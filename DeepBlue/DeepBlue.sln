@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepBlue", "DeepBlue.csproj", "{6BAC1ADD-D823-4979-9905-0A0B677B12CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepBlue", "DeepBlue.csproj", "{29CF30A7-AD06-46A1-87F3-2FBEED1FCA1F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepBlue.Tests", "..\DeepBlue.Tests\DeepBlue.Tests.csproj", "{AB315A5E-A038-4105-8750-74AC180F6ACD}"
 EndProject
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6BAC1ADD-D823-4979-9905-0A0B677B12CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BAC1ADD-D823-4979-9905-0A0B677B12CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BAC1ADD-D823-4979-9905-0A0B677B12CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6BAC1ADD-D823-4979-9905-0A0B677B12CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29CF30A7-AD06-46A1-87F3-2FBEED1FCA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29CF30A7-AD06-46A1-87F3-2FBEED1FCA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29CF30A7-AD06-46A1-87F3-2FBEED1FCA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29CF30A7-AD06-46A1-87F3-2FBEED1FCA1F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB315A5E-A038-4105-8750-74AC180F6ACD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB315A5E-A038-4105-8750-74AC180F6ACD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB315A5E-A038-4105-8750-74AC180F6ACD}.Release|Any CPU.ActiveCfg = Release|Any CPU

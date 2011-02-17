@@ -54,6 +54,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions">
@@ -68,6 +69,7 @@
     <Compile Include="Controllers\Base.cs" />
     <Compile Include="Controllers\Member\Create.cs" />
     <Compile Include="Controllers\Member\MemberBase.cs" />
+    <Compile Include="Controllers\Member\New.cs" />
     <Compile Include="MockSessionState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

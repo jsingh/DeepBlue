@@ -1,0 +1,217 @@
+/* CSS Document */
+* {
+	margin: 0px;
+	padding: 0px;
+}
+img {
+	border: 0px;
+}
+body {
+	font-size: 12px;
+	font-family: Arial;
+	color: #9c9c9c;
+	line-height: 18px;
+	text-align: center;
+	background-color: #ffffff;
+	color: #000000;
+}
+a {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+#main {
+	width: 100%;
+	margin: 0 auto;
+}
+#header {
+	background-image: url(../images/top_bg.gif);
+	background-repeat: repeat-x;
+	height: 160px;
+	text-align: left;
+	border-top: solid 1px #0186A7;
+	border-left: solid 1px #0186A7;
+	border-right: solid 1px #0186A7;
+}
+#header img {
+	padding-top: 20px;
+	padding-left: 20px;
+}
+#menu {
+	height: 24px;
+	margin-left: 15px;
+}
+#menu ul {
+	list-style-type: none;
+	float: left;
+	width: 940px;
+}
+#menu ul li {
+	float: left;
+	padding-right: 2px;
+	cursor: pointer;
+}
+.tab_sel {
+	background-image: url(../images/tab_sel.png);
+	background-repeat: no-repeat;
+	width: 80px;
+	height: 24px;
+	color: #24AFD0;
+	padding-right: 2px;
+	float: left;
+}
+.tab_unsel {
+	background-image: url(../images/tab_unsel.png);
+	background-repeat: no-repeat;
+	width: 80px;
+	height: 24px;
+	color: #24AFD0;
+	padding-right: 2px;
+	float: left;
+}
+#menu a {
+	color: #37cff3;
+	font-weight: bold;
+}
+#contenttop {
+	width: 100%;
+	height: 10px;
+	background-color: #FFFFFF;
+}
+#left-panel {
+	width: 75%;
+	height: 100%;
+	float: left;
+}
+#content {
+	margin-top: -94px;
+}
+#content .maincontent {
+	float: left;
+	background-color: #fff;
+	width: 100%;
+}
+#footer {
+	width: 100%;
+	height: 35px;
+	float: left;
+	background-color: #216687;
+	clear: both;
+}
+#footer .footercontent {
+	color: #ffffff;
+	height: 35px;
+	padding-top: 10px;
+}
+h1 {
+	font-size: 15px;
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+h2 {
+	font-size: 14px;
+	color: Black;
+}
+#form {
+	font-size: 13px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.table_border {
+	border: solid 3px #DDDDDD;
+}
+/*form*/
+.editor-label {
+	width: 150px;
+	float: left;
+	text-align: left;
+	padding-left: 30px;
+	padding: 8px;
+	clear: left;
+}
+.editor-field {
+	text-align: left;
+	padding: 12px;
+	float: left;
+	clear: right;
+	background-image: url("../images/textbox1_bg.png");
+    background-position: left top;
+    background-repeat: no-repeat;
+	border:0px; 
+}
+.editor-field input {
+	border:0px;width:265px;
+}
+.editor-field select {
+	width: 274px;
+}
+.dropdown,.checkbox,.button{
+	background-image: none;padding:8px 2px;
+}
+.checkbox{
+	width:30px;
+}
+.field-validation-error {
+	color: Red;
+}
+/*
+------------------------Box-------------------*/
+.box {
+	clear: both;
+	margin-left: 20px;float:left;margin-bottom:10px;
+}
+.box-top {
+	clear: both;
+	height: 34px;
+}
+.box-left {
+	float: left;
+	background-image: url(../images/box_left.png);
+	background-repeat: no-repeat;
+	width: 10px;
+	height: 34px;
+}
+.box-right {
+	float: left;
+	background-image: url(../images/box_right.png);
+	background-repeat: no-repeat;
+	width: 10px;
+	height: 34px;
+}
+.box-center {
+	float: left;
+	background-image: url(../images/box_center.png);
+	background-repeat: repeat-x;
+	width: 880px;
+	height: 34px;
+	text-align: left;
+	color: White;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 34px;
+}
+.box-content {
+	border: solid 1px #0495bf;   padding-top: 10px;
+	width: 898px;float:left;    background-color: #E9FBFF;
+}
+.contactinfo-right{
+	float:left;
+}
+.contactinfo-left{
+	float:left;
+}
+.accountinfo,.contactinfo{
+	clear:both;margin:10px 0px 10px 0px;float:left;
+}
+.box-content .title{
+	float:left;padding-left:8px;
+}
+.box-content .delete{
+	float:right;clear:right;cursor:pointer;display:none;
+}
+.box-content .add{
+	float:left;
+}.box-content .add img{
+	cursor:pointer;
+}
+.box-content  .box-main{
+	float:left;
+}

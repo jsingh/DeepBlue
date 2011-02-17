@@ -1,12 +1,21 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    Home Page
-</asp:Content>
+	Index
+</asp:Content><asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
 
+	<script src="../../Assets/javascripts/Home.js" type="text/javascript"></script>
+
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <h2><%: ViewData["Message"] %></h2>
-    <p>
-        To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
-    </p>
+	<div style="height: 100px">
+		&nbsp;
+	</div>
+</asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
+
+	<script type="text/javascript">
+		Home.init();
+	</script>
+
 </asp:Content>

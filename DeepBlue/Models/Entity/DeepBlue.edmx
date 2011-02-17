@@ -1,0 +1,1520 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DeepBlueModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="DeepBlueModelStoreContainer">
+          <EntitySet Name="Address" EntityType="DeepBlueModel.Store.Address" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AddressType" EntityType="DeepBlueModel.Store.AddressType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Communication" EntityType="DeepBlueModel.Store.Communication" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CommunicationGrouping" EntityType="DeepBlueModel.Store.CommunicationGrouping" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CommunicationType" EntityType="DeepBlueModel.Store.CommunicationType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Contact" EntityType="DeepBlueModel.Store.Contact" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ContactAddress" EntityType="DeepBlueModel.Store.ContactAddress" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ContactCommunication" EntityType="DeepBlueModel.Store.ContactCommunication" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="COUNTRY" EntityType="DeepBlueModel.Store.COUNTRY" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Member" EntityType="DeepBlueModel.Store.Member" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MemberAccount" EntityType="DeepBlueModel.Store.MemberAccount" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MemberAddress" EntityType="DeepBlueModel.Store.MemberAddress" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MemberCommunication" EntityType="DeepBlueModel.Store.MemberCommunication" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MemberContact" EntityType="DeepBlueModel.Store.MemberContact" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MemberEntityType" EntityType="DeepBlueModel.Store.MemberEntityType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MemberType" EntityType="DeepBlueModel.Store.MemberType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="STATE" EntityType="DeepBlueModel.Store.STATE" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Address_AddressType" Association="DeepBlueModel.Store.FK_Address_AddressType">
+            <End Role="AddressType" EntitySet="AddressType" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Address_Country" Association="DeepBlueModel.Store.FK_Address_Country">
+            <End Role="COUNTRY" EntitySet="COUNTRY" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Address_State" Association="DeepBlueModel.Store.FK_Address_State">
+            <End Role="STATE" EntitySet="STATE" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Communication_CommunicationType" Association="DeepBlueModel.Store.FK_Communication_CommunicationType">
+            <End Role="CommunicationType" EntitySet="CommunicationType" />
+            <End Role="Communication" EntitySet="Communication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommunicationType_CommunicationGrouping" Association="DeepBlueModel.Store.FK_CommunicationType_CommunicationGrouping">
+            <End Role="CommunicationGrouping" EntitySet="CommunicationGrouping" />
+            <End Role="CommunicationType" EntitySet="CommunicationType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactAddress_Address" Association="DeepBlueModel.Store.FK_ContactAddress_Address">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="ContactAddress" EntitySet="ContactAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactAddress_Contact" Association="DeepBlueModel.Store.FK_ContactAddress_Contact">
+            <End Role="Contact" EntitySet="Contact" />
+            <End Role="ContactAddress" EntitySet="ContactAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactCommunication_Communication" Association="DeepBlueModel.Store.FK_ContactCommunication_Communication">
+            <End Role="Communication" EntitySet="Communication" />
+            <End Role="ContactCommunication" EntitySet="ContactCommunication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactCommunication_Contact" Association="DeepBlueModel.Store.FK_ContactCommunication_Contact">
+            <End Role="Contact" EntitySet="Contact" />
+            <End Role="ContactCommunication" EntitySet="ContactCommunication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_MemberEntityType" Association="DeepBlueModel.Store.FK_Member_MemberEntityType">
+            <End Role="MemberEntityType" EntitySet="MemberEntityType" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_ResidencyState" Association="DeepBlueModel.Store.FK_Member_ResidencyState">
+            <End Role="STATE" EntitySet="STATE" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberAccount_Member" Association="DeepBlueModel.Store.FK_MemberAccount_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="MemberAccount" EntitySet="MemberAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberAddress_Address" Association="DeepBlueModel.Store.FK_MemberAddress_Address">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="MemberAddress" EntitySet="MemberAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberAddress_Member" Association="DeepBlueModel.Store.FK_MemberAddress_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="MemberAddress" EntitySet="MemberAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberCommunication_Communication" Association="DeepBlueModel.Store.FK_MemberCommunication_Communication">
+            <End Role="Communication" EntitySet="Communication" />
+            <End Role="MemberCommunication" EntitySet="MemberCommunication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberCommunication_Member" Association="DeepBlueModel.Store.FK_MemberCommunication_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="MemberCommunication" EntitySet="MemberCommunication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberContact_Contact" Association="DeepBlueModel.Store.FK_MemberContact_Contact">
+            <End Role="Contact" EntitySet="Contact" />
+            <End Role="MemberContact" EntitySet="MemberContact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberContact_Member" Association="DeepBlueModel.Store.FK_MemberContact_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="MemberContact" EntitySet="MemberContact" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="AddressTypeID" Type="int" Nullable="false" />
+          <Property Name="Address1" Type="varchar" Nullable="false" MaxLength="40" />
+          <Property Name="Address2" Type="varchar" MaxLength="40" />
+          <Property Name="Address3" Type="varchar" MaxLength="40" />
+          <Property Name="City" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="StProvince" Type="varchar" MaxLength="125" />
+          <Property Name="State" Type="int" />
+          <Property Name="PostalCode" Type="varchar" MaxLength="10" />
+          <Property Name="Country" Type="int" Nullable="false" />
+          <Property Name="County" Type="varchar" MaxLength="50" />
+          <Property Name="Listed" Type="bit" Nullable="false" />
+          <Property Name="IsPreferred" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="AddressType">
+          <Key>
+            <PropertyRef Name="AddressTypeID" />
+          </Key>
+          <Property Name="AddressTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="AddressTypeName" Type="varchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Communication">
+          <Key>
+            <PropertyRef Name="CommunicationID" />
+          </Key>
+          <Property Name="CommunicationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="CommunicationTypeID" Type="int" Nullable="false" />
+          <Property Name="CommunicationValue" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="LastFourPhone" Type="varchar" MaxLength="4" />
+          <Property Name="Listed" Type="bit" Nullable="false" />
+          <Property Name="IsPreferred" Type="bit" Nullable="false" />
+          <Property Name="CommunicationComment" Type="varchar" MaxLength="200" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CommunicationGrouping">
+          <Key>
+            <PropertyRef Name="CommunicationGroupingID" />
+          </Key>
+          <Property Name="CommunicationGroupingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CommunicationGroupingName" Type="varchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="CommunicationType">
+          <Key>
+            <PropertyRef Name="CommunicationTypeID" />
+          </Key>
+          <Property Name="CommunicationTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="CommunicationGroupingID" Type="int" Nullable="false" />
+          <Property Name="CommunicationTypeName" Type="varchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactID" />
+          </Key>
+          <Property Name="ContactID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="ContactName" Type="varchar" MaxLength="100" />
+          <Property Name="ContactType" Type="varchar" MaxLength="20" />
+          <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="FirstName" Type="varchar" MaxLength="30" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="30" />
+          <Property Name="ReceivesDistributionNotices" Type="bit" Nullable="false" />
+          <Property Name="ReceivesK1" Type="bit" Nullable="false" />
+          <Property Name="ReceivesFinancials" Type="bit" Nullable="false" />
+          <Property Name="ReceivesInvestorLetters" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="ContactAddress">
+          <Key>
+            <PropertyRef Name="ContactAddressID" />
+          </Key>
+          <Property Name="ContactAddressID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ContactID" Type="int" Nullable="false" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="AddressID" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="ContactCommunication">
+          <Key>
+            <PropertyRef Name="ContactCommunicationID" />
+          </Key>
+          <Property Name="ContactCommunicationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ContactID" Type="int" Nullable="false" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="CommunicationID" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="COUNTRY">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Name="CountryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CountryCode" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="CountryName" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="MemberName" Type="varchar" MaxLength="100" />
+          <Property Name="MemberEntityTypeID" Type="int" Nullable="false" />
+          <Property Name="Social" Type="int" />
+          <Property Name="TaxID" Type="int" />
+          <Property Name="Alias" Type="varchar" MaxLength="50" />
+          <Property Name="PrevMemberID" Type="int" />
+          <Property Name="ManagerName" Type="varchar" MaxLength="40" />
+          <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="FirstName" Type="varchar" MaxLength="30" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="30" />
+          <Property Name="IsDomestic" Type="bit" Nullable="false" />
+          <Property Name="TaxExempt" Type="bit" Nullable="false" />
+          <Property Name="ResidencyState" Type="int" />
+          <Property Name="Notes" Type="varchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="MemberAccount">
+          <Key>
+            <PropertyRef Name="MemberAccountID" />
+          </Key>
+          <Property Name="MemberAccountID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="Routing" Type="int" />
+          <Property Name="Account" Type="varchar" Nullable="false" MaxLength="40" />
+          <Property Name="Reference" Type="varchar" MaxLength="50" />
+          <Property Name="Attention" Type="varchar" MaxLength="50" />
+          <Property Name="Comments" Type="varchar" MaxLength="105" />
+          <Property Name="IsPrimary" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="MemberAddress">
+          <Key>
+            <PropertyRef Name="MemberAddressID" />
+          </Key>
+          <Property Name="MemberAddressID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="AddressID" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="MemberCommunication">
+          <Key>
+            <PropertyRef Name="MemberCommunicationID" />
+          </Key>
+          <Property Name="MemberCommunicationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="CommunicationID" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="MemberContact">
+          <Key>
+            <PropertyRef Name="MemberContactID" />
+          </Key>
+          <Property Name="MemberContactID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="ContactID" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="MemberEntityType">
+          <Key>
+            <PropertyRef Name="MemberEntityTypeID" />
+          </Key>
+          <Property Name="MemberEntityTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="MemberEntityTypeName" Type="varchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="MemberType">
+          <Key>
+            <PropertyRef Name="MemberTypeID" />
+          </Key>
+          <Property Name="MemberTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="MemberTypeName" Type="varchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="STATE">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Abbr" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Address_AddressType">
+          <End Role="AddressType" Type="DeepBlueModel.Store.AddressType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Address" Type="DeepBlueModel.Store.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddressType">
+              <PropertyRef Name="AddressTypeID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="AddressTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Address_Country">
+          <End Role="COUNTRY" Type="DeepBlueModel.Store.COUNTRY" Multiplicity="1" />
+          <End Role="Address" Type="DeepBlueModel.Store.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COUNTRY">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Address_State">
+          <End Role="STATE" Type="DeepBlueModel.Store.STATE" Multiplicity="0..1" />
+          <End Role="Address" Type="DeepBlueModel.Store.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATE">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Communication_CommunicationType">
+          <End Role="CommunicationType" Type="DeepBlueModel.Store.CommunicationType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Communication" Type="DeepBlueModel.Store.Communication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommunicationType">
+              <PropertyRef Name="CommunicationTypeID" />
+            </Principal>
+            <Dependent Role="Communication">
+              <PropertyRef Name="CommunicationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommunicationType_CommunicationGrouping">
+          <End Role="CommunicationGrouping" Type="DeepBlueModel.Store.CommunicationGrouping" Multiplicity="1" />
+          <End Role="CommunicationType" Type="DeepBlueModel.Store.CommunicationType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommunicationGrouping">
+              <PropertyRef Name="CommunicationGroupingID" />
+            </Principal>
+            <Dependent Role="CommunicationType">
+              <PropertyRef Name="CommunicationGroupingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactAddress_Address">
+          <End Role="Address" Type="DeepBlueModel.Store.Address" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ContactAddress" Type="DeepBlueModel.Store.ContactAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="ContactAddress">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactAddress_Contact">
+          <End Role="Contact" Type="DeepBlueModel.Store.Contact" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ContactAddress" Type="DeepBlueModel.Store.ContactAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="ContactAddress">
+              <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactCommunication_Communication">
+          <End Role="Communication" Type="DeepBlueModel.Store.Communication" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ContactCommunication" Type="DeepBlueModel.Store.ContactCommunication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Communication">
+              <PropertyRef Name="CommunicationID" />
+            </Principal>
+            <Dependent Role="ContactCommunication">
+              <PropertyRef Name="CommunicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactCommunication_Contact">
+          <End Role="Contact" Type="DeepBlueModel.Store.Contact" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ContactCommunication" Type="DeepBlueModel.Store.ContactCommunication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="ContactCommunication">
+              <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_MemberEntityType">
+          <End Role="MemberEntityType" Type="DeepBlueModel.Store.MemberEntityType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Member" Type="DeepBlueModel.Store.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberEntityType">
+              <PropertyRef Name="MemberEntityTypeID" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="MemberEntityTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_ResidencyState">
+          <End Role="STATE" Type="DeepBlueModel.Store.STATE" Multiplicity="0..1" />
+          <End Role="Member" Type="DeepBlueModel.Store.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATE">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="ResidencyState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberAccount_Member">
+          <End Role="Member" Type="DeepBlueModel.Store.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberAccount" Type="DeepBlueModel.Store.MemberAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberAccount">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberAddress_Address">
+          <End Role="Address" Type="DeepBlueModel.Store.Address" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberAddress" Type="DeepBlueModel.Store.MemberAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="MemberAddress">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberAddress_Member">
+          <End Role="Member" Type="DeepBlueModel.Store.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberAddress" Type="DeepBlueModel.Store.MemberAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberAddress">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberCommunication_Communication">
+          <End Role="Communication" Type="DeepBlueModel.Store.Communication" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberCommunication" Type="DeepBlueModel.Store.MemberCommunication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Communication">
+              <PropertyRef Name="CommunicationID" />
+            </Principal>
+            <Dependent Role="MemberCommunication">
+              <PropertyRef Name="CommunicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberCommunication_Member">
+          <End Role="Member" Type="DeepBlueModel.Store.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberCommunication" Type="DeepBlueModel.Store.MemberCommunication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberCommunication">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberContact_Contact">
+          <End Role="Contact" Type="DeepBlueModel.Store.Contact" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberContact" Type="DeepBlueModel.Store.MemberContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="MemberContact">
+              <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberContact_Member">
+          <End Role="Member" Type="DeepBlueModel.Store.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberContact" Type="DeepBlueModel.Store.MemberContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberContact">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DeepBlueModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="DeepBlueEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="DeepBlueModel.Address" />
+          <EntitySet Name="AddressTypes" EntityType="DeepBlueModel.AddressType" />
+          <EntitySet Name="Communications" EntityType="DeepBlueModel.Communication" />
+          <EntitySet Name="CommunicationGroupings" EntityType="DeepBlueModel.CommunicationGrouping" />
+          <EntitySet Name="CommunicationTypes" EntityType="DeepBlueModel.CommunicationType" />
+          <EntitySet Name="Contacts" EntityType="DeepBlueModel.Contact" />
+          <EntitySet Name="ContactAddresses" EntityType="DeepBlueModel.ContactAddress" />
+          <EntitySet Name="ContactCommunications" EntityType="DeepBlueModel.ContactCommunication" />
+          <EntitySet Name="COUNTRies" EntityType="DeepBlueModel.COUNTRY" />
+          <EntitySet Name="Members" EntityType="DeepBlueModel.Member" />
+          <EntitySet Name="MemberAccounts" EntityType="DeepBlueModel.MemberAccount" />
+          <EntitySet Name="MemberAddresses" EntityType="DeepBlueModel.MemberAddress" />
+          <EntitySet Name="MemberCommunications" EntityType="DeepBlueModel.MemberCommunication" />
+          <EntitySet Name="MemberContacts" EntityType="DeepBlueModel.MemberContact" />
+          <EntitySet Name="MemberEntityTypes" EntityType="DeepBlueModel.MemberEntityType" />
+          <EntitySet Name="MemberTypes" EntityType="DeepBlueModel.MemberType" />
+          <EntitySet Name="STATEs" EntityType="DeepBlueModel.STATE" />
+          <AssociationSet Name="FK_Address_AddressType" Association="DeepBlueModel.FK_Address_AddressType">
+            <End Role="AddressType" EntitySet="AddressTypes" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Address_Country" Association="DeepBlueModel.FK_Address_Country">
+            <End Role="COUNTRY" EntitySet="COUNTRies" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Address_State" Association="DeepBlueModel.FK_Address_State">
+            <End Role="STATE" EntitySet="STATEs" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactAddress_Address" Association="DeepBlueModel.FK_ContactAddress_Address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="ContactAddress" EntitySet="ContactAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberAddress_Address" Association="DeepBlueModel.FK_MemberAddress_Address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="MemberAddress" EntitySet="MemberAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Communication_CommunicationType" Association="DeepBlueModel.FK_Communication_CommunicationType">
+            <End Role="CommunicationType" EntitySet="CommunicationTypes" />
+            <End Role="Communication" EntitySet="Communications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactCommunication_Communication" Association="DeepBlueModel.FK_ContactCommunication_Communication">
+            <End Role="Communication" EntitySet="Communications" />
+            <End Role="ContactCommunication" EntitySet="ContactCommunications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberCommunication_Communication" Association="DeepBlueModel.FK_MemberCommunication_Communication">
+            <End Role="Communication" EntitySet="Communications" />
+            <End Role="MemberCommunication" EntitySet="MemberCommunications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommunicationType_CommunicationGrouping" Association="DeepBlueModel.FK_CommunicationType_CommunicationGrouping">
+            <End Role="CommunicationGrouping" EntitySet="CommunicationGroupings" />
+            <End Role="CommunicationType" EntitySet="CommunicationTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactAddress_Contact" Association="DeepBlueModel.FK_ContactAddress_Contact">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="ContactAddress" EntitySet="ContactAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactCommunication_Contact" Association="DeepBlueModel.FK_ContactCommunication_Contact">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="ContactCommunication" EntitySet="ContactCommunications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberContact_Contact" Association="DeepBlueModel.FK_MemberContact_Contact">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="MemberContact" EntitySet="MemberContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_MemberEntityType" Association="DeepBlueModel.FK_Member_MemberEntityType">
+            <End Role="MemberEntityType" EntitySet="MemberEntityTypes" />
+            <End Role="Member" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_ResidencyState" Association="DeepBlueModel.FK_Member_ResidencyState">
+            <End Role="STATE" EntitySet="STATEs" />
+            <End Role="Member" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberAccount_Member" Association="DeepBlueModel.FK_MemberAccount_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="MemberAccount" EntitySet="MemberAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberAddress_Member" Association="DeepBlueModel.FK_MemberAddress_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="MemberAddress" EntitySet="MemberAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberCommunication_Member" Association="DeepBlueModel.FK_MemberCommunication_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="MemberCommunication" EntitySet="MemberCommunications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberContact_Member" Association="DeepBlueModel.FK_MemberContact_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="MemberContact" EntitySet="MemberContacts" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="AddressTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Address1" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="Address2" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="Address3" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="StProvince" Type="String" MaxLength="125" Unicode="false" FixedLength="false" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="PostalCode" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="Country" Type="Int32" Nullable="false" />
+          <Property Name="County" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Listed" Type="Boolean" Nullable="false" />
+          <Property Name="IsPreferred" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="AddressType" Relationship="DeepBlueModel.FK_Address_AddressType" FromRole="Address" ToRole="AddressType" />
+          <NavigationProperty Name="COUNTRY1" Relationship="DeepBlueModel.FK_Address_Country" FromRole="Address" ToRole="COUNTRY" />
+          <NavigationProperty Name="STATE1" Relationship="DeepBlueModel.FK_Address_State" FromRole="Address" ToRole="STATE" />
+          <NavigationProperty Name="ContactAddresses" Relationship="DeepBlueModel.FK_ContactAddress_Address" FromRole="Address" ToRole="ContactAddress" />
+          <NavigationProperty Name="MemberAddresses" Relationship="DeepBlueModel.FK_MemberAddress_Address" FromRole="Address" ToRole="MemberAddress" />
+        </EntityType>
+        <EntityType Name="AddressType">
+          <Key>
+            <PropertyRef Name="AddressTypeID" />
+          </Key>
+          <Property Name="AddressTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="AddressTypeName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Addresses" Relationship="DeepBlueModel.FK_Address_AddressType" FromRole="AddressType" ToRole="Address" />
+        </EntityType>
+        <EntityType Name="Communication">
+          <Key>
+            <PropertyRef Name="CommunicationID" />
+          </Key>
+          <Property Name="CommunicationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="CommunicationTypeID" Type="Int32" Nullable="false" />
+          <Property Name="CommunicationValue" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="LastFourPhone" Type="String" MaxLength="4" Unicode="false" FixedLength="false" />
+          <Property Name="Listed" Type="Boolean" Nullable="false" />
+          <Property Name="IsPreferred" Type="Boolean" Nullable="false" />
+          <Property Name="CommunicationComment" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="CommunicationType" Relationship="DeepBlueModel.FK_Communication_CommunicationType" FromRole="Communication" ToRole="CommunicationType" />
+          <NavigationProperty Name="ContactCommunications" Relationship="DeepBlueModel.FK_ContactCommunication_Communication" FromRole="Communication" ToRole="ContactCommunication" />
+          <NavigationProperty Name="MemberCommunications" Relationship="DeepBlueModel.FK_MemberCommunication_Communication" FromRole="Communication" ToRole="MemberCommunication" />
+        </EntityType>
+        <EntityType Name="CommunicationGrouping">
+          <Key>
+            <PropertyRef Name="CommunicationGroupingID" />
+          </Key>
+          <Property Name="CommunicationGroupingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CommunicationGroupingName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="CommunicationTypes" Relationship="DeepBlueModel.FK_CommunicationType_CommunicationGrouping" FromRole="CommunicationGrouping" ToRole="CommunicationType" />
+        </EntityType>
+        <EntityType Name="CommunicationType">
+          <Key>
+            <PropertyRef Name="CommunicationTypeID" />
+          </Key>
+          <Property Name="CommunicationTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="CommunicationGroupingID" Type="Int32" Nullable="false" />
+          <Property Name="CommunicationTypeName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Communications" Relationship="DeepBlueModel.FK_Communication_CommunicationType" FromRole="CommunicationType" ToRole="Communication" />
+          <NavigationProperty Name="CommunicationGrouping" Relationship="DeepBlueModel.FK_CommunicationType_CommunicationGrouping" FromRole="CommunicationType" ToRole="CommunicationGrouping" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactID" />
+          </Key>
+          <Property Name="ContactID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="ContactName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="ContactType" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="FirstName" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="ReceivesDistributionNotices" Type="Boolean" Nullable="false" />
+          <Property Name="ReceivesK1" Type="Boolean" Nullable="false" />
+          <Property Name="ReceivesFinancials" Type="Boolean" Nullable="false" />
+          <Property Name="ReceivesInvestorLetters" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="ContactAddresses" Relationship="DeepBlueModel.FK_ContactAddress_Contact" FromRole="Contact" ToRole="ContactAddress" />
+          <NavigationProperty Name="ContactCommunications" Relationship="DeepBlueModel.FK_ContactCommunication_Contact" FromRole="Contact" ToRole="ContactCommunication" />
+          <NavigationProperty Name="MemberContacts" Relationship="DeepBlueModel.FK_MemberContact_Contact" FromRole="Contact" ToRole="MemberContact" />
+        </EntityType>
+        <EntityType Name="ContactAddress">
+          <Key>
+            <PropertyRef Name="ContactAddressID" />
+          </Key>
+          <Property Name="ContactAddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContactID" Type="Int32" Nullable="false" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="AddressID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Address" Relationship="DeepBlueModel.FK_ContactAddress_Address" FromRole="ContactAddress" ToRole="Address" />
+          <NavigationProperty Name="Contact" Relationship="DeepBlueModel.FK_ContactAddress_Contact" FromRole="ContactAddress" ToRole="Contact" />
+        </EntityType>
+        <EntityType Name="ContactCommunication">
+          <Key>
+            <PropertyRef Name="ContactCommunicationID" />
+          </Key>
+          <Property Name="ContactCommunicationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContactID" Type="Int32" Nullable="false" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="CommunicationID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Communication" Relationship="DeepBlueModel.FK_ContactCommunication_Communication" FromRole="ContactCommunication" ToRole="Communication" />
+          <NavigationProperty Name="Contact" Relationship="DeepBlueModel.FK_ContactCommunication_Contact" FromRole="ContactCommunication" ToRole="Contact" />
+        </EntityType>
+        <EntityType Name="COUNTRY">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Name="CountryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryCode" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
+          <Property Name="CountryName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Addresses" Relationship="DeepBlueModel.FK_Address_Country" FromRole="COUNTRY" ToRole="Address" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="MemberName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="MemberEntityTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Social" Type="Int32" />
+          <Property Name="TaxID" Type="Int32" />
+          <Property Name="Alias" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PrevMemberID" Type="Int32" />
+          <Property Name="ManagerName" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="FirstName" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="IsDomestic" Type="Boolean" Nullable="false" />
+          <Property Name="TaxExempt" Type="Boolean" Nullable="false" />
+          <Property Name="ResidencyState" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="MemberEntityType" Relationship="DeepBlueModel.FK_Member_MemberEntityType" FromRole="Member" ToRole="MemberEntityType" />
+          <NavigationProperty Name="STATE" Relationship="DeepBlueModel.FK_Member_ResidencyState" FromRole="Member" ToRole="STATE" />
+          <NavigationProperty Name="MemberAccounts" Relationship="DeepBlueModel.FK_MemberAccount_Member" FromRole="Member" ToRole="MemberAccount" />
+          <NavigationProperty Name="MemberAddresses" Relationship="DeepBlueModel.FK_MemberAddress_Member" FromRole="Member" ToRole="MemberAddress" />
+          <NavigationProperty Name="MemberCommunications" Relationship="DeepBlueModel.FK_MemberCommunication_Member" FromRole="Member" ToRole="MemberCommunication" />
+          <NavigationProperty Name="MemberContacts" Relationship="DeepBlueModel.FK_MemberContact_Member" FromRole="Member" ToRole="MemberContact" />
+        </EntityType>
+        <EntityType Name="MemberAccount">
+          <Key>
+            <PropertyRef Name="MemberAccountID" />
+          </Key>
+          <Property Name="MemberAccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="Routing" Type="Int32" />
+          <Property Name="Account" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="Reference" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Attention" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Comments" Type="String" MaxLength="105" Unicode="false" FixedLength="false" />
+          <Property Name="IsPrimary" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Member" Relationship="DeepBlueModel.FK_MemberAccount_Member" FromRole="MemberAccount" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="MemberAddress">
+          <Key>
+            <PropertyRef Name="MemberAddressID" />
+          </Key>
+          <Property Name="MemberAddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="AddressID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Address" Relationship="DeepBlueModel.FK_MemberAddress_Address" FromRole="MemberAddress" ToRole="Address" />
+          <NavigationProperty Name="Member" Relationship="DeepBlueModel.FK_MemberAddress_Member" FromRole="MemberAddress" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="MemberCommunication">
+          <Key>
+            <PropertyRef Name="MemberCommunicationID" />
+          </Key>
+          <Property Name="MemberCommunicationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="CommunicationID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Communication" Relationship="DeepBlueModel.FK_MemberCommunication_Communication" FromRole="MemberCommunication" ToRole="Communication" />
+          <NavigationProperty Name="Member" Relationship="DeepBlueModel.FK_MemberCommunication_Member" FromRole="MemberCommunication" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="MemberContact">
+          <Key>
+            <PropertyRef Name="MemberContactID" />
+          </Key>
+          <Property Name="MemberContactID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="ContactID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Contact" Relationship="DeepBlueModel.FK_MemberContact_Contact" FromRole="MemberContact" ToRole="Contact" />
+          <NavigationProperty Name="Member" Relationship="DeepBlueModel.FK_MemberContact_Member" FromRole="MemberContact" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="MemberEntityType">
+          <Key>
+            <PropertyRef Name="MemberEntityTypeID" />
+          </Key>
+          <Property Name="MemberEntityTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="MemberEntityTypeName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Members" Relationship="DeepBlueModel.FK_Member_MemberEntityType" FromRole="MemberEntityType" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="MemberType">
+          <Key>
+            <PropertyRef Name="MemberTypeID" />
+          </Key>
+          <Property Name="MemberTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="MemberTypeName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="STATE">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Abbr" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Addresses" Relationship="DeepBlueModel.FK_Address_State" FromRole="STATE" ToRole="Address" />
+          <NavigationProperty Name="Members" Relationship="DeepBlueModel.FK_Member_ResidencyState" FromRole="STATE" ToRole="Member" />
+        </EntityType>
+        <Association Name="FK_Address_AddressType">
+          <End Role="AddressType" Type="DeepBlueModel.AddressType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Address" Type="DeepBlueModel.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddressType">
+              <PropertyRef Name="AddressTypeID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="AddressTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Address_Country">
+          <End Role="COUNTRY" Type="DeepBlueModel.COUNTRY" Multiplicity="1" />
+          <End Role="Address" Type="DeepBlueModel.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COUNTRY">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Address_State">
+          <End Role="STATE" Type="DeepBlueModel.STATE" Multiplicity="0..1" />
+          <End Role="Address" Type="DeepBlueModel.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATE">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactAddress_Address">
+          <End Role="Address" Type="DeepBlueModel.Address" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ContactAddress" Type="DeepBlueModel.ContactAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="ContactAddress">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberAddress_Address">
+          <End Role="Address" Type="DeepBlueModel.Address" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberAddress" Type="DeepBlueModel.MemberAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="MemberAddress">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Communication_CommunicationType">
+          <End Role="CommunicationType" Type="DeepBlueModel.CommunicationType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Communication" Type="DeepBlueModel.Communication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommunicationType">
+              <PropertyRef Name="CommunicationTypeID" />
+            </Principal>
+            <Dependent Role="Communication">
+              <PropertyRef Name="CommunicationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactCommunication_Communication">
+          <End Role="Communication" Type="DeepBlueModel.Communication" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ContactCommunication" Type="DeepBlueModel.ContactCommunication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Communication">
+              <PropertyRef Name="CommunicationID" />
+            </Principal>
+            <Dependent Role="ContactCommunication">
+              <PropertyRef Name="CommunicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberCommunication_Communication">
+          <End Role="Communication" Type="DeepBlueModel.Communication" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberCommunication" Type="DeepBlueModel.MemberCommunication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Communication">
+              <PropertyRef Name="CommunicationID" />
+            </Principal>
+            <Dependent Role="MemberCommunication">
+              <PropertyRef Name="CommunicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommunicationType_CommunicationGrouping">
+          <End Role="CommunicationGrouping" Type="DeepBlueModel.CommunicationGrouping" Multiplicity="1" />
+          <End Role="CommunicationType" Type="DeepBlueModel.CommunicationType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommunicationGrouping">
+              <PropertyRef Name="CommunicationGroupingID" />
+            </Principal>
+            <Dependent Role="CommunicationType">
+              <PropertyRef Name="CommunicationGroupingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactAddress_Contact">
+          <End Role="Contact" Type="DeepBlueModel.Contact" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ContactAddress" Type="DeepBlueModel.ContactAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="ContactAddress">
+              <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactCommunication_Contact">
+          <End Role="Contact" Type="DeepBlueModel.Contact" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ContactCommunication" Type="DeepBlueModel.ContactCommunication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="ContactCommunication">
+              <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberContact_Contact">
+          <End Role="Contact" Type="DeepBlueModel.Contact" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberContact" Type="DeepBlueModel.MemberContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="MemberContact">
+              <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_MemberEntityType">
+          <End Role="MemberEntityType" Type="DeepBlueModel.MemberEntityType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Member" Type="DeepBlueModel.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberEntityType">
+              <PropertyRef Name="MemberEntityTypeID" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="MemberEntityTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_ResidencyState">
+          <End Role="STATE" Type="DeepBlueModel.STATE" Multiplicity="0..1" />
+          <End Role="Member" Type="DeepBlueModel.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATE">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="ResidencyState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberAccount_Member">
+          <End Role="Member" Type="DeepBlueModel.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberAccount" Type="DeepBlueModel.MemberAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberAccount">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberAddress_Member">
+          <End Role="Member" Type="DeepBlueModel.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberAddress" Type="DeepBlueModel.MemberAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberAddress">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberCommunication_Member">
+          <End Role="Member" Type="DeepBlueModel.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberCommunication" Type="DeepBlueModel.MemberCommunication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberCommunication">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberContact_Member">
+          <End Role="Member" Type="DeepBlueModel.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberContact" Type="DeepBlueModel.MemberContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberContact">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DeepBlueModelStoreContainer" CdmEntityContainer="DeepBlueEntities">
+          <EntitySetMapping Name="Addresses"><EntityTypeMapping TypeName="DeepBlueModel.Address"><MappingFragment StoreEntitySet="Address">
+            <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="AddressTypeID" ColumnName="AddressTypeID" />
+            <ScalarProperty Name="Address1" ColumnName="Address1" />
+            <ScalarProperty Name="Address2" ColumnName="Address2" />
+            <ScalarProperty Name="Address3" ColumnName="Address3" />
+            <ScalarProperty Name="City" ColumnName="City" />
+            <ScalarProperty Name="StProvince" ColumnName="StProvince" />
+            <ScalarProperty Name="State" ColumnName="State" />
+            <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+            <ScalarProperty Name="Country" ColumnName="Country" />
+            <ScalarProperty Name="County" ColumnName="County" />
+            <ScalarProperty Name="Listed" ColumnName="Listed" />
+            <ScalarProperty Name="IsPreferred" ColumnName="IsPreferred" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="AddressTypes"><EntityTypeMapping TypeName="DeepBlueModel.AddressType"><MappingFragment StoreEntitySet="AddressType">
+            <ScalarProperty Name="AddressTypeID" ColumnName="AddressTypeID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+            <ScalarProperty Name="AddressTypeName" ColumnName="AddressTypeName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Communications"><EntityTypeMapping TypeName="DeepBlueModel.Communication"><MappingFragment StoreEntitySet="Communication">
+            <ScalarProperty Name="CommunicationID" ColumnName="CommunicationID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="CommunicationTypeID" ColumnName="CommunicationTypeID" />
+            <ScalarProperty Name="CommunicationValue" ColumnName="CommunicationValue" />
+            <ScalarProperty Name="LastFourPhone" ColumnName="LastFourPhone" />
+            <ScalarProperty Name="Listed" ColumnName="Listed" />
+            <ScalarProperty Name="IsPreferred" ColumnName="IsPreferred" />
+            <ScalarProperty Name="CommunicationComment" ColumnName="CommunicationComment" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CommunicationGroupings"><EntityTypeMapping TypeName="DeepBlueModel.CommunicationGrouping"><MappingFragment StoreEntitySet="CommunicationGrouping">
+            <ScalarProperty Name="CommunicationGroupingID" ColumnName="CommunicationGroupingID" />
+            <ScalarProperty Name="CommunicationGroupingName" ColumnName="CommunicationGroupingName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CommunicationTypes"><EntityTypeMapping TypeName="DeepBlueModel.CommunicationType"><MappingFragment StoreEntitySet="CommunicationType">
+            <ScalarProperty Name="CommunicationTypeID" ColumnName="CommunicationTypeID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+            <ScalarProperty Name="CommunicationGroupingID" ColumnName="CommunicationGroupingID" />
+            <ScalarProperty Name="CommunicationTypeName" ColumnName="CommunicationTypeName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Contacts"><EntityTypeMapping TypeName="DeepBlueModel.Contact"><MappingFragment StoreEntitySet="Contact">
+            <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+            <ScalarProperty Name="ContactType" ColumnName="ContactType" />
+            <ScalarProperty Name="LastName" ColumnName="LastName" />
+            <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+            <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+            <ScalarProperty Name="ReceivesDistributionNotices" ColumnName="ReceivesDistributionNotices" />
+            <ScalarProperty Name="ReceivesK1" ColumnName="ReceivesK1" />
+            <ScalarProperty Name="ReceivesFinancials" ColumnName="ReceivesFinancials" />
+            <ScalarProperty Name="ReceivesInvestorLetters" ColumnName="ReceivesInvestorLetters" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="ContactAddresses"><EntityTypeMapping TypeName="DeepBlueModel.ContactAddress"><MappingFragment StoreEntitySet="ContactAddress">
+            <ScalarProperty Name="ContactAddressID" ColumnName="ContactAddressID" />
+            <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="ContactCommunications"><EntityTypeMapping TypeName="DeepBlueModel.ContactCommunication"><MappingFragment StoreEntitySet="ContactCommunication">
+            <ScalarProperty Name="ContactCommunicationID" ColumnName="ContactCommunicationID" />
+            <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="CommunicationID" ColumnName="CommunicationID" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="COUNTRies"><EntityTypeMapping TypeName="DeepBlueModel.COUNTRY"><MappingFragment StoreEntitySet="COUNTRY">
+            <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+            <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+            <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Members"><EntityTypeMapping TypeName="DeepBlueModel.Member"><MappingFragment StoreEntitySet="Member">
+            <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+            <ScalarProperty Name="MemberEntityTypeID" ColumnName="MemberEntityTypeID" />
+            <ScalarProperty Name="Social" ColumnName="Social" />
+            <ScalarProperty Name="TaxID" ColumnName="TaxID" />
+            <ScalarProperty Name="Alias" ColumnName="Alias" />
+            <ScalarProperty Name="PrevMemberID" ColumnName="PrevMemberID" />
+            <ScalarProperty Name="ManagerName" ColumnName="ManagerName" />
+            <ScalarProperty Name="LastName" ColumnName="LastName" />
+            <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+            <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+            <ScalarProperty Name="IsDomestic" ColumnName="IsDomestic" />
+            <ScalarProperty Name="TaxExempt" ColumnName="TaxExempt" />
+            <ScalarProperty Name="ResidencyState" ColumnName="ResidencyState" />
+            <ScalarProperty Name="Notes" ColumnName="Notes" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MemberAccounts"><EntityTypeMapping TypeName="DeepBlueModel.MemberAccount"><MappingFragment StoreEntitySet="MemberAccount">
+            <ScalarProperty Name="MemberAccountID" ColumnName="MemberAccountID" />
+            <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="Routing" ColumnName="Routing" />
+            <ScalarProperty Name="Account" ColumnName="Account" />
+            <ScalarProperty Name="Reference" ColumnName="Reference" />
+            <ScalarProperty Name="Attention" ColumnName="Attention" />
+            <ScalarProperty Name="Comments" ColumnName="Comments" />
+            <ScalarProperty Name="IsPrimary" ColumnName="IsPrimary" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MemberAddresses"><EntityTypeMapping TypeName="DeepBlueModel.MemberAddress"><MappingFragment StoreEntitySet="MemberAddress">
+            <ScalarProperty Name="MemberAddressID" ColumnName="MemberAddressID" />
+            <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MemberCommunications"><EntityTypeMapping TypeName="DeepBlueModel.MemberCommunication"><MappingFragment StoreEntitySet="MemberCommunication">
+            <ScalarProperty Name="MemberCommunicationID" ColumnName="MemberCommunicationID" />
+            <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="CommunicationID" ColumnName="CommunicationID" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MemberContacts"><EntityTypeMapping TypeName="DeepBlueModel.MemberContact"><MappingFragment StoreEntitySet="MemberContact">
+            <ScalarProperty Name="MemberContactID" ColumnName="MemberContactID" />
+            <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MemberEntityTypes"><EntityTypeMapping TypeName="DeepBlueModel.MemberEntityType"><MappingFragment StoreEntitySet="MemberEntityType">
+            <ScalarProperty Name="MemberEntityTypeID" ColumnName="MemberEntityTypeID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+            <ScalarProperty Name="MemberEntityTypeName" ColumnName="MemberEntityTypeName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MemberTypes"><EntityTypeMapping TypeName="DeepBlueModel.MemberType"><MappingFragment StoreEntitySet="MemberType">
+            <ScalarProperty Name="MemberTypeID" ColumnName="MemberTypeID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+            <ScalarProperty Name="MemberTypeName" ColumnName="MemberTypeName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="STATEs"><EntityTypeMapping TypeName="DeepBlueModel.STATE"><MappingFragment StoreEntitySet="STATE">
+            <ScalarProperty Name="StateID" ColumnName="StateID" />
+            <ScalarProperty Name="Abbr" ColumnName="Abbr" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="DeepBlue">
+        <EntityTypeShape EntityType="DeepBlueModel.Address" Width="1.5" PointX="3" PointY="7.625" Height="4.7149055989583317" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.AddressType" Width="1.5" PointX="0.75" PointY="5.875" Height="1.7566536458333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.Communication" Width="1.5" PointX="6" PointY="15.25" Height="3.4001269531250014" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.CommunicationGrouping" Width="1.5" PointX="1.5" PointY="16.25" Height="1.427958984374996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.CommunicationType" Width="1.5" PointX="3.75" PointY="15.875" Height="2.0853483072916674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.Contact" Width="1.5" PointX="6" PointY="2" Height="3.8931689453124996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.ContactAddress" Width="1.5" PointX="8.25" PointY="4.625" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.ContactCommunication" Width="1.5" PointX="11.25" PointY="12" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.COUNTRY" Width="1.5" PointX="0.75" PointY="12.375" Height="1.5923063151041674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.Member" Width="1.5" PointX="6" PointY="7.375" Height="5.2079475911458317" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.MemberAccount" Width="1.5" PointX="8.25" PointY="8.25" Height="3.2357796223958317" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.MemberAddress" Width="1.5" PointX="11.25" PointY="8.625" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.MemberCommunication" Width="1.5" PointX="8.25" PointY="12.625" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.MemberContact" Width="1.5" PointX="11.25" PointY="4.625" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.MemberEntityType" Width="1.5" PointX="3.75" PointY="5" Height="1.7566536458333388" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.MemberType" Width="1.5" PointX="0.75" PointY="0.75" Height="1.5923063151041674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.STATE" Width="1.5" PointX="0.75" PointY="9" Height="1.7566536458333388" IsExpanded="true" />
+        <AssociationConnector Association="DeepBlueModel.FK_Address_AddressType" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="7.2220763229166689" />
+          <ConnectorPoint PointX="3.34375" PointY="7.2220763229166689" />
+          <ConnectorPoint PointX="3.34375" PointY="7.625" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_Address_Country" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="13.171153157552084" />
+          <ConnectorPoint PointX="3.75" PointY="13.171153157552084" />
+          <ConnectorPoint PointX="3.75" PointY="12.339905598958332" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_Address_State" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="9.87832682291667" />
+          <ConnectorPoint PointX="3" PointY="9.87832682291667" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_ContactAddress_Address" ManuallyRouted="false">
+          <ConnectorPoint PointX="3.5468775" PointY="7.625" />
+          <ConnectorPoint PointX="3.5468775" PointY="7.0112719726562531" />
+          <ConnectorPoint PointX="4.822916666666667" PointY="7.0112719726562522" />
+          <ConnectorPoint PointX="4.989583333333333" PointY="7.0112719726562531" />
+          <ConnectorPoint PointX="8.25" PointY="7.0112719726562531" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_MemberAddress_Address" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="9.9824527994791659" />
+          <ConnectorPoint PointX="5.75" PointY="9.9824527994791659" />
+          <ConnectorPoint PointX="5.75" PointY="7.25" />
+          <ConnectorPoint PointX="7.541666666666667" PointY="7.2499999999999991" />
+          <ConnectorPoint PointX="7.708333333333333" PointY="7.25" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="7.2499999999999991" />
+          <ConnectorPoint PointX="7.958333333333333" PointY="7.25" />
+          <ConnectorPoint PointX="8" PointY="7.25" />
+          <ConnectorPoint PointX="8" PointY="8" />
+          <ConnectorPoint PointX="10.916666666666666" PointY="7.9999999999999991" />
+          <ConnectorPoint PointX="11.083333333333334" PointY="8" />
+          <ConnectorPoint PointX="11.510414166666665" PointY="7.9999999999999991" />
+          <ConnectorPoint PointX="11.677080833333333" PointY="8" />
+          <ConnectorPoint PointX="12" PointY="8" />
+          <ConnectorPoint PointX="12" PointY="8.625" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_Communication_CommunicationType" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.25" PointY="16.917674153645834" />
+          <ConnectorPoint PointX="6" PointY="16.917674153645834" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_ContactCommunication_Communication" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="16.9500634765625" />
+          <ConnectorPoint PointX="12" PointY="16.9500634765625" />
+          <ConnectorPoint PointX="12" PointY="14.578390299479167" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_MemberCommunication_Communication" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="16.068779238281252" />
+          <ConnectorPoint PointX="9" PointY="16.068779238281252" />
+          <ConnectorPoint PointX="9" PointY="15.203390299479167" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_CommunicationType_CommunicationGrouping" ManuallyRouted="false">
+          <ConnectorPoint PointX="3" PointY="16.963979492187498" />
+          <ConnectorPoint PointX="3.75" PointY="16.963979492187498" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_ContactAddress_Contact" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="5.25908447265625" />
+          <ConnectorPoint PointX="8.25" PointY="5.25908447265625" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_ContactCommunication_Contact" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="3.2812505" />
+          <ConnectorPoint PointX="11" PointY="3.2812505" />
+          <ConnectorPoint PointX="11" PointY="11.625" />
+          <ConnectorPoint PointX="12" PointY="11.625" />
+          <ConnectorPoint PointX="12" PointY="12" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_MemberContact_Contact" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="3.9843772500000005" />
+          <ConnectorPoint PointX="10.916666666666666" PointY="3.98437725" />
+          <ConnectorPoint PointX="11.083333333333334" PointY="3.9843772500000005" />
+          <ConnectorPoint PointX="12" PointY="3.9843772500000005" />
+          <ConnectorPoint PointX="12" PointY="4.625" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_Member_MemberEntityType" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.90625" PointY="6.7566536458333388" />
+          <ConnectorPoint PointX="4.90625" PointY="7.46875" />
+          <ConnectorPoint PointX="5.666666666666667" PointY="7.4687499999999991" />
+          <ConnectorPoint PointX="5.833333333333333" PointY="7.46875" />
+          <ConnectorPoint PointX="6" PointY="7.46875" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_Member_ResidencyState" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.2499999999999996" PointY="10.756653645833339" />
+          <ConnectorPoint PointX="2.625" PointY="11.131653645833339" />
+          <ConnectorPoint PointX="2.625" PointY="12.707947591145832" />
+          <ConnectorPoint PointX="3.6666666666666665" PointY="12.707947591145832" />
+          <ConnectorPoint PointX="3.8333333333333335" PointY="12.707947591145832" />
+          <ConnectorPoint PointX="5.8761528461538468" PointY="12.707947591145832" />
+          <ConnectorPoint PointX="6.0011528461538459" PointY="12.582947591145832" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_MemberAccount_Member" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="9.8678898111979159" />
+          <ConnectorPoint PointX="8.25" PointY="9.8678898111979159" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_MemberAddress_Member" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="7.6875" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="7.6874999999999991" />
+          <ConnectorPoint PointX="8.0833333333333339" PointY="7.6875" />
+          <ConnectorPoint PointX="10.682556966145834" PointY="7.6874999999999991" />
+          <ConnectorPoint PointX="10.849223632812501" PointY="7.6875" />
+          <ConnectorPoint PointX="10.916666666666666" PointY="7.6874999999999991" />
+          <ConnectorPoint PointX="11.083333333333334" PointY="7.6875" />
+          <ConnectorPoint PointX="11.5937475" PointY="7.6875" />
+          <ConnectorPoint PointX="11.5937475" PointY="8.625" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_MemberCommunication_Member" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.7818289230769224" PointY="12.582947591145832" />
+          <ConnectorPoint PointX="6.7818289230769224" PointY="13.914195149739584" />
+          <ConnectorPoint PointX="8.25" PointY="13.914195149739584" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_MemberContact_Member" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="7.375" />
+          <ConnectorPoint PointX="7.875" PointY="7" />
+          <ConnectorPoint PointX="7.875" PointY="7.8283902994791674" />
+          <ConnectorPoint PointX="7.916666666666667" PointY="7.8283902994791665" />
+          <ConnectorPoint PointX="8.0833333333333339" PointY="7.8283902994791674" />
+          <ConnectorPoint PointX="10.625" PointY="7.8283902994791674" />
+          <ConnectorPoint PointX="10.94107443490112" PointY="7.5123158645780457" />
+          <ConnectorPoint PointX="11.058925565098878" PointY="7.3944647343802883" />
+          <ConnectorPoint PointX="11.25" PointY="7.2033902994791674" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

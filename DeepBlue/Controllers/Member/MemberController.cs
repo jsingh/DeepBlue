@@ -3,93 +3,209 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DeepBlue.Models;
+using DeepBlue.Helpers;
+using DeepBlue.Models.Member;
+using DeepBlue.Models.Entity;
 
-namespace DeepBlue.Controllers.Member
-{
-    public interface IMemberControllerRepository {
-        int GetSomethingFromDatabase(int id);
-    }
+namespace DeepBlue.Controllers.Member {
 
-    public class MemberControllerRepository : IMemberControllerRepository {
-        public int GetSomethingFromDatabase(int id) {
-            return 0;
-        }
-    }
+	public class MemberController : Controller {
 
-    public class MemberController : Controller {
+		public IMemberRepository MemberRepository { get; set; }
 
-        public IMemberControllerRepository MemberControllerRepository { get; set; }
+		public MemberController()
+			: this(new MemberRepository()) {
+		}
 
-        public MemberController() {
-            this.MemberControllerRepository = new MemberControllerRepository();
-        }
+		public MemberController(IMemberRepository repository) {
+			MemberRepository = repository;
+		}
 
-        // karan: 02/15/2011
-        // Follow the Unit testing standards document for the naming conventions of the Actions.
-        // As detailed in the document, the following names should be used
-        //*Index - the main "landing" page. This is also the default endpoint.
-        //* List - a list of all the members.
-        //* Show – show a particular member.
-        //* Edit - an edit page for the member
-        //* New - a create page for the member
-        //* Create - creates a new member (and saves it if you're using a DB)
-        //* Update - updates the member
-        //* Delete - deletes the member
+		//
+		// GET: /Member/
 
-        //
-        // GET: /Member/
-        [HttpGet]
-        public ActionResult Index() {
-            return View();
-        }
+		public ActionResult Index() {
+			return View();
+		}
 
-        //
-        // GET: /Member/List
-        [HttpGet]
-        public ActionResult List() {
-            return View();
-        }
+		public ActionResult ThankYou() {
+			return View();
+		}
 
-        //
-        // GET: /Member/Show/1
-        [HttpGet]
-        public ActionResult Show(int id) {
-            return View();
-        }
+		//
+		// GET: /Member/Details/5
 
-        //
-        // GET: /Member/New
-        [HttpGet]
-        public ActionResult New() {
-            return View();
-        }
+		public ActionResult Details(int id) {
+			return View();
+		}
 
-        //
-        // POST: /Member/Create
-        [HttpPost]
-        public ActionResult Create() {
-            return View();
-        }
+		//
+		// GET: /Member/Create
 
-        //
-        // GET: /Member/Edit/1
-        [HttpGet]
-        public ActionResult Edit(int id) {
-            return View();
-        }
+		public ActionResult New() {
+			CreateModel model = new CreateModel();
+			model.SelectList.States = SelectListFactory.GetStateSelectList(MemberRepository.GetAllStates().ToList());
+			model.SelectList.Countries = SelectListFactory.GetCountrySelectList(MemberRepository.GetAllCountries().ToList());
+			model.SelectList.MemberEntityTypes = SelectListFactory.GetAllMemberEntityTypesSelectList(MemberRepository.GetAllMemberEntityTypes().ToList());
+			model.SelectList.AddressTypes = SelectListFactory.GetAddressTypeSelectList(MemberRepository.GetAllAddressTypes().ToList());
+			model.AddressType = 2;
+			model.ContactAddressType = 2;
+			model.AccountLength = 1;
+			model.ContactLength = 1;
+			return View(model);
+		}
 
-        //
-        // POST: /Member/Update/1
-        [HttpPost]
-        public ActionResult Update(int id) {
-            return View();
-        }
+		//
+		// POST: /Member/Create
 
-        //
-        // GET: /Member/Delete/5
-        [HttpGet]
-        public ActionResult Delete(int id) {
-            return View();
-        }
-    }
+		[HttpPost]
+		public ActionResult Create(CreateModel model, FormCollection collection) {
+
+			if (ModelState.IsValid) {
+
+				DeepBlue.Models.Entity.Member member = new DeepBlue.Models.Entity.Member();
+
+				/*Member*/
+				member.Alias = model.Alias;
+				member.CreatedBy = 0;
+				member.CreatedDate = DateTime.Now;
+				member.EntityID = 0;
+				member.FirstName = string.Empty;
+				member.IsDomestic = model.DomesticForeign;
+				member.LastName = string.Empty;
+				member.LastUpdatedBy = 0;
+				member.LastUpdatedDate = DateTime.Now;
+				member.ManagerName = string.Empty;
+				member.MemberEntityTypeID = model.EntityType;
+				member.MemberName = model.MemberName;
+				member.MiddleName = string.Empty;
+				member.Notes = string.Empty;
+				member.PrevMemberID = 0;
+				member.ResidencyState = model.StateOfResidency;
+				member.Social = model.Social;
+				member.TaxExempt = false;
+				member.TaxID = 0;
+
+				/* Member Address */
+				MemberAddress memberAddress = new MemberAddress();
+				memberAddress.CreatedBy = 0;
+				memberAddress.CreatedDate = DateTime.Now;
+				memberAddress.EntityID = 0;
+				memberAddress.LastUpdatedBy = 0;
+				memberAddress.LastUpdatedDate = DateTime.Now;
+
+				memberAddress.Address = new Address();
+				memberAddress.Address.Address1 = model.Address1;
+				memberAddress.Address.Address2 = model.Address2;
+				memberAddress.Address.AddressTypeID = model.AddressType;
+				memberAddress.Address.City = model.City;
+				memberAddress.Address.Country = model.Country;
+				memberAddress.Address.CreatedDate = DateTime.Now;
+				memberAddress.Address.City = model.City;
+				memberAddress.Address.Country = model.Country;
+				memberAddress.Address.CreatedBy = 0;
+				memberAddress.Address.CreatedDate = DateTime.Now;
+				memberAddress.Address.EntityID = 0;
+				memberAddress.Address.IsPreferred = false;
+				memberAddress.Address.LastUpdatedDate = DateTime.Now;
+				memberAddress.Address.LastUpdatedBy = 0;
+				memberAddress.Address.LastUpdatedDate = DateTime.Now;
+				memberAddress.Address.Listed = false;
+				memberAddress.Address.PostalCode = model.Zip;
+				memberAddress.Address.State = model.State;
+				memberAddress.Address.StProvince = string.Empty;
+				/* Add New Member Address */
+				member.MemberAddresses.Add(memberAddress);
+
+				/* Bank Account */
+				MemberAccount memberAccount;
+				for (int index = 0; index < model.AccountLength; index++) {
+					memberAccount = new MemberAccount();
+					memberAccount.Account = collection[(index+1).ToString() + "_" + "AccountNumber"];
+					memberAccount.Attention = collection[(index+1).ToString() + "_" + "Attention"];
+					memberAccount.Comments = string.Empty;
+					memberAccount.CreatedBy = 0;
+					memberAccount.CreatedDate = DateTime.Now;
+					memberAccount.EntityID = 0;
+					memberAccount.IsPrimary = false;
+					memberAccount.LastUpdatedBy = 0;
+					memberAccount.LastUpdatedDate = DateTime.Now;
+					memberAccount.Routing = 0;
+					memberAccount.Reference = collection[(index+1).ToString() + "_" + "Reference"];
+					member.MemberAccounts.Add(memberAccount);
+				}
+
+
+				/* Contact Address */
+				MemberContact memberContact = new MemberContact();
+				memberContact.CreatedBy = 0;
+				memberContact.CreatedDate = DateTime.Now;
+				memberContact.EntityID = 0;
+				memberContact.LastUpdatedBy = 0;
+				memberContact.LastUpdatedDate = DateTime.Now;
+				memberContact.Contact = new Contact();
+				memberContact.Contact.ContactName = model.ContactPerson;
+				memberContact.Contact.ContactType = string.Empty;
+				memberContact.Contact.CreatedBy = 0;
+				memberContact.Contact.CreatedDate = DateTime.Now;
+				memberContact.Contact.FirstName = string.Empty;
+				memberContact.Contact.LastName = string.Empty;
+				memberContact.Contact.LastUpdatedBy = 0;
+				memberContact.Contact.LastUpdatedDate = DateTime.Now;
+				memberContact.Contact.MiddleName = string.Empty;
+				memberContact.Contact.ReceivesDistributionNotices = model.DistributionNotices;
+				memberContact.Contact.ReceivesFinancials = model.Financials;
+				memberContact.Contact.ReceivesInvestorLetters = model.InvestorLetters;
+				memberContact.Contact.ReceivesK1 = model.K1;
+
+				/* Contact Address */
+				ContactAddress contactAddress;
+				for (int index = 0; index < model.ContactLength; index++) {
+					contactAddress = new ContactAddress();
+					contactAddress.CreatedBy = 0;
+					contactAddress.CreatedDate = DateTime.Now;
+					contactAddress.EntityID = 0;
+					contactAddress.LastUpdatedBy = 0;
+					contactAddress.LastUpdatedDate = DateTime.Now;
+					contactAddress.Address = new Address();
+					contactAddress.Address.Address1 = collection[(index+1).ToString() + "_" + "ContactAddress1"];
+					contactAddress.Address.Address2 = collection[(index+1).ToString() + "_" + "ContactAddress2"];
+					contactAddress.Address.Address3 = string.Empty;
+					contactAddress.Address.AddressTypeID = 2; // model.ContactAddressType;
+					contactAddress.Address.City = collection[(index+1).ToString() + "_" + "ContactCity"];
+					if (string.IsNullOrEmpty(collection[(index+1).ToString() + "_" + "ContactCountry"]) == false) {
+						contactAddress.Address.Country = Convert.ToInt32(collection[(index+1).ToString() + "_" + "ContactCountry"]);
+					}
+					contactAddress.Address.County = string.Empty;
+					contactAddress.Address.CreatedBy = 0;
+					contactAddress.Address.CreatedDate = DateTime.Now;
+					contactAddress.Address.EntityID = 0;
+					contactAddress.Address.LastUpdatedBy = 0;
+					contactAddress.Address.LastUpdatedDate = DateTime.Now;
+					contactAddress.Address.Listed = false;
+					contactAddress.Address.PostalCode = collection[(index+1).ToString() + "_" + "ContactZip"];
+					if (string.IsNullOrEmpty(collection[(index+1).ToString() + "_" + "ContactState"]) == false) {
+						contactAddress.Address.State = Convert.ToInt32(collection[(index+1).ToString() + "_" + "ContactState"]);
+					}
+					contactAddress.Address.StProvince = string.Empty;
+					memberContact.Contact.ContactAddresses.Add(contactAddress);
+				}
+				member.MemberContacts.Add(memberContact);
+				MemberRepository.Add(member);
+				MemberRepository.Save();
+
+				return RedirectToAction("ThankYou", "Member");
+			} else {
+				model.SelectList.States = SelectListFactory.GetStateSelectList(MemberRepository.GetAllStates().ToList());
+				model.SelectList.Countries = SelectListFactory.GetCountrySelectList(MemberRepository.GetAllCountries().ToList());
+				model.SelectList.MemberEntityTypes = SelectListFactory.GetAllMemberEntityTypesSelectList(MemberRepository.GetAllMemberEntityTypes().ToList());
+				model.SelectList.AddressTypes = SelectListFactory.GetAddressTypeSelectList(MemberRepository.GetAllAddressTypes().ToList());
+				model.AccountLength = 1;// model.MemberAccounts.Count;
+				return View(model);
+			}
+
+		}
+
+	}
 }
