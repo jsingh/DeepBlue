@@ -5,27 +5,29 @@ using System.Linq;
 using System.Web.Mvc;
 using MbUnit.Framework;
 using Moq;
+using DeepBlue.Models.Member;
 
 namespace DeepBlue.Tests.Controllers.Member {
     public class Create: MemberBase {
+		
         [SetUp]
         public override void Setup() {
             // Arrange
             base.Setup();
-
-            //base.MockRepository.Setup(x => x.GetSomethingFromDatabase(It.IsAny<int>())).Returns(5);
-            
-            //base.DefaultController.HttpContext.Request.Form.Add("firstname", "first");
-            //base.DefaultController.HttpContext.Request.Form.Add("lastname", "last");
-            //base.DefaultController.HttpContext.Request.Form.Add("emailaddress", "email@email.com");
-            //base.DefaultController.HttpContext.Request.Form.Add("country_code", "US");
-            //base.DefaultController.HttpContext.Request.Form.Add("street1", "123 Main St");
-            //base.DefaultController.HttpContext.Request.Form.Add("street2", string.Empty);
-            //base.DefaultController.HttpContext.Request.Form.Add("city", "city");
-            //base.DefaultController.HttpContext.Request.Form.Add("state", "ST");
-            //base.ActionResult = base.DefaultController.Create();
-        }
-
+			CreateModel  model = new CreateModel();
+			FormCollection collection  = new FormCollection();
+			model.MemberName = "test";
+			model.Alias = "test alias";
+			model.SocialSecurityTaxId = 123;
+			model.Address1 = "test";
+			model.Address2 = "test2";
+			model.City = "test city";
+			model.State = 2;
+			model.StateOfResidency = 2;
+			model.WebAddress = "test web address";
+			model.Zip = "123";
+			base.ActionResult =  base.DefaultController.Create(model,collection);
+		}
         [Test]
         public void create_a_new_member() {
             Assert.IsInstanceOfType<RedirectToRouteResult>(base.ActionResult);

@@ -13,6 +13,7 @@ namespace DeepBlue.Controllers
 
         public ActionResult Index()
         {
+			ViewData["MenuName"] = "Home";
             return View();
         }
 

@@ -129,34 +129,43 @@ h2 {
 }
 .editor-field {
 	text-align: left;
-	padding: 12px;
+	padding: 10px 12px;
 	float: left;
 	clear: right;
 	background-image: url("../images/textbox1_bg.png");
-    background-position: left top;
-    background-repeat: no-repeat;
-	border:0px; 
+	background-position: left top;
+	background-repeat: no-repeat;
+	border: 0px;
 }
 .editor-field input {
-	border:0px;width:265px;
+	border: 0px;
+	width: 265px;
 }
 .editor-field select {
 	width: 274px;
 }
-.dropdown,.checkbox,.button{
-	background-image: none;padding:8px 2px;
+.editor-button {
+	width: 950px;
+	margin: 0 auto;
+	margin-bottom: 10px;
 }
-.checkbox{
-	width:30px;
+.dropdown, .checkbox, .button, .textarea {
+	background-image: none;
+	padding: 8px 2px;
 }
-.field-validation-error {
+.checkbox {
+	width: 30px;
+}
+.field-validation-error, .custom-validation {
 	color: Red;
 }
 /*
 ------------------------Box-------------------*/
 .box {
 	clear: both;
-	margin-left: 20px;float:left;margin-bottom:10px;
+	margin-left: 20px;
+	float: left;
+	margin-bottom: 10px;
 }
 .box-top {
 	clear: both;
@@ -189,29 +198,43 @@ h2 {
 	line-height: 34px;
 }
 .box-content {
-	border: solid 1px #0495bf;   padding-top: 10px;
-	width: 898px;float:left;    background-color: #E9FBFF;
+	border: solid 1px #0495bf;
+	padding-top: 10px;
+	width: 898px;
+	float: left;
+	background-color: #E9FBFF;
 }
-.contactinfo-right{
-	float:left;
+.contactinfo-right {
+	float: left;
 }
-.contactinfo-left{
-	float:left;
+.contactinfo-left {
+	float: left;
 }
-.accountinfo,.contactinfo{
-	clear:both;margin:10px 0px 10px 0px;float:left;
+.accountinfo, .contactinfo {
+	clear: both;
+	margin: 10px 0px 10px 0px;
+	float: left;
 }
-.box-content .title{
-	float:left;padding-left:8px;
+.box-content .title {
+	float: left;
+	padding-left: 8px;
 }
-.box-content .delete{
-	float:right;clear:right;cursor:pointer;display:none;
+.box-content .delete {
+	float: right;
+	clear: right;
+	cursor: pointer;
+	display: none;
 }
-.box-content .add{
-	float:left;
-}.box-content .add img{
-	cursor:pointer;
+.box-content .add {
+	float: left;
 }
-.box-content  .box-main{
-	float:left;
+.box-content .add img {
+	cursor: pointer;
+}
+.box-content .box-main {
+	float: left;
+}
+.new-member {
+	width: 940px;
+	margin: 0 auto;
 }

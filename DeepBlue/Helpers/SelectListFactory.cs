@@ -53,7 +53,7 @@ namespace DeepBlue.Helpers {
 			return addressTypeList;
 		}
 
-		public static List<SelectListItem> GetAllMemberEntityTypesSelectList(List<MemberEntityType> memberEntityTypes) {
+		public static List<SelectListItem> GetMemberEntityTypesSelectList(List<MemberEntityType> memberEntityTypes) {
 			List<SelectListItem> memberEntityTypeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
@@ -67,5 +67,19 @@ namespace DeepBlue.Helpers {
 			}
 			return memberEntityTypeList;
 		}
+
+		public static List<SelectListItem> GetDomesticForeignList() {
+			List<SelectListItem> domasticForeigns = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "Yes";
+			item.Value = "True";
+			domasticForeigns.Add(item);
+			item = new SelectListItem();
+			item.Text = "No";
+			item.Value  = "False";
+			domasticForeigns.Add(item);
+			return domasticForeigns;
+		}
+
 	}
 }

@@ -19,61 +19,63 @@ namespace DeepBlue.Models.Member {
 		public string Alias { get; set; }
 
 		[Required(ErrorMessage = "Required")]
-		[DisplayName("SOCIAL SECURITY/TAX ID:")]
-		public int Social { get; set; }
+		[DisplayName("Social Security/Tax Id:")]
+		public int SocialSecurityTaxId { get; set; }
 
-		[DisplayName("DOMESTIC/FOREIGN:")]
+		[DisplayName("Domestic/Foreign:")]
 		public bool DomesticForeign { get; set; }
 
 		[Required(ErrorMessage = "Required")]
-		[DisplayName("STATE OF RESIDENCY:")]
+		[DisplayName("State of residency:")]
 		public int StateOfResidency { get; set; }
 
 		[Required(ErrorMessage = "Required")]
 		[DisplayName("Entity Type:")]
 		public int EntityType { get; set; }
 
-		
+		[DisplayName("Notes:")]
+		public string Notes { get; set; }
+						
 		/* Address Information */
 		[Required(ErrorMessage = "Required")]
 		[DisplayName("Address Type:")]
 		public int AddressType { get; set; }
 
 		[Required(ErrorMessage = "Required")]
-		[DisplayName("TELEPHONE NO:")]
+		[DisplayName("Telephone No:")]
 		public string Phone { get; set; }
 
-		[DisplayName("FAX NO:")]
+		[DisplayName("Fax No:")]
 		public string Fax { get; set; }
 
 		[Required(ErrorMessage = "Required")]
-		[DisplayName("EMAIL:")]
+		[DisplayName("Email:")]
 		public string Email { get; set; }
 
-		[DisplayName("WEB ADDRESS:")]
+		[DisplayName("Web Aaddress:")]
 		public string WebAddress { get; set; }
 
 		[Required(ErrorMessage = "Required")]
 		[DisplayName("ADDRESS1:")]
 		public string Address1 { get; set; }
 
-		[DisplayName("ADDRESS2:")]
+		[DisplayName("Address2:")]
 		public string Address2 { get; set; }
 
 		[Required(ErrorMessage = "Required")]
-		[DisplayName("CITY:")]
+		[DisplayName("City:")]
 		public string City { get; set; }
 
 		[Required(ErrorMessage = "Required")]
-		[DisplayName("STATE:")]
+		[DisplayName("State:")]
 		public int State { get; set; }
 
 		[Required(ErrorMessage = "Required")]
-		[DisplayName("ZIP:")]
+		[DisplayName("Zip:")]
 		public string Zip { get; set; }
 
 		[Required(ErrorMessage = "Required")]
-		[DisplayName("COUNTRY:")]
+		[DisplayName("Country:")]
 		public int Country { get; set; }
 		
 		/* Bank Information */
@@ -111,34 +113,34 @@ namespace DeepBlue.Models.Member {
 		[DisplayName("Designation:")]
 		public string Designation { get; set; }
 
-		[DisplayName("TELEPHONE NO:")]
+		[DisplayName("Telephone No:")]
 		public string ContactPhoneNumber { get; set; }
 
-		[DisplayName("FAX NO:")]
+		[DisplayName("Fax No:")]
 		public string ContactFaxNumber { get; set; }
 
-		[DisplayName("EMAIL:")]
+		[DisplayName("Email:")]
 		public string ContactEmail { get; set; }
 
-		[DisplayName("WEB ADDRESS:")]
+		[DisplayName("Web Address:")]
 		public string ContactWebAddress { get; set; }
 
-		[DisplayName("ADDRESS1:")]
+		[DisplayName("Address1:")]
 		public string ContactAddress1 { get; set; }
 
-		[DisplayName("ADDRESS2:")]
+		[DisplayName("Address2:")]
 		public string ContactAddress2 { get; set; }
 
-		[DisplayName("CITY:")]
+		[DisplayName("City:")]
 		public string ContactCity { get; set; }
 
-		[DisplayName("STATE:")]
+		[DisplayName("State:")]
 		public int ContactState { get; set; }
 
 		[DisplayName("Zip:")]
 		public string ContactZip { get; set; }
 
-		[DisplayName("COUNTRY:")]
+		[DisplayName("Country:")]
 		public int ContactCountry { get; set; }
 
 		[DisplayName("Distribution Notices:")]
@@ -159,32 +161,6 @@ namespace DeepBlue.Models.Member {
 		public List<SelectListItem> States { get; set; }
 		public List<SelectListItem> MemberEntityTypes { get; set; }
 		public List<SelectListItem> AddressTypes { get; set; }
-	}
-
-	public class MemberAccountModel {
-		public MemberAccountModel(int listIndex) {
-			Index = listIndex;
-		}
-		/* Bank Information */
-		public int Index { get; set; }
-
-		[DisplayName("Bank Name:")]
-		public string BankName { get; set; }
-
-		[DisplayName("A/C #:")]
-		public string AccountNumber { get; set; }
-
-		[DisplayName("ABA #:")]
-		public string ABANumber { get; set; }
-
-		[DisplayName("Account Of:")]
-		public string AccountOf { get; set; }
-
-		[DisplayName("Reference:")]
-		public string Reference { get; set; }
-
-		[DisplayName("Attention:")]
-		public string Attention { get; set; }
-		
+		public List<SelectListItem> DomesticForeigns { get; set; }
 	}
 }

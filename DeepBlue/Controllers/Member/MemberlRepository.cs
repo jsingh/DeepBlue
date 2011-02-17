@@ -11,52 +11,6 @@ namespace DeepBlue.Controllers.Member {
 
 		DeepBlueEntities DeepBlueDb = new DeepBlueEntities();
 
-        //#region IModelRepository Members
-
-        //public List<AddressType> GetAllAddressTypes() {
-        //    return from addressType in DeepBlueDb.AddressTypes
-        //           orderby addressType.AddressTypeName
-        //           select addressType;
-        //}
-
-        //public List<COUNTRY> GetAllCountries() {
-        //    return from country in DeepBlueDb.COUNTRies
-        //           orderby country.CountryName ascending
-        //           select country;
-        //}
-
-        //public List<STATE> GetAllStates() {
-        //    return from state in DeepBlueDb.STATEs 
-        //           orderby state.Name ascending
-        //           select state;
-        //}
-
-        //public List<CommunicationType> GetAllCommunicationTypes() {
-        //    return from communicationType in DeepBlueDb.CommunicationTypes
-        //           orderby communicationType.CommunicationTypeName
-        //           select communicationType;
-        //}
-
-        //public List<MemberEntityType> GetAllMemberEntityTypes() {
-        //     return from memberEntityType in DeepBlueDb.MemberEntityTypes
-        //            orderby memberEntityType.MemberEntityTypeName
-        //            select memberEntityType;
-        //}
-
-        //public void Add(DeepBlue.Models.Entity.Member member) {
-        //    DeepBlueDb.Members.AddObject(member);
-        //}
-
-        //public void Delete(DeepBlue.Models.Entity.Member member) {
-        //    DeepBlueDb.Members.DeleteObject(member);
-        //}
-
-        //public void Save() {
-        //    DeepBlueDb.SaveChanges();
-        //}
-
-        //#endregion
-
         #region IModelRepository Members
 
         public List<AddressType> GetAllAddressTypes() {

@@ -25,12 +25,13 @@ namespace DeepBlue.Tests.Controllers.Member {
             // Spin up the controller with the mock http context, and the mock repository
             DefaultController = new MemberController(MockRepository.Object);
             DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
-
             MockRepository.Setup(x => x.GetAllCountries()).Returns(GetMockCountries());
             MockRepository.Setup(x => x.GetAllStates()).Returns(GetMockStates());
             MockRepository.Setup(x => x.GetAllAddressTypes()).Returns(GetAddressTypes());
             MockRepository.Setup(x => x.GetAllMemberEntityTypes()).Returns(new List<MemberEntityType>());
         }
+
+		 
 
         private List<DeepBlue.Models.Entity.STATE> GetMockStates() {
             List<STATE> states = new List<STATE>();
@@ -352,5 +353,6 @@ namespace DeepBlue.Tests.Controllers.Member {
             DefaultController.Dispose();
             DefaultController = null;
         }
+
     }
 }

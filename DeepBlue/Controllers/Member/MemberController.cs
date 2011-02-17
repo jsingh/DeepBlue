@@ -7,6 +7,7 @@ using DeepBlue.Models;
 using DeepBlue.Helpers;
 using DeepBlue.Models.Member;
 using DeepBlue.Models.Entity;
+using DeepBlue.Models.Member.Enums;
 
 namespace DeepBlue.Controllers.Member {
 
@@ -30,6 +31,7 @@ namespace DeepBlue.Controllers.Member {
 		}
 
 		public ActionResult ThankYou() {
+			ViewData["MenuName"] = "Member";
 			return View();
 		}
 
@@ -44,13 +46,16 @@ namespace DeepBlue.Controllers.Member {
 		// GET: /Member/Create
 
 		public ActionResult New() {
+		//	ViewData["MenuName"] = "Member";
 			CreateModel model = new CreateModel();
-			model.SelectList.States = SelectListFactory.GetStateSelectList(MemberRepository.GetAllStates().ToList());
-			model.SelectList.Countries = SelectListFactory.GetCountrySelectList(MemberRepository.GetAllCountries().ToList());
-			model.SelectList.MemberEntityTypes = SelectListFactory.GetAllMemberEntityTypesSelectList(MemberRepository.GetAllMemberEntityTypes().ToList());
-			model.SelectList.AddressTypes = SelectListFactory.GetAddressTypeSelectList(MemberRepository.GetAllAddressTypes().ToList());
-			model.AddressType = 2;
-			model.ContactAddressType = 2;
+			model.SelectList.States = SelectListFactory.GetStateSelectList(MemberRepository.GetAllStates());
+			model.SelectList.Countries = SelectListFactory.GetCountrySelectList(MemberRepository.GetAllCountries());
+			model.SelectList.MemberEntityTypes = SelectListFactory.GetMemberEntityTypesSelectList(MemberRepository.GetAllMemberEntityTypes());
+			model.SelectList.AddressTypes = SelectListFactory.GetAddressTypeSelectList(MemberRepository.GetAllAddressTypes());
+			model.SelectList.DomesticForeigns = SelectListFactory.GetDomesticForeignList();
+			model.AddressType = (int)DeepBlue.Models.Member.Enums.AddressType.Work;
+			model.ContactAddressType = (int)DeepBlue.Models.Member.Enums.AddressType.Work;
+			model.DomesticForeign = true;
 			model.AccountLength = 1;
 			model.ContactLength = 1;
 			return View(model);
@@ -61,11 +66,8 @@ namespace DeepBlue.Controllers.Member {
 
 		[HttpPost]
 		public ActionResult Create(CreateModel model, FormCollection collection) {
-
 			if (ModelState.IsValid) {
-
 				DeepBlue.Models.Entity.Member member = new DeepBlue.Models.Entity.Member();
-
 				/*Member*/
 				member.Alias = model.Alias;
 				member.CreatedBy = 0;
@@ -83,9 +85,10 @@ namespace DeepBlue.Controllers.Member {
 				member.Notes = string.Empty;
 				member.PrevMemberID = 0;
 				member.ResidencyState = model.StateOfResidency;
-				member.Social = model.Social;
+				member.Social = model.SocialSecurityTaxId;
 				member.TaxExempt = false;
 				member.TaxID = 0;
+				member.Notes = model.Notes;
 
 				/* Member Address */
 				MemberAddress memberAddress = new MemberAddress();
@@ -121,91 +124,89 @@ namespace DeepBlue.Controllers.Member {
 				/* Bank Account */
 				MemberAccount memberAccount;
 				for (int index = 0; index < model.AccountLength; index++) {
-					memberAccount = new MemberAccount();
-					memberAccount.Account = collection[(index+1).ToString() + "_" + "AccountNumber"];
-					memberAccount.Attention = collection[(index+1).ToString() + "_" + "Attention"];
-					memberAccount.Comments = string.Empty;
-					memberAccount.CreatedBy = 0;
-					memberAccount.CreatedDate = DateTime.Now;
-					memberAccount.EntityID = 0;
-					memberAccount.IsPrimary = false;
-					memberAccount.LastUpdatedBy = 0;
-					memberAccount.LastUpdatedDate = DateTime.Now;
-					memberAccount.Routing = 0;
-					memberAccount.Reference = collection[(index+1).ToString() + "_" + "Reference"];
-					member.MemberAccounts.Add(memberAccount);
+					if (collection[(index + 1).ToString() + "_" + "AccountNumber"] != null) {
+						memberAccount = new MemberAccount();
+						memberAccount.Account = collection[(index + 1).ToString() + "_" + "AccountNumber"];
+						memberAccount.Attention = collection[(index + 1).ToString() + "_" + "Attention"];
+						memberAccount.Comments = string.Empty;
+						memberAccount.CreatedBy = 0;
+						memberAccount.CreatedDate = DateTime.Now;
+						memberAccount.EntityID = 0;
+						memberAccount.IsPrimary = false;
+						memberAccount.LastUpdatedBy = 0;
+						memberAccount.LastUpdatedDate = DateTime.Now;
+						memberAccount.Routing = 0;
+						memberAccount.Reference = collection[(index + 1).ToString() + "_" + "Reference"];
+						member.MemberAccounts.Add(memberAccount);
+					}
 				}
 
-
 				/* Contact Address */
-				MemberContact memberContact = new MemberContact();
-				memberContact.CreatedBy = 0;
-				memberContact.CreatedDate = DateTime.Now;
-				memberContact.EntityID = 0;
-				memberContact.LastUpdatedBy = 0;
-				memberContact.LastUpdatedDate = DateTime.Now;
-				memberContact.Contact = new Contact();
-				memberContact.Contact.ContactName = model.ContactPerson;
-				memberContact.Contact.ContactType = string.Empty;
-				memberContact.Contact.CreatedBy = 0;
-				memberContact.Contact.CreatedDate = DateTime.Now;
-				memberContact.Contact.FirstName = string.Empty;
-				memberContact.Contact.LastName = string.Empty;
-				memberContact.Contact.LastUpdatedBy = 0;
-				memberContact.Contact.LastUpdatedDate = DateTime.Now;
-				memberContact.Contact.MiddleName = string.Empty;
-				memberContact.Contact.ReceivesDistributionNotices = model.DistributionNotices;
-				memberContact.Contact.ReceivesFinancials = model.Financials;
-				memberContact.Contact.ReceivesInvestorLetters = model.InvestorLetters;
-				memberContact.Contact.ReceivesK1 = model.K1;
-
-				/* Contact Address */
+				MemberContact memberContact;
 				ContactAddress contactAddress;
 				for (int index = 0; index < model.ContactLength; index++) {
-					contactAddress = new ContactAddress();
-					contactAddress.CreatedBy = 0;
-					contactAddress.CreatedDate = DateTime.Now;
-					contactAddress.EntityID = 0;
-					contactAddress.LastUpdatedBy = 0;
-					contactAddress.LastUpdatedDate = DateTime.Now;
-					contactAddress.Address = new Address();
-					contactAddress.Address.Address1 = collection[(index+1).ToString() + "_" + "ContactAddress1"];
-					contactAddress.Address.Address2 = collection[(index+1).ToString() + "_" + "ContactAddress2"];
-					contactAddress.Address.Address3 = string.Empty;
-					contactAddress.Address.AddressTypeID = 2; // model.ContactAddressType;
-					contactAddress.Address.City = collection[(index+1).ToString() + "_" + "ContactCity"];
-					if (string.IsNullOrEmpty(collection[(index+1).ToString() + "_" + "ContactCountry"]) == false) {
-						contactAddress.Address.Country = Convert.ToInt32(collection[(index+1).ToString() + "_" + "ContactCountry"]);
+					if (collection[(index + 1).ToString() + "_" + "ContactAddress1"] != null) {
+						memberContact = new MemberContact();
+						memberContact.CreatedBy = 0;
+						memberContact.CreatedDate = DateTime.Now;
+						memberContact.EntityID = 0;
+						memberContact.LastUpdatedBy = 0;
+						memberContact.LastUpdatedDate = DateTime.Now;
+						memberContact.Contact = new Contact();
+						memberContact.Contact.ContactName = collection[(index + 1).ToString() + "_" + "ContactPerson"];
+						memberContact.Contact.ContactType = string.Empty;
+						memberContact.Contact.CreatedBy = 0;
+						memberContact.Contact.CreatedDate = DateTime.Now;
+						memberContact.Contact.FirstName = string.Empty;
+						memberContact.Contact.LastName = string.Empty;
+						memberContact.Contact.LastUpdatedBy = 0;
+						memberContact.Contact.LastUpdatedDate = DateTime.Now;
+						memberContact.Contact.MiddleName = string.Empty;
+						memberContact.Contact.ReceivesDistributionNotices = collection[(index + 1).ToString() + "_" + "DistributionNotices"].Contains("true");
+						memberContact.Contact.ReceivesFinancials = collection[(index + 1).ToString() + "_" + "Financials"].Contains("true");
+						memberContact.Contact.ReceivesInvestorLetters = collection[(index + 1).ToString() + "_" + "InvestorLetters"].Contains("true");
+						memberContact.Contact.ReceivesK1 = collection[(index + 1).ToString() + "_" + "K1"].Contains("true");
+
+						contactAddress = new ContactAddress();
+						contactAddress.CreatedBy = 0;
+						contactAddress.CreatedDate = DateTime.Now;
+						contactAddress.EntityID = 0;
+						contactAddress.LastUpdatedBy = 0;
+						contactAddress.LastUpdatedDate = DateTime.Now;
+						contactAddress.Address = new Address();
+						contactAddress.Address.Address1 = collection[(index + 1).ToString() + "_" + "ContactAddress1"];
+						contactAddress.Address.Address2 = collection[(index + 1).ToString() + "_" + "ContactAddress2"];
+						contactAddress.Address.Address3 = string.Empty;
+						contactAddress.Address.AddressTypeID = (int)DeepBlue.Models.Member.Enums.AddressType.Work;
+						contactAddress.Address.City = collection[(index + 1).ToString() + "_" + "ContactCity"];
+						contactAddress.Address.Country = Convert.ToInt32(collection[(index + 1).ToString() + "_" + "ContactCountry"]);
+						contactAddress.Address.County = string.Empty;
+						contactAddress.Address.CreatedBy = 0;
+						contactAddress.Address.CreatedDate = DateTime.Now;
+						contactAddress.Address.EntityID = 0;
+						contactAddress.Address.LastUpdatedBy = 0;
+						contactAddress.Address.LastUpdatedDate = DateTime.Now;
+						contactAddress.Address.Listed = false;
+						contactAddress.Address.PostalCode = collection[(index + 1).ToString() + "_" + "ContactZip"];
+						contactAddress.Address.State = Convert.ToInt32(collection[(index + 1).ToString() + "_" + "ContactState"]);
+						contactAddress.Address.StProvince = string.Empty;
+
+						memberContact.Contact.ContactAddresses.Add(contactAddress);
+						member.MemberContacts.Add(memberContact);
 					}
-					contactAddress.Address.County = string.Empty;
-					contactAddress.Address.CreatedBy = 0;
-					contactAddress.Address.CreatedDate = DateTime.Now;
-					contactAddress.Address.EntityID = 0;
-					contactAddress.Address.LastUpdatedBy = 0;
-					contactAddress.Address.LastUpdatedDate = DateTime.Now;
-					contactAddress.Address.Listed = false;
-					contactAddress.Address.PostalCode = collection[(index+1).ToString() + "_" + "ContactZip"];
-					if (string.IsNullOrEmpty(collection[(index+1).ToString() + "_" + "ContactState"]) == false) {
-						contactAddress.Address.State = Convert.ToInt32(collection[(index+1).ToString() + "_" + "ContactState"]);
-					}
-					contactAddress.Address.StProvince = string.Empty;
-					memberContact.Contact.ContactAddresses.Add(contactAddress);
 				}
-				member.MemberContacts.Add(memberContact);
 				MemberRepository.Add(member);
 				MemberRepository.Save();
-
 				return RedirectToAction("ThankYou", "Member");
 			} else {
-				model.SelectList.States = SelectListFactory.GetStateSelectList(MemberRepository.GetAllStates().ToList());
-				model.SelectList.Countries = SelectListFactory.GetCountrySelectList(MemberRepository.GetAllCountries().ToList());
-				model.SelectList.MemberEntityTypes = SelectListFactory.GetAllMemberEntityTypesSelectList(MemberRepository.GetAllMemberEntityTypes().ToList());
-				model.SelectList.AddressTypes = SelectListFactory.GetAddressTypeSelectList(MemberRepository.GetAllAddressTypes().ToList());
-				model.AccountLength = 1;// model.MemberAccounts.Count;
+				ViewData["MenuName"] = "Member";
+				model.SelectList.States = SelectListFactory.GetStateSelectList(MemberRepository.GetAllStates());
+				model.SelectList.Countries = SelectListFactory.GetCountrySelectList(MemberRepository.GetAllCountries());
+				model.SelectList.MemberEntityTypes = SelectListFactory.GetMemberEntityTypesSelectList(MemberRepository.GetAllMemberEntityTypes());
+				model.SelectList.AddressTypes = SelectListFactory.GetAddressTypeSelectList(MemberRepository.GetAllAddressTypes());
+				model.SelectList.DomesticForeigns = SelectListFactory.GetDomesticForeignList();
 				return View(model);
 			}
-
 		}
-
 	}
 }
