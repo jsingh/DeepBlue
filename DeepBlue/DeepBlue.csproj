@@ -69,30 +69,46 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Admin\AdminController.cs" />
+    <Compile Include="Controllers\Admin\AdminRepository.cs" />
+    <Compile Include="Controllers\Admin\IAdminRepository.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Fund\FundController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Member\MemberController.cs" />
+    <Compile Include="Controllers\Investor\InvestorController.cs" />
+    <Compile Include="Controllers\Transaction\ITransactionRepository.cs" />
+    <Compile Include="Controllers\Transaction\TransactionRepository.cs" />
+    <Compile Include="Controllers\Transaction\TransactionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\CssInclude.cs" />
+    <Compile Include="Helpers\AccordionOptions.cs" />
+    <Compile Include="Helpers\AutoCompleteOptions.cs" />
     <Compile Include="Helpers\HtmlControls.cs" />
     <Compile Include="Helpers\HttpContextFactory.cs" />
-    <Compile Include="Helpers\JavascriptInclue.cs" />
+    <Compile Include="Helpers\JQueryHelpers.cs" />
     <Compile Include="Helpers\SelectListFactory.cs" />
+    <Compile Include="Models\Admin\Enums.cs" />
+    <Compile Include="Models\Admin\ListModel.cs" />
     <Compile Include="Models\Entity\DeepBlue.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Member\CreateModel.cs" />
-    <Compile Include="Controllers\Member\IMemberRepository.cs" />
-    <Compile Include="Controllers\Member\MemberlRepository.cs" />
-    <Compile Include="Models\Member\Enums.cs" />
+    <Compile Include="Models\Transaction\CreateTransactionModel.cs" />
+    <Compile Include="Models\Investor\CreateModel.cs" />
+    <Compile Include="Controllers\Investor\IInvestorRepository.cs" />
+    <Compile Include="Controllers\Investor\InvestorlRepository.cs" />
+    <Compile Include="Models\Investor\EditModel.cs" />
+    <Compile Include="Models\Investor\Enums.cs" />
+    <Compile Include="Models\Investor\ListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\images\add_icon.png" />
+    <Content Include="Assets\images\ajax.jpg" />
     <Content Include="Assets\images\body_bg.gif" />
+    <Content Include="Assets\images\bot_bg.gif" />
     <Content Include="Assets\images\box_center.png" />
     <Content Include="Assets\images\box_left.png" />
     <Content Include="Assets\images\box_right.png" />
@@ -109,7 +125,15 @@
     <Content Include="Assets\images\lightbox-ico-loading.gif" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\new_invoice.png" />
+    <Content Include="Assets\images\save.png" />
+    <Content Include="Assets\images\search.png" />
     <Content Include="Assets\images\signin.png" />
+    <Content Include="Assets\images\small_txtbg.png" />
+    <Content Include="Assets\images\small_txtbg_180.png" />
+    <Content Include="Assets\images\small_txtbg_200.png" />
+    <Content Include="Assets\images\small_txtbg_220.png" />
+    <Content Include="Assets\images\small_txtbg_250.png" />
+    <Content Include="Assets\images\submit.png" />
     <Content Include="Assets\images\tab_sel.png" />
     <Content Include="Assets\images\tab_unsel.png" />
     <Content Include="Assets\images\textbox1_bg.png" />
@@ -118,20 +142,49 @@
     <Content Include="Assets\images\top_bar_l.png" />
     <Content Include="Assets\images\top_bar_r.png" />
     <Content Include="Assets\images\top_bg.gif" />
-    <Content Include="Assets\javascripts\Home.js" />
+    <Content Include="Assets\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Assets\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Assets\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Assets\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Assets\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Assets\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Assets\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Assets\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Assets\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Assets\images\ui-icons_222222_256x240.png" />
+    <Content Include="Assets\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Assets\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Assets\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Assets\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Assets\images\Update.png" />
+    <Content Include="Assets\javascripts\EditInvestor.js" />
     <Content Include="Assets\javascripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Assets\javascripts\jquery-ui-1.8.10.custom.min.js" />
+    <Content Include="Assets\javascripts\jquery-ui-1.8.9.combobox.js" />
+    <Content Include="Assets\javascripts\jquery-ui-1.8.9.custom.min.js" />
     <Content Include="Assets\javascripts\jquery.validate-vsdoc.js" />
     <Content Include="Assets\javascripts\jquery.validate.min.js" />
-    <Content Include="Assets\javascripts\Member.js" />
+    <Content Include="Assets\javascripts\Investor.js" />
     <Content Include="Assets\javascripts\MicrosoftAjax.js" />
     <Content Include="Assets\javascripts\MicrosoftMvcAjax.js" />
     <Content Include="Assets\javascripts\MicrosoftMvcValidation.js" />
-    <Content Include="Assets\stylesheets\modal.css" />
+    <Content Include="Assets\javascripts\SearchInvestor.js" />
+    <Content Include="Assets\javascripts\TransactionController.js" />
+    <Content Include="Assets\stylesheets\jquery-ui-1.8.10.custom.css" />
+    <Content Include="Assets\stylesheets\jquery-ui-1.8.9.custom.css" />
+    <Content Include="Assets\stylesheets\newInvestor.css" />
     <Content Include="Global.asax" />
-    <Content Include="Assets\stylesheets\Site.css" />
+    <Content Include="Assets\stylesheets\site.css" />
+    <Content Include="Views\Admin\EntityType.ascx" />
+    <Content Include="Views\Admin\Index.aspx" />
+    <Content Include="Views\Admin\List.ascx" />
     <Content Include="Views\Home\Index.aspx" />
-    <Content Include="Views\Member\New.aspx" />
-    <Content Include="Views\Member\ThankYou.aspx" />
+    <Content Include="Views\Investor\Edit.aspx" />
+    <Content Include="Views\Investor\New.aspx" />
+    <Content Include="Views\Investor\ThankYou.aspx" />
+    <Content Include="Views\Transaction\Edit.ascx" />
+    <Content Include="Views\Transaction\List.ascx" />
+    <Content Include="Views\Transaction\New.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

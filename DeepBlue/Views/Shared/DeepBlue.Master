@@ -8,33 +8,50 @@
 		<asp:ContentPlaceHolder ID="TitleContent" runat="server" />
 	</title>
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
+	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftAjax.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
-	<%= Html.JavascriptInclueTag("Home.js")%>
-	<%= Html.CssIncludeTag("Site.css") %>
+	<%= Html.JavascriptInclueTag("SearchInvestor.js")%>
+	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
+	<%= Html.StylesheetLinkTag("site.css")%>
 	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
 </head>
 <body>
 	<div id="main">
 		<div id="header">
-			<%=Html.ImageTag("logo.png")%>
+			<%=Html.ImageLink("logo.png")%>
+		</div>
+		<div id="menu">
+			<%: Html.Tab(Html.ActionLink("Home", "Index", "Home").ToHtmlString(),(ViewData["MenuName"]=="Home" ? "tab-select" : "tab-unselect")) %>
+			<%: Html.Tab(Html.ActionLink("Investor", "New", "Investor").ToHtmlString(), (ViewData["MenuName"] == "Investor" ? "tab-select" : "tab-unselect"))%>
+			<%: Html.Tab(Html.ActionLink("Admin", "Index", "Admin").ToHtmlString(), (ViewData["MenuName"] == "Admin" ? "tab-select" : "tab-unselect"))%>
+			<%: Html.Tab(Html.ActionLink("Transaction", "New/0", "Transaction").ToHtmlString(), (ViewData["MenuName"] == "Transaction" ? "tab-select" : "tab-unselect"))%>
+			<%: Html.Tab(Html.ActionLink("Login", "").ToHtmlString(), "tab-unselect")%>
 		</div>
 		<div id="content">
-			<div id="menu">
-				<div>
-					<div id="home_menu" class="tab_sel">
-						<%= Html.ActionLink("Home", "Index", "Home")%>
-					</div>
-					<div id="member_menu" class="tab_unsel">
-						<%= Html.ActionLink("Member", "New", "Member")%></div>
-					<div class="tab_unsel">
-						<a href="#">Login</a></div>
+			<div class="content-box">
+				<div class="content-left">
+					<asp:ContentPlaceHolder ID="MainContent" runat="server" />
 				</div>
-			</div>
-			<div class="maincontent">
-				<asp:ContentPlaceHolder ID="MainContent" runat="server" />
+				<div class="content-right">
+					<% using (Html.BeginForm("", "", FormMethod.Post, new { onsubmit = "return searchInvestor.onSubmit(this,'"+ ViewData["MenuName"].ToString() + "');" })) {%>
+					<div class="editor-label auto-width">
+						<%: Html.Label("Search:") %>
+					</div>
+					<div class="editor-field small-text  auto-width">
+						<%: Html.TextBox("search", "", new { onkeyup = "javascript:searchInvestor.onKeyUp(this,'" + ViewData["MenuName"] + "');" })%>
+					</div>
+					<div class="editor-field auto-width button">
+						<%: Html.ImageButton("search.png",new {style="width:73px;height:21px"}) %>
+					</div>
+					<%} %>
+					<div id="investorlist" class="investor-list" style="display: none">
+						<div id="SearchDetail">
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div id="footer">
@@ -43,11 +60,6 @@
 		</div>
 	</div>
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
+	 
 </body>
-
-<script type="text/javascript">
-	Home.menuName='<%=ViewData["MenuName"]%>';
-	Home.init();
-</script>
-
 </html>

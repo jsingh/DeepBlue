@@ -53,32 +53,98 @@ namespace DeepBlue.Helpers {
 			return addressTypeList;
 		}
 
-		public static List<SelectListItem> GetMemberEntityTypesSelectList(List<MemberEntityType> memberEntityTypes) {
-			List<SelectListItem> memberEntityTypeList = new List<SelectListItem>();
+		public static List<SelectListItem> GetInvestorEntityTypesSelectList(List<InvestorEntityType> investorEntityTypes) {
+			List<SelectListItem> investorEntityTypeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
 			item.Value = "";
-			memberEntityTypeList.Add(item);
-			foreach (var memberEntityType in memberEntityTypes) {
+			investorEntityTypeList.Add(item);
+			foreach (var investorEntityType in investorEntityTypes) {
 				item = new SelectListItem();
-				item.Text = memberEntityType.MemberEntityTypeName.ToString();
-				item.Value = memberEntityType.MemberEntityTypeID.ToString();
-				memberEntityTypeList.Add(item);
+				item.Text = investorEntityType.InvestorEntityTypeName.ToString();
+				item.Value = investorEntityType.InvestorEntityTypeID.ToString();
+				investorEntityTypeList.Add(item);
 			}
-			return memberEntityTypeList;
+			return investorEntityTypeList;
 		}
 
 		public static List<SelectListItem> GetDomesticForeignList() {
 			List<SelectListItem> domasticForeigns = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "Yes";
-			item.Value = "True";
+			item.Value = "true";
 			domasticForeigns.Add(item);
 			item = new SelectListItem();
 			item.Text = "No";
-			item.Value  = "False";
+			item.Value  = "false";
 			domasticForeigns.Add(item);
 			return domasticForeigns;
+		}
+
+		public static List<SelectListItem> GetSourceList() {
+			List<SelectListItem> domasticForeigns = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			domasticForeigns.Add(item);
+			item = new SelectListItem();
+			item.Text = "FEG";
+			item.Value = "1";
+			domasticForeigns.Add(item);
+			item = new SelectListItem();
+			item.Text = "Cambridge";
+			item.Value = "2";
+			domasticForeigns.Add(item);
+			item = new SelectListItem();
+			item.Text = "NEPC";
+			item.Value = "3";
+			domasticForeigns.Add(item);
+			return domasticForeigns;
+		}
+
+		public static List<SelectListItem> GetFundSelectList(List<Fund> funds) {
+			List<SelectListItem> fundList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "";
+			fundList.Add(item);
+			foreach (var fund in funds) {
+				item = new SelectListItem();
+				item.Text = fund.FundName.ToString();
+				item.Value = fund.FundID.ToString();
+				fundList.Add(item);
+			}
+			return fundList;
+		}
+
+		public static List<SelectListItem> GetFundClosingSelectList(List<FundClosing> fundClosings) {
+			List<SelectListItem> fundClosingList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "";
+			fundClosingList.Add(item);
+			foreach (var fundClose in fundClosings) {
+				item = new SelectListItem();
+				item.Text =  fundClose.FundClosingDate.ToString();
+				item.Value = fundClose.FundClosingID.ToString();
+				fundClosingList.Add(item);
+			}
+			return fundClosingList;
+		}
+
+		public static List<SelectListItem> GetInvestorTypeSelectList(List<InvestorType> investorTypes) {
+			List<SelectListItem> investorTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "";
+			investorTypeList.Add(item);
+			foreach (var investorType in investorTypes) {
+				item = new SelectListItem();
+				item.Text = investorType.InvestorTypeName.ToString();
+				item.Value = investorType.InvestorTypeID.ToString();
+				investorTypeList.Add(item);
+			}
+			return investorTypeList;
 		}
 
 	}

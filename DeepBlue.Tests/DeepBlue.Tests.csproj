@@ -67,9 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Base.cs" />
-    <Compile Include="Controllers\Member\Create.cs" />
-    <Compile Include="Controllers\Member\MemberBase.cs" />
-    <Compile Include="Controllers\Member\New.cs" />
+    <Compile Include="Controllers\Investor\Create.cs" />
+    <Compile Include="Controllers\Investor\InvestorBase.cs" />
+    <Compile Include="Controllers\Investor\New.cs" />
     <Compile Include="MockSessionState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
