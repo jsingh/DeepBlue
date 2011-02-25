@@ -68,9 +68,13 @@
   <ItemGroup>
     <Compile Include="Controllers\Base.cs" />
     <Compile Include="Controllers\Investor\Create.cs" />
+    <Compile Include="Controllers\Investor\CreateInvalidData.cs" />
     <Compile Include="Controllers\Investor\InvestorBase.cs" />
     <Compile Include="Controllers\Investor\New.cs" />
     <Compile Include="MockSessionState.cs" />
+    <Compile Include="Models\Investor\Investor.cs" />
+    <Compile Include="Models\Investor\InvestornvalidData.cs" />
+    <Compile Include="Models\Investor\InvestorValidData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

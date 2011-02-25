@@ -5,7 +5,7 @@ using System.Web;
 using DeepBlue.Models;
 using DeepBlue.Models.Entity;
 using DeepBlue.Models.Investor;
-
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Controllers.Investor {
 	public class InvestorRepository : IInvestorRepository {
@@ -83,9 +83,13 @@ namespace DeepBlue.Controllers.Investor {
 			DeepBlueDb.Investors.DeleteObject(investor);
 		}
 
-		public void Save() {
-			DeepBlueDb.SaveChanges();
-		}
+        public IEnumerable<ErrorInfo> SaveInvestor(DeepBlue.Models.Entity.Investor investor) {
+            return investor.Save();
+        }
+
+        public void Save() {
+            DeepBlueDb.SaveChanges();
+        }
 		
 		#endregion
 		 

@@ -64,8 +64,10 @@ namespace DeepBlue.Controllers.Investor {
 		// POST: /Investor/Create
 
 		[HttpPost]
-		public ActionResult Create(CreateModel model, FormCollection collection) {
-			if (ModelState.IsValid) {
+		public ActionResult Create(FormCollection collection) {
+            CreateModel model = new CreateModel();
+            this.TryUpdateModel(model);
+            if (ModelState.IsValid) {
 				DeepBlue.Models.Entity.Investor investor = new DeepBlue.Models.Entity.Investor();
 				/*Investor*/
 				investor.Alias = model.Alias;
@@ -195,8 +197,7 @@ namespace DeepBlue.Controllers.Investor {
 						investor.InvestorContacts.Add(investorContact);
 					}
 				}
-				InvestorRepository.Add(investor);
-				InvestorRepository.Save();
+				InvestorRepository.SaveInvestor(investor);
 				return RedirectToAction("ThankYou", "Investor");
 			} else {
 				ViewData["MenuName"] = "Investor";
