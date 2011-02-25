@@ -47,6 +47,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public ActionResult New() {
 			ViewData["MenuName"] = "Investor";
+			ViewData["ShowRightPanelSearch"] = true;
 			CreateModel model = new CreateModel();
 			model.SelectList.States = SelectListFactory.GetStateSelectList(InvestorRepository.GetAllStates());
 			model.SelectList.Countries = SelectListFactory.GetCountrySelectList(InvestorRepository.GetAllCountries());
@@ -224,6 +225,7 @@ namespace DeepBlue.Controllers.Investor {
 			model.SelectList.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(InvestorRepository.GetAllInvestorEntityTypes());
 			model.ContactInformations = new List<ContactInformation>();
 			model.AccountInformations = new List<AccountInformation>();
+			model.InvestorFunds = InvestorRepository.FindInvestorFunds(id);
 			return View(model);
 		}
 
@@ -313,6 +315,17 @@ namespace DeepBlue.Controllers.Investor {
 		// GET: /Investor/FindInvestors
 		public JsonResult FindInvestors() {
 			List<InvestorDetail> investorDetails = InvestorRepository.FindInvestors(Request.QueryString["term"]);
+			List<AutoCompleteList> autoCompleteLists = new List<AutoCompleteList>();
+			foreach (var detail in investorDetails) {
+				autoCompleteLists.Add(new AutoCompleteList { id = detail.InvestorId.ToString(), label = detail.InvestorName + "  (" + detail.Social.ToString() + ")", value = detail.InvestorName.ToString() });
+			}
+			return Json(autoCompleteLists, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Investor/FindOtherInvestors
+		public JsonResult FindOtherInvestors() {
+			List<InvestorDetail> investorDetails = InvestorRepository.FindOtherInvestors(Request.QueryString["term"], Convert.ToInt32(Request.QueryString["investorid"]));
 			List<AutoCompleteList> autoCompleteLists = new List<AutoCompleteList>();
 			foreach (var detail in investorDetails) {
 				autoCompleteLists.Add(new AutoCompleteList { id = detail.InvestorId.ToString(), label = detail.InvestorName + "  (" + detail.Social.ToString() + ")", value = detail.InvestorName.ToString() });

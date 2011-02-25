@@ -18,13 +18,7 @@ namespace DeepBlue {
 				"{controller}/{action}/{id}", // URL with parameters
 				new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
 			);
-
-			routes.MapRoute(
-					"EditInvestor",
-					"{Id}",
-						new { controller = "Investor", action = "Edit" },
-						new { Id = @"\d+" }
-					);
+ 
 
 			routes.MapRoute(
 			"New",
@@ -32,14 +26,7 @@ namespace DeepBlue {
 				new { controller = "Transaction", action = "New" },
 				new { Id = @"\d+" }
 			);
-
-			routes.MapRoute(
-			"EditTransaction",
-			"{Id}",
-				new { controller = "Transaction", action = "Edit" },
-				new { Id = @"\d+" }
-			);
-
+ 
 			routes.MapRoute(
 					"List", // Route name
 					"{controller}/{action}/{id}", // URL with parameters

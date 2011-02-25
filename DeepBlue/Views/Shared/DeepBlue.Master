@@ -36,7 +36,8 @@
 					<asp:ContentPlaceHolder ID="MainContent" runat="server" />
 				</div>
 				<div class="content-right">
-					<% using (Html.BeginForm("", "", FormMethod.Post, new { onsubmit = "return searchInvestor.onSubmit(this,'"+ ViewData["MenuName"].ToString() + "');" })) {%>
+					<%if (Convert.ToBoolean(ViewData["ShowRightPanelSearch"])) {%>
+					<% using (Html.BeginForm("", "", FormMethod.Post, new { onsubmit = "return searchInvestor.onSubmit(this,'" + ViewData["MenuName"].ToString() + "');" })) {%>
 					<div class="editor-label auto-width">
 						<%: Html.Label("Search:") %>
 					</div>
@@ -51,6 +52,7 @@
 						<div id="SearchDetail">
 						</div>
 					</div>
+					<%}%>
 				</div>
 			</div>
 		</div>
@@ -60,6 +62,5 @@
 		</div>
 	</div>
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
-	 
 </body>
 </html>

@@ -66,19 +66,24 @@
 		$("#EntityType",$investorInfo).val(investor.EntityType);
 		return $investorInfo;
 	}
-	,editTransaction: function (investorfundId) {
-		return;
-		var url="/Transaction/Edit/"+investorfundId;
-		var diviframe=document.createElement("div");
-		diviframe.id="dviframeforgotpassw";
-		diviframe.innerHTML+='<iframe id="iframe_modal" allowtransparency="true" marginheight="0" marginwidth="0"  width="100%" frameborder="0" class="externalSite"  />';
-		var ifrm=$("#iframe_modal",diviframe).get(0);
-		$(ifrm).css("height","600px").unbind('load');
+	,closeEditTransactionDialog : function(){
+		$("#editTransactionDialog").dialog('close');
+	}
+	,editTransaction: function (transactionId) {
+		var dt = new Date();
+		var url="/Transaction/Edit/"+transactionId;
+		$("#editTransactionDialog").remove();
+		var iframe=document.createElement("div");
+		iframe.id="editTransactionDialog";
+		iframe.innerHTML+="<div id='loading'><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</div>";
+		iframe.innerHTML+='<iframe id="iframe_modal" allowtransparency="true" marginheight="0" marginwidth="0"  width="100%" frameborder="0" class="externalSite"  />';
+		var ifrm=$("#iframe_modal",iframe).get(0);
+		$(ifrm).css("height","100px").unbind('load');
 		$(ifrm).load(function () {
-			$("#divajax",diviframe).remove();
+			$("#loading",iframe).remove();
 		});
 		ifrm.src=url;
-		$(diviframe).dialog({
+		$(iframe).dialog({
 			title: "Transaction",
 			autoOpen: true,
 			width: 630,
@@ -86,6 +91,12 @@
 			position: 'top',
 			resizable: true,
 			autoResize: true,
+			open: function () {
+				$("body").css("overflow","hidden");
+			},
+			close: function () {
+				$("body").css("overflow","");
+			},
 			overlay: {
 				opacity: 0.5,
 				background: "black"

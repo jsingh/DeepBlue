@@ -294,7 +294,6 @@ h2 {
 #editinfo {
 	width: 100%;
 	float: left;
-	margin-top: 10px;
 }
 .edit-investor {
 	width: 98%;
@@ -435,4 +434,33 @@ h2 {
 .row
 {
     background-color:#E9f8ff;
+}
+
+/* Transaction Edit */
+.transaction-edit{
+	float:left;
+}
+.transaction-edit .edit-detail{
+	clear:both;float:left;
+}
+.transaction-edit .editor-label{
+	width:auto;
+}
+.transaction-edit .edit-detail .editor-label{
+	width: 148px;
+}
+.transaction-edit .edit-detail .editor-field{	
+	width: auto;
+}
+.transaction-edit .edit-detail .editor-field input{	
+	width: 150px;
+}
+.transaction-edit .split-detail{
+	display:none;
+}
+.fund-details{
+	clear:both;
+}
+#tabs .ui-widget-header {
+	background:none;border-top:0px; border-left:0px; border-right:0px;
 }

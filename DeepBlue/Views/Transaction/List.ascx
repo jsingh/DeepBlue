@@ -21,7 +21,9 @@
 		<%: Html.Span(item.UnfundedAmount.ToString())%>
 	</div>
 	<div class="editor-link">
-		<%: Html.Anchor("Transaction", "#", new { onclick = "javascript:transactionController.editTransaction(" + item.InvestorFundID.ToString() + ");" })%>
+		<% foreach (var transaction in item.InvestorFundTransactions) {%>
+		<%: Html.Anchor("Transaction", "#", new { onclick = "javascript:transactionController.editTransaction("+ transaction.InvestorFundTransactionID.ToString() +");" })%>
+		<%}%>
 	</div>
 	<div class="editor-link">
 		<%: Html.Anchor("Edit Committed Amount", "#", new { onclick = "javascript:transactionController.addTransaction(" + item.InvestorFundID.ToString() + ");" })%>

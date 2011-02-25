@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel;
 using System.Web.Mvc;
+using DeepBlue.Models.Entity;
 
 namespace DeepBlue.Models.Investor {
 	public class EditModel {
@@ -12,6 +13,7 @@ namespace DeepBlue.Models.Investor {
 			AddressInformations = new List<AddressInformation>();
 			ContactInformations = new List<ContactInformation>();
 			AccountInformations = new List<AccountInformation>();
+			InvestorFunds = new List<InvestorFund>();
 		}
 		
 		public SelectListModel SelectList = new SelectListModel();
@@ -39,6 +41,8 @@ namespace DeepBlue.Models.Investor {
 		public List<ContactInformation> ContactInformations { get; set; }
 
 		public List<AccountInformation> AccountInformations { get; set; }
+
+		public List<InvestorFund> InvestorFunds { get; set; }
 
 		public int id { get; set; }
 	}

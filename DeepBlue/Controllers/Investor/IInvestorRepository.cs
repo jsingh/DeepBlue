@@ -16,9 +16,11 @@ namespace DeepBlue.Controllers.Investor {
         List<InvestorType> GetAllInvestorTypes();
         List<CommunicationType> GetAllCommunicationTypes();
         List<InvestorDetail> FindInvestors(string investorName);
+		List<InvestorDetail> FindOtherInvestors(string investorName,int excludeInvestorId);
         DeepBlue.Models.Entity.Investor FindInvestor(int investorId);
         List<InvestorFund> FindInvestorFunds(int investorId);
         InvestorFund FindInvestorFund(int investorFundId);
+		InvestorFundTransaction FindInvestorFundTransaction(int transactionId);
         void Add(DeepBlue.Models.Entity.Investor investor);
         void Delete(DeepBlue.Models.Entity.Investor investor);
         void Save();

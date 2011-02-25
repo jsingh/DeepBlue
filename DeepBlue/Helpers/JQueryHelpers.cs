@@ -7,9 +7,9 @@ using System.Web.Mvc;
 
 namespace DeepBlue.Helpers {
 	public static class JQueryHelpers {
-		public static string jQueryAutoCompleteScript(this HtmlHelper helper, string targerId, AutoCompleteOptions options) {
+		public static string jQueryAutoCompleteScript(this HtmlHelper helper, string targetId, AutoCompleteOptions options) {
 			StringBuilder scriptSrc = new StringBuilder();
-			scriptSrc.Append("$(document).ready(function(){$(\"#" + targerId + "\").autocomplete({")
+			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").autocomplete({")
 					 .Append("source:\"" + options.Source + "\"")
 					 .Append(",minLength:" + options.MinLength.ToString())
 					 .Append((string.IsNullOrEmpty(options.OnSelect) ? "" : ",select:" + options.OnSelect.ToString()))
@@ -20,9 +20,9 @@ namespace DeepBlue.Helpers {
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
 
-		public static string jQueryAccordionScript(this HtmlHelper helper, string targerId, AccordionOptions options) {
+		public static string jQueryAccordionScript(this HtmlHelper helper, string targetId, AccordionOptions options) {
 			StringBuilder scriptSrc = new StringBuilder();
-			scriptSrc.Append("$(document).ready(function(){$(\"#" + targerId + "\").accordion({")
+			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").accordion({")
 					 .Append("active:" + options.Active.ToString() + "")
 					 .Append(",autoHeight: " + options.AutoHeight.ToString().ToLower())
 					 .Append(",collapsible: " + options.Collapsible.ToString().ToLower());
@@ -30,9 +30,17 @@ namespace DeepBlue.Helpers {
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
 
-		public static string jQueryDatePickerScript(this HtmlHelper helper, string targerId) {
+		public static string jQueryDatePickerScript(this HtmlHelper helper, string targetId) {
 			StringBuilder scriptSrc = new StringBuilder();
-			scriptSrc.Append("$(document).ready(function(){$(\"#" + targerId + "\").datepicker();});");
+			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").datepicker({changeMonth: true, changeYear: true});});");
+			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
+		}
+
+		public static string jQueryTab(this HtmlHelper helper, string targetId, jQueryTabOptions options) {
+			StringBuilder scriptSrc = new StringBuilder();
+			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").tabs({")
+							 .Append("collapsible:" + options.Collapsible.ToString().ToLower() + "")
+					 .Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
 	}

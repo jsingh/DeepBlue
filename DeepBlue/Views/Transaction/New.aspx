@@ -15,7 +15,7 @@
 					<%: Html.Label("Investor:") %>
 				</div>
 				<div class="editor-field auto-width">
-					<%: Html.TextBox("Investor")%>&nbsp;<%=Html.Span("",new { id = "Loading" })%>
+					<%: Html.TextBox("Investor", "", new { style = "width:265px" })%>&nbsp;<%=Html.Span("",new { id = "Loading" })%>
 				</div>
 			</div>
 			<% if (Model.InvestorId > 0) { %>
