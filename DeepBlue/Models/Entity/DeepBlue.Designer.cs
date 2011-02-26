@@ -4588,17 +4588,19 @@ namespace DeepBlue.Models.Entity
         /// <param name="investorID">Initial value of the InvestorID property.</param>
         /// <param name="entityID">Initial value of the EntityID property.</param>
         /// <param name="investorEntityTypeID">Initial value of the InvestorEntityTypeID property.</param>
+        /// <param name="social">Initial value of the Social property.</param>
         /// <param name="lastName">Initial value of the LastName property.</param>
         /// <param name="isDomestic">Initial value of the IsDomestic property.</param>
         /// <param name="taxExempt">Initial value of the TaxExempt property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        public static Investor CreateInvestor(global::System.Int32 investorID, global::System.Int32 entityID, global::System.Int32 investorEntityTypeID, global::System.String lastName, global::System.Boolean isDomestic, global::System.Boolean taxExempt, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        public static Investor CreateInvestor(global::System.Int32 investorID, global::System.Int32 entityID, global::System.Int32 investorEntityTypeID, global::System.String social, global::System.String lastName, global::System.Boolean isDomestic, global::System.Boolean taxExempt, global::System.DateTime createdDate, global::System.Int32 createdBy)
         {
             Investor investor = new Investor();
             investor.InvestorID = investorID;
             investor.EntityID = entityID;
             investor.InvestorEntityTypeID = investorEntityTypeID;
+            investor.Social = social;
             investor.LastName = lastName;
             investor.IsDomestic = isDomestic;
             investor.TaxExempt = taxExempt;
@@ -4712,9 +4714,9 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> Social
+        public global::System.String Social
         {
             get
             {
@@ -4724,13 +4726,13 @@ namespace DeepBlue.Models.Entity
             {
                 OnSocialChanging(value);
                 ReportPropertyChanging("Social");
-                _Social = StructuralObject.SetValidValue(value);
+                _Social = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("Social");
                 OnSocialChanged();
             }
         }
-        private Nullable<global::System.Int32> _Social;
-        partial void OnSocialChanging(Nullable<global::System.Int32> value);
+        private global::System.String _Social;
+        partial void OnSocialChanging(global::System.String value);
         partial void OnSocialChanged();
     
         /// <summary>
@@ -6783,9 +6785,7 @@ namespace DeepBlue.Models.Entity
         /// <param name="totalCommitment">Initial value of the TotalCommitment property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        /// <param name="investorTypeId">Initial value of the InvestorTypeId property.</param>
-        /// <param name="committedDate">Initial value of the CommittedDate property.</param>
-        public static InvestorFund CreateInvestorFund(global::System.Int32 investorFundID, global::System.Int32 investorID, global::System.Int32 fundID, global::System.Decimal totalCommitment, global::System.DateTime createdDate, global::System.Int32 createdBy, global::System.Int32 investorTypeId, global::System.DateTime committedDate)
+        public static InvestorFund CreateInvestorFund(global::System.Int32 investorFundID, global::System.Int32 investorID, global::System.Int32 fundID, global::System.Decimal totalCommitment, global::System.DateTime createdDate, global::System.Int32 createdBy)
         {
             InvestorFund investorFund = new InvestorFund();
             investorFund.InvestorFundID = investorFundID;
@@ -6794,8 +6794,6 @@ namespace DeepBlue.Models.Entity
             investorFund.TotalCommitment = totalCommitment;
             investorFund.CreatedDate = createdDate;
             investorFund.CreatedBy = createdBy;
-            investorFund.InvestorTypeId = investorTypeId;
-            investorFund.CommittedDate = committedDate;
             return investorFund;
         }
 
@@ -7024,9 +7022,9 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 InvestorTypeId
+        public Nullable<global::System.Int32> InvestorTypeId
         {
             get
             {
@@ -7041,16 +7039,16 @@ namespace DeepBlue.Models.Entity
                 OnInvestorTypeIdChanged();
             }
         }
-        private global::System.Int32 _InvestorTypeId;
-        partial void OnInvestorTypeIdChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _InvestorTypeId;
+        partial void OnInvestorTypeIdChanging(Nullable<global::System.Int32> value);
         partial void OnInvestorTypeIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.DateTime CommittedDate
+        public Nullable<global::System.DateTime> CommittedDate
         {
             get
             {
@@ -7065,8 +7063,8 @@ namespace DeepBlue.Models.Entity
                 OnCommittedDateChanged();
             }
         }
-        private global::System.DateTime _CommittedDate;
-        partial void OnCommittedDateChanging(global::System.DateTime value);
+        private Nullable<global::System.DateTime> _CommittedDate;
+        partial void OnCommittedDateChanging(Nullable<global::System.DateTime> value);
         partial void OnCommittedDateChanged();
 
         #endregion

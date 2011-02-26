@@ -19,14 +19,15 @@ namespace DeepBlue.Models.Investor {
 		public string Alias { get; set; }
 
 		[Required(ErrorMessage = "Required")]
-		[DisplayName("Social Security/Tax Id:")]
-		public int SocialSecurityTaxId { get; set; }
+		[RegularExpression("^\\d{3}-\\d{2}-\\d{4}$", ErrorMessage = "Invalid Social Security/ Tax Id")]
+		[DisplayName("Social Security/ Tax Id:")]
+		public string SocialSecurityTaxId { get; set; }
 
-		[DisplayName("Domestic/Foreign:")]
+		[DisplayName("Domestic/ Foreign:")]
 		public bool DomesticForeign { get; set; }
 
 		[Required(ErrorMessage = "Required")]
-		[DisplayName("State of residency:")]
+		[DisplayName("State of Residency:")]
 		public int StateOfResidency { get; set; }
 
 		[Required(ErrorMessage = "Required")]

@@ -38,11 +38,9 @@
 				<div class="content-right">
 					<%if (Convert.ToBoolean(ViewData["ShowRightPanelSearch"])) {%>
 					<% using (Html.BeginForm("", "", FormMethod.Post, new { onsubmit = "return searchInvestor.onSubmit(this,'" + ViewData["MenuName"].ToString() + "');" })) {%>
-					<div class="editor-label auto-width">
-						<%: Html.Label("Search:") %>
-					</div>
+			 
 					<div class="editor-field small-text  auto-width">
-						<%: Html.TextBox("search", "", new { onkeyup = "javascript:searchInvestor.onKeyUp(this,'" + ViewData["MenuName"] + "');" })%>
+						<%: Html.Label("Search:") %>&nbsp;<%: Html.TextBox("search", "", new { onkeyup = "javascript:searchInvestor.onKeyUp(this,'" + ViewData["MenuName"] + "');" })%>
 					</div>
 					<div class="editor-field auto-width button">
 						<%: Html.ImageButton("search.png",new {style="width:73px;height:21px"}) %>

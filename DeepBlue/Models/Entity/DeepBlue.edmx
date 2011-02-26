@@ -305,7 +305,7 @@
           <Property Name="EntityID" Type="int" Nullable="false" />
           <Property Name="InvestorName" Type="varchar" MaxLength="100" />
           <Property Name="InvestorEntityTypeID" Type="int" Nullable="false" />
-          <Property Name="Social" Type="int" />
+          <Property Name="Social" Type="nvarchar" Nullable="false" MaxLength="25" />
           <Property Name="TaxID" Type="int" />
           <Property Name="Alias" Type="varchar" MaxLength="50" />
           <Property Name="PrevInvestorID" Type="int" />
@@ -401,8 +401,8 @@
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="LastUpdatedBy" Type="int" />
-          <Property Name="InvestorTypeId" Type="int" Nullable="false" />
-          <Property Name="CommittedDate" Type="datetime" Nullable="false" />
+          <Property Name="InvestorTypeId" Type="int" />
+          <Property Name="CommittedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="InvestorFundTransaction">
           <Key>
@@ -1091,7 +1091,7 @@
           <Property Name="EntityID" Type="Int32" Nullable="false" />
           <Property Name="InvestorName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="InvestorEntityTypeID" Type="Int32" Nullable="false" />
-          <Property Name="Social" Type="Int32" />
+          <Property Name="Social" Type="String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="false" />
           <Property Name="TaxID" Type="Int32" />
           <Property Name="Alias" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="PrevInvestorID" Type="Int32" />
@@ -1202,8 +1202,8 @@
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" />
           <Property Name="LastUpdatedBy" Type="Int32" />
-          <Property Name="InvestorTypeId" Type="Int32" Nullable="false" />
-          <Property Name="CommittedDate" Type="DateTime" Nullable="false" />
+          <Property Name="InvestorTypeId" Type="Int32" />
+          <Property Name="CommittedDate" Type="DateTime" />
           <NavigationProperty Name="Fund" Relationship="DeepBlueModel.FK_InvestorFund_Fund" FromRole="InvestorFund" ToRole="Fund" />
           <NavigationProperty Name="Investor" Relationship="DeepBlueModel.FK_InvestorFund_Investor" FromRole="InvestorFund" ToRole="Investor" />
           <NavigationProperty Name="InvestorFundTransactions" Relationship="DeepBlueModel.FK_InvestorFundTransaction_InvestorFund" FromRole="InvestorFund" ToRole="InvestorFundTransaction" />
@@ -1864,7 +1864,7 @@
         <EntityTypeShape EntityType="DeepBlueModel.InvestorEntityType" Width="1.5" PointX="3.75" PointY="7.25" Height="1.7566536458333388" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.InvestorFund" Width="1.5" PointX="11.25" PointY="14.5" Height="3.2357796223958388" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.InvestorFundTransaction" Width="1.5" PointX="13.5" PointY="14.75" Height="2.7427376302083388" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.InvestorType" Width="1.5" PointX="16" PointY="15.875" Height="1.5923063151041674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.InvestorType" Width="1.5" PointX="0.75" PointY="0.75" Height="1.5923063151041674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.STATE" Width="1.5" PointX="0.75" PointY="11.25" Height="1.7566536458333388" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.TransactionType" Width="1.5" PointX="2.75" PointY="0.75" Height="1.5923063151041674" IsExpanded="true" />
         <AssociationConnector Association="DeepBlueModel.FK_Address_AddressType" ManuallyRouted="false">

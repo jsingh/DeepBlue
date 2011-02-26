@@ -71,12 +71,12 @@ namespace DeepBlue.Helpers {
 		public static List<SelectListItem> GetDomesticForeignList() {
 			List<SelectListItem> domasticForeigns = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
-			item.Text = "Yes";
+			item.Text = "Domestic";
 			item.Value = "true";
 			domasticForeigns.Add(item);
 			item = new SelectListItem();
-			item.Text = "No";
-			item.Value  = "false";
+			item.Text = "Foreign";
+			item.Value = "false";
 			domasticForeigns.Add(item);
 			return domasticForeigns;
 		}
@@ -125,7 +125,7 @@ namespace DeepBlue.Helpers {
 			fundClosingList.Add(item);
 			foreach (var fundClose in fundClosings) {
 				item = new SelectListItem();
-				item.Text =  fundClose.FundClosingDate.ToString();
+				item.Text = fundClose.FundClosingDate.ToString();
 				item.Value = fundClose.FundClosingID.ToString();
 				fundClosingList.Add(item);
 			}

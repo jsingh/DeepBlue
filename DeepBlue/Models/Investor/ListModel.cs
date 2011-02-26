@@ -10,6 +10,6 @@ namespace DeepBlue.Models.Investor {
 	public class InvestorDetail {
 		public string InvestorName { get; set; }
 		public int InvestorId { get; set; }
-        public int Social { get; set; }
+        public string Social { get; set; }
 	}
 }

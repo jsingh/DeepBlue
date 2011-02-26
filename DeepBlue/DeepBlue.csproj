@@ -84,6 +84,7 @@
     </Compile>
     <Compile Include="Helpers\AccordionOptions.cs" />
     <Compile Include="Helpers\AutoCompleteOptions.cs" />
+    <Compile Include="Helpers\FlexigridObject.cs" />
     <Compile Include="Helpers\HtmlControls.cs" />
     <Compile Include="Helpers\HttpContextFactory.cs" />
     <Compile Include="Helpers\JQueryHelpers.cs" />
@@ -99,7 +100,7 @@
     </Compile>
     <Compile Include="Models\Entity\Partial\InvestorService.cs" />
     <Compile Include="Models\Entity\Validation\Investor.cs" />
-    <Compile Include="Models\Transaction\CreateTransactionModel.cs" />
+    <Compile Include="Models\Transaction\CreateModel.cs" />
     <Compile Include="Models\Investor\CreateModel.cs" />
     <Compile Include="Controllers\Investor\IInvestorRepository.cs" />
     <Compile Include="Controllers\Investor\InvestorRepository.cs" />
@@ -165,6 +166,7 @@
     <Content Include="Assets\images\ui-icons_888888_256x240.png" />
     <Content Include="Assets\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Assets\images\Update.png" />
+    <Content Include="Assets\javascripts\FlexGrid.js" />
     <Content Include="Assets\javascripts\EditInvestor.js" />
     <Content Include="Assets\javascripts\EditTransaction.js" />
     <Content Include="Assets\javascripts\jquery-1.4.1-vsdoc.js" />
@@ -178,6 +180,7 @@
     <Content Include="Assets\javascripts\MicrosoftMvcValidation.js" />
     <Content Include="Assets\javascripts\SearchInvestor.js" />
     <Content Include="Assets\javascripts\TransactionController.js" />
+    <Content Include="Assets\stylesheets\flexigrid.css" />
     <Content Include="Assets\stylesheets\jquery-ui-1.8.10.custom.css" />
     <Content Include="Assets\stylesheets\newInvestor.css" />
     <Content Include="Global.asax" />
@@ -187,9 +190,11 @@
     <Content Include="Views\Admin\List.ascx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Investor\Edit.aspx" />
+    <Content Include="Views\Investor\FundList.ascx" />
     <Content Include="Views\Investor\New.aspx" />
     <Content Include="Views\Investor\ThankYou.aspx" />
     <Content Include="Views\Transaction\Edit.aspx" />
+    <Content Include="Views\Transaction\EditCommitmentAmount.aspx" />
     <Content Include="Views\Transaction\Index.aspx" />
     <Content Include="Views\Transaction\List.ascx" />
     <Content Include="Views\Transaction\New.aspx" />

@@ -12,13 +12,13 @@
 		<%: Html.Label("Committed Amount:") %>
 	</div>
 	<div class="display-field">
-		<%: Html.Span(item.TotalCommitment.ToString())%>
+		<%: Html.Span(string.Format("{0:C}",item.TotalCommitment))%>
 	</div>
 	<div class="editor-label">
 		<%: Html.Label("Unfunded Amount:")%>
 	</div>
 	<div class="display-field">
-		<%: Html.Span(item.UnfundedAmount.ToString())%>
+		<%: Html.Span(string.Format("{0:C}",item.UnfundedAmount))%>
 	</div>
 	<div class="editor-link">
 		<% foreach (var transaction in item.InvestorFundTransactions) {%>
@@ -26,7 +26,7 @@
 		<%}%>
 	</div>
 	<div class="editor-link">
-		<%: Html.Anchor("Edit Committed Amount", "#", new { onclick = "javascript:transactionController.addTransaction(" + item.InvestorFundID.ToString() + ");" })%>
+		<%: Html.Anchor("Edit Committed Amount", "#", new { onclick = "javascript:transactionController.editCommitmentAmount(" + item.InvestorFundID.ToString() + ");" })%>
 	</div>
 </div>
 <%}%>

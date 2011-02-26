@@ -66,22 +66,21 @@
 		$("#EntityType",$investorInfo).val(investor.EntityType);
 		return $investorInfo;
 	}
-	,closeEditTransactionDialog : function(){
+	,closeEditTransactionDialog: function () {
 		$("#editTransactionDialog").dialog('close');
+		transactionController.loadFundDetails();
 	}
 	,editTransaction: function (transactionId) {
-		var dt = new Date();
-		var url="/Transaction/Edit/"+transactionId;
 		$("#editTransactionDialog").remove();
+		var dt=new Date();
+		var url="/Transaction/Edit/"+transactionId;
 		var iframe=document.createElement("div");
 		iframe.id="editTransactionDialog";
 		iframe.innerHTML+="<div id='loading'><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</div>";
 		iframe.innerHTML+='<iframe id="iframe_modal" allowtransparency="true" marginheight="0" marginwidth="0"  width="100%" frameborder="0" class="externalSite"  />';
 		var ifrm=$("#iframe_modal",iframe).get(0);
 		$(ifrm).css("height","100px").unbind('load');
-		$(ifrm).load(function () {
-			$("#loading",iframe).remove();
-		});
+		$(ifrm).load(function () { $("#loading",iframe).remove(); });
 		ifrm.src=url;
 		$(iframe).dialog({
 			title: "Transaction",
@@ -89,18 +88,32 @@
 			width: 630,
 			modal: true,
 			position: 'top',
-			resizable: true,
 			autoResize: true,
-			open: function () {
-				$("body").css("overflow","hidden");
-			},
-			close: function () {
-				$("body").css("overflow","");
-			},
-			overlay: {
-				opacity: 0.5,
-				background: "black"
-			}
+			open: function () { $("body").css("overflow","hidden"); },
+			close: function () { $("body").css("overflow",""); }
+		});
+	}
+	,editCommitmentAmount: function (investorFundId) {
+		$("#editTransactionDialog").remove();
+		var dt=new Date();
+		var url="/Transaction/EditCommitmentAmount/"+investorFundId;
+		var iframe=document.createElement("div");
+		iframe.id="editTransactionDialog";
+		iframe.innerHTML+="<div id='loading'><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</div>";
+		iframe.innerHTML+='<iframe id="iframe_modal" allowtransparency="true" marginheight="0" marginwidth="0"  width="100%" frameborder="0" class="externalSite"  />';
+		var ifrm=$("#iframe_modal",iframe).get(0);
+		$(ifrm).css("height","100px").unbind('load');
+		$(ifrm).load(function () { $("#loading",iframe).remove(); });
+		ifrm.src=url;
+		$(iframe).dialog({
+			title: "Edit Commitment Amount",
+			autoOpen: true,
+			width: 430,
+			modal: true,
+			position: 'middle',
+			autoResize: true,
+			open: function () { $("body").css("overflow","hidden"); },
+			close: function () { $("body").css("overflow",""); }
 		});
 	}
 }

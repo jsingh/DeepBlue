@@ -39,19 +39,22 @@
 	,closeDialog: function () {
 		parent.transactionController.closeEditTransactionDialog();
 	}
-	,onSubmit: function (frm) {
+	,onSubmit: function () {
+		var frm=document.getElementById("EditTransaction");
 		var Split=document.getElementById("Split");
-		if(Split.checked) {
-			var OtherInvestorId=document.getElementById("OtherInvestorId").value;
-			var OtherInvestor=document.getElementById("OtherInvestorName");
-			var OICA=document.getElementById("OtherInvestorCommitmentAmount");
-			if(parseFloat(OICA.value)<=0) {
-				editTransaction.checkInputValid($(OICA));
-				return false;
-			}
-			if(parseInt(OtherInvestorId)<=0) {
-				editTransaction.checkInputValid($(OtherInvestor));
-				return false;
+		if(Split) {
+			if(Split.checked) {
+				var OtherInvestorId=document.getElementById("OtherInvestorId").value;
+				var OtherInvestor=document.getElementById("OtherInvestorName");
+				var OICA=document.getElementById("OtherInvestorCommitmentAmount");
+				if(parseInt(OtherInvestorId)<=0) {
+					editTransaction.checkInputValid($(OtherInvestor));
+					return false;
+				}
+				if(parseFloat(OICA.value)<=0) {
+					editTransaction.checkInputValid($(OICA));
+					return false;
+				}
 			}
 		}
 		return true;

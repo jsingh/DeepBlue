@@ -4,8 +4,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Index
 </asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
+	<%=Html.JavascriptInclueTag("FlexGrid.js")%><%=Html.StylesheetLinkTag("flexigrid.css") %>
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-	<div id="tabs" style="border:0px">
+	<div id="tabs" style="border: 0px">
 		<ul>
 			<li><a href="#tabs-1">Entity Type </a></li>
 			<li><a href="#tabs-2">Subject to FOIA</a></li>
@@ -24,8 +27,7 @@
 		</div>
 	</div>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
-</asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%=Html.jQueryTab("tabs",new jQueryTabOptions{ }) %>
+	<%=Html.jQueryFlexiGrid("EntityTypes")%>
 </asp:Content>

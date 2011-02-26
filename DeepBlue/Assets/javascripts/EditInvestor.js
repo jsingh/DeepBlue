@@ -16,6 +16,7 @@
 				$investorInfo.attr("id","investor_"+id);
 				$("#InvestorId",$investorInfo).val(id);
 				editInvestor.loadInvestorInfo($investorInfo,data);
+				editInvestor.buildFundTable($investorInfo,data.FundInformations);
 				// Read Address Information
 				$("#AddressInfoCount",$investorInfo).val(data.AddressInformations.length);
 				$.each(
@@ -43,6 +44,29 @@
 				editInvestor.applyAccordion($investorInfo);
 			}
 		});
+	}
+	,buildFundTable: function ($investorInfo,data) {
+		var table=document.createElement("table");
+		$("#funddetails",$investorInfo).append(table);
+		$(table).flexigrid({
+			url: '/Json/FlexigridList',
+			dataType: 'json',
+			colModel: [
+				{ display: 'Fund Name',name: 'FundName',width: 180,sortable: true,align: 'left' },
+				{ display: 'Committed Amount',name: 'CommittedAmount',width: 110,sortable: true,align: 'right' },
+				{ display: 'Unfunded Amount',name: 'UnfundedAmount',width: 100,sortable: true,align: 'right' },
+				{ display: 'Investror Type',name: 'InvestrorType',width: 100,sortable: true,align: 'left' }
+				],
+			title: 'FundDetails',
+			resizable:false,
+			autoload:false,
+			useRp: true,
+			rp: 15,
+			showTableToggleBtn: false,
+			width: 538,
+			height: 380
+		});
+		$(table).flexAddData(data);
 	}
 	,cloneInvestorInfo: function () {
 		var $investorInfo=$("#investorInfo").clone();
@@ -89,7 +113,7 @@
 		$("#InvestorName",$investorInfo).html(investor.InvestorName);
 		$("#DisplayName",$investorInfo).html(investor.DisplayName);
 		$("#SocialSecurityTaxId",$investorInfo).html(investor.SocialSecurityTaxId);
-		if(investor.DomesticForeigns)
+		if(investor.DomesticForeign)
 			$("#DomesticForeigns",$investorInfo).val("true");
 		else
 			$("#DomesticForeigns",$investorInfo).val("false");

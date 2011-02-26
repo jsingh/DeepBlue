@@ -137,7 +137,7 @@ h2 {
 	clear: right;
 }
 .editor-field input {
-	width: 265px;
+	width: 200px;
 }
 .editor-field select {
 	width: 175px;
@@ -213,14 +213,11 @@ h2 {
 	float: left;
 }
 .contactinfo-left {
-	float: left;    width: 422px;
+	float: left;    width: auto;
 }
 .accountinfo, .contactinfo {
 	clear: both;
 	float: left;
-}
-.accountinfo{
-	width: 422px;
 }
 .box-content .title {
 	float: left;
@@ -233,7 +230,7 @@ h2 {
 	display: none;
 }
 .box-content .add {
-	float: left;
+	float: right;
 }
 .box-content .add img {
 	cursor: pointer;
@@ -242,7 +239,7 @@ h2 {
 	float: left;
 }
 .new-investor {
-	width: 755px;
+	width: 800px;
 	margin: 0 auto;
 }
 /* Search */
@@ -251,7 +248,7 @@ h2 {
 	text-align: left;
 	/*padding: 5px 0px 0px 20px;*/	
 	width:250px;
-	margin-left:57px;
+	margin-left:50px;
 	margin-top:21px;
 }
 #SearchDetail li
@@ -463,4 +460,12 @@ h2 {
 }
 #tabs .ui-widget-header {
 	background:none;border-top:0px; border-left:0px; border-right:0px;
+}
+/* Details Box */
+.det-box{
+	width:100%;
+}
+.det-box-top{
+ background-image:url(../images/detleft.png);
+ background-repeat:no-repeat;width:100%;    height: 30px;line-height:30px;padding-left:3px;color:White;
 }

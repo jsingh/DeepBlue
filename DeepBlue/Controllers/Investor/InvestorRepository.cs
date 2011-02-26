@@ -46,9 +46,9 @@ namespace DeepBlue.Controllers.Investor {
 		}
 
 		public List<InvestorType> GetAllInvestorTypes() {
-			 return (from investorType in DeepBlueDb.InvestorTypes
-					 orderby investorType.InvestorTypeName 
-					 select investorType).ToList();
+			return (from investorType in DeepBlueDb.InvestorTypes
+					orderby investorType.InvestorTypeName
+					select investorType).ToList();
 		}
 
 		public List<InvestorDetail> FindInvestors(string investorName) {
@@ -57,7 +57,7 @@ namespace DeepBlue.Controllers.Investor {
 					select new InvestorDetail {
 						InvestorName = investor.InvestorName,
 						InvestorId = investor.InvestorID,
-                        Social = (int)investor.Social
+						Social = investor.Social
 					}).ToList();
 		}
 
@@ -67,11 +67,11 @@ namespace DeepBlue.Controllers.Investor {
 					select new InvestorDetail {
 						InvestorName = investor.InvestorName,
 						InvestorId = investor.InvestorID,
-						Social = (int)investor.Social
+						Social = investor.Social
 					}).ToList();
 		}
 
-		public DeepBlue.Models.Entity.Investor FindInvestor(int investorId){
+		public DeepBlue.Models.Entity.Investor FindInvestor(int investorId) {
 			return DeepBlueDb.Investors.SingleOrDefault(investor => investor.InvestorID == investorId);
 		}
 
@@ -82,13 +82,13 @@ namespace DeepBlue.Controllers.Investor {
 		}
 
 		public InvestorFund FindInvestorFund(int investorFundId) {
-			return  DeepBlueDb.InvestorFunds.SingleOrDefault(investorFund => investorFund.InvestorFundID == investorFundId);
+			return DeepBlueDb.InvestorFunds.SingleOrDefault(investorFund => investorFund.InvestorFundID == investorFundId);
 		}
 
-			public InvestorFundTransaction FindInvestorFundTransaction(int transactionId) {
-				return DeepBlueDb.InvestorFundTransactions.SingleOrDefault(investorFundTransaction => investorFundTransaction.InvestorFundTransactionID == transactionId);
+		public InvestorFundTransaction FindInvestorFundTransaction(int transactionId) {
+			return DeepBlueDb.InvestorFundTransactions.SingleOrDefault(investorFundTransaction => investorFundTransaction.InvestorFundTransactionID == transactionId);
 		}
-		
+
 		public void Add(DeepBlue.Models.Entity.Investor investor) {
 			DeepBlueDb.Investors.AddObject(investor);
 		}
@@ -105,7 +105,11 @@ namespace DeepBlue.Controllers.Investor {
 			return investor.Save();
 		}
 
+		public InvestorType FindInvestorType(int investorTypeId) {
+			return DeepBlueDb.InvestorTypes.SingleOrDefault(investorType => investorType.InvestorTypeID == investorTypeId);
+		}
+
 		#endregion
-	 
+
 	}
 }

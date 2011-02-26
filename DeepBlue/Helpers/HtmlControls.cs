@@ -131,13 +131,18 @@ namespace DeepBlue.Helpers {
 		}
 		#endregion
 
+		#region javascript
 		public static string JavascriptInclueTag(this HtmlHelper helper, string scriptname) {
 			return string.Format("<script src=\"/Assets/javascripts/{0}\" type=\"text/javascript\"></script>", scriptname);
 		}
+		#endregion
 
+		#region stylesheet
 		public static string StylesheetLinkTag(this HtmlHelper helper, string cssname) {
 			return string.Format("<link href=\"/Assets/stylesheets/{0}\" rel=\"stylesheet\" type=\"text/css\" />", cssname);
 		}
+		#endregion
+		
 
 		#region Tab
 		public static MvcHtmlString Tab(this HtmlHelper helper, string innerHTML) {
@@ -159,6 +164,7 @@ namespace DeepBlue.Helpers {
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 		#endregion
+
 
 	
 	}

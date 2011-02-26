@@ -282,19 +282,19 @@
 				<div id="ContactInfoBox" class="box-main">
 					<div id="ContactInfo" class="contactinfo">
 						<div>
-							<div class="title" style="width: 530px; text-align: left">
+							<div class="title">
 								<h2>
 									Contact
 								</h2>
 							</div>
-							<div style="float: left" class="delete">
+							<div class="delete">
 								<%=Html.ImageLink("Delete.png", new { title = "Delete Contact", onclick = "javascript:investor.deleteContact(this);" })%>
 							</div>
-							<div style="float: left; margin-top: -12px;" class="add">
+							<div   class="add">
 								<%=Html.ImageLink("add_icon.png", new { title = "Add New Contact", onclick = "javascript:investor.createContact(this);" })%>
 							</div>
 						</div>
-						<div style="clear: both">
+						<div class="contactinfo-box">
 							<div class="contactinfo-left">
 								<div class="editor-label">
 									<%: Html.LabelFor(model => model.ContactPerson) %>

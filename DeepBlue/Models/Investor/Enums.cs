@@ -31,4 +31,8 @@ namespace DeepBlue.Models.Investor.Enums {
 		Cambridge = 2,
 		NEPC = 3
 	}
+
+	public enum DefaultCountry {
+	   USA = 225
+	}
 }

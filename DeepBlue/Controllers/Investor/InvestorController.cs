@@ -58,6 +58,7 @@ namespace DeepBlue.Controllers.Investor {
 			model.DomesticForeign = true;
 			model.AccountLength = 1;
 			model.ContactLength = 1;
+			model.Country = (int)DeepBlue.Models.Investor.Enums.DefaultCountry.USA;
 			return View(model);
 		}
 
@@ -66,9 +67,9 @@ namespace DeepBlue.Controllers.Investor {
 
 		[HttpPost]
 		public ActionResult Create(FormCollection collection) {
-            CreateModel model = new CreateModel();
-            this.TryUpdateModel(model);
-            if (ModelState.IsValid) {
+			CreateModel model = new CreateModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
 				DeepBlue.Models.Entity.Investor investor = new DeepBlue.Models.Entity.Investor();
 				/*Investor*/
 				investor.Alias = model.Alias;
@@ -225,7 +226,6 @@ namespace DeepBlue.Controllers.Investor {
 			model.SelectList.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(InvestorRepository.GetAllInvestorEntityTypes());
 			model.ContactInformations = new List<ContactInformation>();
 			model.AccountInformations = new List<AccountInformation>();
-			model.InvestorFunds = InvestorRepository.FindInvestorFunds(id);
 			return View(model);
 		}
 
@@ -346,7 +346,7 @@ namespace DeepBlue.Controllers.Investor {
 				model.DisplayName = investor.FirstName;
 				model.DomesticForeign = investor.IsDomestic;
 				model.EntityType = investor.InvestorEntityTypeID;
-				model.SocialSecurityTaxId = (int)investor.Social;
+				model.SocialSecurityTaxId = investor.Social;
 				model.StateOfResidency = (int)(investor.ResidencyState != null ? investor.ResidencyState : 0);
 				foreach (var address in investor.InvestorAddresses) {
 					if (address.Address != null) {
@@ -404,6 +404,22 @@ namespace DeepBlue.Controllers.Investor {
 					accountInfo.IBAN = string.Empty;
 					accountInfo.Swift = string.Empty;
 					model.AccountInformations.Add(accountInfo);
+				}
+				model.FundInformations = new FlexigridObject();
+				model.FundInformations.page = 1;
+				model.FundInformations.total = investor.InvestorFunds.Count();
+				foreach (var fund in investor.InvestorFunds) {
+					FlexigridRow row = new FlexigridRow();
+					row.id = fund.FundID.ToString();
+					row.cell.Add(fund.Fund.FundName.ToString());
+					row.cell.Add(string.Format("{0:C}",fund.TotalCommitment));
+					row.cell.Add(string.Format("{0:C}",Convert.ToDecimal(fund.UnfundedAmount)));
+					InvestorType investorType = InvestorRepository.FindInvestorType((int)fund.InvestorTypeId);
+					if (investorType != null)
+					   row.cell.Add(investorType.InvestorTypeName);
+					else
+					  row.cell.Add(string.Empty);
+					model.FundInformations.rows.Add(row);
 				}
 			}
 			return Json(model, JsonRequestBehavior.AllowGet);

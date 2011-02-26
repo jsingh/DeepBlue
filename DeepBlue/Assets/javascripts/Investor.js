@@ -35,6 +35,7 @@
 		$(".delete",ContactInfo).css("display","block");
 		$(".add",ContactInfo).remove();
 		$("#ContactInfoBox").append(ContactInfo);
+		$("select[name='"+(ContactLength+1)+"_ContactCountry']",ContactInfo).val(225);
 	}
 	,deleteContact: function (that) {
 		if(confirm("Are you sure you want to delete this Contact?")) {
@@ -55,7 +56,7 @@
 		var ContactLength=parseInt($("#ContactLength").val());
 		var index;
 		for(index=1;index<ContactLength+1;index++) {
-			validForm=this.checkInputValid(index+"_ContactPerson");
+			//validForm=this.checkInputValid(index+"_ContactPerson");
 			validForm=this.checkSelectValid(index+"_ContactState");
 			validForm=this.checkSelectValid(index+"_ContactCountry");
 			validForm=this.checkEmail(index+"_ContactEmail");

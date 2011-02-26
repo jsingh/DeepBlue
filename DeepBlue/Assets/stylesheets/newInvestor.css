@@ -1,3 +1,21 @@
-﻿.editor-field select, editor-field dropdown {
-	width: 270px;
+﻿.editor-field select, .editor-field dropdown {
+	width: 205px;
 }
+.editor-field {	
+	 width:auto;
+}.editor-label {
+	width:121px;
+}
+#ContactInfoBox,#AccountInfoBox,.contactinfo{
+	width:100%;
+}
+.contactinfo-box{
+	width:100%;float:left;
+}
+.contactinfo-left {
+	width:60%;
+}
+.contactinfo-right {
+	width:40%;
+}
+ 

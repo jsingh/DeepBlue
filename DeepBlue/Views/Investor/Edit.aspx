@@ -5,7 +5,9 @@
 	Edit
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
+	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.JavascriptInclueTag("EditInvestor.js") %>
+	<%=Html.StylesheetLinkTag("flexigrid.css") %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="edit-investor">
@@ -45,51 +47,7 @@
 							<div class="display-field">
 								<%: Html.Span("", new { id = "DisplayName" })%>
 							</div>
-							<div class="fund-details">
-								<table cellpadding="0" cellspacing="2" border="0" style="width:98%" class="grid-list">
-									<tr class="grid-header">
-										<th>
-											Fund Name
-										</th>
-										<th>
-											Committed Amount
-										</th>
-										<th>
-											Unfunded Amount
-										</th>
-										<th>
-											Investror Type
-										</th>
-									</tr>
-									<% int rowIndex = 0;
-			foreach (var item in Model.InvestorFunds) { %>
-									<%if (rowIndex % 2 == 0) { %>
-									<tr class="row">
-										<%} else {%>
-										<tr class="alter-row">
-											<%}%>
-											<td style="text-align: center;white-space:nowrap;">
-												<%: item.Fund.FundName %>
-											</td>
-											<td style="text-align: right">
-												$<%: item.TotalCommitment.ToString("0.00") %>
-											</td>
-											<td style="text-align: right">
-												$<%: Convert.ToDecimal(item.UnfundedAmount).ToString("0.00") %>
-											</td>
-											<td>
-											</td>
-										</tr>
-										<% rowIndex++;
-			} %>
-										<%if (Model.InvestorFunds.Count == 0) {  %>
-										<tr>
-											<td colspan="4" style="text-align: center">
-												No Records Found
-											</td>
-										</tr>
-										<%} %>
-								</table>
+							<div id="funddetails" class="fund-details">
 							</div>
 						</div>
 						<div id="accordion" class="edit-right">
@@ -112,7 +70,7 @@
 									<%: Html.LabelFor(model => model.DomesticForeign) %>
 								</div>
 								<div class="editor-field dropdown">
-									<%: Html.DropDownList("Domestic Foreigns", Model.SelectList.DomesticForeigns)%>
+									<%: Html.DropDownList("DomesticForeigns", Model.SelectList.DomesticForeigns)%>
 								</div>
 								<div class="editor-label">
 									<%: Html.LabelFor(model => model.EntityType) %>
@@ -414,7 +372,8 @@
 								</div>
 							</div>
 						</div>
-						<div style="clear:both;height:10px">&nbsp;</div>
+						<div style="clear: both; height: 10px">
+							&nbsp;</div>
 						<div class="editor-button" style="width: 210px;">
 							<div style="float: left; padding: 0 0 10px 5px;">
 								<%: Html.ImageButton("Update.png", new { style = "width: 73px; height: 23px;" })%>

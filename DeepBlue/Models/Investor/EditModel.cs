@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel;
 using System.Web.Mvc;
 using DeepBlue.Models.Entity;
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Investor {
 	public class EditModel {
@@ -13,7 +14,7 @@ namespace DeepBlue.Models.Investor {
 			AddressInformations = new List<AddressInformation>();
 			ContactInformations = new List<ContactInformation>();
 			AccountInformations = new List<AccountInformation>();
-			InvestorFunds = new List<InvestorFund>();
+			FundInformations = new FlexigridObject();
 		}
 		
 		public SelectListModel SelectList = new SelectListModel();
@@ -25,9 +26,9 @@ namespace DeepBlue.Models.Investor {
 		public string DisplayName { get; set; }
 
 		[DisplayName("Social Security/Tax Id:")]
-		public int SocialSecurityTaxId { get; set; }
+		public string SocialSecurityTaxId { get; set; }
 
-		[DisplayName("State of residency:")]
+		[DisplayName("State of Residency:")]
 		public int StateOfResidency { get; set; }
 
 		[DisplayName("Entity Type:")]
@@ -42,7 +43,7 @@ namespace DeepBlue.Models.Investor {
 
 		public List<AccountInformation> AccountInformations { get; set; }
 
-		public List<InvestorFund> InvestorFunds { get; set; }
+		public FlexigridObject FundInformations { get; set; }
 
 		public int id { get; set; }
 	}
@@ -173,5 +174,15 @@ namespace DeepBlue.Models.Investor {
 
 		[DisplayName("Attention:")]
 		public string Attention { get; set; }
+	}
+
+	public class FundInformation	{
+		public string FundName { get; set; }
+		
+		public decimal TotalCommitment { get; set; }
+
+		public decimal UnfundedAmount { get; set; }
+
+		public string InvestorType { get; set; }
 	}
 }

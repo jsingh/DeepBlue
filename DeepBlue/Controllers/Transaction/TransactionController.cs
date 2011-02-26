@@ -37,10 +37,10 @@ namespace DeepBlue.Controllers.Transaction {
 		//
 		// GET: /Transaction/New
 
-		public ActionResult New(int id) {
+		public ActionResult New(int? id) {
 			ViewData["MenuName"] = "Transaction";
-			CreateTransactionModel model = new CreateTransactionModel();
-			DeepBlue.Models.Entity.Investor investor = InvestorRepository.FindInvestor(id);
+			CreateModel model = new CreateModel();
+			DeepBlue.Models.Entity.Investor investor = InvestorRepository.FindInvestor(id ?? 0);
 			if (investor != null) {
 				model.InvestorName = investor.InvestorName;
 				model.DisplayName = investor.Alias;
@@ -48,14 +48,14 @@ namespace DeepBlue.Controllers.Transaction {
 			model.FundNames = SelectListFactory.GetFundSelectList(TransactionRepository.GetAllFundNames());
 			model.FundClosings = SelectListFactory.GetFundClosingSelectList(TransactionRepository.GetAllFundClosings());
 			model.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(InvestorRepository.GetAllInvestorTypes());
-			model.InvestorId = id;
+			model.InvestorId = id ?? 0;
 			return View(model);
 		}
 
 		//
 		// GET: /Transaction/New
 
-		public bool CreateInvestorFund(CreateTransactionModel model) {
+		public bool CreateInvestorFund(CreateModel model) {
 			InvestorFund investorFund = new InvestorFund();
 			investorFund.CommittedDate = Convert.ToDateTime(model.CommittedDate);
 			investorFund.CreatedBy = 0;
@@ -90,40 +90,38 @@ namespace DeepBlue.Controllers.Transaction {
 			return View(InvestorRepository.FindInvestorFunds(Convert.ToInt32(Request.QueryString["id"])));
 		}
 
+	 
 		//
 		// GET: /Transaction/Edit/5
-		public ActionResult Edit(int? id) {
-			ViewData["SaveTransaction"] = false;
+		public ActionResult Edit(int id) {
 			EditModel editModel = new EditModel();
-			if (id.HasValue) {
-				InvestorFundTransaction investorFundTrasaction = InvestorRepository.FindInvestorFundTransaction(id ?? 0);
-				editModel.InvestorName = investorFundTrasaction.InvestorFund.Investor.InvestorName;
-				editModel.InvestorId = investorFundTrasaction.InvestorFund.Investor.InvestorID;
-				editModel.InvestorFundId = investorFundTrasaction.InvestorFundID;
-				editModel.OriginalCommitmentAmount = investorFundTrasaction.InvestorFund.TotalCommitment;
-				editModel.InvestorFundTransactionId = investorFundTrasaction.InvestorFundTransactionID;
-				editModel.CommitmentAmount = (decimal)investorFundTrasaction.Amount;
-				editModel.Date = investorFundTrasaction.CreatedDate.ToString("MM/dd/yyyy");
-				if (investorFundTrasaction.TransactionTypeID == (int)DeepBlue.Models.Transaction.Enums.TransactionType.Split) {
-					editModel.OtherInvestorCommitmentAmount = (decimal)investorFundTrasaction.Amount;
-				}
-				editModel.OtherInvestorId = (int)investorFundTrasaction.OtherInvestorID;
-				if (editModel.OtherInvestorId > 0) {
-					DeepBlue.Models.Entity.Investor otherInvestor = InvestorRepository.FindInvestor(editModel.OtherInvestorId);
-					if (otherInvestor != null) {
-						editModel.OtherInvestorName = otherInvestor.InvestorName;
-					}
-				}
-				editModel.TransactionTypeId = investorFundTrasaction.TransactionTypeID;
-				if (editModel.TransactionTypeId <= 0)
-					editModel.TransactionTypeId = (int)DeepBlue.Models.Transaction.Enums.TransactionType.Buy;
+			InvestorFundTransaction investorFundTrasaction = InvestorRepository.FindInvestorFundTransaction(id);
+			editModel.InvestorName = investorFundTrasaction.InvestorFund.Investor.InvestorName;
+			editModel.InvestorId = investorFundTrasaction.InvestorFund.Investor.InvestorID;
+			editModel.InvestorFundId = investorFundTrasaction.InvestorFundID;
+			editModel.OriginalCommitmentAmount = investorFundTrasaction.InvestorFund.TotalCommitment;
+			editModel.InvestorFundTransactionId = investorFundTrasaction.InvestorFundTransactionID;
+			editModel.CommitmentAmount = (decimal)investorFundTrasaction.Amount;
+			editModel.Date = investorFundTrasaction.CreatedDate.ToString("MM/dd/yyyy");
+			if (investorFundTrasaction.TransactionTypeID == (int)DeepBlue.Models.Transaction.Enums.TransactionType.Split) {
+				editModel.OtherInvestorCommitmentAmount = (decimal)investorFundTrasaction.Amount;
 			}
+			editModel.OtherInvestorId = (int)investorFundTrasaction.OtherInvestorID;
+			if (editModel.OtherInvestorId > 0) {
+				DeepBlue.Models.Entity.Investor otherInvestor = InvestorRepository.FindInvestor(editModel.OtherInvestorId);
+				if (otherInvestor != null) {
+					editModel.OtherInvestorName = otherInvestor.InvestorName;
+				}
+			}
+			editModel.TransactionTypeId = investorFundTrasaction.TransactionTypeID;
+			if (editModel.TransactionTypeId <= 0)
+				editModel.TransactionTypeId = (int)DeepBlue.Models.Transaction.Enums.TransactionType.Buy;
 			return View(editModel);
 		}
 
 		//POST: /Transaction/Update
 		[HttpPost]
-		public ActionResult Update(FormCollection collection) {
+		public bool Update(FormCollection collection) {
 			InvestorFund investorFund = InvestorRepository.FindInvestorFund(Convert.ToInt32(collection["InvestorFundId"]));
 			InvestorFundTransaction investorFundTrasaction = investorFund.InvestorFundTransactions.Single(transaction => transaction.InvestorFundTransactionID == Convert.ToInt32(collection["InvestorFundTransactionId"]));
 			if (investorFundTrasaction != null) {
@@ -139,9 +137,25 @@ namespace DeepBlue.Controllers.Transaction {
 				}
 			}
 			InvestorRepository.Save();
-			ViewData["SaveTransaction"] = true;
-			return RedirectToAction("Edit", "Transaction");
+			return true;
 		}
 
+		[HttpGet]
+		public ActionResult EditCommitmentAmount(int id) {
+			EditCommitmentAmountModel editModel = new EditCommitmentAmountModel();
+			InvestorFund investorFund = InvestorRepository.FindInvestorFund(id);
+			editModel.InvestorFundId = investorFund.InvestorFundID;
+			editModel.CommitmentAmount = investorFund.TotalCommitment;
+			return View(editModel);
+		}
+
+
+		[HttpPost]
+		public bool UpdateCommitmentAmount(FormCollection collection) {
+			InvestorFund investorFund = InvestorRepository.FindInvestorFund(Convert.ToInt32(collection["InvestorFundId"]));
+			investorFund.TotalCommitment = Convert.ToDecimal(collection["CommitmentAmount"]);
+			InvestorRepository.Save();
+			return true;
+		}
 	}
 }

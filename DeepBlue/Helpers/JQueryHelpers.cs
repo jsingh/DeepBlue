@@ -43,5 +43,11 @@ namespace DeepBlue.Helpers {
 					 .Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
+
+		public static string jQueryFlexiGrid(this HtmlHelper helper, string targetId) {
+			StringBuilder scriptSrc = new StringBuilder();
+			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").flexigrid();});");
+			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
+		}
 	}
 }

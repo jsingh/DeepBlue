@@ -36,12 +36,22 @@ namespace DeepBlue.Models.Transaction {
 
 		[DisplayName("Notes:")]
 		public string Notes { get; set; }
-
+		
 		public int OtherInvestorId { get; set; }
 
 		public string OtherInvestorName { get; set; }
 
 		[DisplayName("Commitment Amount:")]
 		public decimal OtherInvestorCommitmentAmount { get; set; }
+	}
+
+	public class EditCommitmentAmountModel{
+		
+		public int InvestorFundId { get; set; }
+
+		[Required(ErrorMessage = "Required")]
+		[Range(1, Double.MaxValue, ErrorMessage = "Required")]
+		[DisplayName("Commitment Amount:")]
+		public decimal CommitmentAmount { get; set; }
 	}
 }
