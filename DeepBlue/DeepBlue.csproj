@@ -110,6 +110,7 @@
     <Compile Include="Models\Transaction\EditModel.cs" />
     <Compile Include="Models\Transaction\Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\AppSettings.cs" />
     <Compile Include="Util\ConfigUtil.cs" />
   </ItemGroup>
   <ItemGroup>

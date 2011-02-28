@@ -31,7 +31,7 @@ namespace DeepBlue.Models.Transaction {
 		[DisplayName("Date:")]
 		public string Date { get; set; }
 
-		[DisplayName("Counter Party:")]
+		[DisplayName("Counterparty:")]
 		public string CounterParty { get; set; }
 
 		[DisplayName("Notes:")]

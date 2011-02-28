@@ -73,12 +73,12 @@ namespace DeepBlue.Controllers.Investor {
 				DeepBlue.Models.Entity.Investor investor = new DeepBlue.Models.Entity.Investor();
 				/*Investor*/
 				investor.Alias = model.Alias;
-				investor.CreatedBy = 0;
+				investor.CreatedBy = AppSettings.CreatedByUserId;
 				investor.CreatedDate = DateTime.Now;
 				investor.EntityID = BaseController.CurrentEntityID;
 				investor.FirstName = string.Empty;
 				investor.IsDomestic = model.DomesticForeign;
-				investor.LastName = string.Empty;
+                investor.LastName = "n/a";
 				investor.LastUpdatedBy = 0;
 				investor.LastUpdatedDate = DateTime.Now;
 				investor.ManagerName = string.Empty;
@@ -87,7 +87,7 @@ namespace DeepBlue.Controllers.Investor {
 				investor.FirstName = model.Alias;
 				investor.MiddleName = string.Empty;
 				investor.Notes = string.Empty;
-				investor.PrevInvestorID = 0;
+				investor.PrevInvestorID = null;
 				investor.ResidencyState = model.StateOfResidency;
 				investor.Social = model.SocialSecurityTaxId;
 				investor.TaxExempt = false;
