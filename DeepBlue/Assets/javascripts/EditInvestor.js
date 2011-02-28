@@ -7,7 +7,8 @@
 	}
 	,selectInvestor: function (id) {
 		$("#Loading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
-		$.getJSON("/Investor/FindInvestor/"+id,function (data) {
+		var dt = new Date();
+		$.getJSON("/Investor/FindInvestor/"+id+"?t="+dt.getTime(),function (data) {
 			$("#Loading").html("");
 			var $investorInfo=$("#investor_"+id);
 			if(!($investorInfo.get(0))) {

@@ -10,6 +10,7 @@
 		$("#AccountLength").val(AccountLength+1);
 		//$("#index",AccountInfo).html(AccountLength+1);
 		$(".custom-validation",AccountInfo).remove();
+		$(".add",AccountInfo).remove();
 		$(".delete",AccountInfo).css("display","block");
 		$("#AccountInfoBox").append(AccountInfo);
 	}
@@ -50,8 +51,8 @@
 		var AccountLength=parseInt($("#AccountLength").val());
 		var index;
 		/*for(index=1;index<AccountLength+1;index++) {
-			validForm=this.checkInputValid(index+"_BankName");
-			validForm=this.checkInputValid(index+"_AccountNumber");
+		validForm=this.checkInputValid(index+"_BankName");
+		validForm=this.checkInputValid(index+"_AccountNumber");
 		}*/
 		var ContactLength=parseInt($("#ContactLength").val());
 		var index;

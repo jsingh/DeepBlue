@@ -26,7 +26,8 @@
 	,onSubmit: function (frm,menuName) {
 		searchInvestor.menuName=menuName;
 		searchInvestor.onBeginSearch();
-		$.getJSON("/Investor/FindInvestors/?term="+$("#search",frm).val(),function (data) {
+		var dt = new Date();
+		$.getJSON("/Investor/FindInvestors/?term="+$("#search",frm).val()+"?t="+dt.getTime(),function (data) {
 			searchInvestor.onSuccess(data);
 		});
 		return false;

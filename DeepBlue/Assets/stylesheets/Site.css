@@ -125,7 +125,7 @@ a img {
 	float: left;
 	background-color: #fff;
 	width: 100%;
-	min-height: 400px;
+	min-height: 708px;
 }
 #content .content-right {
 	float: left;
@@ -362,7 +362,7 @@ h2 {
 	width: 40%;
 	float: right;
 }
-.contactinfo {
+.contactinfo, .accountinfo {
 	clear: both;
 }
 /* ui-accordion */

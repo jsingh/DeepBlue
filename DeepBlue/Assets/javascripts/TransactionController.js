@@ -6,8 +6,9 @@
 		//location.href="/Transaction/New/"+id;
 		$("#Loading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		var $investorInfo=$("#investorInfo");
-		$investorInfo.show()
-		$.getJSON("/Investor/InvestorDetail/"+id,function (data) {
+		$investorInfo.show();
+		var dt = new Date();
+		$.getJSON("/Investor/InvestorDetail/"+id+"?t="+dt.getTime(),function (data) {
 			$("#Loading").html("");
 			$("#InvestorName",$investorInfo).html(data.InvestorName);
 			$("#DisplayName",$investorInfo).html(data.DisplayName);
@@ -18,8 +19,9 @@
 	,loadFundDetails: function () {
 		$("#LoadingFundDetail").show();
 		var investorId=$("#InvestorId").val();
+		var dt=new Date();
 		if(parseInt(investorId)>0) {
-			$.get("/Transaction/List/"+investorId,function (data) {
+			$.get("/Transaction/List/"+investorId+"?t="+dt.getTime(),function (data) {
 				$("#LoadingFundDetail").hide();
 				$("#FundDetails").html(data);
 			});
@@ -91,8 +93,6 @@
 			modal: true,
 			position: 'top',
 			autoResize: true
-			,open: function () { $("body").css("overflow","hidden"); },
-			close: function () { $("body").css("overflow",""); }
 		});
 	}
 	,editCommitmentAmount: function (investorFundId) {
@@ -100,7 +100,8 @@
 		$("#CommitmentAmount","#EditCommitmentAmount").val("");
 		$("#EditCommitmentAmount").dialog('open');
 		$("#UpdateEditCmtLoading","#EditCommitmentAmount").html("");
-		$.getJSON("/Transaction/FindCommitmentAmount/"+investorFundId,function (data) {
+		var dt = new Date();
+		$.getJSON("/Transaction/FindCommitmentAmount/"+investorFundId+"?t="+dt.getTime(),function (data) {
 			$("#InvestorFundId","#EditCommitmentAmount").val(data.InvestorFundId);
 			$("#CommitmentAmount","#EditCommitmentAmount").val(data.CommitmentAmount);
 		});

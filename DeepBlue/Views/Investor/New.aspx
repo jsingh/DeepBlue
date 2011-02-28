@@ -183,78 +183,82 @@
 			<div class="box-content">
 				<div id="AccountInfoBox" class="box-main">
 					<div id="AccountInfo" class="accountinfo">
-						<div class="delete">
-							<%=Html.Image("Delete.png", new { onclick = "javascript:investor.deleteAccount(this);" })%>
+						<div style="width: 100%;">
+							<div class="add">
+								<%=Html.Image("add_icon.png", new { title = "Add New Account", onclick = "javascript:investor.createAccount(this);" })%>
+							</div>
+							<div class="delete">
+								<%=Html.Image("Delete.png", new { onclick = "javascript:investor.deleteAccount(this);" })%>
+							</div>
 						</div>
-						<div class="editor-label">
-							<%: Html.LabelFor(model => model.BankName) %>
+						<div class="accountinfo-box">
+							<div class="editor-label">
+								<%: Html.LabelFor(model => model.BankName) %>
+							</div>
+							<div class="editor-field text">
+								<%: Html.TextBox(Model.AccountLength + "_" + "BankName") %>
+							</div>
+							<div class="editor-label">
+								<%: Html.LabelFor(model => model.AccountNumber) %>
+							</div>
+							<div class="editor-field text">
+								<%: Html.TextBox(Model.AccountLength + "_" + "AccountNumber")%>
+							</div>
+							<div class="editor-label">
+								<%: Html.LabelFor(model => model.ABANumber) %>
+							</div>
+							<div class="editor-field text">
+								<%: Html.TextBox(Model.AccountLength + "_" + "ABANumber")%>
+							</div>
+							<div class="editor-label">
+								<%: Html.LabelFor(model => model.AccountOf) %>
+							</div>
+							<div class="editor-field text">
+								<%: Html.TextBox(Model.AccountLength + "_" + "AccountOf")%>
+							</div>
+							<div class="editor-label">
+								<%: Html.LabelFor(model => model.FFC) %>
+							</div>
+							<div class="editor-field text">
+								<%: Html.TextBox(Model.AccountLength + "_" + "FFC")%>
+							</div>
+							<div class="editor-label">
+								<%: Html.LabelFor(model => model.FFCNO) %>
+							</div>
+							<div class="editor-field text">
+								<%: Html.TextBox(Model.AccountLength + "_" + "FFCNO")%>
+							</div>
+							<div class="editor-label">
+								<%: Html.LabelFor(model => model.Attention) %>
+							</div>
+							<div class="editor-field text">
+								<%: Html.TextBox(Model.AccountLength + "_" + "Attention")%>
+							</div>
+							<div class="editor-label">
+								<%: Html.LabelFor(model => model.Swift) %>
+							</div>
+							<div class="editor-field text">
+								<%: Html.TextBox(Model.AccountLength + "_" + "Swift")%>
+							</div>
+							<div class="editor-label">
+								<%: Html.LabelFor(model => model.IBAN) %>
+							</div>
+							<div class="editor-field text">
+								<%: Html.TextBox(Model.AccountLength + "_" + "IBAN")%>
+							</div>
+							<div class="editor-label">
+								<%: Html.LabelFor(model => model.Reference) %>
+							</div>
+							<div class="editor-field text">
+								<%: Html.TextBox(Model.AccountLength + "_" + "Reference")%>
+							</div>
+							<div class="editor-label">
+								<%: Html.LabelFor(model => model.ByOrderOf)%>
+							</div>
+							<div class="editor-field text">
+								<%: Html.TextBox(Model.AccountLength + "_" + "ByOrderOf")%>
+							</div>
 						</div>
-						<div class="editor-field text">
-							<%: Html.TextBox(Model.AccountLength + "_" + "BankName") %>
-						</div>
-						<div class="editor-label">
-							<%: Html.LabelFor(model => model.AccountNumber) %>
-						</div>
-						<div class="editor-field text">
-							<%: Html.TextBox(Model.AccountLength + "_" + "AccountNumber")%>
-						</div>
-						<div class="editor-label">
-							<%: Html.LabelFor(model => model.ABANumber) %>
-						</div>
-						<div class="editor-field text">
-							<%: Html.TextBox(Model.AccountLength + "_" + "ABANumber")%>
-						</div>
-						<div class="editor-label">
-							<%: Html.LabelFor(model => model.AccountOf) %>
-						</div>
-						<div class="editor-field text">
-							<%: Html.TextBox(Model.AccountLength + "_" + "AccountOf")%>
-						</div>
-						<div class="editor-label">
-							<%: Html.LabelFor(model => model.FFC) %>
-						</div>
-						<div class="editor-field text">
-							<%: Html.TextBox(Model.AccountLength + "_" + "FFC")%>
-						</div>
-						<div class="editor-label">
-							<%: Html.LabelFor(model => model.FFCNO) %>
-						</div>
-						<div class="editor-field text">
-							<%: Html.TextBox(Model.AccountLength + "_" + "FFCNO")%>
-						</div>
-						<div class="editor-label">
-							<%: Html.LabelFor(model => model.Attention) %>
-						</div>
-						<div class="editor-field text">
-							<%: Html.TextBox(Model.AccountLength + "_" + "Attention")%>
-						</div>
-						<div class="editor-label">
-							<%: Html.LabelFor(model => model.Swift) %>
-						</div>
-						<div class="editor-field text">
-							<%: Html.TextBox(Model.AccountLength + "_" + "Swift")%>
-						</div>
-						<div class="editor-label">
-							<%: Html.LabelFor(model => model.IBAN) %>
-						</div>
-						<div class="editor-field text">
-							<%: Html.TextBox(Model.AccountLength + "_" + "IBAN")%>
-						</div>
-						<div class="editor-label">
-							<%: Html.LabelFor(model => model.Reference) %>
-						</div>
-						<div class="editor-field text">
-							<%: Html.TextBox(Model.AccountLength + "_" + "Reference")%>
-						</div>
-						<div class="editor-label">
-							<%: Html.LabelFor(model => model.ByOrderOf)%>
-						</div>
-						<div class="editor-field text">
-							<%: Html.TextBox(Model.AccountLength + "_" + "ByOrderOf")%>
-						</div>
-					</div>
-					<div class="add">
-						<%=Html.Image("add_icon.png", new { title = "Add New Account", onclick = "javascript:investor.createAccount(this);" })%>
 					</div>
 				</div>
 			</div>
