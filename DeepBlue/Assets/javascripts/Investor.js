@@ -49,19 +49,19 @@
 		var validForm=true;
 		var AccountLength=parseInt($("#AccountLength").val());
 		var index;
-		for(index=1;index<AccountLength+1;index++) {
+		/*for(index=1;index<AccountLength+1;index++) {
 			validForm=this.checkInputValid(index+"_BankName");
 			validForm=this.checkInputValid(index+"_AccountNumber");
-		}
+		}*/
 		var ContactLength=parseInt($("#ContactLength").val());
 		var index;
 		for(index=1;index<ContactLength+1;index++) {
 			//validForm=this.checkInputValid(index+"_ContactPerson");
-			validForm=this.checkSelectValid(index+"_ContactState");
-			validForm=this.checkSelectValid(index+"_ContactCountry");
-			validForm=this.checkEmail(index+"_ContactEmail");
-			validForm=this.checkZip(index+"_ContactZip");
-			validForm=this.checkPhone(index+"_ContactPhoneNumber");
+			//validForm=this.checkSelectValid(index+"_ContactState");
+			//validForm=this.checkSelectValid(index+"_ContactCountry");
+			//validForm=this.checkEmail(index+"_ContactEmail");
+			//validForm=this.checkZip(index+"_ContactZip");
+			//validForm=this.checkPhone(index+"_ContactPhoneNumber");
 		}
 		return validForm;
 	}

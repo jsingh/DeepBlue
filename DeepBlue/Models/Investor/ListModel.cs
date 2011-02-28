@@ -9,6 +9,7 @@ namespace DeepBlue.Models.Investor {
 	}
 	public class InvestorDetail {
 		public string InvestorName { get; set; }
+		public string DisplayName { get; set; }
 		public int InvestorId { get; set; }
         public string Social { get; set; }
 	}

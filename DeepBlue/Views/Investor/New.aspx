@@ -152,7 +152,6 @@
 				</div>
 				<div class="editor-field dropdown">
 					<%: Html.DropDownListFor(model => model.State,Model.SelectList.States)%>
-					<%: Html.ValidationMessageFor(model => model.State) %>
 				</div>
 				<div class="editor-label">
 					<%: Html.LabelFor(model => model.Zip) %>
@@ -166,7 +165,6 @@
 				</div>
 				<div class="editor-field dropdown">
 					<%: Html.DropDownListFor(model => model.Country, Model.SelectList.Countries)%>
-					<%: Html.ValidationMessageFor(model => model.Country) %>
 				</div>
 			</div>
 		</div>
@@ -185,13 +183,8 @@
 			<div class="box-content">
 				<div id="AccountInfoBox" class="box-main">
 					<div id="AccountInfo" class="accountinfo">
-						<div class="title">
-							<h2>
-								Account
-							</h2>
-						</div>
 						<div class="delete">
-							<%=Html.ImageLink("Delete.png", new { onclick = "javascript:investor.deleteAccount(this);" })%>
+							<%=Html.Image("Delete.png", new { onclick = "javascript:investor.deleteAccount(this);" })%>
 						</div>
 						<div class="editor-label">
 							<%: Html.LabelFor(model => model.BankName) %>
@@ -261,7 +254,7 @@
 						</div>
 					</div>
 					<div class="add">
-						<%=Html.ImageLink("add_icon.png", new { title = "Add New Account", onclick = "javascript:investor.createAccount(this);" })%>
+						<%=Html.Image("add_icon.png", new { title = "Add New Account", onclick = "javascript:investor.createAccount(this);" })%>
 					</div>
 				</div>
 			</div>
@@ -282,16 +275,11 @@
 				<div id="ContactInfoBox" class="box-main">
 					<div id="ContactInfo" class="contactinfo">
 						<div>
-							<div class="title">
-								<h2>
-									Contact
-								</h2>
-							</div>
 							<div class="delete">
-								<%=Html.ImageLink("Delete.png", new { title = "Delete Contact", onclick = "javascript:investor.deleteContact(this);" })%>
+								<%=Html.Image("Delete.png", new { title = "Delete Contact", onclick = "javascript:investor.deleteContact(this);" })%>
 							</div>
-							<div   class="add">
-								<%=Html.ImageLink("add_icon.png", new { title = "Add New Contact", onclick = "javascript:investor.createContact(this);" })%>
+							<div class="add">
+								<%=Html.Image("add_icon.png", new { title = "Add New Contact", onclick = "javascript:investor.createContact(this);" })%>
 							</div>
 						</div>
 						<div class="contactinfo-box">

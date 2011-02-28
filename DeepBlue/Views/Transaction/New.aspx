@@ -6,20 +6,20 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("TransactionController.js") %>
+	<%=Html.JavascriptInclueTag("EditTransaction.js") %>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="edit-investor">
 		<div id="editinfo" class="transaction-info">
 			<div class="search">
-				<div class="editor-label auto-width" style="width:auto">
+				<div class="editor-label auto-width" style="width: auto">
 					<%: Html.Label("Investor:") %>
 				</div>
 				<div class="editor-field auto-width">
 					<%: Html.TextBox("Investor", "", new { style = "width:265px" })%>&nbsp;<%=Html.Span("",new { id = "Loading" })%>
 				</div>
 			</div>
-			<% if (Model.InvestorId > 0) { %>
-			<div class="edit-info" id="investorInfo">
+			<div class="edit-info" id="investorInfo" style="display: none">
 				<div class="box">
 					<div class="box-top">
 						<div class="box-left">
@@ -41,13 +41,15 @@
 								<%: Html.Label("Investor Name") %>
 							</div>
 							<div class="display-field">
-								<%: Html.DisplayFor(model => model.InvestorName)%>
+								<div id="InvestorName">
+									<%: Html.DisplayFor(model => model.InvestorName)%></div>
 							</div>
 							<div class="editor-label">
 								<%: Html.Label("Display Name") %>
 							</div>
 							<div class="display-field">
-								<%: Html.DisplayFor(model => model.DisplayName)%>
+								<div id="DisplayName">
+									<%: Html.DisplayFor(model => model.DisplayName)%></div>
 							</div>
 							<div class="editor-label">
 								<%: Html.LabelFor(model => model.FundId) %>
@@ -60,7 +62,7 @@
 								<%: Html.LabelFor(model => model.TotalCommitment) %>
 							</div>
 							<div class="editor-field">
-								<%: Html.TextBoxFor(model => model.TotalCommitment) %>
+								<%: Html.TextBox("TotalCommitment","") %>
 								<%: Html.ValidationMessageFor(model => model.TotalCommitment) %>
 							</div>
 							<div class="editor-label">
@@ -89,27 +91,34 @@
 							<div class="editor-field checkbox">
 								<%: Html.CheckBoxFor(model => model.IsAgreementSigned)%>
 							</div>
+							<div class="editor-button">
+								<div style="float: left; padding: 0 0 10px 5px;">
+									<%: Html.ImageButton("submit.png", new { style = "width: 73px; height: 23px;" })%>
+								</div>
+								<div style="float: left; padding: 0 0 10px 5px;">
+									<%: Html.Span("",new { id = "UpdateLoading" })%>
+								</div>
+							</div>
 						</div>
 						<div class="edit-right" id="accordion">
 							<h3>
 								<a href="#">Fund Details</a></h3>
-							<div id="FundDetails">
-							</div>
-						</div>
-						<div class="editor-button">
-							<div style="float: left; padding: 0 0 10px 5px;">
-								<%: Html.ImageButton("submit.png", new { style = "width: 73px; height: 23px;" })%>
-							</div>
-							<div style="float: left; padding: 0 0 10px 5px;">
-								<%: Html.Span("",new { id = "UpdateLoading" })%>
+							<div>
+								<div id="LoadingFundDetail">
+									<%: Html.Image("ajax.jpg")%>&nbsp;Loading...
+								</div>
+								<div id="FundDetails">
+								</div>
 							</div>
 						</div>
 						<% } %>
 					</div>
 				</div>
 			</div>
-			<% } %>
 		</div>
+	</div>
+	<div id="EditCommitmentAmount" style="display: none">
+		<% Html.RenderPartial("EditCommitmentAmount", Model.EditCommitmentAmountModel); %>
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
@@ -121,6 +130,16 @@
 
 	<script type="text/javascript">
 		transactionController.init();
+		$("#EditCommitmentAmount").dialog({
+			title: "Edit Commitment Amount",
+			autoOpen: false,
+			width: 430,
+			modal: true,
+			position: 'middle',
+			autoResize: true,
+			open: function () { $("body").css("overflow","hidden"); },
+			close: function () { $("body").css("overflow",""); }
+		});
 	</script>
 
 </asp:Content>

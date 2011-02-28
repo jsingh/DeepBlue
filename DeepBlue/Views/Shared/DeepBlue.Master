@@ -14,6 +14,7 @@
 	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
 	<%= Html.JavascriptInclueTag("SearchInvestor.js")%>
+	<%= Html.JavascriptInclueTag("menu.js")%>
 	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
 	<%= Html.StylesheetLinkTag("site.css")%>
 	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
@@ -21,43 +22,105 @@
 <body>
 	<div id="main">
 		<div id="header">
-			<%=Html.ImageLink("logo.png")%>
+			<%=Html.Image("logo.png")%>
 		</div>
 		<div id="menu">
-			<%: Html.Tab(Html.ActionLink("Home", "Index", "Home").ToHtmlString(),(ViewData["MenuName"]=="Home" ? "tab-select" : "tab-unselect")) %>
-			<%: Html.Tab(Html.ActionLink("Investor", "New", "Investor").ToHtmlString(), (ViewData["MenuName"] == "Investor" ? "tab-select" : "tab-unselect"))%>
-			<%: Html.Tab(Html.ActionLink("Admin", "Index", "Admin").ToHtmlString(), (ViewData["MenuName"] == "Admin" ? "tab-select" : "tab-unselect"))%>
-			<%: Html.Tab(Html.ActionLink("Transaction", "New/0", "Transaction").ToHtmlString(), (ViewData["MenuName"] == "Transaction" ? "tab-select" : "tab-unselect"))%>
-			<%: Html.Tab(Html.ActionLink("Login", "").ToHtmlString(), "tab-unselect")%>
-		</div>
-		<div id="content">
-			<div class="content-box">
-				<div class="content-left">
-					<asp:ContentPlaceHolder ID="MainContent" runat="server" />
+			<% if(ViewData["MenuName"] == "Investor"){%>
+			<div class="topmenu tab-sel">
+			<%}else{%>
+			<div class="topmenu">
+			<%}%>
+					<div class="topmenu-left">
+					</div>
+					<div class="topmenu-center">
+						<a href="#" onmouseover="mopen('Inv_Management')" onmouseout="mclosetime()">Investor Management</a></div>
+					<div class="topmenu-right">
+					</div>
+					<div class="mdiv" id="Inv_Management" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+						<ul>
+							<li>
+								<%: Html.ActionLink("New Investor Setup", "New", "Investor")%></li>
+							<li>
+								<%: Html.ActionLink("Update Investor Information", "Edit", "Investor")%></li>
+							<li>
+								<%: Html.ActionLink("Investor Fund Transaction", "New", "Transaction")%></li>
+						</ul>
+					</div>
+	          </div>
+			<div class="topmenu">
+				<div class="topmenu-left">
 				</div>
-				<div class="content-right">
-					<%if (Convert.ToBoolean(ViewData["ShowRightPanelSearch"])) {%>
-					<% using (Html.BeginForm("", "", FormMethod.Post, new { onsubmit = "return searchInvestor.onSubmit(this,'" + ViewData["MenuName"].ToString() + "');" })) {%>
-			 
-					<div class="editor-field small-text  auto-width">
-						<%: Html.Label("Search:") %>&nbsp;<%: Html.TextBox("search", "", new { onkeyup = "javascript:searchInvestor.onKeyUp(this,'" + ViewData["MenuName"] + "');" })%>
-					</div>
-					<div class="editor-field auto-width button">
-						<%: Html.ImageButton("search.png",new {style="width:73px;height:21px"}) %>
-					</div>
-					<%} %>
-					<div id="investorlist" class="investor-list" style="display: none">
-						<div id="SearchDetail">
-						</div>
-					</div>
-					<%}%>
+				<div class="topmenu-center">
+					<a href="#">Fund Tracker</a></div>
+				<div class="topmenu-right">
+				</div>
+			</div>
+			<div class="topmenu">
+				<div class="topmenu-left">
+				</div>
+				<div class="topmenu-center">
+					<a href="#">Deal Flow</a></div>
+				<div class="topmenu-right">
+				</div>
+			</div>
+			<div class="topmenu">
+				<div class="topmenu-left">
+				</div>
+				<div class="topmenu-center">
+					<a href="#">Transaction Setup</a></div>
+				<div class="topmenu-right">
+				</div>
+			</div>
+			<div class="topmenu">
+				<div class="topmenu-left">
+				</div>
+				<div class="topmenu-center">
+					<a href="#">Accounting</a></div>
+				<div class="topmenu-right">
+				</div>
+			</div>
+			<div class="topmenu">
+				<div class="topmenu-left">
+				</div>
+				<div class="topmenu-center">
+					<a href="#">Document Management</a></div>
+				<div class="topmenu-right">
+				</div>
+			</div>
+				<% if(ViewData["MenuName"] == "Admin"){%>
+			<div class="topmenu tab-sel">
+			<%}else{%>
+			<div class="topmenu">
+			<%}%>
+				<div class="topmenu-left">
+				</div>
+				<div class="topmenu-center">
+					<%: Html.ActionLink("Administration", "Index", "Admin")%>
+				</div>
+				<div class="topmenu-right">
+				</div>
+			</div>
+			<div class="topmenu">
+				<div class="topmenu-left">
+				</div>
+				<div class="topmenu-center">
+					<a href="#">Reports</a></div>
+				<div class="topmenu-right">
 				</div>
 			</div>
 		</div>
-		<div id="footer">
-			<div class="footercontent">
-				Copyright 2011 DeepBlue</div>
+	</div>
+	<div id="content">
+		<div class="content-box">
+			<div class="content-left">
+				<asp:ContentPlaceHolder ID="MainContent" runat="server" />
+			</div>
 		</div>
+	</div>
+	<div id="footer">
+		<div class="footercontent">
+			Copyright 2011 DeepBlue</div>
+	</div>
 	</div>
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
 </body>

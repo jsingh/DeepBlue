@@ -14,7 +14,6 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("Investor Name:")]
 		public string InvestorName { get; set; }
  
-		[Required(ErrorMessage = "Required")]
 		[DisplayName("Display Name:")]
 		public string Alias { get; set; }
 
@@ -50,7 +49,6 @@ namespace DeepBlue.Models.Investor {
 		public string Notes { get; set; }
 						
 		/* Address Information */
-		[Required(ErrorMessage = "Required")]
 		[RegularExpression("^[01]?[-.]?(\\([2-9]\\d{2}\\)|[2-9]\\d{2})[-.]?\\d{3}[-.]?\\d{4}$", ErrorMessage = "Invalid Telephone No")]
 		[DataType(DataType.PhoneNumber)]
 		[DisplayName("Telephone No:")]
@@ -59,7 +57,6 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("Fax No:")]
 		public string Fax { get; set; }
 
-		[Required(ErrorMessage = "Required")]
 		[RegularExpression("^([_a-zA-Z0-9-]+)(\\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+\\.)+([a-zA-Z]{2,3})$",ErrorMessage="Invalid Email")]
 		[DataType(DataType.EmailAddress)]
 		[DisplayName("Email:")]
@@ -69,27 +66,22 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("Web Address:")]
 		public string WebAddress { get; set; }
 
-		[Required(ErrorMessage = "Required")]
 		[DisplayName("Address1:")]
 		public string Address1 { get; set; }
 
 		[DisplayName("Address2:")]
 		public string Address2 { get; set; }
 
-		[Required(ErrorMessage = "Required")]
 		[DisplayName("City:")]
 		public string City { get; set; }
 
-		[Required(ErrorMessage = "Required")]
 		[DisplayName("State:")]
 		public int State { get; set; }
 
-		[Required(ErrorMessage = "Required")]
 		[RegularExpression("^(\\d{5}-\\d{4}|\\d{5}|\\d{9})$|^([a-zA-Z]\\d[a-zA-Z]\\d[a-zA-Z]\\d)$", ErrorMessage = "Invalid Zip")]
 		[DisplayName("Zip:")]
 		public string Zip { get; set; }
 
-		[Required(ErrorMessage = "Required")]
 		[DisplayName("Country:")]
 		public int Country { get; set; }
 		

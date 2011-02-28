@@ -12,12 +12,12 @@ namespace DeepBlue.Helpers {
 	public static class HtmlControls {
 
 		#region Image
-		public static MvcHtmlString ImageLink(this HtmlHelper helper, string imagename) {
+		public static MvcHtmlString Image(this HtmlHelper helper, string imagename) {
 			TagBuilder tag = new TagBuilder("img");
 			tag.Attributes.Add("src", "/Assets/images/" + imagename);
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
-		public static MvcHtmlString ImageLink(this HtmlHelper helper, string imagename, object htmlAttributes) {
+		public static MvcHtmlString Image(this HtmlHelper helper, string imagename, object htmlAttributes) {
 			TagBuilder tag = new TagBuilder("img");
 			tag.Attributes.Add("src", "/Assets/images/" + imagename);
 			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
@@ -52,74 +52,7 @@ namespace DeepBlue.Helpers {
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 		#endregion
-
-		#region Table
-		public static MvcHtmlString Table(this HtmlHelper helper, object htmlAttributes) {
-			TagBuilder tag = new TagBuilder("table");
-			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
-			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
-		}
-		public static MvcHtmlString Table(this HtmlHelper helper, string cssClassName, object htmlAttributes) {
-			TagBuilder tag = new TagBuilder("table");
-			tag.Attributes.Add("class", cssClassName);
-			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
-			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
-		}
-		public static string EndTable(this HtmlHelper helper) {
-			return "</table>";
-		}
-		public static MvcHtmlString TableRow(this HtmlHelper helper, string cssClassName) {
-			TagBuilder tag = new TagBuilder("tr");
-			tag.Attributes.Add("class", cssClassName);
-			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
-		}
-		public static MvcHtmlString TableRow(this HtmlHelper helper, string cssClassName, object htmlAttributes) {
-			TagBuilder tag = new TagBuilder("tr");
-			tag.Attributes.Add("class", cssClassName);
-			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
-			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
-		}
-		public static string EndTableRow(this HtmlHelper helper) {
-			return "</tr>";
-		}
-		public static MvcHtmlString TableCell(this HtmlHelper helper, string innerHTML) {
-			TagBuilder tag = new TagBuilder("td");
-			tag.InnerHtml = innerHTML;
-			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
-		}
-		public static MvcHtmlString TableCell(this HtmlHelper helper, string innerHTML, object htmlAttributes) {
-			TagBuilder tag = new TagBuilder("td");
-			tag.InnerHtml = innerHTML;
-			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
-			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
-		}
-		public static MvcHtmlString TableCell(this HtmlHelper helper, string innerHTML, string cssClassName, object htmlAttributes) {
-			TagBuilder tag = new TagBuilder("td");
-			tag.InnerHtml = innerHTML;
-			tag.Attributes.Add("class", cssClassName);
-			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
-			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
-		}
-		public static string EndTableCell(this HtmlHelper helper) {
-			return "</td>";
-		}
-		public static MvcHtmlString TableHeaderCell(this HtmlHelper helper, string innerHTML, object htmlAttributes) {
-			TagBuilder tag = new TagBuilder("th");
-			tag.InnerHtml = innerHTML;
-			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
-			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
-		}
-		public static MvcHtmlString TableHeaderCell(this HtmlHelper helper, string innerHTML, string cssClassName, object htmlAttributes) {
-			TagBuilder tag = new TagBuilder("th");
-			tag.InnerHtml = innerHTML;
-			tag.Attributes.Add("class", cssClassName);
-			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
-			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
-		}
-		public static string EndTableHeaderCell(this HtmlHelper helper) {
-			return "</th>";
-		}
-		#endregion
+		 
 
 		#region Anchor
 		public static MvcHtmlString Anchor(this HtmlHelper helper, string innerHTML, string href, object htmlAttributes) {
@@ -164,8 +97,6 @@ namespace DeepBlue.Helpers {
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 		#endregion
-
-
-	
+			
 	}
 }

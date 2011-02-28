@@ -29,7 +29,7 @@ namespace DeepBlue.Controllers.Transaction {
 		// GET: /Transaction/
 
 		public ActionResult Index() {
-			ViewData["MenuName"] = "Transaction";
+			ViewData["MenuName"] = "Investor";
 			return View();
 		}
 
@@ -38,7 +38,7 @@ namespace DeepBlue.Controllers.Transaction {
 		// GET: /Transaction/New
 
 		public ActionResult New(int? id) {
-			ViewData["MenuName"] = "Transaction";
+			ViewData["MenuName"] = "Investor";
 			CreateModel model = new CreateModel();
 			DeepBlue.Models.Entity.Investor investor = InvestorRepository.FindInvestor(id ?? 0);
 			if (investor != null) {
@@ -86,36 +86,40 @@ namespace DeepBlue.Controllers.Transaction {
 		//
 		// GET: /Transaction/List
 		[HttpGet]
-		public ActionResult List() {
-			return View(InvestorRepository.FindInvestorFunds(Convert.ToInt32(Request.QueryString["id"])));
+		public ActionResult List(int id) {
+			return View(InvestorRepository.FindInvestorFunds(id));
 		}
 
-	 
+		
+
 		//
 		// GET: /Transaction/Edit/5
 		public ActionResult Edit(int id) {
 			EditModel editModel = new EditModel();
 			InvestorFundTransaction investorFundTrasaction = InvestorRepository.FindInvestorFundTransaction(id);
-			editModel.InvestorName = investorFundTrasaction.InvestorFund.Investor.InvestorName;
-			editModel.InvestorId = investorFundTrasaction.InvestorFund.Investor.InvestorID;
-			editModel.InvestorFundId = investorFundTrasaction.InvestorFundID;
-			editModel.OriginalCommitmentAmount = investorFundTrasaction.InvestorFund.TotalCommitment;
-			editModel.InvestorFundTransactionId = investorFundTrasaction.InvestorFundTransactionID;
-			editModel.CommitmentAmount = (decimal)investorFundTrasaction.Amount;
-			editModel.Date = investorFundTrasaction.CreatedDate.ToString("MM/dd/yyyy");
-			if (investorFundTrasaction.TransactionTypeID == (int)DeepBlue.Models.Transaction.Enums.TransactionType.Split) {
-				editModel.OtherInvestorCommitmentAmount = (decimal)investorFundTrasaction.Amount;
-			}
-			editModel.OtherInvestorId = (int)investorFundTrasaction.OtherInvestorID;
-			if (editModel.OtherInvestorId > 0) {
-				DeepBlue.Models.Entity.Investor otherInvestor = InvestorRepository.FindInvestor(editModel.OtherInvestorId);
-				if (otherInvestor != null) {
-					editModel.OtherInvestorName = otherInvestor.InvestorName;
+			if (investorFundTrasaction != null) {
+				editModel.InvestorName = investorFundTrasaction.InvestorFund.Investor.InvestorName;
+				editModel.InvestorId = investorFundTrasaction.InvestorFund.Investor.InvestorID;
+				editModel.InvestorFundId = investorFundTrasaction.InvestorFundID;
+				editModel.OriginalCommitmentAmount = investorFundTrasaction.InvestorFund.TotalCommitment;
+				editModel.InvestorFundTransactionId = investorFundTrasaction.InvestorFundTransactionID;
+				editModel.CommitmentAmount = (decimal)investorFundTrasaction.Amount;
+				editModel.Date = investorFundTrasaction.CreatedDate.ToString("MM/dd/yyyy");
+				if (investorFundTrasaction.TransactionTypeID == (int)DeepBlue.Models.Transaction.Enums.TransactionType.Split) {
+					editModel.OtherInvestorCommitmentAmount = (decimal)investorFundTrasaction.Amount;
+					editModel.CommitmentAmount = investorFundTrasaction.InvestorFund.TotalCommitment;
 				}
+				editModel.OtherInvestorId = (int)investorFundTrasaction.OtherInvestorID;
+				if (editModel.OtherInvestorId > 0) {
+					DeepBlue.Models.Entity.Investor otherInvestor = InvestorRepository.FindInvestor(editModel.OtherInvestorId);
+					if (otherInvestor != null) {
+						editModel.OtherInvestorName = otherInvestor.InvestorName;
+					}
+				}
+				editModel.TransactionTypeId = investorFundTrasaction.TransactionTypeID;
+				if (editModel.TransactionTypeId <= 0)
+					editModel.TransactionTypeId = (int)DeepBlue.Models.Transaction.Enums.TransactionType.Buy;
 			}
-			editModel.TransactionTypeId = investorFundTrasaction.TransactionTypeID;
-			if (editModel.TransactionTypeId <= 0)
-				editModel.TransactionTypeId = (int)DeepBlue.Models.Transaction.Enums.TransactionType.Buy;
 			return View(editModel);
 		}
 
@@ -141,12 +145,12 @@ namespace DeepBlue.Controllers.Transaction {
 		}
 
 		[HttpGet]
-		public ActionResult EditCommitmentAmount(int id) {
+		public JsonResult FindCommitmentAmount(int id) {
 			EditCommitmentAmountModel editModel = new EditCommitmentAmountModel();
 			InvestorFund investorFund = InvestorRepository.FindInvestorFund(id);
 			editModel.InvestorFundId = investorFund.InvestorFundID;
 			editModel.CommitmentAmount = investorFund.TotalCommitment;
-			return View(editModel);
+			return Json(editModel, JsonRequestBehavior.AllowGet);
 		}
 
 

@@ -2,11 +2,14 @@
 	menuName: ''
 	,onBeginSearch: function () {
 		$("#investorlist").css("display","");
-		$("#SearchDetail").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		$("#SearchLoading").show();
+		$("#SearchDetail").hide();
 	},
 	onSuccess: function (investors) {
 		var i;
 		var $searchDetail=$("#SearchDetail");
+		$("#SearchDetail").show();
+		$("#SearchLoading").hide();
 		$searchDetail.html("");
 		for(i=0;i<investors.length;i++) {
 			if(i==0) {

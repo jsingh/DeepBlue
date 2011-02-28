@@ -2,7 +2,8 @@
 	currentForm: null
 	,init: function () {
 		var id=$("#id").val();
-		editInvestor.selectInvestor(id);
+		if(parseInt(id)>0)
+			editInvestor.selectInvestor(id);
 	}
 	,selectInvestor: function (id) {
 		$("#Loading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
@@ -52,19 +53,17 @@
 			url: '/Json/FlexigridList',
 			dataType: 'json',
 			colModel: [
-				{ display: 'Fund Name',name: 'FundName',width: 180,sortable: true,align: 'left' },
+				{ display: 'Fund Name',name: 'FundName',width: 250,sortable: true,align: 'left' },
 				{ display: 'Committed Amount',name: 'CommittedAmount',width: 110,sortable: true,align: 'right' },
 				{ display: 'Unfunded Amount',name: 'UnfundedAmount',width: 100,sortable: true,align: 'right' },
-				{ display: 'Investror Type',name: 'InvestrorType',width: 100,sortable: true,align: 'left' }
+				{ display: 'Investror Type',name: 'InvestrorType',width: 180,sortable: true,align: 'left' }
 				],
 			title: 'FundDetails',
-			resizable:false,
-			autoload:false,
+			resizable: false,
+			autoload: false,
 			useRp: true,
 			rp: 15,
-			showTableToggleBtn: false,
-			width: 538,
-			height: 380
+			showTableToggleBtn: false
 		});
 		$(table).flexAddData(data);
 	}

@@ -231,15 +231,21 @@
 /* end toolbar*/
 
 .flexigrid div.hDiv {
-	background: #fafafa url(../images/fhbg.gif) repeat-x bottom;
+	/*background: #fafafa url(../images/fhbg.gif) repeat-x bottom;*/
 	position: relative;
 	border: 1px solid #ccc;
 	border-bottom: 0px;
 	overflow: hidden;
+	border-right:0px;
+	border-top:0px;
 }
+
 
 .flexigrid div.hDiv table {
 	border-right: 1px solid #fff;
+}
+.flexigrid div.hDiv table th{
+background: #fafafa url(../images/fhbg.gif) repeat-x bottom;border-top:1px solid #ccc;
 }
 
 .flexigrid div.cDrag {
@@ -287,13 +293,14 @@
 .flexigrid div.bDiv {
 	border: 1px solid #ccc;
 	border-top: 0px;
-	background: #fff;
 	overflow: hidden;
 	position: relative;
+	border-bottom:0px;
+	border-right:0px;
 }
 
 .flexigrid div.bDiv table {
-	/*border-bottom: 1px solid #ccc;*/
+	border-bottom: 1px solid #ccc;
 }
 
 .flexigrid div.hGrip {
@@ -407,7 +414,7 @@ div.colCopy {
 .flexigrid div.bDiv td {
 	border-bottom: 1px solid #fff;
 	vertical-align: top;
-	white-space: nowrap;
+	white-space: nowrap;background-color:#fff;
 }
 
 .flexigrid div.hDiv th div {

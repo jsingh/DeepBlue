@@ -7,11 +7,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace DeepBlue.Models.Transaction {
+
 	public class CreateModel {
 			public CreateModel(){
 				FundNames = new List<SelectListItem>();
 				FundClosings = new List<SelectListItem>(); 
 				InvestorTypes = new List<SelectListItem>();
+				EditCommitmentAmountModel = new EditCommitmentAmountModel();
 			}
 				
 			[Required(ErrorMessage="*")]
@@ -36,6 +38,7 @@ namespace DeepBlue.Models.Transaction {
 			public int InvestorTypeId { get; set; }
 
 			[Required(ErrorMessage = "*")]
+			[Range(1, Double.MaxValue, ErrorMessage = "Invalid Committed Amount")]
 			[DisplayName("Committed Amount:")]
 			public decimal TotalCommitment { get; set; }
 
@@ -51,5 +54,8 @@ namespace DeepBlue.Models.Transaction {
 			public List<SelectListItem> FundClosings { get; set; }
 
 			public List<SelectListItem> InvestorTypes { get; set; }
+
+			public EditCommitmentAmountModel EditCommitmentAmountModel { get; set; }
 	}
+	 
 }

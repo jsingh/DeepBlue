@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Web.Mvc;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace DeepBlue.Models.Investor {
 	public class EditModel {
@@ -182,7 +183,7 @@ namespace DeepBlue.Models.Investor {
 		public decimal TotalCommitment { get; set; }
 
 		public decimal UnfundedAmount { get; set; }
-
+		
 		public string InvestorType { get; set; }
 	}
 }

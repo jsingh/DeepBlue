@@ -18,6 +18,7 @@ namespace DeepBlue.Controllers.Investor {
         List<InvestorDetail> FindInvestors(string investorName);
 		List<InvestorDetail> FindOtherInvestors(string investorName,int excludeInvestorId);
         DeepBlue.Models.Entity.Investor FindInvestor(int investorId);
+		InvestorDetail FindInvestorDetail(int investorId);
 		InvestorType FindInvestorType(int investorTypeId);
         List<InvestorFund> FindInvestorFunds(int investorId);
         InvestorFund FindInvestorFund(int investorFundId);

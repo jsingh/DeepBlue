@@ -1,28 +1,29 @@
 ﻿var transactionController={
 	init: function () {
-		transactionController.loadFundDetails();
+		//	transactionController.loadFundDetails();
 	}
 	,selectInvestor: function (id) {
-		location.href="/Transaction/New/"+id;
-		/*$("#Loading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
-		$.getJSON("/Investor/FindInvestor/"+id,function (data) {
-		$("#Loading").html("");
-		var $investorInfo=$("#investor_"+id);
-		if(!($investorInfo.get(0))) {
-		var $investorInfo=transactionController.cloneInvestorInfo();
-		$("#editinfo").append($investorInfo);
-		$investorInfo.css("display","");
-		$investorInfo.attr("id","investor_"+id);
-		$("#InvestorId",$investorInfo).val(id);
-		transactionController.loadInvestorInfo($investorInfo,data);
-		}
-		});*/
+		//location.href="/Transaction/New/"+id;
+		$("#Loading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		var $investorInfo=$("#investorInfo");
+		$investorInfo.show()
+		$.getJSON("/Investor/InvestorDetail/"+id,function (data) {
+			$("#Loading").html("");
+			$("#InvestorName",$investorInfo).html(data.InvestorName);
+			$("#DisplayName",$investorInfo).html(data.DisplayName);
+			$("#InvestorId",$investorInfo).val(data.InvestorId);
+			transactionController.loadFundDetails();
+		});
 	}
 	,loadFundDetails: function () {
-		$("#FundDetails").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
-		$.get("/Transaction/List/?id="+$("#InvestorId").val(),function (data) {
-			$("#FundDetails").html(data);
-		});
+		$("#LoadingFundDetail").show();
+		var investorId=$("#InvestorId").val();
+		if(parseInt(investorId)>0) {
+			$.get("/Transaction/List/"+investorId,function (data) {
+				$("#LoadingFundDetail").hide();
+				$("#FundDetails").html(data);
+			});
+		}
 	}
 	,onCreateFundBegin: function () {
 		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
@@ -66,9 +67,10 @@
 		$("#EntityType",$investorInfo).val(investor.EntityType);
 		return $investorInfo;
 	}
-	,closeEditTransactionDialog: function () {
+	,closeEditTransactionDialog: function (reload) {
 		$("#editTransactionDialog").dialog('close');
-		transactionController.loadFundDetails();
+		if(reload)
+			transactionController.loadFundDetails();
 	}
 	,editTransaction: function (transactionId) {
 		$("#editTransactionDialog").remove();
@@ -88,32 +90,19 @@
 			width: 630,
 			modal: true,
 			position: 'top',
-			autoResize: true,
-			open: function () { $("body").css("overflow","hidden"); },
+			autoResize: true
+			,open: function () { $("body").css("overflow","hidden"); },
 			close: function () { $("body").css("overflow",""); }
 		});
 	}
 	,editCommitmentAmount: function (investorFundId) {
-		$("#editTransactionDialog").remove();
-		var dt=new Date();
-		var url="/Transaction/EditCommitmentAmount/"+investorFundId;
-		var iframe=document.createElement("div");
-		iframe.id="editTransactionDialog";
-		iframe.innerHTML+="<div id='loading'><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</div>";
-		iframe.innerHTML+='<iframe id="iframe_modal" allowtransparency="true" marginheight="0" marginwidth="0"  width="100%" frameborder="0" class="externalSite"  />';
-		var ifrm=$("#iframe_modal",iframe).get(0);
-		$(ifrm).css("height","100px").unbind('load');
-		$(ifrm).load(function () { $("#loading",iframe).remove(); });
-		ifrm.src=url;
-		$(iframe).dialog({
-			title: "Edit Commitment Amount",
-			autoOpen: true,
-			width: 430,
-			modal: true,
-			position: 'middle',
-			autoResize: true,
-			open: function () { $("body").css("overflow","hidden"); },
-			close: function () { $("body").css("overflow",""); }
+		$("#Investor").focus();
+		$("#CommitmentAmount","#EditCommitmentAmount").val("");
+		$("#EditCommitmentAmount").dialog('open');
+		$("#UpdateEditCmtLoading","#EditCommitmentAmount").html("");
+		$.getJSON("/Transaction/FindCommitmentAmount/"+investorFundId,function (data) {
+			$("#InvestorFundId","#EditCommitmentAmount").val(data.InvestorFundId);
+			$("#CommitmentAmount","#EditCommitmentAmount").val(data.CommitmentAmount);
 		});
 	}
 }

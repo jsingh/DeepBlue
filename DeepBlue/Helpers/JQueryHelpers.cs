@@ -25,6 +25,7 @@ namespace DeepBlue.Helpers {
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").accordion({")
 					 .Append("active:" + options.Active.ToString() + "")
 					 .Append(",autoHeight: " + options.AutoHeight.ToString().ToLower())
+					 .Append(",disabled: " + options.Disabled.ToString().ToLower())
 					 .Append(",collapsible: " + options.Collapsible.ToString().ToLower());
 			scriptSrc.Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());

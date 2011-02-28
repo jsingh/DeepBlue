@@ -97,64 +97,55 @@
 										<%: Html.Label("Fax:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox("Fax"
-																)%>
+										<%: Html.TextBox("Fax")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Email:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "Email"
-																)%>
+										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "Email")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Web Address:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "WebAddress"
-																)%>
+										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "WebAddress")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Address1:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "Address1"
-																)%>
+										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "Address1")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Address2:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "Address2"
-																, new {  maxlength = 40 })%>
+										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "Address2", new {  maxlength = 40 })%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("City:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "City"
-																, new {  maxlength = 30 })%>
+										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "City", new {  maxlength = 30 })%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("State:") %>
 									</div>
 									<div class="editor-field dropdown">
-										<%: Html.DropDownList(Model.AddressInformations.Count.ToString() + "_" + "State", Model.SelectList.States
-																											)%>
+										<%: Html.DropDownList(Model.AddressInformations.Count.ToString() + "_" + "State", Model.SelectList.States)%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Zip:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "PostalCode"
-																											)%>
+										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "PostalCode")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Country:")%>
 									</div>
 									<div class="editor-field dropdown">
-										<%: Html.DropDownList(Model.AddressInformations.Count.ToString() + "_" + "Country", Model.SelectList.Countries
-																											)%>
+										<%: Html.DropDownList(Model.AddressInformations.Count.ToString() + "_" + "Country", Model.SelectList.Countries)%>
 									</div>
 								</div>
 							</div>
@@ -165,121 +156,103 @@
 								<div id="contactInfo" class="contactinfo">
 									<h4>
 										Contact&nbsp;<span id="contactIndex"></span></h4>
-									<%: Html.Hidden(Model.ContactInformations.Count.ToString() + "_" + "ContactId"
-																)%>
-									<%: Html.Hidden(Model.ContactInformations.Count.ToString() + "_" + "ContactAddressId"
-																)%>
+									<%: Html.Hidden(Model.ContactInformations.Count.ToString() + "_" + "ContactId")%>
+									<%: Html.Hidden(Model.ContactInformations.Count.ToString() + "_" + "ContactAddressId")%>
 									<div class="editor-label">
 										<%: Html.Label("Contact Person:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactPerson"
-																										)%>
+										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactPerson")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Designation:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "Designation"
-																										)%>
+										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "Designation")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Phone Number:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactPhoneNumber"
-																										)%>
+										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactPhoneNumber")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Fax Number:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactFaxNumber"
-																										)%>
+										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactFaxNumber")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Email:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactEmail"
-																										)%>
+										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactEmail")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Web Address:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactWebAddress"
-																										)%>
+										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactWebAddress")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Address1:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactAddress1"
-																										, new { maxlength = 40})%>
+										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactAddress1", new { maxlength = 40})%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Address2:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactAddress2"
-																										, new { maxlength = 40})%>
+										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactAddress2", new { maxlength = 40})%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("City:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactCity"
-																										, new { maxlength = 30 } )%>
+										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactCity", new { maxlength = 30 } )%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("State:") %>
 									</div>
 									<div class="editor-field dropdown">
-										<%: Html.DropDownList(Model.ContactInformations.Count.ToString() + "_" + "ContactState", Model.SelectList.States
-																										)%>
+										<%: Html.DropDownList(Model.ContactInformations.Count.ToString() + "_" + "ContactState", Model.SelectList.States)%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Zip:") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactPostalCode"
-																										)%>
+										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactPostalCode")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Country:") %>
 									</div>
 									<div class="editor-field dropdown">
-										<%: Html.DropDownList(Model.ContactInformations.Count.ToString() + "_" + "ContactCountry", Model.SelectList.Countries
-																										)%>
+										<%: Html.DropDownList(Model.ContactInformations.Count.ToString() + "_" + "ContactCountry", Model.SelectList.Countries)%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Distribution Notices") %>
 									</div>
 									<div class="editor-field checkbox">
-										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "DistributionNotices",false
-																										)%>
+										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "DistributionNotices",false)%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Financials")%>
 									</div>
 									<div class="editor-field checkbox">
-										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "Financials",false
-																										)%>
+										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "Financials",false)%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("K1")%>
 									</div>
 									<div class="editor-field checkbox">
-										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "K1",false
-																										)%>
+										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "K1",false)%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Investor Letters")%>
 									</div>
 									<div class="editor-field checkbox">
-										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "InvestorLetters",false
-																										)%>
+										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "InvestorLetters",false)%>
 									</div>
 								</div>
 							</div>
@@ -290,84 +263,72 @@
 								<div id="accountInfo" class="accountInfo">
 									<h4>
 										Account&nbsp;<span id="accountIndex"></span></h4>
-									<%: Html.Hidden(Model.AccountInformations.Count.ToString() + "_" + "AccountId"
-																							)%>
+									<%: Html.Hidden(Model.AccountInformations.Count.ToString() + "_" + "AccountId")%>
 									<div class="editor-label">
 										<%: Html.Label("Bank Name") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "BankName",""
-																							) %>
+										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "BankName","") %>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Account Number") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "AccountNumber",""
-																							)%>
+										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "AccountNumber","")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("ABA Number") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "ABANumber",""
-																							)%>
+										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "ABANumber","")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Account Of") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "AccountOf",""
-																							)%>
+										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "AccountOf","")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("FFC") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "FFC",""
-																							)%>
+										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "FFC","")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("FFCNO") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "FFCNO",""
-																							)%>
+										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "FFCNO","")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Attention") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "Attention",""
-																							)%>
+										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "Attention","")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Swift") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "Swift",""
-																							)%>
+										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "Swift","")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("IBAN") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "IBAN",""
-																							)%>
+										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "IBAN","")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Reference") %>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "Reference",""
-																							)%>
+										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "Reference","")%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("ByOrderOf")%>
 									</div>
 									<div class="editor-field small-text-180">
-										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "ByOrderOf",""
-																							)%>
+										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "ByOrderOf","")%>
 									</div>
 								</div>
 							</div>

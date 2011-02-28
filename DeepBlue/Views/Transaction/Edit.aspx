@@ -9,7 +9,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="transaction-edit">
 		<%Html.EnableClientValidation(); %>
-		<% using (Ajax.BeginForm("Update", null, new AjaxOptions { OnBegin = "editTransaction.onBegin", OnSuccess = "editTransaction.closeDialog" }, new { @id = "EditTransaction" } )) {%>
+		<% using (Ajax.BeginForm("Update", null, new AjaxOptions { UpdateTargetId="UpdateTargetId", OnBegin = "editTransaction.onBegin", OnSuccess = "editTransaction.closeDialog" }, new { @id = "EditTransaction" })) {%>
 		<%: Html.ValidationSummary(true) %>
 		<div class="header">
 			<div class="editor-label">
@@ -42,7 +42,7 @@
 				<%: Html.Span("Commitment Amount:",new { id = "CommitmentAmount" })%>
 			</div>
 			<div class="editor-field">
-				<%: Html.TextBoxFor(model => model.CommitmentAmount, String.Format("{0:F}", Model.CommitmentAmount)) %>
+				<%: Html.TextBox("CommitmentAmount", (Model.CommitmentAmount <=0 ? "" : String.Format("{0:F}", Model.CommitmentAmount)), new { @id = "CommitmentAmount" }) %>
 				<%: Html.ValidationMessageFor(model => model.CommitmentAmount) %>
 			</div>
 			<div class="editor-label">
@@ -57,7 +57,6 @@
 			</div>
 			<div class="editor-field">
 				<%: Html.TextBoxFor(model => model.CounterParty) %>
-				<%: Html.ValidationMessageFor(model => model.CounterParty) %>
 			</div>
 			<div id="splitdetail" class="split-detail">
 				<div class="editor-label" style="width: 200px">
@@ -73,7 +72,7 @@
 					<%: Html.LabelFor(model => model.OtherInvestorCommitmentAmount) %>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBoxFor(model => model.OtherInvestorCommitmentAmount) %>
+					<%: Html.TextBox("OtherInvestorCommitmentAmount",(Model.OtherInvestorCommitmentAmount <=0 ? "" : String.Format("{0:F}",Model.OtherInvestorCommitmentAmount)), new { @id = "OtherInvestorCommitmentAmount" }) %>
 				</div>
 			</div>
 			<div class="editor-label">
@@ -96,10 +95,12 @@
 				<%: Html.ImageButton("Save.png", new { style = "width: 73px; height: 23px;", onclick = "return editTransaction.onSubmit();" })%>
 			</div>
 			<div style="float: left; padding: 0 0 10px 5px;">
-				<%: Html.ImageLink("Close.png", new { style = "width: 73px; height: 23px;cursor:pointer;", onclick = "editTransaction.closeDialog();" })%>
+				<%: Html.Image("Close.png", new { style = "width: 73px; height: 23px;cursor:pointer;", onclick = "editTransaction.closeDialog();" })%>
 			</div>
 		</div>
 		<% } %>
+	</div>
+	<div id="UpdateTargetId">
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">

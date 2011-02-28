@@ -34,10 +34,20 @@
 		$("#OtherInvestorId").val(id);
 	}
 	,onBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Save...");
+		$("#UpdateEditCmtLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Save...");
 	}
 	,closeDialog: function () {
-		parent.transactionController.closeEditTransactionDialog();
+		var reload=false;
+		if($("#UpdateTargetId").html()=="True")
+			reload=true;
+		parent.transactionController.closeEditTransactionDialog(reload);
+	}
+	,closeEditCommitAmtDialog: function () {
+		$("#EditCommitmentAmount").dialog('close');
+		if($("#UpdateTargetId").html()=="True") {
+			transactionController.loadFundDetails();
+		}
+		$("#UpdateTargetId").html("");
 	}
 	,onSubmit: function () {
 		var frm=document.getElementById("EditTransaction");
@@ -47,11 +57,11 @@
 				var OtherInvestorId=document.getElementById("OtherInvestorId").value;
 				var OtherInvestor=document.getElementById("OtherInvestorName");
 				var OICA=document.getElementById("OtherInvestorCommitmentAmount");
-				if(parseInt(OtherInvestorId)<=0) {
+				if(parseInt(OtherInvestorId)<=0||isNaN(parseInt(OtherInvestorId))) {
 					editTransaction.checkInputValid($(OtherInvestor));
 					return false;
 				}
-				if(parseFloat(OICA.value)<=0) {
+				if(parseFloat(OICA.value)<=0||isNaN(parseInt(OICA.value))) {
 					editTransaction.checkInputValid($(OICA));
 					return false;
 				}
