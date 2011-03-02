@@ -10,22 +10,26 @@
 		<div class="tab-right">
 		</div>
 		<div class="tab-cnt">
-			<div class="editor-label">
-				<%: Html.Label("Committed Amount:") %>
+			<div class="editor-row">
+				<div class="editor-label">
+					<%: Html.Label("Committed Amount:") %>
+				</div>
+				<div class="display-field">
+					<%: Html.Span(string.Format("{0:C}",item.TotalCommitment))%>
+				</div>
 			</div>
-			<div class="display-field">
-				<%: Html.Span(string.Format("{0:C}",item.TotalCommitment))%>
-			</div>
-			<div class="editor-label">
-				<%: Html.Label("Unfunded Amount:")%>
-			</div>
-			<div class="display-field">
-				<%: Html.Span(string.Format("{0:C}",item.UnfundedAmount))%>
+			<div class="editor-row">
+				<div class="editor-label">
+					<%: Html.Label("Unfunded Amount:")%>
+				</div>
+				<div class="display-field">
+					<%: Html.Span(string.Format("{0:C}",item.UnfundedAmount))%>
+				</div>
 			</div>
 			<div class="editor-link">
 				<% foreach (var transaction in item.InvestorFundTransactions) {%>
 				<%: Html.Anchor("Transaction", "#", new { onclick = "javascript:transactionController.editTransaction("+ transaction.InvestorFundTransactionID.ToString() +");" })%>
-				<%}%>&nbsp;-
+				<%break;}%>&nbsp;-
 				<%: Html.Anchor("Edit Committed Amount", "#", new { onclick = "javascript:transactionController.editCommitmentAmount(" + item.InvestorFundID.ToString() + ");" })%>
 			</div>
 		</div>

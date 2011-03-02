@@ -7,85 +7,96 @@
 	<%= Html.JavascriptInclueTag("EditTransaction.js")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-	<div class="transaction-edit">
+	<div class="transaction-edit" style="width:99%;">
 		<%Html.EnableClientValidation(); %>
-		<% using (Ajax.BeginForm("Update", null, new AjaxOptions { UpdateTargetId="UpdateTargetId", OnBegin = "editTransaction.onBegin", OnSuccess = "editTransaction.closeDialog" }, new { @id = "EditTransaction" })) {%>
+		<% using (Html.BeginForm("Update", "Transaction", FormMethod.Post, new { @id = "EditTransaction" })) {%>
 		<%: Html.ValidationSummary(true) %>
 		<div class="header">
-			<div class="editor-label">
-				<%: Html.LabelFor(model => model.InvestorName) %>
-			</div>
-			<div class="editor-label" style="clear: right">
-				<b>
-					<%: Html.Span(Model.InvestorName) %></b>
-			</div>
-			<div class="editor-label" style="clear: right">
-				<%: Html.LabelFor(model => model.OriginalCommitmentAmount) %>
-			</div>
-			<div class="editor-label" style="clear: right">
-				<b>
-					<%: Html.Span(Model.OriginalCommitmentAmount.ToString())%></b>
-			</div>
-		</div>
-		<div class="edit-detail">
-			<div class="editor-label">
-				<%: Html.RadioButton("TransactionType", (int)DeepBlue.Models.Transaction.Enums.TransactionType.Buy, (Model.TransactionTypeId == (int)DeepBlue.Models.Transaction.Enums.TransactionType.Buy ? true : false), new { id = "Buy", onclick = "javascript:editTransaction.onClickTransactionType(this);" })%>
-				&nbsp;<%: Html.Span(DeepBlue.Models.Transaction.Enums.TransactionType.Buy.ToString())%>
-			</div>
-			<div class="editor-label" style="clear: right">
-				<%: Html.RadioButton("TransactionType", (int)DeepBlue.Models.Transaction.Enums.TransactionType.Sell, (Model.TransactionTypeId == (int)DeepBlue.Models.Transaction.Enums.TransactionType.Sell ? true : false), new { id = "Sell", onclick = "javascript:editTransaction.onClickTransactionType(this);" })%>&nbsp;<%: Html.Span(DeepBlue.Models.Transaction.Enums.TransactionType.Sell.ToString())%>
-			</div>
-			<div class="editor-label" style="clear: right">
-				<%: Html.RadioButton("TransactionType", (int)DeepBlue.Models.Transaction.Enums.TransactionType.Split, (Model.TransactionTypeId == (int)DeepBlue.Models.Transaction.Enums.TransactionType.Split ? true : false), new { id = "Split", onclick = "javascript:editTransaction.onClickTransactionType(this);" })%>&nbsp;<%: Html.Span(DeepBlue.Models.Transaction.Enums.TransactionType.Split.ToString())%>
-			</div>
-			<div class="editor-label">
-				<%: Html.Span("Commitment Amount:",new { id = "CommitmentAmount" })%>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("CommitmentAmount", (Model.CommitmentAmount <=0 ? "" : String.Format("{0:F}", Model.CommitmentAmount)), new { @id = "CommitmentAmount" }) %>
-				<%: Html.ValidationMessageFor(model => model.CommitmentAmount) %>
-			</div>
-			<div class="editor-label">
-				<%: Html.LabelFor(model => model.Date) %>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBoxFor(model => model.Date) %>
-				<%: Html.ValidationMessageFor(model => model.Date) %>
-			</div>
-			<div class="editor-label">
-				<%: Html.LabelFor(model => model.CounterParty) %>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBoxFor(model => model.CounterParty) %>
-			</div>
-			<div id="splitdetail" class="split-detail">
-				<div class="editor-label" style="width: 200px">
-					<b>Other Investor Information</b>
-				</div>
-				<div class="editor-label">
+			<div style="float: left">
+				<div class="editor-label" style="width:100px">
 					<%: Html.LabelFor(model => model.InvestorName) %>
 				</div>
-				<div class="editor-field">
-					<%: Html.TextBoxFor(model => model.OtherInvestorName)%>
+				<div class="editor-label" style="clear: right">
+					<b>
+						<%: Html.Span(Model.InvestorName) %></b>
 				</div>
+			</div>
+			<div style="float: right">
+				<div class="editor-label" style="clear: right;">
+					<%: Html.LabelFor(model => model.OriginalCommitmentAmount) %>
+				</div>
+				<div class="editor-label" style="clear: right;width:75px;text-align:right;">
+					<b>
+						<%: Html.Span(string.Format("{0:C}", Model.OriginalCommitmentAmount))%></b>
+				</div>
+			</div>
+		</div>
+		<div class="header">
+			<div style="float: left" >
+				<div class="editor-label" style="clear: right;width:100px">
+					TransactionType:
+				</div>
+				<div class="editor-label" style="clear: right">
+					<b>Sell</b>
+				</div>
+			</div>
+			<div style="float: right">
+				<div class="editor-label" style="clear: right;">
+					Unfunded Amount:
+				</div>
+				<div class="editor-label" style="clear: right;width:75px;text-align:right;">
+					<b>
+						<%: Html.Span(string.Format("{0:C}", Model.UnfundedAmount))%></b>
+				</div>
+			</div>
+		</div>
+		<div class="edit-detail" style="margin-bottom: 30px;">
+			<div class="editor-row">
 				<div class="editor-label">
-					<%: Html.LabelFor(model => model.OtherInvestorCommitmentAmount) %>
+					<%: Html.LabelFor(model => model.CommitmentAmount) %>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("OtherInvestorCommitmentAmount",(Model.OtherInvestorCommitmentAmount <=0 ? "" : String.Format("{0:F}",Model.OtherInvestorCommitmentAmount)), new { @id = "OtherInvestorCommitmentAmount" }) %>
+					<%: Html.TextBox("CommitmentAmount", "", new { @id = "CommitmentAmount", @style = "width:100px" })%>
+					<br /><%: Html.ValidationMessageFor(model => model.CommitmentAmount) %>
 				</div>
 			</div>
-			<div class="editor-label">
-				<%: Html.LabelFor(model => model.Notes) %>
+			<div class="editor-row">
+				<div class="editor-label">
+					<%: Html.LabelFor(model => model.Date) %>
+				</div>
+				<div class="editor-field">
+					<%: Html.TextBox("Date", Model.Date.ToString("MM/dd/yyyy"), new { @id = "Date", @style = "width:100px" })%>
+					<%: Html.ValidationMessageFor(model => model.Date) %>
+				</div>
 			</div>
-			<div class="editor-field">
-				<%: Html.TextAreaFor(model => model.Notes,5,40,new {}) %>
-				<%: Html.ValidationMessageFor(model => model.Notes) %>
+			<div class="editor-row">
+				<div class="editor-label">
+					<%: Html.LabelFor(model => model.CounterPartyInvestor) %>
+				</div>
+				<div class="editor-field">
+					<%: Html.TextBoxFor(model => model.CounterPartyInvestor,new { @style = "width:330px"
+					,@onblur = "javascript:editTransaction.onInvestorBlur(this);"})%>
+					<%: Html.ValidationMessageFor(model => model.CounterPartyInvestorId) %>
+				</div>
 			</div>
-			<%: Html.HiddenFor(model => model.OtherInvestorId) %>
+			<div class="editor-row">
+				<div class="editor-label">
+					<%: Html.LabelFor(model => model.Notes) %>
+				</div>
+				<div class="editor-field">
+					<%: Html.TextAreaFor(model => model.Notes, 5, 39, new { @style = "width:331px" })%>
+					<%: Html.ValidationMessageFor(model => model.Notes) %>
+				</div>
+			</div>
+			<%: Html.HiddenFor(model => model.CounterPartyInvestorId) %>
 			<%: Html.HiddenFor(model => model.InvestorFundId)%>
 			<%: Html.HiddenFor(model => model.InvestorFundTransactionId)%>
 			<%: Html.HiddenFor(model => model.TransactionTypeId)%>
+			<%: Html.HiddenFor(model => model.InvestorId)%>
+			<%: Html.HiddenFor(model => model.InvestorName)%>
+			<%: Html.HiddenFor(model => model.OriginalCommitmentAmount)%>
+			<br />
+			<br />
 		</div>
 		<div class="editor-button" style="width: 225px">
 			<div style="float: left; padding: 0 0 10px 5px;">
@@ -95,7 +106,7 @@
 				<%: Html.ImageButton("Save.png", new { style = "width: 73px; height: 23px;", onclick = "return editTransaction.onSubmit();" })%>
 			</div>
 			<div style="float: left; padding: 0 0 10px 5px;">
-				<%: Html.Image("Close.png", new { style = "width: 73px; height: 23px;cursor:pointer;", onclick = "editTransaction.closeDialog();" })%>
+				<%: Html.Image("Close.png", new { style = "width: 73px; height: 23px;cursor:pointer;", onclick = "editTransaction.closeDialog(false);" })%>
 			</div>
 		</div>
 		<% } %>
@@ -104,13 +115,17 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%= Html.jQueryAutoCompleteScript("OtherInvestorName", new AutoCompleteOptions {
+	<%= Html.jQueryAutoCompleteScript("CounterPartyInvestor", new AutoCompleteOptions {
 	Source = "/Investor/FindOtherInvestors?investorid=" + Model.InvestorId.ToString(), MinLength = 1,
 																			OnSelect = "function(event, ui){ editTransaction.selectInvestor(ui.item.id);}"
 		})%>
 	<%= Html.jQueryDatePickerScript("Date")%>
 
 	<script type="text/javascript">
+		var transactionSuccess='<%=Model.TransactionSuccess%>';
+		if(transactionSuccess=="True") {
+			editTransaction.closeDialog(true);
+		}
 		editTransaction.init();
 	</script>
 

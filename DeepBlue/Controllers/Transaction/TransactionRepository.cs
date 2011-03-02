@@ -10,30 +10,23 @@ using DeepBlue.Models.Transaction;
 namespace DeepBlue.Controllers.Transaction {
 	public class TransactionRepository : ITransactionRepository {
 
-		DeepBlueEntities DeepBlueDb = new DeepBlueEntities();
+		DeepBlueEntities DeepBlueContext = new DeepBlueEntities();
 		
 		#region ITransactionRepository Members
 
 		public List<Models.Entity.Fund> GetAllFundNames() {
-			return (from fund in DeepBlueDb.Funds
+			return (from fund in DeepBlueContext.Funds
 					orderby fund.FundName
 					select fund).ToList();
 		}
 
 		public List<Models.Entity.FundClosing> GetAllFundClosings() {
-			return (from fundClose in DeepBlueDb.FundClosings
+			return (from fundClose in DeepBlueContext.FundClosings
 					orderby fundClose.FundClosingDate descending 
 					select fundClose).ToList();
 		}
 
-		public void AddInvestorFund(InvestorFund investorFund) {
-			DeepBlueDb.InvestorFunds.AddObject(investorFund);
-		}
-		
-		public void Save() {
-			DeepBlueDb.SaveChanges();
-		}
-
+	 
 		#endregion
 	}
 }

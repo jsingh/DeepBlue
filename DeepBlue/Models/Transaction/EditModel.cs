@@ -22,6 +22,9 @@ namespace DeepBlue.Models.Transaction {
 		[DisplayName("Original Commitment Amount:")]
 		public decimal OriginalCommitmentAmount { get; set; }
 
+		[DisplayName("Unfunded Amount:")]
+		public decimal UnfundedAmount { get; set; }
+
 		[Required(ErrorMessage = "Required")]
 		[Range(1,Double.MaxValue,ErrorMessage="Required")]
 		[DisplayName("Commitment Amount:")]
@@ -29,20 +32,25 @@ namespace DeepBlue.Models.Transaction {
 
 		[Required(ErrorMessage = "Required")]
 		[DisplayName("Date:")]
-		public string Date { get; set; }
-
-		[DisplayName("Counterparty:")]
-		public string CounterParty { get; set; }
+		public DateTime Date { get; set; }
+				
+		[DisplayName("Counterparty Investor:")]
+		public string CounterPartyInvestor { get; set; }
 
 		[DisplayName("Notes:")]
 		public string Notes { get; set; }
-		
-		public int OtherInvestorId { get; set; }
 
-		public string OtherInvestorName { get; set; }
+		[Required(ErrorMessage = "Required")]
+		[Range((int)ConfigUtil.IDStartRange, Double.MaxValue, ErrorMessage = "Required")]
+		public int CounterPartyInvestorId { get; set; }
+
+		public string CounterPartyInvestorName { get; set; }
 
 		[DisplayName("Commitment Amount:")]
-		public decimal OtherInvestorCommitmentAmount { get; set; }
+		public decimal CounterPartyInvestorCommitmentAmount { get; set; }
+
+		public bool TransactionSuccess { get; set; }
+
 	}
 
 	public class EditCommitmentAmountModel{
@@ -53,5 +61,7 @@ namespace DeepBlue.Models.Transaction {
 		[Range(1, Double.MaxValue, ErrorMessage = "Required")]
 		[DisplayName("Commitment Amount:")]
 		public decimal CommitmentAmount { get; set; }
+
+		public decimal UnfundedAmount { get; set; }
 	}
 }

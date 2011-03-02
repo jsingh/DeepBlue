@@ -71,10 +71,17 @@
     <Compile Include="Controllers\Investor\CreateInvalidData.cs" />
     <Compile Include="Controllers\Investor\InvestorBase.cs" />
     <Compile Include="Controllers\Investor\New.cs" />
+    <Compile Include="Controllers\Transaction\CreateInvestorFund.cs" />
+    <Compile Include="Controllers\Transaction\CreateInvestorFundInvalidData.cs" />
+    <Compile Include="Controllers\Transaction\InvestorFundBase.cs" />
+    <Compile Include="Controllers\Transaction\NewInvestorFund.cs" />
     <Compile Include="MockSessionState.cs" />
     <Compile Include="Models\Investor\Investor.cs" />
     <Compile Include="Models\Investor\InvestornvalidData.cs" />
     <Compile Include="Models\Investor\InvestorValidData.cs" />
+    <Compile Include="Models\Transaction\InvestorFund.cs" />
+    <Compile Include="Models\Transaction\InvestorFundInvalidData.cs" />
+    <Compile Include="Models\Transaction\InvestorValidData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -82,7 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DeepBlue\DeepBlue.csproj">
-      <Project>{6BAC1ADD-D823-4979-9905-0A0B677B12CE}</Project>
+      <Project>{29CF30A7-AD06-46A1-87F3-2FBEED1FCA1F}</Project>
       <Name>DeepBlue</Name>
     </ProjectReference>
   </ItemGroup>

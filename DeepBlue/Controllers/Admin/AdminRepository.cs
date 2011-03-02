@@ -7,12 +7,12 @@ using DeepBlue.Models.Entity;
 namespace DeepBlue.Controllers.Admin {
 	public class AdminRepository : IAdminRepository {
 	
-		DeepBlueEntities DeepBlueDb = new DeepBlueEntities();
+		DeepBlueEntities DeepBlueContext = new DeepBlueEntities();
 
 		#region IAdminRepository Members
 
 		public List<Models.Entity.InvestorEntityType> GetAllInvestorEntityTypes() {
-			return (from entityType in DeepBlueDb.InvestorEntityTypes
+			return (from entityType in DeepBlueContext.InvestorEntityTypes
 					orderby entityType.InvestorEntityTypeName
 					select entityType).ToList();
 		}

@@ -98,7 +98,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\Partial\InvestorFundTransactionService.cs" />
+    <Compile Include="Models\Entity\Partial\InvestorFundService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorService.cs" />
+    <Compile Include="Models\Entity\Validation\InvestorFundTransaction.cs" />
+    <Compile Include="Models\Entity\Validation\InvestorFund.cs" />
     <Compile Include="Models\Entity\Validation\Investor.cs" />
     <Compile Include="Models\Transaction\CreateModel.cs" />
     <Compile Include="Models\Investor\CreateModel.cs" />
@@ -223,6 +227,7 @@
     <Content Include="Views\Investor\FundList.ascx" />
     <Content Include="Views\Investor\New.aspx" />
     <Content Include="Views\Investor\ThankYou.aspx" />
+    <Content Include="Views\Transaction\CreateInvestorFundSuccess.ascx" />
     <Content Include="Views\Transaction\Edit.aspx" />
     <Content Include="Views\Transaction\EditCommitmentAmount.ascx" />
     <Content Include="Views\Transaction\Index.aspx" />

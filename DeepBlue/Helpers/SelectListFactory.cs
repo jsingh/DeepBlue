@@ -12,7 +12,7 @@ namespace DeepBlue.Helpers {
 			List<SelectListItem> stateList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
-			item.Value = "";
+			item.Value = "0";
 			stateList.Add(item);
 			foreach (var state in states) {
 				item = new SelectListItem();
@@ -27,7 +27,7 @@ namespace DeepBlue.Helpers {
 			List<SelectListItem> countryList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
-			item.Value = "";
+			item.Value = "0";
 			countryList.Add(item);
 			foreach (var country in countries) {
 				item = new SelectListItem();
@@ -42,7 +42,7 @@ namespace DeepBlue.Helpers {
 			List<SelectListItem> addressTypeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
-			item.Value = "";
+			item.Value = "0";
 			addressTypeList.Add(item);
 			foreach (var addressType in addressTypes) {
 				item = new SelectListItem();
@@ -57,7 +57,7 @@ namespace DeepBlue.Helpers {
 			List<SelectListItem> investorEntityTypeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
-			item.Value = "";
+			item.Value = "0";
 			investorEntityTypeList.Add(item);
 			foreach (var investorEntityType in investorEntityTypes) {
 				item = new SelectListItem();
@@ -106,7 +106,7 @@ namespace DeepBlue.Helpers {
 			List<SelectListItem> fundList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
-			item.Value = "";
+			item.Value = "0";
 			fundList.Add(item);
 			foreach (var fund in funds) {
 				item = new SelectListItem();
@@ -121,7 +121,7 @@ namespace DeepBlue.Helpers {
 			List<SelectListItem> fundClosingList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
-			item.Value = "";
+			item.Value = "0";
 			fundClosingList.Add(item);
 			foreach (var fundClose in fundClosings) {
 				item = new SelectListItem();
@@ -136,7 +136,7 @@ namespace DeepBlue.Helpers {
 			List<SelectListItem> investorTypeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
-			item.Value = "";
+			item.Value = "0";
 			investorTypeList.Add(item);
 			foreach (var investorType in investorTypes) {
 				item = new SelectListItem();

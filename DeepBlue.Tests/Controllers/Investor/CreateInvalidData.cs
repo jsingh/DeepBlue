@@ -47,7 +47,7 @@ namespace DeepBlue.Tests.Controllers.Investor {
         private bool test_error_count(string parameterName, int errorCount) {
             SetFormCollection();
             int errors = 0;
-            IsValid("InvestorName", out errors);
+			IsValid(parameterName, out errors);
             return errorCount == errors;
         }
 
@@ -66,102 +66,7 @@ namespace DeepBlue.Tests.Controllers.Investor {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }
-
-        [Test]
-        public void invalid_alias_sets_model_error_on_model_state() {
-            Assert.IsFalse(test_posted_value("Alias"));
-        }
-
-        [Test]
-        public void invalid_alias_sets_1_error() {
-            Assert.IsTrue(test_error_count("Alias", 1));
-        }
-
-        [Test]
-        public void invalid_alias_results_in_invalid_modelstate() {
-            SetFormCollection();
-            Assert.IsFalse(base.DefaultController.ModelState.IsValid);
-        }
-
-        [Test]
-        public void invalid_phone_sets_model_error_on_model_state() {
-            Assert.IsFalse(test_posted_value("Phone"));
-        }
-
-        [Test]
-        public void invalid_phone_sets_1_error() {
-            Assert.IsTrue(test_error_count("Phone", 1));
-        }
-
-        [Test]
-        public void invalid_phone_results_in_invalid_modelstate() {
-            SetFormCollection();
-            Assert.IsFalse(base.DefaultController.ModelState.IsValid);
-        }
-
-        [Test]
-        public void invalid_email_sets_model_error_on_model_state() {
-            Assert.IsFalse(test_posted_value("Email"));
-        }
-
-        [Test]
-        public void invalid_email_sets_1_error() {
-            Assert.IsTrue(test_error_count("Email", 1));
-        }
-
-        [Test]
-        public void invalid_email_results_in_invalid_modelstate() {
-            SetFormCollection();
-            Assert.IsFalse(base.DefaultController.ModelState.IsValid);
-        }
-
-        [Test]
-        public void invalid_address1_sets_model_error_on_model_state() {
-            Assert.IsFalse(test_posted_value("Address1"));
-        }
-
-        [Test]
-        public void invalid_address1__sets_1_error() {
-            Assert.IsTrue(test_error_count("Address1", 1));
-        }
-
-        [Test]
-        public void invalid_address1_results_in_invalid_modelstate() {
-            SetFormCollection();
-            Assert.IsFalse(base.DefaultController.ModelState.IsValid);
-        }
-
-        [Test]
-        public void invalid_city_sets_model_error_on_model_state() {
-            Assert.IsFalse(test_posted_value("City"));
-        }
-
-        [Test]
-        public void invalid_city_sets_1_error() {
-            Assert.IsTrue(test_error_count("City", 1));
-        }
-
-        [Test]
-        public void invalid_city_results_in_invalid_modelstate() {
-            SetFormCollection();
-            Assert.IsFalse(base.DefaultController.ModelState.IsValid);
-        }
-
-        [Test]
-        public void invalid_zip_sets_model_error_on_model_state() {
-            Assert.IsFalse(test_posted_value("Zip"));
-        }
-
-        [Test]
-        public void invalid_zip_sets_1_error() {
-            Assert.IsTrue(test_error_count("Zip", 1));
-        }
-
-        [Test]
-        public void invalid_zip_results_in_invalid_modelstate() {
-            SetFormCollection();
-            Assert.IsFalse(base.DefaultController.ModelState.IsValid);
-        }
+      
         #endregion
 
         #region Tests after model state is invalid

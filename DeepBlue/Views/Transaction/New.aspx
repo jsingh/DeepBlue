@@ -12,6 +12,8 @@
 	<div class="edit-investor">
 		<div id="editinfo" class="transaction-info">
 			<div class="search">
+			</div>
+			<div class="editor-row">
 				<div class="editor-label auto-width" style="width: auto">
 					<%: Html.Label("Investor:") %>
 				</div>
@@ -35,68 +37,78 @@
 						<% Html.EnableClientValidation(); %>
 						<% using (Ajax.BeginForm("CreateInvestorFund", new AjaxOptions { HttpMethod = "Post", OnBegin = "transactionController.onCreateFundBegin", OnSuccess = "transactionController.onCreateFundSuccess" })) {%>
 						<%: Html.ValidationSummary(true) %>
+						<%: Html.HiddenFor(model => model.InvestorId)%>
 						<div class="edit-left">
-							<%: Html.HiddenFor(model => model.InvestorId)%>
-							<div class="editor-label">
-								<%: Html.Label("Investor Name") %>
-							</div>
-							<div class="display-field">
-								<div id="InvestorName">
-									<%: Html.DisplayFor(model => model.InvestorName)%></div>
-							</div>
-							<div class="editor-label">
-								<%: Html.Label("Display Name") %>
-							</div>
-							<div class="display-field">
-								<div id="DisplayName">
-									<%: Html.DisplayFor(model => model.DisplayName)%></div>
-							</div>
-							<div class="editor-label">
-								<%: Html.LabelFor(model => model.FundId) %>
-							</div>
-							<div class="editor-field">
-								<%: Html.DropDownListFor(model => model.FundId,Model.FundNames) %>
-								<%: Html.ValidationMessageFor(model => model.FundId) %>
-							</div>
-							<div class="editor-label auto-width" style="clear: right; white-space: nowrap">
-								<%: Html.LabelFor(model => model.TotalCommitment) %>
-							</div>
-							<div class="editor-field">
-								<%: Html.TextBox("TotalCommitment","") %>
-								<%: Html.ValidationMessageFor(model => model.TotalCommitment) %>
-							</div>
-							<div class="editor-label">
-								<%: Html.LabelFor(model => model.FundClosingId) %>
-							</div>
-							<div class="editor-field">
-								<%: Html.DropDownListFor(model => model.FundClosingId, Model.FundClosings)%>
-								<%: Html.ValidationMessageFor(model => model.FundClosingId) %>
-							</div>
-							<div class="editor-label" style="clear: right">
-								<%: Html.LabelFor(model => model.CommittedDate) %>
-							</div>
-							<div class="editor-field">
-								<%: Html.TextBoxFor(model => model.CommittedDate) %>
-								<%: Html.ValidationMessageFor(model => model.CommittedDate) %>
-							</div>
-							<div class="editor-label">
-								<%: Html.LabelFor(model => model.InvestorTypeId) %>
-							</div>
-							<div class="editor-field">
-								<%: Html.DropDownListFor(model => model.InvestorTypeId,Model.InvestorTypes) %>
-							</div>
-							<div class="editor-label" style="clear: right">
-								<%: Html.LabelFor(model => model.IsAgreementSigned) %>
-							</div>
-							<div class="editor-field checkbox">
-								<%: Html.CheckBoxFor(model => model.IsAgreementSigned)%>
-							</div>
-							<div class="editor-button">
-								<div style="float: left; padding: 0 0 10px 5px;">
-									<%: Html.ImageButton("submit.png", new { style = "width: 73px; height: 23px;" })%>
+							<div class="editor-row">
+								<div class="editor-label">
+									<%: Html.Label("Investor Name") %>
 								</div>
-								<div style="float: left; padding: 0 0 10px 5px;">
-									<%: Html.Span("",new { id = "UpdateLoading" })%>
+								<div class="display-field">
+									<div id="InvestorName">
+										<%: Html.DisplayFor(model => model.InvestorName)%></div>
+								</div>
+							</div>
+							<div class="editor-row">
+								<div class="editor-label">
+									<%: Html.Label("Display Name") %>
+								</div>
+								<div class="display-field">
+									<div id="DisplayName">
+										<%: Html.DisplayFor(model => model.DisplayName)%></div>
+								</div>
+							</div>
+							<div class="editor-row">
+								<div class="editor-label">
+									<%: Html.LabelFor(model => model.FundId) %>
+								</div>
+								<div class="editor-field">
+									<%: Html.DropDownListFor(model => model.FundId,Model.FundNames) %>
+									<%: Html.ValidationMessageFor(model => model.FundId) %>
+								</div>
+								<div class="editor-label auto-width" style="clear: right; white-space: nowrap">
+									<%: Html.LabelFor(model => model.TotalCommitment) %>
+								</div>
+								<div class="editor-field">
+									<%: Html.TextBox("TotalCommitment","") %>
+									<%: Html.ValidationMessageFor(model => model.TotalCommitment) %>
+								</div>
+							</div>
+							<div class="editor-row">
+								<div class="editor-label">
+									<%: Html.LabelFor(model => model.FundClosingId) %>
+								</div>
+								<div class="editor-field">
+									<%: Html.DropDownListFor(model => model.FundClosingId, Model.FundClosings)%>
+									<%: Html.ValidationMessageFor(model => model.FundClosingId) %>
+								</div>
+								<div class="editor-label" style="clear: right">
+									<%: Html.LabelFor(model => model.CommittedDate) %>
+								</div>
+								<div class="editor-field">
+									<%: Html.TextBoxFor(model => model.CommittedDate) %>
+									<%: Html.ValidationMessageFor(model => model.CommittedDate) %>
+								</div>
+							</div>
+							<div class="editor-row">
+								<div class="editor-label">
+									<%: Html.LabelFor(model => model.InvestorTypeId) %>
+								</div>
+								<div class="editor-field">
+									<%: Html.DropDownListFor(model => model.InvestorTypeId,Model.InvestorTypes) %>
+								</div>
+								<div class="editor-label" style="clear: right">
+									<%: Html.LabelFor(model => model.IsAgreementSigned) %>
+								</div>
+								<div class="editor-field checkbox">
+									<%: Html.CheckBoxFor(model => model.IsAgreementSigned)%>
+								</div>
+								<div class="editor-button">
+									<div style="float: left; padding: 0 0 10px 5px;">
+										<%: Html.ImageButton("submit.png", new { style = "width: 73px; height: 23px;" })%>
+									</div>
+									<div style="float: left; padding: 0 0 10px 5px;">
+										<%: Html.Span("",new { id = "UpdateLoading" })%>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -120,6 +132,8 @@
 	<div id="EditCommitmentAmount" style="display: none">
 		<% Html.RenderPartial("EditCommitmentAmount", Model.EditCommitmentAmountModel); %>
 	</div>
+	<div id="EditTransaction">
+	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%= Html.jQueryAutoCompleteScript("Investor", new AutoCompleteOptions { Source = "/Investor/FindInvestors", MinLength=1,
@@ -136,7 +150,15 @@
 			width: 430,
 			modal: true,
 			position: 'middle',
-			autoResize: true 
+			autoResize: true
+		});
+		$("#EditTransaction").dialog({
+			title: "Transaction",
+			autoOpen: false,
+			width: 600,
+			modal: true,
+			position: 'top',
+			autoResize: true
 		});
 	</script>
 

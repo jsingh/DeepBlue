@@ -7,8 +7,8 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.Entity {
     public interface IInvestorService {
         void SaveInvestor(Investor investor);
+		void UpdateInvestor(DeepBlueEntities context);
     }
-
     public class InvestorService : IInvestorService {
         public void SaveInvestor(Investor investor) {
             using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -16,5 +16,8 @@ namespace DeepBlue.Models.Entity {
                 context.SaveChanges();
             }
         }
-    }
+		public void UpdateInvestor(DeepBlueEntities context) {
+			context.SaveChanges();
+		}
+	}
 }

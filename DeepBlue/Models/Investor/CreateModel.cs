@@ -13,7 +13,7 @@ namespace DeepBlue.Models.Investor {
 		[Required(ErrorMessage = "Required")]
 		[DisplayName("Investor Name:")]
 		public string InvestorName { get; set; }
- 
+
 		[DisplayName("Display Name:")]
 		public string Alias { get; set; }
 
@@ -26,10 +26,12 @@ namespace DeepBlue.Models.Investor {
 		public bool DomesticForeign { get; set; }
 
 		[Required(ErrorMessage = "Required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Required")]
 		[DisplayName("State of Residency:")]
 		public int StateOfResidency { get; set; }
 
 		[Required(ErrorMessage = "Required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue,ErrorMessage="Required")]
 		[DisplayName("Entity Type:")]
 		public int EntityType { get; set; }
 
@@ -44,10 +46,10 @@ namespace DeepBlue.Models.Investor {
 
 		[DisplayName("Source:")]
 		public int Source { get; set; }
-		
+
 		[DisplayName("Notes:")]
 		public string Notes { get; set; }
-						
+
 		/* Address Information */
 		[RegularExpression("^[01]?[-.]?(\\([2-9]\\d{2}\\)|[2-9]\\d{2})[-.]?\\d{3}[-.]?\\d{4}$", ErrorMessage = "Invalid Telephone No")]
 		[DataType(DataType.PhoneNumber)]
@@ -57,7 +59,7 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("Fax No:")]
 		public string Fax { get; set; }
 
-		[RegularExpression("^([_a-zA-Z0-9-]+)(\\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+\\.)+([a-zA-Z]{2,3})$",ErrorMessage="Invalid Email")]
+		[RegularExpression("^([_a-zA-Z0-9-]+)(\\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+\\.)+([a-zA-Z]{2,3})$", ErrorMessage = "Invalid Email")]
 		[DataType(DataType.EmailAddress)]
 		[DisplayName("Email:")]
 		public string Email { get; set; }
@@ -83,8 +85,8 @@ namespace DeepBlue.Models.Investor {
 		public string Zip { get; set; }
 
 		[DisplayName("Country:")]
-		public int Country { get; set; }
-		
+		public int  Country { get; set; }
+
 		/* Bank Information */
 
 		[DisplayName("Bank Name:")]
@@ -113,7 +115,7 @@ namespace DeepBlue.Models.Investor {
 
 		[DisplayName("By Order Of:")]
 		public string ByOrderOf { get; set; }
-		
+
 		[DisplayName("Reference:")]
 		public string Reference { get; set; }
 

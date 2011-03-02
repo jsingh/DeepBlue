@@ -21,11 +21,13 @@ namespace DeepBlue.Controllers.Investor {
 		InvestorDetail FindInvestorDetail(int investorId);
 		InvestorType FindInvestorType(int investorTypeId);
         List<InvestorFund> FindInvestorFunds(int investorId);
+		InvestorFund FindInvestorFund(int investorId,int investorFundId);
         InvestorFund FindInvestorFund(int investorFundId);
 		InvestorFundTransaction FindInvestorFundTransaction(int transactionId);
-        void Add(DeepBlue.Models.Entity.Investor investor);
         void Delete(DeepBlue.Models.Entity.Investor investor);
-        void Save();
         IEnumerable<ErrorInfo> SaveInvestor(DeepBlue.Models.Entity.Investor investor);
+		IEnumerable<ErrorInfo> UpdateInvestor(DeepBlue.Models.Entity.Investor investor);
+		IEnumerable<ErrorInfo> SaveInvestorFund(DeepBlue.Models.Entity.InvestorFund investorFund);
+		IEnumerable<ErrorInfo> UpdateInvestorFund(DeepBlue.Models.Entity.InvestorFund investorFund);
     }
 }

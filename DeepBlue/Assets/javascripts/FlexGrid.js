@@ -108,95 +108,26 @@
 					 function (i,row) {
 					 	var tr=document.createElement('tr');
 					 	if(i%2&&p.striped) tr.className='erow';
-
 					 	if(row.id) tr.id='row'+row.id;
-
-					 	//add cell
-					 	$('thead tr:first th',g.hDiv).each
-							(
-							 	function () {
-
-							 		var td=document.createElement('td');
-							 		var idx=$(this).attr('axis').substr(3);
-							 		td.align=this.align;
-							 		td.innerHTML=row.cell[idx];
-							 		$(tr).append(td);
-							 		td=null;
-							 	}
-							);
-
-
-					 	if($('thead',this.gDiv).length<1) //handle if grid has no headers
-					 	{
-
-					 		for(idx=0;idx<cell.length;idx++) {
-					 			var td=document.createElement('td');
-					 			td.innerHTML=row.cell[idx];
-					 			$(tr).append(td);
-					 			td=null;
+					 	var i;
+					 	for(i=0;i<p.colModel.length;i++) {
+					 		var td=document.createElement('td');
+					 		var div=document.createElement('div');
+					 		div.innerHTML=row.cell[i];
+					 		$(div).width(p.colModel[i].width);
+					 		if(p.colModel[i].hide) {
+					 			$(div).css("display","none");
+					 			$(td).css("display","none");
 					 		}
+					 		$(div).css("text-align",p.colModel[i].align);
+					 		$(td).append(div);
+					 		$(tr).append(td); 
+					 		td=null;
 					 	}
-
 					 	$(tbody).append(tr);
 					 	tr=null;
 					 }
 					);
-
-				} else if(p.dataType=='xml') {
-
-					i=1;
-
-					$("rows row",data).each
-				(
-
-				 	function () {
-
-				 		i++;
-
-				 		var tr=document.createElement('tr');
-				 		if(i%2&&p.striped) tr.className='erow';
-
-				 		var nid=$(this).attr('id');
-				 		if(nid) tr.id='row'+nid;
-
-				 		nid=null;
-
-				 		var robj=this;
-
-
-
-				 		$('thead tr:first th',g.hDiv).each
-							(
-							 	function () {
-
-							 		var td=document.createElement('td');
-							 		var idx=$(this).attr('axis').substr(3);
-							 		td.align=this.align;
-							 		td.innerHTML=$("cell:eq("+idx+")",robj).text();
-							 		$(tr).append(td);
-							 		td=null;
-							 	}
-							);
-
-
-				 		if($('thead',this.gDiv).length<1) //handle if grid has no headers
-				 		{
-				 			$('cell',this).each
-								(
-								 	function () {
-								 		var td=document.createElement('td');
-								 		td.innerHTML=$(this).text();
-								 		$(tr).append(td);
-								 		td=null;
-								 	}
-								);
-				 		}
-
-				 		$(tbody).append(tr);
-				 		tr=null;
-				 		robj=null;
-				 	}
-				);
 
 				}
 
@@ -204,7 +135,6 @@
 				$(t).empty();
 
 				$(t).append(tbody);
-				this.addCellProp();
 
 				tbody=null;data=null;i=null;
 
@@ -345,7 +275,7 @@
 								if(p.sortname==$(pth).attr('abbr')&&p.sortname) {
 									this.className='sorted';
 								}
-								 
+
 
 								$(tdDiv).css({ textAlign: $(pth).attr("calign"),width: $('div:first',pth)[0].style.width });
 
@@ -580,15 +510,15 @@
 				$(document).ready
 					(
 						function () {
-						 
-								$.addFlex(t,p);
-							 
+
+							$.addFlex(t,p);
+
 						}
 					);
 			} else {
-				 
-					$.addFlex(this,p);
-			 
+
+				$.addFlex(this,p);
+
 			}
 		});
 

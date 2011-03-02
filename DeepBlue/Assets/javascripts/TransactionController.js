@@ -7,11 +7,12 @@
 		$("#Loading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		var $investorInfo=$("#investorInfo");
 		$investorInfo.show();
-		var dt = new Date();
+		var dt=new Date();
 		$.getJSON("/Investor/InvestorDetail/"+id+"?t="+dt.getTime(),function (data) {
 			$("#Loading").html("");
 			$("#InvestorName",$investorInfo).html(data.InvestorName);
 			$("#DisplayName",$investorInfo).html(data.DisplayName);
+			$("#TitleInvestorName",$investorInfo).html(data.InvestorName);
 			$("#InvestorId",$investorInfo).val(data.InvestorId);
 			transactionController.loadFundDetails();
 		});
@@ -77,7 +78,7 @@
 	,editTransaction: function (transactionId) {
 		$("#editTransactionDialog").remove();
 		var dt=new Date();
-		var url="/Transaction/Edit/"+transactionId;
+		var url="/Transaction/Edit/"+transactionId+"?t="+dt.getTime();
 		var iframe=document.createElement("div");
 		iframe.id="editTransactionDialog";
 		iframe.innerHTML+="<div id='loading'><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</div>";
@@ -89,7 +90,7 @@
 		$(iframe).dialog({
 			title: "Transaction",
 			autoOpen: true,
-			width: 630,
+			width: 700,
 			modal: true,
 			position: 'top',
 			autoResize: true
@@ -100,10 +101,11 @@
 		$("#CommitmentAmount","#EditCommitmentAmount").val("");
 		$("#EditCommitmentAmount").dialog('open');
 		$("#UpdateEditCmtLoading","#EditCommitmentAmount").html("");
-		var dt = new Date();
+		var dt=new Date();
 		$.getJSON("/Transaction/FindCommitmentAmount/"+investorFundId+"?t="+dt.getTime(),function (data) {
 			$("#InvestorFundId","#EditCommitmentAmount").val(data.InvestorFundId);
 			$("#CommitmentAmount","#EditCommitmentAmount").val(data.CommitmentAmount);
+			$("#UnfundedAmount","#EditCommitmentAmount").val(data.UnfundedAmount);
 		});
 	}
 }

@@ -155,18 +155,23 @@ h2 {
 	color: Black;
 }
 /* Editor */
+.editor-row{
+	float:left;
+	width:auto;
+	clear:both;
+}
 .editor-label {
 	width: 120px;
 	float: left;
 	text-align: left;
 	padding: 5px 5px 5px 10px;
-	clear: left;
+	clear:left;
 }
 .editor-field {
 	text-align: left;
 	padding: 5px;
 	float: left;
-	clear: right;
+	clear:right;
 }
 .editor-field input {
 	width: 200px;
@@ -346,7 +351,6 @@ h2 {
 .display-field {
 	padding: 5px;
 }
-
 .edit-info {
 	clear: both;
 	float: left;
@@ -475,7 +479,7 @@ h2 {
 	width: auto;
 }
 .transaction-edit .edit-detail .editor-label {
-	width: 148px;
+	width: 200px;
 }
 .transaction-edit .edit-detail .editor-field {
 	width: auto;
@@ -547,4 +551,10 @@ h2 {
 }
 .tab-cnt{
 	clear:both;width:99%; border:solid 1px gray;float: left;margin-bottom:10px;
+}
+.header{
+	float:left;clear:both;width:100%;text-align:left;
+}
+.field-validation-valid{
+	color:Red;
 }

@@ -117,35 +117,48 @@ namespace DeepBlue.Models.Entity {
 
         public IEnumerable<ErrorInfo> Save() {
             var investor = this;
-            IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(investor);
-            foreach (InvestorAddress address in investor.InvestorAddresses) {
-                errors.Union(ValidationHelper.Validate(address.Address));
-            }
-            foreach (InvestorCommunication comm in investor.InvestorCommunications) {
-                errors.Union(ValidationHelper.Validate(comm.Communication));
-            }
-            foreach (InvestorAccount account in investor.InvestorAccounts) {
-                errors.Union(ValidationHelper.Validate(account));
-            }
-
-            foreach (InvestorContact investorContact in investor.InvestorContacts) {
-                Contact contact = investorContact.Contact;
-                errors.Union(ValidationHelper.Validate(contact));
-                foreach (ContactAddress contactAddr in contact.ContactAddresses) {
-                    errors.Union(ValidationHelper.Validate(contactAddr.Address));
-                }
-                foreach (ContactCommunication comm in contact.ContactCommunications) {
-                    errors.Union(ValidationHelper.Validate(comm.Communication));
-                }
-            }
-
+            IEnumerable<ErrorInfo> errors = Validate(investor);
             if (errors.Any()) {
                 return errors;
             }
-
-            InvestorService.SaveInvestor(this);
+			InvestorService.SaveInvestor(this);
             return null;
         }
+
+		public IEnumerable<ErrorInfo> Update(DeepBlueEntities context) {
+			var investor = this;
+			IEnumerable<ErrorInfo> errors = Validate(investor);
+			if (errors.Any()) {
+				return errors;
+			}
+			InvestorService.SaveInvestor(this);
+			return null;
+		}
+
+		private IEnumerable<ErrorInfo> Validate(Investor investor){
+			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(investor);
+			foreach (InvestorAddress address in investor.InvestorAddresses) {
+				errors.Union(ValidationHelper.Validate(address.Address));
+			}
+			foreach (InvestorCommunication comm in investor.InvestorCommunications) {
+				errors.Union(ValidationHelper.Validate(comm.Communication));
+			}
+			foreach (InvestorAccount account in investor.InvestorAccounts) {
+				errors.Union(ValidationHelper.Validate(account));
+			}
+
+			foreach (InvestorContact investorContact in investor.InvestorContacts) {
+				Contact contact = investorContact.Contact;
+				errors.Union(ValidationHelper.Validate(contact));
+				foreach (ContactAddress contactAddr in contact.ContactAddresses) {
+					errors.Union(ValidationHelper.Validate(contactAddr.Address));
+				}
+				foreach (ContactCommunication comm in contact.ContactCommunications) {
+					errors.Union(ValidationHelper.Validate(comm.Communication));
+				}
+			}
+			return errors;
+		}
     }
 
     [MetadataType(typeof(ContactMD))]

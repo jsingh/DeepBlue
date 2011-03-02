@@ -15,8 +15,7 @@ namespace DeepBlue.Models.Transaction {
 				InvestorTypes = new List<SelectListItem>();
 				EditCommitmentAmountModel = new EditCommitmentAmountModel();
 			}
-				
-			[Required(ErrorMessage="*")]
+			 
 			[DisplayName("Investor:")]
 			public int InvestorId { get; set; }
 
@@ -27,10 +26,12 @@ namespace DeepBlue.Models.Transaction {
 			public string DisplayName { get; set; }
 
 			[Required(ErrorMessage = "*")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "*")]
 			[DisplayName("Fund Name:")]
 			public int FundId { get; set; }
 
 			[Required(ErrorMessage = "*")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "*")]
 			[DisplayName("Fund Close:")]
 			public int FundClosingId { get; set; }
 
