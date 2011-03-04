@@ -9,54 +9,56 @@ using System.Web.Mvc;
 namespace DeepBlue.Models.Transaction {
 
 	public class CreateModel {
-			public CreateModel(){
-				FundNames = new List<SelectListItem>();
-				FundClosings = new List<SelectListItem>(); 
-				InvestorTypes = new List<SelectListItem>();
-				EditCommitmentAmountModel = new EditCommitmentAmountModel();
-			}
-			 
-			[DisplayName("Investor:")]
-			public int InvestorId { get; set; }
+		public CreateModel() {
+			FundNames = new List<SelectListItem>();
+			FundClosings = new List<SelectListItem>();
+			InvestorTypes = new List<SelectListItem>();
+			EditCommitmentAmountModel = new EditCommitmentAmountModel();
+		}
 
-			[DisplayName("Investor Name:")]
-			public string InvestorName { get; set; }
+		[DisplayName("Investor:")]
+		public int InvestorId { get; set; }
 
-			[DisplayName("Display Name:")]
-			public string DisplayName { get; set; }
+		[DisplayName("Investor Name:")]
+		public string InvestorName { get; set; }
 
-			[Required(ErrorMessage = "*")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "*")]
-			[DisplayName("Fund Name:")]
-			public int FundId { get; set; }
+		[DisplayName("Display Name:")]
+		public string DisplayName { get; set; }
 
-			[Required(ErrorMessage = "*")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "*")]
-			[DisplayName("Fund Close:")]
-			public int FundClosingId { get; set; }
+		[Required(ErrorMessage = "Fund Name is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund Name is required")]
+		[DisplayName("Fund Name:")]
+		public int FundId { get; set; }
 
-			[DisplayName("Investor Type:")]
-			public int InvestorTypeId { get; set; }
+		[Required(ErrorMessage = "Fund Close is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund Close is required")]
+		[DisplayName("Fund Close:")]
+		public int FundClosingId { get; set; }
 
-			[Required(ErrorMessage = "*")]
-			[Range(1, Double.MaxValue, ErrorMessage = "Invalid Committed Amount")]
-			[DisplayName("Committed Amount:")]
-			public decimal TotalCommitment { get; set; }
+		[Required(ErrorMessage = "Investor Type is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Investor Type is required")]
+		[DisplayName("Investor Type:")]
+		public int InvestorTypeId { get; set; }
 
-			[Required(ErrorMessage = "*")]
-			[DisplayName("Committed Date:")]
-			public string CommittedDate { get; set; }
+		[Required(ErrorMessage = "Committed Amount is required")]
+		[Range(1, Double.MaxValue, ErrorMessage = "Invalid Committed Amount")]
+		[DisplayName("Committed Amount:")]
+		public decimal TotalCommitment { get; set; }
 
-			[DisplayName("Signed Agreement:")]
-			public bool IsAgreementSigned { get; set; }
+		[Required(ErrorMessage = "Committed Date is required")]
+		[DisplayName("Committed Date:")]
+		public string CommittedDate { get; set; }
 
-			public List<SelectListItem> FundNames { get; set; }
+		[DisplayName("Signed Agreement:")]
+		public bool IsAgreementSigned { get; set; }
 
-			public List<SelectListItem> FundClosings { get; set; }
+		public List<SelectListItem> FundNames { get; set; }
 
-			public List<SelectListItem> InvestorTypes { get; set; }
+		public List<SelectListItem> FundClosings { get; set; }
 
-			public EditCommitmentAmountModel EditCommitmentAmountModel { get; set; }
+		public List<SelectListItem> InvestorTypes { get; set; }
+
+		public EditCommitmentAmountModel EditCommitmentAmountModel { get; set; }
 	}
-	 
+
 }

@@ -179,7 +179,7 @@
 						<%: Html.ValidationMessageFor(model => model.City) %>
 					</div>
 				</div>
-				<div class="editor-row">
+				<div class="editor-row" id="StateRow">
 					<div class="editor-label">
 						<%: Html.LabelFor(model => model.State) %>
 					</div>
@@ -202,7 +202,7 @@
 						<%: Html.LabelFor(model => model.Country) %>
 					</div>
 					<div class="editor-field dropdown">
-						<%: Html.DropDownListFor(model => model.Country, Model.SelectList.Countries)%>
+						<%: Html.DropDownListFor(model => model.Country, Model.SelectList.Countries, new { @onchange = "javascript:investor.changeCountry('Country','State','StateRow');" })%>
 						<%: Html.ValidationMessageFor(model => model.Country)%>
 					</div>
 				</div>
@@ -225,10 +225,10 @@
 					<div id="AccountInfo" class="accountinfo">
 						<div style="width: 100%;">
 							<div class="add">
-								<%=Html.Image("add_icon.png", new { title = "Add New Account", onclick = "javascript:investor.createAccount(this);" })%>
+								<%=Html.Image("add_icon.png", new { @title = "Add New Account", @onclick = "javascript:investor.createAccount(this);" })%>
 							</div>
 							<div class="delete">
-								<%=Html.Image("Delete.png", new { onclick = "javascript:investor.deleteAccount(this);" })%>
+								<%=Html.Image("delete_icon.png", new { @title = "Delete Accout" , @onclick = "javascript:investor.deleteAccount(this);" })%>
 							</div>
 						</div>
 						<div class="accountinfo-box">
@@ -342,10 +342,10 @@
 					<div id="ContactInfo" class="contactinfo">
 						<div>
 							<div class="delete">
-								<%=Html.Image("Delete.png", new { title = "Delete Contact", onclick = "javascript:investor.deleteContact(this);" })%>
+								<%=Html.Image("delete_icon.png", new { @title = "Delete Contact", @onclick = "javascript:investor.deleteContact(this);" })%>
 							</div>
 							<div class="add">
-								<%=Html.Image("add_icon.png", new { title = "Add New Contact", onclick = "javascript:investor.createContact(this);" })%>
+								<%=Html.Image("add_icon.png", new { @title = "Add New Contact", @onclick = "javascript:investor.createContact(this);" })%>
 							</div>
 						</div>
 						<div class="contactinfo-box">
@@ -422,12 +422,12 @@
 										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactCity", "", new { maxlength = 30 })%>
 									</div>
 								</div>
-								<div class="editor-row">
+								<div class="editor-row" id="<%=Model.ContactLength.ToString()%>_StateRow">
 									<div class="editor-label">
 										<%: Html.LabelFor(model => model.ContactState) %>
 									</div>
 									<div class="editor-field dropdown">
-										<%: Html.DropDownList(Model.ContactLength.ToString() + "_" + "ContactState",Model.SelectList.States)%>
+										<%: Html.DropDownList(Model.ContactLength.ToString() + "_" + "ContactState",Model.SelectList.States,new { @id = Model.ContactLength.ToString() + "_ContactState" })%>
 									</div>
 								</div>
 								<div class="editor-row">
@@ -443,7 +443,8 @@
 										<%: Html.LabelFor(model => model.ContactCountry) %>
 									</div>
 									<div class="editor-field dropdown">
-										<%: Html.DropDownList(Model.ContactLength.ToString() + "_" + "ContactCountry", Model.SelectList.Countries)%>
+										<%: Html.DropDownList(Model.ContactLength.ToString() + "_" + "ContactCountry", Model.SelectList.Countries
+																																			, new { @id = Model.ContactLength.ToString() + "_ContactCountry", @onchange = "javascript:investor.changeCountry('" + Model.ContactLength.ToString() + "_ContactCountry','" + Model.ContactLength.ToString() + "_ContactState','" + Model.ContactLength.ToString() + "_StateRow');" })%>
 									</div>
 								</div>
 							</div>
@@ -513,4 +514,24 @@
 		</div>
 		<% } %>
 	</div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="BottomContent" runat="server">
+
+	<script type="text/javascript">
+		window.onload=function () {
+			document.forms[0].onsubmit=function () {
+				var errors=Sys.Mvc.FormContext.getValidationForForm(this).validate('submit');
+				var eles=Sys.Mvc.FormContext.getValidationForForm(this);
+				var message='';
+				if(errors.length>0) {
+					var i;
+					for(i=0;i<errors.length;i++) {
+						message+=errors[i]+"\n";
+					}
+					alert(message);
+				}
+			};
+		};
+	</script>
+
 </asp:Content>

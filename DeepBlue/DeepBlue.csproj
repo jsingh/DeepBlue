@@ -72,7 +72,6 @@
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\AdminRepository.cs" />
     <Compile Include="Controllers\Admin\IAdminRepository.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Fund\FundController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Investor\InvestorController.cs" />

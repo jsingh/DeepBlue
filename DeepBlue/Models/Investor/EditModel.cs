@@ -10,14 +10,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DeepBlue.Models.Investor {
 	public class EditModel {
-
-		public EditModel(){
+		public EditModel() {
 			AddressInformations = new List<AddressInformation>();
 			ContactInformations = new List<ContactInformation>();
 			AccountInformations = new List<AccountInformation>();
 			FundInformations = new FlexigridObject();
+			InvestorName = string.Empty;
+			DisplayName = string.Empty;
+			Notes = string.Empty;
+			SocialSecurityTaxId = string.Empty;
+			EntityType = 0;
+			DomesticForeign = false;
 		}
-		
+
 		public SelectListModel SelectList = new SelectListModel();
 
 		[DisplayName("InvestorName:")]
@@ -26,6 +31,9 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("DisplayName:")]
 		public string DisplayName { get; set; }
 
+		[DisplayName("Notes:")]
+		public string Notes { get; set; }
+		
 		[DisplayName("Social Security/Tax Id:")]
 		public string SocialSecurityTaxId { get; set; }
 
@@ -50,6 +58,19 @@ namespace DeepBlue.Models.Investor {
 	}
 
 	public class AddressInformation {
+		public AddressInformation() {
+			AddressId = 0;
+			Phone = string.Empty;
+			Fax = string.Empty;
+			Email = string.Empty;
+			WebAddress = string.Empty;
+			Address1 = string.Empty;
+			Address2 = string.Empty;
+			City = string.Empty;
+			State = 0;
+			Zip = string.Empty;
+			Country = 0;
+		}
 
 		public int AddressId { get; set; }
 
@@ -85,6 +106,26 @@ namespace DeepBlue.Models.Investor {
 	}
 
 	public class ContactInformation {
+		public ContactInformation(){
+			ContactId = 0;
+			ContactAddressId = 0;
+			ContactPerson = string.Empty;
+			Designation = string.Empty;
+			ContactPhoneNumber = string.Empty;
+			ContactFaxNumber = string.Empty;
+			ContactEmail = string.Empty;
+			ContactWebAddress = string.Empty;
+			ContactAddress1 = string.Empty;
+			ContactAddress2 = string.Empty;
+			ContactCity = string.Empty;
+			ContactState = 0;
+			ContactZip = string.Empty;
+			ContactCountry = 0;
+			DistributionNotices = false;
+			Financials = false;
+			K1 = false;
+			InvestorLetters = false;
+		}
 
 		public int ContactId { get; set; }
 
@@ -139,10 +180,24 @@ namespace DeepBlue.Models.Investor {
 		public bool InvestorLetters { get; set; }
 	}
 
-	public class AccountInformation{
-		
+	public class AccountInformation {
+		public AccountInformation(){
+			AccountId = 0;
+			BankName = string.Empty;
+			AccountNumber = string.Empty;
+			ABANumber = string.Empty;
+			AccountOf = string.Empty;
+			FFC = string.Empty;
+			FFCNO = string.Empty;
+			Swift = string.Empty;
+			IBAN = string.Empty;
+			ByOrderOf = string.Empty;
+			Reference = string.Empty;
+			Attention = string.Empty;
+		}
+
 		public int AccountId { get; set; }
-		
+
 		[DisplayName("Bank Name:")]
 		public string BankName { get; set; }
 
@@ -177,13 +232,19 @@ namespace DeepBlue.Models.Investor {
 		public string Attention { get; set; }
 	}
 
-	public class FundInformation	{
+	public class FundInformation {
+		public FundInformation(){
+			FundName = string.Empty;
+			TotalCommitment = 0;
+			UnfundedAmount = 0;
+			InvestorType = string.Empty;
+		}
 		public string FundName { get; set; }
-		
+
 		public decimal TotalCommitment { get; set; }
 
 		public decimal UnfundedAmount { get; set; }
-		
+
 		public string InvestorType { get; set; }
 	}
 }

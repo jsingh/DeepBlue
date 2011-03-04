@@ -4,7 +4,7 @@ var closetimer		= 0;
 var ddmenuitem      = 0;
 
 // open hidden layer
-function mopen(id)
+function mopen(that,id)
 {	
 	// cancel close timer
 	mcancelclosetime();
@@ -15,8 +15,9 @@ function mopen(id)
 	// get new layer and show it
 	ddmenuitem = document.getElementById(id);
 	ddmenuitem.style.visibility = 'visible';
+	var pos = $(that).position();
+	$(ddmenuitem).css({ "left" : pos.left - 7 , "top" : pos.top + 25 });
 	$(ddmenuitem).css("z-index","10001");
-
 }
 // close showed layer
 function mclose()

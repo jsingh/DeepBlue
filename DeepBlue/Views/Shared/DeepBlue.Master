@@ -20,108 +20,108 @@
 	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
 </head>
 <body>
-	<div id="main">
-		<div id="header">
-			<%=Html.Image("logo.png")%>
-		</div>
-		<div id="menu">
-			<% if(ViewData["MenuName"] == "Investor"){%>
-			<div class="topmenu tab-sel">
-			<%}else{%>
-			<div class="topmenu">
-			<%}%>
-					<div class="topmenu-left">
+	<div id="header">
+		<div class="header-logo">
+			<div id="menu">
+				<div class="menu-content">
+					<% if (ViewData["MenuName"] == "Investor") {%>
+					<div class="topmenu tab-sel">
+						<%} else {%>
+						<div class="topmenu">
+							<%}%>
+							<div class="topmenu-left">
+							</div>
+							<div class="topmenu-center">
+								<a onmouseover="mopen(this,'Inv_Management')" onmouseout="mclosetime()">Investor Management</a></div>
+							<div class="topmenu-right">
+							</div>
+						</div>
+						<div class="topmenu">
+							<div class="topmenu-left">
+							</div>
+							<div class="topmenu-center">
+								<a href="#">Fund Tracker</a></div>
+							<div class="topmenu-right">
+							</div>
+						</div>
+						<div class="topmenu">
+							<div class="topmenu-left">
+							</div>
+							<div class="topmenu-center">
+								<a href="#">Deal Flow</a></div>
+							<div class="topmenu-right">
+							</div>
+						</div>
+						<div class="topmenu">
+							<div class="topmenu-left">
+							</div>
+							<div class="topmenu-center">
+								<a href="#">Transaction Setup</a></div>
+							<div class="topmenu-right">
+							</div>
+						</div>
+						<div class="topmenu">
+							<div class="topmenu-left">
+							</div>
+							<div class="topmenu-center">
+								<a href="#">Accounting</a></div>
+							<div class="topmenu-right">
+							</div>
+						</div>
+						<div class="topmenu">
+							<div class="topmenu-left">
+							</div>
+							<div class="topmenu-center">
+								<a href="#">Document Management</a></div>
+							<div class="topmenu-right">
+							</div>
+						</div>
+						<% if (ViewData["MenuName"] == "Admin") {%>
+						<div class="topmenu tab-sel">
+							<%} else {%>
+							<div class="topmenu">
+								<%}%>
+								<div class="topmenu-left">
+								</div>
+								<div class="topmenu-center">
+									<%: Html.ActionLink("Administration", "Index", "Admin")%>
+								</div>
+								<div class="topmenu-right">
+								</div>
+							</div>
+							<div class="topmenu">
+								<div class="topmenu-left">
+								</div>
+								<div class="topmenu-center">
+									<a href="#">Reports</a></div>
+								<div class="topmenu-right">
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="topmenu-center">
-						<a href="#" onmouseover="mopen('Inv_Management')" onmouseout="mclosetime()">Investor Management</a></div>
-					<div class="topmenu-right">
-					</div>
-					<div class="mdiv" id="Inv_Management" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-						<ul>
-							<li>
-								<%: Html.ActionLink("New Investor Setup", "New", "Investor")%></li>
-							<li>
-								<%: Html.ActionLink("Update Investor Information", "Edit", "Investor")%></li>
-							<li>
-								<%: Html.ActionLink("Investor Fund Transaction", "New", "Transaction")%></li>
-						</ul>
-					</div>
-	          </div>
-			<div class="topmenu">
-				<div class="topmenu-left">
-				</div>
-				<div class="topmenu-center">
-					<a href="#">Fund Tracker</a></div>
-				<div class="topmenu-right">
-				</div>
-			</div>
-			<div class="topmenu">
-				<div class="topmenu-left">
-				</div>
-				<div class="topmenu-center">
-					<a href="#">Deal Flow</a></div>
-				<div class="topmenu-right">
-				</div>
-			</div>
-			<div class="topmenu">
-				<div class="topmenu-left">
-				</div>
-				<div class="topmenu-center">
-					<a href="#">Transaction Setup</a></div>
-				<div class="topmenu-right">
-				</div>
-			</div>
-			<div class="topmenu">
-				<div class="topmenu-left">
-				</div>
-				<div class="topmenu-center">
-					<a href="#">Accounting</a></div>
-				<div class="topmenu-right">
-				</div>
-			</div>
-			<div class="topmenu">
-				<div class="topmenu-left">
-				</div>
-				<div class="topmenu-center">
-					<a href="#">Document Management</a></div>
-				<div class="topmenu-right">
-				</div>
-			</div>
-				<% if(ViewData["MenuName"] == "Admin"){%>
-			<div class="topmenu tab-sel">
-			<%}else{%>
-			<div class="topmenu">
-			<%}%>
-				<div class="topmenu-left">
-				</div>
-				<div class="topmenu-center">
-					<%: Html.ActionLink("Administration", "Index", "Admin")%>
-				</div>
-				<div class="topmenu-right">
-				</div>
-			</div>
-			<div class="topmenu">
-				<div class="topmenu-left">
-				</div>
-				<div class="topmenu-center">
-					<a href="#">Reports</a></div>
-				<div class="topmenu-right">
 				</div>
 			</div>
 		</div>
 	</div>
 	<div id="content">
 		<div class="content-box">
-			<div class="content-left">
-				<asp:ContentPlaceHolder ID="MainContent" runat="server" />
-			</div>
+			<asp:ContentPlaceHolder ID="MainContent" runat="server" />
 		</div>
 	</div>
 	<div id="footer">
 		<div class="footercontent">
 			Copyright 2011 DeepBlue</div>
 	</div>
-	</div>
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
+	<div class="mdiv" id="Inv_Management" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+		<ul>
+			<li>
+				<%: Html.ActionLink("New Investor Setup", "New", "Investor")%></li>
+			<li>
+				<%: Html.ActionLink("Update Investor Information", "Edit", "Investor")%></li>
+			<li>
+				<%: Html.ActionLink("Investor Fund Transaction", "New", "Transaction")%></li>
+		</ul>
+	</div>
 </body>
 </html>

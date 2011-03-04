@@ -35,7 +35,7 @@
 					</div>
 					<div class="box-content">
 						<% Html.EnableClientValidation(); %>
-						<% using (Ajax.BeginForm("CreateInvestorFund", new AjaxOptions { HttpMethod = "Post", OnBegin = "transactionController.onCreateFundBegin", OnSuccess = "transactionController.onCreateFundSuccess" })) {%>
+						<% using (Ajax.BeginForm("CreateInvestorFund", "", new AjaxOptions { HttpMethod = "Post", OnBegin = "transactionController.onCreateFundBegin", OnSuccess = "transactionController.onCreateFundSuccess" }, new { @id = "NewTransaction" })) {%>
 						<%: Html.ValidationSummary(true) %>
 						<%: Html.HiddenFor(model => model.InvestorId)%>
 						<div class="edit-left">
@@ -95,6 +95,7 @@
 								</div>
 								<div class="editor-field">
 									<%: Html.DropDownListFor(model => model.InvestorTypeId,Model.InvestorTypes) %>
+									<%: Html.ValidationMessageFor(model => model.InvestorTypeId)%>
 								</div>
 								<div class="editor-label" style="clear: right">
 									<%: Html.LabelFor(model => model.IsAgreementSigned) %>
@@ -160,6 +161,23 @@
 			position: 'top',
 			autoResize: true
 		});
+	</script>
+
+	<script type="text/javascript">
+		window.onload=function () {
+			document.getElementById("NewTransaction").onsubmit=function () {
+				var errors=Sys.Mvc.FormContext.getValidationForForm(this).validate('submit');
+				var eles=Sys.Mvc.FormContext.getValidationForForm(this);
+				var message='';
+				if(errors.length>0) {
+					var i;
+					for(i=0;i<errors.length;i++) {
+						message+=errors[i]+"\n";
+					}
+					alert(message);
+				}
+			};
+		};
 	</script>
 
 </asp:Content>

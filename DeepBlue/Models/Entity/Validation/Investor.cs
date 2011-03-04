@@ -36,7 +36,7 @@ namespace DeepBlue.Models.Entity {
                 set;
             }
 
-            [Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+            [Range(0, int.MaxValue)]
             public Nullable<global::System.Int32> PrevInvestorID {
                 get;
                 set;
@@ -131,7 +131,7 @@ namespace DeepBlue.Models.Entity {
 			if (errors.Any()) {
 				return errors;
 			}
-			InvestorService.SaveInvestor(this);
+			InvestorService.UpdateInvestor(context);
 			return null;
 		}
 

@@ -22,6 +22,18 @@
 			$(AccountInfo).remove();
 		}
 	}
+	,changeCountry: function (CountryId,StateId,StateRow) {
+		var country=document.getElementById(CountryId);
+		var state=document.getElementById(StateId);
+		var staterow=document.getElementById(StateRow);
+		state.value=52;
+		if(country.options[country.selectedIndex].text!="United States") {
+			staterow.style.display="none";
+		} else {
+			staterow.style.display="";
+			state.value=0;
+		}
+	}
 	,createContact: function () {
 		var ContactLength=parseInt($("#ContactLength").val());
 		var ContactInfo=document.createElement("div");
@@ -29,7 +41,7 @@
 		ContactInfo.className="contactinfo";
 		ContactInfo.innerHTML=$("#ContactInfo").html().replace(/1_/g,(ContactLength+1)+"_");
 		$("input[type!='hidden'][type!='checkbox']",ContactInfo).val("");
-		$("select",ContactInfo).val("");
+		$("select",ContactInfo).val(0);
 		$("#ContactLength").val(ContactLength+1);
 		//$("#index",ContactInfo).html(ContactLength+1);
 		$(".custom-validation",ContactInfo).remove();
@@ -37,6 +49,7 @@
 		$(".add",ContactInfo).remove();
 		$("#ContactInfoBox").append(ContactInfo);
 		$("select[name='"+(ContactLength+1)+"_ContactCountry']",ContactInfo).val(225);
+		$("'#"+(ContactLength+1)+"_StateRow'",ContactInfo).show();
 	}
 	,deleteContact: function (that) {
 		if(confirm("Are you sure you want to delete this Contact?")) {

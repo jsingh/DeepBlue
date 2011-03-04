@@ -41,7 +41,9 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorCommunication_Investor", "Investor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Investor), "InvestorCommunication", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorCommunication), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorContact_Investor", "Investor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Investor), "InvestorContact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorContact), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFund_Investor", "Investor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Investor), "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFund), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFund_InvestorType", "InvestorType", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.InvestorType), "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundTransaction_InvestorFund", "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.InvestorFund), "InvestorFundTransaction", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundTransaction), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundTransaction_TransactionType", "TransactionType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.TransactionType), "InvestorFundTransaction", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundTransaction), true)]
 
 #endregion
 
@@ -4504,6 +4506,30 @@ namespace DeepBlue.Models.Entity
         private global::System.Boolean _IsFirstClosing;
         partial void OnIsFirstClosingChanging(global::System.Boolean value);
         partial void OnIsFirstClosingChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
 
         #endregion
     
@@ -7153,6 +7179,44 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFund_InvestorType", "InvestorType")]
+        public InvestorType InvestorType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<InvestorType>("DeepBlueModel.FK_InvestorFund_InvestorType", "InvestorType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<InvestorType>("DeepBlueModel.FK_InvestorFund_InvestorType", "InvestorType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<InvestorType> InvestorTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<InvestorType>("DeepBlueModel.FK_InvestorFund_InvestorType", "InvestorType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<InvestorType>("DeepBlueModel.FK_InvestorFund_InvestorType", "InvestorType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFundTransaction_InvestorFund", "InvestorFundTransaction")]
         public EntityCollection<InvestorFundTransaction> InvestorFundTransactions
         {
@@ -7424,6 +7488,54 @@ namespace DeepBlue.Models.Entity
         private global::System.Int32 _CreatedBy;
         partial void OnCreatedByChanging(global::System.Int32 value);
         partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CommittedDate
+        {
+            get
+            {
+                return _CommittedDate;
+            }
+            set
+            {
+                OnCommittedDateChanging(value);
+                ReportPropertyChanging("CommittedDate");
+                _CommittedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CommittedDate");
+                OnCommittedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _CommittedDate;
+        partial void OnCommittedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnCommittedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Notes
+        {
+            get
+            {
+                return _Notes;
+            }
+            set
+            {
+                OnNotesChanging(value);
+                ReportPropertyChanging("Notes");
+                _Notes = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Notes");
+                OnNotesChanged();
+            }
+        }
+        private global::System.String _Notes;
+        partial void OnNotesChanging(global::System.String value);
+        partial void OnNotesChanged();
 
         #endregion
     
@@ -7501,6 +7613,44 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<InvestorFund>("DeepBlueModel.FK_InvestorFundTransaction_InvestorFund", "InvestorFund", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFundTransaction_TransactionType", "TransactionType")]
+        public TransactionType TransactionType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TransactionType>("DeepBlueModel.FK_InvestorFundTransaction_TransactionType", "TransactionType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TransactionType>("DeepBlueModel.FK_InvestorFundTransaction_TransactionType", "TransactionType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<TransactionType> TransactionTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TransactionType>("DeepBlueModel.FK_InvestorFundTransaction_TransactionType", "TransactionType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TransactionType>("DeepBlueModel.FK_InvestorFundTransaction_TransactionType", "TransactionType", value);
                 }
             }
         }
@@ -7639,6 +7789,31 @@ namespace DeepBlue.Models.Entity
 
         #endregion
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFund_InvestorType", "InvestorFund")]
+        public EntityCollection<InvestorFund> InvestorFunds
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InvestorFund>("DeepBlueModel.FK_InvestorFund_InvestorType", "InvestorFund");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvestorFund>("DeepBlueModel.FK_InvestorFund_InvestorType", "InvestorFund", value);
+                }
+            }
+        }
+
+        #endregion
     }
     
     /// <summary>
@@ -7926,6 +8101,31 @@ namespace DeepBlue.Models.Entity
 
         #endregion
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFundTransaction_TransactionType", "InvestorFundTransaction")]
+        public EntityCollection<InvestorFundTransaction> InvestorFundTransactions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InvestorFundTransaction>("DeepBlueModel.FK_InvestorFundTransaction_TransactionType", "InvestorFundTransaction");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvestorFundTransaction>("DeepBlueModel.FK_InvestorFundTransaction_TransactionType", "InvestorFundTransaction", value);
+                }
+            }
+        }
+
+        #endregion
     }
 
     #endregion

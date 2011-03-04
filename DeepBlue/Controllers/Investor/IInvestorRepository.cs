@@ -9,12 +9,17 @@ using DeepBlue.Helpers;
 
 namespace DeepBlue.Controllers.Investor {
     public interface IInvestorRepository {
+		
+		#region Get
         List<AddressType> GetAllAddressTypes();
         List<COUNTRY> GetAllCountries();
         List<STATE> GetAllStates();
         List<InvestorEntityType> GetAllInvestorEntityTypes();
         List<InvestorType> GetAllInvestorTypes();
         List<CommunicationType> GetAllCommunicationTypes();
+		#endregion
+
+		#region Find
         List<InvestorDetail> FindInvestors(string investorName);
 		List<InvestorDetail> FindOtherInvestors(string investorName,int excludeInvestorId);
         DeepBlue.Models.Entity.Investor FindInvestor(int investorId);
@@ -24,10 +29,22 @@ namespace DeepBlue.Controllers.Investor {
 		InvestorFund FindInvestorFund(int investorId,int investorFundId);
         InvestorFund FindInvestorFund(int investorFundId);
 		InvestorFundTransaction FindInvestorFundTransaction(int transactionId);
-        void Delete(DeepBlue.Models.Entity.Investor investor);
+		#endregion
+		
+		#region Delete
+        void Delete(int investorId);
+		void DeleteInvestorContact(int investorContactId);
+		void DeleteInvestorAccount(int investorAccountId);
+		#endregion
+
+		#region Save
         IEnumerable<ErrorInfo> SaveInvestor(DeepBlue.Models.Entity.Investor investor);
-		IEnumerable<ErrorInfo> UpdateInvestor(DeepBlue.Models.Entity.Investor investor);
 		IEnumerable<ErrorInfo> SaveInvestorFund(DeepBlue.Models.Entity.InvestorFund investorFund);
+		#endregion
+
+		#region Update
+		IEnumerable<ErrorInfo> UpdateInvestor(DeepBlue.Models.Entity.Investor investor);
 		IEnumerable<ErrorInfo> UpdateInvestorFund(DeepBlue.Models.Entity.InvestorFund investorFund);
+		#endregion 
     }
 }

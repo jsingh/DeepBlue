@@ -3,17 +3,17 @@
 	margin: 0px;
 	padding: 0px;
 }
+html, body {
+	margin: 0;
+	padding: 0;
+	overflow: auto;
+}
 body {
+	height: 100%;
+	margin: 0;
 	font-size: 12px;
 	font-family: Arial;
-	color: #9c9c9c;
-	line-height: 18px;
-	text-align: center;
-	background-color: #ffffff;
-	color: #000000;
-}
-#main {
-	width: 100%;
+	color: #000;
 }
 a {
 	text-decoration: none;
@@ -22,24 +22,63 @@ a img {
 	border: 0px;
 }
 /* Header */
+#header, #footer {
+	left: 0;
+	overflow: hidden;
+	position: absolute;
+	right: 0;
+}
 #header {
 	background-image: url(../images/top_bg.gif);
 	background-repeat: repeat-x;
 	height: 100px;
-	text-align: left;
-	border-top: solid 1px #0186A7;
-	border-left: solid 1px #0186A7;
-	border-right: solid 1px #0186A7;
+	padding-left: 10px;
+	top: 0;
 }
-#header img {
-	padding-top: 20px;
-	padding-left: 20px;
+#header .header-logo {
+	background-image: url(../images/logo.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+	height: 100px;
+}
+/* Footer */
+#footer {
+	height: 35px;
+	bottom: 0;
+	background-color: #216687;
+}
+#footer .footercontent {
+	color: #ffffff;
+	height: 35px;
+	padding-top: 10px;
+	text-align:center;
+}
+/* Content */
+#content {
+	bottom: 35px;
+	left: 0;
+	overflow: hidden;
+	position: absolute;
+	right: 0;
+	top: 100px;
+}
+#contenttop {
+	width: 100%;
+	height: 10px;
+	background-color: #FFFFFF;
+}
+#content .content-box {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	overflow: auto;
 }
 /* Menu */
 #menu {
-	height: 24px;
-	margin-left: 15px;
-	margin-top: -24px;
+}
+#menu .menu-content {
+	float: left;
+	padding-top: 76px;
 }
 #menu ul {
 }
@@ -49,8 +88,9 @@ a img {
 .mdiv {
 	clear: both;
 	text-align: left;
-	position: absolute;visibility:hidden;
-	margin-top: 25px;
+	position: absolute;
+	visibility: hidden;
+	top: 24px;
 }
 .mdiv li {
 	list-style: none;
@@ -109,42 +149,7 @@ a img {
 .tab-sel .topmenu-center a {
 	color: #37CFF3;
 }
-/* Content */
-#content {
-}
-#contenttop {
-	width: 100%;
-	height: 10px;
-	background-color: #FFFFFF;
-}
-#content .content-box {
-	float: left;
-	width: 100%;
-}
-#content .content-left {
-	float: left;
-	background-color: #fff;
-	width: 100%;
-	min-height: 708px;
-}
-#content .content-right {
-	float: left;
-	width: 25%;
-	margin-top: 90px;
-}
-/* Footer */
-#footer {
-	width: 100%;
-	height: 35px;
-	float: left;
-	background-color: #216687;
-	clear: both;
-}
-#footer .footercontent {
-	color: #ffffff;
-	height: 35px;
-	padding-top: 10px;
-}
+
 h1 {
 	font-size: 15px;
 	font-weight: bold;
@@ -155,29 +160,39 @@ h2 {
 	color: Black;
 }
 /* Editor */
-.editor-row{
-	float:left;
-	width:auto;
-	clear:both;
+.editor-row {
+	float: left;
+	width: 100%;
+	clear: both;
 }
 .editor-label {
 	width: 120px;
 	float: left;
 	text-align: left;
 	padding: 5px 5px 5px 10px;
-	clear:left;
+	clear: left;
+}
+.editor-editbtn {
+	float: right;
+	clear: both;
+}
+.editor-editbtn a {
+	color: Blue;
+}
+.editor-editbtn img {
+	cursor: pointer;
 }
 .editor-field {
 	text-align: left;
 	padding: 5px;
 	float: left;
-	clear:right;
+	clear: right;
 }
 .editor-field input {
 	width: 200px;
 }
 .editor-field select {
-	width: 175px;
+	width: 203px;
 }
 .dropdown {
 	width: 120px;
@@ -201,6 +216,7 @@ h2 {
 .field-validation-error, .custom-validation {
 	color: Red;
 }
+
 /*
 ------------------------Box-------------------*/
 .box {
@@ -367,11 +383,20 @@ h2 {
 	float: right;
 }
 .contactinfo, .accountinfo {
-	clear: both;
+	clear: both;width:100%;
 }
 /* ui-accordion */
 .ui-accordion .ui-accordion-content {
 	padding: 3px 10px 3px 10px;
+}
+.ui-accordion h3 {
+	height: 30px;
+}
+.ui-accordion .header-left{
+	float:left;
+}
+.ui-accordion .header-right{
+	float:right;display:none;
 }
 .auto-width {
 	width: auto;
@@ -492,7 +517,7 @@ h2 {
 }
 .fund-details {
 	clear: both;
-	margin-right:10px;
+	margin-right: 10px;
 }
 #tabs .ui-widget-header {
 	background: none;
@@ -513,13 +538,15 @@ h2 {
 	padding-left: 3px;
 	color: White;
 }
-#loading{
-	text-align:left;
+#loading {
+	text-align: left;
 }
-#FundDetails{
-	float:left;width:100%;margin-left:2px;
+#FundDetails {
+	float: left;
+	width: 100%;
+	margin-left: 2px;
 }
- .tab {
+.tab {
 	width: 100%;
 	float: left;
 	margin-right: 4px;
@@ -529,7 +556,9 @@ h2 {
 	background-repeat: repeat-x;
 	height: 24px;
 	float: left;
-	width:96%;line-height:24px;color:White;
+	width: 96%;
+	line-height: 24px;
+	color: White;
 }
 .tab-left {
 	background-image: url(../images/tab_unsel_l.png);
@@ -549,12 +578,26 @@ h2 {
 	color: white;
 	font-weight: bold;
 }
-.tab-cnt{
-	clear:both;width:99%; border:solid 1px gray;float: left;margin-bottom:10px;
+.tab-cnt {
+	clear: both;
+	width: 99%;
+	border: solid 1px gray;
+	float: left;
+	margin-bottom: 10px;
 }
-.header{
-	float:left;clear:both;width:100%;text-align:left;
+.header {
+	float: left;
+	clear: both;
+	width: 100%;
+	text-align: left;
 }
-.field-validation-valid{
-	color:Red;
+.field-validation-valid {
+	color: Red;
+}
+#contactInfoMain .editor-field{
+	width:auto;
+}
+ 
+.transaction-info .field-validation-error{
+	display:none;
 }

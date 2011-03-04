@@ -135,57 +135,59 @@ namespace DeepBlue.Controllers.Transaction {
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
 				InvestorFund investorFund = InvestorRepository.FindInvestorFund(model.InvestorFundId);
-				InvestorFundTransaction investorFundTrasaction = investorFund.InvestorFundTransactions.Single(transaction => transaction.InvestorFundTransactionID == model.InvestorFundTransactionId);
-				if (model.CommitmentAmount > investorFund.UnfundedAmount) {
-					ModelState.AddModelError("CommitmentAmount", "Transaction Amount should be less than Unfunded Commitment Amount.");
-				} else {
-					//Seller investor fund transaction
-					InvestorFundTransaction sellerInvestorFundTransaction = new InvestorFundTransaction();
-
-					sellerInvestorFundTransaction.Amount = model.CommitmentAmount;
-					sellerInvestorFundTransaction.CreatedBy = AppSettings.CreatedByUserId;
-					sellerInvestorFundTransaction.CreatedDate = DateTime.Now;
-					sellerInvestorFundTransaction.FundClosingID = investorFundTrasaction.FundClosingID;
-					sellerInvestorFundTransaction.IsAgreementSigned = false;
-					sellerInvestorFundTransaction.OtherInvestorID = model.CounterPartyInvestorId;
-					sellerInvestorFundTransaction.TransactionTypeID = (int)DeepBlue.Models.Transaction.Enums.TransactionType.Sell;
-					investorFund.InvestorFundTransactions.Add(sellerInvestorFundTransaction);
-
-					InvestorFund counterPartyInvestorFund = InvestorRepository.FindInvestorFund(model.CounterPartyInvestorId, model.InvestorFundId);
-					if (counterPartyInvestorFund == null) {
-						counterPartyInvestorFund = new InvestorFund(); //Create new investor fund
-						counterPartyInvestorFund.CommittedDate = Convert.ToDateTime(model.Date);
-						counterPartyInvestorFund.CreatedBy = AppSettings.CreatedByUserId;
-						counterPartyInvestorFund.CreatedDate = DateTime.Now;
-						counterPartyInvestorFund.FundID = investorFund.FundID;
-						counterPartyInvestorFund.InvestorID = model.CounterPartyInvestorId;
-						counterPartyInvestorFund.LastUpdatedBy = AppSettings.CreatedByUserId;
-						counterPartyInvestorFund.LastUpdatedDate = DateTime.Now;
-						counterPartyInvestorFund.TotalCommitment = model.CommitmentAmount;
-						counterPartyInvestorFund.UnfundedAmount = model.CommitmentAmount;
-						counterPartyInvestorFund.InvestorTypeId = 0;
+				InvestorFundTransaction investorFundTrasaction = investorFund.InvestorFundTransactions.SingleOrDefault(transaction => transaction.InvestorFundTransactionID == model.InvestorFundTransactionId);
+				if (investorFundTrasaction != null) {
+					if (model.CommitmentAmount > investorFund.UnfundedAmount) {
+						ModelState.AddModelError("CommitmentAmount", "Transaction Amount should be less than Unfunded Commitment Amount.");
 					} else {
-						counterPartyInvestorFund.TotalCommitment += model.CommitmentAmount;
-					}
+						//Seller investor fund transaction
+						InvestorFundTransaction sellerInvestorFundTransaction = new InvestorFundTransaction();
 
-					InvestorFundTransaction counterPartyFundTransaction = new InvestorFundTransaction();
-					counterPartyFundTransaction.Amount = model.CommitmentAmount;
-					counterPartyFundTransaction.CreatedBy = AppSettings.CreatedByUserId;
-					counterPartyFundTransaction.CreatedDate = DateTime.Now;
-					counterPartyFundTransaction.FundClosingID = investorFundTrasaction.FundClosingID;
-					counterPartyFundTransaction.IsAgreementSigned = false;
-					counterPartyFundTransaction.OtherInvestorID = 0;
-					counterPartyFundTransaction.TransactionTypeID = (int)DeepBlue.Models.Transaction.Enums.TransactionType.Buy;
-					counterPartyInvestorFund.InvestorFundTransactions.Add(counterPartyFundTransaction);
+						sellerInvestorFundTransaction.Amount = model.CommitmentAmount;
+						sellerInvestorFundTransaction.CreatedBy = AppSettings.CreatedByUserId;
+						sellerInvestorFundTransaction.CreatedDate = DateTime.Now;
+						sellerInvestorFundTransaction.FundClosingID = investorFundTrasaction.FundClosingID;
+						sellerInvestorFundTransaction.IsAgreementSigned = false;
+						sellerInvestorFundTransaction.OtherInvestorID = model.CounterPartyInvestorId;
+						sellerInvestorFundTransaction.TransactionTypeID = (int)DeepBlue.Models.Transaction.Enums.TransactionType.Sell;
+						investorFund.InvestorFundTransactions.Add(sellerInvestorFundTransaction);
 
-					// Save counter party investor fund
-					IEnumerable<ErrorInfo> errorInfo = InvestorRepository.SaveInvestorFund(counterPartyInvestorFund);
-					if (errorInfo == null) {
-						// Update unfunded amount
-						investorFund.UnfundedAmount -= model.CommitmentAmount;
-						InvestorRepository.UpdateInvestorFund(investorFund);
+						InvestorFund counterPartyInvestorFund = InvestorRepository.FindInvestorFund(model.CounterPartyInvestorId, model.InvestorFundId);
+						if (counterPartyInvestorFund == null) {
+							counterPartyInvestorFund = new InvestorFund(); //Create new investor fund
+							counterPartyInvestorFund.CommittedDate = Convert.ToDateTime(model.Date);
+							counterPartyInvestorFund.CreatedBy = AppSettings.CreatedByUserId;
+							counterPartyInvestorFund.CreatedDate = DateTime.Now;
+							counterPartyInvestorFund.FundID = investorFund.FundID;
+							counterPartyInvestorFund.InvestorID = model.CounterPartyInvestorId;
+							counterPartyInvestorFund.LastUpdatedBy = AppSettings.CreatedByUserId;
+							counterPartyInvestorFund.LastUpdatedDate = DateTime.Now;
+							counterPartyInvestorFund.TotalCommitment = model.CommitmentAmount;
+							counterPartyInvestorFund.UnfundedAmount = model.CommitmentAmount;
+							counterPartyInvestorFund.InvestorTypeId = 0;
+						} else {
+							counterPartyInvestorFund.TotalCommitment += model.CommitmentAmount;
+						}
+
+						InvestorFundTransaction counterPartyFundTransaction = new InvestorFundTransaction();
+						counterPartyFundTransaction.Amount = model.CommitmentAmount;
+						counterPartyFundTransaction.CreatedBy = AppSettings.CreatedByUserId;
+						counterPartyFundTransaction.CreatedDate = DateTime.Now;
+						counterPartyFundTransaction.FundClosingID = investorFundTrasaction.FundClosingID;
+						counterPartyFundTransaction.IsAgreementSigned = false;
+						counterPartyFundTransaction.OtherInvestorID = 0;
+						counterPartyFundTransaction.TransactionTypeID = (int)DeepBlue.Models.Transaction.Enums.TransactionType.Buy;
+						counterPartyInvestorFund.InvestorFundTransactions.Add(counterPartyFundTransaction);
+
+						// Save counter party investor fund
+						IEnumerable<ErrorInfo> errorInfo = InvestorRepository.SaveInvestorFund(counterPartyInvestorFund);
+						if (errorInfo == null) {
+							// Update unfunded amount
+							investorFund.UnfundedAmount -= model.CommitmentAmount;
+							InvestorRepository.UpdateInvestorFund(investorFund);
+						}
+						model.TransactionSuccess = true;
 					}
-					model.TransactionSuccess = true;
 				}
 			}
 			return View("Edit", model);

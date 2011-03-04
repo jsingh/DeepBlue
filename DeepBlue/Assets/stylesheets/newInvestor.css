@@ -12,5 +12,8 @@
 .contactinfo-box,.accountinfo-box{
 	width:100%;float:left;
 }
+.field-validation-error{
+	display:none;
+}
  
  

@@ -83,10 +83,59 @@ namespace DeepBlue.Controllers.Investor {
 			return DeepBlueContext.InvestorFundTransactions.SingleOrDefault(investorFundTransaction => investorFundTransaction.InvestorFundTransactionID == transactionId);
 		}
 
-		public void Delete(DeepBlue.Models.Entity.Investor investor) {
-			DeepBlueContext.Investors.DeleteObject(investor);
+		public void Delete(int investorId) {
+			DeepBlue.Models.Entity.Investor deepBlueInvestor = DeepBlueContext.Investors.SingleOrDefault(investor => investor.InvestorID == investorId);
+			if (deepBlueInvestor != null) {
+				foreach (var investorAddress in deepBlueInvestor.InvestorAddresses.ToList()) {
+					DeepBlueContext.Addresses.DeleteObject(investorAddress.Address);
+					DeepBlueContext.InvestorAddresses.DeleteObject(investorAddress);
+				}
+				foreach (var investorAccount in deepBlueInvestor.InvestorAccounts.ToList()) {
+					DeepBlueContext.InvestorAccounts.DeleteObject(investorAccount);
+				}
+				foreach (var investorContact in deepBlueInvestor.InvestorContacts.ToList()) {
+					foreach (var contactAddress in investorContact.Contact.ContactAddresses.ToList()) {
+						DeepBlueContext.Addresses.DeleteObject(contactAddress.Address);
+						DeepBlueContext.ContactAddresses.DeleteObject(contactAddress);
+					}
+					DeepBlueContext.Contacts.DeleteObject(investorContact.Contact);
+					DeepBlueContext.InvestorContacts.DeleteObject(investorContact);
+				}
+				foreach (var investorCommunication in deepBlueInvestor.InvestorCommunications.ToList()) {
+					DeepBlueContext.Communications.DeleteObject(investorCommunication.Communication);
+					DeepBlueContext.InvestorCommunications.DeleteObject(investorCommunication);
+				}
+				foreach (var investorFund in deepBlueInvestor.InvestorFunds.ToList()) {
+					foreach(var investorFundTransaction in investorFund.InvestorFundTransactions.ToList()){
+						DeepBlueContext.InvestorFundTransactions.DeleteObject(investorFundTransaction);	
+					}
+					DeepBlueContext.InvestorFunds.DeleteObject(investorFund);
+				}
+				DeepBlueContext.Investors.DeleteObject(deepBlueInvestor);
+				DeepBlueContext.SaveChanges();
+			}
 		}
 
+		public void DeleteInvestorContact(int investorContactId) {
+			InvestorContact investorContact = DeepBlueContext.InvestorContacts.SingleOrDefault(contact => contact.ContactID == investorContactId);
+			if (investorContact != null) {
+				foreach (var contactAddress in investorContact.Contact.ContactAddresses.ToList()) {
+					DeepBlueContext.Addresses.DeleteObject(contactAddress.Address);
+					DeepBlueContext.ContactAddresses.DeleteObject(contactAddress);
+				}
+				DeepBlueContext.Contacts.DeleteObject(investorContact.Contact);
+			}
+			DeepBlueContext.InvestorContacts.DeleteObject(investorContact);
+			DeepBlueContext.SaveChanges();
+		}
+
+		public void DeleteInvestorAccount(int investorAccountId) {
+			InvestorAccount investorAccount = DeepBlueContext.InvestorAccounts.SingleOrDefault(account => account.InvestorAccountID == investorAccountId);
+			if (investorAccount != null) {
+				DeepBlueContext.InvestorAccounts.DeleteObject(investorAccount);
+			}
+			DeepBlueContext.SaveChanges();
+		}
 
 		public IEnumerable<Helpers.ErrorInfo> SaveInvestorFund(InvestorFund investorFund) {
 			return investorFund.Save();

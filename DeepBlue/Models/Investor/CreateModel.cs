@@ -10,14 +10,14 @@ namespace DeepBlue.Models.Investor {
 	public class CreateModel {
 		public SelectListModel SelectList = new SelectListModel();
 
-		[Required(ErrorMessage = "Required")]
+		[Required(ErrorMessage = "Investor Name is required")]
 		[DisplayName("Investor Name:")]
 		public string InvestorName { get; set; }
 
 		[DisplayName("Display Name:")]
 		public string Alias { get; set; }
 
-		[Required(ErrorMessage = "Required")]
+		[Required(ErrorMessage = "Social Security/ Tax Id is required")]
 		[RegularExpression("^\\d{3}-\\d{2}-\\d{4}$", ErrorMessage = "Invalid Social Security/ Tax Id")]
 		[DisplayName("Social Security/ Tax Id:")]
 		public string SocialSecurityTaxId { get; set; }
@@ -25,13 +25,13 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("Domestic/ Foreign:")]
 		public bool DomesticForeign { get; set; }
 
-		[Required(ErrorMessage = "Required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Required")]
+		[Required(ErrorMessage = "State Of Residency is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "State Of Residency is required")]
 		[DisplayName("State of Residency:")]
 		public int StateOfResidency { get; set; }
 
-		[Required(ErrorMessage = "Required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue,ErrorMessage="Required")]
+		[Required(ErrorMessage = "EntityType is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "EntityType is required")]
 		[DisplayName("Entity Type:")]
 		public int EntityType { get; set; }
 
@@ -51,7 +51,7 @@ namespace DeepBlue.Models.Investor {
 		public string Notes { get; set; }
 
 		/* Address Information */
-		[RegularExpression("^[01]?[-.]?(\\([2-9]\\d{2}\\)|[2-9]\\d{2})[-.]?\\d{3}[-.]?\\d{4}$", ErrorMessage = "Invalid Telephone No")]
+		[RegularExpression("^\\d{10}$", ErrorMessage = "Invalid Telephone No")]
 		[DataType(DataType.PhoneNumber)]
 		[DisplayName("Telephone No:")]
 		public string Phone { get; set; }
