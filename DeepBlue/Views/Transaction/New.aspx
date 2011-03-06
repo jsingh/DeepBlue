@@ -35,7 +35,7 @@
 					</div>
 					<div class="box-content">
 						<% Html.EnableClientValidation(); %>
-						<% using (Ajax.BeginForm("CreateInvestorFund", "", new AjaxOptions { HttpMethod = "Post", OnBegin = "transactionController.onCreateFundBegin", OnSuccess = "transactionController.onCreateFundSuccess" }, new { @id = "NewTransaction" })) {%>
+						<% using (Ajax.BeginForm("CreateInvestorFund", null, new AjaxOptions { HttpMethod = "Post", OnBegin = "transactionController.onCreateFundBegin", OnSuccess = "transactionController.onCreateFundSuccess" }, new { @id = "NewTransaction" })) {%>
 						<%: Html.ValidationSummary(true) %>
 						<%: Html.HiddenFor(model => model.InvestorId)%>
 						<div class="edit-left">
@@ -62,7 +62,7 @@
 									<%: Html.LabelFor(model => model.FundId) %>
 								</div>
 								<div class="editor-field">
-									<%: Html.DropDownListFor(model => model.FundId,Model.FundNames) %>
+									<%: Html.DropDownListFor(model => model.FundId,Model.FundNames,new { @onchange = "javascript:transactionController.loadFundClosing(this.value);" } ) %>
 									<%: Html.ValidationMessageFor(model => model.FundId) %>
 								</div>
 								<div class="editor-label auto-width" style="clear: right; white-space: nowrap">
@@ -78,14 +78,14 @@
 									<%: Html.LabelFor(model => model.FundClosingId) %>
 								</div>
 								<div class="editor-field">
-									<%: Html.DropDownListFor(model => model.FundClosingId, Model.FundClosings)%>
+									<%: Html.DropDownListFor(model => model.FundClosingId,Model.FundClosings)%>
 									<%: Html.ValidationMessageFor(model => model.FundClosingId) %>
 								</div>
 								<div class="editor-label" style="clear: right">
 									<%: Html.LabelFor(model => model.CommittedDate) %>
 								</div>
 								<div class="editor-field">
-									<%: Html.TextBoxFor(model => model.CommittedDate) %>
+									<%: Html.TextBox("CommittedDate","", new { @id = "CommittedDate" }) %>
 									<%: Html.ValidationMessageFor(model => model.CommittedDate) %>
 								</div>
 							</div>
@@ -94,21 +94,16 @@
 									<%: Html.LabelFor(model => model.InvestorTypeId) %>
 								</div>
 								<div class="editor-field">
+									<%: Html.Span("",new { @id = "disp_InvestorTypeId", @style = "display:none"  }) %>
 									<%: Html.DropDownListFor(model => model.InvestorTypeId,Model.InvestorTypes) %>
 									<%: Html.ValidationMessageFor(model => model.InvestorTypeId)%>
 								</div>
-								<div class="editor-label" style="clear: right">
-									<%: Html.LabelFor(model => model.IsAgreementSigned) %>
-								</div>
-								<div class="editor-field checkbox">
-									<%: Html.CheckBoxFor(model => model.IsAgreementSigned)%>
-								</div>
 								<div class="editor-button">
 									<div style="float: left; padding: 0 0 10px 5px;">
-										<%: Html.ImageButton("submit.png", new { style = "width: 73px; height: 23px;" })%>
+										<%: Html.ImageButton("submit.png", new { @style = "width: 73px; height: 23px;", @onclick = "javascript:transactionController.showErrorMessage('NewTransaction');" })%>
 									</div>
 									<div style="float: left; padding: 0 0 10px 5px;">
-										<%: Html.Span("",new { id = "UpdateLoading" })%>
+										<%: Html.Span("", new { @id = "UpdateLoading" })%>
 									</div>
 								</div>
 							</div>
@@ -137,11 +132,11 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%= Html.jQueryAutoCompleteScript("Investor", new AutoCompleteOptions { Source = "/Investor/FindInvestors", MinLength=1,
+	<%= Html.jQueryAutoComplete("Investor", new AutoCompleteOptions { Source = "/Investor/FindInvestors", MinLength=1,
 																			OnSelect = "function(event, ui){ transactionController.selectInvestor(ui.item.id);}"
 })%>
-	<%= Html.jQueryDatePickerScript("CommittedDate")%>
-	<%= Html.jQueryAccordionScript("accordion", new AccordionOptions { Disabled = true, Active = 0 })%>
+	<%= Html.jQueryDatePicker("CommittedDate")%>
+	<%= Html.jQueryAccordion("accordion", new AccordionOptions { Disabled = true, Active = 0 })%>
 
 	<script type="text/javascript">
 		transactionController.init();
@@ -161,23 +156,6 @@
 			position: 'top',
 			autoResize: true
 		});
-	</script>
-
-	<script type="text/javascript">
-		window.onload=function () {
-			document.getElementById("NewTransaction").onsubmit=function () {
-				var errors=Sys.Mvc.FormContext.getValidationForForm(this).validate('submit');
-				var eles=Sys.Mvc.FormContext.getValidationForForm(this);
-				var message='';
-				if(errors.length>0) {
-					var i;
-					for(i=0;i<errors.length;i++) {
-						message+=errors[i]+"\n";
-					}
-					alert(message);
-				}
-			};
-		};
 	</script>
 
 </asp:Content>

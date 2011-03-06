@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using DeepBlue.Helpers;
 
 namespace DeepBlue {
 	// Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -37,6 +38,9 @@ namespace DeepBlue {
 		protected void Application_Start() {
 			AreaRegistration.RegisterAllAreas();
 			RegisterRoutes(RouteTable.Routes);
+			DataAnnotationsModelValidatorProvider.RegisterAdapter(
+															   typeof(RemoteUID_Attribute),
+															   typeof(RemoteAttributeAdapter));
 		}
 	}
 }

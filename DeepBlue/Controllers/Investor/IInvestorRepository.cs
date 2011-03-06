@@ -26,13 +26,14 @@ namespace DeepBlue.Controllers.Investor {
 		InvestorDetail FindInvestorDetail(int investorId);
 		InvestorType FindInvestorType(int investorTypeId);
         List<InvestorFund> FindInvestorFunds(int investorId);
-		InvestorFund FindInvestorFund(int investorId,int investorFundId);
+		InvestorFund FindInvestorFund(int investorId,int fundId);
         InvestorFund FindInvestorFund(int investorFundId);
 		InvestorFundTransaction FindInvestorFundTransaction(int transactionId);
+		decimal FindSumOfSellAmount(int investorFundId);
 		#endregion
-		
+		 
 		#region Delete
-        void Delete(int investorId);
+		void Delete(int investorId);
 		void DeleteInvestorContact(int investorContactId);
 		void DeleteInvestorAccount(int investorAccountId);
 		#endregion

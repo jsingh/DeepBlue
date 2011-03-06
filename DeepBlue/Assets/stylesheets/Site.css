@@ -51,7 +51,7 @@ a img {
 	color: #ffffff;
 	height: 35px;
 	padding-top: 10px;
-	text-align:center;
+	text-align: center;
 }
 /* Content */
 #content {
@@ -214,7 +214,7 @@ h2 {
 	background-image: none;
 }
 .field-validation-error, .custom-validation {
-	color: Red;
+	color: Red;display:none;
 }
 
 /*
@@ -383,7 +383,8 @@ h2 {
 	float: right;
 }
 .contactinfo, .accountinfo {
-	clear: both;width:100%;
+	clear: both;
+	width: 100%;
 }
 /* ui-accordion */
 .ui-accordion .ui-accordion-content {
@@ -392,11 +393,12 @@ h2 {
 .ui-accordion h3 {
 	height: 30px;
 }
-.ui-accordion .header-left{
-	float:left;
+.ui-accordion .header-left {
+	float: left;
 }
-.ui-accordion .header-right{
-	float:right;display:none;
+.ui-accordion .header-right {
+	float: right;
+	display: none;
 }
 .auto-width {
 	width: auto;
@@ -504,7 +506,7 @@ h2 {
 	width: auto;
 }
 .transaction-edit .edit-detail .editor-label {
-	width: 200px;
+	width: 120px;
 }
 .transaction-edit .edit-detail .editor-field {
 	width: auto;
@@ -592,12 +594,15 @@ h2 {
 	text-align: left;
 }
 .field-validation-valid {
-	color: Red;
+	color: red;
+	display: none;
 }
-#contactInfoMain .editor-field{
-	width:auto;
+#contactInfoMain .editor-field {
+	width: auto;
 }
- 
-.transaction-info .field-validation-error{
-	display:none;
+.transaction-edit .field-validation-error, .transaction-info .field-validation-error {
+	display: none;
+}
+#admin_accordion{
+	width: 50%; margin: 10px auto;
 }

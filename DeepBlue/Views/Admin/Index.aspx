@@ -8,26 +8,32 @@
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%><%=Html.StylesheetLinkTag("flexigrid.css") %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-	<div id="tabs" style="border: 0px">
-		<ul>
-			<li><a href="#tabs-1">Entity Type </a></li>
-			<li><a href="#tabs-2">Subject to FOIA</a></li>
-			<li><a href="#tabs-3">Subject to ERISA</a></li>
-			<li><a href="#tabs-3">Restricted Person</a></li>
-			<li><a href="#tabs-3">Source</a></li>
-			<li><a href="#tabs-3">Investor Type</a></li>
-			<li><a href="#tabs-3">Fund Close</a></li>
-		</ul>
-		<div id="tabs-1">
-			<% Html.RenderPartial("EntityType", Model.EntityTypes); %>
+	<div id="admin_accordion">
+		<h3>
+			<a href="#">Entity Type </a>
+		</h3>
+		<div>
+			<table cellpadding="0" cellspacing="0" border="0" id="EntityTypes">
+			</table>
 		</div>
-		<div id="tabs-2">
+		<h3>
+			<a href="#">Source</a>
+		</h3>
+		<div>
 		</div>
-		<div id="tabs-3">
+		<h3>
+			<a href="#">Investor Type</a>
+		</h3>
+		<div>
+		</div>
+		<h3>
+			<a href="#">Fund Close</a>
+		</h3>
+		<div>
 		</div>
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryTab("tabs",new jQueryTabOptions{ }) %>
-	<%=Html.jQueryFlexiGrid("EntityTypes")%>
+	<%=Html.jQueryAccordion("admin_accordion", new AccordionOptions { Active = 0 })%>
+<%--	<%=Html.jQueryFlexiGrid("EntityTypes", new FlexigridOptions { ActionName = "Admin", ControllerName = "EntityType", HttpMethod="GET" })%>--%>
 </asp:Content>

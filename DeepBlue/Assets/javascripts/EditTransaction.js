@@ -11,7 +11,7 @@
 		$("document").ready(function () {
 			var theFrame=$("#iframe_modal",parent.document.body);
 			if(theFrame) {
-				theFrame.height($(".transaction-edit").height()+30);
+				theFrame.height($(".transaction-edit").height()+10);
 			}
 		});
 	}
@@ -32,10 +32,35 @@
 	}
 	,selectInvestor: function (id) {
 		$("#CounterPartyInvestorId").val(id);
+		editTransaction.loadInvestorType(id);
 	}
 	,onInvestorBlur: function (txt) {
-		if(txt.value=="")
+		if(txt.value=="") {
 			$("#CounterPartyInvestorId").val(0);
+			editTransaction.loadInvestorType(0);
+		}
+	}
+	,loadInvestorType: function (investorId) {
+		var FundId=$("#FundId").val();
+		var url="/Transaction/InvestorType/?investorId="+investorId+"&fundId="+FundId;
+		var disp_InvestorTypeId=document.getElementById("disp_InvestorTypeId");
+		var InvestorTypeId=document.getElementById("InvestorTypeId");
+		var InvestorTypeRow=document.getElementById("InvestorTypeRow");
+		InvestorTypeRow.style.display="";
+		InvestorTypeId.value=0;
+		InvestorTypeId.style.display="";
+		disp_InvestorTypeId.style.display="none";
+		disp_InvestorTypeId.innerHTML="";
+		if(investorId>0) {
+			$.getJSON(url,function (data) {
+				if(data.InvestorTypeId>0) {
+					InvestorTypeId.value=data.InvestorTypeId;
+					InvestorTypeId.style.display="none";
+					disp_InvestorTypeId.innerHTML=InvestorTypeId.options[InvestorTypeId.selectedIndex].text;
+					disp_InvestorTypeId.style.display="";
+				}
+			});
+		}
 	}
 	,onBegin: function () {
 		$("#UpdateEditCmtLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Save...");
@@ -50,36 +75,64 @@
 		}
 		$("#UpdateTargetId").html("");
 	}
-	,onEditCommitAmgSubmit: function () {
-		//		var CommitmentAmount=parseFloat($("#CommitmentAmount","#EditCommitmentAmount").val());
-		//		var UnfundedAmount=parseFloat($("#UnfundedAmount","#EditCommitmentAmount").val());
-		//		if(UnfundedAmount>CommitmentAmount) {
-		//			alert("Commitment Amount should be greater than Unfunded Commitment Amount.");
-		//			return false;
-		//		}
+	,onEditCommitAmgSubmit: function (formId) {
+		var frm=document.getElementById(formId);
+		Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
+		var message='';
+		$(".field-validation-error",frm).each(function () {
+			if(this.innerHTML!='') {
+				message+=this.innerHTML+"\n";
+			}
+		});
+		if(message!="") {
+			alert(message);
+			return false;
+		} else {
+			return true;
+		}
 		return true;
 	}
-	,onSubmit: function () {
-
-		/*var frm=document.getElementById("EditTransaction");
-		var Split=document.getElementById("Split");
-		if(Split) {
-		if(Split.checked) {
-		var CounterPartyInvestorId=document.getElementById("CounterPartyInvestorId").value;
-		var OtherInvestor=document.getElementById("OtherInvestorName");
-		var OICA=document.getElementById("OtherInvestorCommitmentAmount");
-		if(parseInt(CounterPartyInvestorId)<=0||isNaN(parseInt(CounterPartyInvestorId))) {
-		editTransaction.checkInputValid($(OtherInvestor));
-		return false;
+	,onTransactionBegin: function () {
+		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Save...");
+	}
+	,onTransactionSuccess: function () {
+		$("#UpdateLoading").html("");
+		if($("#UpdateTargetId").html()=="True") {
+			editTransaction.closeDialog(true);
+		} else {
+			alert($("#UpdateTargetId").html());
 		}
-		if(parseFloat(OICA.value)<=0||isNaN(parseInt(OICA.value))) {
-		editTransaction.checkInputValid($(OICA));
-		return false;
+		$("#UpdateTargetId").html("");
+	}
+	,onSubmit: function (formId) {
+		var frm=document.getElementById(formId);
+		Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
+		var message='';
+		$(".field-validation-error",frm).each(function () {
+			if(this.innerHTML!='') {
+				message+=this.innerHTML+"\n";
+			}
+		});
+		var UnfundedAmount=parseFloat($("#UnfundedAmount",frm).val());
+		var CommitmentAmount=parseFloat($("#CommitmentAmount",frm).val());
+		if(isNaN(UnfundedAmount)) {
+			UnfundedAmount=0;
 		}
+		if(isNaN(CommitmentAmount)) {
+			CommitmentAmount=0;
 		}
-		}*/
+		if(CommitmentAmount>UnfundedAmount) {
+			message+="Transaction Amount should be less than Unfunded Commitment Amount\n";
+		}
+		if(message!="") {
+			alert(message);
+			return false;
+		} else {
+			return true;
+		}
 		return true;
-	},checkInputValid: function (input) {
+	}
+	,checkInputValid: function (input) {
 		var editorfield=input.parent();
 		var customvalidation=$(".custom-validation",editorfield).get(0);
 		if(!customvalidation) {

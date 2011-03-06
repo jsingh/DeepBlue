@@ -20,12 +20,12 @@ namespace DeepBlue.Controllers.Transaction {
 					select fund).ToList();
 		}
 
-		public List<Models.Entity.FundClosing> GetAllFundClosings() {
+		public List<FundClosing> GetAllFundClosings(int fundId) {
 			return (from fundClose in DeepBlueContext.FundClosings
-					orderby fundClose.FundClosingDate descending 
+					where fundClose.FundID == fundId
+					orderby fundClose.FundClosingDate descending
 					select fundClose).ToList();
 		}
-
 	 
 		#endregion
 	}

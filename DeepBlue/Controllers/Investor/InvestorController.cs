@@ -78,7 +78,7 @@ namespace DeepBlue.Controllers.Investor {
 				investor.FirstName = string.Empty;
 				investor.IsDomestic = model.DomesticForeign;
 				investor.LastName = "n/a";
-				investor.LastUpdatedBy = 0;
+				investor.LastUpdatedBy = AppSettings.CreatedByUserId;
 				investor.LastUpdatedDate = DateTime.Now;
 				investor.ManagerName = string.Empty;
 				investor.InvestorEntityTypeID = model.EntityType;
@@ -100,7 +100,7 @@ namespace DeepBlue.Controllers.Investor {
 					investorAddress.CreatedBy = AppSettings.CreatedByUserId;
 					investorAddress.CreatedDate = DateTime.Now;
 					investorAddress.EntityID = (int)ConfigUtil.CurrentEntityID;
-					investorAddress.LastUpdatedBy = 0;
+					investorAddress.LastUpdatedBy = AppSettings.CreatedByUserId;
 					investorAddress.LastUpdatedDate = DateTime.Now;
 
 					investorAddress.Address = new Address();
@@ -116,7 +116,7 @@ namespace DeepBlue.Controllers.Investor {
 					investorAddress.Address.EntityID = (int)ConfigUtil.CurrentEntityID;
 					investorAddress.Address.IsPreferred = false;
 					investorAddress.Address.LastUpdatedDate = DateTime.Now;
-					investorAddress.Address.LastUpdatedBy = 0;
+					investorAddress.Address.LastUpdatedBy = AppSettings.CreatedByUserId;
 					investorAddress.Address.LastUpdatedDate = DateTime.Now;
 					investorAddress.Address.Listed = false;
 					investorAddress.Address.PostalCode = model.Zip;
@@ -138,7 +138,7 @@ namespace DeepBlue.Controllers.Investor {
 						investorAccount.CreatedDate = DateTime.Now;
 						investorAccount.EntityID = (int)ConfigUtil.CurrentEntityID;
 						investorAccount.IsPrimary = false;
-						investorAccount.LastUpdatedBy = 0;
+						investorAccount.LastUpdatedBy = AppSettings.CreatedByUserId;
 						investorAccount.LastUpdatedDate = DateTime.Now;
 						investorAccount.Routing = 0;
 						investorAccount.Reference = collection[(index + 1).ToString() + "_" + "Reference"];
@@ -156,7 +156,7 @@ namespace DeepBlue.Controllers.Investor {
 						investorContact.CreatedBy = AppSettings.CreatedByUserId;
 						investorContact.CreatedDate = DateTime.Now;
 						investorContact.EntityID = (int)ConfigUtil.CurrentEntityID;
-						investorContact.LastUpdatedBy = 0;
+						investorContact.LastUpdatedBy = AppSettings.CreatedByUserId;
 						investorContact.LastUpdatedDate = DateTime.Now;
 						investorContact.Contact = new Contact();
 						investorContact.Contact.ContactName = Convert.ToString(collection[(index + 1).ToString() + "_" + "ContactPerson"]);
@@ -165,7 +165,7 @@ namespace DeepBlue.Controllers.Investor {
 						investorContact.Contact.CreatedDate = DateTime.Now;
 						investorContact.Contact.FirstName = string.Empty;
 						investorContact.Contact.LastName = string.Empty;
-						investorContact.Contact.LastUpdatedBy = 0;
+						investorContact.Contact.LastUpdatedBy = AppSettings.CreatedByUserId;
 						investorContact.Contact.LastUpdatedDate = DateTime.Now;
 						investorContact.Contact.MiddleName = string.Empty;
 						investorContact.Contact.ReceivesDistributionNotices = collection[(index + 1).ToString() + "_" + "DistributionNotices"].Contains("true");
@@ -178,7 +178,7 @@ namespace DeepBlue.Controllers.Investor {
 						contactAddress.CreatedBy = AppSettings.CreatedByUserId;
 						contactAddress.CreatedDate = DateTime.Now;
 						contactAddress.EntityID = (int)ConfigUtil.CurrentEntityID;
-						contactAddress.LastUpdatedBy = 0;
+						contactAddress.LastUpdatedBy = AppSettings.CreatedByUserId;
 						contactAddress.LastUpdatedDate = DateTime.Now;
 						contactAddress.Address = new Address();
 						contactAddress.Address.Address1 = Convert.ToString(collection[(index + 1).ToString() + "_" + "ContactAddress1"]);
@@ -191,7 +191,7 @@ namespace DeepBlue.Controllers.Investor {
 						contactAddress.Address.CreatedBy = AppSettings.CreatedByUserId;
 						contactAddress.Address.CreatedDate = DateTime.Now;
 						contactAddress.Address.EntityID = (int)ConfigUtil.CurrentEntityID;
-						contactAddress.Address.LastUpdatedBy = 0;
+						contactAddress.Address.LastUpdatedBy = AppSettings.CreatedByUserId;
 						contactAddress.Address.LastUpdatedDate = DateTime.Now;
 						contactAddress.Address.Listed = false;
 						contactAddress.Address.PostalCode = collection[(index + 1).ToString() + "_" + "ContactZip"];
@@ -527,7 +527,6 @@ namespace DeepBlue.Controllers.Investor {
 				model.FundInformations.total = investor.InvestorFunds.Count();
 				foreach (var fund in investor.InvestorFunds) {
 					FlexigridRow row = new FlexigridRow();
-					row.id = fund.FundID.ToString();
 					row.cell.Add(fund.Fund.FundName.ToString());
 					row.cell.Add(string.Format("{0:C}", fund.TotalCommitment));
 					row.cell.Add(string.Format("{0:C}", Convert.ToDecimal(fund.UnfundedAmount)));

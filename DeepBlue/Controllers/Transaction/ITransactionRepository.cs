@@ -9,7 +9,7 @@ using DeepBlue.Models.Transaction;
 namespace DeepBlue.Controllers.Transaction {
 	public interface ITransactionRepository {
 		List<DeepBlue.Models.Entity.Fund> GetAllFundNames();
-		List<DeepBlue.Models.Entity.FundClosing> GetAllFundClosings();
+		List<FundClosing> GetAllFundClosings(int fundId);
     }
 }
 

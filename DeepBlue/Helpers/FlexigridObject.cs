@@ -6,7 +6,6 @@ using System.Web;
 namespace DeepBlue.Helpers {
 
 	public class FlexigridRow {
-		public string id;
 		public List<string> cell = new List<string>();
 	}
 

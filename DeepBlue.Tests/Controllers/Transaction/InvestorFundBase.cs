@@ -31,7 +31,6 @@ namespace DeepBlue.Tests.Controllers.Transaction {
 			DefaultController = new TransactionController(MockRepository.Object, MockInvestorRepository.Object);
             DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
 			MockRepository.Setup(x => x.GetAllFundNames()).Returns(GetMockAllFundNames());
-			MockRepository.Setup(x => x.GetAllFundClosings()).Returns(GetMockAllFundClosings());
 			MockInvestorRepository.Setup(x => x.GetAllInvestorTypes()).Returns(GetMockAllInvestorTypes());
         }
 		
