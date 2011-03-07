@@ -185,18 +185,23 @@ namespace DeepBlue.Tests {
         /// </summary>
         /// <param name="formValues"></param>
         /// <returns></returns>
-        protected ValueProviderCollection SetupValueProvider(Dictionary<string, string> formValues) {
+        protected ValueProviderCollection SetupValueProvider(FormCollection form) {
             List<IValueProvider> valueProviders = new List<IValueProvider>();
-
-            FormCollection form = new FormCollection();
-            if (formValues != null) {
-                foreach (string key in formValues.Keys) {
-                    form.Add(key, formValues[key]);
-                }
-            }
-
             valueProviders.Add(form);
             return new ValueProviderCollection(valueProviders);
         }
+        //protected ValueProviderCollection SetupValueProvider(Dictionary<string, string> formValues) {
+        //    List<IValueProvider> valueProviders = new List<IValueProvider>();
+
+        //    FormCollection form = new FormCollection();
+        //    if (formValues != null) {
+        //        foreach (string key in formValues.Keys) {
+        //            form.Add(key, formValues[key]);
+        //        }
+        //    }
+
+        //    valueProviders.Add(form);
+        //    return new ValueProviderCollection(valueProviders);
+        //}
     }
 }
