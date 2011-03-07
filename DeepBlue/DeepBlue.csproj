@@ -84,10 +84,13 @@
     <Compile Include="Helpers\AccordionOptions.cs" />
     <Compile Include="Helpers\AutoCompleteOptions.cs" />
     <Compile Include="Helpers\FlexigridObject.cs" />
+    <Compile Include="Helpers\FlexigridOptions.cs" />
     <Compile Include="Helpers\HtmlControls.cs" />
     <Compile Include="Helpers\HttpContextFactory.cs" />
     <Compile Include="Helpers\JQueryHelpers.cs" />
     <Compile Include="Helpers\jQueryTabOptions.cs" />
+    <Compile Include="Helpers\RemoteAttributeAdapter.cs" />
+    <Compile Include="Helpers\RemoteUID_Attribute.cs" />
     <Compile Include="Helpers\SelectListFactory.cs" />
     <Compile Include="Helpers\ValidationHelpers.cs" />
     <Compile Include="Models\Admin\Enums.cs" />
@@ -112,6 +115,7 @@
     <Compile Include="Models\Investor\ListModel.cs" />
     <Compile Include="Models\Transaction\EditModel.cs" />
     <Compile Include="Models\Transaction\Enums.cs" />
+    <Compile Include="Models\Transaction\ErrorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\AppSettings.cs" />
     <Compile Include="Util\ConfigUtil.cs" />
@@ -210,6 +214,7 @@
     <Content Include="Assets\javascripts\menu.js" />
     <Content Include="Assets\javascripts\MicrosoftAjax.js" />
     <Content Include="Assets\javascripts\MicrosoftMvcAjax.js" />
+    <Content Include="Assets\javascripts\MicrosoftMvcCustomValidation.js" />
     <Content Include="Assets\javascripts\MicrosoftMvcValidation.js" />
     <Content Include="Assets\javascripts\SearchInvestor.js" />
     <Content Include="Assets\javascripts\TransactionController.js" />
@@ -226,7 +231,8 @@
     <Content Include="Views\Investor\FundList.ascx" />
     <Content Include="Views\Investor\New.aspx" />
     <Content Include="Views\Investor\ThankYou.aspx" />
-    <Content Include="Views\Transaction\CreateInvestorFundSuccess.ascx" />
+    <Content Include="Views\Transaction\Error.ascx" />
+    <Content Include="Views\Transaction\Success.ascx" />
     <Content Include="Views\Transaction\Edit.aspx" />
     <Content Include="Views\Transaction\EditCommitmentAmount.ascx" />
     <Content Include="Views\Transaction\Index.aspx" />

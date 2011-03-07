@@ -483,7 +483,7 @@
 	<%: Html.HiddenFor(model => model.id) %>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%= Html.jQueryAutoCompleteScript("Investor", new AutoCompleteOptions { Source = "/Investor/FindInvestors", MinLength=1,
+	<%= Html.jQueryAutoComplete("Investor", new AutoCompleteOptions { Source = "/Investor/FindInvestors", MinLength=1,
 																			OnSelect = "function(event, ui){ editInvestor.selectInvestor(ui.item.id);}"
 })%>
 

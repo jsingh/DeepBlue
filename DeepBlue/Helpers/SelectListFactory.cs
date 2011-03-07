@@ -117,21 +117,7 @@ namespace DeepBlue.Helpers {
 			return fundList;
 		}
 
-		public static List<SelectListItem> GetFundClosingSelectList(List<FundClosing> fundClosings) {
-			List<SelectListItem> fundClosingList = new List<SelectListItem>();
-			SelectListItem item = new SelectListItem();
-			item.Text = "--Select One--";
-			item.Value = "0";
-			fundClosingList.Add(item);
-			foreach (var fundClose in fundClosings) {
-				item = new SelectListItem();
-				item.Text = fundClose.FundClosingDate.ToString();
-				item.Value = fundClose.FundClosingID.ToString();
-				fundClosingList.Add(item);
-			}
-			return fundClosingList;
-		}
-
+	 
 		public static List<SelectListItem> GetInvestorTypeSelectList(List<InvestorType> investorTypes) {
 			List<SelectListItem> investorTypeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
@@ -145,6 +131,15 @@ namespace DeepBlue.Helpers {
 				investorTypeList.Add(item);
 			}
 			return investorTypeList;
+		}
+
+		public static List<SelectListItem> GetDefaultSelectList(){
+			List<SelectListItem> defaultSelectList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			defaultSelectList.Add(item);
+			return defaultSelectList;
 		}
 
 	}

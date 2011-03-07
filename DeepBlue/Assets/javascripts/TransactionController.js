@@ -90,7 +90,7 @@
 		$(iframe).dialog({
 			title: "Transaction",
 			autoOpen: true,
-			width: 700,
+			width: 600,
 			modal: true,
 			position: 'top',
 			autoResize: true
@@ -101,11 +101,57 @@
 		$("#CommitmentAmount","#EditCommitmentAmount").val("");
 		$("#EditCommitmentAmount").dialog('open');
 		$("#UpdateEditCmtLoading","#EditCommitmentAmount").html("");
+		$("#EditCommitAmtLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		var dt=new Date();
 		$.getJSON("/Transaction/FindCommitmentAmount/"+investorFundId+"?t="+dt.getTime(),function (data) {
+			$("#EditCommitAmtLoading").html("");
 			$("#InvestorFundId","#EditCommitmentAmount").val(data.InvestorFundId);
 			$("#CommitmentAmount","#EditCommitmentAmount").val(data.CommitmentAmount);
 			$("#UnfundedAmount","#EditCommitmentAmount").val(data.UnfundedAmount);
 		});
+	}
+	,loadFundClosing: function (fundId) {
+		var dt=new Date();
+		var investorId=$("#InvestorId").val();
+		var url="/Transaction/FundClosingList/?fundId="+fundId+"&investorId="+investorId+"&t="+dt.getTime();
+		var ddl=document.getElementById("FundClosingId");
+		ddl.options.length=null;
+		var listItem=new Option("Loading...","",false,false);
+		ddl.options[0]=listItem;
+		var InvestorTypeId=document.getElementById("InvestorTypeId");
+		var disp_InvestorTypeId=document.getElementById("disp_InvestorTypeId");
+		disp_InvestorTypeId.style.display="none";
+		InvestorTypeId.style.display="";
+		InvestorTypeId.value=0;
+		disp_InvestorTypeId.innerHTML="";
+		$.getJSON(url,function (data) {
+			if(data.InvestorTypeId>0) {
+				InvestorTypeId.value=data.InvestorTypeId;
+				InvestorTypeId.style.display="none";
+				disp_InvestorTypeId.innerHTML=InvestorTypeId.options[InvestorTypeId.selectedIndex].text;
+				disp_InvestorTypeId.style.display="";
+			}
+			var i;
+			ddl.options.length=null;
+			listItem=new Option("--Select One--","0",false,false);
+			ddl.options[0]=listItem;
+			for(i=0;i<data.FundClosingDetails.length;i++) {
+				listItem=new Option(data.FundClosingDetails[i].Name,data.FundClosingDetails[i].FundClosingId,false,false);
+				ddl.options[ddl.options.length]=listItem;
+			}
+		});
+	}
+	,showErrorMessage: function (formId) {
+		var frm=document.getElementById(formId);
+		Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
+		var message='';
+		$(".field-validation-error",frm).each(function () {
+			if(this.innerHTML!='') {
+				message+=this.innerHTML+"\n";
+			}
+		});
+		if(message!="") {
+			alert(message);
+		}
 	}
 }

@@ -27,9 +27,7 @@
 				</div>
 			</div>
 			<div class="editor-link">
-				<% foreach (var transaction in item.InvestorFundTransactions) {%>
-				<%: Html.Anchor("Transaction", "#", new { onclick = "javascript:transactionController.editTransaction("+ transaction.InvestorFundTransactionID.ToString() +");" })%>
-				<%break;}%>&nbsp;-
+				<%: Html.Anchor("Transaction", "#", new { onclick = "javascript:transactionController.editTransaction("+ item.InvestorFundID.ToString() +");" })%>&nbsp;-&nbsp;
 				<%: Html.Anchor("Edit Committed Amount", "#", new { onclick = "javascript:transactionController.editCommitmentAmount(" + item.InvestorFundID.ToString() + ");" })%>
 			</div>
 		</div>

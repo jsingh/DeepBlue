@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace DeepBlue.Helpers {
 	public static class JQueryHelpers {
-		public static string jQueryAutoCompleteScript(this HtmlHelper helper, string targetId, AutoCompleteOptions options) {
+		public static string jQueryAutoComplete(this HtmlHelper helper, string targetId, AutoCompleteOptions options) {
 			StringBuilder scriptSrc = new StringBuilder();
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").autocomplete({")
 					 .Append("source:\"" + options.Source + "\"")
@@ -20,7 +20,7 @@ namespace DeepBlue.Helpers {
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
 
-		public static string jQueryAccordionScript(this HtmlHelper helper, string targetId, AccordionOptions options) {
+		public static string jQueryAccordion(this HtmlHelper helper, string targetId, AccordionOptions options) {
 			StringBuilder scriptSrc = new StringBuilder();
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").accordion({")
 					 .Append("active:" + options.Active.ToString() + "")
@@ -31,7 +31,7 @@ namespace DeepBlue.Helpers {
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
 
-		public static string jQueryDatePickerScript(this HtmlHelper helper, string targetId) {
+		public static string jQueryDatePicker(this HtmlHelper helper, string targetId) {
 			StringBuilder scriptSrc = new StringBuilder();
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").datepicker({changeMonth: true, changeYear: true});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
@@ -45,9 +45,13 @@ namespace DeepBlue.Helpers {
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
 
-		public static string jQueryFlexiGrid(this HtmlHelper helper, string targetId) {
+		public static string jQueryFlexiGrid(this HtmlHelper helper, string targetId, FlexigridOptions options) {
 			StringBuilder scriptSrc = new StringBuilder();
-			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").flexigrid();});");
+			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").flexigrid({")
+					 .Append("usepager:"+ options.Paging.ToString().ToLower())
+					 .Append(",url:\"/"+ options.ActionName.ToString() + "/" + options.ControllerName.ToString() + "\"")
+					 .Append(",method:\"" + options.HttpMethod.ToString() + "\"")
+					 .Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
 	}

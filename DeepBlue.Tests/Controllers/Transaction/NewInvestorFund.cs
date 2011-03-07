@@ -21,7 +21,7 @@ namespace DeepBlue.Tests.Controllers.Transaction {
         public override void Setup() {
             // Arrange
             base.Setup();
-			base.ActionResult = base.DefaultController.New(0);
+			base.ActionResult = base.DefaultController.New();
         }
 
 		[Test]

@@ -5,15 +5,16 @@ using System.Web;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Transaction {
 
 	public class CreateModel {
 		public CreateModel() {
 			FundNames = new List<SelectListItem>();
-			FundClosings = new List<SelectListItem>();
 			InvestorTypes = new List<SelectListItem>();
 			EditCommitmentAmountModel = new EditCommitmentAmountModel();
+			FundClosings = new List<SelectListItem>();
 		}
 
 		[DisplayName("Investor:")]
@@ -42,15 +43,13 @@ namespace DeepBlue.Models.Transaction {
 
 		[Required(ErrorMessage = "Committed Amount is required")]
 		[Range(1, Double.MaxValue, ErrorMessage = "Invalid Committed Amount")]
+		[RegularExpression("^(\\+|-)?[0-9][0-9]*(\\.[0-9]*)?$", ErrorMessage = "Invalid Committed Amount")]
 		[DisplayName("Committed Amount:")]
 		public decimal TotalCommitment { get; set; }
 
 		[Required(ErrorMessage = "Committed Date is required")]
 		[DisplayName("Committed Date:")]
-		public string CommittedDate { get; set; }
-
-		[DisplayName("Signed Agreement:")]
-		public bool IsAgreementSigned { get; set; }
+		public DateTime CommittedDate { get; set; }
 
 		public List<SelectListItem> FundNames { get; set; }
 

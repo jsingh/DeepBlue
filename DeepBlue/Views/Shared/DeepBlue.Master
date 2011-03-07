@@ -13,6 +13,7 @@
 	<%= Html.JavascriptInclueTag("MicrosoftAjax.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
 	<%= Html.JavascriptInclueTag("SearchInvestor.js")%>
 	<%= Html.JavascriptInclueTag("menu.js")%>
 	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
@@ -120,7 +121,7 @@
 			<li>
 				<%: Html.ActionLink("Update Investor Information", "Edit", "Investor")%></li>
 			<li>
-				<%: Html.ActionLink("Investor Fund Transaction", "New", "Transaction")%></li>
+				<%: Html.ActionLink("Investor Commitment", "New", "Transaction")%></li>
 		</ul>
 	</div>
 </body>

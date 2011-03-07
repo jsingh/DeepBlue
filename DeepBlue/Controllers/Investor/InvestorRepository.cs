@@ -71,13 +71,14 @@ namespace DeepBlue.Controllers.Investor {
 					select investorFund).ToList();
 		}
 
-		public InvestorFund FindInvestorFund(int investorId, int investorFundId) {
-			return DeepBlueContext.InvestorFunds.SingleOrDefault(investorFund => investorFund.InvestorID == investorId && investorFund.InvestorFundID == investorFundId);
+		public InvestorFund FindInvestorFund(int investorId, int fundId) {
+			return DeepBlueContext.InvestorFunds.SingleOrDefault(investorFund => investorFund.InvestorID == investorId && investorFund.FundID == fundId);
 		}
 
 		public InvestorFund FindInvestorFund(int investorFundId) {
 			return DeepBlueContext.InvestorFunds.SingleOrDefault(investorFund => investorFund.InvestorFundID == investorFundId);
 		}
+		
 
 		public InvestorFundTransaction FindInvestorFundTransaction(int transactionId) {
 			return DeepBlueContext.InvestorFundTransactions.SingleOrDefault(investorFundTransaction => investorFundTransaction.InvestorFundTransactionID == transactionId);
@@ -180,7 +181,13 @@ namespace DeepBlue.Controllers.Investor {
 			return investorFund.Update(DeepBlueContext);
 		}
 
-		#endregion
+		public decimal FindSumOfSellAmount(int investorFundId) {
+			return (from investorFundTransaction in DeepBlueContext.InvestorFundTransactions
+					where investorFundTransaction.InvestorFundID == investorFundId && investorFundTransaction.TransactionTypeID == (int)DeepBlue.Models.Transaction.Enums.TransactionType.Sell
+					select investorFundTransaction.Amount ?? 0).Sum();
+		}
 
+		#endregion
+	 
 	}
 }

@@ -36,7 +36,7 @@
 			rpOptions: [10,15,20,25,40],
 			title: false,
 			pagestat: 'Displaying {from} to {to} of {total} items',
-			procmsg: 'Processing, please wait ...',
+			procmsg: 'Loading...',
 			query: '',
 			qtype: '',
 			nomsg: 'No items',
@@ -108,7 +108,7 @@
 					 function (i,row) {
 					 	var tr=document.createElement('tr');
 					 	if(i%2&&p.striped) tr.className='erow';
-					 	if(row.id) tr.id='row'+row.id;
+					 	tr.id='row'+i;
 					 	var i;
 					 	for(i=0;i<p.colModel.length;i++) {
 					 		var td=document.createElement('td');
@@ -121,7 +121,7 @@
 					 		}
 					 		$(div).css("text-align",p.colModel[i].align);
 					 		$(td).append(div);
-					 		$(tr).append(td); 
+					 		$(tr).append(td);
 					 		td=null;
 					 	}
 					 	$(tbody).append(tr);

@@ -48,5 +48,12 @@ namespace DeepBlue.Controllers.Admin {
 			return View(model);
 		}
 
+		//
+		// GET: /Admin/EntityType
+		[HttpGet]
+		public ActionResult EntityType(int page,int row) {
+			return View();
+		}
+
 	}
 }
