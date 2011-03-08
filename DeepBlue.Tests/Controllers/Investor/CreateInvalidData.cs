@@ -28,8 +28,8 @@ namespace DeepBlue.Tests.Controllers.Investor {
         }
 
         private void SetFormCollection() {
-            base.DefaultController.ValueProvider = SetupValueProvider(null);
-            base.ActionResult = base.DefaultController.Create(new FormCollection());
+            base.DefaultController.ValueProvider = SetupValueProvider(new FormCollection());
+			base.ActionResult = base.DefaultController.Create(GetInvalidformCollection());
         }
         #region Tests where form collection doesnt have the required values. Tests for DataAnnotations
         private bool test_posted_value(string parameterName) {

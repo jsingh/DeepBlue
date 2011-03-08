@@ -81,16 +81,7 @@ namespace DeepBlue.Models.Entity {
 			InvestorFundService.SaveInvestorFund(this);
 			return null;
 		}
-
-		public IEnumerable<ErrorInfo> Update(DeepBlueEntities context) {
-			var investorFund = this;
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(investorFund);
-			if (errors.Any()) {
-				return errors;
-			}
-			InvestorFundService.UpdateInvestorFund(context);
-			return null;
-		}
+	 
 	}
 
 

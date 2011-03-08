@@ -93,7 +93,7 @@ a img {
 	top: 24px;
 }
 .mdiv li {
-	list-style: none;
+	list-style: none;   min-width: 165px;
 }
 .mdiv a {
 	display: block;
@@ -118,6 +118,7 @@ a img {
 	background-repeat: repeat-x;
 	height: 24px;
 	float: left;
+	line-height: 22px;
 }
 .topmenu-left {
 	background-image: url(../images/tab_unsel_l.png);
@@ -214,7 +215,8 @@ h2 {
 	background-image: none;
 }
 .field-validation-error, .custom-validation {
-	color: Red;display:none;
+	color: Red;
+	display: none;
 }
 
 /*
@@ -603,6 +605,7 @@ h2 {
 .transaction-edit .field-validation-error, .transaction-info .field-validation-error {
 	display: none;
 }
-#admin_accordion{
-	width: 50%; margin: 10px auto;
+#admin_accordion {
+	width: 50%;
+	margin: 10px auto;
 }

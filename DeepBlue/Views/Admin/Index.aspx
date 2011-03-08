@@ -35,5 +35,5 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%=Html.jQueryAccordion("admin_accordion", new AccordionOptions { Active = 0 })%>
-<%--	<%=Html.jQueryFlexiGrid("EntityTypes", new FlexigridOptions { ActionName = "Admin", ControllerName = "EntityType", HttpMethod="GET" })%>--%>
+	<%--	<%=Html.jQueryFlexiGrid("EntityTypes", new FlexigridOptions { ActionName = "Admin", ControllerName = "EntityType", HttpMethod="GET" })%>--%>
 </asp:Content>

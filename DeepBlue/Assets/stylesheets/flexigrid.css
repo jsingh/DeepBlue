@@ -403,12 +403,13 @@ div.colCopy {
 	background: #fff !important;
 }
 
-.flexigrid div.hDiv th div.sdesc {
-	background: url(../images/dn.png) no-repeat center top;
+.flexigrid div.hDiv th div span.sdesc {
+	background: url(../images/dn.png) no-repeat right center; padding-right: 10px;
 }
 
-.flexigrid div.hDiv th div.sasc {
-	background: url(../images/up.png) no-repeat center top;
+.flexigrid div.hDiv th div span.sasc {
+    background: url("../images/up.png") no-repeat scroll right center transparent;
+    padding-right: 10px;
 }
 
 .flexigrid div.bDiv td {
@@ -533,7 +534,7 @@ div.colCopy {
 	margin: 3px;
 	margin-left: -2px;
 	float: right;
-	width: 380px;
+	width: auto;
 }
 
 div.pGroup {

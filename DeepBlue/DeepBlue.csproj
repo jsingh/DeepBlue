@@ -72,7 +72,9 @@
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\AdminRepository.cs" />
     <Compile Include="Controllers\Admin\IAdminRepository.cs" />
+    <Compile Include="Controllers\Fund\FundRepository.cs" />
     <Compile Include="Controllers\Fund\FundController.cs" />
+    <Compile Include="Controllers\Fund\IFundRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Investor\InvestorController.cs" />
     <Compile Include="Controllers\Transaction\ITransactionRepository.cs" />
@@ -83,12 +85,12 @@
     </Compile>
     <Compile Include="Helpers\AccordionOptions.cs" />
     <Compile Include="Helpers\AutoCompleteOptions.cs" />
-    <Compile Include="Helpers\FlexigridObject.cs" />
+    <Compile Include="Helpers\Flexigrid.cs" />
     <Compile Include="Helpers\FlexigridOptions.cs" />
     <Compile Include="Helpers\HtmlControls.cs" />
     <Compile Include="Helpers\HttpContextFactory.cs" />
     <Compile Include="Helpers\JQueryHelpers.cs" />
-    <Compile Include="Helpers\jQueryTabOptions.cs" />
+    <Compile Include="Helpers\PaginatedList.cs" />
     <Compile Include="Helpers\RemoteAttributeAdapter.cs" />
     <Compile Include="Helpers\RemoteUID_Attribute.cs" />
     <Compile Include="Helpers\SelectListFactory.cs" />
@@ -100,12 +102,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\Partial\FundService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorFundTransactionService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorFundService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorService.cs" />
+    <Compile Include="Models\Entity\Validation\Fund.cs" />
     <Compile Include="Models\Entity\Validation\InvestorFundTransaction.cs" />
     <Compile Include="Models\Entity\Validation\InvestorFund.cs" />
     <Compile Include="Models\Entity\Validation\Investor.cs" />
+    <Compile Include="Models\Fund\CreateModel.cs" />
+    <Compile Include="Models\Fund\EditModel.cs" />
+    <Compile Include="Models\Fund\FundDetail.cs" />
+    <Compile Include="Models\Fund\FundListModel.cs" />
     <Compile Include="Models\Transaction\CreateModel.cs" />
     <Compile Include="Models\Investor\CreateModel.cs" />
     <Compile Include="Controllers\Investor\IInvestorRepository.cs" />
@@ -205,6 +213,7 @@
     <Content Include="Assets\javascripts\FlexGrid.js" />
     <Content Include="Assets\javascripts\EditInvestor.js" />
     <Content Include="Assets\javascripts\EditTransaction.js" />
+    <Content Include="Assets\javascripts\Fund.js" />
     <Content Include="Assets\javascripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Assets\javascripts\jquery-ui-1.8.10.custom.min.js" />
     <Content Include="Assets\javascripts\jquery-ui-1.8.9.combobox.js" />
@@ -219,6 +228,7 @@
     <Content Include="Assets\javascripts\SearchInvestor.js" />
     <Content Include="Assets\javascripts\TransactionController.js" />
     <Content Include="Assets\stylesheets\flexigrid.css" />
+    <Content Include="Assets\stylesheets\fund.css" />
     <Content Include="Assets\stylesheets\jquery-ui-1.8.10.custom.css" />
     <Content Include="Assets\stylesheets\newInvestor.css" />
     <Content Include="Global.asax" />
@@ -226,6 +236,13 @@
     <Content Include="Views\Admin\EntityType.ascx" />
     <Content Include="Views\Admin\Index.aspx" />
     <Content Include="Views\Admin\List.ascx" />
+    <Content Include="Views\Fund\Edit.aspx" />
+    <Content Include="Views\Fund\Error.ascx" />
+    <Content Include="Views\Fund\FundDetail.ascx" />
+    <Content Include="Views\Fund\Index.aspx" />
+    <Content Include="Views\Fund\List.ascx" />
+    <Content Include="Views\Fund\New.aspx" />
+    <Content Include="Views\Fund\Success.ascx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Investor\Edit.aspx" />
     <Content Include="Views\Investor\FundList.ascx" />
@@ -265,9 +282,7 @@
       <LastGenOutput>DeepBlue.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Fund\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

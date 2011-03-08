@@ -16,7 +16,7 @@ function mopen(that,id)
 	ddmenuitem = document.getElementById(id);
 	ddmenuitem.style.visibility = 'visible';
 	var pos = $(that).position();
-	$(ddmenuitem).css({ "left" : pos.left - 7 , "top" : pos.top + 25 });
+	$(ddmenuitem).css({ "left" : pos.left - 7 , "top" : pos.top + 21 });
 	$(ddmenuitem).css("z-index","10001");
 }
 // close showed layer

@@ -54,12 +54,9 @@ namespace DeepBlue.Controllers.Transaction {
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
 				InvestorFund investorFund = InvestorRepository.FindInvestorFund(model.InvestorId, model.FundId);
-				bool isNewFund = false;
 				if (investorFund == null) {
 					//Create new fund
-					isNewFund = true;
 					investorFund = new InvestorFund();
-					investorFund.CommittedDate = model.CommittedDate;
 					investorFund.CreatedBy = AppSettings.CreatedByUserId;
 					investorFund.CreatedDate = DateTime.Now;
 					investorFund.FundID = model.FundId;
@@ -71,7 +68,6 @@ namespace DeepBlue.Controllers.Transaction {
 					investorFund.TotalCommitment += model.TotalCommitment;
 					investorFund.UnfundedAmount += model.TotalCommitment;
 				}
-				investorFund.CommittedDate = model.CommittedDate;
 				investorFund.LastUpdatedBy = AppSettings.CreatedByUserId;
 				investorFund.LastUpdatedDate = DateTime.Now;
 				// Create new investor fund transaction
@@ -87,10 +83,7 @@ namespace DeepBlue.Controllers.Transaction {
 				investorFundTransaction.CommittedDate = model.CommittedDate;
 				investorFund.InvestorFundTransactions.Add(investorFundTransaction);
 
-				if (isNewFund)
-					InvestorRepository.SaveInvestorFund(investorFund);
-				else
-					InvestorRepository.UpdateInvestorFund(investorFund);
+				InvestorRepository.SaveInvestorFund(investorFund);
 				return View("Success");
 			} else {
 				return View("New", model);
@@ -195,11 +188,8 @@ namespace DeepBlue.Controllers.Transaction {
 				investorFund.InvestorFundTransactions.Add(sellerInvestorFundTransaction);
 
 				InvestorFund counterPartyInvestorFund = InvestorRepository.FindInvestorFund(model.CounterPartyInvestorId, investorFund.FundID);
-				bool isNewCounterParyFund = false;
 				if (counterPartyInvestorFund == null) {
-					isNewCounterParyFund = true;
 					counterPartyInvestorFund = new InvestorFund(); //Create new investor fund
-					counterPartyInvestorFund.CommittedDate = Convert.ToDateTime(model.Date);
 					counterPartyInvestorFund.CreatedBy = AppSettings.CreatedByUserId;
 					counterPartyInvestorFund.CreatedDate = DateTime.Now;
 					counterPartyInvestorFund.FundID = investorFund.FundID;
@@ -228,15 +218,11 @@ namespace DeepBlue.Controllers.Transaction {
 				counterPartyInvestorFund.InvestorFundTransactions.Add(counterPartyFundTransaction);
 
 				// Save counter party investor fund
-
-				if (isNewCounterParyFund)
-					errorInfo = InvestorRepository.SaveInvestorFund(counterPartyInvestorFund);
-				else
-					errorInfo = InvestorRepository.UpdateInvestorFund(counterPartyInvestorFund);
+				errorInfo = InvestorRepository.SaveInvestorFund(counterPartyInvestorFund);
 				if (errorInfo == null) {
 					// Update unfunded amount
 					investorFund.UnfundedAmount -= model.CommitmentAmount;
-					errorInfo = InvestorRepository.UpdateInvestorFund(investorFund);
+					errorInfo = InvestorRepository.SaveInvestorFund(investorFund);
 				}
 				if (errorInfo != null) {
 					errorModel = new ErrorModel();
@@ -270,7 +256,7 @@ namespace DeepBlue.Controllers.Transaction {
 				InvestorFund investorFund = InvestorRepository.FindInvestorFund(editModel.InvestorFundId);
 				investorFund.UnfundedAmount = editModel.CommitmentAmount - InvestorRepository.FindSumOfSellAmount(editModel.InvestorFundId);
 				investorFund.TotalCommitment = editModel.CommitmentAmount;
-				InvestorRepository.UpdateInvestorFund(investorFund);
+				InvestorRepository.SaveInvestorFund(investorFund);
 				return true;
 			} else {
 				return false;

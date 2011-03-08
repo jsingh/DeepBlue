@@ -42,10 +42,6 @@ namespace DeepBlue.Controllers.Investor {
         IEnumerable<ErrorInfo> SaveInvestor(DeepBlue.Models.Entity.Investor investor);
 		IEnumerable<ErrorInfo> SaveInvestorFund(DeepBlue.Models.Entity.InvestorFund investorFund);
 		#endregion
-
-		#region Update
-		IEnumerable<ErrorInfo> UpdateInvestor(DeepBlue.Models.Entity.Investor investor);
-		IEnumerable<ErrorInfo> UpdateInvestorFund(DeepBlue.Models.Entity.InvestorFund investorFund);
-		#endregion 
+ 
     }
 }

@@ -385,7 +385,7 @@ namespace DeepBlue.Controllers.Investor {
 						investor.InvestorAccounts.Add(investorAccount);
 				}
 			}
-			InvestorRepository.UpdateInvestor(investor);
+			InvestorRepository.SaveInvestor(investor);
 			return true;
 		}
 
@@ -522,7 +522,7 @@ namespace DeepBlue.Controllers.Investor {
 					model.ContactInformations.Add(new ContactInformation());
 				if (model.AccountInformations.Count == 0)
 					model.AccountInformations.Add(new AccountInformation());
-				model.FundInformations = new FlexigridObject();
+				model.FundInformations = new FlexigridData();
 				model.FundInformations.page = 1;
 				model.FundInformations.total = investor.InvestorFunds.Count();
 				foreach (var fund in investor.InvestorFunds) {

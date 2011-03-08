@@ -26,8 +26,7 @@ namespace DeepBlue.Tests.Controllers.Investor {
 		public override void Setup() {
 			base.Setup();
 		}
-
-
+		
 		protected void Create_Invalid_Data(CreateModel model) {
 			model.InvestorName = model.Alias = model.Phone = model.Email = model.Address1 = model.City = model.Zip = string.Empty;
 		}

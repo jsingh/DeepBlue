@@ -125,16 +125,6 @@ namespace DeepBlue.Models.Entity {
             return null;
         }
 
-		public IEnumerable<ErrorInfo> Update(DeepBlueEntities context) {
-			var investor = this;
-			IEnumerable<ErrorInfo> errors = Validate(investor);
-			if (errors.Any()) {
-				return errors;
-			}
-			InvestorService.UpdateInvestor(context);
-			return null;
-		}
-
 		private IEnumerable<ErrorInfo> Validate(Investor investor){
 			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(investor);
 			foreach (InvestorAddress address in investor.InvestorAddresses) {

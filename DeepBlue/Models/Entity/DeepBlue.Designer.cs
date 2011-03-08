@@ -30,9 +30,13 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_ContactAddress_Contact", "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Contact), "ContactAddress", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.ContactAddress), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_ContactCommunication_Contact", "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Contact), "ContactCommunication", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.ContactCommunication), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorContact_Contact", "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Contact), "InvestorContact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorContact), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_DocumentType", "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DocumentType), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_File_FileType", "FileType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.FileType), "File", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.File), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_File", "File", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.File), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundAccount_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "FundAccount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundAccount), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundClosing_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "FundClosing", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundClosing), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFund_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFund), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Fund), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundTransaction_FundClosing", "FundClosing", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.FundClosing), "InvestorFundTransaction", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundTransaction), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Investor_InvestorEntityType", "InvestorEntityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.InvestorEntityType), "Investor", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Investor), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Investor_ResidencyState", "STATE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.STATE), "Investor", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Investor), true)]
@@ -41,6 +45,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorCommunication_Investor", "Investor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Investor), "InvestorCommunication", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorCommunication), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorContact_Investor", "Investor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Investor), "InvestorContact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorContact), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFund_Investor", "Investor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Investor), "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFund), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_Investor", "Investor", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Investor), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFund_InvestorType", "InvestorType", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.InvestorType), "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundTransaction_InvestorFund", "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.InvestorFund), "InvestorFundTransaction", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundTransaction), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundTransaction_TransactionType", "TransactionType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.TransactionType), "InvestorFundTransaction", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundTransaction), true)]
@@ -242,6 +247,54 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<DocumentType> DocumentTypes
+        {
+            get
+            {
+                if ((_DocumentTypes == null))
+                {
+                    _DocumentTypes = base.CreateObjectSet<DocumentType>("DocumentTypes");
+                }
+                return _DocumentTypes;
+            }
+        }
+        private ObjectSet<DocumentType> _DocumentTypes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<File> Files
+        {
+            get
+            {
+                if ((_Files == null))
+                {
+                    _Files = base.CreateObjectSet<File>("Files");
+                }
+                return _Files;
+            }
+        }
+        private ObjectSet<File> _Files;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<FileType> FileTypes
+        {
+            get
+            {
+                if ((_FileTypes == null))
+                {
+                    _FileTypes = base.CreateObjectSet<FileType>("FileTypes");
+                }
+                return _FileTypes;
+            }
+        }
+        private ObjectSet<FileType> _FileTypes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<Fund> Funds
         {
             get
@@ -402,6 +455,22 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<InvestorFundDocument> InvestorFundDocuments
+        {
+            get
+            {
+                if ((_InvestorFundDocuments == null))
+                {
+                    _InvestorFundDocuments = base.CreateObjectSet<InvestorFundDocument>("InvestorFundDocuments");
+                }
+                return _InvestorFundDocuments;
+            }
+        }
+        private ObjectSet<InvestorFundDocument> _InvestorFundDocuments;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<InvestorFundTransaction> InvestorFundTransactions
         {
             get
@@ -539,6 +608,30 @@ namespace DeepBlue.Models.Entity
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the DocumentTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDocumentTypes(DocumentType documentType)
+        {
+            base.AddObject("DocumentTypes", documentType);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Files EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFiles(File file)
+        {
+            base.AddObject("Files", file);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the FileTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFileTypes(FileType fileType)
+        {
+            base.AddObject("FileTypes", fileType);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the Funds EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToFunds(Fund fund)
@@ -616,6 +709,14 @@ namespace DeepBlue.Models.Entity
         public void AddToInvestorFunds(InvestorFund investorFund)
         {
             base.AddObject("InvestorFunds", investorFund);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the InvestorFundDocuments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToInvestorFundDocuments(InvestorFundDocument investorFundDocument)
+        {
+            base.AddObject("InvestorFundDocuments", investorFundDocument);
         }
     
         /// <summary>
@@ -3427,6 +3528,688 @@ namespace DeepBlue.Models.Entity
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="DocumentType")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class DocumentType : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new DocumentType object.
+        /// </summary>
+        /// <param name="documentTypeID">Initial value of the DocumentTypeID property.</param>
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        /// <param name="documentTypeName">Initial value of the DocumentTypeName property.</param>
+        public static DocumentType CreateDocumentType(global::System.Int32 documentTypeID, global::System.Int32 entityID, global::System.String documentTypeName)
+        {
+            DocumentType documentType = new DocumentType();
+            documentType.DocumentTypeID = documentTypeID;
+            documentType.EntityID = entityID;
+            documentType.DocumentTypeName = documentTypeName;
+            return documentType;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DocumentTypeID
+        {
+            get
+            {
+                return _DocumentTypeID;
+            }
+            set
+            {
+                if (_DocumentTypeID != value)
+                {
+                    OnDocumentTypeIDChanging(value);
+                    ReportPropertyChanging("DocumentTypeID");
+                    _DocumentTypeID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DocumentTypeID");
+                    OnDocumentTypeIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _DocumentTypeID;
+        partial void OnDocumentTypeIDChanging(global::System.Int32 value);
+        partial void OnDocumentTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String DocumentTypeName
+        {
+            get
+            {
+                return _DocumentTypeName;
+            }
+            set
+            {
+                OnDocumentTypeNameChanging(value);
+                ReportPropertyChanging("DocumentTypeName");
+                _DocumentTypeName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("DocumentTypeName");
+                OnDocumentTypeNameChanged();
+            }
+        }
+        private global::System.String _DocumentTypeName;
+        partial void OnDocumentTypeNameChanging(global::System.String value);
+        partial void OnDocumentTypeNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFundDocument_DocumentType", "InvestorFundDocument")]
+        public EntityCollection<InvestorFundDocument> InvestorFundDocuments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InvestorFundDocument>("DeepBlueModel.FK_InvestorFundDocument_DocumentType", "InvestorFundDocument");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvestorFundDocument>("DeepBlueModel.FK_InvestorFundDocument_DocumentType", "InvestorFundDocument", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="File")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class File : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new File object.
+        /// </summary>
+        /// <param name="fileID">Initial value of the FileID property.</param>
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        /// <param name="fileTypeID">Initial value of the FileTypeID property.</param>
+        /// <param name="filePath">Initial value of the FilePath property.</param>
+        /// <param name="fileName">Initial value of the FileName property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        public static File CreateFile(global::System.Int32 fileID, global::System.Int32 entityID, global::System.Int32 fileTypeID, global::System.String filePath, global::System.String fileName, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        {
+            File file = new File();
+            file.FileID = fileID;
+            file.EntityID = entityID;
+            file.FileTypeID = fileTypeID;
+            file.FilePath = filePath;
+            file.FileName = fileName;
+            file.CreatedDate = createdDate;
+            file.CreatedBy = createdBy;
+            return file;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FileID
+        {
+            get
+            {
+                return _FileID;
+            }
+            set
+            {
+                if (_FileID != value)
+                {
+                    OnFileIDChanging(value);
+                    ReportPropertyChanging("FileID");
+                    _FileID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("FileID");
+                    OnFileIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _FileID;
+        partial void OnFileIDChanging(global::System.Int32 value);
+        partial void OnFileIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FileTypeID
+        {
+            get
+            {
+                return _FileTypeID;
+            }
+            set
+            {
+                OnFileTypeIDChanging(value);
+                ReportPropertyChanging("FileTypeID");
+                _FileTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FileTypeID");
+                OnFileTypeIDChanged();
+            }
+        }
+        private global::System.Int32 _FileTypeID;
+        partial void OnFileTypeIDChanging(global::System.Int32 value);
+        partial void OnFileTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FilePath
+        {
+            get
+            {
+                return _FilePath;
+            }
+            set
+            {
+                OnFilePathChanging(value);
+                ReportPropertyChanging("FilePath");
+                _FilePath = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("FilePath");
+                OnFilePathChanged();
+            }
+        }
+        private global::System.String _FilePath;
+        partial void OnFilePathChanging(global::System.String value);
+        partial void OnFilePathChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FileName
+        {
+            get
+            {
+                return _FileName;
+            }
+            set
+            {
+                OnFileNameChanging(value);
+                ReportPropertyChanging("FileName");
+                _FileName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("FileName");
+                OnFileNameChanged();
+            }
+        }
+        private global::System.String _FileName;
+        partial void OnFileNameChanging(global::System.String value);
+        partial void OnFileNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Size
+        {
+            get
+            {
+                return _Size;
+            }
+            set
+            {
+                OnSizeChanging(value);
+                ReportPropertyChanging("Size");
+                _Size = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Size");
+                OnSizeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Size;
+        partial void OnSizeChanging(Nullable<global::System.Int32> value);
+        partial void OnSizeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.Int32 _CreatedBy;
+        partial void OnCreatedByChanging(global::System.Int32 value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_File_FileType", "FileType")]
+        public FileType FileType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileType>("DeepBlueModel.FK_File_FileType", "FileType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileType>("DeepBlueModel.FK_File_FileType", "FileType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<FileType> FileTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileType>("DeepBlueModel.FK_File_FileType", "FileType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FileType>("DeepBlueModel.FK_File_FileType", "FileType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFundDocument_File", "InvestorFundDocument")]
+        public EntityCollection<InvestorFundDocument> InvestorFundDocuments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InvestorFundDocument>("DeepBlueModel.FK_InvestorFundDocument_File", "InvestorFundDocument");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvestorFundDocument>("DeepBlueModel.FK_InvestorFundDocument_File", "InvestorFundDocument", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="FileType")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class FileType : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new FileType object.
+        /// </summary>
+        /// <param name="fileTypeID">Initial value of the FileTypeID property.</param>
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        /// <param name="fileTypeName">Initial value of the FileTypeName property.</param>
+        public static FileType CreateFileType(global::System.Int32 fileTypeID, global::System.Int32 entityID, global::System.String fileTypeName)
+        {
+            FileType fileType = new FileType();
+            fileType.FileTypeID = fileTypeID;
+            fileType.EntityID = entityID;
+            fileType.FileTypeName = fileTypeName;
+            return fileType;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FileTypeID
+        {
+            get
+            {
+                return _FileTypeID;
+            }
+            set
+            {
+                if (_FileTypeID != value)
+                {
+                    OnFileTypeIDChanging(value);
+                    ReportPropertyChanging("FileTypeID");
+                    _FileTypeID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("FileTypeID");
+                    OnFileTypeIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _FileTypeID;
+        partial void OnFileTypeIDChanging(global::System.Int32 value);
+        partial void OnFileTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FileTypeName
+        {
+            get
+            {
+                return _FileTypeName;
+            }
+            set
+            {
+                OnFileTypeNameChanging(value);
+                ReportPropertyChanging("FileTypeName");
+                _FileTypeName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("FileTypeName");
+                OnFileTypeNameChanged();
+            }
+        }
+        private global::System.String _FileTypeName;
+        partial void OnFileTypeNameChanging(global::System.String value);
+        partial void OnFileTypeNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String FileExtension
+        {
+            get
+            {
+                return _FileExtension;
+            }
+            set
+            {
+                OnFileExtensionChanging(value);
+                ReportPropertyChanging("FileExtension");
+                _FileExtension = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("FileExtension");
+                OnFileExtensionChanged();
+            }
+        }
+        private global::System.String _FileExtension;
+        partial void OnFileExtensionChanging(global::System.String value);
+        partial void OnFileExtensionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_File_FileType", "File")]
+        public EntityCollection<File> Files
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<File>("DeepBlueModel.FK_File_FileType", "File");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<File>("DeepBlueModel.FK_File_FileType", "File", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="Fund")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -3807,6 +4590,28 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvestorFund>("DeepBlueModel.FK_InvestorFund_Fund", "InvestorFund", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFundDocument_Fund", "InvestorFundDocument")]
+        public EntityCollection<InvestorFundDocument> InvestorFundDocuments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InvestorFundDocument>("DeepBlueModel.FK_InvestorFundDocument_Fund", "InvestorFundDocument");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvestorFundDocument>("DeepBlueModel.FK_InvestorFundDocument_Fund", "InvestorFundDocument", value);
                 }
             }
         }
@@ -5307,6 +6112,28 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvestorFund>("DeepBlueModel.FK_InvestorFund_Investor", "InvestorFund", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFundDocument_Investor", "InvestorFundDocument")]
+        public EntityCollection<InvestorFundDocument> InvestorFundDocuments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InvestorFundDocument>("DeepBlueModel.FK_InvestorFundDocument_Investor", "InvestorFundDocument");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvestorFundDocument>("DeepBlueModel.FK_InvestorFundDocument_Investor", "InvestorFundDocument", value);
                 }
             }
         }
@@ -7068,30 +7895,6 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _InvestorTypeId;
         partial void OnInvestorTypeIdChanging(Nullable<global::System.Int32> value);
         partial void OnInvestorTypeIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> CommittedDate
-        {
-            get
-            {
-                return _CommittedDate;
-            }
-            set
-            {
-                OnCommittedDateChanging(value);
-                ReportPropertyChanging("CommittedDate");
-                _CommittedDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CommittedDate");
-                OnCommittedDateChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _CommittedDate;
-        partial void OnCommittedDateChanging(Nullable<global::System.DateTime> value);
-        partial void OnCommittedDateChanged();
 
         #endregion
     
@@ -7229,6 +8032,442 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvestorFundTransaction>("DeepBlueModel.FK_InvestorFundTransaction_InvestorFund", "InvestorFundTransaction", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="InvestorFundDocument")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class InvestorFundDocument : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new InvestorFundDocument object.
+        /// </summary>
+        /// <param name="investorFundDocumentID">Initial value of the InvestorFundDocumentID property.</param>
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        /// <param name="fileID">Initial value of the FileID property.</param>
+        /// <param name="documentTypeID">Initial value of the DocumentTypeID property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        public static InvestorFundDocument CreateInvestorFundDocument(global::System.Int32 investorFundDocumentID, global::System.Int32 entityID, global::System.Int32 fileID, global::System.Int32 documentTypeID, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        {
+            InvestorFundDocument investorFundDocument = new InvestorFundDocument();
+            investorFundDocument.InvestorFundDocumentID = investorFundDocumentID;
+            investorFundDocument.EntityID = entityID;
+            investorFundDocument.FileID = fileID;
+            investorFundDocument.DocumentTypeID = documentTypeID;
+            investorFundDocument.CreatedDate = createdDate;
+            investorFundDocument.CreatedBy = createdBy;
+            return investorFundDocument;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 InvestorFundDocumentID
+        {
+            get
+            {
+                return _InvestorFundDocumentID;
+            }
+            set
+            {
+                if (_InvestorFundDocumentID != value)
+                {
+                    OnInvestorFundDocumentIDChanging(value);
+                    ReportPropertyChanging("InvestorFundDocumentID");
+                    _InvestorFundDocumentID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("InvestorFundDocumentID");
+                    OnInvestorFundDocumentIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _InvestorFundDocumentID;
+        partial void OnInvestorFundDocumentIDChanging(global::System.Int32 value);
+        partial void OnInvestorFundDocumentIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> InvestorID
+        {
+            get
+            {
+                return _InvestorID;
+            }
+            set
+            {
+                OnInvestorIDChanging(value);
+                ReportPropertyChanging("InvestorID");
+                _InvestorID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("InvestorID");
+                OnInvestorIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _InvestorID;
+        partial void OnInvestorIDChanging(Nullable<global::System.Int32> value);
+        partial void OnInvestorIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> FundID
+        {
+            get
+            {
+                return _FundID;
+            }
+            set
+            {
+                OnFundIDChanging(value);
+                ReportPropertyChanging("FundID");
+                _FundID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundID");
+                OnFundIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _FundID;
+        partial void OnFundIDChanging(Nullable<global::System.Int32> value);
+        partial void OnFundIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FileID
+        {
+            get
+            {
+                return _FileID;
+            }
+            set
+            {
+                OnFileIDChanging(value);
+                ReportPropertyChanging("FileID");
+                _FileID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FileID");
+                OnFileIDChanged();
+            }
+        }
+        private global::System.Int32 _FileID;
+        partial void OnFileIDChanging(global::System.Int32 value);
+        partial void OnFileIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DocumentTypeID
+        {
+            get
+            {
+                return _DocumentTypeID;
+            }
+            set
+            {
+                OnDocumentTypeIDChanging(value);
+                ReportPropertyChanging("DocumentTypeID");
+                _DocumentTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DocumentTypeID");
+                OnDocumentTypeIDChanged();
+            }
+        }
+        private global::System.Int32 _DocumentTypeID;
+        partial void OnDocumentTypeIDChanging(global::System.Int32 value);
+        partial void OnDocumentTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.Int32 _CreatedBy;
+        partial void OnCreatedByChanging(global::System.Int32 value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFundDocument_DocumentType", "DocumentType")]
+        public DocumentType DocumentType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DocumentType>("DeepBlueModel.FK_InvestorFundDocument_DocumentType", "DocumentType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DocumentType>("DeepBlueModel.FK_InvestorFundDocument_DocumentType", "DocumentType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<DocumentType> DocumentTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DocumentType>("DeepBlueModel.FK_InvestorFundDocument_DocumentType", "DocumentType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DocumentType>("DeepBlueModel.FK_InvestorFundDocument_DocumentType", "DocumentType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFundDocument_File", "File")]
+        public File File
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<File>("DeepBlueModel.FK_InvestorFundDocument_File", "File").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<File>("DeepBlueModel.FK_InvestorFundDocument_File", "File").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<File> FileReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<File>("DeepBlueModel.FK_InvestorFundDocument_File", "File");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<File>("DeepBlueModel.FK_InvestorFundDocument_File", "File", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFundDocument_Fund", "Fund")]
+        public Fund Fund
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_InvestorFundDocument_Fund", "Fund").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_InvestorFundDocument_Fund", "Fund").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Fund> FundReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_InvestorFundDocument_Fund", "Fund");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Fund>("DeepBlueModel.FK_InvestorFundDocument_Fund", "Fund", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFundDocument_Investor", "Investor")]
+        public Investor Investor
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Investor>("DeepBlueModel.FK_InvestorFundDocument_Investor", "Investor").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Investor>("DeepBlueModel.FK_InvestorFundDocument_Investor", "Investor").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Investor> InvestorReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Investor>("DeepBlueModel.FK_InvestorFundDocument_Investor", "Investor");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Investor>("DeepBlueModel.FK_InvestorFundDocument_Investor", "Investor", value);
                 }
             }
         }

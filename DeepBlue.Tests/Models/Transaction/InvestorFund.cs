@@ -41,13 +41,11 @@ namespace DeepBlue.Tests.Models.Transaction {
 				investorFund.FundID = 1;
 				investorFund.CreatedBy = 1;
 				investorFund.CreatedDate = DateTime.Now;
-				investorFund.CommittedDate = DateTime.Now;
 				investorFund.TotalCommitment = 1;
 			} else {
 				investorFund.FundID = 0;
 				investorFund.CreatedBy = 0;
 				investorFund.CreatedDate = DateTime.MinValue;
-				investorFund.CommittedDate = DateTime.MinValue;
 				investorFund.TotalCommitment = 0;
 			}
 		}

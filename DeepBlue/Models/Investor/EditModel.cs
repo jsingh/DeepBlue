@@ -14,7 +14,7 @@ namespace DeepBlue.Models.Investor {
 			AddressInformations = new List<AddressInformation>();
 			ContactInformations = new List<ContactInformation>();
 			AccountInformations = new List<AccountInformation>();
-			FundInformations = new FlexigridObject();
+			FundInformations = new FlexigridData();
 			InvestorName = string.Empty;
 			DisplayName = string.Empty;
 			Notes = string.Empty;
@@ -52,7 +52,7 @@ namespace DeepBlue.Models.Investor {
 
 		public List<AccountInformation> AccountInformations { get; set; }
 
-		public FlexigridObject FundInformations { get; set; }
+		public FlexigridData FundInformations { get; set; }
 
 		public int id { get; set; }
 	}

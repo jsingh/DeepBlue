@@ -36,21 +36,15 @@ namespace DeepBlue.Helpers {
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").datepicker({changeMonth: true, changeYear: true});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
-
-		public static string jQueryTab(this HtmlHelper helper, string targetId, jQueryTabOptions options) {
-			StringBuilder scriptSrc = new StringBuilder();
-			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").tabs({")
-							 .Append("collapsible:" + options.Collapsible.ToString().ToLower() + "")
-					 .Append("});});");
-			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
-		}
-
+	 
 		public static string jQueryFlexiGrid(this HtmlHelper helper, string targetId, FlexigridOptions options) {
 			StringBuilder scriptSrc = new StringBuilder();
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").flexigrid({")
 					 .Append("usepager:"+ options.Paging.ToString().ToLower())
 					 .Append(",url:\"/"+ options.ActionName.ToString() + "/" + options.ControllerName.ToString() + "\"")
 					 .Append(",method:\"" + options.HttpMethod.ToString() + "\"")
+					 .Append(",sortname:\"" + options.SortName.ToString() + "\"")
+					 .Append(",sortorder:\"" + options.SortOrder.ToString() + "\"")
 					 .Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}

@@ -172,14 +172,7 @@ namespace DeepBlue.Controllers.Investor {
 					}).SingleOrDefault();
 		}
 
-
-		public IEnumerable<Helpers.ErrorInfo> UpdateInvestor(Models.Entity.Investor investor) {
-			return investor.Update(DeepBlueContext);
-		}
-
-		public IEnumerable<Helpers.ErrorInfo> UpdateInvestorFund(InvestorFund investorFund) {
-			return investorFund.Update(DeepBlueContext);
-		}
+	 
 
 		public decimal FindSumOfSellAmount(int investorFundId) {
 			return (from investorFundTransaction in DeepBlueContext.InvestorFundTransactions

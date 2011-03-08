@@ -33,51 +33,11 @@
 							<div class="topmenu-left">
 							</div>
 							<div class="topmenu-center">
-								<a onmouseover="mopen(this,'Inv_Management')" onmouseout="mclosetime()">Investor Management</a></div>
+								<a onmouseover="mopen(this,'Investor_Management')" onmouseout="mclosetime()">Investor Management</a></div>
 							<div class="topmenu-right">
 							</div>
 						</div>
-						<div class="topmenu">
-							<div class="topmenu-left">
-							</div>
-							<div class="topmenu-center">
-								<a href="#">Fund Tracker</a></div>
-							<div class="topmenu-right">
-							</div>
-						</div>
-						<div class="topmenu">
-							<div class="topmenu-left">
-							</div>
-							<div class="topmenu-center">
-								<a href="#">Deal Flow</a></div>
-							<div class="topmenu-right">
-							</div>
-						</div>
-						<div class="topmenu">
-							<div class="topmenu-left">
-							</div>
-							<div class="topmenu-center">
-								<a href="#">Transaction Setup</a></div>
-							<div class="topmenu-right">
-							</div>
-						</div>
-						<div class="topmenu">
-							<div class="topmenu-left">
-							</div>
-							<div class="topmenu-center">
-								<a href="#">Accounting</a></div>
-							<div class="topmenu-right">
-							</div>
-						</div>
-						<div class="topmenu">
-							<div class="topmenu-left">
-							</div>
-							<div class="topmenu-center">
-								<a href="#">Document Management</a></div>
-							<div class="topmenu-right">
-							</div>
-						</div>
-						<% if (ViewData["MenuName"] == "Admin") {%>
+						<% if (ViewData["MenuName"] == "Fund Tracker") {%>
 						<div class="topmenu tab-sel">
 							<%} else {%>
 							<div class="topmenu">
@@ -85,8 +45,7 @@
 								<div class="topmenu-left">
 								</div>
 								<div class="topmenu-center">
-									<%: Html.ActionLink("Administration", "Index", "Admin")%>
-								</div>
+									<a onmouseover="mopen(this,'Fund_Management')" onmouseout="mclosetime()">Fund Tracker</a></div>
 								<div class="topmenu-right">
 								</div>
 							</div>
@@ -94,12 +53,57 @@
 								<div class="topmenu-left">
 								</div>
 								<div class="topmenu-center">
-									<a href="#">Reports</a></div>
+									<a href="#">Deal Flow</a></div>
 								<div class="topmenu-right">
 								</div>
 							</div>
+							<div class="topmenu">
+								<div class="topmenu-left">
+								</div>
+								<div class="topmenu-center">
+									<a href="#">Transaction Setup</a></div>
+								<div class="topmenu-right">
+								</div>
+							</div>
+							<div class="topmenu">
+								<div class="topmenu-left">
+								</div>
+								<div class="topmenu-center">
+									<a href="#">Accounting</a></div>
+								<div class="topmenu-right">
+								</div>
+							</div>
+							<div class="topmenu">
+								<div class="topmenu-left">
+								</div>
+								<div class="topmenu-center">
+									<a href="#">Document Management</a></div>
+								<div class="topmenu-right">
+								</div>
+							</div>
+							<% if (ViewData["MenuName"] == "Admin") {%>
+							<div class="topmenu tab-sel">
+								<%} else {%>
+								<div class="topmenu">
+									<%}%>
+									<div class="topmenu-left">
+									</div>
+									<div class="topmenu-center">
+										<%: Html.ActionLink("Administration", "Index", "Admin")%>
+									</div>
+									<div class="topmenu-right">
+									</div>
+								</div>
+								<div class="topmenu">
+									<div class="topmenu-left">
+									</div>
+									<div class="topmenu-center">
+										<a href="#">Reports</a></div>
+									<div class="topmenu-right">
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -114,7 +118,7 @@
 			Copyright 2011 DeepBlue</div>
 	</div>
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
-	<div class="mdiv" id="Inv_Management" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+	<div class="mdiv" id="Investor_Management" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
 		<ul>
 			<li>
 				<%: Html.ActionLink("New Investor Setup", "New", "Investor")%></li>
@@ -122,6 +126,12 @@
 				<%: Html.ActionLink("Update Investor Information", "Edit", "Investor")%></li>
 			<li>
 				<%: Html.ActionLink("Investor Commitment", "New", "Transaction")%></li>
+		</ul>
+	</div>
+	<div class="mdiv" id="Fund_Management" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+		<ul>
+			<li>
+				<%: Html.ActionLink("Fund Setup", "Index", "Fund")%></li>
 		</ul>
 	</div>
 </body>

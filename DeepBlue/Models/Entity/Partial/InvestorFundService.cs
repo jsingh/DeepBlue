@@ -7,18 +7,23 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.Entity {
 	public interface IInvestorFundService {
 		void SaveInvestorFund(InvestorFund investor);
-		void UpdateInvestorFund(DeepBlueEntities context);
 	}
 
 	public class InvestorFundService : IInvestorFundService {
 		public void SaveInvestorFund(InvestorFund investorFund) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				context.InvestorFunds.AddObject(investorFund);
+				if (investorFund.InvestorFundID == 0) {
+					context.InvestorFunds.AddObject(investorFund);
+				} else {
+					foreach(var investorFundTransaction in investorFund.InvestorFundTransactions){
+						context.InvestorFundTransactions.Attach(new InvestorFundTransaction { InvestorFundTransactionID = investorFundTransaction.InvestorFundTransactionID });
+						context.InvestorFundTransactions.ApplyCurrentValues(investorFundTransaction);
+					}
+					context.InvestorFunds.Attach(new InvestorFund { InvestorFundID = investorFund.InvestorFundID });
+					context.InvestorFunds.ApplyCurrentValues(investorFund);
+				}
 				context.SaveChanges();
 			}
-		}
-		public void UpdateInvestorFund(DeepBlueEntities context) {
-			context.SaveChanges();
 		}
 	}
 }

@@ -1,0 +1,20 @@
+﻿.fund-main {
+	width: 75%;
+	margin: 10px auto;
+}
+.fund-header {
+	width: 100%;
+	text-align: right;
+	padding: 10px 0px 10px 0px;
+}
+.fund-content {
+	width: 100%;
+}
+.editor-label {
+	width: 189px;
+}
+.editor-field {
+    width: 180px;
+}.editor-field input {
+    width: 175px;
+}

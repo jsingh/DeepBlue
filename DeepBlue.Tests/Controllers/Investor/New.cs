@@ -23,7 +23,7 @@ namespace DeepBlue.Tests.Controllers.Investor {
             base.Setup();
 			base.ActionResult = base.DefaultController.New();
         }
-
+ 
 		[Test]
 		public void create_a_new_investor() {
 			Assert.IsInstanceOfType<ActionResult>(base.ActionResult);

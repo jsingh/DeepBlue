@@ -15,7 +15,9 @@ namespace DeepBlue.Helpers {
 			RowsLength = 20;
 			OnSuccess = string.Empty;
 			OnSubmit = string.Empty;
-			HttpMethod = "POST";
+			HttpMethod = "GET";
+			SortName = string.Empty;
+			SortOrder = string.Empty;
 		}
 		public string HttpMethod { get; set; }
 		public string Height { get; set; }
@@ -27,5 +29,7 @@ namespace DeepBlue.Helpers {
 		public int RowsLength { get; set; }
 		public string OnSuccess { get; set; }
 		public string OnSubmit { get; set; }
+		public string SortName  { get; set; }
+		public string SortOrder { get; set; }
 	}
 }

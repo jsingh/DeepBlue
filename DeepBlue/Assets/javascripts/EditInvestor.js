@@ -64,18 +64,12 @@
 		});
 	}
 	,buildFundTable: function ($investorInfo,data) {
-		$("#funddetails",$investorInfo).html("");
-		var table=document.createElement("table");
-		$("#funddetails",$investorInfo).append(table);
-		$(table).flexigrid({
+		var fundDetails=$("#funddetails",$investorInfo).html("");
+		var html="<table cellpadding='0' cellspacing='0' border='0' style='width:100%'><thead><tr><th>Fund Name</th><th style='width:20%'>Committed Amount</th><th style='width:20%'>Unfunded Amount</th><th>Investror Type</th></tr></thead></table>";
+		$(fundDetails).html(html);
+		var table=$("table",fundDetails).flexigrid({
 			url: '/Json/FlexigridList',
 			dataType: 'json',
-			colModel: [
-				{ display: 'Fund Name',name: 'FundName',width: 250,sortable: true,align: 'left' },
-				{ display: 'Committed Amount',name: 'CommittedAmount',width: 110,sortable: true,align: 'right' },
-				{ display: 'Unfunded Amount',name: 'UnfundedAmount',width: 100,sortable: true,align: 'right' },
-				{ display: 'Investror Type',name: 'InvestrorType',width: 180,sortable: true,align: 'left' }
-				],
 			title: 'FundDetails',
 			resizable: false,
 			autoload: false,

@@ -32,8 +32,8 @@
 			page: 1, //current page
 			total: 1, //total pages
 			useRp: true, //use the results per page select box
-			rp: 15, // results per page
-			rpOptions: [10,15,20,25,40],
+			rp: 20, // results per page
+			rpOptions: [20,50,100],
 			title: false,
 			pagestat: 'Displaying {from} to {to} of {total} items',
 			procmsg: 'Loading...',
@@ -45,6 +45,8 @@
 			hideOnSubmit: true,
 			autoload: true,
 			blockOpacity: 0.5,
+			sortname: '',
+			sortorder: '',
 			onToggleCol: false,
 			onChangeSort: false,
 			onSuccess: false,
@@ -54,8 +56,6 @@
 
 		$(t)
 		.show() //show if hidden
-		.attr({ cellPadding: 0,cellSpacing: 0,border: 0 })  //remove padding and spacing
-		.removeAttr('width') //remove width properties	
 		;
 
 		//create grid class
@@ -109,21 +109,19 @@
 					 	var tr=document.createElement('tr');
 					 	if(i%2&&p.striped) tr.className='erow';
 					 	tr.id='row'+i;
-					 	var i;
-					 	for(i=0;i<p.colModel.length;i++) {
+					 	var i=0;
+					 	$("thead tr th",g.hDiv).each(function () {
 					 		var td=document.createElement('td');
 					 		var div=document.createElement('div');
 					 		div.innerHTML=row.cell[i];
-					 		$(div).width(p.colModel[i].width);
-					 		if(p.colModel[i].hide) {
-					 			$(div).css("display","none");
-					 			$(td).css("display","none");
-					 		}
-					 		$(div).css("text-align",p.colModel[i].align);
+					 		$(div).css({ "width": this.style.width,"display": this.style.display });
+					 		//$(td).css({ "width" : this.style.width, "display" : this.style.display });
+					 		$(div).css("text-align",$(this).attr("align"));
 					 		$(td).append(div);
 					 		$(tr).append(td);
 					 		td=null;
-					 	}
+					 		i++;
+					 	});
 					 	$(tbody).append(tr);
 					 	tr=null;
 					 }
@@ -151,7 +149,7 @@
 
 				$(g.nDiv).hide();$(g.nBtn).hide();
 
-				if(p.sortname==$(th).attr('abbr')) {
+				if(p.sortname==$(th).attr('sortname')) {
 					if(p.sortorder=='asc') p.sortorder='desc';
 					else p.sortorder='asc';
 				}
@@ -159,8 +157,8 @@
 				$(th).addClass('sorted').siblings().removeClass('sorted');
 				$('.sdesc',this.hDiv).removeClass('sdesc');
 				$('.sasc',this.hDiv).removeClass('sasc');
-				$('div',th).addClass('s'+p.sortorder);
-				p.sortname=$(th).attr('abbr');
+				$('div span',th).addClass('s'+p.sortorder);
+				p.sortname=$(th).attr('sortname');
 
 				if(p.onChangeSort)
 					p.onChangeSort(p.sortname,p.sortorder);
@@ -214,12 +212,10 @@
 				if(p.page>p.pages) p.page=p.pages;
 				//var param = {page:p.newp, rp: p.rp, sortname: p.sortname, sortorder: p.sortorder, query: p.query, qtype: p.qtype};
 				var param=[
-					 { name: 'page',value: p.newp }
-					,{ name: 'rp',value: p.rp }
-					,{ name: 'sortname',value: p.sortname }
-					,{ name: 'sortorder',value: p.sortorder }
-					,{ name: 'query',value: p.query }
-					,{ name: 'qtype',value: p.qtype }
+					 { name: 'pageIndex',value: p.newp }
+					,{ name: 'pageSize',value: p.rp }
+					,{ name: 'sortName',value: p.sortname }
+					,{ name: 'sortOrder',value: p.sortorder }
 				];
 
 				if(p.params) {
@@ -237,6 +233,7 @@
 			},
 			changePage: function (ctype) { //change page
 
+			
 				if(this.loading) return true;
 
 				switch(ctype) {
@@ -253,7 +250,6 @@
 						p.newp=nv;
 						break;
 				}
-
 				if(p.newp==p.page) return false;
 
 				if(p.onChangePage)
@@ -262,88 +258,8 @@
 					this.populate();
 
 			},
-			addCellProp: function () {
-
-				$('tbody tr td',g.bDiv).each
-					(
-						function () {
-							var tdDiv=document.createElement('div');
-							var n=$('td',$(this).parent()).index(this);
-							var pth=$('th:eq('+n+')',g.hDiv).get(0);
-
-							if(pth!=null) {
-								if(p.sortname==$(pth).attr('abbr')&&p.sortname) {
-									this.className='sorted';
-								}
-
-
-								$(tdDiv).css({ textAlign: $(pth).attr("calign"),width: $('div:first',pth)[0].style.width });
-
-								if(pth.hide) $(this).css('display','none');
-
-							}
-
-							if(p.nowrap==false) $(tdDiv).css('white-space','normal');
-
-							if(this.innerHTML=='') this.innerHTML='&nbsp;';
-
-							//tdDiv.value = this.innerHTML; //store preprocess value
-							tdDiv.innerHTML=this.innerHTML;
-
-							var prnt=$(this).parent()[0];
-							var pid=false;
-							if(prnt.id) pid=prnt.id.substr(3);
-
-							if(pth!=null) {
-								if(pth.process) pth.process(tdDiv,pid);
-							}
-
-							$(this).empty().append(tdDiv).removeAttr('width'); //wrap content
-
-							//add editable event here 'dblclick'
-
-						}
-					);
-
-			},
 			pager: 0
 		};
-
-		//create model if any
-		if(p.colModel) {
-			thead=document.createElement('thead');
-			tr=document.createElement('tr');
-
-			for(i=0;i<p.colModel.length;i++) {
-				var cm=p.colModel[i];
-				var th=document.createElement('th');
-
-				th.innerHTML=cm.display;
-
-				if(cm.name&&cm.sortable)
-					$(th).attr('abbr',cm.name);
-
-				//th.idx = i;
-				$(th).attr('axis','col'+i).attr("calign",cm.align);
-
-				th.align="center";
-
-				if(cm.width)
-					$(th).width(cm.width);
-
-				if(cm.hide) {
-					th.hide=true;
-				}
-
-				if(cm.process) {
-					th.process=cm.process;
-				}
-
-				$(tr).append(th);
-			}
-			$(thead).append(tr);
-			$(t).prepend(thead);
-		} // end if p.colmodel	
 
 		//init divs
 		g.gDiv=document.createElement('div'); //create global container
@@ -351,7 +267,7 @@
 		g.bDiv=document.createElement('div'); //create body container
 
 		if(p.usepager) g.pDiv=document.createElement('div'); //create pager container
-		g.hTable=document.createElement('table');
+		g.hTable=$(t).clone();
 
 		//set gDiv
 		g.gDiv.className='flexigrid';
@@ -369,8 +285,6 @@
 		.append(t)
 		;
 
-
-
 		//set hDiv
 		g.hDiv.className='hDiv';
 
@@ -380,9 +294,6 @@
 		g.hTable.cellPadding=0;
 		g.hTable.cellSpacing=0;
 		$(g.hDiv).append(g.hTable);
-		var thead=$("thead:first",t).get(0);
-		if(thead) $(g.hTable).append(thead);
-		thead=null;
 
 		if(!p.colmodel) var ci=0;
 
@@ -391,23 +302,19 @@
 			(
 			 	function () {
 			 		var thdiv=document.createElement('div');
-
-			 		if($(this).attr('abbr')) {
-			 			$(this).click(
-								function (e) {
-									if(!$(this).hasClass('thOver')) return false;
-									var obj=(e.target||e.srcElement);
-									if(obj.href||obj.type) return true;
-									g.changeSort(this);
-								}
-							)
-							;
-
-			 			if($(this).attr('abbr')==p.sortname) {
+			 		thdiv.innerHTML="<span>"+this.innerHTML+"</span>";
+			 		if($(this).attr('sortname')) {
+			 			$(this).click(function (e) { g.changeSort(this); });
+			 			if($(this).attr('sortname')==p.sortname) {
 			 				this.className='sorted';
-			 				thdiv.className='s'+p.sortorder;
+							if(p.sortorder=='')
+								p.sortorder='asc';
+			 				$("span",thdiv).addClass('s'+p.sortorder);
 			 			}
 			 		}
+
+			 		var w=$(this).innerWidth()-10;
+			 		$(this).css("width",w);
 
 			 		if(this.hide) $(this).hide();
 
@@ -415,11 +322,11 @@
 			 			$(this).attr('axis','col'+ci++);
 			 		}
 
-			 		$(thdiv).css("text-align",this.align);
+			 		$(thdiv).css("text-align","center");
 
 			 		$(thdiv).width(this.style.width);
 
-			 		thdiv.innerHTML=this.innerHTML;
+
 
 			 		$(this).empty().append(thdiv).removeAttr('width');
 			 	}
@@ -428,6 +335,9 @@
 		//set bDiv
 		g.bDiv.className='bDiv';
 		$(t).before(g.bDiv);
+
+		$("thead",t).remove();
+
 		$(g.bDiv)
 		.append(t)
 		;
@@ -436,9 +346,6 @@
 			$('table',g.bDiv).addClass('autoht');
 		}
 
-
-		//add td properties
-		g.addCellProp();
 
 		//add strip		
 		if(p.striped)
@@ -493,6 +400,9 @@
 			g.populate();
 		}
 
+		$(t).removeAttr("style");
+		$("table",g.hDiv).removeAttr("style");
+
 		return t;
 
 	};
@@ -502,7 +412,6 @@
 	$(document).ready(function () { docloaded=true });
 
 	$.fn.flexigrid=function (p) {
-
 		return this.each(function () {
 			if(!docloaded) {
 				$(this).hide();
@@ -510,52 +419,41 @@
 				$(document).ready
 					(
 						function () {
-
 							$.addFlex(t,p);
-
 						}
 					);
 			} else {
-
 				$.addFlex(this,p);
-
 			}
 		});
 
 	}; //end flexigrid
 
 	$.fn.flexReload=function (p) { // function to reload grid
-
 		return this.each(function () {
 			if(this.grid&&this.p.url) this.grid.populate();
 		});
-
 	}; //end flexReload
 
 	$.fn.flexOptions=function (p) { //function to update general options
-
 		return this.each(function () {
 			if(this.grid) $.extend(this.p,p);
 		});
-
 	}; //end flexOptions
 
 	$.fn.flexAddData=function (data) { // function to add data to grid
 		return this.each(function () {
 			if(this.grid) this.grid.addData(data);
 		});
-
 	};
 
 	$.fn.noSelect=function (p) { //no select plugin by me :-)
-
 		if(p==null)
 			prevent=true;
 		else
 			prevent=p;
 
 		if(prevent) {
-
 			return this.each(function () {
 				if($.browser.msie||$.browser.safari) $(this).bind('selectstart',function () { return false; });
 				else if($.browser.mozilla) {
@@ -565,19 +463,14 @@
 				else if($.browser.opera) $(this).bind('mousedown',function () { return false; });
 				else $(this).attr('unselectable','on');
 			});
-
 		} else {
-
-
 			return this.each(function () {
 				if($.browser.msie||$.browser.safari) $(this).unbind('selectstart');
 				else if($.browser.mozilla) $(this).css('MozUserSelect','inherit');
 				else if($.browser.opera) $(this).unbind('mousedown');
 				else $(this).removeAttr('unselectable','on');
 			});
-
 		}
-
 	}; //end noSelect
 
 })(jQuery);
