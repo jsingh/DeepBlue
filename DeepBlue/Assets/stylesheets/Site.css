@@ -93,7 +93,8 @@ a img {
 	top: 24px;
 }
 .mdiv li {
-	list-style: none;   min-width: 165px;
+	list-style: none;
+	min-width: 165px;
 }
 .mdiv a {
 	display: block;
@@ -608,4 +609,27 @@ h2 {
 #admin_accordion {
 	width: 50%;
 	margin: 10px auto;
+}
+.admin-main {
+	width: 95%;
+	margin: 10px auto;
+}
+.admin-header {
+	width: 100%;
+	text-align: right;
+	padding: 10px 0px 10px 0px;
+}
+.admin-content {
+	width: 100%;
+}
+.status {
+	height: 25px;
+	clear: both;
+	text-align: center;
+	width: auto;
+}
+.submenubg {
+	background-image: url(../images/arrow.gif);
+	background-position: right center;
+	background-repeat: no-repeat;
 }

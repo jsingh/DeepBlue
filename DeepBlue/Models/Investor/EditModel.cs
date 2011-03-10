@@ -40,7 +40,7 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("State of Residency:")]
 		public int StateOfResidency { get; set; }
 
-		[DisplayName("Entity Type:")]
+		[DisplayName("EntityType:")]
 		public int EntityType { get; set; }
 
 		[DisplayName("Domestic/Foreign:")]

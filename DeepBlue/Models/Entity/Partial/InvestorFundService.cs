@@ -15,10 +15,6 @@ namespace DeepBlue.Models.Entity {
 				if (investorFund.InvestorFundID == 0) {
 					context.InvestorFunds.AddObject(investorFund);
 				} else {
-					foreach(var investorFundTransaction in investorFund.InvestorFundTransactions){
-						context.InvestorFundTransactions.Attach(new InvestorFundTransaction { InvestorFundTransactionID = investorFundTransaction.InvestorFundTransactionID });
-						context.InvestorFundTransactions.ApplyCurrentValues(investorFundTransaction);
-					}
 					context.InvestorFunds.Attach(new InvestorFund { InvestorFundID = investorFund.InvestorFundID });
 					context.InvestorFunds.ApplyCurrentValues(investorFund);
 				}

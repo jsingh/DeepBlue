@@ -8,6 +8,7 @@ using DeepBlue.Helpers;
 using DeepBlue.Models.Investor;
 using DeepBlue.Models.Entity;
 using DeepBlue.Models.Investor.Enums;
+using System.Data;
 
 namespace DeepBlue.Controllers.Investor {
 
@@ -241,6 +242,7 @@ namespace DeepBlue.Controllers.Investor {
 			int contactAddressCount = Convert.ToInt32(collection["ContactInfoCount"]);
 			int accountCount = Convert.ToInt32(collection["AccountInfoCount"]);
 			DeepBlue.Models.Entity.Investor investor = InvestorRepository.FindInvestor(Convert.ToInt32(collection["InvestorId"]));
+
 			InvestorContact investorContact;
 			ContactAddress investorContactAddress;
 			InvestorAccount investorAccount;
@@ -292,8 +294,9 @@ namespace DeepBlue.Controllers.Investor {
 						investorAddress.Address.Country = Convert.ToInt32(collection[index.ToString() + "_" + "Country"]);
 					if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "State"]) == false)
 						investorAddress.Address.State = Convert.ToInt32(collection[index.ToString() + "_" + "State"]);
-					if (investorAddress.InvestorAddressID == 0 && investorAddress.Address.Country > 0 && investorAddress.Address.State > 0)
+					if (investorAddress.InvestorAddressID == 0 && investorAddress.Address.Country > 0 && investorAddress.Address.State > 0) {
 						investor.InvestorAddresses.Add(investorAddress);
+					}
 				}
 			}
 			// Assign contact address details
@@ -375,14 +378,16 @@ namespace DeepBlue.Controllers.Investor {
 						investorAccount.Comments = string.Empty;
 						investorAccount.Routing = 0;
 						investorAccount.IsPrimary = false;
+						investorAccount.Investor = investor;
 					}
 					investorAccount.Account = collection[index.ToString() + "_" + "AccountNumber"];
 					investorAccount.Attention = collection[index.ToString() + "_" + "Attention"];
 					investorAccount.Reference = collection[index.ToString() + "_" + "Reference"];
-					investorAccount.LastUpdatedBy  = AppSettings.CreatedByUserId;
+					investorAccount.LastUpdatedBy = AppSettings.CreatedByUserId;
 					investorAccount.LastUpdatedDate = DateTime.Now;
-					if (investorAccount.InvestorAccountID == 0)
+					if (investorAccount.InvestorAccountID == 0) {
 						investor.InvestorAccounts.Add(investorAccount);
+					}
 				}
 			}
 			InvestorRepository.SaveInvestor(investor);

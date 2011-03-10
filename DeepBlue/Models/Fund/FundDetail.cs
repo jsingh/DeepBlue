@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Fund {
 	public class FundDetail {
-		public FundDetail(){
+		public FundDetail() {
 			FundId = 0;
 			AccountId = 0;
 		}
@@ -15,12 +16,13 @@ namespace DeepBlue.Models.Fund {
 		public int FundId { get; set; }
 
 		public int AccountId { get; set; }
-		
+
 		[Required(ErrorMessage = "Fund Name is required")]
 		[DisplayName("Fund Name:")]
 		public string FundName { get; set; }
 
 		[Required(ErrorMessage = "Tax Id is required")]
+		[RemoteUID_(Action = "TaxIdAvailable", Controller = "Fund", ValidateParameterName = "TaxId", Params = new string[] {"FundId"})]
 		[DisplayName("Tax Id:")]
 		public string TaxId { get; set; }
 
@@ -87,6 +89,6 @@ namespace DeepBlue.Models.Fund {
 		public string Telephone { get; set; }
 
 		[DisplayName("Fax:")]
-		public string Fax { get; set; }		
+		public string Fax { get; set; }
 	}
 }

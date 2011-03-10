@@ -10,132 +10,187 @@ using DeepBlue.Models.Investor;
 namespace DeepBlue.Controllers.Investor {
 	public class InvestorRepository : IInvestorRepository {
 
-		DeepBlueEntities DeepBlueContext = new DeepBlueEntities();
 
 		#region IInvestorRepository Investors
 
 		public List<AddressType> GetAllAddressTypes() {
-			return (from addressType in DeepBlueContext.AddressTypes
-					orderby addressType.AddressTypeName
-					select addressType).ToList();
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from addressType in context.AddressTypes
+						orderby addressType.AddressTypeName
+						select addressType).ToList();
+			}
 		}
 
 
 		public List<COUNTRY> GetAllCountries() {
-			return (from country in DeepBlueContext.COUNTRies
-					orderby country.CountryName ascending
-					select country).ToList();
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from country in context.COUNTRies
+						orderby country.CountryName ascending
+						select country).ToList();
+			}
 		}
 
 		public List<STATE> GetAllStates() {
-			return (from state in DeepBlueContext.STATEs
-					orderby state.Name ascending
-					select state).ToList();
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from state in context.STATEs
+						orderby state.Name ascending
+						select state).ToList();
+			}
 		}
 
 		public List<CommunicationType> GetAllCommunicationTypes() {
-			return (from communicationType in DeepBlueContext.CommunicationTypes
-					orderby communicationType.CommunicationTypeName
-					select communicationType).ToList();
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from communicationType in context.CommunicationTypes
+						orderby communicationType.CommunicationTypeName
+						select communicationType).ToList();
+			}
 		}
 
 		public List<InvestorEntityType> GetAllInvestorEntityTypes() {
-			return (from investorEntityType in DeepBlueContext.InvestorEntityTypes
-					orderby investorEntityType.InvestorEntityTypeName
-					select investorEntityType).ToList();
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investorEntityType in context.InvestorEntityTypes
+						orderby investorEntityType.InvestorEntityTypeName
+						select investorEntityType).ToList();
+			}
 		}
 
 		public List<InvestorType> GetAllInvestorTypes() {
-			return (from investorType in DeepBlueContext.InvestorTypes
-					orderby investorType.InvestorTypeName
-					select investorType).ToList();
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investorType in context.InvestorTypes
+						orderby investorType.InvestorTypeName
+						select investorType).ToList();
+			}
 		}
 
 		public List<InvestorDetail> FindOtherInvestors(string investorName, int excludeInvestorId) {
-			return (from investor in DeepBlueContext.Investors
-					where investor.InvestorName.Contains(investorName) && investor.InvestorID != excludeInvestorId
-					select new InvestorDetail {
-						InvestorName = investor.InvestorName,
-						InvestorId = investor.InvestorID,
-						Social = investor.Social
-					}).ToList();
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investor in context.Investors
+						where investor.InvestorName.Contains(investorName) && investor.InvestorID != excludeInvestorId
+						select new InvestorDetail {
+							InvestorName = investor.InvestorName,
+							InvestorId = investor.InvestorID,
+							Social = investor.Social
+						}).ToList();
+			}
 		}
 
-		public DeepBlue.Models.Entity.Investor FindInvestor(int investorId) {
-			return DeepBlueContext.Investors.SingleOrDefault(investor => investor.InvestorID == investorId);
+		public Models.Entity.Investor FindInvestor(int investorId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				Models.Entity.Investor deepBlueinvestor = context.Investors
+							  .Include("InvestorAddresses")
+							  .Include("InvestorAddresses.Address")
+							  .Include("InvestorContacts")
+							  .Include("InvestorContacts.Contact")
+							  .Include("InvestorContacts.Contact.ContactAddresses")
+							  .Include("InvestorContacts.Contact.ContactAddresses.Address")
+							  .Include("InvestorAccounts")
+							  .Include("InvestorCommunications")
+							  .Include("InvestorCommunications.Communication")
+							  .Include("InvestorFunds")
+							  .Include("InvestorFunds.Fund")
+							  .SingleOrDefault(investor => investor.InvestorID == investorId);
+				return deepBlueinvestor;
+			}
 		}
 
 		public List<InvestorFund> FindInvestorFunds(int investorId) {
-			return (from investorFund in DeepBlueContext.InvestorFunds
-					where investorFund.InvestorID == investorId
-					select investorFund).ToList();
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investorFund in context.InvestorFunds
+						.Include("Fund")
+						.Include("InvestorFundTransactions")
+						where investorFund.InvestorID == investorId
+						select investorFund)
+						.ToList();
+			}
 		}
 
 		public InvestorFund FindInvestorFund(int investorId, int fundId) {
-			return DeepBlueContext.InvestorFunds.SingleOrDefault(investorFund => investorFund.InvestorID == investorId && investorFund.FundID == fundId);
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.InvestorFunds
+						.Include("Fund")
+						.Include("Investor")
+						.Include("InvestorType")
+						.Include("InvestorFundTransactions")
+						.SingleOrDefault(investorFund => investorFund.InvestorID == investorId && investorFund.FundID == fundId);
+			}
 		}
 
 		public InvestorFund FindInvestorFund(int investorFundId) {
-			return DeepBlueContext.InvestorFunds.SingleOrDefault(investorFund => investorFund.InvestorFundID == investorFundId);
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.InvestorFunds
+						.Include("Fund")
+						.Include("Investor")
+						.Include("InvestorType")
+						.Include("InvestorFundTransactions")
+						.SingleOrDefault(investorFund => investorFund.InvestorFundID == investorFundId);
+			}
 		}
-		
+
 
 		public InvestorFundTransaction FindInvestorFundTransaction(int transactionId) {
-			return DeepBlueContext.InvestorFundTransactions.SingleOrDefault(investorFundTransaction => investorFundTransaction.InvestorFundTransactionID == transactionId);
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.InvestorFundTransactions.SingleOrDefault(investorFundTransaction => investorFundTransaction.InvestorFundTransactionID == transactionId);
+			}
 		}
 
 		public void Delete(int investorId) {
-			DeepBlue.Models.Entity.Investor deepBlueInvestor = DeepBlueContext.Investors.SingleOrDefault(investor => investor.InvestorID == investorId);
-			if (deepBlueInvestor != null) {
-				foreach (var investorAddress in deepBlueInvestor.InvestorAddresses.ToList()) {
-					DeepBlueContext.Addresses.DeleteObject(investorAddress.Address);
-					DeepBlueContext.InvestorAddresses.DeleteObject(investorAddress);
-				}
-				foreach (var investorAccount in deepBlueInvestor.InvestorAccounts.ToList()) {
-					DeepBlueContext.InvestorAccounts.DeleteObject(investorAccount);
-				}
-				foreach (var investorContact in deepBlueInvestor.InvestorContacts.ToList()) {
-					foreach (var contactAddress in investorContact.Contact.ContactAddresses.ToList()) {
-						DeepBlueContext.Addresses.DeleteObject(contactAddress.Address);
-						DeepBlueContext.ContactAddresses.DeleteObject(contactAddress);
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				DeepBlue.Models.Entity.Investor deepBlueInvestor = context.Investors.SingleOrDefault(investor => investor.InvestorID == investorId);
+				if (deepBlueInvestor != null) {
+					foreach (var investorAddress in deepBlueInvestor.InvestorAddresses.ToList()) {
+						context.Addresses.DeleteObject(investorAddress.Address);
+						context.InvestorAddresses.DeleteObject(investorAddress);
 					}
-					DeepBlueContext.Contacts.DeleteObject(investorContact.Contact);
-					DeepBlueContext.InvestorContacts.DeleteObject(investorContact);
-				}
-				foreach (var investorCommunication in deepBlueInvestor.InvestorCommunications.ToList()) {
-					DeepBlueContext.Communications.DeleteObject(investorCommunication.Communication);
-					DeepBlueContext.InvestorCommunications.DeleteObject(investorCommunication);
-				}
-				foreach (var investorFund in deepBlueInvestor.InvestorFunds.ToList()) {
-					foreach(var investorFundTransaction in investorFund.InvestorFundTransactions.ToList()){
-						DeepBlueContext.InvestorFundTransactions.DeleteObject(investorFundTransaction);	
+					foreach (var investorAccount in deepBlueInvestor.InvestorAccounts.ToList()) {
+						context.InvestorAccounts.DeleteObject(investorAccount);
 					}
-					DeepBlueContext.InvestorFunds.DeleteObject(investorFund);
+					foreach (var investorContact in deepBlueInvestor.InvestorContacts.ToList()) {
+						foreach (var contactAddress in investorContact.Contact.ContactAddresses.ToList()) {
+							context.Addresses.DeleteObject(contactAddress.Address);
+							context.ContactAddresses.DeleteObject(contactAddress);
+						}
+						context.Contacts.DeleteObject(investorContact.Contact);
+						context.InvestorContacts.DeleteObject(investorContact);
+					}
+					foreach (var investorCommunication in deepBlueInvestor.InvestorCommunications.ToList()) {
+						context.Communications.DeleteObject(investorCommunication.Communication);
+						context.InvestorCommunications.DeleteObject(investorCommunication);
+					}
+					foreach (var investorFund in deepBlueInvestor.InvestorFunds.ToList()) {
+						foreach (var investorFundTransaction in investorFund.InvestorFundTransactions.ToList()) {
+							context.InvestorFundTransactions.DeleteObject(investorFundTransaction);
+						}
+						context.InvestorFunds.DeleteObject(investorFund);
+					}
+					context.Investors.DeleteObject(deepBlueInvestor);
+					context.SaveChanges();
 				}
-				DeepBlueContext.Investors.DeleteObject(deepBlueInvestor);
-				DeepBlueContext.SaveChanges();
 			}
 		}
 
 		public void DeleteInvestorContact(int investorContactId) {
-			InvestorContact investorContact = DeepBlueContext.InvestorContacts.SingleOrDefault(contact => contact.ContactID == investorContactId);
-			if (investorContact != null) {
-				foreach (var contactAddress in investorContact.Contact.ContactAddresses.ToList()) {
-					DeepBlueContext.Addresses.DeleteObject(contactAddress.Address);
-					DeepBlueContext.ContactAddresses.DeleteObject(contactAddress);
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				InvestorContact investorContact = context.InvestorContacts.SingleOrDefault(contact => contact.ContactID == investorContactId);
+				if (investorContact != null) {
+					foreach (var contactAddress in investorContact.Contact.ContactAddresses.ToList()) {
+						context.Addresses.DeleteObject(contactAddress.Address);
+						context.ContactAddresses.DeleteObject(contactAddress);
+					}
+					context.Contacts.DeleteObject(investorContact.Contact);
 				}
-				DeepBlueContext.Contacts.DeleteObject(investorContact.Contact);
+				context.InvestorContacts.DeleteObject(investorContact);
+				context.SaveChanges();
 			}
-			DeepBlueContext.InvestorContacts.DeleteObject(investorContact);
-			DeepBlueContext.SaveChanges();
 		}
 
 		public void DeleteInvestorAccount(int investorAccountId) {
-			InvestorAccount investorAccount = DeepBlueContext.InvestorAccounts.SingleOrDefault(account => account.InvestorAccountID == investorAccountId);
-			if (investorAccount != null) {
-				DeepBlueContext.InvestorAccounts.DeleteObject(investorAccount);
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				InvestorAccount investorAccount = context.InvestorAccounts.SingleOrDefault(account => account.InvestorAccountID == investorAccountId);
+				if (investorAccount != null) {
+					context.InvestorAccounts.DeleteObject(investorAccount);
+				}
+				context.SaveChanges();
 			}
-			DeepBlueContext.SaveChanges();
 		}
 
 		public IEnumerable<Helpers.ErrorInfo> SaveInvestorFund(InvestorFund investorFund) {
@@ -147,40 +202,47 @@ namespace DeepBlue.Controllers.Investor {
 		}
 
 		public InvestorType FindInvestorType(int investorTypeId) {
-			return DeepBlueContext.InvestorTypes.SingleOrDefault(investorType => investorType.InvestorTypeID == investorTypeId);
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.InvestorTypes.SingleOrDefault(investorType => investorType.InvestorTypeID == investorTypeId);
+			}
 		}
 
 		public List<InvestorDetail> FindInvestors(string investorName) {
-			return (from investor in DeepBlueContext.Investors
-					where investor.InvestorName.Contains(investorName)
-					select new InvestorDetail {
-						InvestorName = investor.InvestorName,
-						DisplayName = investor.Alias,
-						InvestorId = investor.InvestorID,
-						Social = investor.Social
-					}).ToList();
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investor in context.Investors
+						where investor.InvestorName.Contains(investorName)
+						select new InvestorDetail {
+							InvestorName = investor.InvestorName,
+							DisplayName = investor.Alias,
+							InvestorId = investor.InvestorID,
+							Social = investor.Social
+						}).ToList();
+			}
 		}
 
 		public InvestorDetail FindInvestorDetail(int investorId) {
-			return (from investor in DeepBlueContext.Investors
-					where investor.InvestorID == investorId
-					select new InvestorDetail {
-						InvestorName = investor.InvestorName,
-						DisplayName = investor.Alias,
-						InvestorId = investor.InvestorID,
-						Social = investor.Social
-					}).SingleOrDefault();
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investor in context.Investors
+						where investor.InvestorID == investorId
+						select new InvestorDetail {
+							InvestorName = investor.InvestorName,
+							DisplayName = investor.Alias,
+							InvestorId = investor.InvestorID,
+							Social = investor.Social
+						}).SingleOrDefault();
+			}
 		}
 
-	 
-
 		public decimal FindSumOfSellAmount(int investorFundId) {
-			return (from investorFundTransaction in DeepBlueContext.InvestorFundTransactions
-					where investorFundTransaction.InvestorFundID == investorFundId && investorFundTransaction.TransactionTypeID == (int)DeepBlue.Models.Transaction.Enums.TransactionType.Sell
-					select investorFundTransaction.Amount ?? 0).Sum();
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investorFundTransaction in context.InvestorFundTransactions
+						where investorFundTransaction.InvestorFundID == investorFundId && 
+							  investorFundTransaction.TransactionTypeID == (int)DeepBlue.Models.Transaction.Enums.TransactionType.Sell
+						select investorFundTransaction.Amount ?? 0).Sum();
+			}
 		}
 
 		#endregion
-	 
+
 	}
 }

@@ -18,6 +18,7 @@ namespace DeepBlue.Helpers {
 			HttpMethod = "GET";
 			SortName = string.Empty;
 			SortOrder = string.Empty;
+			Autoload = true;
 		}
 		public string HttpMethod { get; set; }
 		public string Height { get; set; }
@@ -31,5 +32,6 @@ namespace DeepBlue.Helpers {
 		public string OnSubmit { get; set; }
 		public string SortName  { get; set; }
 		public string SortOrder { get; set; }
+		public bool Autoload  { get; set; }
 	}
 }

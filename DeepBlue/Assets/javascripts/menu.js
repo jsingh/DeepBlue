@@ -2,7 +2,8 @@
 var timeout         = 500;
 var closetimer		= 0;
 var ddmenuitem      = 0;
-
+var subclosetimer	= 0;
+var subddmenuitem   = 0;
 // open hidden layer
 function mopen(that,id)
 {	
@@ -19,10 +20,28 @@ function mopen(that,id)
 	$(ddmenuitem).css({ "left" : pos.left - 7 , "top" : pos.top + 21 });
 	$(ddmenuitem).css("z-index","10001");
 }
+// open hidden layer
+function msubopen(that,id)
+{
+	// cancel close timer
+	msubcancelclosetime();
+
+	// close old layer
+	if(subddmenuitem) subddmenuitem.style.visibility = 'hidden';
+
+	// get new layer and show it
+	subddmenuitem = document.getElementById(id);
+	subddmenuitem.style.visibility = 'visible';
+	var pos = $(that).offset();
+	$(subddmenuitem).css({ "left" : pos.left + ($(subddmenuitem).width()-19) , "top" : pos.top });
+	$(subddmenuitem).css("z-index","10001");
+}
+
 // close showed layer
 function mclose()
 {
 	if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+	if(subddmenuitem) subddmenuitem.style.visibility = 'hidden';
 }
 
 // go close timer
@@ -38,6 +57,28 @@ function mcancelclosetime()
 	{
 		window.clearTimeout(closetimer);
 		closetimer = null;
+	}
+}
+
+// subclose showed layer
+function msubclose()
+{
+	if(subddmenuitem) subddmenuitem.style.visibility = 'hidden';
+}
+
+// go sub close timer
+function msubclosetime()
+{
+	subclosetimer = window.setTimeout(mclose, timeout);
+}
+
+// sub cancel close timer
+function msubcancelclosetime()
+{
+	if(subclosetimer)
+	{
+		window.clearTimeout(subclosetimer);
+		subclosetimer = null;
 	}
 }
 

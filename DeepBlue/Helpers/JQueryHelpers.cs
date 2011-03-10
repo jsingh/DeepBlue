@@ -41,10 +41,11 @@ namespace DeepBlue.Helpers {
 			StringBuilder scriptSrc = new StringBuilder();
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").flexigrid({")
 					 .Append("usepager:"+ options.Paging.ToString().ToLower())
-					 .Append(",url:\"/"+ options.ActionName.ToString() + "/" + options.ControllerName.ToString() + "\"")
+					 .Append(",url:\"/" + options.ControllerName.ToString() + "/" + options.ActionName.ToString() + "\"")
 					 .Append(",method:\"" + options.HttpMethod.ToString() + "\"")
 					 .Append(",sortname:\"" + options.SortName.ToString() + "\"")
 					 .Append(",sortorder:\"" + options.SortOrder.ToString() + "\"")
+					 .Append(",autoload:" + options.Autoload.ToString().ToLower() + "")
 					 .Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}

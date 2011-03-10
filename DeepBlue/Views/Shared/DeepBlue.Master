@@ -89,7 +89,7 @@
 									<div class="topmenu-left">
 									</div>
 									<div class="topmenu-center">
-										<%: Html.ActionLink("Administration", "Index", "Admin")%>
+										<a onmouseover="mopen(this,'Adm_Management')" onmouseout="mclosetime()">Administration</a>
 									</div>
 									<div class="topmenu-right">
 									</div>
@@ -104,6 +104,7 @@
 								</div>
 							</div>
 						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -132,6 +133,21 @@
 		<ul>
 			<li>
 				<%: Html.ActionLink("Fund Setup", "Index", "Fund")%></li>
+		</ul>
+	</div>
+	<div class="mdiv" id="Adm_Management" onmouseover="mcancelclosetime()">
+		<ul>
+			<li><a onmouseover="msubopen(this,'Admin_Management')" onmouseout="msubclosetime()" class="submenubg">Investor Management</a></li>
+		</ul>
+	</div>
+	<div class="mdiv" id="Admin_Management" onmouseover="msubcancelclosetime()" onmouseout="msubclosetime()">
+		<ul>
+			<li>
+				<%: Html.ActionLink("Investor EntityType", "EntityType", "Admin")%></li>
+			<li>
+				<%: Html.ActionLink("Investor Type", "InvestorType", "Admin")%></li>
+			<li><a href="#">Source</a></li>
+			<li><a href="#">Investor Accounting Categories</a></li>
 		</ul>
 	</div>
 </body>

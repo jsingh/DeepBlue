@@ -14,8 +14,6 @@
 	<%Html.EnableClientValidation(); %>
 	<% using (Ajax.BeginForm("Update", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "fund.onCreateFundBegin", OnSuccess = "fund.onCreateFundSuccess" }, new { @id = "AddNewFund" })) {%>
 	<% Html.RenderPartial("FundDetail", Model); %>
-	<%: Html.HiddenFor(model => model.FundId)%>
-	<%: Html.HiddenFor(model => model.AccountId)%>
 	<% } %>
 	<div id="UpdateTargetId">
 	</div>

@@ -199,5 +199,13 @@ namespace DeepBlue.Controllers.Fund {
 			}
 		}
 
+		[HttpGet]
+		public string TaxIdAvailable(string TaxId,int FundId) {
+			if (FundRepository.TaxIdAvailable(TaxId,FundId))
+				return "TaxId already exist";
+			else
+				return string.Empty;
+		}
+
 	}
 }

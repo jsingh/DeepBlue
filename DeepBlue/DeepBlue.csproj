@@ -91,25 +91,33 @@
     <Compile Include="Helpers\HttpContextFactory.cs" />
     <Compile Include="Helpers\JQueryHelpers.cs" />
     <Compile Include="Helpers\PaginatedList.cs" />
+    <Compile Include="Helpers\QueryableExtension.cs" />
     <Compile Include="Helpers\RemoteAttributeAdapter.cs" />
     <Compile Include="Helpers\RemoteUID_Attribute.cs" />
     <Compile Include="Helpers\SelectListFactory.cs" />
     <Compile Include="Helpers\ValidationHelpers.cs" />
+    <Compile Include="Models\Admin\EditInvestorEntityTypeModel.cs" />
+    <Compile Include="Models\Admin\EditInvestorTypeModel.cs" />
     <Compile Include="Models\Admin\Enums.cs" />
     <Compile Include="Models\Admin\ListModel.cs" />
+    <Compile Include="Models\Admin\ResultModel.cs" />
     <Compile Include="Models\Entity\DeepBlue.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\Partial\FundService.cs" />
+    <Compile Include="Models\Entity\Partial\InvestorEntityTypeService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorFundTransactionService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorFundService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorService.cs" />
+    <Compile Include="Models\Entity\Partial\InvestorTypeService.cs" />
     <Compile Include="Models\Entity\Validation\Fund.cs" />
+    <Compile Include="Models\Entity\Validation\InvestorEntityType.cs" />
     <Compile Include="Models\Entity\Validation\InvestorFundTransaction.cs" />
     <Compile Include="Models\Entity\Validation\InvestorFund.cs" />
     <Compile Include="Models\Entity\Validation\Investor.cs" />
+    <Compile Include="Models\Entity\Validation\InvestorType.cs" />
     <Compile Include="Models\Fund\CreateModel.cs" />
     <Compile Include="Models\Fund\EditModel.cs" />
     <Compile Include="Models\Fund\FundDetail.cs" />
@@ -210,10 +218,13 @@
     <Content Include="Assets\images\Update.png" />
     <Content Include="Assets\images\uup.png" />
     <Content Include="Assets\images\wbg.gif" />
+    <Content Include="Assets\javascripts\InvestorType.js" />
+    <Content Include="Assets\javascripts\ddlmenu.js" />
     <Content Include="Assets\javascripts\FlexGrid.js" />
     <Content Include="Assets\javascripts\EditInvestor.js" />
     <Content Include="Assets\javascripts\EditTransaction.js" />
     <Content Include="Assets\javascripts\Fund.js" />
+    <Content Include="Assets\javascripts\InvestorEntityType.js" />
     <Content Include="Assets\javascripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Assets\javascripts\jquery-ui-1.8.10.custom.min.js" />
     <Content Include="Assets\javascripts\jquery-ui-1.8.9.combobox.js" />
@@ -227,14 +238,20 @@
     <Content Include="Assets\javascripts\MicrosoftMvcValidation.js" />
     <Content Include="Assets\javascripts\SearchInvestor.js" />
     <Content Include="Assets\javascripts\TransactionController.js" />
+    <Content Include="Assets\stylesheets\ddlmenu.css" />
     <Content Include="Assets\stylesheets\flexigrid.css" />
     <Content Include="Assets\stylesheets\fund.css" />
     <Content Include="Assets\stylesheets\jquery-ui-1.8.10.custom.css" />
     <Content Include="Assets\stylesheets\newInvestor.css" />
     <Content Include="Global.asax" />
     <Content Include="Assets\stylesheets\site.css" />
-    <Content Include="Views\Admin\EntityType.ascx" />
-    <Content Include="Views\Admin\Index.aspx" />
+    <Content Include="Views\Admin\EditInvestorType.aspx" />
+    <Content Include="Views\Admin\InvestorTypeList.ascx" />
+    <Content Include="Views\Admin\EditInvestorEntityType.aspx" />
+    <Content Include="Views\Admin\EntityTypeList.ascx" />
+    <Content Include="Views\Admin\InvestorType.aspx" />
+    <Content Include="Views\Admin\Result.ascx" />
+    <Content Include="Views\Admin\EntityType.aspx" />
     <Content Include="Views\Admin\List.ascx" />
     <Content Include="Views\Fund\Edit.aspx" />
     <Content Include="Views\Fund\Error.ascx" />

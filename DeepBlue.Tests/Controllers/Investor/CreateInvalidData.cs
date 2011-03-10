@@ -58,7 +58,7 @@ namespace DeepBlue.Tests.Controllers.Investor {
 
         [Test]
         public void invalid_Investor_name_sets_1_error() {
-            Assert.IsTrue(test_error_count("InvestorName", 1));
+            Assert.IsTrue(test_error_count("InvestorName",1));
         }
 
         [Test]

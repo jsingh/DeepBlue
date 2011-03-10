@@ -236,16 +236,18 @@
 	border: 1px solid #ccc;
 	border-bottom: 0px;
 	overflow: hidden;
-	border-right:0px;
-	border-top:0px;
+	border-right: 0px;
+	border-top: 0px;
 }
 
 
 .flexigrid div.hDiv table {
 	border-right: 1px solid #fff;
+	width: 100%;
 }
-.flexigrid div.hDiv table th{
-background: #fafafa url(../images/fhbg.gif) repeat-x bottom;border-top:1px solid #ccc;
+.flexigrid div.hDiv table th {
+	background: #fafafa url(../images/fhbg.gif) repeat-x bottom;
+	border-top: 1px solid #ccc;
 }
 
 .flexigrid div.cDrag {
@@ -295,8 +297,8 @@ background: #fafafa url(../images/fhbg.gif) repeat-x bottom;border-top:1px solid
 	border-top: 0px;
 	overflow: hidden;
 	position: relative;
-	border-bottom:0px;
-	border-right:0px;
+	border-bottom: 0px;
+	border-right: 0px;
 }
 
 .flexigrid div.bDiv table {
@@ -404,18 +406,21 @@ div.colCopy {
 }
 
 .flexigrid div.hDiv th div span.sdesc {
-	background: url(../images/dn.png) no-repeat right center; padding-right: 10px;
+	background: url(../images/dn.png) no-repeat right center;
+	padding-right: 10px;
 }
 
 .flexigrid div.hDiv th div span.sasc {
-    background: url("../images/up.png") no-repeat scroll right center transparent;
-    padding-right: 10px;
+	background: url("../images/up.png") no-repeat scroll right center transparent;
+	padding-right: 10px;
 }
 
 .flexigrid div.bDiv td {
 	border-bottom: 1px solid #fff;
 	vertical-align: top;
-	white-space: nowrap;background-color:#fff;
+	white-space: nowrap;
+	background-color: #fff;
+	padding-top: 2px;
 }
 
 .flexigrid div.hDiv th div {
@@ -463,6 +468,7 @@ div.colCopy {
 .flexigrid tr.erow td {
 	background: #f7f7f7;
 	border-bottom: 1px solid #f7f7f7;
+	padding-top: 2px;
 }
 
 .flexigrid tr.erow td.sorted {
@@ -554,6 +560,7 @@ div.pGroup {
 	vertical-align: text-top;
 	position: relative;
 	top: -5px;
+	text-align: center;
 }
 
 .flexigrid div.pDiv div.pButton {

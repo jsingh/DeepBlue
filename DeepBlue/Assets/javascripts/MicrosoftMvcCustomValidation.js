@@ -2,10 +2,7 @@
 	var url=rule.ValidationParameters.url;
 	var validateParameterName=rule.ValidationParameters.validateParameterName;
 	var parameterNames=rule.ValidationParameters.parameterNames;
-
 	return function (value,context) {  // anonymous function
-
-		alert(value+','+context+','+context.eventName);
 		if(!value||!value.length) {
 			return true;
 		}
@@ -30,6 +27,9 @@
 					// add error to validation message
 					var newMessage=(responseData=='FAIL'?
                     rule.ErrorMessage:responseData);
+					if(newMessage!='') {
+						alert(newMessage);
+					}
 					context.fieldContext.addError(newMessage);
 				}
 			};

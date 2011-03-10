@@ -143,9 +143,9 @@ namespace DeepBlue.Models.Entity {
 				foreach (ContactAddress contactAddr in contact.ContactAddresses) {
 					errors.Union(ValidationHelper.Validate(contactAddr.Address));
 				}
-				foreach (ContactCommunication comm in contact.ContactCommunications) {
-					errors.Union(ValidationHelper.Validate(comm.Communication));
-				}
+				//foreach (ContactCommunication comm in contact.ContactCommunications) {
+				//    errors.Union(ValidationHelper.Validate(comm.Communication));
+				//}
 			}
 			return errors;
 		}

@@ -211,11 +211,13 @@
 
 				if(p.page>p.pages) p.page=p.pages;
 				//var param = {page:p.newp, rp: p.rp, sortname: p.sortname, sortorder: p.sortorder, query: p.query, qtype: p.qtype};
+				var dt = new Date();
 				var param=[
 					 { name: 'pageIndex',value: p.newp }
 					,{ name: 'pageSize',value: p.rp }
 					,{ name: 'sortName',value: p.sortname }
 					,{ name: 'sortOrder',value: p.sortorder }
+					,{ name: 't', value: dt.getTime() }
 				];
 
 				if(p.params) {
@@ -267,7 +269,7 @@
 		g.bDiv=document.createElement('div'); //create body container
 
 		if(p.usepager) g.pDiv=document.createElement('div'); //create pager container
-		g.hTable=$(t).clone();
+		g.hTable=document.createElement("table");
 
 		//set gDiv
 		g.gDiv.className='flexigrid';
@@ -293,7 +295,11 @@
 		//set hTable
 		g.hTable.cellPadding=0;
 		g.hTable.cellSpacing=0;
+		$(g.hTable).append($("thead",t));
+
 		$(g.hDiv).append(g.hTable);
+		
+	 
 
 		if(!p.colmodel) var ci=0;
 
@@ -394,7 +400,7 @@
 		//make grid functions accessible
 		t.p=p;
 		t.grid=g;
-
+		
 		// load data
 		if(p.url&&p.autoload) {
 			g.populate();
@@ -412,6 +418,7 @@
 	$(document).ready(function () { docloaded=true });
 
 	$.fn.flexigrid=function (p) {
+
 		return this.each(function () {
 			if(!docloaded) {
 				$(this).hide();
@@ -430,30 +437,46 @@
 	}; //end flexigrid
 
 	$.fn.flexReload=function (p) { // function to reload grid
+
 		return this.each(function () {
 			if(this.grid&&this.p.url) this.grid.populate();
 		});
+
 	}; //end flexReload
 
 	$.fn.flexOptions=function (p) { //function to update general options
+
 		return this.each(function () {
 			if(this.grid) $.extend(this.p,p);
 		});
+
 	}; //end flexOptions
 
+    $.fn.flexToggleCol = function(cid, visible) { // function to reload grid
+
+        return this.each(function() {
+            if (this.grid) this.grid.toggleCol(cid, visible);
+        });
+
+    }; //end flexToggleCol
+
 	$.fn.flexAddData=function (data) { // function to add data to grid
+
 		return this.each(function () {
 			if(this.grid) this.grid.addData(data);
 		});
+
 	};
 
 	$.fn.noSelect=function (p) { //no select plugin by me :-)
+
 		if(p==null)
 			prevent=true;
 		else
 			prevent=p;
 
 		if(prevent) {
+
 			return this.each(function () {
 				if($.browser.msie||$.browser.safari) $(this).bind('selectstart',function () { return false; });
 				else if($.browser.mozilla) {
@@ -463,14 +486,19 @@
 				else if($.browser.opera) $(this).bind('mousedown',function () { return false; });
 				else $(this).attr('unselectable','on');
 			});
+
 		} else {
+
+
 			return this.each(function () {
 				if($.browser.msie||$.browser.safari) $(this).unbind('selectstart');
 				else if($.browser.mozilla) $(this).css('MozUserSelect','inherit');
 				else if($.browser.opera) $(this).unbind('mousedown');
 				else $(this).removeAttr('unselectable','on');
 			});
+
 		}
+
 	}; //end noSelect
 
 })(jQuery);

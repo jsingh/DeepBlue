@@ -18,7 +18,6 @@ namespace DeepBlue.Models.Investor {
 		public string Alias { get; set; }
 
 		[Required(ErrorMessage = "Social Security/ Tax Id is required")]
-		[RegularExpression("^\\d{3}-\\d{2}-\\d{4}$", ErrorMessage = "Invalid Social Security/ Tax Id")]
 		[DisplayName("Social Security/ Tax Id:")]
 		public string SocialSecurityTaxId { get; set; }
 
@@ -32,7 +31,7 @@ namespace DeepBlue.Models.Investor {
 
 		[Required(ErrorMessage = "EntityType is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "EntityType is required")]
-		[DisplayName("Entity Type:")]
+		[DisplayName("EntityType:")]
 		public int EntityType { get; set; }
 
 		[DisplayName("FOIA:")]
@@ -51,8 +50,6 @@ namespace DeepBlue.Models.Investor {
 		public string Notes { get; set; }
 
 		/* Address Information */
-		[RegularExpression("^\\d{10}$", ErrorMessage = "Invalid Telephone No")]
-		[DataType(DataType.PhoneNumber)]
 		[DisplayName("Telephone No:")]
 		public string Phone { get; set; }
 

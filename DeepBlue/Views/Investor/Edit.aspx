@@ -333,28 +333,28 @@
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "ContactCountry" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Distribution Notices") %>
+										<%: Html.Label("Distribution Notices:") %>
 									</div>
 									<div class="editor-field checkbox">
 										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "DistributionNotices",false)%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "DistributionNotices" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Financials")%>
+										<%: Html.Label("Financials:")%>
 									</div>
 									<div class="editor-field checkbox">
 										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "Financials",false)%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "Financials" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("K1")%>
+										<%: Html.Label("K1:")%>
 									</div>
 									<div class="editor-field checkbox">
 										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "K1",false)%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "K1" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Investor Letters")%>
+										<%: Html.Label("Investor Letters:")%>
 									</div>
 									<div class="editor-field checkbox">
 										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "InvestorLetters",false)%>

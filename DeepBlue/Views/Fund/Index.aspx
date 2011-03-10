@@ -13,7 +13,9 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="fund-main">
 		<div class="fund-header">
-			<%: Html.Image("add_icon.png", new { @style = "cursor:pointer", @onclick = "javascript:fund.add(0);" }) %>
+			<a href="javascript:fund.add(0);">
+				<%: Html.Image("add_icon.png") %>
+				&nbsp;Add Fund </a>
 		</div>
 		<div class="fund-content">
 			<table id="FundList" cellpadding="0" cellspacing="0" border="0" style="width: 100%">
@@ -40,5 +42,5 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "Fund", ControllerName = "List", SortName= "FundName", Paging=true })%>
+	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List", ControllerName = "Fund", SortName = "FundName", Paging = true })%>
 </asp:Content>

@@ -153,3 +153,5 @@
 		<%: Html.Image("Close.png", new { style = "width: 73px; height: 23px;cursor:pointer;", onclick = "javascript:parent.fund.closeDialog(false);" })%>
 	</div>
 </div>
+<%: Html.HiddenFor(model => model.FundId)%>
+<%: Html.HiddenFor(model => model.AccountId)%>
