@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DeepBlue.Models.Entity.Partial {
+namespace DeepBlue.Models.Entity {
 	public interface IInvestorTypeService {
 		void SaveInvestorType(InvestorType investor);
 	}

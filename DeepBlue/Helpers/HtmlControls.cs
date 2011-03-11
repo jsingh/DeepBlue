@@ -52,7 +52,6 @@ namespace DeepBlue.Helpers {
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 		#endregion
-		 
 
 		#region Anchor
 		public static MvcHtmlString Anchor(this HtmlHelper helper, string innerHTML, string href, object htmlAttributes) {
@@ -75,7 +74,6 @@ namespace DeepBlue.Helpers {
 			return string.Format("<link href=\"/Assets/stylesheets/{0}\" rel=\"stylesheet\" type=\"text/css\" />", cssname);
 		}
 		#endregion
-		
 
 		#region Tab
 		public static MvcHtmlString Tab(this HtmlHelper helper, string innerHTML) {
@@ -97,6 +95,16 @@ namespace DeepBlue.Helpers {
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 		#endregion
-			
+
+		#region File
+		public static MvcHtmlString File(this HtmlHelper htmlHelper, string name, object htmlAttributes) {
+			TagBuilder tag = new TagBuilder("input");
+			tag.Attributes.Add("type", "file");
+			tag.Attributes.Add("name", name);
+			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+		}
+		#endregion
+
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DeepBlue.Models.Entity.Partial {
+namespace DeepBlue.Models.Entity {
 	public interface IInvestorEntityTypeService {
 		void SaveInvestorEntityType(InvestorEntityType investor);
 	}
@@ -16,7 +16,7 @@ namespace DeepBlue.Models.Entity.Partial {
 				if (investorEntityType.InvestorEntityTypeID == 0) {
 					context.InvestorEntityTypes.AddObject(investorEntityType);
 				} else {
-					var origianlEntityType = context.InvestorEntityTypes.SingleOrDefault(entityType => entityType.InvestorEntityTypeID == investorEntityType.InvestorEntityTypeID);
+				    context.InvestorEntityTypes.SingleOrDefault(entityType => entityType.InvestorEntityTypeID == investorEntityType.InvestorEntityTypeID);
 					context.InvestorEntityTypes.ApplyCurrentValues(investorEntityType);
 				}
 				context.SaveChanges();

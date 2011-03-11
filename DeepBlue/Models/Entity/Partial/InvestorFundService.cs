@@ -15,7 +15,7 @@ namespace DeepBlue.Models.Entity {
 				if (investorFund.InvestorFundID == 0) {
 					context.InvestorFunds.AddObject(investorFund);
 				} else {
-					context.InvestorFunds.Attach(new InvestorFund { InvestorFundID = investorFund.InvestorFundID });
+					context.InvestorFunds.SingleOrDefault(fund => fund.InvestorFundID == investorFund.InvestorFundID);
 					context.InvestorFunds.ApplyCurrentValues(investorFund);
 				}
 				context.SaveChanges();

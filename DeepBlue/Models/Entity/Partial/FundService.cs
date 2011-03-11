@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Objects.DataClasses;
 
-namespace DeepBlue.Models.Entity.Partial {
+namespace DeepBlue.Models.Entity {
 	public interface IFundService {
 		void SaveFund(Fund fund);
 	}
@@ -17,14 +17,14 @@ namespace DeepBlue.Models.Entity.Partial {
 				} else {
 					//Update fund,fund account values
 					foreach (var fundAccount in fund.FundAccounts) {
-						context.FundAccounts.Attach(new FundAccount { FundAccountID = fundAccount.FundAccountID });
+						context.FundAccounts.SingleOrDefault(account => account.FundAccountID == fundAccount.FundAccountID);
 						context.FundAccounts.ApplyCurrentValues(fundAccount);
 					}
-					foreach(var fundClosing in fund.FundClosings){
-						context.FundClosings.Attach(new FundClosing { FundClosingID = fundClosing.FundClosingID });
+					foreach (var fundClosing in fund.FundClosings) {
+						context.FundClosings.SingleOrDefault(closing => closing.FundClosingID == fundClosing.FundClosingID);
 						context.FundClosings.ApplyCurrentValues(fundClosing);
 					}
-					context.Funds.Attach(new Fund { FundID = fund.FundID });
+					context.Funds.SingleOrDefault(f => f.FundID == fund.FundID);
 					context.Funds.ApplyCurrentValues(fund);
 				}
 				context.SaveChanges();

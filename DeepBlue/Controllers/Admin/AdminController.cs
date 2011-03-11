@@ -194,7 +194,7 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public string InvestorEntityTypeNameAvailable(string InvestorEntityTypeName, int InvestorEntityTypeID) {
 			if (AdminRepository.InvestorEntityTypeNameAvailable(InvestorEntityTypeName, InvestorEntityTypeID))
-				return "Investor EntityType Name already exist";
+				return "Investor Entity Type Name already exists.";
 			else
 				return string.Empty;
 		}

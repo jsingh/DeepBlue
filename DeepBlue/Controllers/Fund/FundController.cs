@@ -40,6 +40,18 @@ namespace DeepBlue.Controllers.Fund {
 		}
 
 		//
+		// GET: /Fund/FindFunds
+		[HttpGet]
+		public JsonResult FindFunds(string term) {
+			List<Models.Entity.Fund> funds = FundRepository.FindFunds(term);
+			List<AutoCompleteList> autoCompleteLists = new List<AutoCompleteList>();
+			foreach (var detail in funds) {
+				autoCompleteLists.Add(new AutoCompleteList { id = detail.FundID.ToString(), label = detail.FundName, value = detail.FundName });
+			}
+			return Json(autoCompleteLists, JsonRequestBehavior.AllowGet);
+		}
+
+		//
 		// GET: /Fund/Success
 		public ActionResult Success() {
 			return View();
@@ -200,8 +212,8 @@ namespace DeepBlue.Controllers.Fund {
 		}
 
 		[HttpGet]
-		public string TaxIdAvailable(string TaxId,int FundId) {
-			if (FundRepository.TaxIdAvailable(TaxId,FundId))
+		public string TaxIdAvailable(string TaxId, int FundId) {
+			if (FundRepository.TaxIdAvailable(TaxId, FundId))
 				return "TaxId already exist";
 			else
 				return string.Empty;

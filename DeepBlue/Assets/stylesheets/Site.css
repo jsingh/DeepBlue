@@ -196,6 +196,9 @@ h2 {
 .editor-field select {
 	width: 203px;
 }
+.radio input{
+	width:auto;
+}
 .dropdown {
 	width: 120px;
 }

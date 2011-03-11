@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using DeepBlue.Models;
 using DeepBlue.Models.Entity;
+using DeepBlue.Models.Document;
 
 namespace DeepBlue.Helpers {
 	public class SelectListFactory {
@@ -141,6 +142,35 @@ namespace DeepBlue.Helpers {
 			defaultSelectList.Add(item);
 			return defaultSelectList;
 		}
+
+		public static List<SelectListItem> GetDocumentTypeSelectList(List<DocumentType> documentTypes){
+			List<SelectListItem> documentTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			documentTypeList.Add(item);
+			foreach (var documentType in documentTypes) {
+				item = new SelectListItem();
+				item.Text = documentType.DocumentTypeName.ToString();
+				item.Value = documentType.DocumentTypeID.ToString();
+				documentTypeList.Add(item);
+			}
+			return documentTypeList;
+		}
+
+		public static List<SelectListItem> GetDocumentStatusList() {
+			List<SelectListItem> documentStatusList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = DocumentStatus.Investor.ToString();
+			item.Value = ((int)DocumentStatus.Investor).ToString();
+			documentStatusList.Add(item);
+			item = new SelectListItem();
+			item.Text = DocumentStatus.Fund.ToString();
+			item.Value = ((int)DocumentStatus.Fund).ToString();
+			documentStatusList.Add(item);
+			return documentStatusList;
+		}
+
 
 	}
 }

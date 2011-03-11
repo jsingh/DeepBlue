@@ -3845,7 +3845,7 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> Size
+        public Nullable<global::System.Int64> Size
         {
             get
             {
@@ -3860,8 +3860,8 @@ namespace DeepBlue.Models.Entity
                 OnSizeChanged();
             }
         }
-        private Nullable<global::System.Int32> _Size;
-        partial void OnSizeChanging(Nullable<global::System.Int32> value);
+        private Nullable<global::System.Int64> _Size;
+        partial void OnSizeChanging(Nullable<global::System.Int64> value);
         partial void OnSizeChanged();
     
         /// <summary>
@@ -8315,6 +8315,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _LastUpdatedBy;
         partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
         partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DocumentDate
+        {
+            get
+            {
+                return _DocumentDate;
+            }
+            set
+            {
+                OnDocumentDateChanging(value);
+                ReportPropertyChanging("DocumentDate");
+                _DocumentDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DocumentDate");
+                OnDocumentDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DocumentDate;
+        partial void OnDocumentDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnDocumentDateChanged();
 
         #endregion
     

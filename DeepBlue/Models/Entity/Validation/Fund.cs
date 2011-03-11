@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using DeepBlue.Helpers;
 using DeepBlue;
-using DeepBlue.Models.Entity.Partial;
+
 
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(FundMD))]

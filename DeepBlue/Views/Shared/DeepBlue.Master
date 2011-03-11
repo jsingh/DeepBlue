@@ -73,15 +73,7 @@
 								<div class="topmenu-right">
 								</div>
 							</div>
-							<div class="topmenu">
-								<div class="topmenu-left">
-								</div>
-								<div class="topmenu-center">
-									<a href="#">Document Management</a></div>
-								<div class="topmenu-right">
-								</div>
-							</div>
-							<% if (ViewData["MenuName"] == "Admin") {%>
+							<% if (ViewData["MenuName"] == "Document") {%>
 							<div class="topmenu tab-sel">
 								<%} else {%>
 								<div class="topmenu">
@@ -89,17 +81,31 @@
 									<div class="topmenu-left">
 									</div>
 									<div class="topmenu-center">
-										<a onmouseover="mopen(this,'Adm_Management')" onmouseout="mclosetime()">Administration</a>
+										<a onmouseover="mopen(this,'Doc_Management')" onmouseout="mclosetime()">Document Management</a>
 									</div>
 									<div class="topmenu-right">
 									</div>
 								</div>
-								<div class="topmenu">
-									<div class="topmenu-left">
+								<% if (ViewData["MenuName"] == "Admin") {%>
+								<div class="topmenu tab-sel">
+									<%} else {%>
+									<div class="topmenu">
+										<%}%>
+										<div class="topmenu-left">
+										</div>
+										<div class="topmenu-center">
+											<a onmouseover="mopen(this,'Adm_Management')" onmouseout="mclosetime()">Administration</a>
+										</div>
+										<div class="topmenu-right">
+										</div>
 									</div>
-									<div class="topmenu-center">
-										<a href="#">Reports</a></div>
-									<div class="topmenu-right">
+									<div class="topmenu">
+										<div class="topmenu-left">
+										</div>
+										<div class="topmenu-center">
+											<a href="#">Reports</a></div>
+										<div class="topmenu-right">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -108,7 +114,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	<div id="content">
 		<div class="content-box">
 			<asp:ContentPlaceHolder ID="MainContent" runat="server" />
@@ -137,10 +142,10 @@
 	</div>
 	<div class="mdiv" id="Adm_Management" onmouseover="mcancelclosetime()">
 		<ul>
-			<li><a onmouseover="msubopen(this,'Admin_Management')" onmouseout="msubclosetime()" class="submenubg">Investor Management</a></li>
+			<li><a onmouseover="msubopen(this,'Inv_SubMenu_Management')" onmouseout="msubclosetime()" class="submenubg">Investor Management</a></li>
 		</ul>
 	</div>
-	<div class="mdiv" id="Admin_Management" onmouseover="msubcancelclosetime()" onmouseout="msubclosetime()">
+	<div class="mdiv" id="Inv_SubMenu_Management" onmouseover="msubcancelclosetime()" onmouseout="msubclosetime()">
 		<ul>
 			<li>
 				<%: Html.ActionLink("Investor EntityType", "EntityType", "Admin")%></li>
@@ -148,6 +153,14 @@
 				<%: Html.ActionLink("Investor Type", "InvestorType", "Admin")%></li>
 			<li><a href="#">Source</a></li>
 			<li><a href="#">Investor Accounting Categories</a></li>
+		</ul>
+	</div>
+	<div class="mdiv" id="Doc_Management" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+		<ul>
+			<li>
+				<%: Html.ActionLink("Document Search", "Search", "Document")%></li>
+			<li>
+				<%: Html.ActionLink("Document Upload", "New", "Document")%></li>
 		</ul>
 	</div>
 </body>

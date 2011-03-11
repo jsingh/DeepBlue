@@ -1,0 +1,15 @@
+﻿/* Document Upload */
+.document-upload, .document-search {
+	margin-left: 30%;
+	margin-top: 10px;
+	float: left;
+}
+.document-upload .editor-label, .document-search .editor-label {
+	width: 100px;
+}
+.editor-label select{
+	width: 100px;
+}
+.editor-field {
+	width: auto;
+}

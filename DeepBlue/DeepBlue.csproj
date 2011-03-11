@@ -72,6 +72,9 @@
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\AdminRepository.cs" />
     <Compile Include="Controllers\Admin\IAdminRepository.cs" />
+    <Compile Include="Controllers\Document\DocumentRepository.cs" />
+    <Compile Include="Controllers\Document\DocumentController.cs" />
+    <Compile Include="Controllers\Document\IDocumentRepository.cs" />
     <Compile Include="Controllers\Fund\FundRepository.cs" />
     <Compile Include="Controllers\Fund\FundController.cs" />
     <Compile Include="Controllers\Fund\IFundRepository.cs" />
@@ -101,6 +104,9 @@
     <Compile Include="Models\Admin\Enums.cs" />
     <Compile Include="Models\Admin\ListModel.cs" />
     <Compile Include="Models\Admin\ResultModel.cs" />
+    <Compile Include="Models\Document\SearchModel.cs" />
+    <Compile Include="Models\Document\UploadModel.cs" />
+    <Compile Include="Models\Document\Enums.cs" />
     <Compile Include="Models\Entity\DeepBlue.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -108,12 +114,14 @@
     </Compile>
     <Compile Include="Models\Entity\Partial\FundService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorEntityTypeService.cs" />
+    <Compile Include="Models\Entity\Partial\InvestorFundDocumentService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorFundTransactionService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorFundService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorTypeService.cs" />
     <Compile Include="Models\Entity\Validation\Fund.cs" />
     <Compile Include="Models\Entity\Validation\InvestorEntityType.cs" />
+    <Compile Include="Models\Entity\Validation\InvestorFundDocument.cs" />
     <Compile Include="Models\Entity\Validation\InvestorFundTransaction.cs" />
     <Compile Include="Models\Entity\Validation\InvestorFund.cs" />
     <Compile Include="Models\Entity\Validation\Investor.cs" />
@@ -218,6 +226,8 @@
     <Content Include="Assets\images\Update.png" />
     <Content Include="Assets\images\uup.png" />
     <Content Include="Assets\images\wbg.gif" />
+    <Content Include="Assets\javascripts\DocumentSearch.js" />
+    <Content Include="Assets\javascripts\DocumentUpload.js" />
     <Content Include="Assets\javascripts\InvestorType.js" />
     <Content Include="Assets\javascripts\ddlmenu.js" />
     <Content Include="Assets\javascripts\FlexGrid.js" />
@@ -239,6 +249,7 @@
     <Content Include="Assets\javascripts\SearchInvestor.js" />
     <Content Include="Assets\javascripts\TransactionController.js" />
     <Content Include="Assets\stylesheets\ddlmenu.css" />
+    <Content Include="Assets\stylesheets\document.css" />
     <Content Include="Assets\stylesheets\flexigrid.css" />
     <Content Include="Assets\stylesheets\fund.css" />
     <Content Include="Assets\stylesheets\jquery-ui-1.8.10.custom.css" />
@@ -253,6 +264,8 @@
     <Content Include="Views\Admin\Result.ascx" />
     <Content Include="Views\Admin\EntityType.aspx" />
     <Content Include="Views\Admin\List.ascx" />
+    <Content Include="Views\Document\New.aspx" />
+    <Content Include="Views\Document\Search.aspx" />
     <Content Include="Views\Fund\Edit.aspx" />
     <Content Include="Views\Fund\Error.ascx" />
     <Content Include="Views\Fund\FundDetail.ascx" />

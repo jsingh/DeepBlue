@@ -49,6 +49,14 @@ namespace DeepBlue.Controllers.Fund {
 			}
 		}
 
+		public List<Models.Entity.Fund> FindFunds(string fundName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fund in context.Funds
+						where fund.FundName.Contains(fundName)
+						select fund).ToList();
+			}
+		}
+
 		#endregion
 	}
 }
