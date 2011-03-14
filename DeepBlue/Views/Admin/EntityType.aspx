@@ -20,7 +20,7 @@
 			<table cellpadding="0" cellspacing="0" border="0" id="InvEntityTypeList">
 				<thead>
 					<tr>
-						<th sortname="InvestorEntityTypeId" style="width: 5%;" align="center">
+						<th sortname="InvestorEntityTypeID" style="width: 5%;" align="center">
 							ID
 						</th>
 						<th sortname="InvestorEntityTypeName">

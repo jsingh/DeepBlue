@@ -22,11 +22,11 @@ namespace DeepBlue.Models.Entity {
 					// Update investor account,address,contact,communication values
 					foreach (var investorAccount in investor.InvestorAccounts) {
 						if (investorAccount.InvestorAccountID > 0) {
-							context.InvestorAccounts.Attach(new InvestorAccount { InvestorAccountID = investorAccount.InvestorAccountID });
+							context.InvestorAccounts.SingleOrDefault(account => account.InvestorAccountID == investorAccount.InvestorAccountID);
 							context.InvestorAccounts.ApplyCurrentValues(investorAccount);
 						} else {
-						//	 context.ObjectStateManager.ChangeObjectState(investorAccount, System.Data.EntityState.Added);
-						//	context.InvestorAccounts.AddObject(investorAccount);
+							//	 context.ObjectStateManager.ChangeObjectState(investorAccount, System.Data.EntityState.Added);
+							//	context.InvestorAccounts.AddObject(investorAccount);
 							//updateInvestor.InvestorAccounts.Add(new InvestorAccount {
 							//    Account = investorAccount.Account,
 							//    Attention = investorAccount.Attention,
@@ -108,7 +108,7 @@ namespace DeepBlue.Models.Entity {
 							if (contactAddress.Address.AddressID > 0) {
 								context.Addresses.Attach(new Address { AddressID = contactAddress.Address.AddressID });
 								context.Addresses.ApplyCurrentValues(contactAddress.Address);
-							}  
+							}
 						}
 					}
 				}
@@ -117,4 +117,6 @@ namespace DeepBlue.Models.Entity {
 
 		}
 	}
+
+ 
 }

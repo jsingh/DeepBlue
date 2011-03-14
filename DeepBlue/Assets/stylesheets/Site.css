@@ -636,3 +636,6 @@ h2 {
 	background-position: right center;
 	background-repeat: no-repeat;
 }
+.fund-closing-edit .editor-label{
+	width:80px;
+}

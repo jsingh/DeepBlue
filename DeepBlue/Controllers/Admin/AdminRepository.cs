@@ -12,11 +12,10 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.InvestorEntityType> GetAllInvestorEntityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.InvestorEntityType> entityTypeQuery = (from entityType in context.InvestorEntityTypes
-																				orderby entityType.InvestorEntityTypeName
-																				select entityType);
-				entityTypeQuery = entityTypeQuery.OrderBy(sortName, (sortOrder == "asc"));
-				PaginatedList<Models.Entity.InvestorEntityType> paginatedList = new PaginatedList<Models.Entity.InvestorEntityType>(entityTypeQuery, pageIndex, pageSize);
+				IQueryable<Models.Entity.InvestorEntityType> query = (from entityType in context.InvestorEntityTypes
+																	  select entityType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<Models.Entity.InvestorEntityType> paginatedList = new PaginatedList<Models.Entity.InvestorEntityType>(query, pageIndex, pageSize);
 				totalRows = paginatedList.TotalCount;
 				return paginatedList;
 			}
@@ -36,7 +35,7 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
-		public bool DeleteInvestorEntityType(int id,ref bool isRelationExist) {
+		public bool DeleteInvestorEntityType(int id, ref bool isRelationExist) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				InvestorEntityType investorEntityType = context.InvestorEntityTypes.SingleOrDefault(entityType => entityType.InvestorEntityTypeID == id);
 				if (investorEntityType != null) {
@@ -55,14 +54,12 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-
 		#region IAdminRepository InvestorType Members
 
 		public List<Models.Entity.InvestorType> GetAllInvestorTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<Models.Entity.InvestorType> investorTypeQuery = (from investorType in context.InvestorTypes
-																				orderby investorType.InvestorTypeName
-																				select investorType);
+																			select investorType);
 				investorTypeQuery = investorTypeQuery.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<InvestorType> paginatedList = new PaginatedList<InvestorType>(investorTypeQuery, pageIndex, pageSize);
 				totalRows = paginatedList.TotalCount;
@@ -105,6 +102,108 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-	 
+		#region IAdminRepository FundClosing
+
+		public List<Models.Entity.FundClosing> GetAllFundClosings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.FundClosing> query = (from fund in context.FundClosings
+																		 .Include("Fund")
+															   select fund);
+				if (sortName != "FundName") {
+					query = query.OrderBy(sortName, (sortOrder == "asc"));
+				} else {
+					query = (sortOrder == "asc" ? query.OrderBy(fund => fund.Fund.FundName) : query.OrderByDescending(fund => fund.Fund.FundName));
+				}
+				PaginatedList<Models.Entity.FundClosing> paginatedList = new PaginatedList<Models.Entity.FundClosing>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public FundClosing FindFundClosing(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.FundClosings.SingleOrDefault(entityType => entityType.FundClosingID == id);
+			}
+		}
+
+		public bool FundClosingNameAvailable(string name, int fundclosingId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from entityType in context.FundClosings
+						 where entityType.Name == name && entityType.FundClosingID != fundclosingId
+						 select entityType.FundClosingID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteFundClosing(int id, ref bool isRelationExist) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				FundClosing fundclose = context.FundClosings.SingleOrDefault(entityType => entityType.FundClosingID == id);
+				if (fundclose != null) {
+					if (fundclose.InvestorFundTransactions.Count() == 0) {
+						context.FundClosings.DeleteObject(fundclose);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveFundClosing(FundClosing FundClosings) {
+			return FundClosings.Save();
+		}
+
+		#endregion
+
+		#region IAdminRepository CustomField Members
+
+		public List<Models.Entity.CustomField> GetAllCustomFields(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.CustomField> customFieldQuery = (from customField in context.CustomFields
+																									 .Include("MODULE")
+																									 .Include("DataType")
+																		  orderby customField.CustomFieldID
+																		  select customField);
+				customFieldQuery = customFieldQuery.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<CustomField> paginatedList = new PaginatedList<CustomField>(customFieldQuery, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public CustomField FindCustomField(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.CustomFields.SingleOrDefault(entityType => entityType.CustomFieldID == id);
+			}
+		}
+
+		public bool CustomFieldTextAvailable(string customFieldText, int customFieldId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from field in context.CustomFields
+						 where field.CustomFieldText == customFieldText && field.CustomFieldID != customFieldId
+						 select field.CustomFieldID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteCustomField(int id, ref bool isRelationExist) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				CustomField customField = context.CustomFields.SingleOrDefault(type => type.CustomFieldID == id);
+				if (customField != null) {
+					if (customField.OptionFields.Count == 0 && customField.CustomFieldValues.Count == 0) {
+						context.CustomFields.DeleteObject(customField);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveCustomField(CustomField customField) {
+			//	return customField.Save();
+			return null;
+		}
+
+		#endregion
+
 	}
 }

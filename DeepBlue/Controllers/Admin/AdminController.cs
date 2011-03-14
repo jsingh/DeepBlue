@@ -7,18 +7,22 @@ using DeepBlue.Models.Admin;
 using DeepBlue.Models.Admin.Enums;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
+using DeepBlue.Controllers.Transaction;
 
 namespace DeepBlue.Controllers.Admin {
 	public class AdminController : Controller {
 
 		public IAdminRepository AdminRepository { get; set; }
 
+		public ITransactionRepository TransactionRepository { get; set; }
+
 		public AdminController()
-			: this(new AdminRepository()) {
+			: this(new AdminRepository(), new TransactionRepository()) {
 		}
 
-		public AdminController(IAdminRepository repository) {
-			AdminRepository = repository;
+		public AdminController(IAdminRepository adminRepository, ITransactionRepository transactionRepository) {
+			AdminRepository = adminRepository;
+			TransactionRepository = transactionRepository;
 		}
 
 		#region InvestorType
@@ -116,11 +120,11 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/EntityType
 		[HttpGet]
-		public ActionResult EntityType(){
+		public ActionResult EntityType() {
 			ViewData["MenuName"] = "Admin";
 			return View();
 		}
- 
+
 		//
 		// GET: /Admin/EntityTypeList
 		[HttpGet]
@@ -180,7 +184,7 @@ namespace DeepBlue.Controllers.Admin {
 			}
 			return View("Result", resultModel);
 		}
-		
+
 		[HttpGet]
 		public string DeleteInvestorEntityType(int id) {
 			bool isRelationExist = false;
@@ -201,6 +205,202 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
+		#region FundClosing
+		//
+		// GET: /Admin/FundClosing
+		[HttpGet]
+		public ActionResult FundClosing() {
+			ViewData["MenuName"] = "Admin";
+			return View();
+		}
+
+		//
+		// GET: /Admin/FundClosingList
+		[HttpGet]
+		public ActionResult FundClosingList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			int totalRows = 0;
+			IList<FundClosing> fundClosings = AdminRepository.GetAllFundClosings(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			ViewData["TotalRows"] = totalRows;
+			ViewData["PageNo"] = pageIndex;
+			return View(fundClosings);
+		}
+
+		//
+		// GET: /Admin/FundClosing
+		[HttpGet]
+		public ActionResult EditFundClosing(int id) {
+			EditFundClosingModel model = new EditFundClosingModel();
+			FundClosing fundClosing = AdminRepository.FindFundClosing(id);
+			if (fundClosing != null) {
+				model.FundClosingID = fundClosing.FundClosingID;
+				model.Name = fundClosing.Name;
+				model.FundClosingDate = fundClosing.FundClosingDate;
+				model.FundID = fundClosing.FundID;
+				model.IsFirstClosing =  fundClosing.IsFirstClosing;
+			}
+			model.FundNames = SelectListFactory.GetFundSelectList(TransactionRepository.GetAllFundNames());
+			return View(model);
+		}
+
+		////
+		//// GET: /Admin/UpdateFundClosing
+		[HttpPost]
+		public ActionResult UpdateFundClosing(FormCollection collection) {
+			EditFundClosingModel model = new EditFundClosingModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				FundClosing fundClosing = AdminRepository.FindFundClosing(model.FundClosingID);
+				if (fundClosing == null) {
+					fundClosing = new FundClosing();
+				}
+				fundClosing.Name = model.Name;
+				fundClosing.IsFirstClosing = model.IsFirstClosing;
+				fundClosing.FundClosingDate = model.FundClosingDate;
+				fundClosing.FundID = model.FundID;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFundClosing(fundClosing);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage;
+					}
+				} else {
+					resultModel.Result = "True";
+				}
+			} else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage;
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+
+		[HttpGet]
+		public string DeleteFundClosing(int id) {
+			bool isRelationExist = false;
+			if (AdminRepository.DeleteFundClosing(id, ref isRelationExist) == false) {
+				return "Cann't Delete! Child record found!";
+			} else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string FundClosingNameAvailable(string Name, int FundClosingID) {
+			if (AdminRepository.FundClosingNameAvailable(Name, FundClosingID))
+				return "Name is already exist";
+			else
+				return string.Empty;
+		}
+
+		#endregion
+
+		#region Custom Field  
+
+		public ActionResult CustomField() {
+			ViewData["MenuName"] = "Admin";
+			return View();
+		}
+
+		//
+		// GET: /Admin/CustomFieldList
+		[HttpGet]
+		public ActionResult CustomFieldList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			int totalRows = 0;
+			IList<CustomField> investorCustomFields = AdminRepository.GetAllCustomFields(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			ViewData["TotalRows"] = totalRows;
+			ViewData["PageNo"] = pageIndex;
+			return View(investorCustomFields);
+		}
+
+		//
+		// GET: /Admin/EntityType
+		[HttpGet]
+		public ActionResult EditCustomField(int id) {
+			EditCustomFieldModel model = new EditCustomFieldModel();
+			CustomField customField = AdminRepository.FindCustomField(id);
+			if (customField != null) {
+				model.CustomFieldId = customField.CustomFieldID;
+				model.CustomFieldText = customField.CustomFieldText;
+				model.DataTypeId = customField.DataTypeID;
+				model.ModuleId = customField.ModuleID;
+				model.OptionalText = customField.OptionalText;
+				model.Search = customField.Search;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateCustomField
+		[HttpPost]
+		public ActionResult UpdateCustomField(FormCollection collection) {
+			EditCustomFieldModel model = new EditCustomFieldModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				CustomField customField = AdminRepository.FindCustomField(model.CustomFieldId);
+				if (customField == null) {
+					customField = new CustomField();
+				}
+				customField.CustomFieldText = model.CustomFieldText;
+				customField.DataTypeID = model.DataTypeId;
+				customField.ModuleID = model.ModuleId;
+				customField.OptionalText = model.OptionalText;
+				customField.Search = model.Search;
+				customField.EntityID = (int)ConfigUtil.CurrentEntityID;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCustomField(customField);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage;
+					}
+				} else {
+					resultModel.Result = "True";
+				}
+			} else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage;
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteCustomField(int id) {
+			bool isRelationExist = false;
+			if (AdminRepository.DeleteCustomField(id, ref isRelationExist) == false) {
+				return "Cann't Delete! Child record found!";
+			} else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string CustomFieldTextAvailable(string CustomFieldText, int CustomFieldId) {
+			if (AdminRepository.CustomFieldTextAvailable(CustomFieldText, CustomFieldId))
+				return "Custom Field Text already exists.";
+			else
+				return string.Empty;
+		}
+
+
+		#endregion
+
+		#region Module
+
+		public ActionResult Module() {
+			ViewData["MenuName"] = "Admin";
+			return View();
+		}
+
+		#endregion
 
 		public ActionResult Result() {
 			return View();

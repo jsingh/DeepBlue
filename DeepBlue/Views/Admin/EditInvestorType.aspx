@@ -26,7 +26,6 @@
 	</div>
 	<div class="editor-field">
 		<%: Html.CheckBoxFor(model => model.Enabled, new { @style = "width:auto" })%>
-		<%: Html.ValidationMessageFor(model => model.Enabled)%>
 	</div>
 	<div class="status">
 		<%: Html.Span("", new { id = "UpdateLoading" })%></div>

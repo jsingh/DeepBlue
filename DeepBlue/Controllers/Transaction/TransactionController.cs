@@ -222,6 +222,7 @@ namespace DeepBlue.Controllers.Transaction {
 				if (errorInfo == null) {
 					// Update unfunded amount
 					investorFund.UnfundedAmount -= model.CommitmentAmount;
+					investorFund.TotalCommitment -= model.CommitmentAmount;
 					errorInfo = InvestorRepository.SaveInvestorFund(investorFund);
 				}
 				if (errorInfo != null) {

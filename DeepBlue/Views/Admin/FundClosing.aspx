@@ -5,29 +5,35 @@
 	Index
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
-	<%=Html.JavascriptInclueTag("InvestorType.js")%>
+	<%=Html.JavascriptInclueTag("FundClosing.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css") %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="admin-main">
 		<div class="admin-header">
-			<a href="javascript:investorType.add(0);">
+			<a href="javascript:fundClosing.add(0);">
 				<%: Html.Image("add_icon.png") %>
-				&nbsp;Add InvestorType</a>
+				&nbsp;Add Fund Closing</a>
 		</div>
 		<div class="admin-content">
-			<table cellpadding="0" cellspacing="0" border="0" id="InvestorTypeList">
+			<table cellpadding="0" cellspacing="0" border="0" id="FundClosingList">
 				<thead>
 					<tr>
-						<th sortname="InvestorTypeID" style="width: 5%;" align="center">
+						<th sortname="FundClosingID" style="width: 5%;" align="center">
 							ID
 						</th>
-						<th sortname="InvestorTypeName">
-							InvestorType
+						<th sortname="FundClosingDate" style="width: 15%;">
+							Closing Date
 						</th>
-						<th sortname="Enabled" align="center" style="width: 8%;">
-							Enable
+						<th sortname="Name" style="width: 25%;">
+							Name
+						</th>
+						<th sortname="FundName">
+							Fund Name
+						</th>
+						<th sortname="IsFirstClosing" align="center" style="width: 8%;">
+							First Closing
 						</th>
 						<th align="center" style="width: 5%;">
 						</th>
@@ -38,5 +44,5 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("InvestorTypeList", new FlexigridOptions { ActionName = "InvestorTypeList", ControllerName = "Admin", HttpMethod = "GET", SortName = "InvestorTypeName", Paging = true })%>
+	<%=Html.jQueryFlexiGrid("FundClosingList", new FlexigridOptions { ActionName = "FundClosingList", ControllerName = "Admin", HttpMethod = "GET", SortName = "FundClosingDate", SortOrder = "desc" , Paging = true })%>
 </asp:Content>

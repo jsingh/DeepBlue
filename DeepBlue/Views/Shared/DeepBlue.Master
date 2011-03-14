@@ -114,6 +114,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	<div id="content">
 		<div class="content-box">
 			<asp:ContentPlaceHolder ID="MainContent" runat="server" />
@@ -142,17 +143,33 @@
 	</div>
 	<div class="mdiv" id="Adm_Management" onmouseover="mcancelclosetime()">
 		<ul>
-			<li><a onmouseover="msubopen(this,'Inv_SubMenu_Management')" onmouseout="msubclosetime()" class="submenubg">Investor Management</a></li>
+			<li><a onmouseover="msubopen(this,'Inv_SubMenu')" onmouseout="msubclosetime()" class="submenubg">Investor Management</a></li>
+			<li><a onmouseover="msubopen(this,'Fund_SubMenu')" onmouseout="msubclosetime()" class="submenubg">Fund Tracker</a></li>
+			<li><a onmouseover="msubopen(this,'CusField_SubMenu')" onmouseout="msubclosetime()" class="submenubg">Custom Field Management</a></li>
 		</ul>
 	</div>
-	<div class="mdiv" id="Inv_SubMenu_Management" onmouseover="msubcancelclosetime()" onmouseout="msubclosetime()">
+	<div class="mdiv" id="Inv_SubMenu" onmouseover="msubcancelclosetime()" onmouseout="msubclosetime()">
 		<ul>
 			<li>
-				<%: Html.ActionLink("Investor EntityType", "EntityType", "Admin")%></li>
+				<%: Html.ActionLink("Investor Entity Type", "EntityType", "Admin")%></li>
 			<li>
 				<%: Html.ActionLink("Investor Type", "InvestorType", "Admin")%></li>
 			<li><a href="#">Source</a></li>
 			<li><a href="#">Investor Accounting Categories</a></li>
+		</ul>
+	</div>
+	<div class="mdiv" id="Fund_SubMenu" onmouseover="msubcancelclosetime()" onmouseout="msubclosetime()">
+		<ul>
+			<li>
+				<%: Html.ActionLink("Fund Close #", "FundClosing", "Admin")%></li>
+		</ul>
+	</div>
+	<div class="mdiv" id="CusField_SubMenu" onmouseover="msubcancelclosetime()" onmouseout="msubclosetime()">
+		<ul>
+			<li>
+				<%: Html.ActionLink("Create Module", "Module", "Admin")%></li>
+			<li>
+				<%: Html.ActionLink("Create Custom Field", "CustomField", "Admin")%></li>
 		</ul>
 	</div>
 	<div class="mdiv" id="Doc_Management" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">

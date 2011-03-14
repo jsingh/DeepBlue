@@ -2,32 +2,35 @@
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Index
+	Custom Field
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
-	<%=Html.JavascriptInclueTag("InvestorType.js")%>
+	<%=Html.JavascriptInclueTag("CustomField.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css") %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="admin-main">
 		<div class="admin-header">
-			<a href="javascript:investorType.add(0);">
+			<a href="javascript:customField.add(0);">
 				<%: Html.Image("add_icon.png") %>
-				&nbsp;Add InvestorType</a>
+				&nbsp;Add Custom Field</a>
 		</div>
 		<div class="admin-content">
-			<table cellpadding="0" cellspacing="0" border="0" id="InvestorTypeList">
+			<table cellpadding="0" cellspacing="0" border="0" id="CustomFieldList">
 				<thead>
 					<tr>
-						<th sortname="InvestorTypeID" style="width: 5%;" align="center">
+						<th sortname="CustomFieldID" style="width: 5%;" align="center">
 							ID
 						</th>
-						<th sortname="InvestorTypeName">
-							InvestorType
+						<th sortname="InvestorCustomFieldName">
+							Custom Field
 						</th>
-						<th sortname="Enabled" align="center" style="width: 8%;">
-							Enable
+						<th sortname="ModuleName" align="center">
+							Module Name
+						</th>
+						<th sortname="DataTypeName" align="center">
+							Data Type
 						</th>
 						<th align="center" style="width: 5%;">
 						</th>
@@ -38,5 +41,5 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("InvestorTypeList", new FlexigridOptions { ActionName = "InvestorTypeList", ControllerName = "Admin", HttpMethod = "GET", SortName = "InvestorTypeName", Paging = true })%>
+	<%=Html.jQueryFlexiGrid("CustomFieldList", new FlexigridOptions { ActionName = "CustomFieldList", ControllerName = "Admin", HttpMethod = "GET", SortName = "CustomFieldID", Paging = true })%>
 </asp:Content>

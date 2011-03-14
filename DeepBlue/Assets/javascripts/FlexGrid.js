@@ -114,6 +114,7 @@
 					 		var td=document.createElement('td');
 					 		var div=document.createElement('div');
 					 		div.innerHTML=row.cell[i];
+					 		$(td).css({ "display": this.style.display });
 					 		$(div).css({ "width": this.style.width,"display": this.style.display });
 					 		//$(td).css({ "width" : this.style.width, "display" : this.style.display });
 					 		$(div).css("text-align",$(this).attr("align"));
@@ -203,7 +204,10 @@
 
 				$(g.block).css({ top: g.bDiv.offsetTop });
 
-				if(p.hideOnSubmit) $(this.gDiv).prepend(g.block); //$(t).hide();
+				if(p.hideOnSubmit) {
+					$(g.block).height($(g.bDiv).height());
+					$(this.gDiv).prepend(g.block); //$(t).hide();
+				}
 
 				if($.browser.opera) $(t).css('visibility','hidden');
 
@@ -211,13 +215,13 @@
 
 				if(p.page>p.pages) p.page=p.pages;
 				//var param = {page:p.newp, rp: p.rp, sortname: p.sortname, sortorder: p.sortorder, query: p.query, qtype: p.qtype};
-				var dt = new Date();
+				var dt=new Date();
 				var param=[
 					 { name: 'pageIndex',value: p.newp }
 					,{ name: 'pageSize',value: p.rp }
 					,{ name: 'sortName',value: p.sortname }
 					,{ name: 'sortOrder',value: p.sortorder }
-					,{ name: 't', value: dt.getTime() }
+					,{ name: 't',value: dt.getTime() }
 				];
 
 				if(p.params) {
@@ -235,7 +239,7 @@
 			},
 			changePage: function (ctype) { //change page
 
-			
+
 				if(this.loading) return true;
 
 				switch(ctype) {
@@ -267,6 +271,8 @@
 		g.gDiv=document.createElement('div'); //create global container
 		g.hDiv=document.createElement('div'); //create header container
 		g.bDiv=document.createElement('div'); //create body container
+		g.block=document.createElement('div'); //creat blocker
+
 
 		if(p.usepager) g.pDiv=document.createElement('div'); //create pager container
 		g.hTable=document.createElement("table");
@@ -298,8 +304,8 @@
 		$(g.hTable).append($("thead",t));
 
 		$(g.hDiv).append(g.hTable);
-		
-	 
+
+
 
 		if(!p.colmodel) var ci=0;
 
@@ -313,8 +319,8 @@
 			 			$(this).click(function (e) { g.changeSort(this); });
 			 			if($(this).attr('sortname')==p.sortname) {
 			 				this.className='sorted';
-							if(p.sortorder=='')
-								p.sortorder='asc';
+			 				if(p.sortorder=='')
+			 					p.sortorder='asc';
 			 				$("span",thdiv).addClass('s'+p.sortorder);
 			 			}
 			 		}
@@ -397,10 +403,29 @@
 
 		$(g.pDiv,g.sDiv).append("<div style='clear:both'></div>");
 
+		//add block
+		g.block.className='gBlock';
+		var gh=$(g.bDiv).height();
+		var gtop=g.bDiv.offsetTop;
+		$(g.block).css(
+		{
+			width: '100%',
+			height: 100,
+			background: 'white',
+			position: 'absolute',
+			marginBottom: (gh* -1),
+			zIndex: 1,
+			top: gtop,
+			left: '0px'
+		}
+		);
+		$(g.block).fadeTo(0,p.blockOpacity);
+
+
 		//make grid functions accessible
 		t.p=p;
 		t.grid=g;
-		
+
 		// load data
 		if(p.url&&p.autoload) {
 			g.populate();
@@ -452,13 +477,13 @@
 
 	}; //end flexOptions
 
-    $.fn.flexToggleCol = function(cid, visible) { // function to reload grid
+	$.fn.flexToggleCol=function (cid,visible) { // function to reload grid
 
-        return this.each(function() {
-            if (this.grid) this.grid.toggleCol(cid, visible);
-        });
+		return this.each(function () {
+			if(this.grid) this.grid.toggleCol(cid,visible);
+		});
 
-    }; //end flexToggleCol
+	}; //end flexToggleCol
 
 	$.fn.flexAddData=function (data) { // function to add data to grid
 

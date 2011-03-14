@@ -28,6 +28,9 @@ namespace DeepBlue.Models.Document {
 		[DisplayName("Fund:")]
 		public string FundName { get; set; }
 		
+		[DisplayName("Document Type:")]
+		public int DocumentTypeId { get; set; }
+		
 		/* Document Type */
 
 		public List<SelectListItem> DocumentTypes { get; set; }
@@ -35,5 +38,20 @@ namespace DeepBlue.Models.Document {
 		/* Document Staus Type */
 
 		public List<SelectListItem> DocumentStatusTypes { get; set; }
+	}
+
+	public class DocumentDetail{
+			
+		public DateTime? DocumentDate { get; set; }
+
+		public string FilePath { get; set; }
+
+		public string FileName { get; set; }
+
+		public string FileTypeName { get; set; }
+
+		public string InvestorName { get; set; }
+
+		public string FundName { get; set; }
 	}
 }

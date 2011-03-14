@@ -33,7 +33,18 @@ namespace DeepBlue.Helpers {
 
 		public static string jQueryDatePicker(this HtmlHelper helper, string targetId) {
 			StringBuilder scriptSrc = new StringBuilder();
-			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").datepicker({changeMonth: true, changeYear: true});});");
+			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").datepicker({changeMonth: true, changeYear: true")
+					 .Append("});});");
+			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
+		}
+
+		public static string jQueryDatePicker(this HtmlHelper helper, string targetId, DatePickerOptions options) {
+			StringBuilder scriptSrc = new StringBuilder();
+			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").datepicker({changeMonth: true, changeYear: true")
+					 .Append((string.IsNullOrEmpty(options.OnBeforeShow)==false ? ",beforeShow:" + options.OnBeforeShow + "" : ""))
+					 .Append((string.IsNullOrEmpty(options.OnClose)==false ? ",onClose:" + options.OnClose + "" : ""))
+					 .Append((string.IsNullOrEmpty(options.OnSelect)==false ? ",onSelect:" + options.OnSelect + "" : ""))
+					 .Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
 	 

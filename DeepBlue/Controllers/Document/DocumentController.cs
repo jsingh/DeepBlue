@@ -8,6 +8,7 @@ using DeepBlue.Helpers;
 using System.IO;
 using DeepBlue.Models.Entity;
 using System.Text;
+using System.Configuration;
 
 namespace DeepBlue.Controllers.Document {
 	public class DocumentController : Controller {
@@ -43,9 +44,8 @@ namespace DeepBlue.Controllers.Document {
 			UploadModel model = new UploadModel();
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
-				HttpPostedFileBase uploadFile = model.FileName;
-				if (uploadFile != null) {
-					string ext = Path.GetExtension(uploadFile.FileName).ToLower();
+				if (model.File != null) {
+					string ext = Path.GetExtension(model.File.FileName).ToLower();
 					int? investorId = null;
 					int? fundId = null;
 					bool validate = true;
@@ -90,14 +90,8 @@ namespace DeepBlue.Controllers.Document {
 								fileTypeId = (int)DeepBlue.Models.Document.FileType.Excel;
 								break;
 						}
-						Random rnd = new Random();
-						string fileName = rnd.Next(1, 10000) + "_" + Path.GetFileName(uploadFile.FileName.Replace(" ", "_"));
-						string filePath = Path.Combine(HttpContext.Server.MapPath("/Files/Document/"), fileName);
-						if (System.IO.File.Exists(filePath))
-							System.IO.File.Delete(filePath);
-						uploadFile.SaveAs(filePath);
-						if (System.IO.File.Exists(filePath)) {
-							FileInfo fileInfo = new FileInfo(filePath);
+						UploadFile fileUpload = new UploadFile(model.File, "DocumentUploadPath", (int)ConfigUtil.CurrentEntityID, (investorId != null ? investorId : fundId), model.DocumentTypeId, Path.GetFileName(model.File.FileName));
+						if (fileUpload.Upload()) {
 							InvestorFundDocument investorFundDocument = new InvestorFundDocument();
 							investorFundDocument.CreatedBy = AppSettings.CreatedByUserId;
 							investorFundDocument.CreatedDate = DateTime.Now;
@@ -110,15 +104,15 @@ namespace DeepBlue.Controllers.Document {
 							investorFundDocument.FundID = fundId;
 
 							investorFundDocument.File = new Models.Entity.File();
-							investorFundDocument.File.FileName = fileInfo.Name;
-							investorFundDocument.File.FilePath = "/Files/Document/";
+							investorFundDocument.File.FileName = fileUpload.FileName;
+							investorFundDocument.File.FilePath = fileUpload.FilePath;
 							investorFundDocument.File.FileTypeID = fileTypeId;
 							investorFundDocument.File.CreatedBy = AppSettings.CreatedByUserId;
 							investorFundDocument.File.CreatedDate = DateTime.Now;
 							investorFundDocument.File.EntityID = (int)ConfigUtil.CurrentEntityID;
 							investorFundDocument.File.LastUpdatedBy = AppSettings.CreatedByUserId;
 							investorFundDocument.File.LastUpdatedDate = DateTime.Now;
-							investorFundDocument.File.Size = fileInfo.Length;
+							investorFundDocument.File.Size = fileUpload.Size;
 							IEnumerable<ErrorInfo> errorInfo = investorFundDocument.Save();
 							StringBuilder errors = new StringBuilder();
 							if (errorInfo != null) {
@@ -165,5 +159,31 @@ namespace DeepBlue.Controllers.Document {
 			return View(model);
 		}
 
+		//
+		// GET: /Document/Search
+		[HttpGet]
+		public ActionResult List(int pageIndex, int pageSize, string sortName, string sortOrder, string fromDate, string toDate, int investorId, int fundId, int documentTypeId, int documentStatusId) {
+			DateTime documentFromDate;
+			DateTime documentToDate;
+			DocumentStatus documentStatus = (DocumentStatus)documentStatusId;
+			int totalRows = 0;
+			if (string.IsNullOrEmpty(fromDate) == false)
+				documentFromDate = Convert.ToDateTime(fromDate);
+			else
+				documentFromDate = Convert.ToDateTime("01/01/1900");
+			if (string.IsNullOrEmpty(toDate) == false)
+				documentToDate = Convert.ToDateTime(toDate);
+			else
+				documentToDate = DateTime.Now;
+			IList<DocumentDetail> documentDetails = DocumentRepository.FindDocuments(pageIndex, pageSize, sortName, sortOrder, documentFromDate, documentToDate, investorId, fundId, documentTypeId, documentStatus, ref totalRows);
+			ViewData["TotalRows"] = totalRows;
+			ViewData["PageNo"] = pageIndex;
+			return View(documentDetails);
+		}
+
+		[HttpGet]
+		public ActionResult DownloadDocument(string filePath, string fileName) {
+			return new DownloadFile { VirtualPath = filePath, FileDownloadName = fileName };
+		}
 	}
 }

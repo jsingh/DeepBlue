@@ -9,7 +9,7 @@
 	<%=Html.JavascriptInclueTag("DocumentUpload.js")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-	<div class="document-upload">
+	<div class="doc-upload">
 		<% Html.EnableClientValidation(); %>
 		<% using (Html.BeginForm("Create", "Document", FormMethod.Post, new { @id = "AddNewDocument", @enctype = "multipart/form-data" })) {%>
 		<%: Html.HiddenFor(model => model.InvestorId)%>
@@ -45,11 +45,11 @@
 			</div>
 		</div>
 		<div class="editor-label">
-			<%: Html.LabelFor(model => model.FileName) %>
+			<%: Html.LabelFor(model => model.File)%>
 		</div>
 		<div class="editor-field">
-			<%: Html.File("FileName", new { @id = "FileName" })%>
-			<%: Html.ValidationMessageFor(model => model.FileName)%>
+			<%: Html.File("File", new { @id = "File" })%>
+			<%: Html.ValidationMessageFor(model => model.File)%>
 		</div>
 		<div class="editor-label" style="height: 15px">
 			<%: Html.ValidationMessageFor(model => model.ModelErrorMessage)%>

@@ -33,7 +33,7 @@ function msubopen(that,id)
 	subddmenuitem = document.getElementById(id);
 	subddmenuitem.style.visibility = 'visible';
 	var pos = $(that).offset();
-	$(subddmenuitem).css({ "left" : pos.left + ($(subddmenuitem).width()-19) , "top" : pos.top });
+	$(subddmenuitem).css({ "left" : pos.left + ($(ddmenuitem).width()-1) , "top" : pos.top });
 	$(subddmenuitem).css("z-index","10001");
 }
 

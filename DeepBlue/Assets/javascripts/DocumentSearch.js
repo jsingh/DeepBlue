@@ -2,14 +2,22 @@
 	changeType: function (select) {
 		var InvestorRow=document.getElementById("InvestorRow");
 		var FundRow=document.getElementById("FundRow");
+		var InvestorNameColumn=document.getElementById("InvestorNameColumn");
+		var FundNameCloumn=document.getElementById("FundNameCloumn");
 		InvestorRow.style.display="none";
 		FundRow.style.display="none";
 		$("#FundId").val(0);
 		$("#InvestorId").val(0);
-		if(select.value=="1")
+		InvestorNameColumn.style.display="none";
+		FundNameCloumn.style.display="none";
+		if(select.value=="1") {
 			InvestorRow.style.display="";
-		else if(select.value=="2")
+			InvestorNameColumn.style.display="";
+		} else if(select.value=="2") {
 			FundRow.style.display="";
+			FundNameCloumn.style.display="";
+		}
+		this.onSubmit("SearchDocument");
 	}
 	,selectInvestor: function (id) {
 		$("#InvestorId").val(id);
@@ -27,23 +35,43 @@
 			$("#FundId").val(0);
 		}
 	}
-	,showErrorMessage: function (frm) {
+	,onValidation: function (formId) {
 		var message='';
-		$(".field-validation-error",frm).each(function () {
-			if(this.innerHTML!='') {
-				message+=this.innerHTML+"\n";
-			}
-		});
+		var DocumentTypeId=document.getElementById("DocumentTypeId").value;
+		if(parseInt(DocumentTypeId)<=0) {
+			message+="Document Type is required\n";
+		}
 		if(message!="") {
 			alert(message);
 			return false;
-		} else {
-			return true;
 		}
+		return true;
 	}
 	,onSubmit: function (formId) {
-		var frm=document.getElementById(formId);
-		Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
-		this.showErrorMessage(frm);
+		if(this.onValidation(formId)) {
+			var FromDate=document.getElementById("FromDate").value;
+			var ToDate=document.getElementById("ToDate").value;
+			var DocumentTypeId=document.getElementById("DocumentTypeId").value;
+			var DocumentStatus=document.getElementById("DocumentStatus").value;
+			var InvestorId=document.getElementById("InvestorId").value;
+			var FundId=document.getElementById("FundId").value;
+			var grid=$("#SearchDocumentList");
+			var param=[{ name: "fromDate",value: FromDate }
+					,{ name: "toDate",value: ToDate }
+					 ,{ name: "investorId",value: InvestorId }
+					 ,{ name: "fundId",value: FundId }
+					 ,{ name: "documentTypeId",value: DocumentTypeId }
+					 ,{ name: "documentStatusId",value: DocumentStatus }
+					];
+			//grid.flexOptions({ params: null });
+			grid.flexOptions({ params: param });
+			grid.flexReload();
+		}
+		return false;
+	}
+	,downloadFile: function (filePath,fileName) {
+		//window.open("/Document/DownloadDocument?filePath="+filePath+"&fileName="+fileName);
+		var url="/"+filePath+"/"+fileName;
+		window.open(url);
 	}
 }

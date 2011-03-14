@@ -7,38 +7,85 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.StylesheetLinkTag("document.css")%>
 	<%=Html.JavascriptInclueTag("DocumentSearch.js")%>
+	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
+	<%=Html.StylesheetLinkTag("flexigrid.css") %>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-	<div class="document-search">
-		<% using (Html.BeginForm()) {%>
-		<%: Html.ValidationSummary(true) %>
-		<div class="editor-label" style="width: auto">
-			<%: Html.LabelFor(model => model.FromDate) %>
-			<%: Html.TextBox("FromDate","", new { @id = "FromDate" }) %>
-			<%: Html.LabelFor(model => model.ToDate) %>
-			<%: Html.TextBox("ToDate", "", new { @id = "ToDate" })%>
-			<%: Html.ValidationMessageFor(model => model.ToDate) %>
-		</div>
-		<div class="editor-label">
-			<%: Html.DropDownListFor(model => model.DocumentStatus,Model.DocumentStatusTypes, new { @onchange = "javascript:documentSearch.changeType(this);" })%>
-		</div>
-		<div class="editor-field">
-			<div id="InvestorRow">
-				<%: Html.TextBoxFor(model => model.InvestorName, new { @onblur="javascript:documentSearch.InvestorBlur(this);" }) %>
-				<%: Html.ValidationMessageFor(model => model.InvestorId) %>
+	<div class="doc-search">
+		<% using (Html.BeginForm("", "", FormMethod.Get, new { @id = "SearchDocument", @onsubmit = "return false;" })) {%>
+		<%: Html.HiddenFor(model => model.InvestorId)%>
+		<%: Html.HiddenFor(model => model.FundId)%>
+		<div class="doc-header">
+			<div class="editor-label">
+				<%: Html.LabelFor(model => model.FromDate) %>
 			</div>
-			<div id="FundRow" style="display: none">
-				<%: Html.TextBoxFor(model => model.FundName, new { @onblur = "javascript:documentSearch.FundBlur(this);" })%>
-				<%: Html.ValidationMessageFor(model => model.FundId) %>
+			<div class="editor-field">
+				<%: Html.TextBox("FromDate","", new { @id = "FromDate" }) %>
+			</div>
+			<div class="editor-label" style="clear: right; width: auto;">
+				<%: Html.LabelFor(model => model.ToDate) %>
+			</div>
+			<div class="editor-field">
+				<%: Html.TextBox("ToDate", "", new { @id = "ToDate" })%>
+			</div>
+			<div class="editor-label">
+				<%: Html.LabelFor(model => model.DocumentTypeId) %>
+			</div>
+			<div class="editor-field">
+				<%: Html.DropDownListFor(model => model.DocumentTypeId, Model.DocumentTypes, new { @style = "width:242px" })%>
+			</div>
+			<div class="editor-label">
+				<%: Html.DropDownListFor(model => model.DocumentStatus,Model.DocumentStatusTypes, new { @onchange = "javascript:documentSearch.changeType(this);" })%>
+			</div>
+			<div class="editor-field">
+				<div id="InvestorRow">
+					<%: Html.TextBoxFor(model => model.InvestorName, new { @style = "width:238px", @onblur = "javascript:documentSearch.InvestorBlur(this);" })%>
+					<%: Html.ValidationMessageFor(model => model.InvestorId) %>
+				</div>
+				<div id="FundRow" style="display: none">
+					<%: Html.TextBoxFor(model => model.FundName, new { @style = "width:238px", @onblur = "javascript:documentSearch.FundBlur(this);" })%>
+					<%: Html.ValidationMessageFor(model => model.FundId) %>
+				</div>
+			</div>
+			<div class="editor-button">
+				<div style="float: left; padding: 0 0 10px 5px;">
+					<%: Html.ImageButton("Search.png", new { @style = "width: 73px; height: 23px;",@onclick="return documentSearch.onSubmit('SearchDocument');" })%>
+				</div>
 			</div>
 		</div>
-		<div class="editor-button" style="width: 165px">
-			<div style="float: left; padding: 0 0 10px 5px;">
-				<%: Html.ImageButton("Search.png", new { style = "width: 73px; height: 23px;", onclick = "return documentSearch.onSubmit('AddNewDocument');" })%>
-			</div>
+		<div class="doc-result">
+			<table cellpadding="0" cellspacing="0" border="0" id="SearchDocumentList">
+				<thead>
+					<tr>
+						<th sortname="DocumentDate" style="width: 15%;" align="center">
+							Date
+						</th>
+						<th sortname="FileName" style="width: 30%;">
+							File Name
+						</th>
+						<th id="InvestorNameColumn" sortname="InvestorName" style="width: 45%">
+							Investor Name
+						</th>
+						<th id="FundNameCloumn" sortname="FundName" style="display: none; width: 45%;">
+							Fund Name
+						</th>
+						<th sortname="Enabled" align="center" style="width: 10%;">
+						</th>
+					</tr>
+				</thead>
+			</table>
 		</div>
 		<% } %>
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
+	<%= Html.jQueryDatePicker("FromDate")%>
+	<%= Html.jQueryDatePicker("ToDate")%>
+	<%= Html.jQueryAutoComplete("InvestorName", new AutoCompleteOptions {
+																	  Source = "/Investor/FindInvestors", MinLength = 1,
+																	  OnSelect = "function(event, ui) { documentSearch.selectInvestor(ui.item.id);}"})%>
+	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions {
+																	  Source = "/Fund/FindFunds", MinLength = 1,
+																	  OnSelect = "function(event, ui) { documentSearch.selectFund(ui.item.id);}"})%>
+	<%=Html.jQueryFlexiGrid("SearchDocumentList", new FlexigridOptions { ActionName = "List", ControllerName = "Document", HttpMethod = "GET", SortName = "DocumentDate", SortOrder="desc" , Paging = true , Autoload=false })%>
 </asp:Content>

@@ -15,6 +15,9 @@
           <EntitySet Name="ContactAddress" EntityType="DeepBlueModel.Store.ContactAddress" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ContactCommunication" EntityType="DeepBlueModel.Store.ContactCommunication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="COUNTRY" EntityType="DeepBlueModel.Store.COUNTRY" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CustomField" EntityType="DeepBlueModel.Store.CustomField" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CustomFieldValue" EntityType="DeepBlueModel.Store.CustomFieldValue" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DataType" EntityType="DeepBlueModel.Store.DataType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DocumentType" EntityType="DeepBlueModel.Store.DocumentType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="File" EntityType="DeepBlueModel.Store.File" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FileType" EntityType="DeepBlueModel.Store.FileType" store:Type="Tables" Schema="dbo" />
@@ -31,6 +34,9 @@
           <EntitySet Name="InvestorFundDocument" EntityType="DeepBlueModel.Store.InvestorFundDocument" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="InvestorFundTransaction" EntityType="DeepBlueModel.Store.InvestorFundTransaction" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="InvestorType" EntityType="DeepBlueModel.Store.InvestorType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MODULE" EntityType="DeepBlueModel.Store.MODULE" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OptionField" EntityType="DeepBlueModel.Store.OptionField" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OptionFieldValueList" EntityType="DeepBlueModel.Store.OptionFieldValueList" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="STATE" EntityType="DeepBlueModel.Store.STATE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TransactionType" EntityType="DeepBlueModel.Store.TransactionType" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Address_AddressType" Association="DeepBlueModel.Store.FK_Address_AddressType">
@@ -68,6 +74,18 @@
           <AssociationSet Name="FK_ContactCommunication_Contact" Association="DeepBlueModel.Store.FK_ContactCommunication_Contact">
             <End Role="Contact" EntitySet="Contact" />
             <End Role="ContactCommunication" EntitySet="ContactCommunication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomField_CustomFieldValue" Association="DeepBlueModel.Store.FK_CustomField_CustomFieldValue">
+            <End Role="CustomField" EntitySet="CustomField" />
+            <End Role="CustomFieldValue" EntitySet="CustomFieldValue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomField_OptionField" Association="DeepBlueModel.Store.FK_CustomField_OptionField">
+            <End Role="CustomField" EntitySet="CustomField" />
+            <End Role="OptionField" EntitySet="OptionField" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataType_CustomField" Association="DeepBlueModel.Store.FK_DataType_CustomField">
+            <End Role="DataType" EntitySet="DataType" />
+            <End Role="CustomField" EntitySet="CustomField" />
           </AssociationSet>
           <AssociationSet Name="FK_File_FileType" Association="DeepBlueModel.Store.FK_File_FileType">
             <End Role="FileType" EntitySet="FileType" />
@@ -156,6 +174,18 @@
           <AssociationSet Name="FK_InvestorFundTransaction_TransactionType" Association="DeepBlueModel.Store.FK_InvestorFundTransaction_TransactionType">
             <End Role="TransactionType" EntitySet="TransactionType" />
             <End Role="InvestorFundTransaction" EntitySet="InvestorFundTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_CustomField" Association="DeepBlueModel.Store.FK_Module_CustomField">
+            <End Role="MODULE" EntitySet="MODULE" />
+            <End Role="CustomField" EntitySet="CustomField" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OptionFieldValueList_CustomField" Association="DeepBlueModel.Store.FK_OptionFieldValueList_CustomField">
+            <End Role="CustomField" EntitySet="CustomField" />
+            <End Role="OptionFieldValueList" EntitySet="OptionFieldValueList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OptionFieldValueList_OptionField" Association="DeepBlueModel.Store.FK_OptionFieldValueList_OptionField">
+            <End Role="OptionField" EntitySet="OptionField" />
+            <End Role="OptionFieldValueList" EntitySet="OptionFieldValueList" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Address">
@@ -277,6 +307,44 @@
           <Property Name="CountryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CountryCode" Type="varchar" Nullable="false" MaxLength="5" />
           <Property Name="CountryName" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CustomField">
+          <Key>
+            <PropertyRef Name="CustomFieldID" />
+          </Key>
+          <Property Name="CustomFieldID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="DataTypeID" Type="int" Nullable="false" />
+          <Property Name="CustomFieldText" Type="varchar" MaxLength="50" />
+          <Property Name="OptionalText" Type="varchar" MaxLength="2000" />
+          <Property Name="Search" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomFieldValue">
+          <Key>
+            <PropertyRef Name="CustomFieldValueID" />
+          </Key>
+          <Property Name="CustomFieldValueID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomFieldID" Type="int" Nullable="false" />
+          <Property Name="Key" Type="int" Nullable="false" />
+          <Property Name="TextValue" Type="varchar" MaxLength="2000" />
+          <Property Name="IntegerValue" Type="int" />
+          <Property Name="DateValue" Type="datetime" />
+          <Property Name="CurrencyValue" Type="money" />
+          <Property Name="BooleanValue" Type="bit" />
+          <Property Name="OptionFieldID" Type="int" />
+          <Property Name="OptionFieldValueListID" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="DataType">
+          <Key>
+            <PropertyRef Name="DataTypeID" />
+          </Key>
+          <Property Name="DataTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DataTypeName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="DocumentType">
           <Key>
@@ -511,6 +579,32 @@
           <Property Name="Enabled" Type="bit" Nullable="false" />
           <Property Name="InvestorTypeName" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
+        <EntityType Name="MODULE">
+          <Key>
+            <PropertyRef Name="ModuleID" />
+          </Key>
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="ModuleName" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="OptionField">
+          <Key>
+            <PropertyRef Name="OptionFieldID" />
+          </Key>
+          <Property Name="OptionFieldID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="CustomFieldID" Type="int" Nullable="false" />
+          <Property Name="OptionText" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="IsDefault" Type="bit" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OptionFieldValueList">
+          <Key>
+            <PropertyRef Name="OptionFieldValueListID" />
+          </Key>
+          <Property Name="OptionFieldValueListID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="OptionFieldID" Type="int" Nullable="false" />
+          <Property Name="CustomFieldID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="STATE">
           <Key>
             <PropertyRef Name="StateID" />
@@ -645,6 +739,42 @@
             </Principal>
             <Dependent Role="ContactCommunication">
               <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomField_CustomFieldValue">
+          <End Role="CustomField" Type="DeepBlueModel.Store.CustomField" Multiplicity="1" />
+          <End Role="CustomFieldValue" Type="DeepBlueModel.Store.CustomFieldValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomField">
+              <PropertyRef Name="CustomFieldID" />
+            </Principal>
+            <Dependent Role="CustomFieldValue">
+              <PropertyRef Name="CustomFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomField_OptionField">
+          <End Role="CustomField" Type="DeepBlueModel.Store.CustomField" Multiplicity="1" />
+          <End Role="OptionField" Type="DeepBlueModel.Store.OptionField" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomField">
+              <PropertyRef Name="CustomFieldID" />
+            </Principal>
+            <Dependent Role="OptionField">
+              <PropertyRef Name="CustomFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataType_CustomField">
+          <End Role="DataType" Type="DeepBlueModel.Store.DataType" Multiplicity="1" />
+          <End Role="CustomField" Type="DeepBlueModel.Store.CustomField" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataType">
+              <PropertyRef Name="DataTypeID" />
+            </Principal>
+            <Dependent Role="CustomField">
+              <PropertyRef Name="DataTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -928,6 +1058,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Module_CustomField">
+          <End Role="MODULE" Type="DeepBlueModel.Store.MODULE" Multiplicity="1" />
+          <End Role="CustomField" Type="DeepBlueModel.Store.CustomField" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MODULE">
+              <PropertyRef Name="ModuleID" />
+            </Principal>
+            <Dependent Role="CustomField">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OptionFieldValueList_CustomField">
+          <End Role="CustomField" Type="DeepBlueModel.Store.CustomField" Multiplicity="1" />
+          <End Role="OptionFieldValueList" Type="DeepBlueModel.Store.OptionFieldValueList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomField">
+              <PropertyRef Name="CustomFieldID" />
+            </Principal>
+            <Dependent Role="OptionFieldValueList">
+              <PropertyRef Name="CustomFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OptionFieldValueList_OptionField">
+          <End Role="OptionField" Type="DeepBlueModel.Store.OptionField" Multiplicity="1" />
+          <End Role="OptionFieldValueList" Type="DeepBlueModel.Store.OptionFieldValueList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OptionField">
+              <PropertyRef Name="OptionFieldID" />
+            </Principal>
+            <Dependent Role="OptionFieldValueList">
+              <PropertyRef Name="OptionFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
@@ -943,6 +1109,9 @@
           <EntitySet Name="ContactAddresses" EntityType="DeepBlueModel.ContactAddress" />
           <EntitySet Name="ContactCommunications" EntityType="DeepBlueModel.ContactCommunication" />
           <EntitySet Name="COUNTRies" EntityType="DeepBlueModel.COUNTRY" />
+          <EntitySet Name="CustomFields" EntityType="DeepBlueModel.CustomField" />
+          <EntitySet Name="CustomFieldValues" EntityType="DeepBlueModel.CustomFieldValue" />
+          <EntitySet Name="DataTypes" EntityType="DeepBlueModel.DataType" />
           <EntitySet Name="DocumentTypes" EntityType="DeepBlueModel.DocumentType" />
           <EntitySet Name="Files" EntityType="DeepBlueModel.File" />
           <EntitySet Name="FileTypes" EntityType="DeepBlueModel.FileType" />
@@ -959,6 +1128,9 @@
           <EntitySet Name="InvestorFundDocuments" EntityType="DeepBlueModel.InvestorFundDocument" />
           <EntitySet Name="InvestorFundTransactions" EntityType="DeepBlueModel.InvestorFundTransaction" />
           <EntitySet Name="InvestorTypes" EntityType="DeepBlueModel.InvestorType" />
+          <EntitySet Name="MODULEs" EntityType="DeepBlueModel.MODULE" />
+          <EntitySet Name="OptionFields" EntityType="DeepBlueModel.OptionField" />
+          <EntitySet Name="OptionFieldValueLists" EntityType="DeepBlueModel.OptionFieldValueList" />
           <EntitySet Name="STATEs" EntityType="DeepBlueModel.STATE" />
           <EntitySet Name="TransactionTypes" EntityType="DeepBlueModel.TransactionType" />
           <AssociationSet Name="FK_Address_AddressType" Association="DeepBlueModel.FK_Address_AddressType">
@@ -1008,6 +1180,26 @@
           <AssociationSet Name="FK_InvestorContact_Contact" Association="DeepBlueModel.FK_InvestorContact_Contact">
             <End Role="Contact" EntitySet="Contacts" />
             <End Role="InvestorContact" EntitySet="InvestorContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomField_CustomFieldValue" Association="DeepBlueModel.FK_CustomField_CustomFieldValue">
+            <End Role="CustomField" EntitySet="CustomFields" />
+            <End Role="CustomFieldValue" EntitySet="CustomFieldValues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomField_OptionField" Association="DeepBlueModel.FK_CustomField_OptionField">
+            <End Role="CustomField" EntitySet="CustomFields" />
+            <End Role="OptionField" EntitySet="OptionFields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataType_CustomField" Association="DeepBlueModel.FK_DataType_CustomField">
+            <End Role="DataType" EntitySet="DataTypes" />
+            <End Role="CustomField" EntitySet="CustomFields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_CustomField" Association="DeepBlueModel.FK_Module_CustomField">
+            <End Role="MODULE" EntitySet="MODULEs" />
+            <End Role="CustomField" EntitySet="CustomFields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OptionFieldValueList_CustomField" Association="DeepBlueModel.FK_OptionFieldValueList_CustomField">
+            <End Role="CustomField" EntitySet="CustomFields" />
+            <End Role="OptionFieldValueList" EntitySet="OptionFieldValueLists" />
           </AssociationSet>
           <AssociationSet Name="FK_InvestorFundDocument_DocumentType" Association="DeepBlueModel.FK_InvestorFundDocument_DocumentType">
             <End Role="DocumentType" EntitySet="DocumentTypes" />
@@ -1084,6 +1276,10 @@
           <AssociationSet Name="FK_InvestorFundTransaction_TransactionType" Association="DeepBlueModel.FK_InvestorFundTransaction_TransactionType">
             <End Role="TransactionType" EntitySet="TransactionTypes" />
             <End Role="InvestorFundTransaction" EntitySet="InvestorFundTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OptionFieldValueList_OptionField" Association="DeepBlueModel.FK_OptionFieldValueList_OptionField">
+            <End Role="OptionField" EntitySet="OptionFields" />
+            <End Role="OptionFieldValueList" EntitySet="OptionFieldValueLists" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Address">
@@ -1225,6 +1421,51 @@
           <Property Name="CountryCode" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
           <Property Name="CountryName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Addresses" Relationship="DeepBlueModel.FK_Address_Country" FromRole="COUNTRY" ToRole="Address" />
+        </EntityType>
+        <EntityType Name="CustomField">
+          <Key>
+            <PropertyRef Name="CustomFieldID" />
+          </Key>
+          <Property Name="CustomFieldID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="DataTypeID" Type="Int32" Nullable="false" />
+          <Property Name="CustomFieldText" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="OptionalText" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
+          <Property Name="Search" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CustomFieldValues" Relationship="DeepBlueModel.FK_CustomField_CustomFieldValue" FromRole="CustomField" ToRole="CustomFieldValue" />
+          <NavigationProperty Name="OptionFields" Relationship="DeepBlueModel.FK_CustomField_OptionField" FromRole="CustomField" ToRole="OptionField" />
+          <NavigationProperty Name="DataType" Relationship="DeepBlueModel.FK_DataType_CustomField" FromRole="CustomField" ToRole="DataType" />
+          <NavigationProperty Name="MODULE" Relationship="DeepBlueModel.FK_Module_CustomField" FromRole="CustomField" ToRole="MODULE" />
+          <NavigationProperty Name="OptionFieldValueLists" Relationship="DeepBlueModel.FK_OptionFieldValueList_CustomField" FromRole="CustomField" ToRole="OptionFieldValueList" />
+        </EntityType>
+        <EntityType Name="CustomFieldValue">
+          <Key>
+            <PropertyRef Name="CustomFieldValueID" />
+          </Key>
+          <Property Name="CustomFieldValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomFieldID" Type="Int32" Nullable="false" />
+          <Property Name="Key" Type="Int32" Nullable="false" />
+          <Property Name="TextValue" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
+          <Property Name="IntegerValue" Type="Int32" />
+          <Property Name="DateValue" Type="DateTime" />
+          <Property Name="CurrencyValue" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="BooleanValue" Type="Boolean" />
+          <Property Name="OptionFieldID" Type="Int32" />
+          <Property Name="OptionFieldValueListID" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="CustomField" Relationship="DeepBlueModel.FK_CustomField_CustomFieldValue" FromRole="CustomFieldValue" ToRole="CustomField" />
+        </EntityType>
+        <EntityType Name="DataType">
+          <Key>
+            <PropertyRef Name="DataTypeID" />
+          </Key>
+          <Property Name="DataTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataTypeName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="CustomFields" Relationship="DeepBlueModel.FK_DataType_CustomField" FromRole="DataType" ToRole="CustomField" />
         </EntityType>
         <EntityType Name="DocumentType">
           <Key>
@@ -1498,6 +1739,37 @@
           <Property Name="InvestorTypeName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="InvestorFunds" Relationship="DeepBlueModel.FK_InvestorFund_InvestorType" FromRole="InvestorType" ToRole="InvestorFund" />
         </EntityType>
+        <EntityType Name="MODULE">
+          <Key>
+            <PropertyRef Name="ModuleID" />
+          </Key>
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="ModuleName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="CustomFields" Relationship="DeepBlueModel.FK_Module_CustomField" FromRole="MODULE" ToRole="CustomField" />
+        </EntityType>
+        <EntityType Name="OptionField">
+          <Key>
+            <PropertyRef Name="OptionFieldID" />
+          </Key>
+          <Property Name="OptionFieldID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="CustomFieldID" Type="Int32" Nullable="false" />
+          <Property Name="OptionText" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CustomField" Relationship="DeepBlueModel.FK_CustomField_OptionField" FromRole="OptionField" ToRole="CustomField" />
+          <NavigationProperty Name="OptionFieldValueLists" Relationship="DeepBlueModel.FK_OptionFieldValueList_OptionField" FromRole="OptionField" ToRole="OptionFieldValueList" />
+        </EntityType>
+        <EntityType Name="OptionFieldValueList">
+          <Key>
+            <PropertyRef Name="OptionFieldValueListID" />
+          </Key>
+          <Property Name="OptionFieldValueListID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OptionFieldID" Type="Int32" Nullable="false" />
+          <Property Name="CustomFieldID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CustomField" Relationship="DeepBlueModel.FK_OptionFieldValueList_CustomField" FromRole="OptionFieldValueList" ToRole="CustomField" />
+          <NavigationProperty Name="OptionField" Relationship="DeepBlueModel.FK_OptionFieldValueList_OptionField" FromRole="OptionFieldValueList" ToRole="OptionField" />
+        </EntityType>
         <EntityType Name="STATE">
           <Key>
             <PropertyRef Name="StateID" />
@@ -1677,6 +1949,66 @@
             </Principal>
             <Dependent Role="InvestorContact">
               <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomField_CustomFieldValue">
+          <End Role="CustomField" Type="DeepBlueModel.CustomField" Multiplicity="1" />
+          <End Role="CustomFieldValue" Type="DeepBlueModel.CustomFieldValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomField">
+              <PropertyRef Name="CustomFieldID" />
+            </Principal>
+            <Dependent Role="CustomFieldValue">
+              <PropertyRef Name="CustomFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomField_OptionField">
+          <End Role="CustomField" Type="DeepBlueModel.CustomField" Multiplicity="1" />
+          <End Role="OptionField" Type="DeepBlueModel.OptionField" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomField">
+              <PropertyRef Name="CustomFieldID" />
+            </Principal>
+            <Dependent Role="OptionField">
+              <PropertyRef Name="CustomFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataType_CustomField">
+          <End Role="DataType" Type="DeepBlueModel.DataType" Multiplicity="1" />
+          <End Role="CustomField" Type="DeepBlueModel.CustomField" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataType">
+              <PropertyRef Name="DataTypeID" />
+            </Principal>
+            <Dependent Role="CustomField">
+              <PropertyRef Name="DataTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_CustomField">
+          <End Role="MODULE" Type="DeepBlueModel.MODULE" Multiplicity="1" />
+          <End Role="CustomField" Type="DeepBlueModel.CustomField" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MODULE">
+              <PropertyRef Name="ModuleID" />
+            </Principal>
+            <Dependent Role="CustomField">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OptionFieldValueList_CustomField">
+          <End Role="CustomField" Type="DeepBlueModel.CustomField" Multiplicity="1" />
+          <End Role="OptionFieldValueList" Type="DeepBlueModel.OptionFieldValueList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomField">
+              <PropertyRef Name="CustomFieldID" />
+            </Principal>
+            <Dependent Role="OptionFieldValueList">
+              <PropertyRef Name="CustomFieldID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1918,6 +2250,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OptionFieldValueList_OptionField">
+          <End Role="OptionField" Type="DeepBlueModel.OptionField" Multiplicity="1" />
+          <End Role="OptionFieldValueList" Type="DeepBlueModel.OptionFieldValueList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OptionField">
+              <PropertyRef Name="OptionFieldID" />
+            </Principal>
+            <Dependent Role="OptionFieldValueList">
+              <PropertyRef Name="OptionFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2016,6 +2360,35 @@
             <ScalarProperty Name="CountryID" ColumnName="CountryID" />
             <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
             <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CustomFields"><EntityTypeMapping TypeName="DeepBlueModel.CustomField"><MappingFragment StoreEntitySet="CustomField">
+            <ScalarProperty Name="CustomFieldID" ColumnName="CustomFieldID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+            <ScalarProperty Name="DataTypeID" ColumnName="DataTypeID" />
+            <ScalarProperty Name="CustomFieldText" ColumnName="CustomFieldText" />
+            <ScalarProperty Name="OptionalText" ColumnName="OptionalText" />
+            <ScalarProperty Name="Search" ColumnName="Search" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CustomFieldValues"><EntityTypeMapping TypeName="DeepBlueModel.CustomFieldValue"><MappingFragment StoreEntitySet="CustomFieldValue">
+            <ScalarProperty Name="CustomFieldValueID" ColumnName="CustomFieldValueID" />
+            <ScalarProperty Name="CustomFieldID" ColumnName="CustomFieldID" />
+            <ScalarProperty Name="Key" ColumnName="Key" />
+            <ScalarProperty Name="TextValue" ColumnName="TextValue" />
+            <ScalarProperty Name="IntegerValue" ColumnName="IntegerValue" />
+            <ScalarProperty Name="DateValue" ColumnName="DateValue" />
+            <ScalarProperty Name="CurrencyValue" ColumnName="CurrencyValue" />
+            <ScalarProperty Name="BooleanValue" ColumnName="BooleanValue" />
+            <ScalarProperty Name="OptionFieldID" ColumnName="OptionFieldID" />
+            <ScalarProperty Name="OptionFieldValueListID" ColumnName="OptionFieldValueListID" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="DataTypes"><EntityTypeMapping TypeName="DeepBlueModel.DataType"><MappingFragment StoreEntitySet="DataType">
+            <ScalarProperty Name="DataTypeID" ColumnName="DataTypeID" />
+            <ScalarProperty Name="DataTypeName" ColumnName="DataTypeName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="DocumentTypes"><EntityTypeMapping TypeName="DeepBlueModel.DocumentType"><MappingFragment StoreEntitySet="DocumentType">
             <ScalarProperty Name="DocumentTypeID" ColumnName="DocumentTypeID" />
@@ -2202,6 +2575,23 @@
             <ScalarProperty Name="Enabled" ColumnName="Enabled" />
             <ScalarProperty Name="InvestorTypeName" ColumnName="InvestorTypeName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MODULEs"><EntityTypeMapping TypeName="DeepBlueModel.MODULE"><MappingFragment StoreEntitySet="MODULE">
+            <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+            <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="OptionFields"><EntityTypeMapping TypeName="DeepBlueModel.OptionField"><MappingFragment StoreEntitySet="OptionField">
+            <ScalarProperty Name="OptionFieldID" ColumnName="OptionFieldID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="CustomFieldID" ColumnName="CustomFieldID" />
+            <ScalarProperty Name="OptionText" ColumnName="OptionText" />
+            <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+            <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="OptionFieldValueLists"><EntityTypeMapping TypeName="DeepBlueModel.OptionFieldValueList"><MappingFragment StoreEntitySet="OptionFieldValueList">
+            <ScalarProperty Name="OptionFieldValueListID" ColumnName="OptionFieldValueListID" />
+            <ScalarProperty Name="OptionFieldID" ColumnName="OptionFieldID" />
+            <ScalarProperty Name="CustomFieldID" ColumnName="CustomFieldID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="STATEs"><EntityTypeMapping TypeName="DeepBlueModel.STATE"><MappingFragment StoreEntitySet="STATE">
             <ScalarProperty Name="StateID" ColumnName="StateID" />
             <ScalarProperty Name="Abbr" ColumnName="Abbr" />
@@ -2234,244 +2624,274 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="DeepBlue">
-        <EntityTypeShape EntityType="DeepBlueModel.Address" Width="1.5" PointX="3" PointY="13.75" Height="4.7149055989583335" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.AddressType" Width="1.5" PointX="0.75" PointY="12" Height="1.7566536458333353" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.Communication" Width="1.5" PointX="9" PointY="28.375" Height="3.400126953124996" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.CommunicationGrouping" Width="1.5" PointX="4.5" PointY="29.375" Height="1.427958984374996" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.CommunicationType" Width="1.5" PointX="6.75" PointY="29.125" Height="2.0853483072916674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.Contact" Width="1.5" PointX="6" PointY="5.125" Height="3.8931689453124996" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.ContactAddress" Width="1.5" PointX="5.25" PointY="9.875" Height="2.5783902994791674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.ContactCommunication" Width="1.5" PointX="14.25" PointY="15.25" Height="2.5783902994791674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.COUNTRY" Width="1.5" PointX="0.75" PointY="18.625" Height="1.5923063151041674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.DocumentType" Width="1.5" PointX="9" PointY="7.25" Height="1.7566536458333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.File" Width="1.5" PointX="9" PointY="0.75" Height="2.9070849609375031" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.FileType" Width="1.5" PointX="6.75" PointY="1.875" Height="1.9210009765625031" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.Fund" Width="1.5" PointX="9" PointY="23.375" Height="3.5644742838541674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.FundAccount" Width="1.5" PointX="11.25" PointY="29" Height="4.3862109375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.FundClosing" Width="1.5" PointX="11.25" PointY="22.75" Height="2.0853483072916674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.Investor" Width="1.5" PointX="6" PointY="13.375" Height="5.5366422526041656" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.InvestorAccount" Width="1.5" PointX="8.25" PointY="14.5" Height="3.2357796223958388" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.InvestorAddress" Width="1.5" PointX="11.25" PointY="18.875" Height="2.5783902994791674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.InvestorCommunication" Width="1.5" PointX="11.25" PointY="14.875" Height="2.5783902994791674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.InvestorContact" Width="1.5" PointX="8.25" PointY="10.875" Height="2.5783902994791674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.InvestorEntityType" Width="1.5" PointX="3.75" PointY="19.25" Height="1.7566536458333388" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.InvestorFund" Width="1.5" PointX="8.25" PointY="18.5" Height="3.2357796223958246" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.InvestorFundDocument" Width="1.5" PointX="11.25" PointY="10.375" Height="3.400126953124996" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.InvestorFundTransaction" Width="1.5" PointX="13.5" PointY="18.5" Height="3.2357796223958246" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.InvestorType" Width="1.5" PointX="6" PointY="20.25" Height="1.7566536458333246" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.STATE" Width="1.5" PointX="0.75" PointY="15.25" Height="1.7566536458333371" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.TransactionType" Width="1.5" PointX="11.25" PointY="25.625" Height="1.7566536458333246" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.Address" Width="1.5" PointX="3" PointY="12.125" Height="4.7149055989583335" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.AddressType" Width="1.5" PointX="0.75" PointY="10.5" Height="1.7566536458333353" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.Communication" Width="1.5" PointX="6" PointY="19.875" Height="3.400126953124996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.CommunicationGrouping" Width="1.5" PointX="1.5" PointY="20.75" Height="1.427958984374996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.CommunicationType" Width="1.5" PointX="3.75" PointY="20.5" Height="2.0853483072916674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.Contact" Width="1.5" PointX="6" PointY="6.625" Height="3.8931689453124996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.ContactAddress" Width="1.5" PointX="8.25" PointY="9.25" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.ContactCommunication" Width="1.5" PointX="14.25" PointY="8.625" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.COUNTRY" Width="1.5" PointX="0.75" PointY="17" Height="1.5923063151041674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.CustomField" Width="1.5" PointX="17" PointY="3" Height="2.9070849609374996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.CustomFieldValue" Width="1.5" PointX="19.25" PointY="1.25" Height="3.4001269531250031" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.DataType" Width="1.5" PointX="14.75" PointY="3.75" Height="1.4279589843750031" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.DocumentType" Width="1.5" PointX="12" PointY="6.625" Height="1.7566536458333388" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.File" Width="1.5" PointX="12" PointY="2.125" Height="2.907084960937496" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.FileType" Width="1.5" PointX="9.75" PointY="2.625" Height="1.9210009765625031" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.Fund" Width="1.5" PointX="12" PointY="22.875" Height="3.5644742838541674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.FundAccount" Width="1.5" PointX="14.25" PointY="22.375" Height="4.3862109375000031" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.FundClosing" Width="1.5" PointX="11.25" PointY="27.25" Height="2.0853483072916674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.Investor" Width="1.5" PointX="6" PointY="11.75" Height="5.5366422526041656" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.InvestorAccount" Width="1.5" PointX="8.25" PointY="12.875" Height="3.2357796223958371" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.InvestorAddress" Width="1.5" PointX="11.25" PointY="13.25" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.InvestorCommunication" Width="1.5" PointX="8.25" PointY="17.25" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.InvestorContact" Width="1.5" PointX="11.25" PointY="9.25" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.InvestorEntityType" Width="1.5" PointX="3.75" PointY="9.625" Height="1.7566536458333246" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.InvestorFund" Width="1.5" PointX="11.25" PointY="16.875" Height="3.2357796223958246" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.InvestorFundDocument" Width="1.5" PointX="14.25" PointY="12.875" Height="3.4001269531249942" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.InvestorFundTransaction" Width="1.5" PointX="13.5" PointY="17.875" Height="3.2357796223958246" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.InvestorType" Width="1.5" PointX="9" PointY="20.625" Height="1.7566536458333246" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.MODULE" Width="1.5" PointX="14.75" PointY="0.75" Height="1.427958984374996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.OptionField" Width="1.5" PointX="19.25" PointY="5.375" Height="2.2496956380208388" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.OptionFieldValueList" Width="1.5" PointX="21.5" PointY="4.5" Height="1.7566536458333388" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.STATE" Width="1.5" PointX="0.75" PointY="13.625" Height="1.7566536458333388" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.TransactionType" Width="1.5" PointX="11.25" PointY="30" Height="1.7566536458333246" IsExpanded="true" />
         <AssociationConnector Association="DeepBlueModel.FK_Address_AddressType" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="12.874999500000001" />
-          <ConnectorPoint PointX="3.75" PointY="12.874999500000001" />
-          <ConnectorPoint PointX="3.75" PointY="13.75" />
+          <ConnectorPoint PointX="2.25" PointY="11.784576322916664" />
+          <ConnectorPoint PointX="3.34375" PointY="11.784576322916664" />
+          <ConnectorPoint PointX="3.34375" PointY="12.125" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Address_Country" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="18.90625" />
-          <ConnectorPoint PointX="3.34375" PointY="18.90625" />
-          <ConnectorPoint PointX="3.34375" PointY="18.464905598958332" />
+          <ConnectorPoint PointX="2.25" PointY="17.796153157552084" />
+          <ConnectorPoint PointX="3.75" PointY="17.796153157552084" />
+          <ConnectorPoint PointX="3.75" PointY="16.839905598958332" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Address_State" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="16.128326822916669" />
-          <ConnectorPoint PointX="3" PointY="16.128326822916669" />
+          <ConnectorPoint PointX="2.25" PointY="14.503326822916669" />
+          <ConnectorPoint PointX="3" PointY="14.503326822916669" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_ContactAddress_Address" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.1562525" PointY="13.75" />
-          <ConnectorPoint PointX="4.1562525" PointY="11.164195149739584" />
-          <ConnectorPoint PointX="5.25" PointY="11.164195149739584" />
+          <ConnectorPoint PointX="3.5468775" PointY="12.125" />
+          <ConnectorPoint PointX="3.5468775" PointY="11.565826822916662" />
+          <ConnectorPoint PointX="4.822916666666667" PointY="11.565826822916662" />
+          <ConnectorPoint PointX="4.989583333333333" PointY="11.565826822916662" />
+          <ConnectorPoint PointX="7.6019926899038515" PointY="11.565826822916662" />
+          <ConnectorPoint PointX="7.7686593565705175" PointY="11.565826822916662" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="11.565826822916662" />
+          <ConnectorPoint PointX="7.958333333333333" PointY="11.565826822916662" />
+          <ConnectorPoint PointX="8.25" PointY="11.565826822916662" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorAddress_Address" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="16.107452799479166" />
-          <ConnectorPoint PointX="5.75" PointY="16.107452799479166" />
-          <ConnectorPoint PointX="5.75" PointY="19.161642252604167" />
-          <ConnectorPoint PointX="7.666666666666667" PointY="19.161642252604167" />
-          <ConnectorPoint PointX="7.958333333333333" PointY="19.161642252604167" />
-          <ConnectorPoint PointX="8" PointY="19.161642252604167" />
-          <ConnectorPoint PointX="8" PointY="17.985779622395839" />
-          <ConnectorPoint PointX="8.0416666666666661" PointY="17.985779622395839" />
-          <ConnectorPoint PointX="8.2083333333333339" PointY="17.985779622395839" />
-          <ConnectorPoint PointX="10.244791666666666" PointY="17.985779622395839" />
-          <ConnectorPoint PointX="10.411458333333334" PointY="17.985779622395839" />
-          <ConnectorPoint PointX="10.791666666666666" PointY="17.985779622395839" />
-          <ConnectorPoint PointX="10.958333333333334" PointY="17.985779622395839" />
-          <ConnectorPoint PointX="11.541667166666665" PointY="17.985779622395839" />
-          <ConnectorPoint PointX="11.708333833333333" PointY="17.985779622395839" />
-          <ConnectorPoint PointX="12" PointY="17.985779622395839" />
-          <ConnectorPoint PointX="12" PointY="18.875" />
+          <ConnectorPoint PointX="4.156252" PointY="16.839905598958332" />
+          <ConnectorPoint PointX="4.156252" PointY="17.536642252604167" />
+          <ConnectorPoint PointX="5.6678195128205129" PointY="17.536642252604167" />
+          <ConnectorPoint PointX="5.834486179487179" PointY="17.536642252604167" />
+          <ConnectorPoint PointX="6.6984955897435912" PointY="17.536642252604167" />
+          <ConnectorPoint PointX="6.8651622564102572" PointY="17.536642252604167" />
+          <ConnectorPoint PointX="8" PointY="17.536642252604167" />
+          <ConnectorPoint PointX="8" PointY="16.360779622395839" />
+          <ConnectorPoint PointX="10.875" PointY="16.360779622395839" />
+          <ConnectorPoint PointX="10.875" PointY="14.539195149739584" />
+          <ConnectorPoint PointX="11.25" PointY="14.539195149739584" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Communication_CommunicationType" ManuallyRouted="false">
-          <ConnectorPoint PointX="8.25" PointY="30.167674153645834" />
-          <ConnectorPoint PointX="9" PointY="30.167674153645834" />
+          <ConnectorPoint PointX="5.25" PointY="21.542674153645834" />
+          <ConnectorPoint PointX="6" PointY="21.542674153645834" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_ContactCommunication_Communication" ManuallyRouted="false">
-          <ConnectorPoint PointX="10.5" PointY="28.65625" />
-          <ConnectorPoint PointX="10.979166666666666" PointY="28.65625" />
-          <ConnectorPoint PointX="11.145833333333334" PointY="28.65625" />
-          <ConnectorPoint PointX="15.40625" PointY="28.65625" />
-          <ConnectorPoint PointX="15.40625" PointY="17.828390299479167" />
+          <ConnectorPoint PointX="7.5" PointY="21.575063476562498" />
+          <ConnectorPoint PointX="8.4166666666666661" PointY="21.575063476562498" />
+          <ConnectorPoint PointX="8.5833333333333339" PointY="21.575063476562498" />
+          <ConnectorPoint PointX="8.75" PointY="21.575063476562498" />
+          <ConnectorPoint PointX="8.75" PointY="20.375" />
+          <ConnectorPoint PointX="11.697914166666665" PointY="20.375" />
+          <ConnectorPoint PointX="11.864580833333333" PointY="20.375" />
+          <ConnectorPoint PointX="12.291666666666666" PointY="20.375" />
+          <ConnectorPoint PointX="12.458333333333334" PointY="20.375" />
+          <ConnectorPoint PointX="13.057291666666666" PointY="20.375" />
+          <ConnectorPoint PointX="13.223958333333334" PointY="20.375" />
+          <ConnectorPoint PointX="13.25" PointY="20.375" />
+          <ConnectorPoint PointX="13.25" PointY="11.578390299479167" />
+          <ConnectorPoint PointX="13.791666666666666" PointY="11.578390299479167" />
+          <ConnectorPoint PointX="13.958333333333334" PointY="11.578390299479167" />
+          <ConnectorPoint PointX="15" PointY="11.578390299479167" />
+          <ConnectorPoint PointX="15" PointY="11.203390299479167" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorCommunication_Communication" ManuallyRouted="false">
-          <ConnectorPoint PointX="10.5" PointY="28.375" />
-          <ConnectorPoint PointX="10.875" PointY="28" />
-          <ConnectorPoint PointX="10.875" PointY="16.164195149739584" />
-          <ConnectorPoint PointX="11.25" PointY="16.164195149739584" />
+          <ConnectorPoint PointX="7.5" PointY="22.85964029947916" />
+          <ConnectorPoint PointX="8.5" PointY="22.85964029947916" />
+          <ConnectorPoint PointX="8.5" PointY="19.828390299479167" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_CommunicationType_CommunicationGrouping" ManuallyRouted="false">
-          <ConnectorPoint PointX="6" PointY="30.088979492187498" />
-          <ConnectorPoint PointX="6.75" PointY="30.088979492187498" />
+          <ConnectorPoint PointX="3" PointY="21.463979492187498" />
+          <ConnectorPoint PointX="3.75" PointY="21.463979492187498" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_ContactAddress_Contact" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.375" PointY="9.0181689453125" />
-          <ConnectorPoint PointX="6.375" PointY="9.875" />
+          <ConnectorPoint PointX="7.5" PointY="9.88408447265625" />
+          <ConnectorPoint PointX="8.25" PointY="9.88408447265625" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_ContactCommunication_Contact" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="6.15625" />
-          <ConnectorPoint PointX="11.916666666666666" PointY="6.1562499999999991" />
-          <ConnectorPoint PointX="12.083333333333334" PointY="6.15625" />
-          <ConnectorPoint PointX="15" PointY="6.15625" />
-          <ConnectorPoint PointX="15" PointY="15.25" />
+          <ConnectorPoint PointX="7.5" PointY="8.90625" />
+          <ConnectorPoint PointX="11.510416666666666" PointY="8.90625" />
+          <ConnectorPoint PointX="11.677083333333334" PointY="8.90625" />
+          <ConnectorPoint PointX="12.947916666666666" PointY="8.90625" />
+          <ConnectorPoint PointX="13.114583333333334" PointY="8.90625" />
+          <ConnectorPoint PointX="13.791666666666666" PointY="8.90625" />
+          <ConnectorPoint PointX="13.958333333333334" PointY="8.90625" />
+          <ConnectorPoint PointX="14.25" PointY="8.90625" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorContact_Contact" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="6.7031275000000008" />
-          <ConnectorPoint PointX="8.59375" PointY="6.7031275000000008" />
-          <ConnectorPoint PointX="8.59375" PointY="10.875" />
+          <ConnectorPoint PointX="7.5" PointY="8.6439493229166686" />
+          <ConnectorPoint PointX="11.59375" PointY="8.6439493229166686" />
+          <ConnectorPoint PointX="11.59375" PointY="9.25" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_CustomField_CustomFieldValue" ManuallyRouted="false">
+          <ConnectorPoint PointX="18.5" PointY="3.8250634765625016" />
+          <ConnectorPoint PointX="19.25" PointY="3.8250634765625016" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_CustomField_OptionField" ManuallyRouted="false">
+          <ConnectorPoint PointX="18.5" PointY="5.64104248046875" />
+          <ConnectorPoint PointX="19.25" PointY="5.64104248046875" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_DataType_CustomField" ManuallyRouted="false">
+          <ConnectorPoint PointX="16.25" PointY="4.4639794921875016" />
+          <ConnectorPoint PointX="17" PointY="4.4639794921875016" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_Module_CustomField" ManuallyRouted="false">
+          <ConnectorPoint PointX="16.25" PointY="1.463979492187498" />
+          <ConnectorPoint PointX="17.75" PointY="1.463979492187498" />
+          <ConnectorPoint PointX="17.75" PointY="3" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_OptionFieldValueList_CustomField" ManuallyRouted="false">
+          <ConnectorPoint PointX="18.5" PointY="5.0125634765625016" />
+          <ConnectorPoint PointX="21.5" PointY="5.0125634765625016" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundDocument_DocumentType" ManuallyRouted="false">
-          <ConnectorPoint PointX="10.15625" PointY="9.0066536458333317" />
-          <ConnectorPoint PointX="10.15625" PointY="10.59375" />
-          <ConnectorPoint PointX="11.25" PointY="10.59375" />
+          <ConnectorPoint PointX="13.03125" PointY="8.3816536458333388" />
+          <ConnectorPoint PointX="13.03125" PointY="16.083008626302082" />
+          <ConnectorPoint PointX="13.057291666666666" PointY="16.083008626302082" />
+          <ConnectorPoint PointX="13.333333333333334" PointY="16.083008626302082" />
+          <ConnectorPoint PointX="14.25" PointY="16.083008626302082" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_File_FileType" ManuallyRouted="false">
-          <ConnectorPoint PointX="8.25" PointY="2.7660424804687516" />
-          <ConnectorPoint PointX="9" PointY="2.7660424804687516" />
+          <ConnectorPoint PointX="11.25" PointY="3.5855004882812516" />
+          <ConnectorPoint PointX="12" PointY="3.5855004882812516" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundDocument_File" ManuallyRouted="false">
-          <ConnectorPoint PointX="10.5" PointY="2.2035424804687516" />
-          <ConnectorPoint PointX="12" PointY="2.2035424804687516" />
-          <ConnectorPoint PointX="12" PointY="10.375" />
+          <ConnectorPoint PointX="13.5" PointY="5.03093011478365" />
+          <ConnectorPoint PointX="13.875" PointY="5.4059301147836507" />
+          <ConnectorPoint PointX="13.875" PointY="14.447752313151046" />
+          <ConnectorPoint PointX="14.25" PointY="14.447752313151046" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_FundAccount_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="10.5" PointY="26.877165591546476" />
-          <ConnectorPoint PointX="10.816074434901122" PointY="27.193240026447597" />
-          <ConnectorPoint PointX="10.933925565098878" PointY="27.311091156645354" />
-          <ConnectorPoint PointX="11.0625" PointY="27.439665591546476" />
-          <ConnectorPoint PointX="11.0625" PointY="31.193105468749998" />
-          <ConnectorPoint PointX="11.25" PointY="31.193105468749998" />
+          <ConnectorPoint PointX="13.5" PointY="24.657237141927084" />
+          <ConnectorPoint PointX="13.604164166666665" PointY="24.657237141927084" />
+          <ConnectorPoint PointX="13.770830833333333" PointY="24.657237141927084" />
+          <ConnectorPoint PointX="13.791666666666666" PointY="24.657237141927084" />
+          <ConnectorPoint PointX="13.958333333333334" PointY="24.657237141927084" />
+          <ConnectorPoint PointX="14.25" PointY="24.657237141927084" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_FundClosing_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="10.5" PointY="24.105174153645834" />
-          <ConnectorPoint PointX="10.791666666666666" PointY="24.105174153645834" />
-          <ConnectorPoint PointX="10.958333333333334" PointY="24.105174153645834" />
-          <ConnectorPoint PointX="11.25" PointY="24.105174153645834" />
+          <ConnectorPoint PointX="12.375" PointY="26.439474283854167" />
+          <ConnectorPoint PointX="12.375" PointY="27.25" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFund_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="9.375" PointY="23.375" />
-          <ConnectorPoint PointX="9.375" PointY="21.735779622395825" />
+          <ConnectorPoint PointX="12.375" PointY="22.875" />
+          <ConnectorPoint PointX="12.375" PointY="20.110779622395825" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundDocument_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="10.328125" PointY="23.375" />
-          <ConnectorPoint PointX="10.328125" PointY="13.645508626302082" />
-          <ConnectorPoint PointX="11.25" PointY="13.645508626302082" />
+          <ConnectorPoint PointX="13.140625" PointY="22.875" />
+          <ConnectorPoint PointX="13.140625" PointY="13.03125" />
+          <ConnectorPoint PointX="13.166666666666666" PointY="13.03125" />
+          <ConnectorPoint PointX="13.333333333333334" PointY="13.03125" />
+          <ConnectorPoint PointX="13.791666666666666" PointY="13.03125" />
+          <ConnectorPoint PointX="13.958333333333334" PointY="13.03125" />
+          <ConnectorPoint PointX="14.25" PointY="13.03125" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundTransaction_FundClosing" ManuallyRouted="false">
-          <ConnectorPoint PointX="12.75" PointY="23.792674153645834" />
-          <ConnectorPoint PointX="13.760414166666665" PointY="23.792674153645834" />
-          <ConnectorPoint PointX="13.927080833333333" PointY="23.792674153645834" />
-          <ConnectorPoint PointX="14.25" PointY="23.792674153645834" />
-          <ConnectorPoint PointX="14.25" PointY="21.735779622395825" />
+          <ConnectorPoint PointX="12.75" PointY="28.292674153645834" />
+          <ConnectorPoint PointX="13.604164166666665" PointY="28.292674153645834" />
+          <ConnectorPoint PointX="13.770830833333333" PointY="28.292674153645834" />
+          <ConnectorPoint PointX="13.875" PointY="28.292674153645834" />
+          <ConnectorPoint PointX="13.875" PointY="21.110779622395825" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Investor_InvestorEntityType" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.90625" PointY="19.25" />
-          <ConnectorPoint PointX="4.90625" PointY="18.71952392578125" />
-          <ConnectorPoint PointX="5.666666666666667" PointY="18.71952392578125" />
-          <ConnectorPoint PointX="5.833333333333333" PointY="18.71952392578125" />
-          <ConnectorPoint PointX="6" PointY="18.71952392578125" />
+          <ConnectorPoint PointX="4.90625" PointY="11.381653645833325" />
+          <ConnectorPoint PointX="4.90625" PointY="17.09452392578125" />
+          <ConnectorPoint PointX="6" PointY="17.09452392578125" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Investor_ResidencyState" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="15.251152846153847" />
-          <ConnectorPoint PointX="2.625" PointY="14.876152846153847" />
-          <ConnectorPoint PointX="2.625" PointY="13.25" />
-          <ConnectorPoint PointX="3.6666666666666665" PointY="13.25" />
-          <ConnectorPoint PointX="3.8333333333333335" PointY="13.25" />
-          <ConnectorPoint PointX="4.0729191666666669" PointY="13.25" />
-          <ConnectorPoint PointX="4.2395858333333329" PointY="13.25" />
-          <ConnectorPoint PointX="5.8761528461538459" PointY="13.25" />
-          <ConnectorPoint PointX="6.0011528461538459" PointY="13.375" />
+          <ConnectorPoint PointX="2.2499999999999996" PointY="15.381653645833339" />
+          <ConnectorPoint PointX="2.625" PointY="15.756653645833339" />
+          <ConnectorPoint PointX="2.625" PointY="17.661642252604167" />
+          <ConnectorPoint PointX="3.6666666666666665" PointY="17.661642252604167" />
+          <ConnectorPoint PointX="3.8333333333333335" PointY="17.661642252604167" />
+          <ConnectorPoint PointX="5.6261528461538468" PointY="17.661642252604167" />
+          <ConnectorPoint PointX="6.0011528461538477" PointY="17.286642252604167" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorAccount_Investor" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="16.117889811197919" />
-          <ConnectorPoint PointX="7.791666666666667" PointY="16.117889811197919" />
-          <ConnectorPoint PointX="7.958333333333333" PointY="16.117889811197919" />
-          <ConnectorPoint PointX="8.0416666666666661" PointY="16.117889811197919" />
-          <ConnectorPoint PointX="8.2083333333333339" PointY="16.117889811197919" />
-          <ConnectorPoint PointX="8.25" PointY="16.117889811197919" />
+          <ConnectorPoint PointX="7.5" PointY="14.492889811197919" />
+          <ConnectorPoint PointX="8.25" PointY="14.492889811197919" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorAddress_Investor" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="17.546018031901035" />
-          <ConnectorPoint PointX="7.75" PointY="17.546018031901035" />
-          <ConnectorPoint PointX="7.75" PointY="18.235779622395839" />
-          <ConnectorPoint PointX="7.791666666666667" PointY="18.235779622395839" />
-          <ConnectorPoint PointX="8.0833333333333339" PointY="18.235779622395839" />
-          <ConnectorPoint PointX="10.244791666666666" PointY="18.235779622395839" />
-          <ConnectorPoint PointX="10.411458333333334" PointY="18.235779622395839" />
-          <ConnectorPoint PointX="10.791666666666666" PointY="18.235779622395839" />
-          <ConnectorPoint PointX="10.958333333333334" PointY="18.235779622395839" />
-          <ConnectorPoint PointX="11.593748" PointY="18.235779622395839" />
-          <ConnectorPoint PointX="11.593748" PointY="18.875" />
+          <ConnectorPoint PointX="7.5" PointY="15.921018031901037" />
+          <ConnectorPoint PointX="7.75" PointY="15.921018031901037" />
+          <ConnectorPoint PointX="7.75" PointY="16.610779622395839" />
+          <ConnectorPoint PointX="7.916666666666667" PointY="16.610779622395839" />
+          <ConnectorPoint PointX="8.0833333333333339" PointY="16.610779622395839" />
+          <ConnectorPoint PointX="12" PointY="16.610779622395839" />
+          <ConnectorPoint PointX="12" PointY="15.828390299479167" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorCommunication_Investor" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="14.715192905598965" />
-          <ConnectorPoint PointX="7.791666666666667" PointY="14.715192905598965" />
-          <ConnectorPoint PointX="7.958333333333333" PointY="14.715192905598965" />
-          <ConnectorPoint PointX="8.125" PointY="14.715192905598965" />
-          <ConnectorPoint PointX="8.125" PointY="18.110779622395839" />
-          <ConnectorPoint PointX="10.244791666666666" PointY="18.110779622395839" />
-          <ConnectorPoint PointX="10.411458333333334" PointY="18.110779622395839" />
-          <ConnectorPoint PointX="10.791666666666666" PointY="18.110779622395839" />
-          <ConnectorPoint PointX="10.958333333333334" PointY="18.110779622395839" />
-          <ConnectorPoint PointX="11.625000499999999" PointY="18.110779622395839" />
-          <ConnectorPoint PointX="11.625000499999999" PointY="17.453390299479167" />
+          <ConnectorPoint PointX="6.7818289230769242" PointY="17.286642252604167" />
+          <ConnectorPoint PointX="6.7818289230769242" PointY="18.682516276041667" />
+          <ConnectorPoint PointX="8.25" PointY="18.682516276041667" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorContact_Investor" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.15625" PointY="13.375" />
-          <ConnectorPoint PointX="7.15625" PointY="12.91419264973959" />
-          <ConnectorPoint PointX="8.25" PointY="12.91419264973959" />
+          <ConnectorPoint PointX="7.5" PointY="11.751152846153847" />
+          <ConnectorPoint PointX="7.875" PointY="11.376152846153847" />
+          <ConnectorPoint PointX="7.875" PointY="12.203390299479167" />
+          <ConnectorPoint PointX="10.875" PointY="12.203390299479167" />
+          <ConnectorPoint PointX="11.25" PointY="11.828390299479167" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFund_Investor" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="18.705821126302084" />
-          <ConnectorPoint PointX="7.791666666666667" PointY="18.705821126302084" />
-          <ConnectorPoint PointX="8.0833333333333339" PointY="18.705821126302084" />
-          <ConnectorPoint PointX="8.25" PointY="18.705821126302084" />
+          <ConnectorPoint PointX="7.5" PointY="17.03125" />
+          <ConnectorPoint PointX="7.916666666666667" PointY="17.03125" />
+          <ConnectorPoint PointX="8.0833333333333339" PointY="17.03125" />
+          <ConnectorPoint PointX="11.25" PointY="17.03125" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundDocument_Investor" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.4999999999999982" PointY="18.911642252604167" />
-          <ConnectorPoint PointX="7.875" PointY="19.286642252604167" />
-          <ConnectorPoint PointX="7.875" PointY="14.150126953124996" />
-          <ConnectorPoint PointX="10.244791666666666" PointY="14.150126953124996" />
-          <ConnectorPoint PointX="10.411458333333334" PointY="14.150126953124996" />
-          <ConnectorPoint PointX="10.875" PointY="14.150126953124996" />
-          <ConnectorPoint PointX="11.25" PointY="13.775126953124996" />
+          <ConnectorPoint PointX="7.5" PointY="16.241567789713539" />
+          <ConnectorPoint PointX="7.666666666666667" PointY="16.241567789713539" />
+          <ConnectorPoint PointX="7.833333333333333" PointY="16.241567789713539" />
+          <ConnectorPoint PointX="10.791666666666666" PointY="16.241567789713539" />
+          <ConnectorPoint PointX="10.958333333333334" PointY="16.241567789713539" />
+          <ConnectorPoint PointX="11.916666666666666" PointY="16.241567789713539" />
+          <ConnectorPoint PointX="12.083333333333334" PointY="16.241567789713539" />
+          <ConnectorPoint PointX="13.057291666666666" PointY="16.241567789713539" />
+          <ConnectorPoint PointX="13.333333333333334" PointY="16.241567789713539" />
+          <ConnectorPoint PointX="14.25" PointY="16.241567789713539" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFund_InvestorType" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="20.992889811197912" />
-          <ConnectorPoint PointX="8.25" PointY="20.992889811197912" />
+          <ConnectorPoint PointX="10.5" PointY="21.503326822916662" />
+          <ConnectorPoint PointX="11.7812475" PointY="21.503326822916662" />
+          <ConnectorPoint PointX="11.7812475" PointY="20.110779622395825" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundTransaction_InvestorFund" ManuallyRouted="false">
-          <ConnectorPoint PointX="9.75" PointY="18.65625" />
-          <ConnectorPoint PointX="10.244791666666666" PointY="18.65625" />
-          <ConnectorPoint PointX="10.411458333333334" PointY="18.65625" />
-          <ConnectorPoint PointX="10.791666666666666" PointY="18.65625" />
-          <ConnectorPoint PointX="10.958333333333334" PointY="18.65625" />
-          <ConnectorPoint PointX="11.510414666666666" PointY="18.65625" />
-          <ConnectorPoint PointX="11.677081333333334" PointY="18.65625" />
-          <ConnectorPoint PointX="11.916666666666666" PointY="18.65625" />
-          <ConnectorPoint PointX="12.083333333333334" PointY="18.65625" />
-          <ConnectorPoint PointX="13.5" PointY="18.65625" />
+          <ConnectorPoint PointX="12.75" PointY="18.992889811197912" />
+          <ConnectorPoint PointX="13.057291666666666" PointY="18.992889811197912" />
+          <ConnectorPoint PointX="13.333333333333334" PointY="18.992889811197912" />
+          <ConnectorPoint PointX="13.5" PointY="18.992889811197912" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundTransaction_TransactionType" ManuallyRouted="false">
-          <ConnectorPoint PointX="12.75" PointY="26.503326822916662" />
-          <ConnectorPoint PointX="13.8437475" PointY="26.503326822916662" />
-          <ConnectorPoint PointX="13.8437475" PointY="21.735779622395825" />
+          <ConnectorPoint PointX="12.75" PointY="30.878326822916662" />
+          <ConnectorPoint PointX="13.6874975" PointY="30.878326822916662" />
+          <ConnectorPoint PointX="13.6874975" PointY="21.110779622395825" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_OptionFieldValueList_OptionField" ManuallyRouted="false">
+          <ConnectorPoint PointX="20.75" PointY="5.8158268229166694" />
+          <ConnectorPoint PointX="21.5" PointY="5.8158268229166694" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

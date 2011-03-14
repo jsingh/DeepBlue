@@ -25,7 +25,7 @@ namespace DeepBlue.Models.Document {
 		// Reference to the uploaded file
 		[Required(ErrorMessage = "File is required.")]
 		[DisplayName("File:")]
-		public HttpPostedFileBase FileName { get; set; }
+		public HttpPostedFileBase File { get; set; }
 
 		public int DocumentStatus { get; set; }
 

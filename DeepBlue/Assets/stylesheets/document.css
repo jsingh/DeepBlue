@@ -1,15 +1,39 @@
 ﻿/* Document Upload */
-.document-upload, .document-search {
+.doc-upload {
 	margin-left: 30%;
 	margin-top: 10px;
 	float: left;
 }
-.document-upload .editor-label, .document-search .editor-label {
+.doc-search {
+	width: 100%;
+}
+.doc-search .doc-header {
+	width: 40%;
+	margin: 10px auto;
+}
+.doc-search .doc-result {
+	width: 60%;
+	margin: 0 auto;
+	clear: both;
+}
+.doc-upload .editor-label, .doc-search .editor-label {
 	width: 100px;
 }
-.editor-label select{
+.editor-label select {
 	width: 100px;
 }
 .editor-field {
 	width: auto;
+}
+.editor-field input {
+	width: 200px;
+}
+.doc-search .editor-field input {
+	width: 100px;
+}
+.editor-button {
+    width: 40%;
+}
+#SearchDocumentList img{
+	cursor:pointer;
 }

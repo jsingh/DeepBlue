@@ -245,6 +245,9 @@
 	border-right: 1px solid #fff;
 	width: 100%;
 }
+.flexigrid div.bDiv table{
+	width: 100%;
+}
 .flexigrid div.hDiv table th {
 	background: #fafafa url(../images/fhbg.gif) repeat-x bottom;
 	border-top: 1px solid #ccc;

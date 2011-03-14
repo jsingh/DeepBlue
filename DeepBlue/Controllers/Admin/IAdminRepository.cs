@@ -23,5 +23,22 @@ namespace DeepBlue.Controllers.Admin {
 		bool DeleteInvestorType(int id, ref bool isRelationExist);
 		IEnumerable<ErrorInfo> SaveInvestorType(InvestorType investorType);
 		#endregion
+
+		#region FundClosing
+		List<FundClosing> GetAllFundClosings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		FundClosing FindFundClosing(int id);
+		bool FundClosingNameAvailable(string name, int fundClosingId);
+		bool DeleteFundClosing(int id, ref bool isRelationExist);
+		IEnumerable<ErrorInfo> SaveFundClosing(FundClosing FundClosingID);
+		#endregion
+
+
+		#region CustomField
+		List<CustomField> GetAllCustomFields(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		CustomField FindCustomField(int id);
+		bool CustomFieldTextAvailable(string customFieldText, int customFieldId);
+		bool DeleteCustomField(int id, ref bool isRelationExist);
+		IEnumerable<ErrorInfo> SaveCustomField(CustomField investorType);
+		#endregion
 	}
 }
