@@ -10,8 +10,12 @@
 	   row.cell.Add(item.CustomFieldText);
 	   row.cell.Add(item.MODULE.ModuleName);
 	   row.cell.Add(item.DataType.DataTypeName);
-	   row.cell.Add(Html.Image("Edit.gif", new { @style = "cursor:pointer", @onclick = "javascript:customField.add(" + item.CustomFieldID.ToString() + ");" }).ToHtmlString() + "&nbsp;&nbsp;&nbsp;" +
-				  Html.Image("Delete.png", new { @style = "cursor:pointer", @onclick = "javascript:customField.deleteEntityType(" + item.CustomFieldID.ToString() + ",this);" }).ToHtmlString());
+	   if (item.Search)
+		   row.cell.Add(Html.Image("Tick.gif").ToHtmlString());
+	   else
+		   row.cell.Add(string.Empty);
+	   row.cell.Add(Html.Image("Edit.gif", new {  @onclick = "javascript:customField.add(" + item.CustomFieldID.ToString() + ");" }).ToHtmlString() + "&nbsp;&nbsp;&nbsp;" +
+				  Html.Image("Delete.png", new {  @onclick = "javascript:customField.deleteCustomField(" + item.CustomFieldID.ToString() + ",this);" }).ToHtmlString());
 	   flexData.rows.Add(row);
    } %>
 <%= JsonSerializer.ToJsonObject(flexData)%>

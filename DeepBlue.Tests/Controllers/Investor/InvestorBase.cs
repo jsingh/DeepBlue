@@ -8,12 +8,15 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Moq;
 using MbUnit.Framework;
+using DeepBlue.Controllers.Admin;
 
 namespace DeepBlue.Tests.Controllers.Investor {
     public class InvestorBase : Base {
         public InvestorController DefaultController { get; set; }
 
         public Mock<IInvestorRepository> MockRepository { get; set; }
+
+		public Mock<IAdminRepository> MockAdminRepository { get; set; }
 
         [SetUp]
         public override void Setup() {
@@ -22,8 +25,10 @@ namespace DeepBlue.Tests.Controllers.Investor {
             // Spin up mock repository and attach to controller
             MockRepository = new Mock<IInvestorRepository>();
 
+			MockAdminRepository = new Mock<IAdminRepository>();
+
             // Spin up the controller with the mock http context, and the mock repository
-            DefaultController = new InvestorController(MockRepository.Object);
+            DefaultController = new InvestorController(MockRepository.Object, MockAdminRepository.Object);
             DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
             MockRepository.Setup(x => x.GetAllCountries()).Returns(GetMockCountries());
             MockRepository.Setup(x => x.GetAllStates()).Returns(GetMockStates());

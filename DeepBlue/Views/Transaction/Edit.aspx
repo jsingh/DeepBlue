@@ -120,7 +120,7 @@
 		</div>
 		<% } %>
 	</div>
-	<div id="UpdateTargetId">
+	<div id="UpdateTargetId" style="display:none">
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">

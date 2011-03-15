@@ -102,6 +102,7 @@
 						<%: Html.DropDownListFor(model => model.Source,Model.SelectList.Source)%>
 					</div>
 				</div>
+				<% Html.RenderPartial("CustomFieldList", Model.CustomField);%>
 			</div>
 		</div>
 		<br />
@@ -512,6 +513,7 @@
 		<div class="editor-button">
 			<%: Html.ImageButton("submit.png", new { style = "width: 73px; height: 23px;" })%>
 		</div>
+		<%: Html.HiddenFor(model => model.InvestorId)%>
 		<% } %>
 	</div>
 </asp:Content>

@@ -9,6 +9,8 @@ using DeepBlue.Models.Investor;
 using DeepBlue.Models.Entity;
 using DeepBlue.Models.Investor.Enums;
 using System.Data;
+using DeepBlue.Controllers.Admin;
+using DeepBlue.Models.Admin.Enums;
 
 namespace DeepBlue.Controllers.Investor {
 
@@ -16,12 +18,15 @@ namespace DeepBlue.Controllers.Investor {
 
 		public IInvestorRepository InvestorRepository { get; set; }
 
+		public IAdminRepository AdminRepository { get; set; }
+
 		public InvestorController()
-			: this(new InvestorRepository()) {
+			: this(new InvestorRepository(), new AdminRepository()) {
 		}
 
-		public InvestorController(IInvestorRepository repository) {
-			InvestorRepository = repository;
+		public InvestorController(IInvestorRepository investorRepository, IAdminRepository adminRepository) {
+			InvestorRepository = investorRepository;
+			AdminRepository = adminRepository;
 		}
 
 		//
@@ -55,6 +60,9 @@ namespace DeepBlue.Controllers.Investor {
 			model.SelectList.AddressTypes = SelectListFactory.GetAddressTypeSelectList(InvestorRepository.GetAllAddressTypes());
 			model.SelectList.DomesticForeigns = SelectListFactory.GetDomesticForeignList();
 			model.SelectList.Source = SelectListFactory.GetSourceList();
+			model.CustomField = new CustomFieldModel();
+			model.CustomField.Fields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor);
+			model.CustomField.Values = new List<CustomFieldValueDetail>();
 			model.DomesticForeign = true;
 			model.AccountLength = 1;
 			model.ContactLength = 1;
@@ -204,6 +212,38 @@ namespace DeepBlue.Controllers.Investor {
 					}
 				}
 				InvestorRepository.SaveInvestor(investor);
+				// Update custom field Values
+				IList<CustomField> customFields = AdminRepository.GetAllCustomFields((int)Models.Admin.Enums.Module.Investor);
+				foreach (var field in customFields) {
+					var customFieldValue = collection["CustomField_" + field.CustomFieldID.ToString()];
+					if (customFieldValue != null) {
+						CustomFieldValue value = new CustomFieldValue();
+						value.CreatedBy = AppSettings.CreatedByUserId;
+						value.CreatedDate = DateTime.Now;
+						value.CustomFieldID = field.CustomFieldID;
+						value.Key = investor.InvestorID;
+						value.LastUpdatedBy = AppSettings.CreatedByUserId;
+						value.LastUpdatedDate = DateTime.Now;
+						switch ((CustomFieldDataType)field.DataTypeID) {
+							case CustomFieldDataType.Integer:
+								value.IntegerValue = Convert.ToInt32(customFieldValue);
+								break;
+							case CustomFieldDataType.DateTime:
+								value.DateValue = Convert.ToDateTime(customFieldValue);
+								break;
+							case CustomFieldDataType.Text:
+								value.TextValue = customFieldValue;
+								break;
+							case CustomFieldDataType.Currency:
+								value.CurrencyValue = Convert.ToDecimal(customFieldValue);
+								break;
+							case CustomFieldDataType.Boolean:
+								value.BooleanValue = Convert.ToBoolean(customFieldValue);
+								break;
+						}
+						value.Save();
+					}
+				}
 				return RedirectToAction("New", "Investor");
 			} else {
 				ViewData["MenuName"] = "Investor";
@@ -230,6 +270,9 @@ namespace DeepBlue.Controllers.Investor {
 			model.SelectList.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(InvestorRepository.GetAllInvestorEntityTypes());
 			model.ContactInformations = new List<ContactInformation>();
 			model.AccountInformations = new List<AccountInformation>();
+			model.CustomField = new CustomFieldModel();
+			model.CustomField.Fields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor);
+			model.CustomField.Values = new List<CustomFieldValueDetail>();
 			return View(model);
 		}
 
@@ -418,6 +461,16 @@ namespace DeepBlue.Controllers.Investor {
 			return true;
 		}
 
+		//
+		// GET: /Investor/InvestorNameAvailable
+		[HttpGet]
+		public string InvestorNameAvailable(string InvestorName, int InvestorId) {
+			if (InvestorRepository.InvestorNameAvailable(InvestorName, InvestorId))
+				return "Investor Name is already exist";
+			else
+				return string.Empty;
+		}
+
 
 		//
 		// GET: /Investor/FindInvestors
@@ -542,6 +595,20 @@ namespace DeepBlue.Controllers.Investor {
 						row.cell.Add(string.Empty);
 					model.FundInformations.rows.Add(row);
 				}
+				model.CustomField = new CustomFieldModel();
+				IList<CustomFieldValue> customFieldValues = InvestorRepository.GetAllCustomFieldValues(id);
+				model.CustomField.Values = new List<CustomFieldValueDetail>();
+				foreach(var value in customFieldValues){
+					model.CustomField.Values.Add(new CustomFieldValueDetail { CustomFieldId = value.CustomFieldID,
+					CustomFieldValueId = value.CustomFieldID, 
+					DataTypeId = value.CustomField.DataTypeID,
+					BooleanValue = value.BooleanValue, 
+					CurrencyValue = value.CurrencyValue, 
+					DateValue = (value.DateValue ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"), 
+					IntegerValue = value.IntegerValue, 
+					TextValue = value.TextValue });
+				}
+				
 			}
 			return Json(model, JsonRequestBehavior.AllowGet);
 		}

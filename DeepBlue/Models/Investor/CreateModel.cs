@@ -5,12 +5,18 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Web.Mvc;
+using DeepBlue.Models.Entity;
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Investor {
 	public class CreateModel {
+		
 		public SelectListModel SelectList = new SelectListModel();
 
+		public int InvestorId { get; set; }
+
 		[Required(ErrorMessage = "Investor Name is required")]
+		[RemoteUID_(Action = "InvestorNameAvailable", Controller = "Investor", ValidateParameterName = "InvestorName", Params = new string[] { "InvestorId" })]
 		[DisplayName("Investor Name:")]
 		public string InvestorName { get; set; }
 
@@ -57,11 +63,9 @@ namespace DeepBlue.Models.Investor {
 		public string Fax { get; set; }
 
 		[RegularExpression("^([_a-zA-Z0-9-]+)(\\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+\\.)+([a-zA-Z]{2,3})$", ErrorMessage = "Invalid Email")]
-		[DataType(DataType.EmailAddress)]
 		[DisplayName("Email:")]
 		public string Email { get; set; }
 
-		[DataType(DataType.Url)]
 		[DisplayName("Web Address:")]
 		public string WebAddress { get; set; }
 
@@ -171,6 +175,8 @@ namespace DeepBlue.Models.Investor {
 
 		[DisplayName("Investor Letters:")]
 		public bool InvestorLetters { get; set; }
+
+		public CustomFieldModel CustomField { get; set; }
 	}
 
 	public class SelectListModel {

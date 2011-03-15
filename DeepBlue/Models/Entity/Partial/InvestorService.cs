@@ -17,16 +17,13 @@ namespace DeepBlue.Models.Entity {
 				if (investor.InvestorID == 0) {
 					context.Investors.AddObject(investor);
 				} else {
-					context.Investors.Attach(new Investor { InvestorID = investor.InvestorID });
-					context.Investors.ApplyCurrentValues(investor);
 					// Update investor account,address,contact,communication values
 					foreach (var investorAccount in investor.InvestorAccounts) {
 						if (investorAccount.InvestorAccountID > 0) {
 							context.InvestorAccounts.SingleOrDefault(account => account.InvestorAccountID == investorAccount.InvestorAccountID);
 							context.InvestorAccounts.ApplyCurrentValues(investorAccount);
 						} else {
-							//	 context.ObjectStateManager.ChangeObjectState(investorAccount, System.Data.EntityState.Added);
-							//	context.InvestorAccounts.AddObject(investorAccount);
+							context.AttachTo("InvestorAccounts",investorAccount);
 							//updateInvestor.InvestorAccounts.Add(new InvestorAccount {
 							//    Account = investorAccount.Account,
 							//    Attention = investorAccount.Attention,
@@ -111,6 +108,8 @@ namespace DeepBlue.Models.Entity {
 							}
 						}
 					}
+					context.Investors.Attach(new Investor { InvestorID = investor.InvestorID });
+					context.Investors.ApplyCurrentValues(investor);
 				}
 				context.SaveChanges();
 			}
@@ -118,5 +117,8 @@ namespace DeepBlue.Models.Entity {
 		}
 	}
 
- 
+	public partial class Investor {
+		
+		public IList<InvestorAccount> InvestorAccountList { get; set; }
+	}
 }

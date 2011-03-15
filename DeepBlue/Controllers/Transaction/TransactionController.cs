@@ -255,7 +255,7 @@ namespace DeepBlue.Controllers.Transaction {
 			this.TryUpdateModel(editModel);
 			if (ModelState.IsValid) {
 				InvestorFund investorFund = InvestorRepository.FindInvestorFund(editModel.InvestorFundId);
-				investorFund.UnfundedAmount = editModel.CommitmentAmount - InvestorRepository.FindSumOfSellAmount(editModel.InvestorFundId);
+				investorFund.UnfundedAmount = editModel.CommitmentAmount;
 				investorFund.TotalCommitment = editModel.CommitmentAmount;
 				InvestorRepository.SaveInvestorFund(investorFund);
 				return true;

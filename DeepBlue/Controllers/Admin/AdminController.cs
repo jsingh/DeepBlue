@@ -97,8 +97,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		[HttpGet]
 		public string DeleteInvestorType(int id) {
-			bool isRelationExist = false;
-			if (AdminRepository.DeleteInvestorType(id, ref isRelationExist) == false) {
+			if (AdminRepository.DeleteInvestorType(id) == false) {
 				return "Cann't Delete! Child record found!";
 			} else {
 				return string.Empty;
@@ -187,8 +186,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		[HttpGet]
 		public string DeleteInvestorEntityType(int id) {
-			bool isRelationExist = false;
-			if (AdminRepository.DeleteInvestorEntityType(id, ref isRelationExist) == false) {
+			if (AdminRepository.DeleteInvestorEntityType(id) == false) {
 				return "Cann't Delete! Child record found!";
 			} else {
 				return string.Empty;
@@ -236,7 +234,7 @@ namespace DeepBlue.Controllers.Admin {
 				model.Name = fundClosing.Name;
 				model.FundClosingDate = fundClosing.FundClosingDate;
 				model.FundID = fundClosing.FundID;
-				model.IsFirstClosing =  fundClosing.IsFirstClosing;
+				model.IsFirstClosing = fundClosing.IsFirstClosing;
 			}
 			model.FundNames = SelectListFactory.GetFundSelectList(TransactionRepository.GetAllFundNames());
 			return View(model);
@@ -281,8 +279,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		[HttpGet]
 		public string DeleteFundClosing(int id) {
-			bool isRelationExist = false;
-			if (AdminRepository.DeleteFundClosing(id, ref isRelationExist) == false) {
+			if (AdminRepository.DeleteFundClosing(id) == false) {
 				return "Cann't Delete! Child record found!";
 			} else {
 				return string.Empty;
@@ -299,7 +296,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region Custom Field  
+		#region Custom Field
 
 		public ActionResult CustomField() {
 			ViewData["MenuName"] = "Admin";
@@ -311,10 +308,10 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public ActionResult CustomFieldList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			int totalRows = 0;
-			IList<CustomField> investorCustomFields = AdminRepository.GetAllCustomFields(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			IList<CustomField> customFields = AdminRepository.GetAllCustomFields(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
 			ViewData["TotalRows"] = totalRows;
 			ViewData["PageNo"] = pageIndex;
-			return View(investorCustomFields);
+			return View(customFields);
 		}
 
 		//
@@ -323,6 +320,9 @@ namespace DeepBlue.Controllers.Admin {
 		public ActionResult EditCustomField(int id) {
 			EditCustomFieldModel model = new EditCustomFieldModel();
 			CustomField customField = AdminRepository.FindCustomField(id);
+			model.Modules = SelectListFactory.GetModuleSelectList(AdminRepository.GetAllModules());
+			model.DataTypes = SelectListFactory.GetDataTypeSelectList(AdminRepository.GetAllDataTypes());
+			model.OptionFields = new List<EditOptionFieldModel>();
 			if (customField != null) {
 				model.CustomFieldId = customField.CustomFieldID;
 				model.CustomFieldText = customField.CustomFieldText;
@@ -330,6 +330,17 @@ namespace DeepBlue.Controllers.Admin {
 				model.ModuleId = customField.ModuleID;
 				model.OptionalText = customField.OptionalText;
 				model.Search = customField.Search;
+				foreach (var field in customField.OptionFields) {
+					model.OptionFields.Add(new EditOptionFieldModel {
+						CustomFieldId = field.CustomFieldID,
+						IsDefault = field.IsDefault,
+						OptionFieldId = field.OptionFieldID,
+						OptionText = field.OptionText,
+						SortOrder = field.SortOrder
+					});
+				}
+			} else {
+				model.OptionFields.Add(new EditOptionFieldModel());
 			}
 			return View(model);
 		}
@@ -374,8 +385,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		[HttpGet]
 		public string DeleteCustomField(int id) {
-			bool isRelationExist = false;
-			if (AdminRepository.DeleteCustomField(id, ref isRelationExist) == false) {
+			if (AdminRepository.DeleteCustomField(id) == false) {
 				return "Cann't Delete! Child record found!";
 			} else {
 				return string.Empty;
@@ -385,11 +395,94 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public string CustomFieldTextAvailable(string CustomFieldText, int CustomFieldId) {
 			if (AdminRepository.CustomFieldTextAvailable(CustomFieldText, CustomFieldId))
-				return "Custom Field Text already exists.";
+				return "Name already exists.";
 			else
 				return string.Empty;
 		}
 
+		#endregion
+
+		#region Data Type
+
+		public ActionResult DataType() {
+			ViewData["MenuName"] = "Admin";
+			return View();
+		}
+
+		//
+		// GET: /Admin/DataTypeList
+		[HttpGet]
+		public ActionResult DataTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			int totalRows = 0;
+			IList<DataType> dataTypes = AdminRepository.GetAllDataTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			ViewData["TotalRows"] = totalRows;
+			ViewData["PageNo"] = pageIndex;
+			return View(dataTypes);
+		}
+
+		//
+		// GET: /Admin/DataType
+		[HttpGet]
+		public ActionResult EditDataType(int id) {
+			EditDataTypeModel model = new EditDataTypeModel();
+			DataType dataType = AdminRepository.FindDataType(id);
+			if (dataType != null) {
+				model.DataTypeId = dataType.DataTypeID;
+				model.DataTypeName = dataType.DataTypeName;
+			} 
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateDataType
+		[HttpPost]
+		public ActionResult UpdateDataType(FormCollection collection) {
+			EditDataTypeModel model = new EditDataTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				DataType dataType = AdminRepository.FindDataType(model.DataTypeId);
+				if (dataType == null) {
+					dataType = new DataType();
+				}
+				dataType.DataTypeName = model.DataTypeName;
+				dataType.DataTypeID = model.DataTypeId;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveDataType(dataType);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage;
+					}
+				} else {
+					resultModel.Result = "True";
+				}
+			} else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage;
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteDataType(int id) {
+			if (AdminRepository.DeleteDataType(id) == false) {
+				return "Cann't Delete! Child record found!";
+			} else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string DataTypeNameAvailable(string DataTypeName, int DataTypeId) {
+			if (AdminRepository.DataTypeNameAvailable(DataTypeName, DataTypeId))
+				return "Name already exists.";
+			else
+				return string.Empty;
+		}
 
 		#endregion
 

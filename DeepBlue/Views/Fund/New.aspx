@@ -15,7 +15,7 @@
 	<% using (Ajax.BeginForm("Create", null, new AjaxOptions { UpdateTargetId="UpdateTargetId", HttpMethod = "Post", OnBegin = "fund.onCreateFundBegin", OnSuccess = "fund.onCreateFundSuccess" }, new { @id = "AddNewFund" })) {%>
 	<% Html.RenderPartial("FundDetail", Model); %>
 	<% } %>
-	<div id="UpdateTargetId">
+	<div id="UpdateTargetId" style="display:none">
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">

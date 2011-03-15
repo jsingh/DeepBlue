@@ -56,12 +56,45 @@
 					 	i=parseInt(i)+1;
 					 	editInvestor.loadAccountInfo($investorInfo,account,i);
 					 });
+			// Read Custom Fields
+			$.each(
+					 data.CustomField.Values,
+					 function (i,value) {
+					 	var obj=$("'#CustomField_"+value.CustomFieldId+"'",$investorInfo).get(0);
+					 	if(obj) {
+					 		obj.id=obj.name;
+					 		editInvestor.createDispField(obj);
+					 		switch(value.DataTypeId) {
+					 			case 1: // Integer 
+					 				obj.value=value.IntegerValue;
+					 				break;
+					 			case 2: // Text
+					 				obj.value=value.TextValue;
+					 				break;
+					 			case 3: // Boolean
+					 				obj.checked=value.BooleanValue;
+					 				break;
+					 			case 4: // DateTime
+					 				obj.value=value.DateValue;
+					 				break;
+					 			case 5: // Currency
+					 				obj.value=value.CurrencyValue;
+					 				break;
+					 		}
+					 	}
+					 });
 			if(alreadyExist==false) {
 				editInvestor.applyAccordion($investorInfo);
 			}
 			editInvestor.loadDisplCtl($investorInfo);
 			$(".InvestorUpdateLoading").remove();
 		});
+	}
+	,createDispField: function (obj) {
+		var span=document.createElement("span");
+		span.id="Disp_"+obj.id;
+		span.innerHTML=obj.value;
+		$(obj).before(span);
 	}
 	,buildFundTable: function ($investorInfo,data) {
 		var fundDetails=$("#funddetails",$investorInfo).html("");

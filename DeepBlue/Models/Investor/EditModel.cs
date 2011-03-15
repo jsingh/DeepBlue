@@ -55,6 +55,8 @@ namespace DeepBlue.Models.Investor {
 		public FlexigridData FundInformations { get; set; }
 
 		public int id { get; set; }
+
+		public CustomFieldModel CustomField { get; set; }
 	}
 
 	public class AddressInformation {

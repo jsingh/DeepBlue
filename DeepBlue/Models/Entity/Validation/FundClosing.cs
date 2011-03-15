@@ -11,7 +11,7 @@ namespace DeepBlue.Models.Entity {
 		public class FundClosingMD {
 			#region Primitive Properties
 			[Required]
-			[Range((int)(int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
 			public global::System.Int32 FundID {
 				get;
 				set;

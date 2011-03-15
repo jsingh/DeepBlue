@@ -1,13 +1,13 @@
-﻿var customField={
+﻿var dataType={
 	init: function () {
 		this.resizeIframe();
 	}
 	,add: function (id) {
 		var dt=new Date();
-		var url="/Admin/EditCustomField/"+id+"?t="+dt.getTime();
-		$("#addCustomFieldDialog").remove();
+		var url="/Admin/EditDataType/"+id+"?t="+dt.getTime();
+		$("#addDataTypeDialog").remove();
 		var iframe=document.createElement("div");
-		iframe.id="addCustomFieldDialog";
+		iframe.id="addDataTypeDialog";
 		iframe.innerHTML+="<div id='loading'><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</div>";
 		iframe.innerHTML+='<iframe id="iframe_modal" allowtransparency="true" marginheight="0" marginwidth="0"  width="100%" frameborder="0" class="externalSite"  />';
 		var ifrm=$("#iframe_modal",iframe).get(0);
@@ -15,7 +15,7 @@
 		$(ifrm).load(function () { $("#loading",iframe).remove(); });
 		ifrm.src=url;
 		$(iframe).dialog({
-			title: "Custom Field",
+			title: "Data Type",
 			autoOpen: true,
 			width: 400,
 			modal: true,
@@ -23,15 +23,15 @@
 			autoResize: true
 		});
 	}
-	,deleteCustomField: function (id,img) {
-		if(confirm("Are you sure you want to delete this custom field?")) {
+	,deleteDataType: function (id,img) {
+		if(confirm("Are you sure you want to delete this data type?")) {
 			var dt=new Date();
-			var url="/Admin/DeleteCustomField/"+id+"?t="+dt.getTime();
+			var url="/Admin/DeleteDataType/"+id+"?t="+dt.getTime();
 			$.get(url,function (data) {
 				if(data!="") {
 					alert(data);
 				} else {
-					$("#CustomFieldList").flexReload();
+					$("#DataTypeList").flexReload();
 				}
 			});
 		}
@@ -71,21 +71,21 @@
 		return true;
 	}
 	,closeDialog: function (reload) {
-		$("#addCustomFieldDialog").dialog('close');
+		$("#addDataTypeDialog").dialog('close');
 		if(reload==true) {
-			$("#CustomFieldList").flexReload();
+			$("#DataTypeList").flexReload();
 		}
 	}
-	,onCreateCustomFieldBegin: function () {
+	,onCreateDataTypeBegin: function () {
 		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 	}
-	,onCreateCustomFieldSuccess: function () {
+	,onCreateDataTypeSuccess: function () {
 		$("#UpdateLoading").html("");
 		var UpdateTargetId=$("#UpdateTargetId");
 		if(jQuery.trim(UpdateTargetId.html())!="True") {
 			alert(UpdateTargetId.html())
 		} else {
-			parent.customField.closeDialog(true);
+			parent.dataType.closeDialog(true);
 		}
 	}
 }

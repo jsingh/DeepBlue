@@ -12,7 +12,7 @@ namespace DeepBlue.Models.Entity {
         public class InvestorMD {
             #region Primitive Properties
             [Required]
-            [Range((int)(int)ConfigUtil.EntityIDStartRange, int.MaxValue)]
+            [Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue)]
             public global::System.Int32 EntityID {
                 get;
                 set;

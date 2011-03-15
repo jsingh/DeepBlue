@@ -6,16 +6,64 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%= Html.JavascriptInclueTag("CustomField.js")%>
+	<%= Html.StylesheetLinkTag("customfield.css")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<%Html.EnableClientValidation(); %>
 	<% using (Ajax.BeginForm("UpdateCustomField", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "customField.onCreateCustomFieldBegin", OnSuccess = "customField.onCreateCustomFieldSuccess" }, new { @id = "AddNewCustomField" })) {%>
-	<div class="editor-label auto-width">
+	<div class="editor-label">
 		<%: Html.LabelFor(model => model.CustomFieldText) %>
 	</div>
 	<div class="editor-field">
 		<%: Html.TextBoxFor(model => model.CustomFieldText) %>
 		<%: Html.ValidationMessageFor(model => model.CustomFieldText) %>
+	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.ModuleId) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.DropDownListFor(model => model.ModuleId,Model.Modules) %>
+		<%: Html.ValidationMessageFor(model => model.ModuleId) %>
+	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.DataTypeId) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.DropDownListFor(model => model.DataTypeId,Model.DataTypes) %>
+		<%: Html.ValidationMessageFor(model => model.DataTypeId) %>
+	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.OptionalText) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.TextBoxFor(model => model.OptionalText) %>
+	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.Search) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.CheckBoxFor(model => model.Search, new { @style="width:auto" }) %>
+	</div>
+	<div id="OptionalFields" style="display: none">
+		<%if (Model.OptionFields.Count > 0) {%>
+		<table cellpadding="0" cellspacing="0" border="0">
+			<thead>
+				<tr>
+					<th>
+						Text
+					</th>
+					<th>
+						Default
+					</th>
+					<th>
+					</th>
+				</tr>
+			</thead>
+			<%foreach (var field in Model.OptionFields) {%>
+			<%Html.RenderPartial("EditOptionalField", field);%>
+			<%}%>
+		</table>
+		<%}%>
 	</div>
 	<div class="status">
 		<%: Html.Span("", new { id = "UpdateLoading" })%></div>
@@ -29,7 +77,7 @@
 	</div>
 	<%: Html.HiddenFor(model => model.CustomFieldId) %>
 	<% } %>
-	<div id="UpdateTargetId">
+	<div id="UpdateTargetId" style="display:none">
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">

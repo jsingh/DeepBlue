@@ -103,6 +103,7 @@
     <Compile Include="Helpers\UploadFile.cs" />
     <Compile Include="Helpers\ValidationHelpers.cs" />
     <Compile Include="Models\Admin\EditCustomFieldModel.cs" />
+    <Compile Include="Models\Admin\EditDataTypeModel.cs" />
     <Compile Include="Models\Admin\EditFundClosingModel.cs" />
     <Compile Include="Models\Admin\EditInvestorEntityTypeModel.cs" />
     <Compile Include="Models\Admin\EditInvestorTypeModel.cs" />
@@ -117,6 +118,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\Partial\CustomFieldValueService.cs" />
+    <Compile Include="Models\Entity\Partial\CustomFieldService.cs" />
+    <Compile Include="Models\Entity\Partial\DataTypeService.cs" />
     <Compile Include="Models\Entity\Partial\FundClosingService.cs" />
     <Compile Include="Models\Entity\Partial\FundService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorEntityTypeService.cs" />
@@ -125,6 +129,9 @@
     <Compile Include="Models\Entity\Partial\InvestorFundService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorTypeService.cs" />
+    <Compile Include="Models\Entity\Validation\CustomFieldValue.cs" />
+    <Compile Include="Models\Entity\Validation\CustomField.cs" />
+    <Compile Include="Models\Entity\Validation\DataType.cs" />
     <Compile Include="Models\Entity\Validation\Fund.cs" />
     <Compile Include="Models\Entity\Validation\FundClosing.cs" />
     <Compile Include="Models\Entity\Validation\InvestorEntityType.cs" />
@@ -137,6 +144,7 @@
     <Compile Include="Models\Fund\EditModel.cs" />
     <Compile Include="Models\Fund\FundDetail.cs" />
     <Compile Include="Models\Fund\FundListModel.cs" />
+    <Compile Include="Models\Investor\CustomFieldModel.cs" />
     <Compile Include="Models\Transaction\CreateModel.cs" />
     <Compile Include="Models\Investor\CreateModel.cs" />
     <Compile Include="Controllers\Investor\IInvestorRepository.cs" />
@@ -245,6 +253,7 @@
     <Content Include="Assets\images\uup.png" />
     <Content Include="Assets\images\wbg.gif" />
     <Content Include="Assets\images\xls.png" />
+    <Content Include="Assets\javascripts\DataType.js" />
     <Content Include="Assets\javascripts\CustomField.js" />
     <Content Include="Assets\javascripts\DocumentSearch.js" />
     <Content Include="Assets\javascripts\DocumentUpload.js" />
@@ -269,6 +278,7 @@
     <Content Include="Assets\javascripts\MicrosoftMvcValidation.js" />
     <Content Include="Assets\javascripts\SearchInvestor.js" />
     <Content Include="Assets\javascripts\TransactionController.js" />
+    <Content Include="Assets\stylesheets\customfield.css" />
     <Content Include="Assets\stylesheets\ddlmenu.css" />
     <Content Include="Assets\stylesheets\document.css" />
     <Content Include="Assets\stylesheets\flexigrid.css" />
@@ -277,6 +287,10 @@
     <Content Include="Assets\stylesheets\newInvestor.css" />
     <Content Include="Global.asax" />
     <Content Include="Assets\stylesheets\site.css" />
+    <Content Include="Views\Admin\EditDataType.aspx" />
+    <Content Include="Views\Admin\DataTypeList.ascx" />
+    <Content Include="Views\Admin\DataType.aspx" />
+    <Content Include="Views\Admin\EditOptionalField.ascx" />
     <Content Include="Views\Admin\FundClosing.aspx" />
     <Content Include="Views\Admin\FundClosingList.ascx" />
     <Content Include="Views\Admin\EditCustomField.aspx" />
@@ -303,6 +317,7 @@
     <Content Include="Views\Fund\New.aspx" />
     <Content Include="Views\Fund\Success.ascx" />
     <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Investor\CustomFieldList.ascx" />
     <Content Include="Views\Investor\Edit.aspx" />
     <Content Include="Views\Investor\FundList.ascx" />
     <Content Include="Views\Investor\New.aspx" />

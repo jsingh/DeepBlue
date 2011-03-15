@@ -170,6 +170,8 @@
 				<%: Html.ActionLink("Create Module", "Module", "Admin")%></li>
 			<li>
 				<%: Html.ActionLink("Create Custom Field", "CustomField", "Admin")%></li>
+			<li>
+				<%: Html.ActionLink("Create Data Type", "DataType", "Admin")%></li>
 		</ul>
 	</div>
 	<div class="mdiv" id="Doc_Management" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">

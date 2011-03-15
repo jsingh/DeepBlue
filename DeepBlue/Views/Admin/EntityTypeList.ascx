@@ -12,8 +12,8 @@
 		   row.cell.Add(Html.Image("Tick.gif").ToHtmlString());
 	   else
 		   row.cell.Add(string.Empty);
-	   row.cell.Add(Html.Image("Edit.gif", new { @style = "cursor:pointer", @onclick = "javascript:invEntityType.add(" + item.InvestorEntityTypeID.ToString() + ");" }).ToHtmlString() + "&nbsp;&nbsp;&nbsp;" +
-					Html.Image("Delete.png", new { @style = "cursor:pointer", @onclick = "javascript:invEntityType.deleteEntityType(" + item.InvestorEntityTypeID.ToString() + ",this);" }).ToHtmlString());
+	   row.cell.Add(Html.Image("Edit.gif", new {  @onclick = "javascript:invEntityType.add(" + item.InvestorEntityTypeID.ToString() + ");" }).ToHtmlString() + "&nbsp;&nbsp;&nbsp;" +
+					Html.Image("Delete.png", new {  @onclick = "javascript:invEntityType.deleteEntityType(" + item.InvestorEntityTypeID.ToString() + ",this);" }).ToHtmlString());
 	   flexData.rows.Add(row);
    } %>
 <%= JsonSerializer.ToJsonObject(flexData)%>

@@ -12,7 +12,7 @@ namespace DeepBlue.Controllers.Admin {
 		List<InvestorEntityType> GetAllInvestorEntityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		InvestorEntityType FindInvestorEntityType(int id);
 		bool InvestorEntityTypeNameAvailable(string investorEntityTypeName, int investorEntityTypeID);
-		bool DeleteInvestorEntityType(int id, ref bool isRelationExist);
+		bool DeleteInvestorEntityType(int id);
 		IEnumerable<ErrorInfo> SaveInvestorEntityType(InvestorEntityType investorEntityType);
 		#endregion
 
@@ -20,7 +20,7 @@ namespace DeepBlue.Controllers.Admin {
 		List<InvestorType> GetAllInvestorTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		InvestorType FindInvestorType(int id);
 		bool InvestorTypeNameAvailable(string investorTypeName, int investorTypeID);
-		bool DeleteInvestorType(int id, ref bool isRelationExist);
+		bool DeleteInvestorType(int id);
 		IEnumerable<ErrorInfo> SaveInvestorType(InvestorType investorType);
 		#endregion
 
@@ -28,17 +28,29 @@ namespace DeepBlue.Controllers.Admin {
 		List<FundClosing> GetAllFundClosings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		FundClosing FindFundClosing(int id);
 		bool FundClosingNameAvailable(string name, int fundClosingId);
-		bool DeleteFundClosing(int id, ref bool isRelationExist);
-		IEnumerable<ErrorInfo> SaveFundClosing(FundClosing FundClosingID);
+		bool DeleteFundClosing(int id);
+		IEnumerable<ErrorInfo> SaveFundClosing(FundClosing fundClosing);
 		#endregion
-
-
+		
 		#region CustomField
 		List<CustomField> GetAllCustomFields(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<CustomField> GetAllCustomFields(int moduleId);
+		List<MODULE> GetAllModules();
+		List<DataType> GetAllDataTypes();
 		CustomField FindCustomField(int id);
+		CustomFieldValue FindCustomFieldValue(int customFieldId,int key);
 		bool CustomFieldTextAvailable(string customFieldText, int customFieldId);
-		bool DeleteCustomField(int id, ref bool isRelationExist);
-		IEnumerable<ErrorInfo> SaveCustomField(CustomField investorType);
+		bool DeleteCustomField(int id);
+		IEnumerable<ErrorInfo> SaveCustomField(CustomField customField);
+		IEnumerable<ErrorInfo> SaveCustomFieldValue(CustomFieldValue customFieldValue);
+		#endregion
+		
+		#region DataType
+		List<DataType> GetAllDataTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		DataType FindDataType(int id);
+		bool DataTypeNameAvailable(string dataTypeText, int dataTypeId);
+		bool DeleteDataType(int id);
+		IEnumerable<ErrorInfo> SaveDataType(DataType dataType);
 		#endregion
 	}
 }

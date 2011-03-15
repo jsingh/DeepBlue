@@ -17,6 +17,7 @@ namespace DeepBlue.Controllers.Investor {
         List<InvestorEntityType> GetAllInvestorEntityTypes();
         List<InvestorType> GetAllInvestorTypes();
         List<CommunicationType> GetAllCommunicationTypes();
+		List<CustomFieldValue> GetAllCustomFieldValues(int investorId);
 		#endregion
 
 		#region Find
@@ -30,6 +31,7 @@ namespace DeepBlue.Controllers.Investor {
         InvestorFund FindInvestorFund(int investorFundId);
 		InvestorFundTransaction FindInvestorFundTransaction(int transactionId);
 		decimal FindSumOfSellAmount(int investorFundId);
+		bool InvestorNameAvailable(string invesorName, int investorId);
 		#endregion
 		 
 		#region Delete

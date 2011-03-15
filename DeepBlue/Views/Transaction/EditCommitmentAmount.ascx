@@ -32,6 +32,6 @@
 		<%: Html.Image("Close.png", new { style = "width: 73px; height: 23px;cursor:pointer;", onclick = "editTransaction.closeEditCommitAmtDialog();" })%>
 	</div>
 </div>
-<div id="UpdateTargetId">
+<div id="UpdateTargetId" style="display:none">
 </div>
 <% } %>

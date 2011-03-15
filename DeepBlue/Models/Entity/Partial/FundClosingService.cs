@@ -11,13 +11,13 @@ namespace DeepBlue.Models.Entity {
 
 		#region IFundClosingService Members
 
-		public void SaveFundClose(FundClosing  fundcloseid) {
+		public void SaveFundClose(FundClosing  fundclose) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				if (fundcloseid.FundClosingID == 0) {
-					context.FundClosings.AddObject(fundcloseid);
+				if (fundclose.FundClosingID == 0) {
+					context.FundClosings.AddObject(fundclose);
 				} else {
-					context.FundClosings.SingleOrDefault(entityType => entityType.FundClosingID == fundcloseid.FundClosingID);
-					context.FundClosings.ApplyCurrentValues(fundcloseid);
+					context.FundClosings.SingleOrDefault(entityType => entityType.FundClosingID == fundclose.FundClosingID);
+					context.FundClosings.ApplyCurrentValues(fundclose);
 				}
 				context.SaveChanges();
 			}

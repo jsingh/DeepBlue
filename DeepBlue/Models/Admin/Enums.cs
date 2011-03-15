@@ -9,4 +9,19 @@ namespace DeepBlue.Models.Admin.Enums {
 		FOIA = 2,
 		ERISA = 3
 	}
+
+	public enum Module {
+		Investor = 1,
+		Fund = 2
+	}
+
+	public enum CustomFieldDataType {
+		Integer = 1,
+		Text = 2,
+		Boolean = 3,
+		DateTime = 4,
+		Currency = 5,
+		MultiSelectOpiton = 6,
+		SingleSelectOption = 7
+	}
 }

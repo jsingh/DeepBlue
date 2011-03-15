@@ -1,5 +1,4 @@
-﻿@charset "UTF-8";
-/* CSS Document */
+﻿/* CSS Document */
 
 .flexigrid {
 	font-family: Arial;
@@ -245,7 +244,7 @@
 	border-right: 1px solid #fff;
 	width: 100%;
 }
-.flexigrid div.bDiv table{
+.flexigrid div.bDiv table {
 	width: 100%;
 }
 .flexigrid div.hDiv table th {
@@ -423,7 +422,7 @@ div.colCopy {
 	vertical-align: top;
 	white-space: nowrap;
 	background-color: #fff;
-	padding-top: 2px;
+	padding-top: 5px;
 }
 
 .flexigrid div.hDiv th div {
@@ -456,7 +455,9 @@ div.colCopy {
 	border-top: 0px solid #fff;
 	padding-bottom: 4px;
 }
-
+.flexigrid div.bDiv td div img {
+	cursor: pointer;
+}
 
 .flexigrid tr td.sorted {
 	background: #f3f3f3;

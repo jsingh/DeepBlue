@@ -171,6 +171,34 @@ namespace DeepBlue.Helpers {
 			return documentStatusList;
 		}
 
+		public static List<SelectListItem> GetModuleSelectList(List<MODULE> modules) {
+			List<SelectListItem> moduleList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			moduleList.Add(item);
+			foreach (var module in modules) {
+				item = new SelectListItem();
+				item.Text = module.ModuleName;
+				item.Value = module.ModuleID.ToString();
+				moduleList.Add(item);
+			}
+			return moduleList;
+		}
 
+		public static List<SelectListItem> GetDataTypeSelectList(List<DataType> dataTypes) {
+			List<SelectListItem> dataTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			dataTypeList.Add(item);
+			foreach (var dataType in dataTypes) {
+				item = new SelectListItem();
+				item.Text = dataType.DataTypeName;
+				item.Value = dataType.DataTypeID.ToString();
+				dataTypeList.Add(item);
+			}
+			return dataTypeList;
+		}
 	}
 }
