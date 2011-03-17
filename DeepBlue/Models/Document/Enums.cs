@@ -14,4 +14,9 @@ namespace DeepBlue.Models.Document {
 		Word = 2,
 		Excel = 3
 	}
+
+	public enum UploadType {
+		Upload = 1,
+		Link = 2
+	}
 }

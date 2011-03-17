@@ -27,7 +27,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region FundClosing
 		List<FundClosing> GetAllFundClosings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		FundClosing FindFundClosing(int id);
-		bool FundClosingNameAvailable(string name, int fundClosingId);
+		bool FundClosingNameAvailable(string name, int fundClosingId, int fundId);
 		bool DeleteFundClosing(int id);
 		IEnumerable<ErrorInfo> SaveFundClosing(FundClosing fundClosing);
 		#endregion
@@ -35,11 +35,12 @@ namespace DeepBlue.Controllers.Admin {
 		#region CustomField
 		List<CustomField> GetAllCustomFields(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		List<CustomField> GetAllCustomFields(int moduleId);
+		List<CustomFieldValue> GetAllCustomFieldValues(int key);
 		List<MODULE> GetAllModules();
 		List<DataType> GetAllDataTypes();
 		CustomField FindCustomField(int id);
 		CustomFieldValue FindCustomFieldValue(int customFieldId,int key);
-		bool CustomFieldTextAvailable(string customFieldText, int customFieldId);
+		bool CustomFieldTextAvailable(string customFieldText, int customFieldId, int moduleId);
 		bool DeleteCustomField(int id);
 		IEnumerable<ErrorInfo> SaveCustomField(CustomField customField);
 		IEnumerable<ErrorInfo> SaveCustomFieldValue(CustomFieldValue customFieldValue);
@@ -51,6 +52,15 @@ namespace DeepBlue.Controllers.Admin {
 		bool DataTypeNameAvailable(string dataTypeText, int dataTypeId);
 		bool DeleteDataType(int id);
 		IEnumerable<ErrorInfo> SaveDataType(DataType dataType);
+		#endregion
+
+
+		#region Module
+		List<MODULE> GetAllModules(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		MODULE FindModule(int id);
+		bool ModuleTextAvailable(string module, int moduleId);
+		bool DeleteModuleId(int id);
+		IEnumerable<ErrorInfo>SaveModule(MODULE module);
 		#endregion
 	}
 }

@@ -8,6 +8,11 @@
         <EntityContainer Name="DeepBlueModelStoreContainer">
           <EntitySet Name="Address" EntityType="DeepBlueModel.Store.Address" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="AddressType" EntityType="DeepBlueModel.Store.AddressType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CapitalCall" EntityType="DeepBlueModel.Store.CapitalCall" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CapitalCallLineItem" EntityType="DeepBlueModel.Store.CapitalCallLineItem" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CapitalCallLineItemDetail" EntityType="DeepBlueModel.Store.CapitalCallLineItemDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CapitalCallLineItemType" EntityType="DeepBlueModel.Store.CapitalCallLineItemType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CapitalCallType" EntityType="DeepBlueModel.Store.CapitalCallType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Communication" EntityType="DeepBlueModel.Store.Communication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CommunicationGrouping" EntityType="DeepBlueModel.Store.CommunicationGrouping" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CommunicationType" EntityType="DeepBlueModel.Store.CommunicationType" store:Type="Tables" Schema="dbo" />
@@ -24,6 +29,7 @@
           <EntitySet Name="Fund" EntityType="DeepBlueModel.Store.Fund" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FundAccount" EntityType="DeepBlueModel.Store.FundAccount" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FundClosing" EntityType="DeepBlueModel.Store.FundClosing" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FundRateSchedule" EntityType="DeepBlueModel.Store.FundRateSchedule" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Investor" EntityType="DeepBlueModel.Store.Investor" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="InvestorAccount" EntityType="DeepBlueModel.Store.InvestorAccount" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="InvestorAddress" EntityType="DeepBlueModel.Store.InvestorAddress" store:Type="Tables" Schema="dbo" />
@@ -34,9 +40,13 @@
           <EntitySet Name="InvestorFundDocument" EntityType="DeepBlueModel.Store.InvestorFundDocument" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="InvestorFundTransaction" EntityType="DeepBlueModel.Store.InvestorFundTransaction" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="InvestorType" EntityType="DeepBlueModel.Store.InvestorType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ManagementFeeRateSchedule" EntityType="DeepBlueModel.Store.ManagementFeeRateSchedule" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ManagementFeeRateScheduleTier" EntityType="DeepBlueModel.Store.ManagementFeeRateScheduleTier" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MODULE" EntityType="DeepBlueModel.Store.MODULE" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MultiplierType" EntityType="DeepBlueModel.Store.MultiplierType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OptionField" EntityType="DeepBlueModel.Store.OptionField" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OptionFieldValueList" EntityType="DeepBlueModel.Store.OptionFieldValueList" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RateScheduleType" EntityType="DeepBlueModel.Store.RateScheduleType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="STATE" EntityType="DeepBlueModel.Store.STATE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TransactionType" EntityType="DeepBlueModel.Store.TransactionType" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Address_AddressType" Association="DeepBlueModel.Store.FK_Address_AddressType">
@@ -50,6 +60,26 @@
           <AssociationSet Name="FK_Address_State" Association="DeepBlueModel.Store.FK_Address_State">
             <End Role="STATE" EntitySet="STATE" />
             <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CapitalCall_CapitalCallLineItemType" Association="DeepBlueModel.Store.FK_CapitalCall_CapitalCallLineItemType">
+            <End Role="CapitalCallLineItemType" EntitySet="CapitalCallLineItemType" />
+            <End Role="CapitalCallLineItem" EntitySet="CapitalCallLineItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CapitalCall_CapitalCallType" Association="DeepBlueModel.Store.FK_CapitalCall_CapitalCallType">
+            <End Role="CapitalCallType" EntitySet="CapitalCallType" />
+            <End Role="CapitalCall" EntitySet="CapitalCall" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CapitalCall_Fund" Association="DeepBlueModel.Store.FK_CapitalCall_Fund">
+            <End Role="Fund" EntitySet="Fund" />
+            <End Role="CapitalCall" EntitySet="CapitalCall" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CapitalCallLineItem_CapitalCall" Association="DeepBlueModel.Store.FK_CapitalCallLineItem_CapitalCall">
+            <End Role="CapitalCall" EntitySet="CapitalCall" />
+            <End Role="CapitalCallLineItem" EntitySet="CapitalCallLineItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CapitalCallLineItemDetail_CapitalCallLineItem" Association="DeepBlueModel.Store.FK_CapitalCallLineItemDetail_CapitalCallLineItem">
+            <End Role="CapitalCallLineItem" EntitySet="CapitalCallLineItem" />
+            <End Role="CapitalCallLineItemDetail" EntitySet="CapitalCallLineItemDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_Communication_CommunicationType" Association="DeepBlueModel.Store.FK_Communication_CommunicationType">
             <End Role="CommunicationType" EntitySet="CommunicationType" />
@@ -98,6 +128,14 @@
           <AssociationSet Name="FK_FundClosing_Fund" Association="DeepBlueModel.Store.FK_FundClosing_Fund">
             <End Role="Fund" EntitySet="Fund" />
             <End Role="FundClosing" EntitySet="FundClosing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FundRateSchedule_Fund" Association="DeepBlueModel.Store.FK_FundRateSchedule_Fund">
+            <End Role="Fund" EntitySet="Fund" />
+            <End Role="FundRateSchedule" EntitySet="FundRateSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FundRateSchedule_InvestorType" Association="DeepBlueModel.Store.FK_FundRateSchedule_InvestorType">
+            <End Role="InvestorType" EntitySet="InvestorType" />
+            <End Role="FundRateSchedule" EntitySet="FundRateSchedule" />
           </AssociationSet>
           <AssociationSet Name="FK_Investor_InvestorEntityType" Association="DeepBlueModel.Store.FK_Investor_InvestorEntityType">
             <End Role="InvestorEntityType" EntitySet="InvestorEntityType" />
@@ -175,6 +213,18 @@
             <End Role="TransactionType" EntitySet="TransactionType" />
             <End Role="InvestorFundTransaction" EntitySet="InvestorFundTransaction" />
           </AssociationSet>
+          <AssociationSet Name="FK_ManagementFeeRateSchedule_RateScheduleType" Association="DeepBlueModel.Store.FK_ManagementFeeRateSchedule_RateScheduleType">
+            <End Role="RateScheduleType" EntitySet="RateScheduleType" />
+            <End Role="ManagementFeeRateSchedule" EntitySet="ManagementFeeRateSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManagementFeeRateScheduleTier_ManagementFeeRateSchedule" Association="DeepBlueModel.Store.FK_ManagementFeeRateScheduleTier_ManagementFeeRateSchedule">
+            <End Role="ManagementFeeRateSchedule" EntitySet="ManagementFeeRateSchedule" />
+            <End Role="ManagementFeeRateScheduleTier" EntitySet="ManagementFeeRateScheduleTier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManagementFeeRateScheduleTier_MultiplierType" Association="DeepBlueModel.Store.FK_ManagementFeeRateScheduleTier_MultiplierType">
+            <End Role="MultiplierType" EntitySet="MultiplierType" />
+            <End Role="ManagementFeeRateScheduleTier" EntitySet="ManagementFeeRateScheduleTier" />
+          </AssociationSet>
           <AssociationSet Name="FK_Module_CustomField" Association="DeepBlueModel.Store.FK_Module_CustomField">
             <End Role="MODULE" EntitySet="MODULE" />
             <End Role="CustomField" EntitySet="CustomField" />
@@ -219,6 +269,76 @@
           <Property Name="EntityID" Type="int" Nullable="false" />
           <Property Name="Enabled" Type="bit" Nullable="false" />
           <Property Name="AddressTypeName" Type="varchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="CapitalCall">
+          <Key>
+            <PropertyRef Name="CapitalCallID" />
+          </Key>
+          <Property Name="CapitalCallID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FundID" Type="int" Nullable="false" />
+          <Property Name="CapitalCallDate" Type="datetime" Nullable="false" />
+          <Property Name="CapitalCallDueDate" Type="datetime" Nullable="false" />
+          <Property Name="CapitalCallAmount" Type="money" Nullable="false" />
+          <Property Name="NewInvestmentAmount" Type="money" />
+          <Property Name="ExistingInvestmentAmount" Type="money" />
+          <Property Name="CapitalCallNumber" Type="varchar" MaxLength="50" />
+          <Property Name="CapitalCallTypeID" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CapitalCallLineItem">
+          <Key>
+            <PropertyRef Name="CapitalCallLineItemID" />
+          </Key>
+          <Property Name="CapitalCallLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CapitalCallID" Type="int" Nullable="false" />
+          <Property Name="CapitalCallLineItemTypeID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CapitalCallLineItemDetail">
+          <Key>
+            <PropertyRef Name="CapitalCallLineItemDetailID" />
+          </Key>
+          <Property Name="CapitalCallLineItemDetailID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CapitalCallLineItemID" Type="int" Nullable="false" />
+          <Property Name="Key" Type="int" Nullable="false" />
+          <Property Name="Value" Type="money" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CapitalCallLineItemType">
+          <Key>
+            <PropertyRef Name="CapitalCallLineItemTypeID" />
+          </Key>
+          <Property Name="CapitalCallLineItemTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CapitalCallType">
+          <Key>
+            <PropertyRef Name="CapitalCallTypeID" />
+          </Key>
+          <Property Name="CapitalCallTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
         </EntityType>
         <EntityType Name="Communication">
           <Key>
@@ -432,6 +552,20 @@
           <Property Name="IsFirstClosing" Type="bit" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="FundRateSchedule">
+          <Key>
+            <PropertyRef Name="FundRateScheduleID" />
+          </Key>
+          <Property Name="FundRateScheduleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FundID" Type="int" Nullable="false" />
+          <Property Name="InvestorTypeID" Type="int" Nullable="false" />
+          <Property Name="RateScheduleID" Type="int" Nullable="false" />
+          <Property Name="RateScheduleTypeID" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
         <EntityType Name="Investor">
           <Key>
             <PropertyRef Name="InvestorID" />
@@ -579,12 +713,49 @@
           <Property Name="Enabled" Type="bit" Nullable="false" />
           <Property Name="InvestorTypeName" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
+        <EntityType Name="ManagementFeeRateSchedule">
+          <Key>
+            <PropertyRef Name="ManagementFeeRateScheduleID" />
+          </Key>
+          <Property Name="ManagementFeeRateScheduleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="RateScheduleTypeID" Type="int" Nullable="false" />
+          <Property Name="CalculationFormatString" Type="varchar" MaxLength="500" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="ManagementFeeRateScheduleTier">
+          <Key>
+            <PropertyRef Name="ManagementFeeRateScheduleTierID" />
+          </Key>
+          <Property Name="ManagementFeeRateScheduleTierID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ManagementFeeRateScheduleID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="Multiplier" Type="money" Nullable="false" />
+          <Property Name="MultiplierTypeID" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
         <EntityType Name="MODULE">
           <Key>
             <PropertyRef Name="ModuleID" />
           </Key>
           <Property Name="ModuleID" Type="int" Nullable="false" />
           <Property Name="ModuleName" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MultiplierType">
+          <Key>
+            <PropertyRef Name="MultiplierTypeID" />
+          </Key>
+          <Property Name="MultiplierTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="OptionField">
           <Key>
@@ -604,6 +775,20 @@
           <Property Name="OptionFieldValueListID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="OptionFieldID" Type="int" Nullable="false" />
           <Property Name="CustomFieldID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RateScheduleType">
+          <Key>
+            <PropertyRef Name="RateScheduleTypeID" />
+          </Key>
+          <Property Name="RateScheduleTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="RateScheduleName" Type="varchar" MaxLength="100" />
+          <Property Name="CalculationFormatString" Type="varchar" MaxLength="500" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
         </EntityType>
         <EntityType Name="STATE">
           <Key>
@@ -657,6 +842,66 @@
             </Principal>
             <Dependent Role="Address">
               <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CapitalCall_CapitalCallLineItemType">
+          <End Role="CapitalCallLineItemType" Type="DeepBlueModel.Store.CapitalCallLineItemType" Multiplicity="1" />
+          <End Role="CapitalCallLineItem" Type="DeepBlueModel.Store.CapitalCallLineItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CapitalCallLineItemType">
+              <PropertyRef Name="CapitalCallLineItemTypeID" />
+            </Principal>
+            <Dependent Role="CapitalCallLineItem">
+              <PropertyRef Name="CapitalCallLineItemTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CapitalCall_CapitalCallType">
+          <End Role="CapitalCallType" Type="DeepBlueModel.Store.CapitalCallType" Multiplicity="1" />
+          <End Role="CapitalCall" Type="DeepBlueModel.Store.CapitalCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CapitalCallType">
+              <PropertyRef Name="CapitalCallTypeID" />
+            </Principal>
+            <Dependent Role="CapitalCall">
+              <PropertyRef Name="CapitalCallTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CapitalCall_Fund">
+          <End Role="Fund" Type="DeepBlueModel.Store.Fund" Multiplicity="1" />
+          <End Role="CapitalCall" Type="DeepBlueModel.Store.CapitalCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fund">
+              <PropertyRef Name="FundID" />
+            </Principal>
+            <Dependent Role="CapitalCall">
+              <PropertyRef Name="FundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CapitalCallLineItem_CapitalCall">
+          <End Role="CapitalCall" Type="DeepBlueModel.Store.CapitalCall" Multiplicity="1" />
+          <End Role="CapitalCallLineItem" Type="DeepBlueModel.Store.CapitalCallLineItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CapitalCall">
+              <PropertyRef Name="CapitalCallID" />
+            </Principal>
+            <Dependent Role="CapitalCallLineItem">
+              <PropertyRef Name="CapitalCallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CapitalCallLineItemDetail_CapitalCallLineItem">
+          <End Role="CapitalCallLineItem" Type="DeepBlueModel.Store.CapitalCallLineItem" Multiplicity="1" />
+          <End Role="CapitalCallLineItemDetail" Type="DeepBlueModel.Store.CapitalCallLineItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CapitalCallLineItem">
+              <PropertyRef Name="CapitalCallLineItemID" />
+            </Principal>
+            <Dependent Role="CapitalCallLineItemDetail">
+              <PropertyRef Name="CapitalCallLineItemID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -811,6 +1056,30 @@
             </Principal>
             <Dependent Role="FundClosing">
               <PropertyRef Name="FundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FundRateSchedule_Fund">
+          <End Role="Fund" Type="DeepBlueModel.Store.Fund" Multiplicity="1" />
+          <End Role="FundRateSchedule" Type="DeepBlueModel.Store.FundRateSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fund">
+              <PropertyRef Name="FundID" />
+            </Principal>
+            <Dependent Role="FundRateSchedule">
+              <PropertyRef Name="FundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FundRateSchedule_InvestorType">
+          <End Role="InvestorType" Type="DeepBlueModel.Store.InvestorType" Multiplicity="1" />
+          <End Role="FundRateSchedule" Type="DeepBlueModel.Store.FundRateSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InvestorType">
+              <PropertyRef Name="InvestorTypeID" />
+            </Principal>
+            <Dependent Role="FundRateSchedule">
+              <PropertyRef Name="InvestorTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1058,6 +1327,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ManagementFeeRateSchedule_RateScheduleType">
+          <End Role="RateScheduleType" Type="DeepBlueModel.Store.RateScheduleType" Multiplicity="1" />
+          <End Role="ManagementFeeRateSchedule" Type="DeepBlueModel.Store.ManagementFeeRateSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RateScheduleType">
+              <PropertyRef Name="RateScheduleTypeID" />
+            </Principal>
+            <Dependent Role="ManagementFeeRateSchedule">
+              <PropertyRef Name="RateScheduleTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManagementFeeRateScheduleTier_ManagementFeeRateSchedule">
+          <End Role="ManagementFeeRateSchedule" Type="DeepBlueModel.Store.ManagementFeeRateSchedule" Multiplicity="1" />
+          <End Role="ManagementFeeRateScheduleTier" Type="DeepBlueModel.Store.ManagementFeeRateScheduleTier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManagementFeeRateSchedule">
+              <PropertyRef Name="ManagementFeeRateScheduleID" />
+            </Principal>
+            <Dependent Role="ManagementFeeRateScheduleTier">
+              <PropertyRef Name="ManagementFeeRateScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManagementFeeRateScheduleTier_MultiplierType">
+          <End Role="MultiplierType" Type="DeepBlueModel.Store.MultiplierType" Multiplicity="1" />
+          <End Role="ManagementFeeRateScheduleTier" Type="DeepBlueModel.Store.ManagementFeeRateScheduleTier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MultiplierType">
+              <PropertyRef Name="MultiplierTypeID" />
+            </Principal>
+            <Dependent Role="ManagementFeeRateScheduleTier">
+              <PropertyRef Name="MultiplierTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Module_CustomField">
           <End Role="MODULE" Type="DeepBlueModel.Store.MODULE" Multiplicity="1" />
           <End Role="CustomField" Type="DeepBlueModel.Store.CustomField" Multiplicity="*" />
@@ -1102,6 +1407,11 @@
         <EntityContainer Name="DeepBlueEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Addresses" EntityType="DeepBlueModel.Address" />
           <EntitySet Name="AddressTypes" EntityType="DeepBlueModel.AddressType" />
+          <EntitySet Name="CapitalCalls" EntityType="DeepBlueModel.CapitalCall" />
+          <EntitySet Name="CapitalCallLineItems" EntityType="DeepBlueModel.CapitalCallLineItem" />
+          <EntitySet Name="CapitalCallLineItemDetails" EntityType="DeepBlueModel.CapitalCallLineItemDetail" />
+          <EntitySet Name="CapitalCallLineItemTypes" EntityType="DeepBlueModel.CapitalCallLineItemType" />
+          <EntitySet Name="CapitalCallTypes" EntityType="DeepBlueModel.CapitalCallType" />
           <EntitySet Name="Communications" EntityType="DeepBlueModel.Communication" />
           <EntitySet Name="CommunicationGroupings" EntityType="DeepBlueModel.CommunicationGrouping" />
           <EntitySet Name="CommunicationTypes" EntityType="DeepBlueModel.CommunicationType" />
@@ -1118,6 +1428,7 @@
           <EntitySet Name="Funds" EntityType="DeepBlueModel.Fund" />
           <EntitySet Name="FundAccounts" EntityType="DeepBlueModel.FundAccount" />
           <EntitySet Name="FundClosings" EntityType="DeepBlueModel.FundClosing" />
+          <EntitySet Name="FundRateSchedules" EntityType="DeepBlueModel.FundRateSchedule" />
           <EntitySet Name="Investors" EntityType="DeepBlueModel.Investor" />
           <EntitySet Name="InvestorAccounts" EntityType="DeepBlueModel.InvestorAccount" />
           <EntitySet Name="InvestorAddresses" EntityType="DeepBlueModel.InvestorAddress" />
@@ -1128,9 +1439,13 @@
           <EntitySet Name="InvestorFundDocuments" EntityType="DeepBlueModel.InvestorFundDocument" />
           <EntitySet Name="InvestorFundTransactions" EntityType="DeepBlueModel.InvestorFundTransaction" />
           <EntitySet Name="InvestorTypes" EntityType="DeepBlueModel.InvestorType" />
+          <EntitySet Name="ManagementFeeRateSchedules" EntityType="DeepBlueModel.ManagementFeeRateSchedule" />
+          <EntitySet Name="ManagementFeeRateScheduleTiers" EntityType="DeepBlueModel.ManagementFeeRateScheduleTier" />
           <EntitySet Name="MODULEs" EntityType="DeepBlueModel.MODULE" />
+          <EntitySet Name="MultiplierTypes" EntityType="DeepBlueModel.MultiplierType" />
           <EntitySet Name="OptionFields" EntityType="DeepBlueModel.OptionField" />
           <EntitySet Name="OptionFieldValueLists" EntityType="DeepBlueModel.OptionFieldValueList" />
+          <EntitySet Name="RateScheduleTypes" EntityType="DeepBlueModel.RateScheduleType" />
           <EntitySet Name="STATEs" EntityType="DeepBlueModel.STATE" />
           <EntitySet Name="TransactionTypes" EntityType="DeepBlueModel.TransactionType" />
           <AssociationSet Name="FK_Address_AddressType" Association="DeepBlueModel.FK_Address_AddressType">
@@ -1152,6 +1467,26 @@
           <AssociationSet Name="FK_InvestorAddress_Address" Association="DeepBlueModel.FK_InvestorAddress_Address">
             <End Role="Address" EntitySet="Addresses" />
             <End Role="InvestorAddress" EntitySet="InvestorAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CapitalCall_CapitalCallType" Association="DeepBlueModel.FK_CapitalCall_CapitalCallType">
+            <End Role="CapitalCallType" EntitySet="CapitalCallTypes" />
+            <End Role="CapitalCall" EntitySet="CapitalCalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CapitalCall_Fund" Association="DeepBlueModel.FK_CapitalCall_Fund">
+            <End Role="Fund" EntitySet="Funds" />
+            <End Role="CapitalCall" EntitySet="CapitalCalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CapitalCallLineItem_CapitalCall" Association="DeepBlueModel.FK_CapitalCallLineItem_CapitalCall">
+            <End Role="CapitalCall" EntitySet="CapitalCalls" />
+            <End Role="CapitalCallLineItem" EntitySet="CapitalCallLineItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CapitalCall_CapitalCallLineItemType" Association="DeepBlueModel.FK_CapitalCall_CapitalCallLineItemType">
+            <End Role="CapitalCallLineItemType" EntitySet="CapitalCallLineItemTypes" />
+            <End Role="CapitalCallLineItem" EntitySet="CapitalCallLineItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CapitalCallLineItemDetail_CapitalCallLineItem" Association="DeepBlueModel.FK_CapitalCallLineItemDetail_CapitalCallLineItem">
+            <End Role="CapitalCallLineItem" EntitySet="CapitalCallLineItems" />
+            <End Role="CapitalCallLineItemDetail" EntitySet="CapitalCallLineItemDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Communication_CommunicationType" Association="DeepBlueModel.FK_Communication_CommunicationType">
             <End Role="CommunicationType" EntitySet="CommunicationTypes" />
@@ -1221,6 +1556,10 @@
             <End Role="Fund" EntitySet="Funds" />
             <End Role="FundClosing" EntitySet="FundClosings" />
           </AssociationSet>
+          <AssociationSet Name="FK_FundRateSchedule_Fund" Association="DeepBlueModel.FK_FundRateSchedule_Fund">
+            <End Role="Fund" EntitySet="Funds" />
+            <End Role="FundRateSchedule" EntitySet="FundRateSchedules" />
+          </AssociationSet>
           <AssociationSet Name="FK_InvestorFund_Fund" Association="DeepBlueModel.FK_InvestorFund_Fund">
             <End Role="Fund" EntitySet="Funds" />
             <End Role="InvestorFund" EntitySet="InvestorFunds" />
@@ -1232,6 +1571,10 @@
           <AssociationSet Name="FK_InvestorFundTransaction_FundClosing" Association="DeepBlueModel.FK_InvestorFundTransaction_FundClosing">
             <End Role="FundClosing" EntitySet="FundClosings" />
             <End Role="InvestorFundTransaction" EntitySet="InvestorFundTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FundRateSchedule_InvestorType" Association="DeepBlueModel.FK_FundRateSchedule_InvestorType">
+            <End Role="InvestorType" EntitySet="InvestorTypes" />
+            <End Role="FundRateSchedule" EntitySet="FundRateSchedules" />
           </AssociationSet>
           <AssociationSet Name="FK_Investor_InvestorEntityType" Association="DeepBlueModel.FK_Investor_InvestorEntityType">
             <End Role="InvestorEntityType" EntitySet="InvestorEntityTypes" />
@@ -1277,6 +1620,18 @@
             <End Role="TransactionType" EntitySet="TransactionTypes" />
             <End Role="InvestorFundTransaction" EntitySet="InvestorFundTransactions" />
           </AssociationSet>
+          <AssociationSet Name="FK_ManagementFeeRateSchedule_RateScheduleType" Association="DeepBlueModel.FK_ManagementFeeRateSchedule_RateScheduleType">
+            <End Role="RateScheduleType" EntitySet="RateScheduleTypes" />
+            <End Role="ManagementFeeRateSchedule" EntitySet="ManagementFeeRateSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManagementFeeRateScheduleTier_ManagementFeeRateSchedule" Association="DeepBlueModel.FK_ManagementFeeRateScheduleTier_ManagementFeeRateSchedule">
+            <End Role="ManagementFeeRateSchedule" EntitySet="ManagementFeeRateSchedules" />
+            <End Role="ManagementFeeRateScheduleTier" EntitySet="ManagementFeeRateScheduleTiers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManagementFeeRateScheduleTier_MultiplierType" Association="DeepBlueModel.FK_ManagementFeeRateScheduleTier_MultiplierType">
+            <End Role="MultiplierType" EntitySet="MultiplierTypes" />
+            <End Role="ManagementFeeRateScheduleTier" EntitySet="ManagementFeeRateScheduleTiers" />
+          </AssociationSet>
           <AssociationSet Name="FK_OptionFieldValueList_OptionField" Association="DeepBlueModel.FK_OptionFieldValueList_OptionField">
             <End Role="OptionField" EntitySet="OptionFields" />
             <End Role="OptionFieldValueList" EntitySet="OptionFieldValueLists" />
@@ -1319,6 +1674,85 @@
           <Property Name="Enabled" Type="Boolean" Nullable="false" />
           <Property Name="AddressTypeName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Addresses" Relationship="DeepBlueModel.FK_Address_AddressType" FromRole="AddressType" ToRole="Address" />
+        </EntityType>
+        <EntityType Name="CapitalCall">
+          <Key>
+            <PropertyRef Name="CapitalCallID" />
+          </Key>
+          <Property Name="CapitalCallID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FundID" Type="Int32" Nullable="false" />
+          <Property Name="CapitalCallDate" Type="DateTime" Nullable="false" />
+          <Property Name="CapitalCallDueDate" Type="DateTime" Nullable="false" />
+          <Property Name="CapitalCallAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="NewInvestmentAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ExistingInvestmentAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CapitalCallNumber" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="CapitalCallTypeID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="CapitalCallType" Relationship="DeepBlueModel.FK_CapitalCall_CapitalCallType" FromRole="CapitalCall" ToRole="CapitalCallType" />
+          <NavigationProperty Name="Fund" Relationship="DeepBlueModel.FK_CapitalCall_Fund" FromRole="CapitalCall" ToRole="Fund" />
+          <NavigationProperty Name="CapitalCallLineItems" Relationship="DeepBlueModel.FK_CapitalCallLineItem_CapitalCall" FromRole="CapitalCall" ToRole="CapitalCallLineItem" />
+        </EntityType>
+        <EntityType Name="CapitalCallLineItem">
+          <Key>
+            <PropertyRef Name="CapitalCallLineItemID" />
+          </Key>
+          <Property Name="CapitalCallLineItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CapitalCallID" Type="Int32" Nullable="false" />
+          <Property Name="CapitalCallLineItemTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="CapitalCall" Relationship="DeepBlueModel.FK_CapitalCallLineItem_CapitalCall" FromRole="CapitalCallLineItem" ToRole="CapitalCall" />
+          <NavigationProperty Name="CapitalCallLineItemType" Relationship="DeepBlueModel.FK_CapitalCall_CapitalCallLineItemType" FromRole="CapitalCallLineItem" ToRole="CapitalCallLineItemType" />
+          <NavigationProperty Name="CapitalCallLineItemDetails" Relationship="DeepBlueModel.FK_CapitalCallLineItemDetail_CapitalCallLineItem" FromRole="CapitalCallLineItem" ToRole="CapitalCallLineItemDetail" />
+        </EntityType>
+        <EntityType Name="CapitalCallLineItemDetail">
+          <Key>
+            <PropertyRef Name="CapitalCallLineItemDetailID" />
+          </Key>
+          <Property Name="CapitalCallLineItemDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CapitalCallLineItemID" Type="Int32" Nullable="false" />
+          <Property Name="Key" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="CapitalCallLineItem" Relationship="DeepBlueModel.FK_CapitalCallLineItemDetail_CapitalCallLineItem" FromRole="CapitalCallLineItemDetail" ToRole="CapitalCallLineItem" />
+        </EntityType>
+        <EntityType Name="CapitalCallLineItemType">
+          <Key>
+            <PropertyRef Name="CapitalCallLineItemTypeID" />
+          </Key>
+          <Property Name="CapitalCallLineItemTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="CapitalCallLineItems" Relationship="DeepBlueModel.FK_CapitalCall_CapitalCallLineItemType" FromRole="CapitalCallLineItemType" ToRole="CapitalCallLineItem" />
+        </EntityType>
+        <EntityType Name="CapitalCallType">
+          <Key>
+            <PropertyRef Name="CapitalCallTypeID" />
+          </Key>
+          <Property Name="CapitalCallTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="CapitalCalls" Relationship="DeepBlueModel.FK_CapitalCall_CapitalCallType" FromRole="CapitalCallType" ToRole="CapitalCall" />
         </EntityType>
         <EntityType Name="Communication">
           <Key>
@@ -1521,8 +1955,10 @@
           <Property Name="RecycleProvision" Type="Int32" />
           <Property Name="MgmtFeesCatchUpDate" Type="DateTime" />
           <Property Name="Carry" Type="Int32" />
+          <NavigationProperty Name="CapitalCalls" Relationship="DeepBlueModel.FK_CapitalCall_Fund" FromRole="Fund" ToRole="CapitalCall" />
           <NavigationProperty Name="FundAccounts" Relationship="DeepBlueModel.FK_FundAccount_Fund" FromRole="Fund" ToRole="FundAccount" />
           <NavigationProperty Name="FundClosings" Relationship="DeepBlueModel.FK_FundClosing_Fund" FromRole="Fund" ToRole="FundClosing" />
+          <NavigationProperty Name="FundRateSchedules" Relationship="DeepBlueModel.FK_FundRateSchedule_Fund" FromRole="Fund" ToRole="FundRateSchedule" />
           <NavigationProperty Name="InvestorFunds" Relationship="DeepBlueModel.FK_InvestorFund_Fund" FromRole="Fund" ToRole="InvestorFund" />
           <NavigationProperty Name="InvestorFundDocuments" Relationship="DeepBlueModel.FK_InvestorFundDocument_Fund" FromRole="Fund" ToRole="InvestorFundDocument" />
         </EntityType>
@@ -1563,6 +1999,22 @@
           <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Fund" Relationship="DeepBlueModel.FK_FundClosing_Fund" FromRole="FundClosing" ToRole="Fund" />
           <NavigationProperty Name="InvestorFundTransactions" Relationship="DeepBlueModel.FK_InvestorFundTransaction_FundClosing" FromRole="FundClosing" ToRole="InvestorFundTransaction" />
+        </EntityType>
+        <EntityType Name="FundRateSchedule">
+          <Key>
+            <PropertyRef Name="FundRateScheduleID" />
+          </Key>
+          <Property Name="FundRateScheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FundID" Type="Int32" Nullable="false" />
+          <Property Name="InvestorTypeID" Type="Int32" Nullable="false" />
+          <Property Name="RateScheduleID" Type="Int32" Nullable="false" />
+          <Property Name="RateScheduleTypeID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Fund" Relationship="DeepBlueModel.FK_FundRateSchedule_Fund" FromRole="FundRateSchedule" ToRole="Fund" />
+          <NavigationProperty Name="InvestorType" Relationship="DeepBlueModel.FK_FundRateSchedule_InvestorType" FromRole="FundRateSchedule" ToRole="InvestorType" />
         </EntityType>
         <EntityType Name="Investor">
           <Key>
@@ -1737,7 +2189,42 @@
           <Property Name="EntityID" Type="Int32" Nullable="false" />
           <Property Name="Enabled" Type="Boolean" Nullable="false" />
           <Property Name="InvestorTypeName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="FundRateSchedules" Relationship="DeepBlueModel.FK_FundRateSchedule_InvestorType" FromRole="InvestorType" ToRole="FundRateSchedule" />
           <NavigationProperty Name="InvestorFunds" Relationship="DeepBlueModel.FK_InvestorFund_InvestorType" FromRole="InvestorType" ToRole="InvestorFund" />
+        </EntityType>
+        <EntityType Name="ManagementFeeRateSchedule">
+          <Key>
+            <PropertyRef Name="ManagementFeeRateScheduleID" />
+          </Key>
+          <Property Name="ManagementFeeRateScheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="RateScheduleTypeID" Type="Int32" Nullable="false" />
+          <Property Name="CalculationFormatString" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="RateScheduleType" Relationship="DeepBlueModel.FK_ManagementFeeRateSchedule_RateScheduleType" FromRole="ManagementFeeRateSchedule" ToRole="RateScheduleType" />
+          <NavigationProperty Name="ManagementFeeRateScheduleTiers" Relationship="DeepBlueModel.FK_ManagementFeeRateScheduleTier_ManagementFeeRateSchedule" FromRole="ManagementFeeRateSchedule" ToRole="ManagementFeeRateScheduleTier" />
+        </EntityType>
+        <EntityType Name="ManagementFeeRateScheduleTier">
+          <Key>
+            <PropertyRef Name="ManagementFeeRateScheduleTierID" />
+          </Key>
+          <Property Name="ManagementFeeRateScheduleTierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ManagementFeeRateScheduleID" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" />
+          <Property Name="Multiplier" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="MultiplierTypeID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="ManagementFeeRateSchedule" Relationship="DeepBlueModel.FK_ManagementFeeRateScheduleTier_ManagementFeeRateSchedule" FromRole="ManagementFeeRateScheduleTier" ToRole="ManagementFeeRateSchedule" />
+          <NavigationProperty Name="MultiplierType" Relationship="DeepBlueModel.FK_ManagementFeeRateScheduleTier_MultiplierType" FromRole="ManagementFeeRateScheduleTier" ToRole="MultiplierType" />
         </EntityType>
         <EntityType Name="MODULE">
           <Key>
@@ -1746,6 +2233,14 @@
           <Property Name="ModuleID" Type="Int32" Nullable="false" />
           <Property Name="ModuleName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="CustomFields" Relationship="DeepBlueModel.FK_Module_CustomField" FromRole="MODULE" ToRole="CustomField" />
+        </EntityType>
+        <EntityType Name="MultiplierType">
+          <Key>
+            <PropertyRef Name="MultiplierTypeID" />
+          </Key>
+          <Property Name="MultiplierTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="ManagementFeeRateScheduleTiers" Relationship="DeepBlueModel.FK_ManagementFeeRateScheduleTier_MultiplierType" FromRole="MultiplierType" ToRole="ManagementFeeRateScheduleTier" />
         </EntityType>
         <EntityType Name="OptionField">
           <Key>
@@ -1769,6 +2264,21 @@
           <Property Name="CustomFieldID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CustomField" Relationship="DeepBlueModel.FK_OptionFieldValueList_CustomField" FromRole="OptionFieldValueList" ToRole="CustomField" />
           <NavigationProperty Name="OptionField" Relationship="DeepBlueModel.FK_OptionFieldValueList_OptionField" FromRole="OptionFieldValueList" ToRole="OptionField" />
+        </EntityType>
+        <EntityType Name="RateScheduleType">
+          <Key>
+            <PropertyRef Name="RateScheduleTypeID" />
+          </Key>
+          <Property Name="RateScheduleTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="RateScheduleName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="CalculationFormatString" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="ManagementFeeRateSchedules" Relationship="DeepBlueModel.FK_ManagementFeeRateSchedule_RateScheduleType" FromRole="RateScheduleType" ToRole="ManagementFeeRateSchedule" />
         </EntityType>
         <EntityType Name="STATE">
           <Key>
@@ -1853,6 +2363,66 @@
             </Principal>
             <Dependent Role="InvestorAddress">
               <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CapitalCall_CapitalCallType">
+          <End Role="CapitalCallType" Type="DeepBlueModel.CapitalCallType" Multiplicity="1" />
+          <End Role="CapitalCall" Type="DeepBlueModel.CapitalCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CapitalCallType">
+              <PropertyRef Name="CapitalCallTypeID" />
+            </Principal>
+            <Dependent Role="CapitalCall">
+              <PropertyRef Name="CapitalCallTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CapitalCall_Fund">
+          <End Role="Fund" Type="DeepBlueModel.Fund" Multiplicity="1" />
+          <End Role="CapitalCall" Type="DeepBlueModel.CapitalCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fund">
+              <PropertyRef Name="FundID" />
+            </Principal>
+            <Dependent Role="CapitalCall">
+              <PropertyRef Name="FundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CapitalCallLineItem_CapitalCall">
+          <End Role="CapitalCall" Type="DeepBlueModel.CapitalCall" Multiplicity="1" />
+          <End Role="CapitalCallLineItem" Type="DeepBlueModel.CapitalCallLineItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CapitalCall">
+              <PropertyRef Name="CapitalCallID" />
+            </Principal>
+            <Dependent Role="CapitalCallLineItem">
+              <PropertyRef Name="CapitalCallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CapitalCall_CapitalCallLineItemType">
+          <End Role="CapitalCallLineItemType" Type="DeepBlueModel.CapitalCallLineItemType" Multiplicity="1" />
+          <End Role="CapitalCallLineItem" Type="DeepBlueModel.CapitalCallLineItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CapitalCallLineItemType">
+              <PropertyRef Name="CapitalCallLineItemTypeID" />
+            </Principal>
+            <Dependent Role="CapitalCallLineItem">
+              <PropertyRef Name="CapitalCallLineItemTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CapitalCallLineItemDetail_CapitalCallLineItem">
+          <End Role="CapitalCallLineItem" Type="DeepBlueModel.CapitalCallLineItem" Multiplicity="1" />
+          <End Role="CapitalCallLineItemDetail" Type="DeepBlueModel.CapitalCallLineItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CapitalCallLineItem">
+              <PropertyRef Name="CapitalCallLineItemID" />
+            </Principal>
+            <Dependent Role="CapitalCallLineItemDetail">
+              <PropertyRef Name="CapitalCallLineItemID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2072,6 +2642,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FundRateSchedule_Fund">
+          <End Role="Fund" Type="DeepBlueModel.Fund" Multiplicity="1" />
+          <End Role="FundRateSchedule" Type="DeepBlueModel.FundRateSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fund">
+              <PropertyRef Name="FundID" />
+            </Principal>
+            <Dependent Role="FundRateSchedule">
+              <PropertyRef Name="FundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_InvestorFund_Fund">
           <End Role="Fund" Type="DeepBlueModel.Fund" Multiplicity="1" />
           <End Role="InvestorFund" Type="DeepBlueModel.InvestorFund" Multiplicity="*" />
@@ -2105,6 +2687,18 @@
             </Principal>
             <Dependent Role="InvestorFundTransaction">
               <PropertyRef Name="FundClosingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FundRateSchedule_InvestorType">
+          <End Role="InvestorType" Type="DeepBlueModel.InvestorType" Multiplicity="1" />
+          <End Role="FundRateSchedule" Type="DeepBlueModel.FundRateSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InvestorType">
+              <PropertyRef Name="InvestorTypeID" />
+            </Principal>
+            <Dependent Role="FundRateSchedule">
+              <PropertyRef Name="InvestorTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2250,6 +2844,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ManagementFeeRateSchedule_RateScheduleType">
+          <End Role="RateScheduleType" Type="DeepBlueModel.RateScheduleType" Multiplicity="1" />
+          <End Role="ManagementFeeRateSchedule" Type="DeepBlueModel.ManagementFeeRateSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RateScheduleType">
+              <PropertyRef Name="RateScheduleTypeID" />
+            </Principal>
+            <Dependent Role="ManagementFeeRateSchedule">
+              <PropertyRef Name="RateScheduleTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManagementFeeRateScheduleTier_ManagementFeeRateSchedule">
+          <End Role="ManagementFeeRateSchedule" Type="DeepBlueModel.ManagementFeeRateSchedule" Multiplicity="1" />
+          <End Role="ManagementFeeRateScheduleTier" Type="DeepBlueModel.ManagementFeeRateScheduleTier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManagementFeeRateSchedule">
+              <PropertyRef Name="ManagementFeeRateScheduleID" />
+            </Principal>
+            <Dependent Role="ManagementFeeRateScheduleTier">
+              <PropertyRef Name="ManagementFeeRateScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManagementFeeRateScheduleTier_MultiplierType">
+          <End Role="MultiplierType" Type="DeepBlueModel.MultiplierType" Multiplicity="1" />
+          <End Role="ManagementFeeRateScheduleTier" Type="DeepBlueModel.ManagementFeeRateScheduleTier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MultiplierType">
+              <PropertyRef Name="MultiplierTypeID" />
+            </Principal>
+            <Dependent Role="ManagementFeeRateScheduleTier">
+              <PropertyRef Name="MultiplierTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OptionFieldValueList_OptionField">
           <End Role="OptionField" Type="DeepBlueModel.OptionField" Multiplicity="1" />
           <End Role="OptionFieldValueList" Type="DeepBlueModel.OptionFieldValueList" Multiplicity="*" />
@@ -2293,6 +2923,61 @@
             <ScalarProperty Name="EntityID" ColumnName="EntityID" />
             <ScalarProperty Name="Enabled" ColumnName="Enabled" />
             <ScalarProperty Name="AddressTypeName" ColumnName="AddressTypeName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CapitalCalls"><EntityTypeMapping TypeName="DeepBlueModel.CapitalCall"><MappingFragment StoreEntitySet="CapitalCall">
+            <ScalarProperty Name="CapitalCallID" ColumnName="CapitalCallID" />
+            <ScalarProperty Name="FundID" ColumnName="FundID" />
+            <ScalarProperty Name="CapitalCallDate" ColumnName="CapitalCallDate" />
+            <ScalarProperty Name="CapitalCallDueDate" ColumnName="CapitalCallDueDate" />
+            <ScalarProperty Name="CapitalCallAmount" ColumnName="CapitalCallAmount" />
+            <ScalarProperty Name="NewInvestmentAmount" ColumnName="NewInvestmentAmount" />
+            <ScalarProperty Name="ExistingInvestmentAmount" ColumnName="ExistingInvestmentAmount" />
+            <ScalarProperty Name="CapitalCallNumber" ColumnName="CapitalCallNumber" />
+            <ScalarProperty Name="CapitalCallTypeID" ColumnName="CapitalCallTypeID" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CapitalCallLineItems"><EntityTypeMapping TypeName="DeepBlueModel.CapitalCallLineItem"><MappingFragment StoreEntitySet="CapitalCallLineItem">
+            <ScalarProperty Name="CapitalCallLineItemID" ColumnName="CapitalCallLineItemID" />
+            <ScalarProperty Name="CapitalCallID" ColumnName="CapitalCallID" />
+            <ScalarProperty Name="CapitalCallLineItemTypeID" ColumnName="CapitalCallLineItemTypeID" />
+            <ScalarProperty Name="Amount" ColumnName="Amount" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CapitalCallLineItemDetails"><EntityTypeMapping TypeName="DeepBlueModel.CapitalCallLineItemDetail"><MappingFragment StoreEntitySet="CapitalCallLineItemDetail">
+            <ScalarProperty Name="CapitalCallLineItemDetailID" ColumnName="CapitalCallLineItemDetailID" />
+            <ScalarProperty Name="CapitalCallLineItemID" ColumnName="CapitalCallLineItemID" />
+            <ScalarProperty Name="Key" ColumnName="Key" />
+            <ScalarProperty Name="Value" ColumnName="Value" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CapitalCallLineItemTypes"><EntityTypeMapping TypeName="DeepBlueModel.CapitalCallLineItemType"><MappingFragment StoreEntitySet="CapitalCallLineItemType">
+            <ScalarProperty Name="CapitalCallLineItemTypeID" ColumnName="CapitalCallLineItemTypeID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CapitalCallTypes"><EntityTypeMapping TypeName="DeepBlueModel.CapitalCallType"><MappingFragment StoreEntitySet="CapitalCallType">
+            <ScalarProperty Name="CapitalCallTypeID" ColumnName="CapitalCallTypeID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Communications"><EntityTypeMapping TypeName="DeepBlueModel.Communication"><MappingFragment StoreEntitySet="Communication">
             <ScalarProperty Name="CommunicationID" ColumnName="CommunicationID" />
@@ -2458,6 +3143,17 @@
             <ScalarProperty Name="IsFirstClosing" ColumnName="IsFirstClosing" />
             <ScalarProperty Name="Name" ColumnName="Name" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="FundRateSchedules"><EntityTypeMapping TypeName="DeepBlueModel.FundRateSchedule"><MappingFragment StoreEntitySet="FundRateSchedule">
+            <ScalarProperty Name="FundRateScheduleID" ColumnName="FundRateScheduleID" />
+            <ScalarProperty Name="FundID" ColumnName="FundID" />
+            <ScalarProperty Name="InvestorTypeID" ColumnName="InvestorTypeID" />
+            <ScalarProperty Name="RateScheduleID" ColumnName="RateScheduleID" />
+            <ScalarProperty Name="RateScheduleTypeID" ColumnName="RateScheduleTypeID" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Investors"><EntityTypeMapping TypeName="DeepBlueModel.Investor"><MappingFragment StoreEntitySet="Investor">
             <ScalarProperty Name="InvestorID" ColumnName="InvestorID" />
             <ScalarProperty Name="EntityID" ColumnName="EntityID" />
@@ -2575,9 +3271,37 @@
             <ScalarProperty Name="Enabled" ColumnName="Enabled" />
             <ScalarProperty Name="InvestorTypeName" ColumnName="InvestorTypeName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="ManagementFeeRateSchedules"><EntityTypeMapping TypeName="DeepBlueModel.ManagementFeeRateSchedule"><MappingFragment StoreEntitySet="ManagementFeeRateSchedule">
+            <ScalarProperty Name="ManagementFeeRateScheduleID" ColumnName="ManagementFeeRateScheduleID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="RateScheduleTypeID" ColumnName="RateScheduleTypeID" />
+            <ScalarProperty Name="CalculationFormatString" ColumnName="CalculationFormatString" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="ManagementFeeRateScheduleTiers"><EntityTypeMapping TypeName="DeepBlueModel.ManagementFeeRateScheduleTier"><MappingFragment StoreEntitySet="ManagementFeeRateScheduleTier">
+            <ScalarProperty Name="ManagementFeeRateScheduleTierID" ColumnName="ManagementFeeRateScheduleTierID" />
+            <ScalarProperty Name="ManagementFeeRateScheduleID" ColumnName="ManagementFeeRateScheduleID" />
+            <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+            <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+            <ScalarProperty Name="Multiplier" ColumnName="Multiplier" />
+            <ScalarProperty Name="MultiplierTypeID" ColumnName="MultiplierTypeID" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="MODULEs"><EntityTypeMapping TypeName="DeepBlueModel.MODULE"><MappingFragment StoreEntitySet="MODULE">
             <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
             <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MultiplierTypes"><EntityTypeMapping TypeName="DeepBlueModel.MultiplierType"><MappingFragment StoreEntitySet="MultiplierType">
+            <ScalarProperty Name="MultiplierTypeID" ColumnName="MultiplierTypeID" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="OptionFields"><EntityTypeMapping TypeName="DeepBlueModel.OptionField"><MappingFragment StoreEntitySet="OptionField">
             <ScalarProperty Name="OptionFieldID" ColumnName="OptionFieldID" />
@@ -2591,6 +3315,17 @@
             <ScalarProperty Name="OptionFieldValueListID" ColumnName="OptionFieldValueListID" />
             <ScalarProperty Name="OptionFieldID" ColumnName="OptionFieldID" />
             <ScalarProperty Name="CustomFieldID" ColumnName="CustomFieldID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="RateScheduleTypes"><EntityTypeMapping TypeName="DeepBlueModel.RateScheduleType"><MappingFragment StoreEntitySet="RateScheduleType">
+            <ScalarProperty Name="RateScheduleTypeID" ColumnName="RateScheduleTypeID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="RateScheduleName" ColumnName="RateScheduleName" />
+            <ScalarProperty Name="CalculationFormatString" ColumnName="CalculationFormatString" />
+            <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="STATEs"><EntityTypeMapping TypeName="DeepBlueModel.STATE"><MappingFragment StoreEntitySet="STATE">
             <ScalarProperty Name="StateID" ColumnName="StateID" />
@@ -2623,27 +3358,33 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="DeepBlue">
-        <EntityTypeShape EntityType="DeepBlueModel.Address" Width="1.5" PointX="3" PointY="12.125" Height="4.7149055989583335" IsExpanded="true" />
+      <Diagram Name="DeepBlue" ZoomLevel="124">
+        <EntityTypeShape EntityType="DeepBlueModel.Address" Width="1.5" PointX="3" PointY="12.125" Height="4.7149055989583353" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.AddressType" Width="1.5" PointX="0.75" PointY="10.5" Height="1.7566536458333353" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.CapitalCall" Width="1.5" PointX="16.25" PointY="21.875" Height="3.5644742838541674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.CapitalCallLineItem" Width="1.5" PointX="18.5" PointY="22.25" Height="2.7427376302083317" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.CapitalCallLineItemDetail" Width="1.5" PointX="20.75" PointY="22.375" Height="2.414042968749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.CapitalCallLineItemType" Width="1.5" PointX="16.25" PointY="32.375" Height="2.414042968749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.CapitalCallType" Width="1.5" PointX="14" PointY="32.375" Height="2.414042968749996" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.Communication" Width="1.5" PointX="6" PointY="19.875" Height="3.400126953124996" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.CommunicationGrouping" Width="1.5" PointX="1.5" PointY="20.75" Height="1.427958984374996" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.CommunicationType" Width="1.5" PointX="3.75" PointY="20.5" Height="2.0853483072916674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.Contact" Width="1.5" PointX="6" PointY="6.625" Height="3.8931689453124996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.Contact" Width="1.5" PointX="6" PointY="6.625" Height="3.8931689453125031" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.ContactAddress" Width="1.5" PointX="8.25" PointY="9.25" Height="2.5783902994791674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.ContactCommunication" Width="1.5" PointX="14.25" PointY="8.625" Height="2.5783902994791674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.COUNTRY" Width="1.5" PointX="0.75" PointY="17" Height="1.5923063151041674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.CustomField" Width="1.5" PointX="17" PointY="3" Height="2.9070849609374996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.CustomField" Width="1.5" PointX="17" PointY="3" Height="2.907084960937496" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.CustomFieldValue" Width="1.5" PointX="19.25" PointY="1.25" Height="3.4001269531250031" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.DataType" Width="1.5" PointX="14.75" PointY="3.75" Height="1.4279589843750031" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.DocumentType" Width="1.5" PointX="12" PointY="6.625" Height="1.7566536458333388" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.File" Width="1.5" PointX="12" PointY="2.125" Height="2.907084960937496" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.FileType" Width="1.5" PointX="9.75" PointY="2.625" Height="1.9210009765625031" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.Fund" Width="1.5" PointX="12" PointY="22.875" Height="3.5644742838541674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.FundAccount" Width="1.5" PointX="14.25" PointY="22.375" Height="4.3862109375000031" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.FundClosing" Width="1.5" PointX="11.25" PointY="27.25" Height="2.0853483072916674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.Investor" Width="1.5" PointX="6" PointY="11.75" Height="5.5366422526041656" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.InvestorAccount" Width="1.5" PointX="8.25" PointY="12.875" Height="3.2357796223958371" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.DocumentType" Width="1.5" PointX="12" PointY="6.5" Height="1.7566536458333388" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.File" Width="1.5" PointX="12" PointY="2" Height="2.907084960937496" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.FileType" Width="1.5" PointX="9.75" PointY="2.5" Height="1.9210009765625031" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.Fund" Width="1.5" PointX="12" PointY="22.625" Height="3.8931689453125031" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.FundAccount" Width="1.5" PointX="14.25" PointY="26.75" Height="4.386210937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.FundClosing" Width="1.5" PointX="11.25" PointY="28.25" Height="2.0853483072916674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.FundRateSchedule" Width="1.5" PointX="16.25" PointY="18.125" Height="2.7427376302083388" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.Investor" Width="1.5" PointX="6" PointY="11.75" Height="5.5366422526041674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.InvestorAccount" Width="1.5" PointX="8.25" PointY="12.875" Height="3.2357796223958228" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.InvestorAddress" Width="1.5" PointX="11.25" PointY="13.25" Height="2.5783902994791674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.InvestorCommunication" Width="1.5" PointX="8.25" PointY="17.25" Height="2.5783902994791674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.InvestorContact" Width="1.5" PointX="11.25" PointY="9.25" Height="2.5783902994791674" IsExpanded="true" />
@@ -2651,12 +3392,16 @@
         <EntityTypeShape EntityType="DeepBlueModel.InvestorFund" Width="1.5" PointX="11.25" PointY="16.875" Height="3.2357796223958246" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.InvestorFundDocument" Width="1.5" PointX="14.25" PointY="12.875" Height="3.4001269531249942" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.InvestorFundTransaction" Width="1.5" PointX="13.5" PointY="17.875" Height="3.2357796223958246" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.InvestorType" Width="1.5" PointX="9" PointY="20.625" Height="1.7566536458333246" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.InvestorType" Width="1.5" PointX="9" PointY="20.5" Height="1.9210009765625102" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.ManagementFeeRateSchedule" Width="1.5" PointX="3" PointY="1.125" Height="2.9070849609375102" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.ManagementFeeRateScheduleTier" Width="1.5" PointX="5.25" PointY="1.125" Height="2.9070849609375102" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.MODULE" Width="1.5" PointX="14.75" PointY="0.75" Height="1.427958984374996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.MultiplierType" Width="1.5" PointX="3" PointY="5.875" Height="1.427958984374996" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.OptionField" Width="1.5" PointX="19.25" PointY="5.375" Height="2.2496956380208388" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.OptionFieldValueList" Width="1.5" PointX="21.5" PointY="4.5" Height="1.7566536458333388" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.RateScheduleType" Width="1.5" PointX="0.75" PointY="1.25" Height="2.5783902994791674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.STATE" Width="1.5" PointX="0.75" PointY="13.625" Height="1.7566536458333388" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.TransactionType" Width="1.5" PointX="11.25" PointY="30" Height="1.7566536458333246" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.TransactionType" Width="1.5" PointX="11.25" PointY="31" Height="1.7566536458333388" IsExpanded="true" />
         <AssociationConnector Association="DeepBlueModel.FK_Address_AddressType" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="11.784576322916664" />
           <ConnectorPoint PointX="3.34375" PointY="11.784576322916664" />
@@ -2665,7 +3410,7 @@
         <AssociationConnector Association="DeepBlueModel.FK_Address_Country" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="17.796153157552084" />
           <ConnectorPoint PointX="3.75" PointY="17.796153157552084" />
-          <ConnectorPoint PointX="3.75" PointY="16.839905598958332" />
+          <ConnectorPoint PointX="3.75" PointY="16.839905598958335" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Address_State" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="14.503326822916669" />
@@ -2683,17 +3428,47 @@
           <ConnectorPoint PointX="8.25" PointY="11.565826822916662" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorAddress_Address" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.156252" PointY="16.839905598958332" />
+          <ConnectorPoint PointX="4.156252" PointY="16.839905598958335" />
           <ConnectorPoint PointX="4.156252" PointY="17.536642252604167" />
-          <ConnectorPoint PointX="5.6678195128205129" PointY="17.536642252604167" />
-          <ConnectorPoint PointX="5.834486179487179" PointY="17.536642252604167" />
-          <ConnectorPoint PointX="6.6984955897435912" PointY="17.536642252604167" />
-          <ConnectorPoint PointX="6.8651622564102572" PointY="17.536642252604167" />
+          <ConnectorPoint PointX="5.6678195128205138" PointY="17.536642252604167" />
+          <ConnectorPoint PointX="5.83448617948718" PointY="17.536642252604167" />
+          <ConnectorPoint PointX="6.6984955897435894" PointY="17.536642252604167" />
+          <ConnectorPoint PointX="6.8651622564102555" PointY="17.536642252604167" />
           <ConnectorPoint PointX="8" PointY="17.536642252604167" />
-          <ConnectorPoint PointX="8" PointY="16.360779622395839" />
-          <ConnectorPoint PointX="10.875" PointY="16.360779622395839" />
+          <ConnectorPoint PointX="8" PointY="16.360779622395825" />
+          <ConnectorPoint PointX="10.875" PointY="16.360779622395825" />
           <ConnectorPoint PointX="10.875" PointY="14.539195149739584" />
           <ConnectorPoint PointX="11.25" PointY="14.539195149739584" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_CapitalCall_CapitalCallType" ManuallyRouted="false">
+          <ConnectorPoint PointX="14.09375" PointY="32.375" />
+          <ConnectorPoint PointX="14.09375" PointY="23.657237141927084" />
+          <ConnectorPoint PointX="14.463541166666667" PointY="23.657237141927084" />
+          <ConnectorPoint PointX="14.630207833333335" PointY="23.657237141927084" />
+          <ConnectorPoint PointX="16.25" PointY="23.657237141927084" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_CapitalCall_Fund" ManuallyRouted="false">
+          <ConnectorPoint PointX="13.5" PointY="24.610855712890626" />
+          <ConnectorPoint PointX="13.572916666666666" PointY="24.610855712890626" />
+          <ConnectorPoint PointX="13.739583333333334" PointY="24.610855712890626" />
+          <ConnectorPoint PointX="14.010416666666666" PointY="24.610855712890626" />
+          <ConnectorPoint PointX="14.177083333333334" PointY="24.610855712890626" />
+          <ConnectorPoint PointX="14.463541166666667" PointY="24.610855712890626" />
+          <ConnectorPoint PointX="14.630207833333335" PointY="24.610855712890626" />
+          <ConnectorPoint PointX="16.25" PointY="24.610855712890626" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_CapitalCallLineItem_CapitalCall" ManuallyRouted="false">
+          <ConnectorPoint PointX="17.75" PointY="23.621368815104166" />
+          <ConnectorPoint PointX="18.5" PointY="23.621368815104166" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_CapitalCall_CapitalCallLineItemType" ManuallyRouted="false">
+          <ConnectorPoint PointX="17.75" PointY="33.582021484375" />
+          <ConnectorPoint PointX="19.25" PointY="33.582021484375" />
+          <ConnectorPoint PointX="19.25" PointY="24.992737630208332" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_CapitalCallLineItemDetail_CapitalCallLineItem" ManuallyRouted="false">
+          <ConnectorPoint PointX="20" PointY="23.582021484374998" />
+          <ConnectorPoint PointX="20.75" PointY="23.582021484374998" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Communication_CommunicationType" ManuallyRouted="false">
           <ConnectorPoint PointX="5.25" PointY="21.542674153645834" />
@@ -2704,14 +3479,14 @@
           <ConnectorPoint PointX="8.4166666666666661" PointY="21.575063476562498" />
           <ConnectorPoint PointX="8.5833333333333339" PointY="21.575063476562498" />
           <ConnectorPoint PointX="8.75" PointY="21.575063476562498" />
-          <ConnectorPoint PointX="8.75" PointY="20.375" />
-          <ConnectorPoint PointX="11.697914166666665" PointY="20.375" />
-          <ConnectorPoint PointX="11.864580833333333" PointY="20.375" />
-          <ConnectorPoint PointX="12.291666666666666" PointY="20.375" />
-          <ConnectorPoint PointX="12.458333333333334" PointY="20.375" />
-          <ConnectorPoint PointX="13.057291666666666" PointY="20.375" />
-          <ConnectorPoint PointX="13.223958333333334" PointY="20.375" />
-          <ConnectorPoint PointX="13.25" PointY="20.375" />
+          <ConnectorPoint PointX="8.75" PointY="20.25" />
+          <ConnectorPoint PointX="11.697914166666665" PointY="20.25" />
+          <ConnectorPoint PointX="11.864580833333333" PointY="20.25" />
+          <ConnectorPoint PointX="12.291666666666666" PointY="20.25" />
+          <ConnectorPoint PointX="12.458333333333334" PointY="20.25" />
+          <ConnectorPoint PointX="13.057291666666666" PointY="20.25" />
+          <ConnectorPoint PointX="13.223958333333334" PointY="20.25" />
+          <ConnectorPoint PointX="13.25" PointY="20.25" />
           <ConnectorPoint PointX="13.25" PointY="11.578390299479167" />
           <ConnectorPoint PointX="13.791666666666666" PointY="11.578390299479167" />
           <ConnectorPoint PointX="13.958333333333334" PointY="11.578390299479167" />
@@ -2719,8 +3494,8 @@
           <ConnectorPoint PointX="15" PointY="11.203390299479167" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorCommunication_Communication" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="22.85964029947916" />
-          <ConnectorPoint PointX="8.5" PointY="22.85964029947916" />
+          <ConnectorPoint PointX="7.5" PointY="22.879313964843753" />
+          <ConnectorPoint PointX="8.5" PointY="22.879313964843753" />
           <ConnectorPoint PointX="8.5" PointY="19.828390299479167" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_CommunicationType_CommunicationGrouping" ManuallyRouted="false">
@@ -2728,8 +3503,8 @@
           <ConnectorPoint PointX="3.75" PointY="21.463979492187498" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_ContactAddress_Contact" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="9.88408447265625" />
-          <ConnectorPoint PointX="8.25" PointY="9.88408447265625" />
+          <ConnectorPoint PointX="7.5" PointY="9.8840844726562516" />
+          <ConnectorPoint PointX="8.25" PointY="9.8840844726562516" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_ContactCommunication_Contact" ManuallyRouted="false">
           <ConnectorPoint PointX="7.5" PointY="8.90625" />
@@ -2742,8 +3517,8 @@
           <ConnectorPoint PointX="14.25" PointY="8.90625" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorContact_Contact" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="8.6439493229166686" />
-          <ConnectorPoint PointX="11.59375" PointY="8.6439493229166686" />
+          <ConnectorPoint PointX="7.5" PointY="8.5814493229166757" />
+          <ConnectorPoint PointX="11.59375" PointY="8.5814493229166757" />
           <ConnectorPoint PointX="11.59375" PointY="9.25" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_CustomField_CustomFieldValue" ManuallyRouted="false">
@@ -2751,8 +3526,8 @@
           <ConnectorPoint PointX="19.25" PointY="3.8250634765625016" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_CustomField_OptionField" ManuallyRouted="false">
-          <ConnectorPoint PointX="18.5" PointY="5.64104248046875" />
-          <ConnectorPoint PointX="19.25" PointY="5.64104248046875" />
+          <ConnectorPoint PointX="18.5" PointY="5.641042480468748" />
+          <ConnectorPoint PointX="19.25" PointY="5.641042480468748" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_DataType_CustomField" ManuallyRouted="false">
           <ConnectorPoint PointX="16.25" PointY="4.4639794921875016" />
@@ -2768,40 +3543,54 @@
           <ConnectorPoint PointX="21.5" PointY="5.0125634765625016" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundDocument_DocumentType" ManuallyRouted="false">
-          <ConnectorPoint PointX="13.03125" PointY="8.3816536458333388" />
+          <ConnectorPoint PointX="13.03125" PointY="8.2566536458333388" />
           <ConnectorPoint PointX="13.03125" PointY="16.083008626302082" />
           <ConnectorPoint PointX="13.057291666666666" PointY="16.083008626302082" />
           <ConnectorPoint PointX="13.333333333333334" PointY="16.083008626302082" />
           <ConnectorPoint PointX="14.25" PointY="16.083008626302082" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_File_FileType" ManuallyRouted="false">
-          <ConnectorPoint PointX="11.25" PointY="3.5855004882812516" />
-          <ConnectorPoint PointX="12" PointY="3.5855004882812516" />
+          <ConnectorPoint PointX="11.25" PointY="3.4605004882812516" />
+          <ConnectorPoint PointX="12" PointY="3.4605004882812516" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundDocument_File" ManuallyRouted="false">
-          <ConnectorPoint PointX="13.5" PointY="5.03093011478365" />
-          <ConnectorPoint PointX="13.875" PointY="5.4059301147836507" />
+          <ConnectorPoint PointX="13.5" PointY="4.90593011478365" />
+          <ConnectorPoint PointX="13.875" PointY="5.2809301147836507" />
           <ConnectorPoint PointX="13.875" PointY="14.447752313151046" />
           <ConnectorPoint PointX="14.25" PointY="14.447752313151046" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_FundAccount_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="13.5" PointY="24.657237141927084" />
-          <ConnectorPoint PointX="13.604164166666665" PointY="24.657237141927084" />
-          <ConnectorPoint PointX="13.770830833333333" PointY="24.657237141927084" />
-          <ConnectorPoint PointX="13.791666666666666" PointY="24.657237141927084" />
-          <ConnectorPoint PointX="13.958333333333334" PointY="24.657237141927084" />
-          <ConnectorPoint PointX="14.25" PointY="24.657237141927084" />
+          <ConnectorPoint PointX="13.5" PointY="25.595764829101558" />
+          <ConnectorPoint PointX="13.572916666666666" PointY="25.595764829101558" />
+          <ConnectorPoint PointX="13.739583333333334" PointY="25.595764829101558" />
+          <ConnectorPoint PointX="14.010416666666666" PointY="25.595764829101558" />
+          <ConnectorPoint PointX="14.177083333333334" PointY="25.595764829101558" />
+          <ConnectorPoint PointX="14.463541166666667" PointY="25.595764829101558" />
+          <ConnectorPoint PointX="14.630207833333335" PointY="25.595764829101558" />
+          <ConnectorPoint PointX="15" PointY="25.595764829101558" />
+          <ConnectorPoint PointX="15" PointY="26.75" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_FundClosing_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="12.375" PointY="26.439474283854167" />
-          <ConnectorPoint PointX="12.375" PointY="27.25" />
+          <ConnectorPoint PointX="12.375" PointY="26.518168945312503" />
+          <ConnectorPoint PointX="12.375" PointY="28.25" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_FundRateSchedule_Fund" ManuallyRouted="false">
+          <ConnectorPoint PointX="13.5" PointY="22.625" />
+          <ConnectorPoint PointX="13.59732443490112" PointY="22.527675565098878" />
+          <ConnectorPoint PointX="13.715175565098878" PointY="22.409824434901122" />
+          <ConnectorPoint PointX="13.875" PointY="22.25" />
+          <ConnectorPoint PointX="14.463541166666667" PointY="22.25" />
+          <ConnectorPoint PointX="14.630207833333335" PointY="22.25" />
+          <ConnectorPoint PointX="15.875" PointY="22.25" />
+          <ConnectorPoint PointX="15.875" PointY="21.242737630208339" />
+          <ConnectorPoint PointX="16.25" PointY="20.867737630208339" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFund_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="12.375" PointY="22.875" />
+          <ConnectorPoint PointX="12.375" PointY="22.625" />
           <ConnectorPoint PointX="12.375" PointY="20.110779622395825" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundDocument_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="13.140625" PointY="22.875" />
+          <ConnectorPoint PointX="13.140625" PointY="22.625" />
           <ConnectorPoint PointX="13.140625" PointY="13.03125" />
           <ConnectorPoint PointX="13.166666666666666" PointY="13.03125" />
           <ConnectorPoint PointX="13.333333333333334" PointY="13.03125" />
@@ -2810,16 +3599,35 @@
           <ConnectorPoint PointX="14.25" PointY="13.03125" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundTransaction_FundClosing" ManuallyRouted="false">
-          <ConnectorPoint PointX="12.75" PointY="28.292674153645834" />
-          <ConnectorPoint PointX="13.604164166666665" PointY="28.292674153645834" />
-          <ConnectorPoint PointX="13.770830833333333" PointY="28.292674153645834" />
-          <ConnectorPoint PointX="13.875" PointY="28.292674153645834" />
-          <ConnectorPoint PointX="13.875" PointY="21.110779622395825" />
+          <ConnectorPoint PointX="12.75" PointY="29.292674153645834" />
+          <ConnectorPoint PointX="13.572916666666666" PointY="29.292674153645834" />
+          <ConnectorPoint PointX="13.739583333333334" PointY="29.292674153645834" />
+          <ConnectorPoint PointX="13.75" PointY="29.292674153645834" />
+          <ConnectorPoint PointX="13.75" PointY="26.5" />
+          <ConnectorPoint PointX="14.010416666666666" PointY="26.5" />
+          <ConnectorPoint PointX="14.177083333333334" PointY="26.5" />
+          <ConnectorPoint PointX="14.546874500000001" PointY="26.5" />
+          <ConnectorPoint PointX="14.546874500000001" PointY="21.110779622395825" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_FundRateSchedule_InvestorType" ManuallyRouted="false">
+          <ConnectorPoint PointX="10.5" PointY="21.460500488281255" />
+          <ConnectorPoint PointX="12.291666666666666" PointY="21.460500488281255" />
+          <ConnectorPoint PointX="12.458333333333334" PointY="21.460500488281255" />
+          <ConnectorPoint PointX="13.057291666666666" PointY="21.460500488281255" />
+          <ConnectorPoint PointX="13.223958333333334" PointY="21.460500488281255" />
+          <ConnectorPoint PointX="13.572916666666666" PointY="21.460500488281255" />
+          <ConnectorPoint PointX="13.739583333333334" PointY="21.460500488281255" />
+          <ConnectorPoint PointX="14.463541166666667" PointY="21.460500488281255" />
+          <ConnectorPoint PointX="14.630207833333335" PointY="21.460500488281255" />
+          <ConnectorPoint PointX="15.791666666666666" PointY="21.460500488281255" />
+          <ConnectorPoint PointX="15.958333333333334" PointY="21.460500488281255" />
+          <ConnectorPoint PointX="17.031252000000002" PointY="21.460500488281255" />
+          <ConnectorPoint PointX="17.031252000000002" PointY="20.867737630208339" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Investor_InvestorEntityType" ManuallyRouted="false">
           <ConnectorPoint PointX="4.90625" PointY="11.381653645833325" />
-          <ConnectorPoint PointX="4.90625" PointY="17.09452392578125" />
-          <ConnectorPoint PointX="6" PointY="17.09452392578125" />
+          <ConnectorPoint PointX="4.90625" PointY="17.094523925781253" />
+          <ConnectorPoint PointX="6" PointY="17.094523925781253" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Investor_ResidencyState" ManuallyRouted="false">
           <ConnectorPoint PointX="2.2499999999999996" PointY="15.381653645833339" />
@@ -2828,24 +3636,24 @@
           <ConnectorPoint PointX="3.6666666666666665" PointY="17.661642252604167" />
           <ConnectorPoint PointX="3.8333333333333335" PointY="17.661642252604167" />
           <ConnectorPoint PointX="5.6261528461538468" PointY="17.661642252604167" />
-          <ConnectorPoint PointX="6.0011528461538477" PointY="17.286642252604167" />
+          <ConnectorPoint PointX="6.0011528461538459" PointY="17.286642252604167" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorAccount_Investor" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="14.492889811197919" />
-          <ConnectorPoint PointX="8.25" PointY="14.492889811197919" />
+          <ConnectorPoint PointX="7.5" PointY="14.492889811197912" />
+          <ConnectorPoint PointX="8.25" PointY="14.492889811197912" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorAddress_Investor" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="15.921018031901037" />
-          <ConnectorPoint PointX="7.75" PointY="15.921018031901037" />
-          <ConnectorPoint PointX="7.75" PointY="16.610779622395839" />
-          <ConnectorPoint PointX="7.916666666666667" PointY="16.610779622395839" />
-          <ConnectorPoint PointX="8.0833333333333339" PointY="16.610779622395839" />
-          <ConnectorPoint PointX="12" PointY="16.610779622395839" />
+          <ConnectorPoint PointX="7.5" PointY="15.921018031901033" />
+          <ConnectorPoint PointX="7.75" PointY="15.921018031901033" />
+          <ConnectorPoint PointX="7.75" PointY="16.610779622395825" />
+          <ConnectorPoint PointX="7.916666666666667" PointY="16.610779622395825" />
+          <ConnectorPoint PointX="8.0833333333333339" PointY="16.610779622395825" />
+          <ConnectorPoint PointX="12" PointY="16.610779622395825" />
           <ConnectorPoint PointX="12" PointY="15.828390299479167" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorCommunication_Investor" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.7818289230769242" PointY="17.286642252604167" />
-          <ConnectorPoint PointX="6.7818289230769242" PointY="18.682516276041667" />
+          <ConnectorPoint PointX="6.7818289230769224" PointY="17.286642252604167" />
+          <ConnectorPoint PointX="6.7818289230769224" PointY="18.682516276041667" />
           <ConnectorPoint PointX="8.25" PointY="18.682516276041667" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorContact_Investor" ManuallyRouted="false">
@@ -2874,8 +3682,8 @@
           <ConnectorPoint PointX="14.25" PointY="16.241567789713539" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFund_InvestorType" ManuallyRouted="false">
-          <ConnectorPoint PointX="10.5" PointY="21.503326822916662" />
-          <ConnectorPoint PointX="11.7812475" PointY="21.503326822916662" />
+          <ConnectorPoint PointX="10.5" PointY="20.948997744140634" />
+          <ConnectorPoint PointX="11.7812475" PointY="20.948997744140634" />
           <ConnectorPoint PointX="11.7812475" PointY="20.110779622395825" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundTransaction_InvestorFund" ManuallyRouted="false">
@@ -2885,9 +3693,22 @@
           <ConnectorPoint PointX="13.5" PointY="18.992889811197912" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundTransaction_TransactionType" ManuallyRouted="false">
-          <ConnectorPoint PointX="12.75" PointY="30.878326822916662" />
-          <ConnectorPoint PointX="13.6874975" PointY="30.878326822916662" />
-          <ConnectorPoint PointX="13.6874975" PointY="21.110779622395825" />
+          <ConnectorPoint PointX="12.75" PointY="31.755605468749998" />
+          <ConnectorPoint PointX="13.65625" PointY="31.755605468749998" />
+          <ConnectorPoint PointX="13.65625" PointY="21.110779622395825" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_ManagementFeeRateSchedule_RateScheduleType" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.5391951497395837" />
+          <ConnectorPoint PointX="3" PointY="2.5391951497395837" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_ManagementFeeRateScheduleTier_ManagementFeeRateSchedule" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="2.5785424804687551" />
+          <ConnectorPoint PointX="5.25" PointY="2.5785424804687551" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_ManagementFeeRateScheduleTier_MultiplierType" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="6.21875" />
+          <ConnectorPoint PointX="5.59375" PointY="6.21875" />
+          <ConnectorPoint PointX="5.59375" PointY="4.03208496093751" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_OptionFieldValueList_OptionField" ManuallyRouted="false">
           <ConnectorPoint PointX="20.75" PointY="5.8158268229166694" />

@@ -1,5 +1,10 @@
-﻿var documentSearch={
-	changeType: function (select) {
+﻿var documentSearch={	
+	init: function(){
+		$(document).ready(function(){
+			$("#FundNameCloumn").hide();
+		});
+	}
+	,changeType: function (select) {
 		var InvestorRow=document.getElementById("InvestorRow");
 		var FundRow=document.getElementById("FundRow");
 		var InvestorNameColumn=document.getElementById("InvestorNameColumn");
@@ -35,38 +40,24 @@
 			$("#FundId").val(0);
 		}
 	}
-	,onValidation: function (formId) {
-		var message='';
-		var DocumentTypeId=document.getElementById("DocumentTypeId").value;
-		if(parseInt(DocumentTypeId)<=0) {
-			message+="Document Type is required\n";
-		}
-		if(message!="") {
-			alert(message);
-			return false;
-		}
-		return true;
-	}
 	,onSubmit: function (formId) {
-		if(this.onValidation(formId)) {
-			var FromDate=document.getElementById("FromDate").value;
-			var ToDate=document.getElementById("ToDate").value;
-			var DocumentTypeId=document.getElementById("DocumentTypeId").value;
-			var DocumentStatus=document.getElementById("DocumentStatus").value;
-			var InvestorId=document.getElementById("InvestorId").value;
-			var FundId=document.getElementById("FundId").value;
-			var grid=$("#SearchDocumentList");
-			var param=[{ name: "fromDate",value: FromDate }
+		var FromDate=document.getElementById("FromDate").value;
+		var ToDate=document.getElementById("ToDate").value;
+		var DocumentTypeId=document.getElementById("DocumentTypeId").value;
+		var DocumentStatus=document.getElementById("DocumentStatus").value;
+		var InvestorId=document.getElementById("InvestorId").value;
+		var FundId=document.getElementById("FundId").value;
+		var grid=$("#SearchDocumentList");
+		var param=[{ name: "fromDate",value: FromDate }
 					,{ name: "toDate",value: ToDate }
 					 ,{ name: "investorId",value: InvestorId }
 					 ,{ name: "fundId",value: FundId }
 					 ,{ name: "documentTypeId",value: DocumentTypeId }
 					 ,{ name: "documentStatusId",value: DocumentStatus }
 					];
-			//grid.flexOptions({ params: null });
-			grid.flexOptions({ params: param });
-			grid.flexReload();
-		}
+		//grid.flexOptions({ params: null });
+		grid.flexOptions({ params: param });
+		grid.flexReload();
 		return false;
 	}
 	,downloadFile: function (filePath,fileName) {

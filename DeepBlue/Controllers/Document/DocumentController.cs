@@ -9,6 +9,7 @@ using System.IO;
 using DeepBlue.Models.Entity;
 using System.Text;
 using System.Configuration;
+using System.Text.RegularExpressions;
 
 namespace DeepBlue.Controllers.Document {
 	public class DocumentController : Controller {
@@ -25,54 +26,82 @@ namespace DeepBlue.Controllers.Document {
 
 		//
 		// GET: /Document/New
-
 		public ActionResult New() {
 			ViewData["MenuName"] = "Document";
-			UploadModel model = new UploadModel();
+			CreateModel model = new CreateModel();
 			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(DocumentRepository.GetAllDocumentTypes());
 			model.DocumentStatusTypes = SelectListFactory.GetDocumentStatusList();
 			model.DocumentStatus = (int)DocumentStatus.Investor;
+			model.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
 			return View(model);
 		}
 
+
 		//
 		// POST: /Document/Create
-
 		[HttpPost]
 		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult Create(FormCollection collection) {
-			UploadModel model = new UploadModel();
+			CreateModel model = new CreateModel();
 			this.TryUpdateModel(model);
+			int fileTypeId = 0;
+			string fileName = string.Empty;
+			string ext = string.Empty;
+			string filePath = string.Empty;
+			UploadFile fileUpload = null;
 			if (ModelState.IsValid) {
-				if (model.File != null) {
-					string ext = Path.GetExtension(model.File.FileName).ToLower();
-					int? investorId = null;
-					int? fundId = null;
-					bool validate = true;
-					switch (model.DocumentStatus) {
-						case (int)DocumentStatus.Investor:
-							if (model.InvestorId == 0) {
-								ModelState.AddModelError("InvestorId", "Investor is required.");
-								validate = false;
-							} else {
-								investorId = model.InvestorId;
+				int? investorId = null;
+				int? fundId = null;
+				switch (model.DocumentStatus) {
+					case (int)DocumentStatus.Investor:
+						if (model.InvestorId == 0) {
+							ModelState.AddModelError("InvestorId", "Investor is required.");
+						} else {
+							investorId = model.InvestorId;
+						}
+						break;
+					case (int)DocumentStatus.Fund:
+						if (model.FundId == 0) {
+							ModelState.AddModelError("FundId", "Fund is required.");
+						} else {
+							fundId = model.FundId;
+						}
+						break;
+				}
+				switch ((UploadType)model.UploadType) {
+					case UploadType.Link:
+						Regex regex = new Regex(
+									@"^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)"
+									+ @"*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$",
+									RegexOptions.IgnoreCase
+									| RegexOptions.Multiline
+									| RegexOptions.IgnorePatternWhitespace
+									| RegexOptions.Compiled
+									);
+						if (regex.IsMatch(model.FilePath) == false) {
+							ModelState.AddModelError("FilePath", "Invalid Link.");
+						} else {
+							fileName = Path.GetFileName(model.FilePath);
+							ext = Path.GetExtension(model.FilePath);
+							filePath = model.FilePath.Replace(fileName, "");
+							if (filePath.ToLower().StartsWith("http://") == false) {
+								filePath = "http://" + filePath;
 							}
-							break;
-						case (int)DocumentStatus.Fund:
-							if (model.FundId == 0) {
-								ModelState.AddModelError("FundId", "Fund is required.");
-								validate = false;
-							} else {
-								fundId = model.FundId;
-							}
-							break;
-					}
+						}
+						model.File = null;
+						break;
+					case UploadType.Upload:
+						if (model.File != null) {
+							ext = Path.GetExtension(model.File.FileName).ToLower();
+						} else {
+							ModelState.AddModelError("File", "File is required");
+						}
+						break;
+				}
+				if (ModelState.IsValid) {
 					if (ext != ".pdf" && ext != ".doc" && ext != ".docx" && ext != ".xls" && ext != ".xlsx") {
-						ModelState.AddModelError("FileName", "*.pdf,doc,docx,xls,xlsx files only allowed");
-						validate = false;
-					}
-					if (validate) {
-						int fileTypeId = 0;
+						ModelState.AddModelError("File", "*.pdf,doc,docx,xls,xlsx files only allowed");
+					} else {
 						switch (ext) {
 							case ".pdf":
 								fileTypeId = (int)DeepBlue.Models.Document.FileType.PDF;
@@ -90,55 +119,58 @@ namespace DeepBlue.Controllers.Document {
 								fileTypeId = (int)DeepBlue.Models.Document.FileType.Excel;
 								break;
 						}
-						UploadFile fileUpload = new UploadFile(model.File, "DocumentUploadPath", (int)ConfigUtil.CurrentEntityID, (investorId != null ? investorId : fundId), model.DocumentTypeId, Path.GetFileName(model.File.FileName));
-						if (fileUpload.Upload()) {
-							InvestorFundDocument investorFundDocument = new InvestorFundDocument();
-							investorFundDocument.CreatedBy = AppSettings.CreatedByUserId;
-							investorFundDocument.CreatedDate = DateTime.Now;
-							investorFundDocument.DocumentDate = model.DocumentDate;
-							investorFundDocument.DocumentTypeID = model.DocumentTypeId;
-							investorFundDocument.EntityID = (int)ConfigUtil.CurrentEntityID;
-							investorFundDocument.LastUpdatedBy = AppSettings.CreatedByUserId;
-							investorFundDocument.LastUpdatedDate = DateTime.Now;
-							investorFundDocument.InvestorID = investorId;
-							investorFundDocument.FundID = fundId;
+						InvestorFundDocument investorFundDocument = new InvestorFundDocument();
+						investorFundDocument.CreatedBy = AppSettings.CreatedByUserId;
+						investorFundDocument.CreatedDate = DateTime.Now;
+						investorFundDocument.DocumentDate = model.DocumentDate;
+						investorFundDocument.DocumentTypeID = model.DocumentTypeId;
+						investorFundDocument.EntityID = (int)ConfigUtil.CurrentEntityID;
+						investorFundDocument.LastUpdatedBy = AppSettings.CreatedByUserId;
+						investorFundDocument.LastUpdatedDate = DateTime.Now;
+						investorFundDocument.InvestorID = investorId;
+						investorFundDocument.FundID = fundId;
 
-							investorFundDocument.File = new Models.Entity.File();
+						investorFundDocument.File = new Models.Entity.File();
+						if (model.File != null) {
+							fileUpload = new UploadFile(model.File, "DocumentUploadPath", (int)ConfigUtil.CurrentEntityID, (investorId != null ? investorId : fundId), model.DocumentTypeId, Path.GetFileName(model.File.FileName));
+							fileUpload.Upload();
 							investorFundDocument.File.FileName = fileUpload.FileName;
 							investorFundDocument.File.FilePath = fileUpload.FilePath;
-							investorFundDocument.File.FileTypeID = fileTypeId;
-							investorFundDocument.File.CreatedBy = AppSettings.CreatedByUserId;
-							investorFundDocument.File.CreatedDate = DateTime.Now;
-							investorFundDocument.File.EntityID = (int)ConfigUtil.CurrentEntityID;
-							investorFundDocument.File.LastUpdatedBy = AppSettings.CreatedByUserId;
-							investorFundDocument.File.LastUpdatedDate = DateTime.Now;
 							investorFundDocument.File.Size = fileUpload.Size;
-							IEnumerable<ErrorInfo> errorInfo = investorFundDocument.Save();
-							StringBuilder errors = new StringBuilder();
-							if (errorInfo != null) {
-								foreach (var err in errorInfo.ToList()) {
-									errors.Append(err.PropertyName + " : " + err.ErrorMessage + "\n");
-								}
-								if (string.IsNullOrEmpty(errors.ToString()) == false) {
-									ModelState.AddModelError("ModelErrorMessage", errors.ToString());
-								}
-							} else {
-								model.InvestorId = 0;
-								model.FundId = 0;
-								model.DocumentTypeId = 0;
-								model.DocumentStatus = (int)DocumentStatus.Investor;
-								model.DocumentDate = DateTime.Now;
-								model.ModelErrorMessage = string.Empty;
+						} else {
+							investorFundDocument.File.FilePath = filePath;
+							investorFundDocument.File.FileName = fileName;
+						}
+						investorFundDocument.File.FileTypeID = fileTypeId;
+						investorFundDocument.File.CreatedBy = AppSettings.CreatedByUserId;
+						investorFundDocument.File.CreatedDate = DateTime.Now;
+						investorFundDocument.File.EntityID = (int)ConfigUtil.CurrentEntityID;
+						investorFundDocument.File.LastUpdatedBy = AppSettings.CreatedByUserId;
+						investorFundDocument.File.LastUpdatedDate = DateTime.Now;
+						IEnumerable<ErrorInfo> errorInfo = investorFundDocument.Save();
+						StringBuilder errors = new StringBuilder();
+						if (errorInfo != null) {
+							foreach (var err in errorInfo.ToList()) {
+								errors.Append(err.PropertyName + " : " + err.ErrorMessage + "\n");
 							}
+							if (string.IsNullOrEmpty(errors.ToString()) == false) {
+								ModelState.AddModelError("ModelErrorMessage", errors.ToString());
+							}
+						} else {
+							model.InvestorId = 0;
+							model.FundId = 0;
+							model.DocumentTypeId = 0;
+							model.DocumentStatus = (int)DocumentStatus.Investor;
+							model.DocumentDate = DateTime.Now;
+							model.ModelErrorMessage = string.Empty;
 						}
 					}
-				} else {
-					ModelState.AddModelError("FileName", "File is required");
 				}
 			}
 			ViewData["MenuName"] = "Document";
 			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(DocumentRepository.GetAllDocumentTypes());
 			model.DocumentStatusTypes = SelectListFactory.GetDocumentStatusList();
+			model.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
 			if (ModelState.IsValid) {
 				model.DocumentStatus = (int)DocumentStatus.Investor;
 				return RedirectToAction("New", model);
@@ -181,9 +213,5 @@ namespace DeepBlue.Controllers.Document {
 			return View(documentDetails);
 		}
 
-		[HttpGet]
-		public ActionResult DownloadDocument(string filePath, string fileName) {
-			return new DownloadFile { VirtualPath = filePath, FileDownloadName = fileName };
-		}
 	}
 }

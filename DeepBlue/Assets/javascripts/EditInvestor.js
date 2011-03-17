@@ -3,8 +3,9 @@
 	,currentType: ''
 	,init: function () {
 		var id=$("#id").val();
-		if(parseInt(id)>0)
+		if(parseInt(id)>0) {
 			editInvestor.selectInvestor(id);
+		}
 	}
 	,selectInvestor: function (id) {
 		$("#Loading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
@@ -62,11 +63,10 @@
 					 function (i,value) {
 					 	var obj=$("'#CustomField_"+value.CustomFieldId+"'",$investorInfo).get(0);
 					 	if(obj) {
-					 		obj.id=obj.name;
-					 		editInvestor.createDispField(obj);
 					 		switch(value.DataTypeId) {
 					 			case 1: // Integer 
-					 				obj.value=value.IntegerValue;
+					 				if(value.IntegerValue>0)
+					 					obj.value=value.IntegerValue;
 					 				break;
 					 			case 2: // Text
 					 				obj.value=value.TextValue;
@@ -76,9 +76,12 @@
 					 				break;
 					 			case 4: // DateTime
 					 				obj.value=value.DateValue;
+					 				obj.id="CustomField_"+value.Key+"_"+value.CustomFieldId;
+					 				$(obj).datepicker({ changeMonth: true,changeYear: true });
 					 				break;
 					 			case 5: // Currency
-					 				obj.value=value.CurrencyValue;
+					 				if(value.CurrencyValue>0)
+					 					obj.value=value.CurrencyValue;
 					 				break;
 					 		}
 					 	}
@@ -91,9 +94,11 @@
 		});
 	}
 	,createDispField: function (obj) {
+		var parent=$(obj).parent("div");
+		$("span",parent).remove();
 		var span=document.createElement("span");
 		span.id="Disp_"+obj.id;
-		span.innerHTML=obj.value;
+		//span.innerHTML=obj.value;
 		$(obj).before(span);
 	}
 	,buildFundTable: function ($investorInfo,data) {
@@ -358,11 +363,19 @@
 		EntityType.val(investor.EntityType);
 		return $investorInfo;
 	}
+	,createDispCtl: function (input,$target) {
+		var disp=$("'#Disp_"+input.id+"'",$target).get(0);
+		if(!disp) {
+			disp=document.createElement("span");disp.id="Disp_"+input.id;
+			$(input).before(disp);
+		}
+		return $(disp);
+	}
 	,loadDisplCtl: function ($target) {
 		$(":input",$target).each(function () {
 			if($(this).attr("name")!="") {
 				this.style.display="none";
-				var disp=$("'#Disp_"+this.id+"'",$target);
+				var disp=editInvestor.createDispCtl(this,$target);
 				var type=$(this).attr("type");
 				if(type!="hidden"&&type!="checkbox") {
 					disp.html(this.value);
@@ -388,7 +401,7 @@
 		$("select",$target).each(function () {
 			if($(this).attr("name")!="") {
 				this.style.display="none";
-				var disp=$("'#Disp_"+this.id+"'",$target);
+				var disp=editInvestor.createDispCtl(this,$target);
 				if(disp)
 					disp.html(this.options[this.selectedIndex].text);
 				$(this).change(function () {

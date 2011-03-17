@@ -63,6 +63,7 @@
 <div class="editor-field">
 	<%: Html.TextBox("Carry", ((Model.Carry ?? 0) > 0 ? (Model.Carry ?? 0).ToString() : ""), new { @id = "Carry" })%>
 </div>
+<% Html.RenderPartial("CustomFieldList", Model.CustomField);%>
 <div class="editor-label">
 	<b>Bank Details</b>
 </div>

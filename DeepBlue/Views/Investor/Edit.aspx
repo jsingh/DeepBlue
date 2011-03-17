@@ -123,9 +123,7 @@
 									<%: Html.Span("", new { @id = "Disp_Notes" })%>
 									<%: Html.TextAreaFor(model => model.Notes,4,50,new {})%>
 								</div>
-								<div id="CustomFields">
-									<% Html.RenderPartial("CustomFieldList", Model.CustomField);%>
-								</div>
+								<% Html.RenderPartial("CustomFieldList", Model.CustomField);%>
 							</div>
 							<h3>
 								<a href="#">Address</a>

@@ -1,22 +1,9 @@
-﻿/*
-* Flexigrid for jQuery - New Wave Grid
-*
-* Copyright (c) 2008 Paulo P. Marinas (webplicity.net/flexigrid)
-* Dual licensed under the MIT (MIT-LICENSE.txt)
-* and GPL (GPL-LICENSE.txt) licenses.
-*
-* $Date: 2008-07-14 00:09:43 +0800 (Tue, 14 Jul 2008) $
-*/
-
-(function ($) {
-
+﻿(function ($) {
 	$.addFlex=function (t,p) {
-
 		if(t.grid) return false; //return if already exist	
-
 		// apply default properties
 		p=$.extend({
-			height: 200, //default height
+			height: 0, //default height
 			width: 'auto', //auto width
 			striped: true, //apply odd even stripes
 			novstripe: false,
@@ -52,12 +39,9 @@
 			onSuccess: false,
 			onSubmit: false // using a custom populate function
 		},p);
-
-
 		$(t)
 		.show() //show if hidden
 		;
-
 		//create grid class
 		var g={
 			hset: {},
@@ -67,12 +51,10 @@
 
 				$('.pReload',this.pDiv).removeClass('loading');
 				this.loading=false;
-
 				if(!data) {
 					$('.pPageStat',this.pDiv).html(p.errormsg);
 					return false;
 				}
-
 				if(p.dataType=='xml')
 					p.total= +$('rows total',data).text();
 				else
@@ -87,20 +69,15 @@
 					$('.pPageStat',this.pDiv).html(p.nomsg);
 					return false;
 				}
-
 				p.pages=Math.ceil(p.total/p.rp);
-
 				if(p.dataType=='xml')
 					p.page= +$('rows page',data).text();
 				else
 					p.page=data.page;
 
 				this.buildpager();
-
 				//build new body
 				var tbody=document.createElement('tbody');
-
-
 				if(p.dataType=='json') {
 					$.each
 					(
@@ -127,92 +104,69 @@
 					 	tr=null;
 					 }
 					);
-
 				}
-
 				$('tr',t).unbind();
 				$(t).empty();
-
 				$(t).append(tbody);
-
 				tbody=null;data=null;i=null;
-
+				if($(g.bDiv).height()<parseInt(p.height)) {
+					$(g.bDiv).parent().removeClass("bDivMain").addClass("bDivMainNoborder");
+					$(t).addClass("tblborder");
+				} else {
+					$(t).removeClass("tblborder");
+					$(g.bDiv).parent().removeClass("bDivMainNoborder").addClass("bDivMain");
+				}
 				if(p.onSuccess) p.onSuccess();
 				if(p.hideOnSubmit) $(g.block).remove(); //$(t).show();
-
 				this.hDiv.scrollLeft=this.bDiv.scrollLeft;
 				if($.browser.opera) $(t).css('visibility','visible');
-
 			},
 			changeSort: function (th) { //change sortorder
-
 				if(this.loading) return true;
-
 				$(g.nDiv).hide();$(g.nBtn).hide();
-
 				if(p.sortname==$(th).attr('sortname')) {
 					if(p.sortorder=='asc') p.sortorder='desc';
 					else p.sortorder='asc';
 				}
-
 				$(th).addClass('sorted').siblings().removeClass('sorted');
 				$('.sdesc',this.hDiv).removeClass('sdesc');
 				$('.sasc',this.hDiv).removeClass('sasc');
 				$('div span',th).addClass('s'+p.sortorder);
 				p.sortname=$(th).attr('sortname');
-
 				if(p.onChangeSort)
 					p.onChangeSort(p.sortname,p.sortorder);
 				else
 					this.populate();
-
 			},
 			buildpager: function () { //rebuild pager based on new properties
-
 				$('.pcontrol input',this.pDiv).val(p.page);
 				$('.pcontrol span',this.pDiv).html(p.pages);
-
 				var r1=(p.page-1)*p.rp+1;
 				var r2=r1+p.rp-1;
-
 				if(p.total<r2) r2=p.total;
-
 				var stat=p.pagestat;
-
 				stat=stat.replace(/{from}/,r1);
 				stat=stat.replace(/{to}/,r2);
 				stat=stat.replace(/{total}/,p.total);
-
 				$('.pPageStat',this.pDiv).html(stat);
-
 			},
 			populate: function () { //get latest data
-
 				if(this.loading) return true;
-
 				if(p.onSubmit) {
 					var gh=p.onSubmit();
 					if(!gh) return false;
 				}
-
 				this.loading=true;
 				if(!p.url) return false;
-
 				$('.pPageStat',this.pDiv).html(p.procmsg);
-
 				$('.pReload',this.pDiv).addClass('loading');
-
 				$(g.block).css({ top: g.bDiv.offsetTop });
-
 				if(p.hideOnSubmit) {
 					$(g.block).height($(g.bDiv).height());
 					$(this.gDiv).prepend(g.block); //$(t).hide();
 				}
-
 				if($.browser.opera) $(t).css('visibility','hidden');
-
 				if(!p.newp) p.newp=1;
-
 				if(p.page>p.pages) p.page=p.pages;
 				//var param = {page:p.newp, rp: p.rp, sortname: p.sortname, sortorder: p.sortorder, query: p.query, qtype: p.qtype};
 				var dt=new Date();
@@ -223,11 +177,9 @@
 					,{ name: 'sortOrder',value: p.sortorder }
 					,{ name: 't',value: dt.getTime() }
 				];
-
 				if(p.params) {
 					for(var pi=0;pi<p.params.length;pi++) param[param.length]=p.params[pi];
 				}
-
 				$.ajax({
 					type: p.method,
 					url: p.url,
@@ -238,10 +190,7 @@
 				});
 			},
 			changePage: function (ctype) { //change page
-
-
 				if(this.loading) return true;
-
 				switch(ctype) {
 					case 'first': p.newp=1;break;
 					case 'prev': if(p.page>1) p.newp=parseInt(p.page)-1;break;
@@ -257,30 +206,24 @@
 						break;
 				}
 				if(p.newp==p.page) return false;
-
 				if(p.onChangePage)
 					p.onChangePage(p.newp);
 				else
 					this.populate();
-
 			},
 			pager: 0
 		};
-
 		//init divs
 		g.gDiv=document.createElement('div'); //create global container
 		g.hDiv=document.createElement('div'); //create header container
 		g.bDiv=document.createElement('div'); //create body container
 		g.block=document.createElement('div'); //creat blocker
 
-
 		if(p.usepager) g.pDiv=document.createElement('div'); //create pager container
 		g.hTable=document.createElement("table");
-
 		//set gDiv
 		g.gDiv.className='flexigrid';
 		if(p.width!='auto') g.gDiv.style.width=p.width+'px';
-
 		//add conditional classes
 		if($.browser.msie)
 			$(g.gDiv).addClass('ie');
@@ -292,23 +235,15 @@
 		$(g.gDiv)
 		.append(t)
 		;
-
 		//set hDiv
 		g.hDiv.className='hDiv';
-
 		$(t).before(g.hDiv);
-
 		//set hTable
 		g.hTable.cellPadding=0;
 		g.hTable.cellSpacing=0;
 		$(g.hTable).append($("thead",t));
-
 		$(g.hDiv).append(g.hTable);
-
-
-
 		if(!p.colmodel) var ci=0;
-
 		//setup thead			
 		$('thead tr:first th',g.hDiv).each
 			(
@@ -327,42 +262,40 @@
 
 			 		var w=$(this).innerWidth()-10;
 			 		$(this).css("width",w);
-
 			 		if(this.hide) $(this).hide();
 
 			 		if(!p.colmodel) {
 			 			$(this).attr('axis','col'+ci++);
 			 		}
-
 			 		$(thdiv).css("text-align","center");
-
 			 		$(thdiv).width(this.style.width);
-
-
-
 			 		$(this).empty().append(thdiv).removeAttr('width');
 			 	}
 			);
-
 		//set bDiv
 		g.bDiv.className='bDiv';
 		$(t).before(g.bDiv);
-
 		$("thead",t).remove();
-
 		$(g.bDiv)
 		.append(t)
 		;
-
 		if(p.height=='auto') {
 			$('table',g.bDiv).addClass('autoht');
 		}
-
-
+		if(parseInt(p.height)>0) {
+			var div=document.createElement("div");
+			$(g.bDiv).before(div);
+			$(div).append(g.bDiv);
+			$(div).width($(g.bDiv).width()+20).height(p.height);
+			var w=$(g.bDiv).width()-20;
+			$(g.hDiv).width(w);
+			$(g.pDiv).width(w);
+			$(g.bDiv).width(w);
+			$(g.gDiv).width($(div).width());
+		}
 		//add strip		
 		if(p.striped)
 			$('tbody tr:odd',g.bDiv).addClass('erow');
-
 
 		// add pager
 		if(p.usepager) {
@@ -371,7 +304,6 @@
 			$(g.hDiv).before(g.pDiv);
 			var html=' <div class="pGroup"> <div class="pFirst pButton"><span></span></div><div class="pPrev pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pcontrol">Page <input type="text" size="4" value="1" /> of <span> 1 </span></span></div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pNext pButton"><span></span></div><div class="pLast pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pReload pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pPageStat"></span></div>';
 			$('div',g.pDiv).html(html);
-
 			$('.pReload',g.pDiv).click(function () { g.populate() });
 			$('.pFirst',g.pDiv).click(function () { g.changePage('first') });
 			$('.pPrev',g.pDiv).click(function () { g.changePage('prev') });
@@ -379,7 +311,6 @@
 			$('.pLast',g.pDiv).click(function () { g.changePage('last') });
 			$('.pcontrol input',g.pDiv).keydown(function (e) { if(e.keyCode==13) g.changePage('input') });
 			if($.browser.msie&&$.browser.version<7) $('.pButton',g.pDiv).hover(function () { $(this).addClass('pBtnOver'); },function () { $(this).removeClass('pBtnOver'); });
-
 			if(p.useRp) {
 				var opt="";
 				for(var nx=0;nx<p.rpOptions.length;nx++) {
@@ -400,50 +331,28 @@
 				);
 			}
 		}
-
 		$(g.pDiv,g.sDiv).append("<div style='clear:both'></div>");
-
 		//add block
 		g.block.className='gBlock';
 		var gh=$(g.bDiv).height();
 		var gtop=g.bDiv.offsetTop;
-		$(g.block).css(
-		{
-			width: '100%',
-			height: 100,
-			background: 'white',
-			position: 'absolute',
-			marginBottom: (gh* -1),
-			zIndex: 1,
-			top: gtop,
-			left: '0px'
-		}
-		);
+		$(g.block).css({ width: '100%',height: 100,background: 'white',position: 'absolute',marginBottom: (gh* -1),zIndex: 1,top: gtop,left: '0px' });
 		$(g.block).fadeTo(0,p.blockOpacity);
-
-
 		//make grid functions accessible
 		t.p=p;
 		t.grid=g;
-
 		// load data
 		if(p.url&&p.autoload) {
 			g.populate();
 		}
-
 		$(t).removeAttr("style");
 		$("table",g.hDiv).removeAttr("style");
-
 		return t;
-
 	};
 
 	var docloaded=false;
-
 	$(document).ready(function () { docloaded=true });
-
 	$.fn.flexigrid=function (p) {
-
 		return this.each(function () {
 			if(!docloaded) {
 				$(this).hide();
@@ -458,50 +367,34 @@
 				$.addFlex(this,p);
 			}
 		});
-
 	}; //end flexigrid
 
 	$.fn.flexReload=function (p) { // function to reload grid
-
 		return this.each(function () {
 			if(this.grid&&this.p.url) this.grid.populate();
 		});
-
 	}; //end flexReload
-
 	$.fn.flexOptions=function (p) { //function to update general options
-
 		return this.each(function () {
 			if(this.grid) $.extend(this.p,p);
 		});
-
 	}; //end flexOptions
-
 	$.fn.flexToggleCol=function (cid,visible) { // function to reload grid
-
 		return this.each(function () {
 			if(this.grid) this.grid.toggleCol(cid,visible);
 		});
-
 	}; //end flexToggleCol
-
 	$.fn.flexAddData=function (data) { // function to add data to grid
-
 		return this.each(function () {
 			if(this.grid) this.grid.addData(data);
 		});
-
 	};
-
 	$.fn.noSelect=function (p) { //no select plugin by me :-)
-
 		if(p==null)
 			prevent=true;
 		else
 			prevent=p;
-
 		if(prevent) {
-
 			return this.each(function () {
 				if($.browser.msie||$.browser.safari) $(this).bind('selectstart',function () { return false; });
 				else if($.browser.mozilla) {
@@ -511,19 +404,13 @@
 				else if($.browser.opera) $(this).bind('mousedown',function () { return false; });
 				else $(this).attr('unselectable','on');
 			});
-
 		} else {
-
-
 			return this.each(function () {
 				if($.browser.msie||$.browser.safari) $(this).unbind('selectstart');
 				else if($.browser.mozilla) $(this).css('MozUserSelect','inherit');
 				else if($.browser.opera) $(this).unbind('mousedown');
 				else $(this).removeAttr('unselectable','on');
 			});
-
 		}
-
 	}; //end noSelect
-
 })(jQuery);

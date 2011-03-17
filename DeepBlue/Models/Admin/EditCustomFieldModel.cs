@@ -13,8 +13,8 @@ namespace DeepBlue.Models.Admin {
 		public int CustomFieldId { get; set; }
 
 		[Required(ErrorMessage = "Name is required.")]
-		[StringLength(50, ErrorMessage = "Name Must is under 50 characters.")]
-		[RemoteUID_(Action = "CustomFieldTextAvailable", Controller = "Admin", ValidateParameterName = "CustomFieldText", Params = new string[] { "CustomFieldId" })]
+		[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
+		[RemoteUID_(Action = "CustomFieldTextAvailable", Controller = "Admin", ValidateParameterName = "CustomFieldText", Params = new string[] { "CustomFieldId", "ModuleId" })]
 		[DisplayName("Name:")]
 		public string CustomFieldText { get; set; }
 
@@ -28,7 +28,7 @@ namespace DeepBlue.Models.Admin {
 		[DisplayName("DataType:")]
 		public int DataTypeId { get; set; }
 
-		[StringLength(2000, ErrorMessage = "Name Must is under 2000 characters.")]
+		[StringLength(2000, ErrorMessage = "Name must be under 2000 characters.")]
 		[DisplayName("Optional:")]
 		public string OptionalText { get; set; }
 

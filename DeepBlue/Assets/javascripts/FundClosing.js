@@ -41,10 +41,22 @@
 			});
 		}
 	}
-	,showDate : function(dateText, inst){
+	,changeFund: function (fundddl) {
+		var dt=new Date();
+		var url="/Admin/FundClosingNameAvailable/?Name="+$("#Name").val()+"&FundClosingID="+$("#FundClosingID").val()+"&FundID="+$("#FundID").val()+"&t="+dt.getTime();
+		$.get(url,function (data) {
+			if(data!="") {
+				alert(data);
+				$("#Name_validationMessage").html(data);
+			} else {
+				$("#Name_validationMessage").html("");
+			}
+		});
+	}
+	,showDate: function (dateText,inst) {
 		fundClosing.resizeIframe(130);
 	}
-	,closeDate : function(){
+	,closeDate: function () {
 		fundClosing.resizeIframe(-130);
 	}
 	,resizeIframe: function (h) {
@@ -61,8 +73,10 @@
 		var frm=document.getElementById(formId);
 		var message='';
 		$(".field-validation-error",frm).each(function () {
-			if(this.innerHTML!='') {
-				message+=this.innerHTML+"\n";
+			if(this.id!="FundClosingDate_validationMessage") {
+				if(this.innerHTML!='') {
+					message+=this.innerHTML+"\n";
+				}
 			}
 		});
 		if(message!="") {

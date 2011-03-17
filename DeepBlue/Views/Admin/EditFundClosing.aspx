@@ -28,7 +28,7 @@
 			<%: Html.LabelFor(model => model.FundID) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownListFor(model => model.FundID,Model.FundNames) %>
+			<%: Html.DropDownListFor(model => model.FundID,Model.FundNames, new { @onchange = "javascript:fundClosing.changeFund(this);" })%>
 			<%: Html.ValidationMessageFor(model => model.FundID) %>
 		</div>
 		<div class="editor-label">
@@ -36,7 +36,7 @@
 		</div>
 		<div class="editor-field">
 			<%: Html.TextBox("FundClosingDate",
-								 (Model.FundClosingDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"), new { @id = "FundClosingDate" })%>
+								 (Model.FundClosingDate.HasValue ? (Model.FundClosingDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy") : ""), new { @id = "FundClosingDate" })%>
 			<%: Html.ValidationMessageFor(model => model.FundClosingDate) %>
 		</div>
 		<div class="editor-label">
@@ -58,7 +58,7 @@
 	</div>
 	<%: Html.HiddenFor(model => model.FundClosingID) %>
 	<% } %>
-	<div id="UpdateTargetId" style="display:none">
+	<div id="UpdateTargetId" style="display: none">
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">

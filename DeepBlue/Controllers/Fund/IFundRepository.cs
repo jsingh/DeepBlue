@@ -16,6 +16,7 @@ namespace DeepBlue.Controllers.Fund {
 		List<Models.Entity.Fund> FindFunds(string fundName);
 		IEnumerable<Helpers.ErrorInfo> SaveFund(Models.Entity.Fund fund);
 		bool TaxIdAvailable(string taxId,int fundId);
+		bool FundNameAvailable(string fundName, int fundId);
 		#endregion
 		
 	}

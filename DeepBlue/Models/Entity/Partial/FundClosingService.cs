@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 
 namespace DeepBlue.Models.Entity {
 	public interface IFundClosingService {
@@ -16,8 +17,17 @@ namespace DeepBlue.Models.Entity {
 				if (fundclose.FundClosingID == 0) {
 					context.FundClosings.AddObject(fundclose);
 				} else {
-					context.FundClosings.SingleOrDefault(entityType => entityType.FundClosingID == fundclose.FundClosingID);
-					context.FundClosings.ApplyCurrentValues(fundclose);
+					// Define an ObjectStateEntry and EntityKey for the current object. 
+					EntityKey key = default(EntityKey);
+					object originalItem = null;
+					key = context.CreateEntityKey("FundClosings", fundclose);
+					// Get the original item based on the entity key from the context 
+					// or from the database. 
+					if (context.TryGetObjectByKey(key, out originalItem)) {
+						// Call the ApplyCurrentValues method to apply changes 
+						// from the updated item to the original version. 
+						context.ApplyCurrentValues(key.EntitySetName, fundclose);
+					}
 				}
 				context.SaveChanges();
 			}

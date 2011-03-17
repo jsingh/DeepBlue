@@ -8,6 +8,7 @@
 	   row = new FlexigridRow();
 	   row.cell.Add((item.DocumentDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"));
 	   row.cell.Add(item.FileName);
+	   row.cell.Add(item.DocumentType);
 	   row.cell.Add(item.InvestorName);
 	   row.cell.Add(item.FundName);
 	   string imgname = string.Empty;
@@ -22,7 +23,13 @@
 			   imgname = "xls.png";
 			   break;
 	   }
-	   row.cell.Add(Html.Image(imgname, new { @onclick = "javascript:documentSearch.downloadFile('" + Url.Encode(item.FilePath.Replace("\\","/")) + "','" + Url.Encode(item.FileName) + "');" }).ToHtmlString());
+	   string href = string.Empty;
+	   if(item.FilePath.ToLower().StartsWith("http://")){
+			href = (item.FilePath.EndsWith("/") == false ? item.FilePath + "/" + item.FilePath : item.FilePath + item.FileName);
+	   }else{
+			href = "javascript:documentSearch.downloadFile('" + Url.Encode(item.FilePath.Replace("\\","/")) + "','" + Url.Encode(item.FileName) + "');";
+	   }
+	   row.cell.Add(Html.Anchor(Html.Image(imgname).ToHtmlString(),href,new { @target = "_blank" }).ToHtmlString()); // new { @onclick = "javascript:documentSearch.downloadFile('" + Url.Encode(item.FilePath.Replace("\\","/")) + "','" + Url.Encode(item.FileName) + "');" }).ToHtmlString());
 	   flexData.rows.Add(row);
    } %>
 <%= JsonSerializer.ToJsonObject(flexData)%>

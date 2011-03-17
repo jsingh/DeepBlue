@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 
 namespace DeepBlue.Models.Entity {
 	public interface IDataTypeService {
@@ -16,8 +17,17 @@ namespace DeepBlue.Models.Entity {
 				if (dataType.DataTypeID == 0) {
 					context.DataTypes.AddObject(dataType);
 				} else {
-					context.DataTypes.SingleOrDefault(entityType => entityType.DataTypeID == dataType.DataTypeID);
-					context.DataTypes.ApplyCurrentValues(dataType);
+					// Define an ObjectStateEntry and EntityKey for the current object. 
+					EntityKey key = default(EntityKey);
+					object originalItem = null;
+					key = context.CreateEntityKey("DataTypes", dataType);
+					// Get the original item based on the entity key from the context 
+					// or from the database. 
+					if (context.TryGetObjectByKey(key, out originalItem)) {
+						// Call the ApplyCurrentValues method to apply changes 
+						// from the updated item to the original version. 
+						context.ApplyCurrentValues(key.EntitySetName, dataType);
+					}
 				}
 				context.SaveChanges();
 			}

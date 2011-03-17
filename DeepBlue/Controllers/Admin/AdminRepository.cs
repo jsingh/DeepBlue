@@ -125,10 +125,10 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
-		public bool FundClosingNameAvailable(string name, int fundclosingId) {
+		public bool FundClosingNameAvailable(string name, int fundclosingId, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return ((from fundClose in context.FundClosings
-						 where fundClose.Name == name && fundClose.FundClosingID != fundclosingId
+						 where fundClose.Name == name && fundClose.FundClosingID != fundclosingId && fundClose.FundID == fundId
 						 select fundClose.FundClosingID).Count()) > 0 ? true : false;
 			}
 		}
@@ -193,6 +193,14 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
+		public List<CustomFieldValue> GetAllCustomFieldValues(int key) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from customField in context.CustomFieldValues.Include("CustomField")
+						where customField.Key == key
+						select customField).ToList();
+			}
+		}
+
 		public List<DataType> GetAllDataTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.DataTypes.OrderBy(dataType => dataType.DataTypeName).ToList();
@@ -212,11 +220,12 @@ namespace DeepBlue.Controllers.Admin {
 				return context.CustomFieldValues.SingleOrDefault(fieldValue => fieldValue.CustomFieldID == customFieldId && fieldValue.Key == key);
 			}
 		}
+	 
 
-		public bool CustomFieldTextAvailable(string customFieldText, int customFieldId) {
+		public bool CustomFieldTextAvailable(string customFieldText, int customFieldId,int moduleId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return ((from field in context.CustomFields
-						 where field.CustomFieldText == customFieldText && field.CustomFieldID != customFieldId
+						 where field.CustomFieldText == customFieldText && field.CustomFieldID != customFieldId && field.ModuleID == moduleId
 						 select field.CustomFieldID).Count()) > 0 ? true : false;
 			}
 		}
@@ -289,6 +298,52 @@ namespace DeepBlue.Controllers.Admin {
 			return dataType.Save();
 		}
 
+		#endregion
+
+		#region IAdminRepository Module
+
+		public List<Models.Entity.MODULE> GetAllModules(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.MODULE> query = (from module in context.MODULEs																						 						
+														  select module);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<Models.Entity.MODULE> paginatedList = new PaginatedList<Models.Entity.MODULE>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public MODULE  FindModule(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.MODULEs.SingleOrDefault(field => field.ModuleID == id);
+			}
+		}
+
+		public bool ModuleTextAvailable(string moduleFieldText, int moduleFieldId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from field in context.MODULEs
+						 where field.ModuleName == moduleFieldText && field.ModuleID != moduleFieldId
+						 select field.ModuleID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteModuleId(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				MODULE module = context.MODULEs.SingleOrDefault(field => field.ModuleID == id);
+				if (module != null) {
+					if (module.CustomFields.Count == 0) {
+						context.MODULEs.DeleteObject(module);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveModule(MODULE module) {
+			return module.Save();	
+		}
 		#endregion
 	}
 }

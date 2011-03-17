@@ -57,16 +57,19 @@
 			<table cellpadding="0" cellspacing="0" border="0" id="SearchDocumentList">
 				<thead>
 					<tr>
-						<th sortname="DocumentDate" style="width: 15%;" align="center">
+						<th sortname="DocumentDate" style="width: 10%;" align="center">
 							Date
 						</th>
-						<th sortname="FileName" style="width: 30%;">
+						<th sortname="FileName" style="width: 20%;">
 							File Name
 						</th>
-						<th id="InvestorNameColumn" sortname="InvestorName" style="width: 45%">
+						<th sortname="DocumentTypeName" style="width: 35%;">
+							Document Type
+						</th>
+						<th id="InvestorNameColumn" sortname="InvestorName" style="width: 35%">
 							Investor Name
 						</th>
-						<th id="FundNameCloumn" sortname="FundName" style="display: none; width: 45%;">
+						<th id="FundNameCloumn" sortname="FundName" style="width: 35%;">
 							Fund Name
 						</th>
 						<th sortname="Enabled" align="center" style="width: 10%;">
@@ -88,4 +91,7 @@
 																	  Source = "/Fund/FindFunds", MinLength = 1,
 																	  OnSelect = "function(event, ui) { documentSearch.selectFund(ui.item.id);}"})%>
 	<%=Html.jQueryFlexiGrid("SearchDocumentList", new FlexigridOptions { ActionName = "List", ControllerName = "Document", HttpMethod = "GET", SortName = "DocumentDate", SortOrder="desc" , Paging = true , Autoload=false })%>
+	<script type="text/javascript">
+		documentSearch.init();
+	</script>
 </asp:Content>

@@ -17,99 +17,180 @@ namespace DeepBlue.Models.Entity {
 				if (investor.InvestorID == 0) {
 					context.Investors.AddObject(investor);
 				} else {
+					EntityKey key;
+					object originalItem;
+					Investor updateInvestor = context.Investors.SingleOrDefault(deepblueInvestor => deepblueInvestor.InvestorID == investor.InvestorID);
 					// Update investor account,address,contact,communication values
 					foreach (var investorAccount in investor.InvestorAccounts) {
-						if (investorAccount.InvestorAccountID > 0) {
-							context.InvestorAccounts.SingleOrDefault(account => account.InvestorAccountID == investorAccount.InvestorAccountID);
-							context.InvestorAccounts.ApplyCurrentValues(investorAccount);
+						key = default(EntityKey);
+						originalItem = null;
+						key = context.CreateEntityKey("InvestorAccounts", investorAccount);
+						if (context.TryGetObjectByKey(key, out originalItem)) {
+							context.ApplyCurrentValues(key.EntitySetName, investorAccount);
 						} else {
-							context.AttachTo("InvestorAccounts",investorAccount);
-							//updateInvestor.InvestorAccounts.Add(new InvestorAccount {
-							//    Account = investorAccount.Account,
-							//    Attention = investorAccount.Attention,
-							//    Comments = investorAccount.Comments,
-							//    CreatedBy = investorAccount.CreatedBy,
-							//    EntityID = investorAccount.EntityID,
-							//    InvestorAccountID = investorAccount.InvestorAccountID,
-							//    InvestorID = investor.InvestorID,
-							//    IsPrimary = investorAccount.IsPrimary,
-							//    LastUpdatedBy = investorAccount.LastUpdatedBy,
-							//    LastUpdatedDate = investorAccount.LastUpdatedDate,
-							//    Reference = investorAccount.Reference,
-							//    Routing = investorAccount.Routing,
-							//    CreatedDate = investorAccount.CreatedDate
-							//});
+							updateInvestor.InvestorAccounts.Add(new InvestorAccount {
+								Account = investorAccount.Account,
+								Attention = investorAccount.Attention,
+								Comments = investorAccount.Comments,
+								CreatedBy = investorAccount.CreatedBy,
+								CreatedDate = investorAccount.CreatedDate,
+								EntityID = investorAccount.EntityID,
+								IsPrimary = investorAccount.IsPrimary,
+								LastUpdatedBy = investorAccount.LastUpdatedBy,
+								LastUpdatedDate = investorAccount.LastUpdatedDate,
+								Reference = investorAccount.Reference,
+								Routing = investorAccount.Routing
+							});
 						}
 					}
-
 					foreach (var investorAddress in investor.InvestorAddresses) {
-						if (investorAddress.InvestorAddressID > 0) {
-							context.InvestorAddresses.Attach(new InvestorAddress { InvestorAddressID = investorAddress.InvestorAddressID });
-							context.InvestorAddresses.ApplyCurrentValues(investorAddress);
+						key = default(EntityKey);
+						originalItem = null;
+						key = default(EntityKey);
+						originalItem = null;
+						InvestorAddress newInvestorAddress = null;
+						key = context.CreateEntityKey("InvestorAddresses", investorAddress);
+						if (context.TryGetObjectByKey(key, out originalItem)) {
+							context.ApplyCurrentValues(key.EntitySetName, investorAddress);
 						} else {
-							//updateInvestor.InvestorAddresses.Add(new InvestorAddress {
-							//    Address = new Address {
-							//        Address1 = investorAddress.Address.Address1,
-							//        Address2 = investorAddress.Address.Address2,
-							//        Address3 = investorAddress.Address.Address3,
-							//        AddressType = investorAddress.Address.AddressType,
-							//        AddressTypeID = investorAddress.Address.AddressTypeID,
-							//        City = investorAddress.Address.City,
-							//        AddressID = investorAddress.Address.AddressID,
-							//        Country = investorAddress.Address.Country,
-							//        County = investorAddress.Address.County,
-							//        CreatedBy = investorAddress.Address.CreatedBy,
-							//        CreatedDate = investorAddress.Address.CreatedDate,
-							//        EntityID = investorAddress.Address.EntityID,
-							//        IsPreferred = investorAddress.Address.IsPreferred,
-							//        LastUpdatedBy = investorAddress.Address.LastUpdatedBy,
-							//        LastUpdatedDate = investorAddress.Address.LastUpdatedDate,
-							//        Listed = investorAddress.Address.Listed,
-							//        PostalCode = investorAddress.Address.PostalCode,
-							//        State = investorAddress.Address.State,
-							//        StProvince = investorAddress.Address.StProvince,
-							//    },
-							//    CreatedBy = investorAddress.CreatedBy,
-							//    CreatedDate = investorAddress.CreatedDate,
-							//    EntityID = investorAddress.EntityID,
-							//    InvestorID = investor.InvestorID,
-							//    LastUpdatedBy = investorAddress.LastUpdatedBy,
-							//    LastUpdatedDate = investorAddress.LastUpdatedDate,
-							//});
+							newInvestorAddress = new InvestorAddress {
+								CreatedBy = investorAddress.CreatedBy,
+								CreatedDate = investorAddress.CreatedDate,
+								EntityID = investorAddress.EntityID,
+								LastUpdatedBy = investorAddress.LastUpdatedBy,
+								LastUpdatedDate = investorAddress.LastUpdatedDate
+							};
 						}
-						if (investorAddress.Address.AddressID > 0) {
-							context.Addresses.Attach(new Address { AddressID = investorAddress.Address.AddressID });
-							context.Addresses.ApplyCurrentValues(investorAddress.Address);
+						key = context.CreateEntityKey("Addresses", investorAddress.Address);
+						if (context.TryGetObjectByKey(key, out originalItem)) {
+							context.ApplyCurrentValues(key.EntitySetName, investorAddress.Address);
+						} else {
+							if (newInvestorAddress != null) {
+								newInvestorAddress.Address = new Address {
+									Address1 = investorAddress.Address.Address1,
+									Address2 = investorAddress.Address.Address2,
+									Address3 = investorAddress.Address.Address3,
+									AddressTypeID = investorAddress.Address.AddressTypeID,
+									City = investorAddress.Address.City,
+									Country = investorAddress.Address.Country,
+									County = investorAddress.Address.County,
+									CreatedBy = investorAddress.Address.CreatedBy,
+									CreatedDate = investorAddress.Address.CreatedDate,
+									EntityID = investorAddress.Address.EntityID,
+									IsPreferred = investorAddress.Address.IsPreferred,
+									LastUpdatedBy = investorAddress.Address.LastUpdatedBy,
+									LastUpdatedDate = investorAddress.Address.LastUpdatedDate,
+									Listed = investorAddress.Address.Listed,
+									PostalCode = investorAddress.Address.PostalCode,
+									State = investorAddress.Address.State,
+									StProvince = investorAddress.Address.StProvince
+								};
+								updateInvestor.InvestorAddresses.Add(newInvestorAddress);
+							}
 						}
 					}
-					//foreach (var investorCommunication in investor.InvestorCommunications) {
-					//    if (investorCommunication.Communication.CommunicationID > 0) {
-					//        context.Communications.Attach(new Communication { CommunicationID = investorCommunication.Communication.CommunicationID });
-					//        context.Communications.ApplyCurrentValues(investorCommunication.Communication);
-					//    }
-					//    if (investorCommunication.InvestorCommunicationID > 0) {
-					//        context.InvestorCommunications.Attach(new InvestorCommunication { InvestorCommunicationID = investorCommunication.InvestorCommunicationID });
-					//        context.InvestorCommunications.ApplyCurrentValues(investorCommunication);
-					//    }
-					//}
 					foreach (var investorContact in investor.InvestorContacts) {
-						if (investorContact.InvestorContactID > 0) {
-							context.InvestorContacts.Attach(new InvestorContact { InvestorContactID = investorContact.InvestorContactID });
-							context.InvestorContacts.ApplyCurrentValues(investorContact);
+						key = default(EntityKey);
+						originalItem = null;
+						InvestorContact newInvestorContact = null;
+						key = context.CreateEntityKey("InvestorContacts", investorContact);
+						if (context.TryGetObjectByKey(key, out originalItem)) {
+							context.ApplyCurrentValues(key.EntitySetName, investorContact);
+						} else {
+							newInvestorContact = new InvestorContact {
+								CreatedBy = investorContact.CreatedBy,
+								CreatedDate = investorContact.CreatedDate,
+								EntityID = investorContact.EntityID,
+								LastUpdatedBy = investorContact.LastUpdatedBy,
+								LastUpdatedDate = investorContact.LastUpdatedDate
+							};
 						}
-						foreach (var contactAddress in investorContact.Contact.ContactAddresses) {
-							if (contactAddress.ContactAddressID > 0) {
-								context.ContactAddresses.Attach(new ContactAddress { ContactAddressID = contactAddress.ContactAddressID });
-								context.ContactAddresses.ApplyCurrentValues(contactAddress);
+						key = default(EntityKey);
+						originalItem = null;
+						key = context.CreateEntityKey("Contacts", investorContact.Contact);
+						if (context.TryGetObjectByKey(key, out originalItem)) {
+							context.ApplyCurrentValues(key.EntitySetName, investorContact.Contact);
+						} else {
+							if (newInvestorContact != null) {
+								newInvestorContact.Contact = new Contact {
+									ContactName = investorContact.Contact.ContactName,
+									ContactType = investorContact.Contact.ContactType,
+									CreatedBy = investorContact.Contact.CreatedBy,
+									CreatedDate = investorContact.Contact.CreatedDate,
+									EntityID = investorContact.Contact.EntityID,
+									FirstName = investorContact.Contact.FirstName,
+									LastName = investorContact.Contact.LastName,
+									LastUpdatedBy = investorContact.Contact.LastUpdatedBy,
+									LastUpdatedDate = investorContact.Contact.LastUpdatedDate,
+									MiddleName = investorContact.Contact.MiddleName,
+									ReceivesDistributionNotices = investorContact.Contact.ReceivesDistributionNotices,
+									ReceivesFinancials = investorContact.Contact.ReceivesFinancials,
+									ReceivesInvestorLetters = investorContact.Contact.ReceivesInvestorLetters,
+									ReceivesK1 = investorContact.Contact.ReceivesK1
+								};
 							}
-							if (contactAddress.Address.AddressID > 0) {
-								context.Addresses.Attach(new Address { AddressID = contactAddress.Address.AddressID });
-								context.Addresses.ApplyCurrentValues(contactAddress.Address);
+						}
+
+						foreach (var contactAddress in investorContact.Contact.ContactAddresses) {
+							key = default(EntityKey);
+							originalItem = null;
+							ContactAddress newContactAddress = null;
+							key = context.CreateEntityKey("ContactAddresses", contactAddress);
+							if (context.TryGetObjectByKey(key, out originalItem)) {
+								context.ApplyCurrentValues(key.EntitySetName, contactAddress);
+							} else {
+								if (newInvestorContact != null) {
+									if (newInvestorContact.Contact != null) {
+										newContactAddress = new ContactAddress {
+											CreatedBy = contactAddress.CreatedBy,
+											CreatedDate = contactAddress.CreatedDate,
+											EntityID = contactAddress.EntityID,
+											LastUpdatedBy = contactAddress.LastUpdatedBy,
+											LastUpdatedDate = contactAddress.LastUpdatedDate
+										};
+									}
+								}
+							}
+							key = default(EntityKey);
+							originalItem = null;
+							key = context.CreateEntityKey("Addresses", contactAddress.Address);
+							if (context.TryGetObjectByKey(key, out originalItem)) {
+								context.ApplyCurrentValues(key.EntitySetName, contactAddress.Address);
+							} else {
+								if (newContactAddress != null) {
+									newContactAddress.Address = new Address {
+										Address1 = contactAddress.Address.Address1,
+										Address2 = contactAddress.Address.Address2,
+										Address3 = contactAddress.Address.Address3,
+										AddressTypeID = contactAddress.Address.AddressTypeID,
+										City = contactAddress.Address.City,
+										Country = contactAddress.Address.Country,
+										County = contactAddress.Address.County,
+										CreatedBy = contactAddress.Address.CreatedBy,
+										CreatedDate = contactAddress.Address.CreatedDate,
+										EntityID = contactAddress.Address.EntityID,
+										IsPreferred = contactAddress.Address.IsPreferred,
+										LastUpdatedBy = contactAddress.Address.LastUpdatedBy,
+										LastUpdatedDate = contactAddress.Address.LastUpdatedDate,
+										Listed = contactAddress.Address.Listed,
+										PostalCode = contactAddress.Address.PostalCode,
+										State = contactAddress.Address.State,
+										StProvince = contactAddress.Address.StProvince
+									};
+									if (newInvestorContact != null) {
+										newInvestorContact.Contact.ContactAddresses.Add(newContactAddress);
+										updateInvestor.InvestorContacts.Add(newInvestorContact);
+									}
+								}
 							}
 						}
 					}
-					context.Investors.Attach(new Investor { InvestorID = investor.InvestorID });
-					context.Investors.ApplyCurrentValues(investor);
+					key = default(EntityKey);
+					originalItem = null;
+					key = context.CreateEntityKey("Investors", investor);
+					if (context.TryGetObjectByKey(key, out originalItem)) {
+						context.ApplyCurrentValues(key.EntitySetName, investor);
+					}
 				}
 				context.SaveChanges();
 			}
@@ -118,7 +199,7 @@ namespace DeepBlue.Models.Entity {
 	}
 
 	public partial class Investor {
-		
+
 		public IList<InvestorAccount> InvestorAccountList { get; set; }
 	}
 }

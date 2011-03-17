@@ -22,7 +22,7 @@
 		<%: Html.LabelFor(model => model.ModuleId) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.DropDownListFor(model => model.ModuleId,Model.Modules) %>
+		<%: Html.DropDownListFor(model => model.ModuleId, Model.Modules, new { @onchange = "javascript:customField.changeModule(this);" })%>
 		<%: Html.ValidationMessageFor(model => model.ModuleId) %>
 	</div>
 	<div class="editor-label">

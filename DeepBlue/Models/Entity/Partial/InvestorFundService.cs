@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DeepBlue.Helpers;
+using System.Data;
 
 namespace DeepBlue.Models.Entity {
 	public interface IInvestorFundService {
@@ -15,8 +16,12 @@ namespace DeepBlue.Models.Entity {
 				if (investorFund.InvestorFundID == 0) {
 					context.InvestorFunds.AddObject(investorFund);
 				} else {
-					context.InvestorFunds.SingleOrDefault(fund => fund.InvestorFundID == investorFund.InvestorFundID);
-					context.InvestorFunds.ApplyCurrentValues(investorFund);
+					EntityKey key = default(EntityKey);
+					object originalItem = null;
+					key = context.CreateEntityKey("InvestorFunds", investorFund);
+					if (context.TryGetObjectByKey(key, out originalItem)) {
+						context.ApplyCurrentValues(key.EntitySetName, investorFund);
+					}
 				}
 				context.SaveChanges();
 			}

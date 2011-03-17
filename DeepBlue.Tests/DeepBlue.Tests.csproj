@@ -66,6 +66,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Admin\CreateInvestorEntityTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateInvestorEntityTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\EditInvestorEntityType.cs" />
+    <Compile Include="Controllers\Admin\InvestorEntityTypeBase.cs" />
+    <Compile Include="Controllers\Admin\NewInvestorEntityType.cs" />
     <Compile Include="Controllers\Base.cs" />
     <Compile Include="Controllers\Investor\Create.cs" />
     <Compile Include="Controllers\Investor\CreateInvalidData.cs" />
@@ -77,6 +82,9 @@
     <Compile Include="Controllers\Transaction\InvestorFundBase.cs" />
     <Compile Include="Controllers\Transaction\NewInvestorFund.cs" />
     <Compile Include="MockSessionState.cs" />
+    <Compile Include="Models\Admin\InvestorEntityType.cs" />
+    <Compile Include="Models\Admin\InvestorEntityTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\InvestorEntityTypeValidData.cs" />
     <Compile Include="Models\Investor\Investor.cs" />
     <Compile Include="Models\Investor\InvestornvalidData.cs" />
     <Compile Include="Models\Investor\InvestorValidData.cs" />

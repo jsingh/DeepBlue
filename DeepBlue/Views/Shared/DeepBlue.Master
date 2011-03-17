@@ -14,7 +14,7 @@
 	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
-	<%= Html.JavascriptInclueTag("SearchInvestor.js")%>
+	<%= Html.JavascriptInclueTag("jHelper.js")%>
 	<%= Html.JavascriptInclueTag("menu.js")%>
 	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
 	<%= Html.StylesheetLinkTag("site.css")%>
@@ -167,11 +167,9 @@
 	<div class="mdiv" id="CusField_SubMenu" onmouseover="msubcancelclosetime()" onmouseout="msubclosetime()">
 		<ul>
 			<li>
-				<%: Html.ActionLink("Create Module", "Module", "Admin")%></li>
+				<%: Html.ActionLink("Custom Field", "CustomField", "Admin")%></li>
 			<li>
-				<%: Html.ActionLink("Create Custom Field", "CustomField", "Admin")%></li>
-			<li>
-				<%: Html.ActionLink("Create Data Type", "DataType", "Admin")%></li>
+				<%: Html.ActionLink("Data Type", "DataType", "Admin")%></li>
 		</ul>
 	</div>
 	<div class="mdiv" id="Doc_Management" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">

@@ -13,6 +13,7 @@
 	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
+	<%= Html.JavascriptInclueTag("jHelper.js")%>
 	<%= Html.StylesheetLinkTag("site.css")%>
 	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
 </head>

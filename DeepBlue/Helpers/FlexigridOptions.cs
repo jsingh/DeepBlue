@@ -6,8 +6,8 @@ using System.Web;
 namespace DeepBlue.Helpers {
 	public class FlexigridOptions {
 		public FlexigridOptions() {
-			Height = string.Empty;
-			Width = string.Empty;
+			Height = 595;
+			Width = 0;
 			ActionName = string.Empty;
 			ControllerName = string.Empty;
 			Paging = false;
@@ -21,8 +21,8 @@ namespace DeepBlue.Helpers {
 			Autoload = true;
 		}
 		public string HttpMethod { get; set; }
-		public string Height { get; set; }
-		public string Width { get; set; }
+		public int Height { get; set; }
+		public int Width { get; set; }
 		public string ActionName { get; set; }
 		public string ControllerName { get; set; }
 		public bool Paging { get; set; }

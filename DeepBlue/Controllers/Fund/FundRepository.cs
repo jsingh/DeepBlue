@@ -49,6 +49,14 @@ namespace DeepBlue.Controllers.Fund {
 			}
 		}
 
+		public bool FundNameAvailable(string fundName, int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from fund in context.Funds
+						 where fund.FundName == fundName && fund.FundID != fundId
+						 select fund.FundID).Count()) > 0 ? true : false;
+			}
+		}
+
 		public List<Models.Entity.Fund> FindFunds(string fundName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from fund in context.Funds

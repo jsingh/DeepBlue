@@ -9,7 +9,9 @@ using System.ComponentModel;
 
 namespace DeepBlue.Models.Document {
 	public class UploadModel {
-
+		public UploadModel(){
+			UploadType = Document.UploadType.Upload;
+		}	
 		/* Investor Document Module */
 		
 		public int InvestorId { get; set; }
@@ -22,8 +24,6 @@ namespace DeepBlue.Models.Document {
 		[DisplayName("Fund:")]
 		public string FundName { get; set; }
 	 
-		// Reference to the uploaded file
-		[Required(ErrorMessage = "File is required.")]
 		[DisplayName("File:")]
 		public HttpPostedFileBase File { get; set; }
 
@@ -39,6 +39,11 @@ namespace DeepBlue.Models.Document {
 		public DateTime DocumentDate { get; set; }
 		
 		public string ModelErrorMessage { get; set; }
+
+		public UploadType UploadType { get; set; }
+		
+		[DisplayName("Link:")]
+		public string FilePath { get; set; }
 
 		/* Document Type */
 

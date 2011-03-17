@@ -17,7 +17,6 @@ namespace DeepBlue.Controllers.Investor {
         List<InvestorEntityType> GetAllInvestorEntityTypes();
         List<InvestorType> GetAllInvestorTypes();
         List<CommunicationType> GetAllCommunicationTypes();
-		List<CustomFieldValue> GetAllCustomFieldValues(int investorId);
 		#endregion
 
 		#region Find

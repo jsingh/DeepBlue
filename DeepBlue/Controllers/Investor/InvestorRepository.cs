@@ -62,14 +62,6 @@ namespace DeepBlue.Controllers.Investor {
 			}
 		}
 
-		public List<CustomFieldValue> GetAllCustomFieldValues(int investorId) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from customField in context.CustomFieldValues.Include("CustomField")
-						where customField.Key == investorId
-						select customField).ToList();
-			}
-		}
-
 		public List<InvestorDetail> FindOtherInvestors(string investorName, int excludeInvestorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from investor in context.Investors
@@ -258,6 +250,6 @@ namespace DeepBlue.Controllers.Investor {
 			}
 		}
 
-		#endregion
+			#endregion
 	}
 }

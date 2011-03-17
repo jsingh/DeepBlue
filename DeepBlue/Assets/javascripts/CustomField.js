@@ -36,6 +36,18 @@
 			});
 		}
 	}
+	,changeModule: function (moduleddl) {
+		var dt=new Date();
+		var url="/Admin/CustomFieldTextAvailable/?CustomFieldText="+$("#CustomFieldText").val()+"&CustomFieldId="+$("#CustomFieldId").val()+"&ModuleId="+$("#ModuleId").val()+"&t="+dt.getTime();
+		$.get(url,function (data) {
+			if(data!="") {
+				alert(data);
+				$("#CustomFieldText_validationMessage").html(data);
+			} else {
+				$("#CustomFieldText_validationMessage").html("");
+			}
+		});
+	}
 	,resizeIframe: function () {
 		$("document").ready(function () {
 			var theFrame=$("#iframe_modal",parent.document.body);

@@ -11,6 +11,7 @@ using DeepBlue.Models.Investor.Enums;
 using System.Data;
 using DeepBlue.Controllers.Admin;
 using DeepBlue.Models.Admin.Enums;
+using System.Text;
 
 namespace DeepBlue.Controllers.Investor {
 
@@ -213,37 +214,7 @@ namespace DeepBlue.Controllers.Investor {
 				}
 				InvestorRepository.SaveInvestor(investor);
 				// Update custom field Values
-				IList<CustomField> customFields = AdminRepository.GetAllCustomFields((int)Models.Admin.Enums.Module.Investor);
-				foreach (var field in customFields) {
-					var customFieldValue = collection["CustomField_" + field.CustomFieldID.ToString()];
-					if (customFieldValue != null) {
-						CustomFieldValue value = new CustomFieldValue();
-						value.CreatedBy = AppSettings.CreatedByUserId;
-						value.CreatedDate = DateTime.Now;
-						value.CustomFieldID = field.CustomFieldID;
-						value.Key = investor.InvestorID;
-						value.LastUpdatedBy = AppSettings.CreatedByUserId;
-						value.LastUpdatedDate = DateTime.Now;
-						switch ((CustomFieldDataType)field.DataTypeID) {
-							case CustomFieldDataType.Integer:
-								value.IntegerValue = Convert.ToInt32(customFieldValue);
-								break;
-							case CustomFieldDataType.DateTime:
-								value.DateValue = Convert.ToDateTime(customFieldValue);
-								break;
-							case CustomFieldDataType.Text:
-								value.TextValue = customFieldValue;
-								break;
-							case CustomFieldDataType.Currency:
-								value.CurrencyValue = Convert.ToDecimal(customFieldValue);
-								break;
-							case CustomFieldDataType.Boolean:
-								value.BooleanValue = Convert.ToBoolean(customFieldValue);
-								break;
-						}
-						value.Save();
-					}
-				}
+				SaveCustomValues(collection, investor.InvestorID);
 				return RedirectToAction("New", "Investor");
 			} else {
 				ViewData["MenuName"] = "Investor";
@@ -273,17 +244,19 @@ namespace DeepBlue.Controllers.Investor {
 			model.CustomField = new CustomFieldModel();
 			model.CustomField.Fields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor);
 			model.CustomField.Values = new List<CustomFieldValueDetail>();
+			model.CustomField.InitializeDatePicker = false;
 			return View(model);
 		}
 
 		//
 		// POST: /Investor/Update
 		[HttpPost]
-		public bool Update(FormCollection collection) {
+		public ActionResult Update(FormCollection collection) {
 			int index = 0;
 			int addressCount = Convert.ToInt32(collection["AddressInfoCount"]);
 			int contactAddressCount = Convert.ToInt32(collection["ContactInfoCount"]);
 			int accountCount = Convert.ToInt32(collection["AccountInfoCount"]);
+			ResultModel resultModel = new ResultModel();
 			DeepBlue.Models.Entity.Investor investor = InvestorRepository.FindInvestor(Convert.ToInt32(collection["InvestorId"]));
 
 			InvestorContact investorContact;
@@ -433,8 +406,61 @@ namespace DeepBlue.Controllers.Investor {
 					}
 				}
 			}
-			InvestorRepository.SaveInvestor(investor);
-			return true;
+			IEnumerable<ErrorInfo> errorInfo = InvestorRepository.SaveInvestor(investor);
+			if (errorInfo != null) {
+				foreach (var err in errorInfo.ToList()) {
+					resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+				}
+			} else {
+				// Update custom field Values
+				resultModel.Result += SaveCustomValues(collection, investor.InvestorID);
+			}
+			return View("Result", resultModel);
+		}
+
+		private string SaveCustomValues(FormCollection collection, int key) {
+			System.Text.StringBuilder result = new StringBuilder();
+			IEnumerable<ErrorInfo> errorInfo;
+			IList<CustomField> customFields = AdminRepository.GetAllCustomFields((int)Models.Admin.Enums.Module.Investor);
+			foreach (var field in customFields) {
+				var customFieldValue = collection["CustomField_" + field.CustomFieldID.ToString()];
+				if (customFieldValue != null) {
+					CustomFieldValue value = AdminRepository.FindCustomFieldValue(field.CustomFieldID, key);
+					if (value == null) {
+						value = new CustomFieldValue();
+					}
+					value.CreatedBy = AppSettings.CreatedByUserId;
+					value.CreatedDate = DateTime.Now;
+					value.CustomFieldID = field.CustomFieldID;
+					value.Key = key;
+					value.LastUpdatedBy = AppSettings.CreatedByUserId;
+					value.LastUpdatedDate = DateTime.Now;
+					switch ((CustomFieldDataType)field.DataTypeID) {
+						case CustomFieldDataType.Integer:
+							value.IntegerValue = (string.IsNullOrEmpty(customFieldValue) ? 0 : Convert.ToInt32(customFieldValue));
+							break;
+						case CustomFieldDataType.DateTime:
+							value.DateValue = (string.IsNullOrEmpty(customFieldValue) ? Convert.ToDateTime("01/01/1900") : Convert.ToDateTime(customFieldValue));
+							break;
+						case CustomFieldDataType.Text:
+							value.TextValue = customFieldValue;
+							break;
+						case CustomFieldDataType.Currency:
+							value.CurrencyValue = (string.IsNullOrEmpty(customFieldValue) ? 0 : Convert.ToDecimal(customFieldValue));
+							break;
+						case CustomFieldDataType.Boolean:
+							value.BooleanValue = (customFieldValue.Contains("true") ? true : false);
+							break;
+					}
+					errorInfo = value.Save();
+					if (errorInfo != null) {
+						foreach (var err in errorInfo.ToList()) {
+							result.Append(err.PropertyName + " : " + err.ErrorMessage + "\n");
+						}
+					}
+				}
+			}
+			return result.ToString();
 		}
 
 		//
@@ -471,7 +497,6 @@ namespace DeepBlue.Controllers.Investor {
 				return string.Empty;
 		}
 
-
 		//
 		// GET: /Investor/FindInvestors
 		public JsonResult FindInvestors() {
@@ -499,7 +524,6 @@ namespace DeepBlue.Controllers.Investor {
 		public JsonResult InvestorDetail(int id) {
 			return Json(InvestorRepository.FindInvestorDetail(id), JsonRequestBehavior.AllowGet);
 		}
-
 
 		//
 		// GET: /Investor/Edit
@@ -595,22 +619,46 @@ namespace DeepBlue.Controllers.Investor {
 						row.cell.Add(string.Empty);
 					model.FundInformations.rows.Add(row);
 				}
+				/* Load Custom Fields */
 				model.CustomField = new CustomFieldModel();
-				IList<CustomFieldValue> customFieldValues = InvestorRepository.GetAllCustomFieldValues(id);
+				IList<CustomFieldValue> customFieldValues = AdminRepository.GetAllCustomFieldValues(id);
+				var customFields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor);
 				model.CustomField.Values = new List<CustomFieldValueDetail>();
-				foreach(var value in customFieldValues){
-					model.CustomField.Values.Add(new CustomFieldValueDetail { CustomFieldId = value.CustomFieldID,
-					CustomFieldValueId = value.CustomFieldID, 
-					DataTypeId = value.CustomField.DataTypeID,
-					BooleanValue = value.BooleanValue, 
-					CurrencyValue = value.CurrencyValue, 
-					DateValue = (value.DateValue ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"), 
-					IntegerValue = value.IntegerValue, 
-					TextValue = value.TextValue });
+				foreach (var field in customFields) {
+					var value = customFieldValues.SingleOrDefault(fieldValue => fieldValue.CustomFieldID == field.CustomFieldID);
+					if (value != null) {
+						model.CustomField.Values.Add(new CustomFieldValueDetail {
+							CustomFieldId = value.CustomFieldID,
+							CustomFieldValueId = value.CustomFieldID,
+							DataTypeId = value.CustomField.DataTypeID,
+							BooleanValue = value.BooleanValue ?? false,
+							CurrencyValue = (value.CurrencyValue ?? 0),
+							DateValue = ((value.DateValue ?? Convert.ToDateTime("01/01/1900")).Year == 1900 ? string.Empty : (value.DateValue ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy")),
+							IntegerValue = value.IntegerValue ?? 0,
+							TextValue = value.TextValue,
+							Key = id
+						});
+					} else {
+						model.CustomField.Values.Add(new CustomFieldValueDetail {
+							CustomFieldId = field.CustomFieldID,
+							CustomFieldValueId = 0,
+							DataTypeId = field.DataTypeID,
+							BooleanValue = false,
+							CurrencyValue = 0,
+							DateValue = string.Empty,
+							IntegerValue = 0,
+							TextValue = string.Empty,
+							Key = id
+						});
+					}
 				}
-				
+
 			}
 			return Json(model, JsonRequestBehavior.AllowGet);
+		}
+
+		public ActionResult Result() {
+			return View();
 		}
 	}
 }

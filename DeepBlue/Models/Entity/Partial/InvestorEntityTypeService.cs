@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 
 namespace DeepBlue.Models.Entity {
 	public interface IInvestorEntityTypeService {
-		void SaveInvestorEntityType(InvestorEntityType investor);
+		void SaveInvestorEntityType(InvestorEntityType investorEntityType);
 	}
 	public class InvestorEntityTypeService : IInvestorEntityTypeService {
 
@@ -16,8 +17,17 @@ namespace DeepBlue.Models.Entity {
 				if (investorEntityType.InvestorEntityTypeID == 0) {
 					context.InvestorEntityTypes.AddObject(investorEntityType);
 				} else {
-				    context.InvestorEntityTypes.SingleOrDefault(entityType => entityType.InvestorEntityTypeID == investorEntityType.InvestorEntityTypeID);
-					context.InvestorEntityTypes.ApplyCurrentValues(investorEntityType);
+					// Define an ObjectStateEntry and EntityKey for the current object. 
+					EntityKey key = default(EntityKey);
+					object originalItem = null;
+					key = context.CreateEntityKey("InvestorEntityTypes", investorEntityType);
+					// Get the original item based on the entity key from the context 
+					// or from the database. 
+					if (context.TryGetObjectByKey(key, out originalItem)) {
+						// Call the ApplyCurrentValues method to apply changes 
+						// from the updated item to the original version. 
+						context.ApplyCurrentValues(key.EntitySetName, investorEntityType);
+					}
 				}
 				context.SaveChanges();
 			}

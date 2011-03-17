@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 
 namespace DeepBlue.Models.Entity {
 	public interface IInvestorFundDocumentService {
@@ -14,10 +15,18 @@ namespace DeepBlue.Models.Entity {
 				if (investorFundDocument.InvestorFundDocumentID == 0) {
 					context.InvestorFundDocuments.AddObject(investorFundDocument);
 				} else {
-					context.Files.SingleOrDefault(file => file.FileID == investorFundDocument.File.FileID);
-					context.Files.ApplyCurrentValues(investorFundDocument.File);
-					context.InvestorFundDocuments.SingleOrDefault(document => document.InvestorFundDocumentID == investorFundDocument.InvestorFundDocumentID);
-					context.InvestorFundDocuments.ApplyCurrentValues(investorFundDocument);
+					EntityKey key = default(EntityKey);
+					object originalItem = null;
+					key = context.CreateEntityKey("Files", investorFundDocument.File);
+					if (context.TryGetObjectByKey(key, out originalItem)) {
+						context.ApplyCurrentValues(key.EntitySetName, investorFundDocument.File);
+					}
+					key = default(EntityKey);
+					originalItem = null;
+					key = context.CreateEntityKey("InvestorFundDocuments", investorFundDocument);
+					if (context.TryGetObjectByKey(key, out originalItem)) {
+						context.ApplyCurrentValues(key.EntitySetName, investorFundDocument);
+					}
 				}
 				context.SaveChanges();
 			}

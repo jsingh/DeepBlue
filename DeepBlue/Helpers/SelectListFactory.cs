@@ -118,7 +118,6 @@ namespace DeepBlue.Helpers {
 			return fundList;
 		}
 
-	 
 		public static List<SelectListItem> GetInvestorTypeSelectList(List<InvestorType> investorTypes) {
 			List<SelectListItem> investorTypeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
@@ -134,7 +133,7 @@ namespace DeepBlue.Helpers {
 			return investorTypeList;
 		}
 
-		public static List<SelectListItem> GetDefaultSelectList(){
+		public static List<SelectListItem> GetDefaultSelectList() {
 			List<SelectListItem> defaultSelectList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
@@ -143,7 +142,7 @@ namespace DeepBlue.Helpers {
 			return defaultSelectList;
 		}
 
-		public static List<SelectListItem> GetDocumentTypeSelectList(List<DocumentType> documentTypes){
+		public static List<SelectListItem> GetDocumentTypeSelectList(List<DocumentType> documentTypes) {
 			List<SelectListItem> documentTypeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
@@ -199,6 +198,19 @@ namespace DeepBlue.Helpers {
 				dataTypeList.Add(item);
 			}
 			return dataTypeList;
+		}
+
+		public static List<SelectListItem> GetUploadTypeSelectList() {
+			List<SelectListItem> uploadTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = UploadType.Upload.ToString();
+			item.Value = ((int)UploadType.Upload).ToString();
+			uploadTypeList.Add(item);
+			item = new SelectListItem();
+			item.Text = UploadType.Link.ToString();
+			item.Value = ((int)UploadType.Link).ToString();
+			uploadTypeList.Add(item);
+			return uploadTypeList;
 		}
 	}
 }

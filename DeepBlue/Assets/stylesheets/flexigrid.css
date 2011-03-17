@@ -303,8 +303,8 @@
 	border-right: 0px;
 }
 
-.flexigrid div.bDiv table {
-	border-bottom: 1px solid #ccc;
+.flexigrid div.bDiv .tblborder {
+	border-bottom: 1px solid #ccc; 
 }
 
 .flexigrid div.hGrip {
@@ -630,4 +630,12 @@ div.pGroup {
 
 .flexigrid.ie div.hDiv th div, .flexigrid.ie div.bDiv td div, div.colCopy.ie div /* common inner cell properties*/ /* common inner cell properties*/ {
 	overflow: hidden;
+}
+.flexigrid .bDivMain {
+	overflow: auto;
+	overflow-x: hidden;
+	border-bottom: 1px solid #cccccc;
+}
+.flexigrid .bDivMainNoborder {
+	border-bottom: 0px;
 }

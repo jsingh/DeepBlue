@@ -18,7 +18,7 @@ namespace DeepBlue.Models.Admin {
 		public int InvestorEntityTypeId { get; set; }
 
 		[Required(ErrorMessage = "Investor Entity Type Name is required.")]
-		[StringLength(20, ErrorMessage = "Investor Entity Type Name Must is under 20 characters.")]
+		[StringLength(20, ErrorMessage = "Investor Entity Type Name must be under 20 characters.")]
 		[RemoteUID_(Action = "InvestorEntityTypeNameAvailable", Controller = "Admin", ValidateParameterName = "InvestorEntityTypeName", Params = new string[] { "InvestorEntityTypeId" })]
 		[DisplayName("Investor Entity Type Name:")]
 		public string InvestorEntityTypeName { get; set; }

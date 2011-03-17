@@ -92,9 +92,9 @@
 	,onCreateFundSuccess: function () {
 		$("#UpdateLoading").html("");
 		var UpdateTargetId=$("#UpdateTargetId");
-		if(UpdateTargetId.html()=="True")
-			parent.fund.closeDialog(true);
-		else
+		if(UpdateTargetId.html()!="")
 			alert(UpdateTargetId.html());
+		else
+			parent.fund.closeDialog(true);
 	}
 }

@@ -27,7 +27,7 @@ namespace DeepBlue.Controllers.Document {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<DocumentDetail> entityTypeQuery = (from document in context.InvestorFundDocuments
 														  where document.DocumentDate >= fromDate && document.DocumentDate <= toDate
-														  && document.DocumentTypeID == documentTypeId
+														  && (documentTypeId > 0 ? document.DocumentTypeID == documentTypeId : document.DocumentTypeID > 0)
 														  && (documentStatus == DocumentStatus.Investor ? (investorId > 0 ? (document.InvestorID ?? 0) == investorId : (document.InvestorID ?? 0) > 0) : (fundId > 0 ? (document.FundID ?? 0) == fundId : (document.FundID ?? 0) > 0))
 															select new DocumentDetail {
 																DocumentDate = document.DocumentDate,
@@ -35,7 +35,8 @@ namespace DeepBlue.Controllers.Document {
 																FilePath = document.File.FilePath,
 																FileTypeName = document.File.FileType.FileTypeName,
 																InvestorName = document.Investor.InvestorName,
-																FundName = document.Fund.FundName
+																FundName = document.Fund.FundName,
+																DocumentType = document.DocumentType.DocumentTypeName
 															});
 				entityTypeQuery = entityTypeQuery.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<DocumentDetail> paginatedList = new PaginatedList<DocumentDetail>(entityTypeQuery, pageIndex, pageSize);

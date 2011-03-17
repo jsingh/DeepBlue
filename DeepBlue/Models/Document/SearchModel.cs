@@ -53,5 +53,7 @@ namespace DeepBlue.Models.Document {
 		public string InvestorName { get; set; }
 
 		public string FundName { get; set; }
+
+		public string DocumentType { get; set; }
 	}
 }

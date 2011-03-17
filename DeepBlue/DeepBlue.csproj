@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="Helpers\AccordionOptions.cs" />
     <Compile Include="Helpers\AutoCompleteOptions.cs" />
+    <Compile Include="Helpers\CustomFieldHelper.cs" />
     <Compile Include="Helpers\DatePickerOptions.cs" />
     <Compile Include="Helpers\DownloadFile.cs" />
     <Compile Include="Helpers\Flexigrid.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Helpers\SelectListFactory.cs" />
     <Compile Include="Helpers\UploadFile.cs" />
     <Compile Include="Helpers\ValidationHelpers.cs" />
+    <Compile Include="Models\Admin\EditCreateModule.cs" />
     <Compile Include="Models\Admin\EditCustomFieldModel.cs" />
     <Compile Include="Models\Admin\EditDataTypeModel.cs" />
     <Compile Include="Models\Admin\EditFundClosingModel.cs" />
@@ -111,13 +113,14 @@
     <Compile Include="Models\Admin\ListModel.cs" />
     <Compile Include="Models\Admin\ResultModel.cs" />
     <Compile Include="Models\Document\SearchModel.cs" />
-    <Compile Include="Models\Document\UploadModel.cs" />
+    <Compile Include="Models\Document\CreateModel.cs" />
     <Compile Include="Models\Document\Enums.cs" />
     <Compile Include="Models\Entity\DeepBlue.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\Partial\ModuleService.cs" />
     <Compile Include="Models\Entity\Partial\CustomFieldValueService.cs" />
     <Compile Include="Models\Entity\Partial\CustomFieldService.cs" />
     <Compile Include="Models\Entity\Partial\DataTypeService.cs" />
@@ -129,6 +132,7 @@
     <Compile Include="Models\Entity\Partial\InvestorFundService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorTypeService.cs" />
+    <Compile Include="Models\Entity\Validation\Module.cs" />
     <Compile Include="Models\Entity\Validation\CustomFieldValue.cs" />
     <Compile Include="Models\Entity\Validation\CustomField.cs" />
     <Compile Include="Models\Entity\Validation\DataType.cs" />
@@ -144,7 +148,8 @@
     <Compile Include="Models\Fund\EditModel.cs" />
     <Compile Include="Models\Fund\FundDetail.cs" />
     <Compile Include="Models\Fund\FundListModel.cs" />
-    <Compile Include="Models\Investor\CustomFieldModel.cs" />
+    <Compile Include="Models\Fund\ResultModel.cs" />
+    <Compile Include="Models\Investor\ResultModel.cs" />
     <Compile Include="Models\Transaction\CreateModel.cs" />
     <Compile Include="Models\Investor\CreateModel.cs" />
     <Compile Include="Controllers\Investor\IInvestorRepository.cs" />
@@ -259,12 +264,12 @@
     <Content Include="Assets\javascripts\DocumentUpload.js" />
     <Content Include="Assets\javascripts\FundClosing.js" />
     <Content Include="Assets\javascripts\InvestorType.js" />
-    <Content Include="Assets\javascripts\ddlmenu.js" />
     <Content Include="Assets\javascripts\FlexGrid.js" />
     <Content Include="Assets\javascripts\EditInvestor.js" />
     <Content Include="Assets\javascripts\EditTransaction.js" />
     <Content Include="Assets\javascripts\Fund.js" />
     <Content Include="Assets\javascripts\InvestorEntityType.js" />
+    <Content Include="Assets\javascripts\jHelper.js" />
     <Content Include="Assets\javascripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Assets\javascripts\jquery-ui-1.8.10.custom.min.js" />
     <Content Include="Assets\javascripts\jquery-ui-1.8.9.combobox.js" />
@@ -276,6 +281,7 @@
     <Content Include="Assets\javascripts\MicrosoftMvcAjax.js" />
     <Content Include="Assets\javascripts\MicrosoftMvcCustomValidation.js" />
     <Content Include="Assets\javascripts\MicrosoftMvcValidation.js" />
+    <Content Include="Assets\javascripts\Module.js" />
     <Content Include="Assets\javascripts\SearchInvestor.js" />
     <Content Include="Assets\javascripts\TransactionController.js" />
     <Content Include="Assets\stylesheets\customfield.css" />
@@ -290,6 +296,7 @@
     <Content Include="Views\Admin\EditDataType.aspx" />
     <Content Include="Views\Admin\DataTypeList.ascx" />
     <Content Include="Views\Admin\DataType.aspx" />
+    <Content Include="Views\Admin\EditModule.aspx" />
     <Content Include="Views\Admin\EditOptionalField.ascx" />
     <Content Include="Views\Admin\FundClosing.aspx" />
     <Content Include="Views\Admin\FundClosingList.ascx" />
@@ -303,24 +310,25 @@
     <Content Include="Views\Admin\EntityTypeList.ascx" />
     <Content Include="Views\Admin\InvestorType.aspx" />
     <Content Include="Views\Admin\Module.aspx" />
+    <Content Include="Views\Admin\ModuleList.ascx" />
     <Content Include="Views\Admin\Result.ascx" />
     <Content Include="Views\Admin\EntityType.aspx" />
     <Content Include="Views\Admin\List.ascx" />
     <Content Include="Views\Document\List.ascx" />
     <Content Include="Views\Document\New.aspx" />
     <Content Include="Views\Document\Search.aspx" />
+    <Content Include="Views\Shared\CustomFieldList.ascx" />
     <Content Include="Views\Fund\Edit.aspx" />
-    <Content Include="Views\Fund\Error.ascx" />
     <Content Include="Views\Fund\FundDetail.ascx" />
     <Content Include="Views\Fund\Index.aspx" />
     <Content Include="Views\Fund\List.ascx" />
     <Content Include="Views\Fund\New.aspx" />
-    <Content Include="Views\Fund\Success.ascx" />
+    <Content Include="Views\Fund\Result.ascx" />
     <Content Include="Views\Home\Index.aspx" />
-    <Content Include="Views\Investor\CustomFieldList.ascx" />
     <Content Include="Views\Investor\Edit.aspx" />
     <Content Include="Views\Investor\FundList.ascx" />
     <Content Include="Views\Investor\New.aspx" />
+    <Content Include="Views\Investor\Result.ascx" />
     <Content Include="Views\Investor\ThankYou.aspx" />
     <Content Include="Views\Transaction\Error.ascx" />
     <Content Include="Views\Transaction\Success.ascx" />

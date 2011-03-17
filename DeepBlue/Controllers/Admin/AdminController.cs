@@ -77,7 +77,7 @@ namespace DeepBlue.Controllers.Admin {
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveInvestorType(investorType);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage;
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 					}
 				} else {
 					resultModel.Result = "True";
@@ -86,7 +86,7 @@ namespace DeepBlue.Controllers.Admin {
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
-							resultModel.Result += err.ErrorMessage;
+							resultModel.Result += err.ErrorMessage + "\n";
 						}
 					}
 				}
@@ -167,7 +167,7 @@ namespace DeepBlue.Controllers.Admin {
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveInvestorEntityType(investorEntityType);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage;
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 					}
 				} else {
 					resultModel.Result = "True";
@@ -176,7 +176,7 @@ namespace DeepBlue.Controllers.Admin {
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
-							resultModel.Result += err.ErrorMessage;
+							resultModel.Result += err.ErrorMessage + "\n";
 						}
 					}
 				}
@@ -259,7 +259,7 @@ namespace DeepBlue.Controllers.Admin {
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFundClosing(fundClosing);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage;
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 					}
 				} else {
 					resultModel.Result = "True";
@@ -268,7 +268,7 @@ namespace DeepBlue.Controllers.Admin {
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
-							resultModel.Result += err.ErrorMessage;
+							resultModel.Result += err.ErrorMessage + "\n";
 						}
 					}
 				}
@@ -287,8 +287,8 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string FundClosingNameAvailable(string Name, int FundClosingID) {
-			if (AdminRepository.FundClosingNameAvailable(Name, FundClosingID))
+		public string FundClosingNameAvailable(string Name, int FundClosingID, int FundID) {
+			if (AdminRepository.FundClosingNameAvailable(Name, FundClosingID, FundID))
 				return "Name is already exist";
 			else
 				return string.Empty;
@@ -366,7 +366,7 @@ namespace DeepBlue.Controllers.Admin {
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCustomField(customField);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage;
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 					}
 				} else {
 					resultModel.Result = "True";
@@ -375,7 +375,7 @@ namespace DeepBlue.Controllers.Admin {
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
-							resultModel.Result += err.ErrorMessage;
+							resultModel.Result += err.ErrorMessage + "\n";
 						}
 					}
 				}
@@ -393,8 +393,8 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string CustomFieldTextAvailable(string CustomFieldText, int CustomFieldId) {
-			if (AdminRepository.CustomFieldTextAvailable(CustomFieldText, CustomFieldId))
+		public string CustomFieldTextAvailable(string CustomFieldText, int CustomFieldId, int ModuleId) {
+			if (AdminRepository.CustomFieldTextAvailable(CustomFieldText, CustomFieldId,ModuleId))
 				return "Name already exists.";
 			else
 				return string.Empty;
@@ -429,7 +429,7 @@ namespace DeepBlue.Controllers.Admin {
 			if (dataType != null) {
 				model.DataTypeId = dataType.DataTypeID;
 				model.DataTypeName = dataType.DataTypeName;
-			} 
+			}
 			return View(model);
 		}
 
@@ -450,7 +450,7 @@ namespace DeepBlue.Controllers.Admin {
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveDataType(dataType);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage;
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 					}
 				} else {
 					resultModel.Result = "True";
@@ -459,7 +459,7 @@ namespace DeepBlue.Controllers.Admin {
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
-							resultModel.Result += err.ErrorMessage;
+							resultModel.Result += err.ErrorMessage + "\n";
 						}
 					}
 				}
@@ -488,10 +488,89 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region Module
 
-		public ActionResult Module() {
+		public ActionResult MODULE() {
 			ViewData["MenuName"] = "Admin";
 			return View();
 		}
+
+		//
+		// GET: /Admin/ModuleList
+		[HttpGet]
+		public ActionResult ModuleList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			int totalRows = 0;
+			IList<MODULE> module = AdminRepository.GetAllModules(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			ViewData["TotalRows"] = totalRows;
+			ViewData["PageNo"] = pageIndex;
+			return View(module);
+		}
+
+		//
+		// GET: /Admin/EntityType
+		[HttpGet]
+		public ActionResult EditModule(int id) {
+			EditModule model = new EditModule();
+			MODULE module = AdminRepository.FindModule(id);
+			if (module != null) {
+				model.ModuleID = module.ModuleID;
+				model.ModuleName = module.ModuleName;
+
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateModule
+		[HttpPost]
+		public ActionResult UpdateModule(FormCollection collection) {
+			EditModule model = new EditModule();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				MODULE module = AdminRepository.FindModule(model.ModuleID);
+				if (module == null) {
+					module = new MODULE();
+				}
+				module.ModuleName = model.ModuleName;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveModule(module);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteModule(int id) {
+			if (AdminRepository.DeleteModuleId(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string ModuleFieldTextAvailable(string ModuleFieldText, int ModuleFieldId) {
+			if (AdminRepository.ModuleTextAvailable(ModuleFieldText, ModuleFieldId))
+				return "Custom Field Text already exists.";
+			else
+				return string.Empty;
+		}
+
 
 		#endregion
 

@@ -72,6 +72,7 @@ a img {
 	height: 100%;
 	position: absolute;
 	overflow: auto;
+	overflow-x:hidden;
 }
 /* Menu */
 #menu {
@@ -620,7 +621,7 @@ h2 {
 .admin-header {
 	width: 100%;
 	text-align: right;
-	padding: 10px 0px 10px 0px;
+	padding: 5px 0px 5px 0px;
 }
 .admin-content {
 	width: 100%;

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<DeepBlue.Models.Document.UploadModel>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<DeepBlue.Models.Document.CreateModel>" %>
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
@@ -45,11 +45,15 @@
 			</div>
 		</div>
 		<div class="editor-label">
-			<%: Html.LabelFor(model => model.File)%>
+			<%: Html.DropDownListFor(model => model.UploadType,Model.UploadTypes, new { @onchange = "javascript:documentUpload.changeUploadType(this);" })%>
 		</div>
-		<div class="editor-field">
+		<div id="FileRow" class="editor-field">
 			<%: Html.File("File", new { @id = "File" })%>
 			<%: Html.ValidationMessageFor(model => model.File)%>
+		</div>
+		<div id="LinkRow" style="display: none" class="editor-field">
+			<%: Html.TextBoxFor(model => model.FilePath)%>
+			<%: Html.ValidationMessageFor(model => model.FilePath)%>
 		</div>
 		<div class="editor-label" style="height: 15px">
 			<%: Html.ValidationMessageFor(model => model.ModelErrorMessage)%>
@@ -77,10 +81,11 @@
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			var frm=document.getElementById("AddNewDocument");
-			var DocumentStatus = document.getElementById("DocumentStatus");
+			var DocumentStatus=document.getElementById("DocumentStatus");
 			documentUpload.changeType(DocumentStatus);
-			documentUpload.showErrorMessage(frm);
+			var UploadType=document.getElementById("UploadType");
+			documentUpload.changeUploadType(UploadType);
+			documentUpload.init();
 		});
 	</script>
 

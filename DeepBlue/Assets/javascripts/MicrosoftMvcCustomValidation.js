@@ -27,9 +27,9 @@
 					// add error to validation message
 					var newMessage=(responseData=='FAIL'?
                     rule.ErrorMessage:responseData);
-					if(newMessage!='') {
+					/*if(newMessage!='') {
 						alert(newMessage);
-					}
+					}*/
 					context.fieldContext.addError(newMessage);
 				}
 			};

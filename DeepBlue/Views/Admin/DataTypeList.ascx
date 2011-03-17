@@ -8,8 +8,7 @@
 	   row = new FlexigridRow();
 	   row.cell.Add(item.DataTypeID.ToString());
 	   row.cell.Add(item.DataTypeName);
-	   row.cell.Add(Html.Image("Edit.gif", new {  @onclick = "javascript:dataType.add(" + item.DataTypeID.ToString() + ");" }).ToHtmlString() + "&nbsp;&nbsp;&nbsp;" +
-				  Html.Image("Delete.png", new {  @onclick = "javascript:dataType.deleteDataType(" + item.DataTypeID.ToString() + ",this);" }).ToHtmlString());
+	   row.cell.Add(Html.Image("Edit.gif", new {  @onclick = "javascript:dataType.add(" + item.DataTypeID.ToString() + ");" }).ToHtmlString());
 	   flexData.rows.Add(row);
    } %>
 <%= JsonSerializer.ToJsonObject(flexData)%>
