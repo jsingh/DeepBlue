@@ -18,6 +18,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region InvestorType
 		List<InvestorType> GetAllInvestorTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<InvestorType> GetAllInvestorTypes();
 		InvestorType FindInvestorType(int id);
 		bool InvestorTypeNameAvailable(string investorTypeName, int investorTypeID);
 		bool DeleteInvestorType(int id);

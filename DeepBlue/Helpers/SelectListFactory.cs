@@ -212,5 +212,20 @@ namespace DeepBlue.Helpers {
 			uploadTypeList.Add(item);
 			return uploadTypeList;
 		}
+
+		public static List<SelectListItem> GetMultiplierTypeList(List<MultiplierType> multiplierTypes) {
+			List<SelectListItem> multiplierTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			multiplierTypeList.Add(item);
+			foreach (var type in multiplierTypes) {
+				item = new SelectListItem();
+				item.Text = type.Name;
+				item.Value = type.MultiplierTypeID.ToString();
+				multiplierTypeList.Add(item);
+			}
+			return multiplierTypeList;
+		}
 	}
 }

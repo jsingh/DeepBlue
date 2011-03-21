@@ -67,6 +67,15 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
+
+		public List<InvestorType> GetAllInvestorTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investorType in context.InvestorTypes
+						orderby investorType.InvestorTypeName
+						select investorType).ToList();
+			}
+		}
+
 		public InvestorType FindInvestorType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.InvestorTypes.SingleOrDefault(type => type.InvestorTypeID == id);

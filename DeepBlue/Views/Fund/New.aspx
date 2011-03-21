@@ -8,7 +8,8 @@
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
 	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
 	<%= Html.JavascriptInclueTag("Fund.js")%>
-	<%= Html.StylesheetLinkTag("fund.css")%>
+	<%= Html.StylesheetLinkTag("fund.css")%>	<%= Html.JavascriptInclueTag("FlexGrid.js")%>
+	<%= Html.StylesheetLinkTag("flexigrid.css")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<%Html.EnableClientValidation(); %>
@@ -24,9 +25,4 @@
 	<%= Html.jQueryDatePicker("FinalTerminationDate")%>
 	<%= Html.jQueryDatePicker("DateClawbackTriggered")%>
 	<%= Html.jQueryDatePicker("MgmtFeesCatchUpDate")%>
-
-	<script type="text/javascript">
-		fund.init();
-	</script>
-
 </asp:Content>

@@ -9,9 +9,9 @@ using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
     public class CreateInvestorEntityTypeInvalidData : EditInvestorEntityType {
-        private EditInvestorTypeModel Model {
+        private EditInvestorEntityTypeModel Model {
             get {
-				return base.ViewResult.ViewData.Model as EditInvestorTypeModel;
+				return base.ViewResult.ViewData.Model as EditInvestorEntityTypeModel;
             }
         }
 
@@ -53,17 +53,17 @@ namespace DeepBlue.Tests.Controllers.Admin {
         }
 
         [Test]
-        public void invalid_Investor_name_sets_model_error_on_model_state() {
+        public void invalid_Investorentitytype_name_sets_model_error_on_model_state() {
             Assert.IsFalse(test_posted_value("InvestorEntityTypeName"));
         }
 
         [Test]
-        public void invalid_Investor_name_sets_1_error() {
+        public void invalid_Investorentitytype_name_sets_1_error() {
 			Assert.IsTrue(test_error_count("InvestorEntityTypeName", 1));
         }
 
         [Test]
-        public void invalid_Investor_name_results_in_invalid_modelstate() {
+        public void invalid_Investorentitytype_name_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }

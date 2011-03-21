@@ -19,7 +19,7 @@ namespace DeepBlue.Tests.Models.Admin {
         }
 
 		[Test]
-		public void create_a_new_investorentitytype_with_investor_name_passes() {
+		public void create_a_new_investorentitytype_with_investorentitytype_name_passes() {
 			Assert.IsTrue(IsPropertyValid("InvestorEntityTypeName"));
 		}
     }

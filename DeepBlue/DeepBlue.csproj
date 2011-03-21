@@ -75,6 +75,7 @@
     <Compile Include="Controllers\Document\DocumentRepository.cs" />
     <Compile Include="Controllers\Document\DocumentController.cs" />
     <Compile Include="Controllers\Document\IDocumentRepository.cs" />
+    <Compile Include="Controllers\Fund\Enums.cs" />
     <Compile Include="Controllers\Fund\FundRepository.cs" />
     <Compile Include="Controllers\Fund\FundController.cs" />
     <Compile Include="Controllers\Fund\IFundRepository.cs" />
@@ -120,6 +121,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\Partial\ManagementFeeRateScheduleService.cs" />
     <Compile Include="Models\Entity\Partial\ModuleService.cs" />
     <Compile Include="Models\Entity\Partial\CustomFieldValueService.cs" />
     <Compile Include="Models\Entity\Partial\CustomFieldService.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Models\Entity\Partial\InvestorFundService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorTypeService.cs" />
+    <Compile Include="Models\Entity\Validation\ManagementFeeRateSchedule.cs" />
     <Compile Include="Models\Entity\Validation\Module.cs" />
     <Compile Include="Models\Entity\Validation\CustomFieldValue.cs" />
     <Compile Include="Models\Entity\Validation\CustomField.cs" />
@@ -148,6 +151,7 @@
     <Compile Include="Models\Fund\EditModel.cs" />
     <Compile Include="Models\Fund\FundDetail.cs" />
     <Compile Include="Models\Fund\FundListModel.cs" />
+    <Compile Include="Models\Fund\FundRateScheduleDetail.cs" />
     <Compile Include="Models\Fund\ResultModel.cs" />
     <Compile Include="Models\Investor\ResultModel.cs" />
     <Compile Include="Models\Transaction\CreateModel.cs" />
@@ -270,12 +274,11 @@
     <Content Include="Assets\javascripts\Fund.js" />
     <Content Include="Assets\javascripts\InvestorEntityType.js" />
     <Content Include="Assets\javascripts\jHelper.js" />
-    <Content Include="Assets\javascripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Assets\javascripts\jquery-ui-1.8.10.custom.min.js" />
     <Content Include="Assets\javascripts\jquery-ui-1.8.9.combobox.js" />
-    <Content Include="Assets\javascripts\jquery.validate-vsdoc.js" />
     <Content Include="Assets\javascripts\jquery.validate.min.js" />
     <Content Include="Assets\javascripts\Investor.js" />
+    <Content Include="Assets\javascripts\jsDate.js" />
     <Content Include="Assets\javascripts\menu.js" />
     <Content Include="Assets\javascripts\MicrosoftAjax.js" />
     <Content Include="Assets\javascripts\MicrosoftMvcAjax.js" />

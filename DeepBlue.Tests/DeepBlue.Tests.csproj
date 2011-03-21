@@ -68,9 +68,14 @@
   <ItemGroup>
     <Compile Include="Controllers\Admin\CreateInvestorEntityTypeInvalidData.cs" />
     <Compile Include="Controllers\Admin\CreateInvestorEntityTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateInvestorTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateInvestorTypeValidData.cs" />
     <Compile Include="Controllers\Admin\EditInvestorEntityType.cs" />
+    <Compile Include="Controllers\Admin\EditInvestorType.cs" />
     <Compile Include="Controllers\Admin\InvestorEntityTypeBase.cs" />
+    <Compile Include="Controllers\Admin\InvestorTypeBase.cs" />
     <Compile Include="Controllers\Admin\NewInvestorEntityType.cs" />
+    <Compile Include="Controllers\Admin\NewInvestorType.cs" />
     <Compile Include="Controllers\Base.cs" />
     <Compile Include="Controllers\Investor\Create.cs" />
     <Compile Include="Controllers\Investor\CreateInvalidData.cs" />
@@ -85,11 +90,17 @@
     <Compile Include="Models\Admin\InvestorEntityType.cs" />
     <Compile Include="Models\Admin\InvestorEntityTypeInvalidData.cs" />
     <Compile Include="Models\Admin\InvestorEntityTypeValidData.cs" />
+    <Compile Include="Models\Admin\InvestorType.cs" />
+    <Compile Include="Models\Admin\InvestorTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\InvestorTypeValidData.cs" />
     <Compile Include="Models\Investor\Investor.cs" />
     <Compile Include="Models\Investor\InvestornvalidData.cs" />
     <Compile Include="Models\Investor\InvestorValidData.cs" />
     <Compile Include="Models\Transaction\InvestorFund.cs" />
     <Compile Include="Models\Transaction\InvestorFundInvalidData.cs" />
+    <Compile Include="Models\Transaction\InvestorFundTransaction.cs" />
+    <Compile Include="Models\Transaction\InvestorFundTransactionInvalidData.cs" />
+    <Compile Include="Models\Transaction\InvestorFundTransactionValidData.cs" />
     <Compile Include="Models\Transaction\InvestorValidData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

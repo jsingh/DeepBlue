@@ -344,6 +344,17 @@
 		// load data
 		if(p.url&&p.autoload) {
 			g.populate();
+		} else {
+			var i=0;
+			$("tr",t).each(function () {
+				var tr=this;
+				i=0;
+				$("thead tr th",g.hDiv).each(function () {
+					$("td:eq("+i+") div",tr).css({ "width": this.style.width,"display": this.style.display,"text-align": $(this).attr("align") });
+					i++;
+				});
+			});
+			$(t).addClass("tblborder");
 		}
 		$(t).removeAttr("style");
 		$("table",g.hDiv).removeAttr("style");

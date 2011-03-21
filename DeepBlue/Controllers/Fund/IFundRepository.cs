@@ -9,15 +9,31 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Controllers.Fund {
 
 	public interface IFundRepository {
-		
+
 		#region EntiryType
 		List<FundListModel> GetAllFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		Models.Entity.Fund FindFund(int fundId);
 		List<Models.Entity.Fund> FindFunds(string fundName);
-		IEnumerable<Helpers.ErrorInfo> SaveFund(Models.Entity.Fund fund);
-		bool TaxIdAvailable(string taxId,int fundId);
+		bool TaxIdAvailable(string taxId, int fundId);
 		bool FundNameAvailable(string fundName, int fundId);
 		#endregion
-		
+
+		#region Fund Rate Schedules
+		List<FundRateSchedule> GetAllFundRateSchdules(int fundId);
+		List<MultiplierType> GetAllMultiplierTypes();
+		void DeleteFundRateSchedule(int id);
+		void DeleteManagementFeeRateSchedule(int id);
+		FundRateSchedule FindRateSchedule(int id);
+		ManagementFeeRateSchedule FindManagementFeeRateSchedule(int id);
+		ManagementFeeRateScheduleTier FindManagementFeeRateScheduleTier(int id);
+		#endregion
+
+		#region Save Fund
+		IEnumerable<ErrorInfo> SaveFund(Models.Entity.Fund fund);
+		#endregion
+
+		#region Save Fund ManagementFeeRateSchedule
+		IEnumerable<ErrorInfo> SaveManagementFeeRateSchedule(ManagementFeeRateSchedule managementFeeRateSchedule);
+		#endregion
 	}
 }

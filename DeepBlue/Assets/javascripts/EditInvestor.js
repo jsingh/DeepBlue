@@ -13,55 +13,55 @@
 
 		$.getJSON("/Investor/FindInvestor/"+id+"?t="+dt.getTime(),function (data) {
 			$("#Loading").html("");
-			var $investorInfo=$("#investor_"+id);
+			var $invInfo=$("#investor_"+id);
 			var alreadyExist=false;
-			if($investorInfo.get(0)) {
+			if($invInfo.get(0)) {
 				alreadyExist=true;
 			} else {
-				$investorInfo=editInvestor.cloneInvestorInfo();
-				$("#editinfo").append($investorInfo);
-				$investorInfo.css("display","");
-				$investorInfo.attr("id","investor_"+id);
-				$("#InvestorId",$investorInfo).val(id);
+				$invInfo=editInvestor.cloneInvestorInfo();
+				$("#editinfo").append($invInfo);
+				$invInfo.css("display","");
+				$invInfo.attr("id","investor_"+id);
+				$("#InvestorId",$invInfo).val(id);
 			}
-			$("#addressInfo_0",$investorInfo).remove();
-			$("#contactInfo_0",$investorInfo).remove();
-			$("#accountInfo_0",$investorInfo).remove();
-			$("#addressInfo",$investorInfo).remove();
-			$("#contactInfo",$investorInfo).remove();
-			$("#accountInfo",$investorInfo).remove();
+			$("#addressInfo_0",$invInfo).remove();
+			$("#contactInfo_0",$invInfo).remove();
+			$("#accountInfo_0",$invInfo).remove();
+			$("#addressInfo",$invInfo).remove();
+			$("#contactInfo",$invInfo).remove();
+			$("#accountInfo",$invInfo).remove();
 
-			editInvestor.loadInvestorInfo($investorInfo,data);
-			editInvestor.buildFundTable($investorInfo,data.FundInformations);
+			editInvestor.loadInvestorInfo($invInfo,data);
+			editInvestor.buildFundTable($invInfo,data.FundInformations);
 			// Read Address Information
-			$("#AddressInfoCount",$investorInfo).val(data.AddressInformations.length);
+			$("#AddressInfoCount",$invInfo).val(data.AddressInformations.length);
 			$.each(
 					 data.AddressInformations,
 					 function (i,address) {
 					 	i=parseInt(i)+1;
-					 	editInvestor.loadAddressInfo($investorInfo,address,i);
+					 	editInvestor.loadAddressInfo($invInfo,address,i);
 					 });
 			// Read Contact Information
-			$("#ContactInfoCount",$investorInfo).val(data.ContactInformations.length);
+			$("#ContactInfoCount",$invInfo).val(data.ContactInformations.length);
 			$.each(
 					 data.ContactInformations,
 					 function (i,contact) {
 					 	i=parseInt(i)+1;
-					 	editInvestor.loadContactInfo($investorInfo,contact,i);
+					 	editInvestor.loadContactInfo($invInfo,contact,i);
 					 });
 			// Read Account Information
-			$("#AccountInfoCount",$investorInfo).val(data.AccountInformations.length);
+			$("#AccountInfoCount",$invInfo).val(data.AccountInformations.length);
 			$.each(
 					 data.AccountInformations,
 					 function (i,account) {
 					 	i=parseInt(i)+1;
-					 	editInvestor.loadAccountInfo($investorInfo,account,i);
+					 	editInvestor.loadAccountInfo($invInfo,account,i);
 					 });
 			// Read Custom Fields
 			$.each(
 					 data.CustomField.Values,
 					 function (i,value) {
-					 	var obj=$("'#CustomField_"+value.CustomFieldId+"'",$investorInfo).get(0);
+					 	var obj=$("'#CustomField_"+value.CustomFieldId+"'",$invInfo).get(0);
 					 	if(obj) {
 					 		switch(value.DataTypeId) {
 					 			case 1: // Integer 
@@ -87,9 +87,9 @@
 					 	}
 					 });
 			if(alreadyExist==false) {
-				editInvestor.applyAccordion($investorInfo);
+				editInvestor.applyAccordion($invInfo);
 			}
-			editInvestor.loadDisplCtl($investorInfo);
+			editInvestor.loadDisplCtl($invInfo);
 			$(".InvestorUpdateLoading").remove();
 		});
 	}
@@ -101,8 +101,8 @@
 		//span.innerHTML=obj.value;
 		$(obj).before(span);
 	}
-	,buildFundTable: function ($investorInfo,data) {
-		var fundDetails=$("#funddetails",$investorInfo).html("");
+	,buildFundTable: function ($invInfo,data) {
+		var fundDetails=$("#funddetails",$invInfo).html("");
 		var html="<table cellpadding='0' cellspacing='0' border='0' style='width:100%'><thead><tr><th>Fund Name</th><th style='width:20%'>Committed Amount</th><th style='width:20%'>Unfunded Amount</th><th>Investror Type</th></tr></thead></table>";
 		$(fundDetails).html(html);
 		var table=$("table",fundDetails).flexigrid({
@@ -118,12 +118,12 @@
 		$(table).flexAddData(data);
 	}
 	,cloneInvestorInfo: function () {
-		var $investorInfo=$("#investorInfo").clone();
-		$("#addressInfo",$investorInfo).remove();
-		$("#contactInfo",$investorInfo).remove();
-		$("#accountInfo",$investorInfo).remove();
-		editInvestor.assignId($investorInfo);
-		return $investorInfo;
+		var $invInfo=$("#investorInfo").clone();
+		$("#addressInfo",$invInfo).remove();
+		$("#contactInfo",$invInfo).remove();
+		$("#accountInfo",$invInfo).remove();
+		editInvestor.assignId($invInfo);
+		return $invInfo;
 	}
 	,assignId: function ($target) {
 		$(":input",$target).each(function () {
@@ -166,8 +166,8 @@
 		editInvestor.assignId(accountInfo);
 		return accountInfo;
 	}
-	,applyAccordion: function ($investorInfo) {
-		var $accordion=$("#accordion",$investorInfo);
+	,applyAccordion: function ($invInfo) {
+		var $accordion=$("#accordion",$invInfo);
 		$accordion.accordion({ animated: false,active: -1,collapsible: true,autoHeight: false,navigation: true
 		});
 	}
@@ -343,17 +343,17 @@
 			}
 		});
 	}
-	,loadInvestorInfo: function ($investorInfo,investor) {
-		$("#TitleInvestorName",$investorInfo).html(investor.InvestorName);
-		$("#InvestorName",$investorInfo).html(investor.InvestorName);
-		$("#DisplayName",$investorInfo).val(investor.DisplayName);
-		$("#Notes",$investorInfo).val(investor.Notes);
-		$("#Spn_DisplayName",$investorInfo).html(investor.DisplayName);
-		$("#Spn_Notes",$investorInfo).html(investor.Notes);
-		$("#SocialSecurityTaxId",$investorInfo).html(investor.SocialSecurityTaxId);
-		var DomesticForeigns=$("#DomesticForeigns",$investorInfo);
-		var StateOfResidency=$("#StateOfResidency",$investorInfo);
-		var EntityType=$("#EntityType",$investorInfo);
+	,loadInvestorInfo: function ($invInfo,investor) {
+		$("#TitleInvestorName",$invInfo).html(investor.InvestorName);
+		$("#InvestorName",$invInfo).html(investor.InvestorName);
+		$("#DisplayName",$invInfo).val(investor.DisplayName);
+		$("#Notes",$invInfo).val(investor.Notes);
+		$("#Spn_DisplayName",$invInfo).html(investor.DisplayName);
+		$("#Spn_Notes",$invInfo).html(investor.Notes);
+		$("#SocialSecurityTaxId",$invInfo).html(investor.SocialSecurityTaxId);
+		var DomesticForeigns=$("#DomesticForeigns",$invInfo);
+		var StateOfResidency=$("#StateOfResidency",$invInfo);
+		var EntityType=$("#EntityType",$invInfo);
 		if(investor.DomesticForeign)
 			DomesticForeigns.val("true");
 		else
@@ -361,7 +361,7 @@
 
 		StateOfResidency.val(investor.StateOfResidency);
 		EntityType.val(investor.EntityType);
-		return $investorInfo;
+		return $invInfo;
 	}
 	,createDispCtl: function (input,$target) {
 		var disp=$("'#Disp_"+input.id+"'",$target).get(0);
@@ -410,92 +410,92 @@
 			}
 		});
 	}
-	,loadAddressInfo: function ($investorInfo,address,index) {
-		var $addressInfo=$("#addressInfo_"+address.AddressId,$investorInfo);
-		if(!($addressInfo.get(0))) {
-			$addressInfo=editInvestor.cloneAddressInfo($investorInfo);
+	,loadAddressInfo: function ($invInfo,address,index) {
+		var $addInfo=$("#addressInfo_"+address.AddressId,$invInfo);
+		if(!($addInfo.get(0))) {
+			$addInfo=editInvestor.cloneAddressInfo($invInfo);
 			//Replace the index
-			$addressInfo.html($addressInfo.html().replace(/0_/g,(index)+"_"));
-			$addressInfo.css("display","");
-			$addressInfo.attr("id","addressInfo_"+address.AddressId);
-			$("#addressInfoMain",$investorInfo).append($addressInfo);
+			$addInfo.html($addInfo.html().replace(/0_/g,(index)+"_"));
+			$addInfo.css("display","");
+			$addInfo.attr("id","addressInfo_"+address.AddressId);
+			$("#addressInfoMain",$invInfo).append($addInfo);
 
-			$("#addressIndex",$addressInfo).html(index);
-			$("#"+index+"_"+"AddressId",$addressInfo).val(address.AddressId);
-			$("#"+index+"_"+"Phone",$addressInfo).val(address.Phone);
-			$("#"+index+"_"+"Fax",$addressInfo).val(address.Fax);
-			$("#"+index+"_"+"Email",$addressInfo).val(address.Email);
-			$("#"+index+"_"+"WebAddress",$addressInfo).val(address.WebAddress);
-			$("#"+index+"_"+"Address1",$addressInfo).val(address.Address1);
-			$("#"+index+"_"+"Address2",$addressInfo).val(address.Address2);
-			$("#"+index+"_"+"City",$addressInfo).val(address.City);
-			$("#"+index+"_"+"State",$addressInfo).val(address.State);
-			$("#"+index+"_"+"PostalCode",$addressInfo).val(address.Zip);
-			var country=$("#"+index+"_"+"Country",$addressInfo);
+			$("#addressIndex",$addInfo).html(index);
+			$("#"+index+"_"+"AddressId",$addInfo).val(address.AddressId);
+			$("#"+index+"_"+"Phone",$addInfo).val(address.Phone);
+			$("#"+index+"_"+"Fax",$addInfo).val(address.Fax);
+			$("#"+index+"_"+"Email",$addInfo).val(address.Email);
+			$("#"+index+"_"+"WebAddress",$addInfo).val(address.WebAddress);
+			$("#"+index+"_"+"Address1",$addInfo).val(address.Address1);
+			$("#"+index+"_"+"Address2",$addInfo).val(address.Address2);
+			$("#"+index+"_"+"City",$addInfo).val(address.City);
+			$("#"+index+"_"+"State",$addInfo).val(address.State);
+			$("#"+index+"_"+"PostalCode",$addInfo).val(address.Zip);
+			var country=$("#"+index+"_"+"Country",$addInfo);
 			country.val(address.Country);
 			if(country.val()!="225") {
-				$("#"+index+"_"+"AddressStateRow",$addressInfo).hide();
+				$("#"+index+"_"+"AddressStateRow",$addInfo).hide();
 			}
 		}
 	}
-	,loadContactInfo: function ($investorInfo,contact,index) {
-		var $contactInfo=$("#contactInfo_"+contact.ContactId,$investorInfo);
-		if(!($contactInfo.get(0))) {
-			$contactInfo=editInvestor.cloneContactInfo($investorInfo);
+	,loadContactInfo: function ($invInfo,contact,index) {
+		var $contInfo=$("#contactInfo_"+contact.ContactId,$invInfo);
+		if(!($contInfo.get(0))) {
+			$contInfo=editInvestor.cloneContactInfo($invInfo);
 			//Replace the index
-			$contactInfo.html($contactInfo.html().replace(/0_/g,(index)+"_"));
-			$("#contactInfoMain",$investorInfo).append($contactInfo);
-			$contactInfo.css("display","");
-			$contactInfo.attr("id","contactInfo_"+contact.ContactId);
-			$("#contactIndex",$contactInfo).html(index);
+			$contInfo.html($contInfo.html().replace(/0_/g,(index)+"_"));
+			$("#contactInfoMain",$invInfo).append($contInfo);
+			$contInfo.css("display","");
+			$contInfo.attr("id","contactInfo_"+contact.ContactId);
+			$("#contactIndex",$contInfo).html(index);
 
-			$("#"+index+"_"+"ContactId",$contactInfo).val(contact.ContactId);
-			$("#"+index+"_"+"ContactAddressId",$contactInfo).val(contact.ContactAddressId);
-			$("#"+index+"_"+"ContactPerson",$contactInfo).val(contact.ContactPerson);
-			$("#"+index+"_"+"Designation",$contactInfo).val(contact.Designation);
-			$("#"+index+"_"+"ContactPhoneNumber",$contactInfo).val(contact.ContactPhoneNumber);
-			$("#"+index+"_"+"ContactFaxNumber",$contactInfo).val(contact.ContactFaxNumber);
-			$("#"+index+"_"+"ContactEmail",$contactInfo).val(contact.ContactEmail);
-			$("#"+index+"_"+"ContactWebAddress",$contactInfo).val(contact.ContactWebAddress);
-			$("#"+index+"_"+"ContactAddress1",$contactInfo).val(contact.ContactAddress1);
-			$("#"+index+"_"+"ContactAddress2",$contactInfo).val(contact.ContactAddress2);
-			$("#"+index+"_"+"ContactCity",$contactInfo).val(contact.ContactCity);
-			$("#"+index+"_"+"ContactState",$contactInfo).val(contact.ContactState);
-			$("#"+index+"_"+"ContactPostalCode",$contactInfo).val(contact.ContactZip);
-			$("#"+index+"_"+"DistributionNotices",$contactInfo).get(0).checked=contact.DistributionNotices;
-			$("#"+index+"_"+"Financials",$contactInfo).get(0).checked=contact.Financials;
-			$("#"+index+"_"+"K1",$contactInfo).get(0).checked=contact.K1;
-			$("#"+index+"_"+"InvestorLetters",$contactInfo).get(0).checked=contact.InvestorLetters;
-			var contactCountry=$("#"+index+"_"+"ContactCountry",$contactInfo);
+			$("#"+index+"_"+"ContactId",$contInfo).val(contact.ContactId);
+			$("#"+index+"_"+"ContactAddressId",$contInfo).val(contact.ContactAddressId);
+			$("#"+index+"_"+"ContactPerson",$contInfo).val(contact.ContactPerson);
+			$("#"+index+"_"+"Designation",$contInfo).val(contact.Designation);
+			$("#"+index+"_"+"ContactPhoneNumber",$contInfo).val(contact.ContactPhoneNumber);
+			$("#"+index+"_"+"ContactFaxNumber",$contInfo).val(contact.ContactFaxNumber);
+			$("#"+index+"_"+"ContactEmail",$contInfo).val(contact.ContactEmail);
+			$("#"+index+"_"+"ContactWebAddress",$contInfo).val(contact.ContactWebAddress);
+			$("#"+index+"_"+"ContactAddress1",$contInfo).val(contact.ContactAddress1);
+			$("#"+index+"_"+"ContactAddress2",$contInfo).val(contact.ContactAddress2);
+			$("#"+index+"_"+"ContactCity",$contInfo).val(contact.ContactCity);
+			$("#"+index+"_"+"ContactState",$contInfo).val(contact.ContactState);
+			$("#"+index+"_"+"ContactPostalCode",$contInfo).val(contact.ContactZip);
+			$("#"+index+"_"+"DistributionNotices",$contInfo).get(0).checked=contact.DistributionNotices;
+			$("#"+index+"_"+"Financials",$contInfo).get(0).checked=contact.Financials;
+			$("#"+index+"_"+"K1",$contInfo).get(0).checked=contact.K1;
+			$("#"+index+"_"+"InvestorLetters",$contInfo).get(0).checked=contact.InvestorLetters;
+			var contactCountry=$("#"+index+"_"+"ContactCountry",$contInfo);
 			contactCountry.val(contact.ContactCountry);
 			if(contactCountry.val()!="225") {
-				$("#"+index+"_"+"ContactSateRow",$contactInfo).hide();
+				$("#"+index+"_"+"ContactSateRow",$contInfo).hide();
 			}
 		}
 	}
-	,loadAccountInfo: function ($investorInfo,account,index) {
-		var $accountInfo=$("#accountInfo_"+account.AccountId,$investorInfo);
-		if(!($accountInfo.get(0))) {
-			$accountInfo=editInvestor.cloneAccountInfo($investorInfo);
+	,loadAccountInfo: function ($invInfo,account,index) {
+		var $accInfo=$("#accountInfo_"+account.AccountId,$invInfo);
+		if(!($accInfo.get(0))) {
+			$accInfo=editInvestor.cloneAccountInfo($invInfo);
 			//Replace the index
-			$accountInfo.html($accountInfo.html().replace(/0_/g,(index)+"_"));
-			$("#accountInfoMain",$investorInfo).append($accountInfo);
-			$accountInfo.css("display","");
-			$accountInfo.attr("id","accountInfo_"+account.AccountId);
-			$("#accountIndex",$accountInfo).html(index);
+			$accInfo.html($accInfo.html().replace(/0_/g,(index)+"_"));
+			$("#accountInfoMain",$invInfo).append($accInfo);
+			$accInfo.css("display","");
+			$accInfo.attr("id","accountInfo_"+account.AccountId);
+			$("#accountIndex",$accInfo).html(index);
 
-			$("#"+index+"_"+"AccountId",$accountInfo).val(account.AccountId);
-			$("#"+index+"_"+"BankName",$accountInfo).val(account.BankName);
-			$("#"+index+"_"+"AccountNumber",$accountInfo).val(account.AccountNumber);
-			$("#"+index+"_"+"ABANumber",$accountInfo).val(account.ABANumber);
-			$("#"+index+"_"+"AccountOf",$accountInfo).val(account.AccountOf);
-			$("#"+index+"_"+"FFC",$accountInfo).val(account.FFC);
-			$("#"+index+"_"+"FFCNO",$accountInfo).val(account.FFCNO);
-			$("#"+index+"_"+"Swift",$accountInfo).val(account.Swift);
-			$("#"+index+"_"+"IBAN",$accountInfo).val(account.IBAN);
-			$("#"+index+"_"+"ByOrderOf",$accountInfo).val(account.ByOrderOf);
-			$("#"+index+"_"+"Reference",$accountInfo).val(account.Reference);
-			$("#"+index+"_"+"Attention",$accountInfo).val(account.Attention);
+			$("#"+index+"_"+"AccountId",$accInfo).val(account.AccountId);
+			$("#"+index+"_"+"BankName",$accInfo).val(account.BankName);
+			$("#"+index+"_"+"AccountNumber",$accInfo).val(account.AccountNumber);
+			$("#"+index+"_"+"ABANumber",$accInfo).val(account.ABANumber);
+			$("#"+index+"_"+"AccountOf",$accInfo).val(account.AccountOf);
+			$("#"+index+"_"+"FFC",$accInfo).val(account.FFC);
+			$("#"+index+"_"+"FFCNO",$accInfo).val(account.FFCNO);
+			$("#"+index+"_"+"Swift",$accInfo).val(account.Swift);
+			$("#"+index+"_"+"IBAN",$accInfo).val(account.IBAN);
+			$("#"+index+"_"+"ByOrderOf",$accInfo).val(account.ByOrderOf);
+			$("#"+index+"_"+"Reference",$accInfo).val(account.Reference);
+			$("#"+index+"_"+"Attention",$accInfo).val(account.Attention);
 		}
 	}
 	,submit: function (frm) {

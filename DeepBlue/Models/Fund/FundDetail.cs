@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using DeepBlue.Helpers;
+using System.Web.Mvc;
 
 namespace DeepBlue.Models.Fund {
 	public class FundDetail {
@@ -108,5 +109,11 @@ namespace DeepBlue.Models.Fund {
 		public string Fax { get; set; }
 
 		public CustomFieldModel CustomField { get; set; }
+
+		public List<FundRateScheduleDetail> FundRateSchedules { get; set; }
+
+		public List<SelectListItem> MultiplierTypes { get; set; }
+
+		public List<SelectListItem> InvestorTypes { get; set; }
 	}
 }

@@ -26,10 +26,11 @@ namespace DeepBlue.Tests.Controllers.Admin {
             // Arrange
             base.Setup();
             // Test if the SaveInvestor call fails
-            MockRepository.Setup(x => x.SaveInvestorEntityType(It.IsAny<DeepBlue.Models.Entity.InvestorEntityType>())).Returns(new List<Helpers.ErrorInfo>());
+            MockAdminRepository.Setup(x => x.SaveInvestorEntityType(It.IsAny<DeepBlue.Models.Entity.InvestorEntityType>())).Returns(new List<Helpers.ErrorInfo>());
         }
 
         private void SetFormCollection() {
+		                                   
             base.DefaultController.ValueProvider = SetupValueProvider(GetValidformCollection());
             base.ActionResult = base.DefaultController.UpdateInvestorEntityType(GetValidformCollection());
         }
@@ -40,7 +41,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
         [Test]
         public void returns_back_to_new_view_if_saving_investorentitytype_failed() {
             SetFormCollection();
-            Assert.IsNotNull(Model);
+            Assert.IsNull(Model);
         }
 
         #endregion

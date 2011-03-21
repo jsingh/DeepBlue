@@ -14,7 +14,34 @@
 	width: 189px;
 }
 .editor-field {
-    width: 180px;
-}.editor-field input {
-    width: 175px;
+	width: 180px;
+}
+.editor-field input {
+	width: 175px;
+}
+.rate-sch-main {
+	width: 800px;
+}
+.rate-header {
+	float: right;
+	margin-right: 10px;
+}
+.rate-header, .rate-schedules, .rate-schedules .rate-grid {
+	clear: both;
+}
+.rate-grid input, .rate-grid select, .rate-grid textarea {
+	width: 94%;
+}
+.rate-detail {
+	padding-top: 5px;
+	width: 99%;font-size:11px;
+}
+.rate-detail input,.rate-detail select{
+	font-size:11px;
+}
+.rate-detail td,.rate-detail th{
+	font-size:11px;
+}
+.rate-schedules {
+ 
 }

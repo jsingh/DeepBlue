@@ -33,6 +33,7 @@ namespace DeepBlue.Controllers.Fund {
 				return context.Funds
 							  .Include("FundClosings")
 							  .Include("FundAccounts")
+							  .Include("FundRateSchedules")
 							  .SingleOrDefault(fund => fund.FundID == fundId);
 			}
 		}
@@ -62,6 +63,71 @@ namespace DeepBlue.Controllers.Fund {
 				return (from fund in context.Funds
 						where fund.FundName.Contains(fundName)
 						select fund).ToList();
+			}
+		}
+
+		public List<FundRateSchedule> GetAllFundRateSchdules(int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from rateSchedule in context.FundRateSchedules
+													.Include("ManagementFeeRateSchedule")
+													.Include("ManagementFeeRateSchedule.ManagementFeeRateScheduleTiers")
+													.Include("ManagementFeeRateSchedule.ManagementFeeRateScheduleTiers.MultiplierType")
+						where rateSchedule.FundID == fundId
+						select rateSchedule).ToList();
+			}
+		}
+
+		public List<MultiplierType> GetAllMultiplierTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.MultiplierTypes.OrderBy(type => type.Name).ToList();
+			}
+		}
+
+		public void DeleteFundRateSchedule(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				FundRateSchedule rateSchedule = context.FundRateSchedules
+													 .SingleOrDefault(schedule => schedule.FundRateScheduleID == id);
+				context.FundRateSchedules.DeleteObject(rateSchedule);
+				context.SaveChanges();
+			}
+		}
+
+		public void DeleteManagementFeeRateSchedule(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				ManagementFeeRateSchedule rateSchedule = context.ManagementFeeRateSchedules
+														.Include("ManagementFeeRateScheduleTiers")
+														.SingleOrDefault(schedule => schedule.ManagementFeeRateScheduleID == id);
+				foreach (var tier in rateSchedule.ManagementFeeRateScheduleTiers) {
+					context.ManagementFeeRateScheduleTiers.DeleteObject(tier);
+				}
+				context.ManagementFeeRateSchedules.DeleteObject(rateSchedule);
+				context.SaveChanges();
+			}
+		}
+
+		public FundRateSchedule FindRateSchedule(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.FundRateSchedules.Include("ManagementFeeRateSchedule")
+												.SingleOrDefault(schedule => schedule.FundRateScheduleID == id);
+			}
+		}
+
+		public ManagementFeeRateSchedule FindManagementFeeRateSchedule(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.ManagementFeeRateSchedules
+												.Include("ManagementFeeRateScheduleTiers")
+												.Include("ManagementFeeRateScheduleTiers.MultiplierType")
+												.SingleOrDefault(schedule => schedule.ManagementFeeRateScheduleID == id);
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveManagementFeeRateSchedule(ManagementFeeRateSchedule managementFeeRateSchedule) {
+			return managementFeeRateSchedule.Save();
+		}
+
+		public ManagementFeeRateScheduleTier FindManagementFeeRateScheduleTier(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.ManagementFeeRateScheduleTiers.SingleOrDefault(tier => tier.ManagementFeeRateScheduleTierID == id);
 			}
 		}
 

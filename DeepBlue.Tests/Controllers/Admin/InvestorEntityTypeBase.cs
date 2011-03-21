@@ -14,21 +14,21 @@ namespace DeepBlue.Tests.Controllers.Admin {
     public class InvestorEntityTypeBase : Base {
         public AdminController  DefaultController { get; set; }
 
-        public Mock<IAdminRepository> MockRepository { get; set; }
+        public Mock<ITransactionRepository> MockRepository { get; set; }
 
-		public Mock<ITransactionRepository> MockAdminRepository { get; set; }
+		public Mock<IAdminRepository> MockAdminRepository { get; set; }
 
         [SetUp]
         public override void Setup() {
             base.Setup();
 
             // Spin up mock repository and attach to controller
-            MockRepository = new Mock<IAdminRepository>();
+            MockRepository = new Mock<ITransactionRepository>();
 
-			MockAdminRepository = new Mock<ITransactionRepository>();
+			MockAdminRepository = new Mock<IAdminRepository>();
 
             // Spin up the controller with the mock http context, and the mock repository
-			DefaultController = new AdminController(MockRepository.Object,MockAdminRepository.Object);
+			DefaultController = new AdminController(MockAdminRepository.Object,MockRepository.Object);
             DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
        
         }

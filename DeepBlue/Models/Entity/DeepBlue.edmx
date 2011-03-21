@@ -742,6 +742,7 @@
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="LastUpdatedBy" Type="int" />
+          <Property Name="Notes" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="MODULE">
           <Key>
@@ -2223,6 +2224,7 @@
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" />
           <Property Name="LastUpdatedBy" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="ManagementFeeRateSchedule" Relationship="DeepBlueModel.FK_ManagementFeeRateScheduleTier_ManagementFeeRateSchedule" FromRole="ManagementFeeRateScheduleTier" ToRole="ManagementFeeRateSchedule" />
           <NavigationProperty Name="MultiplierType" Relationship="DeepBlueModel.FK_ManagementFeeRateScheduleTier_MultiplierType" FromRole="ManagementFeeRateScheduleTier" ToRole="MultiplierType" />
         </EntityType>
@@ -3294,6 +3296,7 @@
             <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
             <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
             <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+            <ScalarProperty Name="Notes" ColumnName="Notes" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="MODULEs"><EntityTypeMapping TypeName="DeepBlueModel.MODULE"><MappingFragment StoreEntitySet="MODULE">
             <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
@@ -3358,7 +3361,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="DeepBlue" ZoomLevel="124">
+      <Diagram Name="DeepBlue">
         <EntityTypeShape EntityType="DeepBlueModel.Address" Width="1.5" PointX="3" PointY="12.125" Height="4.7149055989583353" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.AddressType" Width="1.5" PointX="0.75" PointY="10.5" Height="1.7566536458333353" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.CapitalCall" Width="1.5" PointX="16.25" PointY="21.875" Height="3.5644742838541674" IsExpanded="true" />
@@ -3393,13 +3396,13 @@
         <EntityTypeShape EntityType="DeepBlueModel.InvestorFundDocument" Width="1.5" PointX="14.25" PointY="12.875" Height="3.4001269531249942" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.InvestorFundTransaction" Width="1.5" PointX="13.5" PointY="17.875" Height="3.2357796223958246" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.InvestorType" Width="1.5" PointX="9" PointY="20.5" Height="1.9210009765625102" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.ManagementFeeRateSchedule" Width="1.5" PointX="3" PointY="1.125" Height="2.9070849609375102" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.ManagementFeeRateScheduleTier" Width="1.5" PointX="5.25" PointY="1.125" Height="2.9070849609375102" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.ManagementFeeRateSchedule" Width="1.5" PointX="3" PointY="1.125" Height="2.9070849609375107" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.ManagementFeeRateScheduleTier" Width="1.5" PointX="5.25" PointY="1.125" Height="3.0714322916666679" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.MODULE" Width="1.5" PointX="14.75" PointY="0.75" Height="1.427958984374996" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.MultiplierType" Width="1.5" PointX="3" PointY="5.875" Height="1.427958984374996" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.OptionField" Width="1.5" PointX="19.25" PointY="5.375" Height="2.2496956380208388" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.OptionFieldValueList" Width="1.5" PointX="21.5" PointY="4.5" Height="1.7566536458333388" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.RateScheduleType" Width="1.5" PointX="0.75" PointY="1.25" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.RateScheduleType" Width="1.5" PointX="0.75" PointY="1.375" Height="2.5783902994791674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.STATE" Width="1.5" PointX="0.75" PointY="13.625" Height="1.7566536458333388" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.TransactionType" Width="1.5" PointX="11.25" PointY="31" Height="1.7566536458333388" IsExpanded="true" />
         <AssociationConnector Association="DeepBlueModel.FK_Address_AddressType" ManuallyRouted="false">
@@ -3698,8 +3701,8 @@
           <ConnectorPoint PointX="13.65625" PointY="21.110779622395825" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_ManagementFeeRateSchedule_RateScheduleType" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="2.5391951497395837" />
-          <ConnectorPoint PointX="3" PointY="2.5391951497395837" />
+          <ConnectorPoint PointX="2.25" PointY="2.6641951497395837" />
+          <ConnectorPoint PointX="3" PointY="2.6641951497395837" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_ManagementFeeRateScheduleTier_ManagementFeeRateSchedule" ManuallyRouted="false">
           <ConnectorPoint PointX="4.5" PointY="2.5785424804687551" />
@@ -3708,7 +3711,7 @@
         <AssociationConnector Association="DeepBlueModel.FK_ManagementFeeRateScheduleTier_MultiplierType" ManuallyRouted="false">
           <ConnectorPoint PointX="4.5" PointY="6.21875" />
           <ConnectorPoint PointX="5.59375" PointY="6.21875" />
-          <ConnectorPoint PointX="5.59375" PointY="4.03208496093751" />
+          <ConnectorPoint PointX="5.59375" PointY="4.1964322916666674" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_OptionFieldValueList_OptionField" ManuallyRouted="false">
           <ConnectorPoint PointX="20.75" PointY="5.8158268229166694" />

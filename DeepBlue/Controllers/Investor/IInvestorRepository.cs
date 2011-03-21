@@ -15,7 +15,6 @@ namespace DeepBlue.Controllers.Investor {
         List<COUNTRY> GetAllCountries();
         List<STATE> GetAllStates();
         List<InvestorEntityType> GetAllInvestorEntityTypes();
-        List<InvestorType> GetAllInvestorTypes();
         List<CommunicationType> GetAllCommunicationTypes();
 		#endregion
 

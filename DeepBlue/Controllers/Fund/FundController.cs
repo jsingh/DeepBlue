@@ -9,6 +9,7 @@ using DeepBlue.Helpers;
 using DeepBlue.Controllers.Admin;
 using System.Text;
 using DeepBlue.Models.Admin.Enums;
+using DeepBlue.Models.Fund.Enums;
 
 namespace DeepBlue.Controllers.Fund {
 	public class FundController : Controller {
@@ -66,6 +67,8 @@ namespace DeepBlue.Controllers.Fund {
 			model.CustomField = new CustomFieldModel();
 			model.CustomField.DisplayTwoColumn = true;
 			model.CustomField.Fields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Fund);
+			model.MultiplierTypes = SelectListFactory.GetMultiplierTypeList(FundRepository.GetAllMultiplierTypes());
+			model.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(AdminRepository.GetAllInvestorTypes());
 			model.CustomField.Values = new List<CustomFieldValueDetail>();
 			foreach (var field in model.CustomField.Fields) {
 				model.CustomField.Values.Add(new CustomFieldValueDetail {
@@ -80,6 +83,11 @@ namespace DeepBlue.Controllers.Fund {
 					Key = 0
 				});
 			}
+			model.FundRateSchedules = new List<FundRateScheduleDetail>();
+			FundRateScheduleDetail scheduleDetail = new FundRateScheduleDetail();
+			scheduleDetail.FundRateScheduleTiers = new List<FundRateScheduleTier>();
+			scheduleDetail.FundRateScheduleTiers.Add(new FundRateScheduleTier());
+			model.FundRateSchedules.Add(scheduleDetail);
 			return View(model);
 		}
 
@@ -147,8 +155,55 @@ namespace DeepBlue.Controllers.Fund {
 					});
 				}
 			}
+			/* Load Fund Rate Schedules */
+			model.MultiplierTypes = SelectListFactory.GetMultiplierTypeList(FundRepository.GetAllMultiplierTypes());
+			model.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(AdminRepository.GetAllInvestorTypes());
+			model.FundRateSchedules = new List<FundRateScheduleDetail>();
+			FundRateScheduleDetail schedule;
+			if (fund.FundRateSchedules.Count > 0) {
+				foreach (var rateSchedule in fund.FundRateSchedules) {
+					schedule = new FundRateScheduleDetail {
+						FundId = id,
+						FundRateScheduleId = rateSchedule.FundRateScheduleID,
+						InvestorTypeId = rateSchedule.InvestorTypeID,
+						RateScheduleId = rateSchedule.RateScheduleID,
+						RateScheduleTypeId = rateSchedule.RateScheduleTypeID
+					};
+					schedule.FundRateScheduleTiers = new List<FundRateScheduleTier>();
+					ManagementFeeRateSchedule feeRateSchedule = FundRepository.FindManagementFeeRateSchedule(rateSchedule.RateScheduleID);
+					if (feeRateSchedule != null) {
+						foreach (var tier in feeRateSchedule.ManagementFeeRateScheduleTiers) {
+							schedule.FundRateScheduleTiers.Add(new FundRateScheduleTier {
+								Notes = tier.Notes,
+								ManagementFeeRateScheduleId = tier.ManagementFeeRateScheduleID,
+								ManagementFeeRateScheduleTierId = tier.ManagementFeeRateScheduleTierID,
+								StartDate = tier.StartDate,
+								EndDate = tier.EndDate,
+								Rate = (tier.MultiplierTypeID == (int)MutiplierType.CapitalCommitted ? tier.Multiplier : 0),
+								FlatFee = (tier.MultiplierTypeID == (int)MutiplierType.FlatFee ? tier.Multiplier : 0),
+								MultiplierTypeId = tier.MultiplierTypeID
+							});
+						}
+					}
+					AddExcessTiers(ref schedule);
+					model.FundRateSchedules.Add(schedule);
+				}
+			} else {
+				schedule = new FundRateScheduleDetail();
+				schedule.FundRateScheduleTiers = new List<FundRateScheduleTier>();
+				AddExcessTiers(ref schedule);
+				model.FundRateSchedules.Add(schedule);
+			}
 
 			return View(model);
+		}
+
+		private void AddExcessTiers(ref FundRateScheduleDetail schedule) {
+			int index = 0;
+			int total = (8 - schedule.FundRateScheduleTiers.Count);
+			for (index = 0; index < total; index++) {
+				schedule.FundRateScheduleTiers.Add(new FundRateScheduleTier());
+			}
 		}
 
 		//
@@ -169,6 +224,8 @@ namespace DeepBlue.Controllers.Fund {
 			FundDetail model = new FundDetail();
 			this.TryUpdateModel(model);
 			IEnumerable<ErrorInfo> errorInfo;
+			ManagementFeeRateSchedule managementFeeRateSchedule = null;
+			ManagementFeeRateScheduleTier rateTier = null;
 			ResultModel resultModel = new ResultModel();
 			if (ModelState.IsValid) {
 				Models.Entity.Fund fund;
@@ -216,14 +273,108 @@ namespace DeepBlue.Controllers.Fund {
 				fundAccount.Routing = 0;
 				fundAccount.SWIFT = model.Swift ?? string.Empty;
 
-				errorInfo = fund.Save();
-				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+				/* Add new fund rate schedule */
+				int FundRateSchedulesCount = Convert.ToInt32(collection["FundRateSchedulesCount"]);
+				if (FundRateSchedulesCount > 0) {
+					int index = 0;
+					for (index = 1; index < FundRateSchedulesCount + 1; index++) {
+						if (Convert.ToInt32(Convert.ToInt32(collection[index.ToString() + "_InvestorTypeId"])) > 0) {
+
+							managementFeeRateSchedule = new ManagementFeeRateSchedule();
+
+							managementFeeRateSchedule.CreatedBy = AppSettings.CreatedByUserId;
+							managementFeeRateSchedule.CreatedDate = DateTime.Now;
+							managementFeeRateSchedule.Description = string.Empty;
+							managementFeeRateSchedule.EntityID = (int)ConfigUtil.CurrentEntityID;
+							managementFeeRateSchedule.LastUpdatedBy = AppSettings.CreatedByUserId;
+							managementFeeRateSchedule.LastUpdatedDate = DateTime.Now;
+							managementFeeRateSchedule.Name = string.Empty;
+							managementFeeRateSchedule.RateScheduleTypeID = (int)Models.Fund.Enums.RateScheduleType.TieredRateSchedule;
+
+							int tiersCount = Convert.ToInt32(collection[index.ToString() + "_Tiers"]);
+							int tierIndex = 0;
+							for (tierIndex = 1; tierIndex < tiersCount + 1; tierIndex++) {
+								if (string.IsNullOrEmpty(collection[index.ToString() + "_$" + tierIndex.ToString() + "$StartDate"]) == false &&
+									string.IsNullOrEmpty(collection[index.ToString() + "_$" + tierIndex.ToString() + "$EndDate"]) == false) {
+
+									rateTier = new ManagementFeeRateScheduleTier();
+									rateTier.CreatedBy = AppSettings.CreatedByUserId;
+									rateTier.CreatedDate = DateTime.Now;
+
+									rateTier.EndDate = Convert.ToDateTime(collection[index.ToString() + "_$" + tierIndex.ToString() + "$EndDate"]);
+									rateTier.LastUpdatedBy = AppSettings.CreatedByUserId;
+									rateTier.LastUpdatedDate = DateTime.Now;
+									rateTier.MultiplierTypeID = Convert.ToInt32(collection[index.ToString() + "_$" + tierIndex.ToString() + "$MultiplierTypeId"]);
+									if (rateTier.MultiplierTypeID > 0) {
+										if (rateTier.MultiplierTypeID == (int)DeepBlue.Models.Fund.Enums.MutiplierType.CapitalCommitted) {
+											if (string.IsNullOrEmpty(collection[index.ToString() + "_$" + tierIndex.ToString() + "$Rate"]) == false)
+												rateTier.Multiplier = Convert.ToDecimal(collection[index.ToString() + "_$" + tierIndex.ToString() + "$Rate"]);
+										} else {
+											if (string.IsNullOrEmpty(collection[index.ToString() + "_$" + tierIndex.ToString() + "$FlatFee"]) == false)
+												rateTier.Multiplier = Convert.ToDecimal(collection[index.ToString() + "_$" + tierIndex.ToString() + "$FlatFee"]);
+										}
+										rateTier.StartDate = Convert.ToDateTime(collection[index.ToString() + "_$" + tierIndex.ToString() + "$StartDate"]);
+										rateTier.Notes = collection[index.ToString() + "_$" + tierIndex.ToString() + "$Notes"];
+										int managementFeeRateScheduleTierId = 0;
+										ManagementFeeRateScheduleTier oldTier = null;
+										if (string.IsNullOrEmpty(collection[index.ToString() + "_$" + tierIndex.ToString() + "$ManagementFeeRateScheduleTierId"]) == false) {
+											managementFeeRateScheduleTierId = Convert.ToInt32(collection[index.ToString() + "_$" + tierIndex.ToString() + "$ManagementFeeRateScheduleTierId"]);
+											if (managementFeeRateScheduleTierId > 0)
+												oldTier = FundRepository.FindManagementFeeRateScheduleTier(managementFeeRateScheduleTierId);
+										}
+										if (oldTier != null) {
+											if (oldTier.MultiplierTypeID != rateTier.MultiplierTypeID ||
+											   oldTier.Multiplier != rateTier.Multiplier ||
+											   oldTier.StartDate != rateTier.StartDate ||
+											   oldTier.EndDate != rateTier.EndDate ||
+											   oldTier.Notes != rateTier.Notes) {
+												managementFeeRateSchedule.ManagementFeeRateScheduleTiers.Add(rateTier);
+											}
+										} else {
+											managementFeeRateSchedule.ManagementFeeRateScheduleTiers.Add(rateTier);
+										}
+									}
+								}
+							}
+
+							if (managementFeeRateSchedule.ManagementFeeRateScheduleTiers.Count > 0) {
+								errorInfo = FundRepository.SaveManagementFeeRateSchedule(managementFeeRateSchedule);
+								if (errorInfo != null) {
+									foreach (var err in errorInfo.ToList()) {
+										resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+									}
+								} else {
+									FundRateSchedule fundRateSchedule = null;
+									if (Convert.ToInt32(collection[index.ToString() + "_FundRateScheduleId"]) > 0) {
+										fundRateSchedule = fund.FundRateSchedules.SingleOrDefault(schedule => schedule.FundRateScheduleID == Convert.ToInt32(collection[index.ToString() + "_FundRateScheduleId"]));
+									}
+									if (fundRateSchedule == null) {
+										fundRateSchedule = new FundRateSchedule();
+										fundRateSchedule.CreatedBy = AppSettings.CreatedByUserId;
+										fundRateSchedule.CreatedDate = DateTime.Now;
+										fund.FundRateSchedules.Add(fundRateSchedule);
+									}
+									fundRateSchedule.InvestorTypeID = Convert.ToInt32(collection[index.ToString() + "_InvestorTypeId"]);
+									fundRateSchedule.LastUpdatedBy = AppSettings.CreatedByUserId;
+									fundRateSchedule.LastUpdatedDate = DateTime.Now;
+									fundRateSchedule.RateScheduleTypeID = (int)Models.Fund.Enums.RateScheduleType.TieredRateSchedule;
+									fundRateSchedule.RateScheduleID = managementFeeRateSchedule.ManagementFeeRateScheduleID;
+								}
+							}
+						}
 					}
-				} else {
-					// Update custom field Values
-					resultModel.Result += SaveCustomValues(collection, fund.FundID);
+				}
+
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					errorInfo = FundRepository.SaveFund(fund);
+					if (errorInfo != null) {
+						foreach (var err in errorInfo.ToList()) {
+							resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+						}
+					} else {
+						// Update custom field Values
+						resultModel.Result += SaveCustomValues(collection, fund.FundID);
+					}
 				}
 			} else {
 				foreach (var values in ModelState.Values.ToList()) {
@@ -234,8 +385,11 @@ namespace DeepBlue.Controllers.Fund {
 					}
 				}
 			}
+
 			return View("Result", resultModel);
 		}
+
+
 
 		private string SaveCustomValues(FormCollection collection, int key) {
 			System.Text.StringBuilder result = new StringBuilder();
@@ -296,6 +450,16 @@ namespace DeepBlue.Controllers.Fund {
 				return "Fund Name already exist";
 			else
 				return string.Empty;
+		}
+
+		[HttpGet]
+		public void DeleteFundRateSchedule(int id) {
+			FundRepository.DeleteFundRateSchedule(id);
+		}
+
+		[HttpGet]
+		public void DeleteManagementFeeRateSchedule(int id) {
+			FundRepository.DeleteManagementFeeRateSchedule(id);
 		}
 
 	}

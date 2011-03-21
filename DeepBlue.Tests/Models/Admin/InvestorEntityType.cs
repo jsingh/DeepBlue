@@ -33,8 +33,7 @@ namespace DeepBlue.Tests.Models.Admin {
 
 		protected void Create_Data(DeepBlue.Models.Entity.InvestorEntityType investorEntityType, bool ifValid) {
 			RequiredFieldDataMissing(investorEntityType, ifValid);
-			StringLengthInvalidData(investorEntityType, ifValid);
-			
+			StringLengthInvalidData(investorEntityType, ifValid);			
 		}
 
 		#region InvestorEntityType

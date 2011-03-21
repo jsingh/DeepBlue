@@ -65,6 +65,115 @@
 </div>
 <% Html.RenderPartial("CustomFieldList", Model.CustomField);%>
 <div class="editor-label">
+	<b>Rate Schedules</b>
+</div>
+<%: Html.Hidden("FundRateSchedulesCount", Model.FundRateSchedules.Count, new { @id = "FundRateSchedulesCount" })%>
+<div class="rate-sch-main">
+	<div class="rate-header">
+		<%:Html.Anchor(Html.Image("add_icon.png").ToHtmlString()+"&nbsp;Add Investor Type","javascript:fund.addRateSchedule(this);",new {})%>
+	</div>
+	<div class="rate-schedules">
+		<% int index = 1;
+	 foreach (DeepBlue.Models.Fund.FundRateScheduleDetail rateSchedule in Model.FundRateSchedules) {%>
+		<div class="rate-detail">
+			<%: Html.Hidden(index.ToString() + "_Tiers",rateSchedule.FundRateScheduleTiers.Count, new { @id = "TiersCount" })%>
+			<%: Html.Hidden(index.ToString() + "_IsDelete",Model.FundRateSchedules.Count,new { @id = "IsDelete" })%>
+			<%: Html.Hidden(index.ToString() + "_FundRateScheduleId", rateSchedule.FundRateScheduleId, new { @id = "FundRateScheduleId" })%>
+			<div class="editor-label" style="width: 100%">
+				<div style="float: left">
+					<%: Html.Label("Investor:") %>&nbsp;<%: Html.DropDownList(index.ToString() + "_" + "InvestorTypeId", Model.InvestorTypes,new { @id = "InvestorTypeId", @onchange="javascript:fund.changeInvestorType(this);", @class="investortype ddlist" , @val = rateSchedule.InvestorTypeId.ToString() } )%>
+				</div>
+				<div id="DeleteRateSchedule" style="float: right;">
+					<%:Html.Anchor(Html.Image("Delete.png").ToHtmlString() + "&nbsp;Delete Rate Schedule", "#" , new { @onclick="javascript:fund.deleteInvestorType(this);" })%>
+				</div>
+			</div>
+			<div class="rate-grid">
+				<table cellpadding="0" cellspacing="0" border="0" class="tblrateschedule" id="RateScheduleList">
+					<thead>
+						<tr>
+							<th style="width: 8%" align="center">
+								Name
+							</th>
+							<th style="width: 12%">
+								From Date
+							</th>
+							<th style="width: 12%">
+								To Date
+							</th>
+							<th style="width: 17%">
+								Fee Calculation Type
+							</th>
+							<th style="width: 15%">
+								Rate %
+							</th>
+							<th>
+								Flat Fee
+							</th>
+							<th>
+								Comments
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% int rowIndex = 1;
+		 foreach (DeepBlue.Models.Fund.FundRateScheduleTier tier in rateSchedule.FundRateScheduleTiers) {%>
+						<tr>
+							<td>
+								<div>
+									<%: Html.Span("Year " + rowIndex.ToString(), new { @id = "SpnName" })%></div>
+							</td>
+							<td>
+								<div>
+									<%if (rowIndex == 1) {%>
+									<%: Html.TextBox(index.ToString() + "_$" + rowIndex.ToString() +"$StartDate", (tier.StartDate.Year > 1900 ? tier.StartDate.ToString("MM/dd/yyyy") : string.Empty),new { @id="StartDate", @inputname="StartDate",  @onchange = "javascript:fund.dateChecking(this);" })%>
+									<%} else {%>
+									<%: Html.Hidden(index.ToString() + "_$" + rowIndex.ToString() + "$StartDate", (tier.StartDate.Year > 1900 ? tier.StartDate.ToString("MM/dd/yyyy") : string.Empty), new { @id = "StartDate" })%>
+									<%: Html.Span( (tier.EndDate.Year > 1900 ? tier.EndDate.ToString("MM/dd/yyyy") : string.Empty),new { @id="SpnStartDate" })%>
+									<%}%>
+								</div>
+							</td>
+							<td>
+								<div>
+									<%: Html.Hidden(index.ToString() + "_$" + rowIndex.ToString() + "$EndDate", (tier.EndDate.Year > 1900 ? tier.EndDate.ToString("MM/dd/yyyy") : string.Empty), new { @id = "EndDate" })%><%: Html.Span( (tier.EndDate.Year > 1900 ? tier.EndDate.ToString("MM/dd/yyyy") : string.Empty),new { @id="SpnEndDate" })%></div>
+							</td>
+							<td>
+								<div>
+									<%: Html.DropDownList(index.ToString() + "_$" + rowIndex.ToString() + "$MultiplierTypeId", Model.MultiplierTypes, new { @id= "MultiplierTypeId", @class = "ddlist" , @val = tier.MultiplierTypeId.ToString(), @onchange = "return fund.changeRS(this);" })%></div>
+							</td>
+							<td>
+								<div>
+									<%: Html.TextBox(index.ToString() + "_$" + rowIndex.ToString() + "$Rate", (tier.Rate > 0 ? tier.Rate.ToString("0.00") : string.Empty), new { @id = "Rate", @onkeypress = "return jHelper.isCurrency(event);", @onchange = "javascript:fund.changeRate(this);" })%></div>
+							</td>
+							<td>
+								<div>
+									<%: Html.TextBox(index.ToString() + "_$" + rowIndex.ToString() + "$FlatFee", (tier.FlatFee > 0 ? tier.FlatFee.ToString("0.00") : string.Empty), new { @id = "FlatFee", @onkeypress = "return jHelper.isCurrency(event);" })%></div>
+							</td>
+							<td>
+								<div>
+									<%: Html.TextBox(index.ToString() + "_$" + rowIndex.ToString() + "$Notes", tier.Notes, new { })%>
+									<%: Html.Hidden(index.ToString() + "_$" + rowIndex.ToString() + "$ManagementFeeRateScheduleId", tier.ManagementFeeRateScheduleId.ToString(), new { @id = "ManagementFeeRateScheduleId" })%>
+									<%: Html.Hidden(index.ToString() + "_$" + rowIndex.ToString() + "$ManagementFeeRateScheduleTierId", tier.ManagementFeeRateScheduleTierId.ToString(), new { @id = "ManagementFeeRateScheduleTierId" })%>
+								</div>
+							</td>
+						</tr>
+						<% rowIndex++;
+		 }%>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="7" style="text-align: right; padding-right: 10px;">
+								<%:Html.Anchor(Html.Image("add_icon.png").ToHtmlString()+"&nbsp;Add Year", "#",new { @onclick="javascript:fund.addNewRow(this);" } )%>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+		<% index++;
+	 }%>
+	</div>
+</div>
+<div class="editor-label">
 	<b>Bank Details</b>
 </div>
 <div class="editor-label">
@@ -156,3 +265,10 @@
 </div>
 <%: Html.HiddenFor(model => model.FundId)%>
 <%: Html.HiddenFor(model => model.AccountId)%>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		fund.init();
+	});
+</script>
+

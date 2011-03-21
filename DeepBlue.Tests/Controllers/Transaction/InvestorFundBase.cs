@@ -9,6 +9,7 @@ using System.Web.Routing;
 using Moq;
 using MbUnit.Framework;
 using DeepBlue.Controllers.Investor;
+using DeepBlue.Controllers.Admin;
 
 namespace DeepBlue.Tests.Controllers.Transaction {
     public class InvestorFundBase : Base {
@@ -16,6 +17,7 @@ namespace DeepBlue.Tests.Controllers.Transaction {
 
         public Mock<ITransactionRepository> MockRepository { get; set; }
 		public Mock<IInvestorRepository> MockInvestorRepository { get; set; }
+		public Mock<IAdminRepository> MockAdminRepository { get; set; }
 
         [SetUp]
         public override void Setup() {
@@ -27,11 +29,13 @@ namespace DeepBlue.Tests.Controllers.Transaction {
 			// Spin up mock repository and attach to controller
 			MockInvestorRepository = new Mock<IInvestorRepository>();
 
+			MockAdminRepository = new Mock<IAdminRepository>();
+
             // Spin up the controller with the mock http context, and the mock repository
-			DefaultController = new TransactionController(MockRepository.Object, MockInvestorRepository.Object);
+			DefaultController = new TransactionController(MockRepository.Object, MockInvestorRepository.Object, MockAdminRepository.Object);
             DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
 			MockRepository.Setup(x => x.GetAllFundNames()).Returns(GetMockAllFundNames());
-			MockInvestorRepository.Setup(x => x.GetAllInvestorTypes()).Returns(GetMockAllInvestorTypes());
+			MockAdminRepository.Setup(x => x.GetAllInvestorTypes()).Returns(GetMockAllInvestorTypes());
         }
 		
 		private List<Fund> GetMockAllFundNames() {

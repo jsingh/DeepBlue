@@ -7,6 +7,7 @@ using DeepBlue.Models.Transaction;
 using DeepBlue.Helpers;
 using DeepBlue.Controllers.Investor;
 using DeepBlue.Models.Entity;
+using DeepBlue.Controllers.Admin;
 
 
 namespace DeepBlue.Controllers.Transaction {
@@ -14,14 +15,16 @@ namespace DeepBlue.Controllers.Transaction {
 
 		public ITransactionRepository TransactionRepository { get; set; }
 		public IInvestorRepository InvestorRepository { get; set; }
+		public IAdminRepository AdminRepository { get; set; }
 
 		public TransactionController()
-			: this(new TransactionRepository(), new InvestorRepository()) {
+			: this(new TransactionRepository(), new InvestorRepository(), new AdminRepository()) {
 		}
 
-		public TransactionController(ITransactionRepository transactionRepository, IInvestorRepository investorRepository) {
+		public TransactionController(ITransactionRepository transactionRepository, IInvestorRepository investorRepository,IAdminRepository adminRepository) {
 			TransactionRepository = transactionRepository;
 			InvestorRepository = investorRepository;
+			AdminRepository = adminRepository;
 		}
 
 		//
@@ -41,7 +44,7 @@ namespace DeepBlue.Controllers.Transaction {
 			CreateModel model = new CreateModel();
 			model.FundNames = SelectListFactory.GetFundSelectList(TransactionRepository.GetAllFundNames());
 			model.FundClosings = SelectListFactory.GetDefaultSelectList();
-			model.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(InvestorRepository.GetAllInvestorTypes());
+			model.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(AdminRepository.GetAllInvestorTypes());
 			model.InvestorId = 0;
 			return View(model);
 		}
@@ -159,7 +162,7 @@ namespace DeepBlue.Controllers.Transaction {
 				model.CounterPartyInvestorId = 0;
 				model.CounterPartyInvestorName = string.Empty;
 				model.TransactionTypeId = (int)DeepBlue.Models.Transaction.Enums.TransactionType.Sell;
-				model.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(InvestorRepository.GetAllInvestorTypes());
+				model.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(AdminRepository.GetAllInvestorTypes());
 				model.FundId = investorFund.FundID;
 			}
 			return View(model);

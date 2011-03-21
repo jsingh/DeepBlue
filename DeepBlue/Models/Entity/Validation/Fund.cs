@@ -31,7 +31,7 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-			
+
 			[Required]
 			public global::System.DateTime InceptionDate {
 				get;
@@ -77,6 +77,9 @@ namespace DeepBlue.Models.Entity {
 			foreach (FundAccount account in fund.FundAccounts) {
 				errors.Union(ValidationHelper.Validate(account));
 			}
+			foreach (FundRateSchedule schedule in fund.FundRateSchedules) {
+				errors.Union(ValidationHelper.Validate(schedule));
+			}
 			return errors;
 		}
 	}
@@ -91,7 +94,7 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-			
+
 			[StringLength(50), Required]
 			public global::System.String BankName {
 				get;
@@ -106,5 +109,25 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 	}
-	 
+
+	[MetadataType(typeof(FundRateScheduleMD))]
+	public partial class FundRateSchedule {
+		public class FundRateScheduleMD {
+			#region Primitive Properties
+			[Required]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "InvestorType is required")]
+			public global::System.Int32 InvestorTypeID {
+				get;
+				set;
+			}
+
+			[Required]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "RateScheduleType is required")]
+			public global::System.Int32 RateScheduleTypeID {
+				get;
+				set;
+			}
+			#endregion
+		}
+	}
 }

@@ -54,14 +54,6 @@ namespace DeepBlue.Controllers.Investor {
 			}
 		}
 
-		public List<InvestorType> GetAllInvestorTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investorType in context.InvestorTypes
-						orderby investorType.InvestorTypeName
-						select investorType).ToList();
-			}
-		}
-
 		public List<InvestorDetail> FindOtherInvestors(string investorName, int excludeInvestorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from investor in context.Investors
