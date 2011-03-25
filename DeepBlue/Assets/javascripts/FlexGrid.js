@@ -92,7 +92,9 @@
 					 		var div=document.createElement('div');
 					 		div.innerHTML=row.cell[i];
 					 		$(td).css({ "display": this.style.display });
-					 		$(div).css({ "width": this.style.width,"display": this.style.display });
+					 		$(td).css({ "width": this.style.width });
+					 		$(div).css({ "width": "100%" });
+					 		//$(div).css({ "width": this.style.width,"display": this.style.display });
 					 		//$(td).css({ "width" : this.style.width, "display" : this.style.display });
 					 		$(div).css("text-align",$(this).attr("align"));
 					 		$(td).append(div);
@@ -109,12 +111,16 @@
 				$(t).empty();
 				$(t).append(tbody);
 				tbody=null;data=null;i=null;
-				if($(g.bDiv).height()<parseInt(p.height)) {
-					$(g.bDiv).parent().removeClass("bDivMain").addClass("bDivMainNoborder");
+				if(parseInt(p.height)<=0) {
 					$(t).addClass("tblborder");
 				} else {
-					$(t).removeClass("tblborder");
-					$(g.bDiv).parent().removeClass("bDivMainNoborder").addClass("bDivMain");
+					if($(g.bDiv).height()<$(g.bDivBox).height()) {
+						$(g.bDiv).parent().removeClass("bDivMain").addClass("bDivMainNoborder");
+						$(t).addClass("tblborder");
+					} else {
+						$(t).removeClass("tblborder");
+						$(g.bDiv).parent().removeClass("bDivMainNoborder").addClass("bDivMain");
+					}
 				}
 				if(p.onSuccess) p.onSuccess();
 				if(p.hideOnSubmit) $(g.block).remove(); //$(t).show();
@@ -175,11 +181,11 @@
 					,{ name: 'pageSize',value: p.rp }
 					,{ name: 'sortName',value: p.sortname }
 					,{ name: 'sortOrder',value: p.sortorder }
-					,{ name: 't',value: dt.getTime() }
 				];
 				if(p.params) {
 					for(var pi=0;pi<p.params.length;pi++) param[param.length]=p.params[pi];
 				}
+				param[param.length]={ name: "t",value: dt.getTime() };
 				$.ajax({
 					type: p.method,
 					url: p.url,
@@ -216,6 +222,7 @@
 		//init divs
 		g.gDiv=document.createElement('div'); //create global container
 		g.hDiv=document.createElement('div'); //create header container
+		g.bDivBox=document.createElement('div');
 		g.bDiv=document.createElement('div'); //create body container
 		g.block=document.createElement('div'); //creat blocker
 
@@ -241,6 +248,8 @@
 		//set hTable
 		g.hTable.cellPadding=0;
 		g.hTable.cellSpacing=0;
+		g.hTable.style.width="100%";
+		t.style.width="100%";
 		$(g.hTable).append($("thead",t));
 		$(g.hDiv).append(g.hTable);
 		if(!p.colmodel) var ci=0;
@@ -260,39 +269,28 @@
 			 			}
 			 		}
 
-			 		var w=$(this).innerWidth()-10;
-			 		$(this).css("width",w);
+			 		//var w=$(this).innerWidth()-10;
+			 		//$(this).css("width",w);
 			 		if(this.hide) $(this).hide();
 
 			 		if(!p.colmodel) {
 			 			$(this).attr('axis','col'+ci++);
 			 		}
 			 		$(thdiv).css("text-align","center");
-			 		$(thdiv).width(this.style.width);
+			 		//$(thdiv).width(this.style.width);
+			 		$(thdiv).width("100%");
 			 		$(this).empty().append(thdiv).removeAttr('width');
 			 	}
 			);
 		//set bDiv
 		g.bDiv.className='bDiv';
+		g.bDivBox.className='bDivBox';
 		$(t).before(g.bDiv);
 		$("thead",t).remove();
 		$(g.bDiv)
 		.append(t)
 		;
-		if(p.height=='auto') {
-			$('table',g.bDiv).addClass('autoht');
-		}
-		if(parseInt(p.height)>0) {
-			var div=document.createElement("div");
-			$(g.bDiv).before(div);
-			$(div).append(g.bDiv);
-			$(div).width($(g.bDiv).width()+20).height(p.height);
-			var w=$(g.bDiv).width()-20;
-			$(g.hDiv).width(w);
-			$(g.pDiv).width(w);
-			$(g.bDiv).width(w);
-			$(g.gDiv).width($(div).width());
-		}
+
 		//add strip		
 		if(p.striped)
 			$('tbody tr:odd',g.bDiv).addClass('erow');
@@ -350,14 +348,17 @@
 				var tr=this;
 				i=0;
 				$("thead tr th",g.hDiv).each(function () {
-					$("td:eq("+i+") div",tr).css({ "width": this.style.width,"display": this.style.display,"text-align": $(this).attr("align") });
+					$("td:eq("+i+") div",tr).css({ "width": "100%","display": this.style.display,"text-align": $(this).attr("align") });
 					i++;
 				});
 			});
 			$(t).addClass("tblborder");
 		}
-		$(t).removeAttr("style");
-		$("table",g.hDiv).removeAttr("style");
+		$(g.bDiv).before(g.bDivBox);
+		$(g.bDivBox).append(g.bDiv);
+		if(parseInt(p.height)>0) {
+			$(g.bDivBox).height(p.height);
+		}
 		return t;
 	};
 

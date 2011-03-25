@@ -57,14 +57,16 @@ namespace DeepBlue.Helpers {
 		public static string jQueryFlexiGrid(this HtmlHelper helper, string targetId, FlexigridOptions options) {
 			StringBuilder scriptSrc = new StringBuilder();
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").flexigrid({")
-					 .Append("usepager:" + options.Paging.ToString().ToLower())
-					 .Append(",url:\"/" + options.ControllerName.ToString() + "/" + options.ActionName.ToString() + "\"")
-					 .Append(",method:\"" + options.HttpMethod.ToString() + "\"")
-					 .Append(",sortname:\"" + options.SortName.ToString() + "\"")
-					 .Append(",sortorder:\"" + options.SortOrder.ToString() + "\"")
-					 .Append(",autoload:" + options.Autoload.ToString().ToLower() + "")
-					 .Append(",height:" + options.Height.ToString() + "")
-					 .Append("});});");
+					 .Append("usepager:" + options.Paging.ToString().ToLower());
+			if (string.IsNullOrEmpty(options.ControllerName) == false && string.IsNullOrEmpty(options.ActionName) == false) {
+				scriptSrc.Append(",url:\"/" + options.ControllerName.ToString() + "/" + options.ActionName.ToString() + "\"");
+			}
+			scriptSrc.Append(",method:\"" + options.HttpMethod.ToString() + "\"")
+			 .Append(",sortname:\"" + options.SortName.ToString() + "\"")
+			 .Append(",sortorder:\"" + options.SortOrder.ToString() + "\"")
+			 .Append(",autoload:" + options.Autoload.ToString().ToLower() + "")
+			 .Append(",height:" + options.Height.ToString() + "")
+			 .Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
 	}

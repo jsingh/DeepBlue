@@ -26,8 +26,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_CapitalCall_CapitalCallType", "CapitalCallType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.CapitalCallType), "CapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.CapitalCall), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_CapitalCall_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "CapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.CapitalCall), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_CapitalCallLineItem_CapitalCall", "CapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.CapitalCall), "CapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.CapitalCallLineItem), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_CapitalCall_CapitalCallLineItemType", "CapitalCallLineItemType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.CapitalCallLineItemType), "CapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.CapitalCallLineItem), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_CapitalCallLineItemDetail_CapitalCallLineItem", "CapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.CapitalCallLineItem), "CapitalCallLineItemDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.CapitalCallLineItemDetail), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_CapitalCallLineItem_Investor", "Investor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Investor), "CapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.CapitalCallLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Communication_CommunicationType", "CommunicationType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.CommunicationType), "Communication", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Communication), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_ContactCommunication_Communication", "Communication", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Communication), "ContactCommunication", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.ContactCommunication), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorCommunication_Communication", "Communication", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Communication), "InvestorCommunication", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorCommunication), true)]
@@ -179,22 +178,6 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<CapitalCallLineItem> _CapitalCallLineItems;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<CapitalCallLineItemDetail> CapitalCallLineItemDetails
-        {
-            get
-            {
-                if ((_CapitalCallLineItemDetails == null))
-                {
-                    _CapitalCallLineItemDetails = base.CreateObjectSet<CapitalCallLineItemDetail>("CapitalCallLineItemDetails");
-                }
-                return _CapitalCallLineItemDetails;
-            }
-        }
-        private ObjectSet<CapitalCallLineItemDetail> _CapitalCallLineItemDetails;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -837,14 +820,6 @@ namespace DeepBlue.Models.Entity
         public void AddToCapitalCallLineItems(CapitalCallLineItem capitalCallLineItem)
         {
             base.AddObject("CapitalCallLineItems", capitalCallLineItem);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the CapitalCallLineItemDetails EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToCapitalCallLineItemDetails(CapitalCallLineItemDetail capitalCallLineItemDetail)
-        {
-            base.AddObject("CapitalCallLineItemDetails", capitalCallLineItemDetail);
         }
     
         /// <summary>
@@ -1976,18 +1951,20 @@ namespace DeepBlue.Models.Entity
         /// <param name="fundID">Initial value of the FundID property.</param>
         /// <param name="capitalCallDate">Initial value of the CapitalCallDate property.</param>
         /// <param name="capitalCallDueDate">Initial value of the CapitalCallDueDate property.</param>
-        /// <param name="capitalCallAmount">Initial value of the CapitalCallAmount property.</param>
+        /// <param name="capitalAmountCalled">Initial value of the CapitalAmountCalled property.</param>
+        /// <param name="investmentAmount">Initial value of the InvestmentAmount property.</param>
         /// <param name="capitalCallTypeID">Initial value of the CapitalCallTypeID property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        public static CapitalCall CreateCapitalCall(global::System.Int32 capitalCallID, global::System.Int32 fundID, global::System.DateTime capitalCallDate, global::System.DateTime capitalCallDueDate, global::System.Decimal capitalCallAmount, global::System.Int32 capitalCallTypeID, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        public static CapitalCall CreateCapitalCall(global::System.Int32 capitalCallID, global::System.Int32 fundID, global::System.DateTime capitalCallDate, global::System.DateTime capitalCallDueDate, global::System.Decimal capitalAmountCalled, global::System.Decimal investmentAmount, global::System.Int32 capitalCallTypeID, global::System.DateTime createdDate, global::System.Int32 createdBy)
         {
             CapitalCall capitalCall = new CapitalCall();
             capitalCall.CapitalCallID = capitalCallID;
             capitalCall.FundID = fundID;
             capitalCall.CapitalCallDate = capitalCallDate;
             capitalCall.CapitalCallDueDate = capitalCallDueDate;
-            capitalCall.CapitalCallAmount = capitalCallAmount;
+            capitalCall.CapitalAmountCalled = capitalAmountCalled;
+            capitalCall.InvestmentAmount = investmentAmount;
             capitalCall.CapitalCallTypeID = capitalCallTypeID;
             capitalCall.CreatedDate = createdDate;
             capitalCall.CreatedBy = createdBy;
@@ -2101,24 +2078,48 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal CapitalCallAmount
+        public global::System.Decimal CapitalAmountCalled
         {
             get
             {
-                return _CapitalCallAmount;
+                return _CapitalAmountCalled;
             }
             set
             {
-                OnCapitalCallAmountChanging(value);
-                ReportPropertyChanging("CapitalCallAmount");
-                _CapitalCallAmount = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CapitalCallAmount");
-                OnCapitalCallAmountChanged();
+                OnCapitalAmountCalledChanging(value);
+                ReportPropertyChanging("CapitalAmountCalled");
+                _CapitalAmountCalled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CapitalAmountCalled");
+                OnCapitalAmountCalledChanged();
             }
         }
-        private global::System.Decimal _CapitalCallAmount;
-        partial void OnCapitalCallAmountChanging(global::System.Decimal value);
-        partial void OnCapitalCallAmountChanged();
+        private global::System.Decimal _CapitalAmountCalled;
+        partial void OnCapitalAmountCalledChanging(global::System.Decimal value);
+        partial void OnCapitalAmountCalledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal InvestmentAmount
+        {
+            get
+            {
+                return _InvestmentAmount;
+            }
+            set
+            {
+                OnInvestmentAmountChanging(value);
+                ReportPropertyChanging("InvestmentAmount");
+                _InvestmentAmount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("InvestmentAmount");
+                OnInvestmentAmountChanged();
+            }
+        }
+        private global::System.Decimal _InvestmentAmount;
+        partial void OnInvestmentAmountChanging(global::System.Decimal value);
+        partial void OnInvestmentAmountChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2167,6 +2168,150 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Decimal> _ExistingInvestmentAmount;
         partial void OnExistingInvestmentAmountChanging(Nullable<global::System.Decimal> value);
         partial void OnExistingInvestmentAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ManagementFees
+        {
+            get
+            {
+                return _ManagementFees;
+            }
+            set
+            {
+                OnManagementFeesChanging(value);
+                ReportPropertyChanging("ManagementFees");
+                _ManagementFees = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ManagementFees");
+                OnManagementFeesChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ManagementFees;
+        partial void OnManagementFeesChanging(Nullable<global::System.Decimal> value);
+        partial void OnManagementFeesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> ManagementFeeStartDate
+        {
+            get
+            {
+                return _ManagementFeeStartDate;
+            }
+            set
+            {
+                OnManagementFeeStartDateChanging(value);
+                ReportPropertyChanging("ManagementFeeStartDate");
+                _ManagementFeeStartDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ManagementFeeStartDate");
+                OnManagementFeeStartDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _ManagementFeeStartDate;
+        partial void OnManagementFeeStartDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnManagementFeeStartDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> ManagementFeeEndDate
+        {
+            get
+            {
+                return _ManagementFeeEndDate;
+            }
+            set
+            {
+                OnManagementFeeEndDateChanging(value);
+                ReportPropertyChanging("ManagementFeeEndDate");
+                _ManagementFeeEndDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ManagementFeeEndDate");
+                OnManagementFeeEndDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _ManagementFeeEndDate;
+        partial void OnManagementFeeEndDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnManagementFeeEndDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> FundExpenses
+        {
+            get
+            {
+                return _FundExpenses;
+            }
+            set
+            {
+                OnFundExpensesChanging(value);
+                ReportPropertyChanging("FundExpenses");
+                _FundExpenses = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundExpenses");
+                OnFundExpensesChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _FundExpenses;
+        partial void OnFundExpensesChanging(Nullable<global::System.Decimal> value);
+        partial void OnFundExpensesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ManagementFeeInterest
+        {
+            get
+            {
+                return _ManagementFeeInterest;
+            }
+            set
+            {
+                OnManagementFeeInterestChanging(value);
+                ReportPropertyChanging("ManagementFeeInterest");
+                _ManagementFeeInterest = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ManagementFeeInterest");
+                OnManagementFeeInterestChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ManagementFeeInterest;
+        partial void OnManagementFeeInterestChanging(Nullable<global::System.Decimal> value);
+        partial void OnManagementFeeInterestChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> InvestedAmountInterest
+        {
+            get
+            {
+                return _InvestedAmountInterest;
+            }
+            set
+            {
+                OnInvestedAmountInterestChanging(value);
+                ReportPropertyChanging("InvestedAmountInterest");
+                _InvestedAmountInterest = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("InvestedAmountInterest");
+                OnInvestedAmountInterestChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _InvestedAmountInterest;
+        partial void OnInvestedAmountInterestChanging(Nullable<global::System.Decimal> value);
+        partial void OnInvestedAmountInterestChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2432,17 +2577,19 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         /// <param name="capitalCallLineItemID">Initial value of the CapitalCallLineItemID property.</param>
         /// <param name="capitalCallID">Initial value of the CapitalCallID property.</param>
-        /// <param name="capitalCallLineItemTypeID">Initial value of the CapitalCallLineItemTypeID property.</param>
-        /// <param name="amount">Initial value of the Amount property.</param>
+        /// <param name="investorID">Initial value of the InvestorID property.</param>
+        /// <param name="capitalAmountCalled">Initial value of the CapitalAmountCalled property.</param>
+        /// <param name="investmentAmount">Initial value of the InvestmentAmount property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        public static CapitalCallLineItem CreateCapitalCallLineItem(global::System.Int32 capitalCallLineItemID, global::System.Int32 capitalCallID, global::System.Int32 capitalCallLineItemTypeID, global::System.Decimal amount, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        public static CapitalCallLineItem CreateCapitalCallLineItem(global::System.Int32 capitalCallLineItemID, global::System.Int32 capitalCallID, global::System.Int32 investorID, global::System.Decimal capitalAmountCalled, global::System.Decimal investmentAmount, global::System.DateTime createdDate, global::System.Int32 createdBy)
         {
             CapitalCallLineItem capitalCallLineItem = new CapitalCallLineItem();
             capitalCallLineItem.CapitalCallLineItemID = capitalCallLineItemID;
             capitalCallLineItem.CapitalCallID = capitalCallID;
-            capitalCallLineItem.CapitalCallLineItemTypeID = capitalCallLineItemTypeID;
-            capitalCallLineItem.Amount = amount;
+            capitalCallLineItem.InvestorID = investorID;
+            capitalCallLineItem.CapitalAmountCalled = capitalAmountCalled;
+            capitalCallLineItem.InvestmentAmount = investmentAmount;
             capitalCallLineItem.CreatedDate = createdDate;
             capitalCallLineItem.CreatedBy = createdBy;
             return capitalCallLineItem;
@@ -2507,48 +2654,240 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 CapitalCallLineItemTypeID
+        public global::System.Int32 InvestorID
         {
             get
             {
-                return _CapitalCallLineItemTypeID;
+                return _InvestorID;
             }
             set
             {
-                OnCapitalCallLineItemTypeIDChanging(value);
-                ReportPropertyChanging("CapitalCallLineItemTypeID");
-                _CapitalCallLineItemTypeID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CapitalCallLineItemTypeID");
-                OnCapitalCallLineItemTypeIDChanged();
+                OnInvestorIDChanging(value);
+                ReportPropertyChanging("InvestorID");
+                _InvestorID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("InvestorID");
+                OnInvestorIDChanged();
             }
         }
-        private global::System.Int32 _CapitalCallLineItemTypeID;
-        partial void OnCapitalCallLineItemTypeIDChanging(global::System.Int32 value);
-        partial void OnCapitalCallLineItemTypeIDChanged();
+        private global::System.Int32 _InvestorID;
+        partial void OnInvestorIDChanging(global::System.Int32 value);
+        partial void OnInvestorIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal Amount
+        public global::System.Decimal CapitalAmountCalled
         {
             get
             {
-                return _Amount;
+                return _CapitalAmountCalled;
             }
             set
             {
-                OnAmountChanging(value);
-                ReportPropertyChanging("Amount");
-                _Amount = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Amount");
-                OnAmountChanged();
+                OnCapitalAmountCalledChanging(value);
+                ReportPropertyChanging("CapitalAmountCalled");
+                _CapitalAmountCalled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CapitalAmountCalled");
+                OnCapitalAmountCalledChanged();
             }
         }
-        private global::System.Decimal _Amount;
-        partial void OnAmountChanging(global::System.Decimal value);
-        partial void OnAmountChanged();
+        private global::System.Decimal _CapitalAmountCalled;
+        partial void OnCapitalAmountCalledChanging(global::System.Decimal value);
+        partial void OnCapitalAmountCalledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal InvestmentAmount
+        {
+            get
+            {
+                return _InvestmentAmount;
+            }
+            set
+            {
+                OnInvestmentAmountChanging(value);
+                ReportPropertyChanging("InvestmentAmount");
+                _InvestmentAmount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("InvestmentAmount");
+                OnInvestmentAmountChanged();
+            }
+        }
+        private global::System.Decimal _InvestmentAmount;
+        partial void OnInvestmentAmountChanging(global::System.Decimal value);
+        partial void OnInvestmentAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> NewInvestmentAmount
+        {
+            get
+            {
+                return _NewInvestmentAmount;
+            }
+            set
+            {
+                OnNewInvestmentAmountChanging(value);
+                ReportPropertyChanging("NewInvestmentAmount");
+                _NewInvestmentAmount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NewInvestmentAmount");
+                OnNewInvestmentAmountChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _NewInvestmentAmount;
+        partial void OnNewInvestmentAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnNewInvestmentAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ExistingInvestmentAmount
+        {
+            get
+            {
+                return _ExistingInvestmentAmount;
+            }
+            set
+            {
+                OnExistingInvestmentAmountChanging(value);
+                ReportPropertyChanging("ExistingInvestmentAmount");
+                _ExistingInvestmentAmount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ExistingInvestmentAmount");
+                OnExistingInvestmentAmountChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ExistingInvestmentAmount;
+        partial void OnExistingInvestmentAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnExistingInvestmentAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ManagementFees
+        {
+            get
+            {
+                return _ManagementFees;
+            }
+            set
+            {
+                OnManagementFeesChanging(value);
+                ReportPropertyChanging("ManagementFees");
+                _ManagementFees = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ManagementFees");
+                OnManagementFeesChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ManagementFees;
+        partial void OnManagementFeesChanging(Nullable<global::System.Decimal> value);
+        partial void OnManagementFeesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> FundExpenses
+        {
+            get
+            {
+                return _FundExpenses;
+            }
+            set
+            {
+                OnFundExpensesChanging(value);
+                ReportPropertyChanging("FundExpenses");
+                _FundExpenses = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundExpenses");
+                OnFundExpensesChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _FundExpenses;
+        partial void OnFundExpensesChanging(Nullable<global::System.Decimal> value);
+        partial void OnFundExpensesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ManagementFeeInterest
+        {
+            get
+            {
+                return _ManagementFeeInterest;
+            }
+            set
+            {
+                OnManagementFeeInterestChanging(value);
+                ReportPropertyChanging("ManagementFeeInterest");
+                _ManagementFeeInterest = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ManagementFeeInterest");
+                OnManagementFeeInterestChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ManagementFeeInterest;
+        partial void OnManagementFeeInterestChanging(Nullable<global::System.Decimal> value);
+        partial void OnManagementFeeInterestChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> InvestedAmountInterest
+        {
+            get
+            {
+                return _InvestedAmountInterest;
+            }
+            set
+            {
+                OnInvestedAmountInterestChanging(value);
+                ReportPropertyChanging("InvestedAmountInterest");
+                _InvestedAmountInterest = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("InvestedAmountInterest");
+                OnInvestedAmountInterestChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _InvestedAmountInterest;
+        partial void OnInvestedAmountInterestChanging(Nullable<global::System.Decimal> value);
+        partial void OnInvestedAmountInterestChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> ReceivedDate
+        {
+            get
+            {
+                return _ReceivedDate;
+            }
+            set
+            {
+                OnReceivedDateChanging(value);
+                ReportPropertyChanging("ReceivedDate");
+                _ReceivedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ReceivedDate");
+                OnReceivedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _ReceivedDate;
+        partial void OnReceivedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnReceivedDateChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2694,16 +3033,16 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_CapitalCall_CapitalCallLineItemType", "CapitalCallLineItemType")]
-        public CapitalCallLineItemType CapitalCallLineItemType
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_CapitalCallLineItem_Investor", "Investor")]
+        public Investor Investor
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CapitalCallLineItemType>("DeepBlueModel.FK_CapitalCall_CapitalCallLineItemType", "CapitalCallLineItemType").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Investor>("DeepBlueModel.FK_CapitalCallLineItem_Investor", "Investor").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CapitalCallLineItemType>("DeepBlueModel.FK_CapitalCall_CapitalCallLineItemType", "CapitalCallLineItemType").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Investor>("DeepBlueModel.FK_CapitalCallLineItem_Investor", "Investor").Value = value;
             }
         }
         /// <summary>
@@ -2711,313 +3050,17 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<CapitalCallLineItemType> CapitalCallLineItemTypeReference
+        public EntityReference<Investor> InvestorReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CapitalCallLineItemType>("DeepBlueModel.FK_CapitalCall_CapitalCallLineItemType", "CapitalCallLineItemType");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Investor>("DeepBlueModel.FK_CapitalCallLineItem_Investor", "Investor");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<CapitalCallLineItemType>("DeepBlueModel.FK_CapitalCall_CapitalCallLineItemType", "CapitalCallLineItemType", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_CapitalCallLineItemDetail_CapitalCallLineItem", "CapitalCallLineItemDetail")]
-        public EntityCollection<CapitalCallLineItemDetail> CapitalCallLineItemDetails
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<CapitalCallLineItemDetail>("DeepBlueModel.FK_CapitalCallLineItemDetail_CapitalCallLineItem", "CapitalCallLineItemDetail");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<CapitalCallLineItemDetail>("DeepBlueModel.FK_CapitalCallLineItemDetail_CapitalCallLineItem", "CapitalCallLineItemDetail", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="CapitalCallLineItemDetail")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class CapitalCallLineItemDetail : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new CapitalCallLineItemDetail object.
-        /// </summary>
-        /// <param name="capitalCallLineItemDetailID">Initial value of the CapitalCallLineItemDetailID property.</param>
-        /// <param name="capitalCallLineItemID">Initial value of the CapitalCallLineItemID property.</param>
-        /// <param name="key">Initial value of the Key property.</param>
-        /// <param name="value">Initial value of the Value property.</param>
-        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
-        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        public static CapitalCallLineItemDetail CreateCapitalCallLineItemDetail(global::System.Int32 capitalCallLineItemDetailID, global::System.Int32 capitalCallLineItemID, global::System.Int32 key, global::System.Decimal value, global::System.DateTime createdDate, global::System.Int32 createdBy)
-        {
-            CapitalCallLineItemDetail capitalCallLineItemDetail = new CapitalCallLineItemDetail();
-            capitalCallLineItemDetail.CapitalCallLineItemDetailID = capitalCallLineItemDetailID;
-            capitalCallLineItemDetail.CapitalCallLineItemID = capitalCallLineItemID;
-            capitalCallLineItemDetail.Key = key;
-            capitalCallLineItemDetail.Value = value;
-            capitalCallLineItemDetail.CreatedDate = createdDate;
-            capitalCallLineItemDetail.CreatedBy = createdBy;
-            return capitalCallLineItemDetail;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 CapitalCallLineItemDetailID
-        {
-            get
-            {
-                return _CapitalCallLineItemDetailID;
-            }
-            set
-            {
-                if (_CapitalCallLineItemDetailID != value)
-                {
-                    OnCapitalCallLineItemDetailIDChanging(value);
-                    ReportPropertyChanging("CapitalCallLineItemDetailID");
-                    _CapitalCallLineItemDetailID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("CapitalCallLineItemDetailID");
-                    OnCapitalCallLineItemDetailIDChanged();
-                }
-            }
-        }
-        private global::System.Int32 _CapitalCallLineItemDetailID;
-        partial void OnCapitalCallLineItemDetailIDChanging(global::System.Int32 value);
-        partial void OnCapitalCallLineItemDetailIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 CapitalCallLineItemID
-        {
-            get
-            {
-                return _CapitalCallLineItemID;
-            }
-            set
-            {
-                OnCapitalCallLineItemIDChanging(value);
-                ReportPropertyChanging("CapitalCallLineItemID");
-                _CapitalCallLineItemID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CapitalCallLineItemID");
-                OnCapitalCallLineItemIDChanged();
-            }
-        }
-        private global::System.Int32 _CapitalCallLineItemID;
-        partial void OnCapitalCallLineItemIDChanging(global::System.Int32 value);
-        partial void OnCapitalCallLineItemIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 Key
-        {
-            get
-            {
-                return _Key;
-            }
-            set
-            {
-                OnKeyChanging(value);
-                ReportPropertyChanging("Key");
-                _Key = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Key");
-                OnKeyChanged();
-            }
-        }
-        private global::System.Int32 _Key;
-        partial void OnKeyChanging(global::System.Int32 value);
-        partial void OnKeyChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal Value
-        {
-            get
-            {
-                return _Value;
-            }
-            set
-            {
-                OnValueChanging(value);
-                ReportPropertyChanging("Value");
-                _Value = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Value");
-                OnValueChanged();
-            }
-        }
-        private global::System.Decimal _Value;
-        partial void OnValueChanging(global::System.Decimal value);
-        partial void OnValueChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime CreatedDate
-        {
-            get
-            {
-                return _CreatedDate;
-            }
-            set
-            {
-                OnCreatedDateChanging(value);
-                ReportPropertyChanging("CreatedDate");
-                _CreatedDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CreatedDate");
-                OnCreatedDateChanged();
-            }
-        }
-        private global::System.DateTime _CreatedDate;
-        partial void OnCreatedDateChanging(global::System.DateTime value);
-        partial void OnCreatedDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 CreatedBy
-        {
-            get
-            {
-                return _CreatedBy;
-            }
-            set
-            {
-                OnCreatedByChanging(value);
-                ReportPropertyChanging("CreatedBy");
-                _CreatedBy = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CreatedBy");
-                OnCreatedByChanged();
-            }
-        }
-        private global::System.Int32 _CreatedBy;
-        partial void OnCreatedByChanging(global::System.Int32 value);
-        partial void OnCreatedByChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> LastUpdatedDate
-        {
-            get
-            {
-                return _LastUpdatedDate;
-            }
-            set
-            {
-                OnLastUpdatedDateChanging(value);
-                ReportPropertyChanging("LastUpdatedDate");
-                _LastUpdatedDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LastUpdatedDate");
-                OnLastUpdatedDateChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _LastUpdatedDate;
-        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
-        partial void OnLastUpdatedDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> LastUpdatedBy
-        {
-            get
-            {
-                return _LastUpdatedBy;
-            }
-            set
-            {
-                OnLastUpdatedByChanging(value);
-                ReportPropertyChanging("LastUpdatedBy");
-                _LastUpdatedBy = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LastUpdatedBy");
-                OnLastUpdatedByChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _LastUpdatedBy;
-        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
-        partial void OnLastUpdatedByChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_CapitalCallLineItemDetail_CapitalCallLineItem", "CapitalCallLineItem")]
-        public CapitalCallLineItem CapitalCallLineItem
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CapitalCallLineItem>("DeepBlueModel.FK_CapitalCallLineItemDetail_CapitalCallLineItem", "CapitalCallLineItem").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CapitalCallLineItem>("DeepBlueModel.FK_CapitalCallLineItemDetail_CapitalCallLineItem", "CapitalCallLineItem").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<CapitalCallLineItem> CapitalCallLineItemReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CapitalCallLineItem>("DeepBlueModel.FK_CapitalCallLineItemDetail_CapitalCallLineItem", "CapitalCallLineItem");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<CapitalCallLineItem>("DeepBlueModel.FK_CapitalCallLineItemDetail_CapitalCallLineItem", "CapitalCallLineItem", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Investor>("DeepBlueModel.FK_CapitalCallLineItem_Investor", "Investor", value);
                 }
             }
         }
@@ -3254,31 +3297,6 @@ namespace DeepBlue.Models.Entity
 
         #endregion
     
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_CapitalCall_CapitalCallLineItemType", "CapitalCallLineItem")]
-        public EntityCollection<CapitalCallLineItem> CapitalCallLineItems
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<CapitalCallLineItem>("DeepBlueModel.FK_CapitalCall_CapitalCallLineItemType", "CapitalCallLineItem");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<CapitalCallLineItem>("DeepBlueModel.FK_CapitalCall_CapitalCallLineItemType", "CapitalCallLineItem", value);
-                }
-            }
-        }
-
-        #endregion
     }
     
     /// <summary>
@@ -9161,6 +9179,28 @@ namespace DeepBlue.Models.Entity
         #endregion
     
         #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_CapitalCallLineItem_Investor", "CapitalCallLineItem")]
+        public EntityCollection<CapitalCallLineItem> CapitalCallLineItems
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<CapitalCallLineItem>("DeepBlueModel.FK_CapitalCallLineItem_Investor", "CapitalCallLineItem");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<CapitalCallLineItem>("DeepBlueModel.FK_CapitalCallLineItem_Investor", "CapitalCallLineItem", value);
+                }
+            }
+        }
     
         /// <summary>
         /// No Metadata Documentation available.

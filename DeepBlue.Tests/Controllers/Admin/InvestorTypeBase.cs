@@ -29,6 +29,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
             // Spin up the controller with the mock http context, and the mock repository
 			DefaultController = new AdminController(MockAdminRepository.Object,MockRepository.Object);
+			MockAdminRepository.Setup(x=>x.GetAllInvestorTypes()).Returns(new List<InvestorType>()); 
             DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
        
         }

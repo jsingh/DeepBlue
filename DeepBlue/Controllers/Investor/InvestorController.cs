@@ -55,10 +55,10 @@ namespace DeepBlue.Controllers.Investor {
 		public ActionResult New() {
 			ViewData["MenuName"] = "Investor";
 			CreateModel model = new CreateModel();
-			model.SelectList.States = SelectListFactory.GetStateSelectList(InvestorRepository.GetAllStates());
-			model.SelectList.Countries = SelectListFactory.GetCountrySelectList(InvestorRepository.GetAllCountries());
-			model.SelectList.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(InvestorRepository.GetAllInvestorEntityTypes());
-			model.SelectList.AddressTypes = SelectListFactory.GetAddressTypeSelectList(InvestorRepository.GetAllAddressTypes());
+			model.SelectList.States = SelectListFactory.GetStateSelectList(AdminRepository.GetAllStates());
+			model.SelectList.Countries = SelectListFactory.GetCountrySelectList(AdminRepository.GetAllCountries());
+			model.SelectList.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(AdminRepository.GetAllInvestorEntityTypes());
+			model.SelectList.AddressTypes = SelectListFactory.GetAddressTypeSelectList(AdminRepository.GetAllAddressTypes());
 			model.SelectList.DomesticForeigns = SelectListFactory.GetDomesticForeignList();
 			model.SelectList.Source = SelectListFactory.GetSourceList();
 			model.CustomField = new CustomFieldModel();
@@ -218,10 +218,10 @@ namespace DeepBlue.Controllers.Investor {
 				return RedirectToAction("New", "Investor");
 			} else {
 				ViewData["MenuName"] = "Investor";
-				model.SelectList.States = SelectListFactory.GetStateSelectList(InvestorRepository.GetAllStates());
-				model.SelectList.Countries = SelectListFactory.GetCountrySelectList(InvestorRepository.GetAllCountries());
-				model.SelectList.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(InvestorRepository.GetAllInvestorEntityTypes());
-				model.SelectList.AddressTypes = SelectListFactory.GetAddressTypeSelectList(InvestorRepository.GetAllAddressTypes());
+				model.SelectList.States = SelectListFactory.GetStateSelectList(AdminRepository.GetAllStates());
+				model.SelectList.Countries = SelectListFactory.GetCountrySelectList(AdminRepository.GetAllCountries());
+				model.SelectList.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(AdminRepository.GetAllInvestorEntityTypes());
+				model.SelectList.AddressTypes = SelectListFactory.GetAddressTypeSelectList(AdminRepository.GetAllAddressTypes());
 				model.SelectList.DomesticForeigns = SelectListFactory.GetDomesticForeignList();
 				model.SelectList.Source = SelectListFactory.GetSourceList();
 				return View(model);
@@ -235,10 +235,10 @@ namespace DeepBlue.Controllers.Investor {
 			EditModel model = new EditModel();
 			ViewData["MenuName"] = "Investor";
 			model.id = id ?? 0;
-			model.SelectList.States = SelectListFactory.GetStateSelectList(InvestorRepository.GetAllStates());
+			model.SelectList.States = SelectListFactory.GetStateSelectList(AdminRepository.GetAllStates());
 			model.SelectList.DomesticForeigns = SelectListFactory.GetDomesticForeignList();
-			model.SelectList.Countries = SelectListFactory.GetCountrySelectList(InvestorRepository.GetAllCountries());
-			model.SelectList.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(InvestorRepository.GetAllInvestorEntityTypes());
+			model.SelectList.Countries = SelectListFactory.GetCountrySelectList(AdminRepository.GetAllCountries());
+			model.SelectList.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(AdminRepository.GetAllInvestorEntityTypes());
 			model.ContactInformations = new List<ContactInformation>();
 			model.AccountInformations = new List<AccountInformation>();
 			model.CustomField = new CustomFieldModel();
@@ -612,7 +612,7 @@ namespace DeepBlue.Controllers.Investor {
 					row.cell.Add(fund.Fund.FundName.ToString());
 					row.cell.Add(string.Format("{0:C}", fund.TotalCommitment));
 					row.cell.Add(string.Format("{0:C}", Convert.ToDecimal(fund.UnfundedAmount)));
-					InvestorType investorType = InvestorRepository.FindInvestorType((int)fund.InvestorTypeId);
+					Models.Entity.InvestorType investorType = InvestorRepository.FindInvestorType((int)fund.InvestorTypeId);
 					if (investorType != null)
 						row.cell.Add(investorType.InvestorTypeName);
 					else

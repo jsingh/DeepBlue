@@ -8,8 +8,9 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateInvestorEntityTypeValidData :EditInvestorEntityType {
-        private EditInvestorEntityTypeModel Model {
+    public class CreateInvestorEntityTypeValidData : EditInvestorEntityType {
+        
+		private EditInvestorEntityTypeModel Model {
             get {
 				return base.ViewResult.ViewData.Model as EditInvestorEntityTypeModel;
             }
@@ -30,7 +31,6 @@ namespace DeepBlue.Tests.Controllers.Admin {
         }
 
         private void SetFormCollection() {
-		                                   
             base.DefaultController.ValueProvider = SetupValueProvider(GetValidformCollection());
             base.ActionResult = base.DefaultController.UpdateInvestorEntityType(GetValidformCollection());
         }

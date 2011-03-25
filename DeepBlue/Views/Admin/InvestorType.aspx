@@ -23,10 +23,10 @@
 						<th sortname="InvestorTypeID" style="width: 5%;" align="center">
 							ID
 						</th>
-						<th sortname="InvestorTypeName">
+						<th sortname="InvestorTypeName" style="width:80%">
 							InvestorType
 						</th>
-						<th sortname="Enabled" align="center" style="width: 8%;">
+						<th sortname="Enabled" align="center" style="width: 10%;">
 							Enable
 						</th>
 						<th align="center" style="width: 5%;">

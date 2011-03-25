@@ -8,6 +8,12 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Controllers.Admin {
 	public interface IAdminRepository {
 
+		List<COUNTRY> GetAllCountries();
+		List<STATE> GetAllStates();
+		List<InvestorEntityType> GetAllInvestorEntityTypes();
+		List<CommunicationType> GetAllCommunicationTypes();
+		List<AddressType> GetAllAddressTypes();
+
 		#region EntityType
 		List<InvestorEntityType> GetAllInvestorEntityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		InvestorEntityType FindInvestorEntityType(int id);

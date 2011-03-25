@@ -16,7 +16,7 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-			[StringLength(100), Required]
+			[StringLength(20), Required]
 			public global::System.String InvestorEntityTypeName {
 				get;
 				set;

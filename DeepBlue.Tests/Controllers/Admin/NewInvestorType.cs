@@ -12,9 +12,9 @@ using DeepBlue.Controllers.Admin;
 namespace DeepBlue.Tests.Controllers.Admin {
 	public class NewInvestorType : InvestorTypeBase {
 
-		private EditFundClosingModel   Model {
+		private EditInvestorTypeModel    Model {
             get {
-				return base.ViewResult.ViewData.Model as EditFundClosingModel;
+				return base.ViewResult.ViewData.Model as EditInvestorTypeModel;
             }
         }
         [SetUp]

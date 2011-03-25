@@ -9,7 +9,7 @@ using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
     public class CreateDataTypeValidData :EditDataType {
-        private EditDataTypeModel  Model {
+        private EditDataTypeModel Model {
             get {
 				return base.ViewResult.ViewData.Model as EditDataTypeModel;
             }

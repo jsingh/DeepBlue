@@ -6,7 +6,7 @@ using System.Web;
 namespace DeepBlue.Helpers {
 	public class FlexigridOptions {
 		public FlexigridOptions() {
-			Height = 595;
+			Height = 600;
 			Width = 0;
 			ActionName = string.Empty;
 			ControllerName = string.Empty;

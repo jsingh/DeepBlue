@@ -23,7 +23,7 @@
 						<th sortname="CustomFieldID" style="width: 5%;" align="center">
 							ID
 						</th>
-						<th sortname="CustomFieldText">
+						<th sortname="CustomFieldText" style="width: 50%">
 							Custom Field
 						</th>
 						<th sortname="ModuleName" style="width: 20%;">
@@ -32,7 +32,7 @@
 						<th sortname="DataTypeName" style="width: 15%;">
 							Data Type
 						</th>
-						<th sortname="Search" style="width: 5%;" align=center>
+						<th sortname="Search" style="width: 5%;" align="center">
 							Search
 						</th>
 						<th align="center" style="width: 5%;">

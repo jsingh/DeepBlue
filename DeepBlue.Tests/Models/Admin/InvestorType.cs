@@ -36,10 +36,13 @@ namespace DeepBlue.Tests.Models.Admin {
 			StringLengthInvalidData(investorType, ifValid);			
 		}
 
-		#region InvestorEntityType
+		#region InvestorType
 		private void RequiredFieldDataMissing(DeepBlue.Models.Entity.InvestorType investorType, bool ifValidData) {
 			if (ifValidData) {
-				investorType.InvestorTypeName = "";
+				investorType.InvestorTypeName = "InvestorTypeName";
+			}
+			else{
+				investorType.InvestorTypeName = string.Empty;
 			}
 		}
 

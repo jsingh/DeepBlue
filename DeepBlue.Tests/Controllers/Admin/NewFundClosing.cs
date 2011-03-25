@@ -28,6 +28,5 @@ namespace DeepBlue.Tests.Controllers.Admin {
 		public void create_a_new_fundclosing() {
 			Assert.IsInstanceOfType<ActionResult>(base.ActionResult);
 		}
-		
     }
 }

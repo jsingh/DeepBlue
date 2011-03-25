@@ -35,4 +35,9 @@ namespace DeepBlue.Models.Investor.Enums {
 	public enum DefaultCountry {
 	   USA = 225
 	}
+
+	public enum InvestorType {
+		ManagingMember = 1,
+		NonManagingMember = 2
+	}
 }

@@ -24,7 +24,7 @@ namespace DeepBlue.Tests.Models.Admin {
 		}
 
 		[Test]
-		public void create_a_new_datatype_with_too_long_datatype_name_throws_error() {
+		public void create_a_new_datatype_without_too_long_datatype_name_throws_error() {
 			Assert.IsFalse(IsPropertyValid("DataTypeName"));
 		}
     }

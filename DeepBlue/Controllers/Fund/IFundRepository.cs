@@ -16,6 +16,7 @@ namespace DeepBlue.Controllers.Fund {
 		List<Models.Entity.Fund> FindFunds(string fundName);
 		bool TaxIdAvailable(string taxId, int fundId);
 		bool FundNameAvailable(string fundName, int fundId);
+		decimal FindTotalCommittedAmount(int fundId,int investorTypeId);
 		#endregion
 
 		#region Fund Rate Schedules

@@ -20,7 +20,7 @@ namespace DeepBlue.Controllers.Admin {
 				return paginatedList;
 			}
 		}
-
+	 
 		public InvestorEntityType FindInvestorEntityType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.InvestorEntityTypes.SingleOrDefault(entityType => entityType.InvestorEntityTypeID == id);
@@ -66,11 +66,11 @@ namespace DeepBlue.Controllers.Admin {
 				return paginatedList;
 			}
 		}
-
-
+		
 		public List<InvestorType> GetAllInvestorTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from investorType in context.InvestorTypes
+						where investorType.Enabled == true
 						orderby investorType.InvestorTypeName
 						select investorType).ToList();
 			}
@@ -354,5 +354,49 @@ namespace DeepBlue.Controllers.Admin {
 			return module.Save();	
 		}
 		#endregion
+
+		public List<COUNTRY> GetAllCountries() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from country in context.COUNTRies
+						orderby country.CountryName ascending
+						select country).ToList();
+			}
+		}
+
+		public List<STATE> GetAllStates() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from state in context.STATEs
+						orderby state.Name ascending
+						select state).ToList();
+			}
+		}
+
+		public List<CommunicationType> GetAllCommunicationTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from communicationType in context.CommunicationTypes
+						where communicationType.Enabled == true
+						orderby communicationType.CommunicationTypeName
+						select communicationType).ToList();
+			}
+		}
+
+		public List<InvestorEntityType> GetAllInvestorEntityTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investorEntityType in context.InvestorEntityTypes
+						where investorEntityType.Enabled == true
+						orderby investorEntityType.InvestorEntityTypeName
+						select investorEntityType).ToList();
+			}
+		}
+
+
+		public List<AddressType> GetAllAddressTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from addressType in context.AddressTypes
+						orderby addressType.AddressTypeName
+						select addressType).ToList();
+			}
+		}
+
 	}
 }

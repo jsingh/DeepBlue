@@ -23,7 +23,7 @@
 						<th sortname="DataTypeID" style="width: 5%;" align="center">
 							ID
 						</th>
-						<th sortname="DataTypeName">
+						<th sortname="DataTypeName" style="width:90%">
 							Data Type Name
 						</th>
 						<th align="center" style="width: 5%;">

@@ -10,14 +10,6 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Controllers.Investor {
     public interface IInvestorRepository {
 		
-		#region Get
-        List<AddressType> GetAllAddressTypes();
-        List<COUNTRY> GetAllCountries();
-        List<STATE> GetAllStates();
-        List<InvestorEntityType> GetAllInvestorEntityTypes();
-        List<CommunicationType> GetAllCommunicationTypes();
-		#endregion
-
 		#region Find
         List<InvestorDetail> FindInvestors(string investorName);
 		List<InvestorDetail> FindOtherInvestors(string investorName,int excludeInvestorId);

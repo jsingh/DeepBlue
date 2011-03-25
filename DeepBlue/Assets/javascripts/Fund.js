@@ -26,13 +26,11 @@
 				});
 			});
 		});
-
-		var rateSchedule=$(".rate-schedules .rate-detail:first");
-		var div=document.createElement("div");
-		div.innerHTML=rateSchedule.html();
-		$(div).hide();
-		$("body").append(div);
-
+		fund.rateDetailHTML=$(".rate-schedules .rate-detail:first").html();
+		this.resizeIframe();
+		this.pageInit=true;
+	}
+	,resetValues: function (div) {
 		var tempTable=$(".tblrateschedule:first",div);
 		$("tr",tempTable).each(function () {
 			$("td",this).each(function () {
@@ -46,17 +44,6 @@
 			if(this.type=="hidden")
 				this.value="0";
 		});
-		fund.rateDetailHTML=div.innerHTML;
-		fund.rateTierFirstRow=document.createElement("tr");
-		var firstrow=$("tbody tr:first",tempTable);
-		$("td",firstrow).each(function () {
-			var td=document.createElement("td");
-			td.innerHTML=this.innerHTML;
-			firstrow.append(td);
-		});
-		$(div).remove();
-		this.resizeIframe();
-		this.pageInit=true;
 	}
 	,add: function () {
 		var dt=new Date();
@@ -125,6 +112,7 @@
 		return fund.onFundRateValidation();
 	}
 	,changeRS: function (ddl) {
+		this.checkChange(ddl);
 		var tr=$(ddl).parents("tr:first");
 		var tbl=tr.parent();
 		var trPrev=tr.prev();
@@ -182,45 +170,6 @@
 				}
 			}
 		});
-		/*$(".rate-detail").each(function () {
-		var InvestorTypeId=$("#InvestorTypeId",this).val();
-		if(parseInt(InvestorTypeId)>0) {
-		$(".tblrateschedule",this).each(function () {
-		if(result)
-		result=fund.checkRateTable(this);
-		else
-		return;
-		});
-		}
-		});*/
-		return result;
-	}
-	,checkRateTable: function (tbl) {
-		var trfirst=$("tr:first",tbl);
-		var message="";
-		var txt=$(":input[inputname='StartDate']",tbl).get(0);
-		var result=true;
-		if(txt) {
-			if(txt.value!="") {
-				$("tr",tbl).each(function () {
-					if(result==false) {
-						return;
-					}
-					var MultiplierTypeId=$("#MultiplierTypeId",this).get(0);
-					var Rate=$("#Rate",this).get(0);
-					var FlatFee=$("#FlatFee",this).get(0);
-					if(MultiplierTypeId&&Rate&&FlatFee) {
-						var msg="";var focusinput;
-						switch(MultiplierTypeId.value) {
-							case "0": msg="Fee Calculation Type is required";focusinput=MultiplierTypeId;break;
-							case "1": if(parseInt(Rate.value)>100) { msg="Rate must be under 100%"; } else if(parseInt(Rate.value)<=0) { msg="Rate is required"; } focusinput=Rate;break;
-							case "2": if(parseInt(FlatFee.value)<=0) { msg="Flat Fee is required"; } focusinput=FlatFee;break;
-						}
-						if(msg!="") { alert(msg);if(focusinput) { focusinput.focus(); } result=false; }
-					}
-				});
-			}
-		}
 		return result;
 	}
 	,onTaxIdAvailable: function (message) {
@@ -260,12 +209,11 @@
 	,addRateSchedule: function () {
 		var FundRateSchedulesCount=document.getElementById("FundRateSchedulesCount");
 		FundRateSchedulesCount.value=parseInt(FundRateSchedulesCount.value)+1;
-		var rateDetail=document.createElement("div");
-		rateDetail.innerHTML=fund.rateDetailHTML;
 		var newRateDetail=document.createElement("div");
 		newRateDetail.className="rate-detail";
-		newRateDetail.innerHTML=rateDetail.innerHTML.replace(/1_/g,(FundRateSchedulesCount.value)+"_");
 		$(".rate-schedules").append(newRateDetail);
+		newRateDetail.innerHTML=fund.rateDetailHTML.replace(/1_/g,(FundRateSchedulesCount.value)+"_");
+		this.resetValues(newRateDetail);
 		$("#FundRateScheduleId",newRateDetail).val("0");
 		$("#InvestorTypeId",newRateDetail).val("0");
 		$("#IsDelete",newRateDetail).val("");
@@ -310,45 +258,32 @@
 			}
 		}
 	}
-	,deleteTier: function (img) {
-		if(confirm("Are you sure you want to delete this rate schedule tier?")) {
-			var tr=$(img).parents("tr:first");
-			var ManagementFeeRateScheduleId=parseInt($("#ManagementFeeRateScheduleId",tr).val());
-			if(parseInt(ManagementFeeRateScheduleId)>0) {
-				$.get("/Fund/DeleteFundRateSchedule/?id="+FundRateScheduleId,function (data) {
-					$(tr).remove();
-				});
-			} else {
-				$(tr).remove();
-			}
-		}
-	}
-	,dateChecking: function (txt) {
-		try {
-			if(txt.value!="") {
-				var tr=$(txt).parents("tr:first");
-				var tbl=$(tr).parents("table:first");
-				var eDate=Date.DateAdd("yyyy",1,txt.value);
-				var endDate=Date.DateAdd("d",-1,this.formatDate(eDate));
-				$("#EndDate",tr).val(this.formatDate(endDate));
-				$("#SpnEndDate",tr).html(this.formatDate(endDate));
-				this.addAdditionalRow(tbl,9-$("tr",tbl).length);
-				var index=0;
-				$("tr",tbl).each(function () {
-					if(index!=0) {
-						var trPrev=$(this).prev();
-						var ewDate=$("#EndDate",trPrev).val();
-						fund.assignDates(this,ewDate);
-					}
-					index++;
-				});
-				this.resizeIframe();
-			}
-			return true;
-		} catch(e) {
-			//alert(e);
-		}
-	}
+    ,dateChecking: function (txt) {
+    	try {
+    		if(txt.value!="") {
+    			var tr=$(txt).parents("tr:first");
+    			var tbl=$(tr).parents("table:first");
+    			var eDate=Date.DateAdd("yyyy",1,txt.value);
+    			var endDate=Date.DateAdd("d",-1,this.formatDate(eDate));
+    			$("#EndDate",tr).val(this.formatDate(endDate));
+    			$("#SpnEndDate",tr).html(this.formatDate(endDate));
+    			this.addAdditionalRow(tbl,9-$("tr",tbl).length);
+    			var index=0;
+    			$("tr",tbl).each(function () {
+    				if(index!=0) {
+    					var trPrev=$(this).prev();
+    					var ewDate=$("#EndDate",trPrev).val();
+    					fund.assignDates(this,ewDate);
+    				}
+    				index++;
+    			});
+    			this.resizeIframe();
+    		}
+    		return true;
+    	} catch(e) {
+    		//alert(e);
+    	}
+    }
 	,addAdditionalRow: function (tbl,count) {
 		var i=0;
 		for(i=0;i<count;i++) {
@@ -373,9 +308,9 @@
 				$("input",td).each(function () {
 					if($(this).attr("name").indexOf("StartDate")>0) {
 						var hdn=document.createElement("input");
-						hdn.type="hidden";hdn.value=this.value;hdn.name=this.name;hdn.id="StartDate";
+						hdn.type="hidden";hdn.value="";hdn.name=this.name;hdn.id="StartDate";
 						var spn=document.createElement("span");
-						spn.id="SpnStartDate";spn.innerHTML=this.value;
+						spn.id="SpnStartDate";spn.innerHTML="";
 						$(this).remove();
 						$("span",td).remove();
 						$("div",td).append(hdn).append(spn);
@@ -391,13 +326,16 @@
 			$(tbl).append(tr);
 		}
 		if(TiersHidden) {
-			TiersHidden.value=TiersCount-1;
+			TiersHidden.value=TiersCount;
 		}
 	}
 	,assignDates: function (tr,startDate) {
-		var sDate=Date.DateAdd("d",1,startDate);
-		var eDate=Date.DateAdd("yyyy",1,this.formatDate(sDate));
-		var endDate=Date.DateAdd("d",-1,this.formatDate(eDate));
+		var sDate="";var eDate="";var endDate="";
+		if(startDate!="") {
+			sDate=Date.DateAdd("d",1,startDate);
+			eDate=Date.DateAdd("yyyy",1,this.formatDate(sDate));
+			endDate=Date.DateAdd("d",-1,this.formatDate(eDate));
+		}
 		$("#StartDate",tr).val(this.formatDate(sDate));
 		$("#SpnStartDate",tr).html(this.formatDate(sDate));
 		$("#EndDate",tr).val(this.formatDate(endDate));
@@ -405,5 +343,9 @@
 	}
 	,formatDate: function (dateobj) {
 		return $.datepicker.formatDate('mm/dd/yy',dateobj);
+	}
+	,checkChange: function (obj) {
+		var rateGrid=$(obj).parents(".rate-grid:first");
+		$("#IsScheduleChange",rateGrid).val("true");
 	}
 }

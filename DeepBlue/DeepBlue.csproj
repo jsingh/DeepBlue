@@ -72,6 +72,9 @@
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\AdminRepository.cs" />
     <Compile Include="Controllers\Admin\IAdminRepository.cs" />
+    <Compile Include="Controllers\CapitalCall\CapitalCallController.cs" />
+    <Compile Include="Controllers\CapitalCall\CapitalCallRepository.cs" />
+    <Compile Include="Controllers\CapitalCall\ICapitalCallRepository.cs" />
     <Compile Include="Controllers\Document\DocumentRepository.cs" />
     <Compile Include="Controllers\Document\DocumentController.cs" />
     <Compile Include="Controllers\Document\IDocumentRepository.cs" />
@@ -113,6 +116,14 @@
     <Compile Include="Models\Admin\Enums.cs" />
     <Compile Include="Models\Admin\ListModel.cs" />
     <Compile Include="Models\Admin\ResultModel.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallDetail.cs" />
+    <Compile Include="Models\CapitalCall\CreateManualCapitalCallModel.cs" />
+    <Compile Include="Models\CapitalCall\CreateReqularCapitalCallModel.cs" />
+    <Compile Include="Models\CapitalCall\Enums.cs" />
+    <Compile Include="Models\CapitalCall\FundDetail.cs" />
+    <Compile Include="Models\CapitalCall\ListModel.cs" />
+    <Compile Include="Models\CapitalCall\ManagementFeeDetail.cs" />
+    <Compile Include="Models\CapitalCall\ResultModel.cs" />
     <Compile Include="Models\Document\SearchModel.cs" />
     <Compile Include="Models\Document\CreateModel.cs" />
     <Compile Include="Models\Document\Enums.cs" />
@@ -121,6 +132,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\Partial\CapitalCall.cs" />
     <Compile Include="Models\Entity\Partial\ManagementFeeRateScheduleService.cs" />
     <Compile Include="Models\Entity\Partial\ModuleService.cs" />
     <Compile Include="Models\Entity\Partial\CustomFieldValueService.cs" />
@@ -134,6 +146,7 @@
     <Compile Include="Models\Entity\Partial\InvestorFundService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorTypeService.cs" />
+    <Compile Include="Models\Entity\Validation\CapitalCall.cs" />
     <Compile Include="Models\Entity\Validation\ManagementFeeRateSchedule.cs" />
     <Compile Include="Models\Entity\Validation\Module.cs" />
     <Compile Include="Models\Entity\Validation\CustomFieldValue.cs" />
@@ -193,6 +206,7 @@
     <Content Include="Assets\images\DeleteBtn.png" />
     <Content Include="Assets\images\delete_icon.png" />
     <Content Include="Assets\images\del_icon.png" />
+    <Content Include="Assets\images\detail.png" />
     <Content Include="Assets\images\detleft.png" />
     <Content Include="Assets\images\detright.png" />
     <Content Include="Assets\images\dn.png" />
@@ -262,6 +276,9 @@
     <Content Include="Assets\images\uup.png" />
     <Content Include="Assets\images\wbg.gif" />
     <Content Include="Assets\images\xls.png" />
+    <Content Include="Assets\javascripts\CapitalCall.js" />
+    <Content Include="Assets\javascripts\CapitalCallDetail.js" />
+    <Content Include="Assets\javascripts\ManualCapitalCall.js" />
     <Content Include="Assets\javascripts\DataType.js" />
     <Content Include="Assets\javascripts\CustomField.js" />
     <Content Include="Assets\javascripts\DocumentSearch.js" />
@@ -287,6 +304,7 @@
     <Content Include="Assets\javascripts\Module.js" />
     <Content Include="Assets\javascripts\SearchInvestor.js" />
     <Content Include="Assets\javascripts\TransactionController.js" />
+    <Content Include="Assets\stylesheets\capitalcall.css" />
     <Content Include="Assets\stylesheets\customfield.css" />
     <Content Include="Assets\stylesheets\ddlmenu.css" />
     <Content Include="Assets\stylesheets\document.css" />
@@ -294,8 +312,18 @@
     <Content Include="Assets\stylesheets\fund.css" />
     <Content Include="Assets\stylesheets\jquery-ui-1.8.10.custom.css" />
     <Content Include="Assets\stylesheets\newInvestor.css" />
+    <Content Include="bin\DeepBlue.dll" />
+    <Content Include="bin\DeepBlue.pdb" />
     <Content Include="Global.asax" />
     <Content Include="Assets\stylesheets\site.css" />
+    <Content Include="obj\Debug\DeepBlue.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\DeepBlue.dll" />
+    <Content Include="obj\Debug\DeepBlue.pdb" />
+    <Content Include="obj\Debug\TempPE\Models.Entity.DeepBlue.Designer.cs.dll" />
+    <Content Include="obj\Release\DeepBlue.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Release\DeepBlue.dll" />
+    <Content Include="obj\Release\DeepBlue.pdb" />
+    <Content Include="obj\Release\TempPE\Models.Entity.DeepBlue.Designer.cs.dll" />
     <Content Include="Views\Admin\EditDataType.aspx" />
     <Content Include="Views\Admin\DataTypeList.ascx" />
     <Content Include="Views\Admin\DataType.aspx" />
@@ -317,6 +345,11 @@
     <Content Include="Views\Admin\Result.ascx" />
     <Content Include="Views\Admin\EntityType.aspx" />
     <Content Include="Views\Admin\List.ascx" />
+    <Content Include="Views\CapitalCall\CapitalCallList.ascx" />
+    <Content Include="Views\CapitalCall\List.aspx" />
+    <Content Include="Views\CapitalCall\New.aspx" />
+    <Content Include="Views\CapitalCall\NewManualCapitalCall.aspx" />
+    <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Document\List.ascx" />
     <Content Include="Views\Document\New.aspx" />
     <Content Include="Views\Document\Search.aspx" />
@@ -367,7 +400,23 @@
       <LastGenOutput>DeepBlue.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\edmxResourcesToEmbed\Models\Entity\DeepBlue.csdl" />
+    <None Include="obj\Debug\edmxResourcesToEmbed\Models\Entity\DeepBlue.msl" />
+    <None Include="obj\Debug\edmxResourcesToEmbed\Models\Entity\DeepBlue.ssdl" />
+    <None Include="obj\Debug\ResolveAssemblyReference.cache" />
+    <None Include="obj\Release\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Release\edmxResourcesToEmbed\Models\Entity\DeepBlue.csdl" />
+    <None Include="obj\Release\edmxResourcesToEmbed\Models\Entity\DeepBlue.msl" />
+    <None Include="obj\Release\edmxResourcesToEmbed\Models\Entity\DeepBlue.ssdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Files\Documents\2\1\" />
+    <Folder Include="Files\Document\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

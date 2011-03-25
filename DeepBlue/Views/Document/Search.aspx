@@ -54,7 +54,7 @@
 			</div>
 		</div>
 		<div class="doc-result">
-			<table cellpadding="0" cellspacing="0" border="0" id="SearchDocumentList">
+			<table cellpadding="0" cellspacing="0" border="0" id="SearchDocumentList" style="width:100%">
 				<thead>
 					<tr>
 						<th sortname="DocumentDate" style="width: 10%;" align="center">
@@ -66,10 +66,10 @@
 						<th sortname="DocumentTypeName" style="width: 35%;">
 							Document Type
 						</th>
-						<th id="InvestorNameColumn" sortname="InvestorName" style="width: 35%">
+						<th id="InvestorNameColumn" sortname="InvestorName" style="width:25%">
 							Investor Name
 						</th>
-						<th id="FundNameCloumn" sortname="FundName" style="width: 35%;">
+						<th id="FundNameCloumn" sortname="FundName" style="display:none;width:25%;">
 							Fund Name
 						</th>
 						<th sortname="Enabled" align="center" style="width: 10%;">
@@ -90,8 +90,8 @@
 	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions {
 																	  Source = "/Fund/FindFunds", MinLength = 1,
 																	  OnSelect = "function(event, ui) { documentSearch.selectFund(ui.item.id);}"})%>
-	<%=Html.jQueryFlexiGrid("SearchDocumentList", new FlexigridOptions { ActionName = "List", ControllerName = "Document", HttpMethod = "GET", SortName = "DocumentDate", SortOrder="desc" , Paging = true , Autoload=false })%>
+	<%=Html.jQueryFlexiGrid("SearchDocumentList", new FlexigridOptions { ActionName = "List", ControllerName = "Document", HttpMethod = "GET", SortName = "DocumentDate", SortOrder = "desc", Paging = true, Autoload = false, Height = 300 })%>
 	<script type="text/javascript">
-		documentSearch.init();
+	 	documentSearch.init();
 	</script>
 </asp:Content>

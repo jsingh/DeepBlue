@@ -39,9 +39,14 @@ namespace DeepBlue.Tests.Models.Admin {
 		#region CustomField
 		private void RequiredFieldDataMissing(DeepBlue.Models.Entity.CustomField customfield, bool ifValidData) {
 			if (ifValidData) {
-			    customfield.ModuleID = 0;
+				customfield.CustomFieldText  = "CustomFieldText";
+			    customfield.ModuleID = 1;
+				customfield.DataTypeID = 1;				
+			}
+			else{
+				customfield.CustomFieldText = string.Empty;
+				customfield.ModuleID = 0;
 				customfield.DataTypeID = 0;
-				customfield.CustomFieldText  = "";
 			}
 		}
 
@@ -50,9 +55,10 @@ namespace DeepBlue.Tests.Models.Admin {
 			if (!ifValidData) {
 				delta = 1;
 			}
-			customfield.ModuleID = 0 + delta;
-			customfield.DataTypeID = 0 + delta;
 			customfield.CustomFieldText  = GetString(50 + delta);
+			//customfield.ModuleID = 0 + delta;
+			//customfield.DataTypeID = 0 + delta;
+			
 		}
 		#endregion
     }

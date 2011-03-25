@@ -11,6 +11,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="edit-investor">
+		<div class="page-title">
+			<h2>
+				Update Investor Information</h2>
+		</div>
 		<div class="search">
 			<div class="editor-label auto-width">
 				<%: Html.Label("Investor:") %>

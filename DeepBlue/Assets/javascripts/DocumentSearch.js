@@ -1,7 +1,8 @@
-﻿var documentSearch={	
-	init: function(){
-		$(document).ready(function(){
-			$("#FundNameCloumn").hide();
+﻿var documentSearch={
+	init: function () {
+		$(document).ready(function () {
+			//$("#FundNameCloumn").width($("#InvestorNameColumn").width());
+			//$("#FundNameCloumn div").width($("#InvestorNameColumn").width());
 		});
 	}
 	,changeType: function (select) {

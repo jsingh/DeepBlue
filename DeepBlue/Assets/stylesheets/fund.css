@@ -23,6 +23,13 @@
 	width: 800px;
 }
 .rate-header {
+	float: left;
+	clear: both;width:100%;
+}
+.rate-header .left {
+	float: left; padding: 5px 0px 0px 5px;
+}
+.rate-header .right {
 	float: right;
 	margin-right: 10px;
 }
@@ -34,14 +41,14 @@
 }
 .rate-detail {
 	padding-top: 5px;
-	width: 99%;font-size:11px;
+	width: 99%;
+	font-size: 11px;
 }
-.rate-detail input,.rate-detail select{
-	font-size:11px;
+.rate-detail input, .rate-detail select {
+	font-size: 11px;
 }
-.rate-detail td,.rate-detail th{
-	font-size:11px;
+.rate-detail td, .rate-detail th {
+	font-size: 11px;
 }
 .rate-schedules {
- 
 }

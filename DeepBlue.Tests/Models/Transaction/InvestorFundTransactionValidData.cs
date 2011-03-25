@@ -14,7 +14,7 @@ namespace DeepBlue.Tests.Models.Transaction {
         [SetUp]
         public override void Setup() {
             base.Setup();
-			Create_Data(DefaultInvestorFundTransaction, false);
+			Create_Data(DefaultInvestorFundTransaction, true);
 			this.ServiceErrors = DefaultInvestorFundTransaction.Save();
         }
 

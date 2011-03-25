@@ -29,10 +29,10 @@
 						<th sortname="Name" style="width: 25%;">
 							Name
 						</th>
-						<th sortname="FundName">
+						<th sortname="FundName" style="width:40%">
 							Fund Name
 						</th>
-						<th sortname="IsFirstClosing" align="center" style="width: 8%;">
+						<th sortname="IsFirstClosing" align="center" style="width: 10%;">
 							First Closing
 						</th>
 						<th align="center" style="width: 5%;">

@@ -39,9 +39,14 @@ namespace DeepBlue.Tests.Models.Admin {
 		#region FundClosing
 		private void RequiredFieldDataMissing(DeepBlue.Models.Entity.FundClosing fundClosing, bool ifValidData) {
 			if (ifValidData) {
-				fundClosing.Name = "";
+				fundClosing.Name = "FundClosing";
+				fundClosing.FundID = 1;
+				fundClosing.FundClosingDate = DateTime.Now ; 
+			}
+			else{
+				fundClosing.Name = string.Empty ;
 				fundClosing.FundID = 0;
-				fundClosing.FundClosingDate  =DateTime.Now ; 
+				fundClosing.FundClosingDate = DateTime.MinValue ; 
 			}
 		}
 
@@ -51,7 +56,8 @@ namespace DeepBlue.Tests.Models.Admin {
 				delta = 1;
 			}
 			fundClosing.Name = GetString(50 + delta);
-			fundClosing.FundID = 0 + delta ;
+			//fundClosing.FundID = 0 + delta ;
+			//fundClosing.FundClosingDate = DateTime.Now + delta;
 		}
 		#endregion
     }

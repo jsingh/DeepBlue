@@ -24,7 +24,7 @@
 						<th sortname="ModuleID" style="width: 5%;" align="center">
 							ID
 						</th>
-						<th sortname="ModuleName">
+						<th sortname="ModuleName" style="width:90%">
 							Module Name
 						</th>
 						<th align="center" style="width: 5%;">

@@ -34,6 +34,7 @@ namespace DeepBlue.Controllers.Fund {
 							  .Include("FundClosings")
 							  .Include("FundAccounts")
 							  .Include("FundRateSchedules")
+							  .Include("InvestorFunds")
 							  .SingleOrDefault(fund => fund.FundID == fundId);
 			}
 		}
@@ -129,6 +130,12 @@ namespace DeepBlue.Controllers.Fund {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.ManagementFeeRateScheduleTiers.SingleOrDefault(tier => tier.ManagementFeeRateScheduleTierID == id);
 			}
+		}
+
+		public decimal FindTotalCommittedAmount(int fundId, int investorTypeId) {
+				using (DeepBlueEntities context = new DeepBlueEntities()) {
+					return context.InvestorFunds.Where(investorFund => investorFund.InvestorTypeId == investorTypeId && investorFund.FundID == fundId).Sum(invfund => invfund.TotalCommitment);
+				}
 		}
 
 		#endregion

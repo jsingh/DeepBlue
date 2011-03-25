@@ -21,7 +21,7 @@
 			<table id="FundList" cellpadding="0" cellspacing="0" border="0" style="width: 100%">
 				<thead>
 					<tr>
-						<th sortname="FundName">
+						<th sortname="FundName" style="width: 50%">
 							Fund Name
 						</th>
 						<th sortname="TaxId" align="center" style="width: 10%">
@@ -30,7 +30,7 @@
 						<th sortname="FundStartDate" align="center" style="width: 15%">
 							Fund Start Date
 						</th>
-						<th sortname="ScheduleTerminationDate" align="center" style="width: 18%">
+						<th sortname="ScheduleTerminationDate" align="center" style="width: 20%">
 							Schedule termination Date
 						</th>
 						<th align="center" style="width: 5%">

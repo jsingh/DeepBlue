@@ -9,51 +9,8 @@ using DeepBlue.Models.Investor;
 
 namespace DeepBlue.Controllers.Investor {
 	public class InvestorRepository : IInvestorRepository {
-
-
+	
 		#region IInvestorRepository Investors
-
-		public List<AddressType> GetAllAddressTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from addressType in context.AddressTypes
-						orderby addressType.AddressTypeName
-						select addressType).ToList();
-			}
-		}
-
-
-		public List<COUNTRY> GetAllCountries() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from country in context.COUNTRies
-						orderby country.CountryName ascending
-						select country).ToList();
-			}
-		}
-
-		public List<STATE> GetAllStates() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from state in context.STATEs
-						orderby state.Name ascending
-						select state).ToList();
-			}
-		}
-
-		public List<CommunicationType> GetAllCommunicationTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from communicationType in context.CommunicationTypes
-						orderby communicationType.CommunicationTypeName
-						select communicationType).ToList();
-			}
-		}
-
-		public List<InvestorEntityType> GetAllInvestorEntityTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investorEntityType in context.InvestorEntityTypes
-						orderby investorEntityType.InvestorEntityTypeName
-						select investorEntityType).ToList();
-			}
-		}
-
 		public List<InvestorDetail> FindOtherInvestors(string investorName, int excludeInvestorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from investor in context.Investors

@@ -7,6 +7,7 @@ html, body {
 	margin: 0;
 	padding: 0;
 	overflow: auto;
+	overflow-x: hidden;
 }
 body {
 	height: 100%;
@@ -72,7 +73,7 @@ a img {
 	height: 100%;
 	position: absolute;
 	overflow: auto;
-	overflow-x:hidden;
+	overflow-x: hidden;
 }
 /* Menu */
 #menu {
@@ -197,8 +198,8 @@ h2 {
 .editor-field select {
 	width: 203px;
 }
-.radio input{
-	width:auto;
+.radio input {
+	width: auto;
 }
 .dropdown {
 	width: 120px;
@@ -637,6 +638,13 @@ h2 {
 	background-position: right center;
 	background-repeat: no-repeat;
 }
-.fund-closing-edit .editor-label{
-	width:80px;
+.fund-closing-edit .editor-label {
+	width: 80px;
+}
+.page-title {
+	clear: both;
+	padding: 5px;
+}
+h2 {
+	font-size: 14px;
 }

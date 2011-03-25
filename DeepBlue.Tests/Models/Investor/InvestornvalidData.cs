@@ -45,7 +45,7 @@ namespace DeepBlue.Tests.Models.Investor {
 
         [Test]
         public void create_a_new_investor_without_valid_previnvestorid_throws_error() {
-            Assert.IsFalse(IsPropertyValid("PrevInvestorID"));
+            Assert.IsTrue(IsPropertyValid("PrevInvestorID"));
         }
 
         [Test]

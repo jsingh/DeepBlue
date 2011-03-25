@@ -35,7 +35,7 @@ namespace DeepBlue.Tests.Models.Transaction {
 
 		[Test]
 		public void create_a_new_investor_fund_without_committed_date_throws_error() {
-			Assert.IsFalse(IsPropertyValid("CommittedDate"));
+			Assert.IsTrue(IsPropertyValid("CommittedDate"));
 		}
 
 		[Test]

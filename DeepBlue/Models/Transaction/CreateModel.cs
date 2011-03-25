@@ -47,6 +47,8 @@ namespace DeepBlue.Models.Transaction {
 		[DisplayName("Committed Amount:")]
 		public decimal TotalCommitment { get; set; }
 
+		public int Amount { get; set; }
+
 		[Required(ErrorMessage = "Committed Date is required")]
 		[DisplayName("Committed Date:")]
 		public DateTime CommittedDate { get; set; }

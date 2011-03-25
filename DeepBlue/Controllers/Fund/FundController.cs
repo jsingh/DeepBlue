@@ -294,7 +294,8 @@ namespace DeepBlue.Controllers.Fund {
 							int tiersCount = Convert.ToInt32(collection[index.ToString() + "_Tiers"]);
 							int tierIndex = 0;
 							for (tierIndex = 1; tierIndex < tiersCount + 1; tierIndex++) {
-								if (string.IsNullOrEmpty(collection[index.ToString() + "_$" + tierIndex.ToString() + "$StartDate"]) == false &&
+								if (collection[index.ToString() + "_IsScheduleChange"] == "true" && 
+									string.IsNullOrEmpty(collection[index.ToString() + "_$" + tierIndex.ToString() + "$StartDate"]) == false &&
 									string.IsNullOrEmpty(collection[index.ToString() + "_$" + tierIndex.ToString() + "$EndDate"]) == false) {
 
 									rateTier = new ManagementFeeRateScheduleTier();
@@ -315,24 +316,7 @@ namespace DeepBlue.Controllers.Fund {
 										}
 										rateTier.StartDate = Convert.ToDateTime(collection[index.ToString() + "_$" + tierIndex.ToString() + "$StartDate"]);
 										rateTier.Notes = collection[index.ToString() + "_$" + tierIndex.ToString() + "$Notes"];
-										int managementFeeRateScheduleTierId = 0;
-										ManagementFeeRateScheduleTier oldTier = null;
-										if (string.IsNullOrEmpty(collection[index.ToString() + "_$" + tierIndex.ToString() + "$ManagementFeeRateScheduleTierId"]) == false) {
-											managementFeeRateScheduleTierId = Convert.ToInt32(collection[index.ToString() + "_$" + tierIndex.ToString() + "$ManagementFeeRateScheduleTierId"]);
-											if (managementFeeRateScheduleTierId > 0)
-												oldTier = FundRepository.FindManagementFeeRateScheduleTier(managementFeeRateScheduleTierId);
-										}
-										if (oldTier != null) {
-											if (oldTier.MultiplierTypeID != rateTier.MultiplierTypeID ||
-											   oldTier.Multiplier != rateTier.Multiplier ||
-											   oldTier.StartDate != rateTier.StartDate ||
-											   oldTier.EndDate != rateTier.EndDate ||
-											   oldTier.Notes != rateTier.Notes) {
-												managementFeeRateSchedule.ManagementFeeRateScheduleTiers.Add(rateTier);
-											}
-										} else {
-											managementFeeRateSchedule.ManagementFeeRateScheduleTiers.Add(rateTier);
-										}
+										managementFeeRateSchedule.ManagementFeeRateScheduleTiers.Add(rateTier);
 									}
 								}
 							}

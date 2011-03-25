@@ -14,7 +14,7 @@ namespace DeepBlue.Tests.Models.Admin {
         [SetUp]
         public override void Setup() {
             base.Setup();
-			Create_Data(DefaultInvestorEntityType, false);
+			Create_Data(DefaultInvestorEntityType,false);
 			this.ServiceErrors = DefaultInvestorEntityType.Save();
         }
 
@@ -24,7 +24,7 @@ namespace DeepBlue.Tests.Models.Admin {
 		}
 
 		[Test]
-		public void create_a_new_investorentitytype_with_too_long_investorentitytype_name_throws_error() {
+		public void create_a_new_investorentitytype_without_too_long_investorentitytype_name_throws_error() {
 			Assert.IsFalse(IsPropertyValid("InvestorEntityTypeName"));
 		}
     }

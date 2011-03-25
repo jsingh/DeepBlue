@@ -23,10 +23,10 @@
 						<th sortname="InvestorEntityTypeID" style="width: 5%;" align="center">
 							ID
 						</th>
-						<th sortname="InvestorEntityTypeName">
+						<th sortname="InvestorEntityTypeName" style="width: 80%">
 							EntityType
 						</th>
-						<th sortname="Enabled" align="center" style="width: 8%;">
+						<th sortname="Enabled" align="center" style="width: 10%;">
 							Enable
 						</th>
 						<th align="center" style="width: 5%;">
@@ -38,5 +38,5 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("InvEntityTypeList", new FlexigridOptions { ActionName = "EntityTypeList", ControllerName = "Admin", HttpMethod = "GET", SortName = "InvestorEntityTypeName", Paging = true })%>
+	<%=Html.jQueryFlexiGrid("InvEntityTypeList", new FlexigridOptions { ActionName = "EntityTypeList", ControllerName = "Admin", HttpMethod = "GET", SortName = "InvestorEntityTypeName", Paging = true   })%>
 </asp:Content>

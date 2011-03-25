@@ -24,8 +24,18 @@ namespace DeepBlue.Tests.Models.Admin {
 		}
 
 		[Test]
-		public void create_a_new_customfield_with_too_long_customfieldtext_name_throws_error() {
+		public void create_a_new_customfield_without_too_long_customfieldtext_name_throws_error() {
 			Assert.IsFalse(IsPropertyValid("CustomFieldText"));
+		}
+
+		[Test]
+		public void create_a_new_customfield_without_valid_moduleid_throws_error() {
+			Assert.IsFalse(IsPropertyValid("ModuleID"));
+		}
+
+		[Test]
+		public void create_a_new_customfield_without_valid_datatypeid_throws_error() {
+			Assert.IsFalse(IsPropertyValid("DataTypeID"));
 		}
     }
 }

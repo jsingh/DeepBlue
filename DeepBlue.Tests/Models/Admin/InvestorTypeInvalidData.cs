@@ -24,7 +24,7 @@ namespace DeepBlue.Tests.Models.Admin {
 		}
 
 		[Test]
-		public void create_a_new_investortype_with_too_long_investortype_name_throws_error() {
+		public void create_a_new_investortype_without_too_long_investortype_name_throws_error() {
 			Assert.IsFalse(IsPropertyValid("InvestorTypeName"));
 		}
     }

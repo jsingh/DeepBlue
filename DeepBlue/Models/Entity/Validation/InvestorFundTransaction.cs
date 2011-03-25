@@ -48,8 +48,8 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			[Required]
-			[Range(typeof(DateTime), "1/1/1900", "1/1/9999")]
-			public global::System.DateTime Amount {
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			public global::System.Int32 Amount {
 				get;
 				set;
 			}

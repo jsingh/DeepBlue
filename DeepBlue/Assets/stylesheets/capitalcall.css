@@ -1,0 +1,59 @@
+﻿.cc-header, .cc-main {
+	margin: 10px;
+}
+.cc-main {
+	width: 98%;
+	float: left;
+}
+.editor-label {
+	width: auto;
+	padding: 10px 5px;
+}
+.editor-field {
+	padding: 8px 5px;
+}
+.editor-field input {
+	width: 150px;
+}
+.edit-left {
+	width: 75%;
+	float: left;
+}
+.edit-right {
+	width: 25%;
+	float: left;
+}
+.fromcell {
+	width: 169px;
+	clear: right;
+	text-align: right;
+	padding-right: 0px;
+}
+.editor-field .datetxt {
+	width: 110px;
+}
+.TierDetail-Main {
+	clear: both;
+	width: 600px;
+}
+.list {
+	clear: both;
+}
+.cc-manual {
+	clear: both;
+}
+.bDiv td div input {
+	width: 96%;
+}
+.cc-manual-detail {
+	clear: both;
+}
+.cc-manual-detail table {
+	width: 85%;
+}
+.cc-manual-detail table td {
+	padding: 5px 0px 5px 0px;
+}
+.investor-detail{
+	clear:both;
+}

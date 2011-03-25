@@ -10,6 +10,8 @@ using Moq;
 using MbUnit.Framework;
 using DeepBlue.Controllers.Investor;
 using DeepBlue.Controllers.Admin;
+using DeepBlue.Controllers.Fund; 
+using DeepBlue.Models.Fund; 
 
 namespace DeepBlue.Tests.Controllers.Transaction {
     public class InvestorFundBase : Base {

@@ -47,9 +47,9 @@ namespace DeepBlue.Tests.Controllers.Admin {
        
         private FormCollection GetValidformCollection() {
             FormCollection formCollection = new FormCollection();
-			formCollection.Add("FundID", "1");
-			formCollection.Add("FundClosingDate","2011-02-26");
 			formCollection.Add("Name","n/a");
+			formCollection.Add("FundID", "1");
+			formCollection.Add("FundClosingDate", "1/1/9999");
             return formCollection;
         }
     }

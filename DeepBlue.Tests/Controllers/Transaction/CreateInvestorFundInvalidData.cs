@@ -102,12 +102,12 @@ namespace DeepBlue.Tests.Controllers.Transaction {
 				
 		[Test]
 		public void invalid_Fund_CommittedDate_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("CommittedDate"));
+			Assert.IsTrue (test_posted_value("CommittedDate"));
 		}
 
 		[Test]
 		public void invalid_Fund_CommittedDate_sets_1_error() {
-			Assert.IsTrue(test_error_count("CommittedDate", 1));
+			Assert.IsFalse (test_error_count("CommittedDate", 1));
 		}
 
 		[Test]

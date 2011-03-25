@@ -1,9 +1,9 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head>
 	<title>
 		<asp:ContentPlaceHolder ID="TitleContent" runat="server" />
 	</title>
@@ -136,10 +136,21 @@
 				<%: Html.ActionLink("Investor Commitment", "New", "Transaction")%></li>
 		</ul>
 	</div>
-	<div class="mdiv" id="Fund_Management" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+	<div class="mdiv" id="Fund_Management" onmouseover="mcancelclosetime()">
 		<ul>
 			<li>
 				<%: Html.ActionLink("Fund Setup", "Index", "Fund")%></li>
+			<li><a onmouseover="msubopen(this,'CC_Submenu')" onmouseout="msubclosetime()" class="submenubg">CapitalCall</a></li>
+		</ul>
+	</div>
+	<div class="mdiv" id="CC_Submenu" onmouseover="msubcancelclosetime()" onmouseout="msubclosetime()">
+		<ul>
+			<li>
+				<%: Html.ActionLink("Capital Call Detail", "List", "CapitalCall")%></li>
+			<li>
+				<%: Html.ActionLink("New Capital Call", "New", "CapitalCall")%></li>
+			<li><%: Html.ActionLink("Manual Capital Call", "NewManualCapitalCall", "CapitalCall")%></li>
+			<li><a href="#">Capital Call Reconcile</a></li>
 		</ul>
 	</div>
 	<div class="mdiv" id="Adm_Management" onmouseover="mcancelclosetime()">

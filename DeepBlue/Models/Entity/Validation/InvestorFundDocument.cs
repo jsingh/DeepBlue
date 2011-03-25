@@ -21,6 +21,13 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			[Required]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			public global::System.Int32 InvestorID {
+				get;
+				set;
+			}
+
+			[Required]
 			[Range(typeof(DateTime), "1/1/1900", "1/1/9999")]
 			public global::System.DateTime DocumentDate {
 				get;

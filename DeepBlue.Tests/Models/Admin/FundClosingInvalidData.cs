@@ -24,7 +24,7 @@ namespace DeepBlue.Tests.Models.Admin {
 		}
 
 		[Test]
-		public void create_a_new_fundclosing_with_too_long_fundclosing_name_throws_error() {
+		public void create_a_new_fundclosing_without_too_long_fundclosing_name_throws_error() {
 			Assert.IsFalse(IsPropertyValid("Name"));
 		}
 
@@ -35,7 +35,7 @@ namespace DeepBlue.Tests.Models.Admin {
 
 		[Test]
 		public void create_a_new_fundclosing_without_valid_fundclosingdate_throws_error() {
-			Assert.IsFalse(IsPropertyValid("CreatedDate"));
+			Assert.IsFalse(IsPropertyValid("FundClosingDate"));
 		}
 
     }
