@@ -43,10 +43,19 @@ namespace DeepBlue.Tests.Models.Fund {
 				fund.FundName= "FundName";
 				fund.TaxID = "1";
 				fund.InceptionDate = DateTime.Now;
+				fund.FundAccounts.Add(new FundAccount {
+					BankName="Bank Name",
+					Account ="AC0034300349304"
+				});
+
             } else {
 				fund.FundName = string.Empty;
 				fund.TaxID = string.Empty;
 				fund.InceptionDate = DateTime.MinValue;
+				fund.FundAccounts.Add(new FundAccount{
+					BankName = string.Empty,
+					Account = string.Empty
+				});
             }
         }
 
@@ -56,30 +65,12 @@ namespace DeepBlue.Tests.Models.Fund {
                 delta = 1;
             }
             fund.FundName = GetString(50 + delta);
+			fund.FundAccounts.Add(new FundAccount {
+				BankName = GetString(50 + delta),
+				Account = GetString(40 + delta)
+			});
         }
         #endregion
-
-		//#region FundAccounts
-		//private void RequiredFieldDataMissingForFundAccounts(DeepBlue.Models.Entity.FundAccount fundaccount, bool ifValidData) {
-		//    if (ifValidData) {
-		//        fundaccount.BankName = "BankName";
-		//        fundaccount.Account = "Account";
-		//    }
-		//    else {
-		//        fundaccount.BankName = string.Empty;
-		//        fundaccount.Account  = string.Empty;
-		//    }
-		//}
-
-		//private void StringLengthInvalidDataForFundAccounts(DeepBlue.Models.Entity.FundAccount fundaccount, bool ifValidData) {
-		//    int delta = 0;
-		//    if (!ifValidData) {
-		//        delta = 1;
-		//    }
-		//    fundaccount.BankName = GetString(50 + delta);
-		//    fundaccount.Account =  GetString(40 + delta);
-		//}
-		//#endregion
 
     }
 }

@@ -24,11 +24,11 @@ namespace DeepBlue.Helpers {
 	}
 	public class AutoCompleteList{
 		public AutoCompleteList(){
-			id = string.Empty;
+			id = 0;
 			label = string.Empty;
 			value = string.Empty;
 		}
-		public string id { get; set; }
+		public int id { get; set; }
 		public string label { get; set; }
 		public string value { get; set; }
 	}

@@ -36,13 +36,13 @@ namespace DeepBlue.Controllers.CapitalCall {
 		// POST: /CapitalCall/Create
 		[HttpPost]
 		public ActionResult Create(FormCollection collection) {
-			CreateReqularCapitalCallModel model = new CreateReqularCapitalCallModel();
+			CreateReqularModel model = new CreateReqularModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
 				Models.Entity.CapitalCall capitalCall = new Models.Entity.CapitalCall();
 				CapitalCallLineItem item;
-				capitalCall.CapitalAmountCalled = model.CapitalAmount;
+				capitalCall.CapitalAmountCalled = model.CapitalCallAmount;
 				capitalCall.CapitalCallDate = model.CapitalCallDate;
 				capitalCall.CapitalCallDueDate = model.CapitalCallDueDate;
 				capitalCall.CapitalCallNumber = string.Empty;
@@ -62,7 +62,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 					capitalCall.FundExpenses = model.FundExpenseAmount ?? 0;
 				}
 				if (model.AddManagementFees) {
-					decimal totalCommittedAmount =  FundRepository.FindTotalCommittedAmount(capitalCall.FundID, (int)Models.Investor.Enums.InvestorType.NonManagingMember);
+					decimal totalCommittedAmount = FundRepository.FindTotalCommittedAmount(capitalCall.FundID, (int)Models.Investor.Enums.InvestorType.NonManagingMember);
 					capitalCall.ManagementFeeStartDate = model.FromDate;
 					capitalCall.ManagementFeeEndDate = model.ToDate;
 					capitalCall.ManagementFees = model.ManagementFees ?? 0;
@@ -115,11 +115,12 @@ namespace DeepBlue.Controllers.CapitalCall {
 			ViewData["MenuName"] = "Fund Tracker";
 			return View();
 		}
+
 		//
 		// POST: /CapitalCall/CreateManualCapitalCall
 		[HttpPost]
 		public ActionResult CreateManualCapitalCall(FormCollection collection) {
-			CreateManualCapitalCallModel model = new CreateManualCapitalCallModel();
+			CreateManualModel model = new CreateManualModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
@@ -129,7 +130,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 				capitalCall.CapitalCallDate = model.CapitalCallDate;
 				capitalCall.CapitalCallDueDate = model.CapitalCallDueDate;
 				capitalCall.CapitalCallNumber = string.Empty;
-				capitalCall.CapitalCallTypeID = (int)Models.CapitalCall.Enums.CapitalCallType.Reqular;
+				capitalCall.CapitalCallTypeID = (int)Models.CapitalCall.Enums.CapitalCallType.Manual;
 				capitalCall.CreatedBy = AppSettings.CreatedByUserId;
 				capitalCall.CreatedDate = DateTime.Now;
 				capitalCall.ExistingInvestmentAmount = model.ExistingInvestmentAmount ?? 0;
@@ -195,7 +196,74 @@ namespace DeepBlue.Controllers.CapitalCall {
 			return View("Result", resultModel);
 		}
 
+		//
+		// POST: /CapitalCall/CreateReceiveCapitalCall
+		[HttpPost]
+		public ActionResult CreateReceiveCapitalCall(FormCollection collection) {
+			CreateReceiveModel model = new CreateReceiveModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				Models.Entity.CapitalCall capitalCall = CapitalCallRepository.FindCapitalCall(model.CapitalCallId);
+				CapitalCallLineItem item;
+				capitalCall.CapitalAmountCalled = model.CapitalAmountCalled;
+				capitalCall.CapitalCallDate = model.CapitalCallDate;
+				capitalCall.CapitalCallDueDate = model.CapitalCallDueDate;
+				capitalCall.LastUpdatedBy = AppSettings.CreatedByUserId;
+				capitalCall.LastUpdatedDate = DateTime.Now;
+				int index;
+				for (index = 1; index < model.ItemCount + 1; index++) {
+					item = capitalCall.CapitalCallLineItems.SingleOrDefault(capitalCallItem => capitalCallItem.CapitalCallLineItemID == Convert.ToInt32(collection[index.ToString() + "_" + "CapitalCallLineItemId"]));
+					if (item != null) {
+						item.LastUpdatedBy = AppSettings.CreatedByUserId;
+						item.LastUpdatedDate = DateTime.Now;
+						if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "CapitalAmountCalled"]) == false) {
+							item.CapitalAmountCalled = Convert.ToDecimal(collection[index.ToString() + "_" + "CapitalAmountCalled"]);
+						}
+						if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "ManagementFees"]) == false) {
+							item.ManagementFees = Convert.ToDecimal(collection[index.ToString() + "_" + "ManagementFees"]);
+						}
+						if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "InvestmentAmount"]) == false) {
+							item.InvestmentAmount = Convert.ToDecimal(collection[index.ToString() + "_" + "InvestmentAmount"]);
+						}
+						if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "InvestedAmountInterest"]) == false) {
+							item.InvestedAmountInterest = Convert.ToDecimal(collection[index.ToString() + "_" + "InvestedAmountInterest"]);
+						}
+						if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "ManagementFeeInterest"]) == false) {
+							item.ManagementFeeInterest = Convert.ToDecimal(collection[index.ToString() + "_" + "ManagementFeeInterest"]);
+						}
+						if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "Received"]) == false) {
+							if (collection[index.ToString() + "_" + "Received"].Contains("true")) {
+								if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "ReceivedDate"]) == false) {
+									item.ReceivedDate = Convert.ToDateTime(collection[index.ToString() + "_" + "ReceivedDate"]);
+								}
+							}
+						}
+						if ((item.ReceivedDate ?? Convert.ToDateTime("01/01/1900")).Year <= 1900) {
+							item.ReceivedDate = null;
+						}
+					}
+				}
+				IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalCall(capitalCall);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+			}
+			if (ModelState.IsValid == false) {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
 
+		//
 		//GET : /CapitalCall/FundDetail
 		[HttpGet]
 		public JsonResult FundDetail(int id) {
@@ -217,7 +285,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 		}
 
 		//
-		// GET: /Admin/CapitalCallList
+		// GET: /CapitalCall/CapitalCallList
 		[HttpGet]
 		public ActionResult CapitalCallList(int pageIndex, int pageSize, string sortName, string sortOrder, int fundId) {
 			int totalRows = 0;
@@ -227,6 +295,66 @@ namespace DeepBlue.Controllers.CapitalCall {
 			return View(capitalCalls);
 		}
 
+		//
+		// GET: /CapitalCall/Receive
+		[HttpGet]
+		public ActionResult Receive(int? id, int? fundId) {
+			ViewData["MenuName"] = "Fund Tracker";
+			CreateReceiveModel model = new CreateReceiveModel();
+			model.CapitalCallId = id ?? 0;
+			model.FundId = fundId ?? 0;
+			model.CapitalCalls = new List<SelectListItem>();
+			model.CapitalCalls.Add(new SelectListItem {
+				Value = "0", Text = "--Select One--", Selected = false
+			});
+			model.Items = new List<CapitalCallLineItemDetail>();
+			model.Items.Add(new CapitalCallLineItemDetail());
+			return View(model);
+		}
+
+		//
+		// GET: /CapitalCall/CapitalCallList
+		[HttpGet]
+		public JsonResult GetCapitalCallList(int fundId) {
+			List<Models.Entity.CapitalCall> capitalCalls = CapitalCallRepository.GetCapitalCalls(fundId);
+			List<SelectListItem> selectLists = new List<SelectListItem>();
+			foreach (var capitalCall in capitalCalls) {
+				selectLists.Add(new SelectListItem { Selected = false, Text = capitalCall.CapitalCallNumber + "# (" + capitalCall.CapitalCallDate.ToString("MM/dd/yyyy") + ")", Value = capitalCall.CapitalCallID.ToString() });
+			}
+			return Json(selectLists, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /CapitalCall/FindCapitalCall
+		[HttpGet]
+		public JsonResult FindCapitalCall(int id) {
+			CreateReceiveModel model = new CreateReceiveModel();
+			Models.Entity.CapitalCall capitalCall = CapitalCallRepository.FindCapitalCall(id);
+			if (capitalCall != null) {
+				model.FundId = capitalCall.Fund.FundID;
+				model.FundName = capitalCall.Fund.FundName;
+				model.CapitalCallNumber = capitalCall.CapitalCallNumber;
+				model.CapitalAmountCalled = capitalCall.CapitalAmountCalled;
+				model.CapitalCallDate = capitalCall.CapitalCallDate;
+				model.CapitalCallDueDate = capitalCall.CapitalCallDueDate;
+				model.CapitalCallId = capitalCall.CapitalCallID;
+				model.Items = new List<CapitalCallLineItemDetail>();
+				foreach (var item in capitalCall.CapitalCallLineItems) {
+					model.Items.Add(new CapitalCallLineItemDetail {
+						InvestorName = item.Investor.InvestorName,
+						CapitalAmountCalled = item.CapitalAmountCalled,
+						InvestedAmountInterest = item.InvestedAmountInterest ?? 0,
+						CapitalCallLineItemId = item.CapitalCallLineItemID,
+						InvestmentAmount = item.InvestedAmountInterest ?? 0,
+						ManagementFeeInterest = item.ManagementFeeInterest ?? 0,
+						ManagementFees = item.ManagementFees ?? 0,
+						Received = (item.ReceivedDate.HasValue ? true : false),
+						ReceivedDate = item.ReceivedDate ?? Convert.ToDateTime("01/01/1900")
+					});
+				}
+			}
+			return Json(model, JsonRequestBehavior.AllowGet);
+		}
 
 		#region Manament Fee Calculation
 		//GET : /CapitalCall/CalculateManagementFee

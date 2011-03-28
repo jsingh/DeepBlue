@@ -20,6 +20,13 @@ namespace DeepBlue.Models.Entity {
 					// Define an ObjectStateEntry and EntityKey for the current object. 
 					EntityKey key;
 					object originalItem;
+					foreach (var item in capitalCall.CapitalCallLineItems) {
+						key = default(EntityKey);
+						key = context.CreateEntityKey("CapitalCallLineItems", item);
+						if (context.TryGetObjectByKey(key, out originalItem)) {
+							context.ApplyCurrentValues(key.EntitySetName, item);
+						}
+					}
 					key = default(EntityKey);
 					key = context.CreateEntityKey("CapitalCalls", capitalCall);
 					if (context.TryGetObjectByKey(key, out originalItem)) {

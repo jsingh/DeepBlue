@@ -59,11 +59,17 @@ namespace DeepBlue.Controllers.Fund {
 			}
 		}
 
-		public List<Models.Entity.Fund> FindFunds(string fundName) {
+		public List<AutoCompleteList> FindFunds(string fundName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from fund in context.Funds
+				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.Funds
 						where fund.FundName.Contains(fundName)
-						select fund).ToList();
+						orderby fund.FundName
+						select new AutoCompleteList {
+							id = fund.FundID,
+							label = fund.FundName,
+							value = fund.FundName
+						});
+				return new PaginatedList<AutoCompleteList>(fundListQuery, 1, 20);
 			}
 		}
 
@@ -133,9 +139,9 @@ namespace DeepBlue.Controllers.Fund {
 		}
 
 		public decimal FindTotalCommittedAmount(int fundId, int investorTypeId) {
-				using (DeepBlueEntities context = new DeepBlueEntities()) {
-					return context.InvestorFunds.Where(investorFund => investorFund.InvestorTypeId == investorTypeId && investorFund.FundID == fundId).Sum(invfund => invfund.TotalCommitment);
-				}
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.InvestorFunds.Where(investorFund => investorFund.InvestorTypeId == investorTypeId && investorFund.FundID == fundId).Sum(invfund => invfund.TotalCommitment);
+			}
 		}
 
 		#endregion

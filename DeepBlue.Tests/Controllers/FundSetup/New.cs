@@ -21,7 +21,7 @@ namespace DeepBlue.Tests.Controllers.FundSetup {
         public override void Setup() {
             // Arrange
             base.Setup();
-			base.ActionResult = base.DefaultController.Edit(0);
+			base.ActionResult = base.DefaultController.New();
         }
  
 		[Test]

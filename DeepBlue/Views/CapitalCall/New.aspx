@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<DeepBlue.Models.CapitalCall.CreateReqularCapitalCallModel>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<DeepBlue.Models.CapitalCall.CreateReqularModel>" %>
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
@@ -23,7 +23,6 @@
 	<div class="cc-main" id="CCDetail">
 		<% Html.EnableClientValidation(); %>
 		<% using (Ajax.BeginForm("Create", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "capitalCall.onCreateCapitalCallBegin", OnSuccess = "capitalCall.onCreateCapitalCallSuccess" }, new { @id = "CapitalCall" })) {%>
-		<%: Html.ValidationSummary(true) %>
 		<div class="box">
 			<div class="box-top">
 				<div class="box-left">
@@ -38,10 +37,10 @@
 			<div class="box-content">
 				<div class="edit-left">
 					<div class="editor-label">
-						<%: Html.LabelFor(model => model.CapitalAmount) %>
+						<%: Html.LabelFor(model => model.CapitalCallAmount)%>
 					</div>
 					<div class="editor-field" style="width: auto">
-						<%: Html.TextBoxFor(model => model.CapitalAmount,new { @onkeypress = "return jHelper.isCurrency(event);" , @style="width:110px" }) %>
+						<%: Html.TextBoxFor(model => model.CapitalCallAmount, new { @onkeypress = "return jHelper.isCurrency(event);", @style = "width:110px" })%>
 					</div>
 					<div class="editor-label" style="clear: right">
 						<%: Html.LabelFor(model => model.CapitalCallDate) %>
@@ -138,7 +137,7 @@
 		<%: Html.HiddenFor(model => model.CapitalCallNumber)%>
 		<%: Html.ValidationMessageFor(model => model.CapitalCallDueDate) %>
 		<%: Html.ValidationMessageFor(model => model.CapitalCallDate) %>
-		<%: Html.ValidationMessageFor(model => model.CapitalAmount) %>
+		<%: Html.ValidationMessageFor(model => model.CapitalCallAmount)%>
 		<%: Html.ValidationMessageFor(model => model.NewInvestmentAmount)%>
 		<%: Html.ValidationMessageFor(model => model.ExistingInvestmentAmount)%>
 		<%: Html.ValidationMessageFor(model => model.FundId) %>

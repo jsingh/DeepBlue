@@ -57,3 +57,6 @@
 .investor-detail{
 	clear:both;
 }
+#FundDetails .editor-label{
+	padding:5px;
+}

@@ -21,7 +21,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
         public override void Setup() {
             // Arrange
             base.Setup();
-			base.ActionResult = base.DefaultController.EditInvestorEntityType(0);
+			base.ActionResult = base.DefaultController.EditInvestorEntityType(1);
         }
  
 		[Test]

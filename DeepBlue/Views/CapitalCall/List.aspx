@@ -53,6 +53,9 @@
 					<table cellpadding="0" cellspacing="0" border="0" id="FundDetail">
 						<thead>
 							<tr>
+								<th style="width: 20%;display:none;" align="center" sortname="CapitalCallID">
+									Capital Call Id
+								</th>
 								<th style="width: 20%" align="center" sortname="CapitalCallID">
 									Capital Call Number
 								</th>
@@ -83,7 +86,8 @@
 	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { capitalCallDetail.selectFund(ui.item.id);}" })%>
 	<%= Html.jQueryFlexiGrid("FundDetail", new FlexigridOptions { 
 	ActionName="CapitalCallList", ControllerName="CapitalCall", Autoload=false, SortName="CapitalCallID", SortOrder="desc",
-	 HttpMethod="Get", Paging=true, Height = 480 })%>
+	HttpMethod = "Get", Paging = true, Height = 480, OnRowClick = "capitalCallDetail.selectCapitalCall"
+})%>
 
 	<script type="text/javascript">
 		capitalCallDetail.init();

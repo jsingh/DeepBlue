@@ -117,4 +117,5 @@
 			location.href="/CapitalCall/New";
 		}
 	}
+	
 }

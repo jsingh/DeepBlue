@@ -6,7 +6,7 @@ using System.Web;
 namespace DeepBlue.Helpers {
 	public class FlexigridOptions {
 		public FlexigridOptions() {
-			Height = 600;
+			Height = 615;
 			Width = 0;
 			ActionName = string.Empty;
 			ControllerName = string.Empty;
@@ -15,6 +15,7 @@ namespace DeepBlue.Helpers {
 			RowsLength = 20;
 			OnSuccess = string.Empty;
 			OnSubmit = string.Empty;
+			OnRowClick = string.Empty;
 			HttpMethod = "GET";
 			SortName = string.Empty;
 			SortOrder = string.Empty;
@@ -30,6 +31,7 @@ namespace DeepBlue.Helpers {
 		public int RowsLength { get; set; }
 		public string OnSuccess { get; set; }
 		public string OnSubmit { get; set; }
+		public string OnRowClick { get; set; }
 		public string SortName  { get; set; }
 		public string SortOrder { get; set; }
 		public bool Autoload  { get; set; }

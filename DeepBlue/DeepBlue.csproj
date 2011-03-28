@@ -117,12 +117,14 @@
     <Compile Include="Models\Admin\ListModel.cs" />
     <Compile Include="Models\Admin\ResultModel.cs" />
     <Compile Include="Models\CapitalCall\CapitalCallDetail.cs" />
-    <Compile Include="Models\CapitalCall\CreateManualCapitalCallModel.cs" />
-    <Compile Include="Models\CapitalCall\CreateReqularCapitalCallModel.cs" />
+    <Compile Include="Models\CapitalCall\CreateDistributionModel.cs" />
+    <Compile Include="Models\CapitalCall\CreateManualModel.cs" />
+    <Compile Include="Models\CapitalCall\CreateReqularModel.cs" />
     <Compile Include="Models\CapitalCall\Enums.cs" />
     <Compile Include="Models\CapitalCall\FundDetail.cs" />
     <Compile Include="Models\CapitalCall\ListModel.cs" />
     <Compile Include="Models\CapitalCall\ManagementFeeDetail.cs" />
+    <Compile Include="Models\CapitalCall\CreateReceiveModel.cs" />
     <Compile Include="Models\CapitalCall\ResultModel.cs" />
     <Compile Include="Models\Document\SearchModel.cs" />
     <Compile Include="Models\Document\CreateModel.cs" />
@@ -278,6 +280,7 @@
     <Content Include="Assets\images\xls.png" />
     <Content Include="Assets\javascripts\CapitalCall.js" />
     <Content Include="Assets\javascripts\CapitalCallDetail.js" />
+    <Content Include="Assets\javascripts\CapitalCallReceive.js" />
     <Content Include="Assets\javascripts\ManualCapitalCall.js" />
     <Content Include="Assets\javascripts\DataType.js" />
     <Content Include="Assets\javascripts\CustomField.js" />
@@ -349,6 +352,7 @@
     <Content Include="Views\CapitalCall\List.aspx" />
     <Content Include="Views\CapitalCall\New.aspx" />
     <Content Include="Views\CapitalCall\NewManualCapitalCall.aspx" />
+    <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Document\List.ascx" />
     <Content Include="Views\Document\New.aspx" />

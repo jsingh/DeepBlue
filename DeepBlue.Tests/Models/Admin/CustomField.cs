@@ -56,9 +56,6 @@ namespace DeepBlue.Tests.Models.Admin {
 				delta = 1;
 			}
 			customfield.CustomFieldText  = GetString(50 + delta);
-			//customfield.ModuleID = 0 + delta;
-			//customfield.DataTypeID = 0 + delta;
-			
 		}
 		#endregion
     }

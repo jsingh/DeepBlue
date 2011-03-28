@@ -7,6 +7,7 @@
    foreach (var item in Model) {
 	   row = new FlexigridRow();
 	   row.cell.Add(item.CapitalCallID.ToString());
+	   row.cell.Add(item.CapitalCallNumber.ToString());
 	   row.cell.Add(string.Format("{0:C}", item.CapitalAmountCalled));
 	   row.cell.Add(string.Format("{0:C}", item.ManagementFees));
 	   row.cell.Add(string.Format("{0:C}", item.FundExpenses));

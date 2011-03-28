@@ -37,10 +37,25 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
+
+
+			[Required]
+			[Range(1, double.MaxValue)]
+			public global::System.Decimal CapitalCallAmount {
+				get;
+				set;
+			}
+
+			[Required]
+			[Range(1, double.MaxValue)]
+			public global::System.Decimal NewInvestmentAmount {
+				get;
+				set;
+			}
 		
 			#endregion
 		}
-
+																							
 		public CapitalCall(ICapitalCallService capitalCallservice)
 			: this() {
 			this.capitalCallservice = capitalCallservice;

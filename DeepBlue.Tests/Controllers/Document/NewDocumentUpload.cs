@@ -25,7 +25,7 @@ namespace DeepBlue.Tests.Controllers.Document {
         }
  
 		[Test]
-		public void create_a_new_investor() {
+		public void create_a_new_document() {
 			Assert.IsInstanceOfType<ActionResult>(base.ActionResult);
 		}
     }

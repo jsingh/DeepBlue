@@ -499,24 +499,14 @@ namespace DeepBlue.Controllers.Investor {
 
 		//
 		// GET: /Investor/FindInvestors
-		public JsonResult FindInvestors() {
-			List<InvestorDetail> investorDetails = InvestorRepository.FindInvestors(Request.QueryString["term"]);
-			List<AutoCompleteList> autoCompleteLists = new List<AutoCompleteList>();
-			foreach (var detail in investorDetails) {
-				autoCompleteLists.Add(new AutoCompleteList { id = detail.InvestorId.ToString(), label = detail.InvestorName + "  (" + detail.Social.ToString() + ")", value = detail.InvestorName.ToString() });
-			}
-			return Json(autoCompleteLists, JsonRequestBehavior.AllowGet);
+		public JsonResult FindInvestors(string term) {
+			return Json(InvestorRepository.FindInvestors(term), JsonRequestBehavior.AllowGet);
 		}
 
 		//
 		// GET: /Investor/FindOtherInvestors
-		public JsonResult FindOtherInvestors() {
-			List<InvestorDetail> investorDetails = InvestorRepository.FindOtherInvestors(Request.QueryString["term"], Convert.ToInt32(Request.QueryString["investorid"]));
-			List<AutoCompleteList> autoCompleteLists = new List<AutoCompleteList>();
-			foreach (var detail in investorDetails) {
-				autoCompleteLists.Add(new AutoCompleteList { id = detail.InvestorId.ToString(), label = detail.InvestorName + "  (" + detail.Social.ToString() + ")", value = detail.InvestorName.ToString() });
-			}
-			return Json(autoCompleteLists, JsonRequestBehavior.AllowGet);
+		public JsonResult FindOtherInvestors(int investorId,string term) {
+			return Json(InvestorRepository.FindOtherInvestors(term, investorId), JsonRequestBehavior.AllowGet);
 		}
 
 		//

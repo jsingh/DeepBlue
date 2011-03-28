@@ -40,8 +40,8 @@ namespace DeepBlue.Tests.Controllers.Transaction {
 			MockAdminRepository.Setup(x => x.GetAllInvestorTypes()).Returns(GetMockAllInvestorTypes());
         }
 		
-		private List<Fund> GetMockAllFundNames() {
-			List<Fund> funds = new List<Fund>();
+		private List<DeepBlue.Models.Entity.Fund> GetMockAllFundNames() {
+			List<DeepBlue.Models.Entity.Fund> funds = new List<DeepBlue.Models.Entity.Fund>();
 			return funds;
         }
 

@@ -56,8 +56,6 @@ namespace DeepBlue.Tests.Models.Admin {
 				delta = 1;
 			}
 			fundClosing.Name = GetString(50 + delta);
-			//fundClosing.FundID = 0 + delta ;
-			//fundClosing.FundClosingDate = DateTime.Now + delta;
 		}
 		#endregion
     }

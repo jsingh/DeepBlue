@@ -50,17 +50,12 @@ namespace DeepBlue.Controllers.Fund {
 		// GET: /Fund/FindFunds
 		[HttpGet]
 		public JsonResult FindFunds(string term) {
-			List<Models.Entity.Fund> funds = FundRepository.FindFunds(term);
-			List<AutoCompleteList> autoCompleteLists = new List<AutoCompleteList>();
-			foreach (var detail in funds) {
-				autoCompleteLists.Add(new AutoCompleteList { id = detail.FundID.ToString(), label = detail.FundName, value = detail.FundName });
-			}
-			return Json(autoCompleteLists, JsonRequestBehavior.AllowGet);
+			return Json(FundRepository.FindFunds(term), JsonRequestBehavior.AllowGet);
 		}
 
 
 		//
-		// GET: /Investor/New
+		// GET: /Fund/New
 		public ActionResult New() {
 			CreateModel model = new CreateModel();
 			/* Load Custom Fields */
@@ -92,7 +87,7 @@ namespace DeepBlue.Controllers.Fund {
 		}
 
 		//
-		// GET: /Investor/Edit/1
+		// GET: /Fund/Edit/1
 		public ActionResult Edit(int id) {
 			EditModel model = new EditModel();
 			Models.Entity.Fund fund = FundRepository.FindFund(id);
@@ -294,7 +289,7 @@ namespace DeepBlue.Controllers.Fund {
 							int tiersCount = Convert.ToInt32(collection[index.ToString() + "_Tiers"]);
 							int tierIndex = 0;
 							for (tierIndex = 1; tierIndex < tiersCount + 1; tierIndex++) {
-								if (collection[index.ToString() + "_IsScheduleChange"] == "true" && 
+								if (collection[index.ToString() + "_IsScheduleChange"] == "true" &&
 									string.IsNullOrEmpty(collection[index.ToString() + "_$" + tierIndex.ToString() + "$StartDate"]) == false &&
 									string.IsNullOrEmpty(collection[index.ToString() + "_$" + tierIndex.ToString() + "$EndDate"]) == false) {
 
@@ -372,8 +367,6 @@ namespace DeepBlue.Controllers.Fund {
 
 			return View("Result", resultModel);
 		}
-
-
 
 		private string SaveCustomValues(FormCollection collection, int key) {
 			System.Text.StringBuilder result = new StringBuilder();

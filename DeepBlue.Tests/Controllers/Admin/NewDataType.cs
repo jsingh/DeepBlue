@@ -21,11 +21,11 @@ namespace DeepBlue.Tests.Controllers.Admin {
         public override void Setup() {
             // Arrange
             base.Setup();
-			base.ActionResult = base.DefaultController.EditDataType(0);
+			base.ActionResult = base.DefaultController.EditDataType(1);
         }
  
 		[Test]
-		public void create_a_new_investorentitytype() {
+		public void create_a_new_datatype() {
 			Assert.IsInstanceOfType<ActionResult>(base.ActionResult);
 		}
 		

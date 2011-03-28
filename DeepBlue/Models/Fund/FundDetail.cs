@@ -34,6 +34,10 @@ namespace DeepBlue.Models.Fund {
 		[DisplayName("Fund Start Date:")]
 		public DateTime FundStartDate { get; set; }
 
+		[Required(ErrorMessage = "Inception Date is required")]
+		[DisplayName("Inception Date:")]
+		public DateTime InceptionDate { get; set; }
+
 		[DisplayName("Schedule Termination Date:")]
 		public DateTime? ScheduleTerminationDate { get; set; }
 

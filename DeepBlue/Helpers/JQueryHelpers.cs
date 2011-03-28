@@ -61,6 +61,15 @@ namespace DeepBlue.Helpers {
 			if (string.IsNullOrEmpty(options.ControllerName) == false && string.IsNullOrEmpty(options.ActionName) == false) {
 				scriptSrc.Append(",url:\"/" + options.ControllerName.ToString() + "/" + options.ActionName.ToString() + "\"");
 			}
+			if (string.IsNullOrEmpty(options.OnSuccess) == false) {
+				scriptSrc.Append(",onSuccess:" + options.OnSuccess + "");
+			}
+			if (string.IsNullOrEmpty(options.OnSubmit) == false) {
+				scriptSrc.Append(",onSubmit:" + options.OnSubmit + "");
+			}
+			if(string.IsNullOrEmpty(options.OnRowClick)==false){
+				scriptSrc.Append(",onRowClick:" + options.OnRowClick + "");
+			}
 			scriptSrc.Append(",method:\"" + options.HttpMethod.ToString() + "\"")
 			 .Append(",sortname:\"" + options.SortName.ToString() + "\"")
 			 .Append(",sortorder:\"" + options.SortOrder.ToString() + "\"")

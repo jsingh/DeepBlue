@@ -33,10 +33,12 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			[Required]
+			[Range(typeof(DateTime), "1/1/1900", "1/1/9999")]
 			public global::System.DateTime InceptionDate {
 				get;
 				set;
 			}
+
 
 			#endregion
 		}
@@ -101,7 +103,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[StringLength(20), Required]
+			[StringLength(40), Required]
 			public global::System.String Account {
 				get;
 				set;

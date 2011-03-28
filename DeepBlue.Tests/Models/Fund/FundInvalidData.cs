@@ -30,7 +30,27 @@ namespace DeepBlue.Tests.Models.Fund {
 
         [Test]
         public void create_a_new_fund_without_valid_taxid_throws_error() {
-            Assert.IsTrue(IsPropertyValid("TaxID"));
+			Assert.IsTrue(IsPropertyValid("TaxId"));
         }
+
+		[Test]
+		public void create_a_new_document_without_inception_date_throws_error() {
+			Assert.IsFalse(IsPropertyValid("InceptionDate"));
+		}
+
+		//[Test]
+		//public void create_a_new_fund_without_bank_name_throws_error() {
+		//    Assert.IsFalse(IsPropertyValid("BankName"));
+		//}
+
+		//[Test]
+		//public void create_a_new_fund_without_too_long_bank_name_throws_error() {
+		//    Assert.IsFalse(IsPropertyValid("BankName"));
+		//}
+
+		//[Test]
+		//public void create_a_new_fund_without_account_throws_error() {
+		//    Assert.IsFalse(IsPropertyValid("Account"));
+		//}
     }
 }

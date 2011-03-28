@@ -5,24 +5,14 @@ using System.Web;
 using DeepBlue.Models;
 using DeepBlue.Models.Entity;
 using DeepBlue.Models.Investor;
+using DeepBlue.Helpers;
 
 
 namespace DeepBlue.Controllers.Investor {
 	public class InvestorRepository : IInvestorRepository {
 	
 		#region IInvestorRepository Investors
-		public List<InvestorDetail> FindOtherInvestors(string investorName, int excludeInvestorId) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investor in context.Investors
-						where investor.InvestorName.Contains(investorName) && investor.InvestorID != excludeInvestorId
-						select new InvestorDetail {
-							InvestorName = investor.InvestorName,
-							InvestorId = investor.InvestorID,
-							Social = investor.Social
-						}).ToList();
-			}
-		}
-
+	
 		public Models.Entity.Investor FindInvestor(int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				Models.Entity.Investor deepBlueinvestor = context.Investors
@@ -156,18 +146,34 @@ namespace DeepBlue.Controllers.Investor {
 			}
 		}
 
-		public List<InvestorDetail> FindInvestors(string investorName) {
+		public List<AutoCompleteList> FindInvestors(string investorName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investor in context.Investors
-						where investor.InvestorName.Contains(investorName)
-						select new InvestorDetail {
-							InvestorName = investor.InvestorName,
-							DisplayName = investor.Alias,
-							InvestorId = investor.InvestorID,
-							Social = investor.Social
-						}).ToList();
+				IQueryable<AutoCompleteList> query = (from investor in context.Investors
+													  where investor.InvestorName.Contains(investorName)
+													  orderby investor.InvestorName
+															  select new AutoCompleteList {
+																  id = investor.InvestorID,
+																  label = investor.InvestorName + " (" + investor.Social + ")",
+																  value = investor.InvestorName 
+															  });
+				return new PaginatedList<AutoCompleteList>(query, 1, 20);
 			}
 		}
+
+		public List<AutoCompleteList> FindOtherInvestors(string investorName, int excludeInvestorId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> query = (from investor in context.Investors
+													  where investor.InvestorName.Contains(investorName) && investor.InvestorID != excludeInvestorId
+													  orderby investor.InvestorName
+													  select new AutoCompleteList {
+														  id = investor.InvestorID,
+														  label = investor.InvestorName + " (" + investor.Social + ")",
+														  value = investor.InvestorName
+													  });
+				return new PaginatedList<AutoCompleteList>(query, 1, 20);
+			}
+		}
+
 
 		public InvestorDetail FindInvestorDetail(int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {

@@ -37,10 +37,10 @@ namespace DeepBlue.Tests.Controllers.Investor {
         
 
         [Test]
-        public void returns_back_to_new_view_if_saving_investor_failed() {
-            SetFormCollection();
-            Assert.IsNotNull(Model);
-        }
+		//public void returns_back_to_new_view_if_saving_investor_failed() {
+		//    SetFormCollection();
+		//    Assert.IsNotNull(Model);
+		//}
 
         #endregion
        

@@ -1,0 +1,42 @@
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using MbUnit.Framework;
+using Moq;
+using DeepBlue.Models.Entity;
+using DeepBlue.Helpers;
+
+namespace DeepBlue.Tests.Models.CapitalCall {
+    public class CapitalCallManualValidData : CapitalCallManualTest  {
+
+        [SetUp]
+        public override void Setup() {
+            base.Setup();
+			Create_Data(DefaultCapitalCallManual, true);
+			this.ServiceErrors = DefaultCapitalCallManual.Save();
+        }
+
+
+        [Test]
+        public void create_a_new_capitalcallmanual_with_valid_capitalamount_passes() {
+			Assert.IsTrue(IsPropertyValid("CapitalCallAmount"));
+        }
+
+        [Test]
+        public void create_a_new_capitalcallmanual_with_valid_capitalcalldate_passes() {
+			Assert.IsTrue(IsPropertyValid("CapitalCallDate"));
+        }
+
+		[Test]
+		public void create_a_new_capitalcallmanual_with_valid_capitalcallduedate_passes() {
+			Assert.IsTrue(IsPropertyValid("CapitalCallDueDate"));
+		}
+
+		[Test]
+		public void create_a_new_capitalcallmanual_with_valid_newinvestmentamount_passes() {
+			Assert.IsTrue(IsPropertyValid("NewInvestmentAmount"));
+		}
+    }
+}

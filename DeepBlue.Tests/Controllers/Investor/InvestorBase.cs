@@ -30,10 +30,11 @@ namespace DeepBlue.Tests.Controllers.Investor {
             // Spin up the controller with the mock http context, and the mock repository
             DefaultController = new InvestorController(MockRepository.Object, MockAdminRepository.Object);
             DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
-			MockRepository.Setup(x => x.GetAllCountries()).Returns(GetMockCountries());
-			MockRepository.Setup(x => x.GetAllStates()).Returns(GetMockStates());
-			MockRepository.Setup(x => x.GetAllAddressTypes()).Returns(GetAddressTypes());
-			MockRepository.Setup(x => x.GetAllInvestorEntityTypes()).Returns(new List<InvestorEntityType>());
+			MockAdminRepository.Setup(x => x.GetAllCountries()).Returns(GetMockCountries());
+			MockAdminRepository.Setup(x => x.GetAllStates()).Returns(GetMockStates());
+			MockAdminRepository.Setup(x => x.GetAllAddressTypes()).Returns(GetAddressTypes());
+			MockAdminRepository.Setup(x => x.GetAllInvestorEntityTypes()).Returns(new List<InvestorEntityType>());
+			MockAdminRepository.Setup(x => x.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor)).Returns(new List<CustomField>());
         }
 
         private List<DeepBlue.Models.Entity.STATE> GetMockStates() {

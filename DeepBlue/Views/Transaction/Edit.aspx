@@ -125,7 +125,7 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%= Html.jQueryAutoComplete("CounterPartyInvestor", new AutoCompleteOptions {
-	Source = "/Investor/FindOtherInvestors?investorid=" + Model.InvestorId.ToString(), MinLength = 1,
+	Source = "/Investor/FindOtherInvestors?investorId=" + Model.InvestorId.ToString(), MinLength = 1,
 																			OnSelect = "function(event, ui){ editTransaction.selectInvestor(ui.item.id);}"
 		})%>
 	<%= Html.jQueryDatePicker("Date")%>

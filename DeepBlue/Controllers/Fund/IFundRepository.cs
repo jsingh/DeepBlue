@@ -13,7 +13,7 @@ namespace DeepBlue.Controllers.Fund {
 		#region EntiryType
 		List<FundListModel> GetAllFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		Models.Entity.Fund FindFund(int fundId);
-		List<Models.Entity.Fund> FindFunds(string fundName);
+		List<AutoCompleteList> FindFunds(string fundName);
 		bool TaxIdAvailable(string taxId, int fundId);
 		bool FundNameAvailable(string fundName, int fundId);
 		decimal FindTotalCommittedAmount(int fundId,int investorTypeId);

@@ -27,6 +27,16 @@ namespace DeepBlue.Controllers.CapitalCall {
 			}
 		}
 
+
+		public List<Models.Entity.CapitalCall> GetCapitalCalls(int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from capitalCall in context.CapitalCalls		
+						where capitalCall.FundID == fundId
+						orderby capitalCall.CapitalCallNumber
+						select capitalCall).ToList();
+			}
+		}
+
 		public CapitalCallDetail FindCapitalCallDetail(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				List<Models.Entity.CapitalCall> calls = context.CapitalCalls.Where(capitalCallDetail => capitalCallDetail.FundID == fundId).ToList();
@@ -37,6 +47,10 @@ namespace DeepBlue.Controllers.CapitalCall {
 					detail.FundExpenses = string.Format("{0:C}", calls.Sum(capitalCall => capitalCall.FundExpenses ?? 0));
 					detail.ManagementFees = string.Format("{0:C}", calls.Sum(capitalCall => capitalCall.ManagementFees ?? 0));
 					detail.UnfundedAmount = string.Format("{0:C}", calls.Sum(capitalCall => capitalCall.Fund.InvestorFunds.Sum(fund => fund.UnfundedAmount ?? 0)));
+				}else{
+					detail.FundName = (from fund in context.Funds
+										where fund.FundID == fundId
+										select fund.FundName).FirstOrDefault();
 				}
 				return detail;
 			}
@@ -54,6 +68,16 @@ namespace DeepBlue.Controllers.CapitalCall {
 							  .Include("CapitalCalls")
 							  .Include("InvestorFunds")
 							  .SingleOrDefault(fund => fund.FundID == fundId);
+			}
+		}
+
+		public Models.Entity.CapitalCall FindCapitalCall(int capitalCallId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.CapitalCalls
+							  .Include("CapitalCallLineItems")
+							  .Include("Fund")
+							  .Include("CapitalCallLineItems.Investor")
+							  .SingleOrDefault(capitalCall => capitalCall.CapitalCallID == capitalCallId);
 			}
 		}
 

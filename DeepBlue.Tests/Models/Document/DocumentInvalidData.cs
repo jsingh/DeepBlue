@@ -24,7 +24,7 @@ namespace DeepBlue.Tests.Models.Document {
         }
 
 		[Test]
-		public void create_a_new_document_without_too_long_document_date_throws_error() {
+		public void create_a_new_document_without_document_date_throws_error() {
 			Assert.IsFalse(IsPropertyValid("DocumentDate"));
 		}
 
