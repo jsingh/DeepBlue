@@ -9,12 +9,6 @@ using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
     public class CreateFundClosingInvalidData : EditFundClosing {
-        private EditFundClosingModel  Model {
-            get {
-				return base.ViewResult.ViewData.Model as EditFundClosingModel;
-            }
-        }
-
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;
@@ -60,6 +54,27 @@ namespace DeepBlue.Tests.Controllers.Admin {
         public void invalid_fundclosing_name_sets_1_error() {
 			Assert.IsTrue(test_error_count("Name", 1));
         }
+
+		[Test]
+		public void invalid_fundclosing_fundid_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("FundID"));
+		}
+
+		[Test]
+		public void invalid_fundclosing_fundid_sets_1_error() {
+			Assert.IsTrue(test_error_count("FundID", 1));
+		}
+
+
+		[Test]
+		public void invalid_fundclosing_fundclosingdate_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("FundClosingDate"));
+		}
+
+		[Test]
+		public void invalid_fundclosing_fundclosingdate_sets_1_error() {
+			Assert.IsTrue(test_error_count("FundClosingDate", 1));
+		}
 
         [Test]
         public void invalid_fundclosing_name_results_in_invalid_modelstate() {

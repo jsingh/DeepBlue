@@ -12,7 +12,7 @@ namespace DeepBlue.Models.Entity {
 			#region Primitive Properties
 			[Required]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
-			public global::System.Int32 ModuleID {
+			public global::System.Int32 ModuleId {
 				get;
 				set;
 			}

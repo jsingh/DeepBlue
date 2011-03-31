@@ -34,7 +34,6 @@ namespace DeepBlue.Tests.Models.Document {
 
         protected void Create_Data(DeepBlue.Models.Entity.InvestorFundDocument funddocument, bool ifValid) {
 			RequiredFieldDataMissing(funddocument, ifValid);
-			StringLengthInvalidData(funddocument, ifValid);
         }
 
         #region Document
@@ -47,13 +46,6 @@ namespace DeepBlue.Tests.Models.Document {
 				funddocument.DocumentTypeID  = 0;
 				funddocument.DocumentDate = DateTime.MinValue;
 				funddocument.InvestorID = 0;
-            }
-        }
-
-		private void StringLengthInvalidData(DeepBlue.Models.Entity.InvestorFundDocument funddocument, bool ifValidData) {
-            int delta = 0;
-            if (!ifValidData) {
-                delta = 1;
             }
         }
         #endregion

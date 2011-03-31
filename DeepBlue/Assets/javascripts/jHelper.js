@@ -15,4 +15,11 @@
 		}
 		return true
 	}
+	,cfloat:function(value){
+		var retValue = parseFloat(value);
+		if(isNaN(retValue))
+			return 0;
+		else
+			return retValue;
+	}
 }

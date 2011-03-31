@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.CapitalCall {
 	public class CreateReqularModel {
@@ -14,20 +15,24 @@ namespace DeepBlue.Models.CapitalCall {
 
 		[DisplayName("Capital Amount:")]
 		[Required(ErrorMessage = "Capital Call Amount is required")]
-		public decimal CapitalCallAmount { get; set; }
+		[Range((double)1, (double)decimal.MaxValue, ErrorMessage = "Capital Call Amount is required")]
+		public decimal CapitalAmountCalled { get; set; }
 
 		public string CapitalCallNumber { get; set; }
 
 		[DisplayName("Capital Call Date:")]
 		[Required(ErrorMessage = "Capital Call Date is required")]
+		[DateRange()]
 		public DateTime CapitalCallDate { get; set; }
 
 		[DisplayName("Capital Call Due Date:")]
 		[Required(ErrorMessage = "Capital Call Due Date is required")]
+		[DateRange()]
 		public DateTime CapitalCallDueDate { get; set; }
 
 		[DisplayName("New Investment Amount:")]
 		[Required(ErrorMessage = "New Investment Amount is required")]
+		[Range((double)1, (double)decimal.MaxValue, ErrorMessage = "New Investment Amount is required")]
 		public decimal NewInvestmentAmount { get; set; }
 
 		[DisplayName("Existing Investment Amount:")]

@@ -4,18 +4,11 @@
 		// apply default properties
 		p=$.extend({
 			height: 0, //default height
-			width: 'auto', //auto width
-			striped: true, //apply odd even stripes
-			novstripe: false,
-			minwidth: 30, //min width of columns
-			minheight: 80, //min height of columns
-			resizable: false, //resizable table
 			url: false, //ajax url
 			method: 'POST', // data sending method
 			dataType: 'json', // type of data loaded
 			errormsg: 'Connection Error',
 			usepager: false, //
-			nowrap: true, //
 			page: 1, //current page
 			total: 1, //total pages
 			useRp: true, //use the results per page select box
@@ -24,17 +17,12 @@
 			title: false,
 			pagestat: 'Displaying {from} to {to} of {total} items',
 			procmsg: 'Loading...',
-			query: '',
-			qtype: '',
 			nomsg: 'No items',
-			minColToggle: 1, //minimum allowed column to be hidden
-			showToggleBtn: true, //show or hide column toggle popup
 			hideOnSubmit: true,
 			autoload: true,
 			blockOpacity: 0.5,
 			sortname: '',
 			sortorder: '',
-			onToggleCol: false,
 			onChangeSort: false,
 			onSuccess: false,
 			onRowClick: false,
@@ -85,7 +73,7 @@
 					 data.rows,
 					 function (i,row) {
 					 	var tr=document.createElement('tr');
-					 	if(i%2&&p.striped) tr.className='erow';
+					 	if(i%2) tr.className='erow';
 					 	tr.id='row'+i;
 					 	var i=0;
 					 	$("thead tr th",g.hDiv).each(function () {
@@ -179,7 +167,6 @@
 				if($.browser.opera) $(t).css('visibility','hidden');
 				if(!p.newp) p.newp=1;
 				if(p.page>p.pages) p.page=p.pages;
-				//var param = {page:p.newp, rp: p.rp, sortname: p.sortname, sortorder: p.sortorder, query: p.query, qtype: p.qtype};
 				var dt=new Date();
 				var param=[
 					 { name: 'pageIndex',value: p.newp }
@@ -235,14 +222,6 @@
 		g.hTable=document.createElement("table");
 		//set gDiv
 		g.gDiv.className='flexigrid';
-		if(p.width!='auto') g.gDiv.style.width=p.width+'px';
-		//add conditional classes
-		if($.browser.msie)
-			$(g.gDiv).addClass('ie');
-
-		if(p.novstripe)
-			$(g.gDiv).addClass('novstripe');
-
 		$(t).before(g.gDiv);
 		$(g.gDiv)
 		.append(t)
@@ -295,11 +274,6 @@
 		$(g.bDiv)
 		.append(t)
 		;
-
-		//add strip		
-		if(p.striped)
-			$('tbody tr:odd',g.bDiv).addClass('erow');
-
 		// add pager
 		if(p.usepager) {
 			g.pDiv.className='pDiv';

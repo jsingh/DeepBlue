@@ -9,12 +9,6 @@ using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
     public class CreateInvestorEntityTypeInvalidData : EditInvestorEntityType {
-        private EditInvestorEntityTypeModel Model {
-            get {
-				return base.ViewResult.ViewData.Model as EditInvestorEntityTypeModel;
-            }
-        }
-
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;

@@ -27,7 +27,7 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			[Required]
-			[Range(typeof(DateTime), "1/1/1900", "1/1/9999")]
+			[DateRange()]
 			public global::System.DateTime CreatedDate {
 				get;
 				set;
@@ -35,14 +35,14 @@ namespace DeepBlue.Models.Entity {
 
 
 			[Required]
-			[Range(typeof(DateTime), "1/1/1900", "1/1/9999")]
+			[DateRange()]
 			public global::System.DateTime CommittedDate {
 				get;
 				set;
 			}
 
 			[Required]
-			[Range(1, double.MaxValue)]
+			[Range(1, (double)decimal.MaxValue)]
 			public global::System.Decimal TotalCommitment {
 				get;
 				set;

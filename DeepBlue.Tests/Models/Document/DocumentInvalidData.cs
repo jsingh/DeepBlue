@@ -32,5 +32,6 @@ namespace DeepBlue.Tests.Models.Document {
 		public void create_a_new_document_without_valid_documentinvestorid_throws_error() {
 			Assert.IsFalse(IsPropertyValid("InvestorID"));
 		}
+
     }
 }

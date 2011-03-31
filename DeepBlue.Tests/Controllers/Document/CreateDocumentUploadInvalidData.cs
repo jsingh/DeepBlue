@@ -9,12 +9,6 @@ using DeepBlue.Models.Document;
 
 namespace DeepBlue.Tests.Controllers.Document {
     public class CreateDocumentUploadInvalidData : CreateDocumentUpload {
-        private CreateModel Model {
-            get {
-                return base.ViewResult.ViewData.Model as CreateModel;
-            }
-        }
-
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;
@@ -54,16 +48,26 @@ namespace DeepBlue.Tests.Controllers.Document {
 
 		[Test]
 		public void invalid_DocumentType_id_sets_model_error_on_model_state() {
-			Assert.IsTrue (test_posted_value("DocumentTypeID"));
+			Assert.IsFalse(test_posted_value("DocumentTypeId"));
 		}
 
 		[Test]
 		public void invalid_DocumentType_id_sets_1_error() {
-			Assert.IsFalse(test_error_count("DocumentTypeID", 1));
+			Assert.IsTrue(test_error_count("DocumentTypeId", 1));
+		}
+
+		[Test]
+		public void invalid_DocumentDate_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("DocumentDate"));
+		}
+
+		[Test]
+		public void invalid_DocumentDate_sets_1_error() {
+			Assert.IsTrue(test_error_count("DocumentDate", 1));
 		}
 
         [Test]
-        public void invalid_DocumentType_id_results_in_invalid_modelstate() {
+        public void invalid_Document_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }
@@ -88,9 +92,9 @@ namespace DeepBlue.Tests.Controllers.Document {
    
         private FormCollection GetInvalidformCollection() {
             FormCollection formCollection = new FormCollection();
-            formCollection.Add("DocumentTypeID",string.Empty);
+			formCollection.Add("DocumentTypeID", string.Empty);
 			formCollection.Add("DocumentDate", string.Empty);
-			formCollection.Add("InvestoryID", string.Empty);
+			formCollection.Add("InvestorId", string.Empty);
             return formCollection;
         }
     }

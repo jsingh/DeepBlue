@@ -5,10 +5,14 @@ using System.Web;
 using DeepBlue.Models.Entity;
 using System.ComponentModel;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.CapitalCall {
 	public class CreateReceiveModel {
 
+		[DisplayName("Fund:")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
 		public int FundId { get; set; }
 
 		[DisplayName("Fund Name:")]
@@ -20,12 +24,18 @@ namespace DeepBlue.Models.CapitalCall {
 		public int CapitalCallId { get; set; }
 
 		[DisplayName("Capital Call Amount:")]
+		[Required(ErrorMessage = "Capital Call Amount is required")]
+		[Range((double)1, (double)decimal.MaxValue, ErrorMessage = "Capital Call Amount is required")]
 		public decimal CapitalAmountCalled { get; set; }
 
 		[DisplayName("Capital Call Date:")]
+		[Required(ErrorMessage = "Capital Call Date is required")]
+        [DateRange()]
 		public DateTime CapitalCallDate { get; set; }
 
 		[DisplayName("Capital Call Due Date:")]
+		[Required(ErrorMessage = "Capital Call Due Date is required")]
+        [DateRange()]
 		public DateTime CapitalCallDueDate { get; set; }
 
 		public List<CapitalCallLineItemDetail> Items { get; set; }

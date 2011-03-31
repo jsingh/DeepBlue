@@ -9,11 +9,12 @@ using DeepBlue.Models.CapitalCall ;
 
 namespace DeepBlue.Tests.Controllers.CapitalCall {
     public class CreateCapitalCallManualInvalidData : CreateCapitalCallManual {
-        private CreateManualModel  Model {
-            get {
-				return base.ViewResult.ViewData.Model as CreateManualModel;
-            }
-        }
+
+		protected ResultModel ResultModel {
+			get {
+				return base.ViewResult.ViewData.Model as ResultModel;
+			}
+		}
 
         private ModelStateDictionary ModelState {
             get {
@@ -50,22 +51,48 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
 			IsValid(parameterName, out errors);
             return errorCount == errors;
         }
+		[Test]
+		public void invalid_CapitalCallManual_fundId_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("FundId"));
+		}
 
-        [Test]
-        public void invalid_CapitalCall_amount_sets_model_error_on_model_state() {
-			Assert.IsTrue(test_posted_value("CapitalCallAmount"));
-        }
+		[Test]
+		public void invalid_CapitalCallManual_fundId_sets_1_error() {
+			Assert.IsTrue(test_error_count("FundId", 1));
+		}
 
-        [Test]
-        public void invalid_CapitalCall_amount_sets_1_error() {
-			Assert.IsFalse(test_error_count("CapitalCallAmount", 1));
-        }
+		[Test]
+		public void invalid_CapitalCallManual_amount_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("CapitalAmountCalled"));
+		}
 
-        [Test]
-        public void invalid_CapitalCall_amount_results_in_invalid_modelstate() {
-            SetFormCollection();
-            Assert.IsFalse(base.DefaultController.ModelState.IsValid);
-        }
+		[Test]
+		public void invalid_CapitalCallManual_amount_sets_1_error() {
+			Assert.IsTrue(test_error_count("CapitalAmountCalled", 1));
+		}
+
+
+		[Test]
+		public void invalid_CapitalCallManual_date_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("CapitalCallDate"));
+		}
+
+		[Test]
+		public void invalid_CapitalCallManual_date_sets_1_error() {
+			Assert.IsTrue(test_error_count("CapitalCallDate", 1));
+		}
+
+
+		[Test]
+		public void invalid_CapitalCallManual_duedate_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("CapitalCallDueDate"));
+		}
+
+		[Test]
+		public void invalid_CapitalCallManual_duedate_sets_1_error() {
+			Assert.IsTrue(test_error_count("CapitalCallDueDate", 1));
+		}
+
       
         #endregion
 
@@ -78,21 +105,16 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
         [Test]
         public void model_state_invalid_redirects_to_new_view() {
             SetModelInvalid();
-            Assert.IsNull(Model);
+			Assert.IsNotNull(ResultModel);
         }
-
-       
-
         #endregion
-
-        
 
         private FormCollection GetInvalidformCollection() {
             FormCollection formCollection = new FormCollection();
-			formCollection.Add("CapitalCallAmount", string.Empty);
-			formCollection.Add("CapitalCallDate",string.Empty);
+			formCollection.Add("FundId", string.Empty);
+			formCollection.Add("CapitalAmountCalled", string.Empty);
+			formCollection.Add("CapitalCallDate", string.Empty);
 			formCollection.Add("CapitalCallDueDate", string.Empty);
-			formCollection.Add("NewInvestmentAmount",string.Empty);
             return formCollection;
         }
     }

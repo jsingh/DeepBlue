@@ -9,12 +9,6 @@ using DeepBlue.Models.Investor;
 
 namespace DeepBlue.Tests.Controllers.Investor {
     public class CreateInvalidData : Create {
-        private CreateModel Model {
-            get {
-                return base.ViewResult.ViewData.Model as CreateModel;
-            }
-        }
-
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;

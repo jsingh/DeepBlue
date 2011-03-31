@@ -30,7 +30,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public List<Models.Entity.CapitalCall> GetCapitalCalls(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from capitalCall in context.CapitalCalls		
+				return (from capitalCall in context.CapitalCalls
 						where capitalCall.FundID == fundId
 						orderby capitalCall.CapitalCallNumber
 						select capitalCall).ToList();
@@ -47,10 +47,10 @@ namespace DeepBlue.Controllers.CapitalCall {
 					detail.FundExpenses = string.Format("{0:C}", calls.Sum(capitalCall => capitalCall.FundExpenses ?? 0));
 					detail.ManagementFees = string.Format("{0:C}", calls.Sum(capitalCall => capitalCall.ManagementFees ?? 0));
 					detail.UnfundedAmount = string.Format("{0:C}", calls.Sum(capitalCall => capitalCall.Fund.InvestorFunds.Sum(fund => fund.UnfundedAmount ?? 0)));
-				}else{
+				} else {
 					detail.FundName = (from fund in context.Funds
-										where fund.FundID == fundId
-										select fund.FundName).FirstOrDefault();
+									   where fund.FundID == fundId
+									   select fund.FundName).FirstOrDefault();
 				}
 				return detail;
 			}
@@ -67,6 +67,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 				return context.Funds
 							  .Include("CapitalCalls")
 							  .Include("InvestorFunds")
+							  .Include("FundRateSchedules")
+							  .Include("CapitalDistributions")
 							  .SingleOrDefault(fund => fund.FundID == fundId);
 			}
 		}
@@ -78,6 +80,22 @@ namespace DeepBlue.Controllers.CapitalCall {
 							  .Include("Fund")
 							  .Include("CapitalCallLineItems.Investor")
 							  .SingleOrDefault(capitalCall => capitalCall.CapitalCallID == capitalCallId);
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveCapitalDistribution(CapitalDistribution capitalDistribution) {
+			return capitalDistribution.Save();
+		}
+
+		public List<CapitalDistribution> GetCapitalDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<CapitalDistribution> query = (from capitalDistribution in context.CapitalDistributions
+															   where capitalDistribution.FundID == fundId
+															   select capitalDistribution);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<CapitalDistribution> paginatedList = new PaginatedList<CapitalDistribution>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
 			}
 		}
 

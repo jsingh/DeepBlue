@@ -1,10 +1,10 @@
 ﻿var manualCapitalCall={
 	init: function () {
 		$(document).ready(function () {
-			setTimeout(function () {
+		/*	setTimeout(function () {
 				$("#CCDetail").hide();
 				$("#InvestorDetail").hide();
-			},200);
+			},200); */
 			$("#Investor").focus(function () {
 				this.value="";
 			});

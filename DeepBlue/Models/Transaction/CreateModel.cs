@@ -51,6 +51,7 @@ namespace DeepBlue.Models.Transaction {
 
 		[Required(ErrorMessage = "Committed Date is required")]
 		[DisplayName("Committed Date:")]
+        [DateRange()]
 		public DateTime CommittedDate { get; set; }
 
 		public List<SelectListItem> FundNames { get; set; }

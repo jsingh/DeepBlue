@@ -21,7 +21,7 @@
 		</div>
 		<%: Html.HiddenFor(model => model.FundId) %>
 	</div>
-	<div class="cc-main" id="CaptialCallDetail">
+	<div class="cc-main" id="CaptialCallDetail" style="display:none">
 		<div class="box">
 			<div class="box-top">
 				<div class="box-left">

@@ -10,7 +10,7 @@ using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Investor {
 	public class CreateModel {
-		
+
 		public SelectListModel SelectList = new SelectListModel();
 
 		public int InvestorId { get; set; }
@@ -18,6 +18,7 @@ namespace DeepBlue.Models.Investor {
 		[Required(ErrorMessage = "Investor Name is required")]
 		[RemoteUID_(Action = "InvestorNameAvailable", Controller = "Investor", ValidateParameterName = "InvestorName", Params = new string[] { "InvestorId" })]
 		[DisplayName("Investor Name:")]
+		[StringLength(100, ErrorMessage = "Investor Name must be under 100 characters.")]
 		public string InvestorName { get; set; }
 
 		[DisplayName("Display Name:")]
@@ -25,6 +26,7 @@ namespace DeepBlue.Models.Investor {
 
 		[Required(ErrorMessage = "Social Security/ Tax Id is required")]
 		[DisplayName("Social Security/ Tax Id:")]
+		[StringLength(50, ErrorMessage = "Investor Name must be under 50 characters.")]
 		public string SocialSecurityTaxId { get; set; }
 
 		[DisplayName("Domestic/ Foreign:")]
@@ -86,7 +88,7 @@ namespace DeepBlue.Models.Investor {
 		public string Zip { get; set; }
 
 		[DisplayName("Country:")]
-		public int  Country { get; set; }
+		public int Country { get; set; }
 
 		/* Bank Information */
 

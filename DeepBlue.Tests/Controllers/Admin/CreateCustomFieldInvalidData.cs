@@ -9,12 +9,6 @@ using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
     public class CreateCustomFieldInvalidData :EditCustomField {
-        private EditCustomFieldModel  Model {
-            get {
-				return base.ViewResult.ViewData.Model as EditCustomFieldModel;
-            }
-        }
-
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;
@@ -31,6 +25,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
             base.DefaultController.ValueProvider = SetupValueProvider(new FormCollection());
 			base.ActionResult = base.DefaultController.UpdateCustomField(GetInvalidformCollection());
         }
+
         #region Tests where form collection doesnt have the required values. Tests for DataAnnotations
         private bool test_posted_value(string parameterName) {
             SetFormCollection();
@@ -61,6 +56,28 @@ namespace DeepBlue.Tests.Controllers.Admin {
 			Assert.IsTrue(test_error_count("CustomFieldText", 1));
         }
 
+
+		[Test]
+		public void invalid_customfield_moduleid_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("ModuleId"));
+		}
+
+		[Test]
+		public void invalid_customfield_moduleid_sets_1_error() {
+			Assert.IsTrue(test_error_count("ModuleId", 1));
+		}
+
+		[Test]
+		public void invalid_customfield_datatypeid_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("DataTypeId"));
+		}
+
+		[Test]
+		public void invalid_customfield_datatypeid_sets_1_error() {
+			Assert.IsTrue(test_error_count("DataTypeId", 1));
+		}
+
+
         [Test]
         public void invalid_customfield_name_results_in_invalid_modelstate() {
             SetFormCollection();
@@ -74,15 +91,12 @@ namespace DeepBlue.Tests.Controllers.Admin {
             base.DefaultController.ModelState.AddModelError(string.Empty, string.Empty);
             SetFormCollection();
         }
-
-       
         #endregion
-
 
         private FormCollection GetInvalidformCollection() {
             FormCollection formCollection = new FormCollection();
-			formCollection.Add("CustomFieldText", string.Empty);	
-			formCollection.Add("ModuleID", string.Empty);
+			formCollection.Add("CustomFieldText", string.Empty);
+			formCollection.Add("ModuleId", string.Empty);
 			formCollection.Add("DataTypeID", string.Empty);					
             return formCollection;
         }

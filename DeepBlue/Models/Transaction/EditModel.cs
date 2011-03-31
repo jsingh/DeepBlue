@@ -39,6 +39,7 @@ namespace DeepBlue.Models.Transaction {
 
 		[Required(ErrorMessage = "Date is required")]
 		[DisplayName("Date:")]
+        [DateRange()]
 		public DateTime Date { get; set; }
 				
 		[DisplayName("Counterparty Investor:")]

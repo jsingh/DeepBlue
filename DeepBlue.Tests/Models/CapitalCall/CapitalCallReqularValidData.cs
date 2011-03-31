@@ -19,6 +19,11 @@ namespace DeepBlue.Tests.Models.CapitalCall {
         }
 
 
+		[Test]
+		public void create_a_new_capitalcallreqular_with_valid_fundid_passes() {
+			Assert.IsTrue(IsPropertyValid("FundId"));
+		}
+
         [Test]
         public void create_a_new_capitalcallreqular_with_valid_capitalamount_passes() {
 			Assert.IsTrue(IsPropertyValid("CapitalCallAmount"));

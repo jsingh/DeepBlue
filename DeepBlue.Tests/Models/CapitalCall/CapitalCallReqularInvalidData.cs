@@ -18,9 +18,14 @@ namespace DeepBlue.Tests.Models.CapitalCall {
 			this.ServiceErrors = DefaultCapitalCallReqular.Save();
         }
 
+		[Test]
+		public void create_a_new_capitalcallreqular_without_valid_fundid_throws_error() {
+			Assert.IsFalse(IsPropertyValid("FundID"));
+		}
+
         [Test]
         public void create_a_new_capitalcallreqular_without_valid_capitalamount_throws_error() {
-			Assert.IsTrue(IsPropertyValid("CapitalCallAmount"));
+			Assert.IsFalse(IsPropertyValid("CapitalAmountCalled"));
         }
 
         [Test]

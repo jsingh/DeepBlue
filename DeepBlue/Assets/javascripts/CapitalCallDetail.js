@@ -5,9 +5,9 @@
 			if(parseInt(fundId)>0) {
 				capitalCallDetail.selectFund(fundId);
 			} else {
-				setTimeout(function () {
+				/*setTimeout(function () {
 					$("#CaptialCallDetail").hide();
-				},200);
+				},200);*/
 			}
 		});
 	}

@@ -18,7 +18,7 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			[Required]
-			[Range(typeof(DateTime), "1/1/1900", "1/1/9999")]
+			[DateRange()]
 			public global::System.DateTime FundClosingDate {
 				get;
 				set;

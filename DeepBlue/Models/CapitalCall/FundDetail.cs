@@ -16,5 +16,7 @@ namespace DeepBlue.Models.CapitalCall {
 
 		public string CapitalCallNumber { get; set; }
 
+		public string DistributionNumber { get; set; }
+
 	}
 }

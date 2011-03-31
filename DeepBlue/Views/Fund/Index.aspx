@@ -18,13 +18,13 @@
 				&nbsp;Add Fund </a>
 		</div>
 		<div class="fund-content">
-			<table id="FundList" cellpadding="0" cellspacing="0" border="0" style="width: 100%">
+			<table id="FundList" cellpadding="0" cellspacing="0" border="0">
 				<thead>
 					<tr>
-						<th sortname="FundName" style="width: 50%">
+						<th sortname="FundName" style="width: 40%">
 							Fund Name
 						</th>
-						<th sortname="TaxId" align="center" style="width: 10%">
+						<th sortname="TaxId" align="center" style="width: 20%">
 							Tax ID
 						</th>
 						<th sortname="FundStartDate" align="center" style="width: 15%">

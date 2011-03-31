@@ -27,7 +27,7 @@
 	   if(item.FilePath.ToLower().StartsWith("http://")){
 			href = (item.FilePath.EndsWith("/") == false ? item.FilePath + "/" + item.FilePath : item.FilePath + item.FileName);
 	   }else{
-			href = "javascript:documentSearch.downloadFile('" + Url.Encode(item.FilePath.Replace("\\","/")) + "','" + Url.Encode(item.FileName) + "');";
+			href = "/" + item.FilePath.Replace("\\","/") + "/" + item.FileName;
 	   }
 	   row.cell.Add(Html.Anchor(Html.Image(imgname).ToHtmlString(),href,new { @target = "_blank" }).ToHtmlString()); // new { @onclick = "javascript:documentSearch.downloadFile('" + Url.Encode(item.FilePath.Replace("\\","/")) + "','" + Url.Encode(item.FileName) + "');" }).ToHtmlString());
 	   flexData.rows.Add(row);

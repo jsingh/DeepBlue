@@ -149,7 +149,12 @@
 				<%: Html.ActionLink("Capital Call Detail", "List", "CapitalCall")%></li>
 			<li>
 				<%: Html.ActionLink("New Capital Call", "New", "CapitalCall")%></li>
-			<li><%: Html.ActionLink("Manual Capital Call", "NewManualCapitalCall", "CapitalCall")%></li>
+			<li>
+				<%: Html.ActionLink("Manual Capital Call", "NewManualCapitalCall", "CapitalCall")%></li>
+			<li>
+				<%: Html.ActionLink("New Capital Distribution", "NewCapitalDistribution", "CapitalCall")%></li>
+			<li>
+				<%: Html.ActionLink("Capital Distribution Detail", "CapitalDistributionList", "CapitalCall")%></li>
 			<li><a href="#">Capital Call Reconcile</a></li>
 		</ul>
 	</div>

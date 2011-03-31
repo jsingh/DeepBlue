@@ -20,7 +20,7 @@
 			<%: Html.LabelFor(model => model.FundId) %>&nbsp;<%: Html.TextBox("Fund","", new { @style = "width:200px" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
 		</div>
 	</div>
-	<div class="cc-main" id="CCDetail">
+	<div class="cc-main" id="CCDetail" style="display:none">
 		<% Html.EnableClientValidation(); %>
 		<% using (Ajax.BeginForm("Create", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "capitalCall.onCreateCapitalCallBegin", OnSuccess = "capitalCall.onCreateCapitalCallSuccess" }, new { @id = "CapitalCall" })) {%>
 		<div class="box">
@@ -37,10 +37,10 @@
 			<div class="box-content">
 				<div class="edit-left">
 					<div class="editor-label">
-						<%: Html.LabelFor(model => model.CapitalCallAmount)%>
+						<%: Html.LabelFor(model => model.CapitalAmountCalled)%>
 					</div>
 					<div class="editor-field" style="width: auto">
-						<%: Html.TextBoxFor(model => model.CapitalCallAmount, new { @onkeypress = "return jHelper.isCurrency(event);", @style = "width:110px" })%>
+						<%: Html.TextBoxFor(model => model.CapitalAmountCalled, new { @onkeypress = "return jHelper.isCurrency(event);", @style = "width:110px" })%>
 					</div>
 					<div class="editor-label" style="clear: right">
 						<%: Html.LabelFor(model => model.CapitalCallDate) %>
@@ -125,7 +125,7 @@
 									<%: Html.Span("",new { @id="UnfundedAmount"})%></b>
 							</div>
 							<div class="editor-label">
-								<a id="lnkPCC" target="_blank" href="#" style="color: Blue">Previous Capital Calls</a>
+							 <%: Html.Anchor("Previous Capital Calls","#", new { @id="lnkPCC", @target = "_blank", @style="color:Blue" })%>
 							</div>
 						</div>
 					</div>
@@ -137,7 +137,7 @@
 		<%: Html.HiddenFor(model => model.CapitalCallNumber)%>
 		<%: Html.ValidationMessageFor(model => model.CapitalCallDueDate) %>
 		<%: Html.ValidationMessageFor(model => model.CapitalCallDate) %>
-		<%: Html.ValidationMessageFor(model => model.CapitalCallAmount)%>
+		<%: Html.ValidationMessageFor(model => model.CapitalAmountCalled)%>
 		<%: Html.ValidationMessageFor(model => model.NewInvestmentAmount)%>
 		<%: Html.ValidationMessageFor(model => model.ExistingInvestmentAmount)%>
 		<%: Html.ValidationMessageFor(model => model.FundId) %>

@@ -30,6 +30,7 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
             // Spin up the controller with the mock http context, and the mock repository
 			DefaultController = new CapitalCallController(MockFundRepository.Object, MockCapiticalCallRepository.Object);
             DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
+			
         }
 
         [TearDown]

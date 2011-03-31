@@ -37,7 +37,7 @@
 	<%: Html.LabelFor(model => model.NumofAutoExtensions) %>
 </div>
 <div class="editor-field">
-	<%: Html.TextBox("NumofAutoExtensions", ((Model.NumofAutoExtensions ?? 0) > 0 ? (Model.NumofAutoExtensions ?? 0).ToString() : ""), new { @id = "NumofAutoExtensions" })%>
+	<%: Html.TextBox("NumofAutoExtensions", ((Model.NumofAutoExtensions ?? 0) > 0 ? (Model.NumofAutoExtensions ?? 0).ToString() : ""), new { @id = "NumofAutoExtensions", @onkeypress = "return jHelper.isNumeric(event);" })%>
 </div>
 <div class="editor-label">
 	<%: Html.LabelFor(model => model.DateClawbackTriggered) %>
@@ -49,7 +49,7 @@
 	<%: Html.LabelFor(model => model.RecycleProvision) %>
 </div>
 <div class="editor-field">
-	<%: Html.TextBox("RecycleProvision", ((Model.RecycleProvision ?? 0) > 0 ? (Model.RecycleProvision ?? 0).ToString() : ""), new { @id = "RecycleProvision" })%>
+	<%: Html.TextBox("RecycleProvision", ((Model.RecycleProvision ?? 0) > 0 ? (Model.RecycleProvision ?? 0).ToString() : ""), new { @id = "RecycleProvision", @onkeypress = "return jHelper.isNumeric(event);" })%>
 </div>
 <div class="editor-label">
 	<%: Html.LabelFor(model => model.MgmtFeesCatchUpDate) %>
@@ -61,7 +61,7 @@
 	<%: Html.LabelFor(model => model.Carry) %>
 </div>
 <div class="editor-field">
-	<%: Html.TextBox("Carry", ((Model.Carry ?? 0) > 0 ? (Model.Carry ?? 0).ToString() : ""), new { @id = "Carry" })%>
+	<%: Html.TextBox("Carry", ((Model.Carry ?? 0) > 0 ? (Model.Carry ?? 0).ToString() : ""), new { @id = "Carry", @onkeypress = "return jHelper.isNumeric(event);" })%>
 </div>
 <% Html.RenderPartial("CustomFieldList", Model.CustomField);%>
 <%: Html.Hidden("FundRateSchedulesCount", Model.FundRateSchedules.Count, new { @id = "FundRateSchedulesCount" })%>
@@ -70,7 +70,7 @@
 		<div class="left">
 			<b>Rate Schedules</b></div>
 		<div class="right">
-			<%:Html.Anchor(Html.Image("add_icon.png").ToHtmlString()+"&nbsp;Add Investor Type","javascript:fund.addRateSchedule(this);",new {})%></div>
+			<%:Html.Anchor(Html.Image("add_icon.png").ToHtmlString()+"&nbsp;Add Investor Type","javascript:fund.addRateSchedule(this);",new { @style = "font-size:11px" })%></div>
 	</div>
 	<div class="rate-schedules">
 		<% int index = 1;
@@ -79,7 +79,7 @@
 			<%: Html.Hidden(index.ToString() + "_Tiers",rateSchedule.FundRateScheduleTiers.Count, new { @id = "TiersCount" })%>
 			<%: Html.Hidden(index.ToString() + "_IsDelete",Model.FundRateSchedules.Count,new { @id = "IsDelete" })%>
 			<%: Html.Hidden(index.ToString() + "_FundRateScheduleId", rateSchedule.FundRateScheduleId, new { @id = "FundRateScheduleId" })%>
-			<div class="editor-label" style="width: 100%">
+			<div class="editor-label" style="width: 97%">
 				<div style="float: left">
 					<%: Html.Label("Investor:") %>&nbsp;<%: Html.DropDownList(index.ToString() + "_" + "InvestorTypeId", Model.InvestorTypes,new { @id = "InvestorTypeId", @onchange="javascript:fund.changeInvestorType(this);", @class="investortype ddlist" , @val = rateSchedule.InvestorTypeId.ToString() } )%>
 				</div>
@@ -87,7 +87,7 @@
 					<%:Html.Anchor(Html.Image("Delete.png").ToHtmlString() + "&nbsp;Delete Rate Schedule", "#" , new { @onclick="javascript:fund.deleteInvestorType(this);" })%>
 				</div>
 			</div>
-			<div class="rate-grid">
+			<div class="rate-grid" style="width:100%">
 				<%: Html.Hidden(index.ToString() + "_IsScheduleChange", "", new { @id = "IsScheduleChange" })%>
 				<table cellpadding="0" cellspacing="0" border="0" class="tblrateschedule" id="RateScheduleList">
 					<thead>

@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using DeepBlue.Models.Entity;
 using System.Web.Mvc;
 using System.ComponentModel;
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Document {
 	public class CreateModel {
@@ -36,6 +37,7 @@ namespace DeepBlue.Models.Document {
 
 		[Required(ErrorMessage = "Document Date is required.")]
 		[DisplayName("Document Date:")]
+        [DateRange()]
 		public DateTime DocumentDate { get; set; }
 		
 		public string ModelErrorMessage { get; set; }

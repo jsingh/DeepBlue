@@ -20,7 +20,7 @@
 			<%: Html.LabelFor(model => model.FundId) %>&nbsp;<%: Html.TextBox("Fund","", new { @style = "width:200px" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
 		</div>
 	</div>
-	<div class="cc-main" id="CCDetail">
+	<div class="cc-main" id="CCDetail" style="display: none">
 		<% Html.EnableClientValidation(); %>
 		<% using (Ajax.BeginForm("CreateManualCapitalCall", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "manualCapitalCall.onCreateCapitalCallBegin", OnSuccess = "manualCapitalCall.onCreateCapitalCallSuccess" }, new { @id = "CapitalCall" })) {%>
 		<%: Html.ValidationSummary(true) %>
@@ -44,7 +44,8 @@
 									<%: Html.LabelFor(model => model.CapitalCallNumber)%>
 								</td>
 								<td>
-									<b><%: Html.Span("", new {  @id="SpnCapitalCallNumber"})%></b>
+									<b>
+										<%: Html.Span("", new {  @id="SpnCapitalCallNumber"})%></b>
 								</td>
 								<td>
 									<%: Html.LabelFor(model => model.CapitalCallDate) %>
@@ -61,7 +62,7 @@
 							</tr>
 							<tr>
 								<td>
-									<%: Html.LabelFor(model => model.CapitalCallAmount) %>
+									<%: Html.LabelFor(model => model.CapitalAmountCalled) %>
 								</td>
 								<td>
 									<b>
@@ -121,7 +122,7 @@
 									<%: Html.Span("",new { @id="UnfundedAmount"})%></b>
 							</div>
 							<div class="editor-label">
-								<a id="lnkPCC" target="_blank" href="#" style="color: Blue">Previous Capital Calls</a>
+								<%: Html.Anchor("Previous Capital Calls","#", new { @id="lnkPCC", @target = "_blank", @style="color:Blue" })%>
 							</div>
 						</div>
 					</div>
@@ -219,19 +220,19 @@
 		<%: Html.HiddenFor(model => model.ManagementFees)%>
 		<%: Html.HiddenFor(model => model.ManagementFeeInterest)%>
 		<%: Html.HiddenFor(model => model.InvestedAmountInterest)%>
-		<%: Html.HiddenFor(model => model.CapitalCallAmount)%>
+		<%: Html.HiddenFor(model => model.CapitalAmountCalled)%>
 		<%: Html.HiddenFor(model => model.FundExpenses)%>
 		<%: Html.HiddenFor(model => model.InvestorCount)%>
 		<%: Html.ValidationMessageFor(model => model.CapitalCallDueDate) %>
 		<%: Html.ValidationMessageFor(model => model.CapitalCallDate) %>
-		<%: Html.ValidationMessageFor(model => model.CapitalCallAmount) %>
+		<%: Html.ValidationMessageFor(model => model.CapitalAmountCalled) %>
 		<%: Html.ValidationMessageFor(model => model.NewInvestmentAmount)%>
 		<%: Html.ValidationMessageFor(model => model.ExistingInvestmentAmount)%>
 		<%: Html.ValidationMessageFor(model => model.FundId) %>
 		<%: Html.ValidationMessageFor(model => model.InvestorCount)%>
-		<% } %>
 		<div id="UpdateTargetId" style="display: none">
 		</div>
+		<% } %>
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">

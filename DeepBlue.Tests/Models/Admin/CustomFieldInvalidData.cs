@@ -30,7 +30,7 @@ namespace DeepBlue.Tests.Models.Admin {
 
 		[Test]
 		public void create_a_new_customfield_without_valid_moduleid_throws_error() {
-			Assert.IsFalse(IsPropertyValid("ModuleID"));
+			Assert.IsTrue(IsPropertyValid("ModuleId"));
 		}
 
 		[Test]

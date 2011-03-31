@@ -9,12 +9,7 @@ using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
     public class CreateDataTypeInvalidData : EditDataType {
-        private EditDataTypeModel  Model {
-            get {
-				return base.ViewResult.ViewData.Model as EditDataTypeModel;
-            }
-        }
-
+       
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;
@@ -31,6 +26,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
             base.DefaultController.ValueProvider = SetupValueProvider(GetInvalidformCollection());
 			base.ActionResult = base.DefaultController.UpdateDataType(GetInvalidformCollection());
         }
+
         #region Tests where form collection doesnt have the required values. Tests for DataAnnotations
         private bool test_posted_value(string parameterName) {
             SetFormCollection();
@@ -74,8 +70,6 @@ namespace DeepBlue.Tests.Controllers.Admin {
             base.DefaultController.ModelState.AddModelError(string.Empty, string.Empty);
             SetFormCollection();
         }
-
-       
         #endregion
 
 

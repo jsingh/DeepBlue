@@ -94,6 +94,7 @@
     <Compile Include="Helpers\AutoCompleteOptions.cs" />
     <Compile Include="Helpers\CustomFieldHelper.cs" />
     <Compile Include="Helpers\DatePickerOptions.cs" />
+    <Compile Include="Helpers\DateRange.cs" />
     <Compile Include="Helpers\DownloadFile.cs" />
     <Compile Include="Helpers\Flexigrid.cs" />
     <Compile Include="Helpers\FlexigridOptions.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Models\CapitalCall\CreateDistributionModel.cs" />
     <Compile Include="Models\CapitalCall\CreateManualModel.cs" />
     <Compile Include="Models\CapitalCall\CreateReqularModel.cs" />
+    <Compile Include="Models\CapitalCall\CapitalDistributionListModel.cs" />
     <Compile Include="Models\CapitalCall\Enums.cs" />
     <Compile Include="Models\CapitalCall\FundDetail.cs" />
     <Compile Include="Models\CapitalCall\ListModel.cs" />
@@ -135,6 +137,7 @@
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\Partial\CapitalCall.cs" />
+    <Compile Include="Models\Entity\Partial\CapitalDistribution.cs" />
     <Compile Include="Models\Entity\Partial\ManagementFeeRateScheduleService.cs" />
     <Compile Include="Models\Entity\Partial\ModuleService.cs" />
     <Compile Include="Models\Entity\Partial\CustomFieldValueService.cs" />
@@ -149,6 +152,7 @@
     <Compile Include="Models\Entity\Partial\InvestorService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorTypeService.cs" />
     <Compile Include="Models\Entity\Validation\CapitalCall.cs" />
+    <Compile Include="Models\Entity\Validation\CapitalDistribution.cs" />
     <Compile Include="Models\Entity\Validation\ManagementFeeRateSchedule.cs" />
     <Compile Include="Models\Entity\Validation\Module.cs" />
     <Compile Include="Models\Entity\Validation\CustomFieldValue.cs" />
@@ -281,6 +285,8 @@
     <Content Include="Assets\javascripts\CapitalCall.js" />
     <Content Include="Assets\javascripts\CapitalCallDetail.js" />
     <Content Include="Assets\javascripts\CapitalCallReceive.js" />
+    <Content Include="Assets\javascripts\CapitalCallDistribution.js" />
+    <Content Include="Assets\javascripts\CapitalDistributionDetail.js" />
     <Content Include="Assets\javascripts\ManualCapitalCall.js" />
     <Content Include="Assets\javascripts\DataType.js" />
     <Content Include="Assets\javascripts\CustomField.js" />
@@ -310,6 +316,7 @@
     <Content Include="Assets\stylesheets\capitalcall.css" />
     <Content Include="Assets\stylesheets\customfield.css" />
     <Content Include="Assets\stylesheets\ddlmenu.css" />
+    <Content Include="Assets\stylesheets\distribution.css" />
     <Content Include="Assets\stylesheets\document.css" />
     <Content Include="Assets\stylesheets\flexigrid.css" />
     <Content Include="Assets\stylesheets\fund.css" />
@@ -349,6 +356,9 @@
     <Content Include="Views\Admin\EntityType.aspx" />
     <Content Include="Views\Admin\List.ascx" />
     <Content Include="Views\CapitalCall\CapitalCallList.ascx" />
+    <Content Include="Views\CapitalCall\CapitalDistributionDetailList.ascx" />
+    <Content Include="Views\CapitalCall\NewCapitalDistribution.aspx" />
+    <Content Include="Views\CapitalCall\CapitalDistributionList.aspx" />
     <Content Include="Views\CapitalCall\List.aspx" />
     <Content Include="Views\CapitalCall\New.aspx" />
     <Content Include="Views\CapitalCall\NewManualCapitalCall.aspx" />
@@ -419,7 +429,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\Documents\2\1\" />
-    <Folder Include="Files\Document\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -24,14 +24,16 @@
 }
 .rate-header {
 	float: left;
-	clear: both;width:100%;
+	clear: both;
+	width: 97%;
 }
 .rate-header .left {
-	float: left; padding: 5px 0px 0px 5px;
+	float: left;
+	padding: 5px 0px 0px 5px;
 }
 .rate-header .right {
 	float: right;
-	margin-right: 10px;
+	margin-right: 5px;
 }
 .rate-header, .rate-schedules, .rate-schedules .rate-grid {
 	clear: both;

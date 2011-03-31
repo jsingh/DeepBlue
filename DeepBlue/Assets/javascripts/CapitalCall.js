@@ -9,9 +9,9 @@
 				position: 'middle',
 				autoResize: false
 			});
-			setTimeout(function () {
+			/*setTimeout(function () {
 				$("#CCDetail").hide();
-			},200);
+			},200);*/
 		});
 	}
 	,selectFund: function (id) {

@@ -17,6 +17,7 @@ namespace DeepBlue.Models.Entity {
                 get;
                 set;
             }
+
             [StringLength(100), Required]
             public global::System.String InvestorName {
                 get;
@@ -80,7 +81,7 @@ namespace DeepBlue.Models.Entity {
 
 
             [Required]
-            [Range(typeof(DateTime), "1/1/1900", "1/1/9999")]
+            [DateRange()]
             public global::System.DateTime CreatedDate {
                 get;
                 set;
@@ -192,7 +193,7 @@ namespace DeepBlue.Models.Entity {
             }
 
             [Required]
-            [Range(typeof(DateTime), "1/1/1900", "1/1/9999")]
+            [DateRange()]
             public global::System.DateTime CreatedDate {
                 get;
                 set;
@@ -286,7 +287,7 @@ namespace DeepBlue.Models.Entity {
             }
 
             [Required]
-            [Range(typeof(DateTime), "1/1/1900", "1/1/9999")]
+            [DateRange()]
             public global::System.DateTime CreatedDate {
                 get;
                 set;
@@ -340,7 +341,7 @@ namespace DeepBlue.Models.Entity {
             }
 
             [Required]
-            [Range(typeof(DateTime), "1/1/1900", "1/1/9999")]
+            [DateRange()]
             public global::System.DateTime CreatedDate {
                 get;
                 set;

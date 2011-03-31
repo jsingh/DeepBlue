@@ -879,6 +879,11 @@
 	overflow-x: hidden;
 	overflow-y: auto;
 }
+.ui-autocomplete-loading {
+	background-image: url(../images/ajax.jpg);
+	background-position: right center;
+	background-repeat: no-repeat;
+}
 
 /* workarounds */
 * html .ui-autocomplete {

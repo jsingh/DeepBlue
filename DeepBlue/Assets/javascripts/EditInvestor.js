@@ -103,7 +103,12 @@
 	}
 	,buildFundTable: function ($invInfo,data) {
 		var fundDetails=$("#funddetails",$invInfo).html("");
-		var html="<table cellpadding='0' cellspacing='0' border='0' style='width:100%'><thead><tr><th>Fund Name</th><th style='width:20%'>Committed Amount</th><th style='width:20%'>Unfunded Amount</th><th>Investror Type</th></tr></thead></table>";
+		var html="<table cellpadding='0' cellspacing='0' border='0' style='width:100%'><thead><tr>";
+		html+="<th style='width:30%'>Fund Name</th>";
+		html+="<th style='width:20%' align='right'>Committed Amount</th>";
+		html+="<th style='width:20%' align='right'>Unfunded Amount</th>";
+		html+="<th style='width:30%'>Investror Type</th>";
+		html+="</tr></thead></table>";
 		$(fundDetails).html(html);
 		var table=$("table",fundDetails).flexigrid({
 			url: '/Json/FlexigridList',

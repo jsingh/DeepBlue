@@ -18,10 +18,14 @@ namespace DeepBlue.Tests.Models.CapitalCall {
 			this.ServiceErrors = DefaultCapitalCallManual.Save();
         }
 
+		[Test]
+		public void create_a_new_capitalcallreqular_with_valid_fundid_passes() {
+			Assert.IsTrue(IsPropertyValid("FundId"));
+		}
 
         [Test]
         public void create_a_new_capitalcallmanual_with_valid_capitalamount_passes() {
-			Assert.IsTrue(IsPropertyValid("CapitalCallAmount"));
+			Assert.IsTrue(IsPropertyValid("CapitalAmountCalled"));
         }
 
         [Test]
@@ -34,9 +38,5 @@ namespace DeepBlue.Tests.Models.CapitalCall {
 			Assert.IsTrue(IsPropertyValid("CapitalCallDueDate"));
 		}
 
-		[Test]
-		public void create_a_new_capitalcallmanual_with_valid_newinvestmentamount_passes() {
-			Assert.IsTrue(IsPropertyValid("NewInvestmentAmount"));
-		}
     }
 }

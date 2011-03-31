@@ -18,6 +18,14 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			[Required]
+			[StringLength(12)]
+			public global::System.String CapitalCallNumber {
+				get;
+				set;
+			}
+
+
+			[Required]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
 			public global::System.Int32 CapitalCallTypeID {
 				get;
@@ -25,29 +33,28 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			[Required]
-			[Range(typeof(DateTime), "1/1/1900", "1/1/9999")]
+			[DateRange()]
 			public global::System.DateTime CapitalCallDate {
 				get;
 				set;
 			}
 
 			[Required]
-			[Range(typeof(DateTime), "1/1/1900", "1/1/9999")]
+			[DateRange()]
 			public global::System.DateTime CapitalCallDueDate {
 				get;
 				set;
 			}
 
-
 			[Required]
-			[Range(1, double.MaxValue)]
-			public global::System.Decimal CapitalCallAmount {
+			[Range(1, (double)decimal.MaxValue)]
+			public global::System.Decimal CapitalAmountCalled {
 				get;
 				set;
 			}
 
 			[Required]
-			[Range(1, double.MaxValue)]
+			[Range(1, (double)decimal.MaxValue)]
 			public global::System.Decimal NewInvestmentAmount {
 				get;
 				set;
