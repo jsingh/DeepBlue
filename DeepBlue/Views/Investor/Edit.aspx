@@ -36,7 +36,7 @@
 						<div class="box-right">
 						</div>
 					</div>
-					<%using (Ajax.BeginForm("Update", null, new AjaxOptions { HttpMethod = "Post", OnBegin = "editInvestor.onBegin", OnSuccess = "editInvestor.onSuccess" }, new { @id = "frmInvestorInfo", @onclick = "return editInvestor.submit(this);" })) {%>
+					<%using (Ajax.BeginForm("Update", null, new AjaxOptions { HttpMethod = "Post", OnBegin = "editInvestor.onBegin", OnSuccess = "editInvestor.onSuccess" }, new { @id = "frmInvestorInfo" })) {%>
 					<div class="box-content">
 						<div class="edit-left">
 							<div class="editor-label auto-width">
@@ -166,14 +166,14 @@
 										<%: Html.Label("Email:") %>
 									</div>
 									<div class="editor-field">
-										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "Email")%>
+										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "Email", "", new { @onblur = "javascript:jHelper.checkEmail(this);" })%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AddressInformations.Count.ToString() + "_" + "Email" })%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Web Address:") %>
 									</div>
 									<div class="editor-field">
-										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "WebAddress")%>
+										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "WebAddress", "", new { @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AddressInformations.Count.ToString() + "_" + "WebAddress" })%>
 									</div>
 									<div class="editor-label">
@@ -283,14 +283,14 @@
 										<%: Html.Label("Email:") %>
 									</div>
 									<div class="editor-field">
-										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactEmail")%>
+										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactEmail", "", new { @onblur = "javascript:jHelper.checkEmail(this);" })%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "ContactEmail" })%>
 									</div>
 									<div class="editor-label">
 										<%: Html.Label("Web Address:") %>
 									</div>
 									<div class="editor-field">
-										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactWebAddress")%>
+										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactWebAddress", "", new { @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "ContactWebAddress" })%>
 									</div>
 									<div class="editor-label">
@@ -491,9 +491,7 @@
 	<%= Html.jQueryAutoComplete("Investor", new AutoCompleteOptions { Source = "/Investor/FindInvestors", MinLength=1,
 																			OnSelect = "function(event, ui){ editInvestor.selectInvestor(ui.item.id);}"
 })%>
-
 	<script type="text/javascript">
 		editInvestor.init();
 	</script>
-
 </asp:Content>

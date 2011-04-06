@@ -44,16 +44,16 @@
 						<%: Html.TextBoxFor(model => model.DistributionAmount, new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</div>
 					<div class="editor-label" style="clear: right">
-						<%: Html.LabelFor(model => model.DistributionDate) %>
+						<%: Html.LabelFor(model => model.CapitalDistributionDate) %>
 					</div>
 					<div class="editor-field">
-						<%: Html.TextBoxFor(model => model.DistributionDate) %>
+						<%: Html.TextBoxFor(model => model.CapitalDistributionDate) %>
 					</div>
 					<div class="editor-label" style="clear: right">
-						<%: Html.LabelFor(model => model.DistributionDueDate) %>
+						<%: Html.LabelFor(model => model.CapitalDistributionDueDate) %>
 					</div>
 					<div class="editor-field">
-						<%: Html.TextBoxFor(model => model.DistributionDueDate) %>
+						<%: Html.TextBoxFor(model => model.CapitalDistributionDueDate) %>
 					</div>
 					<div class="editor-label" style="width: 207px">
 						<%: Html.CheckBoxFor(model => model.AddPreferredReturn, new { @onclick="javascript:distribution.showControl(this,'PreferredAmountBox');" }) %>&nbsp;<%: Html.LabelFor(model => model.AddPreferredReturn) %>
@@ -140,8 +140,8 @@
 	</div>
 	<%: Html.ValidationMessageFor(model => model.FundId) %>
 	<%: Html.ValidationMessageFor(model => model.DistributionAmount) %>
-	<%: Html.ValidationMessageFor(model => model.DistributionDate) %>
-	<%: Html.ValidationMessageFor(model => model.DistributionDueDate) %>
+	<%: Html.ValidationMessageFor(model => model.CapitalDistributionDate) %>
+	<%: Html.ValidationMessageFor(model => model.CapitalDistributionDueDate) %>
 	<%: Html.ValidationMessageFor(model => model.PreferredReturn) %>
 	<%: Html.ValidationMessageFor(model => model.ReturnFundExpenses) %>
 	<%: Html.ValidationMessageFor(model => model.ReturnManagementFees) %>
@@ -152,8 +152,8 @@
 	<%}%>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%= Html.jQueryDatePicker("DistributionDate")%><%= Html.jQueryDatePicker("FromDate")%><%= Html.jQueryDatePicker("ToDate")%>
-	<%= Html.jQueryDatePicker("DistributionDueDate")%><%= Html.jQueryAccordion("accordion", new AccordionOptions { Disabled = true, Active = 0 })%>
+	<%= Html.jQueryDatePicker("CapitalDistributionDate")%><%= Html.jQueryDatePicker("FromDate")%><%= Html.jQueryDatePicker("ToDate")%>
+	<%= Html.jQueryDatePicker("CapitalDistributionDueDate")%><%= Html.jQueryAccordion("accordion", new AccordionOptions { Disabled = true, Active = 0 })%>
 	<%= Html.jQueryAutoComplete("Fund", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { distribution.selectFund(ui.item.id);}"})%>
 
 	<script type="text/javascript">

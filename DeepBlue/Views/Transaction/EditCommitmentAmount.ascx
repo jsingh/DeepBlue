@@ -4,7 +4,7 @@
 <% using (Ajax.BeginForm("UpdateCommitmentAmount", "Transaction", null, new AjaxOptions {
 	   UpdateTargetId = "UpdateTargetId", Confirm = "Are you sure you want to update this commitment amount?", OnBegin = "editTransaction.onBegin", OnSuccess = "editTransaction.closeEditCommitAmtDialog"
    },new { @id = "UpdateCommitmentAmount" })) {%>
-<%: Html.ValidationSummary(true) %>
+
 <%: Html.HiddenFor(model => model.InvestorFundId) %>
 <%: Html.HiddenFor(model => model.UnfundedAmount) %>
 <br />

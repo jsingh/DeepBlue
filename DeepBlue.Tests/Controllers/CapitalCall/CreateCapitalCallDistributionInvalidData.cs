@@ -74,23 +74,23 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
 
 		[Test]
 		public void invalid_CapitalCallDistribution_date_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("DistributionDate"));
+			Assert.IsFalse(test_posted_value("CapitalDistributionDate"));
 		}
 
 		[Test]
 		public void invalid_CapitalCallDistribution_date_sets_1_error() {
-			Assert.IsTrue(test_error_count("DistributionDate", 1));
+			Assert.IsTrue(test_error_count("CapitalDistributionDate", 1));
 		}
 
 
 		[Test]
 		public void invalid_CapitalCallDistribution_duedate_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("DistributionDueDate"));
+			Assert.IsFalse(test_posted_value("CapitalDistributionDueDate"));
 		}
 
 		[Test]
 		public void invalid_CapitalCallDistribution_duedate_sets_1_error() {
-			Assert.IsTrue(test_error_count("DistributionDueDate", 1));
+			Assert.IsTrue(test_error_count("CapitalDistributionDueDate", 1));
 		}
 
 		[Test]
@@ -122,8 +122,8 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
             FormCollection formCollection = new FormCollection();
 			formCollection.Add("FundId", string.Empty);
 			formCollection.Add("DistributionAmount", string.Empty);
-			formCollection.Add("DistributionDate", string.Empty);
-			formCollection.Add("DistributionDueDate", string.Empty);
+			formCollection.Add("CapitalDistributionDate", string.Empty);
+			formCollection.Add("CapitalDistributionDueDate", string.Empty);
 			formCollection.Add("DistributionNumber", string.Empty);
             return formCollection;
         }

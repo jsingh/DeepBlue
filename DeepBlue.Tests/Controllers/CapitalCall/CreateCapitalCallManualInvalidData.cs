@@ -30,7 +30,7 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
 
         private void SetFormCollection() {
             base.DefaultController.ValueProvider = SetupValueProvider(new FormCollection());
-			base.ActionResult = base.DefaultController.Create(GetInvalidformCollection());
+			base.ActionResult = base.DefaultController.CreateManualCapitalCall(GetInvalidformCollection());
         }
         #region Tests where form collection doesnt have the required values. Tests for DataAnnotations
         private bool test_posted_value(string parameterName) {

@@ -7,7 +7,7 @@ using System.Web.Script.Serialization;
 namespace DeepBlue.Helpers {
 
 	public class FlexigridRow {
-		public List<string> cell = new List<string>();
+		public List<object> cell = new List<object>();
 	}
 
 	public class FlexigridData {

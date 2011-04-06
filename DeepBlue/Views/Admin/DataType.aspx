@@ -35,5 +35,5 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("DataTypeList", new FlexigridOptions { ActionName = "DataTypeList", ControllerName = "Admin", HttpMethod = "GET", SortName = "DataTypeID", Paging = true })%>
+	<%=Html.jQueryFlexiGrid("DataTypeList", new FlexigridOptions { ActionName = "DataTypeList", ControllerName = "Admin", HttpMethod = "GET", SortName = "DataTypeID", Paging = true , OnRowBound="dataType.onRowBound" })%>
 </asp:Content>

@@ -62,33 +62,33 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_capitalcallamount_sets_model_error_on_model_state() {
+		public void valid_CapitalCallDistribution_distributionamount_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("DistributionAmount"));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_capitalcallamount_sets_1_error() {
+		public void valid_CapitalCallDistribution_distributionamount_sets_1_error() {
 			Assert.IsTrue(test_error_count("DistributionAmount", 0));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_capitalcalldate_sets_model_error_on_model_state() {
-			Assert.IsTrue(test_posted_value("DistributionDate"));
+		public void valid_CapitalCallDistribution_capitaldistributiondate_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("CapitalDistributionDate"));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_capitalcalldate_sets_1_error() {
-			Assert.IsTrue(test_error_count("DistributionDate", 0));
+		public void valid_CapitalCallDistribution_capitaldistributiondate_sets_1_error() {
+			Assert.IsTrue(test_error_count("CapitalDistributionDate", 0));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_capitalcallduedate_sets_model_error_on_model_state() {
-			Assert.IsTrue(test_posted_value("DistributionDueDate"));
+		public void valid_CapitalCallDistribution_capitaldistributionduedate_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("CapitalDistributionDueDate"));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_capitalcallduedate_sets_1_error() {
-			Assert.IsTrue(test_error_count("DistributionDueDate", 0));
+		public void valid_CapitalCallDistribution_capitaldistributionduedate_sets_1_error() {
+			Assert.IsTrue(test_error_count("CapitalDistributionDueDate", 0));
 		}
 
 		[Test]
@@ -107,9 +107,9 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
             FormCollection formCollection = new FormCollection();
 			formCollection.Add("FundId", "1");
 			formCollection.Add("DistributionAmount", "10000.00");
-			formCollection.Add("DistributionDate", "1/1/1999");
-			formCollection.Add("DistributionDueDate", "1/1/1999");
-			formCollection.Add("DistributionNumber", string.Empty);     
+			formCollection.Add("CapitalDistributionDate", "1/1/1999");
+			formCollection.Add("CapitalDistributionDueDate", "1/1/1999");
+			formCollection.Add("DistributionNumber", "1");     
             return formCollection;
         }
     }

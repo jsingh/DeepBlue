@@ -29,10 +29,10 @@
 						<th sortname="Name" style="width: 25%;">
 							Name
 						</th>
-						<th sortname="FundName" style="width:40%">
+						<th sortname="FundName" style="width: 40%">
 							Fund Name
 						</th>
-						<th sortname="IsFirstClosing" align="center" style="width: 10%;">
+						<th datatype="Boolean" sortname="IsFirstClosing" align="center" style="width: 10%;">
 							First Closing
 						</th>
 						<th align="center" style="width: 5%;">
@@ -44,5 +44,7 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("FundClosingList", new FlexigridOptions { ActionName = "FundClosingList", ControllerName = "Admin", HttpMethod = "GET", SortName = "FundClosingDate", SortOrder = "desc" , Paging = true })%>
+	<%=Html.jQueryFlexiGrid("FundClosingList", new FlexigridOptions { ActionName = "FundClosingList", 
+	ControllerName = "Admin", HttpMethod = "GET", SortName = "FundClosingDate", SortOrder = "desc" 
+	, Paging = true , OnRowBound="fundClosing.onRowBound" })%>
 </asp:Content>

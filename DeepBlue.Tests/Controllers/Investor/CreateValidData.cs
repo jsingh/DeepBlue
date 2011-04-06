@@ -69,13 +69,13 @@ namespace DeepBlue.Tests.Controllers.Investor
         [Test]
         public void valid_Investor_name_sets_model_error_on_model_state()
         {
-            Assert.IsFalse(test_posted_value("InvestorName"));
+			Assert.IsTrue(test_posted_value("InvestorName"));
         }
 
         [Test]
         public void valid_Investor_name_sets_1_error()
         {
-            Assert.IsTrue(test_error_count("InvestorName", 0));
+             Assert.IsTrue(test_error_count("InvestorName", 0));
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace DeepBlue.Tests.Controllers.Investor
             FormCollection formCollection = new FormCollection();
             formCollection.Add("InvestorName", "n/a");
             formCollection.Add("Alias", "n/a");
-            formCollection.Add("Phone", "2547331111");
+			formCollection.Add("Phone", "2547331111");
             formCollection.Add("Email", "test@email.com");
             formCollection.Add("Address1", "123 Main street");
             formCollection.Add("City", "New York");

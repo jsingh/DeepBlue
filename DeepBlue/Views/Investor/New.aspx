@@ -9,8 +9,7 @@
 </asp:Content>
 <asp:Content ID="MainCnt" ContentPlaceHolderID="MainContent" runat="server">
 	<% Html.EnableClientValidation(); %>
-	<% using (Html.BeginForm("Create", "Investor", FormMethod.Post, new { onsubmit = "return investor.validation();" })) {%>
-	<%: Html.ValidationSummary(true) %>
+	<%using (Ajax.BeginForm("Create", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "investor.onBegin", OnSuccess = "investor.onSuccess" }, new { @id = "NewInvestor" })) {%>
 	<br />
 	<div class="new-investor">
 		<div class="box">
@@ -140,16 +139,16 @@
 						<%: Html.LabelFor(model => model.Email) %>
 					</div>
 					<div class="editor-field text">
-						<%: Html.TextBoxFor(model => model.Email)%>
+						<%: Html.TextBoxFor(model => model.Email, new { @onblur = "javascript:jHelper.checkEmail(this);" })%>
 						<%: Html.ValidationMessageFor(model => model.Email) %>
 					</div>
 				</div>
 				<div class="editor-row">
 					<div class="editor-label">
-						<%: Html.LabelFor(model => model.WebAddress) %>
+						<%: Html.LabelFor(model => model.WebAddress)%>
 					</div>
 					<div class="editor-field text">
-						<%: Html.TextBoxFor(model => model.WebAddress)%>
+						<%: Html.TextBoxFor(model => model.WebAddress, new { @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
 						<%: Html.ValidationMessageFor(model => model.WebAddress) %>
 					</div>
 				</div>
@@ -194,7 +193,7 @@
 						<%: Html.LabelFor(model => model.Zip) %>
 					</div>
 					<div class="editor-field text">
-						<%: Html.TextBoxFor(model => model.Zip)%>
+						<%: Html.TextBoxFor(model => model.Zip, new { @maxlength = "10" })%>
 						<%: Html.ValidationMessageFor(model => model.Zip) %>
 					</div>
 				</div>
@@ -388,7 +387,7 @@
 										<%: Html.LabelFor(model => model.ContactEmail) %>
 									</div>
 									<div class="editor-field text">
-										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactEmail") %>
+										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactEmail","", new { @onblur = "javascript:jHelper.checkEmail(this);" })%>
 									</div>
 								</div>
 								<div class="editor-row">
@@ -396,7 +395,7 @@
 										<%: Html.LabelFor(model => model.ContactWebAddress) %>
 									</div>
 									<div class="editor-field text">
-										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactWebAddress") %>
+										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactWebAddress","", new { @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
 									</div>
 								</div>
 								<div class="editor-row">
@@ -436,7 +435,7 @@
 										<%: Html.LabelFor(model => model.ContactZip) %>
 									</div>
 									<div class="editor-field text">
-										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactZip")%>
+										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactZip", "", new { @maxlength = "10" })%>
 									</div>
 								</div>
 								<div class="editor-row">
@@ -510,30 +509,16 @@
 				</div>
 			</div>
 		</div>
+		<div class="status">
+			<%: Html.Span("", new { id = "UpdateLoading" })%></div>
 		<div class="editor-button">
-			<%: Html.ImageButton("submit.png", new { style = "width: 73px; height: 23px;" })%>
+			<%: Html.ImageButton("submit.png", new { style = "width: 73px; height: 23px;", @onclick = "return investor.validation('NewInvestor');" })%>
 		</div>
 		<%: Html.HiddenFor(model => model.InvestorId)%>
-		<% } %>
+		<div id="UpdateTargetId" style="display: none">
+		</div>
 	</div>
+	<% } %>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BottomContent" runat="server">
-
-	<script type="text/javascript">
-		window.onload=function () {
-			document.forms[0].onsubmit=function () {
-				var errors=Sys.Mvc.FormContext.getValidationForForm(this).validate('submit');
-				var eles=Sys.Mvc.FormContext.getValidationForForm(this);
-				var message='';
-				if(errors.length>0) {
-					var i;
-					for(i=0;i<errors.length;i++) {
-						message+=errors[i]+"\n";
-					}
-					alert(message);
-				}
-			};
-		};
-	</script>
-
 </asp:Content>

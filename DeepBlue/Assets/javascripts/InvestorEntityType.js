@@ -70,6 +70,14 @@
 		}
 		return true;
 	}
+	,onGridSuccess: function (t) {
+		$("tr",t).each(function () {
+			$("td:last div",this).html("<img src='/Assets/images/Edit.gif'/>");
+		});
+	}
+	,onRowClick: function (row) {
+		invEntityType.add(row.cell[0]);
+	}
 	,closeDialog: function (reload) {
 		$("#addInvEntityTypeDialog").dialog('close');
 		if(reload==true) {

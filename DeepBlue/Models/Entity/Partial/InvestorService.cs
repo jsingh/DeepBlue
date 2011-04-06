@@ -16,7 +16,8 @@ namespace DeepBlue.Models.Entity {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				if (investor.InvestorID == 0) {
 					context.Investors.AddObject(investor);
-				} else {
+				}
+				else {
 					EntityKey key;
 					object originalItem;
 					Investor updateInvestor = context.Investors.SingleOrDefault(deepblueInvestor => deepblueInvestor.InvestorID == investor.InvestorID);
@@ -27,7 +28,8 @@ namespace DeepBlue.Models.Entity {
 						key = context.CreateEntityKey("InvestorAccounts", investorAccount);
 						if (context.TryGetObjectByKey(key, out originalItem)) {
 							context.ApplyCurrentValues(key.EntitySetName, investorAccount);
-						} else {
+						}
+						else {
 							updateInvestor.InvestorAccounts.Add(new InvestorAccount {
 								Account = investorAccount.Account,
 								Attention = investorAccount.Attention,
@@ -39,7 +41,15 @@ namespace DeepBlue.Models.Entity {
 								LastUpdatedBy = investorAccount.LastUpdatedBy,
 								LastUpdatedDate = investorAccount.LastUpdatedDate,
 								Reference = investorAccount.Reference,
-								Routing = investorAccount.Routing
+								Routing = investorAccount.Routing,
+								ABA = investorAccount.ABA,
+								AccountOf = investorAccount.AccountOf,
+								BankName = investorAccount.BankName,
+								ByOrderOf = investorAccount.ByOrderOf,
+								FFC = investorAccount.FFC,
+								FFCNO = investorAccount.FFCNO,
+								IBAN = investorAccount.IBAN,
+								Swift = investorAccount.Swift
 							});
 						}
 					}
@@ -52,7 +62,8 @@ namespace DeepBlue.Models.Entity {
 						key = context.CreateEntityKey("InvestorAddresses", investorAddress);
 						if (context.TryGetObjectByKey(key, out originalItem)) {
 							context.ApplyCurrentValues(key.EntitySetName, investorAddress);
-						} else {
+						}
+						else {
 							newInvestorAddress = new InvestorAddress {
 								CreatedBy = investorAddress.CreatedBy,
 								CreatedDate = investorAddress.CreatedDate,
@@ -64,7 +75,8 @@ namespace DeepBlue.Models.Entity {
 						key = context.CreateEntityKey("Addresses", investorAddress.Address);
 						if (context.TryGetObjectByKey(key, out originalItem)) {
 							context.ApplyCurrentValues(key.EntitySetName, investorAddress.Address);
-						} else {
+						}
+						else {
 							if (newInvestorAddress != null) {
 								newInvestorAddress.Address = new Address {
 									Address1 = investorAddress.Address.Address1,
@@ -83,7 +95,11 @@ namespace DeepBlue.Models.Entity {
 									Listed = investorAddress.Address.Listed,
 									PostalCode = investorAddress.Address.PostalCode,
 									State = investorAddress.Address.State,
-									StProvince = investorAddress.Address.StProvince
+									StProvince = investorAddress.Address.StProvince,
+									Email = investorAddress.Address.Email,
+									Fax = investorAddress.Address.Fax,
+									Phone = investorAddress.Address.Phone,
+									WebAddress = investorAddress.Address.WebAddress
 								};
 								updateInvestor.InvestorAddresses.Add(newInvestorAddress);
 							}
@@ -96,7 +112,8 @@ namespace DeepBlue.Models.Entity {
 						key = context.CreateEntityKey("InvestorContacts", investorContact);
 						if (context.TryGetObjectByKey(key, out originalItem)) {
 							context.ApplyCurrentValues(key.EntitySetName, investorContact);
-						} else {
+						}
+						else {
 							newInvestorContact = new InvestorContact {
 								CreatedBy = investorContact.CreatedBy,
 								CreatedDate = investorContact.CreatedDate,
@@ -110,7 +127,8 @@ namespace DeepBlue.Models.Entity {
 						key = context.CreateEntityKey("Contacts", investorContact.Contact);
 						if (context.TryGetObjectByKey(key, out originalItem)) {
 							context.ApplyCurrentValues(key.EntitySetName, investorContact.Contact);
-						} else {
+						}
+						else {
 							if (newInvestorContact != null) {
 								newInvestorContact.Contact = new Contact {
 									ContactName = investorContact.Contact.ContactName,
@@ -126,7 +144,8 @@ namespace DeepBlue.Models.Entity {
 									ReceivesDistributionNotices = investorContact.Contact.ReceivesDistributionNotices,
 									ReceivesFinancials = investorContact.Contact.ReceivesFinancials,
 									ReceivesInvestorLetters = investorContact.Contact.ReceivesInvestorLetters,
-									ReceivesK1 = investorContact.Contact.ReceivesK1
+									ReceivesK1 = investorContact.Contact.ReceivesK1,
+									Designation = investorContact.Contact.Designation
 								};
 							}
 						}
@@ -138,7 +157,8 @@ namespace DeepBlue.Models.Entity {
 							key = context.CreateEntityKey("ContactAddresses", contactAddress);
 							if (context.TryGetObjectByKey(key, out originalItem)) {
 								context.ApplyCurrentValues(key.EntitySetName, contactAddress);
-							} else {
+							}
+							else {
 								if (newInvestorContact != null) {
 									if (newInvestorContact.Contact != null) {
 										newContactAddress = new ContactAddress {
@@ -156,7 +176,8 @@ namespace DeepBlue.Models.Entity {
 							key = context.CreateEntityKey("Addresses", contactAddress.Address);
 							if (context.TryGetObjectByKey(key, out originalItem)) {
 								context.ApplyCurrentValues(key.EntitySetName, contactAddress.Address);
-							} else {
+							}
+							else {
 								if (newContactAddress != null) {
 									newContactAddress.Address = new Address {
 										Address1 = contactAddress.Address.Address1,
@@ -175,7 +196,11 @@ namespace DeepBlue.Models.Entity {
 										Listed = contactAddress.Address.Listed,
 										PostalCode = contactAddress.Address.PostalCode,
 										State = contactAddress.Address.State,
-										StProvince = contactAddress.Address.StProvince
+										StProvince = contactAddress.Address.StProvince,
+										Email = contactAddress.Address.Email,
+										Fax = contactAddress.Address.Fax,
+										Phone = contactAddress.Address.Phone,
+										WebAddress = contactAddress.Address.WebAddress
 									};
 									if (newInvestorContact != null) {
 										newInvestorContact.Contact.ContactAddresses.Add(newContactAddress);

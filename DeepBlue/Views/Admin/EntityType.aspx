@@ -26,7 +26,7 @@
 						<th sortname="InvestorEntityTypeName" style="width: 80%">
 							EntityType
 						</th>
-						<th sortname="Enabled" align="center" style="width: 10%;">
+						<th datatype="Boolean" sortname="Enabled" align="center" style="width: 10%;">
 							Enable
 						</th>
 						<th align="center" style="width: 5%;">
@@ -38,5 +38,10 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("InvEntityTypeList", new FlexigridOptions { ActionName = "EntityTypeList", ControllerName = "Admin", HttpMethod = "GET", SortName = "InvestorEntityTypeName", Paging = true   })%>
+	<%=Html.jQueryFlexiGrid("InvEntityTypeList", new FlexigridOptions { 
+    ActionName = "EntityTypeList", ControllerName = "Admin", 
+    HttpMethod = "GET", SortName = "InvestorEntityTypeName", Paging = true 
+	, OnSuccess= "invEntityType.onGridSuccess"
+	, OnRowClick = "invEntityType.onRowClick"
+})%>
 </asp:Content>

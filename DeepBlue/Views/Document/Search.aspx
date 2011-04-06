@@ -54,7 +54,7 @@
 			</div>
 		</div>
 		<div class="doc-result">
-			<table cellpadding="0" cellspacing="0" border="0" id="SearchDocumentList" style="width:100%">
+			<table cellpadding="0" cellspacing="0" border="0" id="SearchDocumentList" style="width: 100%">
 				<thead>
 					<tr>
 						<th sortname="DocumentDate" style="width: 10%;" align="center">
@@ -63,16 +63,16 @@
 						<th sortname="FileName" style="width: 20%;">
 							File Name
 						</th>
-						<th sortname="DocumentTypeName" style="width: 35%;">
+						<th sortname="DocumentType" style="width: 35%;">
 							Document Type
 						</th>
-						<th id="InvestorNameColumn" sortname="InvestorName" style="width:25%">
+						<th sortname="InvestorName" style="width: 25%" id="InvestorNameColumn">
 							Investor Name
 						</th>
-						<th id="FundNameCloumn" sortname="FundName" style="display:none;width:25%;">
+						<th sortname="FundName" style="display: none; width: 25%;" id="FundNameCloumn">
 							Fund Name
 						</th>
-						<th sortname="Enabled" align="center" style="width: 10%;">
+						<th sortname="FileTypeName" align="center" style="width: 10%;">
 						</th>
 					</tr>
 				</thead>
@@ -92,6 +92,6 @@
 																	  OnSelect = "function(event, ui) { documentSearch.selectFund(ui.item.id);}"})%>
 	<%=Html.jQueryFlexiGrid("SearchDocumentList", new FlexigridOptions { ActionName = "List", ControllerName = "Document", HttpMethod = "GET", SortName = "DocumentDate", SortOrder = "desc", Paging = true, Autoload = false, Height = 300 })%>
 	<script type="text/javascript">
-	 	documentSearch.init();
+		documentSearch.init();
 	</script>
 </asp:Content>

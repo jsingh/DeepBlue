@@ -88,7 +88,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 				}
 				if (!((capitalCall.NewInvestmentAmount + capitalCall.ExistingInvestmentAmount) == (capitalCall.CapitalAmountCalled - capitalCall.ManagementFees - capitalCall.FundExpenses))) {
 					ModelState.AddModelError("NewInvestmentAmount", "(New Investment Amount + Existing Investment Amount) should be equal to (Capital Amount - Management Fees - Fund Expenses).");
-				} else {
+				}
+				else {
 					IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalCall(capitalCall);
 					if (errorInfo != null) {
 						foreach (var err in errorInfo.ToList()) {
@@ -177,7 +178,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 				}
 				if (capitalCall.CapitalCallLineItems.Count == 0) {
 					ModelState.AddModelError("InvestorCount", "Select any one investor");
-				} else {
+				}
+				else {
 					IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalCall(capitalCall);
 					if (errorInfo != null) {
 						foreach (var err in errorInfo.ToList()) {
@@ -210,7 +212,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 			model.FundId = fundId ?? 0;
 			model.CapitalCalls = new List<SelectListItem>();
 			model.CapitalCalls.Add(new SelectListItem {
-				Value = "0", Text = "--Select One--", Selected = false
+				Value = "0",
+				Text = "--Select One--",
+				Selected = false
 			});
 			model.Items = new List<CapitalCallLineItemDetail>();
 			model.Items.Add(new CapitalCallLineItemDetail());
@@ -226,49 +230,51 @@ namespace DeepBlue.Controllers.CapitalCall {
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
 				Models.Entity.CapitalCall capitalCall = CapitalCallRepository.FindCapitalCall(model.CapitalCallId);
-				CapitalCallLineItem item;
-				capitalCall.CapitalAmountCalled = model.CapitalAmountCalled;
-				capitalCall.CapitalCallDate = model.CapitalCallDate;
-				capitalCall.CapitalCallDueDate = model.CapitalCallDueDate;
-				capitalCall.LastUpdatedBy = AppSettings.CreatedByUserId;
-				capitalCall.LastUpdatedDate = DateTime.Now;
-				int index;
-				for (index = 1; index < model.ItemCount + 1; index++) {
-					item = capitalCall.CapitalCallLineItems.SingleOrDefault(capitalCallItem => capitalCallItem.CapitalCallLineItemID == Convert.ToInt32(collection[index.ToString() + "_" + "CapitalCallLineItemId"]));
-					if (item != null) {
-						item.LastUpdatedBy = AppSettings.CreatedByUserId;
-						item.LastUpdatedDate = DateTime.Now;
-						if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "CapitalAmountCalled"]) == false) {
-							item.CapitalAmountCalled = Convert.ToDecimal(collection[index.ToString() + "_" + "CapitalAmountCalled"]);
-						}
-						if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "ManagementFees"]) == false) {
-							item.ManagementFees = Convert.ToDecimal(collection[index.ToString() + "_" + "ManagementFees"]);
-						}
-						if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "InvestmentAmount"]) == false) {
-							item.InvestmentAmount = Convert.ToDecimal(collection[index.ToString() + "_" + "InvestmentAmount"]);
-						}
-						if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "InvestedAmountInterest"]) == false) {
-							item.InvestedAmountInterest = Convert.ToDecimal(collection[index.ToString() + "_" + "InvestedAmountInterest"]);
-						}
-						if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "ManagementFeeInterest"]) == false) {
-							item.ManagementFeeInterest = Convert.ToDecimal(collection[index.ToString() + "_" + "ManagementFeeInterest"]);
-						}
-						if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "Received"]) == false) {
-							if (collection[index.ToString() + "_" + "Received"].Contains("true")) {
-								if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "ReceivedDate"]) == false) {
-									item.ReceivedDate = Convert.ToDateTime(collection[index.ToString() + "_" + "ReceivedDate"]);
+				if (capitalCall != null) {
+					CapitalCallLineItem item;
+					capitalCall.CapitalAmountCalled = model.CapitalAmountCalled;
+					capitalCall.CapitalCallDate = model.CapitalCallDate;
+					capitalCall.CapitalCallDueDate = model.CapitalCallDueDate;
+					capitalCall.LastUpdatedBy = AppSettings.CreatedByUserId;
+					capitalCall.LastUpdatedDate = DateTime.Now;
+					int index;
+					for (index = 1; index < model.ItemCount + 1; index++) {
+						item = capitalCall.CapitalCallLineItems.SingleOrDefault(capitalCallItem => capitalCallItem.CapitalCallLineItemID == Convert.ToInt32(collection[index.ToString() + "_" + "CapitalCallLineItemId"]));
+						if (item != null) {
+							item.LastUpdatedBy = AppSettings.CreatedByUserId;
+							item.LastUpdatedDate = DateTime.Now;
+							if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "CapitalAmountCalled"]) == false) {
+								item.CapitalAmountCalled = Convert.ToDecimal(collection[index.ToString() + "_" + "CapitalAmountCalled"]);
+							}
+							if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "ManagementFees"]) == false) {
+								item.ManagementFees = Convert.ToDecimal(collection[index.ToString() + "_" + "ManagementFees"]);
+							}
+							if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "InvestmentAmount"]) == false) {
+								item.InvestmentAmount = Convert.ToDecimal(collection[index.ToString() + "_" + "InvestmentAmount"]);
+							}
+							if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "InvestedAmountInterest"]) == false) {
+								item.InvestedAmountInterest = Convert.ToDecimal(collection[index.ToString() + "_" + "InvestedAmountInterest"]);
+							}
+							if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "ManagementFeeInterest"]) == false) {
+								item.ManagementFeeInterest = Convert.ToDecimal(collection[index.ToString() + "_" + "ManagementFeeInterest"]);
+							}
+							if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "Received"]) == false) {
+								if (collection[index.ToString() + "_" + "Received"].Contains("true")) {
+									if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "ReceivedDate"]) == false) {
+										item.ReceivedDate = Convert.ToDateTime(collection[index.ToString() + "_" + "ReceivedDate"]);
+									}
 								}
 							}
-						}
-						if ((item.ReceivedDate ?? Convert.ToDateTime("01/01/1900")).Year <= 1900) {
-							item.ReceivedDate = null;
+							if ((item.ReceivedDate ?? Convert.ToDateTime("01/01/1900")).Year <= 1900) {
+								item.ReceivedDate = null;
+							}
 						}
 					}
-				}
-				IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalCall(capitalCall);
-				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalCall(capitalCall);
+					if (errorInfo != null) {
+						foreach (var err in errorInfo.ToList()) {
+							resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+						}
 					}
 				}
 			}
@@ -281,7 +287,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 					}
 				}
 			}
-			return View("Result",resultModel);
+			return View("Result", resultModel);
 		}
 
 		#endregion
@@ -313,7 +319,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 									tierDetail.cell.Add("CapitalCommitted");
 									tierDetail.cell.Add(tiers[0].Multiplier.ToString("0.00"));
 									tierDetail.cell.Add(string.Empty);
-								} else {
+								}
+								else {
 									detail.ManagementFee = CalculateFlatFee(totalCommittedAmount, tiers[0].Multiplier, 90);
 									tierDetail.cell.Add("FlatFee");
 									tierDetail.cell.Add(string.Empty);
@@ -330,7 +337,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 									tierDetail.cell.Add("CapitalCommitted");
 									tierDetail.cell.Add(tiers[0].Multiplier.ToString("0.00"));
 									tierDetail.cell.Add(string.Empty);
-								} else {
+								}
+								else {
 									detail.ManagementFee += CalculateFlatFee(totalCommittedAmount, tiers[0].Multiplier, (tiers[0].EndDate - startDate).TotalDays);
 									tierDetail.cell.Add("FlatFee");
 									tierDetail.cell.Add(string.Empty);
@@ -345,7 +353,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 									tierDetail.cell.Add("CapitalCommitted");
 									tierDetail.cell.Add(tiers[1].Multiplier.ToString("0.00"));
 									tierDetail.cell.Add(string.Empty);
-								} else {
+								}
+								else {
 									detail.ManagementFee += CalculateFlatFee(totalCommittedAmount, tiers[1].Multiplier, (90 - (tiers[0].EndDate - startDate).TotalDays));
 									tierDetail.cell.Add("FlatFee");
 									tierDetail.cell.Add(string.Empty);
@@ -385,8 +394,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 			if (ModelState.IsValid) {
 				CapitalDistribution distribution = new CapitalDistribution();
 				CapitalDistributionLineItem item;
-				distribution.CapitalDistributionDate = model.DistributionDate;
-				distribution.CapitalDistributionDueDate = model.DistributionDueDate;
+				distribution.CapitalDistributionDate = model.CapitalDistributionDate;
+				distribution.CapitalDistributionDueDate = model.CapitalDistributionDueDate;
 				if (model.AddPreferredReturn)
 					distribution.PreferredReturn = model.PreferredReturn;
 				if (model.AddReturnManagementFees)
@@ -408,64 +417,70 @@ namespace DeepBlue.Controllers.CapitalCall {
 				distribution.LastUpdatedBy = AppSettings.CreatedByUserId;
 				distribution.LastUpdatedDate = DateTime.Now;
 				List<InvestorFund> investorFunds = CapitalCallRepository.GetAllInvestorFunds(distribution.FundID);
-				decimal nonManagingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember).Sum(fund => fund.TotalCommitment);
-				decimal managingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember).Sum(fund => fund.TotalCommitment);
-				decimal totalCommitment = nonManagingMemberTotalCommitment + managingMemberTotalCommitment;
-				foreach (var investorFund in investorFunds) {
-					item = new CapitalDistributionLineItem();
-					item.CapitalReturn = 0;
-					item.CreatedBy = AppSettings.CreatedByUserId;
-					item.CreatedDate = DateTime.Now;
-					item.DistributionAmount = model.DistributionAmount;
-					item.InvestorID = investorFund.InvestorID;
-					item.LastUpdatedBy = AppSettings.CreatedByUserId;
-					item.LastUpdatedDate = DateTime.Now;
+				if (investorFunds != null) {
+					decimal nonManagingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember).Sum(fund => fund.TotalCommitment);
+					decimal managingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember).Sum(fund => fund.TotalCommitment);
+					decimal totalCommitment = nonManagingMemberTotalCommitment + managingMemberTotalCommitment;
+					foreach (var investorFund in investorFunds) {
+						item = new CapitalDistributionLineItem();
+						item.CapitalReturn = 0;
+						item.CreatedBy = AppSettings.CreatedByUserId;
+						item.CreatedDate = DateTime.Now;
+						item.DistributionAmount = model.DistributionAmount;
+						item.InvestorID = investorFund.InvestorID;
+						item.LastUpdatedBy = AppSettings.CreatedByUserId;
+						item.LastUpdatedDate = DateTime.Now;
 
-					if (distribution.PreferredCatchUp > 0) {
-						// ManagingMember investor type only
-						if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember) {
-							item.PreferredCatchUp = distribution.PreferredCatchUp * (investorFund.TotalCommitment / managingMemberTotalCommitment);
+						if (distribution.PreferredCatchUp > 0) {
+							// ManagingMember investor type only
+							if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember) {
+								item.PreferredCatchUp = distribution.PreferredCatchUp * (investorFund.TotalCommitment / managingMemberTotalCommitment);
+							}
 						}
-					} else {
-						item.PreferredCatchUp = 0;
-					}
-					if (distribution.PreferredReturn > 0) {
-						// NonManagingMember investor type only
-						if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
-							item.PreferredReturn = distribution.PreferredReturn * (investorFund.TotalCommitment / nonManagingMemberTotalCommitment);
+						else {
+							item.PreferredCatchUp = 0;
 						}
-					} else {
-						item.PreferredReturn = 0;
-					}
-					if (distribution.ReturnFundExpenses > 0) {
-						// NonManagingMember investor type only
-						if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
-							item.ReturnFundExpenses = distribution.ReturnFundExpenses * (investorFund.TotalCommitment / nonManagingMemberTotalCommitment);
+						if (distribution.PreferredReturn > 0) {
+							// NonManagingMember investor type only
+							if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
+								item.PreferredReturn = distribution.PreferredReturn * (investorFund.TotalCommitment / nonManagingMemberTotalCommitment);
+							}
 						}
-					} else {
-						item.ReturnFundExpenses = 0;
-					}
-					if (distribution.ReturnManagementFees > 0) {
-						// NonManagingMember investor type only
-						if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
-							item.ReturnManagementFees = distribution.ReturnManagementFees * (investorFund.TotalCommitment / nonManagingMemberTotalCommitment);
+						else {
+							item.PreferredReturn = 0;
 						}
-					} else {
-						item.ReturnManagementFees = 0;
-					}
-					if (distribution.Profits > 0) {
-						// ManagingMember investor type only
-						if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember) {
-							item.Profits = distribution.Profits * (investorFund.TotalCommitment / managingMemberTotalCommitment);
+						if (distribution.ReturnFundExpenses > 0) {
+							// NonManagingMember investor type only
+							if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
+								item.ReturnFundExpenses = distribution.ReturnFundExpenses * (investorFund.TotalCommitment / nonManagingMemberTotalCommitment);
+							}
 						}
-					}
-					if (distribution.LPProfits > 0) {
-						// NonManagingMember investor type only
-						if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
-							item.Profits = distribution.LPProfits * (investorFund.TotalCommitment / nonManagingMemberTotalCommitment);
+						else {
+							item.ReturnFundExpenses = 0;
 						}
+						if (distribution.ReturnManagementFees > 0) {
+							// NonManagingMember investor type only
+							if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
+								item.ReturnManagementFees = distribution.ReturnManagementFees * (investorFund.TotalCommitment / nonManagingMemberTotalCommitment);
+							}
+						}
+						else {
+							item.ReturnManagementFees = 0;
+						}
+						if (distribution.Profits > 0) {
+							// ManagingMember investor type only
+							if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember) {
+								item.Profits = distribution.Profits * (investorFund.TotalCommitment / managingMemberTotalCommitment);
+							}
+						}
+						if (distribution.LPProfits > 0) {
+							// NonManagingMember investor type only
+							if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
+								item.Profits = distribution.LPProfits * (investorFund.TotalCommitment / nonManagingMemberTotalCommitment);
+							}
+						}
+						distribution.CapitalDistributionLineItems.Add(item);
 					}
-					distribution.CapitalDistributionLineItems.Add(item);
 				}
 				IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalDistribution(distribution);
 				if (errorInfo != null) {

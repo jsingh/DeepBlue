@@ -81,6 +81,13 @@
 			return true;
 		}
 		return true;
+	}	
+	,onRowBound: function (tr,data) {
+		var lastcell=$("td:last div",tr);
+		lastcell.html("<img id='Edit' src='/Assets/images/Edit.gif'/>&nbsp;&nbsp;&nbsp;<img id='Delete' src='/Assets/images/Delete.png'/>");
+		$("#Edit",lastcell).click(function () { customField.add(data.cell[0]); });
+		$("#Delete",lastcell).click(function () { customField.deleteCustomField(data.cell[0],this); });
+		$("td:not(:last)",tr).click(function () { customField.add(data.cell[0]); });
 	}
 	,closeDialog: function (reload) {
 		$("#addCustomFieldDialog").dialog('close');

@@ -82,7 +82,7 @@ namespace DeepBlue.Models.Entity {
 		public IEnumerable<ErrorInfo> Save() {
 			var investorFundDocument = this;
 			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(investorFundDocument);
-			errors.Union(ValidationHelper.Validate(investorFundDocument.File));
+			errors = errors.Union(ValidationHelper.Validate(investorFundDocument.File));
 			if (errors.Any()) {
 				return errors;
 			}

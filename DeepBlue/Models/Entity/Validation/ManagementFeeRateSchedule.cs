@@ -57,7 +57,7 @@ namespace DeepBlue.Models.Entity {
 		private IEnumerable<ErrorInfo> Validate(ManagementFeeRateSchedule managementFeeRateSchedule) {
 			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(managementFeeRateSchedule);
 			foreach (ManagementFeeRateScheduleTier tier in managementFeeRateSchedule.ManagementFeeRateScheduleTiers) {
-				errors.Union(ValidationHelper.Validate(tier));
+				errors = errors.Union(ValidationHelper.Validate(tier));
 			}
 			return errors;
 		}

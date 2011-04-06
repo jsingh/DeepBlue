@@ -70,6 +70,9 @@ namespace DeepBlue.Helpers {
 			if(string.IsNullOrEmpty(options.OnRowClick)==false){
 				scriptSrc.Append(",onRowClick:" + options.OnRowClick + "");
 			}
+			if (string.IsNullOrEmpty(options.OnRowBound) == false) {
+				scriptSrc.Append(",onRowBound:" + options.OnRowBound + "");
+			}
 			scriptSrc.Append(",method:\"" + options.HttpMethod.ToString() + "\"")
 			 .Append(",sortname:\"" + options.SortName.ToString() + "\"")
 			 .Append(",sortorder:\"" + options.SortOrder.ToString() + "\"")

@@ -8,11 +8,7 @@
 	   row = new FlexigridRow();
 	   row.cell.Add(item.InvestorEntityTypeID.ToString());
 	   row.cell.Add(item.InvestorEntityTypeName);
-	   if (item.Enabled)
-		   row.cell.Add(Html.Image("Tick.gif").ToHtmlString());
-	   else
-		   row.cell.Add(string.Empty);
-	   row.cell.Add(Html.Image("Edit.gif", new {  @onclick = "javascript:invEntityType.add(" + item.InvestorEntityTypeID.ToString() + ");" }).ToHtmlString());
+	   row.cell.Add(item.Enabled);
 	   flexData.rows.Add(row);
    } %>
 <%= JsonSerializer.ToJsonObject(flexData)%>

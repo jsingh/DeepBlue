@@ -16,6 +16,7 @@ namespace DeepBlue.Helpers {
 			OnSuccess = string.Empty;
 			OnSubmit = string.Empty;
 			OnRowClick = string.Empty;
+			OnRowBound = string.Empty;
 			HttpMethod = "GET";
 			SortName = string.Empty;
 			SortOrder = string.Empty;
@@ -32,6 +33,7 @@ namespace DeepBlue.Helpers {
 		public string OnSuccess { get; set; }
 		public string OnSubmit { get; set; }
 		public string OnRowClick { get; set; }
+		public string OnRowBound { get; set; }
 		public string SortName  { get; set; }
 		public string SortOrder { get; set; }
 		public bool Autoload  { get; set; }

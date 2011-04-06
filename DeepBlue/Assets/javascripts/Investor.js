@@ -59,25 +59,52 @@
 			$(ContactInfo).remove();
 		}
 	}
-	,validation: function () {
-		var validForm=true;
+	,validation: function (formId) {
+		var frm=document.getElementById(formId);
+		var message='';
+		var invnameValid=$("#InvestorName_validationMessage",frm);
+		var sstaxidValid=$("#SocialSecurityTaxId_validationMessage",frm);
+		if(jQuery.trim(invnameValid.html())!="") {
+			message+=invnameValid.html()+"\n";
+		}
+		if(jQuery.trim(sstaxidValid.html())!="") {
+			message+=sstaxidValid.html()+"\n";
+		}
+		if(jQuery.trim(message)!="") {
+			alert(message);
+			return false;
+		} else {
+			Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
+			$(".field-validation-error",frm).each(function () {
+				if(this.innerHTML!='') {
+					message+=this.innerHTML+"\n";
+				}
+			});
+			if(jQuery.trim(message)!="") {
+				alert(message);
+				return false;
+			} else {
+				return true;
+			}
+		}
+		/*var validForm=true;
 		var AccountLength=parseInt($("#AccountLength").val());
 		var index;
-		/*for(index=1;index<AccountLength+1;index++) {
+		for(index=1;index<AccountLength+1;index++) {
 		validForm=this.checkInputValid(index+"_BankName");
 		validForm=this.checkInputValid(index+"_AccountNumber");
-		}*/
+		}
 		var ContactLength=parseInt($("#ContactLength").val());
 		var index;
 		for(index=1;index<ContactLength+1;index++) {
-			//validForm=this.checkInputValid(index+"_ContactPerson");
-			//validForm=this.checkSelectValid(index+"_ContactState");
-			//validForm=this.checkSelectValid(index+"_ContactCountry");
-			//validForm=this.checkEmail(index+"_ContactEmail");
-			//validForm=this.checkZip(index+"_ContactZip");
-			//validForm=this.checkPhone(index+"_ContactPhoneNumber");
+		//validForm=this.checkInputValid(index+"_ContactPerson");
+		//validForm=this.checkSelectValid(index+"_ContactState");
+		//validForm=this.checkSelectValid(index+"_ContactCountry");
+		//validForm=this.checkEmail(index+"_ContactEmail");
+		//validForm=this.checkZip(index+"_ContactZip");
+		//validForm=this.checkPhone(index+"_ContactPhoneNumber");
 		}
-		return validForm;
+		return validForm;*/
 	}
 	,checkEmail: function (name) {
 		if(this.checkInputValid(name)) {
@@ -167,5 +194,17 @@
 			return false;
 		}
 		return true;
+	}
+	,onBegin: function () {
+		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+	}
+	,onSuccess: function () {
+		$("#UpdateLoading").html("");
+		var UpdateTargetId=$("#UpdateTargetId");
+		if(jQuery.trim(UpdateTargetId.html())!="") {
+			alert(UpdateTargetId.html())
+		} else {
+			location.href="/Investor/New";
+		}
 	}
 };

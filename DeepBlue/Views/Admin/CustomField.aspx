@@ -32,7 +32,7 @@
 						<th sortname="DataTypeName" style="width: 15%;">
 							Data Type
 						</th>
-						<th sortname="Search" style="width: 5%;" align="center">
+						<th datatype="Boolean" sortname="Search" style="width: 5%;" align="center">
 							Search
 						</th>
 						<th align="center" style="width: 5%;">
@@ -44,5 +44,5 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("CustomFieldList", new FlexigridOptions { ActionName = "CustomFieldList", ControllerName = "Admin", HttpMethod = "GET", SortName = "CustomFieldID", Paging = true })%>
+	<%=Html.jQueryFlexiGrid("CustomFieldList", new FlexigridOptions { ActionName = "CustomFieldList", ControllerName = "Admin", HttpMethod = "GET", SortName = "CustomFieldID", Paging = true , OnRowBound="customField.onRowBound" })%>
 </asp:Content>

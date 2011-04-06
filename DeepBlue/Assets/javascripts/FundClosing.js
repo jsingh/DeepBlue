@@ -97,6 +97,13 @@
 		}
 		return true;
 	}
+	,onRowBound: function (tr,data) {
+		var lastcell=$("td:last div",tr);
+		lastcell.html("<img id='Edit' src='/Assets/images/Edit.gif'/>&nbsp;&nbsp;&nbsp;<img id='Delete' src='/Assets/images/Delete.png'/>");
+		$("#Edit",lastcell).click(function () { fundClosing.add(data.cell[0]); });
+		$("#Delete",lastcell).click(function () { fundClosing.deleteFundClosing(data.cell[0],this); });
+		$("td:not(:last)",tr).click(function () { fundClosing.add(data.cell[0]); });
+	}
 	,closeDialog: function (reload) {
 		$("#addFundClosingDialog").dialog('close');
 		if(reload==true) {

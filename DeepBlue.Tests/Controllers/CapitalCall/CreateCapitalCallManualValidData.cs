@@ -26,7 +26,7 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
 
         private void SetFormCollection() {
             base.DefaultController.ValueProvider = SetupValueProvider(GetValidformCollection());
-            base.ActionResult = base.DefaultController.Create(GetValidformCollection());
+            base.ActionResult = base.DefaultController.CreateManualCapitalCall(GetValidformCollection());
         }
 
 

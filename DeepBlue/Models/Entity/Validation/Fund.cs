@@ -77,10 +77,10 @@ namespace DeepBlue.Models.Entity {
 		private IEnumerable<ErrorInfo> Validate(Fund fund) {
 			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(fund);
 			foreach (FundAccount account in fund.FundAccounts) {
-				errors.Union(ValidationHelper.Validate(account));
+			  errors =	errors.Union(ValidationHelper.Validate(account));
 			}
 			foreach (FundRateSchedule schedule in fund.FundRateSchedules) {
-				errors.Union(ValidationHelper.Validate(schedule));
+				errors = errors.Union(ValidationHelper.Validate(schedule));
 			}
 			return errors;
 		}

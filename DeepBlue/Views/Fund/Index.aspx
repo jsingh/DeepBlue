@@ -21,6 +21,9 @@
 			<table id="FundList" cellpadding="0" cellspacing="0" border="0">
 				<thead>
 					<tr>
+						<th sortname="FundID" style="width: 1%;display:none;">
+							Fund Id
+						</th>
 						<th sortname="FundName" style="width: 40%">
 							Fund Name
 						</th>
@@ -42,5 +45,5 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List", ControllerName = "Fund", SortName = "FundName", Paging = true })%>
+	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List", ControllerName = "Fund", SortName = "FundName", Paging = true, OnRowBound = "fund.onRowBound" })%>
 </asp:Content>

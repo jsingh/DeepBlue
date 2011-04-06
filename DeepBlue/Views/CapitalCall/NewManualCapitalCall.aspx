@@ -23,7 +23,7 @@
 	<div class="cc-main" id="CCDetail" style="display: none">
 		<% Html.EnableClientValidation(); %>
 		<% using (Ajax.BeginForm("CreateManualCapitalCall", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "manualCapitalCall.onCreateCapitalCallBegin", OnSuccess = "manualCapitalCall.onCreateCapitalCallSuccess" }, new { @id = "CapitalCall" })) {%>
-		<%: Html.ValidationSummary(true) %>
+		
 		<div class="box">
 			<div class="box-top">
 				<div class="box-left">

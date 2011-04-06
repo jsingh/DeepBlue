@@ -25,6 +25,7 @@ namespace DeepBlue.Models.Investor {
 		public string Alias { get; set; }
 
 		[Required(ErrorMessage = "Social Security/ Tax Id is required")]
+		[RemoteUID_(Action = "SocialSecurityTaxIdAvailable", Controller = "Investor", ValidateParameterName = "SocialSecurityTaxId", Params = new string[] { "InvestorId" })]
 		[DisplayName("Social Security/ Tax Id:")]
 		[StringLength(50, ErrorMessage = "Investor Name must be under 50 characters.")]
 		public string SocialSecurityTaxId { get; set; }
@@ -179,6 +180,7 @@ namespace DeepBlue.Models.Investor {
 		public bool InvestorLetters { get; set; }
 
 		public CustomFieldModel CustomField { get; set; }
+		
 	}
 
 	public class SelectListModel {

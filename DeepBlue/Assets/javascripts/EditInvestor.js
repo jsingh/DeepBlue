@@ -90,6 +90,9 @@
 				editInvestor.applyAccordion($invInfo);
 			}
 			editInvestor.loadDisplCtl($invInfo);
+			$(".editinfo",$invInfo).each(function () {
+				editInvestor.showControls(this,false);
+			});
 			$(".InvestorUpdateLoading").remove();
 		});
 	}
@@ -173,14 +176,13 @@
 	}
 	,applyAccordion: function ($invInfo) {
 		var $accordion=$("#accordion",$invInfo);
-		$accordion.accordion({ animated: false,active: -1,collapsible: true,autoHeight: false,navigation: true
-		});
+		$accordion.accordion({ animated: false,active: -1,collapsible: true,autoHeight: false,navigation: true });
 	}
 	,addContactInfo: function (that) {
 		var editinfo=$(that).parents(".edit-info:first").get(0); // get edit-info box
 		var contactInfo=$("#contactInfo").clone();
 		var contactInfoMain=$(that).parents("#contactInfoMain").get(0);
-		$("#ContactInfoAddNew",contactInfoMain).hide();
+		//$("#ContactInfoAddNew",contactInfoMain).hide();
 		var contactInfoCount=parseInt($("#ContactInfoCount",editinfo).val());
 		contactInfo.html(contactInfo.html().replace(/0_/g,(contactInfoCount+1)+"_"));
 		$("#ContactInfoCount",editinfo).val(contactInfoCount+1);
@@ -318,7 +320,7 @@
 		$(EditInvestorInfo).before(loading);
 		var editinfo=$(that).parents(".edit-info").get(0);
 		$("#Update",editinfo).click();
-		editInvestor.showControls(cntdiv,false);
+		//editInvestor.showControls(cntdiv,false);
 	}
 	,cancelInvestorInfo: function (that) {
 		var cntdiv=$(that).parents(".editinfo:first").get(0);
@@ -528,7 +530,7 @@
 	,onSuccess: function () {
 		$("#UpdateLoading",editInvestor.currentForm).html("Update Successfully");
 		var InvestorId=$("#InvestorId",editInvestor.currentForm).val();
-		$(".InvestorUpdateLoading").remove();
+		/*$(".InvestorUpdateLoading").remove();*/
 		setTimeout(function () {
 			$("#UpdateLoading",editInvestor.currentForm).html("");
 		},2000)

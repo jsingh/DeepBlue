@@ -574,7 +574,11 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		public ActionResult Result() {
+        #region Communication
+            
+        #endregion
+
+        public ActionResult Result() {
 			return View();
 		}
 	}

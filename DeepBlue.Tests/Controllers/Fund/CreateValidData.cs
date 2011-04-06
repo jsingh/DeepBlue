@@ -9,12 +9,7 @@ using DeepBlue.Models.Fund;
 
 namespace DeepBlue.Tests.Controllers.Fund {
     public class CreateValidData : Create {
-        private FundDetail  Model {
-            get {
-				return base.ViewResult.ViewData.Model as FundDetail;
-            }
-        }
-
+        
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;

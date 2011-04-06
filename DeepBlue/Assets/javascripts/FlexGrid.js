@@ -26,6 +26,7 @@
 			onChangeSort: false,
 			onSuccess: false,
 			onRowClick: false,
+			onRowBound: false,
 			onSubmit: false // using a custom populate function
 		},p);
 		$(t)
@@ -79,7 +80,13 @@
 					 	$("thead tr th",g.hDiv).each(function () {
 					 		var td=document.createElement('td');
 					 		var div=document.createElement('div');
-					 		div.innerHTML=row.cell[i];
+					 		if(row.cell.length>i) {
+					 			if($(this).attr("datatype")=="Boolean") {
+					 				if(row.cell[i]==true) div.innerHTML="<img src='/Assets/images/Tick.gif' />";
+					 			} else {
+					 				div.innerHTML=row.cell[i];
+					 			}
+					 		}
 					 		$(td).css({ "display": this.style.display });
 					 		$(td).css({ "width": this.style.width,"display": this.style.display });
 					 		$(div).css("text-align",$(this).attr("align"));
@@ -88,12 +95,16 @@
 					 		td=null;
 					 		i++;
 					 	});
+
+					 	$(tbody).append(tr);
+					 	if(p.onRowBound) {
+					 		p.onRowBound(tr,row);
+					 	}
 					 	if(p.onRowClick) {
 					 		$(tr).click(function () {
 					 			p.onRowClick(row);
 					 		});
 					 	}
-					 	$(tbody).append(tr);
 					 	tr=null;
 					 }
 					);
@@ -103,7 +114,7 @@
 				$(t).append(tbody);
 				tbody=null;data=null;i=null;
 				g.checkHeight();
-				if(p.onSuccess) p.onSuccess();
+				if(p.onSuccess) p.onSuccess(t);
 				if(p.hideOnSubmit) $(g.block).remove(); //$(t).show();
 				this.hDiv.scrollLeft=this.bDiv.scrollLeft;
 				if($.browser.opera) $(t).css('visibility','visible');

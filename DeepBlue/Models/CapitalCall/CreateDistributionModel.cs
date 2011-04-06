@@ -15,6 +15,8 @@ namespace DeepBlue.Models.CapitalCall {
 		public int FundId { get; set; }
 
 		[DisplayName("Distribution #:")]
+		[Required(ErrorMessage = "Distribution number is required")]
+		[StringLength(12)]
 		public string DistributionNumber { get; set; }
 
 		[DisplayName("Distribution Amount:")]
@@ -25,12 +27,12 @@ namespace DeepBlue.Models.CapitalCall {
 		[DisplayName("Distribution Date:")]
 		[Required(ErrorMessage = "Distribution Date is required")]
 		[DateRange()]
-		public DateTime DistributionDate { get; set; }
+		public DateTime CapitalDistributionDate { get; set; }
 
 		[DisplayName("Distribution Due Date:")]
 		[Required(ErrorMessage = "Distribution Due Date is required")]
         [DateRange()]
-		public DateTime DistributionDueDate { get; set; }
+		public DateTime CapitalDistributionDueDate { get; set; }
 
 		[DisplayName("Add Preferred Return")]
 		public bool AddPreferredReturn { get; set; }

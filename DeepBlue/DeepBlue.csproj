@@ -101,6 +101,7 @@
     <Compile Include="Helpers\HtmlControls.cs" />
     <Compile Include="Helpers\HttpContextFactory.cs" />
     <Compile Include="Helpers\JQueryHelpers.cs" />
+    <Compile Include="Helpers\MvcDiv.cs" />
     <Compile Include="Helpers\PaginatedList.cs" />
     <Compile Include="Helpers\QueryableExtension.cs" />
     <Compile Include="Helpers\RemoteAttributeAdapter.cs" />
@@ -397,7 +398,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Assets\javascripts\jquery-1.4.1.min.js" />
-    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\DeepBlue.Master" />
@@ -413,8 +413,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DeepBlue.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="obj\Debug\edmxResourcesToEmbed\Models\Entity\DeepBlue.csdl" />
@@ -426,6 +424,7 @@
     <None Include="obj\Release\edmxResourcesToEmbed\Models\Entity\DeepBlue.csdl" />
     <None Include="obj\Release\edmxResourcesToEmbed\Models\Entity\DeepBlue.msl" />
     <None Include="obj\Release\edmxResourcesToEmbed\Models\Entity\DeepBlue.ssdl" />
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\Documents\2\1\" />

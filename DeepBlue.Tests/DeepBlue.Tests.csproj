@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -213,12 +214,24 @@
     <Compile Include="Controllers\Document\NewDocumentUpload.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\Fund\Create.cs" />
-    <Compile Include="Controllers\Fund\CreateInvalidData.cs" />
-    <Compile Include="Controllers\Fund\CreateValidData.cs" />
-    <Compile Include="Controllers\Fund\Edit.cs" />
-    <Compile Include="Controllers\Fund\FundBase.cs" />
-    <Compile Include="Controllers\Fund\New.cs" />
+    <Compile Include="Controllers\Fund\Create.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Fund\CreateInvalidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Fund\CreateValidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Fund\Edit.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Fund\FundBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Fund\New.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\Investor\Create.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -234,6 +247,10 @@
     <Compile Include="Controllers\Investor\New.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\Transaction\CreateInvestorFund.cs" />
+    <Compile Include="Controllers\Transaction\CreateInvestorFundInvalidData.cs" />
+    <Compile Include="Controllers\Transaction\InvestorFundBase.cs" />
+    <Compile Include="Controllers\Transaction\NewInvestorFund.cs" />
     <Compile Include="MockSessionState.cs" />
     <Compile Include="Models\Admin\CustomField.cs">
       <SubType>Code</SubType>

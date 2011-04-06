@@ -252,9 +252,11 @@
 			if(parseInt(FundRateScheduleId)>0) {
 				$.get("/Fund/DeleteFundRateSchedule/?id="+FundRateScheduleId,function (data) {
 					$(rateDetail).remove();
+					fund.resizeIframe();
 				});
 			} else {
 				$(rateDetail).remove();
+				fund.resizeIframe();
 			}
 		}
 	}
@@ -347,5 +349,11 @@
 	,checkChange: function (obj) {
 		var rateGrid=$(obj).parents(".rate-grid:first");
 		$("#IsScheduleChange",rateGrid).val("true");
+	}
+	,onRowBound: function (tr,data) {
+		var lastcell=$("td:last div",tr);
+		lastcell.html("<img id='Edit' src='/Assets/images/Edit.gif'/>");
+		$("#Edit",lastcell).click(function () { fund.edit(data.cell[0]); });
+		$("td:not(:last)",tr).click(function () { fund.edit(data.cell[0]); });
 	}
 }

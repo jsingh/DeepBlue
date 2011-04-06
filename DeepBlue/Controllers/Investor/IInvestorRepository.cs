@@ -22,6 +22,7 @@ namespace DeepBlue.Controllers.Investor {
 		InvestorFundTransaction FindInvestorFundTransaction(int transactionId);
 		decimal FindSumOfSellAmount(int investorFundId);
 		bool InvestorNameAvailable(string invesorName, int investorId);
+		bool SocialSecurityTaxIdAvailable(string socialSecurityId, int investorId);
 		#endregion
 		 
 		#region Delete

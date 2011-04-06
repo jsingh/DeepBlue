@@ -205,6 +205,13 @@ namespace DeepBlue.Controllers.Investor {
 			}
 		}
 
+		public bool SocialSecurityTaxIdAvailable(string socialSecurityId, int investorId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from investor in context.Investors
+						 where investor.Social == socialSecurityId && investor.InvestorID != investorId
+						 select investor.InvestorID).Count()) > 0 ? true : false;
+			}
+		}
 			#endregion
 	}
 }

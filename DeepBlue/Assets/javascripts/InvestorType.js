@@ -70,6 +70,14 @@
 		}
 		return true;
 	}
+	,onGridSuccess: function (t) {
+		$("tr",t).each(function () {
+			$("td:last div",this).html("<img id='Edit' src='/Assets/images/Edit.gif'/>");
+		});
+	}
+	,onRowClick: function (row) {
+		investorType.add(row.cell[0]);
+	}
 	,closeDialog: function (reload) {
 		$("#addInvTypeDialog").dialog('close');
 		if(reload==true) {

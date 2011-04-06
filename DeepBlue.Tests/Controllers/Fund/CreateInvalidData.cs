@@ -9,9 +9,9 @@ using DeepBlue.Models.Fund;
 
 namespace DeepBlue.Tests.Controllers.Fund {
     public class CreateInvalidData : Create {
-		private FundDetail Model {
+		private ResultModel ResultModel {
 			get {
-				return base.ViewResult.ViewData.Model as FundDetail;
+				return base.ViewResult.ViewData.Model as ResultModel;
 			}
 		}
 
@@ -118,9 +118,9 @@ namespace DeepBlue.Tests.Controllers.Fund {
         }
 
 		[Test]
-		public void model_state_invalid_redirects_to_new_view() {
+		public void model_state_invalid_redirects_to_result_view() {
 			SetModelInvalid();
-			Assert.IsNotNull(Model);
+			Assert.IsNotNull(ResultModel);
 		}
 
        
