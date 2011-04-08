@@ -10,7 +10,8 @@ namespace DeepBlue.Models.Entity {
 	public partial class DataType {
 		public class DataTypeMD {
 			#region Primitive Properties
-			[StringLength(50), Required]
+			[Required(ErrorMessage = "DataType Name is required")]
+			[StringLength(50, ErrorMessage = "DataType Name must be under 50 characters.")]
 			public global::System.String DataTypeName {
 				get;
 				set;

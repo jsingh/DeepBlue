@@ -10,15 +10,15 @@ namespace DeepBlue.Models.Entity {
 	public partial class CustomFieldValue {
 		public class CustomFieldValueMD {
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Custom Field is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Custom Field is required")]
 			public global::System.Int32 CustomFieldID {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Key is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Key is required")]
 			public global::System.Int32 Key {
 				get;
 				set;

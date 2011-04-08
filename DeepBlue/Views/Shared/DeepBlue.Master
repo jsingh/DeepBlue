@@ -4,160 +4,148 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>
-        <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
-    </title>
-    <%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
-    <%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
-    <%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
-    <%= Html.JavascriptInclueTag("MicrosoftAjax.js")%>
-    <%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
-    <%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
-    <%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
-    <%= Html.JavascriptInclueTag("jHelper.js")%>
-    <%= Html.JavascriptInclueTag("menu.js")%>
-    <%= Html.JavascriptInclueTag("jsDate.js")%>
-    <%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
-    <%= Html.StylesheetLinkTag("site.css")%>
-    <asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
+	<title>
+		<asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+	</title>
+	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
+	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
+	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftAjax.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
+	<%= Html.JavascriptInclueTag("jHelper.js")%>
+	<%= Html.JavascriptInclueTag("menu.js")%>
+	<%= Html.JavascriptInclueTag("jsDate.js")%>
+	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
+	<%= Html.StylesheetLinkTag("site.css")%>
+	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
 </head>
 <body>
-    <div id="header">
-        <div class="header-logo">
-            <div id="menu">
-                <div class="menu-content">
-                    <% using (Html.TopMenu((ViewData["MenuName"] == "Investor")))
-                       {%>
-                    <%: Html.TopMenuLink("Investor Management","Investor_Management")%>
-                    <%}%>
-                    <% using (Html.TopMenu((ViewData["MenuName"] == "Fund Tracker")))
-                       {%>
-                    <%: Html.TopMenuLink("Fund Tracker", "Fund_Management")%>
-                    <%}%>
-                    <% using (Html.TopMenu((ViewData["MenuName"] == "Deal Flow")))
-                       {%>
-                    <%: Html.TopMenuLink("Deal Flow")%>
-                    <%}%>
-                    <% using (Html.TopMenu((ViewData["MenuName"] == "Transaction Setup")))
-                       {%>
-                    <%: Html.TopMenuLink("Transaction Setup")%>
-                    <%}%>
-                    <% using (Html.TopMenu((ViewData["MenuName"] == "Accounting")))
-                       {%>
-                    <%: Html.TopMenuLink("Accounting")%>
-                    <%}%>
-                    <% using (Html.TopMenu((ViewData["MenuName"] == "Document")))
-                       {%>
-                    <%: Html.TopMenuLink("Document Management", "Doc_Management")%>
-                    <%}%>
-                    <% using (Html.TopMenu((ViewData["MenuName"] == "Admin")))
-                       {%>
-                    <%: Html.TopMenuLink("Administration", "Adm_Management")%>
-                    <%}%>
-                    <% using (Html.TopMenu((ViewData["MenuName"] == "Reports")))
-                       {%>
-                    <%: Html.TopMenuLink("Reports")%>
-                    <%}%>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="content">
-        <div class="content-box">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-        </div>
-    </div>
-    <div id="footer">
-        <div class="footercontent">
-            Copyright 2011 DeepBlue</div>
-    </div>
-    <asp:ContentPlaceHolder ID="BottomContent" runat="server" />
-    <%using (Html.SubMenu("Investor_Management"))
-      {%>
-    <ul>
-        <li>
-            <%: Html.ActionLink("New Investor Setup", "New", "Investor")%></li>
-        <li>
-            <%: Html.ActionLink("Update Investor Information", "Edit", "Investor")%></li>
-        <li>
-            <%: Html.ActionLink("Investor Commitment", "New", "Transaction")%></li>
-    </ul>
-    <%}%>
-    <%using (Html.SubMenu("Fund_Management", true))
-      {%>
-    <ul>
-        <li>
-            <%: Html.ActionLink("Fund Setup", "Index", "Fund")%></li>
-        <li>
-            <%: Html.SubMenuLink("Capital Call", "CC_Submenu")%>
-        </li>
-    </ul>
-    <%}%>
-    <%using (Html.InnerSubMenu("CC_Submenu"))
-      {%>
-    <ul>
-        <li>
-            <%: Html.ActionLink("Capital Call Detail", "List", "CapitalCall")%></li>
-        <li>
-            <%: Html.ActionLink("New Capital Call", "New", "CapitalCall")%></li>
-        <li>
-            <%: Html.ActionLink("Manual Capital Call", "NewManualCapitalCall", "CapitalCall")%></li>
-        <li>
-            <%: Html.ActionLink("New Capital Distribution", "NewCapitalDistribution", "CapitalCall")%></li>
-        <li>
-            <%: Html.ActionLink("Capital Distribution Detail", "CapitalDistributionList", "CapitalCall")%></li>
-        <li>
-            <%: Html.Anchor("Capital Call Reconcile")%></li>
-    </ul>
-    <%}%>
-    <%using (Html.SubMenu("Adm_Management", true))
-      {%>
-    <ul>
-        <li>
-            <%: Html.SubMenuLink("Investor Management","Inv_SubMenu")%></li>
-        <li>
-            <%: Html.SubMenuLink("Fund Tracker", "Fund_SubMenu")%></li>
-        <li>
-            <%: Html.SubMenuLink("Custom Field Management", "CusField_SubMenu")%></li>
-    </ul>
-    <%} %>
-    <%using (Html.SubMenu("Doc_Management"))
-      {%>
-    <ul>
-        <li>
-            <%: Html.ActionLink("Document Search", "Search", "Document")%></li>
-        <li>
-            <%: Html.ActionLink("Document Upload", "New", "Document")%></li>
-    </ul>
-    <%} %>
-    <%using (Html.InnerSubMenu("Inv_SubMenu"))
-      {%>
-    <ul>
-        <li>
-            <%: Html.ActionLink("Investor Entity Type", "EntityType", "Admin")%></li>
-        <li>
-            <%: Html.ActionLink("Investor Type", "InvestorType", "Admin")%></li>
-        <li>
-            <%: Html.Anchor("Source")%></li>
-        <li>
-            <%: Html.Anchor("Investor Accounting Categories")%></li>
-    </ul>
-    <%} %>
-    <%using (Html.InnerSubMenu("Fund_SubMenu"))
-      {%>
-    <ul>
-        <li>
-            <%: Html.ActionLink("Fund Close #", "FundClosing", "Admin")%></li>
-    </ul>
-    <%} %>
-    <%using (Html.InnerSubMenu("CusField_SubMenu"))
-      {%>
-    <ul>
-        <li>
-            <%: Html.ActionLink("Custom Field", "CustomField", "Admin")%></li>
-        <li>
-            <%: Html.ActionLink("Data Type", "DataType", "Admin")%></li>
-    </ul>
-    <%} %>
+	<div id="header">
+		<div class="header-logo">
+			<div id="menu">
+				<div class="menu-content">
+					<% using (Html.TopMenu((ViewData["MenuName"] == "Investor"))) {%>
+					<%: Html.TopMenuLink("Investor Management","Investor_Management")%>
+					<%}%>
+					<% using (Html.TopMenu((ViewData["MenuName"] == "Fund Tracker"))) {%>
+					<%: Html.TopMenuLink("Fund Tracker", "Fund_Management")%>
+					<%}%>
+					<% using (Html.TopMenu((ViewData["MenuName"] == "Deal Flow"))) {%>
+					<%: Html.TopMenuLink("Deal Flow")%>
+					<%}%>
+					<% using (Html.TopMenu((ViewData["MenuName"] == "Transaction Setup"))) {%>
+					<%: Html.TopMenuLink("Transaction Setup")%>
+					<%}%>
+					<% using (Html.TopMenu((ViewData["MenuName"] == "Accounting"))) {%>
+					<%: Html.TopMenuLink("Accounting")%>
+					<%}%>
+					<% using (Html.TopMenu((ViewData["MenuName"] == "Document"))) {%>
+					<%: Html.TopMenuLink("Document Management", "Doc_Management")%>
+					<%}%>
+					<% using (Html.TopMenu((ViewData["MenuName"] == "Admin"))) {%>
+					<%: Html.TopMenuLink("Administration", "Adm_Management")%>
+					<%}%>
+					<% using (Html.TopMenu((ViewData["MenuName"] == "Reports"))) {%>
+					<%: Html.TopMenuLink("Reports")%>
+					<%}%>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="content">
+		<div class="content-box">
+			<asp:ContentPlaceHolder ID="MainContent" runat="server" />
+		</div>
+	</div>
+	<div id="footer">
+		<div class="footercontent">
+			Copyright 2011 DeepBlue</div>
+	</div>
+	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
+	<%using (Html.SubMenu("Investor_Management")) {%>
+	<ul>
+		<li>
+			<%: Html.ActionLink("New Investor Setup", "New", "Investor")%></li>
+		<li>
+			<%: Html.ActionLink("Update Investor Information", "Edit", "Investor")%></li>
+		<li>
+			<%: Html.ActionLink("Investor Commitment", "New", "Transaction")%></li>
+	</ul>
+	<%}%>
+	<%using (Html.SubMenu("Fund_Management", true)) {%>
+	<ul>
+		<li>
+			<%: Html.ActionLink("Fund Setup", "Index", "Fund")%></li>
+		<li>
+			<%: Html.SubMenuLink("Capital Call", "CC_Submenu")%>
+		</li>
+	</ul>
+	<%}%>
+	<%using (Html.InnerSubMenu("CC_Submenu")) {%>
+	<ul>
+		<li>
+			<%: Html.ActionLink("Capital Call Detail", "List", "CapitalCall")%></li>
+		<li>
+			<%: Html.ActionLink("New Capital Call", "New", "CapitalCall")%></li>
+		<li>
+			<%: Html.ActionLink("Manual Capital Call", "NewManualCapitalCall", "CapitalCall")%></li>
+		<li>
+			<%: Html.ActionLink("New Capital Distribution", "NewCapitalDistribution", "CapitalCall")%></li>
+		<li>
+			<%: Html.ActionLink("Capital Distribution Detail", "CapitalDistributionList", "CapitalCall")%></li>
+		<li>
+			<%: Html.Anchor("Capital Call Reconcile")%></li>
+	</ul>
+	<%}%>
+	<%using (Html.SubMenu("Adm_Management", true)) {%>
+	<ul>
+		<li>
+			<%: Html.SubMenuLink("Investor Management","Inv_SubMenu")%></li>
+		<li>
+			<%: Html.SubMenuLink("Fund Tracker", "Fund_SubMenu")%></li>
+		<li>
+			<%: Html.SubMenuLink("Custom Field Management", "CusField_SubMenu")%></li>
+	</ul>
+	<%} %>
+	<%using (Html.SubMenu("Doc_Management")) {%>
+	<ul>
+		<li>
+			<%: Html.ActionLink("Document Search", "Search", "Document")%></li>
+		<li>
+			<%: Html.ActionLink("Document Upload", "New", "Document")%></li>
+	</ul>
+	<%} %>
+	<%using (Html.InnerSubMenu("Inv_SubMenu")) {%>
+	<ul>
+		<li>
+			<%: Html.ActionLink("Investor Entity Type", "EntityType", "Admin")%></li>
+		<li>
+			<%: Html.ActionLink("Investor Type", "InvestorType", "Admin")%></li>
+		<li>
+			<%: Html.ActionLink("Communication Type", "CommunicationType", "Admin")%></li>
+		<li>
+			<%: Html.ActionLink("Communication Grouping", "CommunicationGrouping", "Admin")%></li>
+		<li>
+			<%: Html.Anchor("Source")%></li>
+		<li>
+			<%: Html.Anchor("Investor Accounting Categories")%></li>
+	</ul>
+	<%} %>
+	<%using (Html.InnerSubMenu("Fund_SubMenu")) {%>
+	<ul>
+		<li>
+			<%: Html.ActionLink("Fund Close #", "FundClosing", "Admin")%></li>
+	</ul>
+	<%} %>
+	<%using (Html.InnerSubMenu("CusField_SubMenu")) {%>
+	<ul>
+		<li>
+			<%: Html.ActionLink("Custom Field", "CustomField", "Admin")%></li>
+		<li>
+			<%: Html.ActionLink("Data Type", "DataType", "Admin")%></li>
+	</ul>
+	<%} %>
 </body>
 </html>

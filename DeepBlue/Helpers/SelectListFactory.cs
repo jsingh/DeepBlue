@@ -227,5 +227,20 @@ namespace DeepBlue.Helpers {
 			}
 			return multiplierTypeList;
 		}
+
+		public static List<SelectListItem> GetCommunicationGroupingSelectList(List<CommunicationGrouping> communicationGroupings) {
+			List<SelectListItem> communicationGroupingList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			communicationGroupingList.Add(item);
+			foreach (var communicationGrouping in communicationGroupings) {
+				item = new SelectListItem();
+				item.Text = communicationGrouping.CommunicationGroupingName.ToString();
+				item.Value = communicationGrouping.CommunicationGroupingID.ToString();
+				communicationGroupingList.Add(item);
+			}
+			return communicationGroupingList;
+		}
 	}
 }

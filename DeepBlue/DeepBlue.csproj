@@ -109,6 +109,8 @@
     <Compile Include="Helpers\SelectListFactory.cs" />
     <Compile Include="Helpers\UploadFile.cs" />
     <Compile Include="Helpers\ValidationHelpers.cs" />
+    <Compile Include="Models\Admin\EditCommunicationGroupingModel.cs" />
+    <Compile Include="Models\Admin\EditCommunicationTypeModel.cs" />
     <Compile Include="Models\Admin\EditCreateModule.cs" />
     <Compile Include="Models\Admin\EditCustomFieldModel.cs" />
     <Compile Include="Models\Admin\EditDataTypeModel.cs" />
@@ -139,6 +141,8 @@
     </Compile>
     <Compile Include="Models\Entity\Partial\CapitalCall.cs" />
     <Compile Include="Models\Entity\Partial\CapitalDistribution.cs" />
+    <Compile Include="Models\Entity\Partial\CommunicationTypeService.cs" />
+    <Compile Include="Models\Entity\Partial\CommunicationGroupingService.cs" />
     <Compile Include="Models\Entity\Partial\ManagementFeeRateScheduleService.cs" />
     <Compile Include="Models\Entity\Partial\ModuleService.cs" />
     <Compile Include="Models\Entity\Partial\CustomFieldValueService.cs" />
@@ -154,6 +158,8 @@
     <Compile Include="Models\Entity\Partial\InvestorTypeService.cs" />
     <Compile Include="Models\Entity\Validation\CapitalCall.cs" />
     <Compile Include="Models\Entity\Validation\CapitalDistribution.cs" />
+    <Compile Include="Models\Entity\Validation\CommunicationType.cs" />
+    <Compile Include="Models\Entity\Validation\CommunicationGrouping.cs" />
     <Compile Include="Models\Entity\Validation\ManagementFeeRateSchedule.cs" />
     <Compile Include="Models\Entity\Validation\Module.cs" />
     <Compile Include="Models\Entity\Validation\CustomFieldValue.cs" />
@@ -288,6 +294,8 @@
     <Content Include="Assets\javascripts\CapitalCallReceive.js" />
     <Content Include="Assets\javascripts\CapitalCallDistribution.js" />
     <Content Include="Assets\javascripts\CapitalDistributionDetail.js" />
+    <Content Include="Assets\javascripts\CommunicationType.js" />
+    <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\ManualCapitalCall.js" />
     <Content Include="Assets\javascripts\DataType.js" />
     <Content Include="Assets\javascripts\CustomField.js" />
@@ -335,6 +343,12 @@
     <Content Include="obj\Release\DeepBlue.dll" />
     <Content Include="obj\Release\DeepBlue.pdb" />
     <Content Include="obj\Release\TempPE\Models.Entity.DeepBlue.Designer.cs.dll" />
+    <Content Include="Views\Admin\CommunicationType.aspx" />
+    <Content Include="Views\Admin\CommunicationTypeList.ascx" />
+    <Content Include="Views\Admin\CommunicationGrouping.aspx" />
+    <Content Include="Views\Admin\CommunicationGroupingList.ascx" />
+    <Content Include="Views\Admin\EditCommunicationGrouping.aspx" />
+    <Content Include="Views\Admin\EditCommunicationType.aspx" />
     <Content Include="Views\Admin\EditDataType.aspx" />
     <Content Include="Views\Admin\DataTypeList.ascx" />
     <Content Include="Views\Admin\DataType.aspx" />

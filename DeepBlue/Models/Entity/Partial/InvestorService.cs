@@ -42,14 +42,13 @@ namespace DeepBlue.Models.Entity {
 								LastUpdatedDate = investorAccount.LastUpdatedDate,
 								Reference = investorAccount.Reference,
 								Routing = investorAccount.Routing,
-								ABA = investorAccount.ABA,
 								AccountOf = investorAccount.AccountOf,
-								BankName = investorAccount.BankName,
 								ByOrderOf = investorAccount.ByOrderOf,
 								FFC = investorAccount.FFC,
-								FFCNO = investorAccount.FFCNO,
 								IBAN = investorAccount.IBAN,
-								Swift = investorAccount.Swift
+								BankName = investorAccount.BankName,
+								FFCNumber = investorAccount.FFCNumber,
+								SWIFT = investorAccount.SWIFT
 							});
 						}
 					}
@@ -95,13 +94,47 @@ namespace DeepBlue.Models.Entity {
 									Listed = investorAddress.Address.Listed,
 									PostalCode = investorAddress.Address.PostalCode,
 									State = investorAddress.Address.State,
-									StProvince = investorAddress.Address.StProvince,
-									Email = investorAddress.Address.Email,
-									Fax = investorAddress.Address.Fax,
-									Phone = investorAddress.Address.Phone,
-									WebAddress = investorAddress.Address.WebAddress
+									StProvince = investorAddress.Address.StProvince
 								};
 								updateInvestor.InvestorAddresses.Add(newInvestorAddress);
+							}
+						}
+					}
+					foreach (var investorCommunication in investor.InvestorCommunications) {
+						key = default(EntityKey);
+						originalItem = null;
+						key = context.CreateEntityKey("InvestorCommunications", investorCommunication);
+						if (context.TryGetObjectByKey(key, out originalItem)) {
+							context.ApplyCurrentValues(key.EntitySetName, investorCommunication);
+							key = default(EntityKey);
+							originalItem = null;
+							key = context.CreateEntityKey("Communications", investorCommunication.Communication);
+							if (context.TryGetObjectByKey(key, out originalItem)) {
+								context.ApplyCurrentValues(key.EntitySetName, investorCommunication.Communication);
+							}
+						}
+						else {
+							if (updateInvestor != null) {
+								updateInvestor.InvestorCommunications.Add(new InvestorCommunication {
+									CreatedBy = investorCommunication.CreatedBy,
+									CreatedDate = investorCommunication.CreatedDate,
+									LastUpdatedBy = investorCommunication.LastUpdatedBy,
+									LastUpdatedDate = investorCommunication.LastUpdatedDate,
+									EntityID = investorCommunication.EntityID,
+									Communication = new Communication {
+										CommunicationComment = investorCommunication.Communication.CommunicationComment,
+										CommunicationTypeID = investorCommunication.Communication.CommunicationTypeID,
+										CommunicationValue = investorCommunication.Communication.CommunicationValue,
+										CreatedBy = investorCommunication.Communication.CreatedBy,
+										CreatedDate = investorCommunication.Communication.CreatedDate,
+										EntityID = investorCommunication.Communication.EntityID,
+										IsPreferred = investorCommunication.Communication.IsPreferred,
+										LastFourPhone = investorCommunication.Communication.LastFourPhone,
+										LastUpdatedBy = investorCommunication.Communication.LastUpdatedBy,
+										LastUpdatedDate = investorCommunication.Communication.LastUpdatedDate,
+										Listed = investorCommunication.Communication.Listed
+									}
+								});
 							}
 						}
 					}
@@ -132,7 +165,7 @@ namespace DeepBlue.Models.Entity {
 							if (newInvestorContact != null) {
 								newInvestorContact.Contact = new Contact {
 									ContactName = investorContact.Contact.ContactName,
-									ContactType = investorContact.Contact.ContactType,
+									Designation = investorContact.Contact.Designation,
 									CreatedBy = investorContact.Contact.CreatedBy,
 									CreatedDate = investorContact.Contact.CreatedDate,
 									EntityID = investorContact.Contact.EntityID,
@@ -144,12 +177,10 @@ namespace DeepBlue.Models.Entity {
 									ReceivesDistributionNotices = investorContact.Contact.ReceivesDistributionNotices,
 									ReceivesFinancials = investorContact.Contact.ReceivesFinancials,
 									ReceivesInvestorLetters = investorContact.Contact.ReceivesInvestorLetters,
-									ReceivesK1 = investorContact.Contact.ReceivesK1,
-									Designation = investorContact.Contact.Designation
+									ReceivesK1 = investorContact.Contact.ReceivesK1
 								};
 							}
 						}
-
 						foreach (var contactAddress in investorContact.Contact.ContactAddresses) {
 							key = default(EntityKey);
 							originalItem = null;
@@ -196,16 +227,57 @@ namespace DeepBlue.Models.Entity {
 										Listed = contactAddress.Address.Listed,
 										PostalCode = contactAddress.Address.PostalCode,
 										State = contactAddress.Address.State,
-										StProvince = contactAddress.Address.StProvince,
-										Email = contactAddress.Address.Email,
-										Fax = contactAddress.Address.Fax,
-										Phone = contactAddress.Address.Phone,
-										WebAddress = contactAddress.Address.WebAddress
+										StProvince = contactAddress.Address.StProvince
 									};
 									if (newInvestorContact != null) {
 										newInvestorContact.Contact.ContactAddresses.Add(newContactAddress);
 										updateInvestor.InvestorContacts.Add(newInvestorContact);
 									}
+								}
+							}
+						}
+						foreach (var contactCommunication in investorContact.Contact.ContactCommunications) {
+							key = default(EntityKey);
+							originalItem = null;
+							key = context.CreateEntityKey("ContactCommunications", contactCommunication);
+							if (context.TryGetObjectByKey(key, out originalItem)) {
+								context.ApplyCurrentValues(key.EntitySetName, contactCommunication);
+								key = default(EntityKey);
+								originalItem = null;
+								key = context.CreateEntityKey("Communications", contactCommunication.Communication);
+								if (context.TryGetObjectByKey(key, out originalItem)) {
+									context.ApplyCurrentValues(key.EntitySetName, contactCommunication.Communication);
+								}
+							}
+							else {
+								Contact contact = null;
+								if (newInvestorContact != null) {
+									contact = newInvestorContact.Contact;
+								}
+								else {
+									contact = context.Contacts.SingleOrDefault(cont => cont.ContactID == contactCommunication.Contact.ContactID);
+								}
+								if (contact != null) {
+									contact.ContactCommunications.Add(new ContactCommunication {
+										CreatedBy = contactCommunication.CreatedBy,
+										CreatedDate = contactCommunication.CreatedDate,
+										EntityID = contactCommunication.EntityID,
+										LastUpdatedBy = contactCommunication.LastUpdatedBy,
+										LastUpdatedDate = contactCommunication.LastUpdatedDate,
+										Communication = new Communication {
+											CommunicationComment = contactCommunication.Communication.CommunicationComment,
+											CommunicationTypeID = contactCommunication.Communication.CommunicationTypeID,
+											CommunicationValue = contactCommunication.Communication.CommunicationValue,
+											CreatedBy = contactCommunication.Communication.CreatedBy,
+											CreatedDate = contactCommunication.Communication.CreatedDate,
+											EntityID = contactCommunication.Communication.EntityID,
+											IsPreferred = contactCommunication.Communication.IsPreferred,
+											LastFourPhone = contactCommunication.Communication.LastFourPhone,
+											LastUpdatedBy = contactCommunication.Communication.LastUpdatedBy,
+											LastUpdatedDate = contactCommunication.Communication.LastUpdatedDate,
+											Listed = contactCommunication.Communication.Listed
+										}
+									});
 								}
 							}
 						}

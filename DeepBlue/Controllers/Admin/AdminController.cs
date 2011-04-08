@@ -574,9 +574,183 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-        #region Communication
-            
+        #region Communication Type
+            //
+		// GET: /Admin/CommunicationType
+		[HttpGet]
+		public ActionResult CommunicationType() {
+			ViewData["MenuName"] = "Admin";
+			return View();
+		}
+
+		//
+		// GET: /Admin/CommunicationTypeList
+		[HttpGet]
+		public ActionResult CommunicationTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			int totalRows = 0;
+			IList<DeepBlue.Models.Entity.CommunicationType> communicationTypes = AdminRepository.GetAllCommunicationTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			ViewData["TotalRows"] = totalRows;
+			ViewData["PageNo"] = pageIndex;
+			return View(communicationTypes);
+		}
+
+		//
+		// GET: /Admin/CommunicationType
+		[HttpGet]
+		public ActionResult EditCommunicationType(int id) {
+			EditCommunicationTypeModel model = new EditCommunicationTypeModel();
+			DeepBlue.Models.Entity.CommunicationType communicationType = AdminRepository.FindCommunicationType(id);
+			model.CommunicationGroupings = SelectListFactory.GetCommunicationGroupingSelectList(AdminRepository.GetAllCommunicationGroupings());
+			if (communicationType != null) {
+				model.CommunicationTypeId = communicationType.CommunicationTypeID;
+				model.CommunicationTypeName = communicationType.CommunicationTypeName;
+				model.Enabled = communicationType.Enabled;
+				model.CommunicationGroupId = communicationType.CommunicationGroupingID;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateCommunicationType
+		[HttpPost]
+		public ActionResult UpdateCommunicationType(FormCollection collection) {
+			EditCommunicationTypeModel model = new EditCommunicationTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				DeepBlue.Models.Entity.CommunicationType communicationType = AdminRepository.FindCommunicationType(model.CommunicationTypeId);
+				if (communicationType == null) {
+					communicationType = new DeepBlue.Models.Entity.CommunicationType();
+				}
+				communicationType.CommunicationTypeName = model.CommunicationTypeName;
+				communicationType.Enabled = model.Enabled;
+				communicationType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCommunicationType(communicationType);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				} else {
+					resultModel.Result = "True";
+				}
+			} else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+
+		[HttpGet]
+		public string DeleteCommunicationType(int id) {
+			if (AdminRepository.DeleteCommunicationType(id) == false) {
+				return "Cann't Delete! Child record found!";
+			} else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string CommunicationTypeNameAvailable(string CommunicationTypeName, int CommunicationTypeID) {
+			if (AdminRepository.CommunicationTypeNameAvailable(CommunicationTypeName, CommunicationTypeID))
+				return "Communication Type Name already exist";
+			else
+				return string.Empty;
+		}
         #endregion
+
+		#region Communication Grouping
+		//
+		// GET: /Admin/CommunicationGrouping
+		[HttpGet]
+		public ActionResult CommunicationGrouping() {
+			ViewData["MenuName"] = "Admin";
+			return View();
+		}
+
+		//
+		// GET: /Admin/CommunicationGroupingList
+		[HttpGet]
+		public ActionResult CommunicationGroupingList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			int totalRows = 0;
+			IList<CommunicationGrouping> communicationGroupings = AdminRepository.GetAllCommunicationGroupings(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			ViewData["TotalRows"] = totalRows;
+			ViewData["PageNo"] = pageIndex;
+			return View(communicationGroupings);
+		}
+
+		//
+		// GET: /Admin/CommunicationGrouping
+		[HttpGet]
+		public ActionResult EditCommunicationGrouping(int id) {
+			EditCommunicationGroupingModel model = new EditCommunicationGroupingModel();
+			CommunicationGrouping communicationGrouping = AdminRepository.FindCommunicationGrouping(id);
+			if (communicationGrouping != null) {
+				model.CommunicationGroupingId = communicationGrouping.CommunicationGroupingID;
+				model.CommunicationGroupingName = communicationGrouping.CommunicationGroupingName;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateCommunicationGrouping
+		[HttpPost]
+		public ActionResult UpdateCommunicationGrouping(FormCollection collection) {
+			EditCommunicationGroupingModel model = new EditCommunicationGroupingModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				CommunicationGrouping communicationGrouping = AdminRepository.FindCommunicationGrouping(model.CommunicationGroupingId);
+				if (communicationGrouping == null) {
+					communicationGrouping = new CommunicationGrouping();
+				}
+				communicationGrouping.CommunicationGroupingName = model.CommunicationGroupingName;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCommunicationGrouping(communicationGrouping);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+
+		[HttpGet]
+		public string DeleteCommunicationGrouping(int id) {
+			if (AdminRepository.DeleteCommunicationGrouping(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string CommunicationGroupingNameAvailable(string CommunicationGroupingName, int CommunicationGroupingID) {
+			if (AdminRepository.CommunicationGroupingNameAvailable(CommunicationGroupingName, CommunicationGroupingID))
+				return "Communication Grouping Name already exist";
+			else
+				return string.Empty;
+		}
+		#endregion
 
         public ActionResult Result() {
 			return View();

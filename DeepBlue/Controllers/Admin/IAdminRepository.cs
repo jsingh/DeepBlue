@@ -8,11 +8,12 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Controllers.Admin {
 	public interface IAdminRepository {
 
+		#region Get
 		List<COUNTRY> GetAllCountries();
 		List<STATE> GetAllStates();
 		List<InvestorEntityType> GetAllInvestorEntityTypes();
-		List<CommunicationType> GetAllCommunicationTypes();
 		List<AddressType> GetAllAddressTypes();
+		#endregion
 
 		#region EntityType
 		List<InvestorEntityType> GetAllInvestorEntityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
@@ -60,14 +61,31 @@ namespace DeepBlue.Controllers.Admin {
 		bool DeleteDataType(int id);
 		IEnumerable<ErrorInfo> SaveDataType(DataType dataType);
 		#endregion
-
-
+		
 		#region Module
 		List<MODULE> GetAllModules(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		MODULE FindModule(int id);
 		bool ModuleTextAvailable(string module, int moduleId);
 		bool DeleteModuleId(int id);
 		IEnumerable<ErrorInfo>SaveModule(MODULE module);
+		#endregion
+
+		#region CommunicationType
+		List<CommunicationType> GetAllCommunicationTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<CommunicationType> GetAllCommunicationTypes();
+		CommunicationType FindCommunicationType(int id);
+		bool CommunicationTypeNameAvailable(string communicationTypeName, int communicationTypeID);
+		bool DeleteCommunicationType(int id);
+		IEnumerable<ErrorInfo> SaveCommunicationType(CommunicationType communicationType);
+		#endregion
+
+		#region CommunicationGrouping
+		List<CommunicationGrouping> GetAllCommunicationGroupings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<CommunicationGrouping> GetAllCommunicationGroupings();
+		CommunicationGrouping FindCommunicationGrouping(int id);
+		bool CommunicationGroupingNameAvailable(string communicationGroupingName, int communicationGroupingID);
+		bool DeleteCommunicationGrouping(int id);
+		IEnumerable<ErrorInfo> SaveCommunicationGrouping(CommunicationGrouping communicationGrouping);
 		#endregion
 	}
 }

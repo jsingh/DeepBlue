@@ -10,28 +10,29 @@ namespace DeepBlue.Models.Entity {
 	public partial class CustomField {
 		public class CustomFieldMD {
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Module is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Module is required")]
 			public global::System.Int32 ModuleId {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "EntityID is required")]
+			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
 			public global::System.Int32 EntityID {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "DataType is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "DataType is required")]
 			public global::System.Int32 DataTypeID {
 				get;
 				set;
 			}
 
-			[StringLength(50), Required]
+			[Required(ErrorMessage = "Custom Field Text is required")]
+			[StringLength(50, ErrorMessage = "Custom Field Text must be under 50 characters.")]
 			public global::System.String CustomFieldText {
 				get;
 				set;

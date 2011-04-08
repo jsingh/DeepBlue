@@ -10,21 +10,22 @@ namespace DeepBlue.Models.Entity {
 	public partial class FundClosing {
 		public class FundClosingMD {
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Fund is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
 			public global::System.Int32 FundID {
 				get;
 				set;
 			}
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage = "Fund Closing Date is required")]
+			[DateRange(ErrorMessage = "Fund Closing Date is required")]
 			public global::System.DateTime FundClosingDate {
 				get;
 				set;
 			}
 
-			[StringLength(50), Required]
+			[Required(ErrorMessage = "Name is required")]
+			[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
 			public global::System.String Name {
 				get;
 				set;
@@ -34,7 +35,7 @@ namespace DeepBlue.Models.Entity {
 
 		public FundClosing(IFundClosingService fundservice)
 			: this() {
-				this.fundcloseservice = fundservice;
+			this.fundcloseservice = fundservice;
 		}
 
 		public FundClosing() {

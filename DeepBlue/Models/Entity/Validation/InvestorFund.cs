@@ -12,37 +12,36 @@ namespace DeepBlue.Models.Entity {
 		public class InvestorFundMD {
 
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Fund is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
 			public global::System.Int32 FundID {
 				get;
 				set;
 			}
- 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
 			public global::System.Int32 CreatedBy {
 				get;
 				set;
 			}
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage = "Created Date is required")]
+			[DateRange(ErrorMessage = "Created Date is required")]
 			public global::System.DateTime CreatedDate {
 				get;
 				set;
 			}
 
-
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage = "Committed Date is required")]
+			[DateRange(ErrorMessage = "Committed Date is required")]
 			public global::System.DateTime CommittedDate {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range(1, (double)decimal.MaxValue)]
+			[Required(ErrorMessage="Total Commitment is required")]
+			[Range(1, (double)decimal.MaxValue, ErrorMessage = "Total Commitment is required")]
 			public global::System.Decimal TotalCommitment {
 				get;
 				set;
@@ -81,7 +80,7 @@ namespace DeepBlue.Models.Entity {
 			InvestorFundService.SaveInvestorFund(this);
 			return null;
 		}
-	 
+
 	}
 
 

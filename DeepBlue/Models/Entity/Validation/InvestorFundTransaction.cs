@@ -12,48 +12,48 @@ namespace DeepBlue.Models.Entity {
 		public class InvestorFundTransactionMD {
 
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Fund Closing is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund Closing is required")]
 			public global::System.Int32 FundClosingID {
 				get;
 				set;
 			}
- 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
 			public global::System.Int32 CreatedBy {
 				get;
 				set;
 			}
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage = "Created Date is required")]
+			[DateRange(ErrorMessage = "Created Date is required")]
 			public global::System.DateTime CreatedDate {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Other Investor is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Other Investor is required")]
 			public global::System.Int32 OtherInvestorID {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Transaction Type is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Transaction Type is required")]
 			public global::System.Int32 TransactionTypeID {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
-			public global::System.Int32 Amount {
+			[Required(ErrorMessage = "Amount is required")]
+			[Range(1, (double)decimal.MaxValue, ErrorMessage = "Amount is required")]
+			public global::System.Decimal Amount {
 				get;
 				set;
 			}
-		
+
 			#endregion
 		}
 

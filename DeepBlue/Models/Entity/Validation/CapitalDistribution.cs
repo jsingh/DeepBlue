@@ -10,38 +10,38 @@ namespace DeepBlue.Models.Entity {
 	public partial class CapitalDistribution {
 		public class CapitalDistributionMD {
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Fund is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
 			public global::System.Int32 FundID {
 				get;
 				set;
 			}
- 
-			[Required]
-			[DateRange()]
+
+			[Required(ErrorMessage = "Capital Distribution Date is required")]
+			[DateRange(ErrorMessage = "Capital Distribution Date is required")]
 			public global::System.DateTime CapitalDistributionDate {
 				get;
 				set;
 			}
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage = "Capital Distribution Due Date is required")]
+			[DateRange(ErrorMessage = "Capital Distribution Due Date is required")]
 			public global::System.DateTime CapitalDistributionDueDate {
 				get;
 				set;
 			}
 
 
-			[Required]
-			[Range(1, (double)decimal.MaxValue)]
+			[Required(ErrorMessage = "Distribution Amount is required")]
+			[Range(1, (double)decimal.MaxValue, ErrorMessage = "Distribution Amount is required")]
 			public global::System.Decimal DistributionAmount {
 				get;
 				set;
 			}
 
 
-			[Required]
-			[StringLength(12)]
+			[Required(ErrorMessage = "Distribution Number is required")]
+			[StringLength(12, ErrorMessage = "Distribution Number must be under 12 characters.")]
 			public global::System.String DistributionNumber {
 				get;
 				set;

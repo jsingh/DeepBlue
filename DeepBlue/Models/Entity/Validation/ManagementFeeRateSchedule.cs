@@ -12,14 +12,12 @@ namespace DeepBlue.Models.Entity {
 	public partial class ManagementFeeRateSchedule {
 		public class ManagementFeeRateScheduleMD {
 			#region Primitive Properties
-
-			[Required]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "EntityID is required")]
+			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
 			public global::System.Int32 EntityID {
 				get;
 				set;
 			}
-
 			#endregion
 		}
 
@@ -67,7 +65,7 @@ namespace DeepBlue.Models.Entity {
 	public partial class ManagementFeeRateScheduleTier {
 		public class ManagementFeeRateScheduleTierMD {
 			#region Primitive Properties
-			[Required]
+			[Required(ErrorMessage = "MultiplierType is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "MultiplierType is required")]
 			public global::System.Int32 MultiplierTypeID {
 				get;

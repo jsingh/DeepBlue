@@ -10,59 +10,58 @@ namespace DeepBlue.Models.Entity {
 	public partial class CapitalCall {
 		public class CapitalCallMD {
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Fund is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
 			public global::System.Int32 FundID {
 				get;
 				set;
 			}
 
-			[Required]
-			[StringLength(12)]
+			[Required(ErrorMessage = "Capital Call Number is required")]
+			[StringLength(12, ErrorMessage = "Capital Call Number must be under 12 characters.")]
 			public global::System.String CapitalCallNumber {
 				get;
 				set;
 			}
 
-
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Capital Call Type is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Capital Call Type is required")]
 			public global::System.Int32 CapitalCallTypeID {
 				get;
 				set;
 			}
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage="Capital Call Date is required")]
+			[DateRange(ErrorMessage = "Capital Call Date is required")]
 			public global::System.DateTime CapitalCallDate {
 				get;
 				set;
 			}
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage = "Capital Call Due Date is required")]
+			[DateRange(ErrorMessage = "Capital Call Due Date is required")]
 			public global::System.DateTime CapitalCallDueDate {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range(1, (double)decimal.MaxValue)]
+			[Required(ErrorMessage="Capital Amount Called is required")]
+			[Range(1, (double)decimal.MaxValue, ErrorMessage = "Capital Amount Called is required")]
 			public global::System.Decimal CapitalAmountCalled {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range(1, (double)decimal.MaxValue)]
+			[Required(ErrorMessage = "New Investment Amount is required")]
+			[Range(1, (double)decimal.MaxValue, ErrorMessage = "New Investment Amount is required")]
 			public global::System.Decimal NewInvestmentAmount {
 				get;
 				set;
 			}
-		
+
 			#endregion
 		}
-																							
+
 		public CapitalCall(ICapitalCallService capitalCallservice)
 			: this() {
 			this.capitalCallservice = capitalCallservice;

@@ -122,7 +122,7 @@ namespace DeepBlue.Tests.Models.Investor {
                 delta = 1;
             }
             contact.ContactName = GetString(10 + delta);
-            contact.ContactType = GetString(20 + delta);
+            contact.Designation = GetString(20 + delta);
             contact.LastName = GetString(30 + delta);
             contact.FirstName = GetString(30 + delta);
             contact.MiddleName = GetString(30 + delta);

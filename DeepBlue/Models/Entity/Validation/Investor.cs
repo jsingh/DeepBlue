@@ -12,8 +12,8 @@ namespace DeepBlue.Models.Entity {
 		public class InvestorMD {
 			#region Primitive Properties
 
-			[Required]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "EntityID is required")]
+			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
 			public global::System.Int32 EntityID {
 				get;
 				set;
@@ -33,8 +33,8 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Investor Entity Type is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Investor Entity Type is required")]
 			public global::System.Int32 InvestorEntityTypeID {
 				get;
 				set;
@@ -46,7 +46,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Range(0, int.MaxValue)]
+			[Range(0, int.MaxValue, ErrorMessage = "Prev Investor is required")]
 			public Nullable<global::System.Int32> PrevInvestorID {
 				get;
 				set;
@@ -77,7 +77,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Residency State is required")]
 			public Nullable<global::System.Int32> ResidencyState {
 				get;
 				set;
@@ -90,15 +90,15 @@ namespace DeepBlue.Models.Entity {
 			}
 
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage = "Created Date is required")]
+			[DateRange(ErrorMessage = "Created Date is required")]
 			public global::System.DateTime CreatedDate {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
 			public global::System.Int32 CreatedBy {
 				get;
 				set;
@@ -147,16 +147,15 @@ namespace DeepBlue.Models.Entity {
 			foreach (InvestorAccount account in investor.InvestorAccounts) {
 				errors = errors.Union(ValidationHelper.Validate(account));
 			}
-
 			foreach (InvestorContact investorContact in investor.InvestorContacts) {
 				Contact contact = investorContact.Contact;
 				errors = errors.Union(ValidationHelper.Validate(contact));
 				foreach (ContactAddress contactAddr in contact.ContactAddresses) {
 					errors = errors.Union(ValidationHelper.Validate(contactAddr.Address));
 				}
-				//foreach (ContactCommunication comm in contact.ContactCommunications) {
-				//   errors = errors.Union(ValidationHelper.Validate(comm.Communication));
-				//}
+				foreach (ContactCommunication comm in contact.ContactCommunications) {
+					errors = errors.Union(ValidationHelper.Validate(comm.Communication));
+				}
 			}
 			return errors;
 		}
@@ -166,12 +165,14 @@ namespace DeepBlue.Models.Entity {
 	public partial class Contact {
 		public class ContactMD {
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue)]
+
+			[Required(ErrorMessage = "EntityID is required")]
+			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
 			public global::System.Int32 EntityID {
 				get;
 				set;
 			}
+
 			[StringLength(100, ErrorMessage = "Contact Name must be under 100 characters.")]
 			public global::System.String ContactName {
 				get;
@@ -202,15 +203,15 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage = "Created Date is required")]
+			[DateRange(ErrorMessage = "Created Date is required")]
 			public global::System.DateTime CreatedDate {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
 			public global::System.Int32 CreatedBy {
 				get;
 				set;
@@ -223,21 +224,21 @@ namespace DeepBlue.Models.Entity {
 	public partial class Address {
 		public class AddressMD {
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "EntityID is required")]
+			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
 			public global::System.Int32 EntityID {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Address Type is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Address Type is required")]
 			public global::System.Int32 AddressTypeID {
 				get;
 				set;
 			}
 
-			[StringLength(40, ErrorMessage = "Address1 must be under 40 characters."), Required]
+			[StringLength(40, ErrorMessage = "Address1 must be under 40 characters.")]
 			public global::System.String Address1 {
 				get;
 				set;
@@ -271,8 +272,8 @@ namespace DeepBlue.Models.Entity {
 			/// DB wise it is not required. but currently all the entities will
 			/// be USA based, so we will be mandating this
 			/// </summary>
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "State is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "State is required")]
 			public Nullable<global::System.Int32> State {
 				get;
 				set;
@@ -284,8 +285,8 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Country is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Country is required")]
 			public global::System.Int32 Country {
 				get;
 				set;
@@ -297,15 +298,15 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage = "Created Date is required")]
+			[DateRange(ErrorMessage = "Created Date is required")]
 			public global::System.DateTime CreatedDate {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
 			public global::System.Int32 CreatedBy {
 				get;
 				set;
@@ -338,26 +339,25 @@ namespace DeepBlue.Models.Entity {
 		}
 	}
 
-
 	[MetadataType(typeof(CommunicationMD))]
 	public partial class Communication {
 		public class CommunicationMD {
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "EntityID is required")]
+			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
 			public global::System.Int32 EntityID {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Communication Type is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Communication Type is required")]
 			public global::System.Int32 CommunicationTypeID {
 				get;
 				set;
 			}
 
-			[StringLength(200, ErrorMessage = "Communication Value must be under 50 characters."), Required]
+			[StringLength(200, ErrorMessage = "Communication Value must be under 50 characters.")]
 			public global::System.String CommunicationValue {
 				get;
 				set;
@@ -375,16 +375,116 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage = "Created Date is required")]
+			[DateRange(ErrorMessage = "Created Date is required")]
 			public global::System.DateTime CreatedDate {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
 			public global::System.Int32 CreatedBy {
+				get;
+				set;
+			}
+			#endregion
+		}
+	}
+
+	[MetadataType(typeof(InvestorAccountMD))]
+	public partial class InvestorAccount {
+		public class InvestorAccountMD {
+			#region Primitive Properties
+			[Required(ErrorMessage = "EntityID is required")]
+			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
+			public global::System.Int32 EntityID {
+				get;
+				set;
+			}
+
+			[Range((int)0, int.MaxValue, ErrorMessage = "Routing is required")]
+			public global::System.Int32 Routing {
+				get;
+				set;
+			}
+
+			[StringLength(40, ErrorMessage = "Account must be under 40 characters.")]
+			public global::System.String Account {
+				get;
+				set;
+			}
+
+			[StringLength(50, ErrorMessage = "SWIFT must be under 50 characters.")]
+			public global::System.String SWIFT {
+				get;
+				set;
+			}
+
+			[StringLength(50, ErrorMessage = "AccountOf must be under 50 characters.")]
+			public global::System.String AccountOf {
+				get;
+				set;
+			}
+
+			[StringLength(50, ErrorMessage = "FFC must be under 50 characters.")]
+			public global::System.String FFC {
+				get;
+				set;
+			}
+
+			[StringLength(50, ErrorMessage = "FFCNumber must be under 50 characters.")]
+			public global::System.String FFCNumber {
+				get;
+				set;
+			}
+
+			[StringLength(50, ErrorMessage = "IBAN must be under 50 characters.")]
+			public global::System.String IBAN {
+				get;
+				set;
+			}
+
+			[StringLength(50, ErrorMessage = "ByOrderOf must be under 50 characters.")]
+			public global::System.String ByOrderOf {
+				get;
+				set;
+			}
+
+			[StringLength(50, ErrorMessage = "Reference must be under 50 characters.")]
+			public global::System.String Reference {
+				get;
+				set;
+			}
+
+			[StringLength(50, ErrorMessage = "Attention must be under 50 characters.")]
+			public global::System.String Attention {
+				get;
+				set;
+			}
+
+			[StringLength(105, ErrorMessage = "Comments must be under 105 characters.")]
+			public global::System.String Comments {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "Created Date is required")]
+			[DateRange(ErrorMessage = "Created Date is required")]
+			public global::System.DateTime CreatedDate {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
+			public global::System.Int32 CreatedBy {
+				get;
+				set;
+			}
+
+			[StringLength(50, ErrorMessage = "BankName must be under 50 characters.")]
+			public global::System.String BankName {
 				get;
 				set;
 			}

@@ -22,6 +22,8 @@ namespace DeepBlue.Controllers.Investor {
 							  .Include("InvestorContacts.Contact")
 							  .Include("InvestorContacts.Contact.ContactAddresses")
 							  .Include("InvestorContacts.Contact.ContactAddresses.Address")
+							  .Include("InvestorContacts.Contact.ContactCommunications")
+							  .Include("InvestorContacts.Contact.ContactCommunications.Communication")
 							  .Include("InvestorAccounts")
 							  .Include("InvestorCommunications")
 							  .Include("InvestorCommunications.Communication")

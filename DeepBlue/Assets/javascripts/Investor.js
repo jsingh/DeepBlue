@@ -129,7 +129,7 @@
 			var editorfield=input.parent();
 			var customvalidation=$(".custom-validation",editorfield).get(0);
 			if(customvalidation) {
-				var regZip=/^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/;
+				var regZip=/^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z]\d[a-zA-Z]\d)$/;
 				if(regZip.test(input.val())==false) {
 					customvalidation.innerHTML="Invalid Zip";
 					return false;

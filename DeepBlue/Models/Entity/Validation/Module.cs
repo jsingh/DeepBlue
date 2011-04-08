@@ -10,7 +10,8 @@ namespace DeepBlue.Models.Entity {
 	public partial class MODULE {
 		public class ModuleMD {
 			#region Primitive Properties
-			[StringLength(50), Required]
+			[Required(ErrorMessage = "Module is required")]
+			[StringLength(50, ErrorMessage = "Module Name must be under 50 characters.")]
 			public global::System.String ModuleName {
 				get;
 				set;
@@ -20,7 +21,7 @@ namespace DeepBlue.Models.Entity {
 
 		public MODULE(IModuleService moduleservice)
 			: this() {
-				this.moduleService = moduleservice;
+			this.moduleService = moduleservice;
 		}
 
 		public MODULE() {

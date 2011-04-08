@@ -305,6 +305,7 @@
 		editInvestor.showControls(cntdiv,true);
 	}
 	,updateInvestorInfo: function (that,type) {
+		editInvestor.currentForm=$(that).parents("form:first");
 		editInvestor.currentType=type;
 		var cntdiv=$(that).parents(".ui-accordion-content").get(0);
 		var editbtn=$(that).parents(".editor-editbtn").get(0);
@@ -409,8 +410,9 @@
 			if($(this).attr("name")!="") {
 				this.style.display="none";
 				var disp=editInvestor.createDispCtl(this,$target);
-				if(disp)
-					disp.html(this.options[this.selectedIndex].text);
+				if(disp) {
+					if(this.options[this.selectedIndex].text=="--Select One--") disp.html("");else disp.html(this.options[this.selectedIndex].text);
+				}
 				$(this).change(function () {
 					disp.html(this.options[this.selectedIndex].text);
 				});
@@ -525,15 +527,21 @@
 		}
 	}
 	,onBegin: function () {
+		$("#UpdateTargetId").html("");
 		$("#UpdateLoading",editInvestor.currentForm).html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Updating...");
 	}
 	,onSuccess: function () {
 		$("#UpdateLoading",editInvestor.currentForm).html("Update Successfully");
+		var UpdateTargetId=$("#UpdateTargetId");
 		var InvestorId=$("#InvestorId",editInvestor.currentForm).val();
 		/*$(".InvestorUpdateLoading").remove();*/
 		setTimeout(function () {
 			$("#UpdateLoading",editInvestor.currentForm).html("");
 		},2000)
-		editInvestor.selectInvestor(InvestorId);
+		if($.trim(UpdateTargetId.html())!="") {
+			alert(UpdateTargetId.html());
+		} else {
+			editInvestor.selectInvestor(InvestorId);
+		}
 	}
 };

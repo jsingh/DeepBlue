@@ -1687,102 +1687,6 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _LastUpdatedBy;
         partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
         partial void OnLastUpdatedByChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Phone
-        {
-            get
-            {
-                return _Phone;
-            }
-            set
-            {
-                OnPhoneChanging(value);
-                ReportPropertyChanging("Phone");
-                _Phone = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Phone");
-                OnPhoneChanged();
-            }
-        }
-        private global::System.String _Phone;
-        partial void OnPhoneChanging(global::System.String value);
-        partial void OnPhoneChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Fax
-        {
-            get
-            {
-                return _Fax;
-            }
-            set
-            {
-                OnFaxChanging(value);
-                ReportPropertyChanging("Fax");
-                _Fax = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Fax");
-                OnFaxChanged();
-            }
-        }
-        private global::System.String _Fax;
-        partial void OnFaxChanging(global::System.String value);
-        partial void OnFaxChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Email
-        {
-            get
-            {
-                return _Email;
-            }
-            set
-            {
-                OnEmailChanging(value);
-                ReportPropertyChanging("Email");
-                _Email = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Email");
-                OnEmailChanged();
-            }
-        }
-        private global::System.String _Email;
-        partial void OnEmailChanging(global::System.String value);
-        partial void OnEmailChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String WebAddress
-        {
-            get
-            {
-                return _WebAddress;
-            }
-            set
-            {
-                OnWebAddressChanging(value);
-                ReportPropertyChanging("WebAddress");
-                _WebAddress = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("WebAddress");
-                OnWebAddressChanged();
-            }
-        }
-        private global::System.String _WebAddress;
-        partial void OnWebAddressChanging(global::System.String value);
-        partial void OnWebAddressChanged();
 
         #endregion
     
@@ -5836,24 +5740,24 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String ContactType
+        public global::System.String Designation
         {
             get
             {
-                return _ContactType;
+                return _Designation;
             }
             set
             {
-                OnContactTypeChanging(value);
-                ReportPropertyChanging("ContactType");
-                _ContactType = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("ContactType");
-                OnContactTypeChanged();
+                OnDesignationChanging(value);
+                ReportPropertyChanging("Designation");
+                _Designation = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Designation");
+                OnDesignationChanged();
             }
         }
-        private global::System.String _ContactType;
-        partial void OnContactTypeChanging(global::System.String value);
-        partial void OnContactTypeChanged();
+        private global::System.String _Designation;
+        partial void OnDesignationChanging(global::System.String value);
+        partial void OnDesignationChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6118,30 +6022,6 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _LastUpdatedBy;
         partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
         partial void OnLastUpdatedByChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Designation
-        {
-            get
-            {
-                return _Designation;
-            }
-            set
-            {
-                OnDesignationChanging(value);
-                ReportPropertyChanging("Designation");
-                _Designation = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Designation");
-                OnDesignationChanged();
-            }
-        }
-        private global::System.String _Designation;
-        partial void OnDesignationChanging(global::System.String value);
-        partial void OnDesignationChanged();
 
         #endregion
     
@@ -11064,6 +10944,150 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public global::System.String SWIFT
+        {
+            get
+            {
+                return _SWIFT;
+            }
+            set
+            {
+                OnSWIFTChanging(value);
+                ReportPropertyChanging("SWIFT");
+                _SWIFT = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SWIFT");
+                OnSWIFTChanged();
+            }
+        }
+        private global::System.String _SWIFT;
+        partial void OnSWIFTChanging(global::System.String value);
+        partial void OnSWIFTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AccountOf
+        {
+            get
+            {
+                return _AccountOf;
+            }
+            set
+            {
+                OnAccountOfChanging(value);
+                ReportPropertyChanging("AccountOf");
+                _AccountOf = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("AccountOf");
+                OnAccountOfChanged();
+            }
+        }
+        private global::System.String _AccountOf;
+        partial void OnAccountOfChanging(global::System.String value);
+        partial void OnAccountOfChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String FFC
+        {
+            get
+            {
+                return _FFC;
+            }
+            set
+            {
+                OnFFCChanging(value);
+                ReportPropertyChanging("FFC");
+                _FFC = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("FFC");
+                OnFFCChanged();
+            }
+        }
+        private global::System.String _FFC;
+        partial void OnFFCChanging(global::System.String value);
+        partial void OnFFCChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String FFCNumber
+        {
+            get
+            {
+                return _FFCNumber;
+            }
+            set
+            {
+                OnFFCNumberChanging(value);
+                ReportPropertyChanging("FFCNumber");
+                _FFCNumber = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("FFCNumber");
+                OnFFCNumberChanged();
+            }
+        }
+        private global::System.String _FFCNumber;
+        partial void OnFFCNumberChanging(global::System.String value);
+        partial void OnFFCNumberChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String IBAN
+        {
+            get
+            {
+                return _IBAN;
+            }
+            set
+            {
+                OnIBANChanging(value);
+                ReportPropertyChanging("IBAN");
+                _IBAN = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("IBAN");
+                OnIBANChanged();
+            }
+        }
+        private global::System.String _IBAN;
+        partial void OnIBANChanging(global::System.String value);
+        partial void OnIBANChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ByOrderOf
+        {
+            get
+            {
+                return _ByOrderOf;
+            }
+            set
+            {
+                OnByOrderOfChanging(value);
+                ReportPropertyChanging("ByOrderOf");
+                _ByOrderOf = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ByOrderOf");
+                OnByOrderOfChanged();
+            }
+        }
+        private global::System.String _ByOrderOf;
+        partial void OnByOrderOfChanging(global::System.String value);
+        partial void OnByOrderOfChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public global::System.String Reference
         {
             get
@@ -11274,174 +11298,6 @@ namespace DeepBlue.Models.Entity
         private global::System.String _BankName;
         partial void OnBankNameChanging(global::System.String value);
         partial void OnBankNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String ABA
-        {
-            get
-            {
-                return _ABA;
-            }
-            set
-            {
-                OnABAChanging(value);
-                ReportPropertyChanging("ABA");
-                _ABA = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("ABA");
-                OnABAChanged();
-            }
-        }
-        private global::System.String _ABA;
-        partial void OnABAChanging(global::System.String value);
-        partial void OnABAChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String AccountOf
-        {
-            get
-            {
-                return _AccountOf;
-            }
-            set
-            {
-                OnAccountOfChanging(value);
-                ReportPropertyChanging("AccountOf");
-                _AccountOf = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("AccountOf");
-                OnAccountOfChanged();
-            }
-        }
-        private global::System.String _AccountOf;
-        partial void OnAccountOfChanging(global::System.String value);
-        partial void OnAccountOfChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String FFC
-        {
-            get
-            {
-                return _FFC;
-            }
-            set
-            {
-                OnFFCChanging(value);
-                ReportPropertyChanging("FFC");
-                _FFC = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("FFC");
-                OnFFCChanged();
-            }
-        }
-        private global::System.String _FFC;
-        partial void OnFFCChanging(global::System.String value);
-        partial void OnFFCChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String FFCNO
-        {
-            get
-            {
-                return _FFCNO;
-            }
-            set
-            {
-                OnFFCNOChanging(value);
-                ReportPropertyChanging("FFCNO");
-                _FFCNO = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("FFCNO");
-                OnFFCNOChanged();
-            }
-        }
-        private global::System.String _FFCNO;
-        partial void OnFFCNOChanging(global::System.String value);
-        partial void OnFFCNOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Swift
-        {
-            get
-            {
-                return _Swift;
-            }
-            set
-            {
-                OnSwiftChanging(value);
-                ReportPropertyChanging("Swift");
-                _Swift = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Swift");
-                OnSwiftChanged();
-            }
-        }
-        private global::System.String _Swift;
-        partial void OnSwiftChanging(global::System.String value);
-        partial void OnSwiftChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String IBAN
-        {
-            get
-            {
-                return _IBAN;
-            }
-            set
-            {
-                OnIBANChanging(value);
-                ReportPropertyChanging("IBAN");
-                _IBAN = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("IBAN");
-                OnIBANChanged();
-            }
-        }
-        private global::System.String _IBAN;
-        partial void OnIBANChanging(global::System.String value);
-        partial void OnIBANChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String ByOrderOf
-        {
-            get
-            {
-                return _ByOrderOf;
-            }
-            set
-            {
-                OnByOrderOfChanging(value);
-                ReportPropertyChanging("ByOrderOf");
-                _ByOrderOf = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("ByOrderOf");
-                OnByOrderOfChanged();
-            }
-        }
-        private global::System.String _ByOrderOf;
-        partial void OnByOrderOfChanging(global::System.String value);
-        partial void OnByOrderOfChanged();
 
         #endregion
     

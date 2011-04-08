@@ -13,27 +13,29 @@ namespace DeepBlue.Models.Entity {
 		public class FundMD {
 			#region Primitive Properties
 
-			[Required]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "EntityID is required")]
+			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
 			public global::System.Int32 EntityID {
 				get;
 				set;
 			}
 
-			[StringLength(50), Required]
+			[Required(ErrorMessage = "Fund Name is required")]
+			[StringLength(50, ErrorMessage = "Fund Name must be under 50 characters")]
 			public global::System.String FundName {
 				get;
 				set;
 			}
 
-			[StringLength(50), Required]
+			[Required(ErrorMessage="Tax Id is required")]
+			[StringLength(50, ErrorMessage="Tax Id must be under 50 characters.")]
 			public global::System.String TaxId {
 				get;
 				set;
 			}
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage="Inception Date is required")]
+			[DateRange(ErrorMessage = "Inception Date is required")]
 			public global::System.DateTime InceptionDate {
 				get;
 				set;
@@ -77,7 +79,7 @@ namespace DeepBlue.Models.Entity {
 		private IEnumerable<ErrorInfo> Validate(Fund fund) {
 			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(fund);
 			foreach (FundAccount account in fund.FundAccounts) {
-			  errors =	errors.Union(ValidationHelper.Validate(account));
+				errors = errors.Union(ValidationHelper.Validate(account));
 			}
 			foreach (FundRateSchedule schedule in fund.FundRateSchedules) {
 				errors = errors.Union(ValidationHelper.Validate(schedule));
@@ -90,20 +92,22 @@ namespace DeepBlue.Models.Entity {
 	public partial class FundAccount {
 		public class FundAccountMD {
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "EntityID is required")]
+			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
 			public global::System.Int32 EntityID {
 				get;
 				set;
 			}
 
-			[StringLength(50), Required]
+			[Required(ErrorMessage="Bank Name is required")]
+			[StringLength(50, ErrorMessage="Bank Name must be under 50 characters.")]
 			public global::System.String BankName {
 				get;
 				set;
 			}
 
-			[StringLength(40), Required]
+			[Required(ErrorMessage="Account is required")]
+			[StringLength(40, ErrorMessage="Account must be under 40 characters.")]
 			public global::System.String Account {
 				get;
 				set;
@@ -116,14 +120,15 @@ namespace DeepBlue.Models.Entity {
 	public partial class FundRateSchedule {
 		public class FundRateScheduleMD {
 			#region Primitive Properties
-			[Required]
+			
+			[Required(ErrorMessage="Investor Type is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "InvestorType is required")]
 			public global::System.Int32 InvestorTypeID {
 				get;
 				set;
 			}
 
-			[Required]
+			[Required(ErrorMessage = "Rate Schedule Type is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "RateScheduleType is required")]
 			public global::System.Int32 RateScheduleTypeID {
 				get;

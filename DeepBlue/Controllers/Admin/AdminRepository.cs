@@ -355,6 +355,8 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
+		#region IAdminRepository Get
+
 		public List<COUNTRY> GetAllCountries() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from country in context.COUNTRies
@@ -371,6 +373,45 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
+		public List<InvestorEntityType> GetAllInvestorEntityTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investorEntityType in context.InvestorEntityTypes
+						where investorEntityType.Enabled == true
+						orderby investorEntityType.InvestorEntityTypeName
+						select investorEntityType).ToList();
+			}
+		}
+		
+		public List<AddressType> GetAllAddressTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from addressType in context.AddressTypes
+						orderby addressType.AddressTypeName
+						select addressType).ToList();
+			}
+		}
+
+		#endregion
+
+		#region IAdminRepository CommunicationType Members
+
+		public List<Models.Entity.CommunicationType> GetAllCommunicationTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.CommunicationType> query = (from communicationType in context.CommunicationTypes.Include("CommunicationGrouping")
+																select communicationType);
+				switch (sortName) {
+					case "CommunicationGroupingName":
+						query = (sortOrder == "asc" ? query.OrderBy(field => field.CommunicationGrouping.CommunicationGroupingName) : query.OrderByDescending(field => field.CommunicationGrouping.CommunicationGroupingName));
+						break;
+					default:
+						query = query.OrderBy(sortName, (sortOrder == "asc"));
+						break;
+				}
+				PaginatedList<CommunicationType> paginatedList = new PaginatedList<CommunicationType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
 		public List<CommunicationType> GetAllCommunicationTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from communicationType in context.CommunicationTypes
@@ -380,23 +421,94 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
-		public List<InvestorEntityType> GetAllInvestorEntityTypes() {
+		public CommunicationType FindCommunicationType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investorEntityType in context.InvestorEntityTypes
-						where investorEntityType.Enabled == true
-						orderby investorEntityType.InvestorEntityTypeName
-						select investorEntityType).ToList();
+				return context.CommunicationTypes.SingleOrDefault(type => type.CommunicationTypeID == id);
 			}
 		}
 
-
-		public List<AddressType> GetAllAddressTypes() {
+		public bool CommunicationTypeNameAvailable(string communicationTypeName, int communicationTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from addressType in context.AddressTypes
-						orderby addressType.AddressTypeName
-						select addressType).ToList();
+				return ((from type in context.CommunicationTypes
+						 where type.CommunicationTypeName == communicationTypeName && type.CommunicationTypeID != communicationTypeID
+						 select type.CommunicationTypeID).Count()) > 0 ? true : false;
 			}
 		}
+
+		public bool DeleteCommunicationType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				CommunicationType communicationType = context.CommunicationTypes.SingleOrDefault(type => type.CommunicationTypeID == id);
+				if (communicationType != null) {
+					if (communicationType.Communications.Count == 0 && communicationType.CommunicationGrouping != null) {
+						context.CommunicationTypes.DeleteObject(communicationType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveCommunicationType(CommunicationType communicationType) {
+			return communicationType.Save();
+		}
+
+		#endregion
+
+		#region IAdminRepository CommunicationGrouping Members
+
+		public List<Models.Entity.CommunicationGrouping> GetAllCommunicationGroupings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.CommunicationGrouping> query = (from communicationGrouping in context.CommunicationGroupings
+																	 select communicationGrouping);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<CommunicationGrouping> paginatedList = new PaginatedList<CommunicationGrouping>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<CommunicationGrouping> GetAllCommunicationGroupings() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from communicationGrouping in context.CommunicationGroupings
+						orderby communicationGrouping.CommunicationGroupingName
+						select communicationGrouping).ToList();
+			}
+		}
+
+		public CommunicationGrouping FindCommunicationGrouping(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.CommunicationGroupings.SingleOrDefault(type => type.CommunicationGroupingID == id);
+			}
+		}
+
+		public bool CommunicationGroupingNameAvailable(string communicationGroupingName, int communicationGroupingID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.CommunicationGroupings
+						 where type.CommunicationGroupingName == communicationGroupingName && type.CommunicationGroupingID != communicationGroupingID
+						 select type.CommunicationGroupingID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteCommunicationGrouping(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				CommunicationGrouping communicationGrouping = context.CommunicationGroupings.SingleOrDefault(type => type.CommunicationGroupingID == id);
+				if (communicationGrouping != null) {
+					if (communicationGrouping.CommunicationTypes.Count == 0) {
+						context.CommunicationGroupings.DeleteObject(communicationGrouping);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveCommunicationGrouping(CommunicationGrouping communicationGrouping) {
+			return communicationGrouping.Save();
+		}
+
+		#endregion
 
 	}
 }

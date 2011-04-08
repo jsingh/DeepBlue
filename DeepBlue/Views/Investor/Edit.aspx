@@ -36,7 +36,7 @@
 						<div class="box-right">
 						</div>
 					</div>
-					<%using (Ajax.BeginForm("Update", null, new AjaxOptions { HttpMethod = "Post", OnBegin = "editInvestor.onBegin", OnSuccess = "editInvestor.onSuccess" }, new { @id = "frmInvestorInfo" })) {%>
+					<%using (Ajax.BeginForm("Update", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "editInvestor.onBegin", OnSuccess = "editInvestor.onSuccess" }, new { @id = "frmInvestorInfo" })) {%>
 					<div class="box-content">
 						<div class="edit-left">
 							<div class="editor-label auto-width">
@@ -413,7 +413,7 @@
 										<%: Html.Label("ABA Number:")%>
 									</div>
 									<div class="editor-field">
-										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "ABANumber","")%>
+										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "ABANumber", "", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AccountInformations.Count.ToString() + "_" + "ABANumber" })%>
 									</div>
 									<div class="editor-label">
@@ -475,22 +475,22 @@
 								</div>
 							</div>
 						</div>
-						<%: Html.Hidden("InvestorId","",new {@id = "InvestorId"}) %>
 					</div>
 					<%: Html.Hidden("AddressInfoCount") %>
 					<%: Html.Hidden("ContactInfoCount")%>
 					<%: Html.Hidden("AccountInfoCount")%>
+					<%: Html.Hidden("InvestorId","",new {@id = "InvestorId"}) %>
 					<%}%>
 				</div>
 			</div>
 		</div>
 	</div>
 	<%: Html.HiddenFor(model => model.id) %>
+	<div id="UpdateTargetId" style="display: none">
+	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%= Html.jQueryAutoComplete("Investor", new AutoCompleteOptions { Source = "/Investor/FindInvestors", MinLength=1,
-																			OnSelect = "function(event, ui){ editInvestor.selectInvestor(ui.item.id);}"
-})%>
+	<%= Html.jQueryAutoComplete("Investor", new AutoCompleteOptions { Source = "/Investor/FindInvestors", MinLength=1,OnSelect = "function(event, ui){ editInvestor.selectInvestor(ui.item.id);}"})%>
 	<script type="text/javascript">
 		editInvestor.init();
 	</script>

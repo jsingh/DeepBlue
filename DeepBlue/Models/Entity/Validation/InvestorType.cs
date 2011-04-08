@@ -10,13 +10,15 @@ namespace DeepBlue.Models.Entity {
 	public partial class InvestorType {
 		public class InvestorTypeMD {
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "EntityID is required")]
+			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
 			public global::System.Int32 EntityID {
 				get;
 				set;
 			}
-			[StringLength(20), Required]
+
+			[Required(ErrorMessage = "Investor Type Name is required")]
+			[StringLength(20, ErrorMessage = "Investor Type Name must be under 20 characters.")]
 			public global::System.String InvestorTypeName {
 				get;
 				set;

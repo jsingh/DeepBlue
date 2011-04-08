@@ -13,43 +13,43 @@ namespace DeepBlue.Models.Entity {
 		public class InvestorFundDocumentMD {
 
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Document Type is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Document Type is required")]
 			public global::System.Int32 DocumentTypeID {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "Investor Type is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Investor Type is required")]
 			public global::System.Int32 InvestorID {
 				get;
 				set;
 			}
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage = "Document Date is required")]
+			[DateRange(ErrorMessage = "Document Date is required")]
 			public global::System.DateTime DocumentDate {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "EntityID is required")]
+			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
 			public global::System.Int32 EntityID {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
 			public global::System.Int32 CreatedBy {
 				get;
 				set;
 			}
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage = "Created Date is required")]
+			[DateRange(ErrorMessage = "Created Date is required")]
 			public global::System.DateTime CreatedDate {
 				get;
 				set;
@@ -96,41 +96,41 @@ namespace DeepBlue.Models.Entity {
 	public partial class File {
 		public class FileMD {
 			#region Primitive Properties
-			[Required]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "EntityID is required")]
+			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
 			public global::System.Int32 EntityID {
 				get;
 				set;
 			}
 
-			[StringLength(500)]
+			[StringLength(500, ErrorMessage = "File Path must be under 500 characters.")]
 			public global::System.String FilePath {
 				get;
 				set;
 			}
 
-			[StringLength(200)]
+			[StringLength(200, ErrorMessage = "File Name must be under 200 characters.")]
 			public global::System.String FileName {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "File Type is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "File Type is required")]
 			public global::System.Int32 FileTypeId {
 				get;
 				set;
 			}
 
-			[Required]
-			[DateRange()]
+			[Required(ErrorMessage = "Created Date is required")]
+			[DateRange(ErrorMessage = "Created Date is required")]
 			public global::System.DateTime CreatedDate {
 				get;
 				set;
 			}
 
-			[Required]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
 			public global::System.Int32 CreatedBy {
 				get;
 				set;

@@ -24,4 +24,14 @@ namespace DeepBlue.Models.Admin.Enums {
 		MultiSelectOpiton = 6,
 		SingleSelectOption = 7
 	}
+
+	public enum CommunicationType {
+		HomePhone = 1,
+		WorkPhone = 2,
+		Mobile = 3,
+		Pager = 4,
+		Fax = 5,
+		Email = 6,
+		WebAddress = 7
+	}
 }

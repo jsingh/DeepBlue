@@ -23,12 +23,11 @@ namespace DeepBlue.Helpers {
 									  join modelProp in modelClassProperties on buddyProp.Name equals modelProp.Name
 									  from attribute in buddyProp.Attributes.OfType<ValidationAttribute>()
 									  where !attribute.IsValid(modelProp.GetValue(instance))
-									  select new ErrorInfo(buddyProp.Name,  attribute.FormatErrorMessage(string.Empty), instance)).ToList();
-
+									  select new ErrorInfo(buddyProp.Name, attribute.FormatErrorMessage(attribute.ErrorMessage), instance)).ToList();
 			// Add in the class level custom attributes
 			IEnumerable<ErrorInfo> classErrors = from attribute in TypeDescriptor.GetAttributes(buddyClassOrModelClass).OfType<ValidationAttribute>()
 												 where !attribute.IsValid(instance)
-												 select new ErrorInfo("ClassLevelCustom", attribute.FormatErrorMessage(string.Empty), instance);
+												 select new ErrorInfo("ClassLevelCustom", attribute.FormatErrorMessage(attribute.ErrorMessage), instance);
 
 			errors.AddRange(classErrors);
 			return errors.AsEnumerable();
@@ -37,11 +36,11 @@ namespace DeepBlue.Helpers {
 	public class ErrorInfo {
 		public ErrorInfo(string propertyName, string errorMessage) {
 			this.PropertyName = propertyName;
-			this.ErrorMessage = ErrorMessage;
+			this.ErrorMessage = errorMessage;
 		}
 		public ErrorInfo(string propertyName, string errorMessage, object onObject) {
 			this.PropertyName = propertyName;
-			this.ErrorMessage = ErrorMessage;
+			this.ErrorMessage = errorMessage;
 			this.Object = onObject;
 		}
 
