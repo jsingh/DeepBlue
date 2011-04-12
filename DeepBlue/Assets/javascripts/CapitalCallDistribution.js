@@ -51,7 +51,7 @@
 		if(jQuery.trim(UpdateTargetId.html())!="") {
 			alert(UpdateTargetId.html())
 		} else {
-			location.href="/CapitalCall/Distribution";
+			location.href="/CapitalCall/CapitalDistributionList";
 		}
 	}
 	,showControl: function (chk,boxId) {

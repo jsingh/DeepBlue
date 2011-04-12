@@ -20,7 +20,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
         public override void Setup() {
             // Arrange
             base.Setup();
-            // Test if the SaveInvestor call fails
+            // Test if the SaveCustomField call fails
             MockAdminRepository.Setup(x => x.SaveCustomField(It.IsAny<DeepBlue.Models.Entity.CustomField>())).Returns(new List<Helpers.ErrorInfo>());
         }
 

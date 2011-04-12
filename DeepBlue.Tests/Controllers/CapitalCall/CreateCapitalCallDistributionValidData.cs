@@ -20,7 +20,7 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
         public override void Setup() {
             // Arrange
             base.Setup();
-            // Test if the SaveInvestor call fails
+            // Test if the SaveCapitalCall call fails
 			MockCapiticalCallRepository.Setup(x => x.SaveCapitalCall(It.IsAny<DeepBlue.Models.Entity.CapitalCall>())).Returns(new List<Helpers.ErrorInfo>());
         }
 

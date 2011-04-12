@@ -40,7 +40,6 @@
 					<div class="box-content">
 						<% Html.EnableClientValidation(); %>
 						<% using (Ajax.BeginForm("CreateInvestorFund", null, new AjaxOptions { HttpMethod = "Post", OnBegin = "transactionController.onCreateFundBegin", OnSuccess = "transactionController.onCreateFundSuccess" }, new { @id = "NewTransaction" })) {%>
-						
 						<%: Html.HiddenFor(model => model.InvestorId)%>
 						<div class="edit-left">
 							<div class="editor-row">

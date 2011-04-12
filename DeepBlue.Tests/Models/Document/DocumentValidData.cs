@@ -28,8 +28,23 @@ namespace DeepBlue.Tests.Models.Document {
 		}
 
 		[Test]
-		public void create_a_new_document_with_valid_investorid_passes() {
+		public void create_a_new_document_with_documentinvestorid_passes() {
 			Assert.IsTrue(IsPropertyValid("InvestorId"));
+		}
+
+		[Test]
+		public void create_a_new_document_with_documententityid_passes() {
+			Assert.IsFalse(IsPropertyValid("EntityID"));
+		}
+
+		[Test]
+		public void create_a_new_document_with_documentcreatedby_passes() {
+			Assert.IsFalse(IsPropertyValid("CreatedBy"));
+		}
+
+		[Test]
+		public void create_a_new_document_with_documentcreateddate_passes() {
+			Assert.IsFalse(IsPropertyValid("CreatedDate"));
 		}
     }
 }

@@ -84,6 +84,9 @@
     <Compile Include="Controllers\Fund\IFundRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Investor\InvestorController.cs" />
+    <Compile Include="Controllers\Report\ReportRepository.cs" />
+    <Compile Include="Controllers\Report\IReportRepository.cs" />
+    <Compile Include="Controllers\Report\ReportController.cs" />
     <Compile Include="Controllers\Transaction\ITransactionRepository.cs" />
     <Compile Include="Controllers\Transaction\TransactionRepository.cs" />
     <Compile Include="Controllers\Transaction\TransactionController.cs" />
@@ -180,6 +183,12 @@
     <Compile Include="Models\Fund\FundRateScheduleDetail.cs" />
     <Compile Include="Models\Fund\ResultModel.cs" />
     <Compile Include="Models\Investor\ResultModel.cs" />
+    <Compile Include="Models\Report\CapitalCallSummaryModel.cs" />
+    <Compile Include="Models\Report\CapitalCallReportDetail.cs" />
+    <Compile Include="Models\Report\CapitalCallItem.cs" />
+    <Compile Include="Models\Report\DistributionLineItem.cs" />
+    <Compile Include="Models\Report\CashDistributionSummaryModel.cs" />
+    <Compile Include="Models\Report\CashDistributionReportDetail.cs" />
     <Compile Include="Models\Transaction\CreateModel.cs" />
     <Compile Include="Models\Investor\CreateModel.cs" />
     <Compile Include="Controllers\Investor\IInvestorRepository.cs" />
@@ -296,6 +305,11 @@
     <Content Include="Assets\javascripts\CapitalDistributionDetail.js" />
     <Content Include="Assets\javascripts\CommunicationType.js" />
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
+    <Content Include="Assets\javascripts\CCSummaryReport.js" />
+    <Content Include="Assets\javascripts\DeepBlue.js" />
+    <Content Include="Assets\javascripts\jquery.layoutengine.js" />
+    <Content Include="Assets\javascripts\jquery.PrintArea.js" />
+    <Content Include="Assets\javascripts\jquery.tmpl.min.js" />
     <Content Include="Assets\javascripts\ManualCapitalCall.js" />
     <Content Include="Assets\javascripts\DataType.js" />
     <Content Include="Assets\javascripts\CustomField.js" />
@@ -320,6 +334,7 @@
     <Content Include="Assets\javascripts\MicrosoftMvcCustomValidation.js" />
     <Content Include="Assets\javascripts\MicrosoftMvcValidation.js" />
     <Content Include="Assets\javascripts\Module.js" />
+    <Content Include="Assets\javascripts\DSummaryReport.js" />
     <Content Include="Assets\javascripts\SearchInvestor.js" />
     <Content Include="Assets\javascripts\TransactionController.js" />
     <Content Include="Assets\stylesheets\capitalcall.css" />
@@ -331,6 +346,7 @@
     <Content Include="Assets\stylesheets\fund.css" />
     <Content Include="Assets\stylesheets\jquery-ui-1.8.10.custom.css" />
     <Content Include="Assets\stylesheets\newInvestor.css" />
+    <Content Include="Assets\stylesheets\report.css" />
     <Content Include="bin\DeepBlue.dll" />
     <Content Include="bin\DeepBlue.pdb" />
     <Content Include="Global.asax" />
@@ -382,6 +398,8 @@
     <Content Include="Views\Document\List.ascx" />
     <Content Include="Views\Document\New.aspx" />
     <Content Include="Views\Document\Search.aspx" />
+    <Content Include="Views\Report\CapitalCallSummary.aspx" />
+    <Content Include="Views\Report\CashDistributionSummary.aspx" />
     <Content Include="Views\Shared\CustomFieldList.ascx" />
     <Content Include="Views\Fund\Edit.aspx" />
     <Content Include="Views\Fund\FundDetail.ascx" />

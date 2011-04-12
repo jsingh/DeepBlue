@@ -33,9 +33,6 @@ Date.CDate=function (p_Date) {
 	return false;	// double as looser IsDate
 	//throw("Error #13 - Type mismatch");	// or is this better? 
 }
-
-
-
 Date.DateAdd=function (p_Interval,p_Number,p_Date) {
 
 	if(!Date.CDate(p_Date)) { return "invalid date: '"+p_Date+"'"; }
@@ -99,9 +96,6 @@ Date.DateAdd=function (p_Interval,p_Number,p_Date) {
 	}
 	return dt;
 }
-
-
-
 Date.DateDiff=function (p_Interval,p_Date1,p_Date2,p_FirstDayOfWeek) {
 	if(!Date.CDate(p_Date1)) { return "invalid date: '"+p_Date1+"'"; }
 	if(!Date.CDate(p_Date2)) { return "invalid date: '"+p_Date2+"'"; }
@@ -162,15 +156,9 @@ Date.DateDiff=function (p_Interval,p_Date1,p_Date2,p_FirstDayOfWeek) {
 		default: return "invalid interval: '"+p_Interval+"'";
 	}
 }
-
-
-
-
 Date.DatePart=function (p_Interval,p_Date,p_FirstDayOfWeek) {
 	if(!Date.CDate(p_Date)) { return "invalid date: '"+p_Date+"'"; }
-
 	var dtPart=Date.CDate(p_Date);
-
 	switch(p_Interval.toLowerCase()) {
 		case "yyyy": return dtPart.getFullYear();
 		case "q": return parseInt(dtPart.getMonth()/3)+1;
@@ -186,21 +174,15 @@ Date.DatePart=function (p_Interval,p_Date,p_FirstDayOfWeek) {
 		default: return "invalid interval: '"+p_Interval+"'";
 	}
 }
-
-
-
 Date.MonthName=function (p_Month,p_Abbreviate) {
 	if(isNaN(p_Month)) {	// v0.94- compat: extract real param from passed date
 		if(!Date.CDate(p_Month)) { return "invalid month: '"+p_Month+"'"; }
 		p_Month=DatePart("m",Date.CDate(p_Month));
 	}
-
 	var retVal=Date.MonthNames[p_Month];
 	if(p_Abbreviate==true) { retVal=retVal.substring(0,3) } // abbr to 3 chars
 	return retVal;
 }
-
-
 Date.WeekdayName=function (p_Weekday,p_Abbreviate,p_FirstDayOfWeek) {
 	if(isNaN(p_Weekday)) {	// v0.94- compat: extract real param from passed date
 		if(!Date.CDate(p_Weekday)) { return "invalid weekday: '"+p_Weekday+"'"; }
@@ -213,19 +195,12 @@ Date.WeekdayName=function (p_Weekday,p_Abbreviate,p_FirstDayOfWeek) {
 	if(p_Abbreviate==true) { retVal=retVal.substring(0,3) } // abbr to 3 chars
 	return retVal;
 }
-
-
 // adjusts weekday for week starting on p_FirstDayOfWeek
 Date.Weekday=function (p_Weekday,p_FirstDayOfWeek) {
 	p_FirstDayOfWeek=(isNaN(p_FirstDayOfWeek)||p_FirstDayOfWeek==0)?vbSunday:parseInt(p_FirstDayOfWeek);	// set default & cast
 
 	return ((parseInt(p_Weekday)-p_FirstDayOfWeek+7)%7)+1;
 }
-
-
-
-
-
 Date.FormatDateTime=function (p_Date,p_NamedFormat) {
 	if(p_Date.toUpperCase().substring(0,3)=="NOW") { p_Date=new Date() };
 	if(!Date.CDate(p_Date)) { return "invalid date: '"+p_Date+"'"; }
@@ -242,8 +217,6 @@ Date.FormatDateTime=function (p_Date,p_NamedFormat) {
 		default: return "invalid NamedFormat: '"+p_NamedFormat+"'";
 	}
 }
-
-
 Date.Format=function (p_Date,p_Format,p_FirstDayOfWeek,p_firstweekofyear) {
 	if(!Date.CDate(p_Date)) { return "invalid date: '"+p_Date+"'"; }
 	if(!p_Format||p_Format=='') { return dt.toString() };
@@ -319,13 +292,6 @@ Date.Format=function (p_Date,p_Format,p_FirstDayOfWeek,p_firstweekofyear) {
 
 	return retVal;
 }
-
-
-
-// ====================================
-
-/* if desired, map new methods to direct functions
-*/
 IsDate=Date.IsDate;
 CDate=Date.CDate;
 DateAdd=Date.DateAdd;
@@ -337,32 +303,4 @@ Weekday=Date.Weekday;
 FormatDateTime=Date.FormatDateTime;
 Format=Date.Format;
 
-
-
-/* and other capitalizations for easier porting
-isDate = IsDate;
-dateAdd = DateAdd;
-dateDiff = DateDiff;
-datePart = DatePart;
-monthName = MonthName;
-weekdayName = WeekdayName;
-formatDateTime = FormatDateTime;
-format = Format;
-
-isdate = IsDate;
-dateadd = DateAdd;
-datediff = DateDiff;
-datepart = DatePart;
-monthname = MonthName;
-weekdayname = WeekdayName;
-formatdatetime = FormatDateTime;
-
-ISDATE = IsDate;
-DATEADD = DateAdd;
-DATEDIFF = DateDiff;
-DATEPART = DatePart;
-MONTHNAME = MonthName;
-WEEKDAYNAME = WeekdayName;
-FORMATDATETIME = FormatDateTime;
-FORMAT = Format;
-*/
+ 

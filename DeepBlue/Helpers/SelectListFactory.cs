@@ -242,5 +242,15 @@ namespace DeepBlue.Helpers {
 			}
 			return communicationGroupingList;
 		}
+
+		public static List<SelectListItem> GetEmptySelectList() {
+			List<SelectListItem> lists = new List<SelectListItem>(); 
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			lists.Add(item);
+			return lists;
+		}
+		
 	}
 }

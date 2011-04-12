@@ -29,12 +29,12 @@ namespace DeepBlue.Tests.Models.Admin {
 		}
 
 		[Test]
-		public void create_a_new_customfield_without_valid_moduleid_throws_error() {
+		public void create_a_new_customfield_without_moduleid_throws_error() {
 			Assert.IsTrue(IsPropertyValid("ModuleId"));
 		}
 
 		[Test]
-		public void create_a_new_customfield_without_valid_datatypeid_throws_error() {
+		public void create_a_new_customfield_without_datatypeid_throws_error() {
 			Assert.IsFalse(IsPropertyValid("DataTypeID"));
 		}
     }

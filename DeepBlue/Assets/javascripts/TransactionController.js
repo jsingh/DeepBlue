@@ -1,6 +1,9 @@
 ﻿var transactionController={
 	init: function () {
 		//	transactionController.loadFundDetails();
+		$(document).ready(function(){
+			$("#NewTransaction").css("height","auto");
+		});
 	}
 	,selectInvestor: function (id) {
 		//location.href="/Transaction/New/"+id;

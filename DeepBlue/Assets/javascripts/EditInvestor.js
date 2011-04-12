@@ -10,7 +10,6 @@
 	,selectInvestor: function (id) {
 		$("#Loading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		var dt=new Date();
-
 		$.getJSON("/Investor/FindInvestor/"+id+"?t="+dt.getTime(),function (data) {
 			$("#Loading").html("");
 			var $invInfo=$("#investor_"+id);
@@ -94,6 +93,8 @@
 				editInvestor.showControls(this,false);
 			});
 			$(".InvestorUpdateLoading").remove();
+			$(".UpdateInvestorInfo").hide();
+			$(".EditInvestorInfo").show();
 		});
 	}
 	,createDispField: function (obj) {
@@ -311,8 +312,6 @@
 		var editbtn=$(that).parents(".editor-editbtn").get(0);
 		var EditInvestorInfo=$(".EditInvestorInfo",cntdiv);
 		var UpdateInvestorInfo=$(".UpdateInvestorInfo",cntdiv);
-		UpdateInvestorInfo.hide();
-		EditInvestorInfo.show();
 		$(".InvestorUpdateLoading",editbtn).remove();
 		var loading=document.createElement("div");
 		loading.innerHTML="<img src='/Assets/images/ajax.jpg'/>&nbsp;Updating...";
@@ -539,7 +538,7 @@
 			$("#UpdateLoading",editInvestor.currentForm).html("");
 		},2000)
 		if($.trim(UpdateTargetId.html())!="") {
-			alert(UpdateTargetId.html());
+			alert(UpdateTargetId.html());$(".InvestorUpdateLoading").remove();
 		} else {
 			editInvestor.selectInvestor(InvestorId);
 		}

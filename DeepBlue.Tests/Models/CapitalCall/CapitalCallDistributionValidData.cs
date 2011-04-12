@@ -19,27 +19,27 @@ namespace DeepBlue.Tests.Models.CapitalCall {
         }
 
 		[Test]
-		public void create_a_new_capitalcalldistribution_with_valid_fundid_passes() {
+		public void create_a_new_capitalcalldistribution_with_fundid_passes() {
 			Assert.IsTrue(IsPropertyValid("FundID"));
 		}
 
         [Test]
-        public void create_a_new_capitalcalldistribution_with_valid_capitalamount_passes() {
+        public void create_a_new_capitalcalldistribution_with_capitalamount_passes() {
 			Assert.IsTrue(IsPropertyValid("DistributionAmount"));
         }
 
         [Test]
-        public void create_a_new_capitalcalldistribution_with_valid_capitalcalldate_passes() {
+        public void create_a_new_capitalcalldistribution_with_capitalcalldate_passes() {
 			Assert.IsTrue(IsPropertyValid("CapitalDistributionDate"));
         }
 
 		[Test]
-		public void create_a_new_capitalcalldistribution_with_valid_capitalcallduedate_passes() {
+		public void create_a_new_capitalcalldistribution_with_capitalcallduedate_passes() {
 			Assert.IsTrue(IsPropertyValid("CapitalDistributionDueDate"));
 		}
 
 		[Test]
-		public void create_a_new_capitalcalldistribution_with_valid_capitalcallnumber_passes() {
+		public void create_a_new_capitalcalldistribution_with_capitalcallnumber_passes() {
 			Assert.IsTrue(IsPropertyValid("DistributionNumber"));
 		}
 

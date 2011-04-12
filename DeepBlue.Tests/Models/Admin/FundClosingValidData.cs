@@ -24,12 +24,12 @@ namespace DeepBlue.Tests.Models.Admin {
 		}
 
 		[Test]
-		public void create_a_new_fundclosing_with_valid_fundid_passes() {
+		public void create_a_new_fundclosing_with_fundid_passes() {
 			Assert.IsTrue(IsPropertyValid("FundID"));
 		}
 
 		[Test]
-		public void create_a_new_fundclosing_with_valid_fundclosingdate_passes() {
+		public void create_a_new_fundclosing_with_fundclosingdate_passes() {
 			Assert.IsTrue(IsPropertyValid("FundClosingDate"));
 		}
 

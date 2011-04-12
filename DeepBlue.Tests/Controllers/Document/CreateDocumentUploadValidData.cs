@@ -20,7 +20,7 @@ namespace DeepBlue.Tests.Controllers.Document {
         public override void Setup() {
             // Arrange
             base.Setup();
-            // Test if the SaveInvestor call fails
+			// Test if the SaveDocument call fails
             MockRepository.Setup(x => x.SaveDocument(It.IsAny<DeepBlue.Models.Entity.InvestorFundDocument>())).Returns(new List<Helpers.ErrorInfo>());
         }
 

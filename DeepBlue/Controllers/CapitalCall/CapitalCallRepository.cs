@@ -32,7 +32,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from capitalCall in context.CapitalCalls
 						where capitalCall.FundID == fundId
-						orderby capitalCall.CapitalCallNumber
+						orderby capitalCall.CapitalCallID descending 
 						select capitalCall).ToList();
 			}
 		}
@@ -96,6 +96,15 @@ namespace DeepBlue.Controllers.CapitalCall {
 				PaginatedList<CapitalDistribution> paginatedList = new PaginatedList<CapitalDistribution>(query, pageIndex, pageSize);
 				totalRows = paginatedList.TotalCount;
 				return paginatedList;
+			}
+		}
+
+		public List<CapitalDistribution> GetCapitalDistributions(int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from capitalDistribution in context.CapitalDistributions
+														 where capitalDistribution.FundID == fundId
+														 orderby capitalDistribution.CapitalDistributionID descending
+														 select capitalDistribution).ToList();
 			}
 		}
 

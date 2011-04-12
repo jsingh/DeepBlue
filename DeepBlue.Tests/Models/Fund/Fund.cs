@@ -40,6 +40,7 @@ namespace DeepBlue.Tests.Models.Fund {
         #region Fund
         private void RequiredFieldDataMissing(DeepBlue.Models.Entity.Fund fund, bool ifValidData) {
             if (ifValidData) {
+				fund.EntityID = 1 ;
 				fund.FundName= "FundName";
 				fund.TaxID = "1";
 				fund.InceptionDate = DateTime.Now;
@@ -49,6 +50,7 @@ namespace DeepBlue.Tests.Models.Fund {
 				});
 
             } else {
+				fund.EntityID = 0;
 				fund.FundName = string.Empty;
 				fund.TaxID = string.Empty;
 				fund.InceptionDate = DateTime.MinValue;

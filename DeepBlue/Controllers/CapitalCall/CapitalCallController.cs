@@ -56,40 +56,43 @@ namespace DeepBlue.Controllers.CapitalCall {
 				capitalCall.FundID = model.FundId;
 				capitalCall.FundExpenses = 0;
 				capitalCall.ManagementFees = 0;
-				capitalCall.InvestedAmountInterest = 0;
 				capitalCall.CapitalCallNumber = model.CapitalCallNumber;
+				capitalCall.InvestmentAmount = (capitalCall.NewInvestmentAmount ?? 0) + (capitalCall.ExistingInvestmentAmount ?? 0);
+				capitalCall.InvestedAmountInterest = 0;
 				if (model.AddFundExpenses) {
 					capitalCall.FundExpenses = model.FundExpenseAmount ?? 0;
 				}
+				List<InvestorFund> investorFunds = CapitalCallRepository.GetAllInvestorFunds(capitalCall.FundID);
+				decimal nonManagingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember).Sum(fund => fund.TotalCommitment);
+				decimal managingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember).Sum(fund => fund.TotalCommitment);
+				decimal totalCommitment = nonManagingMemberTotalCommitment + managingMemberTotalCommitment;
 				if (model.AddManagementFees) {
-					decimal totalCommittedAmount = FundRepository.FindTotalCommittedAmount(capitalCall.FundID, (int)Models.Investor.Enums.InvestorType.NonManagingMember);
 					capitalCall.ManagementFeeStartDate = model.FromDate;
 					capitalCall.ManagementFeeEndDate = model.ToDate;
 					capitalCall.ManagementFees = model.ManagementFees ?? 0;
 					capitalCall.ManagementFeeInterest = 0;
-					List<InvestorFund> investorFunds = CapitalCallRepository.GetAllInvestorFunds(capitalCall.FundID);
-					foreach (var investorFund in investorFunds) {
-						item = new CapitalCallLineItem();
-						item.CapitalAmountCalled = 0;
-						item.CreatedBy = AppSettings.CreatedByUserId;
-						item.CreatedDate = DateTime.Now;
-						item.ExistingInvestmentAmount = 0;
-						item.FundExpenses = 0;
-						item.InvestedAmountInterest = 0;
-						item.InvestmentAmount = 0;
-						item.InvestorID = investorFund.InvestorID;
-						item.LastUpdatedBy = AppSettings.CreatedByUserId;
-						item.LastUpdatedDate = DateTime.Now;
-						item.ManagementFeeInterest = 0;
-						item.ManagementFees = (investorFund.TotalCommitment / totalCommittedAmount) * capitalCall.ManagementFees;
-						item.NewInvestmentAmount = 0;
-						capitalCall.CapitalCallLineItems.Add(item);
-					}
 				}
 				if (!((capitalCall.NewInvestmentAmount + capitalCall.ExistingInvestmentAmount) == (capitalCall.CapitalAmountCalled - capitalCall.ManagementFees - capitalCall.FundExpenses))) {
 					ModelState.AddModelError("NewInvestmentAmount", "(New Investment Amount + Existing Investment Amount) should be equal to (Capital Amount - Management Fees - Fund Expenses).");
 				}
 				else {
+					foreach (var investorFund in investorFunds) {
+						item = new CapitalCallLineItem();
+						item.CapitalAmountCalled = (investorFund.TotalCommitment / totalCommitment) * capitalCall.CapitalAmountCalled;
+						item.CreatedBy = AppSettings.CreatedByUserId;
+						item.CreatedDate = DateTime.Now;
+						item.ExistingInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.ExistingInvestmentAmount;
+						item.FundExpenses = (investorFund.TotalCommitment / totalCommitment) * capitalCall.FundExpenses;
+						item.InvestedAmountInterest = (investorFund.TotalCommitment / totalCommitment) * capitalCall.InvestedAmountInterest;
+						item.InvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.InvestmentAmount;
+						item.InvestorID = investorFund.InvestorID;
+						item.LastUpdatedBy = AppSettings.CreatedByUserId;
+						item.LastUpdatedDate = DateTime.Now;
+						item.ManagementFeeInterest = (investorFund.TotalCommitment / nonManagingMemberTotalCommitment) * capitalCall.ManagementFeeInterest;
+						item.ManagementFees = (investorFund.TotalCommitment / nonManagingMemberTotalCommitment) * capitalCall.ManagementFees;
+						item.NewInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.NewInvestmentAmount;
+						capitalCall.CapitalCallLineItems.Add(item);
+					}
 					IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalCall(capitalCall);
 					if (errorInfo != null) {
 						foreach (var err in errorInfo.ToList()) {
@@ -426,7 +429,6 @@ namespace DeepBlue.Controllers.CapitalCall {
 						item.CapitalReturn = 0;
 						item.CreatedBy = AppSettings.CreatedByUserId;
 						item.CreatedDate = DateTime.Now;
-						item.DistributionAmount = model.DistributionAmount;
 						item.InvestorID = investorFund.InvestorID;
 						item.LastUpdatedBy = AppSettings.CreatedByUserId;
 						item.LastUpdatedDate = DateTime.Now;
@@ -479,6 +481,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 								item.Profits = distribution.LPProfits * (investorFund.TotalCommitment / nonManagingMemberTotalCommitment);
 							}
 						}
+						item.DistributionAmount = model.DistributionAmount * (investorFund.TotalCommitment / totalCommitment);
 						distribution.CapitalDistributionLineItems.Add(item);
 					}
 				}

@@ -40,14 +40,20 @@ namespace DeepBlue.Tests.Models.CapitalCall {
 		private void RequiredFieldDataMissing(DeepBlue.Models.Entity.CapitalCall capitalcall, bool ifValidData) {
             if (ifValidData) {
 				capitalcall.FundID = 1;
-				capitalcall.CapitalAmountCalled = 10000;
+				capitalcall.CapitalCallNumber = "1" ;
+				capitalcall.CapitalCallTypeID = 1;
 				capitalcall.CapitalCallDate = DateTime.Now;
 				capitalcall.CapitalCallDueDate = DateTime.Now;
+				capitalcall.CapitalAmountCalled = 10000;
+				capitalcall.NewInvestmentAmount = 10000;
             } else {
 				capitalcall.FundID = 0;
-				capitalcall.CapitalAmountCalled = 0;
+				capitalcall.CapitalCallNumber = string.Empty;
+				capitalcall.CapitalCallTypeID = 0;
 				capitalcall.CapitalCallDate = DateTime.MinValue;
-				capitalcall.CapitalCallDueDate = DateTime.MinValue;
+				capitalcall.CapitalCallDueDate = DateTime.MinValue;	
+				capitalcall.CapitalAmountCalled = 0;							
+				capitalcall.NewInvestmentAmount = 0;
             }
         }
 

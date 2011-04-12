@@ -23,7 +23,7 @@ namespace DeepBlue.Tests.Controllers.Investor {
 
         private void SetFormCollection() {
             base.DefaultController.ValueProvider = SetupValueProvider(new FormCollection());
-			base.ActionResult = base.DefaultController.Create(GetInvalidformCollection());
+			base.ActionResult = base.DefaultController.Create (GetInvalidformCollection());
         }
         #region Tests where form collection doesnt have the required values. Tests for DataAnnotations
         private bool test_posted_value(string parameterName) {
@@ -54,6 +54,67 @@ namespace DeepBlue.Tests.Controllers.Investor {
         public void invalid_Investor_name_sets_1_error() {
             Assert.IsTrue(test_error_count("InvestorName",1));
         }
+
+		[Test]
+		public void invalid_Investor_alias_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("Alias"));
+		}
+
+		[Test]
+		public void invalid_Investor_alias_sets_1_error() {
+			Assert.IsTrue(test_error_count("Alias", 1));
+		}
+
+		[Test]
+		public void invalid_Investor_phone_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("Phone"));
+		}
+
+		[Test]
+		public void invalid_Investor_phone_sets_1_error() {
+			Assert.IsTrue(test_error_count("Phone", 1));
+		}
+
+		[Test]
+		public void invalid_Investor_email_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("Email"));
+		}
+
+		[Test]
+		public void invalid_Investor_email_sets_1_error() {
+			Assert.IsTrue(test_error_count("Email", 1));
+		}
+
+		[Test]
+		public void invalid_Investor_address_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("Address1"));
+		}
+
+		[Test]
+		public void invalid_Investor_address_sets_1_error() {
+			Assert.IsTrue(test_error_count("Address1", 1));
+		}
+
+		[Test]
+		public void invalid_Investor_city_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("City"));
+		}
+
+		[Test]
+		public void invalid_Investor_city_sets_1_error() {
+			Assert.IsTrue(test_error_count("City", 1));
+		}
+
+		[Test]
+		public void invalid_Investor_zip_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("Zip"));
+		}
+
+		[Test]
+		public void invalid_Investor_zip_sets_1_error() {
+			Assert.IsTrue(test_error_count("Zip", 1));
+		}
+
 
         [Test]
         public void invalid_Investor_name_results_in_invalid_modelstate() {

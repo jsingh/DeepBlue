@@ -78,6 +78,99 @@ namespace DeepBlue.Tests.Controllers.Investor
              Assert.IsTrue(test_error_count("InvestorName", 0));
         }
 
+		[Test]
+		public void valid_Investor_alias_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("Alias"));
+		}
+
+		[Test]
+		public void valid_Investor_alias_sets_1_error() {
+			Assert.IsTrue(test_error_count("Alias", 0));
+		}
+
+		[Test]
+		public void valid_Investor_phone_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("Phone"));
+		}
+
+		[Test]
+		public void valid_Investor_phone_sets_1_error() {
+			Assert.IsTrue(test_error_count("Phone", 0));
+		}
+
+		[Test]
+		public void valid_Investor_email_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("Email"));
+		}
+
+		[Test]
+		public void valid_Investor_email_sets_1_error() {
+			Assert.IsTrue(test_error_count("Email", 0));
+		}
+
+		[Test]
+		public void valid_Investor_address_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("Address1"));
+		}
+
+		[Test]
+		public void valid_Investor_address_sets_1_error() {
+			Assert.IsTrue(test_error_count("Address1", 0));
+		}
+
+		[Test]
+		public void valid_Investor_city_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("City"));
+		}
+
+		[Test]
+		public void valid_Investor_city_sets_1_error() {
+			Assert.IsTrue(test_error_count("City", 0));
+		}
+
+
+		[Test]
+		public void valid_Investor_state_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("StateOfResidency"));
+		}
+
+		[Test]
+		public void valid_Investor_state_sets_1_error() {
+			Assert.IsTrue(test_error_count("StateOfResidency", 0));
+		}
+
+		[Test]
+		public void valid_Investor_entitytype_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("EntityType"));
+		}
+
+		[Test]
+		public void valid_Investor_entitytype_sets_1_error() {
+			Assert.IsTrue(test_error_count("EntityType", 0));
+		}
+
+		
+
+		[Test]
+		public void valid_Investor_socialsecuritytaxid_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("SocialSecurityTaxId"));
+		}
+
+		[Test]
+		public void valid_Investor_socialsecuritytaxid_sets_1_error() {
+			Assert.IsTrue(test_error_count("SocialSecurityTaxId", 0));
+		}
+
+		[Test]
+		public void valid_Investor_zip_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("Zip"));
+		}
+
+		[Test]
+		public void valid_Investor_zip_sets_1_error() {
+			Assert.IsTrue(test_error_count("Zip", 0));
+		}
+
         [Test]
         public void valid_Investor_name_results_in_valid_modelstate()
         {

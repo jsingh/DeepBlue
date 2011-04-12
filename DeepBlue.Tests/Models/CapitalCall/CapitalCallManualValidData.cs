@@ -19,23 +19,38 @@ namespace DeepBlue.Tests.Models.CapitalCall {
         }
 
 		[Test]
-		public void create_a_new_capitalcallreqular_with_valid_fundid_passes() {
-			Assert.IsTrue(IsPropertyValid("FundId"));
+		public void create_a_new_capitalcallreqular_with_fundid_passes() {
+			Assert.IsTrue(IsPropertyValid("FundID"));
+		}
+
+		[Test]
+		public void create_a_new_capitalcallmanual_with_capitalcallnumber_passes() {
+			Assert.IsTrue(IsPropertyValid("CapitalCallNumber"));
+		}
+
+		[Test]
+		public void create_a_new_capitalcallmanual_with_capitalcalltypeid_passes() {
+			Assert.IsTrue(IsPropertyValid("CapitalCallTypeID"));
+		}
+
+		[Test]
+		public void create_a_new_capitalcallmanual_with_capitalcalldate_passes() {
+			Assert.IsTrue(IsPropertyValid("CapitalCallDate"));
+		}
+
+		[Test]
+		public void create_a_new_capitalcallmanual_with_capitalcallduedate_passes() {
+			Assert.IsTrue(IsPropertyValid("CapitalCallDueDate"));
 		}
 
         [Test]
-        public void create_a_new_capitalcallmanual_with_valid_capitalamount_passes() {
+        public void create_a_new_capitalcallmanual_with_capitalamount_passes() {
 			Assert.IsTrue(IsPropertyValid("CapitalAmountCalled"));
         }
-
-        [Test]
-        public void create_a_new_capitalcallmanual_with_valid_capitalcalldate_passes() {
-			Assert.IsTrue(IsPropertyValid("CapitalCallDate"));
-        }
-
+		
 		[Test]
-		public void create_a_new_capitalcallmanual_with_valid_capitalcallduedate_passes() {
-			Assert.IsTrue(IsPropertyValid("CapitalCallDueDate"));
+		public void create_a_new_capitalcallmanual_with_capitalcallnewinvestmentamount_passes() {
+			Assert.IsTrue(IsPropertyValid("NewInvestmentAmount"));
 		}
 
     }

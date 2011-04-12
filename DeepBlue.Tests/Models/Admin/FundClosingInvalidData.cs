@@ -29,12 +29,12 @@ namespace DeepBlue.Tests.Models.Admin {
 		}
 
 		[Test]
-		public void create_a_new_fundclosing_without_valid_fundid_throws_error() {
+		public void create_a_new_fundclosing_without_fundid_throws_error() {
 			Assert.IsFalse(IsPropertyValid("FundID"));
 		}
 
 		[Test]
-		public void create_a_new_fundclosing_without_valid_fundclosingdate_throws_error() {
+		public void create_a_new_fundclosing_without_fundclosingdate_throws_error() {
 			Assert.IsFalse(IsPropertyValid("FundClosingDate"));
 		}
 

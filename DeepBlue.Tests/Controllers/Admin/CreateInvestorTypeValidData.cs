@@ -19,7 +19,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
         public override void Setup() {
             // Arrange
             base.Setup();
-            // Test if the SaveInvestor call fails
+            // Test if the SaveInvestorType call fails
 			MockAdminRepository.Setup(x => x.SaveInvestorType(It.IsAny<DeepBlue.Models.Entity.InvestorType>())).Returns(new List<Helpers.ErrorInfo>());
         }
 
@@ -79,7 +79,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
        
         private FormCollection GetValidformCollection() {
             FormCollection formCollection = new FormCollection();
-			formCollection.Add("InvestorTypeName", "n/a");
+			formCollection.Add("InvestorTypeName", "Test");
             return formCollection;
         }
     }

@@ -81,7 +81,7 @@ namespace DeepBlue.Controllers.Fund {
 			model.FundRateSchedules = new List<FundRateScheduleDetail>();
 			FundRateScheduleDetail scheduleDetail = new FundRateScheduleDetail();
 			scheduleDetail.FundRateScheduleTiers = new List<FundRateScheduleTier>();
-			scheduleDetail.FundRateScheduleTiers.Add(new FundRateScheduleTier());
+			AddExcessTiers(ref scheduleDetail);
 			model.FundRateSchedules.Add(scheduleDetail);
 			return View(model);
 		}

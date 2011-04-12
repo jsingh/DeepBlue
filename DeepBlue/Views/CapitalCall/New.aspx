@@ -20,7 +20,7 @@
 			<%: Html.LabelFor(model => model.FundId) %>&nbsp;<%: Html.TextBox("Fund","", new { @style = "width:200px" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
 		</div>
 	</div>
-	<div class="cc-main" id="CCDetail" style="display:none">
+	<div class="cc-main" id="CCDetail" style="display: none">
 		<% Html.EnableClientValidation(); %>
 		<% using (Ajax.BeginForm("Create", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "capitalCall.onCreateCapitalCallBegin", OnSuccess = "capitalCall.onCreateCapitalCallSuccess" }, new { @id = "CapitalCall" })) {%>
 		<div class="box">
@@ -55,7 +55,8 @@
 						<%: Html.TextBoxFor(model => model.CapitalCallDueDate, new { @style = "width:110px" })%>
 					</div>
 					<div class="editor-label" style="width: auto">
-						<%: Html.CheckBox("AddManagementFees",false,new { @style="width:auto", @onclick="javascript:capitalCall.selectMFee(this);" })%>&nbsp;Add Management Fees
+						<%: Html.CheckBox("AddManagementFees",false,new { @style="width:auto", @onclick="javascript:capitalCall.selectMFee(this);" })%>&nbsp;Add
+						Management Fees
 					</div>
 					<div id="ManFeeMain" style="display: none;">
 						<div class="editor-label fromcell">
@@ -69,7 +70,8 @@
 						</div>
 					</div>
 					<div class="editor-label" style="width: 143px;">
-						<%: Html.CheckBox("AddFundExpenses", false, new { @style = "width:auto", @onclick = "javascript:capitalCall.selectFundExp(this);" })%>&nbsp;Add Fund Expenses
+						<%: Html.CheckBox("AddFundExpenses", false, new { @style = "width:auto", @onclick = "javascript:capitalCall.selectFundExp(this);" })%>&nbsp;Add
+						Fund Expenses
 					</div>
 					<div id="FunExpAmount" style="display: none;">
 						<div class="editor-label fromcell">
@@ -125,7 +127,7 @@
 									<%: Html.Span("",new { @id="UnfundedAmount"})%></b>
 							</div>
 							<div class="editor-label">
-							 <%: Html.Anchor("Previous Capital Calls","#", new { @id="lnkPCC", @target = "_blank", @style="color:Blue" })%>
+								<%: Html.Anchor("Previous Capital Calls","#", new { @id="lnkPCC", @target = "_blank", @style="color:Blue" })%>
 							</div>
 						</div>
 					</div>
@@ -174,9 +176,7 @@
 	<%= Html.jQueryDatePicker("CapitalCallDueDate")%><%= Html.jQueryAccordion("accordion", new AccordionOptions { Disabled = true, Active = 0 })%>
 	<%= Html.jQueryAutoComplete("Fund", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { capitalCall.selectFund(ui.item.id);}"})%>
 	<%= Html.jQueryFlexiGrid("TierDetail", new FlexigridOptions { Height = 0 })%>
-
 	<script type="text/javascript">
 		capitalCall.init();
 	</script>
-
 </asp:Content>

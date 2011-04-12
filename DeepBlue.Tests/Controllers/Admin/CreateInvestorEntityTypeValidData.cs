@@ -19,7 +19,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
         public override void Setup() {
             // Arrange
             base.Setup();
-            // Test if the SaveInvestor call fails
+            // Test if the SaveInvestorEntityType call fails
             MockAdminRepository.Setup(x => x.SaveInvestorEntityType(It.IsAny<DeepBlue.Models.Entity.InvestorEntityType>())).Returns(new List<Helpers.ErrorInfo>());
         }
 

@@ -24,12 +24,12 @@ namespace DeepBlue.Tests.Models.Admin {
 		}
 
 		[Test]
-		public void create_a_new_customfield_with_valid_moduleid_passes() {
+		public void create_a_new_customfield_with_moduleid_passes() {
 			Assert.IsTrue(IsPropertyValid("ModuleId"));
 		}
 
 		[Test]
-		public void create_a_new_customfield_with_valid_datatypeid_passes() {
+		public void create_a_new_customfield_with_datatypeid_passes() {
 			Assert.IsTrue(IsPropertyValid("DataTypeID"));
 		}
     }

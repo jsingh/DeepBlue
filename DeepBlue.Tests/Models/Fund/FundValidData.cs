@@ -17,29 +17,26 @@ namespace DeepBlue.Tests.Models.Fund {
             Create_Data(DefaultFund, true);
             this.ServiceErrors = DefaultFund.Save();
         }
+
+		[Test]
+		public void create_a_new_fund_with_entityid_passes() {
+			Assert.IsFalse(IsPropertyValid("EntityID"));
+		}
+
         [Test]
         public void create_a_new_fund_with_fund_name_passes() {
             Assert.IsTrue(IsPropertyValid("FundName"));
         }
 
         [Test]
-        public void create_a_new_fund_with_valid_taxid_passes() {
+        public void create_a_new_fund_with_taxid_passes() {
 			Assert.IsTrue(IsPropertyValid("TaxId"));
         }
 
 		[Test]
-		public void create_a_new_fund_with_valid_inceptiondate_passes() {
+		public void create_a_new_fund_with_inceptiondate_passes() {
 			Assert.IsTrue(IsPropertyValid("InceptionDate"));
 		}
 
-		//[Test]
-		//public void create_a_new_fund_with_bank_name_passes() {
-		//    Assert.IsTrue(IsPropertyValid("BankName"));
-		//}
-
-		//[Test]
-		//public void create_a_new_fund_with_account_passes() {
-		//    Assert.IsTrue(IsPropertyValid("Account"));
-		//}
     }
 }

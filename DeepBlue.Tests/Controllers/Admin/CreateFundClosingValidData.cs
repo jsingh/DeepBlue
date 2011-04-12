@@ -19,7 +19,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
         public override void Setup() {
             // Arrange
             base.Setup();
-            // Test if the SaveInvestor call fails
+            // Test if the SaveFundClosing call fails
             MockAdminRepository.Setup(x => x.SaveFundClosing(It.IsAny<DeepBlue.Models.Entity.FundClosing>())).Returns(new List<Helpers.ErrorInfo>());
         }
 

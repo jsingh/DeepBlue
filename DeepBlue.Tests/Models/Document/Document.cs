@@ -42,11 +42,18 @@ namespace DeepBlue.Tests.Models.Document {
 				funddocument.DocumentTypeID  = 1;
 				funddocument.DocumentDate = DateTime.Now;
 				funddocument.InvestorID = 1;
+				funddocument.EntityID = 1;
+				funddocument.CreatedBy = 1;
+				funddocument.CreatedDate = DateTime.Now;
+				 
             } else {
 				funddocument.DocumentTypeID  = 0;
 				funddocument.DocumentDate = DateTime.MinValue;
 				funddocument.InvestorID = 0;
-            }
+				funddocument.EntityID = 0;
+				funddocument.CreatedBy = 0;
+				funddocument.CreatedDate = DateTime.MinValue;
+             }
         }
         #endregion
     }
