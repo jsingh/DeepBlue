@@ -59,12 +59,12 @@
 			if((rows+1)%2==0)
 				tr.className="erow";
 			var lastRow=$("tr:last",InvestorList);
-			$("#txtCapitalCallAmount",lastRow).get(0).focus();
+			$("#txtCapitalAmountCalled",lastRow).get(0).focus();
 			$("#Investor").blur();
 		}
 	}
 	,calcCCA: function () {
-		this.calc("txtCapitalCallAmount","CapitalCallAmount","SpnCapitalCallAmount");
+		this.calc("txtCapitalAmountCalled","CapitalAmountCalled","SpnCapitalAmountCalled");
 	}
 	,calcMFIAmt: function () {
 		this.calc("txtManagementFeeInterest","ManagementFeeInterest","SpnManagementFeeInterest");

@@ -108,7 +108,7 @@ namespace DeepBlue.Controllers.Fund {
 			model.FundId = fund.FundID;
 			model.FundName = fund.FundName;
 			model.TaxId = fund.TaxID ?? string.Empty;
-			model.FundStartDate = fund.InceptionDate ?? Convert.ToDateTime("01/01/1900");
+			model.InceptionDate = fund.InceptionDate ?? Convert.ToDateTime("01/01/1900");
 			model.ScheduleTerminationDate = fund.ScheduleTerminationDate;
 			model.FinalTerminationDate = fund.FinalTerminationDate;
 			model.NumofAutoExtensions = fund.NumofAutoExtensions;
@@ -234,7 +234,7 @@ namespace DeepBlue.Controllers.Fund {
 				fund.EntityID = (int)ConfigUtil.CurrentEntityID;
 				fund.FinalTerminationDate = model.FinalTerminationDate ?? Convert.ToDateTime("01/01/1900");
 				fund.FundName = model.FundName;
-				fund.InceptionDate = model.FundStartDate;
+				fund.InceptionDate = model.InceptionDate;
 				fund.MgmtFeesCatchUpDate = model.MgmtFeesCatchUpDate ?? Convert.ToDateTime("01/01/1900");
 				fund.NumofAutoExtensions = model.NumofAutoExtensions ?? 0;
 				fund.RecycleProvision = model.RecycleProvision ?? 0;

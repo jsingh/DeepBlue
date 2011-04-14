@@ -13,7 +13,7 @@ namespace DeepBlue.Models.Fund {
 		
 		public string TaxId { get; set; }
 
-		public DateTime? FundStartDate { get; set; }
+		public DateTime? InceptionDate { get; set; }
 
 		public DateTime? ScheduleTerminationDate { get; set; }
 	}

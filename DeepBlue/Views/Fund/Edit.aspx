@@ -21,7 +21,7 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%= Html.jQueryDatePicker("FundStartDate")%>
+	<%= Html.jQueryDatePicker("InceptionDate")%>
 	<%= Html.jQueryDatePicker("ScheduleTerminationDate")%>
 	<%= Html.jQueryDatePicker("FinalTerminationDate")%>
 	<%= Html.jQueryDatePicker("DateClawbackTriggered")%>

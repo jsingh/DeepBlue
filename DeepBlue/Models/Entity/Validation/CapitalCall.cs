@@ -52,13 +52,6 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage = "New Investment Amount is required")]
-			[Range(1, (double)decimal.MaxValue, ErrorMessage = "New Investment Amount is required")]
-			public global::System.Decimal NewInvestmentAmount {
-				get;
-				set;
-			}
-
 			#endregion
 		}
 

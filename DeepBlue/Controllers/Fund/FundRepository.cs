@@ -18,7 +18,7 @@ namespace DeepBlue.Controllers.Fund {
 																		   FundId = fund.FundID,
 																		   FundName = fund.FundName,
 																		   TaxId = fund.TaxID,
-																		   FundStartDate = fund.InceptionDate,
+																		   InceptionDate = fund.InceptionDate,
 																		   ScheduleTerminationDate = fund.ScheduleTerminationDate
 																	   });
 				fundListQuery = fundListQuery.OrderBy(sortName, (sortOrder == "asc"));

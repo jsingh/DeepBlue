@@ -157,8 +157,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 					item.CreatedDate = DateTime.Now;
 					item.LastUpdatedBy = AppSettings.CreatedByUserId;
 					item.LastUpdatedDate = DateTime.Now;
-					if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "CapitalCallAmount"]) == false) {
-						item.CapitalAmountCalled = Convert.ToDecimal(collection[index.ToString() + "_" + "CapitalCallAmount"]);
+					if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "CapitalAmountCalled"]) == false) {
+						item.CapitalAmountCalled = Convert.ToDecimal(collection[index.ToString() + "_" + "CapitalAmountCalled"]);
 					}
 					if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "ManagementFeeInterest"]) == false) {
 						item.ManagementFeeInterest = Convert.ToDecimal(collection[index.ToString() + "_" + "ManagementFeeInterest"]);

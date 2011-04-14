@@ -66,7 +66,7 @@
 								</td>
 								<td>
 									<b>
-										<%: Html.Span("$0",new { @id = "SpnCapitalCallAmount" }) %></b>
+										<%: Html.Span("$0",new { @id = "SpnCapitalAmountCalled" }) %></b>
 								</td>
 								<td>
 									<%: Html.LabelFor(model => model.ManagementFeeInterest) %>
@@ -170,7 +170,7 @@
 									</td>
 									<td style="width: 15%">
 										<div>
-											<%:Html.TextBox("1_CapitalCallAmount","",new { @id="txtCapitalCallAmount", @onkeypress="return jHelper.isCurrency(event);", @onkeyup="javascript:manualCapitalCall.calcCCA();" })%>
+											<%:Html.TextBox("1_CapitalAmountCalled","",new { @id="txtCapitalAmountCalled", @onkeypress="return jHelper.isCurrency(event);", @onkeyup="javascript:manualCapitalCall.calcCCA();" })%>
 										</div>
 									</td>
 									<td style="width: 15%">

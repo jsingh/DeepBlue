@@ -15,11 +15,11 @@
 	<%: Html.ValidationMessageFor(model => model.TaxId) %>
 </div>
 <div class="editor-label">
-	<%: Html.LabelFor(model => model.FundStartDate) %>
+	<%: Html.LabelFor(model => model.InceptionDate) %>
 </div>
 <div class="editor-field">
-	<%: Html.TextBox("FundStartDate",(Model.FundStartDate.Year > 1900 ? Model.FundStartDate.ToString("MM/dd/yyyy") : ""),new { @id = "FundStartDate" }) %>
-	<%: Html.ValidationMessageFor(model => model.FundStartDate) %>
+	<%: Html.TextBox("InceptionDate",(Model.InceptionDate.Year > 1900 ? Model.InceptionDate.ToString("MM/dd/yyyy") : ""),new { @id = "InceptionDate" }) %>
+	<%: Html.ValidationMessageFor(model => model.InceptionDate) %>
 </div>
 <div class="editor-label" style="clear: right">
 	<%: Html.LabelFor(model => model.ScheduleTerminationDate) %>

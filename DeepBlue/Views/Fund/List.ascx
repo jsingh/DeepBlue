@@ -9,7 +9,7 @@
 	   row.cell.Add(item.FundId);
 	   row.cell.Add(item.FundName);
 	   row.cell.Add(item.TaxId);
-	   row.cell.Add((item.FundStartDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"));
+	   row.cell.Add((item.InceptionDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"));
 	   row.cell.Add((item.ScheduleTerminationDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"));
 	   flexData.rows.Add(row);
    } %>

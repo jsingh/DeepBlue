@@ -30,7 +30,7 @@
 						<th sortname="TaxId" align="center" style="width: 20%">
 							Tax ID
 						</th>
-						<th sortname="FundStartDate" align="center" style="width: 15%">
+						<th sortname="InceptionDate" align="center" style="width: 15%">
 							Fund Start Date
 						</th>
 						<th sortname="ScheduleTerminationDate" align="center" style="width: 20%">
