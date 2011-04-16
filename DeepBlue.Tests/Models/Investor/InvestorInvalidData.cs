@@ -29,9 +29,21 @@ namespace DeepBlue.Tests.Models.Investor {
         }
 
         [Test]
-        public void create_a_new_investor_with_too_long_investor_name_throws_error() {
+        public void create_a_new_investor_without_too_long_investor_name_throws_error() {
             Assert.IsFalse(IsPropertyValid("InvestorName"));
         }
+
+
+		[Test]
+		public void create_a_new_investor_without_socialsecuritytaxid_passes() {
+			Assert.IsTrue(IsPropertyValid("SocialSecurityTaxId"));
+		}
+
+		[Test]
+		public void create_a_new_investor_without_stateofresidency_passes() {
+			Assert.IsTrue(IsPropertyValid("StateOfResidency"));
+		}
+
 
         [Test]
         public void create_a_new_investor_without_valid_investorentitytypeid_throws_error() {

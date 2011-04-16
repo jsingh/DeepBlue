@@ -71,7 +71,7 @@ namespace DeepBlue.Models.Fund {
 		public string Account { get; set; }
 
 		[DisplayName("ABA Number:")]
-		public string ABANumber { get; set; }
+		public int? ABANumber { get; set; }
 
 		[StringLength(50, ErrorMessage = "Swift Code must be under 50 characters.")]
 		[DisplayName("Swift Code:")]

@@ -45,14 +45,24 @@ namespace DeepBlue.Tests.Controllers.Investor {
             return errorCount == errors;
         }
 
+		[Test]
+		public void invalid_Investor_name_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("InvestorName"));
+		}
+
+		[Test]
+		public void invalid_Investor_name_sets_1_error() {
+			Assert.IsTrue(test_error_count("InvestorName", 1));
+		}
+
         [Test]
-        public void invalid_Investor_name_sets_model_error_on_model_state() {
-            Assert.IsFalse(test_posted_value("InvestorName"));
+        public void invalid_Investor_social_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("Social"));
         }
 
         [Test]
-        public void invalid_Investor_name_sets_1_error() {
-            Assert.IsTrue(test_error_count("InvestorName",1));
+        public void invalid_Investor_social_sets_1_error() {
+			Assert.IsTrue(test_error_count("Social", 1));
         }
 
 		[Test]

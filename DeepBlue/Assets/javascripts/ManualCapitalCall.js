@@ -108,6 +108,7 @@
 	,deleteInvestor: function (img) {
 		if(confirm("Are you sure you want to delete this investor?")) {
 			$(img).parents("tr:first").remove();
+			this.calcCCA();this.calcMFIAmt();this.calcIAI();this.calcMF();this.calcFE();
 		}
 	}
 	,onSubmit: function (formId) {

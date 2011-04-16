@@ -10,13 +10,12 @@
 				setTimeout(function () {
 					$("#CaptialCallDetail").hide();
 				},200);
-			}
+			}  
 			capitalCallReceive.pageInit=true;
 		});
 	}
 	,selectFund: function (id) {
 		$("#SpnLoading").show();
-		$("#FundId").val(id);
 		var capitalCallId=0;
 		if(this.pageInit) {
 			$("#CapitalCall").val(0);
@@ -53,7 +52,7 @@
 		$("tr:first",tbl).get(0).style.display="none";
 		$("#ItemCount").val(0);
 		$(":input[type='text']").val("");
-		$(":input[type='hidden']").val("0");
+		$(":input[type='hidden'][name!='FundId']").val("0");
 		$("#CapitalCall").val(id);
 		if(parseInt(id)>0) {
 			$.getJSON(url,function (data) {
@@ -81,7 +80,7 @@
 						var receiveDate=$(":input[rdate='true']",tr);
 						if(data.Items[i].Received) {
 							receiveDate.get(0).disabled=false;
-						}else{
+						} else {
 							receiveDate.get(0).disabled=true;
 						}
 						receiveDate.attr("id",i).attr("class","");

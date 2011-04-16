@@ -36,10 +36,10 @@ namespace DeepBlue.Tests.Controllers.Investor
         #region Tests after model state is invalid
 
         [Test]
-        //public void returns_back_to_new_view_if_saving_investor_failed() {
-        //    SetFormCollection();
-        //    Assert.IsNotNull(Model);
-        //}
+		public void returns_back_to_new_view_if_saving_investor_failed() {
+			SetFormCollection();
+			Assert.IsNotNull(Model);
+		}
 
 
 
@@ -77,6 +77,18 @@ namespace DeepBlue.Tests.Controllers.Investor
         {
              Assert.IsTrue(test_error_count("InvestorName", 0));
         }
+
+		[Test]
+		public void valid_Investor_social_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("InvestorName"));
+		}
+
+		[Test]
+		public void valid_Investor_social_sets_1_error() {
+			Assert.IsTrue(test_error_count("InvestorName", 0));
+		}
+
+
 
 		[Test]
 		public void valid_Investor_alias_sets_model_error_on_model_state() {
@@ -149,7 +161,7 @@ namespace DeepBlue.Tests.Controllers.Investor
 			Assert.IsTrue(test_error_count("EntityType", 0));
 		}
 
-		
+
 
 		[Test]
 		public void valid_Investor_socialsecuritytaxid_sets_model_error_on_model_state() {

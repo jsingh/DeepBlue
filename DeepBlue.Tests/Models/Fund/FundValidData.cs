@@ -38,5 +38,15 @@ namespace DeepBlue.Tests.Models.Fund {
 			Assert.IsTrue(IsPropertyValid("InceptionDate"));
 		}
 
+		[Test]
+		public void create_a_new_fund_with_bank_name_passes() {
+			Assert.IsTrue(IsPropertyValid("BankName"));
+		}
+
+		[Test]
+		public void create_a_new_fund_with_account_passes() {
+			Assert.IsTrue(IsPropertyValid("Account"));
+		}
+
     }
 }

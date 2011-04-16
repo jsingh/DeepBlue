@@ -67,6 +67,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Admin\CommunicationGroupingBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Admin\CommunicationTypeBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Admin\CreateCommunicationGropingValidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Admin\CreateCommunicationGroupingInvalidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Admin\CreateCommunicationTypeInvalidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Admin\CreateCommunicationTypeValidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\Admin\CreateCustomFieldInvalidData.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -103,6 +121,12 @@
     <Compile Include="Controllers\Admin\DataTypeBase.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\Admin\EditCommunicationGroping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Admin\EditCommunicationType.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\Admin\EditCustomField.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -127,6 +151,12 @@
     <Compile Include="Controllers\Admin\InvestorTypeBase.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\Admin\NewCommunicationGrouping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Admin\NewCommunicationType.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\Admin\NewCustomField.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -143,7 +173,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\Base.cs" />
-    <Compile Include="Controllers\CapitalCall\CapitalCallDistributionBase.cs" />
+    <Compile Include="Controllers\CapitalCall\CapitalCallDistributionBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\CapitalCall\CapitalCallManualBase.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -153,9 +185,15 @@
     <Compile Include="Controllers\CapitalCall\CapitalCallReqularBase.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallDistribution.cs" />
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallDistributionInvalidData.cs" />
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallDistributionValidData.cs" />
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallDistribution.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallDistributionInvalidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallDistributionValidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\CapitalCall\CreateCapitalCallManual.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -189,7 +227,9 @@
     <Compile Include="Controllers\CapitalCall\EditCapitalCallReqular.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\CapitalCall\NewCapitalCallDistribution.cs" />
+    <Compile Include="Controllers\CapitalCall\NewCapitalCallDistribution.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\CapitalCall\NewCapitalCallManual.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -232,26 +272,34 @@
     <Compile Include="Controllers\Fund\New.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\Investor\Create.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Investor\CreateInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Investor\CreateValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Investor\InvestorBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Investor\New.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Controllers\Investor\Create.cs" />
+    <Compile Include="Controllers\Investor\CreateInvalidData.cs" />
+    <Compile Include="Controllers\Investor\CreateValidData.cs" />
+    <Compile Include="Controllers\Investor\InvestorBase.cs" />
+    <Compile Include="Controllers\Investor\New.cs" />
     <Compile Include="Controllers\Transaction\CreateInvestorFund.cs" />
     <Compile Include="Controllers\Transaction\CreateInvestorFundInvalidData.cs" />
     <Compile Include="Controllers\Transaction\InvestorFundBase.cs" />
     <Compile Include="Controllers\Transaction\NewInvestorFund.cs" />
     <Compile Include="MockSessionState.cs" />
+    <Compile Include="Models\Admin\CommunicationGrouping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\CommunicationGroupingInvalidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\CommunicationGroupingValidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\CommunicationType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\CommunicationTypeInvalidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\CommunicationTypeValidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\Admin\CustomField.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -297,9 +345,15 @@
     <Compile Include="Models\Admin\InvestorTypeValidData.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallDistribution.cs" />
-    <Compile Include="Models\CapitalCall\CapitalCallDistributionInvalidData.cs" />
-    <Compile Include="Models\CapitalCall\CapitalCallDistributionValidData.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallDistribution.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CapitalCall\CapitalCallDistributionInvalidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CapitalCall\CapitalCallDistributionValidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\CapitalCall\CapitalCallManual.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -345,33 +399,15 @@
     <Compile Include="Models\Fund\FundValidData.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Investor\Investor.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Investor\InvestorInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Investor\InvestorValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Transaction\InvestorFund.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Transaction\InvestorFundInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Transaction\InvestorFundTransaction.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Transaction\InvestorFundTransactionInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Transaction\InvestorFundTransactionValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Transaction\InvestorValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Models\Investor\Investor.cs" />
+    <Compile Include="Models\Investor\InvestorInvalidData.cs" />
+    <Compile Include="Models\Investor\InvestorValidData.cs" />
+    <Compile Include="Models\Transaction\InvestorFund.cs" />
+    <Compile Include="Models\Transaction\InvestorFundInvalidData.cs" />
+    <Compile Include="Models\Transaction\InvestorFundTransaction.cs" />
+    <Compile Include="Models\Transaction\InvestorFundTransactionInvalidData.cs" />
+    <Compile Include="Models\Transaction\InvestorFundTransactionValidData.cs" />
+    <Compile Include="Models\Transaction\InvestorValidData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -383,6 +419,7 @@
       <Name>DeepBlue</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

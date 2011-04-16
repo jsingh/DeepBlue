@@ -53,7 +53,6 @@ namespace DeepBlue.Controllers.Fund {
 			return Json(FundRepository.FindFunds(term), JsonRequestBehavior.AllowGet);
 		}
 
-
 		//
 		// GET: /Fund/New
 		public ActionResult New() {
@@ -92,7 +91,7 @@ namespace DeepBlue.Controllers.Fund {
 			EditModel model = new EditModel();
 			Models.Entity.Fund fund = FundRepository.FindFund(id);
 			foreach (var fundAccount in fund.FundAccounts) {
-				model.ABANumber = string.Empty;
+				model.ABANumber = fundAccount.Routing;
 				model.Account = fundAccount.Account;
 				model.AccountNumberCash = fundAccount.AccountNumberCash;
 				model.AccountOf = fundAccount.AccountOf;
@@ -104,6 +103,7 @@ namespace DeepBlue.Controllers.Fund {
 				model.Fax = fundAccount.Fax;
 				model.Reference = fundAccount.Reference;
 				model.AccountId = fundAccount.FundAccountID;
+				model.Telephone = fundAccount.Phone;
 			}
 			model.FundId = fund.FundID;
 			model.FundName = fund.FundName;
@@ -136,7 +136,8 @@ namespace DeepBlue.Controllers.Fund {
 						TextValue = value.TextValue,
 						Key = id
 					});
-				} else {
+				}
+				else {
 					model.CustomField.Values.Add(new CustomFieldValueDetail {
 						CustomFieldId = field.CustomFieldID,
 						CustomFieldValueId = 0,
@@ -183,7 +184,8 @@ namespace DeepBlue.Controllers.Fund {
 					AddExcessTiers(ref schedule);
 					model.FundRateSchedules.Add(schedule);
 				}
-			} else {
+			}
+			else {
 				schedule = new FundRateScheduleDetail();
 				schedule.FundRateScheduleTiers = new List<FundRateScheduleTier>();
 				AddExcessTiers(ref schedule);
@@ -226,7 +228,8 @@ namespace DeepBlue.Controllers.Fund {
 				Models.Entity.Fund fund;
 				if (model.FundId > 0) {
 					fund = FundRepository.FindFund(model.FundId);
-				} else {
+				}
+				else {
 					fund = new Models.Entity.Fund();
 				}
 				fund.Carry = model.Carry ?? 0;
@@ -245,7 +248,8 @@ namespace DeepBlue.Controllers.Fund {
 				FundAccount fundAccount;
 				if (model.AccountId > 0) {
 					fundAccount = fund.FundAccounts.SingleOrDefault(account => account.FundAccountID == model.AccountId);
-				} else {
+				}
+				else {
 					fundAccount = new FundAccount();
 					fund.FundAccounts.Add(fundAccount);
 				}
@@ -265,7 +269,7 @@ namespace DeepBlue.Controllers.Fund {
 				fundAccount.LastUpdatedDate = DateTime.Now;
 				fundAccount.Phone = model.Telephone ?? string.Empty;
 				fundAccount.Reference = model.Reference ?? string.Empty;
-				fundAccount.Routing = 0;
+				fundAccount.Routing = model.ABANumber;
 				fundAccount.SWIFT = model.Swift ?? string.Empty;
 
 				/* Add new fund rate schedule */
@@ -305,7 +309,8 @@ namespace DeepBlue.Controllers.Fund {
 										if (rateTier.MultiplierTypeID == (int)DeepBlue.Models.Fund.Enums.MutiplierType.CapitalCommitted) {
 											if (string.IsNullOrEmpty(collection[index.ToString() + "_$" + tierIndex.ToString() + "$Rate"]) == false)
 												rateTier.Multiplier = Convert.ToDecimal(collection[index.ToString() + "_$" + tierIndex.ToString() + "$Rate"]);
-										} else {
+										}
+										else {
 											if (string.IsNullOrEmpty(collection[index.ToString() + "_$" + tierIndex.ToString() + "$FlatFee"]) == false)
 												rateTier.Multiplier = Convert.ToDecimal(collection[index.ToString() + "_$" + tierIndex.ToString() + "$FlatFee"]);
 										}
@@ -322,7 +327,8 @@ namespace DeepBlue.Controllers.Fund {
 									foreach (var err in errorInfo.ToList()) {
 										resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 									}
-								} else {
+								}
+								else {
 									FundRateSchedule fundRateSchedule = null;
 									if (Convert.ToInt32(collection[index.ToString() + "_FundRateScheduleId"]) > 0) {
 										fundRateSchedule = fund.FundRateSchedules.SingleOrDefault(schedule => schedule.FundRateScheduleID == Convert.ToInt32(collection[index.ToString() + "_FundRateScheduleId"]));
@@ -350,12 +356,14 @@ namespace DeepBlue.Controllers.Fund {
 						foreach (var err in errorInfo.ToList()) {
 							resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 						}
-					} else {
+					}
+					else {
 						// Update custom field Values
 						resultModel.Result += SaveCustomValues(collection, fund.FundID);
 					}
 				}
-			} else {
+			}
+			else {
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {

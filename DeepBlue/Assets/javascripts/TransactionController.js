@@ -11,6 +11,11 @@
 		var $investorInfo=$("#investorInfo");
 		$investorInfo.show();
 		var dt=new Date();
+		$("#FundId").val(0);
+		$("#FundClosingId").val(0);
+		$("#InvestorTypeId").val(0);
+		$("#TotalCommitment").val("");
+		$("#CommittedDate").val("");
 		$.getJSON("/Investor/InvestorDetail/"+id+"?t="+dt.getTime(),function (data) {
 			$("#Loading").html("");
 			$("#InvestorName",$investorInfo).html(data.InvestorName);
@@ -37,7 +42,7 @@
 	,onCreateFundSuccess: function () {
 		$("#UpdateLoading").html("");
 		$("input[type!='hidden'][type!='checkbox']","#investorInfo").val("");
-		$("select","#investorInfo").val("");
+		$("select","#investorInfo").val("0");
 		transactionController.loadFundDetails();
 	}
 	,cloneInvestorInfo: function () {

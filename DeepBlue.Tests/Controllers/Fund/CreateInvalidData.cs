@@ -131,6 +131,7 @@ namespace DeepBlue.Tests.Controllers.Fund {
             FormCollection formCollection = new FormCollection();
             formCollection.Add("FundName", string.Empty);
             formCollection.Add("TaxID", string.Empty);
+			formCollection.Add("FundStartDate", string.Empty);
             formCollection.Add("InceptionDate", string.Empty);
 			formCollection.Add("BankName",string.Empty);
 			formCollection.Add("Account",string.Empty);

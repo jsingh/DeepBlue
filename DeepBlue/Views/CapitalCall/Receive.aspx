@@ -114,7 +114,7 @@
 								</td>
 								<td style="width: 10%">
 									<div>
-									 <%: Html.CheckBox("1_" + "Received", new { @id = "Received" , @value="true", @onclick="javascript:capitalCallReceive.selectReceive(this);" })%></div>
+										<%: Html.CheckBox("1_" + "Received", new { @id = "Received" , @value="true", @onclick="javascript:capitalCallReceive.selectReceive(this);" })%></div>
 								</td>
 								<td style="width: 10%">
 									<div>
@@ -147,9 +147,8 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%= Html.jQueryDatePicker("CapitalCallDate")%><%= Html.jQueryDatePicker("CapitalCallDueDate")%>
 	<%= Html.jQueryFlexiGrid("InvestorDetail", new FlexigridOptions { Height = 480 })%>
-
+	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { capitalCallReceive.selectFund(ui.item.id);}" })%>
 	<script type="text/javascript">
 		capitalCallReceive.init();
 	</script>
-
 </asp:Content>

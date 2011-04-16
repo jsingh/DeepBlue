@@ -87,7 +87,7 @@
 					<%:Html.Anchor(Html.Image("Delete.png").ToHtmlString() + "&nbsp;Delete Rate Schedule", "#" , new { @onclick="javascript:fund.deleteInvestorType(this);" })%>
 				</div>
 			</div>
-			<div class="rate-grid" style="width:100%">
+			<div class="rate-grid" style="width: 100%">
 				<%: Html.Hidden(index.ToString() + "_IsScheduleChange", "", new { @id = "IsScheduleChange" })%>
 				<table cellpadding="0" cellspacing="0" border="0" class="tblrateschedule" id="RateScheduleList">
 					<thead>
@@ -127,7 +127,8 @@
 								<div>
 									<%if (rowIndex == 1) {%>
 									<%: Html.TextBox(index.ToString() + "_$" + rowIndex.ToString() +"$StartDate", (tier.StartDate.Year > 1900 ? tier.StartDate.ToString("MM/dd/yyyy") : string.Empty),new { @id="StartDate", @inputname="StartDate",  @onchange = "javascript:fund.dateChecking(this);fund.checkChange(this);" })%>
-									<%} else {%>
+									<%}
+		   else {%>
 									<%: Html.Hidden(index.ToString() + "_$" + rowIndex.ToString() + "$StartDate", (tier.StartDate.Year > 1900 ? tier.StartDate.ToString("MM/dd/yyyy") : string.Empty), new { @id = "StartDate" })%>
 									<%: Html.Span( (tier.EndDate.Year > 1900 ? tier.EndDate.ToString("MM/dd/yyyy") : string.Empty),new { @id="SpnStartDate" })%>
 									<%}%>
@@ -181,24 +182,21 @@
 	<%: Html.LabelFor(model => model.BankName) %>
 </div>
 <div class="editor-field">
-	<%: Html.TextBoxFor(model => model.BankName)
-	%>
+	<%: Html.TextBoxFor(model => model.BankName)%>
 	<%: Html.ValidationMessageFor(model => model.BankName) %>
 </div>
 <div class="editor-label" style="clear: right">
 	<%: Html.LabelFor(model => model.Account) %>
 </div>
 <div class="editor-field">
-	<%: Html.TextBoxFor(model
-=> model.Account) %>
+	<%: Html.TextBoxFor(model => model.Account) %>
 	<%: Html.ValidationMessageFor(model => model.Account) %>
 </div>
 <div class="editor-label">
 	<%: Html.LabelFor(model => model.ABANumber) %>
 </div>
 <div class="editor-field">
-	<%: Html.TextBoxFor(model
-=> model.ABANumber) %>
+	<%: Html.TextBox("ABANumber",((Model.ABANumber ?? 0) > 0 ? (Model.ABANumber ?? 0).ToString() :  string.Empty), new { @onkeypress = "return jHelper.isNumeric(event);" })%>
 </div>
 <div class="editor-label" style="clear: right">
 	<%: Html.LabelFor(model => model.Swift) %>
@@ -235,15 +233,13 @@
 	<%: Html.LabelFor(model => model.AccountOf) %>
 </div>
 <div class="editor-field">
-	<%: Html.TextBoxFor(model
-=> model.AccountOf) %>
+	<%: Html.TextBoxFor(model => model.AccountOf) %>
 </div>
 <div class="editor-label" style="clear: right">
 	<%: Html.LabelFor(model => model.Attention) %>
 </div>
 <div class="editor-field">
-	<%: Html.TextBoxFor(model => model.Attention)
-	%>
+	<%: Html.TextBoxFor(model => model.Attention)%>
 </div>
 <div class="editor-label">
 	<%: Html.LabelFor(model => model.Telephone) %>
@@ -267,13 +263,9 @@
 		<%: Html.ImageButton("Save.png", new { style = "width: 73px; height: 23px;", onclick = "return fund.onSubmit('AddNewFund');" })%>
 	</div>
 	<div style="float: left; padding: 0 0 10px 5px;">
-		<%: Html.Image("Close.png",
-new { style = "width: 73px; height: 23px;cursor:pointer;", onclick = "javascript:parent.fund.closeDialog(false);" })%>
+		<%: Html.Image("Close.png", new { style = "width: 73px; height: 23px;cursor:pointer;", onclick = "javascript:parent.fund.closeDialog(false);" })%>
 	</div>
 </div>
 <%: Html.HiddenFor(model => model.FundId)%>
-<%: Html.HiddenFor(model
-=> model.AccountId)%>
-
+<%: Html.HiddenFor(model => model.AccountId)%>
 <script type="text/javascript">	$(document).ready(function () { fund.init(); }); </script>
-
