@@ -10,7 +10,7 @@
 				setTimeout(function () {
 					$("#CaptialCallDetail").hide();
 				},200);
-			}  
+			}
 			capitalCallReceive.pageInit=true;
 		});
 	}
@@ -47,9 +47,7 @@
 		$("#SpnLoading").show();
 		var dt=new Date();
 		var url="/CapitalCall/FindCapitalCall?id="+id+"&t="+dt.getTime();
-		var tbl=document.getElementById("InvestorDetail");
-		$("tr:not(:first)",tbl).remove();
-		$("tr:first",tbl).get(0).style.display="none";
+		$("#CaptialCallDetail").html("");
 		$("#ItemCount").val(0);
 		$(":input[type='text']").val("");
 		$(":input[type='hidden'][name!='FundId']").val("0");
@@ -57,36 +55,28 @@
 		if(parseInt(id)>0) {
 			$.getJSON(url,function (data) {
 				$("#SpnLoading").hide();
+				$("#CCLItemTemplate").tmpl(data).appendTo("#CaptialCallDetail");
 				$("#CapitalAmountCalled").val(data.CapitalAmountCalled);
 				$("#CapitalCallDate").val(capitalCallReceive.formatDate(data.CapitalCallDate));
 				$("#CapitalCallDueDate").val(capitalCallReceive.formatDate(data.CapitalCallDueDate));
+				$("#CapitalCallDate").datepicker({ changeMonth: true,changeYear: true });
+				$("#CapitalCallDueDate").datepicker({ changeMonth: true,changeYear: true });
 				$("#FundName").val(data.FundName);
 				var i;
-				$("tr:first",tbl).get(0).style.display="";
 				if(data.Items) {
 					$("#ItemCount").val(data.Items.length);
-					for(i=0;i<data.Items.length;i++) {
-						var tr=capitalCallReceive.addRow(tbl,i);
-						$("#CapitalCallLineItemId",tr).val(data.Items[i].CapitalCallLineItemId);
-						$("#InvestorName",tr).html(data.Items[i].InvestorName);
-						$("#CapitalAmountCalled",tr).val(data.Items[i].CapitalAmountCalled);
-						$("#ManagementFees",tr).val(data.Items[i].ManagementFees);
-						$("#InvestmentAmount",tr).val(data.Items[i].InvestmentAmount);
-						$("#ManagementFeeInterest",tr).val(data.Items[i].ManagementFeeInterest);
-						$("#InvestedAmountInterest",tr).val(data.Items[i].InvestedAmountInterest);
-						var received=$("#Received",tr);
-						$(":input[type='hidden'][name='"+received.attr("name")+"']").val("false");
-						received.attr("value","true").get(0).checked=data.Items[i].Received;
-						var receiveDate=$(":input[rdate='true']",tr);
-						if(data.Items[i].Received) {
-							receiveDate.get(0).disabled=false;
-						} else {
-							receiveDate.get(0).disabled=true;
+					var table=$("table","#CapitalCallItems").flexigrid({ height: 0 });
+					$("tr",table).each(function () {
+						var received=$("#Received[type='checkbox']",this).get(0);
+						var receiveDate=$("td:last input",this).get(0);
+						if(receiveDate) {
+							$(receiveDate).datepicker({ changeMonth: true,changeYear: true });
 						}
-						receiveDate.attr("id",i).attr("class","");
-						receiveDate.datepicker({ changeMonth: true,changeYear: true });
-						receiveDate.val(capitalCallReceive.formatDate(data.Items[i].ReceivedDate));
-					}
+						if(received) {
+							if($(received).attr("checkvalue")=="true") { received.checked=true; }
+							receiveDate.disabled=!received.checked;
+						}
+					});
 				}
 			});
 		} else {
@@ -100,30 +90,12 @@
 		else
 			return $.datepicker.formatDate('mm/dd/yy',dt);
 	}
-	,addRow: function (tbl,index) {
-		if(index==0) {
-			return $("tr:first",tbl).get(0);
-		} else {
-			var tr=document.createElement("tr");
-			var firstRow=$("tr:first",tbl);
-			$("td",firstRow).each(function () {
-				var td=document.createElement("td");
-				td.innerHTML=this.innerHTML.replace(/1_/g,(index+1)+"_");
-				$(":input",td).val("");
-				$(":input[type='hidden']",td).val("0");
-				$(tr).append(td);
-			});
-			if((index+1)%2==0)
-				tr.className="erow";
-			$(tbl).append(tr);
-			return tr;
-		}
-	}
 	,selectReceive: function (chk) {
 		var tr=$(chk).parents("tr:first");
 		var txt=$(":input[rdate='true']",tr).get(0);
-		if(txt)
+		if(txt) {
 			txt.disabled=!chk.checked;
+		}
 	}
 	,onCreateCapitalCallBegin: function () {
 		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");

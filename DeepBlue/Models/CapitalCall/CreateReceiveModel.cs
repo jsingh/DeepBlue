@@ -46,7 +46,9 @@ namespace DeepBlue.Models.CapitalCall {
 	}
  
 
-	public class CapitalCallLineItemDetail{
+	public class CapitalCallLineItemDetail {
+
+		public int Index { get; set; }
 
 		public string InvestorName { get; set; }
 
@@ -64,6 +66,6 @@ namespace DeepBlue.Models.CapitalCall {
 
 		public bool Received { get; set; }
 
-		public DateTime ReceivedDate { get; set; }
+		public string ReceivedDate { get; set; }
 	}
 }

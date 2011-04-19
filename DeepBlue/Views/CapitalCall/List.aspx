@@ -21,7 +21,7 @@
 		</div>
 		<%: Html.HiddenFor(model => model.FundId) %>
 	</div>
-	<div class="cc-main" id="CaptialCallDetail" style="display:none">
+	<div class="cc-main" id="CaptialCallDetail" style="display: none">
 		<div class="box">
 			<div class="box-top">
 				<div class="box-left">
@@ -53,7 +53,7 @@
 					<table cellpadding="0" cellspacing="0" border="0" id="FundDetail">
 						<thead>
 							<tr>
-								<th style="width: 20%;display:none;" align="center" sortname="CapitalCallID">
+								<th style="width: 20%; display: none;" align="center" sortname="CapitalCallID">
 									Capital Call Id
 								</th>
 								<th style="width: 20%" align="center" sortname="CapitalCallID">
@@ -88,9 +88,7 @@
 	ActionName="CapitalCallList", ControllerName="CapitalCall", Autoload=false, SortName="CapitalCallID", SortOrder="desc",
 	HttpMethod = "Get", Paging = true, Height = 480, OnRowClick = "capitalCallDetail.selectCapitalCall"
 })%>
-
 	<script type="text/javascript">
 		capitalCallDetail.init();
 	</script>
-
 </asp:Content>

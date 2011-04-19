@@ -7,6 +7,8 @@ using DeepBlue.Controllers.Fund;
 using DeepBlue.Models.CapitalCall;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
+using DeepBlue.Controllers.Investor;
+using System.Text;
 
 namespace DeepBlue.Controllers.CapitalCall {
 	public class CapitalCallController : Controller {
@@ -15,13 +17,16 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public ICapitalCallRepository CapitalCallRepository { get; set; }
 
+		public IInvestorRepository InvestorRepository { get; set; }
+
 		public CapitalCallController()
-			: this(new FundRepository(), new CapitalCallRepository()) {
+			: this(new FundRepository(), new CapitalCallRepository(), new InvestorRepository()) {
 		}
 
-		public CapitalCallController(IFundRepository fundRepository, ICapitalCallRepository adminRepository) {
+		public CapitalCallController(IFundRepository fundRepository, ICapitalCallRepository adminRepository, IInvestorRepository investorRepository) {
 			FundRepository = fundRepository;
 			CapitalCallRepository = adminRepository;
+			InvestorRepository = investorRepository;
 		}
 
 		#region New Capital Call
@@ -91,17 +96,27 @@ namespace DeepBlue.Controllers.CapitalCall {
 						item.ManagementFeeInterest = (investorFund.TotalCommitment / nonManagingMemberTotalCommitment) * capitalCall.ManagementFeeInterest;
 						item.ManagementFees = (investorFund.TotalCommitment / nonManagingMemberTotalCommitment) * capitalCall.ManagementFees;
 						item.NewInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.NewInvestmentAmount;
+
+						// Update unfundedamount
+						investorFund.UnfundedAmount = investorFund.UnfundedAmount - item.CapitalAmountCalled;
+
 						capitalCall.CapitalCallLineItems.Add(item);
 					}
 					IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalCall(capitalCall);
 					if (errorInfo != null) {
-						foreach (var err in errorInfo.ToList()) {
-							resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+						resultModel.Result += GetErrorMessage(errorInfo);
+					}
+					else {
+						foreach (var investorFund in investorFunds) {
+							errorInfo = InvestorRepository.SaveInvestorFund(investorFund);
+							if (errorInfo != null) {
+								resultModel.Result += GetErrorMessage(errorInfo);
+							}
 						}
 					}
 				}
 			}
-			if (ModelState.IsValid == false) {
+			if(ModelState.IsValid == false){
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
@@ -113,6 +128,14 @@ namespace DeepBlue.Controllers.CapitalCall {
 			return View("Result", resultModel);
 		}
 		#endregion
+
+		private string GetErrorMessage(IEnumerable<ErrorInfo> errorInfo) {
+			StringBuilder errors = new StringBuilder();
+			foreach (var err in errorInfo.ToList()) {
+				errors.Append(err.PropertyName + " : " + err.ErrorMessage + "\n");
+			}
+			return errors.ToString();
+		}
 
 		#region Manual Capital Call
 		//
@@ -128,6 +151,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 		public ActionResult CreateManualCapitalCall(FormCollection collection) {
 			CreateManualModel model = new CreateManualModel();
 			ResultModel resultModel = new ResultModel();
+			List<InvestorFund> investorFunds = new List<InvestorFund>();
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
 				Models.Entity.CapitalCall capitalCall = new Models.Entity.CapitalCall();
@@ -176,6 +200,11 @@ namespace DeepBlue.Controllers.CapitalCall {
 						item.InvestorID = Convert.ToInt32(collection[index.ToString() + "_" + "InvestorId"]);
 					}
 					if (item.InvestorID > 0) {
+						InvestorFund investorFund = InvestorRepository.FindInvestorFund(item.InvestorID, capitalCall.FundID);
+						if (investorFund != null) {
+							investorFund.UnfundedAmount = investorFund.UnfundedAmount - item.CapitalAmountCalled;
+							investorFunds.Add(investorFund);
+						}
 						capitalCall.CapitalCallLineItems.Add(item);
 					}
 				}
@@ -185,8 +214,14 @@ namespace DeepBlue.Controllers.CapitalCall {
 				else {
 					IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalCall(capitalCall);
 					if (errorInfo != null) {
-						foreach (var err in errorInfo.ToList()) {
-							resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+						resultModel.Result += GetErrorMessage(errorInfo);
+					}
+					else {
+						foreach (var investorFund in investorFunds) {
+							errorInfo = InvestorRepository.SaveInvestorFund(investorFund);
+							if (errorInfo != null) {
+								resultModel.Result += GetErrorMessage(errorInfo);
+							}
 						}
 					}
 				}
@@ -266,6 +301,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 									if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "ReceivedDate"]) == false) {
 										item.ReceivedDate = Convert.ToDateTime(collection[index.ToString() + "_" + "ReceivedDate"]);
 									}
+								}
+								else {
+									item.ReceivedDate = null;
 								}
 							}
 							if ((item.ReceivedDate ?? Convert.ToDateTime("01/01/1900")).Year <= 1900) {
@@ -587,8 +625,11 @@ namespace DeepBlue.Controllers.CapitalCall {
 				model.CapitalCallDueDate = capitalCall.CapitalCallDueDate;
 				model.CapitalCallId = capitalCall.CapitalCallID;
 				model.Items = new List<CapitalCallLineItemDetail>();
+				int index = 0;
 				foreach (var item in capitalCall.CapitalCallLineItems) {
+					index++;
 					model.Items.Add(new CapitalCallLineItemDetail {
+						Index = index,
 						InvestorName = item.Investor.InvestorName,
 						CapitalAmountCalled = item.CapitalAmountCalled,
 						InvestedAmountInterest = item.InvestedAmountInterest ?? 0,
@@ -597,7 +638,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 						ManagementFeeInterest = item.ManagementFeeInterest ?? 0,
 						ManagementFees = item.ManagementFees ?? 0,
 						Received = (item.ReceivedDate.HasValue ? true : false),
-						ReceivedDate = item.ReceivedDate ?? Convert.ToDateTime("01/01/1900")
+						ReceivedDate = ((item.ReceivedDate ?? Convert.ToDateTime("01/01/1900")).Year <= 1900 ? string.Empty : (item.ReceivedDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"))
 					});
 				}
 			}
