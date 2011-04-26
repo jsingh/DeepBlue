@@ -2,58 +2,58 @@
 	init: function () {
 		$(document).ready(function () {
 			var layoutSettings=
-    {
-    	Name: "Main",
-    	Dock: $.layoutEngine.DOCK.NONE,
-    	EleID: "content",
-    	Children: [
-    				{
-    					Name: "Main",
-    					Dock: $.layoutEngine.DOCK.FILL,
-    					EleID: "ReportMain",
-    					Children: [
-									{
-										Name: "Top",
-										Dock: $.layoutEngine.DOCK.TOP,
-										EleID: "ReportHeader",
-										Margin: 0,
-										Height: 40
-									}
-									,{
-										Name: "Fill",
-										Dock: $.layoutEngine.DOCK.FILL,
-										EleID: "ReportDetail",Margin:0,
-										MarginLeft: 200,
-										MarginRight: 200
-									}
-								]
-    				}
-			]
-    };
+		{
+			Name: "Main",
+			Dock: $.layoutEngine.DOCK.NONE,
+			EleID: "content",
+			Children: [
+		{
+			Name: "Main",
+			Dock: $.layoutEngine.DOCK.FILL,
+			EleID: "ReportMain",
+			Children: [
+		{
+			Name: "Top",
+			Dock: $.layoutEngine.DOCK.TOP,
+			EleID: "ReportHeader",
+			Margin: 0,
+			Height: 40
+		}
+		,{
+			Name: "Fill",
+			Dock: $.layoutEngine.DOCK.FILL,
+			EleID: "ReportDetail",Margin: 0,
+			MarginLeft: 200,
+			MarginRight: 200
+		}
+		]
+		}
+		]
+		};
 			$.layoutEngine(layoutSettings);
 		});
 	}
 	,reportReinit: function () {
 		var layoutSettings=
-    {
-    	Name: "Main",
-    	Dock: $.layoutEngine.DOCK.NONE,
-    	EleID: "ReportDetail",
-    	Margin: 0,
-    	Children: [
-                        {
-                        	Name: "Top",
-                        	Dock: $.layoutEngine.DOCK.TOP,
-                        	EleID: "RepTop",
-                        	Height: 100
-                        }
-                        ,{
-                        	Name: "Fill",
-                        	Dock: $.layoutEngine.DOCK.FILL,
-                        	EleID: "RepContent"
-                        }
-                    ]
-    };
+		{
+			Name: "Main",
+			Dock: $.layoutEngine.DOCK.NONE,
+			EleID: "ReportDetail",
+			Margin: 0,
+			Children: [
+		{
+			Name: "Top",
+			Dock: $.layoutEngine.DOCK.TOP,
+			EleID: "RepTop",
+			Height: 100
+		}
+		,{
+			Name: "Fill",
+			Dock: $.layoutEngine.DOCK.FILL,
+			EleID: "RepContent"
+		}
+		]
+		};
 		$.layoutEngine(layoutSettings);
 	}
 	,selectFund: function (id) {
@@ -122,7 +122,7 @@
 			report.reportReinit();
 		});
 	}
-	,print : function(){	
+	,print: function () {
 		$("#ReportDetail").printArea();
 	}
 }

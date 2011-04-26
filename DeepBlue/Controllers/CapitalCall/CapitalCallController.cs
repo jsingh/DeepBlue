@@ -34,6 +34,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 		// GET: /CapitalCall/New
 		public ActionResult New() {
 			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["SubmenuName"] = "Capital Call";
+			ViewData["PageName"] = "New Capital Call";
 			return View();
 		}
 
@@ -142,6 +144,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 		// GET: /CapitalCall/New
 		public ActionResult NewManualCapitalCall() {
 			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["SubmenuName"] = "Capital Call";
+			ViewData["PageName"] = "New Manual Capital Call";
 			return View();
 		}
 
@@ -245,6 +249,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 		[HttpGet]
 		public ActionResult Receive(int? id, int? fundId) {
 			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["SubmenuName"] = "Capital Call";
+			ViewData["PageName"] = "Receive Capital Call";
 			CreateReceiveModel model = new CreateReceiveModel();
 			model.CapitalCallId = id ?? 0;
 			model.FundId = fundId ?? 0;
@@ -425,6 +431,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 		#region Distribution
 		public ActionResult NewCapitalDistribution() {
 			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["SubmenuName"] = "Capital Call";
+			ViewData["PageName"] = "New Capital Distribution";
 			return View();
 		}
 
@@ -544,6 +552,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public ActionResult CapitalDistributionList(int? id) {
 			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["SubmenuName"] = "Capital Call";
+			ViewData["PageName"] = "Capital Distribution List";
 			CapitalDistributionListModel model = new CapitalDistributionListModel();
 			model.FundId = id ?? 0;
 			if (model.FundId > 0) {
@@ -649,6 +659,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 		//GET : /CapitalCall/List
 		public ActionResult List(int? id) {
 			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["SubmenuName"] = "Capital Call";
+			ViewData["PageName"] = "Capital Call List";
 			ListModel model = new ListModel();
 			model.FundId = id ?? 0;
 			if (model.FundId > 0) {

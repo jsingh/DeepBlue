@@ -54,6 +54,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public ActionResult New() {
 			ViewData["MenuName"] = "Investor";
+			ViewData["PageName"] = "New Investor Setup";
 			CreateModel model = new CreateModel();
 			model.SelectList.States = SelectListFactory.GetStateSelectList(AdminRepository.GetAllStates());
 			model.SelectList.Countries = SelectListFactory.GetCountrySelectList(AdminRepository.GetAllCountries());
@@ -79,6 +80,14 @@ namespace DeepBlue.Controllers.Investor {
 			CreateModel model = new CreateModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
+			string ErrorMessage = InvestorNameAvailable(model.InvestorName, model.InvestorId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("InvestorName", ErrorMessage);
+			}
+			ErrorMessage = SocialSecurityTaxIdAvailable(model.SocialSecurityTaxId, model.InvestorId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("SocialSecurityTaxId", ErrorMessage);
+			}
 			if (ModelState.IsValid) {
 				DeepBlue.Models.Entity.Investor investor = new DeepBlue.Models.Entity.Investor();
 				/*Investor*/
@@ -231,6 +240,15 @@ namespace DeepBlue.Controllers.Investor {
 					resultModel.Result += SaveCustomValues(collection, investor.InvestorID);
 				}
 			}
+			if (ModelState.IsValid == false) {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
 			return View("Result", resultModel);
 		}
 
@@ -282,6 +300,7 @@ namespace DeepBlue.Controllers.Investor {
 		public ActionResult Edit(int? id) {
 			EditModel model = new EditModel();
 			ViewData["MenuName"] = "Investor";
+			ViewData["PageName"] = "Update Investor Information";
 			model.id = id ?? 0;
 			model.SelectList.States = SelectListFactory.GetStateSelectList(AdminRepository.GetAllStates());
 			model.SelectList.DomesticForeigns = SelectListFactory.GetDomesticForeignList();
@@ -437,7 +456,7 @@ namespace DeepBlue.Controllers.Investor {
 				if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "AccountId"]) == false) {
 					investorAccount = investor.InvestorAccounts.SingleOrDefault(account => account.InvestorAccountID == Convert.ToInt32(collection[index.ToString() + "_" + "AccountId"]));
 					if (investorAccount == null) {
-						investorAccount = new InvestorAccount(); 
+						investorAccount = new InvestorAccount();
 						investor.InvestorAccounts.Add(investorAccount);
 					}
 					if (investorAccount.CreatedBy == 0) {

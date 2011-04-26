@@ -5,6 +5,7 @@ using System.Web;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace DeepBlue.Helpers {
 	public class ValidationHelper {
@@ -33,6 +34,7 @@ namespace DeepBlue.Helpers {
 			return errors.AsEnumerable();
 		}
 	}
+
 	public class ErrorInfo {
 		public ErrorInfo(string propertyName, string errorMessage) {
 			this.PropertyName = propertyName;
@@ -48,4 +50,5 @@ namespace DeepBlue.Helpers {
 		public object Object { get; set; }
 		public string PropertyName { get; set; }
 	}
+	 
 }

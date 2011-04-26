@@ -17,6 +17,5 @@ namespace DeepBlue.Models.Fund {
 
 		public DateTime? ScheduleTerminationDate { get; set; }
 	}
-	
-
+ 
 }

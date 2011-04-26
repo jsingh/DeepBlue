@@ -1,87 +1,74 @@
-﻿<!--
-var timeout         = 500;
-var closetimer		= 0;
-var ddmenuitem      = 0;
-var subclosetimer	= 0;
-var subddmenuitem   = 0;
-// open hidden layer
-function mopen(that,id)
-{	
-	// cancel close timer
-	mcancelclosetime();
-
-	// close old layer
-	if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
-
-	// get new layer and show it
-	ddmenuitem = document.getElementById(id);
-	ddmenuitem.style.visibility = 'visible';
-	var pos = $(that).position();
-	$(ddmenuitem).css({ "left" : pos.left - 7 , "top" : pos.top + 21 });
-	$(ddmenuitem).css("z-index","10001");
-}
-// open hidden layer
-function msubopen(that,id)
-{
-	// cancel close timer
-	msubcancelclosetime();
-
-	// close old layer
-	if(subddmenuitem) subddmenuitem.style.visibility = 'hidden';
-
-	// get new layer and show it
-	subddmenuitem = document.getElementById(id);
-	subddmenuitem.style.visibility = 'visible';
-	var pos = $(that).offset();
-	$(subddmenuitem).css({ "left" : pos.left + ($(ddmenuitem).width()-1) , "top" : pos.top });
-	$(subddmenuitem).css("z-index","10001");
-}
-
-// close showed layer
-function mclose()
-{
-	if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
-	if(subddmenuitem) subddmenuitem.style.visibility = 'hidden';
-}
-
-// go close timer
-function mclosetime()
-{
-	closetimer = window.setTimeout(mclose, timeout);
-}
-
-// cancel close timer
-function mcancelclosetime()
-{
-	if(closetimer)
-	{
-		window.clearTimeout(closetimer);
-		closetimer = null;
+﻿var menu={
+	timeout: 500
+	,closetimer: 0
+	,ddmenuitem: 0
+	,subclosetimer: 0
+	,subddmenuitem: 0
+	,stopMenuClose: false
+	,mopen: function (that,id) {
+		menu.mcancelclosetime();
+		if(menu.ddmenuitem) { menu.ddmenuitem.style.display='none'; }
+		$(".mdiv").hide();
+		menu.ddmenuitem=document.getElementById(id);
+		if(menu.ddmenuitem) {
+			menu.ddmenuitem.style.display='block';
+		}
+		DeepBlue.layout();
+	}
+	,msubopen: function (that,id) {
+		// cancel close timer
+		menu.msubcancelclosetime();
+		menu.mcancelclosetime();
+		var smenu=document.getElementById(id);
+		var ullength=$("ul",smenu).length;
+		if(ullength>0) {
+			$(".innersub-select").hide().removeClass("innersub-select");
+			if(id!='') {
+				if(menu.subddmenuitem) menu.subddmenuitem.style.display='none';
+				$(that).parents(".mdiv:first").addClass("subext");
+				menu.subddmenuitem=document.getElementById(id);
+				menu.subddmenuitem.style.display='block';
+				DeepBlue.layout();
+			} else {
+				$(".subul").hide();$(".subext").each(function () { $(this).removeClass("subext"); });
+			}
+		}
+	}
+	,mclose: function () {
+		return;
+		if(menu.ddmenuitem) {
+			menu.ddmenuitem.style.display='none';
+			$("#arrow").hide();
+			$(".mdiv").hide();$(".subul").hide();
+			$(".current").css("display","block");
+			DeepBlue.layout();
+		}
+	}
+	,mclickclose: function () {
+		if(menu.ddmenuitem) { menu.ddmenuitem.style.display='none';$("#arrow").hide(); }
+	}
+	,mclosetime: function () {
+		menu.closetimer=window.setTimeout(menu.mclose,menu.timeout);
+	}
+	,mcancelclosetime: function () {
+		if(menu.closetimer) {
+			window.clearTimeout(menu.closetimer);
+			menu.closetimer=null;
+		}
+	}
+	,msubclose: function () {
+		$(".subext").each(function () { $(this).removeClass("subext"); });DeepBlue.layout();
+	}
+	,msubclosetime: function () {
+		//menu.subclosetimer=window.setTimeout(menu.msubclose,timeout);
+	}
+	,msubcancelclosetime: function () {
+		if(menu.subclosetimer) {
+			window.clearTimeout(menu.subclosetimer);
+			menu.subclosetimer=null;
+		}
 	}
 }
 
-// subclose showed layer
-function msubclose()
-{
-	if(subddmenuitem) subddmenuitem.style.visibility = 'hidden';
-}
-
-// go sub close timer
-function msubclosetime()
-{
-	subclosetimer = window.setTimeout(mclose, timeout);
-}
-
-// sub cancel close timer
-function msubcancelclosetime()
-{
-	if(subclosetimer)
-	{
-		window.clearTimeout(subclosetimer);
-		subclosetimer = null;
-	}
-}
-
-// close layer when click-out
-document.onclick = mclose; 
-// -->
+//document.onclick=mclickclose;
+ 

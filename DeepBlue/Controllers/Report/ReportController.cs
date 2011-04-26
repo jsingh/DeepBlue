@@ -27,6 +27,7 @@ namespace DeepBlue.Controllers.Report {
 		#region Cash Distribution Summary
 		public ActionResult CashDistributionSummary() {
 			ViewData["MenuName"] = "Reports";
+			ViewData["PageName"] = "CashDistributionSummary";
 			CashDistributionSummaryModel model = new CashDistributionSummaryModel();
 			model.CapitalDistributions = SelectListFactory.GetEmptySelectList();
 			return View(model);
@@ -57,6 +58,7 @@ namespace DeepBlue.Controllers.Report {
 		#region Capital Call Summary
 		public ActionResult CapitalCallSummary() {
 			ViewData["MenuName"] = "Reports";
+			ViewData["PageName"] = "CapitalCallSummary";
 			CapitalCallSummaryModel model = new CapitalCallSummaryModel();
 			model.CapitalCalls = SelectListFactory.GetEmptySelectList();
 			return View(model);

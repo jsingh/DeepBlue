@@ -6,13 +6,13 @@ using System.Web;
 namespace DeepBlue.Helpers {
 	public class FlexigridOptions {
 		public FlexigridOptions() {
-			Height = 615;
+			Height = 0;
 			Width = 0;
 			ActionName = string.Empty;
 			ControllerName = string.Empty;
 			Paging = false;
-			RowOptions = new int[] { 20, 50, 100 };
-			RowsLength = 20;
+			RowOptions = new int[] { 15, 20, 50, 100 };
+			RowsLength = 15;
 			OnSuccess = string.Empty;
 			OnSubmit = string.Empty;
 			OnRowClick = string.Empty;

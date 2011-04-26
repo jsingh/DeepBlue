@@ -1,0 +1,103 @@
+﻿.cell {
+	width: 180px;
+	float: left;
+	height: 25px;
+	line-height: 25px;
+}
+.auto {
+	width: auto;
+}
+.fieldbox {
+	clear: both;
+	margin: 15px 0px 15px 5px;
+	float: left;
+	width: 100%;
+	clear: both;
+	display: none;
+}
+.rdo input {
+	width: auto;
+}
+.checkbox, .rdo input {
+	border: 0px;
+}
+.editor-label {
+	text-align: right;
+	line-height: 20px;
+	text-align: right;
+}
+.editor-field { width:180px }
+h5, .editor-label, .editor-field {
+	color: #a6a6a6;
+}
+.editor-label input, .editor-field input {
+	border: solid 1px #d9d9d9;
+	padding: 3px;
+	color: #7f7f97;
+}
+h5 {
+	font-size: 15px;
+	font-weight: normal;
+}
+.grid {
+	width: 100%;
+}
+.grid th, .grid td {
+	padding: 5px;
+	color: #7f7f7f;
+}
+.grid th {
+	font-weight: normal;
+}
+.grid tbody tr {
+	background-color: #f2f2f2;
+}
+.grid .emptyrow td{
+	background-color:White;    padding: 0;
+}
+.expandbtn {
+	cursor: pointer;
+}
+#DealDeail {
+	float: left;
+}
+.grid input, .grid select {
+	width: 70%;float:right;
+}
+.grid .blank { background-color: #fff; }
+#tblDealExpense tr td { text-align:center; }
+.line {
+	height: 1px;
+	margin: 5px 0px 5px 0px;
+	background-color: #E3E3E3;
+	clear: both;
+	width: 100%;
+}
+h4 {
+	font-size: 16px;
+	font-weight: normal;
+	text-align: left;
+}
+h4 a {
+	text-decoration: underline;
+	color: #558EE3;
+	white-space: nowrap;
+}
+.subext3,.subext {
+	background-image: url("../images/submnubg3.png");
+	height: 184px; clear:both;
+}
+.fundname {
+	width: 200px;
+	overflow: hidden;
+	float: left;
+}
+.searchdeal {
+	font-size: 12pt;
+}
+.hide {
+	display: none;
+}
+.show {
+	display: block;
+}

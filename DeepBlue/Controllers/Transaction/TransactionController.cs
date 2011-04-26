@@ -41,6 +41,7 @@ namespace DeepBlue.Controllers.Transaction {
 
 		public ActionResult New() {
 			ViewData["MenuName"] = "Investor";
+			ViewData["PageName"] = "Investor Commitment";
 			CreateModel model = new CreateModel();
 			model.FundNames = SelectListFactory.GetFundSelectList(TransactionRepository.GetAllFundNames());
 			model.FundClosings = SelectListFactory.GetDefaultSelectList();

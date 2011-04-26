@@ -1,7 +1,7 @@
 ﻿/* CSS Document */
 .flexigrid {
-	font-family: Arial;
-	font-size: 12px;
+	font-family: Calibri;
+	font-size: 13px;
 	position: relative;
 	border: 0px solid #eee;
 	overflow: hidden;
@@ -76,8 +76,8 @@
 	background: none;
 }
 .flexigrid div.iDiv input, .flexigrid div.iDiv select, .flexigrid div.iDiv textarea {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 11px;
+	font-family: Calibri;
+font-size: 13px;
 }
 .flexigrid div.iDiv input.tb {
 	border: 0px;

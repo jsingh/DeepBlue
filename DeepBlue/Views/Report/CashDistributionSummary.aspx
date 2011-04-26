@@ -5,6 +5,7 @@
 	Cash Distribution Summary
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
+	<%=Html.JavascriptInclueTag("jquery.layoutengine.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("DSummaryReport.js")%>
 	<%=Html.JavascriptInclueTag("jquery.PrintArea.js")%>

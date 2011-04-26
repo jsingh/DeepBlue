@@ -11,10 +11,6 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="edit-investor">
 		<div id="editinfo" class="transaction-info">
-			<div class="page-title">
-				<h2>
-					Investor Commitment</h2>
-			</div>
 			<div class="search">
 			</div>
 			<div class="editor-row">

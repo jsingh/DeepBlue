@@ -15,14 +15,6 @@ namespace DeepBlue.Controllers.Document {
 			return investorFundDocument.Save();
 		}
 
-		public List<DocumentType> GetAllDocumentTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from document in context.DocumentTypes
-						orderby document.DocumentTypeName
-						select document).ToList();
-			}
-		}
-
 		public List<DocumentDetail> FindDocuments(int pageIndex, int pageSize, string sortName, string sortOrder, DateTime fromDate, DateTime toDate, int investorId, int fundId, int documentTypeId, DocumentStatus documentStatus, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<DocumentDetail> entityTypeQuery = (from document in context.InvestorFundDocuments
@@ -36,7 +28,7 @@ namespace DeepBlue.Controllers.Document {
 																FileTypeName = document.File.FileType.FileTypeName,
 																InvestorName = document.Investor.InvestorName,
 																FundName = document.Fund.FundName,
-																DocumentType = document.DocumentType.DocumentTypeName
+																DocumentType = document.DocumentType.DocumentTypeName,
 															});
 				entityTypeQuery = entityTypeQuery.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<DocumentDetail> paginatedList = new PaginatedList<DocumentDetail>(entityTypeQuery, pageIndex, pageSize);

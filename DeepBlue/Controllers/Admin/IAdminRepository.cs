@@ -87,5 +87,31 @@ namespace DeepBlue.Controllers.Admin {
 		bool DeleteCommunicationGrouping(int id);
 		IEnumerable<ErrorInfo> SaveCommunicationGrouping(CommunicationGrouping communicationGrouping);
 		#endregion
+		
+		#region PurchaseType
+		List<PurchaseType> GetAllPurchaseTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<PurchaseType> GetAllPurchaseTypes();
+		PurchaseType FindPurchaseType(int id);
+		bool PurchaseTypeNameAvailable(string purchaseTypeName, int purchaseTypeID);
+		bool DeletePurchaseType(int id);
+		IEnumerable<ErrorInfo> SavePurchaseType(PurchaseType purchaseType);
+		#endregion
+		
+		#region DealClosingCostType
+		List<DealClosingCostType> GetAllDealClosingCostTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<DealClosingCostType> GetAllDealClosingCostTypes();
+		DealClosingCostType FindDealClosingCostType(int id);
+		bool DealClosingCostTypeNameAvailable(string dealClosingCostTypeName, int dealClosingCostTypeID);
+		bool DeleteDealClosingCostType(int id);
+		IEnumerable<ErrorInfo> SaveDealClosingCostType(DealClosingCostType dealClosingCostType);
+		#endregion
+
+		#region DocumentType
+		List<DocumentType> GetAllDocumentTypes();
+		#endregion
+
+		#region Communication
+		string GetContactCommunicationValue(int contactId, DeepBlue.Models.Admin.Enums.CommunicationType communicationType);
+		#endregion
 	}
 }

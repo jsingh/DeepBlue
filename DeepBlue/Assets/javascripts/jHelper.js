@@ -52,6 +52,12 @@
 		}
 		return 1;
 	}
+	,formatDate: function (dateobj) {
+		return $.datepicker.formatDate('mm/dd/yy',dateobj);
+	}
+	,parseJSONDate: function (date) {
+		return eval('new'+date.toString().replace(/\//g,' '));
+	}
 	,dollarAmount: function (Num) { // idea by David Turley
 		dec=Num.indexOf(".");
 		end=((dec> -1)?""+Num.substring(dec,Num.length):".00");

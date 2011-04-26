@@ -11,6 +11,7 @@ namespace DeepBlue {
 	// visit http://go.microsoft.com/?LinkId=9394801
 
 	public class MvcApplication : System.Web.HttpApplication {
+
 		public static void RegisterRoutes(RouteCollection routes) {
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
@@ -33,6 +34,7 @@ namespace DeepBlue {
 					"{controller}/{action}/{id}", // URL with parameters
 					new { controller = "Admin", action = "List", id = @"\d+" } // Parameter defaults
 				);
+			 
 		}
 		
 		protected void Application_Start() {

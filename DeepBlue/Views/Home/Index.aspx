@@ -2,10 +2,7 @@
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="TitleCnt" ContentPlaceHolderID="TitleContent" runat="server">
-	Index
+	DeepBlue
 </asp:Content>
 <asp:Content ID="MainCnt" ContentPlaceHolderID="MainContent" runat="server">
-	<div style="height: 100px">
-		&nbsp;
-	</div>
 </asp:Content>

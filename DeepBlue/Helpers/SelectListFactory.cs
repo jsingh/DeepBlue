@@ -243,6 +243,36 @@ namespace DeepBlue.Helpers {
 			return communicationGroupingList;
 		}
 
+		public static List<SelectListItem> GetPurchaseTypeSelectList(List<PurchaseType> purchaseTypes) {
+			List<SelectListItem> purchaseTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			purchaseTypeList.Add(item);
+			foreach (var purchaseType in purchaseTypes) {
+				item = new SelectListItem();
+				item.Text = purchaseType.Name.ToString();
+				item.Value = purchaseType.PurchaseTypeID.ToString();
+				purchaseTypeList.Add(item);
+			}
+			return purchaseTypeList;
+		}
+
+		public static List<SelectListItem> GetDealClosingCostTypeSelectList(List<DealClosingCostType> dealClosingCostTypes) {
+			List<SelectListItem> dealClosingCostTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			dealClosingCostTypeList.Add(item);
+			foreach (var dealClosingCostType in dealClosingCostTypes) {
+				item = new SelectListItem();
+				item.Text = dealClosingCostType.Name.ToString();
+				item.Value = dealClosingCostType.DealClosingCostTypeID.ToString();
+				dealClosingCostTypeList.Add(item);
+			}
+			return dealClosingCostTypeList;
+		}
+
 		public static List<SelectListItem> GetEmptySelectList() {
 			List<SelectListItem> lists = new List<SelectListItem>(); 
 			SelectListItem item = new SelectListItem();

@@ -28,6 +28,23 @@ namespace DeepBlue.Controllers.Fund {
 			}
 		}
 
+		public Helpers.FundLists GetAllFunds(int pageIndex, int pageSize) {
+			Helpers.FundLists funds = new Helpers.FundLists();
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Helpers.FundList> fundListQuery = (from fund in context.Funds
+															  select new Helpers.FundList {  
+																		   FundId = fund.FundID,
+																		   FundName = fund.FundName
+																	   });
+				fundListQuery = fundListQuery.OrderBy("FundName", true);
+				PaginatedList<Helpers.FundList> paginatedList = new PaginatedList<Helpers.FundList>(fundListQuery, pageIndex, pageSize);
+				funds.TotalPages = paginatedList.TotalPages;
+				funds.PageNo = pageIndex;
+				funds.FundDetails = paginatedList.ToList();
+			}
+			return funds;
+		}
+
 		public Models.Entity.Fund FindFund(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.Funds

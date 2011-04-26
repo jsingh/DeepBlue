@@ -510,5 +510,134 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
+		#region IAdminRepository PurchaseType Members
+
+		public List<Models.Entity.PurchaseType> GetAllPurchaseTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.PurchaseType> query = (from purchaseType in context.PurchaseTypes
+																		 select purchaseType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<PurchaseType> paginatedList = new PaginatedList<PurchaseType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<PurchaseType> GetAllPurchaseTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from purchaseType in context.PurchaseTypes
+						orderby purchaseType.Name
+						select purchaseType).ToList();
+			}
+		}
+
+		public PurchaseType FindPurchaseType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.PurchaseTypes.SingleOrDefault(type => type.PurchaseTypeID == id);
+			}
+		}
+
+		public bool PurchaseTypeNameAvailable(string purchaseTypeName, int purchaseTypeID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.PurchaseTypes
+						 where type.Name == purchaseTypeName && type.PurchaseTypeID != purchaseTypeID
+						 select type.PurchaseTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeletePurchaseType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				PurchaseType purchaseType = context.PurchaseTypes.SingleOrDefault(type => type.PurchaseTypeID == id);
+				if (purchaseType != null) {
+					if (purchaseType.Deals.Count == 0) {
+						context.PurchaseTypes.DeleteObject(purchaseType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SavePurchaseType(PurchaseType purchaseType) {
+			return purchaseType.Save();
+		}
+
+		#endregion
+
+		#region IAdminRepository DealClosingCostType Members
+
+		public List<Models.Entity.DealClosingCostType> GetAllDealClosingCostTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.DealClosingCostType> query = (from dealClosingCostType in context.DealClosingCostTypes
+																select dealClosingCostType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<DealClosingCostType> paginatedList = new PaginatedList<DealClosingCostType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<DealClosingCostType> GetAllDealClosingCostTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from dealClosingCostType in context.DealClosingCostTypes
+						orderby dealClosingCostType.Name
+						select dealClosingCostType).ToList();
+			}
+		}
+
+		public DealClosingCostType FindDealClosingCostType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DealClosingCostTypes.SingleOrDefault(type => type.DealClosingCostTypeID == id);
+			}
+		}
+
+		public bool DealClosingCostTypeNameAvailable(string dealClosingCostTypeName, int dealClosingCostTypeID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.DealClosingCostTypes
+						 where type.Name == dealClosingCostTypeName && type.DealClosingCostTypeID != dealClosingCostTypeID
+						 select type.DealClosingCostTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteDealClosingCostType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				DealClosingCostType dealClosingCostType = context.DealClosingCostTypes.SingleOrDefault(type => type.DealClosingCostTypeID == id);
+				if (dealClosingCostType != null) {
+					if (dealClosingCostType.DealClosingCosts.Count == 0) {
+						context.DealClosingCostTypes.DeleteObject(dealClosingCostType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveDealClosingCostType(DealClosingCostType dealClosingCostType) {
+			return dealClosingCostType.Save();
+		}
+
+		#endregion
+
+		#region IAdminRepository DocumentTypes
+		public List<DocumentType> GetAllDocumentTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from document in context.DocumentTypes
+						orderby document.DocumentTypeName
+						select document).ToList();
+			}
+		}
+		#endregion
+
+		#region IAdminRepository Communication
+		public string GetContactCommunicationValue(int contactId, Models.Admin.Enums.CommunicationType communicationType) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from contactCommunication in context.ContactCommunications
+						where contactCommunication.ContactID == contactId && contactCommunication.Communication.CommunicationTypeID == (int)communicationType
+						select contactCommunication.Communication.CommunicationValue).FirstOrDefault();
+			}
+		}
+		#endregion
 	}
 }

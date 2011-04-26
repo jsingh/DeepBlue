@@ -31,10 +31,10 @@
 			]
     };
 			$.layoutEngine(layoutSettings);
-		});
+		}); 
 	}
 	,ccsummaryReportReinit: function () {
-		var layoutSettings=
+		 var layoutSettings=
     {
     	Name: "Main",
     	Dock: $.layoutEngine.DOCK.NONE,

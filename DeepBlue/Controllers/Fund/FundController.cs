@@ -32,6 +32,7 @@ namespace DeepBlue.Controllers.Fund {
 
 		public ActionResult Index() {
 			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["PageName"] = "Fund Setup";
 			return View();
 		}
 
@@ -44,6 +45,13 @@ namespace DeepBlue.Controllers.Fund {
 			ViewData["TotalRows"] = totalRows;
 			ViewData["PageNo"] = pageIndex;
 			return View(fundLists);
+		}
+
+		//
+		// GET: /Fund/List
+		[HttpGet]
+		public JsonResult GetAllFunds(int pageIndex, int pageSize) {
+			return Json(FundRepository.GetAllFunds(pageIndex, pageSize), JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -207,23 +215,31 @@ namespace DeepBlue.Controllers.Fund {
 		// GET: /Fund/Create
 		[HttpPost]
 		public ActionResult Create(FormCollection collection) {
-			return SaveFundModel(collection);
+			return SaveFund(collection);
 		}
 
 		//
 		// GET: /Fund/Create
 		[HttpPost]
 		public ActionResult Update(FormCollection collection) {
-			return SaveFundModel(collection);
+			return SaveFund(collection);
 		}
 
-		private ActionResult SaveFundModel(FormCollection collection) {
+		private ActionResult SaveFund(FormCollection collection) {
 			FundDetail model = new FundDetail();
 			this.TryUpdateModel(model);
 			IEnumerable<ErrorInfo> errorInfo;
 			ManagementFeeRateSchedule managementFeeRateSchedule = null;
 			ManagementFeeRateScheduleTier rateTier = null;
 			ResultModel resultModel = new ResultModel();
+			string ErrorMessage = FundNameAvailable(model.FundName, model.FundId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("FundName", ErrorMessage);
+			}
+			ErrorMessage = TaxIdAvailable(model.TaxId, model.FundId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("TaxId", ErrorMessage);
+			}
 			if (ModelState.IsValid) {
 				Models.Entity.Fund fund;
 				if (model.FundId > 0) {

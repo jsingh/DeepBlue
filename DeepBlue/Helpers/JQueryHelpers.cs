@@ -73,6 +73,16 @@ namespace DeepBlue.Helpers {
 			if (string.IsNullOrEmpty(options.OnRowBound) == false) {
 				scriptSrc.Append(",onRowBound:" + options.OnRowBound + "");
 			}
+			scriptSrc.Append(",rpOptions:[");
+			string rows = string.Empty;
+			foreach (var value in options.RowOptions) {
+				rows +=  value + ",";
+			}
+			if (rows.Length > 0) {
+				rows = rows.Substring(0, rows.Length - 1);
+			}
+			scriptSrc.Append(rows + "]");
+			scriptSrc.Append(",rp:" + options.RowsLength);
 			scriptSrc.Append(",method:\"" + options.HttpMethod.ToString() + "\"")
 			 .Append(",sortname:\"" + options.SortName.ToString() + "\"")
 			 .Append(",sortorder:\"" + options.SortOrder.ToString() + "\"")
@@ -81,5 +91,6 @@ namespace DeepBlue.Helpers {
 			 .Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
+		
 	}
 }

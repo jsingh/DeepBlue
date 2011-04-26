@@ -12,10 +12,6 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="cc-header">
-		<div class="page-title">
-			<h2>
-				New Manual Capital Call</h2>
-		</div>
 		<div class="editor-label" style="width: auto">
 			<%: Html.LabelFor(model => model.FundId) %>&nbsp;<%: Html.TextBox("Fund","", new { @style = "width:200px" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
 		</div>

@@ -10,26 +10,32 @@ using DeepBlue.Models.Entity;
 using System.Text;
 using System.Configuration;
 using System.Text.RegularExpressions;
+using DeepBlue.Controllers.Admin;
 
 namespace DeepBlue.Controllers.Document {
 	public class DocumentController : Controller {
 
 		public IDocumentRepository DocumentRepository { get; set; }
 
+		public IAdminRepository AdminRepository { get; set; }
+
 		public DocumentController()
-			: this(new DocumentRepository()) {
+			: this(new DocumentRepository(),new AdminRepository()) {
 		}
 
-		public DocumentController(IDocumentRepository repository) {
+		public DocumentController(IDocumentRepository repository,IAdminRepository adminRepository) {
 			DocumentRepository = repository;
+			AdminRepository = adminRepository;
 		}
 
 		//
 		// GET: /Document/New
 		public ActionResult New() {
 			ViewData["MenuName"] = "Document";
+			ViewData["SubmenuName"] = "";
+			ViewData["PageName"] = "NewDocument";
 			CreateModel model = new CreateModel();
-			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(DocumentRepository.GetAllDocumentTypes());
+			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
 			model.DocumentStatusTypes = SelectListFactory.GetDocumentStatusList();
 			model.DocumentStatus = (int)DocumentStatus.Investor;
 			model.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
@@ -168,7 +174,7 @@ namespace DeepBlue.Controllers.Document {
 				}
 			}
 			ViewData["MenuName"] = "Document";
-			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(DocumentRepository.GetAllDocumentTypes());
+			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
 			model.DocumentStatusTypes = SelectListFactory.GetDocumentStatusList();
 			model.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
 			if (ModelState.IsValid) {
@@ -184,8 +190,10 @@ namespace DeepBlue.Controllers.Document {
 		[HttpGet]
 		public ActionResult Search() {
 			ViewData["MenuName"] = "Document";
+			ViewData["SubmenuName"] = "";
+			ViewData["PageName"] = "DocumentSearch";
 			SearchModel model = new SearchModel();
-			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(DocumentRepository.GetAllDocumentTypes());
+			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
 			model.DocumentStatusTypes = SelectListFactory.GetDocumentStatusList();
 			model.DocumentStatus = (int)DocumentStatus.Investor;
 			return View(model);

@@ -15,7 +15,7 @@
 		$(ifrm).load(function () { $("#loading",iframe).remove(); });
 		ifrm.src=url;
 		$(iframe).dialog({
-			title: "Investor Type",
+			title: "Communication Grouping",
 			autoOpen: true,
 			width: 400,
 			modal: true,

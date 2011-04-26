@@ -1,36 +1,35 @@
 ﻿var DeepBlue={
 	init: function () {
 		$(document).ready(function () {
-			var layoutSettings=
-    {
-    	Name: "Main",
-    	Dock: $.layoutEngine.DOCK.FILL,
-    	EleID: "DepMain",
-    	Margin: 0,
-    	Children: [
-                        {
-                        	Name: "Top",
-                        	Dock: $.layoutEngine.DOCK.TOP,
-                        	EleID: "header",
-                        	Margin: 0,
-                        	Height: 100
-                        }
-                        ,{
-                        	Name: "Fill",
-                        	Dock: $.layoutEngine.DOCK.FILL,
-                        	EleID: "content",
-                        	Margin: 0
-                        }
-                        ,{
-                        	Name: "Bottom",
-                        	Dock: $.layoutEngine.DOCK.BOTTOM,
-                        	EleID: "footer",
-                        	Margin: 0,
-                        	Height: 35
-                        }
-                    ]
-    };
-			$.layoutEngine(layoutSettings);
+			$(".topmenu").hover(function () {
+				$(".tab-sel").each(function () {
+					if($(this).hasClass("current")==false) { $(this).removeClass("tab-sel") }
+				});
+				var showmenu=$(this);
+				var arrow=$("#arrow");
+				arrow.hide();
+				if(showmenu.attr("nosubmenu")!="true") {
+					showmenu.addClass("tab-sel");
+					DeepBlue.setArrow(showmenu);
+				}
+			});
+			$(".innersub-select").each(function () {
+				$(this).parents(".sub-select:first").addClass("subext");
+			});
+			DeepBlue.setArrow($(".tab-sel:first"));
+			DeepBlue.layout();
 		});
+	}
+	,setArrow: function (showmenu) {
+		var pos=showmenu.offset();
+		var arrow=$("#arrow");
+		arrow.show();
+		arrow.css({ "left": pos.left+((showmenu.width()/2)) });
+	}
+	,layout: function () {
+		var header=document.getElementById("header");
+		var submenu=document.getElementById("submenu");
+		var content=document.getElementById("content");
+		content.style.top=$(header).height()+$(submenu).height()+"px";
 	}
 }

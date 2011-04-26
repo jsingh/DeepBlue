@@ -24,6 +24,7 @@ namespace DeepBlue.Helpers {
 		public override string FormatErrorMessage(string name) {
 			return String.Format(CultureInfo.CurrentCulture, ErrorMessageString, name);
 		}
+
 		public override bool IsValid(object value) {
 			if (value != null) {
 				DateTime date;

@@ -31,6 +31,8 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public ActionResult InvestorType() {
 			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminInvestor";
+			ViewData["PageName"] = "InvestorType";
 			return View();
 		}
 
@@ -66,6 +68,10 @@ namespace DeepBlue.Controllers.Admin {
 			EditInvestorTypeModel model = new EditInvestorTypeModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
+			string ErrorMessage = InvestorTypeNameAvailable(model.InvestorTypeName, model.InvestorTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("InvestorTypeName", ErrorMessage);
+			}
 			if (ModelState.IsValid) {
 				InvestorType investorType = AdminRepository.FindInvestorType(model.InvestorTypeId);
 				if (investorType == null) {
@@ -121,6 +127,8 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public ActionResult EntityType() {
 			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminInvestor";
+			ViewData["PageName"] = "EntityType";
 			return View();
 		}
 
@@ -156,6 +164,10 @@ namespace DeepBlue.Controllers.Admin {
 			EditInvestorEntityTypeModel model = new EditInvestorEntityTypeModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
+			string ErrorMessage = InvestorEntityTypeNameAvailable(model.InvestorEntityTypeName, model.InvestorEntityTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("InvestorEntityTypeName", ErrorMessage);
+			}
 			if (ModelState.IsValid) {
 				InvestorEntityType investorEntityType = AdminRepository.FindInvestorEntityType(model.InvestorEntityTypeId);
 				if (investorEntityType == null) {
@@ -209,6 +221,8 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public ActionResult FundClosing() {
 			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminFund";
+			ViewData["PageName"] = "FundClosing";
 			return View();
 		}
 
@@ -247,6 +261,10 @@ namespace DeepBlue.Controllers.Admin {
 			EditFundClosingModel model = new EditFundClosingModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
+			string ErrorMessage = FundClosingNameAvailable(model.Name, model.FundClosingID, model.FundID);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
 			if (ModelState.IsValid) {
 				FundClosing fundClosing = AdminRepository.FindFundClosing(model.FundClosingID);
 				if (fundClosing == null) {
@@ -300,6 +318,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		public ActionResult CustomField() {
 			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminCustomField";
+			ViewData["PageName"] = "CustomField";
 			return View();
 		}
 
@@ -352,6 +372,10 @@ namespace DeepBlue.Controllers.Admin {
 			EditCustomFieldModel model = new EditCustomFieldModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
+			string ErrorMessage = CustomFieldTextAvailable(model.CustomFieldText, model.CustomFieldId, model.ModuleId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("CustomFieldText", ErrorMessage);
+			}
 			if (ModelState.IsValid) {
 				CustomField customField = AdminRepository.FindCustomField(model.CustomFieldId);
 				if (customField == null) {
@@ -405,7 +429,9 @@ namespace DeepBlue.Controllers.Admin {
 		#region Data Type
 
 		public ActionResult DataType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "Admin"; 
+			ViewData["SubmenuName"] = "AdminCustomField";
+			ViewData["PageName"] = "DataType";
 			return View();
 		}
 
@@ -440,6 +466,10 @@ namespace DeepBlue.Controllers.Admin {
 			EditDataTypeModel model = new EditDataTypeModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
+			string ErrorMessage = DataTypeNameAvailable(model.DataTypeName, model.DataTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("DataTypeName", ErrorMessage);
+			}
 			if (ModelState.IsValid) {
 				DataType dataType = AdminRepository.FindDataType(model.DataTypeId);
 				if (dataType == null) {
@@ -525,6 +555,10 @@ namespace DeepBlue.Controllers.Admin {
 			EditModule model = new EditModule();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
+			string ErrorMessage = ModuleFieldTextAvailable(model.ModuleName, model.ModuleID);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("ModuleName", ErrorMessage);
+			}
 			if (ModelState.IsValid) {
 				MODULE module = AdminRepository.FindModule(model.ModuleID);
 				if (module == null) {
@@ -580,6 +614,8 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public ActionResult CommunicationType() {
 			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminInvestor";
+			ViewData["PageName"] = "CommunicationType";
 			return View();
 		}
 
@@ -617,6 +653,10 @@ namespace DeepBlue.Controllers.Admin {
 			EditCommunicationTypeModel model = new EditCommunicationTypeModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
+			string ErrorMessage = CommunicationTypeNameAvailable(model.CommunicationTypeName, model.CommunicationTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("CommunicationTypeName", ErrorMessage);
+			}
 			if (ModelState.IsValid) {
 				DeepBlue.Models.Entity.CommunicationType communicationType = AdminRepository.FindCommunicationType(model.CommunicationTypeId);
 				if (communicationType == null) {
@@ -670,6 +710,8 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public ActionResult CommunicationGrouping() {
 			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminInvestor";
+			ViewData["PageName"] = "CommunicationGrouping";
 			return View();
 		}
 
@@ -704,6 +746,10 @@ namespace DeepBlue.Controllers.Admin {
 			EditCommunicationGroupingModel model = new EditCommunicationGroupingModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
+			string ErrorMessage = CommunicationGroupingNameAvailable(model.CommunicationGroupingName, model.CommunicationGroupingId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("CommunicationGroupingName", ErrorMessage);
+			}
 			if (ModelState.IsValid) {
 				CommunicationGrouping communicationGrouping = AdminRepository.FindCommunicationGrouping(model.CommunicationGroupingId);
 				if (communicationGrouping == null) {
@@ -752,7 +798,192 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-        public ActionResult Result() {
+		#region Purchase Type
+		//
+		// GET: /Admin/PurchaseType
+		[HttpGet]
+		public ActionResult PurchaseType() {
+			ViewData["MenuName"] = "Admin";
+			return View();
+		}
+
+		//
+		// GET: /Admin/PurchaseTypeList
+		[HttpGet]
+		public ActionResult PurchaseTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			int totalRows = 0;
+			IList<PurchaseType> purchaseTypes = AdminRepository.GetAllPurchaseTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			ViewData["TotalRows"] = totalRows;
+			ViewData["PageNo"] = pageIndex;
+			return View(purchaseTypes);
+		}
+
+		//
+		// GET: /Admin/PurchaseType
+		[HttpGet]
+		public ActionResult EditPurchaseType(int id) {
+			EditPurchaseTypeModel model = new EditPurchaseTypeModel();
+			PurchaseType purchaseType = AdminRepository.FindPurchaseType(id);
+			if (purchaseType != null) {
+				model.PurchaseTypeId = purchaseType.PurchaseTypeID;
+				model.Name = purchaseType.Name;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdatePurchaseType
+		[HttpPost]
+		public ActionResult UpdatePurchaseType(FormCollection collection) {
+			EditPurchaseTypeModel model = new EditPurchaseTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = PurchaseTypeNameAvailable(model.Name, model.PurchaseTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				PurchaseType purchaseType = AdminRepository.FindPurchaseType(model.PurchaseTypeId);
+				if (purchaseType == null) {
+					purchaseType = new PurchaseType();
+				}
+				purchaseType.Name = model.Name;
+				purchaseType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SavePurchaseType(purchaseType);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+		
+		[HttpGet]
+		public string DeletePurchaseType(int id) {
+			if (AdminRepository.DeletePurchaseType(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string PurchaseTypeNameAvailable(string Name, int PurchaseTypeID) {
+			if (AdminRepository.PurchaseTypeNameAvailable(Name, PurchaseTypeID))
+				return "Name already exist";
+			else
+				return string.Empty;
+		}
+		#endregion
+
+		#region Deal Closing Cost Type
+		//
+		// GET: /Admin/DealClosingCostType
+		[HttpGet]
+		public ActionResult DealClosingCostType() {
+			ViewData["MenuName"] = "Admin";
+			return View();
+		}
+
+		//
+		// GET: /Admin/DealClosingCostTypeList
+		[HttpGet]
+		public ActionResult DealClosingCostTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			int totalRows = 0;
+			IList<DealClosingCostType> DealClosingCostTypes = AdminRepository.GetAllDealClosingCostTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			ViewData["TotalRows"] = totalRows;
+			ViewData["PageNo"] = pageIndex;
+			return View(DealClosingCostTypes);
+		}
+
+		//
+		// GET: /Admin/DealClosingCostType
+		[HttpGet]
+		public ActionResult EditDealClosingCostType(int id) {
+			EditDealClosingCostTypeModel model = new EditDealClosingCostTypeModel();
+			DealClosingCostType DealClosingCostType = AdminRepository.FindDealClosingCostType(id);
+			if (DealClosingCostType != null) {
+				model.DealClosingCostTypeId = DealClosingCostType.DealClosingCostTypeID;
+				model.Name = DealClosingCostType.Name;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateDealClosingCostType
+		[HttpPost]
+		public ActionResult UpdateDealClosingCostType(FormCollection collection) {
+			EditDealClosingCostTypeModel model = new EditDealClosingCostTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = DealClosingCostTypeNameAvailable(model.Name, model.DealClosingCostTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				DealClosingCostType DealClosingCostType = AdminRepository.FindDealClosingCostType(model.DealClosingCostTypeId);
+				if (DealClosingCostType == null) {
+					DealClosingCostType = new DealClosingCostType();
+				}
+				DealClosingCostType.Name = model.Name;
+				DealClosingCostType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveDealClosingCostType(DealClosingCostType);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+
+		[HttpGet]
+		public string DeleteDealClosingCostType(int id) {
+			if (AdminRepository.DeleteDealClosingCostType(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string DealClosingCostTypeNameAvailable(string Name, int DealClosingCostTypeID) {
+			if (AdminRepository.DealClosingCostTypeNameAvailable(Name, DealClosingCostTypeID))
+				return "Name already exist";
+			else
+				return string.Empty;
+		}
+		#endregion
+
+		public ActionResult Result() {
 			return View();
 		}
 	}

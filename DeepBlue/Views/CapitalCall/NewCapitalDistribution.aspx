@@ -11,10 +11,6 @@
 	<% Html.EnableClientValidation(); %>
 	<% using (Ajax.BeginForm("CreateDistribution", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "distribution.onCreateCapitalCallBegin", OnSuccess = "distribution.onCreateCapitalCallSuccess" }, new { @id = "Distribution" })) {%>
 	<div class="cc-header">
-		<div class="page-title">
-			<h2>
-				New Capital Distribution</h2>
-		</div>
 		<div class="editor-label" style="width: auto">
 			<%: Html.LabelFor(model => model.FundId) %>&nbsp;<%: Html.TextBox("Fund","", new { @style = "width:200px" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
 		</div>
