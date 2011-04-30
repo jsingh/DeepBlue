@@ -65,14 +65,15 @@ namespace DeepBlue.Tests.Controllers.Document {
         [Test]
         public void valid_DocumentType_id_sets_model_error_on_model_state()
         {
-            Assert.IsTrue(test_posted_value("DocumentTypeId"));
+			Assert.IsTrue(test_posted_value("DocumentTypeID"));
         }
 
         [Test]
         public void valid_DocumentType_id_sets_1_error()
         {
-            Assert.IsTrue(test_error_count("DocumentTypeId", 0));
+			Assert.IsTrue(test_error_count("DocumentTypeID", 0));
         }
+
 
         [Test]
         public void valid_DocumentDate_sets_model_error_on_model_state()
@@ -86,11 +87,42 @@ namespace DeepBlue.Tests.Controllers.Document {
             Assert.IsTrue(test_error_count("DocumentDate", 0));
         }
 
-		//[Test]
-		//public void valid_Document_results_valid_modelstate() {
-		//    SetFormCollection();
-		//    Assert.IsTrue(base.DefaultController.ModelState.IsValid);
-		//}
+
+		[Test]
+		public void valid_Entityid_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("EntityID"));
+		}
+
+		[Test]
+		public void valid_Entityid_sets_1_error() {
+			Assert.IsTrue(test_error_count("EntityID", 0));
+		}
+
+		[Test]
+		public void valid_Createdby_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("CreatedBy"));
+		}
+
+		[Test]
+		public void valid_Createdby_sets_1_error() {
+			Assert.IsTrue(test_error_count("CreatedBy", 0));
+		}
+
+		[Test]
+		public void valid_Createddate_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("CreatedDate"));
+		}
+
+		[Test]
+		public void valid_Createddate_sets_1_error() {
+			Assert.IsTrue(test_error_count("CreatedDate", 0));
+		}
+
+		[Test]
+		public void returns_back_to_new_view_if_saving_Document_failed() {
+			SetFormCollection();
+			Assert.IsNotNull(Model);
+		}
 
         #endregion
        
@@ -98,7 +130,9 @@ namespace DeepBlue.Tests.Controllers.Document {
             FormCollection formCollection = new FormCollection();
 			formCollection.Add("DocumentTypeID", "1");
 			formCollection.Add("DocumentDate", "1/1/1900");
-			formCollection.Add("InvestorId", "1");
+			formCollection.Add("EntityID", "1");
+			formCollection.Add("CreatedBy", "1");
+			formCollection.Add("CreatedDate", "1/1/1900");
             return formCollection;
         }
     }

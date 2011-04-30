@@ -5,16 +5,20 @@
 <div>
 	<%: Html.Image("UnderlyingDirects.png", new { @class="expandbtn" })%></div>
 <div class="fieldbox">
-	<table cellpadding="0" cellspacing="0" border="0" class="grid" style="width: 80%">
+	<table id="tblUnderlyingDirect" cellpadding="0" cellspacing="0" border="0" class="grid"
+		style="width: 95%">
 		<thead>
 			<tr>
 				<th>
 					No.
 				</th>
-				<th>
+				<th style="width: 15%">
 					Company
 				</th>
-				<th>
+				<th style="width: 15%">
+					Security Type
+				</th>
+				<th style="width: 15%">
 					Security
 				</th>
 				<th>
@@ -29,30 +33,48 @@
 				<th>
 					Record Date
 				</th>
+				<th style="width: 15%">
+				</th>
 				<th>
 				</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="tbodyUnderlyingDirect">
+		</tbody>
+		<tfoot>
 			<tr>
 				<td style="text-align: center">
+					<%: Html.Span("", new { @id = "SpnIndex" }) %>
 				</td>
 				<td>
+					<%: Html.DropDownList("IssuerId", Model.Issuers, new { @id="IssuerId", @onchange = "javascript:deal.changeIssuer(this);" })%>
 				</td>
 				<td>
+					<%: Html.DropDownList("SecurityTypeId", Model.SecurityTypes, new { @id="SecurityTypeId", @onchange = "javascript:deal.changeSecurityType(this);" })%>
 				</td>
 				<td>
+					<%: Html.DropDownList("SecurityId", Model.Securities, new { @id = "SecurityId" })%>
 				</td>
 				<td>
+					<%: Html.TextBox("NumberOfShares", "", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
 				</td>
 				<td>
+					<%: Html.TextBox("Percent", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td>
+					<%: Html.TextBox("FMV", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td>
-					<%: Html.Image("Editbtn.png")%><%: Html.Image("Delete_Btn.png")%>
+					<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_DirectRecordDate" })%>
+				</td>
+				<td style="text-align: center">
+					<%: Html.Image("add_btn.png", new { @onclick = "javascript:deal.addUnderlyingDirect(this);" })%>
+					<%: Html.Hidden("DealUnderlyingDirectId", "${DealUnderlyingDirectId}")%>
+				</td>
+				<td class="blank">
+					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 				</td>
 			</tr>
-		</tbody>
+		</tfoot>
 	</table>
 </div>

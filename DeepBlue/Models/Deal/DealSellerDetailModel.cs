@@ -8,6 +8,18 @@ using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Deal {
 	public class DealSellerDetailModel {
+
+		public DealSellerDetailModel() {
+			DealId = 0;
+			SellerContactId = 0;
+			ContactName = string.Empty;
+			Phone = string.Empty;
+			Fax = string.Empty;
+			SellerName = string.Empty;
+			CompanyName = string.Empty;
+			Email = string.Empty;
+		}
+
 		
 		/* Seller Information */
 		public int DealId { get; set; }

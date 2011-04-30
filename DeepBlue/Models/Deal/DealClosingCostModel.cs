@@ -8,6 +8,15 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.Deal {
 	public class DealClosingCostModel {
 
+		public DealClosingCostModel() {
+			DealClosingCostId = 0;
+			Description = string.Empty;
+			DealClosingCostTypeId = 0;
+			DealId = 0;
+			Amount = 0;
+			Date = Convert.ToDateTime("01/01/1900");
+		}
+
 		public int? DealClosingCostId { get; set; }
 	
 		public string Description { get; set; }

@@ -10,7 +10,7 @@
 				autoResize: false
 			});
 			/*setTimeout(function () {
-				$("#CCDetail").hide();
+			$("#CCDetail").hide();
 			},200);*/
 		});
 	}
@@ -117,5 +117,15 @@
 			location.href="/CapitalCall/New";
 		}
 	}
-	
+	,calcExistingInvestmentAmount: function () {
+		var newInvestmentAmount=parseFloat($("#NewInvestmentAmount").val());
+		var capitalAmountCalled=parseFloat($("#CapitalAmountCalled").val());
+		if(isNaN(newInvestmentAmount)) { newInvestmentAmount=0; }
+		if(isNaN(capitalAmountCalled)) { capitalAmountCalled=0; }
+		var existingInvAmount=(capitalAmountCalled-newInvestmentAmount);
+		if(existingInvAmount<=0) { existingInvAmount=0; }
+		$("#ExistingInvestmentAmount").val(existingInvAmount);
+		$("#SpnExistingInvestmentAmount").html(jHelper.dollarAmount(existingInvAmount.toString()));
+	}
+
 }

@@ -1,0 +1,82 @@
+﻿.report-header, .report-content {
+	color: #a6a6a6;
+	width: 99.8%;
+	position: absolute;
+	font-family: Calibri;
+	font-size: 14px;
+}
+.line {
+	height: 1px;
+	margin: 5px 0px 5px 0px;
+	background-color: #E3E3E3;
+	clear: both;
+	width: 100%;
+}
+.report-header {
+	float: left;
+	top: 0px;
+}
+.report-content {
+	top: 52px;
+	bottom: 10px;
+	overflow: auto;
+	overflow-x: hidden;
+}
+.report-content a {
+	color: #a6a6a6;
+}
+.title {
+	font-size: 16px;
+	float: left;
+	width: 100%;
+	margin: 5px 0px 5px;
+}
+.left-col {
+	float: left;
+}
+.right-col {
+	float: right;
+}
+.export {
+	font-size: 14px;
+}
+.export a {
+	color: #a6a6a6;
+}
+#ReportList {
+	width: 100%;
+}
+#ReportList tbody tr td, #ReportList tfoot tr td {
+	padding: 8px;
+	text-align: center;
+	background-color: #f2f2f2;
+}
+#ReportList .emptyrow td, #ReportList tfoot tr td {
+	background-color: #fff;
+}
+#ReportList .erow td {
+	background-color: #d9d9d9;
+	color: #af8f7f;
+}
+.detail-content {
+	float: left;
+	width: 100%;
+}
+.detail-left {
+	float: left;
+	width: 50%;
+}
+.detail-right {
+	float: right;
+	width: 50%;
+}
+.detail-left table, .detail-right table {
+	width: 95%;
+	background-color: #000;color:#000; 
+}
+#ReportList #tblUnderlyingFund tr th,
+#ReportList #tblUnderlyingFund tr td,
+#ReportList #tblUnderlyingDirect tr th,
+#ReportList #tblUnderlyingDirect tr td {
+	background-color: #fff; color:#000;
+}

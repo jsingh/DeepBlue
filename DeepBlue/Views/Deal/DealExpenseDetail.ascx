@@ -10,7 +10,7 @@
 		<%:Html.Span("",new { @id = "SpnTotalExpenses" })%>
 	</h5>
 	<br />
-	<table id="tblDealExpense" cellpadding="0" cellspacing="0" border="0" class="grid" style="width: 80%">
+	<table id="tblDealExpense" cellpadding="0" cellspacing="0" border="0" class="grid" style="width: 70%">
 		<thead>
 			<tr>
 				<th style="width: 25%">
@@ -39,7 +39,7 @@
 					<%: Html.TextBox("Amount", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td>
-					<%: Html.TextBox("Date", "", new { @class = "datefield", @id = "${Index}_Date" })%>
+					<%: Html.TextBox("Date", "", new { @class = "datefield", @id = "0_Date" })%>
 				</td>
 				<td>
 					<%: Html.Image("add_btn.png", new { @onclick = "javascript:deal.addDealExpense(this);" })%>

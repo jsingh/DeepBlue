@@ -9,7 +9,13 @@ using DeepBlue.Models.CapitalCall;
 
 namespace DeepBlue.Tests.Controllers.CapitalCall {
     public class CreateCapitalCallManualValidData : CreateCapitalCallManual {
-      
+
+		protected ResultModel ResultModel {
+			get {
+				return base.ViewResult.ViewData.Model as ResultModel;
+			}
+		}
+
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;
@@ -89,6 +95,15 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
 		[Test]
 		public void valid_CapitalCallManual_capitalcallduedate_sets_1_error() {
 			Assert.IsTrue(test_error_count("CapitalCallDueDate", 0));
+		}
+		#endregion
+
+		#region Tests after model state is valid
+
+		[Test]
+		public void returns_back_to_new_view_if_saving_capitalcall_failed() {
+			SetFormCollection();
+			Assert.IsNotNull(ResultModel);
 		}
 
 		#endregion

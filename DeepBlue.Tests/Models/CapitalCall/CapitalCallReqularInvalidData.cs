@@ -48,9 +48,5 @@ namespace DeepBlue.Tests.Models.CapitalCall {
 			Assert.IsFalse(IsPropertyValid("CapitalAmountCalled"));
 		}
 
-		[Test]
-		public void create_a_new_capitalcallreqular_without_newinvestmentamount_throws_error() {
-			Assert.IsFalse(IsPropertyValid("NewInvestmentAmount"));
-		}
     }
 }

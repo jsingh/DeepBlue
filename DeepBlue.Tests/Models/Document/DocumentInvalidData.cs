@@ -29,11 +29,6 @@ namespace DeepBlue.Tests.Models.Document {
 		}
 
 		[Test]
-		public void create_a_new_document_without_documentinvestorid_throws_error() {
-			Assert.IsFalse(IsPropertyValid("InvestorID"));
-		}
-
-		[Test]
 		public void create_a_new_document_without_documententityid_throws_error() {
 			Assert.IsFalse(IsPropertyValid("EntityID"));
 		}

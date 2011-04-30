@@ -19,7 +19,7 @@ namespace DeepBlue.Models.Entity {
 
 			[Required(ErrorMessage = "Purchase Type Name is required")]
 			[StringLength(50, ErrorMessage = "Purchase Type Name must be under 50 characters.")]
-			public global::System.String PurchaseTypeName {
+			public global::System.String Name {
 				get;
 				set;
 			}

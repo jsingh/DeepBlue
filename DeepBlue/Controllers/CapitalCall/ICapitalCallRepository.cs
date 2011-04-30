@@ -9,7 +9,6 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Controllers.CapitalCall {
 
 	public interface ICapitalCallRepository {
-
 		List<Models.Entity.CapitalCall> GetCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId);
 		List<Models.Entity.CapitalCall> GetCapitalCalls(int fundId);
 		List<CapitalDistribution> GetCapitalDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId);

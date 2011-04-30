@@ -26,7 +26,9 @@
 	line-height: 20px;
 	text-align: right;
 }
-.editor-field { width:180px }
+.editor-field {
+	width: 180px;
+}
 h5, .editor-label, .editor-field {
 	color: #a6a6a6;
 }
@@ -52,8 +54,9 @@ h5 {
 .grid tbody tr {
 	background-color: #f2f2f2;
 }
-.grid .emptyrow td{
-	background-color:White;    padding: 0;
+.grid .emptyrow td {
+	background-color: White;
+	padding: 0;
 }
 .expandbtn {
 	cursor: pointer;
@@ -62,10 +65,14 @@ h5 {
 	float: left;
 }
 .grid input, .grid select {
-	width: 70%;float:right;
+	width: 98%;
 }
-.grid .blank { background-color: #fff; }
-#tblDealExpense tr td { text-align:center; }
+.grid .blank {
+	background-color: #fff;
+}
+#tblDealExpense tr td {
+	text-align: center;
+}
 .line {
 	height: 1px;
 	margin: 5px 0px 5px 0px;
@@ -83,9 +90,10 @@ h4 a {
 	color: #558EE3;
 	white-space: nowrap;
 }
-.subext3,.subext {
+.subext3, .subext {
 	background-image: url("../images/submnubg3.png");
-	height: 184px; clear:both;
+	height: 184px;
+	clear: both;
 }
 .fundname {
 	width: 200px;

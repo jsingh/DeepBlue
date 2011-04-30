@@ -77,7 +77,7 @@
 					 	if(i%2) tr.className='erow';
 					 	tr.id='row'+i;
 					 	var i=0;
-					 	$("thead tr th",g.hDiv).each(function () {
+					 	$("thead tr:first th",g.hDiv).each(function () {
 					 		var td=document.createElement('td');
 					 		var div=document.createElement('div');
 					 		if(row.cell.length>i) {
@@ -349,9 +349,6 @@
 		if(parseInt(p.height)>0) {
 			$(g.bDivBox).height(p.height);
 		}
-		$(window).resize(function () {
-			g.checkHeight();
-		});
 		return t;
 	};
 

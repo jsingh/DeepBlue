@@ -39,7 +39,7 @@ namespace DeepBlue.Tests.Models.Fund {
         }
 
 		[Test]
-		public void create_a_new_document_without_inception_date_throws_error() {
+		public void create_a_new_fund_without_inception_date_throws_error() {
 			Assert.IsFalse(IsPropertyValid("InceptionDate"));
 		}
 

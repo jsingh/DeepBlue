@@ -113,5 +113,14 @@ namespace DeepBlue.Controllers.Admin {
 		#region Communication
 		string GetContactCommunicationValue(int contactId, DeepBlue.Models.Admin.Enums.CommunicationType communicationType);
 		#endregion
+
+		#region SecurityType
+		List<SecurityType> GetAllSecurityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<SecurityType> GetAllSecurityTypes();
+		SecurityType FindSecurityType(int id);
+		bool SecurityTypeNameAvailable(string securityTypeName, int securityTypeID);
+		bool DeleteSecurityType(int id);
+		IEnumerable<ErrorInfo> SaveSecurityType(SecurityType securityType);
+		#endregion
 	}
 }

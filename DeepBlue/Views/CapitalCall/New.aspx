@@ -36,7 +36,7 @@
 						<%: Html.LabelFor(model => model.CapitalAmountCalled)%>
 					</div>
 					<div class="editor-field" style="width: auto">
-						<%: Html.TextBoxFor(model => model.CapitalAmountCalled, new { @onkeypress = "return jHelper.isCurrency(event);", @style = "width:110px" })%>
+						<%: Html.TextBoxFor(model => model.CapitalAmountCalled, new { @onkeypress = "return jHelper.isCurrency(event);", @style = "width:110px", @onkeyup = "javascript:capitalCall.calcExistingInvestmentAmount();" })%>
 					</div>
 					<div class="editor-label" style="clear: right">
 						<%: Html.LabelFor(model => model.CapitalCallDate) %>
@@ -84,13 +84,14 @@
 						<%: Html.LabelFor(model => model.NewInvestmentAmount) %>
 					</div>
 					<div class="editor-field" style="width: auto">
-						<%: Html.TextBoxFor(model => model.NewInvestmentAmount, new { @class = "datetxt", @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBoxFor(model => model.NewInvestmentAmount, new { @class = "datetxt", @onkeypress = "return jHelper.isCurrency(event);", @onkeyup="javascript:capitalCall.calcExistingInvestmentAmount();" })%>
 					</div>
 					<div class="editor-label fromcell" style="width: auto">
 						<%: Html.LabelFor(model => model.ExistingInvestmentAmount) %>
 					</div>
 					<div class="editor-field" style="width: auto">
-						<%: Html.TextBoxFor(model => model.ExistingInvestmentAmount, new { @class = "datetxt", @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.Span("$0", new { @id = "SpnExistingInvestmentAmount" })%>
+						<%: Html.HiddenFor(model => model.ExistingInvestmentAmount)%>
 					</div>
 					<div class="status">
 						<%: Html.Span("", new { id = "UpdateLoading" })%></div>

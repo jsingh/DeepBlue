@@ -804,6 +804,8 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public ActionResult PurchaseType() {
 			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "PurchaseType";
 			return View();
 		}
 
@@ -896,6 +898,8 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public ActionResult DealClosingCostType() {
 			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "DealClosingCostType";
 			return View();
 		}
 
@@ -977,6 +981,101 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public string DealClosingCostTypeNameAvailable(string Name, int DealClosingCostTypeID) {
 			if (AdminRepository.DealClosingCostTypeNameAvailable(Name, DealClosingCostTypeID))
+				return "Name already exist";
+			else
+				return string.Empty;
+		}
+		#endregion
+
+		#region Security Type
+		//
+		// GET: /Admin/SecurityType
+		[HttpGet]
+		public ActionResult SecurityType() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "SecurityType";
+			return View();
+		}
+
+		//
+		// GET: /Admin/SecurityTypeList
+		[HttpGet]
+		public ActionResult SecurityTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			int totalRows = 0;
+			IList<SecurityType> securityTypes = AdminRepository.GetAllSecurityTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			ViewData["TotalRows"] = totalRows;
+			ViewData["PageNo"] = pageIndex;
+			return View(securityTypes);
+		}
+
+		//
+		// GET: /Admin/SecurityType
+		[HttpGet]
+		public ActionResult EditSecurityType(int id) {
+			EditSecurityTypeModel model = new EditSecurityTypeModel();
+			SecurityType securityType = AdminRepository.FindSecurityType(id);
+			if (securityType != null) {
+				model.SecurityTypeId = securityType.SecurityTypeID;
+				model.Name = securityType.Name;
+				model.Enabled = securityType.Enabled;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateSecurityType
+		[HttpPost]
+		public ActionResult UpdateSecurityType(FormCollection collection) {
+			EditSecurityTypeModel model = new EditSecurityTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = SecurityTypeNameAvailable(model.Name, model.SecurityTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				SecurityType securityType = AdminRepository.FindSecurityType(model.SecurityTypeId);
+				if (securityType == null) {
+					securityType = new SecurityType();
+				}
+				securityType.Name = model.Name;
+				securityType.Enabled = model.Enabled;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveSecurityType(securityType);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteSecurityType(int id) {
+			if (AdminRepository.DeleteSecurityType(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string SecurityTypeNameAvailable(string Name, int SecurityTypeID) {
+			if (AdminRepository.SecurityTypeNameAvailable(Name, SecurityTypeID))
 				return "Name already exist";
 			else
 				return string.Empty;

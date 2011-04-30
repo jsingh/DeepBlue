@@ -358,5 +358,11 @@ namespace DeepBlue.Tests.Controllers.Investor {
             DefaultController = null;
         }
 
+		#region FindInvestors
+		[Test]
+		public void valid_Find_Investors_sets_json_result_error() {
+			Assert.IsTrue((DefaultController.FindInvestors("test")!=null));
+		}
+		#endregion
     }
 }

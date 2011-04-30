@@ -87,6 +87,8 @@
     <Compile Include="Controllers\Fund\IFundRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Investor\InvestorController.cs" />
+    <Compile Include="Controllers\Issuer\IssuerRepository.cs" />
+    <Compile Include="Controllers\Issuer\IIssuerRepository.cs" />
     <Compile Include="Controllers\Report\ReportRepository.cs" />
     <Compile Include="Controllers\Report\IReportRepository.cs" />
     <Compile Include="Controllers\Report\ReportController.cs" />
@@ -97,6 +99,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AccordionOptions.cs" />
+    <Compile Include="Helpers\AjaxTableOptions.cs" />
     <Compile Include="Helpers\AutoCompleteOptions.cs" />
     <Compile Include="Helpers\CustomFieldHelper.cs" />
     <Compile Include="Helpers\DatePickerOptions.cs" />
@@ -118,6 +121,7 @@
     <Compile Include="Helpers\SelectListFactory.cs" />
     <Compile Include="Helpers\UploadFile.cs" />
     <Compile Include="Helpers\ValidationHelpers.cs" />
+    <Compile Include="Models\Admin\EditSecurityTypeModel.cs" />
     <Compile Include="Models\Admin\EditCommunicationGroupingModel.cs" />
     <Compile Include="Models\Admin\EditCommunicationTypeModel.cs" />
     <Compile Include="Models\Admin\EditCreateModule.cs" />
@@ -143,9 +147,18 @@
     <Compile Include="Models\CapitalCall\CreateReceiveModel.cs" />
     <Compile Include="Models\CapitalCall\ResultModel.cs" />
     <Compile Include="Models\Deal\CreateModel.cs" />
-    <Compile Include="Models\Deal\DealDetail.cs" />
+    <Compile Include="Models\Deal\DealDetailModel.cs" />
     <Compile Include="Models\Deal\DealDocumentModel.cs" />
     <Compile Include="Models\Deal\DealClosingCostModel.cs" />
+    <Compile Include="Models\Deal\DealReportModel.cs" />
+    <Compile Include="Models\Deal\DealUnderlyingDirectModel.cs" />
+    <Compile Include="Models\Deal\DealUnderlyingFundModel.cs" />
+    <Compile Include="Models\Deal\Enums.cs" />
+    <Compile Include="Models\Entity\Partial\DealClosingService.cs" />
+    <Compile Include="Models\Entity\Validation\DealClosing.cs" />
+    <Compile Include="Models\Issuer\EquityDetailModel.cs" />
+    <Compile Include="Models\Issuer\FixedIncomeDetailModel.cs" />
+    <Compile Include="Models\Issuer\IssuerDetailModel.cs" />
     <Compile Include="Models\Deal\ResultModel.cs" />
     <Compile Include="Models\Deal\DealSellerDetailModel.cs" />
     <Compile Include="Models\Document\SearchModel.cs" />
@@ -160,6 +173,9 @@
     <Compile Include="Models\Entity\Partial\CapitalDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\CommunicationTypeService.cs" />
     <Compile Include="Models\Entity\Partial\CommunicationGroupingService.cs" />
+    <Compile Include="Models\Entity\Partial\SecurityTypeService.cs" />
+    <Compile Include="Models\Entity\Partial\DealUnderlyingDirectService.cs" />
+    <Compile Include="Models\Entity\Partial\DealUnderlyingFundService.cs" />
     <Compile Include="Models\Entity\Partial\DealClosingCostService.cs" />
     <Compile Include="Models\Entity\Partial\DealService.cs" />
     <Compile Include="Models\Entity\Partial\DealClosingCostTypeService.cs" />
@@ -184,6 +200,9 @@
     <Compile Include="Models\Entity\Validation\CommunicationType.cs" />
     <Compile Include="Models\Entity\Validation\CommunicationGrouping.cs" />
     <Compile Include="Models\Entity\Validation\Contact.cs" />
+    <Compile Include="Models\Entity\Validation\SecurityType.cs" />
+    <Compile Include="Models\Entity\Validation\DealUnderlyingDirect.cs" />
+    <Compile Include="Models\Entity\Validation\DealUnderlyingFund.cs" />
     <Compile Include="Models\Entity\Validation\Deal.cs" />
     <Compile Include="Models\Entity\Validation\DealClosingCost.cs" />
     <Compile Include="Models\Entity\Validation\DealClosingCostType.cs" />
@@ -371,7 +390,13 @@
     <Content Include="Assets\javascripts\CommunicationType.js" />
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
+    <Content Include="Assets\javascripts\jAjaxTable.js" />
+    <Content Include="Assets\javascripts\DealReport.js" />
+    <Content Include="Assets\javascripts\SecurityType.js" />
+    <Content Include="Assets\javascripts\DealUnderlyingDirect.js" />
     <Content Include="Assets\javascripts\DealClosingCostType.js" />
+    <Content Include="Assets\javascripts\DealExpense.js" />
+    <Content Include="Assets\javascripts\DealUnderlyingFund.js" />
     <Content Include="Assets\javascripts\PurchaseType.js" />
     <Content Include="Assets\javascripts\Deal.js" />
     <Content Include="Assets\javascripts\DeepBlue.js" />
@@ -405,10 +430,12 @@
     <Content Include="Assets\javascripts\DSummaryReport.js" />
     <Content Include="Assets\javascripts\SearchInvestor.js" />
     <Content Include="Assets\javascripts\TransactionController.js" />
+    <Content Include="Assets\stylesheets\adminflexigrid.css" />
     <Content Include="Assets\stylesheets\capitalcall.css" />
     <Content Include="Assets\stylesheets\customfield.css" />
     <Content Include="Assets\stylesheets\ddlmenu.css" />
     <Content Include="Assets\stylesheets\deal.css" />
+    <Content Include="Assets\stylesheets\dealreport.css" />
     <Content Include="Assets\stylesheets\distribution.css" />
     <Content Include="Assets\stylesheets\document.css" />
     <Content Include="Assets\stylesheets\flexigrid.css" />
@@ -432,6 +459,9 @@
     <Content Include="Views\Admin\CommunicationTypeList.ascx" />
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
     <Content Include="Views\Admin\CommunicationGroupingList.ascx" />
+    <Content Include="Views\Admin\EditSecurityType.aspx" />
+    <Content Include="Views\Admin\SecurityType.aspx" />
+    <Content Include="Views\Admin\SecurityTypeList.ascx" />
     <Content Include="Views\Admin\EditDealClosingCostType.aspx" />
     <Content Include="Views\Admin\DealClosingCostType.aspx" />
     <Content Include="Views\Admin\DealClosingCostTypeList.ascx" />
@@ -472,6 +502,8 @@
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\DealDocumentDetail.ascx" />
     <Content Include="Views\Deal\DealExpenseDetail.ascx" />
+    <Content Include="Views\Deal\DealList.ascx" />
+    <Content Include="Views\Deal\Report.aspx" />
     <Content Include="Views\Deal\DealUnderlyingDirectDetail.ascx" />
     <Content Include="Views\Deal\DealUnderlyingFundDetail.ascx" />
     <Content Include="Views\Deal\Result.ascx" />

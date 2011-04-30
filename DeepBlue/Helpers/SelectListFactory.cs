@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using DeepBlue.Models;
 using DeepBlue.Models.Entity;
 using DeepBlue.Models.Document;
+using DeepBlue.Models.Issuer;
 
 namespace DeepBlue.Helpers {
 	public class SelectListFactory {
@@ -271,6 +272,81 @@ namespace DeepBlue.Helpers {
 				dealClosingCostTypeList.Add(item);
 			}
 			return dealClosingCostTypeList;
+		}
+
+		public static List<SelectListItem> GetUnderlyingFundSelectList(List<UnderlyingFund> underlyingFunds) {
+			List<SelectListItem> underlyingFundList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			underlyingFundList.Add(item);
+			foreach (var underlyingFund in underlyingFunds) {
+				item = new SelectListItem();
+				item.Text = underlyingFund.FundName.ToString();
+				item.Value = underlyingFund.UnderlyingtFundID.ToString();
+				underlyingFundList.Add(item);
+			}
+			return underlyingFundList;
+		}
+
+		public static List<SelectListItem> GetIssuerSelectList(List<IssuerDetailModel> issuers) {
+			List<SelectListItem> issuerList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			issuerList.Add(item);
+			foreach (var issuer in issuers) {
+				item = new SelectListItem();
+				item.Text = issuer.Name.ToString();
+				item.Value = issuer.IssuerId.ToString();
+				issuerList.Add(item);
+			}
+			return issuerList;
+		}
+
+		public static List<SelectListItem> GetSecurityTypeSelectList(List<SecurityType> securityTypes) {
+			List<SelectListItem> securityTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			securityTypeList.Add(item);
+			foreach (var securityType in securityTypes) {
+				item = new SelectListItem();
+				item.Text = securityType.Name.ToString();
+				item.Value = securityType.SecurityTypeID.ToString();
+				securityTypeList.Add(item);
+			}
+			return securityTypeList;
+		}
+
+		public static List<SelectListItem> GetEquitySelectList(List<EquityDetailModel> equities) {
+			List<SelectListItem> equityList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			equityList.Add(item);
+			foreach (var equity in equities) {
+				item = new SelectListItem();
+				item.Text = equity.Symbol.ToString();
+				item.Value = equity.EquityId.ToString();
+				equityList.Add(item);
+			}
+			return equityList;
+		}
+
+		public static List<SelectListItem> GetFixedIncomeSelectList(List<FixedIncomeDetailModel> fixedIncomes) {
+			List<SelectListItem> fixedIncomeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			fixedIncomeList.Add(item);
+			foreach (var fixedIncome in fixedIncomes) {
+				item = new SelectListItem();
+				item.Text = fixedIncome.Symbol.ToString();
+				item.Value = fixedIncome.FixedIncomeId.ToString();
+				fixedIncomeList.Add(item);
+			}
+			return fixedIncomeList;
 		}
 
 		public static List<SelectListItem> GetEmptySelectList() {

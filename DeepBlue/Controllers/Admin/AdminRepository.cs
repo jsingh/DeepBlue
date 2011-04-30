@@ -639,5 +639,60 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 		#endregion
+
+		#region IAdminRepository SecurityType Members
+
+		public List<Models.Entity.SecurityType> GetAllSecurityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.SecurityType> query = (from securityType in context.SecurityTypes
+																select securityType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<SecurityType> paginatedList = new PaginatedList<SecurityType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<SecurityType> GetAllSecurityTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from securityType in context.SecurityTypes
+						orderby securityType.Name
+						select securityType).ToList();
+			}
+		}
+
+		public SecurityType FindSecurityType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.SecurityTypes.SingleOrDefault(type => type.SecurityTypeID == id);
+			}
+		}
+
+		public bool SecurityTypeNameAvailable(string securityTypeName, int securityTypeID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.SecurityTypes
+						 where type.Name == securityTypeName && type.SecurityTypeID != securityTypeID
+						 select type.SecurityTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteSecurityType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				SecurityType securityType = context.SecurityTypes.SingleOrDefault(type => type.SecurityTypeID == id);
+				if (securityType != null) {
+					if (securityType.DealUnderlyingDirects.Count == 0) {
+						context.SecurityTypes.DeleteObject(securityType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveSecurityType(SecurityType securityType) {
+			return securityType.Save();
+		}
+
+		#endregion
 	}
 }

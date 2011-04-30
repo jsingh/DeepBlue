@@ -70,49 +70,51 @@ namespace DeepBlue.Controllers.CapitalCall {
 					capitalCall.FundExpenses = model.FundExpenseAmount ?? 0;
 				}
 				List<InvestorFund> investorFunds = CapitalCallRepository.GetAllInvestorFunds(capitalCall.FundID);
-				decimal nonManagingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember).Sum(fund => fund.TotalCommitment);
-				decimal managingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember).Sum(fund => fund.TotalCommitment);
-				decimal totalCommitment = nonManagingMemberTotalCommitment + managingMemberTotalCommitment;
-				if (model.AddManagementFees) {
-					capitalCall.ManagementFeeStartDate = model.FromDate;
-					capitalCall.ManagementFeeEndDate = model.ToDate;
-					capitalCall.ManagementFees = model.ManagementFees ?? 0;
-					capitalCall.ManagementFeeInterest = 0;
-				}
-				if (!((capitalCall.NewInvestmentAmount + capitalCall.ExistingInvestmentAmount) == (capitalCall.CapitalAmountCalled - capitalCall.ManagementFees - capitalCall.FundExpenses))) {
-					ModelState.AddModelError("NewInvestmentAmount", "(New Investment Amount + Existing Investment Amount) should be equal to (Capital Amount - Management Fees - Fund Expenses).");
-				}
-				else {
-					foreach (var investorFund in investorFunds) {
-						item = new CapitalCallLineItem();
-						item.CapitalAmountCalled = (investorFund.TotalCommitment / totalCommitment) * capitalCall.CapitalAmountCalled;
-						item.CreatedBy = AppSettings.CreatedByUserId;
-						item.CreatedDate = DateTime.Now;
-						item.ExistingInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.ExistingInvestmentAmount;
-						item.FundExpenses = (investorFund.TotalCommitment / totalCommitment) * capitalCall.FundExpenses;
-						item.InvestedAmountInterest = (investorFund.TotalCommitment / totalCommitment) * capitalCall.InvestedAmountInterest;
-						item.InvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.InvestmentAmount;
-						item.InvestorID = investorFund.InvestorID;
-						item.LastUpdatedBy = AppSettings.CreatedByUserId;
-						item.LastUpdatedDate = DateTime.Now;
-						item.ManagementFeeInterest = (investorFund.TotalCommitment / nonManagingMemberTotalCommitment) * capitalCall.ManagementFeeInterest;
-						item.ManagementFees = (investorFund.TotalCommitment / nonManagingMemberTotalCommitment) * capitalCall.ManagementFees;
-						item.NewInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.NewInvestmentAmount;
-
-						// Update unfundedamount
-						investorFund.UnfundedAmount = investorFund.UnfundedAmount - item.CapitalAmountCalled;
-
-						capitalCall.CapitalCallLineItems.Add(item);
+				if (investorFunds != null) {
+					decimal nonManagingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember).Sum(fund => fund.TotalCommitment);
+					decimal managingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember).Sum(fund => fund.TotalCommitment);
+					decimal totalCommitment = nonManagingMemberTotalCommitment + managingMemberTotalCommitment;
+					if (model.AddManagementFees) {
+						capitalCall.ManagementFeeStartDate = model.FromDate;
+						capitalCall.ManagementFeeEndDate = model.ToDate;
+						capitalCall.ManagementFees = model.ManagementFees ?? 0;
+						capitalCall.ManagementFeeInterest = 0;
 					}
-					IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalCall(capitalCall);
-					if (errorInfo != null) {
-						resultModel.Result += GetErrorMessage(errorInfo);
+					if (!((capitalCall.NewInvestmentAmount + capitalCall.ExistingInvestmentAmount) == (capitalCall.CapitalAmountCalled - capitalCall.ManagementFees - capitalCall.FundExpenses))) {
+						ModelState.AddModelError("NewInvestmentAmount", "(New Investment Amount + Existing Investment Amount) should be equal to (Capital Amount - Management Fees - Fund Expenses).");
 					}
 					else {
 						foreach (var investorFund in investorFunds) {
-							errorInfo = InvestorRepository.SaveInvestorFund(investorFund);
-							if (errorInfo != null) {
-								resultModel.Result += GetErrorMessage(errorInfo);
+							item = new CapitalCallLineItem();
+							item.CapitalAmountCalled = (investorFund.TotalCommitment / totalCommitment) * capitalCall.CapitalAmountCalled;
+							item.CreatedBy = AppSettings.CreatedByUserId;
+							item.CreatedDate = DateTime.Now;
+							item.ExistingInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.ExistingInvestmentAmount;
+							item.FundExpenses = (investorFund.TotalCommitment / totalCommitment) * capitalCall.FundExpenses;
+							item.InvestedAmountInterest = (investorFund.TotalCommitment / totalCommitment) * capitalCall.InvestedAmountInterest;
+							item.InvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.InvestmentAmount;
+							item.InvestorID = investorFund.InvestorID;
+							item.LastUpdatedBy = AppSettings.CreatedByUserId;
+							item.LastUpdatedDate = DateTime.Now;
+							item.ManagementFeeInterest = (investorFund.TotalCommitment / nonManagingMemberTotalCommitment) * capitalCall.ManagementFeeInterest;
+							item.ManagementFees = (investorFund.TotalCommitment / nonManagingMemberTotalCommitment) * capitalCall.ManagementFees;
+							item.NewInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.NewInvestmentAmount;
+
+							// Update unfundedamount
+							investorFund.UnfundedAmount = investorFund.UnfundedAmount - item.CapitalAmountCalled;
+
+							capitalCall.CapitalCallLineItems.Add(item);
+						}
+						IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalCall(capitalCall);
+						if (errorInfo != null) {
+							resultModel.Result += GetErrorMessage(errorInfo);
+						}
+						else {
+							foreach (var investorFund in investorFunds) {
+								errorInfo = InvestorRepository.SaveInvestorFund(investorFund);
+								if (errorInfo != null) {
+									resultModel.Result += GetErrorMessage(errorInfo);
+								}
 							}
 						}
 					}

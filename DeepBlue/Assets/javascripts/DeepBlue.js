@@ -21,10 +21,12 @@
 		});
 	}
 	,setArrow: function (showmenu) {
-		var pos=showmenu.offset();
-		var arrow=$("#arrow");
-		arrow.show();
-		arrow.css({ "left": pos.left+((showmenu.width()/2)) });
+		if(showmenu.get(0)) {
+			var pos=showmenu.offset();
+			var arrow=$("#arrow");
+			arrow.show();
+			arrow.css({ "left": pos.left+((showmenu.width()/2)) });
+		}
 	}
 	,layout: function () {
 		var header=document.getElementById("header");

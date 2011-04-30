@@ -5,7 +5,8 @@
 <div>
 	<%: Html.Image("UnderlyingFunds.png", new { @class="expandbtn" })%></div>
 <div class="fieldbox">
-	<table cellpadding="0" cellspacing="0" border="0" class="grid" style="width: 80%">
+	<table id="tblUnderlyingFund" cellpadding="0" cellspacing="0" border="0" class="grid"
+		style="width: 80%">
 		<thead>
 			<tr>
 				<th>
@@ -28,26 +29,40 @@
 				</th>
 				<th>
 				</th>
+				<th>
+				</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="tbodyUnderlyingFund">
+		</tbody>
+		<tfoot>
 			<tr>
 				<td style="text-align: center">
+					<%: Html.Span("", new { @id = "SpnIndex" }) %>
 				</td>
-				<td>
+				<td style="text-align: center">
+					<%: Html.DropDownList("UnderlyingFundID", Model.UnderlyingFunds)%>
 				</td>
-				<td>
+				<td style="text-align: center">
+					<%: Html.TextBox("FundNav", "",new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
-				<td>
+				<td style="text-align: center">
+					<%: Html.TextBox("Percent", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
-				<td>
+				<td style="text-align: center">
+					<%: Html.TextBox("CommittedAmount", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
-				<td>
+				<td style="text-align: center">
+					<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_RecordDate" })%>
 				</td>
-				<td>
-					<%: Html.Image("Editbtn.png")%><%: Html.Image("Delete_Btn.png")%>
+				<td style="text-align: center">
+					<%: Html.Image("add_btn.png", new { @onclick = "javascript:deal.addUnderlyingFund(this);" })%>
+					<%: Html.Hidden("DealUnderlyingFundId", "${DealUnderlyingFundId}")%>
+				</td>
+				<td class="blank">
+					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 				</td>
 			</tr>
-		</tbody>
+		</tfoot>
 	</table>
 </div>

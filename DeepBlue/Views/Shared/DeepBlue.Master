@@ -88,8 +88,11 @@
 				<%: Html.ActionLink("Modify Deal", "Edit", "Deal", null , new { @onmouseover = "menu.msubopen(this,'ModifyDealBox')", @class = (ViewData["SubmenuName"] == "Modify Deal" ? "sel" : "") })%>
 			</li>
 			<li>
-				<%: Html.Anchor("Close Deal")%></li><li>
-					<%: Html.Anchor("Deal Report")%></li>
+				<%: Html.Anchor("Close Deal")%>
+			</li>
+			<li>
+				<%: Html.ActionLink("Deal Report", "Report", "Deal", null, new { @class = (ViewData["PageName"] == "DealReport" ? "sel" : "") })%>
+			</li>
 		</ul>
 		<%using (Html.InnerSubMenu("DealFundList", (ViewData["SubmenuName"] == "Create New Deal"))) {%>
 		<%}%>
@@ -133,6 +136,9 @@
 			<li>
 				<%: Html.SubMenuLink("Custom Field Management", "CusField_SubMenu", (ViewData["SubmenuName"] == "AdminCustomField"))%>
 			</li>
+			<li>
+				<%: Html.SubMenuLink("Deal Management", "Deal_SubMenu", (ViewData["SubmenuName"] == "AdminDeal"))%>
+			</li>
 		</ul>
 		<%using (Html.InnerSubMenu("Inv_SubMenu", (ViewData["SubmenuName"] == "AdminInvestor"))) {%>
 		<ul>
@@ -148,6 +154,16 @@
 				<%: Html.Anchor("Source")%></li>
 			<li>
 				<%: Html.Anchor("Investor Accounting Categories")%></li>
+		</ul>
+		<%} %>
+		<%using (Html.InnerSubMenu("Deal_SubMenu", (ViewData["SubmenuName"] == "AdminDeal"))) {%>
+		<ul>
+			<li>
+				<%: Html.ActionLink("Purchase Type", "PurchaseType", "Admin", null, new { @class = (ViewData["PageName"] == "PurchaseType" ? "sel" : "") })%></li>
+			<li>
+				<%: Html.ActionLink("Deal Closing Cost Type", "DealClosingCostType", "Admin", null, new { @class = (ViewData["PageName"] == "DealClosingCostType" ? "sel" : "") })%></li>
+			<li>
+				<%: Html.ActionLink("Security Type", "SecurityType", "Admin", null, new { @class = (ViewData["PageName"] == "SecurityType" ? "sel" : "") })%></li>
 		</ul>
 		<%} %>
 		<%using (Html.InnerSubMenu("Fund_SubMenu", (ViewData["SubmenuName"] == "AdminFund"))) {%>

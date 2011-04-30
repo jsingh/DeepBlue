@@ -62,35 +62,37 @@
 		dec=Num.indexOf(".");
 		end=((dec> -1)?""+Num.substring(dec,Num.length):".00");
 		Num=""+parseInt(Num);
-		var temp1="";
-		var temp2="";
-		if(this.checkNum(Num)==0) {
-			return "$0";
-		}
+		var temp1="";var temp2="";
+		if(this.checkNum(Num)==0) { return "$0"; }
 		else {
-			if(end.length==2) end+="0";
-			if(end.length==1) end+="00";
-			if(end=="") end+=".00";
+			if(end.length==2) { end+="0"; } if(end.length==1) { end+="00"; } if(end=="") { end+=".00"; }
 			var count=0;
-			for(var k=Num.length-1;k>=0;k--) {
-				var oneChar=Num.charAt(k);
-				if(count==3) {
-					temp1+=",";
-					temp1+=oneChar;
-					count=1;
-					continue;
-				}
-				else {
-					temp1+=oneChar;
-					count++;
-				}
-			}
-			for(var k=temp1.length-1;k>=0;k--) {
-				var oneChar=temp1.charAt(k);
-				temp2+=oneChar;
-			}
+			for(var k=Num.length-1;k>=0;k--) { var oneChar=Num.charAt(k);if(count==3) { temp1+=",";temp1+=oneChar;count=1;continue; } else { temp1+=oneChar;count++; } }
+			for(var k=temp1.length-1;k>=0;k--) { var oneChar=temp1.charAt(k);temp2+=oneChar; }
 			temp2="$"+temp2+end;
 			return temp2;
+		}
+	}
+	,serialize: function (target) {
+		var param=[];
+		$(":input",target).each(function () {
+			var type=$(this).attr("type");
+			switch(type) {
+				case "checkbox": if(this.checked) { param[param.length]=jHelper.getParam(this); } break;
+				case "radio": if(this.checked) { param[param.length]=jHelper.getParam(this); } break;
+				default: param[param.length]=jHelper.getParam(this);break;
+			}
+		});
+		return param;
+	}
+	,getParam: function (input) {
+		return { name: $(input).attr("name"),value: $(input).val() };
+	}
+	,loadDropDown: function (ddl,data) {
+		ddl.options.length=null;
+		for(i=0;i<data.length;i++) {
+			listItem=new Option(data[i].Text,data[i].Value,false,false);
+			ddl.options[ddl.options.length]=listItem;
 		}
 	}
 }

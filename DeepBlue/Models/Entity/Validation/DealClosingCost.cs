@@ -10,13 +10,6 @@ namespace DeepBlue.Models.Entity {
 	public partial class DealClosingCost {
 		public class DealClosingCostMD {
 			#region Primitive Properties
-			[Required(ErrorMessage = "EntityID is required")]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
-			public global::System.Int32 EntityID {
-				get;
-				set;
-			}
-
 			[Required(ErrorMessage = "Deal Closing Cost Type Name is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Deal Closing Cost Type Name is required")]
 			public global::System.Int32 DealClosingCostTypeID {
@@ -47,30 +40,30 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public DealClosingCost(IDealClosingCostService purchaseTypeService)
+		public DealClosingCost(IDealClosingCostService dealClosingCostService)
 			: this() {
-			this.DealClosingCostService = purchaseTypeService;
+			this.DealClosingCostService = dealClosingCostService;
 		}
 
 		public DealClosingCost() {
 		}
 
-		private IDealClosingCostService _purchaseTypeService;
+		private IDealClosingCostService _dealClosingCostService;
 		public IDealClosingCostService DealClosingCostService {
 			get {
-				if (_purchaseTypeService == null) {
-					_purchaseTypeService = new DealClosingCostService();
+				if (_dealClosingCostService == null) {
+					_dealClosingCostService = new DealClosingCostService();
 				}
-				return _purchaseTypeService;
+				return _dealClosingCostService;
 			}
 			set {
-				_purchaseTypeService = value;
+				_dealClosingCostService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var purchaseType = this;
-			IEnumerable<ErrorInfo> errors = Validate(purchaseType);
+			var dealClosingCost = this;
+			IEnumerable<ErrorInfo> errors = Validate(dealClosingCost);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -78,8 +71,8 @@ namespace DeepBlue.Models.Entity {
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(DealClosingCost purchaseType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(purchaseType);
+		private IEnumerable<ErrorInfo> Validate(DealClosingCost dealClosingCost) {
+			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(dealClosingCost);
 			return errors;
 		}
 	}

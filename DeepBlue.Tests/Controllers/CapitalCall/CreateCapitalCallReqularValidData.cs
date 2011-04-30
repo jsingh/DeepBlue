@@ -9,7 +9,13 @@ using DeepBlue.Models.CapitalCall;
 
 namespace DeepBlue.Tests.Controllers.CapitalCall {
     public class CreateCapitalCallReqularValidData : CreateCapitalCallReqular {
-    
+
+		protected ResultModel ResultModel {
+			get {
+				return base.ViewResult.ViewData.Model as ResultModel;
+			}
+		}
+
 	    private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;
@@ -26,7 +32,7 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
 
         private void SetFormCollection() {
             base.DefaultController.ValueProvider = SetupValueProvider(GetValidformCollection());
-            base.ActionResult = base.DefaultController.Create(GetValidformCollection());
+            base.ActionResult = base.DefaultController.Create (GetValidformCollection());
         }
 
 		/// <summary>
@@ -100,6 +106,17 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
 		}
 
 		#endregion
+
+		#region Tests after model state is valid
+
+		[Test]
+		public void returns_back_to_new_view_if_saving_capitalcall_failed() {
+			SetFormCollection();
+			Assert.IsNotNull(ResultModel);
+		}
+
+		#endregion
+
 
 		private FormCollection GetValidformCollection() {
             FormCollection formCollection = new FormCollection();

@@ -79,7 +79,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#endregion
 
-        #region Tests after model state is invalid
+        #region Tests after model state is valid
         
 
         [Test]

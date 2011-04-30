@@ -91,6 +91,48 @@ namespace DeepBlue.Helpers {
 			 .Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
+
+		public static string jQueryAjaxTable(this HtmlHelper helper, string targetId, AjaxTableOptions options) {
+			StringBuilder scriptSrc = new StringBuilder();
+			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").ajaxTable({")
+					 .Append("usepager:" + options.Paging.ToString().ToLower());
+			if (string.IsNullOrEmpty(options.ControllerName) == false && string.IsNullOrEmpty(options.ActionName) == false) {
+				scriptSrc.Append(",url:\"/" + options.ControllerName.ToString() + "/" + options.ActionName.ToString() + "\"");
+			}
+			if (string.IsNullOrEmpty(options.OnSuccess) == false) {
+				scriptSrc.Append(",onSuccess:" + options.OnSuccess + "");
+			}
+			if (string.IsNullOrEmpty(options.OnSubmit) == false) {
+				scriptSrc.Append(",onSubmit:" + options.OnSubmit + "");
+			}
+			if (string.IsNullOrEmpty(options.OnRowClick) == false) {
+				scriptSrc.Append(",onRowClick:" + options.OnRowClick + "");
+			}
+			if (string.IsNullOrEmpty(options.OnRowBound) == false) {
+				scriptSrc.Append(",onRowBound:" + options.OnRowBound + "");
+			}
+			if (string.IsNullOrEmpty(options.OnChangeSort) == false) {
+				scriptSrc.Append(",onChangeSort:" + options.OnChangeSort + "");
+			}
+			if (options.AppendExistRows) { scriptSrc.Append(",appendExistRows:true"); }
+			scriptSrc.Append(",rpOptions:[");
+			string rows = string.Empty;
+			foreach (var value in options.RowOptions) {
+				rows += value + ",";
+			}
+			if (rows.Length > 0) {
+				rows = rows.Substring(0, rows.Length - 1);
+			}
+			scriptSrc.Append(rows + "]");
+			scriptSrc.Append(",rp:" + options.RowsLength);
+			scriptSrc.Append(",method:\"" + options.HttpMethod.ToString() + "\"")
+			 .Append(",sortname:\"" + options.SortName.ToString() + "\"")
+			 .Append(",sortorder:\"" + options.SortOrder.ToString() + "\"")
+			 .Append(",autoload:" + options.Autoload.ToString().ToLower() + "")
+			 .Append("});});");
+			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
+		}
+		
 		
 	}
 }

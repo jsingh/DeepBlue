@@ -5,12 +5,18 @@
 <div class="editor-label auto">
 	<div class="cell">
 		<h4>
-			<a href="#">${FundName}</a></h4>
+			<a href="#" id="lnkFundName">${FundName}</a></h4>
 	</div>
 	<div class="cell" style="text-align: left">
 		<%: Html.LabelFor(model => model.DealNumber) %>&nbsp;${DealNumber}</div>
 	<div class="cell auto" style="margin-left: 25px">
 		<%: Html.LabelFor(model => model.DealName) %>&nbsp;<%: Html.TextBox("DealName","${DealName}") %></div>
+</div>
+<div class="editor-label">
+	<%: Html.LabelFor(model => model.FundId) %>
+</div>
+<div class="editor-field">
+	<%: Html.TextBox("FundName", "${FundName}", new { @id = "FundName", @onblur="javascript:deal.checkFund(this);" })%>
 </div>
 <div class="editor-label">
 	<%: Html.LabelFor(model => model.ContactId) %>
