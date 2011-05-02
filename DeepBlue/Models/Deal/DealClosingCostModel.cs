@@ -35,6 +35,6 @@ namespace DeepBlue.Models.Deal {
 
 		[Required(ErrorMessage = "Date is required")]
 		[DateRange(ErrorMessage = "Date is required")]
-		public DateTime Date { get; set; }
+		public DateTime? Date { get; set; }
 	}
 }

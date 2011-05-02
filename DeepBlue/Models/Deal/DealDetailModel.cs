@@ -50,7 +50,9 @@ namespace DeepBlue.Models.Deal {
 		[Required(ErrorMessage = "Purchase Type is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Purchase Type is required")]
 		[DisplayName("Purchase Type-")]
-		public int PurchaseTypeId { get; set; }
+		public int? PurchaseTypeId { get; set; }
+
+		public int? SellerContactId { get; set; }
 
 		[DisplayName("Partnered-")]
 		public bool IsPartnered { get; set; }

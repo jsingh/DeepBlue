@@ -11,6 +11,7 @@ using DeepBlue.Models.Entity;
 using System.Text;
 using DeepBlue.Controllers.Issuer;
 using DeepBlue.Models.Issuer;
+using DeepBlue.Models.Deal.Enums;
 
 namespace DeepBlue.Controllers.Deal {
 	public class DealController : Controller {
@@ -179,38 +180,10 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/FindDeal/5
 		public JsonResult FindDeal(int dealId) {
-			Models.Entity.Deal deal = DealRepository.FindDeal(dealId);
-			DealDetailModel dealDetail = new DealDetailModel();
-			dealDetail.ContactId = deal.ContactID;
-			dealDetail.DealId = deal.DealID;
-			dealDetail.DealName = deal.DealName;
-			dealDetail.DealNumber = deal.DealNumber;
-			dealDetail.FundId = deal.FundID;
-			dealDetail.FundName = deal.Fund.FundName;
-			if (deal.Partner != null) {
-				dealDetail.PartnerName = deal.Partner.PartnerName;
-			}
-			dealDetail.PurchaseTypeId = deal.PurchaseTypeID ?? 0;
-			dealDetail.IsPartnered = deal.IsPartnered;
-			dealDetail.SellerInfo.DealId = deal.DealID;
-			if (deal.Contact1 != null) {
-				dealDetail.SellerInfo.SellerName = deal.Contact1.FirstName;
-				dealDetail.SellerInfo.ContactName = deal.Contact1.ContactName;
-				int sellerContactId = deal.SellerContactID ?? 0;
-				if (sellerContactId > 0) {
-					dealDetail.SellerInfo.Email = AdminRepository.GetContactCommunicationValue(sellerContactId, Models.Admin.Enums.CommunicationType.Email);
-					dealDetail.SellerInfo.Fax = AdminRepository.GetContactCommunicationValue(sellerContactId, Models.Admin.Enums.CommunicationType.Fax);
-					dealDetail.SellerInfo.Phone = AdminRepository.GetContactCommunicationValue(sellerContactId, Models.Admin.Enums.CommunicationType.HomePhone);
-				}
-			}
-			foreach (var dealClosingCost in deal.DealClosingCosts) {
-				dealDetail.DealExpenses.Add(GetDealClosingCostModel(dealClosingCost));
-			}
-			foreach (var dealUnderlyingFund in deal.DealUnderlyingFunds) {
-				dealDetail.DealUnderlyingFunds.Add(GetDealUnderlyingFundModel(dealUnderlyingFund));
-			}
-			foreach (var dealUnderlyingDirect in deal.DealUnderlyingDirects) {
-				dealDetail.DealUnderlyingDirects.Add(GetDealUnderlyingDirectModel(dealUnderlyingDirect));
+			DealDetailModel dealDetail = DealRepository.FindDealDetail(dealId);
+			foreach (var dealUnderlyingDirect in dealDetail.DealUnderlyingDirects) {
+				dealUnderlyingDirect.Equities = SelectListFactory.GetEquitySelectList(IssuerRepository.GetAllEquity(dealUnderlyingDirect.IssuerId));
+				dealUnderlyingDirect.FixedIncomes = SelectListFactory.GetFixedIncomeSelectList(IssuerRepository.GetAllFixedIncome(dealUnderlyingDirect.IssuerId));
 			}
 			return Json(dealDetail, JsonRequestBehavior.AllowGet);
 		}
@@ -261,6 +234,7 @@ namespace DeepBlue.Controllers.Deal {
 				}
 			}
 			return resultModel.Result;
+			//return View("Result", resultModel);
 		}
 
 		//
@@ -579,6 +553,23 @@ namespace DeepBlue.Controllers.Deal {
 			underlyingDetail.DealUnderlyingFunds = DealRepository.GetAllDealUnderlyingFunds(dealId);
 			underlyingDetail.DealUnderlyingDirects = DealRepository.GetAllDealUnderlyingDirects(dealId);
 			return Json(underlyingDetail, JsonRequestBehavior.AllowGet);
+		}
+
+		public ActionResult Export(int id) {
+			Uri requestUrl = HttpContext.Request.Url;
+			string url = string.Format("{0}://{1}{2}",
+												  requestUrl.Scheme,
+												  requestUrl.Authority,
+												  "/Deal/ExportDetail/" + id);
+			return new ExportWordResult(url,"DealReport.doc");
+		}
+
+		public ActionResult ExportDetail(int id) {
+			DealExportModel model = new DealExportModel();
+			int totalRows = 0;
+			model.ExportType = (ExportType)id;
+			model.Deals = DealRepository.GetAllExportDeals(1, 100, "DealName", "asc", ref totalRows);
+			return View(model);
 		}
 		#endregion
 

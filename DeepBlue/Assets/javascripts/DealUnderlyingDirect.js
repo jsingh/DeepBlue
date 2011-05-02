@@ -17,7 +17,6 @@
 			jHelper.loadDropDown(Security,data.FixedIncomes);
 		}
 	}
-	//$("#SpnCommittedAmount",tr).html(jHelper.dollarAmount(data.CommittedAmount.toString()));
 	var date=jHelper.formatDate(jHelper.parseJSONDate(data.RecordDate));
 	$("#SpnRecordDate",tr).html(date);
 	$(":input[name='RecordDate']",tr).val(date);

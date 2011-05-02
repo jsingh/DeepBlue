@@ -5,6 +5,7 @@ using System.Web;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
 using DeepBlue.Models.Deal;
+using System.Data.Objects;
 
 namespace DeepBlue.Controllers.Deal {
 	public class DealRepository : IDealRepository {
@@ -41,13 +42,100 @@ namespace DeepBlue.Controllers.Deal {
 							  .Include("Contact1.ContactCommunications.Communication")
 							  .Include("Partner")
 							  .Include("Fund")
-							  .Include("DealClosingCosts")
-							  .Include("DealClosingCosts.DealClosingCostType")
-							  .Include("DealUnderlyingFunds")
-							  .Include("DealUnderlyingFunds.UnderlyingFund")
-							  .Include("DealUnderlyingDirects")
-							  .Include("DealUnderlyingDirects.SecurityType")
 							  .Where(deal => deal.DealID == dealId).SingleOrDefault();
+			}
+		}
+
+		public DealDetailModel FindDealDetail(int dealId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				DealDetailModel dealDetail = (from deal in context.Deals
+											  where deal.DealID == dealId
+											  select new DealDetailModel {
+												  ContactId = deal.ContactID,
+												  DealId = deal.DealID,
+												  DealName = deal.DealName,
+												  DealNumber = deal.DealNumber,
+												  FundId = deal.Fund.FundID,
+												  FundName = deal.Fund.FundName,
+												  IsPartnered = deal.IsPartnered,
+												  PartnerName = deal.Partner.PartnerName,
+												  PurchaseTypeId = deal.PurchaseTypeID,
+												  SellerContactId = deal.SellerContactID,
+											  }).SingleOrDefault();
+
+				if ((dealDetail.SellerContactId ?? 0) > 0) {
+					dealDetail.SellerInfo = (from sellerContact in context.Contacts
+											 where sellerContact.ContactID == dealDetail.SellerContactId
+											 select new DealSellerDetailModel {
+												 ContactName = sellerContact.ContactName,
+												 SellerName = sellerContact.FirstName,
+												 SellerContactId = sellerContact.ContactID,
+												 DealId = dealId
+											 }).SingleOrDefault();
+
+					List<CommunicationDetailModel> communications = (from contactCommunication in context.ContactCommunications
+																	 join communication in context.Communications on contactCommunication.CommunicationID equals communication.CommunicationID
+																	 where contactCommunication.ContactID == dealDetail.SellerContactId
+																	 select new CommunicationDetailModel {
+																		 CommunicationValue = communication.CommunicationValue,
+																		 CommunicationTypeId = communication.CommunicationTypeID
+																	 }).ToList();
+					dealDetail.SellerInfo.Email = (from communication in communications
+												   where communication.CommunicationTypeId == (int)Models.Investor.Enums.CommunicationType.Email
+												   select communication.CommunicationValue).SingleOrDefault();
+					dealDetail.SellerInfo.Phone = (from communication in communications
+												   where communication.CommunicationTypeId == (int)Models.Investor.Enums.CommunicationType.Home_Phone
+												   select communication.CommunicationValue).SingleOrDefault();
+					dealDetail.SellerInfo.Fax = (from communication in communications
+												 where communication.CommunicationTypeId == (int)Models.Investor.Enums.CommunicationType.Fax
+												 select communication.CommunicationValue).SingleOrDefault();
+				}
+
+				dealDetail.DealExpenses = (from expense in context.DealClosingCosts
+										   where expense.DealID == dealId
+										   select new DealClosingCostModel {
+											   Amount = expense.Amount,
+											   Date = expense.Date,
+											   DealClosingCostId = expense.DealClosingCostID,
+											   DealClosingCostTypeId = expense.DealClosingCostID,
+											   DealId = expense.DealID,
+											   Description = expense.DealClosingCostType.Name
+										   }).ToList();
+
+				dealDetail.DealUnderlyingFunds = (from fund in context.DealUnderlyingFunds
+												  where fund.DealID == dealId
+												  select new DealUnderlyingFundModel {
+													  CommittedAmount = fund.CommittedAmount,
+													  DealId = fund.DealID,
+													  DealUnderlyingFundId = fund.DealUnderlyingtFundID,
+													  FundName = fund.UnderlyingFund.FundName,
+													  FundNav = fund.FundNav,
+													  Percent = fund.Percent,
+													  RecordDate = fund.RecordDate,
+													  UnderlyingFundId = fund.UnderlyingFundID
+												  }).ToList();
+
+				dealDetail.DealUnderlyingDirects = (from direct in context.DealUnderlyingDirects
+													join equity in context.Equities on direct.SecurityID equals equity.EquityID into equities
+													join fixedIncome in context.FixedIncomes on direct.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes
+													from equity in equities.DefaultIfEmpty()
+													from fixedIncome in fixedIncomes.DefaultIfEmpty()
+													where direct.DealID == dealId
+													select new DealUnderlyingDirectModel {
+														DealId = direct.DealID,
+														DealUnderlyingDirectId = direct.DealUnderlyingDirectID,
+														FMV = direct.FMV,
+														NumberOfShares = direct.NumberOfShares,
+														Percent = direct.Percent,
+														RecordDate = direct.RecordDate,
+														SecurityId = direct.SecurityID,
+														SecurityTypeId = direct.SecurityTypeID,
+														SecurityType = direct.SecurityType.Name,
+														Security = (direct.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Symbol : fixedIncome.Symbol),
+														IssuerId = (direct.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Issuer.IssuerID : fixedIncome.Issuer.IssuerID),
+														IssuerName = (direct.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Issuer.Name : fixedIncome.Issuer.Name)
+													}).ToList();
+				return dealDetail;
 			}
 		}
 
@@ -172,7 +260,7 @@ namespace DeepBlue.Controllers.Deal {
 						join fixedIncome in context.FixedIncomes on dealUnderlyingDirect.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes
 						from equity in equities.DefaultIfEmpty()
 						from fixedIncome in fixedIncomes.DefaultIfEmpty()
-						where dealUnderlyingDirect.DealID == dealId 
+						where dealUnderlyingDirect.DealID == dealId
 						select new DealUnderlyingDirectDetail {
 							Company = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Issuer.Name : fixedIncome.Issuer.Name),
 							FMV = dealUnderlyingDirect.FMV,
@@ -227,6 +315,47 @@ namespace DeepBlue.Controllers.Deal {
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<DealReportModel> paginatedList = new PaginatedList<DealReportModel>(query, pageIndex, pageSize);
 				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<DealReportModel> GetAllExportDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<DealReportModel> query = (from deal in context.Deals
+													 select new DealReportModel {
+														 DealId = deal.DealID,
+														 DealName = deal.DealName,
+														 DealNumber = deal.DealNumber,
+														 FundName = deal.Fund.FundName,
+														 SellerName = (deal.Contact1 != null ? deal.Contact1.ContactName : "")
+													 });
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<DealReportModel> paginatedList = new PaginatedList<DealReportModel>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				foreach (var deal in paginatedList) {
+					deal.DealUnderlyingFunds = (from fund in context.DealUnderlyingFunds
+												where fund.DealID == deal.DealId
+												select new DealUnderlyingFundDetail {
+													Commitment = fund.CommittedAmount,
+													FundName = fund.UnderlyingFund.FundName,
+													NAV = fund.FundNav,
+													RecordDate = fund.RecordDate
+												}).ToList();
+					deal.DealUnderlyingDirects = (from dealUnderlyingDirect in context.DealUnderlyingDirects
+												  join equity in context.Equities on dealUnderlyingDirect.SecurityID equals equity.EquityID into equities
+												  join fixedIncome in context.FixedIncomes on dealUnderlyingDirect.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes
+												  from equity in equities.DefaultIfEmpty()
+												  from fixedIncome in fixedIncomes.DefaultIfEmpty()
+												  where dealUnderlyingDirect.DealID == deal.DealId
+												  select new DealUnderlyingDirectDetail {
+													  Company = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Issuer.Name : fixedIncome.Issuer.Name),
+													  FMV = dealUnderlyingDirect.FMV,
+													  NoOfShares = dealUnderlyingDirect.NumberOfShares,
+													  Percentage = dealUnderlyingDirect.Percent,
+													  RecordDate = dealUnderlyingDirect.RecordDate,
+													  Security = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Symbol : fixedIncome.Symbol)
+												  }).ToList();
+				}
 				return paginatedList;
 			}
 		}

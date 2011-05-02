@@ -9,6 +9,8 @@
 		tr.remove();
 	}
 	tr=$("#UnderlyingFund_"+data.DealUnderlyingFundId,tbody);
+	var amount = parseFloat(data.CommittedAmount);
+	if(isNaN(amount)) { data.CommittedAmount=0; }
 	$("#SpnCommittedAmount",tr).html(jHelper.dollarAmount(data.CommittedAmount.toString()));
 	var date=jHelper.formatDate(jHelper.parseJSONDate(data.RecordDate));
 	$("#SpnRecordDate",tr).html(date);

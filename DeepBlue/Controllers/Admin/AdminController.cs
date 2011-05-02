@@ -1082,6 +1082,203 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
+		#region UnderlyingFundType
+
+		public ActionResult UnderlyingFundType() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "UnderlyingFundType";
+			return View();
+		}
+
+		//
+		// GET: /Admin/UnderlyingList
+		[HttpGet]
+		public ActionResult UnderlyingFundTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			int totalRows = 0;
+			IList<UnderlyingFundType> module = AdminRepository.GetAllUnderlyingFundTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			ViewData["TotalRows"] = totalRows;
+			ViewData["PageNo"] = pageIndex;
+			return View(module);
+		}
+
+		//
+		// GET: /Admin/EditUnderlyingFundType
+		[HttpGet]
+		public ActionResult EditUnderlyingFundType(int id) {
+			EditUnderlyingFundTypeModel model = new EditUnderlyingFundTypeModel();
+			UnderlyingFundType underlyinfundtype = AdminRepository.FindUnderlyingFundType(id);
+			if (underlyinfundtype != null) {
+				model.UnderlyingFundTypeID = underlyinfundtype.UnderlyingFundTypeID;
+				model.Name = underlyinfundtype.Name;
+
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateUnderlyingFundType
+		[HttpPost]
+		public ActionResult UpdateUnderlyingFundType(FormCollection collection) {
+			EditUnderlyingFundTypeModel model = new EditUnderlyingFundTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = UnderlyingFundTypeFieldTextAvailable(model.Name, model.UnderlyingFundTypeID);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				UnderlyingFundType underlyingfundtype = AdminRepository.FindUnderlyingFundType(model.UnderlyingFundTypeID);
+				if (underlyingfundtype == null) {
+					underlyingfundtype = new UnderlyingFundType();
+				}
+				underlyingfundtype.Name = model.Name;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveUnderlyingFundType(underlyingfundtype);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteUnderlyingFundType(int id) {
+			if (AdminRepository.DeleteUnderlyingFundTypeId(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string UnderlyingFundTypeFieldTextAvailable(string UnderlyingFundTypeFieldText, int UnderlyingFundtypeFieldId) {
+			if (AdminRepository.UnderlyingFundTypeTextAvailable(UnderlyingFundTypeFieldText, UnderlyingFundtypeFieldId))
+				return "Custom Field Text already exists.";
+			else
+				return string.Empty;
+		}
+
+
+		#endregion
+
+		#region ShareClassType
+
+		public ActionResult ShareClassType() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "ShareClassType";
+			return View();
+		}
+
+		//
+		// GET: /Admin/ShareClassTypeList
+		[HttpGet]
+		public ActionResult ShareClassTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			int totalRows = 0;
+			IList<ShareClassType> module = AdminRepository.GetAllShareClassTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			ViewData["TotalRows"] = totalRows;
+			ViewData["PageNo"] = pageIndex;
+			return View(module);
+		}
+
+		//
+		// GET: /Admin/EditShareClassType
+		[HttpGet]
+		public ActionResult EditShareClassType(int id) {
+			EditShareClassTypeModel model = new EditShareClassTypeModel();
+			ShareClassType shareclasstype = AdminRepository.FindShareClassType(id);
+			if (shareclasstype != null) {
+				model.ShareClassTypeID = shareclasstype.ShareClassTypeID;
+				model.ShareClass = shareclasstype.ShareClass;
+				model.Enabled = shareclasstype.Enabled ;
+				model.CreatedBy = shareclasstype.CreatedBy;
+				model.CreatedDate = shareclasstype.CreatedDate;  
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateShareClassType
+		[HttpPost]
+		public ActionResult UpdateShareClassType(FormCollection collection) {
+			EditShareClassTypeModel model = new EditShareClassTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = ShareClassTypeFieldTextAvailable(model.ShareClass, model.ShareClassTypeID);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				ShareClassType shareclasstype = AdminRepository.FindShareClassType(model.ShareClassTypeID);
+				if (shareclasstype == null) {
+					shareclasstype = new ShareClassType();
+				}
+				shareclasstype.ShareClass = model.ShareClass;
+				shareclasstype.Enabled = model.Enabled;
+				shareclasstype.EntityID = (int)ConfigUtil.CurrentEntityID;
+				shareclasstype.CreatedBy = AppSettings.CreatedByUserId;
+				shareclasstype.CreatedDate = DateTime.Now; 
+				shareclasstype.LastUpdatedBy = AppSettings.CreatedByUserId;
+				shareclasstype.LastUpdatedDate = DateTime.Now;
+				IEnumerable < ErrorInfo > errorInfo = AdminRepository.SaveShareClassType(shareclasstype);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteShareClassType(int id) {
+			if (AdminRepository.DeleteShareClassTypeId(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string ShareClassTypeFieldTextAvailable(string ShareClassTypeFieldText, int ShareClassTypeFieldId) {
+			if (AdminRepository.ShareClassTypeTextAvailable(ShareClassTypeFieldText, ShareClassTypeFieldId))
+				return "Custom Field Text already exists.";
+			else
+				return string.Empty;
+		}
+
+
+		#endregion
+
+
 		public ActionResult Result() {
 			return View();
 		}

@@ -16,7 +16,7 @@ namespace DeepBlue.Controllers.Report {
 						where distributionDetail.CapitalDistribution.FundID == fundId && distributionDetail.CapitalDistributionID == capitalDistributionlId
 						select new DistributionLineItem {
 							 InvestorName = distributionDetail.Investor.InvestorName,
-							 Commitment = distributionDetail.Investor.InvestorFunds.Sum(investor => investor.TotalCommitment),
+							 Commitment = distributionDetail.Investor.InvestorFunds.Where(investorFund => investorFund.FundID == fundId).Sum(investor => investor.TotalCommitment),
 							 DistributionAmount = distributionDetail.DistributionAmount,
 							 Designation = distributionDetail.Investor.InvestorContacts.FirstOrDefault().Contact.Designation
 						}).ToList();
@@ -34,10 +34,10 @@ namespace DeepBlue.Controllers.Report {
 		public List<CapitalCallItem> CapitalCallLineItems(int fundId, int capitalCalllId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from capitalCallDetail in context.CapitalCallLineItems
-						where capitalCallDetail.CapitalCall.FundID == fundId && capitalCallDetail.CapitalCallID == capitalCalllId
+						where capitalCallDetail.CapitalCall.FundID == fundId && capitalCallDetail.CapitalCallID == capitalCalllId  
 						select new CapitalCallItem {
 							InvestorName = capitalCallDetail.Investor.InvestorName,
-							Commitment = capitalCallDetail.Investor.InvestorFunds.Sum(investor => investor.TotalCommitment),
+							Commitment = capitalCallDetail.Investor.InvestorFunds.Where(investorFund => investorFund.FundID == fundId).Sum(investor => investor.TotalCommitment),
 							Expenses = capitalCallDetail.FundExpenses,
 							Investments = capitalCallDetail.InvestmentAmount,
 							ManagementFees  = capitalCallDetail.ManagementFees

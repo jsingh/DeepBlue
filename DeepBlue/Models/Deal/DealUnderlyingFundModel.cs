@@ -33,7 +33,7 @@ namespace DeepBlue.Models.Deal {
 
 		[Required(ErrorMessage = "Record Date is required")]
 		[DateRange()]
-		public DateTime RecordDate { get; set; }
+		public DateTime? RecordDate { get; set; }
 
 		[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "FundNav is required")]
 		public decimal? FundNav { get; set; }

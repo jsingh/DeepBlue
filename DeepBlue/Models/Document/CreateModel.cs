@@ -40,6 +40,21 @@ namespace DeepBlue.Models.Document {
         [DateRange()]
 		public DateTime DocumentDate { get; set; }
 		
+		//[Required(ErrorMessage = "Document Date is required.")]
+		//[DisplayName("Created Date:")]
+		//[DateRange()] 
+		//public DateTime CreatedDate { get;set;}
+
+		//[Required(ErrorMessage = "Entity Id is required.")]
+		//[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Entity Id is required")]
+		//[DisplayName("EntityID:")]
+		//public int EntityID { get; set; }
+
+		//[Required(ErrorMessage = "Created By is required.")]
+		//[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Created By is required.")]
+		//[DisplayName("Created By:")]
+		//public int CreatedBy { get; set; }
+
 		public string ModelErrorMessage { get; set; }
 
 		public int UploadType { get; set; }
@@ -47,7 +62,7 @@ namespace DeepBlue.Models.Document {
 		[DisplayName("Link:")]
 		public string FilePath { get; set; }
 
-		/* Document Type */
+		/* Document Type */ 
 
 		public List<SelectListItem> DocumentTypes { get; set; }
 

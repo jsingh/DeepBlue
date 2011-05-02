@@ -694,5 +694,97 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		#endregion
+
+		#region IAdminRepository UnderlingFundType
+
+		public List<Models.Entity.UnderlyingFundType> GetAllUnderlyingFundTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.UnderlyingFundType> query = (from module in context.UnderlyingFundTypes
+														  select module);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<Models.Entity.UnderlyingFundType> paginatedList = new PaginatedList<Models.Entity.UnderlyingFundType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public UnderlyingFundType FindUnderlyingFundType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.UnderlyingFundTypes.SingleOrDefault(field => field.UnderlyingFundTypeID == id);
+			}
+		}
+
+		public bool UnderlyingFundTypeTextAvailable(string underlyingfundtypeFieldText, int underlyingfundtypeFieldId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from field in context.UnderlyingFundTypes
+						 where field.Name == underlyingfundtypeFieldText && field.UnderlyingFundTypeID != underlyingfundtypeFieldId
+						 select field.UnderlyingFundTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteUnderlyingFundTypeId(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				UnderlyingFundType underlyingfundtype = context.UnderlyingFundTypes.SingleOrDefault(field => field.UnderlyingFundTypeID == id);
+				if (underlyingfundtype != null) {
+					if (underlyingfundtype.UnderlyingFunds.Count == 0) {
+						context.UnderlyingFundTypes.DeleteObject(underlyingfundtype);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveUnderlyingFundType(UnderlyingFundType  underlyingfundtype) {
+			return underlyingfundtype.Save();
+		}
+		#endregion
+
+		#region IAdminRepository ShareClassType
+
+		public List<Models.Entity.ShareClassType> GetAllShareClassTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.ShareClassType> query = (from module in context.ShareClassTypes
+																	  select module);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<Models.Entity.ShareClassType> paginatedList = new PaginatedList<Models.Entity.ShareClassType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public ShareClassType FindShareClassType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.ShareClassTypes.SingleOrDefault(field => field.ShareClassTypeID == id);
+			}
+		}
+
+		public bool ShareClassTypeTextAvailable(string shareclasstypeFieldText, int shareclasstypeFieldId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from field in context.ShareClassTypes
+						 where field.ShareClass == shareclasstypeFieldText && field.ShareClassTypeID != shareclasstypeFieldId
+						 select field.ShareClassTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteShareClassTypeId(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				ShareClassType shareclasstype = context.ShareClassTypes.SingleOrDefault(field => field.ShareClassTypeID == id);
+				if (shareclasstype != null) {
+					if (shareclasstype.UnderlyingFunds.Count == 0) {
+						context.ShareClassTypes.DeleteObject(shareclasstype);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveShareClassType(ShareClassType shareclasstype) {
+			return shareclasstype.Save();
+		}
+		#endregion
 	}
 }

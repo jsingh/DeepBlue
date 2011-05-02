@@ -72,11 +72,37 @@
 }
 .detail-left table, .detail-right table {
 	width: 95%;
-	background-color: #000;color:#000; 
+	background-color: #000;
+	color: #000;
 }
-#ReportList #tblUnderlyingFund tr th,
-#ReportList #tblUnderlyingFund tr td,
-#ReportList #tblUnderlyingDirect tr th,
-#ReportList #tblUnderlyingDirect tr td {
-	background-color: #fff; color:#000;
+#ReportList #tblUnderlyingFund tr th, #ReportList #tblUnderlyingFund tr td, #ReportList #tblUnderlyingDirect tr th, #ReportList #tblUnderlyingDirect tr td {
+	background-color: #fff;
+	color: #000;
 }
+#ReportList .sorted span {
+	background-image: url(../images/sort_up.gif);
+	background-repeat: no-repeat;
+	background-position: right center;
+	padding-right: 12px;
+}
+#ReportList .sdesc span {
+	background-image: url(../images/sort_down.gif);
+	background-repeat: no-repeat;
+	background-position: right center;
+	padding-right: 12px;
+}
+#ExportMenu {
+	display: none;
+	position: absolute;
+	width: 120px;  border: 1px solid gray;
+}
+#ExportMenu ul li {
+    background-color: #FFFFFF;
+    color: #000000;
+	padding: 5px; list-style:none;
+}
+#ExportMenu ul li a{
+	color: #000000;
+}
+#ExportMenu .sel { background-color:#B4AFAF; }
+#ExportMenu .sel a { color:#fff; }

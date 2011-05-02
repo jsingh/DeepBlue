@@ -12,6 +12,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region Deal
 		Models.Entity.Deal FindDeal(int dealId);
+		DealDetailModel FindDealDetail(int dealId);
 		IEnumerable<ErrorInfo> SaveDeal(Models.Entity.Deal deal);
 		List<AutoCompleteList> FindDeals(string dealName);
 		bool DealNameAvailable(string fundName, int fundId);
@@ -47,6 +48,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region DealReport
 		List<DealReportModel> GetAllReportDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<DealReportModel> GetAllExportDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		#endregion
 	}
 }

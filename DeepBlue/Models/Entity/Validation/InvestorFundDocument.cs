@@ -20,13 +20,6 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage = "Investor Type is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Investor Type is required")]
-			public global::System.Int32 InvestorID {
-				get;
-				set;
-			}
-
 			[Required(ErrorMessage = "Document Date is required")]
 			[DateRange(ErrorMessage = "Document Date is required")]
 			public global::System.DateTime DocumentDate {

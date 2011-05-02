@@ -17,8 +17,10 @@
 		<div class="title">
 			<div class="left-col">
 				Deal Report</div>
+			<div class="left-col" style="margin-left: 10px; display: none" id="ReportLoading">
+				<%:Html.Image("ajax.jpg")%>&nbsp;Loading....</div>
 			<div class="right-col export">
-				<a href="javascript:void(0);">Export to&nbsp;<%:Html.Image("arrow_down.png")%></a></div>
+				<a id="lnkExport" style="cursor:pointer">Export to&nbsp;<%:Html.Image("arrow_down.png")%></a></div>
 		</div>
 		<div class="line">
 		</div>
@@ -31,16 +33,16 @@
 						DealId
 					</th>
 					<th sortname="DealNumber" style="width: 10%">
-						Deal No.
+						<span>Deal No.</span>
 					</th>
 					<th sortname="DealName">
-						Deal Name
+						<span>Deal Name</span>
 					</th>
-					<th>
-						Fund Name
+					<th sortname="FundName">
+						<span>Fund Name</span>
 					</th>
-					<th>
-						Seller Name
+					<th sortname="SellerName">
+						<span>Seller Name</span>
 					</th>
 					<th style="width: 2%">
 					</th>
@@ -50,8 +52,19 @@
 			</tbody>
 		</table>
 	</div>
+	<div id="ExportMenu">
+		<ul>
+			<li>
+				<%:Html.ActionLink("Word", "Export/1", null, new { @target = "_blank" })%></li>
+			<li>
+				<%:Html.Anchor("Pdf", new { @href = "#" })%></li>
+			<li>
+				<%:Html.Anchor("Print", new { @href = "#" })%></li>
+		</ul>
+	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
+	<script type="text/javascript">		dealReport.init();</script>
 	<%=Html.jQueryAjaxTable("ReportList", new AjaxTableOptions {
 	ActionName = "DealReportList",
 	ControllerName = "Deal"

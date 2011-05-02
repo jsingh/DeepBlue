@@ -1,8 +1,8 @@
-﻿#ReportMain{
-	overflow:hidden;
+﻿#ReportMain {
+	overflow: hidden;
 }
-.rep-header{
-	padding:10px;
+.rep-header {
+	padding: 10px;
 }
 .rep-header, .rep-main {
 }
@@ -23,24 +23,32 @@
 }
 .grid {
 	clear: both;
-	overflow:auto;
-	overflow-x:hidden;
+	overflow: auto;
+	overflow-x: hidden;
 }
 .grid table {
 	width: 99%;
 }
 .grid tr th {
-	text-align:right;text-decoration:underline;
+	text-align: right;
+	text-decoration: underline;
 }
-.grid tr th,.grid tr td {
-	padding:3px 0px;
+.grid tr th, .grid tr td {
+	padding: 3px 0px;
 }
-.foot-name,.foot-value{
-	 float:left;font-weight:bold; padding:3px; white-space:nowrap;
+.foot-name, .foot-value {
+	float: left;
+	font-weight: bold;
+	padding: 3px;
+	white-space: nowrap;
 }
-.foot-name{
-	width:150px;clear:left;   text-decoration: underline;
+.foot-name {
+	width: 150px;
+	clear: left;
+	text-decoration: underline;
 }
-.foot-value{
-	clear:right;width:120px;text-align:right;
+.foot-value {
+	clear: right;
+	width: 120px;
+	text-align: right;
 }

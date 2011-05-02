@@ -106,6 +106,7 @@
     <Compile Include="Helpers\DateRange.cs" />
     <Compile Include="Helpers\DownloadFile.cs" />
     <Compile Include="Helpers\EmailAttribute.cs" />
+    <Compile Include="Helpers\ExportWordResult.cs" />
     <Compile Include="Helpers\Flexigrid.cs" />
     <Compile Include="Helpers\FlexigridOptions.cs" />
     <Compile Include="Helpers\FundDetails.cs" />
@@ -121,20 +122,50 @@
     <Compile Include="Helpers\SelectListFactory.cs" />
     <Compile Include="Helpers\UploadFile.cs" />
     <Compile Include="Helpers\ValidationHelpers.cs" />
-    <Compile Include="Models\Admin\EditSecurityTypeModel.cs" />
-    <Compile Include="Models\Admin\EditCommunicationGroupingModel.cs" />
-    <Compile Include="Models\Admin\EditCommunicationTypeModel.cs" />
-    <Compile Include="Models\Admin\EditCreateModule.cs" />
-    <Compile Include="Models\Admin\EditCustomFieldModel.cs" />
-    <Compile Include="Models\Admin\EditDataTypeModel.cs" />
-    <Compile Include="Models\Admin\EditDealClosingCostTypeModel.cs" />
-    <Compile Include="Models\Admin\EditFundClosingModel.cs" />
-    <Compile Include="Models\Admin\EditInvestorEntityTypeModel.cs" />
-    <Compile Include="Models\Admin\EditInvestorTypeModel.cs" />
-    <Compile Include="Models\Admin\EditPurchaseTypeModel.cs" />
-    <Compile Include="Models\Admin\Enums.cs" />
-    <Compile Include="Models\Admin\ListModel.cs" />
-    <Compile Include="Models\Admin\ResultModel.cs" />
+    <Compile Include="Models\Admin\EditCommunicationGroupingModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\EditCommunicationTypeModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\EditCreateModule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\EditCustomFieldModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\EditDataTypeModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\EditDealClosingCostTypeModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\EditFundClosingModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\EditInvestorEntityTypeModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\EditInvestorTypeModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\EditPurchaseTypeModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\EditSecurityTypeModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\EditShareClassTypeModel.cs" />
+    <Compile Include="Models\Admin\EditUnderlyingFundTypeModel.cs" />
+    <Compile Include="Models\Admin\Enums.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\ListModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Admin\ResultModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\CapitalCall\CapitalCallDetail.cs" />
     <Compile Include="Models\CapitalCall\CreateDistributionModel.cs" />
     <Compile Include="Models\CapitalCall\CreateManualModel.cs" />
@@ -146,16 +177,96 @@
     <Compile Include="Models\CapitalCall\ManagementFeeDetail.cs" />
     <Compile Include="Models\CapitalCall\CreateReceiveModel.cs" />
     <Compile Include="Models\CapitalCall\ResultModel.cs" />
+    <Compile Include="Models\Deal\CommunicationDetailModel.cs" />
     <Compile Include="Models\Deal\CreateModel.cs" />
     <Compile Include="Models\Deal\DealDetailModel.cs" />
     <Compile Include="Models\Deal\DealDocumentModel.cs" />
     <Compile Include="Models\Deal\DealClosingCostModel.cs" />
+    <Compile Include="Models\Deal\DealExportModel.cs" />
     <Compile Include="Models\Deal\DealReportModel.cs" />
     <Compile Include="Models\Deal\DealUnderlyingDirectModel.cs" />
     <Compile Include="Models\Deal\DealUnderlyingFundModel.cs" />
     <Compile Include="Models\Deal\Enums.cs" />
-    <Compile Include="Models\Entity\Partial\DealClosingService.cs" />
+    <Compile Include="Models\Entity\Partial\CapitalCallService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\CapitalDistributionService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\CommunicationGroupingService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\CommunicationTypeService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\CustomFieldService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\CustomFieldValueService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\DataTypeService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\DealClosingCostService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\DealClosingCostTypeService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\DealClosingService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\DealService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\DealUnderlyingDirectService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\DealUnderlyingFundService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\FundClosingService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\FundService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\InvestorEntityTypeService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\InvestorFundDocumentService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\InvestorFundService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\InvestorFundTransactionService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\InvestorService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\InvestorTypeService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\ManagementFeeRateScheduleService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\ModuleService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\PurchaseTypeService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\SecurityTypeService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\ShareClassTypeService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingFundTypeService.cs" />
     <Compile Include="Models\Entity\Validation\DealClosing.cs" />
+    <Compile Include="Models\Entity\Validation\ShareClassType.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingFundType.cs" />
     <Compile Include="Models\Issuer\EquityDetailModel.cs" />
     <Compile Include="Models\Issuer\FixedIncomeDetailModel.cs" />
     <Compile Include="Models\Issuer\IssuerDetailModel.cs" />
@@ -169,30 +280,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entity\Partial\CapitalCallService.cs" />
-    <Compile Include="Models\Entity\Partial\CapitalDistributionService.cs" />
-    <Compile Include="Models\Entity\Partial\CommunicationTypeService.cs" />
-    <Compile Include="Models\Entity\Partial\CommunicationGroupingService.cs" />
-    <Compile Include="Models\Entity\Partial\SecurityTypeService.cs" />
-    <Compile Include="Models\Entity\Partial\DealUnderlyingDirectService.cs" />
-    <Compile Include="Models\Entity\Partial\DealUnderlyingFundService.cs" />
-    <Compile Include="Models\Entity\Partial\DealClosingCostService.cs" />
-    <Compile Include="Models\Entity\Partial\DealService.cs" />
-    <Compile Include="Models\Entity\Partial\DealClosingCostTypeService.cs" />
-    <Compile Include="Models\Entity\Partial\ManagementFeeRateScheduleService.cs" />
-    <Compile Include="Models\Entity\Partial\ModuleService.cs" />
-    <Compile Include="Models\Entity\Partial\CustomFieldValueService.cs" />
-    <Compile Include="Models\Entity\Partial\CustomFieldService.cs" />
-    <Compile Include="Models\Entity\Partial\DataTypeService.cs" />
-    <Compile Include="Models\Entity\Partial\FundClosingService.cs" />
-    <Compile Include="Models\Entity\Partial\FundService.cs" />
-    <Compile Include="Models\Entity\Partial\InvestorEntityTypeService.cs" />
-    <Compile Include="Models\Entity\Partial\InvestorFundDocumentService.cs" />
-    <Compile Include="Models\Entity\Partial\InvestorFundTransactionService.cs" />
-    <Compile Include="Models\Entity\Partial\InvestorFundService.cs" />
-    <Compile Include="Models\Entity\Partial\InvestorService.cs" />
-    <Compile Include="Models\Entity\Partial\InvestorTypeService.cs" />
-    <Compile Include="Models\Entity\Partial\PurchaseTypeService.cs" />
     <Compile Include="Models\Entity\Validation\Address.cs" />
     <Compile Include="Models\Entity\Validation\CapitalCall.cs" />
     <Compile Include="Models\Entity\Validation\CapitalDistribution.cs" />
@@ -258,6 +345,8 @@
     <Content Include="Assets\images\ajax.jpg" />
     <Content Include="Assets\images\arrow.gif" />
     <Content Include="Assets\images\arrow.png" />
+    <Content Include="Assets\images\arrow_down.png" />
+    <Content Include="Assets\images\arrow_up.png" />
     <Content Include="Assets\images\balloon.png" />
     <Content Include="Assets\images\bg.gif" />
     <Content Include="Assets\images\body_bg.gif" />
@@ -429,7 +518,9 @@
     <Content Include="Assets\javascripts\Module.js" />
     <Content Include="Assets\javascripts\DSummaryReport.js" />
     <Content Include="Assets\javascripts\SearchInvestor.js" />
+    <Content Include="Assets\javascripts\ShareClassType.js" />
     <Content Include="Assets\javascripts\TransactionController.js" />
+    <Content Include="Assets\javascripts\UnderlyingFundType.js" />
     <Content Include="Assets\stylesheets\adminflexigrid.css" />
     <Content Include="Assets\stylesheets\capitalcall.css" />
     <Content Include="Assets\stylesheets\customfield.css" />
@@ -455,42 +546,48 @@
     <Content Include="obj\Release\DeepBlue.dll" />
     <Content Include="obj\Release\DeepBlue.pdb" />
     <Content Include="obj\Release\TempPE\Models.Entity.DeepBlue.Designer.cs.dll" />
-    <Content Include="Views\Admin\CommunicationType.aspx" />
-    <Content Include="Views\Admin\CommunicationTypeList.ascx" />
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
     <Content Include="Views\Admin\CommunicationGroupingList.ascx" />
-    <Content Include="Views\Admin\EditSecurityType.aspx" />
-    <Content Include="Views\Admin\SecurityType.aspx" />
-    <Content Include="Views\Admin\SecurityTypeList.ascx" />
-    <Content Include="Views\Admin\EditDealClosingCostType.aspx" />
+    <Content Include="Views\Admin\CommunicationType.aspx" />
+    <Content Include="Views\Admin\CommunicationTypeList.ascx" />
+    <Content Include="Views\Admin\CustomField.aspx" />
+    <Content Include="Views\Admin\CustomFieldList.ascx" />
+    <Content Include="Views\Admin\DataType.aspx" />
+    <Content Include="Views\Admin\DataTypeList.ascx" />
     <Content Include="Views\Admin\DealClosingCostType.aspx" />
     <Content Include="Views\Admin\DealClosingCostTypeList.ascx" />
-    <Content Include="Views\Admin\EditPurchaseType.aspx" />
-    <Content Include="Views\Admin\PurchaseTypeList.ascx" />
     <Content Include="Views\Admin\EditCommunicationGrouping.aspx" />
     <Content Include="Views\Admin\EditCommunicationType.aspx" />
+    <Content Include="Views\Admin\EditCustomField.aspx" />
     <Content Include="Views\Admin\EditDataType.aspx" />
-    <Content Include="Views\Admin\DataTypeList.ascx" />
-    <Content Include="Views\Admin\DataType.aspx" />
+    <Content Include="Views\Admin\EditDealClosingCostType.aspx" />
+    <Content Include="Views\Admin\EditFundClosing.aspx" />
+    <Content Include="Views\Admin\EditInvestorEntityType.aspx" />
+    <Content Include="Views\Admin\EditInvestorType.aspx" />
     <Content Include="Views\Admin\EditModule.aspx" />
     <Content Include="Views\Admin\EditOptionalField.ascx" />
+    <Content Include="Views\Admin\EditPurchaseType.aspx" />
+    <Content Include="Views\Admin\EditSecurityType.aspx" />
+    <Content Include="Views\Admin\EditShareClassType.aspx" />
+    <Content Include="Views\Admin\EditUnderlyingFundType.aspx" />
+    <Content Include="Views\Admin\EntityType.aspx" />
+    <Content Include="Views\Admin\EntityTypeList.ascx" />
     <Content Include="Views\Admin\FundClosing.aspx" />
     <Content Include="Views\Admin\FundClosingList.ascx" />
-    <Content Include="Views\Admin\EditCustomField.aspx" />
-    <Content Include="Views\Admin\CustomFieldList.ascx" />
-    <Content Include="Views\Admin\CustomField.aspx" />
-    <Content Include="Views\Admin\EditFundClosing.aspx" />
-    <Content Include="Views\Admin\EditInvestorType.aspx" />
-    <Content Include="Views\Admin\InvestorTypeList.ascx" />
-    <Content Include="Views\Admin\EditInvestorEntityType.aspx" />
-    <Content Include="Views\Admin\EntityTypeList.ascx" />
     <Content Include="Views\Admin\InvestorType.aspx" />
+    <Content Include="Views\Admin\InvestorTypeList.ascx" />
+    <Content Include="Views\Admin\List.ascx" />
     <Content Include="Views\Admin\Module.aspx" />
     <Content Include="Views\Admin\ModuleList.ascx" />
     <Content Include="Views\Admin\PurchaseType.aspx" />
+    <Content Include="Views\Admin\PurchaseTypeList.ascx" />
     <Content Include="Views\Admin\Result.ascx" />
-    <Content Include="Views\Admin\EntityType.aspx" />
-    <Content Include="Views\Admin\List.ascx" />
+    <Content Include="Views\Admin\SecurityType.aspx" />
+    <Content Include="Views\Admin\SecurityTypeList.ascx" />
+    <Content Include="Views\Admin\ShareClassType.aspx" />
+    <Content Include="Views\Admin\ShareClassTypeList.ascx" />
+    <Content Include="Views\Admin\UnderlyingFundType.aspx" />
+    <Content Include="Views\Admin\UnderlyingFundTypeList.ascx" />
     <Content Include="Views\CapitalCall\CapitalCallList.ascx" />
     <Content Include="Views\CapitalCall\CapitalDistributionDetailList.ascx" />
     <Content Include="Views\CapitalCall\NewCapitalDistribution.aspx" />
@@ -500,6 +597,7 @@
     <Content Include="Views\CapitalCall\NewManualCapitalCall.aspx" />
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
+    <Content Include="Views\Deal\ExportDetail.aspx" />
     <Content Include="Views\Deal\DealDocumentDetail.ascx" />
     <Content Include="Views\Deal\DealExpenseDetail.ascx" />
     <Content Include="Views\Deal\DealList.ascx" />

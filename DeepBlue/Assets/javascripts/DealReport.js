@@ -1,13 +1,25 @@
 ﻿var dealReport={
 	pageIndex: 1
+	,init: function () {
+		$(document).ready(function () {
+			var lnk=$("#lnkExport");
+			var pos=$(lnk).position();
+			var menu=$("#ExportMenu");
+			$("li",menu).hover(function () { $(this).addClass("sel"); },function () { $(this).removeClass("sel"); });
+			menu.css({ "left": pos.left-55,"top": pos.top+20 });
+			lnk.toggle(function () { menu.show(); },function () { menu.hide(); });
+		});
+	}
 	,onSubmit: function (p) {
 		var reportCnt=$("#ReportContent");
 		var h=reportCnt.height();
 		p.rp=parseInt((h/55));
 		p.newp=dealReport.pageIndex;
+		$("#ReportLoading").show();
 		return true;
 	}
 	,onSuccess: function (t) {
+		$("#ReportLoading").hide();
 		var tfoot=$("tfoot",t).get(0);
 		if(!tfoot) {
 			tfoot=document.createElement("tfoot");

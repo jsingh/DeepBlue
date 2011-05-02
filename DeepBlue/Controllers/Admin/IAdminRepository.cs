@@ -122,5 +122,21 @@ namespace DeepBlue.Controllers.Admin {
 		bool DeleteSecurityType(int id);
 		IEnumerable<ErrorInfo> SaveSecurityType(SecurityType securityType);
 		#endregion
+
+		#region UnderlyingFundType
+		List<UnderlyingFundType> GetAllUnderlyingFundTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		UnderlyingFundType FindUnderlyingFundType(int id);
+		bool UnderlyingFundTypeTextAvailable(string underlyingfundtype, int underlyingfundtypeId);
+		bool DeleteUnderlyingFundTypeId(int id);
+		IEnumerable<ErrorInfo> SaveUnderlyingFundType(UnderlyingFundType underlyingfundtype);
+		#endregion
+
+		#region ShareClassType
+		List<ShareClassType> GetAllShareClassTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		ShareClassType FindShareClassType(int id);
+		bool ShareClassTypeTextAvailable(string shareclassype, int shareclasstypeId);
+		bool DeleteShareClassTypeId(int id);
+		IEnumerable<ErrorInfo> SaveShareClassType(ShareClassType shareclasstype);
+		#endregion
 	}
 }

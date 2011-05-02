@@ -8,4 +8,10 @@ namespace DeepBlue.Models.Deal.Enums {
         Equity = 1,
         FixedIncome = 2
     }
+
+	public enum ExportType {
+		Word = 1,
+		Pdf = 2,
+		Print = 3
+	}
 }

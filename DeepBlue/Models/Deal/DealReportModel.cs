@@ -7,6 +7,11 @@ namespace DeepBlue.Models.Deal {
 
 	public class DealReportModel {
 
+		public DealReportModel() {
+			DealUnderlyingFunds = new List<DealUnderlyingFundDetail>();
+			DealUnderlyingDirects = new List<DealUnderlyingDirectDetail>();
+		}
+
 		public int DealId { get; set; }
 
 		public int DealNumber { get; set; }
@@ -17,6 +22,9 @@ namespace DeepBlue.Models.Deal {
 
 		public string SellerName { get; set; }
 
+		public List<DealUnderlyingFundDetail> DealUnderlyingFunds { get; set; }
+
+		public List<DealUnderlyingDirectDetail> DealUnderlyingDirects { get; set; }
 	}
 
 	public class DealUnderlyingDetail {
