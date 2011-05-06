@@ -20,10 +20,10 @@ namespace DeepBlue.Controllers.Document {
 		public IAdminRepository AdminRepository { get; set; }
 
 		public DocumentController()
-			: this(new DocumentRepository(),new AdminRepository()) {
+			: this(new DocumentRepository(), new AdminRepository()) {
 		}
 
-		public DocumentController(IDocumentRepository repository,IAdminRepository adminRepository) {
+		public DocumentController(IDocumentRepository repository, IAdminRepository adminRepository) {
 			DocumentRepository = repository;
 			AdminRepository = adminRepository;
 		}
@@ -62,14 +62,16 @@ namespace DeepBlue.Controllers.Document {
 					case (int)DocumentStatus.Investor:
 						if (model.InvestorId == 0) {
 							ModelState.AddModelError("InvestorId", "Investor is required.");
-						} else {
+						}
+						else {
 							investorId = model.InvestorId;
 						}
 						break;
 					case (int)DocumentStatus.Fund:
 						if (model.FundId == 0) {
 							ModelState.AddModelError("FundId", "Fund is required.");
-						} else {
+						}
+						else {
 							fundId = model.FundId;
 						}
 						break;
@@ -86,7 +88,8 @@ namespace DeepBlue.Controllers.Document {
 									);
 						if (regex.IsMatch(model.FilePath) == false) {
 							ModelState.AddModelError("FilePath", "Invalid Link.");
-						} else {
+						}
+						else {
 							fileName = Path.GetFileName(model.FilePath);
 							ext = Path.GetExtension(model.FilePath);
 							filePath = model.FilePath.Replace(fileName, "");
@@ -99,32 +102,20 @@ namespace DeepBlue.Controllers.Document {
 					case UploadType.Upload:
 						if (model.File != null) {
 							ext = Path.GetExtension(model.File.FileName).ToLower();
-						} else {
+						}
+						else {
 							ModelState.AddModelError("File", "File is required");
 						}
 						break;
 				}
 				if (ModelState.IsValid) {
-					if (ext != ".pdf" && ext != ".doc" && ext != ".docx" && ext != ".xls" && ext != ".xlsx") {
-						ModelState.AddModelError("File", "*.pdf,doc,docx,xls,xlsx files only allowed");
-					} else {
-						switch (ext) {
-							case ".pdf":
-								fileTypeId = (int)DeepBlue.Models.Document.FileType.PDF;
-								break;
-							case ".doc":
-								fileTypeId = (int)DeepBlue.Models.Document.FileType.Word;
-								break;
-							case ".docx":
-								fileTypeId = (int)DeepBlue.Models.Document.FileType.Word;
-								break;
-							case ".xls":
-								fileTypeId = (int)DeepBlue.Models.Document.FileType.Excel;
-								break;
-							case ".xlsx":
-								fileTypeId = (int)DeepBlue.Models.Document.FileType.Excel;
-								break;
-						}
+					string errorMessage = string.Empty;
+					Models.Entity.FileType fileType = CheckFileExtension(ext, out errorMessage);
+					if (fileType == null) {
+						ModelState.AddModelError("File", errorMessage);
+					}
+					else {
+						fileTypeId = fileType.FileTypeID;
 						InvestorFundDocument investorFundDocument = new InvestorFundDocument();
 						investorFundDocument.CreatedBy = AppSettings.CreatedByUserId;
 						investorFundDocument.CreatedDate = DateTime.Now;
@@ -143,7 +134,8 @@ namespace DeepBlue.Controllers.Document {
 							investorFundDocument.File.FileName = fileUpload.FileName;
 							investorFundDocument.File.FilePath = fileUpload.FilePath;
 							investorFundDocument.File.Size = fileUpload.Size;
-						} else {
+						}
+						else {
 							investorFundDocument.File.FilePath = filePath;
 							investorFundDocument.File.FileName = fileName;
 						}
@@ -162,7 +154,8 @@ namespace DeepBlue.Controllers.Document {
 							if (string.IsNullOrEmpty(errors.ToString()) == false) {
 								ModelState.AddModelError("ModelErrorMessage", errors.ToString());
 							}
-						} else {
+						}
+						else {
 							model.InvestorId = 0;
 							model.FundId = 0;
 							model.DocumentTypeId = 0;
@@ -179,10 +172,36 @@ namespace DeepBlue.Controllers.Document {
 			model.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
 			if (ModelState.IsValid) {
 				model.DocumentStatus = (int)DocumentStatus.Investor;
-				return RedirectToAction("New", model);
-			} else {
+				return RedirectToAction("New");
+			}
+			else {
 				return View("New", model);
 			}
+		}
+
+		private Models.Entity.FileType CheckFileExtension(string extension, out string errorMessage) {
+			List<Models.Entity.FileType> fileTypes = AdminRepository.GetAllFileTypes();
+			Models.Entity.FileType fileType = null;
+			errorMessage = "*.";
+			foreach (var type in fileTypes) {
+				errorMessage += type.FileExtension + ",";
+				if (fileType == null) {
+					var arrExtensions = type.FileExtension.Split((",").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+					foreach (var ext in arrExtensions) {
+						if (ext.ToLower() == extension.Replace(".", "").ToLower()) {
+							fileType = type;
+							break;
+						}
+					}
+				}
+				else {
+					break;
+				}
+			}
+			if (fileType == null) {
+				errorMessage += "  files only allowed";
+			}
+			return fileType;
 		}
 
 		//

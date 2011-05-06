@@ -122,6 +122,7 @@
     <Compile Include="Helpers\SelectListFactory.cs" />
     <Compile Include="Helpers\UploadFile.cs" />
     <Compile Include="Helpers\ValidationHelpers.cs" />
+    <Compile Include="Models\Admin\EditFileTypeModel.cs" />
     <Compile Include="Models\Admin\EditIndustryModel.cs" />
     <Compile Include="Models\Admin\EditGeographyModel.cs" />
     <Compile Include="Models\Admin\EditReportingFrequencyModel.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Models\Deal\DealDocumentModel.cs" />
     <Compile Include="Models\Deal\DealClosingCostModel.cs" />
     <Compile Include="Models\Deal\DealExportModel.cs" />
+    <Compile Include="Models\Deal\DealListModel.cs" />
     <Compile Include="Models\Deal\DealReportModel.cs" />
     <Compile Include="Models\Deal\DealUnderlyingDirectModel.cs" />
     <Compile Include="Models\Deal\DealUnderlyingFundModel.cs" />
@@ -206,6 +208,7 @@
     <Compile Include="Models\Entity\Partial\CommunicationTypeService.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Entity\Partial\FileTypeService.cs" />
     <Compile Include="Models\Entity\Partial\IndustryService.cs" />
     <Compile Include="Models\Entity\Partial\GeographyService.cs" />
     <Compile Include="Models\Entity\Partial\ReportingFrequencyService.cs" />
@@ -276,6 +279,7 @@
     <Compile Include="Models\Entity\Partial\ShareClassTypeService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundTypeService.cs" />
+    <Compile Include="Models\Entity\Validation\FileType.cs" />
     <Compile Include="Models\Entity\Validation\Industry.cs" />
     <Compile Include="Models\Entity\Validation\Geography.cs" />
     <Compile Include="Models\Entity\Validation\ReportingFrequency.cs" />
@@ -496,6 +500,7 @@
     <Content Include="Assets\javascripts\CommunicationType.js" />
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
+    <Content Include="Assets\javascripts\FileType.js" />
     <Content Include="Assets\javascripts\CreateDealUnderlyingDirect.js" />
     <Content Include="Assets\javascripts\Industry.js" />
     <Content Include="Assets\javascripts\Geography.js" />
@@ -573,6 +578,8 @@
     <Content Include="obj\Release\TempPE\Models.Entity.DeepBlue.Designer.cs.dll" />
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
     <Content Include="Views\Admin\CommunicationType.aspx" />
+    <Content Include="Views\Admin\EditFileType.aspx" />
+    <Content Include="Views\Admin\FileType.aspx" />
     <Content Include="Views\Admin\EditIndustry.aspx" />
     <Content Include="Views\Admin\Industry.aspx" />
     <Content Include="Views\Admin\EditGeography.aspx" />
@@ -623,7 +630,6 @@
     <Content Include="Views\Deal\ExportDetail.aspx" />
     <Content Include="Views\Deal\DealDocumentDetail.ascx" />
     <Content Include="Views\Deal\DealExpenseDetail.ascx" />
-    <Content Include="Views\Deal\DealList.ascx" />
     <Content Include="Views\Deal\Report.aspx" />
     <Content Include="Views\Deal\DealUnderlyingDirectDetail.ascx" />
     <Content Include="Views\Deal\DealUnderlyingFundDetail.ascx" />

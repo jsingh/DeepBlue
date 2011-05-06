@@ -1018,5 +1018,59 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
+		#region IAdminRepository FileType
+
+		public List<Models.Entity.FileType> GetAllFileTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.FileType> query = (from fileType in context.FileTypes
+															select fileType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<Models.Entity.FileType> paginatedList = new PaginatedList<Models.Entity.FileType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public FileType FindFileType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.FileTypes.SingleOrDefault(field => field.FileTypeID == id);
+			}
+		}
+
+		public bool FileTypeNameAvailable(string fileTypeFieldText, int fileTypeFieldId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from field in context.FileTypes
+						 where field.FileTypeName == fileTypeFieldText && field.FileTypeID != fileTypeFieldId
+						 select field.FileTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteFileType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				FileType fileType = context.FileTypes.SingleOrDefault(field => field.FileTypeID == id);
+				if (fileType != null) {
+					if (fileType.Files.Count == 0) {
+						context.FileTypes.DeleteObject(fileType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveFileType(FileType fileType) {
+			return fileType.Save();
+		}
+
+		public List<FileType> GetAllFileTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fileType in context.FileTypes
+						orderby fileType.FileTypeName
+						select fileType).ToList();
+			}
+		}
+		 
+		#endregion
 	}
 }

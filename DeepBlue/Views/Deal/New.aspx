@@ -58,8 +58,11 @@
 					<th sortname="DealID" style="width: 10%;" align="center">
 						ID
 					</th>
-					<th sortname="DealName" style="width: 90%">
+					<th sortname="DealName" style="width: 50%">
 						Deal Name
+					</th>
+					<th sortname="FundName" style="width: 40%">
+						Fund Name
 					</th>
 				</tr>
 			</thead>

@@ -78,7 +78,6 @@
 	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions {
 																	  Source = "/Fund/FindFunds", MinLength = 1,
 																	  OnSelect = "function(event, ui) { documentUpload.selectFund(ui.item.id);}"})%>
-
 	<script type="text/javascript">
 		$(document).ready(function () {
 			var DocumentStatus=document.getElementById("DocumentStatus");
@@ -88,5 +87,4 @@
 			documentUpload.init();
 		});
 	</script>
-
 </asp:Content>

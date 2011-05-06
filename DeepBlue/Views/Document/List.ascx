@@ -22,6 +22,9 @@
 		   case "excel":
 			   imgname = "xls.png";
 			   break;
+		   default:
+			   imgname = "attach.gif";
+			   break;
 	   }
 	   string href = string.Empty;
 	   if(item.FilePath.ToLower().StartsWith("http://")){

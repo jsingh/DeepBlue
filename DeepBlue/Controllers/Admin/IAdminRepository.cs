@@ -175,5 +175,15 @@ namespace DeepBlue.Controllers.Admin {
 		bool DeleteIndustryId(int id);
 		IEnumerable<ErrorInfo> SaveIndustry(Industry industry);
 		#endregion
+
+
+		#region FileType
+		List<FileType> GetAllFileTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		FileType FindFileType(int id);
+		bool FileTypeNameAvailable(string fileType, int fileTypeId);
+		bool DeleteFileType(int id);
+		IEnumerable<ErrorInfo> SaveFileType(FileType fileType);
+		List<FileType> GetAllFileTypes();
+		#endregion
 	}
 }

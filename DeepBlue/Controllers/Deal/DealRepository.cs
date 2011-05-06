@@ -27,7 +27,7 @@ namespace DeepBlue.Controllers.Deal {
 		public bool DealNameAvailable(string dealName, int dealId, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return ((from deal in context.Deals
-						 where deal.DealName == dealName && (deal.DealID != dealId && deal.FundID != fundId)
+						 where deal.DealName == dealName && (deal.DealID != dealId && deal.FundID == fundId)
 						 select deal.DealID).Count()) > 0 ? true : false;
 			}
 		}
@@ -80,7 +80,7 @@ namespace DeepBlue.Controllers.Deal {
 					dealDetail.SellerInfo.CompanyName = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.Company);
 				}
 
-				dealDetail.DealExpenses = GetDealClosingCostModel(context,0,dealDetail.DealId).ToList();
+				dealDetail.DealExpenses = GetDealClosingCostModel(context, 0, dealDetail.DealId).ToList();
 
 				dealDetail.DealUnderlyingFunds = GetDealUnderlyingFundModel(context, 0, dealDetail.DealId).ToList();
 
@@ -101,19 +101,23 @@ namespace DeepBlue.Controllers.Deal {
 															  orderby deal.DealName
 															  select new AutoCompleteList {
 																  id = deal.DealID,
-																  label = deal.DealName,
+																  label = deal.DealName + " (" + deal.Fund.FundName + ")",
 																  value = deal.DealName
 															  });
 				return new PaginatedList<AutoCompleteList>(dealListQuery, 1, 20);
 			}
 		}
 
-		public List<Models.Entity.Deal> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+		public List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.Deal> query = (from deal in context.Deals
-														select deal);
+				IQueryable<DealListModel> query = (from deal in context.Deals
+												   select new DealListModel {
+													   DealId = deal.DealID,
+													   DealName = deal.DealName,
+													   FundName = deal.Fund.FundName
+												   });
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
-				PaginatedList<Models.Entity.Deal> paginatedList = new PaginatedList<Models.Entity.Deal>(query, pageIndex, pageSize);
+				PaginatedList<DealListModel> paginatedList = new PaginatedList<DealListModel>(query, pageIndex, pageSize);
 				totalRows = paginatedList.TotalCount;
 				return paginatedList;
 			}
@@ -157,7 +161,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		public DealClosingCostModel FindDealClosingCostModel(int dealClosingCostId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return GetDealClosingCostModel(context,dealClosingCostId,0).SingleOrDefault();
+				return GetDealClosingCostModel(context, dealClosingCostId, 0).SingleOrDefault();
 			}
 		}
 

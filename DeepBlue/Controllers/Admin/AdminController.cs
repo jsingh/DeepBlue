@@ -1830,6 +1830,112 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
+		#region File Type
+
+		public ActionResult FileType() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminFileType";
+			ViewData["PageName"] = "FileType";
+			return View();
+		}
+
+		//
+		// GET: /Admin/FileTypeList
+		[HttpGet]
+		public JsonResult FileTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			IList<DeepBlue.Models.Entity.FileType> fileTypes = AdminRepository.GetAllFileTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var fileType in fileTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {fileType.FileTypeID,
+					  fileType.FileTypeName,
+					  fileType.FileExtension
+					  }
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EntityType
+		[HttpGet]
+		public ActionResult EditFileType(int id) {
+			EditFileTypeModel model = new EditFileTypeModel();
+			FileType fileType = AdminRepository.FindFileType(id);
+			if (fileType != null) {
+				model.FileTypeId = fileType.FileTypeID;
+				model.FileTypeName = fileType.FileTypeName;
+				model.FileExtension = fileType.FileExtension;
+				model.Description = fileType.Description;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateFileType
+		[HttpPost]
+		public ActionResult UpdateFileType(FormCollection collection) {
+			EditFileTypeModel model = new EditFileTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = FileTypeNameAvailable(model.FileTypeName, model.FileTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("FileTypeText", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				FileType fileType = AdminRepository.FindFileType(model.FileTypeId);
+				if (fileType == null) {
+					fileType = new FileType();
+				}
+				fileType.FileTypeName = model.FileTypeName;
+				fileType.FileExtension = model.FileExtension;
+				fileType.Description = model.Description;
+				fileType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFileType(fileType);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteFileType(int id) {
+			if (AdminRepository.DeleteFileType(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string FileTypeNameAvailable(string FileTypeText, int FileTypeId) {
+			if (AdminRepository.FileTypeNameAvailable(FileTypeText, FileTypeId))
+				return "Name already exists.";
+			else
+				return string.Empty;
+		}
+
+		#endregion
+
 		public ActionResult Result() {
 			return View();
 		}

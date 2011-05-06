@@ -69,11 +69,17 @@ namespace DeepBlue.Controllers.Deal {
 		// GET: /Deal/DealList
 		[HttpGet]
 		public ActionResult DealList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			List<Models.Entity.Deal> deals = DealRepository.GetAllDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(deals);
+			List<DealListModel> deals = DealRepository.GetAllDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var deal in deals) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> { deal.DealId, deal.DealName, deal.FundName }
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -93,10 +99,10 @@ namespace DeepBlue.Controllers.Deal {
 					deal = new Models.Entity.Deal();
 					deal.CreatedBy = AppSettings.CreatedByUserId;
 					deal.CreatedDate = DateTime.Now;
+					deal.DealNumber = DealRepository.GetMaxDealNumber(model.FundId);
 				}
 				deal.EntityID = (int)ConfigUtil.CurrentEntityID;
 				deal.DealName = model.DealName;
-				deal.DealNumber = DealRepository.GetMaxDealNumber(model.FundId);
 				deal.FundID = model.FundId;
 				deal.IsPartnered = model.IsPartnered;
 				if (deal.IsPartnered) {

@@ -17,7 +17,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<AutoCompleteList> FindDeals(string dealName);
 		bool DealNameAvailable(string dealName, int dealId,int fundId);
 		int GetMaxDealNumber(int fundId);
-		List<Models.Entity.Deal> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		#endregion
 
 		#region DealExpense
