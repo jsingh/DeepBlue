@@ -172,7 +172,7 @@
 	<%= Html.jQueryDatePicker("CapitalCallDate")%><%= Html.jQueryDatePicker("FromDate")%><%= Html.jQueryDatePicker("ToDate")%>
 	<%= Html.jQueryDatePicker("CapitalCallDueDate")%><%= Html.jQueryAccordion("accordion", new AccordionOptions { Disabled = true, Active = 0 })%>
 	<%= Html.jQueryAutoComplete("Fund", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { capitalCall.selectFund(ui.item.id);}"})%>
-	<%= Html.jQueryFlexiGrid("TierDetail", new FlexigridOptions { Height = 0 })%>
+	<%= Html.jQueryFlexiGrid("TierDetail", new FlexigridOptions { Height = 0, ResizeWidth=false })%>
 	<script type="text/javascript">
 		capitalCall.init();
 	</script>

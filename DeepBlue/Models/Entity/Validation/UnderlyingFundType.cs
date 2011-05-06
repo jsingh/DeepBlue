@@ -10,8 +10,8 @@ namespace DeepBlue.Models.Entity {
 	public partial class UnderlyingFundType {
 		public class UnderlyingFundTypeMD {
 			#region Primitive Properties
-			[Required(ErrorMessage = "UnderlyingFundType is required")]
-			[StringLength(50, ErrorMessage = "UnderlyingFundType Name must be under 50 characters.")]
+			[Required(ErrorMessage = "Name is required")]
+			[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
 			public global::System.String Name {
 				get;
 				set;

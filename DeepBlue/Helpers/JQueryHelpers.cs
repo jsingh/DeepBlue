@@ -83,6 +83,7 @@ namespace DeepBlue.Helpers {
 			}
 			scriptSrc.Append(rows + "]");
 			scriptSrc.Append(",rp:" + options.RowsLength);
+			scriptSrc.Append(",resizeWidth:" + options.ResizeWidth.ToString().ToLower());
 			scriptSrc.Append(",method:\"" + options.HttpMethod.ToString() + "\"")
 			 .Append(",sortname:\"" + options.SortName.ToString() + "\"")
 			 .Append(",sortorder:\"" + options.SortOrder.ToString() + "\"")

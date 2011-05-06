@@ -41,5 +41,12 @@ namespace DeepBlue.Tests.Controllers.Admin {
             DefaultController = null;
         }
 
+		#region FindDatatype
+		[Test]
+		public void valid_Find_DataType_sets_json_result_error() {
+			Assert.IsTrue((DefaultController.DataTypeList(1, 1, "DataTypeID", "asc") != null));
+		}
+		#endregion
+
     }
 }

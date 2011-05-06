@@ -10,14 +10,11 @@ using System.Web.Mvc;
 
 namespace DeepBlue.Models.Admin {
 	public class EditUnderlyingFundTypeModel{
-		public EditUnderlyingFundTypeModel() {
-		}
-
-		public int UnderlyingFundTypeID { get; set; }
+		public int UnderlyingFundTypeId { get; set; }
 
 		[Required(ErrorMessage = "Name is required.")]
 		[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
-		[RemoteUID_(Action = "UnderlyingFundTextAvailable", Controller = "Admin", ValidateParameterName = "Name", Params = new string[] { "UnderlyingFundTypeID" })]
+		[RemoteUID_(Action = "UnderlyingFundTypeNameAvailable", Controller = "Admin", ValidateParameterName = "Name", Params = new string[] { "UnderlyingFundTypeId" })]
 		[DisplayName("Name:")]
 		public string Name { get; set; }
 	}

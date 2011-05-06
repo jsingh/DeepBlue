@@ -65,10 +65,32 @@
 			</thead>
 		</table>
 	</div>
+	<div id="FullFundList">
+		<table cellpadding="0" cellspacing="0" border="0" id="FundList">
+			<thead>
+				<tr>
+					<th sortname="FundID" style="width: 10%;" align="center">
+						ID
+					</th>
+					<th sortname="FundName" style="width: 90%">
+						Fund Name
+					</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("DealList", new FlexigridOptions { ActionName = "DealList", ControllerName = "Deal", HttpMethod = "GET", SortName = "DealName", Paging = true, OnSuccess = "deal.onDealListSuccess", Autoload = false })%>
+	<%=Html.jQueryFlexiGrid("DealList", new FlexigridOptions { ActionName = "DealList", ControllerName = "Deal", HttpMethod = "GET", SortName = "DealName", Paging = true, OnSuccess = "deal.onDealListSuccess", Autoload = false, ResizeWidth=false, RowsLength=20 })%>
+	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List", ControllerName = "Fund", HttpMethod = "GET", SortName = "FundName", Paging = true, OnSuccess = "deal.onFundListSuccess", Autoload = false, ResizeWidth=false, RowsLength=20 })%>
 	<script type="text/javascript">		deal.init();</script>
+	<script id="FundListTemplate" type="text/x-jquery-tmpl">
+		<ul>{{each FundDetails}}<li>
+		<a href='#' id='Fund_${FundId}' style='cursor:pointer' onclick='javascript:deal.selectFund(this,${FundId},"${FundName}");'>${FundName}</a>
+		</li>{{/each}}
+		</ul>
+		<div class='seefull'><a href='javascript:deal.seeFullFund();'>See Full List</a></div>
+	</script>
 	<script id="DealTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("DealDetail", Model); %>
 	</script>
@@ -134,16 +156,28 @@
 		<td style="text-align: center">
 			<%: Html.Span("${CommittedAmount}", new { @class = "show", @id = "SpnCommittedAmount" })%>
 			<%: Html.TextBox("CommittedAmount","${CommittedAmount}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
+		</td>	
+		<td style="text-align: center">
+			<%: Html.Span("${UnfundedAmount}", new { @class = "show", @id = "SpnUnfundedAmount" })%>
+			<%: Html.TextBox("UnfundedAmount","${UnfundedAmount}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
+		</td>
+		<td style="text-align: center">
+			<%: Html.Span("${GrossPurchasePrice}", new { @class = "show", @id = "SpnGrossPurchasePrice" })%>
+			<%: Html.TextBox("GrossPurchasePrice","${GrossPurchasePrice}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
+		</td>	
+		<td style="text-align: center">
+			<%: Html.Span("${ReassignedGPP}", new { @class = "show", @id = "SpnReassignedGPP" })%>
+			<%: Html.TextBox("ReassignedGPP","${ReassignedGPP}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
 		<td style="text-align: center">
 			<%: Html.Span("${RecordDate}", new { @class = "show", @id = "SpnRecordDate" })%>
 			<%: Html.TextBox("RecordDate", "",new { @class = "hide datefield", @id = "${DealUnderlyingFundId}_RecordDate" })%>
 		</td>
-		<td style="text-align: center">
+		<td style="text-align: center" nowrap>
 			<%: Html.Image("Editbtn.png", new { @onclick = "javascript:deal.editUnderlyingFund(this);" })%>&nbsp;&nbsp;<%: Html.Image("Delete_Btn.png", new { @onclick = "javascript:deal.deleteUnderlyingFund(${DealUnderlyingFundId},this);" })%>
 			<%: Html.Hidden("DealUnderlyingFundId","${DealUnderlyingFundId}")%>
 		</td>
-		<td class="blank">
+		<td class="blank" nowrap>
 			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 		</td>
 	</tr>
@@ -180,14 +214,26 @@
 			<%: Html.TextBox("FMV","${FMV}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
 		<td style="text-align: center">
+			<%: Html.Span("${PurchasePrice}", new { @class = "show", @id = "SpnPurchasePrice" })%>
+			<%: Html.TextBox("PurchasePrice","${PurchasePrice}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
+		</td>	
+		<td style="text-align: center">
+			<%: Html.Span("${TaxCostBase}", new { @class = "show", @id = "SpnTaxCostBase" })%>
+			<%: Html.TextBox("TaxCostBase","${TaxCostBase}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
+		</td>
+		<td style="text-align: center">
+			<%: Html.Span("${TaxCostDate}", new { @class = "show", @id = "SpnTaxCostDate" })%>
+			<%: Html.TextBox("TaxCostDate", "",new { @class = "hide datefield", @id = "${DealUnderlyingDirectId}_DirectTaxCostDate" })%>
+		</td>
+		<td style="text-align: center">
 			<%: Html.Span("${RecordDate}", new { @class = "show", @id = "SpnRecordDate" })%>
 			<%: Html.TextBox("RecordDate", "",new { @class = "hide datefield", @id = "${DealUnderlyingDirectId}_DirectRecordDate" })%>
 		</td>
-		<td style="text-align: center">
+		<td style="text-align: center" nowrap>
 			<%: Html.Image("Editbtn.png", new { @onclick = "javascript:deal.editUnderlyingDirect(this);" })%>&nbsp;&nbsp;<%: Html.Image("Delete_Btn.png", new { @onclick = "javascript:deal.deleteUnderlyingDirect(${DealUnderlyingDirectId},this);" })%>
 			<%: Html.Hidden("DealUnderlyingDirectId","${DealUnderlyingDirectId}")%>
 		</td>
-		<td class="blank">
+		<td class="blank" nowrap>
 			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 		</td>
 	</tr>

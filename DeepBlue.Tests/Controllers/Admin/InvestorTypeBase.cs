@@ -41,5 +41,12 @@ namespace DeepBlue.Tests.Controllers.Admin {
             DefaultController = null;
         }
 
+		#region FindInvestorType
+		[Test]
+		public void valid_Find_InvestorType_sets_json_result_error() {
+			Assert.IsTrue((DefaultController.InvestorTypeList(1, 1, "InvestorTypeName", "asc") != null));
+		}
+		#endregion
+
     }
 }

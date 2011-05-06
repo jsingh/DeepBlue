@@ -20,6 +20,4 @@ namespace DeepBlue.Helpers {
 			this.AddRange(source.Skip(PageIndex * PageSize).Take(PageSize));
 		}
 	}
-
-	
 }

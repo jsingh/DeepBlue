@@ -1,5 +1,4 @@
-﻿/* Document Upload */
-.doc-upload {
+﻿.doc-upload {
 	margin-left: 30%;
 	margin-top: 10px;
 	float: left;
@@ -32,8 +31,14 @@
 	width: 100px;
 }
 .editor-button {
-    width: 40%;
+	width: 40%;     margin: 0px 0 0 15%;
 }
-#SearchDocumentList img{
-	cursor:pointer;
+#SearchDocumentList img {
+	cursor: pointer;
+}
+.admin-header {
+	margin-left: 25%;
+}
+.admin-content {
+	top: 125px;
 }

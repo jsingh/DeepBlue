@@ -17,8 +17,8 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage = "UnderlyingFundType is required")]
-			[StringLength(100, ErrorMessage = "UnderlyingFundType Name must be under 100 characters.")]
+			[Required(ErrorMessage = "ShareClass is required")]
+			[StringLength(100, ErrorMessage = "ShareClass must be under 100 characters.")]
 			public global::System.String ShareClass {
 				get;
 				set;

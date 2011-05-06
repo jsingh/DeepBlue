@@ -8,6 +8,7 @@
 	<%=Html.JavascriptInclueTag("InvestorEntityType.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css") %>
+	<%=Html.StylesheetLinkTag("adminbackend.css") %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="admin-main">

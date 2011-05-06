@@ -5,17 +5,18 @@
 	Search
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
-	<%=Html.StylesheetLinkTag("document.css")%>
 	<%=Html.JavascriptInclueTag("DocumentSearch.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css") %>
+	<%=Html.StylesheetLinkTag("adminbackend.css") %>
+	<%=Html.StylesheetLinkTag("document.css")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-	<div class="doc-search">
+	<div class="admin-main">
 		<% using (Html.BeginForm("", "", FormMethod.Get, new { @id = "SearchDocument", @onsubmit = "return false;" })) {%>
 		<%: Html.HiddenFor(model => model.InvestorId)%>
 		<%: Html.HiddenFor(model => model.FundId)%>
-		<div class="doc-header">
+		<div class="admin-header">
 			<div class="editor-label">
 				<%: Html.LabelFor(model => model.FromDate) %>
 			</div>
@@ -53,7 +54,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="doc-result">
+		<div class="admin-content">
 			<table cellpadding="0" cellspacing="0" border="0" id="SearchDocumentList" style="width: 100%">
 				<thead>
 					<tr>

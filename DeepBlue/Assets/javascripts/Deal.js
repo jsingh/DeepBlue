@@ -6,16 +6,11 @@
 			deal.loadFundList();
 			$("#Deal_Management").removeClass("subext").addClass("subext3");
 			var FullDealList=$("#FullDealList");
-			FullDealList.dialog({
-				title: "Deal List",
-				autoOpen: false,
-				width: 625,
-				modal: true,
-				position: 'top',
-				autoResize: false,
-				open: function () { $("#DealList").flexReload(); }
-			});
+			FullDealList.dialog({ title: "Deal List",autoOpen: false,width: 625,modal: true,position: 'top',autoResize: false,open: function () { $("#DealList").flexReload(); } });
 			FullDealList.hide();
+			var FullFundList=$("#FullFundList");
+			FullFundList.dialog({ title: "Fund List",autoOpen: false,width: 625,modal: true,position: 'top',autoResize: false,open: function () { $("#FundList").flexReload(); } });
+			FullFundList.hide();
 			DeepBlue.layout();
 		});
 		var modifyDeal=$("#ModifyDealBox");
@@ -135,6 +130,19 @@
 	/* End Deal Detail */
 
 	/* Fund Details */
+	,seeFullFund: function () {
+		var FullFundList=$("#FullFundList");
+		FullFundList.dialog("open");
+	}
+	,onFundListSuccess: function () {
+		var FullFundList=$("#FullFundList");
+		$("tbody tr","#FundList").click(function () {
+			var fundId=$.trim($("td:eq(0) div",this).html());
+			var fundName=$.trim($("td:eq(1) div",this).html());
+			deal.selectFund(null,fundId,fundName);
+			FullFundList.dialog("close");
+		});
+	}
 	,loadFundList: function () {
 		var pageIndex=1;
 		var pageSize=20;
@@ -146,15 +154,8 @@
 		var DealFundList=$("#DealFundList");
 		DealFundList.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		$.getJSON(url,function (data) {
-			DealFundList.html("");
-			var index=0;
-			var ul=document.createElement("ul");
-			$.each(data.FundDetails,function (index,item) {
-				var li=document.createElement("li");
-				li.innerHTML="<a href='#' id='Fund_"+item.FundId+"' style='cursor:pointer' onclick=\"javascript:deal.selectFund(this,"+item.FundId+",'"+item.FundName+"');\">"+item.FundName+"</a>";
-				$(ul).append(li);
-			});
-			DealFundList.append(ul);
+			DealFundList.empty();
+			$("#FundListTemplate").tmpl(data).appendTo(DealFundList);
 		});
 	}
 	,changeFund: function (fundId,fundName) {

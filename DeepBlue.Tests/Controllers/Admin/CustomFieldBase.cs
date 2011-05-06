@@ -42,5 +42,12 @@ namespace DeepBlue.Tests.Controllers.Admin {
             DefaultController = null;
         }
 
+
+		#region FindCustomField
+		[Test]
+		public void valid_Find_Customfield_sets_json_result_error() {
+			Assert.IsTrue((DefaultController.CustomFieldList(1, 1, "CustomFieldID", "asc") != null));
+		}
+		#endregion
     }
 }

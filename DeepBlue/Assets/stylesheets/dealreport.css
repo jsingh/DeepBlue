@@ -2,7 +2,7 @@
 	color: #a6a6a6;
 	width: 99.8%;
 	position: absolute;
-	font-family: Calibri;
+	font-family: Calibri, Arial;
 	font-size: 14px;
 }
 .line {
@@ -94,15 +94,24 @@
 #ExportMenu {
 	display: none;
 	position: absolute;
-	width: 120px;  border: 1px solid gray;
+	width: 120px;
+	border: 1px solid gray;
 }
 #ExportMenu ul li {
-    background-color: #FFFFFF;
-    color: #000000;
-	padding: 5px; list-style:none;
+	background-color: #FFFFFF;
+	color: #000000;
+	padding: 5px;
+	list-style: none;
 }
-#ExportMenu ul li a{
+#ExportMenu ul li a {
 	color: #000000;
 }
-#ExportMenu .sel { background-color:#B4AFAF; }
-#ExportMenu .sel a { color:#fff; }
+#ExportMenu .sel {
+	background-color: #B4AFAF;
+}
+#ExportMenu .sel a {
+	color: #fff;
+}
+.expandrow td {
+	border-bottom: solid 1px #fff;
+}

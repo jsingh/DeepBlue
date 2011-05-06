@@ -12,6 +12,8 @@ namespace DeepBlue {
 
 	public class MvcApplication : System.Web.HttpApplication {
 
+	 
+
 		public static void RegisterRoutes(RouteCollection routes) {
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
@@ -34,9 +36,9 @@ namespace DeepBlue {
 					"{controller}/{action}/{id}", // URL with parameters
 					new { controller = "Admin", action = "List", id = @"\d+" } // Parameter defaults
 				);
-			 
+
 		}
-		
+
 		protected void Application_Start() {
 			AreaRegistration.RegisterAllAreas();
 			RegisterRoutes(RouteTable.Routes);
@@ -44,7 +46,5 @@ namespace DeepBlue {
 															   typeof(RemoteUID_Attribute),
 															   typeof(RemoteAttributeAdapter));
 		}
-
-		 
 	}
 }

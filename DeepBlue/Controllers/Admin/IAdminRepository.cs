@@ -11,8 +11,9 @@ namespace DeepBlue.Controllers.Admin {
 		#region Get
 		List<COUNTRY> GetAllCountries();
 		List<STATE> GetAllStates();
-		List<InvestorEntityType> GetAllInvestorEntityTypes();
 		List<AddressType> GetAllAddressTypes();
+		List<Industry> GetAllIndusties();
+		List<Geography> GetAllGeographies();
 		#endregion
 
 		#region EntityType
@@ -21,6 +22,7 @@ namespace DeepBlue.Controllers.Admin {
 		bool InvestorEntityTypeNameAvailable(string investorEntityTypeName, int investorEntityTypeID);
 		bool DeleteInvestorEntityType(int id);
 		IEnumerable<ErrorInfo> SaveInvestorEntityType(InvestorEntityType investorEntityType);
+		List<InvestorEntityType> GetAllInvestorEntityTypes();
 		#endregion
 
 		#region InvestorType
@@ -126,17 +128,52 @@ namespace DeepBlue.Controllers.Admin {
 		#region UnderlyingFundType
 		List<UnderlyingFundType> GetAllUnderlyingFundTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		UnderlyingFundType FindUnderlyingFundType(int id);
-		bool UnderlyingFundTypeTextAvailable(string underlyingfundtype, int underlyingfundtypeId);
+		bool UnderlyingFundTypeNameAvailable(string underlyingFundType, int underlyingfundtypeId);
 		bool DeleteUnderlyingFundTypeId(int id);
-		IEnumerable<ErrorInfo> SaveUnderlyingFundType(UnderlyingFundType underlyingfundtype);
+		IEnumerable<ErrorInfo> SaveUnderlyingFundType(UnderlyingFundType underlyingFundType);
+		List<UnderlyingFundType> GetAllUnderlyingFundTypes();
 		#endregion
 
 		#region ShareClassType
 		List<ShareClassType> GetAllShareClassTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		ShareClassType FindShareClassType(int id);
-		bool ShareClassTypeTextAvailable(string shareclassype, int shareclasstypeId);
+		bool ShareClassTypeNameAvailable(string shareclasstype, int shareclasstypeId);
 		bool DeleteShareClassTypeId(int id);
-		IEnumerable<ErrorInfo> SaveShareClassType(ShareClassType shareclasstype);
+		IEnumerable<ErrorInfo> SaveShareClassType(ShareClassType shareClassType);
+		#endregion
+
+		#region ReportingType
+		List<ReportingType> GetAllReportingTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		ReportingType FindReportingType(int id);
+		bool ReportingTypeNameAvailable(string reportingtype, int reportingtypeId);
+		bool DeleteReportingTypeId(int id);
+		IEnumerable<ErrorInfo> SaveReportingType(ReportingType reportingType);
+		List<ReportingType> GetAllReportingTypes();
+		#endregion
+
+		#region ReportingFrequency
+		List<ReportingFrequency> GetAllReportingFrequencies(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		ReportingFrequency FindReportingFrequency(int id);
+		bool ReportingFrequencyNameAvailable(string reportingfrequency, int reportingfrequencyId);
+		bool DeleteReportingFrequencyId(int id);
+		IEnumerable<ErrorInfo> SaveReportingFrequency(ReportingFrequency reportingFrequency);
+		List<ReportingFrequency> GetAllReportingFrequencies();
+		#endregion
+
+		#region Geography
+		List<Geography> GetAllGeographys(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		Geography FindGeography(int id);
+		bool GeographyNameAvailable(string reportingfrequency, int reportingfrequencyId);
+		bool DeleteGeographyId(int id);
+		IEnumerable<ErrorInfo> SaveGeography(Geography geography);
+		#endregion
+
+		#region Industry
+		List<Industry> GetAllIndustrys(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		Industry FindIndustry(int id);
+		bool IndustryNameAvailable(string industry, int industryId);
+		bool DeleteIndustryId(int id);
+		IEnumerable<ErrorInfo> SaveIndustry(Industry industry);
 		#endregion
 	}
 }

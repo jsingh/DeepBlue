@@ -1,0 +1,36 @@
+﻿body {
+	font-family: Calibri, Arial;
+	font-size: 14px;
+	color: #A6A6A6;
+}
+table {
+	width: 100%;
+}
+tbody tr {
+	background-color: #F2F2F2;
+}
+th {
+	white-space: nowrap;
+}
+td {
+	padding: 8px 0px;
+}
+.erow {
+	background-color: #fff;
+}
+.erow td {
+	padding: 0px;
+}
+.arow {
+	background-color: #D9D9D9;
+}
+#tblUnderlyingFund, #tblUnderlyingDirect {
+	background-color: #000000;
+	color: #000000;
+	width: 95%;
+}
+#tblUnderlyingFund tr th, #ReportList #tblUnderlyingFund tr td, #tblUnderlyingDirect tr th, #ReportList #tblUnderlyingDirect tr td {
+	background-color: #FFFFFF;
+	color: #000000;
+	text-align: center;
+}

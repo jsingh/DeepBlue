@@ -7,7 +7,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("FundClosing.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
-	<%=Html.StylesheetLinkTag("flexigrid.css") %>
+	<%=Html.StylesheetLinkTag("flexigrid.css") %>	<%=Html.StylesheetLinkTag("adminbackend.css") %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="admin-main">
@@ -29,13 +29,13 @@
 						<th sortname="Name" style="width: 25%;">
 							Name
 						</th>
-						<th sortname="FundName" style="width: 40%">
+						<th sortname="FundName" style="width: 35%">
 							Fund Name
 						</th>
 						<th datatype="Boolean" sortname="IsFirstClosing" align="center" style="width: 10%;">
 							First Closing
 						</th>
-						<th align="center" style="width: 5%;">
+						<th align="center" style="width: 10%;">
 						</th>
 					</tr>
 				</thead>

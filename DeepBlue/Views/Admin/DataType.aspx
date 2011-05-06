@@ -8,6 +8,7 @@
 	<%=Html.JavascriptInclueTag("DataType.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css") %>
+	<%=Html.StylesheetLinkTag("adminbackend.css") %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="admin-main">
@@ -23,7 +24,7 @@
 						<th sortname="DataTypeID" style="width: 5%;" align="center">
 							ID
 						</th>
-						<th sortname="DataTypeName" style="width:90%">
+						<th sortname="DataTypeName" style="width: 90%">
 							Data Type Name
 						</th>
 						<th align="center" style="width: 5%;">
@@ -35,5 +36,5 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("DataTypeList", new FlexigridOptions { ActionName = "DataTypeList", ControllerName = "Admin", HttpMethod = "GET", SortName = "DataTypeID", Paging = true , OnRowBound="dataType.onRowBound" })%>
+	<%=Html.jQueryFlexiGrid("DataTypeList", new FlexigridOptions { ActionName = "DataTypeList", ControllerName = "Admin", HttpMethod = "GET", SortName = "DataTypeName", Paging = true, OnRowBound = "dataType.onRowBound" })%>
 </asp:Content>

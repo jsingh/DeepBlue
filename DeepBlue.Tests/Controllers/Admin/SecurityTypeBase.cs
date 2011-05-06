@@ -40,5 +40,12 @@ namespace DeepBlue.Tests.Controllers.Admin {
             DefaultController = null;
         }
 
+		#region FindSecurityType
+		[Test]
+		public void valid_Find_SecurityType_sets_json_result_error() {
+			Assert.IsTrue((DefaultController.SecurityTypeList(1, 1, "InvestorEntityTypeName", "asc") != null));
+		}
+		#endregion
+
     }
 }

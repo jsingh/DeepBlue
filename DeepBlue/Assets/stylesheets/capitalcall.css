@@ -54,9 +54,12 @@
 .cc-manual-detail table td {
 	padding: 5px 0px 5px 0px;
 }
-.investor-detail{
-	clear:both;
+.investor-detail {
+	clear: both;
 }
-#FundDetails .editor-label{
-	padding:5px;
+#FundDetails .editor-label {
+	padding: 5px;
+}
+label {
+	color: #a6a6a6;
 }

@@ -9,9 +9,15 @@
 		tr.remove();
 	}
 	tr=$("#UnderlyingFund_"+data.DealUnderlyingFundId,tbody);
-	var amount = parseFloat(data.CommittedAmount);
-	if(isNaN(amount)) { data.CommittedAmount=0; }
+	var amount;
+	amount = parseFloat(data.CommittedAmount);	if(isNaN(amount)) { data.CommittedAmount=0; }
+	amount = parseFloat(data.UnfundedAmount);	if(isNaN(amount)) { data.UnfundedAmount=0; }
+	amount = parseFloat(data.GrossPurchasePrice);	if(isNaN(amount)) { data.GrossPurchasePrice=0; }
+	amount = parseFloat(data.ReassignedGPP);	if(isNaN(amount)) { data.ReassignedGPP=0; }
 	$("#SpnCommittedAmount",tr).html(jHelper.dollarAmount(data.CommittedAmount.toString()));
+	$("#SpnUnfundedAmount",tr).html(jHelper.dollarAmount(data.UnfundedAmount.toString()));
+	$("#SpnGrossPurchasePrice",tr).html(jHelper.dollarAmount(data.GrossPurchasePrice.toString()));
+	$("#SpnReassignedGPP",tr).html(jHelper.dollarAmount(data.ReassignedGPP.toString()));
 	var date=jHelper.formatDate(jHelper.parseJSONDate(data.RecordDate));
 	$("#SpnRecordDate",tr).html(date);
 	$(":input[name='RecordDate']",tr).val(date);
@@ -62,11 +68,11 @@ deal.saveUnderlyingFund=function (tr) {
 		deal.onDealSuccess=function () { deal.saveUnderlyingFund(tr); }
 		$("#btnSaveDeal").click();
 	}
-}
+};
 deal.loadUnderlyingFund=function (id) {
 	var dt=new Date();
 	var url="/Deal/FindDealUnderlyingFund?dealUnderlyingFundId="+id+"&t="+dt.getTime();
 	$.getJSON(url,function (data) {
 		deal.loadUnderlyingFundData(data);
 	});
-}
+};

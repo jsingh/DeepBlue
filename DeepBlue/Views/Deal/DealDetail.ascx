@@ -3,9 +3,9 @@
 <div class="line">
 </div>
 <div class="editor-label auto">
-	<div class="cell">
+	<div class="cell" style="overflow:hidden">
 		<h4>
-			<a href="#" id="lnkFundName">${FundName}</a></h4>
+			<%: Html.Anchor("${FundName}","#", new { @id="lnkFundName" })%></h4>
 	</div>
 	<div class="cell" style="text-align: left">
 		<%: Html.LabelFor(model => model.DealNumber) %>&nbsp;${DealNumber}</div>
@@ -34,7 +34,7 @@
 	<%: Html.LabelFor(model => model.IsPartnered) %>
 </div>
 <div class="editor-field rdo" style="width: auto">
-	<div class="cell" style="width: 224px">
+	<div class="cell" style="width: 240px">
 		<%: Html.RadioButton("IsPartnered","true", false, new { @id = "IsPartneredYes", @style = "border:0px;", @onclick = "javascript:deal.selectPartner(!this.checked);" })%>
 		&nbsp;Yes&nbsp;
 		<%: Html.RadioButton("IsPartnered", "false", true, new { @id = "IsPartneredNo", @style = "border:0px;", @onclick = "javascript:deal.selectPartner(this.checked);" })%>

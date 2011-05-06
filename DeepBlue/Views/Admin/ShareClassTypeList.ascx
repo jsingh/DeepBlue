@@ -9,7 +9,6 @@
 	   row.cell.Add(item.ShareClassTypeID.ToString());
 	   row.cell.Add(item.ShareClass);
 	   row.cell.Add(item.Enabled);
-	   row.cell.Add(Html.Image("Edit.gif", new { @style = "cursor:pointer", @onclick = "javascript:shareclasstype.add(" + item.ShareClassTypeID.ToString() + ");" }).ToHtmlString());
 	   flexData.rows.Add(row);
    } %>
 <%= JsonSerializer.ToJsonObject(flexData)%>

@@ -40,5 +40,11 @@ namespace DeepBlue.Tests.Controllers.Admin {
             DefaultController = null;
         }
 
+		#region FindPurchaseType
+		[Test]
+		public void valid_Find_PurchaseType_sets_json_result_error() {
+			Assert.IsTrue((DefaultController.PurchaseTypeList(1, 1, "Name", "asc") != null));
+		}
+		#endregion
     }
 }

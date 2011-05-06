@@ -180,7 +180,7 @@ namespace DeepBlue.Models.Investor {
 		public bool InvestorLetters { get; set; }
 
 		public CustomFieldModel CustomField { get; set; }
-		
+
 	}
 
 	public class SelectListModel {

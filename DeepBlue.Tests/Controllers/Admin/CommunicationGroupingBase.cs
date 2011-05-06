@@ -42,5 +42,12 @@ namespace DeepBlue.Tests.Controllers.Admin {
             DefaultController = null;
         }
 
+
+		#region FindCommunicationGrouping
+		[Test]
+		public void valid_Find_CommunicationGrouping_sets_json_result_error() {
+			Assert.IsTrue((DefaultController.CommunicationGroupingList(1, 1, "CommunicationGroupingName", "asc") != null));
+		}
+		#endregion
     }
 }

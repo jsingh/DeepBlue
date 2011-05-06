@@ -97,4 +97,36 @@
 			}
 		}
 	}
+	,formSubmit: function (formId,checkAutoComplete) {
+		try {
+			var frm=document.getElementById(formId);
+			var message='';
+			if(isNaN(checkAutoComplete)) { checkAutoComplete=true; }
+			if(checkAutoComplete) {
+				$(".field-validation-error",frm).each(function () {
+					if(this.innerHTML!='') {
+						message+=this.innerHTML+"\n";
+					}
+				});
+			}
+			if(message!="") {
+				alert(message);
+				return false;
+			}
+			Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
+			$(".field-validation-error",frm).each(function () {
+				if(this.innerHTML!='') {
+					message+=this.innerHTML+"\n";
+				}
+			});
+			if(message!="") {
+				alert(message);
+				return false;
+			} else {
+				return true;
+			}
+		} catch(e) { alert(e); 
+		}
+		return true;
+	}
 }

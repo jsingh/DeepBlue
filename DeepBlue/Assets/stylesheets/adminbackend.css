@@ -1,0 +1,29 @@
+﻿.admin-main, .admin-header, .admin-content {
+	position: absolute;
+}
+.admin-main {
+	top: 0px;
+	bottom: 1px;
+}
+.admin-header {
+	top: 0px; width:98%;
+}
+.admin-content {
+	top: 35px;
+	bottom: 0px;  width: 99%;
+}
+.flexigrid, .flexigrid .pDiv, .flexigrid .hDiv, .flexigrid .bDivBox {
+	position: absolute;
+}
+.flexigrid {
+	top: 0px;
+	bottom: 5px;
+	width: 100%;
+}
+.flexigrid .hDiv {
+	top: 32px;
+}
+.flexigrid .bDivBox {
+	top: 56px;
+	bottom: 0px;
+}

@@ -5,19 +5,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 	<title>Export</title>
+	<%=Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<style type="text/css">
 		body {
-			font-family: Calibri;
+			font-family: Calibri, Arial;
 			font-size: 14px;
-			color: #A6A6A6;
 		}
 		table {
 			width: 100%;
 		}
 		tbody tr {
-			background-color: #F2F2F2;
+			background-color: #FFF;
 		}
-		th {  white-space:nowrap; }
+		th {
+			white-space: nowrap;
+		}
 		td {
 			padding: 8px 0px;
 		}
@@ -28,16 +30,14 @@
 			padding: 0px;
 		}
 		.arow {
-			background-color: #D9D9D9;
+			background-color: #fff;
 		}
 		#tblUnderlyingFund, #tblUnderlyingDirect {
-			background-color: #000000;
-			color: #000000;
 			width: 95%;
 		}
 		#tblUnderlyingFund tr th, #ReportList #tblUnderlyingFund tr td, #tblUnderlyingDirect tr th, #ReportList #tblUnderlyingDirect tr td {
-			background-color: #FFFFFF;
-			color: #000000; text-align:center;
+			text-align: center;
+			border: solid 1px #000;
 		}
 	</style>
 </head>
@@ -87,20 +87,20 @@
 		  </td>
 	  </tr>
 				<tr>
-					<td colspan="2" style="padding-left: 20px; text-align: center;vertical-align:top;">
-						<table cellspacing="1" cellpadding="0" border="0" id="tblUnderlyingFund">
+					<td colspan="2" style="padding-left: 20px; text-align: center; vertical-align: top;border-bottom:solid 1px #000;">
+						<table cellspacing="0" cellpadding="0" border="0" id="tblUnderlyingFund">
 							<thead>
 								<tr>
-									<th>
+									<th style="border-right:0px">
 										No.
 									</th>
-									<th>
+									<th style="border-right:0px">
 										Fund Name
 									</th>
-									<th>
+									<th style="border-right:0px">
 										Fund NAV
 									</th>
-									<th>
+									<th style="border-right:0px">
 										Commitment
 									</th>
 									<th>
@@ -114,16 +114,16 @@
 		  foreach (var fund in item.DealUnderlyingFunds) {
 			  fundIndex++; %>
 								<tr>
-									<td>
+									<td style="border-right:0px">
 										<%: fundIndex%>&nbsp;.
 									</td>
-									<td>
+									<td style="border-right:0px">
 										<%: fund.FundName%>
 									</td>
-									<td>
+									<td style="border-right:0px">
 										<%: fund.NAV%>
 									</td>
-									<td class="dollarcell">
+									<td class="dollarcell" style="border-right:0px">
 										<%: string.Format("{0:C}",fund.Commitment)%>
 									</td>
 									<td class="datecell">
@@ -137,26 +137,26 @@
 						<br />
 						Underlying Funds
 					</td>
-					<td colspan="2" style="paddin-left: 20px; text-align: center;vertical-align:top;">
-						<table cellspacing="1" cellpadding="0" border="0" id="tblUnderlyingDirect">
+					<td colspan="2" style="paddin-left: 20px; text-align: center; vertical-align: top;border-bottom:solid 1px #000;">
+						<table cellspacing="0" cellpadding="0" border="0" id="tblUnderlyingDirect">
 							<thead>
 								<tr>
-									<th>
+									<th style="border-right:0px">
 										No.
 									</th>
-									<th>
+									<th style="border-right:0px">
 										Company
 									</th>
-									<th>
+									<th style="border-right:0px">
 										Security
 									</th>
-									<th>
+									<th style="border-right:0px">
 										No.of Shares
 									</th>
-									<th>
+									<th style="border-right:0px">
 										Percentage
 									</th>
-									<th>
+									<th style="border-right:0px">
 										FMV
 									</th>
 									<th>
@@ -170,22 +170,22 @@
 		  foreach (var direct in item.DealUnderlyingDirects) {
 			  directIndex++; %>
 								<tr>
-									<td>
+									<td style="border-right:0px">
 										<%: directIndex%>&nbsp;.
 									</td>
-									<td>
+									<td style="border-right:0px">
 										<%: direct.Company%>
 									</td>
-									<td>
+									<td style="border-right:0px">
 										<%: direct.Security%>
 									</td>
-									<td>
+									<td style="border-right:0px">
 										<%: direct.NoOfShares%>
 									</td>
-									<td>
+									<td style="border-right:0px">
 										<%: direct.Percentage%>
 									</td>
-									<td>
+									<td style="border-right:0px">
 										<%: direct.FMV%>
 									</td>
 									<td class="datecell">
@@ -203,5 +203,15 @@
 				<% } %>
 		</tbody>
 	</table>
+	<%: Html.HiddenFor(model => model.IsPrint)%>
 </body>
+<script type="text/javascript">
+	$(document).ready(function () {
+		var isprint=$("#IsPrint").val();
+		if(isprint.toLowerCase()=="true") {
+			window.print();
+		}
+		window.close();
+	});
+</script>
 </html>

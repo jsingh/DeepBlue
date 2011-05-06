@@ -83,7 +83,7 @@ namespace DeepBlue.Controllers.Deal {
 			DealDetailModel model = new DealDetailModel();
 			this.TryUpdateModel(model);
 			ResultModel resultModel = new ResultModel();
-			string ErrorMessage = DealdNameAvailable(model.DealName, model.DealId);
+			string ErrorMessage = DealdNameAvailable(model.DealName, model.DealId, model.FundId);
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				ModelState.AddModelError("DealName", ErrorMessage);
 			}
@@ -96,7 +96,7 @@ namespace DeepBlue.Controllers.Deal {
 				}
 				deal.EntityID = (int)ConfigUtil.CurrentEntityID;
 				deal.DealName = model.DealName;
-				deal.DealNumber = DealRepository.GetMaxDealNumber();
+				deal.DealNumber = DealRepository.GetMaxDealNumber(model.FundId);
 				deal.FundID = model.FundId;
 				deal.IsPartnered = model.IsPartnered;
 				if (deal.IsPartnered) {
@@ -122,8 +122,7 @@ namespace DeepBlue.Controllers.Deal {
 						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 					}
 				}
-				DealClosing dealClosing = new DealClosing(); //Create new Deal Closing
-				resultModel.Result = CreateDealClosing(deal.DealID, out dealClosing);
+				FindDealClosing(model.DealId);
 				if (string.IsNullOrEmpty(resultModel.Result)) {
 					resultModel.Result = "True||" + deal.DealID;
 				}
@@ -141,8 +140,8 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		[HttpGet]
-		public string DealdNameAvailable(string DealName, int DealId) {
-			if (DealRepository.DealNameAvailable(DealName, DealId))
+		public string DealdNameAvailable(string DealName, int DealId, int FundId) {
+			if (DealRepository.DealNameAvailable(DealName, DealId, FundId))
 				return "Deal Name already exist";
 			else
 				return string.Empty;
@@ -173,7 +172,7 @@ namespace DeepBlue.Controllers.Deal {
 		// GET: /Deal/Edit/5
 		public JsonResult FindFund(int fundId) {
 			DealDetailModel deal = new DealDetailModel();
-			deal.DealNumber = DealRepository.GetMaxDealNumber();
+			deal.DealNumber = DealRepository.GetMaxDealNumber(fundId);
 			return Json(deal, JsonRequestBehavior.AllowGet);
 		}
 
@@ -241,19 +240,7 @@ namespace DeepBlue.Controllers.Deal {
 		// GET: /Deal/FindDealClosingCost/1
 		[HttpGet]
 		public JsonResult FindDealClosingCost(int dealClosingCostId) {
-			DealClosingCost dealClosingCost = DealRepository.FindDealClosingCost(dealClosingCostId);
-			return Json(GetDealClosingCostModel(dealClosingCost), JsonRequestBehavior.AllowGet);
-		}
-
-		private DealClosingCostModel GetDealClosingCostModel(DealClosingCost dealClosingCost) {
-			return new DealClosingCostModel {
-				Amount = dealClosingCost.Amount,
-				Date = (dealClosingCost.Date ?? Convert.ToDateTime("01/01/1900")),
-				DealClosingCostId = dealClosingCost.DealClosingCostID,
-				DealClosingCostTypeId = dealClosingCost.DealClosingCostTypeID,
-				DealId = dealClosingCost.DealID,
-				Description = dealClosingCost.DealClosingCostType.Name
-			};
+			return Json(DealRepository.FindDealClosingCostModel(dealClosingCostId), JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -289,6 +276,7 @@ namespace DeepBlue.Controllers.Deal {
 					AddCommunication(deal.Contact1, Models.Admin.Enums.CommunicationType.Email, model.Email);
 					AddCommunication(deal.Contact1, Models.Admin.Enums.CommunicationType.Fax, model.Fax);
 					AddCommunication(deal.Contact1, Models.Admin.Enums.CommunicationType.HomePhone, model.Phone);
+					AddCommunication(deal.Contact1, Models.Admin.Enums.CommunicationType.Company, model.CompanyName);
 					IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveDeal(deal);
 					if (errorInfo != null) {
 						foreach (var err in errorInfo.ToList()) {
@@ -329,6 +317,9 @@ namespace DeepBlue.Controllers.Deal {
 				dealUnderlyingFund.Percent = model.Percent;
 				dealUnderlyingFund.RecordDate = model.RecordDate;
 				dealUnderlyingFund.UnderlyingFundID = model.UnderlyingFundId;
+				dealUnderlyingFund.GrossPurchasePrice = model.GrossPurchasePrice;
+				dealUnderlyingFund.ReassignedGPP = model.ReassignedGPP;
+				dealUnderlyingFund.UnfundedAmount = model.UnfundedAmount;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
@@ -355,22 +346,10 @@ namespace DeepBlue.Controllers.Deal {
 		// GET: /Deal/FindDealUnderlyingFund/1
 		[HttpGet]
 		public JsonResult FindDealUnderlyingFund(int dealUnderlyingFundId) {
-			DealUnderlyingFund dealUnderlyingFund = DealRepository.FindDealUnderlyingFund(dealUnderlyingFundId);
-			return Json(GetDealUnderlyingFundModel(dealUnderlyingFund), JsonRequestBehavior.AllowGet);
+			return Json(DealRepository.FindDealUnderlyingFundModel(dealUnderlyingFundId), JsonRequestBehavior.AllowGet);
 		}
 
-		private DealUnderlyingFundModel GetDealUnderlyingFundModel(DealUnderlyingFund dealUnderlyingFund) {
-			return new DealUnderlyingFundModel {
-				CommittedAmount = dealUnderlyingFund.CommittedAmount ?? 0,
-				UnderlyingFundId = dealUnderlyingFund.UnderlyingFundID,
-				RecordDate = dealUnderlyingFund.RecordDate ?? Convert.ToDateTime("01/01/1900"),
-				Percent = dealUnderlyingFund.Percent ?? 0,
-				FundNav = dealUnderlyingFund.FundNav ?? 0,
-				FundName = dealUnderlyingFund.UnderlyingFund.FundName,
-				DealId = dealUnderlyingFund.DealID,
-				DealUnderlyingFundId = dealUnderlyingFund.DealUnderlyingtFundID
-			};
-		}
+
 
 		//
 		// GET: /Deal/DeleteDealUnderlyingFund/1
@@ -381,6 +360,15 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region DealUnderlyingDirect
+
+		[HttpGet]
+		public ActionResult DealUnderlyingDirects() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "DealUnderlyingDirects";
+			return View();
+		}
+
 		//
 		// GET: /Deal/CreateDealUnderlyingDirect
 		[HttpPost]
@@ -401,6 +389,9 @@ namespace DeepBlue.Controllers.Deal {
 				dealUnderlyingDirect.DealClosingID = FindDealClosing(model.DealId).DealClosingID;
 				dealUnderlyingDirect.SecurityID = model.SecurityId;
 				dealUnderlyingDirect.SecurityTypeID = model.SecurityTypeId;
+				dealUnderlyingDirect.TaxCostDate = model.TaxCostDate;
+				dealUnderlyingDirect.TaxCostBase = model.TaxCostBase;
+				dealUnderlyingDirect.PurchasePrice = model.PurchasePrice;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveDealUnderlyingDirect(dealUnderlyingDirect);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
@@ -423,46 +414,49 @@ namespace DeepBlue.Controllers.Deal {
 			return resultModel.Result;
 		}
 
+		public ActionResult EditDealUnderlyingDirect(int? id) {
+			DealUnderlyingDirectModel model = DealRepository.FindDealUnderlyingDirectModel(id ?? 0);
+			if (model == null) {
+				model = new DealUnderlyingDirectModel();
+			}
+			model.Issuers = SelectListFactory.GetIssuerSelectList(IssuerRepository.GetAllIssuers());
+			model.SecurityTypes = SelectListFactory.GetSecurityTypeSelectList(AdminRepository.GetAllSecurityTypes());
+			switch ((Models.Deal.Enums.SecurityType)model.SecurityTypeId) {
+				case Models.Deal.Enums.SecurityType.Equity:
+					model.Equities = SelectListFactory.GetEquitySelectList(IssuerRepository.GetAllEquity(model.IssuerId));
+					break;
+				case Models.Deal.Enums.SecurityType.FixedIncome:
+					model.FixedIncomes = SelectListFactory.GetFixedIncomeSelectList(IssuerRepository.GetAllFixedIncome(model.IssuerId));
+					break;
+			}
+			return View(model);
+		}
+
 		//
 		// GET: /Deal/FindDealUnderlyingDirect/1
 		[HttpGet]
 		public JsonResult FindDealUnderlyingDirect(int dealUnderlyingDirectId) {
-			DealUnderlyingDirect dealUnderlyingDirect = DealRepository.FindDealUnderlyingDirect(dealUnderlyingDirectId);
-			return Json(GetDealUnderlyingDirectModel(dealUnderlyingDirect), JsonRequestBehavior.AllowGet);
+			DealUnderlyingDirectModel model = DealRepository.FindDealUnderlyingDirectModel(dealUnderlyingDirectId);
+		    model.Equities = SelectListFactory.GetEquitySelectList(IssuerRepository.GetAllEquity(model.IssuerId));
+			model.FixedIncomes = SelectListFactory.GetFixedIncomeSelectList(IssuerRepository.GetAllFixedIncome(model.IssuerId));
+			return Json(model, JsonRequestBehavior.AllowGet);
 		}
 
-		private DealUnderlyingDirectModel GetDealUnderlyingDirectModel(DealUnderlyingDirect dealUnderlyingDirect) {
-			EquityDetailModel quityModel;
-			FixedIncomeDetailModel fixedIncomeModel;
-			DealUnderlyingDirectModel model = new DealUnderlyingDirectModel {
-				RecordDate = dealUnderlyingDirect.RecordDate ?? Convert.ToDateTime("01/01/1900"),
-				Percent = dealUnderlyingDirect.Percent ?? 0,
-				DealId = dealUnderlyingDirect.DealID,
-				DealUnderlyingDirectId = dealUnderlyingDirect.DealUnderlyingDirectID,
-				NumberOfShares = dealUnderlyingDirect.NumberOfShares,
-				FMV = dealUnderlyingDirect.FMV,
-				SecurityId = dealUnderlyingDirect.SecurityID,
-				SecurityTypeId = dealUnderlyingDirect.SecurityTypeID,
-				SecurityType = dealUnderlyingDirect.SecurityType.Name
-			};
-			switch ((DeepBlue.Models.Deal.Enums.SecurityType)model.SecurityTypeId) {
-				case Models.Deal.Enums.SecurityType.Equity:
-					quityModel = IssuerRepository.FindEquity(model.SecurityId);
-					model.IssuerName = quityModel.IssuerName;
-					model.IssuerId = quityModel.IssuerId;
-					model.Security = quityModel.Symbol;
-					break;
-				case Models.Deal.Enums.SecurityType.FixedIncome:
-					fixedIncomeModel = IssuerRepository.FindFixedIncome(model.SecurityId);
-					model.IssuerName = fixedIncomeModel.IssuerName;
-					model.IssuerId = fixedIncomeModel.IssuerId;
-					model.Security = fixedIncomeModel.Symbol;
-					break;
+		[HttpGet]
+		public JsonResult DealUnderlyingDirectList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DealUnderlyingDirectListModel> dealUnderlyingDirects = DealRepository.GetAllDealUnderlyingDirects(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var dealUnderlyingDirect in dealUnderlyingDirects) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> { dealUnderlyingDirect.DealUnderlyingDirectId, dealUnderlyingDirect.DealName, dealUnderlyingDirect.CloseDate.ToString("MM/dd/yyyy"), dealUnderlyingDirect.IssuerName, dealUnderlyingDirect.SecurityType }
+				});
 			}
-			model.Equities = SelectListFactory.GetEquitySelectList(IssuerRepository.GetAllEquity(model.IssuerId));
-			model.FixedIncomes = SelectListFactory.GetFixedIncomeSelectList(IssuerRepository.GetAllFixedIncome(model.IssuerId));
-			return model;
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
+
 
 		//
 		// GET: /Deal/DeleteDealUnderlyingDirect/1
@@ -531,15 +525,15 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/DealReportList
 		[HttpGet]
-		public JsonResult DealReportList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult DealReportList(int pageIndex, int pageSize, string sortName, string sortOrder, int fundId) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			List<DealReportModel> deals = DealRepository.GetAllReportDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			List<DealReportModel> deals = DealRepository.GetAllReportDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows, fundId);
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var deal in deals) {
 				flexgridData.rows.Add(new FlexigridRow {
-					cell = new List<object> { deal.DealId, deal.DealNumber.ToString() + ".", deal.DealName, deal.FundName, deal.SellerName }
+					cell = new List<object> { deal.DealId, deal.DealNumber.ToString() + ".", deal.DealName, deal.FundName, (deal.SellerName == null ? string.Empty : deal.SellerName) }
 				});
 			}
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);
@@ -555,21 +549,152 @@ namespace DeepBlue.Controllers.Deal {
 			return Json(underlyingDetail, JsonRequestBehavior.AllowGet);
 		}
 
-		public ActionResult Export(int id) {
+		//
+		// GET: /Deal/DealUnderlyingDetails
+		[HttpGet]
+		public ActionResult Export(int fundId, int exportTypeId, string sortName, string sortOrder) {
 			Uri requestUrl = HttpContext.Request.Url;
 			string url = string.Format("{0}://{1}{2}",
 												  requestUrl.Scheme,
 												  requestUrl.Authority,
-												  "/Deal/ExportDetail/" + id);
-			return new ExportWordResult(url,"DealReport.doc");
+												  "/Deal/ExportDetail?FundId=" + fundId
+												  + "&SortName=" + sortName
+												  + "&SortOrder=" + sortOrder);
+			ActionResult result = null;
+			switch ((Models.Deal.Enums.ExportType)exportTypeId) {
+				case ExportType.Word:
+					result = new ExportWordResult(url, "DealReport.doc");
+					break;
+			}
+			return result;
 		}
 
-		public ActionResult ExportDetail(int id) {
+		public ActionResult ExportDetail(FormCollection collection) {
 			DealExportModel model = new DealExportModel();
-			int totalRows = 0;
-			model.ExportType = (ExportType)id;
-			model.Deals = DealRepository.GetAllExportDeals(1, 100, "DealName", "asc", ref totalRows);
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				model.Deals = DealRepository.GetAllExportDeals(model.SortName, model.SortOrder, model.FundId);
+			}
 			return View(model);
+		}
+		#endregion
+
+		#region UnderlyingFund
+		public ActionResult UnderlyingFunds() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "UnderlyingFund";
+			return View();
+		}
+
+		public ActionResult EditUnderlyingFund(int? id) {
+			CreateUnderlyingFundModel model = DealRepository.FindUnderlyingFundModel(id ?? 0);
+			if (model == null) {
+				model = new CreateUnderlyingFundModel();
+			}
+			model.UnderlyingFundTypes = SelectListFactory.GetUnderlyingFundTypeSelectList(AdminRepository.GetAllUnderlyingFundTypes());
+			model.ReportingTypes = SelectListFactory.GetReportingTypeSelectList(AdminRepository.GetAllReportingTypes());
+			model.Reportings = SelectListFactory.GetReportingFrequencySelectList(AdminRepository.GetAllReportingFrequencies());
+			model.Industries = SelectListFactory.GetIndustrySelectList(AdminRepository.GetAllIndusties());
+			model.Geographyes = SelectListFactory.GetGeographySelectList(AdminRepository.GetAllGeographies());
+			model.Issuers = SelectListFactory.GetIssuerSelectList(IssuerRepository.GetAllIssuers());
+			return View(model);
+		}
+
+		[HttpPost]
+		public ActionResult UpdateUnderlyingFund(FormCollection collection) {
+			CreateUnderlyingFundModel model = new CreateUnderlyingFundModel();
+			this.TryUpdateModel(model);
+			ResultModel resultModel = new ResultModel();
+			string ErrorMessage = UnderlyingFundNameAvailable(model.FundName, model.UnderlyingFundId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("FundName", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				UnderlyingFund underlyingFund = DealRepository.FindUnderlyingFund(model.UnderlyingFundId);
+				if (underlyingFund == null) {
+					underlyingFund = new UnderlyingFund();
+				}
+				underlyingFund.EntityID = (int)ConfigUtil.CurrentEntityID;
+				underlyingFund.IsFeesIncluded = model.IsFeesIncluded;
+				underlyingFund.FundName = model.FundName;
+				underlyingFund.FundTypeID = model.FundTypeId;
+				underlyingFund.GeographyID = ((model.GeographyId ?? 0) > 0 ? model.GeographyId : null);
+				underlyingFund.IndustryID = ((model.IndustryId ?? 0) > 0 ? model.IndustryId : null);
+				underlyingFund.ReportingFrequencyID = ((model.ReportingFrequencyId ?? 0) > 0 ? model.ReportingFrequencyId : null);
+				underlyingFund.ReportingTypeID = ((model.ReportingTypeId ?? 0) > 0 ? model.ReportingTypeId : null);
+				underlyingFund.IssuerID = model.IssuerId;
+				underlyingFund.VintageYear = model.VintageYear;
+				underlyingFund.TotalSize = model.TotalSize;
+				underlyingFund.TerminationYear = model.TerminationYear;
+				underlyingFund.EntityID = (int)ConfigUtil.CurrentEntityID;
+				if (underlyingFund.Account == null) {
+					underlyingFund.Account = new Account();
+					underlyingFund.Account.CreatedBy = AppSettings.CreatedByUserId;
+					underlyingFund.Account.CreatedDate = DateTime.Now;
+				}
+				underlyingFund.Account.BankName = model.BankName;
+				underlyingFund.Account.AccountNumberCash = model.Account;
+				underlyingFund.Account.Account1 = model.Account;
+				underlyingFund.Account.AccountOf = model.AccountOf;
+				underlyingFund.Account.Attention = model.Attention;
+				underlyingFund.Account.EntityID = (int)ConfigUtil.CurrentEntityID;
+				underlyingFund.Account.Reference = model.Reference;
+				underlyingFund.Account.Routing = model.Routing;
+				underlyingFund.Account.LastUpdatedBy = AppSettings.CreatedByUserId;
+				underlyingFund.Account.LastUpdatedDate = DateTime.Now;
+				if (underlyingFund.Contact == null) {
+					underlyingFund.Contact = new Contact();
+					underlyingFund.Contact.CreatedBy = AppSettings.CreatedByUserId;
+					underlyingFund.Contact.CreatedDate = DateTime.Now;
+				}
+				underlyingFund.Contact.EntityID = (int)ConfigUtil.CurrentEntityID;
+				underlyingFund.Contact.ContactName = model.ContactName;
+				underlyingFund.Contact.LastName = "n/a";
+				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.Email, model.Email);
+				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.HomePhone, model.Phone);
+				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebAddress, model.WebAddress);
+				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.MailingAddress, model.WebAddress);
+				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveUnderlyingFund(underlyingFund);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string UnderlyingFundNameAvailable(string FundName, int UnderlyingFundId) {
+			if (DealRepository.UnderlyingFundNameAvailable(FundName, UnderlyingFundId))
+				return "Fund Name already exist";
+			else
+				return string.Empty;
+		}
+
+		[HttpGet]
+		public JsonResult UnderlyingFundList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<UnderlyingFundListModel> underlyingFunds = DealRepository.GetAllUnderlyingFunds(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var underlyingFund in underlyingFunds) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> { underlyingFund.UnderlyingFundId, underlyingFund.FundName, underlyingFund.FundType, underlyingFund.IssuerName }
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 		#endregion
 

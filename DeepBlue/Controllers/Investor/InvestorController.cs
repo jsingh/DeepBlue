@@ -68,7 +68,7 @@ namespace DeepBlue.Controllers.Investor {
 			model.DomesticForeign = true;
 			model.AccountLength = 1;
 			model.ContactLength = 1;
-			model.Country = (int)DeepBlue.Models.Investor.Enums.DefaultCountry.USA;
+			model.Country = (int)DeepBlue.Models.Admin.Enums.DefaultCountry.USA;
 			return View(model);
 		}
 
@@ -125,7 +125,7 @@ namespace DeepBlue.Controllers.Investor {
 					investorAddress.Address = new Address();
 					investorAddress.Address.Address1 = model.Address1 ?? "";
 					investorAddress.Address.Address2 = model.Address2 ?? "";
-					investorAddress.Address.AddressTypeID = (int)DeepBlue.Models.Investor.Enums.AddressType.Work;
+					investorAddress.Address.AddressTypeID = (int)DeepBlue.Models.Admin.Enums.AddressType.Work;
 					investorAddress.Address.City = model.City ?? "";
 					investorAddress.Address.Country = model.Country;
 					investorAddress.Address.CreatedBy = AppSettings.CreatedByUserId;
@@ -204,7 +204,7 @@ namespace DeepBlue.Controllers.Investor {
 						contactAddress.Address = new Address();
 						contactAddress.Address.Address1 = Convert.ToString(collection[(index + 1).ToString() + "_" + "ContactAddress1"]);
 						contactAddress.Address.Address2 = Convert.ToString(collection[(index + 1).ToString() + "_" + "ContactAddress2"]);
-						contactAddress.Address.AddressTypeID = (int)DeepBlue.Models.Investor.Enums.AddressType.Work;
+						contactAddress.Address.AddressTypeID = (int)DeepBlue.Models.Admin.Enums.AddressType.Work;
 						contactAddress.Address.City = Convert.ToString(collection[(index + 1).ToString() + "_" + "ContactCity"]);
 						contactAddress.Address.Country = Convert.ToInt32(collection[(index + 1).ToString() + "_" + "ContactCountry"]);
 						contactAddress.Address.CreatedBy = AppSettings.CreatedByUserId;
@@ -363,7 +363,7 @@ namespace DeepBlue.Controllers.Investor {
 					investorAddress.LastUpdatedBy = AppSettings.CreatedByUserId;
 					investorAddress.LastUpdatedDate = DateTime.Now;
 					investorAddress.Address.EntityID = (int)ConfigUtil.CurrentEntityID;
-					investorAddress.Address.AddressTypeID = (int)DeepBlue.Models.Investor.Enums.AddressType.Work;
+					investorAddress.Address.AddressTypeID = (int)DeepBlue.Models.Admin.Enums.AddressType.Work;
 					investorAddress.Address.Address1 = collection[index.ToString() + "_" + "Address1"];
 					investorAddress.Address.Address2 = collection[index.ToString() + "_" + "Address2"];
 					investorAddress.Address.City = collection[index.ToString() + "_" + "City"];
@@ -428,7 +428,7 @@ namespace DeepBlue.Controllers.Investor {
 						investorContactAddress.Address.CreatedDate = DateTime.Now;
 					}
 					investorContactAddress.EntityID = (int)ConfigUtil.CurrentEntityID;
-					investorContactAddress.Address.AddressTypeID = (int)DeepBlue.Models.Investor.Enums.AddressType.Work;
+					investorContactAddress.Address.AddressTypeID = (int)DeepBlue.Models.Admin.Enums.AddressType.Work;
 					investorContactAddress.Address.EntityID = (int)ConfigUtil.CurrentEntityID;
 					investorContactAddress.Address.Address1 = collection[index.ToString() + "_" + "ContactAddress1"];
 					investorContactAddress.Address.Address2 = collection[index.ToString() + "_" + "ContactAddress2"];

@@ -122,6 +122,10 @@
     <Compile Include="Helpers\SelectListFactory.cs" />
     <Compile Include="Helpers\UploadFile.cs" />
     <Compile Include="Helpers\ValidationHelpers.cs" />
+    <Compile Include="Models\Admin\EditIndustryModel.cs" />
+    <Compile Include="Models\Admin\EditGeographyModel.cs" />
+    <Compile Include="Models\Admin\EditReportingFrequencyModel.cs" />
+    <Compile Include="Models\Admin\EditReportingTypeModel.cs" />
     <Compile Include="Models\Admin\EditCommunicationGroupingModel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -178,7 +182,9 @@
     <Compile Include="Models\CapitalCall\CreateReceiveModel.cs" />
     <Compile Include="Models\CapitalCall\ResultModel.cs" />
     <Compile Include="Models\Deal\CommunicationDetailModel.cs" />
+    <Compile Include="Models\Deal\CreateDealUnderlyingDirectModel.cs" />
     <Compile Include="Models\Deal\CreateModel.cs" />
+    <Compile Include="Models\Deal\CreateUnderlyingFundModel.cs" />
     <Compile Include="Models\Deal\DealDetailModel.cs" />
     <Compile Include="Models\Deal\DealDocumentModel.cs" />
     <Compile Include="Models\Deal\DealClosingCostModel.cs" />
@@ -187,6 +193,7 @@
     <Compile Include="Models\Deal\DealUnderlyingDirectModel.cs" />
     <Compile Include="Models\Deal\DealUnderlyingFundModel.cs" />
     <Compile Include="Models\Deal\Enums.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundListModel.cs" />
     <Compile Include="Models\Entity\Partial\CapitalCallService.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -199,6 +206,10 @@
     <Compile Include="Models\Entity\Partial\CommunicationTypeService.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Entity\Partial\IndustryService.cs" />
+    <Compile Include="Models\Entity\Partial\GeographyService.cs" />
+    <Compile Include="Models\Entity\Partial\ReportingFrequencyService.cs" />
+    <Compile Include="Models\Entity\Partial\ReportingTypeService.cs" />
     <Compile Include="Models\Entity\Partial\CustomFieldService.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -263,9 +274,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Entity\Partial\ShareClassTypeService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingFundService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundTypeService.cs" />
+    <Compile Include="Models\Entity\Validation\Industry.cs" />
+    <Compile Include="Models\Entity\Validation\Geography.cs" />
+    <Compile Include="Models\Entity\Validation\ReportingFrequency.cs" />
+    <Compile Include="Models\Entity\Validation\ReportingType.cs" />
     <Compile Include="Models\Entity\Validation\DealClosing.cs" />
     <Compile Include="Models\Entity\Validation\ShareClassType.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingFund.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundType.cs" />
     <Compile Include="Models\Issuer\EquityDetailModel.cs" />
     <Compile Include="Models\Issuer\FixedIncomeDetailModel.cs" />
@@ -479,6 +496,11 @@
     <Content Include="Assets\javascripts\CommunicationType.js" />
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
+    <Content Include="Assets\javascripts\CreateDealUnderlyingDirect.js" />
+    <Content Include="Assets\javascripts\Industry.js" />
+    <Content Include="Assets\javascripts\Geography.js" />
+    <Content Include="Assets\javascripts\ReportingFrequency.js" />
+    <Content Include="Assets\javascripts\ReportingType.js" />
     <Content Include="Assets\javascripts\jAjaxTable.js" />
     <Content Include="Assets\javascripts\DealReport.js" />
     <Content Include="Assets\javascripts\SecurityType.js" />
@@ -520,7 +542,9 @@
     <Content Include="Assets\javascripts\SearchInvestor.js" />
     <Content Include="Assets\javascripts\ShareClassType.js" />
     <Content Include="Assets\javascripts\TransactionController.js" />
+    <Content Include="Assets\javascripts\UnderlyingFund.js" />
     <Content Include="Assets\javascripts\UnderlyingFundType.js" />
+    <Content Include="Assets\stylesheets\adminbackend.css" />
     <Content Include="Assets\stylesheets\adminflexigrid.css" />
     <Content Include="Assets\stylesheets\capitalcall.css" />
     <Content Include="Assets\stylesheets\customfield.css" />
@@ -529,6 +553,7 @@
     <Content Include="Assets\stylesheets\dealreport.css" />
     <Content Include="Assets\stylesheets\distribution.css" />
     <Content Include="Assets\stylesheets\document.css" />
+    <Content Include="Assets\stylesheets\exportdeal.css" />
     <Content Include="Assets\stylesheets\flexigrid.css" />
     <Content Include="Assets\stylesheets\fund.css" />
     <Content Include="Assets\stylesheets\jquery-ui-1.8.10.custom.css" />
@@ -547,15 +572,18 @@
     <Content Include="obj\Release\DeepBlue.pdb" />
     <Content Include="obj\Release\TempPE\Models.Entity.DeepBlue.Designer.cs.dll" />
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
-    <Content Include="Views\Admin\CommunicationGroupingList.ascx" />
     <Content Include="Views\Admin\CommunicationType.aspx" />
-    <Content Include="Views\Admin\CommunicationTypeList.ascx" />
+    <Content Include="Views\Admin\EditIndustry.aspx" />
+    <Content Include="Views\Admin\Industry.aspx" />
+    <Content Include="Views\Admin\EditGeography.aspx" />
+    <Content Include="Views\Admin\Geography.aspx" />
+    <Content Include="Views\Admin\EditReportingFrequency.aspx" />
+    <Content Include="Views\Admin\ReportingFrequency.aspx" />
+    <Content Include="Views\Admin\EditReportingType.aspx" />
+    <Content Include="Views\Admin\ReportingType.aspx" />
     <Content Include="Views\Admin\CustomField.aspx" />
-    <Content Include="Views\Admin\CustomFieldList.ascx" />
     <Content Include="Views\Admin\DataType.aspx" />
-    <Content Include="Views\Admin\DataTypeList.ascx" />
     <Content Include="Views\Admin\DealClosingCostType.aspx" />
-    <Content Include="Views\Admin\DealClosingCostTypeList.ascx" />
     <Content Include="Views\Admin\EditCommunicationGrouping.aspx" />
     <Content Include="Views\Admin\EditCommunicationType.aspx" />
     <Content Include="Views\Admin\EditCustomField.aspx" />
@@ -571,23 +599,15 @@
     <Content Include="Views\Admin\EditShareClassType.aspx" />
     <Content Include="Views\Admin\EditUnderlyingFundType.aspx" />
     <Content Include="Views\Admin\EntityType.aspx" />
-    <Content Include="Views\Admin\EntityTypeList.ascx" />
     <Content Include="Views\Admin\FundClosing.aspx" />
-    <Content Include="Views\Admin\FundClosingList.ascx" />
     <Content Include="Views\Admin\InvestorType.aspx" />
-    <Content Include="Views\Admin\InvestorTypeList.ascx" />
     <Content Include="Views\Admin\List.ascx" />
     <Content Include="Views\Admin\Module.aspx" />
-    <Content Include="Views\Admin\ModuleList.ascx" />
     <Content Include="Views\Admin\PurchaseType.aspx" />
-    <Content Include="Views\Admin\PurchaseTypeList.ascx" />
     <Content Include="Views\Admin\Result.ascx" />
     <Content Include="Views\Admin\SecurityType.aspx" />
-    <Content Include="Views\Admin\SecurityTypeList.ascx" />
     <Content Include="Views\Admin\ShareClassType.aspx" />
-    <Content Include="Views\Admin\ShareClassTypeList.ascx" />
     <Content Include="Views\Admin\UnderlyingFundType.aspx" />
-    <Content Include="Views\Admin\UnderlyingFundTypeList.ascx" />
     <Content Include="Views\CapitalCall\CapitalCallList.ascx" />
     <Content Include="Views\CapitalCall\CapitalDistributionDetailList.ascx" />
     <Content Include="Views\CapitalCall\NewCapitalDistribution.aspx" />
@@ -597,6 +617,9 @@
     <Content Include="Views\CapitalCall\NewManualCapitalCall.aspx" />
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
+    <Content Include="Views\Deal\DealUnderlyingDirects.aspx" />
+    <Content Include="Views\Deal\EditDealUnderlyingDirect.aspx" />
+    <Content Include="Views\Deal\EditUnderlyingFund.aspx" />
     <Content Include="Views\Deal\ExportDetail.aspx" />
     <Content Include="Views\Deal\DealDocumentDetail.ascx" />
     <Content Include="Views\Deal\DealExpenseDetail.ascx" />
@@ -608,6 +631,7 @@
     <Content Include="Views\Deal\SellerDetail.ascx" />
     <Content Include="Views\Deal\DealDetail.ascx" />
     <Content Include="Views\Deal\New.aspx" />
+    <Content Include="Views\Deal\UnderlyingFunds.aspx" />
     <Content Include="Views\Document\List.ascx" />
     <Content Include="Views\Document\New.aspx" />
     <Content Include="Views\Document\Search.aspx" />

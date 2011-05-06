@@ -6,22 +6,22 @@
 	<%: Html.Image("UnderlyingDirects.png", new { @class="expandbtn" })%></div>
 <div class="fieldbox">
 	<table id="tblUnderlyingDirect" cellpadding="0" cellspacing="0" border="0" class="grid"
-		style="width: 95%">
+		style="width: 100%">
 		<thead>
 			<tr>
 				<th>
 					No.
 				</th>
-				<th style="width: 15%">
+				<th style="width: 10%">
 					Company
 				</th>
-				<th style="width: 15%">
+				<th style="width: 10%">
 					Security Type
 				</th>
-				<th style="width: 15%">
+				<th style="width: 10%">
 					Security
 				</th>
-				<th>
+				<th nowrap>
 					No. of Shares
 				</th>
 				<th>
@@ -30,10 +30,19 @@
 				<th>
 					FMV
 				</th>
+				<th nowrap>
+					Purchase Price
+				</th>
+				<th nowrap>
+					Tax Cost Base
+				</th>
+				<th nowrap>
+					Tax Cost Date
+				</th>
 				<th>
 					Record Date
 				</th>
-				<th style="width: 15%">
+				<th>
 				</th>
 				<th>
 				</th>
@@ -63,6 +72,15 @@
 				</td>
 				<td>
 					<%: Html.TextBox("FMV", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+				</td>
+				<td>
+					<%: Html.TextBox("PurchasePrice", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+				</td>
+				<td>
+					<%: Html.TextBox("TaxCostBase", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+				</td>
+				<td>
+					<%: Html.TextBox("TaxCostDate", "", new { @class = "datefield", @id = "0_DirectTaxCostDate" })%>
 				</td>
 				<td>
 					<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_DirectRecordDate" })%>

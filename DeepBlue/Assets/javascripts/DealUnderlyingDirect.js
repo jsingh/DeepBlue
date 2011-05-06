@@ -17,9 +17,20 @@
 			jHelper.loadDropDown(Security,data.FixedIncomes);
 		}
 	}
-	var date=jHelper.formatDate(jHelper.parseJSONDate(data.RecordDate));
+	var date;
+	var amount;
+	amount=parseFloat(data.PurchasePrice);if(isNaN(amount)) { data.PurchasePrice=0; }
+	amount=parseFloat(data.TaxCostBase);if(isNaN(amount)) { data.TaxCostBase=0; }
+	$("#SpnPurchasePrice",tr).html(jHelper.dollarAmount(data.PurchasePrice.toString()));
+	$("#SpnTaxCostBase",tr).html(jHelper.dollarAmount(data.TaxCostBase.toString()));
+	date=jHelper.formatDate(jHelper.parseJSONDate(data.RecordDate));
 	$("#SpnRecordDate",tr).html(date);
 	$(":input[name='RecordDate']",tr).val(date);
+	if(data.TaxCostDate!=null) {
+		date=jHelper.formatDate(jHelper.parseJSONDate(data.TaxCostDate));
+		$("#SpnTaxCostDate",tr).html(date);
+		$(":input[name='TaxCostDate']",tr).val(date);
+	}
 	deal.selectValue(tr);
 	deal.applyDatePicker(tr);
 	deal.setIndex($("#tblUnderlyingDirect"));
@@ -67,20 +78,20 @@ deal.saveUnderlyingDirect=function (tr) {
 		deal.onDealSuccess=function () { deal.saveUnderlyingDirect(tr); }
 		$("#btnSaveDeal").click();
 	}
-}
+};
 deal.loadUnderlyingDirect=function (id) {
 	var dt=new Date();
 	var url="/Deal/FindDealUnderlyingDirect?dealUnderlyingDirectId="+id+"&t="+dt.getTime();
 	$.getJSON(url,function (data) {
 		deal.loadUnderlyingDirectData(data);
 	});
-}
+};
 deal.changeIssuer=function (ddl) {
 	deal.loadSecurity($(ddl).parents("tr:first"));
-}
+};
 deal.changeSecurityType=function (ddl) {
 	deal.loadSecurity($(ddl).parents("tr:first"));
-}
+};
 deal.loadSecurity=function (tr) {
 	var issuerId=$("#IssuerId",tr).val();
 	var securityTypeId=$("#SecurityTypeId",tr).val();
@@ -108,4 +119,4 @@ deal.loadSecurity=function (tr) {
 			}
 		});
 	}
-}
+};

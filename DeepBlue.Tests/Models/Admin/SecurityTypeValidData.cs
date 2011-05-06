@@ -19,7 +19,7 @@ namespace DeepBlue.Tests.Models.Admin {
         }
 
 		[Test]
-		public void create_a_new_securitytype_with_purchasetype_name_passes() {
+		public void create_a_new_securitytype_with_securitytype_name_passes() {
 			Assert.IsTrue(IsPropertyValid("Name"));
 		}
 

@@ -15,6 +15,16 @@ namespace DeepBlue.Models.Admin.Enums {
 		Fund = 2
 	}
 
+	public enum AddressType {
+		Home = 1,
+		Work = 2
+	}
+
+	public enum DefaultCountry {
+		USA = 225
+	}
+
+
 	public enum CustomFieldDataType {
 		Integer = 1,
 		Text = 2,
@@ -24,6 +34,14 @@ namespace DeepBlue.Models.Admin.Enums {
 		MultiSelectOpiton = 6,
 		SingleSelectOption = 7
 	}
+	 
+	public enum CommunicationGrouping {
+		Phone = 1,
+		Email = 2,
+		IM = 3,
+		Social_Networking = 4,
+		Other = 5
+	}
 
 	public enum CommunicationType {
 		HomePhone = 1,
@@ -32,6 +50,8 @@ namespace DeepBlue.Models.Admin.Enums {
 		Pager = 4,
 		Fax = 5,
 		Email = 6,
-		WebAddress = 7
+		WebAddress = 7,
+		Company = 8,
+		MailingAddress = 9
 	}
 }

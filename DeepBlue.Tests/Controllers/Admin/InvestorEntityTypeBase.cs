@@ -31,6 +31,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
             // Spin up the controller with the mock http context, and the mock repository
 			DefaultController = new AdminController(MockAdminRepository.Object, MockTransactionRepository.Object); 
             DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
+			//MockAdminRepository.Setup(x => x.GetAllInvestorEntityTypes()).Returns(new List<InvestorEntityType>());
         }
 
         [TearDown]
@@ -40,5 +41,11 @@ namespace DeepBlue.Tests.Controllers.Admin {
             DefaultController = null;
         }
 
+		#region FindInvestorEntityType
+		[Test]
+		public void valid_Find_InvestorEntityType_sets_json_result_error() {
+			Assert.IsTrue((DefaultController.EntityTypeList(1,1,"InvestorEntityTypeName","asc") != null));
+		}
+		#endregion
     }
 }

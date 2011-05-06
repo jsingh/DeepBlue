@@ -1,9 +1,9 @@
-﻿var shareclasstype={
+﻿var shareClassType={
 	pageLoad: false
 	,init: function () {
 		$("document").ready(function () {
-			shareclasstype.resizeIframe();
-			shareclasstype.pageLoad=true;
+			shareClassType.resizeIframe();
+			shareClassType.pageLoad=true;
 			$("body").css("overflow","hidden");
 		});
 	}
@@ -20,7 +20,7 @@
 		$(ifrm).load(function () { $("#loading",iframe).remove(); });
 		ifrm.src=url;
 		$(iframe).dialog({
-			title: " ShareClassType ",
+			title: "Share Class Type",
 			autoOpen: true,
 			width: 380,
 			modal: true,
@@ -29,7 +29,7 @@
 		});
 	}
 	,deleteShareClassType: function (id,img) {
-		if(confirm("Are you sure you want to delete this ShareClassType?")) {
+		if(confirm("Are you sure you want to delete this Share Class Type?")) {
 			var dt=new Date();
 			var url="/Admin/DeleteShareClassType/"+id+"?t="+dt.getTime();
 			$.get(url,function (data) {
@@ -52,34 +52,7 @@
 		}
 	}
 	,onSubmit: function (formId) {
-		
-		try {
-			var frm=document.getElementById(formId);
-			var message='';
-			$(".field-validation-error",frm).each(function () {
-				if(this.innerHTML!='') {
-					message+=this.innerHTML+"\n";
-				}
-			});
-			if(message!="") {
-				alert(message);
-				return false;
-			}
-			Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
-			$(".field-validation-error",frm).each(function () {
-				if(this.innerHTML!='') {
-					message+=this.innerHTML+"\n";
-				}
-			});
-			if(message!="") {
-				alert(message);
-				return false;
-			} else {
-				return true;
-			}
-		} catch(e) {
-		}
-		return true;
+		return jHelper.formSubmit(formId);
 	}
 	,onGridSuccess: function (t) {
 		$("tr",t).each(function () {
@@ -87,7 +60,7 @@
 		});
 	}
 	,onRowClick: function (row) {
-		purchaseType.add(row.cell[0]);
+		shareClassType.add(row.cell[0]);
 	}
 	,closeDialog: function (reload) {
 		$("#addShareClassTypeDialog").dialog('close');
@@ -104,7 +77,7 @@
 		if(jQuery.trim(UpdateTargetId.html())!="True") {
 			alert(UpdateTargetId.html())
 		} else {
-			parent.shareclasstype.closeDialog(true);
+			parent.shareClassType.closeDialog(true);
 		}
 	}
 }

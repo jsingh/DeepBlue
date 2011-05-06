@@ -42,5 +42,11 @@ namespace DeepBlue.Tests.Controllers.Admin {
             DefaultController = null;
         }
 
+		#region FindFundClosing
+		[Test]
+		public void valid_Find_FundClosingType_sets_json_result_error() {
+			Assert.IsTrue((DefaultController.FundClosingList(1, 1, "FundClosingDate", "asc") != null));
+		}
+		#endregion
     }
 }

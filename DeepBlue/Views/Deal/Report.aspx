@@ -19,8 +19,11 @@
 				Deal Report</div>
 			<div class="left-col" style="margin-left: 10px; display: none" id="ReportLoading">
 				<%:Html.Image("ajax.jpg")%>&nbsp;Loading....</div>
+			<div class="left-col" style="margin-left: 400px;">
+				<%: Html.Label("Fund:") %>&nbsp;<%: Html.TextBox("FundName", "", new { @id="FundName", @style = "width:200px" })%>
+			</div>
 			<div class="right-col export">
-				<a id="lnkExport" style="cursor:pointer">Export to&nbsp;<%:Html.Image("arrow_down.png")%></a></div>
+				<a id="lnkExport" style="cursor: pointer">Export to&nbsp;<%:Html.Image("arrow_down.png")%></a></div>
 		</div>
 		<div class="line">
 		</div>
@@ -52,19 +55,22 @@
 			</tbody>
 		</table>
 	</div>
+	<%: Html.Hidden("FundId","0",new  { @id="FundId"}) %>
+	<%: Html.Hidden("SortName", "DealName", new { @id = "SortName" })%>
+	<%: Html.Hidden("SortOrder", "asc", new { @id = "SortOrder" })%>
 	<div id="ExportMenu">
 		<ul>
 			<li>
-				<%:Html.ActionLink("Word", "Export/1", null, new { @target = "_blank" })%></li>
+				<%:Html.Anchor("Word", "javascript:dealReport.exportDeal(1);", new { })%></li>
 			<li>
 				<%:Html.Anchor("Pdf", new { @href = "#" })%></li>
 			<li>
-				<%:Html.Anchor("Print", new { @href = "#" })%></li>
+				<%:Html.Anchor("Print", "javascript:dealReport.exportDeal(3);", new { })%></li>
 		</ul>
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<script type="text/javascript">		dealReport.init();</script>
+	<script type="text/javascript">		dealReport.init(); </script>
 	<%=Html.jQueryAjaxTable("ReportList", new AjaxTableOptions {
 	ActionName = "DealReportList",
 	ControllerName = "Deal"
@@ -77,7 +83,9 @@
 	, OnSuccess = "dealReport.onSuccess"
 	, OnChangeSort = "dealReport.onChangeSort"
 	, AppendExistRows= true
+	, Autoload = false
 	})%>
+	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { dealReport.selectFund(ui.item.id);}" })%>
 	<script id="DealDetailTemplate" type="text/x-jquery-tmpl"> 
 	<div class="detail-content">
 		<div class="detail-left">

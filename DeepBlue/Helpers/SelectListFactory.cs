@@ -7,11 +7,14 @@ using DeepBlue.Models;
 using DeepBlue.Models.Entity;
 using DeepBlue.Models.Document;
 using DeepBlue.Models.Issuer;
+using DeepBlue.Controllers.Admin;
 
 namespace DeepBlue.Helpers {
 	public class SelectListFactory {
+		
 		public static List<SelectListItem> GetStateSelectList(List<STATE> states) {
 			List<SelectListItem> stateList = new List<SelectListItem>();
+			stateList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
 			item.Value = "0";
@@ -349,14 +352,89 @@ namespace DeepBlue.Helpers {
 			return fixedIncomeList;
 		}
 
+		public static List<SelectListItem> GetUnderlyingFundTypeSelectList(List<UnderlyingFundType> underlyingFundTypes) {
+			List<SelectListItem> underlyingFundTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			underlyingFundTypeList.Add(item);
+			foreach (var underlyingFundType in underlyingFundTypes) {
+				item = new SelectListItem();
+				item.Text = underlyingFundType.Name.ToString();
+				item.Value = underlyingFundType.UnderlyingFundTypeID.ToString();
+				underlyingFundTypeList.Add(item);
+			}
+			return underlyingFundTypeList;
+		}
+
+		public static List<SelectListItem> GetReportingTypeSelectList(List<ReportingType> reportingTypes) {
+			List<SelectListItem> reportingTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			reportingTypeList.Add(item);
+			foreach (var reportingType in reportingTypes) {
+				item = new SelectListItem();
+				item.Text = reportingType.Reporting.ToString();
+				item.Value = reportingType.ReportingTypeID.ToString();
+				reportingTypeList.Add(item);
+			}
+			return reportingTypeList;
+		}
+
+		public static List<SelectListItem> GetReportingFrequencySelectList(List<ReportingFrequency> reportingFrequencys) {
+			List<SelectListItem> reportingFrequencyList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			reportingFrequencyList.Add(item);
+			foreach (var reportingFrequency in reportingFrequencys) {
+				item = new SelectListItem();
+				item.Text = reportingFrequency.ReportingFrequency1.ToString();
+				item.Value = reportingFrequency.ReportingFrequencyID.ToString();
+				reportingFrequencyList.Add(item);
+			}
+			return reportingFrequencyList;
+		}
+
+		public static List<SelectListItem> GetIndustrySelectList(List<Industry> industrys) {
+			List<SelectListItem> industryList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			industryList.Add(item);
+			foreach (var industry in industrys) {
+				item = new SelectListItem();
+				item.Text = industry.Industry1.ToString();
+				item.Value = industry.IndustryID.ToString();
+				industryList.Add(item);
+			}
+			return industryList;
+		}
+
+		public static List<SelectListItem> GetGeographySelectList(List<Geography> geographys) {
+			List<SelectListItem> geographyList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			geographyList.Add(item);
+			foreach (var geography in geographys) {
+				item = new SelectListItem();
+				item.Text = geography.Geography1.ToString();
+				item.Value = geography.GeographyID.ToString();
+				geographyList.Add(item);
+			}
+			return geographyList;
+		}
+
 		public static List<SelectListItem> GetEmptySelectList() {
-			List<SelectListItem> lists = new List<SelectListItem>(); 
+			List<SelectListItem> lists = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
 			item.Value = "0";
 			lists.Add(item);
 			return lists;
 		}
-		
+
 	}
 }

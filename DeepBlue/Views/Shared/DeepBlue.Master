@@ -159,13 +159,17 @@
 		<%using (Html.InnerSubMenu("Deal_SubMenu", (ViewData["SubmenuName"] == "AdminDeal"))) {%>
 		<ul>
 			<li>
+				<%: Html.ActionLink("Underlying Fund", "UnderlyingFunds", "Deal", null, new { @class = (ViewData["PageName"] == "UnderlyingFund" ? "sel" : "") })%></li>
+			<li>
+				<%: Html.ActionLink("Deal Underlying Direct", "DealUnderlyingDirects", "Deal", null, new { @class = (ViewData["PageName"] == "DealUnderlyingDirects" ? "sel" : "") })%></li>
+			<li>
 				<%: Html.ActionLink("Purchase Type", "PurchaseType", "Admin", null, new { @class = (ViewData["PageName"] == "PurchaseType" ? "sel" : "") })%></li>
 			<li>
 				<%: Html.ActionLink("Deal Closing Cost Type", "DealClosingCostType", "Admin", null, new { @class = (ViewData["PageName"] == "DealClosingCostType" ? "sel" : "") })%></li>
 			<li>
 				<%: Html.ActionLink("Security Type", "SecurityType", "Admin", null, new { @class = (ViewData["PageName"] == "SecurityType" ? "sel" : "") })%></li>
-            <li>
-				<%: Html.ActionLink("Underlying Fund Type", "UnderlyingFundType", "Admin", null, new { @class = (ViewData["PageName"] == "UnderlyingFundType" ? "sel" : "") })%></li> 
+			<li>
+				<%: Html.ActionLink("Underlying Fund Type", "UnderlyingFundType", "Admin", null, new { @class = (ViewData["PageName"] == "UnderlyingFundType" ? "sel" : "") })%></li>
 			<li>
 				<%: Html.ActionLink("Share Class Type", "ShareClassType", "Admin", null, new { @class = (ViewData["PageName"] == "ShareClassType" ? "sel" : "") })%></li>
 		</ul>
@@ -173,7 +177,7 @@
 		<%using (Html.InnerSubMenu("Fund_SubMenu", (ViewData["SubmenuName"] == "AdminFund"))) {%>
 		<ul>
 			<li>
-				<%: Html.ActionLink("Fund Close #", "FundClosing", "Admin",null, new { @class = (ViewData["PageName"] == "FundClosing" ? "sel" : "") })%></li>				
+				<%: Html.ActionLink("Fund Close #", "FundClosing", "Admin",null, new { @class = (ViewData["PageName"] == "FundClosing" ? "sel" : "") })%></li>
 		</ul>
 		<%} %>
 		<%using (Html.InnerSubMenu("CusField_SubMenu", (ViewData["SubmenuName"] == "AdminCustomField"))) {%>

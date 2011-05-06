@@ -1,9 +1,9 @@
-﻿var underlyingfundtype={
+﻿var underlyingFundType={
 	pageLoad: false
 	,init: function () {
 		$("document").ready(function () {
-			underlyingfundtype.resizeIframe();
-			underlyingfundtype.pageLoad=true;
+			underlyingFundType.resizeIframe();
+			underlyingFundType.pageLoad=true;
 			$("body").css("overflow","hidden");
 		});
 	}
@@ -20,7 +20,7 @@
 		$(ifrm).load(function () { $("#loading",iframe).remove(); });
 		ifrm.src=url;
 		$(iframe).dialog({
-			title: " UnderlyingFundType ",
+			title: "Underlying Fund Type",
 			autoOpen: true,
 			width: 380,
 			modal: true,
@@ -52,34 +52,7 @@
 		}
 	}
 	,onSubmit: function (formId) {
-		
-		try {
-			var frm=document.getElementById(formId);
-			var message='';
-			$(".field-validation-error",frm).each(function () {
-				if(this.innerHTML!='') {
-					message+=this.innerHTML+"\n";
-				}
-			});
-			if(message!="") {
-				alert(message);
-				return false;
-			}
-			Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
-			$(".field-validation-error",frm).each(function () {
-				if(this.innerHTML!='') {
-					message+=this.innerHTML+"\n";
-				}
-			});
-			if(message!="") {
-				alert(message);
-				return false;
-			} else {
-				return true;
-			}
-		} catch(e) {
-		}
-		return true;
+		return jHelper.formSubmit(formId);
 	}
 	,onGridSuccess: function (t) {
 		$("tr",t).each(function () {
@@ -87,7 +60,7 @@
 		});
 	}
 	,onRowClick: function (row) {
-		purchaseType.add(row.cell[0]);
+		underlyingFundType.add(row.cell[0]);
 	}
 	,closeDialog: function (reload) {
 		$("#addUnderlyingFundTypeDialog").dialog('close');
@@ -104,7 +77,7 @@
 		if(jQuery.trim(UpdateTargetId.html())!="True") {
 			alert(UpdateTargetId.html())
 		} else {
-			parent.underlyingfundtype.closeDialog(true);
+			parent.underlyingFundType.closeDialog(true);
 		}
 	}
 }

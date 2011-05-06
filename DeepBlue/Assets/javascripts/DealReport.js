@@ -37,7 +37,7 @@
 		td.colSpan=6;
 		trempty.className="emptyrow";
 		$(trempty).append(td);
-		$("td:last",tr).html("<img src='/Assets/images/arrow_down.png'/>");
+		$("td:last",tr).html("<img id='expandimg' src='/Assets/images/arrow_down.png'/>");
 		$(tr).before(trempty);
 	}
 	,onRowClick: function (row,tr) {
@@ -46,6 +46,8 @@
 		var rowId="Deal_"+dealId;
 		var trExpand;
 		trExpand=document.getElementById(rowId);
+		var expandimg=$("#expandimg",tr).get(0);
+		if(expandimg.src.indexOf("arrow_down.png")> -1) { expandimg.src=expandimg.src.replace("arrow_down.png","arrow_up.png");$(tr).addClass("expandrow"); } else { expandimg.src=expandimg.src.replace("arrow_up.png","arrow_down.png");$(tr).removeClass("expandrow"); }
 		if(!trExpand) {
 			trExpand=document.createElement("tr");
 			trExpand.className=tr.className;
@@ -71,8 +73,10 @@
 			if(trExpand.style.display=="none") { trExpand.style.display=""; } else { trExpand.style.display="none"; }
 		}
 	}
-	,onChangeSort: function (t) {
+	,onChangeSort: function (t,param) {
 		$("tbody",t).empty();
+		$("#SortName").val(param.sortname);
+		$("#SortOrder").val(param.sortorder);
 	}
 	,setDollarValue: function (tbl) {
 		$(".dollarcell",tbl).each(function () {
@@ -94,5 +98,27 @@
 	,viewMore: function () {
 		dealReport.pageIndex++;
 		$("#ReportList").ajaxTableReload();
+	}
+	,selectFund: function (id) {
+		var grid=$("#ReportList");
+		$("#FundId").val(id);
+		var param=[{ name: "fundId",value: id}];
+		$("tbody",grid).empty();
+		grid.ajaxTableOptions({ params: param });
+		grid.ajaxTableReload();
+	}
+	,exportDeal: function (exportTypeId) {
+		var fundId=$("#FundId").val();
+		var url;
+		switch(exportTypeId) {
+			case 1:
+				url="/Deal/Export?fundId="+fundId+"&exportTypeId="+exportTypeId+"&sortName="+$("#SortName").val()+"&sortOrder="+$("#SortOrder").val();
+				break;
+			default:
+				url="/Deal/ExportDetail?IsPrint=true&FundId="+fundId+"&SortName="+$("#SortName").val()+"&SortOrder="+$("#SortOrder").val();
+				break;
+		}
+		var features="width="+1+",height="+1;
+		window.open(url,"exportdeal",features);
 	}
 }

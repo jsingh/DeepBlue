@@ -42,5 +42,12 @@ namespace DeepBlue.Tests.Controllers.Admin {
             DefaultController = null;
         }
 
+		#region FindCommunicationType
+		[Test]
+		public void valid_Find_DataType_sets_json_result_error() {
+			Assert.IsTrue((DefaultController.CommunicationTypeList(1, 1, "CommunicationTypeName", "asc") != null));
+		}
+		#endregion
+
     }
 }

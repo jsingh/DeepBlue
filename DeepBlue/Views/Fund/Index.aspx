@@ -8,17 +8,17 @@
 	<%= Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%= Html.JavascriptInclueTag("Fund.js")%>
 	<%= Html.StylesheetLinkTag("flexigrid.css")%>
-	<%= Html.StylesheetLinkTag("adminflexigrid.css")%>
 	<%= Html.StylesheetLinkTag("fund.css")%>
+	<%= Html.StylesheetLinkTag("adminbackend.css")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-	<div class="fund-main">
-		<div class="fund-header">
+	<div class="admin-main">
+		<div class="admin-header">
 			<a href="javascript:fund.add(0);">
 				<%: Html.Image("add_icon.png") %>
 				&nbsp;Add Fund </a>
 		</div>
-		<div class="fund-content">
+		<div class="admin-content">
 			<table id="FundList" cellpadding="0" cellspacing="0" border="0">
 				<thead>
 					<tr>

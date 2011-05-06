@@ -6,7 +6,7 @@
 	<%: Html.Image("UnderlyingFunds.png", new { @class="expandbtn" })%></div>
 <div class="fieldbox">
 	<table id="tblUnderlyingFund" cellpadding="0" cellspacing="0" border="0" class="grid"
-		style="width: 80%">
+		style="width: 100%">
 		<thead>
 			<tr>
 				<th>
@@ -23,6 +23,15 @@
 				</th>
 				<th>
 					Commitment
+				</th>
+				<th>
+					Unfunded Amount
+				</th>
+				<th>
+					Gross Purchase Price
+				</th>
+				<th>
+					Reassigned GPP
 				</th>
 				<th>
 					Record Date
@@ -51,6 +60,15 @@
 				</td>
 				<td style="text-align: center">
 					<%: Html.TextBox("CommittedAmount", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+				</td>
+				<td style="text-align: center">
+					<%: Html.TextBox("UnfundedAmount", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+				</td>
+				<td style="text-align: center">
+					<%: Html.TextBox("GrossPurchasePrice", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+				</td>
+				<td style="text-align: center">
+					<%: Html.TextBox("ReassignedGPP", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td style="text-align: center">
 					<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_RecordDate" })%>

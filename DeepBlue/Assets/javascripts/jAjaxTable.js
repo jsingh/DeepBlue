@@ -83,7 +83,7 @@
 					$(th).addClass('s'+p.sortorder);
 					p.sortname=$(th).attr('sortname');
 					if(p.onChangeSort) {
-						p.onChangeSort(t);
+						p.onChangeSort(t,p);
 						this.populate();
 					} else {
 						this.populate();

@@ -2,7 +2,7 @@
 	width: 180px;
 	float: left;
 	height: 25px;
-	line-height: 25px;
+	line-height: 25px;    margin-right: 10px;
 }
 .auto {
 	width: auto;
@@ -108,4 +108,13 @@ h4 a {
 }
 .show {
 	display: block;
+}
+.seefull {
+	clear: both;
+	float: right;
+	color: #fff;
+	font-size: 15px;
+}
+.seefull a {
+	color: #fff;
 }

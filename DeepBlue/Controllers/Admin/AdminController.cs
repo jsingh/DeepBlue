@@ -39,12 +39,20 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/InvestorTypeList
 		[HttpGet]
-		public ActionResult InvestorTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult InvestorTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			IList<InvestorType> investorTypes = AdminRepository.GetAllInvestorTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(investorTypes);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var invertorType in investorTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> { invertorType.InvestorTypeID,
+						invertorType.InvestorTypeName,
+					   invertorType.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -85,10 +93,12 @@ namespace DeepBlue.Controllers.Admin {
 					foreach (var err in errorInfo.ToList()) {
 						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 					}
-				} else {
+				}
+				else {
 					resultModel.Result = "True";
 				}
-			} else {
+			}
+			else {
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
@@ -105,7 +115,8 @@ namespace DeepBlue.Controllers.Admin {
 		public string DeleteInvestorType(int id) {
 			if (AdminRepository.DeleteInvestorType(id) == false) {
 				return "Cann't Delete! Child record found!";
-			} else {
+			}
+			else {
 				return string.Empty;
 			}
 		}
@@ -135,12 +146,20 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/EntityTypeList
 		[HttpGet]
-		public ActionResult EntityTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult EntityTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			IList<InvestorEntityType> investorEntityTypes = AdminRepository.GetAllInvestorEntityTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(investorEntityTypes);
+			IList<DeepBlue.Models.Entity.InvestorEntityType> investorEntityTypes = AdminRepository.GetAllInvestorEntityTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var investorEntityType in investorEntityTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {investorEntityType.InvestorEntityTypeID,
+					  investorEntityType.InvestorEntityTypeName,
+					  investorEntityType.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -181,10 +200,12 @@ namespace DeepBlue.Controllers.Admin {
 					foreach (var err in errorInfo.ToList()) {
 						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 					}
-				} else {
+				}
+				else {
 					resultModel.Result = "True";
 				}
-			} else {
+			}
+			else {
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
@@ -200,7 +221,8 @@ namespace DeepBlue.Controllers.Admin {
 		public string DeleteInvestorEntityType(int id) {
 			if (AdminRepository.DeleteInvestorEntityType(id) == false) {
 				return "Cann't Delete! Child record found!";
-			} else {
+			}
+			else {
 				return string.Empty;
 			}
 		}
@@ -229,12 +251,22 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/FundClosingList
 		[HttpGet]
-		public ActionResult FundClosingList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult FundClosingList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			IList<FundClosing> fundClosings = AdminRepository.GetAllFundClosings(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(fundClosings);
+			IList<DeepBlue.Models.Entity.FundClosing> fundClosings = AdminRepository.GetAllFundClosings(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var fundClosing in fundClosings) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {fundClosing.FundClosingID,
+					  (fundClosing.FundClosingDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"),
+					  fundClosing.Name,
+					  fundClosing.Fund.FundName,
+					  fundClosing.IsFirstClosing}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -279,10 +311,12 @@ namespace DeepBlue.Controllers.Admin {
 					foreach (var err in errorInfo.ToList()) {
 						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 					}
-				} else {
+				}
+				else {
 					resultModel.Result = "True";
 				}
-			} else {
+			}
+			else {
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
@@ -299,7 +333,8 @@ namespace DeepBlue.Controllers.Admin {
 		public string DeleteFundClosing(int id) {
 			if (AdminRepository.DeleteFundClosing(id) == false) {
 				return "Cann't Delete! Child record found!";
-			} else {
+			}
+			else {
 				return string.Empty;
 			}
 		}
@@ -326,12 +361,22 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/CustomFieldList
 		[HttpGet]
-		public ActionResult CustomFieldList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult CustomFieldList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			IList<CustomField> customFields = AdminRepository.GetAllCustomFields(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(customFields);
+			IList<DeepBlue.Models.Entity.CustomField> customFields = AdminRepository.GetAllCustomFields(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var customField in customFields) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {customField.CustomFieldID,
+					  customField.CustomFieldText,
+					  customField.MODULE.ModuleName,
+					  customField.DataType.DataTypeName,
+					  customField.Search}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -359,7 +404,8 @@ namespace DeepBlue.Controllers.Admin {
 						SortOrder = field.SortOrder
 					});
 				}
-			} else {
+			}
+			else {
 				model.OptionFields.Add(new EditOptionFieldModel());
 			}
 			return View(model);
@@ -392,10 +438,12 @@ namespace DeepBlue.Controllers.Admin {
 					foreach (var err in errorInfo.ToList()) {
 						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 					}
-				} else {
+				}
+				else {
 					resultModel.Result = "True";
 				}
-			} else {
+			}
+			else {
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
@@ -411,14 +459,15 @@ namespace DeepBlue.Controllers.Admin {
 		public string DeleteCustomField(int id) {
 			if (AdminRepository.DeleteCustomField(id) == false) {
 				return "Cann't Delete! Child record found!";
-			} else {
+			}
+			else {
 				return string.Empty;
 			}
 		}
 
 		[HttpGet]
 		public string CustomFieldTextAvailable(string CustomFieldText, int CustomFieldId, int ModuleId) {
-			if (AdminRepository.CustomFieldTextAvailable(CustomFieldText, CustomFieldId,ModuleId))
+			if (AdminRepository.CustomFieldTextAvailable(CustomFieldText, CustomFieldId, ModuleId))
 				return "Name already exists.";
 			else
 				return string.Empty;
@@ -429,7 +478,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region Data Type
 
 		public ActionResult DataType() {
-			ViewData["MenuName"] = "Admin"; 
+			ViewData["MenuName"] = "Admin";
 			ViewData["SubmenuName"] = "AdminCustomField";
 			ViewData["PageName"] = "DataType";
 			return View();
@@ -438,12 +487,19 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/DataTypeList
 		[HttpGet]
-		public ActionResult DataTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult DataTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			IList<DataType> dataTypes = AdminRepository.GetAllDataTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(dataTypes);
+			IList<DeepBlue.Models.Entity.DataType> dataTypes = AdminRepository.GetAllDataTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var dataType in dataTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {dataType.DataTypeID,
+					  dataType.DataTypeName}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -482,10 +538,12 @@ namespace DeepBlue.Controllers.Admin {
 					foreach (var err in errorInfo.ToList()) {
 						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 					}
-				} else {
+				}
+				else {
 					resultModel.Result = "True";
 				}
-			} else {
+			}
+			else {
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
@@ -501,7 +559,8 @@ namespace DeepBlue.Controllers.Admin {
 		public string DeleteDataType(int id) {
 			if (AdminRepository.DeleteDataType(id) == false) {
 				return "Cann't Delete! Child record found!";
-			} else {
+			}
+			else {
 				return string.Empty;
 			}
 		}
@@ -526,12 +585,19 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/ModuleList
 		[HttpGet]
-		public ActionResult ModuleList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult ModuleList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			IList<MODULE> module = AdminRepository.GetAllModules(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(module);
+			IList<DeepBlue.Models.Entity.MODULE> modules = AdminRepository.GetAllModules(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var module in modules) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {module.ModuleID,
+					  module.ModuleName}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -608,8 +674,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-        #region Communication Type
-            //
+		#region Communication Type
+		//
 		// GET: /Admin/CommunicationType
 		[HttpGet]
 		public ActionResult CommunicationType() {
@@ -622,12 +688,21 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/CommunicationTypeList
 		[HttpGet]
-		public ActionResult CommunicationTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult CommunicationTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			IList<DeepBlue.Models.Entity.CommunicationType> communicationTypes = AdminRepository.GetAllCommunicationTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(communicationTypes);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var communicationType in communicationTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> { communicationType.CommunicationTypeID,
+						communicationType.CommunicationTypeName,
+					   communicationType.CommunicationGrouping.CommunicationGroupingName,
+					  communicationType.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -665,15 +740,18 @@ namespace DeepBlue.Controllers.Admin {
 				communicationType.CommunicationTypeName = model.CommunicationTypeName;
 				communicationType.Enabled = model.Enabled;
 				communicationType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				communicationType.CommunicationGroupingID = model.CommunicationGroupId;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCommunicationType(communicationType);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
 						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 					}
-				} else {
+				}
+				else {
 					resultModel.Result = "True";
 				}
-			} else {
+			}
+			else {
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
@@ -690,7 +768,8 @@ namespace DeepBlue.Controllers.Admin {
 		public string DeleteCommunicationType(int id) {
 			if (AdminRepository.DeleteCommunicationType(id) == false) {
 				return "Cann't Delete! Child record found!";
-			} else {
+			}
+			else {
 				return string.Empty;
 			}
 		}
@@ -702,7 +781,7 @@ namespace DeepBlue.Controllers.Admin {
 			else
 				return string.Empty;
 		}
-        #endregion
+		#endregion
 
 		#region Communication Grouping
 		//
@@ -718,12 +797,18 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/CommunicationGroupingList
 		[HttpGet]
-		public ActionResult CommunicationGroupingList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult CommunicationGroupingList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			IList<CommunicationGrouping> communicationGroupings = AdminRepository.GetAllCommunicationGroupings(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(communicationGroupings);
+			IList<Models.Entity.CommunicationGrouping> communicationGroupings = AdminRepository.GetAllCommunicationGroupings(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var communicationGroup in communicationGroupings) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> { communicationGroup.CommunicationGroupingID, communicationGroup.CommunicationGroupingName }
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -731,7 +816,7 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public ActionResult EditCommunicationGrouping(int id) {
 			EditCommunicationGroupingModel model = new EditCommunicationGroupingModel();
-			CommunicationGrouping communicationGrouping = AdminRepository.FindCommunicationGrouping(id);
+			Models.Entity.CommunicationGrouping communicationGrouping = AdminRepository.FindCommunicationGrouping(id);
 			if (communicationGrouping != null) {
 				model.CommunicationGroupingId = communicationGrouping.CommunicationGroupingID;
 				model.CommunicationGroupingName = communicationGrouping.CommunicationGroupingName;
@@ -751,9 +836,9 @@ namespace DeepBlue.Controllers.Admin {
 				ModelState.AddModelError("CommunicationGroupingName", ErrorMessage);
 			}
 			if (ModelState.IsValid) {
-				CommunicationGrouping communicationGrouping = AdminRepository.FindCommunicationGrouping(model.CommunicationGroupingId);
+				Models.Entity.CommunicationGrouping communicationGrouping = AdminRepository.FindCommunicationGrouping(model.CommunicationGroupingId);
 				if (communicationGrouping == null) {
-					communicationGrouping = new CommunicationGrouping();
+					communicationGrouping = new Models.Entity.CommunicationGrouping();
 				}
 				communicationGrouping.CommunicationGroupingName = model.CommunicationGroupingName;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCommunicationGrouping(communicationGrouping);
@@ -812,12 +897,19 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/PurchaseTypeList
 		[HttpGet]
-		public ActionResult PurchaseTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult PurchaseTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			IList<PurchaseType> purchaseTypes = AdminRepository.GetAllPurchaseTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(purchaseTypes);
+			IList<DeepBlue.Models.Entity.PurchaseType> purchaseTypes = AdminRepository.GetAllPurchaseTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var purchaseType in purchaseTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {purchaseType.PurchaseTypeID,
+					  purchaseType.Name}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -872,7 +964,7 @@ namespace DeepBlue.Controllers.Admin {
 			}
 			return View("Result", resultModel);
 		}
-		
+
 		[HttpGet]
 		public string DeletePurchaseType(int id) {
 			if (AdminRepository.DeletePurchaseType(id) == false) {
@@ -906,12 +998,19 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/DealClosingCostTypeList
 		[HttpGet]
-		public ActionResult DealClosingCostTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult DealClosingCostTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			IList<DealClosingCostType> DealClosingCostTypes = AdminRepository.GetAllDealClosingCostTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(DealClosingCostTypes);
+			IList<DeepBlue.Models.Entity.DealClosingCostType> dealClosingCostTypes = AdminRepository.GetAllDealClosingCostTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var dealClosingCostType in dealClosingCostTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {dealClosingCostType.DealClosingCostTypeID,
+					  dealClosingCostType.Name}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -1001,12 +1100,20 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/SecurityTypeList
 		[HttpGet]
-		public ActionResult SecurityTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult SecurityTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			IList<SecurityType> securityTypes = AdminRepository.GetAllSecurityTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(securityTypes);
+			List<DeepBlue.Models.Entity.SecurityType> securityTypes = AdminRepository.GetAllSecurityTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var securityType in securityTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {securityType.SecurityTypeID,
+					  securityType.Name,
+					  securityType.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -1094,12 +1201,19 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UnderlyingList
 		[HttpGet]
-		public ActionResult UnderlyingFundTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult UnderlyingFundTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			IList<UnderlyingFundType> module = AdminRepository.GetAllUnderlyingFundTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(module);
+			List<DeepBlue.Models.Entity.UnderlyingFundType> underlyingFundTypes = AdminRepository.GetAllUnderlyingFundTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var underlyingFundType in underlyingFundTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {underlyingFundType.UnderlyingFundTypeID,
+					  underlyingFundType.Name}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -1109,9 +1223,8 @@ namespace DeepBlue.Controllers.Admin {
 			EditUnderlyingFundTypeModel model = new EditUnderlyingFundTypeModel();
 			UnderlyingFundType underlyinfundtype = AdminRepository.FindUnderlyingFundType(id);
 			if (underlyinfundtype != null) {
-				model.UnderlyingFundTypeID = underlyinfundtype.UnderlyingFundTypeID;
+				model.UnderlyingFundTypeId = underlyinfundtype.UnderlyingFundTypeID;
 				model.Name = underlyinfundtype.Name;
-
 			}
 			return View(model);
 		}
@@ -1123,17 +1236,17 @@ namespace DeepBlue.Controllers.Admin {
 			EditUnderlyingFundTypeModel model = new EditUnderlyingFundTypeModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
-			string ErrorMessage = UnderlyingFundTypeFieldTextAvailable(model.Name, model.UnderlyingFundTypeID);
+			string ErrorMessage = UnderlyingFundTypeNameAvailable(model.Name, model.UnderlyingFundTypeId);
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				ModelState.AddModelError("Name", ErrorMessage);
 			}
 			if (ModelState.IsValid) {
-				UnderlyingFundType underlyingfundtype = AdminRepository.FindUnderlyingFundType(model.UnderlyingFundTypeID);
-				if (underlyingfundtype == null) {
-					underlyingfundtype = new UnderlyingFundType();
+				UnderlyingFundType underlyingFundType = AdminRepository.FindUnderlyingFundType(model.UnderlyingFundTypeId);
+				if (underlyingFundType == null) {
+					underlyingFundType = new UnderlyingFundType();
 				}
-				underlyingfundtype.Name = model.Name;
-				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveUnderlyingFundType(underlyingfundtype);
+				underlyingFundType.Name = model.Name;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveUnderlyingFundType(underlyingFundType);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
 						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
@@ -1166,14 +1279,15 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string UnderlyingFundTypeFieldTextAvailable(string UnderlyingFundTypeFieldText, int UnderlyingFundtypeFieldId) {
-			if (AdminRepository.UnderlyingFundTypeTextAvailable(UnderlyingFundTypeFieldText, UnderlyingFundtypeFieldId))
-				return "Custom Field Text already exists.";
+		public string UnderlyingFundTypeNameAvailable(string Name, int UnderlyingFundTypeId) {
+			if (AdminRepository.UnderlyingFundTypeNameAvailable(Name, UnderlyingFundTypeId))
+				return "Name already exists.";
 			else
 				return string.Empty;
 		}
 
 
+		
 		#endregion
 
 		#region ShareClassType
@@ -1188,12 +1302,20 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/ShareClassTypeList
 		[HttpGet]
-		public ActionResult ShareClassTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult ShareClassTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			IList<ShareClassType> module = AdminRepository.GetAllShareClassTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(module);
+			List<DeepBlue.Models.Entity.ShareClassType> shareClassTypes = AdminRepository.GetAllShareClassTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var shareClassType in shareClassTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {shareClassType.ShareClassTypeID,
+					  shareClassType.ShareClass,
+					  shareClassType.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -1201,13 +1323,11 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public ActionResult EditShareClassType(int id) {
 			EditShareClassTypeModel model = new EditShareClassTypeModel();
-			ShareClassType shareclasstype = AdminRepository.FindShareClassType(id);
-			if (shareclasstype != null) {
-				model.ShareClassTypeID = shareclasstype.ShareClassTypeID;
-				model.ShareClass = shareclasstype.ShareClass;
-				model.Enabled = shareclasstype.Enabled ;
-				model.CreatedBy = shareclasstype.CreatedBy;
-				model.CreatedDate = shareclasstype.CreatedDate;  
+			ShareClassType shareClassType = AdminRepository.FindShareClassType(id);
+			if (shareClassType != null) {
+				model.ShareClassTypeId = shareClassType.ShareClassTypeID;
+				model.ShareClass = shareClassType.ShareClass;
+				model.Enabled = shareClassType.Enabled;
 			}
 			return View(model);
 		}
@@ -1219,23 +1339,23 @@ namespace DeepBlue.Controllers.Admin {
 			EditShareClassTypeModel model = new EditShareClassTypeModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
-			string ErrorMessage = ShareClassTypeFieldTextAvailable(model.ShareClass, model.ShareClassTypeID);
+			string ErrorMessage = ShareClassAvailable(model.ShareClass, model.ShareClassTypeId);
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				ModelState.AddModelError("Name", ErrorMessage);
 			}
 			if (ModelState.IsValid) {
-				ShareClassType shareclasstype = AdminRepository.FindShareClassType(model.ShareClassTypeID);
-				if (shareclasstype == null) {
-					shareclasstype = new ShareClassType();
+				ShareClassType shareClassType = AdminRepository.FindShareClassType(model.ShareClassTypeId);
+				if (shareClassType == null) {
+					shareClassType = new ShareClassType();
+					shareClassType.CreatedBy = AppSettings.CreatedByUserId;
+					shareClassType.CreatedDate = DateTime.Now;
 				}
-				shareclasstype.ShareClass = model.ShareClass;
-				shareclasstype.Enabled = model.Enabled;
-				shareclasstype.EntityID = (int)ConfigUtil.CurrentEntityID;
-				shareclasstype.CreatedBy = AppSettings.CreatedByUserId;
-				shareclasstype.CreatedDate = DateTime.Now; 
-				shareclasstype.LastUpdatedBy = AppSettings.CreatedByUserId;
-				shareclasstype.LastUpdatedDate = DateTime.Now;
-				IEnumerable < ErrorInfo > errorInfo = AdminRepository.SaveShareClassType(shareclasstype);
+				shareClassType.ShareClass = model.ShareClass;
+				shareClassType.Enabled = model.Enabled;
+				shareClassType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				shareClassType.LastUpdatedBy = AppSettings.CreatedByUserId;
+				shareClassType.LastUpdatedDate = DateTime.Now;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveShareClassType(shareClassType);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
 						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
@@ -1268,9 +1388,9 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string ShareClassTypeFieldTextAvailable(string ShareClassTypeFieldText, int ShareClassTypeFieldId) {
-			if (AdminRepository.ShareClassTypeTextAvailable(ShareClassTypeFieldText, ShareClassTypeFieldId))
-				return "Custom Field Text already exists.";
+		public string ShareClassAvailable(string ShareClass, int ShareClassTypeId) {
+			if (AdminRepository.ShareClassTypeNameAvailable(ShareClass, ShareClassTypeId))
+				return "Share Class already exists.";
 			else
 				return string.Empty;
 		}
@@ -1278,6 +1398,437 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
+		#region ReportingType
+
+		public ActionResult ReportingType() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "ReportingType";
+			return View();
+		}
+
+		//
+		// GET: /Admin/ReportingTypeList
+		[HttpGet]
+		public JsonResult ReportingTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DeepBlue.Models.Entity.ReportingType> reportingTypes = AdminRepository.GetAllReportingTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var reportingType in reportingTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {reportingType.ReportingTypeID,
+					  reportingType.Reporting,
+					  reportingType.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditReportingType
+		[HttpGet]
+		public ActionResult EditReportingType(int id) {
+			EditReportingTypeModel model = new EditReportingTypeModel();
+			ReportingType reportingType = AdminRepository.FindReportingType(id);
+			if (reportingType != null) {
+				model.ReportingTypeId = reportingType.ReportingTypeID;
+				model.Reporting = reportingType.Reporting;
+				model.Enabled = reportingType.Enabled;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateReportingType
+		[HttpPost]
+		public ActionResult UpdateReportingType(FormCollection collection) {
+			EditReportingTypeModel model = new EditReportingTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = ReportingTypeAvailable(model.Reporting, model.ReportingTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				ReportingType reportingType = AdminRepository.FindReportingType(model.ReportingTypeId);
+				if (reportingType == null) {
+					reportingType = new ReportingType();
+					reportingType.CreatedBy = AppSettings.CreatedByUserId;
+					reportingType.CreatedDate = DateTime.Now;
+				}
+				reportingType.Reporting = model.Reporting;
+				reportingType.Enabled = model.Enabled;
+				reportingType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				reportingType.LastUpdatedBy = AppSettings.CreatedByUserId;
+				reportingType.LastUpdatedDate = DateTime.Now;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveReportingType(reportingType);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteReportingType(int id) {
+			if (AdminRepository.DeleteReportingTypeId(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string ReportingTypeAvailable(string Reporting, int ReportingTypeId) {
+			if (AdminRepository.ReportingTypeNameAvailable(Reporting, ReportingTypeId))
+				return "Reporting Type already exists.";
+			else
+				return string.Empty;
+		}
+
+
+		#endregion
+
+		#region ReportingFrequency
+
+		public ActionResult ReportingFrequency() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "ReportingFrequency";
+			return View();
+		}
+
+		//
+		// GET: /Admin/ReportingFrequencyList
+		[HttpGet]
+		public JsonResult ReportingFrequencyList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DeepBlue.Models.Entity.ReportingFrequency> reportingFrequencys = AdminRepository.GetAllReportingFrequencies(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var reportingFrequency in reportingFrequencys) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {reportingFrequency.ReportingFrequencyID,
+					  reportingFrequency.ReportingFrequency1,
+					  reportingFrequency.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditReportingFrequency
+		[HttpGet]
+		public ActionResult EditReportingFrequency(int id) {
+			EditReportingFrequencyModel model = new EditReportingFrequencyModel();
+			ReportingFrequency reportingFrequency = AdminRepository.FindReportingFrequency(id);
+			if (reportingFrequency != null) {
+				model.ReportingFrequencyId = reportingFrequency.ReportingFrequencyID;
+				model.ReportingFrequency = reportingFrequency.ReportingFrequency1;
+				model.Enabled = reportingFrequency.Enabled;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateReportingFrequency
+		[HttpPost]
+		public ActionResult UpdateReportingFrequency(FormCollection collection) {
+			EditReportingFrequencyModel model = new EditReportingFrequencyModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = ReportingFrequencyAvailable(model.ReportingFrequency, model.ReportingFrequencyId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				ReportingFrequency reportingFrequency = AdminRepository.FindReportingFrequency(model.ReportingFrequencyId);
+				if (reportingFrequency == null) {
+					reportingFrequency = new ReportingFrequency();
+					reportingFrequency.CreatedBy = AppSettings.CreatedByUserId;
+					reportingFrequency.CreatedDate = DateTime.Now;
+				}
+				reportingFrequency.ReportingFrequency1 = model.ReportingFrequency;
+				reportingFrequency.Enabled = model.Enabled;
+				reportingFrequency.EntityID = (int)ConfigUtil.CurrentEntityID;
+				reportingFrequency.LastUpdatedBy = AppSettings.CreatedByUserId;
+				reportingFrequency.LastUpdatedDate = DateTime.Now;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveReportingFrequency(reportingFrequency);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteReportingFrequency(int id) {
+			if (AdminRepository.DeleteReportingFrequencyId(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string ReportingFrequencyAvailable(string ReportingFrequency, int ReportingFrequencyId) {
+			if (AdminRepository.ReportingFrequencyNameAvailable(ReportingFrequency, ReportingFrequencyId))
+				return "Reporting Frequency already exists.";
+			else
+				return string.Empty;
+		}
+
+
+		#endregion
+
+		#region Geography
+
+		public ActionResult Geography() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "Geography";
+			return View();
+		}
+
+		//
+		// GET: /Admin/GeographyList
+		[HttpGet]
+		public JsonResult GeographyList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DeepBlue.Models.Entity.Geography> geographys = AdminRepository.GetAllGeographys(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var geography in geographys) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {geography.GeographyID,
+					  geography.Geography1,
+					  geography.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditGeography
+		[HttpGet]
+		public ActionResult EditGeography(int id) {
+			EditGeographyModel model = new EditGeographyModel();
+			Geography geography = AdminRepository.FindGeography(id);
+			if (geography != null) {
+				model.GeographyId = geography.GeographyID;
+				model.Geography = geography.Geography1;
+				model.Enabled = geography.Enabled;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateGeography
+		[HttpPost]
+		public ActionResult UpdateGeography(FormCollection collection) {
+			EditGeographyModel model = new EditGeographyModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = GeographyAvailable(model.Geography, model.GeographyId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				Geography geography = AdminRepository.FindGeography(model.GeographyId);
+				if (geography == null) {
+					geography = new Geography();
+					geography.CreatedBy = AppSettings.CreatedByUserId;
+					geography.CreatedDate = DateTime.Now;
+				}
+				geography.Geography1 = model.Geography;
+				geography.Enabled = model.Enabled;
+				geography.EntityID = (int)ConfigUtil.CurrentEntityID;
+				geography.LastUpdatedBy = AppSettings.CreatedByUserId;
+				geography.LastUpdatedDate = DateTime.Now;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveGeography(geography);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteGeography(int id) {
+			if (AdminRepository.DeleteGeographyId(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string GeographyAvailable(string Geography, int GeographyId) {
+			if (AdminRepository.GeographyNameAvailable(Geography, GeographyId))
+				return "Geography already exists.";
+			else
+				return string.Empty;
+		}
+
+
+		#endregion
+
+		#region Industry
+
+		public ActionResult Industry() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "Industry";
+			return View();
+		}
+
+		//
+		// GET: /Admin/IndustryList
+		[HttpGet]
+		public JsonResult IndustryList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DeepBlue.Models.Entity.Industry> industrys = AdminRepository.GetAllIndustrys(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var industry in industrys) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {industry.IndustryID,
+					  industry.Industry1,
+					  industry.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditIndustry
+		[HttpGet]
+		public ActionResult EditIndustry(int id) {
+			EditIndustryModel model = new EditIndustryModel();
+			Industry industry = AdminRepository.FindIndustry(id);
+			if (industry != null) {
+				model.IndustryId = industry.IndustryID;
+				model.Industry = industry.Industry1;
+				model.Enabled = industry.Enabled;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateIndustry
+		[HttpPost]
+		public ActionResult UpdateIndustry(FormCollection collection) {
+			EditIndustryModel model = new EditIndustryModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = IndustryAvailable(model.Industry, model.IndustryId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				Industry industry = AdminRepository.FindIndustry(model.IndustryId);
+				if (industry == null) {
+					industry = new Industry();
+					industry.CreatedBy = AppSettings.CreatedByUserId;
+					industry.CreatedDate = DateTime.Now;
+				}
+				industry.Industry1 = model.Industry;
+				industry.Enabled = model.Enabled;
+				industry.EntityID = (int)ConfigUtil.CurrentEntityID;
+				industry.LastUpdatedBy = AppSettings.CreatedByUserId;
+				industry.LastUpdatedDate = DateTime.Now;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveIndustry(industry);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteIndustry(int id) {
+			if (AdminRepository.DeleteIndustryId(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string IndustryAvailable(string Industry, int IndustryId) {
+			if (AdminRepository.IndustryNameAvailable(Industry, IndustryId))
+				return "Industry already exists.";
+			else
+				return string.Empty;
+		}
+
+
+		#endregion
 
 		public ActionResult Result() {
 			return View();

@@ -338,12 +338,12 @@ namespace DeepBlue.Tests.Controllers.Investor {
 
         private List<AddressType> GetAddressTypes() {
             List<AddressType> addressTypes = new List<AddressType>();
-            Array values = Enum.GetValues(typeof(DeepBlue.Models.Investor.Enums.AddressType));
+            Array values = Enum.GetValues(typeof(DeepBlue.Models.Admin.Enums.AddressType));
             
             foreach (var i in values) {
                 int val = (int)i;
                 addressTypes.Add(new AddressType {
-                    AddressTypeName = Enum.GetName(typeof(DeepBlue.Models.Investor.Enums.AddressType), val),
+					AddressTypeName = Enum.GetName(typeof(DeepBlue.Models.Admin.Enums.AddressType), val),
                     AddressTypeID = val
                 });
             }

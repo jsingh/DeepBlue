@@ -8,6 +8,11 @@ namespace DeepBlue.Models.Deal {
 	public class DealReportModel {
 
 		public DealReportModel() {
+			DealId = 0;
+			DealNumber = 0;
+			DealName = string.Empty;
+			FundName = string.Empty;
+			SellerName = string.Empty;
 			DealUnderlyingFunds = new List<DealUnderlyingFundDetail>();
 			DealUnderlyingDirects = new List<DealUnderlyingDirectDetail>();
 		}

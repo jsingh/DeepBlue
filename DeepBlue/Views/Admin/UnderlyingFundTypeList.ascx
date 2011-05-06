@@ -8,7 +8,6 @@
 	   row = new FlexigridRow();
 	   row.cell.Add(item.UnderlyingFundTypeID.ToString());
 	   row.cell.Add(item.Name);
-	   row.cell.Add(Html.Image("Edit.gif", new { @style = "cursor:pointer", @onclick = "javascript:underlyingfundtype.add(" + item.UnderlyingFundTypeID.ToString() + ");" }).ToHtmlString());
 	   flexData.rows.Add(row);
    } %>
 <%= JsonSerializer.ToJsonObject(flexData)%>

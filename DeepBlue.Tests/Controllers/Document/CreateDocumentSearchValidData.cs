@@ -9,7 +9,7 @@ using DeepBlue.Models.Document;
 using System.Web;
 
 namespace DeepBlue.Tests.Controllers.Document {
-    public class CreateDocumentSearchValidData : CreateDocumentSearch {
+    public class CreateDocumentSearchValidData : CreateDocumentUpload {
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;

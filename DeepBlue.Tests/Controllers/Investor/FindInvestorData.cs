@@ -25,7 +25,6 @@ namespace DeepBlue.Tests.Controllers.Investor
 			base.Setup();
 		}
 
-
         private void SetFormCollection()
         {
             base.ActionResult = base.DefaultController.FindInvestor(1);
