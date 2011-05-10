@@ -5,23 +5,25 @@
 	,isSaveExit: false
 	,init: function () {
 		this.resizeIframe();
-		this.loadIssuer();
-		$(".expandbtn").toggle(function () {
-			var parent=$(this).parent().parent();
-			var fname=this.src.substring(this.src.lastIndexOf('/')+1);
-			var src=this.src.replace("/"+fname,"");
-			fname=fname.replace("S_","");
-			this.src=src+"/"+fname;
-			$(".fieldbox",parent).hide();
-			issuer.resizeIframe();
-		},function () {
-			var parent=$(this).parent().parent();
-			var fname=this.src.substring(this.src.lastIndexOf('/')+1);
-			var src=this.src.replace("/"+fname,"");
-			fname="S_"+fname.replace("S_","");
-			this.src=src+"/"+fname;
-			$(".fieldbox",parent).show();
-			issuer.resizeIframe();
+		$("document").ready(function () {
+			this.loadIssuer();
+			$(".expandbtn").toggle(function () {
+				var parent=$(this).parent().parent();
+				var fname=this.src.substring(this.src.lastIndexOf('/')+1);
+				var src=this.src.replace("/"+fname,"");
+				fname=fname.replace("S_","");
+				this.src=src+"/"+fname;
+				$(".fieldbox",parent).hide();
+				issuer.resizeIframe();
+			},function () {
+				var parent=$(this).parent().parent();
+				var fname=this.src.substring(this.src.lastIndexOf('/')+1);
+				var src=this.src.replace("/"+fname,"");
+				fname="S_"+fname.replace("S_","");
+				this.src=src+"/"+fname;
+				$(".fieldbox",parent).show();
+				issuer.resizeIframe();
+			});
 		});
 	}
 	,loadIssuer: function () {
