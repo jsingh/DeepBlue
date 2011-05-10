@@ -12,7 +12,6 @@ namespace DeepBlue.Controllers.Admin {
 		List<COUNTRY> GetAllCountries();
 		List<STATE> GetAllStates();
 		List<AddressType> GetAllAddressTypes();
-		List<Industry> GetAllIndusties();
 		List<Geography> GetAllGeographies();
 		#endregion
 
@@ -170,13 +169,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region Industry
 		List<Industry> GetAllIndustrys(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<Industry> GetAllIndusties();
 		Industry FindIndustry(int id);
 		bool IndustryNameAvailable(string industry, int industryId);
 		bool DeleteIndustryId(int id);
 		IEnumerable<ErrorInfo> SaveIndustry(Industry industry);
 		#endregion
-
-
+		
 		#region FileType
 		List<FileType> GetAllFileTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		FileType FindFileType(int id);
@@ -184,6 +183,37 @@ namespace DeepBlue.Controllers.Admin {
 		bool DeleteFileType(int id);
 		IEnumerable<ErrorInfo> SaveFileType(FileType fileType);
 		List<FileType> GetAllFileTypes();
+		#endregion
+
+		#region EquityType
+		List<EquityType> GetAllEquityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<EquityType> GetAllEquityTypes();
+		EquityType FindEquityType(int id);
+		bool EquityTypeNameAvailable(string equityTypeName, int equityTypeID);
+		bool DeleteEquityType(int id);
+		IEnumerable<ErrorInfo> SaveEquityType(EquityType equityType);
+		#endregion
+
+		#region FixedIncomeType
+		List<FixedIncomeType> GetAllFixedIncomeTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<FixedIncomeType> GetAllFixedIncomeTypes();
+		FixedIncomeType FindFixedIncomeType(int id);
+		bool FixedIncomeTypeNameAvailable(string fixedIncomeTypeName, int fixedIncomeTypeID);
+		bool DeleteFixedIncomeType(int id);
+		IEnumerable<ErrorInfo> SaveFixedIncomeType(FixedIncomeType fixedIncomeType);
+		#endregion
+
+		#region Currency
+		List<Currency> GetAllCurrencies(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<Currency> GetAllCurrencies();
+		Currency FindCurrency(int id);
+		bool CurrencyNameAvailable(string currency, int currencyId);
+		bool DeleteCurrency(int id);
+		IEnumerable<ErrorInfo> SaveCurrency(Currency currency);
+		#endregion
+
+		#region ShareClassType
+		List<ShareClassType> GetAllShareClassTypes();
 		#endregion
 	}
 }

@@ -24,7 +24,7 @@
 					<%: Html.DropDownListFor(model => model.CapitalDistributionId, Model.CapitalDistributions, new { @style = "width:150px" })%>
 				</div>
 				<div style="float: left; margin-left: 10px;">
-					<%: Html.ImageButton("submit.png", new { @style = "width: 73px; height: 23px;" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
+					<%: Html.ImageButton("submit.png", new { @style = "width: 73px; height: 26px;" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
 				</div>
 				<%: Html.HiddenFor(model => model.FundId)%>
 				<%: Html.ValidationMessageFor(model => model.FundId)%>

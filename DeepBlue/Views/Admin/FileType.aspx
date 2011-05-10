@@ -25,10 +25,10 @@
 							ID
 						</th>
 						<th sortname="FileTypeName" style="width: 50%">
-							FileType
+							File Type
 						</th>
 						<th sortname="FileExtension" style="width: 40%">
-							FileType
+							File Extension 
 						</th>
 						<th align="center" style="width: 5%;">
 						</th>

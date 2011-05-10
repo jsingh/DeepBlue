@@ -10,7 +10,6 @@ using DeepBlue.Controllers.Fund;
 using DeepBlue.Models.Entity;
 using System.Text;
 using DeepBlue.Controllers.Issuer;
-using DeepBlue.Models.Issuer;
 using DeepBlue.Models.Deal.Enums;
 
 namespace DeepBlue.Controllers.Deal {
@@ -60,6 +59,7 @@ namespace DeepBlue.Controllers.Deal {
 			model.DealClosingCostTypes = SelectListFactory.GetDealClosingCostTypeSelectList(AdminRepository.GetAllDealClosingCostTypes());
 			model.UnderlyingFunds = SelectListFactory.GetUnderlyingFundSelectList(DealRepository.GetAllUnderlyingFunds());
 			model.Issuers = SelectListFactory.GetIssuerSelectList(IssuerRepository.GetAllIssuers());
+			model.Issuers.Add(new SelectListItem { Selected = false, Text = "--Add Issuer--", Value = "-1" });
 			model.SecurityTypes = SelectListFactory.GetSecurityTypeSelectList(AdminRepository.GetAllSecurityTypes());
 			model.Securities = SelectListFactory.GetEmptySelectList();
 			return model;
@@ -128,7 +128,6 @@ namespace DeepBlue.Controllers.Deal {
 						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
 					}
 				}
-				FindDealClosing(model.DealId);
 				if (string.IsNullOrEmpty(resultModel.Result)) {
 					resultModel.Result = "True||" + deal.DealID;
 				}
@@ -392,7 +391,6 @@ namespace DeepBlue.Controllers.Deal {
 				dealUnderlyingDirect.RecordDate = model.RecordDate;
 				dealUnderlyingDirect.FMV = model.FMV;
 				dealUnderlyingDirect.NumberOfShares = model.NumberOfShares;
-				dealUnderlyingDirect.DealClosingID = FindDealClosing(model.DealId).DealClosingID;
 				dealUnderlyingDirect.SecurityID = model.SecurityId;
 				dealUnderlyingDirect.SecurityTypeID = model.SecurityTypeId;
 				dealUnderlyingDirect.TaxCostDate = model.TaxCostDate;
@@ -489,31 +487,41 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region DealClosing
-		//
-		// GET: /Deal/CreateDealClosing
-		[HttpGet]
-		public string CreateDealClosing(int dealId, out DealClosing dealClosing) {
-			string result = string.Empty;
-			dealClosing = new DealClosing { DealID = dealId, CloseDate = DateTime.Now, DealClosingID = 0 };
-			IEnumerable<ErrorInfo> errorInfo = dealClosing.Save();
-			if (errorInfo != null) {
-				foreach (var err in errorInfo.ToList()) {
-					result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-				}
-			}
-			return result;
-		}
+		////
+		//// GET: /Deal/CreateDealClosing
+		//[HttpGet]
+		//public string CreateDealClosing(int dealId, out DealClosing dealClosing) {
+		//    string result = string.Empty;
+		//    dealClosing = new DealClosing { DealID = dealId, CloseDate = DateTime.Now, DealClosingID = 0 };
+		//    IEnumerable<ErrorInfo> errorInfo = dealClosing.Save();
+		//    if (errorInfo != null) {
+		//        foreach (var err in errorInfo.ToList()) {
+		//            result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+		//        }
+		//    }
+		//    return result;
+		//}
 
 		//
 		// GET: /Deal/FindDealClosing
+		//[HttpGet]
+		//private DealClosing FindDealClosing(int dealId) {
+		//    DealClosing dealClosing = DealRepository.FindDealClosing(dealId);
+		//    if (dealClosing == null) {
+		//        dealClosing = new DealClosing();
+		//        CreateDealClosing(dealId, out dealClosing);
+		//    }
+		//    return dealClosing;
+		//}
+
+		//
+		// GET: /Deal/Close
 		[HttpGet]
-		private DealClosing FindDealClosing(int dealId) {
-			DealClosing dealClosing = DealRepository.FindDealClosing(dealId);
-			if (dealClosing == null) {
-				dealClosing = new DealClosing();
-				CreateDealClosing(dealId, out dealClosing);
-			}
-			return dealClosing;
+		public ActionResult Close() {
+			ViewData["MenuName"] = "DealManagement";
+			ViewData["PageName"] = "CloseDeal";
+			CreateDealCloseModel model = new CreateDealCloseModel();
+			return View(model);
 		}
 		#endregion
 
@@ -703,6 +711,8 @@ namespace DeepBlue.Controllers.Deal {
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 		#endregion
+
+	
 
 		public ActionResult Result() {
 			return View();

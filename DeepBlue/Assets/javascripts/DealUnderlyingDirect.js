@@ -87,7 +87,12 @@ deal.loadUnderlyingDirect=function (id) {
 	});
 };
 deal.changeIssuer=function (ddl) {
-	deal.loadSecurity($(ddl).parents("tr:first"));
+	if(ddl.value=="-1") {
+		deal.currentIssuerDDL=ddl;
+		issuer.add(0,true); // Call add issuer
+	} else {
+		deal.loadSecurity($(ddl).parents("tr:first"));
+	}
 };
 deal.changeSecurityType=function (ddl) {
 	deal.loadSecurity($(ddl).parents("tr:first"));
@@ -118,5 +123,23 @@ deal.loadSecurity=function (tr) {
 				ddl.options[0]=listItem;
 			}
 		});
+	}
+};
+deal.currentIssuerDDL=null;
+deal.loadIssuers=function (issuerName,issuerId) {
+	$(".issuerddl").each(function () {
+		var listItem=new Option(issuerName,issuerId,false,false);
+		var i;
+		for(i=0;i<this.options.length;i++) {
+			if(this.options[i].value=="-1") {
+				this.options[i]=null;
+			}
+		}
+		this.options[this.options.length]=listItem;
+		listItem=new Option("--Add Issuer--","-1",false,false);
+		this.options[this.options.length]=listItem;
+	});
+	if(deal.currentIssuerDDL) {
+		deal.currentIssuerDDL.value=issuerId;
 	}
 };

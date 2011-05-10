@@ -87,6 +87,27 @@
     <Compile Include="Controllers\Fund\IFundRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Investor\InvestorController.cs" />
+    <Compile Include="Models\Admin\EditEquityTypeModel.cs" />
+    <Compile Include="Models\Admin\EditFixedIncomeTypeModel.cs" />
+    <Compile Include="Models\Entity\DeepBlue.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DeepBlue.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\Partial\CurrencyService.cs" />
+    <Compile Include="Models\Entity\Partial\EquityService.cs" />
+    <Compile Include="Models\Entity\Partial\EquityTypeService.cs" />
+    <Compile Include="Models\Entity\Partial\FixedIncomeService.cs" />
+    <Compile Include="Models\Entity\Partial\FixedIncomeTypeService.cs" />
+    <Compile Include="Models\Entity\Validation\Currency.cs" />
+    <Compile Include="Models\Entity\Validation\Equity.cs" />
+    <Compile Include="Models\Entity\Validation\EquityType.cs" />
+    <Compile Include="Models\Entity\Validation\FixedIncome.cs" />
+    <Compile Include="Models\Entity\Validation\FixedIncomeType.cs" />
+    <Compile Include="Models\Issuer\EquityDetailModel.cs" />
+    <Compile Include="Models\Issuer\FixedIncomeDetailModel.cs" />
+    <Compile Include="Models\Issuer\EditIssuerModel.cs" />
+    <Compile Include="Controllers\Issuer\IssuerController.cs" />
     <Compile Include="Controllers\Issuer\IssuerRepository.cs" />
     <Compile Include="Controllers\Issuer\IIssuerRepository.cs" />
     <Compile Include="Controllers\Report\ReportRepository.cs" />
@@ -183,6 +204,7 @@
     <Compile Include="Models\CapitalCall\CreateReceiveModel.cs" />
     <Compile Include="Models\CapitalCall\ResultModel.cs" />
     <Compile Include="Models\Deal\CommunicationDetailModel.cs" />
+    <Compile Include="Models\Deal\CreateDealCloseModel.cs" />
     <Compile Include="Models\Deal\CreateDealUnderlyingDirectModel.cs" />
     <Compile Include="Models\Deal\CreateModel.cs" />
     <Compile Include="Models\Deal\CreateUnderlyingFundModel.cs" />
@@ -211,6 +233,7 @@
     <Compile Include="Models\Entity\Partial\FileTypeService.cs" />
     <Compile Include="Models\Entity\Partial\IndustryService.cs" />
     <Compile Include="Models\Entity\Partial\GeographyService.cs" />
+    <Compile Include="Models\Entity\Partial\IssuerService.cs" />
     <Compile Include="Models\Entity\Partial\ReportingFrequencyService.cs" />
     <Compile Include="Models\Entity\Partial\ReportingTypeService.cs" />
     <Compile Include="Models\Entity\Partial\CustomFieldService.cs">
@@ -282,25 +305,19 @@
     <Compile Include="Models\Entity\Validation\FileType.cs" />
     <Compile Include="Models\Entity\Validation\Industry.cs" />
     <Compile Include="Models\Entity\Validation\Geography.cs" />
+    <Compile Include="Models\Entity\Validation\Issuer.cs" />
     <Compile Include="Models\Entity\Validation\ReportingFrequency.cs" />
     <Compile Include="Models\Entity\Validation\ReportingType.cs" />
     <Compile Include="Models\Entity\Validation\DealClosing.cs" />
     <Compile Include="Models\Entity\Validation\ShareClassType.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFund.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundType.cs" />
-    <Compile Include="Models\Issuer\EquityDetailModel.cs" />
-    <Compile Include="Models\Issuer\FixedIncomeDetailModel.cs" />
     <Compile Include="Models\Issuer\IssuerDetailModel.cs" />
     <Compile Include="Models\Deal\ResultModel.cs" />
     <Compile Include="Models\Deal\DealSellerDetailModel.cs" />
     <Compile Include="Models\Document\SearchModel.cs" />
     <Compile Include="Models\Document\CreateModel.cs" />
     <Compile Include="Models\Document\Enums.cs" />
-    <Compile Include="Models\Entity\DeepBlue.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DeepBlue.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entity\Validation\Address.cs" />
     <Compile Include="Models\Entity\Validation\CapitalCall.cs" />
     <Compile Include="Models\Entity\Validation\CapitalDistribution.cs" />
@@ -337,6 +354,8 @@
     <Compile Include="Models\Fund\FundRateScheduleDetail.cs" />
     <Compile Include="Models\Fund\ResultModel.cs" />
     <Compile Include="Models\Investor\ResultModel.cs" />
+    <Compile Include="Models\Issuer\IssuerListModel.cs" />
+    <Compile Include="Models\Issuer\ResultModel.cs" />
     <Compile Include="Models\Report\CapitalCallSummaryModel.cs" />
     <Compile Include="Models\Report\CapitalCallReportDetail.cs" />
     <Compile Include="Models\Report\CapitalCallItem.cs" />
@@ -500,10 +519,16 @@
     <Content Include="Assets\javascripts\CommunicationType.js" />
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
+    <Content Include="Assets\javascripts\IssuerFixedIncome.js" />
+    <Content Include="Assets\javascripts\IssuerEquity.js" />
+    <Content Include="Assets\javascripts\FixedIncomeType.js" />
+    <Content Include="Assets\javascripts\EquityType.js" />
+    <Content Include="Assets\javascripts\DealClose.js" />
     <Content Include="Assets\javascripts\FileType.js" />
     <Content Include="Assets\javascripts\CreateDealUnderlyingDirect.js" />
     <Content Include="Assets\javascripts\Industry.js" />
     <Content Include="Assets\javascripts\Geography.js" />
+    <Content Include="Assets\javascripts\Issuer.js" />
     <Content Include="Assets\javascripts\ReportingFrequency.js" />
     <Content Include="Assets\javascripts\ReportingType.js" />
     <Content Include="Assets\javascripts\jAjaxTable.js" />
@@ -561,6 +586,7 @@
     <Content Include="Assets\stylesheets\exportdeal.css" />
     <Content Include="Assets\stylesheets\flexigrid.css" />
     <Content Include="Assets\stylesheets\fund.css" />
+    <Content Include="Assets\stylesheets\issuer.css" />
     <Content Include="Assets\stylesheets\jquery-ui-1.8.10.custom.css" />
     <Content Include="Assets\stylesheets\newInvestor.css" />
     <Content Include="Assets\stylesheets\report.css" />
@@ -578,6 +604,10 @@
     <Content Include="obj\Release\TempPE\Models.Entity.DeepBlue.Designer.cs.dll" />
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
     <Content Include="Views\Admin\CommunicationType.aspx" />
+    <Content Include="Views\Admin\EditFixedIncomeType.aspx" />
+    <Content Include="Views\Admin\FixedIncomeType.aspx" />
+    <Content Include="Views\Admin\EditEquityType.aspx" />
+    <Content Include="Views\Admin\EquityType.aspx" />
     <Content Include="Views\Admin\EditFileType.aspx" />
     <Content Include="Views\Admin\FileType.aspx" />
     <Content Include="Views\Admin\EditIndustry.aspx" />
@@ -624,6 +654,7 @@
     <Content Include="Views\CapitalCall\NewManualCapitalCall.aspx" />
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
+    <Content Include="Views\Deal\Close.aspx" />
     <Content Include="Views\Deal\DealUnderlyingDirects.aspx" />
     <Content Include="Views\Deal\EditDealUnderlyingDirect.aspx" />
     <Content Include="Views\Deal\EditUnderlyingFund.aspx" />
@@ -641,6 +672,9 @@
     <Content Include="Views\Document\List.ascx" />
     <Content Include="Views\Document\New.aspx" />
     <Content Include="Views\Document\Search.aspx" />
+    <Content Include="Views\Issuer\EditIssuer.aspx" />
+    <Content Include="Views\Issuer\Index.aspx" />
+    <Content Include="Views\Issuer\Result.ascx" />
     <Content Include="Views\Report\CapitalCallSummary.aspx" />
     <Content Include="Views\Report\CashDistributionSummary.aspx" />
     <Content Include="Views\Shared\CustomFieldList.ascx" />

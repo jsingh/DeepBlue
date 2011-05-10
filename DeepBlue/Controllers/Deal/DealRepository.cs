@@ -313,7 +313,8 @@ namespace DeepBlue.Controllers.Deal {
 
 		public DealUnderlyingDirectModel FindDealUnderlyingDirectModel(int dealUnderlyingDirectId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return GetDealUnderlyingDirectModel(context, dealUnderlyingDirectId, 0).SingleOrDefault();
+				IQueryable<DealUnderlyingDirectModel> query = GetDealUnderlyingDirectModel(context, dealUnderlyingDirectId, 0);
+				return (query != null ? query.SingleOrDefault() : null);
 			}
 		}
 
@@ -489,6 +490,10 @@ namespace DeepBlue.Controllers.Deal {
 													   BankName = underlyingFund.Account.BankName,
 													   ContactId = (underlyingFund.Contact != null ? underlyingFund.Contact.ContactID : 0),
 													   ContactName = (underlyingFund.Contact != null ? underlyingFund.Contact.ContactName : string.Empty),
+													   IncentiveFee = underlyingFund.IncentiveFee,
+													   LegalFundName = underlyingFund.LegalFundName,
+													   Description = underlyingFund.Description,
+													    FiscalYearEnd = underlyingFund.FiscalYearEnd
 												   }).SingleOrDefault();
 				if (model != null) {
 					List<CommunicationDetailModel> communications = GetContactCommunications(context, model.ContactId);
@@ -541,16 +546,6 @@ namespace DeepBlue.Controllers.Deal {
 					where communication.CommunicationTypeId == (int)communicationType
 					select communication.CommunicationValue).SingleOrDefault();
 		}
-
-
-
-
-
-
-
-
-
-
 
 	}
 }

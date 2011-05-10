@@ -718,3 +718,10 @@ h2 {
 	padding-top: 10px;
 }
 .checkbox input {  width:auto; }
+.search-header, .search-main {
+	margin: 10px;
+}
+.search-main {
+	width: 100%;
+	float: left;
+}

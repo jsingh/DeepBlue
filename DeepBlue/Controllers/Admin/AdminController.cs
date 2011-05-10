@@ -1936,6 +1936,220 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
+		#region EquityType
+		//
+		// GET: /Admin/EquityType
+		[HttpGet]
+		public ActionResult EquityType() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "EquityType";
+			return View();
+		}
+
+		//
+		// GET: /Admin/EquityTypeList
+		[HttpGet]
+		public JsonResult EquityTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			IList<DeepBlue.Models.Entity.EquityType> equityTypes = AdminRepository.GetAllEquityTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var equityType in equityTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {equityType.EquityTypeID,
+					  equityType.Equity, equityType.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EquityType
+		[HttpGet]
+		public ActionResult EditEquityType(int id) {
+			EditEquityTypeModel model = new EditEquityTypeModel();
+			EquityType equityType = AdminRepository.FindEquityType(id);
+			if (equityType != null) {
+				model.EquityTypeId = equityType.EquityTypeID;
+				model.Equity = equityType.Equity;
+				model.Enabled = equityType.Enabled;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateEquityType
+		[HttpPost]
+		public ActionResult UpdateEquityType(FormCollection collection) {
+			EditEquityTypeModel model = new EditEquityTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = EquityTypeNameAvailable(model.Equity, model.EquityTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Equity", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				EquityType equityType = AdminRepository.FindEquityType(model.EquityTypeId);
+				if (equityType == null) {
+					equityType = new EquityType();
+					equityType.CreatedBy = AppSettings.CreatedByUserId;
+					equityType.CreatedDate = DateTime.Now;
+				}
+				equityType.Equity = model.Equity;
+				equityType.Enabled = model.Enabled;
+				equityType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				equityType.LastUpdatedBy = AppSettings.CreatedByUserId;
+				equityType.LastUpdatedDate = DateTime.Now;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveEquityType(equityType);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteEquityType(int id) {
+			if (AdminRepository.DeleteEquityType(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string EquityTypeNameAvailable(string Equity, int EquityTypeID) {
+			if (AdminRepository.EquityTypeNameAvailable(Equity, EquityTypeID))
+				return "Equity already exist";
+			else
+				return string.Empty;
+		}
+		#endregion
+
+		#region FixedIncomeType
+		//
+		// GET: /Admin/FixedIncomeType
+		[HttpGet]
+		public ActionResult FixedIncomeType() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "FixedIncomeType";
+			return View();
+		}
+
+		//
+		// GET: /Admin/FixedIncomeTypeList
+		[HttpGet]
+		public JsonResult FixedIncomeTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			IList<DeepBlue.Models.Entity.FixedIncomeType> fixedIncomeTypes = AdminRepository.GetAllFixedIncomeTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var fixedIncomeType in fixedIncomeTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {fixedIncomeType.FixedIncomeTypeID,
+					  fixedIncomeType.FixedIncomeType1, fixedIncomeType.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/FixedIncomeType
+		[HttpGet]
+		public ActionResult EditFixedIncomeType(int id) {
+			EditFixedIncomeTypeModel model = new EditFixedIncomeTypeModel();
+			FixedIncomeType fixedIncomeType = AdminRepository.FindFixedIncomeType(id);
+			if (fixedIncomeType != null) {
+				model.FixedIncomeTypeId = fixedIncomeType.FixedIncomeTypeID;
+				model.FixedIncomeType = fixedIncomeType.FixedIncomeType1;
+				model.Enabled = fixedIncomeType.Enabled;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateFixedIncomeType
+		[HttpPost]
+		public ActionResult UpdateFixedIncomeType(FormCollection collection) {
+			EditFixedIncomeTypeModel model = new EditFixedIncomeTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = FixedIncomeTypeNameAvailable(model.FixedIncomeType, model.FixedIncomeTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("FixedIncome", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				FixedIncomeType fixedIncomeType = AdminRepository.FindFixedIncomeType(model.FixedIncomeTypeId);
+				if (fixedIncomeType == null) {
+					fixedIncomeType = new FixedIncomeType();
+					fixedIncomeType.CreatedBy = AppSettings.CreatedByUserId;
+					fixedIncomeType.CreatedDate = DateTime.Now;
+				}
+				fixedIncomeType.FixedIncomeType1 = model.FixedIncomeType;
+				fixedIncomeType.Enabled = model.Enabled;
+				fixedIncomeType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				fixedIncomeType.LastUpdatedBy = AppSettings.CreatedByUserId;
+				fixedIncomeType.LastUpdatedDate = DateTime.Now;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFixedIncomeType(fixedIncomeType);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteFixedIncomeType(int id) {
+			if (AdminRepository.DeleteFixedIncomeType(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string FixedIncomeTypeNameAvailable(string FixedIncomeType, int FixedIncomeTypeID) {
+			if (AdminRepository.FixedIncomeTypeNameAvailable(FixedIncomeType, FixedIncomeTypeID))
+				return "Fixed Income Type already exist";
+			else
+				return string.Empty;
+		}
+		#endregion
+
 		public ActionResult Result() {
 			return View();
 		}

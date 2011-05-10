@@ -7,6 +7,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%= Html.JavascriptInclueTag("UnderlyingFund.js")%>
+	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
+	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
 	<style type="text/css">
 		.editor-label {
 			width: 97px;
@@ -31,6 +33,18 @@
 		<%: Html.TextBoxFor(model => model.FundName)%>
 	</div>
 	<div class="editor-label" style="clear: right">
+		<%: Html.LabelFor(model => model.LegalFundName) %>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.TextBoxFor(model => model.LegalFundName)%>
+	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.Description) %>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.TextBoxFor(model => model.Description)%>
+	</div>
+	<div class="editor-label" style="clear: right">
 		<%: Html.LabelFor(model => model.FundTypeId) %>
 	</div>
 	<div class="editor-field auto-width">
@@ -41,6 +55,12 @@
 	</div>
 	<div class="editor-field auto-width">
 		<%: Html.TextBoxFor(model => model.VintageYear, new { @onkeypress = "return jHelper.isNumeric(event);" })%>
+	</div>
+	<div class="editor-label" style="clear:right">
+		<%: Html.LabelFor(model => model.FiscalYearEnd) %>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.TextBoxFor(model => model.FiscalYearEnd)%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.LabelFor(model => model.TotalSize) %>
@@ -166,10 +186,10 @@
 		<%: Html.Span("", new { id = "UpdateLoading" })%></div>
 	<div class="editor-button" style="width: 200px">
 		<div style="float: left; padding: 0 0 10px 5px;">
-			<%: Html.ImageButton("Save.png", new { style = "width: 73px; height: 23px;", onclick = "return underlyingFund.onSubmit('AddNewInvEnityType');" })%>
+			<%: Html.ImageButton("Save.png", new { style = "width: 73px; height: 26px;", onclick = "return underlyingFund.onSubmit('AddNewInvEnityType');" })%>
 		</div>
 		<div style="float: left; padding: 0 0 10px 5px;">
-			<%: Html.Image("Close.png", new { style = "width: 73px; height: 23px;cursor:pointer;", onclick = "javascript:parent.underlyingFund.closeDialog(false);" })%>
+			<%: Html.Image("Close.png", new { style = "width: 73px; height: 26px;cursor:pointer;", onclick = "javascript:parent.underlyingFund.closeDialog(false);" })%>
 		</div>
 	</div>
 	<%: Html.HiddenFor(model => model.UnderlyingFundId)%>
@@ -188,4 +208,5 @@
 	<script type="text/javascript">
 		underlyingFund.init();
 	</script>
+	<%=Html.jQueryDatePicker("FiscalYearEnd")%>
 </asp:Content>

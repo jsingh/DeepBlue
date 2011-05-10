@@ -15,8 +15,18 @@ namespace DeepBlue.Models.Deal {
 		[Required(ErrorMessage = "Fund Name is required")]
 		[StringLength(100, ErrorMessage = "Fund Name must be under 100 characters.")]
 		[RemoteUID_(Action = "UnderlyingFundNameAvailable", Controller = "Deal", ValidateParameterName = "FundName", Params = new string[] { "UnderlyingFundId" })]
-		[DisplayName("FundName:")]
+		[DisplayName("Fund Name:")]
 		public string FundName { get; set; }
+
+		[DisplayName("Fund Legal Name:")]
+		public string LegalFundName { get; set; }
+
+		[DisplayName("Description:")]
+		public string Description { get; set; }
+
+		public decimal? IncentiveFee { get; set; }
+
+		public DateTime? FiscalYearEnd { get; set; }
 
 		[Required(ErrorMessage = "Fund Type is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund Type is required")]

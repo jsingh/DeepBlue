@@ -20,6 +20,7 @@
 		var searchDealName=$("#SearchDealName",modifyDeal);
 		searchDealName.autocomplete({ source: "/Deal/FindDeals",minLength: 1,select: function (event,ui) { deal.loadDeal(ui.item.id); },appendTo: "body",delay: 300 });
 		menu.stopMenuClose=true;
+		issuer.isCreateDealPage=true;
 	}
 	,initDealEvents: function () {
 		$(".expandbtn").toggle(function () {

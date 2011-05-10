@@ -45,30 +45,7 @@
 		});
 	}
 	,onSubmit: function (formId) {
-		var frm=document.getElementById(formId);
-		var message='';
-		$(".field-validation-error",frm).each(function () {
-			if(this.innerHTML!='') {
-				message+=this.innerHTML+"\n";
-			}
-		});
-		if(message!="") {
-			alert(message);
-			return false;
-		}
-		Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
-		$(".field-validation-error",frm).each(function () {
-			if(this.innerHTML!='') {
-				message+=this.innerHTML+"\n";
-			}
-		});
-		if(message!="") {
-			alert(message);
-			return false;
-		} else {
-			return true;
-		}
-		return true;
+		return jHelper.formSubmit(formId);
 	}
 	,onGridSuccess: function (t) {
 		$("tr",t).each(function () {

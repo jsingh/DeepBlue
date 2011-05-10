@@ -62,7 +62,7 @@
 									<%: Html.Image("DeleteBtn.png", new { @id = "Delete", @style="cursor:pointer" , @onclick = "javascript:editInvestor.deleteInvestor(this);" })%>
 								</div>
 								<div style="float: left; padding: 0 0 10px 5px; display: none;">
-									<%: Html.ImageButton("Update.png", new { @id = "Update", @style = "width: 73px; height: 23px;" })%>
+									<%: Html.ImageButton("Update.png", new { @id = "Update", @style = "width: 73px; height: 26px;" })%>
 								</div>
 							</div>
 						</div>

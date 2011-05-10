@@ -26,10 +26,10 @@
 		<%: Html.Span("",new { id = "UpdateEditCmtLoading" })%>
 	</div>
 	<div style="float: left; padding: 0 0 10px 5px;">
-		<%: Html.ImageButton("Update.png", new { style = "width: 73px; height: 23px;", onclick = "return editTransaction.onEditCommitAmgSubmit('UpdateCommitmentAmount');" })%>
+		<%: Html.ImageButton("Update.png", new { style = "width: 73px; height: 26px;", onclick = "return editTransaction.onEditCommitAmgSubmit('UpdateCommitmentAmount');" })%>
 	</div>
 	<div style="float: left; padding: 0 0 10px 5px;">
-		<%: Html.Image("Close.png", new { style = "width: 73px; height: 23px;cursor:pointer;", onclick = "editTransaction.closeEditCommitAmtDialog();" })%>
+		<%: Html.Image("Close.png", new { style = "width: 73px; height: 26px;cursor:pointer;", onclick = "editTransaction.closeEditCommitAmtDialog();" })%>
 	</div>
 </div>
 <div id="UpdateTargetId" style="display:none">

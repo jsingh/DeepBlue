@@ -31,10 +31,10 @@
 		<%: Html.Span("", new { id = "UpdateLoading" })%></div>
 	<div class="editor-button" style="width: 200px">
 		<div style="float: left; padding: 0 0 10px 5px;">
-			<%: Html.ImageButton("Save.png", new { style = "width: 73px; height: 23px;", onclick = "return investorType.onSubmit('AddNewInvestorType');" })%>
+			<%: Html.ImageButton("Save.png", new { style = "width: 73px; height: 26px;", onclick = "return investorType.onSubmit('AddNewInvestorType');" })%>
 		</div>
 		<div style="float: left; padding: 0 0 10px 5px;">
-			<%: Html.Image("Close.png", new { style = "width: 73px; height: 23px;cursor:pointer;", onclick = "javascript:parent.investorType.closeDialog(false);" })%>
+			<%: Html.Image("Close.png", new { style = "width: 73px; height: 26px;cursor:pointer;", onclick = "javascript:parent.investorType.closeDialog(false);" })%>
 		</div>
 	</div>
 	<%: Html.HiddenFor(model => model.InvestorTypeId) %>

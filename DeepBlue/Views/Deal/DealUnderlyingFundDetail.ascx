@@ -31,9 +31,6 @@
 					Gross Purchase Price
 				</th>
 				<th>
-					Reassigned GPP
-				</th>
-				<th>
 					Record Date
 				</th>
 				<th>
@@ -66,9 +63,6 @@
 				</td>
 				<td style="text-align: center">
 					<%: Html.TextBox("GrossPurchasePrice", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
-				</td>
-				<td style="text-align: center">
-					<%: Html.TextBox("ReassignedGPP", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td style="text-align: center">
 					<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_RecordDate" })%>

@@ -13,7 +13,7 @@
 					No.
 				</th>
 				<th style="width: 10%">
-					Company
+					Issuer
 				</th>
 				<th style="width: 10%">
 					Security Type
@@ -24,14 +24,14 @@
 				<th nowrap>
 					No. of Shares
 				</th>
-				<th>
-					Percentage
+				<th nowrap>
+					Purchase Price
 				</th>
 				<th>
 					FMV
 				</th>
-				<th nowrap>
-					Purchase Price
+				<th>
+					Percentage
 				</th>
 				<th nowrap>
 					Tax Cost Base
@@ -56,7 +56,7 @@
 					<%: Html.Span("", new { @id = "SpnIndex" }) %>
 				</td>
 				<td>
-					<%: Html.DropDownList("IssuerId", Model.Issuers, new { @id="IssuerId", @onchange = "javascript:deal.changeIssuer(this);" })%>
+					<%: Html.DropDownList("IssuerId", Model.Issuers, new { @id="IssuerId", @class="issuerddl", @onchange = "javascript:deal.changeIssuer(this);" })%>
 				</td>
 				<td>
 					<%: Html.DropDownList("SecurityTypeId", Model.SecurityTypes, new { @id="SecurityTypeId", @onchange = "javascript:deal.changeSecurityType(this);" })%>
@@ -68,13 +68,13 @@
 					<%: Html.TextBox("NumberOfShares", "", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
 				</td>
 				<td>
-					<%: Html.TextBox("Percent", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+					<%: Html.TextBox("PurchasePrice", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td>
 					<%: Html.TextBox("FMV", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td>
-					<%: Html.TextBox("PurchasePrice", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+					<%: Html.TextBox("Percent", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td>
 					<%: Html.TextBox("TaxCostBase", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>

@@ -1072,5 +1072,184 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		 
 		#endregion
+
+		#region IAdminRepository EquityType Members
+
+		public List<Models.Entity.EquityType> GetAllEquityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.EquityType> query = (from equityType in context.EquityTypes
+															  select equityType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<EquityType> paginatedList = new PaginatedList<EquityType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<EquityType> GetAllEquityTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from equityType in context.EquityTypes
+						where equityType.Enabled == true
+						orderby equityType.Equity
+						select equityType).ToList();
+			}
+		}
+
+		public EquityType FindEquityType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.EquityTypes.SingleOrDefault(type => type.EquityTypeID == id);
+			}
+		}
+
+		public bool EquityTypeNameAvailable(string equityTypeName, int equityTypeID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.EquityTypes
+						 where type.Equity == equityTypeName && type.EquityTypeID != equityTypeID
+						 select type.EquityTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteEquityType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				EquityType equityType = context.EquityTypes.SingleOrDefault(type => type.EquityTypeID == id);
+				if (equityType != null) {
+					if (equityType.Equities.Count == 0) {
+						context.EquityTypes.DeleteObject(equityType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveEquityType(EquityType equityType) {
+			return equityType.Save();
+		}
+
+		#endregion
+
+		#region IAdminRepository FixedIncomeType Members
+
+		public List<Models.Entity.FixedIncomeType> GetAllFixedIncomeTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.FixedIncomeType> query = (from fixedIncomeType in context.FixedIncomeTypes
+																   select fixedIncomeType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<FixedIncomeType> paginatedList = new PaginatedList<FixedIncomeType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<FixedIncomeType> GetAllFixedIncomeTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fixedIncomeType in context.FixedIncomeTypes
+						where fixedIncomeType.Enabled == true
+						orderby fixedIncomeType.FixedIncomeType1
+						select fixedIncomeType).ToList();
+			}
+		}
+
+		public FixedIncomeType FindFixedIncomeType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.FixedIncomeTypes.SingleOrDefault(type => type.FixedIncomeTypeID == id);
+			}
+		}
+
+		public bool FixedIncomeTypeNameAvailable(string fixedIncomeTypeName, int fixedIncomeTypeID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.FixedIncomeTypes
+						 where type.FixedIncomeType1 == fixedIncomeTypeName && type.FixedIncomeTypeID != fixedIncomeTypeID
+						 select type.FixedIncomeTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteFixedIncomeType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				FixedIncomeType fixedIncomeType = context.FixedIncomeTypes.SingleOrDefault(type => type.FixedIncomeTypeID == id);
+				if (fixedIncomeType != null) {
+					if (fixedIncomeType.FixedIncomes.Count == 0) {
+						context.FixedIncomeTypes.DeleteObject(fixedIncomeType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveFixedIncomeType(FixedIncomeType fixedIncomeType) {
+			return fixedIncomeType.Save();
+		}
+
+		#endregion
+
+		#region IAdminRepository Currency
+
+		public List<Models.Entity.Currency> GetAllCurrencies(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.Currency> query = (from currency in context.Currencies
+															select currency);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<Models.Entity.Currency> paginatedList = new PaginatedList<Models.Entity.Currency>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public Currency FindCurrency(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.Currencies.SingleOrDefault(field => field.CurrencyID == id);
+			}
+		}
+
+		public bool CurrencyNameAvailable(string currencyFieldText, int currencyFieldId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from field in context.Currencies
+						 where field.Currency1 == currencyFieldText && field.CurrencyID != currencyFieldId
+						 select field.CurrencyID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteCurrency(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				Currency currency = context.Currencies.SingleOrDefault(field => field.CurrencyID == id);
+				if (currency != null) {
+					if (currency.Equities.Count == 0 && currency.FixedIncomes.Count == 0) {
+						context.Currencies.DeleteObject(currency);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveCurrency(Currency currency) {
+			return currency.Save();
+		}
+
+		public List<Currency> GetAllCurrencies() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from currency in context.Currencies
+						where currency.Enabled == true
+						orderby currency.Currency1
+						select currency).ToList();
+			}
+		}
+		#endregion
+
+		#region ShareClassType
+		public List<ShareClassType> GetAllShareClassTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from shareClassType in context.ShareClassTypes
+						where shareClassType.Enabled == true
+						orderby shareClassType.ShareClass
+						select shareClassType).ToList();
+			}
+		}
+		#endregion
+
 	}
 }

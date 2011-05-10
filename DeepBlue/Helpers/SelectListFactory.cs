@@ -322,7 +322,7 @@ namespace DeepBlue.Helpers {
 			return securityTypeList;
 		}
 
-		public static List<SelectListItem> GetEquitySelectList(List<EquityDetailModel> equities) {
+		public static List<SelectListItem> GetEquitySelectList(List<Equity> equities) {
 			List<SelectListItem> equityList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
@@ -331,13 +331,28 @@ namespace DeepBlue.Helpers {
 			foreach (var equity in equities) {
 				item = new SelectListItem();
 				item.Text = equity.Symbol.ToString();
-				item.Value = equity.EquityId.ToString();
+				item.Value = equity.EquityID.ToString();
 				equityList.Add(item);
 			}
 			return equityList;
 		}
 
-		public static List<SelectListItem> GetFixedIncomeSelectList(List<FixedIncomeDetailModel> fixedIncomes) {
+		public static List<SelectListItem> GetEquityTypeSelectList(List<EquityType> equityTypes) {
+			List<SelectListItem> equityTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			equityTypeList.Add(item);
+			foreach (var equityType in equityTypes) {
+				item = new SelectListItem();
+				item.Text = equityType.Equity.ToString();
+				item.Value = equityType.EquityTypeID.ToString();
+				equityTypeList.Add(item);
+			}
+			return equityTypeList;
+		}
+
+		public static List<SelectListItem> GetFixedIncomeSelectList(List<FixedIncome> fixedIncomes) {
 			List<SelectListItem> fixedIncomeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
@@ -346,12 +361,27 @@ namespace DeepBlue.Helpers {
 			foreach (var fixedIncome in fixedIncomes) {
 				item = new SelectListItem();
 				item.Text = fixedIncome.Symbol.ToString();
-				item.Value = fixedIncome.FixedIncomeId.ToString();
+				item.Value = fixedIncome.FixedIncomeID.ToString();
 				fixedIncomeList.Add(item);
 			}
 			return fixedIncomeList;
 		}
 
+		public static List<SelectListItem> GetFixedIncomeTypesSelectList(List<FixedIncomeType> fixedIncomeTypes) {
+			List<SelectListItem> fixedIncomeTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			fixedIncomeTypeList.Add(item);
+			foreach (var fixedIncomeType in fixedIncomeTypes) {
+				item = new SelectListItem();
+				item.Text = fixedIncomeType.FixedIncomeType1.ToString();
+				item.Value = fixedIncomeType.FixedIncomeTypeID.ToString();
+				fixedIncomeTypeList.Add(item);
+			}
+			return fixedIncomeTypeList;
+		}
+		
 		public static List<SelectListItem> GetUnderlyingFundTypeSelectList(List<UnderlyingFundType> underlyingFundTypes) {
 			List<SelectListItem> underlyingFundTypeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
@@ -425,6 +455,36 @@ namespace DeepBlue.Helpers {
 				geographyList.Add(item);
 			}
 			return geographyList;
+		}
+
+		public static List<SelectListItem> GetCurrencySelectList(List<Currency> currencies) {
+			List<SelectListItem> currencyList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			currencyList.Add(item);
+			foreach (var currency in currencies) {
+				item = new SelectListItem();
+				item.Text = currency.Currency1.ToString();
+				item.Value = currency.CurrencyID.ToString();
+				currencyList.Add(item);
+			}
+			return currencyList;
+		}
+
+		public static List<SelectListItem> GetShareClassTypeSelectList(List<ShareClassType> shareClassTypes) {
+			List<SelectListItem> shareClassTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			shareClassTypeList.Add(item);
+			foreach (var shareClassType in shareClassTypes) {
+				item = new SelectListItem();
+				item.Text = shareClassType.ShareClass.ToString();
+				item.Value = shareClassType.ShareClassTypeID.ToString();
+				shareClassTypeList.Add(item);
+			}
+			return shareClassTypeList;
 		}
 
 		public static List<SelectListItem> GetEmptySelectList() {

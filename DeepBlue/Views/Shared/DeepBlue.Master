@@ -88,7 +88,7 @@
 				<%: Html.ActionLink("Modify Deal", "Edit", "Deal", null , new { @onmouseover = "menu.msubopen(this,'ModifyDealBox')", @class = (ViewData["SubmenuName"] == "Modify Deal" ? "sel" : "") })%>
 			</li>
 			<li>
-				<%: Html.Anchor("Close Deal")%>
+				<%: Html.ActionLink("Close Deal", "Close", "Deal", null, new { @class = (ViewData["PageName"] == "CloseDeal" ? "sel" : "") })%>
 			</li>
 			<li>
 				<%: Html.ActionLink("Deal Report", "Report", "Deal", null, new { @class = (ViewData["PageName"] == "DealReport" ? "sel" : "") })%>
@@ -161,7 +161,7 @@
 			<li>
 				<%: Html.ActionLink("Underlying Fund", "UnderlyingFunds", "Deal", null, new { @class = (ViewData["PageName"] == "UnderlyingFund" ? "sel" : "") })%></li>
 			<li>
-				<%: Html.ActionLink("Deal Underlying Direct", "DealUnderlyingDirects", "Deal", null, new { @class = (ViewData["PageName"] == "DealUnderlyingDirects" ? "sel" : "") })%></li>
+				<%: Html.ActionLink("Direct", "Index", "Issuer", null, new { @class = (ViewData["PageName"] == "Issuer" ? "sel" : "") })%></li>
 			<li>
 				<%: Html.ActionLink("Purchase Type", "PurchaseType", "Admin", null, new { @class = (ViewData["PageName"] == "PurchaseType" ? "sel" : "") })%></li>
 			<li>
@@ -210,7 +210,7 @@
 	</div>
 	<div id="footer">
 		<div class="footercontent">
-			Copyright 2011 DeepBlue</div>
+			Copyright 2011 DeepBlue&nbsp;<%=ConfigurationManager.AppSettings["CurrentVersion"]%></div>
 	</div>
 	<script type="text/javascript">		DeepBlue.init();</script>
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />

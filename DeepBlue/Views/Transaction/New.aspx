@@ -99,7 +99,7 @@
 								</div>
 								<div class="editor-button">
 									<div style="float: left; padding: 0 0 10px 5px;">
-										<%: Html.ImageButton("submit.png", new { @style = "width: 73px; height: 23px;", @onclick = "javascript:transactionController.showErrorMessage('NewTransaction');" })%>
+										<%: Html.ImageButton("submit.png", new { @style = "width: 73px; height: 26px;", @onclick = "javascript:transactionController.showErrorMessage('NewTransaction');" })%>
 									</div>
 									<div style="float: left; padding: 0 0 10px 5px;">
 										<%: Html.Span("", new { @id = "UpdateLoading" })%>

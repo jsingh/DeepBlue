@@ -1,0 +1,81 @@
+﻿.grid input, .grid select, .cell input, .cell select {
+	margin-left: 5px;
+	width: 90%;
+}
+.hide {
+	display: none;
+}
+.show {
+	display: block;
+}
+body {
+	color: #A6A6A6;
+}
+.grid {
+	width: auto;
+}
+.grid th, .grid td {
+	padding: 2px;
+	color: #7f7f7f;
+}
+.grid th {
+	font-weight: normal;
+}
+.grid tbody tr {
+	background-color: #f2f2f2;
+}
+.grid .emptyrow td {
+	background-color: White;
+	padding: 0;
+}
+.expandbtn {
+	cursor: pointer;
+}
+.grid input, .grid select {
+	width: 94%;
+}
+
+.editcell {
+	float: left;
+	width: 20%;
+	margin: 2px;
+}
+
+.subgrid th, .subgrid td {
+	padding: 0px;
+}
+.subgrid input, .subgrid select {
+	margin: 0px;
+}
+
+.cell {
+	float: left;
+	margin: 2px;
+	text-align: center;
+	height: 25px;
+	line-height: 25px;
+}
+.row {
+	clear: both;
+	float: left;
+	margin: 5px 0px 5px 0px;
+}
+.head .cell {
+	text-align: center;
+}
+.head, .footer, .body {
+	clear: both;
+}
+.celltitle {
+	margin: 5px 2px 5px 2px;
+}
+
+.row {
+	background-color: #FFF;
+}
+
+#FixedIncomeDetail, #EquityDetail, #FixedIncomeList, #EquityList, #tblFixedIncome {
+	float: left;
+	clear: both;
+	width: 100%;
+}

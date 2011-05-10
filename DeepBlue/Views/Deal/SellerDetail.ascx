@@ -48,7 +48,7 @@
 		<%: Html.Hidden("DealId", "${DealId}")%>
 		<div class="editor-field auto">
 			<div class="cell auto">
-				<%: Html.ImageButton("Save.png", new { style = "width: 73px; height: 23px;border:0;" })%></div>
+				<%: Html.ImageButton("Save.png", new { style = "width: 73px; height: 26px;border:0;" })%></div>
 			<div class="cell auto">
 				<%: Html.Span("", new { id = "SpnSellerUpdateLoading" })%>
 			</div>

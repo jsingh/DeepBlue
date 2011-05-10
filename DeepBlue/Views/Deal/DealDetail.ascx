@@ -47,7 +47,7 @@
 </div>
 <div class="editor-field auto">
 	<div class="cell auto">
-		<%: Html.ImageButton("Save.png", new { @id = "btnSaveDeal", style = "width: 73px; height: 23px;border:0;", onclick = "return deal.onDealSubmit('AddNewDeal');" })%></div>
+		<%: Html.ImageButton("Save.png", new { @id = "btnSaveDeal", style = "width: 73px; height: 26px;border:0;", onclick = "return deal.onDealSubmit('AddNewDeal');" })%></div>
 	<div class="cell auto">
 		<%: Html.Span("", new { id = "UpdateLoading" })%>
 	</div>
