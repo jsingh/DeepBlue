@@ -56,7 +56,7 @@
 		<table cellpadding="0" cellspacing="0" border="0" id="DealList">
 			<thead>
 				<tr>
-					<th sortname="DealID" style="width: 10%;" align="center">
+					<th sortname="DealId" style="width: 10%;" align="center">
 						ID
 					</th>
 					<th sortname="DealName" style="width: 50%">

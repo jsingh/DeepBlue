@@ -32,7 +32,7 @@
 		$(":input[name='TaxCostDate']",tr).val(date);
 	}
 	deal.selectValue(tr);
-	deal.applyDatePicker(tr);
+	jHelper.applyDatePicker(tr);
 	deal.setIndex($("#tblUnderlyingDirect"));
 };
 deal.deleteUnderlyingDirect=function (id,img) {

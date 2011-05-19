@@ -487,6 +487,36 @@ namespace DeepBlue.Helpers {
 			return shareClassTypeList;
 		}
 
+		public static List<SelectListItem> GetInvestmentTypeSelectList(List<InvestmentType> investmentTypes) {
+			List<SelectListItem> investmentTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			investmentTypeList.Add(item);
+			foreach (var investmentType in investmentTypes) {
+				item = new SelectListItem();
+				item.Text = investmentType.Investment.ToString();
+				item.Value = investmentType.InvestmentTypeID.ToString();
+				investmentTypeList.Add(item);
+			}
+			return investmentTypeList;
+		}
+
+		public static List<SelectListItem> GetCashDistributionTypeSelectList(List<CashDistributionType> cashDistributionTypes) {
+			List<SelectListItem> cashDistributionTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			cashDistributionTypeList.Add(item);
+			foreach (var cashDistributionType in cashDistributionTypes) {
+				item = new SelectListItem();
+				item.Text = cashDistributionType.Name.ToString();
+				item.Value = cashDistributionType.CashDistributionTypeID.ToString();
+				cashDistributionTypeList.Add(item);
+			}
+			return cashDistributionTypeList;
+		}
+
 		public static List<SelectListItem> GetEmptySelectList() {
 			List<SelectListItem> lists = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();

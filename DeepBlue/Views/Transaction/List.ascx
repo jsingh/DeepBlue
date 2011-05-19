@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IList<DeepBlue.Models.Entity.InvestorFund>>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<List<DeepBlue.Models.Entity.InvestorFund>>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <% foreach (var item in Model) { %>
 <div class="fund-detail">

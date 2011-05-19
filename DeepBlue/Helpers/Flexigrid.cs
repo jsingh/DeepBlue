@@ -16,10 +16,5 @@ namespace DeepBlue.Helpers {
 		public List<FlexigridRow> rows = new List<FlexigridRow>();
 	}
 
-	public class JsonSerializer {
-		public static string ToJsonObject(FlexigridData flexgridData) {
-			 JavaScriptSerializer jsonSerialize = new JavaScriptSerializer();
-			 return jsonSerialize.Serialize(flexgridData);
-		}
-	}
+	
 }

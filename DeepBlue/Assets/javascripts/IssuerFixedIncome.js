@@ -31,8 +31,8 @@
 		issuer.selectValue(tr);
 		issuer.checkboxValue(tr);
 		issuer.fixedIncomeSetIndex($("#tblFixedIncome"));
-		issuer.applyDatePicker(tr);
-		issuer.resizeIframe();
+		jHelper.applyDatePicker(tr);
+		jHelper.resizeIframe();
 	} catch(e) { alert(e); }
 };
 issuer.loadFixedIncome=function (id) {
@@ -45,7 +45,7 @@ issuer.loadFixedIncome=function (id) {
 issuer.addFixedIncome=function (img) {
 	var tr=$(img).parents(".row:first");
 	issuer.saveFixedIncome(tr);
-	issuer.resizeIframe();
+	jHelper.resizeIframe();
 };
 issuer.editFixedIncome=function (img) {
 	var tr=$(img).parents(".row:first");
@@ -55,7 +55,7 @@ issuer.editFixedIncome=function (img) {
 		img.src="/Assets/images/save.png";
 		issuer.showElements(tr);
 	}
-	issuer.resizeIframe();
+	jHelper.resizeIframe();
 };
 issuer.saveFixedIncome=function (tr) {
 	var issuerId=issuer.getIssuerId();

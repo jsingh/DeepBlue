@@ -512,7 +512,7 @@
 		<div class="status">
 			<%: Html.Span("", new { id = "UpdateLoading" })%></div>
 		<div class="editor-button">
-			<%: Html.ImageButton("submit.png", new { style = "width: 73px; height: 26px;", @onclick = "return investor.validation('NewInvestor');" })%>
+			<%: Html.ImageButton("submit.png", new { @class="default-button", @onclick = "return investor.validation('NewInvestor');" })%>
 		</div>
 		<%: Html.HiddenFor(model => model.InvestorId)%>
 		<div id="UpdateTargetId" style="display: none">

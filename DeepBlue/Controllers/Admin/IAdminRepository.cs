@@ -40,7 +40,7 @@ namespace DeepBlue.Controllers.Admin {
 		bool DeleteFundClosing(int id);
 		IEnumerable<ErrorInfo> SaveFundClosing(FundClosing fundClosing);
 		#endregion
-		
+
 		#region CustomField
 		List<CustomField> GetAllCustomFields(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		List<CustomField> GetAllCustomFields(int moduleId);
@@ -48,13 +48,13 @@ namespace DeepBlue.Controllers.Admin {
 		List<MODULE> GetAllModules();
 		List<DataType> GetAllDataTypes();
 		CustomField FindCustomField(int id);
-		CustomFieldValue FindCustomFieldValue(int customFieldId,int key);
+		CustomFieldValue FindCustomFieldValue(int customFieldId, int key);
 		bool CustomFieldTextAvailable(string customFieldText, int customFieldId, int moduleId);
 		bool DeleteCustomField(int id);
 		IEnumerable<ErrorInfo> SaveCustomField(CustomField customField);
 		IEnumerable<ErrorInfo> SaveCustomFieldValue(CustomFieldValue customFieldValue);
 		#endregion
-		
+
 		#region DataType
 		List<DataType> GetAllDataTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		DataType FindDataType(int id);
@@ -62,13 +62,13 @@ namespace DeepBlue.Controllers.Admin {
 		bool DeleteDataType(int id);
 		IEnumerable<ErrorInfo> SaveDataType(DataType dataType);
 		#endregion
-		
+
 		#region Module
 		List<MODULE> GetAllModules(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		MODULE FindModule(int id);
 		bool ModuleTextAvailable(string module, int moduleId);
-		bool DeleteModuleId(int id);
-		IEnumerable<ErrorInfo>SaveModule(MODULE module);
+		bool DeleteModule(int id);
+		IEnumerable<ErrorInfo> SaveModule(MODULE module);
 		#endregion
 
 		#region CommunicationType
@@ -88,7 +88,7 @@ namespace DeepBlue.Controllers.Admin {
 		bool DeleteCommunicationGrouping(int id);
 		IEnumerable<ErrorInfo> SaveCommunicationGrouping(CommunicationGrouping communicationGrouping);
 		#endregion
-		
+
 		#region PurchaseType
 		List<PurchaseType> GetAllPurchaseTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		List<PurchaseType> GetAllPurchaseTypes();
@@ -97,7 +97,7 @@ namespace DeepBlue.Controllers.Admin {
 		bool DeletePurchaseType(int id);
 		IEnumerable<ErrorInfo> SavePurchaseType(PurchaseType purchaseType);
 		#endregion
-		
+
 		#region DealClosingCostType
 		List<DealClosingCostType> GetAllDealClosingCostTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		List<DealClosingCostType> GetAllDealClosingCostTypes();
@@ -128,7 +128,7 @@ namespace DeepBlue.Controllers.Admin {
 		List<UnderlyingFundType> GetAllUnderlyingFundTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		UnderlyingFundType FindUnderlyingFundType(int id);
 		bool UnderlyingFundTypeNameAvailable(string underlyingFundType, int underlyingfundtypeId);
-		bool DeleteUnderlyingFundTypeId(int id);
+		bool DeleteUnderlyingFundType(int id);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundType(UnderlyingFundType underlyingFundType);
 		List<UnderlyingFundType> GetAllUnderlyingFundTypes();
 		#endregion
@@ -137,7 +137,7 @@ namespace DeepBlue.Controllers.Admin {
 		List<ShareClassType> GetAllShareClassTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		ShareClassType FindShareClassType(int id);
 		bool ShareClassTypeNameAvailable(string shareclasstype, int shareclasstypeId);
-		bool DeleteShareClassTypeId(int id);
+		bool DeleteShareClassType(int id);
 		IEnumerable<ErrorInfo> SaveShareClassType(ShareClassType shareClassType);
 		#endregion
 
@@ -145,7 +145,7 @@ namespace DeepBlue.Controllers.Admin {
 		List<ReportingType> GetAllReportingTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		ReportingType FindReportingType(int id);
 		bool ReportingTypeNameAvailable(string reportingtype, int reportingtypeId);
-		bool DeleteReportingTypeId(int id);
+		bool DeleteReportingType(int id);
 		IEnumerable<ErrorInfo> SaveReportingType(ReportingType reportingType);
 		List<ReportingType> GetAllReportingTypes();
 		#endregion
@@ -154,7 +154,7 @@ namespace DeepBlue.Controllers.Admin {
 		List<ReportingFrequency> GetAllReportingFrequencies(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		ReportingFrequency FindReportingFrequency(int id);
 		bool ReportingFrequencyNameAvailable(string reportingfrequency, int reportingfrequencyId);
-		bool DeleteReportingFrequencyId(int id);
+		bool DeleteReportingFrequency(int id);
 		IEnumerable<ErrorInfo> SaveReportingFrequency(ReportingFrequency reportingFrequency);
 		List<ReportingFrequency> GetAllReportingFrequencies();
 		#endregion
@@ -163,7 +163,7 @@ namespace DeepBlue.Controllers.Admin {
 		List<Geography> GetAllGeographys(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		Geography FindGeography(int id);
 		bool GeographyNameAvailable(string reportingfrequency, int reportingfrequencyId);
-		bool DeleteGeographyId(int id);
+		bool DeleteGeography(int id);
 		IEnumerable<ErrorInfo> SaveGeography(Geography geography);
 		#endregion
 
@@ -172,10 +172,10 @@ namespace DeepBlue.Controllers.Admin {
 		List<Industry> GetAllIndusties();
 		Industry FindIndustry(int id);
 		bool IndustryNameAvailable(string industry, int industryId);
-		bool DeleteIndustryId(int id);
+		bool DeleteIndustry(int id);
 		IEnumerable<ErrorInfo> SaveIndustry(Industry industry);
 		#endregion
-		
+
 		#region FileType
 		List<FileType> GetAllFileTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		FileType FindFileType(int id);
@@ -214,6 +214,19 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region ShareClassType
 		List<ShareClassType> GetAllShareClassTypes();
+		#endregion
+
+		#region InvestmentType
+		List<InvestmentType> GetAllInvestmentTypes();
+		#endregion
+
+		#region CashDistributionTypes
+		List<CashDistributionType> GetAllCashDistributionTypes();
+		List<CashDistributionType> GetAllCashDistributionTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		CashDistributionType FindCashDistributionType(int id);
+		bool CashDistributionTypeNameAvailable(string shareclasstype, int cashDistributionTypeId);
+		bool DeleteCashDistributionType(int id);
+		IEnumerable<ErrorInfo> SaveCashDistributionType(CashDistributionType cashDistributionType);
 		#endregion
 	}
 }

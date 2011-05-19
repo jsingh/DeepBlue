@@ -14,7 +14,7 @@
 	$("#SpnDate",tr).html(date);
 	$(":input[name='Date']",tr).val(date);
 	deal.selectValue(tr);
-	deal.applyDatePicker(tr);
+	jHelper.applyDatePicker(tr);
 	deal.calcTotalExpense();
 };
 deal.deleteDealExpense=function (id,img) {

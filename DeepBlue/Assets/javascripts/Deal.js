@@ -84,7 +84,7 @@
 		$.each(data.DealUnderlyingDirects,function (index,item) { deal.loadUnderlyingDirectData(item); });
 		var dealMain=$("#DealMain");
 		deal.selectValue(dealMain);
-		deal.applyDatePicker(dealMain);
+		jHelper.applyDatePicker(dealMain);
 		deal.setFundAutoComplete();
 		deal.initDealEvents();
 		deal.initMVCValidation();
@@ -204,11 +204,6 @@
 	/* End SellerInfo */
 	,selectValue: function (target) {
 		$("select",target).each(function () { var id=parseInt($(this).attr("val"));if(isNaN(id)) { id=0; } this.value=id; });
-	}
-	,applyDatePicker: function (target) {
-		$(".datefield",target).each(function () {
-			$(this).datepicker({ changeMonth: true,changeYear: true });
-		});
 	}
 	,initMVCValidation: function () {
 		if(deal.mvcValidation==false) {

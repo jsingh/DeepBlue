@@ -96,7 +96,7 @@
 						<%: Html.Span("", new { id = "UpdateLoading" })%></div>
 					<div class="editor-button">
 						<div style="float: left; padding: 0 0 10px 5px;">
-							<%: Html.ImageButton("submit.png", new { @style = "width: 73px; height: 26px;", @onclick = "javascript:distribution.onSubmit('Distribution');" })%>
+							<%: Html.ImageButton("submit.png", new { @class="default-button", @onclick = "javascript:distribution.onSubmit('Distribution');" })%>
 						</div>
 						<div style="float: left; padding: 0 0 10px 5px;">
 							<%: Html.Span("", new { @id = "UpdateLoading" })%>

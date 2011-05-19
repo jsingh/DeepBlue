@@ -48,8 +48,11 @@ namespace DeepBlue.Helpers {
 			StringBuilder scriptSrc = new StringBuilder();
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").datepicker({changeMonth: true, changeYear: true")
 					 .Append((string.IsNullOrEmpty(options.OnBeforeShow) == false ? ",beforeShow:" + options.OnBeforeShow + "" : ""))
+					 .Append((string.IsNullOrEmpty(options.OnBeforeShowDay) == false ? ",beforeShowDay:" + options.OnBeforeShowDay + "" : ""))
 					 .Append((string.IsNullOrEmpty(options.OnClose) == false ? ",onClose:" + options.OnClose + "" : ""))
 					 .Append((string.IsNullOrEmpty(options.OnSelect) == false ? ",onSelect:" + options.OnSelect + "" : ""))
+					 .Append((string.IsNullOrEmpty(options.OnCreate) == false ? ",create:" + options.OnCreate + "" : ""))
+					 .Append((string.IsNullOrEmpty(options.OnChangeMonthYear) == false ? ",onChangeMonthYear:" + options.OnChangeMonthYear + "" : ""))
 					 .Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}

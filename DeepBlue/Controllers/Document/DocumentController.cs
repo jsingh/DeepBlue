@@ -179,6 +179,8 @@ namespace DeepBlue.Controllers.Document {
 			}
 		}
 
+
+
 		private Models.Entity.FileType CheckFileExtension(string extension, out string errorMessage) {
 			List<Models.Entity.FileType> fileTypes = AdminRepository.GetAllFileTypes();
 			Models.Entity.FileType fileType = null;
@@ -234,7 +236,7 @@ namespace DeepBlue.Controllers.Document {
 				documentToDate = Convert.ToDateTime(toDate);
 			else
 				documentToDate = DateTime.Now;
-			IList<DocumentDetail> documentDetails = DocumentRepository.FindDocuments(pageIndex, pageSize, sortName, sortOrder, documentFromDate, documentToDate, investorId, fundId, documentTypeId, documentStatus, ref totalRows);
+			List<DocumentDetail> documentDetails = DocumentRepository.FindDocuments(pageIndex, pageSize, sortName, sortOrder, documentFromDate, documentToDate, investorId, fundId, documentTypeId, documentStatus, ref totalRows);
 			ViewData["TotalRows"] = totalRows;
 			ViewData["PageNo"] = pageIndex;
 			return View(documentDetails);

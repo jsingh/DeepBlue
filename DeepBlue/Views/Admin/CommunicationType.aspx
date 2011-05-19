@@ -46,9 +46,7 @@
 	, HttpMethod = "GET"
 	, SortName = "CommunicationTypeName"
 	, Paging = true
-	,
-	OnSuccess = "communicationType.onGridSuccess"
-	,
-	OnRowClick = "communicationType.onRowClick"
+	, OnSuccess = "communicationType.onGridSuccess"
+	, OnRowClick = "communicationType.onRowClick"
 })%>
 </asp:Content>

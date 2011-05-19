@@ -1,0 +1,16 @@
+﻿.editor-label {
+	width: 180px;
+}
+.editor-field {
+	width: auto;
+}
+.status {
+	width: 65%;
+}
+#AddNewCD {
+	width: 100%;
+	text-align: center;
+}
+.grid tfoot tr td {
+	text-align: center;
+}

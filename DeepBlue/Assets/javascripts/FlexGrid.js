@@ -82,10 +82,15 @@
 					 		var td=document.createElement('td');
 					 		var div=document.createElement('div');
 					 		if(row.cell.length>i) {
-					 			if($(this).attr("datatype")=="Boolean") {
-					 				if(row.cell[i]==true) div.innerHTML="<img src='/Assets/images/Tick.gif' />";
-					 			} else {
-					 				div.innerHTML=row.cell[i];
+					 			switch($(this).attr("datatype")) {
+					 				case "Boolean":
+					 					if(row.cell[i]==true) div.innerHTML="<img src='/Assets/images/Tick.gif' />";
+					 					break;
+					 				case "money":
+					 					div.innerHTML=jHelper.dollarAmount(row.cell[i].toString());
+					 					break;
+					 				default:
+					 					div.innerHTML=row.cell[i];
 					 			}
 					 		}
 					 		$(td).css({ "display": this.style.display });
@@ -96,10 +101,9 @@
 					 		td=null;
 					 		i++;
 					 	});
-
 					 	$(tbody).append(tr);
 					 	if(p.onRowBound) {
-					 		p.onRowBound(tr,row);
+					 		p.onRowBound(tr,row,t);
 					 	}
 					 	if(p.onRowClick) {
 					 		$(tr).click(function () {
@@ -161,7 +165,7 @@
 			,populate: function () { //get latest data
 				if(this.loading) return true;
 				if(p.onSubmit) {
-					var gh=p.onSubmit();
+					var gh=p.onSubmit(p);
 					if(!gh) return false;
 				}
 				this.loading=true;
@@ -177,12 +181,15 @@
 				if(!p.newp) p.newp=1;
 				if(p.page>p.pages) p.page=p.pages;
 				var dt=new Date();
-				var param=[
+				var param=[];
+				if(p.usepager) {
+					param=[
 					 { name: 'pageIndex',value: p.newp }
 					,{ name: 'pageSize',value: p.rp }
 					,{ name: 'sortName',value: p.sortname }
 					,{ name: 'sortOrder',value: p.sortorder }
 				];
+				}
 				if(p.params) {
 					for(var pi=0;pi<p.params.length;pi++) param[param.length]=p.params[pi];
 				}

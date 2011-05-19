@@ -44,7 +44,7 @@ namespace DeepBlue.Models.Deal {
 		[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "Committed Amount is required")]
 		public decimal? CommittedAmount { get; set; }
 
-		[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "Unfunded Amount is required")]
+		[Range((double)decimal.MinValue, (double)decimal.MaxValue, ErrorMessage = "Unfunded Amount is required")]
 		public decimal? UnfundedAmount { get; set; }
 
 		[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "Gross Purchase Price is required")]
@@ -52,5 +52,11 @@ namespace DeepBlue.Models.Deal {
 
 		[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "Reassigned GPP is required")]
 		public decimal? ReassignedGPP { get; set; }
+
+		public decimal? PostRecordDateCapitalCall { get; set; }
+
+		public decimal? PostRecordDateDistribution { get; set; }
+
+		public int? DealClosingId { get; set; }
 	}
 }

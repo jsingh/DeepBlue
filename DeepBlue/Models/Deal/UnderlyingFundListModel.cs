@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace DeepBlue.Models.Deal {
+
 	public class UnderlyingFundListModel {
 
 		public int UnderlyingFundId { get; set; }

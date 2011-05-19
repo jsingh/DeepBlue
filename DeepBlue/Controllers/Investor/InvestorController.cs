@@ -497,7 +497,7 @@ namespace DeepBlue.Controllers.Investor {
 		private string SaveCustomValues(FormCollection collection, int key) {
 			System.Text.StringBuilder result = new StringBuilder();
 			IEnumerable<ErrorInfo> errorInfo;
-			IList<CustomField> customFields = AdminRepository.GetAllCustomFields((int)Models.Admin.Enums.Module.Investor);
+			List<CustomField> customFields = AdminRepository.GetAllCustomFields((int)Models.Admin.Enums.Module.Investor);
 			foreach (var field in customFields) {
 				var customFieldValue = collection["CustomField_" + field.CustomFieldID.ToString()];
 				if (customFieldValue != null) {
@@ -709,7 +709,7 @@ namespace DeepBlue.Controllers.Investor {
 				}
 				/* Load Custom Fields */
 				model.CustomField = new CustomFieldModel();
-				IList<CustomFieldValue> customFieldValues = AdminRepository.GetAllCustomFieldValues(id);
+				List<CustomFieldValue> customFieldValues = AdminRepository.GetAllCustomFieldValues(id);
 				var customFields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor);
 				model.CustomField.Values = new List<CustomFieldValueDetail>();
 				foreach (var field in customFields) {

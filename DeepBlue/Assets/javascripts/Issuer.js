@@ -4,9 +4,9 @@
 	,onCloseDialog: null
 	,isSaveExit: false
 	,init: function () {
-		this.resizeIframe();
+		jHelper.resizeIframe();
 		$("document").ready(function () {
-			this.loadIssuer();
+			issuer.loadIssuer();
 			$(".expandbtn").toggle(function () {
 				var parent=$(this).parent().parent();
 				var fname=this.src.substring(this.src.lastIndexOf('/')+1);
@@ -14,7 +14,7 @@
 				fname=fname.replace("S_","");
 				this.src=src+"/"+fname;
 				$(".fieldbox",parent).hide();
-				issuer.resizeIframe();
+				jHelper.resizeIframe();
 			},function () {
 				var parent=$(this).parent().parent();
 				var fname=this.src.substring(this.src.lastIndexOf('/')+1);
@@ -22,7 +22,7 @@
 				fname="S_"+fname.replace("S_","");
 				this.src=src+"/"+fname;
 				$(".fieldbox",parent).show();
-				issuer.resizeIframe();
+				jHelper.resizeIframe();
 			});
 		});
 	}
@@ -36,23 +36,14 @@
 			$("#CountryId").val(data.CountryId);
 			$.each(data.Equities,function (index,item) { issuer.loadEquityData(item); });
 			$.each(data.FixedIncomes,function (index,item) { issuer.loadFixedIncomeData(item); });
-			issuer.resizeIframe();
-			issuer.applyDatePicker($("#FixedIncomeDetail"));
+			jHelper.resizeIframe();
+			jHelper.applyDatePicker($("#FixedIncomeDetail"));
 		});
 	}
 	,add: function (id) {
 		var dt=new Date();
 		var url="/Issuer/EditIssuer/"+id+"?t="+dt.getTime();
-		$("#addDialog").remove();
-		var iframe=document.createElement("div");
-		iframe.id="addDialog";
-		iframe.innerHTML+="<div id='loading'><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</div>";
-		iframe.innerHTML+='<iframe id="iframe_modal" allowtransparency="true" marginheight="0" marginwidth="0"  width="100%" frameborder="0" class="externalSite"  />';
-		var ifrm=$("#iframe_modal",iframe).get(0);
-		$(ifrm).css("height","100px").unbind('load');
-		$(ifrm).load(function () { $("#loading",iframe).remove(); });
-		ifrm.src=url;
-		$(iframe).dialog({
+		jHelper.createDialog(url,{
 			title: "Issuer",
 			autoOpen: true,
 			width: 1000,
@@ -74,14 +65,6 @@
 			});
 		}
 	}
-	,resizeIframe: function () {
-		$("document").ready(function () {
-			var theFrame=$("#iframe_modal",parent.document.body);
-			if(theFrame) {
-				theFrame.height($("body").height());
-			}
-		});
-	}
 	,onSubmit: function (formId,saveExit) {
 		issuer.onIssuerSuccess=null;
 		issuer.isSaveExit=saveExit;
@@ -94,8 +77,8 @@
 		$("#Delete",lastcell).click(function () { issuer.deleteIssuer(data.cell[0],this); });
 		$("td:not(:last)",tr).click(function () { issuer.add(data.cell[0]); });
 	}
-	,closeDialog: function (reload,issuerId,issuerName) {
-		if(issuer.isSaveExit) {
+	,closeDialog: function (reload,issuerId,issuerName,closeDialogEvent) {
+		if(issuer.isSaveExit||closeDialogEvent) {
 			$("#addDialog").dialog('close');
 			if(reload==true) { if(issuer.isCreateDealPage) { if(issuerId>0) { deal.loadIssuers(issuerName,issuerId); } } else { $("#IssuerList").flexReload(); } }
 		}
@@ -117,9 +100,9 @@
 			parent.issuer.isSaveExit=issuer.isSaveExit;
 			if(issuer.onIssuerSuccess) {
 				issuer.onIssuerSuccess();
-				issuer.onCloseDialog=function () { parent.issuer.closeDialog(true,issuerId,issuerName); }
+				issuer.onCloseDialog=function () { parent.issuer.closeDialog(true,issuerId,issuerName,false); }
 			} else {
-				parent.issuer.closeDialog(true,issuerId,issuerName);
+				parent.issuer.closeDialog(true,issuerId,issuerName,false);
 			}
 		}
 	}
@@ -131,11 +114,6 @@
 	}
 	,checkboxValue: function (target) {
 		$("input:checkbox",target).each(function () { var bool=$(this).attr("val");if(bool.toLowerCase()=="true") { this.checked=true; } });
-	}
-	,applyDatePicker: function (target) {
-		$(".datefield",target).each(function () {
-			$(this).datepicker({ changeMonth: true,changeYear: true });
-		});
 	}
 	,setIndex: function (target) {
 		var index=0;

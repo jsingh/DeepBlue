@@ -18,7 +18,7 @@
 		$("#ReportLoading").show();
 		return true;
 	}
-	,onSuccess: function (t) {
+	,onSuccess: function (t,p) {
 		$("#ReportLoading").hide();
 		var tfoot=$("tfoot",t).get(0);
 		if(!tfoot) {
@@ -30,6 +30,7 @@
 			$(tfoot).append(trviewmore);
 			$(t).append(tfoot);
 		}
+		if(p.pages<=p.newp) { $(tfoot).remove(); }
 	}
 	,onRowBound: function (tr,row) {
 		var trempty=document.createElement("tr");

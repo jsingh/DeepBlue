@@ -12,7 +12,7 @@
 		tr=$("#Equity_"+data.EquityId,tbody);
 		issuer.selectValue(tr);
 		issuer.checkboxValue(tr);
-		issuer.setIndex($("#tblEquity"));	issuer.resizeIframe();
+		issuer.setIndex($("#tblEquity"));	jHelper.resizeIframe();
 	} catch(e) { alert(e); }
 };
 issuer.loadEquity=function (id) {
@@ -25,7 +25,7 @@ issuer.loadEquity=function (id) {
 issuer.addEquity=function (img) {
 	var tr=$(img).parents("tr:first");
 	issuer.saveEquity(tr);
-	issuer.resizeIframe();
+	jHelper.resizeIframe();
 };
 issuer.editEquity=function (img) {
 	var tr=$(img).parents("tr:first");
@@ -35,7 +35,7 @@ issuer.editEquity=function (img) {
 		img.src="/Assets/images/save.png";
 		issuer.showElements(tr);
 	}
-	issuer.resizeIframe();
+	jHelper.resizeIframe();
 };
 issuer.saveEquity=function (tr) {
 	var issuerId=issuer.getIssuerId();

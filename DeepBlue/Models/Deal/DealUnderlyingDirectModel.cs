@@ -66,6 +66,8 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Tax Cost Date:")]
 		public DateTime? TaxCostDate { get; set; }
 
+		public int? DealClosingId { get; set; }
+
 		public List<SelectListItem> Equities { get; set; }
 
 		public List<SelectListItem> FixedIncomes { get; set; }

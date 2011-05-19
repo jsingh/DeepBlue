@@ -297,6 +297,6 @@ namespace DeepBlue.Models.Entity {
 
 	public partial class Investor {
 
-		public IList<InvestorAccount> InvestorAccountList { get; set; }
+		public List<InvestorAccount> InvestorAccountList { get; set; }
 	}
 }

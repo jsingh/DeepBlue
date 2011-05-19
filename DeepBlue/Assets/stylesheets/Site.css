@@ -338,9 +338,7 @@ a img {
 	float: right;
 	display: none;
 }
-.auto-width {
-	width: auto;
-}
+
 .checkbox input {
 	width: auto;
 }
@@ -492,7 +490,7 @@ a img {
 	float: left;
 	width: 96%;
 	line-height: 24px;
-     color: #939090;
+	color: #939090;
 }
 .tab-left {
 	background-image: url(../images/tab_unsel_l.png);
@@ -549,7 +547,8 @@ a img {
 	padding: 5px 0px 5px 0px;
 }
 .admin-content {
-	width: 100%; margin-left:10px; 
+	width: 100%;
+	margin-left: 10px;
 }
 .status {
 	height: 25px;
@@ -717,11 +716,30 @@ h2 {
 .topmenu a img {
 	padding-top: 10px;
 }
-.checkbox input {  width:auto; }
+.checkbox input {
+	width: auto;
+}
 .search-header, .search-main {
 	margin: 10px;
 }
 .search-main {
 	width: 100%;
 	float: left;
+}
+.rightcol {
+	clear: right;
+}
+.auto-width {
+	width: auto;
+}
+.nowrap {
+	white-space: nowrap;
+}
+.default-button {
+	width: auto;
+	height: auto;
+	cursor: pointer;
+}
+#Edit, #Delete {
+	cursor: pointer;
 }

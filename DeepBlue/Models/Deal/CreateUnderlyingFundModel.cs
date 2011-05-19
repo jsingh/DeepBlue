@@ -24,8 +24,11 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Description:")]
 		public string Description { get; set; }
 
+		[DisplayName("Incentive Fee:")]
 		public decimal? IncentiveFee { get; set; }
 
+		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+		[DisplayName("Fiscal Year End:")]
 		public DateTime? FiscalYearEnd { get; set; }
 
 		[Required(ErrorMessage = "Fund Type is required")]
@@ -64,6 +67,37 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Reporting Type:")]
 		public int? ReportingTypeId { get; set; }
 
+		[DisplayName("Fund Structure:")]
+		public int? FundStructureId { get; set; }
+
+		[DisplayName("Tax Rate:")]
+		public decimal? TaxRate { get; set; }
+
+		[DisplayName("Taxable:")]
+		public bool Taxable { get; set; }
+
+		[DisplayName("Management Fee:")]
+		public decimal? ManagementFee { get; set; }
+
+		[DisplayName("Exempt:")]
+		public bool Exempt { get; set; }
+
+		[DisplayName("Auditor Name:")]
+		[StringLength(75, ErrorMessage = "Fund Name must be under 75 characters.")]
+		public string AuditorName { get; set; }
+
+		[DisplayName("Fund Registered Office:")]
+		public int? FundRegisteredOfficeId { get; set; }
+
+		[DisplayName("Investment Type:")]
+		public int? InvestmentTypeId { get; set; }
+
+		[DisplayName("Manager Contact:")]
+		public int? ManagerContactId { get; set; }
+
+		[DisplayName("Domestic:")]
+		public bool IsDomestic { get; set; }
+ 
 		/* Contact Info */
 
 		public int ContactId { get; set; }
@@ -127,6 +161,14 @@ namespace DeepBlue.Models.Deal {
 		public List<SelectListItem> Reportings { get; set; }
 
 		public List<SelectListItem> Issuers { get; set; }
+
+		public List<SelectListItem> FundStructures { get; set; }
+
+		public List<SelectListItem> FundRegisteredOffices { get; set; }
+
+		public List<SelectListItem> InvestmentTypes { get; set; }
+
+		public List<SelectListItem> ManagerContacts { get; set; }
 
 	}
 }

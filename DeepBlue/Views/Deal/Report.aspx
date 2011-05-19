@@ -35,16 +35,16 @@
 					<th style="display: none">
 						DealId
 					</th>
-					<th sortname="DealNumber" style="width: 10%">
+					<th align=center sortname="DealNumber" style="width: 10%">
 						<span>Deal No.</span>
 					</th>
-					<th sortname="DealName">
+					<th align=center sortname="DealName">
 						<span>Deal Name</span>
 					</th>
-					<th sortname="FundName">
+					<th align=center sortname="FundName">
 						<span>Fund Name</span>
 					</th>
-					<th sortname="SellerName">
+					<th align=center sortname="SellerName">
 						<span>Seller Name</span>
 					</th>
 					<th style="width: 2%">

@@ -19,7 +19,7 @@
 	width: auto;
 }
 .checkbox, .rdo input {
-	border: 0px;
+	border: 0px; margin-top:2px;
 }
 .editor-label {
 	text-align: right;
@@ -118,3 +118,7 @@ h4 a {
 .seefull a {
 	color: #fff;
 }
+.auto-width {
+	width: auto;
+}
+.checkbox input { border:0px; }

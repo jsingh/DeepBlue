@@ -53,6 +53,12 @@ namespace DeepBlue.Helpers {
 		}
 		#endregion
 
+		#region Display
+		public static MvcHtmlString Literal(this HtmlHelper helper, string value) {
+			return MvcHtmlString.Create(value);
+		}
+ 		#endregion
+
 		#region Anchor
 		public static MvcHtmlString Anchor(this HtmlHelper helper, string innerHTML, string href, object htmlAttributes) {
 			TagBuilder tag = new TagBuilder("a");
@@ -210,5 +216,23 @@ namespace DeepBlue.Helpers {
 		}
 		#endregion
 
+		#region CheckBox
+		public static MvcHtmlString InputCheckBox(this HtmlHelper helper, string name, bool isChecked) {
+			TagBuilder tag = new TagBuilder("input");
+			tag.Attributes.Add("type", "checkbox");
+			tag.Attributes.Add("name", name);
+			if (isChecked) tag.Attributes.Add("checked", "");
+			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+		}
+
+		public static MvcHtmlString InputCheckBox(this HtmlHelper helper, string name,  bool isChecked, object htmlAttributes) {
+			TagBuilder tag = new TagBuilder("input");
+			tag.Attributes.Add("type", "checkbox");
+			tag.Attributes.Add("name", name);
+			if (isChecked) tag.Attributes.Add("checked", "");
+			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+		}
+		#endregion
 	}
 }

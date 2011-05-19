@@ -337,7 +337,7 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
-		public bool DeleteModuleId(int id) {
+		public bool DeleteModule(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				MODULE module = context.MODULEs.SingleOrDefault(field => field.ModuleID == id);
 				if (module != null) {
@@ -723,7 +723,7 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
-		public bool DeleteUnderlyingFundTypeId(int id) {
+		public bool DeleteUnderlyingFundType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				UnderlyingFundType underlyingFundType = context.UnderlyingFundTypes.SingleOrDefault(field => field.UnderlyingFundTypeID == id);
 				if (underlyingFundType != null) {
@@ -777,7 +777,7 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
-		public bool DeleteShareClassTypeId(int id) {
+		public bool DeleteShareClassType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				ShareClassType shareClassType = context.ShareClassTypes.SingleOrDefault(field => field.ShareClassTypeID == id);
 				if (shareClassType != null) {
@@ -823,7 +823,7 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
-		public bool DeleteReportingTypeId(int id) {
+		public bool DeleteReportingType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				ReportingType reportingType = context.ReportingTypes.SingleOrDefault(field => field.ReportingTypeID == id);
 				if (reportingType != null) {
@@ -880,7 +880,7 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
-		public bool DeleteReportingFrequencyId(int id) {
+		public bool DeleteReportingFrequency(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				ReportingFrequency reportingFrequency = context.ReportingFrequencies.SingleOrDefault(field => field.ReportingFrequencyID == id);
 				if (reportingFrequency != null) {
@@ -935,7 +935,7 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
-		public bool DeleteGeographyId(int id) {
+		public bool DeleteGeography(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				Geography geography = context.Geographies.SingleOrDefault(field => field.GeographyID == id);
 				if (geography != null) {
@@ -990,7 +990,7 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
-		public bool DeleteIndustryId(int id) {
+		public bool DeleteIndustry(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				Industry industry = context.Industries.SingleOrDefault(field => field.IndustryID == id);
 				if (industry != null) {
@@ -1240,7 +1240,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region ShareClassType
+		#region IAdminRepository ShareClassType
 		public List<ShareClassType> GetAllShareClassTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from shareClassType in context.ShareClassTypes
@@ -1251,5 +1251,74 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
+		#region IAdminRepository InvestmentType
+		public List<InvestmentType> GetAllInvestmentTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investmentType in context.InvestmentTypes
+						where investmentType.Enabled == true
+						orderby investmentType.Investment
+						select investmentType).ToList();
+			}
+		}
+		#endregion
+
+		#region IAdminRepository CashDistributionType Members
+		
+		public List<Models.Entity.CashDistributionType> GetAllCashDistributionTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.CashDistributionType> query = (from cashDistributionType in context.CashDistributionTypes
+																		select cashDistributionType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<CashDistributionType> paginatedList = new PaginatedList<CashDistributionType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<CashDistributionType> GetAllCashDistributionTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from cashDistributionType in context.CashDistributionTypes
+						where cashDistributionType.Enabled == true
+						orderby cashDistributionType.Name
+						select cashDistributionType).ToList();
+			}
+		}
+
+		public CashDistributionType FindCashDistributionType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.CashDistributionTypes.SingleOrDefault(type => type.CashDistributionTypeID == id);
+			}
+		}
+
+		public bool CashDistributionTypeNameAvailable(string cashDistributionTypeName, int cashDistributionTypeID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.CashDistributionTypes
+						 where type.Name == cashDistributionTypeName && type.CashDistributionTypeID != cashDistributionTypeID
+						 select type.CashDistributionTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteCashDistributionType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				CashDistributionType cashDistributionType = context.CashDistributionTypes.SingleOrDefault(type => type.CashDistributionTypeID == id);
+				if (cashDistributionType != null) {
+					if (cashDistributionType.UnderlyingFundCashDistributions.Count == 0) {
+						context.CashDistributionTypes.DeleteObject(cashDistributionType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveCashDistributionType(CashDistributionType cashDistributionType) {
+			return cashDistributionType.Save();
+		}
+
+		#endregion
+
+
+	 
 	}
 }

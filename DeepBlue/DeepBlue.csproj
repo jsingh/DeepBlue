@@ -81,29 +81,107 @@
     <Compile Include="Controllers\Document\DocumentRepository.cs" />
     <Compile Include="Controllers\Document\DocumentController.cs" />
     <Compile Include="Controllers\Document\IDocumentRepository.cs" />
-    <Compile Include="Controllers\Fund\Enums.cs" />
-    <Compile Include="Controllers\Fund\FundRepository.cs" />
-    <Compile Include="Controllers\Fund\FundController.cs" />
-    <Compile Include="Controllers\Fund\IFundRepository.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Investor\InvestorController.cs" />
-    <Compile Include="Models\Admin\EditEquityTypeModel.cs" />
-    <Compile Include="Models\Admin\EditFixedIncomeTypeModel.cs" />
+    <Compile Include="Helpers\JsonSerializer.cs" />
+    <Compile Include="Models\Deal\CashDistributionListModel.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundActivityFields.cs" />
+    <Compile Include="Models\Deal\CommunicationDetailModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\CreateActivityModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\CreateDealCloseModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\CreateDealUnderlyingDirectModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\CreateModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\CreateUnderlyingFundModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\DealCloseListModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\DealClosingCostModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\DealDetailModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\DealDocumentModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\DealExportModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\DealListModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\DealReportModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\DealSellerDetailModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\DealUnderlyingDirectModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\DealUnderlyingFundModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\Enums.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\ResultModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\UnderlyingFundCapitalCallModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\UnderlyingFundCashDistributionModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\UnderlyingFundListModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\Entity\DeepBlue.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallLineItemService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallService.cs" />
+    <Compile Include="Models\Entity\Validation\CashDistribution.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingFundCapitalCall.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingFundCapitalCallLineItem.cs" />
+    <Compile Include="Models\Fund\Enums.cs" />
+    <Compile Include="Controllers\Fund\FundRepository.cs" />
+    <Compile Include="Controllers\Fund\FundController.cs" />
+    <Compile Include="Controllers\Fund\IFundRepository.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Investor\InvestorController.cs" />
+    <Compile Include="Helpers\DataTypeHelper.cs" />
+    <Compile Include="Models\Admin\EditCashDistributionTypeModel.cs" />
+    <Compile Include="Models\Admin\EditEquityTypeModel.cs" />
+    <Compile Include="Models\Admin\EditFixedIncomeTypeModel.cs" />
+    <Compile Include="Models\Entity\Partial\CashDistributionTypeService.cs" />
     <Compile Include="Models\Entity\Partial\CurrencyService.cs" />
     <Compile Include="Models\Entity\Partial\EquityService.cs" />
     <Compile Include="Models\Entity\Partial\EquityTypeService.cs" />
     <Compile Include="Models\Entity\Partial\FixedIncomeService.cs" />
     <Compile Include="Models\Entity\Partial\FixedIncomeTypeService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingFundCashDistributionService.cs" />
+    <Compile Include="Models\Entity\Validation\CashDistributionType.cs" />
     <Compile Include="Models\Entity\Validation\Currency.cs" />
     <Compile Include="Models\Entity\Validation\Equity.cs" />
     <Compile Include="Models\Entity\Validation\EquityType.cs" />
     <Compile Include="Models\Entity\Validation\FixedIncome.cs" />
     <Compile Include="Models\Entity\Validation\FixedIncomeType.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingFundCashDistribution.cs" />
     <Compile Include="Models\Issuer\EquityDetailModel.cs" />
     <Compile Include="Models\Issuer\FixedIncomeDetailModel.cs" />
     <Compile Include="Models\Issuer\EditIssuerModel.cs" />
@@ -203,21 +281,6 @@
     <Compile Include="Models\CapitalCall\ManagementFeeDetail.cs" />
     <Compile Include="Models\CapitalCall\CreateReceiveModel.cs" />
     <Compile Include="Models\CapitalCall\ResultModel.cs" />
-    <Compile Include="Models\Deal\CommunicationDetailModel.cs" />
-    <Compile Include="Models\Deal\CreateDealCloseModel.cs" />
-    <Compile Include="Models\Deal\CreateDealUnderlyingDirectModel.cs" />
-    <Compile Include="Models\Deal\CreateModel.cs" />
-    <Compile Include="Models\Deal\CreateUnderlyingFundModel.cs" />
-    <Compile Include="Models\Deal\DealDetailModel.cs" />
-    <Compile Include="Models\Deal\DealDocumentModel.cs" />
-    <Compile Include="Models\Deal\DealClosingCostModel.cs" />
-    <Compile Include="Models\Deal\DealExportModel.cs" />
-    <Compile Include="Models\Deal\DealListModel.cs" />
-    <Compile Include="Models\Deal\DealReportModel.cs" />
-    <Compile Include="Models\Deal\DealUnderlyingDirectModel.cs" />
-    <Compile Include="Models\Deal\DealUnderlyingFundModel.cs" />
-    <Compile Include="Models\Deal\Enums.cs" />
-    <Compile Include="Models\Deal\UnderlyingFundListModel.cs" />
     <Compile Include="Models\Entity\Partial\CapitalCallService.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -313,8 +376,6 @@
     <Compile Include="Models\Entity\Validation\UnderlyingFund.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundType.cs" />
     <Compile Include="Models\Issuer\IssuerDetailModel.cs" />
-    <Compile Include="Models\Deal\ResultModel.cs" />
-    <Compile Include="Models\Deal\DealSellerDetailModel.cs" />
     <Compile Include="Models\Document\SearchModel.cs" />
     <Compile Include="Models\Document\CreateModel.cs" />
     <Compile Include="Models\Document\Enums.cs" />
@@ -387,6 +448,7 @@
     <Content Include="Assets\images\arrow.png" />
     <Content Include="Assets\images\arrow_down.png" />
     <Content Include="Assets\images\arrow_up.png" />
+    <Content Include="Assets\images\attach.gif" />
     <Content Include="Assets\images\balloon.png" />
     <Content Include="Assets\images\bg.gif" />
     <Content Include="Assets\images\body_bg.gif" />
@@ -400,6 +462,8 @@
     <Content Include="Assets\images\btn-sprite.gif" />
     <Content Include="Assets\images\Cancel.png" />
     <Content Include="Assets\images\cancel_btn.png" />
+    <Content Include="Assets\images\Capital-Calls.png" />
+    <Content Include="Assets\images\Cash-Distributions.png" />
     <Content Include="Assets\images\Close.png" />
     <Content Include="Assets\images\content_top.png" />
     <Content Include="Assets\images\content_top_r.png" />
@@ -421,8 +485,10 @@
     <Content Include="Assets\images\Edit.gif" />
     <Content Include="Assets\images\Edit.png" />
     <Content Include="Assets\images\Editbtn.png" />
+    <Content Include="Assets\images\Equities.png" />
     <Content Include="Assets\images\fhbg.gif" />
     <Content Include="Assets\images\first.gif" />
+    <Content Include="Assets\images\Fixed-Incomes.png" />
     <Content Include="Assets\images\footer.png" />
     <Content Include="Assets\images\footerbg.png" />
     <Content Include="Assets\images\foot_bg.png" />
@@ -452,6 +518,7 @@
     <Content Include="Assets\images\print.png" />
     <Content Include="Assets\images\report.png" />
     <Content Include="Assets\images\save.png" />
+    <Content Include="Assets\images\SaveExit.png" />
     <Content Include="Assets\images\search.png" />
     <Content Include="Assets\images\SellerInfo.png" />
     <Content Include="Assets\images\settings.png" />
@@ -462,12 +529,18 @@
     <Content Include="Assets\images\small_txtbg_220.png" />
     <Content Include="Assets\images\small_txtbg_250.png" />
     <Content Include="Assets\images\smenucenter.png" />
+    <Content Include="Assets\images\sort_down.gif" />
+    <Content Include="Assets\images\sort_up.gif" />
     <Content Include="Assets\images\submit.png" />
     <Content Include="Assets\images\submnubg1.png" />
     <Content Include="Assets\images\submnubg2.png" />
     <Content Include="Assets\images\submnubg3.png" />
+    <Content Include="Assets\images\S_Capital-Calls.png" />
+    <Content Include="Assets\images\S_Cash-Distributions.png" />
     <Content Include="Assets\images\S_DealDocuments.png" />
     <Content Include="Assets\images\S_DealExpenses.png" />
+    <Content Include="Assets\images\S_Equities.png" />
+    <Content Include="Assets\images\S_Fixed-Incomes.png" />
     <Content Include="Assets\images\S_SellerInfo.png" />
     <Content Include="Assets\images\S_UnderlyingDirects.png" />
     <Content Include="Assets\images\S_UnderlyingFunds.png" />
@@ -519,13 +592,14 @@
     <Content Include="Assets\javascripts\CommunicationType.js" />
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
+    <Content Include="Assets\javascripts\CashDistributionType.js" />
+    <Content Include="Assets\javascripts\DealActivity.js" />
     <Content Include="Assets\javascripts\IssuerFixedIncome.js" />
     <Content Include="Assets\javascripts\IssuerEquity.js" />
     <Content Include="Assets\javascripts\FixedIncomeType.js" />
     <Content Include="Assets\javascripts\EquityType.js" />
     <Content Include="Assets\javascripts\DealClose.js" />
     <Content Include="Assets\javascripts\FileType.js" />
-    <Content Include="Assets\javascripts\CreateDealUnderlyingDirect.js" />
     <Content Include="Assets\javascripts\Industry.js" />
     <Content Include="Assets\javascripts\Geography.js" />
     <Content Include="Assets\javascripts\Issuer.js" />
@@ -580,6 +654,8 @@
     <Content Include="Assets\stylesheets\customfield.css" />
     <Content Include="Assets\stylesheets\ddlmenu.css" />
     <Content Include="Assets\stylesheets\deal.css" />
+    <Content Include="Assets\stylesheets\dealactivity.css" />
+    <Content Include="Assets\stylesheets\dealclose.css" />
     <Content Include="Assets\stylesheets\dealreport.css" />
     <Content Include="Assets\stylesheets\distribution.css" />
     <Content Include="Assets\stylesheets\document.css" />
@@ -604,6 +680,8 @@
     <Content Include="obj\Release\TempPE\Models.Entity.DeepBlue.Designer.cs.dll" />
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
     <Content Include="Views\Admin\CommunicationType.aspx" />
+    <Content Include="Views\Admin\CashDistributionType.aspx" />
+    <Content Include="Views\Admin\EditCashDistributionType.aspx" />
     <Content Include="Views\Admin\EditFixedIncomeType.aspx" />
     <Content Include="Views\Admin\FixedIncomeType.aspx" />
     <Content Include="Views\Admin\EditEquityType.aspx" />
@@ -654,10 +732,14 @@
     <Content Include="Views\CapitalCall\NewManualCapitalCall.aspx" />
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
+    <Content Include="Views\Deal\Activities.aspx" />
     <Content Include="Views\Deal\Close.aspx" />
-    <Content Include="Views\Deal\DealUnderlyingDirects.aspx" />
-    <Content Include="Views\Deal\EditDealUnderlyingDirect.aspx" />
+    <Content Include="Views\Deal\CreateUnderlyingFundCapitalCall.ascx" />
+    <Content Include="Views\Deal\CreateUnderlyingFundCashDistribution.ascx" />
+    <Content Include="Views\Deal\EditUnderlyingFundCashDistribution.aspx" />
+    <Content Include="Views\Deal\EditDealClosing.aspx" />
     <Content Include="Views\Deal\EditUnderlyingFund.aspx" />
+    <Content Include="Views\Deal\EditUnderlyingFundCapitalCall.aspx" />
     <Content Include="Views\Deal\ExportDetail.aspx" />
     <Content Include="Views\Deal\DealDocumentDetail.ascx" />
     <Content Include="Views\Deal\DealExpenseDetail.ascx" />

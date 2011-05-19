@@ -34,10 +34,10 @@
 		<%: Html.Span("", new { id = "UpdateLoading" })%></div>
 	<div class="editor-button" style="width: 200px">
 		<div style="float: left; padding: 0 0 10px 5px;">
-			<%: Html.ImageButton("Save.png", new { style = "width: 73px; height: 26px;", onclick = "return securityType.onSubmit('AddNewSecurityType');" })%>
+			<%: Html.ImageButton("Save.png", new { @class="default-button", onclick = "return securityType.onSubmit('AddNewSecurityType');" })%>
 		</div>
 		<div style="float: left; padding: 0 0 10px 5px;">
-			<%: Html.Image("Close.png", new { style = "width: 73px; height: 26px;cursor:pointer;", onclick = "javascript:parent.securityType.closeDialog(false);" })%>
+			<%: Html.Image("Close.png", new { @class="default-button", onclick = "javascript:parent.securityType.closeDialog(false);" })%>
 		</div>
 	</div>
 	<%: Html.HiddenFor(model => model.SecurityTypeId) %>

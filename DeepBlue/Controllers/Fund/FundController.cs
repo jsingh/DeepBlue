@@ -41,7 +41,7 @@ namespace DeepBlue.Controllers.Fund {
 		[HttpGet]
 		public ActionResult List(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			int totalRows = 0;
-			IList<FundListModel> fundLists = FundRepository.GetAllFunds(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			List<FundListModel> fundLists = FundRepository.GetAllFunds(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
 			ViewData["TotalRows"] = totalRows;
 			ViewData["PageNo"] = pageIndex;
 			return View(fundLists);
@@ -127,7 +127,7 @@ namespace DeepBlue.Controllers.Fund {
 			/* Load Custom Fields */
 			model.CustomField = new CustomFieldModel();
 			model.CustomField.DisplayTwoColumn = true;
-			IList<CustomFieldValue> customFieldValues = AdminRepository.GetAllCustomFieldValues(id);
+			List<CustomFieldValue> customFieldValues = AdminRepository.GetAllCustomFieldValues(id);
 			model.CustomField.Fields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Fund);
 			model.CustomField.Values = new List<CustomFieldValueDetail>();
 			foreach (var field in model.CustomField.Fields) {
@@ -395,7 +395,7 @@ namespace DeepBlue.Controllers.Fund {
 		private string SaveCustomValues(FormCollection collection, int key) {
 			System.Text.StringBuilder result = new StringBuilder();
 			IEnumerable<ErrorInfo> errorInfo;
-			IList<CustomField> customFields = AdminRepository.GetAllCustomFields((int)Models.Admin.Enums.Module.Fund);
+			List<CustomField> customFields = AdminRepository.GetAllCustomFields((int)Models.Admin.Enums.Module.Fund);
 			foreach (var field in customFields) {
 				var customFieldValue = collection["CustomField_" + field.CustomFieldID.ToString()];
 				if (customFieldValue != null) {

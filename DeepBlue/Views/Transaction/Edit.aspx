@@ -112,10 +112,10 @@
 				<%: Html.Span("",new { @id = "UpdateLoading" })%>
 			</div>
 			<div style="float: left; padding: 0 0 10px 5px;">
-				<%: Html.ImageButton("Save.png", new { @style = "width: 73px; height: 26px;", @onclick = "return editTransaction.onSubmit('EditTransaction');" })%>
+				<%: Html.ImageButton("Save.png", new { @class="default-button", @onclick = "return editTransaction.onSubmit('EditTransaction');" })%>
 			</div>
 			<div style="float: left; padding: 0 0 10px 5px;">
-				<%: Html.Image("Close.png", new { @style = "width: 73px; height: 26px;cursor:pointer;", @onclick = "editTransaction.closeDialog(false);" })%>
+				<%: Html.Image("Close.png", new { @class="default-button", @onclick = "editTransaction.closeDialog(false);" })%>
 			</div>
 		</div>
 		<% } %>

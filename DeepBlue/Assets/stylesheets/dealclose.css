@@ -1,0 +1,18 @@
+﻿.editor-label {
+	text-align: left;
+	width: 85px;
+}
+.closebox {
+	clear: both;
+	margin-left: 5px;
+}
+.grid {
+	width: 99%;
+}
+.grid tr th {
+	white-space: nowrap;
+}
+.auto-width {
+	width: auto;
+}
+.checkbox { padding-top:10px; }

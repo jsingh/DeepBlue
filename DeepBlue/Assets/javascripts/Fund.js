@@ -27,7 +27,7 @@
 			});
 		});
 		fund.rateDetailHTML=$(".rate-schedules .rate-detail:first").html();
-		this.resizeIframe();
+		jHelper.resizeIframe();
 		this.pageInit=true;
 	}
 	,resetValues: function (div) {
@@ -56,16 +56,7 @@
 		this.open(url);
 	}
 	,open: function (url) {
-		$("#addFundDialog").remove();
-		var iframe=document.createElement("div");
-		iframe.id="addFundDialog";
-		iframe.innerHTML+="<div id='loading'><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</div>";
-		iframe.innerHTML+='<iframe id="iframe_modal" allowtransparency="true" marginheight="0" marginwidth="0"  width="100%" frameborder="0" class="externalSite"  />';
-		var ifrm=$("#iframe_modal",iframe).get(0);
-		$(ifrm).css("height","100px").unbind('load');
-		$(ifrm).load(function () { $("#loading",iframe).remove(); });
-		ifrm.src=url;
-		$(iframe).dialog({
+		jHelper.createDialog(url,{
 			title: "Fund",
 			autoOpen: true,
 			width: 850,
@@ -74,42 +65,20 @@
 			autoResize: true
 		});
 	}
-	,resizeIframe: function () {
-		$("document").ready(function () {
-			var theFrame=$("#iframe_modal",parent.document.body);
-			if(theFrame) {
-				theFrame.height($("body").height()+10);
-			}
-		});
-	}
 	,onSubmit: function (formId) {
-		var frm=document.getElementById(formId);
-		var message='';
-		$(".field-validation-error",frm).each(function () {
-			if(this.innerHTML!='') {
-				message+=this.innerHTML+"\n";
+		if(jHelper.formSubmit(formId,false)) {
+			var message="";
+			var UnfundedAmount=parseFloat($("#UnfundedAmount",frm).val());
+			var CommitmentAmount=parseFloat($("#CommitmentAmount",frm).val());
+			if(isNaN(UnfundedAmount)) { UnfundedAmount=0; }
+			if(isNaN(CommitmentAmount)) { CommitmentAmount=0; }
+			if(CommitmentAmount>UnfundedAmount) { message+="Transaction Amount should be less than Unfunded Commitment Amount\n"; }
+			if(message!="") {
+				alert(message);
+				return false;
 			}
-		});
-		if(message!="") {
-			alert(message);
-			return false;
+			return fund.onFundRateValidation();
 		}
-		Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
-		$(".field-validation-error",frm).each(function () {
-			if(this.innerHTML!='') {
-				message+=this.innerHTML+"\n";
-			}
-		});
-		var UnfundedAmount=parseFloat($("#UnfundedAmount",frm).val());
-		var CommitmentAmount=parseFloat($("#CommitmentAmount",frm).val());
-		if(isNaN(UnfundedAmount)) { UnfundedAmount=0; }
-		if(isNaN(CommitmentAmount)) { CommitmentAmount=0; }
-		if(CommitmentAmount>UnfundedAmount) { message+="Transaction Amount should be less than Unfunded Commitment Amount\n"; }
-		if(message!="") {
-			alert(message);
-			return false;
-		}
-		return fund.onFundRateValidation();
 	}
 	,changeRS: function (ddl) {
 		this.checkChange(ddl);
@@ -177,7 +146,7 @@
 			alert(message);
 	}
 	,closeDialog: function (reload) {
-		$("#addFundDialog").dialog('close');
+		$("#addDialog").dialog('close');
 		if(reload==true) {
 			$("#FundList").flexReload();
 		}
@@ -223,7 +192,7 @@
 		$("tbody tr:first",tbl).each(function () {
 			fund.applyDatePicker(this);
 		});
-		this.resizeIframe();
+		jHelper.resizeIframe();
 	}
 	,addNewRow: function (addlink) {
 		var tbl=$(addlink).parents("table:first");
@@ -231,7 +200,7 @@
 		var tr=$("tr:first",tbl);
 		var txt=$(":input[inputname='StartDate']",tr).get(0);
 		this.dateChecking(txt);
-		this.resizeIframe();
+		jHelper.resizeIframe();
 	}
 	,changeInvestorType: function (invType) {
 		if(invType.value!="0") {
@@ -252,11 +221,11 @@
 			if(parseInt(FundRateScheduleId)>0) {
 				$.get("/Fund/DeleteFundRateSchedule/?id="+FundRateScheduleId,function (data) {
 					$(rateDetail).remove();
-					fund.resizeIframe();
+					jHelper.resizeIframe();
 				});
 			} else {
 				$(rateDetail).remove();
-				fund.resizeIframe();
+				jHelper.resizeIframe();
 			}
 		}
 	}
@@ -279,7 +248,7 @@
     				}
     				index++;
     			});
-    			this.resizeIframe();
+    			jHelper.resizeIframe();
     		}
     		return true;
     	} catch(e) {

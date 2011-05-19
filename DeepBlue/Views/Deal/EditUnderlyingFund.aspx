@@ -9,14 +9,6 @@
 	<%= Html.JavascriptInclueTag("UnderlyingFund.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
 	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
-	<style type="text/css">
-		.editor-label {
-			width: 97px;
-		}
-		.auto-width {
-			width: auto;
-		}
-	</style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<%Html.EnableClientValidation(); %>
@@ -27,58 +19,100 @@
 		OnSuccess = "underlyingFund.onCreateUnderlyingFundSuccess"
 	}, new { @id = "AddNewInvEnityType" })) {%>
 	<div class="editor-label">
+		<%: Html.LabelFor(model => model.IssuerId) %>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.DropDownListFor(model => model.IssuerId,Model.Issuers)%>
+	</div>
+	<div class="editor-label rightcol">
 		<%: Html.LabelFor(model => model.FundName) %>
 	</div>
 	<div class="editor-field auto-width">
 		<%: Html.TextBoxFor(model => model.FundName)%>
 	</div>
-	<div class="editor-label" style="clear: right">
+	<div class="editor-label">
 		<%: Html.LabelFor(model => model.LegalFundName) %>
 	</div>
 	<div class="editor-field auto-width">
 		<%: Html.TextBoxFor(model => model.LegalFundName)%>
 	</div>
-	<div class="editor-label">
+	<div class="editor-label rightcol">
 		<%: Html.LabelFor(model => model.Description) %>
 	</div>
 	<div class="editor-field auto-width">
 		<%: Html.TextBoxFor(model => model.Description)%>
 	</div>
-	<div class="editor-label" style="clear: right">
+	<div class="editor-label">
 		<%: Html.LabelFor(model => model.FundTypeId) %>
 	</div>
 	<div class="editor-field auto-width">
 		<%: Html.DropDownListFor(model => model.FundTypeId,Model.UnderlyingFundTypes)%>
 	</div>
-	<div class="editor-label">
+	<div class="editor-label rightcol">
 		<%: Html.LabelFor(model => model.VintageYear) %>
 	</div>
 	<div class="editor-field auto-width">
 		<%: Html.TextBoxFor(model => model.VintageYear, new { @onkeypress = "return jHelper.isNumeric(event);" })%>
 	</div>
-	<div class="editor-label" style="clear:right">
+	<div class="editor-label">
 		<%: Html.LabelFor(model => model.FiscalYearEnd) %>
 	</div>
 	<div class="editor-field auto-width">
-		<%: Html.TextBoxFor(model => model.FiscalYearEnd)%>
+		<%: Html.EditorFor(model => model.FiscalYearEnd)%>
 	</div>
-	<div class="editor-label" style="clear: right">
+	<div class="editor-label rightcol">
 		<%: Html.LabelFor(model => model.TotalSize) %>
 	</div>
 	<div class="editor-field auto-width">
 		<%: Html.TextBoxFor(model => model.TotalSize, new { @onkeypress = "return jHelper.isNumeric(event);" })%>
 	</div>
-	<div class="editor-label" style="clear: right">
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.FundStructureId) %>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.DropDownListFor(model => model.FundStructureId, Model.FundStructures)%>
+	</div>
+	<div class="editor-label rightcol">
+		<%: Html.LabelFor(model => model.ReportingFrequencyId) %>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.DropDownListFor(model => model.ReportingFrequencyId, Model.Reportings)%>
+	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.ReportingTypeId) %>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.DropDownListFor(model => model.ReportingTypeId, Model.ReportingTypes)%>
+	</div>
+	<div class="editor-label rightcol">
+		<%: Html.LabelFor(model => model.TaxRate) %>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.TextBoxFor(model => model.TaxRate, new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.ManagementFee) %>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.TextBoxFor(model => model.ManagementFee, new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+	</div>
+	<div class="editor-label rightcol">
+		<%: Html.LabelFor(model => model.IncentiveFee) %>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.TextBoxFor(model => model.IncentiveFee, new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+	</div>
+	<div class="editor-label">
 		<%: Html.LabelFor(model => model.TerminationYear) %>
 	</div>
 	<div class="editor-field auto-width">
 		<%: Html.TextBoxFor(model => model.TerminationYear, new { @onkeypress = "return jHelper.isNumeric(event);" })%>
 	</div>
-	<div class="editor-label" style="clear: right">
-		<%: Html.LabelFor(model => model.IssuerId) %>
+	<div class="editor-label rightcol">
+		<%: Html.LabelFor(model => model.GeographyId) %>
 	</div>
-	<div class="editor-field checkbox">
-		<%: Html.DropDownListFor(model => model.IssuerId,Model.Issuers)%>
+	<div class="editor-field auto-width">
+		<%: Html.DropDownListFor(model => model.GeographyId, Model.Geographyes)%>
 	</div>
 	<div class="editor-label">
 		<%: Html.LabelFor(model => model.IndustryId) %>
@@ -86,31 +120,55 @@
 	<div class="editor-field auto-width">
 		<%: Html.DropDownListFor(model => model.IndustryId, Model.Industries)%>
 	</div>
-	<div class="editor-label" style="clear: right">
-		<%: Html.LabelFor(model => model.GeographyId) %>
-	</div>
-	<div class="editor-field auto-width">
-		<%: Html.DropDownListFor(model => model.GeographyId, Model.Geographyes)%>
-	</div>
-	<div class="editor-label">
-		<%: Html.LabelFor(model => model.ReportingFrequencyId) %>
-	</div>
-	<div class="editor-field auto-width">
-		<%: Html.DropDownListFor(model => model.ReportingFrequencyId, Model.Reportings)%>
-	</div>
-	<div class="editor-label" style="clear: right">
-		<%: Html.LabelFor(model => model.ReportingTypeId) %>
-	</div>
-	<div class="editor-field auto-width">
-		<%: Html.DropDownListFor(model => model.ReportingTypeId, Model.ReportingTypes)%>
-	</div>
-	<div class="editor-label">
+	<div class="editor-label rightcol">
 		<%: Html.LabelFor(model => model.IsFeesIncluded) %>
 	</div>
-	<div class="editor-field checkbox">
+	<div class="editor-field auto-width checkbox">
 		<%: Html.CheckBoxFor(model => model.IsFeesIncluded)%>
 	</div>
-	<div class="editor-label auto-width">
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.AuditorName)%>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.TextBoxFor(model => model.AuditorName)%>
+	</div>
+	<div class="editor-label rightcol">
+		<%: Html.LabelFor(model => model.FundRegisteredOfficeId)%>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.DropDownListFor(model => model.FundRegisteredOfficeId, Model.FundRegisteredOffices)%>
+	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.InvestmentTypeId)%>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.DropDownListFor(model => model.InvestmentTypeId,Model.InvestmentTypes)%>
+	</div>
+	<div class="editor-label  rightcol">
+		<%: Html.LabelFor(model => model.ManagerContactId)%>
+	</div>
+	<div class="editor-field auto-width">
+		<%: Html.DropDownListFor(model => model.ManagerContactId,Model.ManagerContacts)%>
+	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.Taxable)%>
+	</div>
+	<div class="editor-field auto-width checkbox">
+		<%: Html.CheckBoxFor(model => model.Taxable)%>
+	</div>
+	<div class="editor-label auto-width rightcol">
+		<%: Html.LabelFor(model => model.Exempt)%>
+	</div>
+	<div class="editor-field auto-width checkbox">
+		<%: Html.CheckBoxFor(model => model.Exempt)%>
+	</div>
+	<div class="editor-label auto-width rightcol">
+		<%: Html.LabelFor(model => model.IsDomestic)%>
+	</div>
+	<div class="editor-field auto-width checkbox">
+		<%: Html.CheckBoxFor(model => model.IsDomestic)%>
+	</div>
+	<div class="editor-label">
 		<b>Contact Information</b>
 	</div>
 	<div class="editor-label">
@@ -119,7 +177,7 @@
 	<div class="editor-field auto-width">
 		<%: Html.TextBoxFor(model => model.ContactName)%>
 	</div>
-	<div class="editor-label" style="clear: right">
+	<div class="editor-label rightcol">
 		<%: Html.LabelFor(model => model.WebAddress) %>
 	</div>
 	<div class="editor-field auto-width">
@@ -131,7 +189,7 @@
 	<div class="editor-field auto-width">
 		<%: Html.TextBoxFor(model => model.Address)%>
 	</div>
-	<div class="editor-label" style="clear: right">
+	<div class="editor-label  rightcol">
 		<%: Html.LabelFor(model => model.Phone) %>
 	</div>
 	<div class="editor-field auto-width">
@@ -143,7 +201,7 @@
 	<div class="editor-field auto-width">
 		<%: Html.TextBoxFor(model => model.Email)%>
 	</div>
-	<div class="editor-label auto-width">
+	<div class="editor-label">
 		<b>Bank Information</b>
 	</div>
 	<div class="editor-label">
@@ -152,7 +210,7 @@
 	<div class="editor-field auto-width">
 		<%: Html.TextBoxFor(model => model.BankName)%>
 	</div>
-	<div class="editor-label" style="clear: right">
+	<div class="editor-label rightcol">
 		<%: Html.LabelFor(model => model.Routing)%>
 	</div>
 	<div class="editor-field auto-width">
@@ -164,7 +222,7 @@
 	<div class="editor-field auto-width">
 		<%: Html.TextBoxFor(model => model.AccountOf)%>
 	</div>
-	<div class="editor-label" style="clear: right">
+	<div class="editor-label  rightcol">
 		<%: Html.LabelFor(model => model.Account)%>
 	</div>
 	<div class="editor-field auto-width">
@@ -176,7 +234,7 @@
 	<div class="editor-field auto-width">
 		<%: Html.TextBoxFor(model => model.Attention)%>
 	</div>
-	<div class="editor-label" style="clear: right">
+	<div class="editor-label  rightcol">
 		<%: Html.LabelFor(model => model.Reference)%>
 	</div>
 	<div class="editor-field auto-width">
@@ -186,10 +244,10 @@
 		<%: Html.Span("", new { id = "UpdateLoading" })%></div>
 	<div class="editor-button" style="width: 200px">
 		<div style="float: left; padding: 0 0 10px 5px;">
-			<%: Html.ImageButton("Save.png", new { style = "width: 73px; height: 26px;", onclick = "return underlyingFund.onSubmit('AddNewInvEnityType');" })%>
+			<%: Html.ImageButton("Save.png", new { @class="default-button", onclick = "return underlyingFund.onSubmit('AddNewInvEnityType');" })%>
 		</div>
 		<div style="float: left; padding: 0 0 10px 5px;">
-			<%: Html.Image("Close.png", new { style = "width: 73px; height: 26px;cursor:pointer;", onclick = "javascript:parent.underlyingFund.closeDialog(false);" })%>
+			<%: Html.Image("Close.png", new { @class="default-button", onclick = "javascript:parent.underlyingFund.closeDialog(false);" })%>
 		</div>
 	</div>
 	<%: Html.HiddenFor(model => model.UnderlyingFundId)%>

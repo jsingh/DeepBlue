@@ -33,6 +33,16 @@ namespace DeepBlue.Helpers {
 			errors.AddRange(classErrors);
 			return errors.AsEnumerable();
 		}
+
+		public static string GetErrorInfo(IEnumerable<ErrorInfo> errorInfo) {
+			StringBuilder errors = new StringBuilder();
+			if (errorInfo != null) {
+				foreach (var err in errorInfo.ToList()) {
+					errors.Append(err.PropertyName + " : " + err.ErrorMessage + "\n");
+				}
+			}
+			return errors.ToString();
+		}
 	}
 
 	public class ErrorInfo {

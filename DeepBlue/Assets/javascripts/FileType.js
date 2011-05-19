@@ -1,20 +1,11 @@
 ﻿var fileType={
 	init: function () {
-		this.resizeIframe();
+		jHelper.resizeIframe();
 	}
 	,add: function (id) {
 		var dt=new Date();
 		var url="/Admin/EditFileType/"+id+"?t="+dt.getTime();
-		$("#addInvTypeDialog").remove();
-		var iframe=document.createElement("div");
-		iframe.id="addInvTypeDialog";
-		iframe.innerHTML+="<div id='loading'><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</div>";
-		iframe.innerHTML+='<iframe id="iframe_modal" allowtransparency="true" marginheight="0" marginwidth="0"  width="100%" frameborder="0" class="externalSite"  />';
-		var ifrm=$("#iframe_modal",iframe).get(0);
-		$(ifrm).css("height","100px").unbind('load');
-		$(ifrm).load(function () { $("#loading",iframe).remove(); });
-		ifrm.src=url;
-		$(iframe).dialog({
+		jHelper.createDialog(url,{
 			title: "File Type",
 			autoOpen: true,
 			width: 400,
@@ -36,14 +27,6 @@
 			});
 		}
 	}
-	,resizeIframe: function () {
-		$("document").ready(function () {
-			var theFrame=$("#iframe_modal",parent.document.body);
-			if(theFrame) {
-				theFrame.height($("body").height());
-			}
-		});
-	}
 	,onSubmit: function (formId) {
 		return jHelper.formSubmit(formId);
 	}
@@ -54,7 +37,7 @@
 		$("#Delete",tr).click(function () { fileType.deleteType(row.cell[0]); });
 	}
 	,closeDialog: function (reload) {
-		$("#addInvTypeDialog").dialog('close');
+		$("#addDialog").dialog('close');
 		if(reload==true) {
 			$("#FileTypeList").flexReload();
 		}

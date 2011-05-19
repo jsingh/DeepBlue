@@ -22,7 +22,7 @@
 	$("#SpnRecordDate",tr).html(date);
 	$(":input[name='RecordDate']",tr).val(date);
 	deal.selectValue(tr);
-	deal.applyDatePicker(tr);
+	jHelper.applyDatePicker(tr);
 	deal.setIndex($("#tblUnderlyingFund"));
 };
 deal.deleteUnderlyingFund=function (id,img) {

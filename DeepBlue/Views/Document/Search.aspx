@@ -50,7 +50,7 @@
 			</div>
 			<div class="editor-button">
 				<div style="float: left; padding: 0 0 10px 5px;">
-					<%: Html.ImageButton("Search.png", new { @style = "width: 73px; height: 26px;",@onclick="return documentSearch.onSubmit('SearchDocument');" })%>
+					<%: Html.ImageButton("Search.png", new { @class="default-button",@onclick="return documentSearch.onSubmit('SearchDocument');" })%>
 				</div>
 			</div>
 		</div>

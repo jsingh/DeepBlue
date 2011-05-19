@@ -15,7 +15,7 @@
 		<div class="admin-header">
 			<a href="javascript:investorType.add(0);">
 				<%: Html.Image("add_icon.png") %>
-				&nbsp;Add InvestorType</a>
+				&nbsp;Add Investor Type</a>
 		</div>
 		<div class="admin-content">
 			<table cellpadding="0" cellspacing="0" border="0" id="InvestorTypeList">

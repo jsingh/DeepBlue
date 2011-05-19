@@ -24,19 +24,19 @@
 		 OnBegin = "issuer.onCreateIssuerBegin",
 		 OnSuccess = "issuer.onCreateIssuerSuccess"
 	 }, new { @id = "AddNewIssuer" })) {%>
-	<div class="editor-label" style="width: 130px">
+	<div class="editor-label" style="width: 145px">
 		<%: Html.LabelFor(model => model.Name) %>
 	</div>
 	<div class="editor-field">
 		<%: Html.TextBoxFor(model => model.Name)%>
 	</div>
-	<div class="editor-label" style="width: 130px">
+	<div class="editor-label" style="width: 145px">
 		<%: Html.LabelFor(model => model.ParentName)%>
 	</div>
 	<div class="editor-field">
 		<%: Html.TextBoxFor(model => model.ParentName)%>
 	</div>
-	<div class="editor-label" style="width: 130px">
+	<div class="editor-label" style="width: 145px">
 		<%: Html.LabelFor(model => model.CountryId)%>
 	</div>
 	<div class="editor-field">
@@ -49,10 +49,10 @@
 			<%: Html.ImageButton("SaveExit.png", new { @id="SaveExit", style = "width: 78px; height: 26px;", onclick = "return issuer.onSubmit('AddNewIssuer',true);" })%>
 		</div>
 		<div style="float: left; padding: 0 0 10px 5px;">
-			<%: Html.ImageButton("Save.png", new { @id="Save", style = "width: 73px; height: 26px;", onclick = "return issuer.onSubmit('AddNewIssuer',false);" })%>
+			<%: Html.ImageButton("Save.png", new { @id="Save", @class="default-button", onclick = "return issuer.onSubmit('AddNewIssuer',false);" })%>
 		</div>
 		<div style="float: left; padding: 0 0 10px 5px;">
-			<%: Html.Image("Close.png", new { style = "width: 73px; height: 26px;cursor:pointer;", onclick = "javascript:parent.issuer.closeDialog(false,0,'');" })%>
+			<%: Html.Image("Close.png", new { @class="default-button", onclick = "javascript:parent.issuer.closeDialog(false,0,'',true);" })%>
 		</div>
 	</div>
 	<div id="EquityDetail" style="clear: both">
@@ -144,21 +144,21 @@
 					<div class="cell" style="width: 126px">
 						Symbol
 					</div>
-					<div class="cell" style="width: 115px">
+					<div class="cell" style="width: 118px">
 						FaceValue
 					</div>
-					<div class="cell" style="width: 115px">
+					<div class="cell" style="width: 118px">
 						Maturity
 					</div>
-					<div class="cell" style="width: 115px">
+					<div class="cell" style="width: 118px">
 						IssuedDate
 					</div>
-					<div class="cell" style="width: 115px">
+					<div class="cell" style="width: 118px">
 						Coupon
 					</div>
-					<div class="cell" style="width: 130px">
+					<div class="cell" style="width: 145px">
 					</div>
-					<div class="cell" style="width: 60px">
+					<div class="cell" style="width: 40px">
 					</div>
 				</div>
 				<div class="body" id="tbodyFixedIncome">
@@ -174,23 +174,23 @@
 						<div class="cell" style="width: 126px">
 							<%: Html.TextBox("Symbol")%>
 						</div>
-						<div class="cell" style="width: 115px">
+						<div class="cell" style="width: 118px">
 							<%: Html.TextBox("FaceValue", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 						</div>
-						<div class="cell" style="width: 115px">
+						<div class="cell" style="width: 118px">
 							<%: Html.TextBox("Maturity", "", new { @class = "datefield", @id = "0_Maturity" })%>
 						</div>
-						<div class="cell" style="width: 115px">
+						<div class="cell" style="width: 118px">
 							<%: Html.TextBox("IssuedDate", "", new { @class = "datefield", @id = "0_IssuedDate" })%>
 						</div>
-						<div class="cell" style="width: 115px">
+						<div class="cell" style="width: 118px">
 							<%: Html.TextBox("CouponInformation")%>
 						</div>
-						<div class="cell" style="width: 130px">
+						<div class="cell" style="width: 145px">
 							<%: Html.Image("add_btn.png", new { @onclick = "javascript:issuer.addFixedIncome(this);" })%>
 							<%: Html.Hidden("FixedIncomeId", "0")%>
 						</div>
-						<div class="cell" style="width: 60px">
+						<div class="cell" style="width: 40px">
 							<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 						</div>
 						<div style="clear: both; float: left; height: 60px;">
@@ -206,12 +206,12 @@
 									<%: Html.Span("First Coupon Date")%></div>
 								<%: Html.TextBox("FirstCouponDate", "", new { @class = "datefield", @id = "0_FirstCouponDate" })%>
 							</div>
-							<div class="cell" style="width: 115px">
+							<div class="cell" style="width: 118px">
 								<div class="celltitle">
 									<%: Html.Span("First Accrual Date")%></div>
 								<%: Html.TextBox("FirstAccrualDate", "", new { @class = "datefield", @id = "0_FirstAccrualDate" })%>
 							</div>
-							<div class="cell" style="width: 115px">
+							<div class="cell" style="width: 118px">
 								<div class="celltitle">
 									<%: Html.Span("Industry")%></div>
 								<%: Html.DropDownList("IndustryId", Model.Industries)%>
@@ -221,9 +221,9 @@
 									<%: Html.Span("Currency")%></div>
 								<%: Html.DropDownList("CurrencyId", Model.Currencies)%>
 							</div>
-							<div class="cell" style="width: 130px">
+							<div class="cell" style="width: 145px">
 								&nbsp;</div>
-							<div class="cell" style="width: 60px">
+							<div class="cell" style="width: 40px">
 								&nbsp;</div>
 						</div>
 					</div>
@@ -296,27 +296,27 @@
 			<%: Html.TextBox("Symbol","${Symbol}", new { @class = "hide" })%>
 			<%: Html.Span("${Symbol}", new { @class = "show" })%>
 		</div>
-		<div class="cell" style="width: 115px">
+		<div class="cell" style="width: 118px">
 			<%: Html.TextBox("FaceValue", "${FaceValue}", new { @class = "hide", @onkeypress = "return jHelper.isCurrency(event);" })%>
 			<%: Html.Span("${FaceValue}", new { @class = "show" })%>
 		</div>
-		<div class="cell" style="width: 115px">
+		<div class="cell" style="width: 118px">
 			<%: Html.TextBox("Maturity", "${Maturity}", new { @class = "datefield hide",  @id = "${FixedIncomeId}_Maturity"})%>
 			<%: Html.Span("${Maturity}", new { @id="SpnMaturity", @class = "show" })%>
 		</div>
-		<div class="cell" style="width: 115px">
+		<div class="cell" style="width: 118px">
 			<%: Html.TextBox("IssuedDate", "${IssuedDate}", new { @class = "datefield hide", @id = "${FixedIncomeId}_IssuedDate" })%>
 			<%: Html.Span("${IssuedDate}", new { @id="SpnIssuedDate", @class = "show" })%>
 		</div>
-		<div class="cell" style="width: 115px">
+		<div class="cell" style="width: 118px">
 			<%: Html.TextBox("CouponInformation", "${CouponInformation}", new { @class = "hide" })%>
 			<%: Html.Span("${CouponInformation}", new { @class = "show" })%>
 		</div>
-		<div class="cell" style="width: 130px">
+		<div class="cell" style="width: 145px">
 			<%: Html.Image("Editbtn.png", new { @onclick = "javascript:issuer.editFixedIncome(this);" })%>&nbsp;&nbsp;<%: Html.Image("Delete_Btn.png", new { @onclick = "javascript:issuer.deleteFixedIncome(${FixedIncomeId},this);" })%>
 			<%: Html.Hidden("FixedIncomeId", "${FixedIncomeId}")%>
 		</div>
-		<div class="cell" style="width: 60px">
+		<div class="cell" style="width: 40px">
 			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 		</div>
 		<div style="clear: both; float: left; height: 60px;" class="hide">
@@ -332,24 +332,24 @@
 					<%: Html.Span("First Coupon Date")%></div>
 				<%: Html.TextBox("FirstCouponDate", "${FirstCouponDate}", new { @class = "datefield hide", @id = "${FixedIncomeId}_FirstCouponDate" })%>
 			</div>
-			<div class="cell" style="width: 115px">
+			<div class="cell" style="width: 118px">
 				<div class="celltitle">
 					<%: Html.Span("First Accrual Date")%></div>
 				<%: Html.TextBox("FirstAccrualDate", "${FirstAccrualDate}", new { @class = "datefield hide", @id = "${FixedIncomeId}_FirstAccrualDate" })%>
 			</div>
-			<div class="cell" style="width: 115px">
+			<div class="cell" style="width: 118px">
 				<div class="celltitle">
 					<%: Html.Span("Industry")%></div>
 				<%: Html.DropDownList("IndustryId", Model.Industries, new { @class = "hide", @val = "${IndustryId}" })%>
 			</div>
-			<div class="cell" style="width: 115px">
+			<div class="cell" style="width: 118px">
 				<div class="celltitle">
 					<%: Html.Span("Currency")%></div>
 				<%: Html.DropDownList("CurrencyId", Model.Currencies, new { @class = "hide", @val = "${CurrencyId}" })%>
 			</div>
-			<div class="cell" style="width: 130px">
+			<div class="cell" style="width: 145px">
 				&nbsp;</div>
-			<div class="cell" style="width: 60px">
+			<div class="cell" style="width: 40px">
 				&nbsp;</div>
 		</div>
 	</div>

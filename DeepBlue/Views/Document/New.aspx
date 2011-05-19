@@ -61,10 +61,10 @@
 		</div>
 		<div class="editor-button" style="width: 165px">
 			<div style="float: left; padding: 0 0 10px 5px;">
-				<%: Html.ImageButton("Save.png", new { style = "width: 73px; height: 26px;", onclick = "return documentUpload.onSubmit('AddNewDocument');" })%>
+				<%: Html.ImageButton("Save.png", new { @class="default-button", onclick = "return documentUpload.onSubmit('AddNewDocument');" })%>
 			</div>
 			<div style="float: left; padding: 0 0 10px 5px;">
-				<%: Html.Image("Close.png", new { style = "width: 73px; height: 26px;cursor:pointer;", onclick = "javascript:parent.documentUpload.closeDialog(false);" })%>
+				<%: Html.Image("Close.png", new { @class="default-button", onclick = "javascript:parent.documentUpload.closeDialog(false);" })%>
 			</div>
 		</div>
 	</div>

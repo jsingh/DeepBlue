@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IList<DeepBlue.Models.Document.DocumentDetail>>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<List<DeepBlue.Models.Document.DocumentDetail>>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <% FlexigridData flexData = new FlexigridData();%>
 <% flexData.total = Convert.ToInt32(ViewData["TotalRows"]);
