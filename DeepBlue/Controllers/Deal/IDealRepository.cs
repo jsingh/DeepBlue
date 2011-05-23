@@ -93,7 +93,7 @@ namespace DeepBlue.Controllers.Deal {
 		UnderlyingFundCapitalCallModel FindUnderlyingFundCapitalCallModel(int underlyingFundCapitalCallId);
 		UnderlyingFundCapitalCall FindUnderlyingFundCapitalCall(int underlyingFundCapitalCallId);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundCapitalCall(UnderlyingFundCapitalCall underlyingFundCapitalCall);
-		List<UnderlyingFundCapitalCallList> GetAllUnderlyingFundCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<UnderlyingFundCapitalCallList> GetAllUnderlyingFundCapitalCalls(int underlyingFundId);
 		UnderlyingFundCapitalCallList GetUnderlyingFundCapitalCall(int underlyingFundCapitalCallId);
 		bool DeleteUnderlyingFundCapitalCall(int id);
 		#endregion

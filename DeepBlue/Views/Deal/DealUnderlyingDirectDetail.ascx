@@ -65,13 +65,13 @@
 					<%: Html.DropDownList("SecurityId", Model.Securities, new { @id = "SecurityId" })%>
 				</td>
 				<td>
-					<%: Html.TextBox("NumberOfShares", "", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
+					<%: Html.TextBox("NumberOfShares", "", new { @id = "NumberOfShares", @onkeyup = "javascript:deal.calcFMV(this);", @onkeypress = "return jHelper.isNumeric(event);" })%>
 				</td>
 				<td>
-					<%: Html.TextBox("PurchasePrice", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+					<%: Html.TextBox("PurchasePrice", "", new { @id = "PurchasePrice", @onkeyup = "javascript:deal.calcFMV(this);", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td>
-					<%: Html.TextBox("FMV", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+					<%: Html.TextBox("FMV", "", new { @readonly="readonly", @id="FMV", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td>
 					<%: Html.TextBox("Percent", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>

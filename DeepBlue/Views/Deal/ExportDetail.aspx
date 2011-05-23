@@ -34,15 +34,15 @@
 		}
 		#tblUnderlyingFund, #tblUnderlyingDirect {
 			width: 95%;
+			background-color: #000;
 		}
 		#tblUnderlyingFund tr th, #ReportList #tblUnderlyingFund tr td, #tblUnderlyingDirect tr th, #ReportList #tblUnderlyingDirect tr td {
 			text-align: center;
-			border: solid 1px #000;
 		}
 	</style>
 </head>
 <body>
-	<table cellpadding="0" cellspacing="0" border="0" id="ReportList">
+	<table cellpadding="0" cellspacing="1" border="0" id="ReportList">
 		<thead>
 			<tr>
 				<th style="width: 10%">
@@ -62,8 +62,8 @@
 		<tbody>
 			<% int index = 0;
 	  foreach (var item in Model.Deals) { %>
-			<tr class="erow" colspan="4">
-				<td>
+			<tr class="erow">
+				<td colspan="4">
 					&nbsp;
 				</td>
 			</tr>
@@ -87,21 +87,20 @@
 		  </td>
 	  </tr>
 				<tr>
-					<td colspan="2" style="padding-left: 20px; text-align: center; vertical-align: top;
-						border-bottom: solid 1px #000;">
-						<table cellspacing="0" cellpadding="0" border="0" id="tblUnderlyingFund">
+					<td colspan="2" style="padding-left: 20px; text-align: center; vertical-align: top;">
+						<table cellspacing="1" cellpadding="0" border="0" id="tblUnderlyingFund">
 							<thead>
 								<tr>
-									<th style="border-right: 0px">
+									<th>
 										No.
 									</th>
-									<th style="border-right: 0px">
+									<th>
 										Fund Name
 									</th>
-									<th style="border-right: 0px">
+									<th>
 										Fund NAV
 									</th>
-									<th style="border-right: 0px">
+									<th>
 										Commitment
 									</th>
 									<th>
@@ -115,16 +114,16 @@
 		  foreach (var fund in item.DealUnderlyingFunds) {
 			  fundIndex++; %>
 								<tr>
-									<td style="border-right: 0px">
+									<td>
 										<%: fundIndex%>&nbsp;.
 									</td>
-									<td style="border-right: 0px">
+									<td>
 										<%: fund.FundName%>
 									</td>
-									<td style="border-right: 0px">
+									<td>
 										<%: fund.NAV%>
 									</td>
-									<td class="dollarcell" style="border-right: 0px">
+									<td class="dollarcell">
 										<%: string.Format("{0:C}",fund.Commitment)%>
 									</td>
 									<td class="datecell">
@@ -138,27 +137,26 @@
 						<br />
 						Underlying Funds
 					</td>
-					<td colspan="2" style="paddin-left: 20px; text-align: center; vertical-align: top;
-						border-bottom: solid 1px #000;">
-						<table cellspacing="0" cellpadding="0" border="0" id="tblUnderlyingDirect">
+					<td colspan="2" style="paddin-left: 20px; text-align: center; vertical-align: top;">
+						<table cellspacing="1" cellpadding="0" border="0" id="tblUnderlyingDirect">
 							<thead>
 								<tr>
-									<th style="border-right: 0px">
+									<th>
 										No.
 									</th>
-									<th style="border-right: 0px">
+									<th>
 										Company
 									</th>
-									<th style="border-right: 0px">
+									<th>
 										Security
 									</th>
-									<th style="border-right: 0px">
+									<th>
 										No.of Shares
 									</th>
-									<th style="border-right: 0px">
+									<th>
 										Percentage
 									</th>
-									<th style="border-right: 0px">
+									<th>
 										FMV
 									</th>
 									<th>
@@ -172,22 +170,22 @@
 		  foreach (var direct in item.DealUnderlyingDirects) {
 			  directIndex++; %>
 								<tr>
-									<td style="border-right: 0px">
+									<td>
 										<%: directIndex%>&nbsp;.
 									</td>
-									<td style="border-right: 0px">
+									<td>
 										<%: direct.Company%>
 									</td>
-									<td style="border-right: 0px">
+									<td>
 										<%: direct.Security%>
 									</td>
-									<td style="border-right: 0px">
+									<td>
 										<%: direct.NoOfShares%>
 									</td>
-									<td style="border-right: 0px">
+									<td>
 										<%: direct.Percentage%>
 									</td>
-									<td style="border-right: 0px">
+									<td>
 										<%: direct.FMV%>
 									</td>
 									<td class="datecell">

@@ -18,11 +18,7 @@
 		}
 	}
 	var date;
-	var amount;
-	amount=parseFloat(data.PurchasePrice);if(isNaN(amount)) { data.PurchasePrice=0; }
-	amount=parseFloat(data.TaxCostBase);if(isNaN(amount)) { data.TaxCostBase=0; }
-	$("#SpnPurchasePrice",tr).html(jHelper.dollarAmount(data.PurchasePrice.toString()));
-	$("#SpnTaxCostBase",tr).html(jHelper.dollarAmount(data.TaxCostBase.toString()));
+	jHelper.formatDollar(tr);
 	date=jHelper.formatDate(jHelper.parseJSONDate(data.RecordDate));
 	$("#SpnRecordDate",tr).html(date);
 	$(":input[name='RecordDate']",tr).val(date);
@@ -142,4 +138,13 @@ deal.loadIssuers=function (issuerName,issuerId) {
 	if(deal.currentIssuerDDL) {
 		deal.currentIssuerDDL.value=issuerId;
 	}
+};
+deal.calcFMV=function (txt) {
+	var tr=$(txt).parents("tr:first");
+	var noofsha=parseFloat($("#NumberOfShares",tr).val());
+	var price=parseFloat($("#PurchasePrice",tr).val());
+	var FMV=$("#FMV",tr);
+	if(isNaN(noofsha)) { noofsha=0; }
+	if(isNaN(price)) { price=0; }
+	FMV.val(noofsha*price);
 };

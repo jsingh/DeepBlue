@@ -12,8 +12,9 @@
 			}
 		});
 		$(document).ready(function () {
-			dealActivity.loadTemplate("CashDistributionAddTemplate",$("#AddNewCD"),newCDData);
-			dealActivity.loadTemplate("CapitalCallAddTemplate",$("#AddNewCC"),newCCData);
+			//dealActivity.loadTemplate("CashDistributionAddTemplate",$("#AddNewCD"),newCDData);
+			//dealActivity.loadTemplate("CapitalCallAddTemplate",$("#AddNewCC"),newCCData);
+			dealActivity.expand();
 		});
 	}
 	,isCapitalCallDialog: false
@@ -27,7 +28,6 @@
 		$("#FundName",target)
 		.blur(function () { if($.trim(this.value)=="") { FundId.val(0); } })
 		.autocomplete({ source: "/Fund/FindFunds",minLength: 1,select: function (event,ui) { FundId.val(ui.item.id); },appendTo: "body",delay: 300 });
-
 	}
 	,onListSuccess: function (t,p) {
 		var tfoot=$("tfoot",t).get(0);
@@ -130,84 +130,12 @@
 		jHelper.applyDatePicker(target);
 		jHelper.formatDateTxt(target);
 		jHelper.checkValAttr(target);
+		jHelper.formatDollar(target);
+		jHelper.formatDateHtml(target);
 		dealActivity.applyAutoComplete(target);
 	}
 	/* End Template */
-	/* Capital Call */
-	,findCC: function (id,isEdit) {
-		var dt=new Date();
-		var url="/Deal/FindUnderlyingFundCapitalCall/"+id+"?t="+dt.getTime();
-		var target;
-		if(isEdit) { target=$("#EditCC"); } else { target=$("#AddNewCC"); }
-		target.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
-		$.getJSON(url,function (data) {
-			dealActivity.loadTemplate("CapitalCallAddTemplate",target,data);
-		});
-	}
-	,addCC: function (id) {
-		var dt=new Date();
-		var url="/Deal/EditUnderlyingFundCapitalCall/"+id+"?t="+dt.getTime();
-		this.isCapitalCallDialog=true;
-		//this.openDialog(url,"Underlying Fund Capital Call");
-		var editCC=$("#EditCC");
-		editCC.dialog("destroy");
-		editCC.dialog({
-			title: "Underlying Fund Capital Call",
-			autoOpen: true,
-			width: 600,
-			modal: true,
-			position: 'top',
-			autoResize: true,
-			open: function () {
-				dealActivity.findCC(id,true);
-				dealActivity.onSuccessSave=function () { editCC.dialog('close'); }
-			}
-		});
-	}
-	,deleteCC: function (id,img) {
-		if(confirm("Are you sure you want to delete this underlying fund capital call?")) {
-			var dt=new Date();
-			var url="/Deal/DeleteUnderlyingFundCapitalCall/"+id+"?t="+dt.getTime();
-			var tr=$(img).parents("tr:first");
-			var spnloading=$("#spnloading",tr);
-			spnloading.html("<img src='/Assets/images/ajax.jpg'/>");
-			$.get(url,function (data) {
-				if(data!="") {
-					alert(data);
-				} else {
-					spnloading.empty();
-					var t=$(img).parents("table:first");
-					var trid="tr"+id;
-					$("#"+trid,t).remove();
-					$("#em"+trid,t).remove();
-				}
-			});
-		}
-	}
-	,onCCSubmit: function (frm) {
-		var param=$(frm).serialize();
-		var url="/Deal/CreateUnderlyingFundCapitalCall";
-		var ULoading=$("#UpdateLoading",frm);
-		ULoading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-		$.ajax({
-			type: "POST",
-			url: url,
-			data: param,
-			success: function (data) {
-				ULoading.html("");var arr=data.split("||");
-				if(arr[0]!="True") { alert(arr[0]); }
-				else {
-					jHelper.resetFields(frm);var dt=new Date();
-					$.getJSON("/Deal/GetUnderlyingFundCapitalCallList/"+arr[1]+"?t="+dt.getTime(),function (addData) {
-						$("#CapitalCallList").ajaxTableAddData(addData);
-					});
-				} if(dealActivity.onSuccessSave) { dealActivity.onSuccessSave(); }
-			},
-			error: function (data) { alert(data); }
-		});
-		return false;
-	}
-	/* End Capital Call */
+
 	/* Common Functions */
 	,onRowBound: function (tr,data,t) {
 		var trid="tr"+data.cell[0];
@@ -217,8 +145,8 @@
 		$("#em"+trid,t).remove();
 		tr.id=trid;
 		var lastcell=$("td:last",tr);
-		lastcell.html("<span><img id='Edit' src='/Assets/images/Editbtn.png'/>&nbsp;&nbsp;&nbsp;<img id='Delete' src='/Assets/images/DeleteBtn.png'/></span><span id='spnloading'></span>");
-		//lastcell.html("<img id='Edit' src='/Assets/images/Editbtn.png'/>");
+		lastcell.html("<span><img id='Edit' src='/Assets/images/Edit.png'/>&nbsp;&nbsp;&nbsp;<img id='Delete' src='/Assets/images/Delete.png'/></span><span id='spnloading'></span>");
+		//lastcell.html("<img id='Edit' src='/Assets/images/Edit.png'/>");
 		var addFunction=function (t) {
 			if(t.id=="CashDistributionList") {
 				dealActivity.addCD(data.cell[0]);
@@ -270,9 +198,7 @@
 	,selectFund: function (id) {
 		$("#FundId").val(id);
 	}
-	,selectUnderlyingFund: function (id) {
-		$("#UnderlyingFundId").val(id);
-	}
+
 	,openDialog: function (url,title) {
 		jHelper.createDialog(url,{
 			title: title,
@@ -281,6 +207,17 @@
 			modal: true,
 			position: 'top',
 			autoResize: true
+		});
+	}
+	,expand: function () {
+		$(".title","#ActivityMain").toggle(function () {
+			var parent=$(this).parent();
+			$(".detail",parent).show();
+			$(this).addClass("expand");
+		},function () {
+			var parent=$(this).parent();
+			$(".detail",parent).hide();
+			$(this).removeClass("expand");
 		});
 	}
 	/* End Common Functions */

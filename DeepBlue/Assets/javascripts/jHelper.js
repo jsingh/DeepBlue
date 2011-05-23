@@ -153,4 +153,18 @@
 		$(":input:checkbox",target).each(function () { this.checked==false; });
 		$("select",target).val(0);
 	}
+	,formatDollar: function (target) {
+		$(".money",target).each(function () {
+			var amt=parseFloat($(this).attr("val"));
+			if(isNaN(amt)) { amt=0; }
+			this.innerHTML=jHelper.dollarAmount(amt.toString());
+		});
+	}
+	,formatDateHtml: function (target) {
+		$(".dispdate",target).each(function () {
+			if($.trim(this.innerHTML)) {
+				this.innerHTML=jHelper.formatDate(jHelper.parseJSONDate(this.innerHTML));
+			}
+		});
+	}
 }

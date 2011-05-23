@@ -86,7 +86,6 @@
 		var tbl=$("#tblDealUnderlyingFund");
 		var thCommitmentAmount=$("#thCommitmentAmount",tbl);
 		var thGPP=$("#thGPP",tbl);
-		var thCHK=$("#thCHK",tbl);
 		var thReassignedGPP=$("#thReassignedGPP",tbl);
 		var display="";var disabled=!chk.checked;
 		if(chk.checked) { display="none"; } else { display=""; }
@@ -94,12 +93,6 @@
 		this.hideColumn(thGPP,tbl,display);
 		if(display=="none") { display=""; } else { display="none"; }
 		this.hideColumn(thReassignedGPP,tbl,display);
-		this.hideColumn(thCHK,tbl,display);
-
-		/* Deal Underlying Direct */
-		tbl=$("#tblDealUnderlyingDirect");
-		thCHK=$("#thCHK",tbl);
-		this.hideColumn(thCHK,tbl,display);
 	}
 	,hideColumn: function (th,tbl,display) {
 		th.css("display",display);

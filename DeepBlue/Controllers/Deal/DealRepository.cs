@@ -82,9 +82,9 @@ namespace DeepBlue.Controllers.Deal {
 
 				dealDetail.DealExpenses = GetDealClosingCostModel(context, 0, dealDetail.DealId).ToList();
 
-				dealDetail.DealUnderlyingFunds = GetDealUnderlyingFundModel(context, 0, dealDetail.DealId).ToList();
+				dealDetail.DealUnderlyingFunds = GetDealUnderlyingFundModel(context, context.DealUnderlyingFunds.Where(fund => fund.DealID == dealId)).ToList();
 
-				dealDetail.DealUnderlyingDirects = GetDealUnderlyingDirectModel(context, 0, dealDetail.DealId).ToList();
+				dealDetail.DealUnderlyingDirects = GetDealUnderlyingDirectModel(context, context.DealUnderlyingDirects.Where(direct => direct.DealID == dealId)).ToList();
 
 				return dealDetail;
 			}
@@ -184,36 +184,24 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region DealUnderlyingFund
 
-		private IQueryable<DealUnderlyingFundModel> GetDealUnderlyingFundModel(DeepBlueEntities context, int dealUnderlyingFundId, int dealId) {
-			IQueryable<DealUnderlyingFund> dealUnderlyingFunds = null;
-			if (dealUnderlyingFundId > 0) {
-				dealUnderlyingFunds = context.DealUnderlyingFunds.Where(dealUnderlyingFund => dealUnderlyingFund.DealUnderlyingtFundID == dealUnderlyingFundId);
-			}
-			if (dealId > 0) {
-				dealUnderlyingFunds = context.DealUnderlyingFunds.Where(dealUnderlyingFund => dealUnderlyingFund.DealID == dealId);
-			}
-			if (dealUnderlyingFunds != null) {
-				return (from fund in dealUnderlyingFunds
-						select new DealUnderlyingFundModel {
-							CommittedAmount = fund.CommittedAmount,
-							DealId = fund.DealID,
-							DealUnderlyingFundId = fund.DealUnderlyingtFundID,
-							FundName = fund.UnderlyingFund.FundName,
-							FundNav = fund.FundNav,
-							Percent = fund.Percent,
-							RecordDate = fund.RecordDate,
-							UnderlyingFundId = fund.UnderlyingFundID,
-							GrossPurchasePrice = fund.GrossPurchasePrice,
-							ReassignedGPP = fund.ReassignedGPP,
-							UnfundedAmount = fund.UnfundedAmount,
-							PostRecordDateCapitalCall = fund.PostRecordDateCapitalCall,
-							PostRecordDateDistribution = fund.PostRecordDateDistribution,
-							DealClosingId = fund.DealClosingID
-						});
-			}
-			else {
-				return null;
-			}
+		private IQueryable<DealUnderlyingFundModel> GetDealUnderlyingFundModel(DeepBlueEntities context, IQueryable<DealUnderlyingFund> dealUnderlyingFunds) {
+			return (from fund in dealUnderlyingFunds
+					select new DealUnderlyingFundModel {
+						CommittedAmount = fund.CommittedAmount,
+						DealId = fund.DealID,
+						DealUnderlyingFundId = fund.DealUnderlyingtFundID,
+						FundName = fund.UnderlyingFund.FundName,
+						FundNav = fund.FundNav,
+						Percent = fund.Percent,
+						RecordDate = fund.RecordDate,
+						UnderlyingFundId = fund.UnderlyingFundID,
+						GrossPurchasePrice = fund.GrossPurchasePrice,
+						ReassignedGPP = fund.ReassignedGPP,
+						UnfundedAmount = fund.UnfundedAmount,
+						PostRecordDateCapitalCall = fund.PostRecordDateCapitalCall,
+						PostRecordDateDistribution = fund.PostRecordDateDistribution,
+						DealClosingId = fund.DealClosingID
+					});
 		}
 
 		public DealUnderlyingFund FindDealUnderlyingFund(int dealUnderlyingFundId) {
@@ -226,7 +214,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		public DealUnderlyingFundModel FindDealUnderlyingFundModel(int dealUnderlyingFundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return GetDealUnderlyingFundModel(context, dealUnderlyingFundId, 0).SingleOrDefault();
+				return GetDealUnderlyingFundModel(context, context.DealUnderlyingFunds.Where(fund => fund.DealUnderlyingtFundID == dealUnderlyingFundId)).SingleOrDefault();
 			}
 		}
 
@@ -276,42 +264,30 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region DealUnderlyingDirect
 
-		private IQueryable<DealUnderlyingDirectModel> GetDealUnderlyingDirectModel(DeepBlueEntities context, int dealUnderlyingDirectId, int dealId) {
-			IQueryable<DealUnderlyingDirect> dealUnderlyingDirects = null;
-			if (dealUnderlyingDirectId > 0) {
-				dealUnderlyingDirects = context.DealUnderlyingDirects.Where(dealUnderlyingDirect => dealUnderlyingDirect.DealUnderlyingDirectID == dealUnderlyingDirectId);
-			}
-			if (dealId > 0) {
-				dealUnderlyingDirects = context.DealUnderlyingDirects.Where(dealUnderlyingDirect => dealUnderlyingDirect.DealID == dealId);
-			}
-			if (dealUnderlyingDirects != null) {
-				return (from dealUnderlyingDirect in dealUnderlyingDirects
-						join equity in context.Equities on dealUnderlyingDirect.SecurityID equals equity.EquityID into equities
-						join fixedIncome in context.FixedIncomes on dealUnderlyingDirect.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes
-						from equity in equities.DefaultIfEmpty()
-						from fixedIncome in fixedIncomes.DefaultIfEmpty()
-						select new DealUnderlyingDirectModel {
-							FMV = dealUnderlyingDirect.FMV,
-							DealId = dealUnderlyingDirect.DealID,
-							DealUnderlyingDirectId = dealUnderlyingDirect.DealUnderlyingDirectID,
-							PurchasePrice = dealUnderlyingDirect.PurchasePrice,
-							SecurityId = dealUnderlyingDirect.SecurityID,
-							SecurityTypeId = dealUnderlyingDirect.SecurityTypeID,
-							TaxCostBase = dealUnderlyingDirect.TaxCostBase,
-							TaxCostDate = dealUnderlyingDirect.TaxCostDate,
-							NumberOfShares = dealUnderlyingDirect.NumberOfShares ?? 0,
-							Percent = dealUnderlyingDirect.Percent ?? 0,
-							RecordDate = dealUnderlyingDirect.RecordDate,
-							SecurityType = dealUnderlyingDirect.SecurityType.Name,
-							DealClosingId = dealUnderlyingDirect.DealClosingID,
-							IssuerId = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Issuer.IssuerID : fixedIncome.Issuer.IssuerID),
-							IssuerName = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Issuer.Name : fixedIncome.Issuer.Name),
-							Security = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Symbol : fixedIncome.Symbol),
-						});
-			}
-			else {
-				return null;
-			}
+		private IQueryable<DealUnderlyingDirectModel> GetDealUnderlyingDirectModel(DeepBlueEntities context, IQueryable<DealUnderlyingDirect> dealUnderlyingDirects) {
+			return (from dealUnderlyingDirect in dealUnderlyingDirects
+					join equity in context.Equities on dealUnderlyingDirect.SecurityID equals equity.EquityID into equities
+					join fixedIncome in context.FixedIncomes on dealUnderlyingDirect.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes
+					from equity in equities.DefaultIfEmpty()
+					from fixedIncome in fixedIncomes.DefaultIfEmpty()
+					select new DealUnderlyingDirectModel {
+						FMV = dealUnderlyingDirect.FMV,
+						DealId = dealUnderlyingDirect.DealID,
+						DealUnderlyingDirectId = dealUnderlyingDirect.DealUnderlyingDirectID,
+						PurchasePrice = dealUnderlyingDirect.PurchasePrice,
+						SecurityId = dealUnderlyingDirect.SecurityID,
+						SecurityTypeId = dealUnderlyingDirect.SecurityTypeID,
+						TaxCostBase = dealUnderlyingDirect.TaxCostBase,
+						TaxCostDate = dealUnderlyingDirect.TaxCostDate,
+						NumberOfShares = dealUnderlyingDirect.NumberOfShares ?? 0,
+						Percent = dealUnderlyingDirect.Percent ?? 0,
+						RecordDate = dealUnderlyingDirect.RecordDate,
+						SecurityType = dealUnderlyingDirect.SecurityType.Name,
+						DealClosingId = dealUnderlyingDirect.DealClosingID,
+						IssuerId = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Issuer.IssuerID : fixedIncome.Issuer.IssuerID),
+						IssuerName = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Issuer.Name : fixedIncome.Issuer.Name),
+						Security = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Symbol : fixedIncome.Symbol),
+					});
 		}
 
 		public DealUnderlyingDirect FindDealUnderlyingDirect(int dealUnderlyingDirectId) {
@@ -324,7 +300,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		public DealUnderlyingDirectModel FindDealUnderlyingDirectModel(int dealUnderlyingDirectId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<DealUnderlyingDirectModel> query = GetDealUnderlyingDirectModel(context, dealUnderlyingDirectId, 0);
+				IQueryable<DealUnderlyingDirectModel> query = GetDealUnderlyingDirectModel(context, context.DealUnderlyingDirects.Where(direct => direct.DealUnderlyingDirectID == dealUnderlyingDirectId));
 				return (query != null ? query.SingleOrDefault() : null);
 			}
 		}
@@ -442,8 +418,12 @@ namespace DeepBlue.Controllers.Deal {
 					model.DealId = dealId;
 				}
 				if (dealId > 0) {
-					model.DealUnderlyingDirects = GetDealUnderlyingDirectModel(context, 0, dealId).ToList();
-					model.DealUnderlyingFunds = GetDealUnderlyingFundModel(context, 0, dealId).ToList();
+					IQueryable<DealUnderlyingDirect> dealUnderlyingDirects;
+					dealUnderlyingDirects = context.DealUnderlyingDirects.Where(direct => direct.DealID == dealId && (direct.DealClosingID == null || direct.DealClosingID == dealClosingId));
+					model.DealUnderlyingDirects = GetDealUnderlyingDirectModel(context, dealUnderlyingDirects).ToList();
+					IQueryable<DealUnderlyingFund> dealUnderlyingFunds;
+					dealUnderlyingFunds = context.DealUnderlyingFunds.Where(fund => fund.DealID == dealId && (fund.DealClosingID == null || fund.DealClosingID == dealClosingId));
+					model.DealUnderlyingFunds = GetDealUnderlyingFundModel(context, dealUnderlyingFunds).ToList();
 				}
 				return model;
 			}
@@ -842,13 +822,9 @@ namespace DeepBlue.Controllers.Deal {
 			return underlyingFundCapitalCall.Save();
 		}
 
-		public List<UnderlyingFundCapitalCallList> GetAllUnderlyingFundCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+		public List<UnderlyingFundCapitalCallList> GetAllUnderlyingFundCapitalCalls(int underlyingFundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<UnderlyingFundCapitalCallList> query = GetUnderlyingFundCapitalCallQuery(context.UnderlyingFundCapitalCalls);
-				query = query.OrderBy(sortName, (sortOrder == "asc"));
-				PaginatedList<UnderlyingFundCapitalCallList> paginatedList = new PaginatedList<UnderlyingFundCapitalCallList>(query, pageIndex, pageSize);
-				totalRows = paginatedList.TotalCount;
-				return paginatedList;
+				return GetUnderlyingFundCapitalCallQuery(context.UnderlyingFundCapitalCalls.Where(capitalCall => capitalCall.UnderlyingFundID == underlyingFundId)).ToList();
 			}
 		}
 
@@ -867,7 +843,10 @@ namespace DeepBlue.Controllers.Deal {
 						NoticeDate = capitalCall.NoticeDate,
 						ReceivedDate = capitalCall.ReceivedDate,
 						UnderlyingFundCapitalCallId = capitalCall.UnderlyingFundCapitalCallID,
-						UnderlyingFundName = capitalCall.UnderlyingFund.FundName
+						UnderlyingFundName = capitalCall.UnderlyingFund.FundName,
+						FundId = capitalCall.Fund.FundID,
+						IsPostRecordDateTransaction = capitalCall.IsPostRecordDateTransaction,
+						UnderlyingFundId = capitalCall.UnderlyingFundID
 					});
 		}
 

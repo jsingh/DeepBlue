@@ -203,22 +203,22 @@
 		</td>
 		<td style="text-align: center">
 			<%: Html.Span("${NumberOfShares}", new { @class = "show", @id = "SpnNumberOfShares" })%>
-			<%: Html.TextBox("NumberOfShares", "${NumberOfShares}",new { @class = "hide",@onkeypress = "return jHelper.isNumeric(event);" })%>
+			<%: Html.TextBox("NumberOfShares", "${NumberOfShares}",new { @class = "hide",@id="NumberOfShares",@onkeyup="javascript:deal.calcFMV(this);",@onkeypress = "return jHelper.isNumeric(event);" })%>
 		</td>
 		<td style="text-align: center">
-			<%: Html.Span("${PurchasePrice}", new { @class = "show", @id = "SpnPurchasePrice" })%>
-			<%: Html.TextBox("PurchasePrice","${PurchasePrice}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
+			<%: Html.Span("${PurchasePrice}", new { @class = "show money", @id = "SpnPurchasePrice", @val="${PurchasePrice}" })%>
+			<%: Html.TextBox("PurchasePrice","${PurchasePrice}",new { @class = "hide",@id="PurchasePrice",@onkeyup="javascript:deal.calcFMV(this);",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>	
 		<td style="text-align: center">
-			<%: Html.Span("${FMV}", new { @class = "show", @id = "SpnFMV" })%>
-			<%: Html.TextBox("FMV","${FMV}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
+			<%: Html.Span("${FMV}", new { @class = "show money", @id = "SpnFMV", @val="${FMV}" })%>
+			<%: Html.TextBox("FMV","${FMV}",new { @class = "hide",@readonly="readonly",@id="FMV",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
 		<td style="text-align: center">
 			<%: Html.Span("{{if Percent>0}}${Percent}{{/if}}", new { @class = "show", @id = "SpnPercent" })%>
 			<%: Html.TextBox("Percent","{{if Percent>0}}${Percent}{{/if}}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
 		<td style="text-align: center">
-			<%: Html.Span("${TaxCostBase}", new { @class = "show", @id = "SpnTaxCostBase" })%>
+			<%: Html.Span("${TaxCostBase}", new { @class = "show money", @id = "SpnTaxCostBase", @val="${TaxCostBase}" })%>
 			<%: Html.TextBox("TaxCostBase","${TaxCostBase}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
 		<td style="text-align: center">

@@ -67,6 +67,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="wnvhtmlconvert, Version=3.9.0.25692, Culture=neutral, PublicKeyToken=5b5f377bc08a4d32, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\wnvhtmlconvert.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Admin\AdminController.cs" />
@@ -81,6 +85,8 @@
     <Compile Include="Controllers\Document\DocumentRepository.cs" />
     <Compile Include="Controllers\Document\DocumentController.cs" />
     <Compile Include="Controllers\Document\IDocumentRepository.cs" />
+    <Compile Include="Helpers\ExportPdfResult.cs" />
+    <Compile Include="Helpers\ExportToPdf.cs" />
     <Compile Include="Helpers\JsonSerializer.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundActivityFields.cs" />
@@ -594,6 +600,7 @@
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
     <Content Include="Assets\javascripts\DealActivity.js" />
+    <Content Include="Assets\javascripts\DealActivityCapitalCall.js" />
     <Content Include="Assets\javascripts\IssuerFixedIncome.js" />
     <Content Include="Assets\javascripts\IssuerEquity.js" />
     <Content Include="Assets\javascripts\FixedIncomeType.js" />

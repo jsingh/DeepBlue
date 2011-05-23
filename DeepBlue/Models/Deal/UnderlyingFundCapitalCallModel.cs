@@ -20,5 +20,7 @@ namespace DeepBlue.Models.Deal {
 
 		public int UnderlyingFundCapitalCallId { get; set; }
 
+		public bool? IsDeemedCapitalCall { get; set; }
+
 	}
 }

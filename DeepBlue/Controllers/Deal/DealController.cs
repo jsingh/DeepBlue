@@ -353,8 +353,8 @@ namespace DeepBlue.Controllers.Deal {
 		public JsonResult FindDealUnderlyingFund(int dealUnderlyingFundId) {
 			return Json(DealRepository.FindDealUnderlyingFundModel(dealUnderlyingFundId), JsonRequestBehavior.AllowGet);
 		}
-
-
+			
+		
 		//
 		// GET: /Deal/DeleteDealUnderlyingFund/1
 		[HttpGet]
@@ -516,16 +516,16 @@ namespace DeepBlue.Controllers.Deal {
 				if (errorInfo == null) {
 					List<DealUnderlyingFund> dealUnderlyingFunds = DealRepository.GetDealUnderlyingFunds(dealClosing.DealID);
 					foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
-						dealUnderlyingFund.CommittedAmount = DataTypeHelper.ToDecimal(collection[dealUnderlyingFund.DealUnderlyingtFundID.ToString() + "_" + "CommittedAmount"]);
-						dealUnderlyingFund.GrossPurchasePrice = DataTypeHelper.ToDecimal(collection[dealUnderlyingFund.DealUnderlyingtFundID.ToString() + "_" + "GrossPurchasePrice"]);
-						dealUnderlyingFund.PostRecordDateCapitalCall = DataTypeHelper.ToDecimal(collection[dealUnderlyingFund.DealUnderlyingtFundID.ToString() + "_" + "PostRecordDateCapitalCall"]);
-						dealUnderlyingFund.PostRecordDateDistribution = DataTypeHelper.ToDecimal(collection[dealUnderlyingFund.DealUnderlyingtFundID.ToString() + "_" + "PostRecordDateDistribution"]);
-						dealUnderlyingFund.ReassignedGPP = DataTypeHelper.ToDecimal(collection[dealUnderlyingFund.DealUnderlyingtFundID.ToString() + "_" + "ReassignedGPP"]);
-						dealUnderlyingFund.DealClosingID = null;
 						if (dealUnderlyingFundIds.Contains(dealUnderlyingFund.DealUnderlyingtFundID.ToString())) {
-							if ((dealClosing.IsFinalClose ?? false)) {
-								dealUnderlyingFund.DealClosingID = dealClosing.DealClosingID;
-							}
+							dealUnderlyingFund.CommittedAmount = DataTypeHelper.ToDecimal(collection[dealUnderlyingFund.DealUnderlyingtFundID.ToString() + "_" + "CommittedAmount"]);
+							dealUnderlyingFund.GrossPurchasePrice = DataTypeHelper.ToDecimal(collection[dealUnderlyingFund.DealUnderlyingtFundID.ToString() + "_" + "GrossPurchasePrice"]);
+							dealUnderlyingFund.PostRecordDateCapitalCall = DataTypeHelper.ToDecimal(collection[dealUnderlyingFund.DealUnderlyingtFundID.ToString() + "_" + "PostRecordDateCapitalCall"]);
+							dealUnderlyingFund.PostRecordDateDistribution = DataTypeHelper.ToDecimal(collection[dealUnderlyingFund.DealUnderlyingtFundID.ToString() + "_" + "PostRecordDateDistribution"]);
+							dealUnderlyingFund.ReassignedGPP = DataTypeHelper.ToDecimal(collection[dealUnderlyingFund.DealUnderlyingtFundID.ToString() + "_" + "ReassignedGPP"]);
+							dealUnderlyingFund.DealClosingID = dealClosing.DealClosingID;
+						}
+						else if (dealUnderlyingFund.DealClosingID == dealClosing.DealClosingID) {
+							dealUnderlyingFund.DealClosingID = null;
 						}
 						errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
 						if (errorInfo != null)
@@ -533,20 +533,20 @@ namespace DeepBlue.Controllers.Deal {
 					}
 					List<DealUnderlyingDirect> dealUnderlyingDirects = DealRepository.GetDealUnderlyingDirects(dealClosing.DealID);
 					foreach (var dealUnderlyingDirect in dealUnderlyingDirects) {
-						dealUnderlyingDirect.NumberOfShares = DataTypeHelper.ToInt32(collection[dealUnderlyingDirect.DealUnderlyingDirectID.ToString() + "_" + "NumberOfShares"]);
-						dealUnderlyingDirect.PurchasePrice = DataTypeHelper.ToDecimal(collection[dealUnderlyingDirect.DealUnderlyingDirectID.ToString() + "_" + "PurchasePrice"]);
-						dealUnderlyingDirect.FMV = DataTypeHelper.ToDecimal(collection[dealUnderlyingDirect.DealUnderlyingDirectID.ToString() + "_" + "FMV"]);
-						dealUnderlyingDirect.DealClosingID = null;
 						if (dealUnderlyingDirectIds.Contains(dealUnderlyingDirect.DealUnderlyingDirectID.ToString())) {
-							if ((dealClosing.IsFinalClose ?? false)) {
-								dealUnderlyingDirect.DealClosingID = dealClosing.DealClosingID;
-							}
+							dealUnderlyingDirect.NumberOfShares = DataTypeHelper.ToInt32(collection[dealUnderlyingDirect.DealUnderlyingDirectID.ToString() + "_" + "NumberOfShares"]);
+							dealUnderlyingDirect.PurchasePrice = DataTypeHelper.ToDecimal(collection[dealUnderlyingDirect.DealUnderlyingDirectID.ToString() + "_" + "PurchasePrice"]);
+							dealUnderlyingDirect.FMV = DataTypeHelper.ToDecimal(collection[dealUnderlyingDirect.DealUnderlyingDirectID.ToString() + "_" + "FMV"]);
+							dealUnderlyingDirect.DealClosingID = null;
+							dealUnderlyingDirect.DealClosingID = dealClosing.DealClosingID;
+						}
+						else if (dealUnderlyingDirect.DealClosingID == dealClosing.DealClosingID) {
+							dealUnderlyingDirect.DealClosingID = null;
 						}
 						errorInfo = DealRepository.SaveDealUnderlyingDirect(dealUnderlyingDirect);
 						if (errorInfo != null)
 							break;
 					}
-
 				}
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 			}
@@ -641,6 +641,9 @@ namespace DeepBlue.Controllers.Deal {
 			switch ((Models.Deal.Enums.ExportType)exportTypeId) {
 				case ExportType.Word:
 					result = new ExportWordResult(url, "DealReport.doc");
+					break;
+				case ExportType.Pdf:
+					result = new ExportPdfResult(url, "DealReport.pdf");
 					break;
 			}
 			return result;
@@ -982,23 +985,8 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/UnderlyingFundCapitalCallList
 		[HttpGet]
-		public JsonResult UnderlyingFundCapitalCallList(int pageIndex, int pageSize, string sortName, string sortOrder) {
-			FlexigridData flexgridData = new FlexigridData();
-			int totalRows = 0;
-			List<UnderlyingFundCapitalCallList> underlyingFundCapitalCalls = DealRepository.GetAllUnderlyingFundCapitalCalls(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			flexgridData.total = totalRows;
-			flexgridData.page = pageIndex;
-			foreach (var capitalCall in underlyingFundCapitalCalls) {
-				flexgridData.rows.Add(new FlexigridRow {
-					cell = new List<object> {capitalCall.UnderlyingFundCapitalCallId, 
-					 capitalCall.FundName, 
-					 capitalCall.UnderlyingFundName, 
-					 capitalCall.Amount, 
-					 (capitalCall.NoticeDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"),
-					 (capitalCall.ReceivedDate ??  Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy") }
-				});
-			}
-			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		public JsonResult UnderlyingFundCapitalCallList(int underlyingFundId) {
+			return Json(DealRepository.GetAllUnderlyingFundCapitalCalls(underlyingFundId), JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -1116,7 +1104,7 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		//
-		// GET: /Deal/UnderlyingFundCashDistributionList
+		// GET: /Deal/GetUnderlyingFundCapitalCallList
 		[HttpGet]
 		public JsonResult GetUnderlyingFundCapitalCallList(int id) {
 			UnderlyingFundCapitalCallList underlyingFundCapitalCallList = DealRepository.GetUnderlyingFundCapitalCall(id);

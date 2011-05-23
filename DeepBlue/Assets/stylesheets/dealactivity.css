@@ -14,3 +14,59 @@
 .grid tfoot tr td {
 	text-align: center;
 }
+#ActivityMain .header {
+	margin: 10px 0px 10px 0px;
+	font-size: 16px;
+	position: absolute;
+}
+.header a {
+	color: #000;
+	margin: 20px;
+}
+.header a.select {
+	color: #9381bd;
+}
+#content {
+	overflow: hidden;
+}
+#ActivityMain .content {
+	clear: both;
+	position: absolute;
+	top: 35px;
+	bottom: 0px;
+	width: 100%;
+	overflow: auto;
+}
+#ActivityMain .detail {
+	display: none;
+}
+#ActivityMain .title {
+	background: url(../images/plus.png) no-repeat scroll left top transparent;
+	font-size: 15px;
+	height: 30px;
+	line-height: 24px;
+	padding-left: 28px;
+	cursor: pointer;
+}
+#ActivityMain .title a {
+	color: #7f7f97;
+}
+#ActivityMain .expand {
+	background-image: url(../images/minus.png);
+}
+.group {
+	margin: 10px;
+}
+.cell {
+	float: left;
+	width: auto;
+	padding: 0 20px 0px 20px;
+}
+.cell input {
+	width: 140px;
+}
+.search-header {
+	clear: both;
+	margin: 10px;
+	float: left;
+}

@@ -39,7 +39,7 @@
 			<table cellspacing="0" cellpadding="0" border="0" class="grid" id="tblDealUnderlyingFund">
 				<thead>
 					<tr>
-						<th id="thCHK" style="width: 10%; display: none;">
+						<th style="width: 10%;">
 						</th>
 						<th style="width: 25%">
 							Fund Name
@@ -69,7 +69,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="display: none;">
+						<td>
 							<%: Html.InputCheckBox("DealUnderlyingFundId", (dealUnderlyingFund.DealClosingId == Model.DealClosingId), new {  @value=dealUnderlyingFund.DealUnderlyingFundId })%>
 						</td>
 						<td>
@@ -103,7 +103,7 @@
 			<table cellspacing="0" cellpadding="0" border="0" class="grid" id="tblDealUnderlyingDirect">
 				<thead>
 					<tr>
-						<th id="thCHK" style="width: 10%; display: none;">
+						<th style="width: 10%;">
 						</th>
 						<th style="width: 20%">
 							No Of Shares
@@ -130,7 +130,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="display: none">
+						<td>
 							<%:Html.InputCheckBox("DealUnderlyingDirectId", (dealUnderlyingDirect.DealClosingId == Model.DealClosingId), new {  @value = dealUnderlyingDirect.DealUnderlyingDirectId })%>
 						</td>
 						<td>

@@ -111,15 +111,12 @@
 	,exportDeal: function (exportTypeId) {
 		var fundId=$("#FundId").val();
 		var url;
-		switch(exportTypeId) {
-			case 1:
-				url="/Deal/Export?fundId="+fundId+"&exportTypeId="+exportTypeId+"&sortName="+$("#SortName").val()+"&sortOrder="+$("#SortOrder").val();
-				break;
-			default:
-				url="/Deal/ExportDetail?IsPrint=true&FundId="+fundId+"&SortName="+$("#SortName").val()+"&SortOrder="+$("#SortOrder").val();
-				break;
-		}
 		var features="width="+1+",height="+1;
+		if(exportTypeId==1||exportTypeId==2) {
+			url="/Deal/Export?fundId="+fundId+"&exportTypeId="+exportTypeId+"&sortName="+$("#SortName").val()+"&sortOrder="+$("#SortOrder").val();
+		} else {
+			url="/Deal/ExportDetail?IsPrint=true&FundId="+fundId+"&SortName="+$("#SortName").val()+"&SortOrder="+$("#SortOrder").val();
+		}
 		window.open(url,"exportdeal",features);
 	}
 }

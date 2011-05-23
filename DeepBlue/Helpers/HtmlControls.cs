@@ -60,6 +60,9 @@ namespace DeepBlue.Helpers {
  		#endregion
 
 		#region Anchor
+		public static MvcHtmlString Anchor(this HtmlHelper helper, string innerHTML, string href) {
+			return Anchor(helper, innerHTML, href, new { });
+		}
 		public static MvcHtmlString Anchor(this HtmlHelper helper, string innerHTML, string href, object htmlAttributes) {
 			TagBuilder tag = new TagBuilder("a");
 			if (string.IsNullOrEmpty(href) == false) {

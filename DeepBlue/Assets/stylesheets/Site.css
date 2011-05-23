@@ -743,3 +743,4 @@ h2 {
 #Edit, #Delete {
 	cursor: pointer;
 }
+.clear { clear:both; }

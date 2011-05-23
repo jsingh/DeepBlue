@@ -35,16 +35,16 @@
 					<th style="display: none">
 						DealId
 					</th>
-					<th align=center sortname="DealNumber" style="width: 10%">
+					<th align="center" sortname="DealNumber" style="width: 10%">
 						<span>Deal No.</span>
 					</th>
-					<th align=center sortname="DealName">
+					<th align="center" sortname="DealName">
 						<span>Deal Name</span>
 					</th>
-					<th align=center sortname="FundName">
+					<th align="center" sortname="FundName">
 						<span>Fund Name</span>
 					</th>
-					<th align=center sortname="SellerName">
+					<th align="center" sortname="SellerName">
 						<span>Seller Name</span>
 					</th>
 					<th style="width: 2%">
@@ -61,11 +61,11 @@
 	<div id="ExportMenu">
 		<ul>
 			<li>
-				<%:Html.Anchor("Word", "javascript:dealReport.exportDeal(1);", new { })%></li>
+				<%:Html.Anchor("Word", "javascript:dealReport.exportDeal(1);")%></li>
 			<li>
-				<%:Html.Anchor("Pdf", new { @href = "#" })%></li>
+				<%:Html.Anchor("Pdf", "javascript:dealReport.exportDeal(2);")%></li>
 			<li>
-				<%:Html.Anchor("Print", "javascript:dealReport.exportDeal(3);", new { })%></li>
+				<%:Html.Anchor("Print", "javascript:dealReport.exportDeal(3);")%></li>
 		</ul>
 	</div>
 </asp:Content>
