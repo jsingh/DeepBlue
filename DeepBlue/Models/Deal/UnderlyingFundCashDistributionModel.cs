@@ -11,6 +11,11 @@ namespace DeepBlue.Models.Deal {
 
 	public class UnderlyingFundCashDistributionModel : UnderlyingFundActivityFields {
 
+		public UnderlyingFundCashDistributionModel() {
+			UnderlyingFundCashDistributionId = 0;
+			CashDistributionTypeId = 0;
+		}
+
 		[Range(0, int.MaxValue, ErrorMessage = "UnderlyingFundCashDistributionId is required")]
 		public int? UnderlyingFundCashDistributionId { get; set; }
 
@@ -19,20 +24,19 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Cash Distribution:")]
 		public int CashDistributionTypeId { get; set; }
 
-		[Required(ErrorMessage = "Paid Date is required")]
-		[DateRange()]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
 		[DisplayName("Paid Date:")]
 		public DateTime? PaidDate { get; set; }
+
+		public bool IsDeemedDistribution { get; set; }
+
+		public bool IsNettedDistribution { get; set; }
+
+		public string CashDistributionType { get; set; }
 
 		public List<SelectListItem> CashDistributionTypes { get; set; }
 
 	}
 
-
-	public class UnderlyingFundCashDistributionList : UnderlyingFundActivityFields {
-
-		public int UnderlyingFundCashDistributionId { get; set; }
-
-	}
+	 
 }

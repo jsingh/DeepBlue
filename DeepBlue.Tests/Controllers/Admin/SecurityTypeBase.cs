@@ -28,9 +28,13 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 			MockAdminRepository = new Mock<IAdminRepository>();
 
+			int totalRows = 0;
+
             // Spin up the controller with the mock http context, and the mock repository
 			DefaultController = new AdminController(MockAdminRepository.Object, MockTransactionRepository.Object); 
             DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
+			MockAdminRepository.Setup(x => x.GetAllSecurityTypes(1, 1, "SecurityTypeID", "asc", ref totalRows)).Returns(new List<DeepBlue.Models.Entity.SecurityType>());
+
         }
 
         [TearDown]
@@ -43,7 +47,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 		#region FindSecurityType
 		[Test]
 		public void valid_Find_SecurityType_sets_json_result_error() {
-			Assert.IsTrue((DefaultController.SecurityTypeList(1, 1, "InvestorEntityTypeName", "asc") != null));
+			Assert.IsTrue((DefaultController.SecurityTypeList(1, 1, "SecurityTypeID", "asc") != null));
 		}
 		#endregion
 

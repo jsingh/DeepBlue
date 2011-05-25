@@ -107,7 +107,7 @@ h4 a {
 	display: none;
 }
 .show {
-	display: block;
+	display:inline-block;
 }
 .seefull {
 	clear: both;

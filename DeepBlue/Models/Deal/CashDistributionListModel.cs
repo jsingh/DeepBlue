@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace DeepBlue.Models.Deal {
-	public class CashDistributionListModel {
+	public class CashDistributionListModel1 {
 
 		public int CashDistributionId { get; set; }
 

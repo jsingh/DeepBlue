@@ -199,6 +199,12 @@ namespace DeepBlue.Controllers.Deal {
 			return Json(DealRepository.FindDeals(term), JsonRequestBehavior.AllowGet);
 		}
 
+		//
+		// GET: /Deal/FindFundDeals
+		[HttpGet]
+		public JsonResult FindFundDeals(int fundId, string term) {
+			return Json(DealRepository.FindDeals(fundId, term), JsonRequestBehavior.AllowGet);
+		}
 		#endregion
 
 		#region DealExpense
@@ -353,8 +359,8 @@ namespace DeepBlue.Controllers.Deal {
 		public JsonResult FindDealUnderlyingFund(int dealUnderlyingFundId) {
 			return Json(DealRepository.FindDealUnderlyingFundModel(dealUnderlyingFundId), JsonRequestBehavior.AllowGet);
 		}
-			
-		
+
+
 		//
 		// GET: /Deal/DeleteDealUnderlyingFund/1
 		[HttpGet]
@@ -874,7 +880,7 @@ namespace DeepBlue.Controllers.Deal {
 					List<DealUnderlyingFund> dealUnderlyingFunds = DealRepository.GetAllDealUnderlyingFunds(underlyingFundCashDistribution.UnderlyingFundID, underlyingFundCashDistribution.FundID);
 					CashDistribution cashDistribution;
 					foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
-						cashDistribution = DealRepository.FindCashDistribution(underlyingFundCashDistribution.UnderlyingFundCashDistributionID,
+						cashDistribution = DealRepository.FindUnderlyingFundPostRecordCashDistribution(underlyingFundCashDistribution.UnderlyingFundCashDistributionID,
 																				underlyingFundCashDistribution.UnderlyingFundID,
 																				dealUnderlyingFund.DealID);
 						if (cashDistribution == null) {
@@ -884,32 +890,18 @@ namespace DeepBlue.Controllers.Deal {
 						}
 						cashDistribution.LastUpdatedBy = AppSettings.CreatedByUserId;
 						cashDistribution.LastUpdatedDate = DateTime.Now;
-						if (dealUnderlyingFund.DealClosingID == null) {
-							cashDistribution.UnderluingFundCashDistributionID = null;
-							cashDistribution.Amount = underlyingFundCashDistribution.Amount;
-							dealUnderlyingFund.PostRecordDateDistribution = cashDistribution.Amount;
-						}
-						else {
+						if (dealUnderlyingFund.DealClosingID != null) {
 							cashDistribution.UnderluingFundCashDistributionID = underlyingFundCashDistribution.UnderlyingFundCashDistributionID;
 							// Calculate distribution amount
 							cashDistribution.Amount = ((dealUnderlyingFund.CommittedAmount ?? 0) / dealUnderlyingFunds.Sum(fund => fund.CommittedAmount ?? 0)) * underlyingFundCashDistribution.Amount;
 						}
 						cashDistribution.UnderlyingFundID = underlyingFundCashDistribution.UnderlyingFundID;
 						cashDistribution.DealID = dealUnderlyingFund.DealID;
-						errorInfo = DealRepository.SaveCashDistribution(cashDistribution);
+						errorInfo = DealRepository.SaveUnderlyingFundPostRecordCashDistribution(cashDistribution);
 						if (errorInfo == null)
 							errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
 						if (errorInfo != null)
 							break;
-					}
-					if (errorInfo == null) {
-						// If UnderlyingFundId or FundId is change Then
-						// Update existing underlying fund post record date distribution
-						if (existingUnderlyingFundId > 0 && existingFundId > 0 &&
-							(existingUnderlyingFundId != underlyingFundCashDistribution.UnderlyingFundID || existingFundId != underlyingFundCashDistribution.FundID)
-							) {
-							errorInfo = DealRepository.UpdatePostRecordDateDistribution(existingUnderlyingFundId, existingFundId);
-						}
 					}
 				}
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
@@ -932,45 +924,120 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/UnderlyingFundCashDistributionList
 		[HttpGet]
-		public JsonResult UnderlyingFundCashDistributionList(int pageIndex, int pageSize, string sortName, string sortOrder) {
-			FlexigridData flexgridData = new FlexigridData();
-			int totalRows = 0;
-			List<UnderlyingFundCashDistributionList> underlyingFundCashDistributions = DealRepository.GetAllUnderlyingFundCashDistributions(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			flexgridData.total = totalRows;
-			flexgridData.page = pageIndex;
-			foreach (var cashDistribution in underlyingFundCashDistributions) {
-				flexgridData.rows.Add(new FlexigridRow {
-					cell = new List<object> {cashDistribution.UnderlyingFundCashDistributionId, 
-					 cashDistribution.FundName, 
-					 cashDistribution.UnderlyingFundName, 
-					 cashDistribution.Amount, 
-					 (cashDistribution.NoticeDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"),
-					 (cashDistribution.ReceivedDate ??  Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy") }
-				});
-			}
-			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		public JsonResult UnderlyingFundCashDistributionList(int underlyingFundId) {
+			return Json(DealRepository.GetAllUnderlyingFundCashDistributions(underlyingFundId), JsonRequestBehavior.AllowGet);
 		}
 
 		//
-		// GET: /Deal/UnderlyingFundCashDistributionList
-		[HttpGet]
-		public JsonResult GetUnderlyingFundCashDistributionList(int id) {
-			UnderlyingFundCashDistributionList cashDistribution = DealRepository.GetUnderlyingFundCashDistribution(id);
-			FlexigridData flexgridData = new FlexigridData();
-			flexgridData.rows.Add(new FlexigridRow {
-				cell = new List<object> {cashDistribution.UnderlyingFundCashDistributionId, 
-					 cashDistribution.FundName, 
-					 cashDistribution.UnderlyingFundName, 
-					 cashDistribution.Amount, 
-					 (cashDistribution.NoticeDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"),
-					 (cashDistribution.ReceivedDate ??  Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy") }
-			});
-			return Json(flexgridData, JsonRequestBehavior.AllowGet);
-		}
-
+		// GET: /Deal/DeleteUnderlyingFundCashDistribution
 		[HttpGet]
 		public string DeleteUnderlyingFundCashDistribution(int id) {
 			if (DealRepository.DeleteUnderlyingFundCashDistribution(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		#endregion
+
+		#region UnderlyingFundPostRecordCashDistribution
+
+		//
+		// GET: /Deal/UnderlyingFundPostRecordCashDistributionList
+		[HttpGet]
+		public ActionResult UnderlyingFundPostRecordCashDistributionList(int underlyingFundId) {
+			return Json(DealRepository.GetAllUnderlyingFundPostRecordCashDistributions(underlyingFundId), JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/FindUnderlyingFundPostRecordCashDistribution
+		[HttpGet]
+		public JsonResult FindUnderlyingFundPostRecordCashDistribution(int id) {
+			UnderlyingFundPostRecordCashDistributionModel model = DealRepository.FindUnderlyingFundPostRecordCashDistributionModel(id);
+			if (model == null) {
+				model = new UnderlyingFundPostRecordCashDistributionModel();
+			}
+			return Json(model, JsonRequestBehavior.AllowGet);
+		}
+
+
+		//
+		// POST : /Deal/CreateUnderlyingFundPostRecordCashDistribution
+		[HttpPost]
+		public ActionResult CreateUnderlyingFundPostRecordCashDistribution(FormCollection collection) {
+			UnderlyingFundPostRecordCashDistributionModel model = new UnderlyingFundPostRecordCashDistributionModel();
+			this.TryUpdateModel(model);
+			ResultModel resultModel = new ResultModel();
+			if (ModelState.IsValid) {
+				CashDistribution cashDistribution = DealRepository.FindUnderlyingFundPostRecordCashDistribution(model.CashDistributionId);
+				int existingDealId = 0;
+				if (cashDistribution != null) {
+					existingDealId = cashDistribution.DealID;
+				}
+				if (cashDistribution == null) {
+					cashDistribution = new CashDistribution();
+					cashDistribution.CreatedBy = AppSettings.CreatedByUserId;
+					cashDistribution.CreatedDate = DateTime.Now;
+				}
+				cashDistribution.UnderlyingFundID = model.UnderlyingFundId;
+				cashDistribution.Amount = model.Amount ?? 0;
+				cashDistribution.DealID = model.DealId;
+				cashDistribution.LastUpdatedBy = AppSettings.CreatedByUserId;
+				cashDistribution.LastUpdatedDate = DateTime.Now;
+				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveUnderlyingFundPostRecordCashDistribution(cashDistribution);
+				if (errorInfo == null) {
+					//Create capital call line item
+					List<DealUnderlyingFund> dealUnderlyingFunds = DealRepository.GetDealUnderlyingFunds(cashDistribution.UnderlyingFundID, cashDistribution.DealID);
+					decimal distributionAmount = DealRepository.GetSumOfCashDistribution(cashDistribution.UnderlyingFundID, cashDistribution.DealID);
+					foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
+						if (dealUnderlyingFund.DealClosingID == null) {
+							dealUnderlyingFund.PostRecordDateDistribution = distributionAmount;
+							errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
+							if (errorInfo != null)
+								break;
+						}
+					}
+					if (errorInfo == null) {
+						// If DealId is change Then
+						// Update existing underlying fund post record date distribution
+						if (existingDealId > 0 && existingDealId != cashDistribution.DealID) {
+							distributionAmount = DealRepository.GetSumOfCashDistribution(cashDistribution.UnderlyingFundID, existingDealId);
+							dealUnderlyingFunds = DealRepository.GetDealUnderlyingFunds(cashDistribution.UnderlyingFundID, existingDealId);
+							foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
+								if (dealUnderlyingFund.DealClosingID == null) {
+									dealUnderlyingFund.PostRecordDateDistribution = distributionAmount;
+									errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
+									if (errorInfo != null)
+										break;
+								}
+							}
+						}
+					}
+				}
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					resultModel.Result = "True||" + cashDistribution.CashDistributionID;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		//
+		// GET: /Deal/DeleteUnderlyingFundPostRecordCapitalCall
+		[HttpGet]
+		public string DeleteUnderlyingFundPostRecordCashDistribution(int id) {
+			if (DealRepository.DeleteUnderlyingFundPostRecordCashDistribution(id) == false) {
 				return "Cann't Delete! Child record found!";
 			}
 			else {
@@ -988,18 +1055,6 @@ namespace DeepBlue.Controllers.Deal {
 		public JsonResult UnderlyingFundCapitalCallList(int underlyingFundId) {
 			return Json(DealRepository.GetAllUnderlyingFundCapitalCalls(underlyingFundId), JsonRequestBehavior.AllowGet);
 		}
-
-		//
-		// GET: /Deal/EditUnderlyingFundCapitalCall
-		[HttpGet]
-		public ActionResult EditUnderlyingFundCapitalCall(int id) {
-			UnderlyingFundCapitalCallModel model = DealRepository.FindUnderlyingFundCapitalCallModel(id);
-			if (model == null) {
-				model = new UnderlyingFundCapitalCallModel();
-			}
-			return View(model);
-		}
-
 
 		//
 		// GET: /Deal/FindUnderlyingFundCapitalCall
@@ -1047,7 +1102,7 @@ namespace DeepBlue.Controllers.Deal {
 					List<DealUnderlyingFund> dealUnderlyingFunds = DealRepository.GetAllDealUnderlyingFunds(underlyingFundCapitalCall.UnderlyingFundID, underlyingFundCapitalCall.FundID);
 					UnderlyingFundCapitalCallLineItem underlyingFundCapitalCallLineItem;
 					foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
-						underlyingFundCapitalCallLineItem = DealRepository.FindUnderlyingFundCapitalCallLineItem(underlyingFundCapitalCall.UnderlyingFundCapitalCallID,
+						underlyingFundCapitalCallLineItem = DealRepository.FindUnderlyingFundPostRecordCapitalCall(underlyingFundCapitalCall.UnderlyingFundCapitalCallID,
 																				underlyingFundCapitalCall.UnderlyingFundID,
 																				dealUnderlyingFund.DealID);
 						if (underlyingFundCapitalCallLineItem == null) {
@@ -1057,33 +1112,18 @@ namespace DeepBlue.Controllers.Deal {
 						}
 						underlyingFundCapitalCallLineItem.LastUpdatedBy = AppSettings.CreatedByUserId;
 						underlyingFundCapitalCallLineItem.LastUpdatedDate = DateTime.Now;
-						if (dealUnderlyingFund.DealClosingID == null) {
-							underlyingFundCapitalCallLineItem.UnderlyingFundCapitalCallID = null;
-							underlyingFundCapitalCallLineItem.Amount = underlyingFundCapitalCall.Amount;
-							dealUnderlyingFund.PostRecordDateCapitalCall = underlyingFundCapitalCallLineItem.Amount;
-							dealUnderlyingFund.UnfundedAmount = dealUnderlyingFund.CommittedAmount - dealUnderlyingFund.PostRecordDateCapitalCall;
-						}
-						else {
+						if (dealUnderlyingFund.DealClosingID != null) {
 							underlyingFundCapitalCallLineItem.UnderlyingFundCapitalCallID = underlyingFundCapitalCall.UnderlyingFundCapitalCallID;
 							// Calculate capital call amount
 							underlyingFundCapitalCallLineItem.Amount = ((dealUnderlyingFund.CommittedAmount ?? 0) / dealUnderlyingFunds.Sum(fund => fund.CommittedAmount ?? 0)) * underlyingFundCapitalCall.Amount;
 						}
 						underlyingFundCapitalCallLineItem.UnderlyingFundID = underlyingFundCapitalCall.UnderlyingFundID;
 						underlyingFundCapitalCallLineItem.DealID = dealUnderlyingFund.DealID;
-						errorInfo = DealRepository.SaveUnderlyingFundCapitalCallLineItem(underlyingFundCapitalCallLineItem);
+						errorInfo = DealRepository.SaveUnderlyingFundPostRecordCapitalCall(underlyingFundCapitalCallLineItem);
 						if (errorInfo == null)
 							errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
 						if (errorInfo != null)
 							break;
-					}
-					if (errorInfo == null) {
-						// If UnderlyingFundId or FundId is change Then
-						// Update existing underlying fund post record date distribution
-						if (existingUnderlyingFundId > 0 && existingFundId > 0 &&
-							(existingUnderlyingFundId != underlyingFundCapitalCall.UnderlyingFundID || existingFundId != underlyingFundCapitalCall.FundID)
-							) {
-							errorInfo = DealRepository.UpdatePostRecordDateCapitalCall(existingUnderlyingFundId, existingFundId);
-						}
 					}
 				}
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
@@ -1104,22 +1144,7 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		//
-		// GET: /Deal/GetUnderlyingFundCapitalCallList
-		[HttpGet]
-		public JsonResult GetUnderlyingFundCapitalCallList(int id) {
-			UnderlyingFundCapitalCallList underlyingFundCapitalCallList = DealRepository.GetUnderlyingFundCapitalCall(id);
-			FlexigridData flexgridData = new FlexigridData();
-			flexgridData.rows.Add(new FlexigridRow {
-				cell = new List<object> {underlyingFundCapitalCallList.UnderlyingFundCapitalCallId, 
-					 underlyingFundCapitalCallList.FundName, 
-					 underlyingFundCapitalCallList.UnderlyingFundName, 
-					 underlyingFundCapitalCallList.Amount, 
-					 (underlyingFundCapitalCallList.NoticeDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"),
-					 (underlyingFundCapitalCallList.ReceivedDate ??  Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy") }
-			});
-			return Json(flexgridData, JsonRequestBehavior.AllowGet);
-		}
-
+		// GET: /Deal/DeleteUnderlyingFundCapitalCall
 		[HttpGet]
 		public string DeleteUnderlyingFundCapitalCall(int id) {
 			if (DealRepository.DeleteUnderlyingFundCapitalCall(id) == false) {
@@ -1132,22 +1157,108 @@ namespace DeepBlue.Controllers.Deal {
 
 		#endregion
 
-		#region CashDistribution
+		#region UnderlyingFundPostRecordCapitalCall
+		//
+		// GET: /Deal/UnderlyingFundPostRecordCapitalCallList
+		[HttpGet]
+		public JsonResult UnderlyingFundPostRecordCapitalCallList(int underlyingFundId) {
+			return Json(DealRepository.GetAllUnderlyingFundPostRecordCapitalCalls(underlyingFundId), JsonRequestBehavior.AllowGet);
+		}
 
 		//
-		// GET: /Deal/CashDistributionList
+		// GET: /Deal/FindUnderlyingFundPostRecordCapitalCall
 		[HttpGet]
-		public ActionResult CashDistributionList(int underlyingFundCashDistributionId) {
-			FlexigridData flexgridData = new FlexigridData();
-			List<CashDistributionListModel> cashDistributions = DealRepository.GetAllCashDistributions(underlyingFundCashDistributionId);
-			flexgridData.total = cashDistributions.Count;
-			flexgridData.page = 1;
-			foreach (var cashDistribution in cashDistributions) {
-				flexgridData.rows.Add(new FlexigridRow {
-					cell = new List<object> { cashDistribution.CashDistributionId, cashDistribution.DealName, cashDistribution.Amount }
-				});
+		public JsonResult FindUnderlyingFundPostRecordCapitalCall(int id) {
+			UnderlyingFundPostRecordCapitalCallModel model = DealRepository.FindUnderlyingFundPostRecordCapitalCallModel(id);
+			if (model == null) {
+				model = new UnderlyingFundPostRecordCapitalCallModel();
 			}
-			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+			return Json(model, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// POST : /Deal/CreateUnderlyingFundPostRecordCapitalCall
+		[HttpPost]
+		public ActionResult CreateUnderlyingFundPostRecordCapitalCall(FormCollection collection) {
+			UnderlyingFundPostRecordCapitalCallModel model = new UnderlyingFundPostRecordCapitalCallModel();
+			this.TryUpdateModel(model);
+			ResultModel resultModel = new ResultModel();
+			if (ModelState.IsValid) {
+				UnderlyingFundCapitalCallLineItem capitalCallLineItem = DealRepository.FindUnderlyingFundPostRecordCapitalCall(model.UnderlyingFundCapitalCallLineItemId);
+				int existingDealId = 0;
+				if (capitalCallLineItem != null) {
+					existingDealId = capitalCallLineItem.DealID;
+				}
+				if (capitalCallLineItem == null) {
+					capitalCallLineItem = new UnderlyingFundCapitalCallLineItem();
+					capitalCallLineItem.CreatedBy = AppSettings.CreatedByUserId;
+					capitalCallLineItem.CreatedDate = DateTime.Now;
+				}
+				capitalCallLineItem.UnderlyingFundID = model.UnderlyingFundId;
+				capitalCallLineItem.Amount = model.Amount ?? 0;
+				capitalCallLineItem.ReceivedDate = model.ReceivedDate;
+				capitalCallLineItem.DealID = model.DealId;
+				capitalCallLineItem.LastUpdatedBy = AppSettings.CreatedByUserId;
+				capitalCallLineItem.LastUpdatedDate = DateTime.Now;
+				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveUnderlyingFundPostRecordCapitalCall(capitalCallLineItem);
+				if (errorInfo == null) {
+					//Create capital call line item
+					List<DealUnderlyingFund> dealUnderlyingFunds = DealRepository.GetDealUnderlyingFunds(capitalCallLineItem.UnderlyingFundID, capitalCallLineItem.DealID);
+					decimal capitalCallAmount = DealRepository.GetSumOfUnderlyingFundCapitalCallLineItem(capitalCallLineItem.UnderlyingFundID, capitalCallLineItem.DealID);
+					foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
+						if (dealUnderlyingFund.DealClosingID == null) {
+							dealUnderlyingFund.PostRecordDateCapitalCall = capitalCallAmount;
+							dealUnderlyingFund.UnfundedAmount = dealUnderlyingFund.CommittedAmount - capitalCallAmount;
+							errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
+							if (errorInfo != null)
+								break;
+						}
+					}
+					if (errorInfo == null) {
+						// If DealId is change Then
+						// Update existing underlying fund post record date distribution
+						if (existingDealId > 0 && existingDealId != capitalCallLineItem.DealID) {
+							capitalCallAmount = DealRepository.GetSumOfUnderlyingFundCapitalCallLineItem(capitalCallLineItem.UnderlyingFundID, existingDealId);
+							dealUnderlyingFunds = DealRepository.GetDealUnderlyingFunds(capitalCallLineItem.UnderlyingFundID, existingDealId);
+							foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
+								if (dealUnderlyingFund.DealClosingID == null) {
+									dealUnderlyingFund.PostRecordDateCapitalCall = capitalCallAmount;
+									dealUnderlyingFund.UnfundedAmount = dealUnderlyingFund.CommittedAmount - capitalCallAmount;
+									errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
+									if (errorInfo != null)
+										break;
+								}
+							}
+						}
+					}
+				}
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					resultModel.Result = "True||" + capitalCallLineItem.UnderlyingFundCapitalCallLineItemID;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		//
+		// GET: /Deal/DeleteUnderlyingFundPostRecordCapitalCall
+		[HttpGet]
+		public string DeleteUnderlyingFundPostRecordCapitalCall(int id) {
+			if (DealRepository.DeleteUnderlyingFundPostRecordCapitalCall(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
 		}
 		#endregion
 

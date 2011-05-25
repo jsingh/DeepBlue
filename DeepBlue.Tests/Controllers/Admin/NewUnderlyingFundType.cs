@@ -25,7 +25,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
         }
  
 		[Test]
-		public void create_a_new_dealclosingcosttype() {
+		public void create_a_new_underlyingfundtype() {
 			Assert.IsInstanceOfType<ActionResult>(base.ActionResult);
 		}
 		

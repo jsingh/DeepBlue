@@ -20,7 +20,7 @@
 	position: absolute;
 }
 .header a {
-	color: #000;
+	color: #977f7f;
 	margin: 20px;
 }
 .header a.select {
@@ -42,11 +42,14 @@
 }
 #ActivityMain .title {
 	background: url(../images/plus.png) no-repeat scroll left top transparent;
-	font-size: 15px;
+	font-size: 14px;
 	height: 30px;
 	line-height: 24px;
 	padding-left: 28px;
 	cursor: pointer;
+	color: #977f7f;
+	width: 200px;
+	float: left;
 }
 #ActivityMain .title a {
 	color: #7f7f97;
@@ -54,19 +57,55 @@
 #ActivityMain .expand {
 	background-image: url(../images/minus.png);
 }
+#ActivityMain .search-tool {
+	display: none;
+	float: left;
+}
 .group {
+	float: left;
 	margin: 10px;
+	width: 98%;
 }
 .cell {
 	float: left;
 	width: auto;
-	padding: 0 20px 0px 20px;
+	padding: 0px 20px 0px 20px;
+	color: #977f7f;
 }
 .cell input {
 	width: 140px;
 }
+.cell .checkbox {
+	width: auto;
+}
+.cell a {
+	color: #4E98BF;
+}
+.title .cell {
+	padding: 0px;
+}
+#ActivityMain .title .cell a {
+	font-size: 12px;
+	color: Blue;
+}
 .search-header {
 	clear: both;
-	margin: 10px;
 	float: left;
+	margin-left: 28px;
+	color: #977f7f;
+}
+input, select {
+	padding: 3px;
+}
+.grid input, .grid select {
+	width: 95%;
+}
+.loading {
+	margin-left: 435px;
+}
+.grid tbody tr.newrow {
+	background-color: #DCE6F2;
+}
+.act-group {
+	float: left; width:100%;
 }

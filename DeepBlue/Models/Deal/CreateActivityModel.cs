@@ -9,15 +9,18 @@ namespace DeepBlue.Models.Deal {
 
 		public CreateActivityModel() {
 			UnderlyingFundCapitalCallModel = new UnderlyingFundCapitalCallModel();
+			UnderlyingFundPostRecordCapitalCallModel = new UnderlyingFundPostRecordCapitalCallModel();
 			UnderlyingFundCashDistributionModel = new UnderlyingFundCashDistributionModel();
+			UnderlyingFundPostRecordCashDistributionModel = new UnderlyingFundPostRecordCashDistributionModel();
 		}
 
 		public UnderlyingFundCapitalCallModel UnderlyingFundCapitalCallModel { get; set; }
 
+		public UnderlyingFundPostRecordCapitalCallModel UnderlyingFundPostRecordCapitalCallModel { get; set; }
+
 		public UnderlyingFundCashDistributionModel UnderlyingFundCashDistributionModel { get; set; }
 
-		public List<UnderlyingFundCapitalCallList> UnderlyingFundCapitalCalls { get; set; }
-
-		public List<UnderlyingFundCashDistributionList> UnderlyingFundCashDistributions { get; set; }
+		public UnderlyingFundPostRecordCashDistributionModel UnderlyingFundPostRecordCashDistributionModel { get; set; }
+	
 	}
 }

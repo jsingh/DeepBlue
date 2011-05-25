@@ -10,6 +10,11 @@ namespace DeepBlue.Models.Deal {
 
 	public class UnderlyingFundActivityFields {
 
+		public UnderlyingFundActivityFields() {
+			UnderlyingFundId = 0;
+			FundId = 0;
+		}
+
 		[DisplayName("Post Record Date Transaction:")]
 		public bool? IsPostRecordDateTransaction { get; set; }
 

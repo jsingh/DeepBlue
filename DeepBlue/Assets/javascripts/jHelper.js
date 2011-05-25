@@ -44,7 +44,7 @@
 		return $.datepicker.formatDate('mm/dd/yy',dateobj);
 	}
 	,parseJSONDate: function (date) {
-		return eval('new'+date.toString().replace(/\//g,' '));
+		try { return eval('new'+date.toString().replace(/\//g,' ')); } catch(e) { return date; }
 	}
 	,dollarAmount: function (Num) { // idea by David Turley
 		dec=Num.indexOf(".");
@@ -139,7 +139,7 @@
 		$(iframe).dialog(param);
 	}
 	,formatDateTxt: function (target) {
-		$(".datefield",target).each(function () { if(this.value!="") { this.value=jHelper.formatDate(jHelper.parseJSONDate(this.value)); } });
+		$(".datefield",target).each(function () { if($.trim(this.value)!="") { this.value=jHelper.formatDate(jHelper.parseJSONDate(this.value)); } });
 	}
 	,checkValAttr: function (target) {
 		$("select",target).each(function () { var v=$(this).attr("val");if(v!="") { this.value=v; } });
@@ -162,9 +162,17 @@
 	}
 	,formatDateHtml: function (target) {
 		$(".dispdate",target).each(function () {
-			if($.trim(this.innerHTML)) {
-				this.innerHTML=jHelper.formatDate(jHelper.parseJSONDate(this.innerHTML));
+			if($.trim(this.innerHTML)!="") {
+				try {
+					this.innerHTML=jHelper.formatDate(jHelper.parseJSONDate(this.innerHTML));
+				} catch(e) { alert(e); }
 			}
+		});
+	}
+	,waterMark: function (target) {
+		$(".wm",target).each(function () {
+			var v=this.value;
+			$(this).focus(function () { this.value=""; }).blur(function () { if($.trim(this.value)=="") { this.value=v; } });
 		});
 	}
 }

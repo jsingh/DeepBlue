@@ -27,10 +27,13 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 			MockAdminRepository = new Mock<IAdminRepository>();
 
+			int totalRows = 0;
+
             // Spin up the controller with the mock http context, and the mock repository
 			DefaultController = new AdminController(MockAdminRepository.Object, MockTransactionRepository.Object);
             DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
-			MockTransactionRepository.Setup(x => x.GetAllFundNames()).Returns(new List<DeepBlue.Models.Entity.Fund>());   
+			MockTransactionRepository.Setup(x => x.GetAllFundNames()).Returns(new List<DeepBlue.Models.Entity.Fund>());
+			MockAdminRepository.Setup(x => x.GetAllFundClosings(1, 1, "FundClosingDate", "asc", ref totalRows)).Returns(new List<DeepBlue.Models.Entity.FundClosing>());
        
         }
 

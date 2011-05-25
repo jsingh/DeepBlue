@@ -28,9 +28,12 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 			MockAdminRepository = new Mock<IAdminRepository>();
 
+			int totalRows = 0;
+
             // Spin up the controller with the mock http context, and the mock repository
 			DefaultController = new AdminController(MockAdminRepository.Object, MockTransactionRepository.Object); 
             DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
+			MockAdminRepository.Setup(x => x.GetAllDealClosingCostTypes(1, 1, "DealClosingCostTypeID", "asc", ref totalRows)).Returns(new List<DeepBlue.Models.Entity.DealClosingCostType>());
         }
 
         [TearDown]
@@ -39,6 +42,13 @@ namespace DeepBlue.Tests.Controllers.Admin {
             DefaultController.Dispose();
             DefaultController = null;
         }
+
+		#region FindDealClosingCostType
+		[Test]
+		public void valid_Find_DealClosingCostType_sets_json_result_error() {
+			Assert.IsTrue((DefaultController.DealClosingCostTypeList(1, 1, "DealClosingCostTypeID", "asc") != null));
+		}
+		#endregion
 
     }
 }

@@ -153,6 +153,8 @@
     <Compile Include="Models\Deal\UnderlyingFundListModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Deal\UnderlyingFundPostRecordCapitalCallModel.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundPostRecordCashDistributionModel.cs" />
     <Compile Include="Models\Entity\DeepBlue.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -599,8 +601,11 @@
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
+    <Content Include="Assets\javascripts\DealActivityPRCashDistribution.js" />
     <Content Include="Assets\javascripts\DealActivity.js" />
     <Content Include="Assets\javascripts\DealActivityCapitalCall.js" />
+    <Content Include="Assets\javascripts\DealActivityCashDistribution.js" />
+    <Content Include="Assets\javascripts\DealActivityPRCapitalCall.js" />
     <Content Include="Assets\javascripts\IssuerFixedIncome.js" />
     <Content Include="Assets\javascripts\IssuerEquity.js" />
     <Content Include="Assets\javascripts\FixedIncomeType.js" />
@@ -741,8 +746,10 @@
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
     <Content Include="Views\Deal\Close.aspx" />
-    <Content Include="Views\Deal\CreateUnderlyingFundCapitalCall.ascx" />
-    <Content Include="Views\Deal\CreateUnderlyingFundCashDistribution.ascx" />
+    <Content Include="Views\Deal\UnderlyingFundPostRecordCashDistribution.ascx" />
+    <Content Include="Views\Deal\UnderlyingFundPostRecordCapitalCall.ascx" />
+    <Content Include="Views\Deal\UnderlyingFundCapitalCall.ascx" />
+    <Content Include="Views\Deal\UnderlyingFundCashDistribution.ascx" />
     <Content Include="Views\Deal\EditUnderlyingFundCashDistribution.aspx" />
     <Content Include="Views\Deal\EditDealClosing.aspx" />
     <Content Include="Views\Deal\EditUnderlyingFund.aspx" />

@@ -15,6 +15,7 @@ namespace DeepBlue.Controllers.Deal {
 		DealDetailModel FindDealDetail(int dealId);
 		IEnumerable<ErrorInfo> SaveDeal(Models.Entity.Deal deal);
 		List<AutoCompleteList> FindDeals(string dealName);
+		List<AutoCompleteList> FindDeals(int fundId, string dealName);
 		bool DealNameAvailable(string dealName, int dealId, int fundId);
 		int GetMaxDealNumber(int fundId);
 		List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
@@ -32,11 +33,12 @@ namespace DeepBlue.Controllers.Deal {
 		DealUnderlyingFundModel FindDealUnderlyingFundModel(int dealUnderlyingFundId);
 		List<DealUnderlyingFundDetail> GetAllDealUnderlyingFundDetails(int dealId);
 		List<DealUnderlyingFund> GetDealUnderlyingFunds(int dealId);
+		List<DealUnderlyingFund> GetDealUnderlyingFunds(int underlyingFundId, int dealId);
 		List<DealUnderlyingFund> GetAllDealUnderlyingFunds(int underlyingFundId, int fundId);
 		void DeleteDealUnderlyingFund(int dealUnderlyingFundId);
 		IEnumerable<ErrorInfo> SaveDealUnderlyingFund(DealUnderlyingFund dealUnderlyingFund);
-		IEnumerable<ErrorInfo> UpdatePostRecordDateDistribution(int underlyingFundId, int fundId);
-		IEnumerable<ErrorInfo> UpdatePostRecordDateCapitalCall(int underlyingFundId, int fundId);
+		//IEnumerable<ErrorInfo> UpdatePostRecordDateDistribution(int underlyingFundId, int fundId);
+		//IEnumerable<ErrorInfo> UpdatePostRecordDateCapitalCall(int underlyingFundId, int fundId);
 		#endregion
 
 		#region DealUnderlyingDirect
@@ -77,32 +79,36 @@ namespace DeepBlue.Controllers.Deal {
 		UnderlyingFundCashDistributionModel FindUnderlyingFundCashDistributionModel(int underlyingFundCashDistributionId);
 		UnderlyingFundCashDistribution FindUnderlyingFundCashDistribution(int underlyingFundCashDistributionId);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundCashDistribution(UnderlyingFundCashDistribution underlyingFundCashDistribution);
-		List<UnderlyingFundCashDistributionList> GetAllUnderlyingFundCashDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
-		UnderlyingFundCashDistributionList GetUnderlyingFundCashDistribution(int underlyingFundCashDitributionId);
+		List<UnderlyingFundCashDistributionModel> GetAllUnderlyingFundCashDistributions(int underlyingFundId);
 		bool DeleteUnderlyingFundCashDistribution(int id);
 		#endregion
 
-		#region CashDistribution
-		List<CashDistributionListModel> GetAllCashDistributions(int underlyingFundCashDistributionId);
-		CashDistribution FindCashDistribution(int underlyingFundCashDistributionId, int underlyingFundId, int dealId);
+		#region UnderlyingFundPostRecordCashDistribution
+		List<UnderlyingFundPostRecordCashDistributionModel> GetAllUnderlyingFundPostRecordCashDistributions(int underlyingFundId);
+		UnderlyingFundPostRecordCashDistributionModel FindUnderlyingFundPostRecordCashDistributionModel(int cashDistributionId);
+		CashDistribution FindUnderlyingFundPostRecordCashDistribution(int cashDistributionId);
+		CashDistribution FindUnderlyingFundPostRecordCashDistribution(int underlyingFundCashDistributionId, int underlyingFundId, int dealId);
+		IEnumerable<ErrorInfo> SaveUnderlyingFundPostRecordCashDistribution(CashDistribution cashDistribution);
 		decimal GetSumOfCashDistribution(int underlyingFundId, int dealId);
-		IEnumerable<ErrorInfo> SaveCashDistribution(CashDistribution cashDistribution);
+		bool DeleteUnderlyingFundPostRecordCashDistribution(int id);
 		#endregion
 
 		#region UnderlyingFundCapitalCall
 		UnderlyingFundCapitalCallModel FindUnderlyingFundCapitalCallModel(int underlyingFundCapitalCallId);
 		UnderlyingFundCapitalCall FindUnderlyingFundCapitalCall(int underlyingFundCapitalCallId);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundCapitalCall(UnderlyingFundCapitalCall underlyingFundCapitalCall);
-		List<UnderlyingFundCapitalCallList> GetAllUnderlyingFundCapitalCalls(int underlyingFundId);
-		UnderlyingFundCapitalCallList GetUnderlyingFundCapitalCall(int underlyingFundCapitalCallId);
+		List<UnderlyingFundCapitalCallModel> GetAllUnderlyingFundCapitalCalls(int underlyingFundId);
 		bool DeleteUnderlyingFundCapitalCall(int id);
 		#endregion
 
-		#region UnderlyingFundCapitalCallLineItem
-		//List<CashDistributionListModel> GetAllCashDistributions(int underlyingFundCashDistributionId);
-		UnderlyingFundCapitalCallLineItem FindUnderlyingFundCapitalCallLineItem(int underlyingFundCapitalCallId, int underlyingFundId, int dealId);
+		#region UnderlyingFundPostRecordCapitalCall
+		UnderlyingFundPostRecordCapitalCallModel FindUnderlyingFundPostRecordCapitalCallModel(int underlyingFundCapitalCallLineItemId);
+		UnderlyingFundCapitalCallLineItem FindUnderlyingFundPostRecordCapitalCall(int underlyingFundCapitalCallLineItemId);
+		UnderlyingFundCapitalCallLineItem FindUnderlyingFundPostRecordCapitalCall(int underlyingFundCapitalCallId, int underlyingFundId, int dealId);
+		IEnumerable<ErrorInfo> SaveUnderlyingFundPostRecordCapitalCall(UnderlyingFundCapitalCallLineItem underlyingFundCapitalCallLineItem);
+		List<UnderlyingFundPostRecordCapitalCallModel> GetAllUnderlyingFundPostRecordCapitalCalls(int underlyingFundId);
 		decimal GetSumOfUnderlyingFundCapitalCallLineItem(int underlyingFundId, int dealId);
-		IEnumerable<ErrorInfo> SaveUnderlyingFundCapitalCallLineItem(UnderlyingFundCapitalCallLineItem underlyingFundCapitalCallLineItem);
+		bool DeleteUnderlyingFundPostRecordCapitalCall(int id);
 		#endregion
 	}
 }

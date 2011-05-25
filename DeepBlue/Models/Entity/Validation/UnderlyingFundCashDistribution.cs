@@ -46,14 +46,7 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-
-			[Required(ErrorMessage = "Paid Date is required")]
-			[DateRange()]
-			public global::System.DateTime PaidDate {
-				get;
-				set;
-			}
-
+			 
 			[Required(ErrorMessage = "Received Date is required")]
 			[DateRange()]
 			public global::System.DateTime ReceivedDate {

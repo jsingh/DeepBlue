@@ -28,11 +28,14 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 			MockAdminRepository = new Mock<IAdminRepository>();
 
+			int totalRows = 0;
+
             // Spin up the controller with the mock http context, and the mock repository
 			DefaultController = new AdminController(MockAdminRepository.Object, MockTransactionRepository.Object); 
             DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
 			MockAdminRepository.Setup(x=>x.GetAllCommunicationGroupings ()).Returns(new List<DeepBlue.Models.Entity.CommunicationGrouping>());
-			
+			MockAdminRepository.Setup(x => x.GetAllCommunicationTypes(1, 1, "CommunicationTypeName", "asc", ref totalRows)).Returns(new List<DeepBlue.Models.Entity.CommunicationType>());
+						
         }
 
         [TearDown]
@@ -44,7 +47,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindCommunicationType
 		[Test]
-		public void valid_Find_DataType_sets_json_result_error() {
+		public void valid_Find_CommunicationType_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.CommunicationTypeList(1, 1, "CommunicationTypeName", "asc") != null));
 		}
 		#endregion

@@ -6,7 +6,7 @@
 	display: none;
 }
 .show {
-	display: block;
+	display: inline-block;
 }
 body {
 	color: #A6A6A6;
