@@ -19,7 +19,7 @@ namespace DeepBlue.Models.Deal {
 		public bool? IsPostRecordDateTransaction { get; set; }
 
 		[Required(ErrorMessage = "Amount is required")]
-		[Range((double)1, (double)decimal.MaxValue, ErrorMessage = "Amount is required")]
+		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Amount is required")]
 		[DisplayName("Amount:")]
 		public decimal? Amount { get; set; }
 

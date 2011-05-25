@@ -31,19 +31,19 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "FundNav is required")]
+            [Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "FundNav is required")]
 			public global::System.Decimal FundNav {
 				get;
 				set;
 			}
 
-			[Range((double)0, (double)100, ErrorMessage = "Percent is required")]
+            [Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Percent is required")]
 			public global::System.Decimal Percent {
 				get;
 				set;
 			}
 
-			[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "CommittedAmount is required")]
+            [Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "CommittedAmount is required")]
 			public global::System.Decimal CommittedAmount {
 				get;
 				set;
