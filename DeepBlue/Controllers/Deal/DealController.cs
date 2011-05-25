@@ -648,9 +648,9 @@ namespace DeepBlue.Controllers.Deal {
 				case ExportType.Word:
 					result = new ExportWordResult(url, "DealReport.doc");
 					break;
-				case ExportType.Pdf:
+				/*case ExportType.Pdf:
 					result = new ExportPdfResult(url, "DealReport.pdf");
-					break;
+					break; */
 			}
 			return result;
 		}

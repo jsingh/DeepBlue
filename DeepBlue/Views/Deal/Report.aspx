@@ -63,7 +63,7 @@
 			<li>
 				<%:Html.Anchor("Word", "javascript:dealReport.exportDeal(1);")%></li>
 			<li>
-				<%:Html.Anchor("Pdf", "javascript:dealReport.exportDeal(2);")%></li>
+				<%:Html.Anchor("Pdf", "#")%></li>
 			<li>
 				<%:Html.Anchor("Print", "javascript:dealReport.exportDeal(3);")%></li>
 		</ul>
