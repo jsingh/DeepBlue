@@ -200,12 +200,13 @@ namespace DeepBlue.Controllers.Deal {
 
 		private IQueryable<DealUnderlyingFundModel> GetDealUnderlyingFundModel(DeepBlueEntities context, IQueryable<DealUnderlyingFund> dealUnderlyingFunds) {
 			return (from fund in dealUnderlyingFunds
+					join fundNAV in context.UnderlyingFundNAVs on new { fund.UnderlyingFundID, fund.Deal.FundID } equals new { fundNAV.UnderlyingFundID, fundNAV.FundID } into underlyingFundNAVS
+					from fundNAV in underlyingFundNAVS.DefaultIfEmpty()
 					select new DealUnderlyingFundModel {
 						CommittedAmount = fund.CommittedAmount,
 						DealId = fund.DealID,
 						DealUnderlyingFundId = fund.DealUnderlyingtFundID,
 						FundName = fund.UnderlyingFund.FundName,
-						FundNav = fund.FundNav,
 						Percent = fund.Percent,
 						RecordDate = fund.RecordDate,
 						UnderlyingFundId = fund.UnderlyingFundID,
@@ -214,15 +215,16 @@ namespace DeepBlue.Controllers.Deal {
 						UnfundedAmount = fund.UnfundedAmount,
 						PostRecordDateCapitalCall = fund.PostRecordDateCapitalCall,
 						PostRecordDateDistribution = fund.PostRecordDateDistribution,
-						DealClosingId = fund.DealClosingID
+						DealClosingId = fund.DealClosingID,
+						FundNAV = underlyingFundNAVS.FirstOrDefault().FundNAV
 					});
 		}
 
 		public DealUnderlyingFund FindDealUnderlyingFund(int dealUnderlyingFundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.DealUnderlyingFunds
-							  .Include("UnderlyingFund")
-							  .Where(dealUnderlyingFund => dealUnderlyingFund.DealUnderlyingtFundID == dealUnderlyingFundId).SingleOrDefault();
+					.Include("Deal")
+					.Where(dealUnderlyingFund => dealUnderlyingFund.DealUnderlyingtFundID == dealUnderlyingFundId).SingleOrDefault();
 			}
 		}
 
@@ -253,7 +255,6 @@ namespace DeepBlue.Controllers.Deal {
 						select new DealUnderlyingFundDetail {
 							Commitment = dealUnderlyingFund.CommittedAmount,
 							FundName = dealUnderlyingFund.UnderlyingFund.FundName,
-							NAV = dealUnderlyingFund.FundNav,
 							RecordDate = dealUnderlyingFund.RecordDate
 						}).ToList();
 			}
@@ -297,7 +298,7 @@ namespace DeepBlue.Controllers.Deal {
 			return errorInfo;
 		}
 
-	 
+
 		#endregion
 
 		#region DealUnderlyingDirect
@@ -419,7 +420,7 @@ namespace DeepBlue.Controllers.Deal {
 												  DealId = dealClosing.DealID,
 												  DealNumber = dealClosing.DealNumber,
 												  DealClosingId = dealClosing.DealClosingID,
-												  IsFinalClose = dealClosing.IsFinalClose ?? false
+												  IsFinalClose = dealClosing.IsFinalClose
 											  }).SingleOrDefault();
 				if (model == null) {
 					model = new CreateDealCloseModel();
@@ -520,7 +521,6 @@ namespace DeepBlue.Controllers.Deal {
 												select new DealUnderlyingFundDetail {
 													Commitment = fund.CommittedAmount,
 													FundName = fund.UnderlyingFund.FundName,
-													NAV = fund.FundNav,
 													RecordDate = fund.RecordDate
 												}).ToList();
 					deal.DealUnderlyingDirects = (from dealUnderlyingDirect in context.DealUnderlyingDirects
@@ -903,7 +903,7 @@ namespace DeepBlue.Controllers.Deal {
 														&& lineItem.DealID == dealId).SingleOrDefault();
 			}
 		}
-		
+
 		public IEnumerable<ErrorInfo> SaveUnderlyingFundPostRecordCapitalCall(UnderlyingFundCapitalCallLineItem underlyingFundCapitalCallLineItem) {
 			return underlyingFundCapitalCallLineItem.Save();
 		}
@@ -920,12 +920,12 @@ namespace DeepBlue.Controllers.Deal {
 				if (underlyingFundCapitalCallLineItem != null) {
 					context.UnderlyingFundCapitalCallLineItems.DeleteObject(underlyingFundCapitalCallLineItem);
 					context.SaveChanges();
-					List<DealUnderlyingFund> dealUnderlyingFunds = context.DealUnderlyingFunds.Where(fund => fund.UnderlyingFundID == underlyingFundCapitalCallLineItem.UnderlyingFundID && fund.DealID == underlyingFundCapitalCallLineItem.DealID).ToList();				
+					List<DealUnderlyingFund> dealUnderlyingFunds = context.DealUnderlyingFunds.Where(fund => fund.UnderlyingFundID == underlyingFundCapitalCallLineItem.UnderlyingFundID && fund.DealID == underlyingFundCapitalCallLineItem.DealID).ToList();
 					foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
 						if (dealUnderlyingFund.DealClosingID == null) {
 							dealUnderlyingFund.PostRecordDateCapitalCall = GetSumOfUnderlyingFundCapitalCallLineItem(dealUnderlyingFund.UnderlyingFundID, dealUnderlyingFund.DealID);
 							dealUnderlyingFund.UnfundedAmount = dealUnderlyingFund.CommittedAmount - dealUnderlyingFund.PostRecordDateCapitalCall;
-   						    dealUnderlyingFund.Save();
+							dealUnderlyingFund.Save();
 						}
 					}
 					return true;
@@ -961,5 +961,98 @@ namespace DeepBlue.Controllers.Deal {
 
 		#endregion
 
+		#region UnderlyingFundValuation
+
+		public List<UnderlyingFundValuationModel> GetAllUnderlyingFundValuations(int underlyingFundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return GetUnderlyingFundValuationModel(context, context.UnderlyingFundNAVs.Where(fundNAV => fundNAV.UnderlyingFundID == underlyingFundId)).ToList();
+			}
+		}
+
+		public UnderlyingFundValuationModel FindUnderlyingFundValuationModel(int underlyingFundNAVId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return GetUnderlyingFundValuationModel(context, context.UnderlyingFundNAVs.Where(fundNAV => fundNAV.UnderlyingFundNAVID == underlyingFundNAVId)).FirstOrDefault();
+			}
+		}
+
+		public bool DeleteUnderlyingFundValuation(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				UnderlyingFundNAV underlyingFundNAV = context.UnderlyingFundNAVs.Where(fundNAV => fundNAV.UnderlyingFundNAVID == id).SingleOrDefault();
+				if (underlyingFundNAV != null) {
+					List<UnderlyingFundNAVHistory> underlyingFundNAVHistories = underlyingFundNAV.UnderlyingFundNAVHistories.ToList();
+					foreach (var navHistory in underlyingFundNAVHistories) {
+						context.UnderlyingFundNAVHistories.DeleteObject(navHistory);
+					}
+					context.UnderlyingFundNAVs.DeleteObject(underlyingFundNAV);
+					context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
+		}
+
+		public UnderlyingFundNAV FindUnderlyingFundNAV(int underlyingFundId, int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.UnderlyingFundNAVs.Where(fundNAV => fundNAV.UnderlyingFundID == underlyingFundId && fundNAV.FundID == fundId).SingleOrDefault();
+			}
+		}
+
+		public decimal SumOfTotalCapitalCalls(int underlyingFundId, int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<UnderlyingFundCapitalCall> underlyingFundCapitalCalls = context.UnderlyingFundCapitalCalls.Where(capitalCall => capitalCall.UnderlyingFundID == underlyingFundId && capitalCall.FundID == fundId);
+				return (underlyingFundCapitalCalls.Count() > 0 ? underlyingFundCapitalCalls.Sum(capitalCall => capitalCall.Amount) : 0);
+			}
+		}
+
+		public decimal SumOfTotalDistributions(int underlyingFundId, int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<UnderlyingFundCashDistribution> underlyingFundCashDistributions = context.UnderlyingFundCashDistributions.Where(distribution => distribution.UnderlyingFundID == underlyingFundId && distribution.FundID == fundId);
+				return (underlyingFundCashDistributions.Count() > 0 ? underlyingFundCashDistributions.Sum(capitalCall => capitalCall.Amount) : 0);
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveUnderlyingFundNAV(UnderlyingFundNAV underlyingFundNAV) {
+			return underlyingFundNAV.Save();
+		}
+
+		private IQueryable<UnderlyingFundValuationModel> GetUnderlyingFundValuationModel(DeepBlueEntities context, IQueryable<UnderlyingFundNAV> underlyingFundNAVs) {
+			return (from underlyingFundNAV in underlyingFundNAVs
+					join capitalCall in context.UnderlyingFundCapitalCalls on new {
+						underlyingFundNAV.UnderlyingFundID,
+						underlyingFundNAV.FundID
+					} equals new { capitalCall.UnderlyingFundID, capitalCall.FundID } into capitalCalls
+					join distribution in context.UnderlyingFundCashDistributions on new {
+						underlyingFundNAV.UnderlyingFundID,
+						underlyingFundNAV.FundID
+					} equals new {
+						distribution.UnderlyingFundID,
+						distribution.FundID
+					}
+					into distributions
+					from capitalCall in capitalCalls.DefaultIfEmpty()
+					from distribution in distributions.DefaultIfEmpty()
+					select new UnderlyingFundValuationModel {
+						FundId = underlyingFundNAV.Fund.FundID,
+						FundName = underlyingFundNAV.Fund.FundName,
+						FundNAV = underlyingFundNAV.FundNAV,
+						FundNAVDate = underlyingFundNAV.FundNAVDate,
+						TotalCapitalCall = (capitalCalls.Count() > 0 ? capitalCalls.Sum(cc => cc.Amount) : 0),
+						TotalDistribution = (distributions.Count() > 0 ? distributions.Sum(ds => ds.Amount) : 0),
+						UnderlyingFundId = underlyingFundNAV.UnderlyingFundID,
+						UnderlyingFundName = underlyingFundNAV.UnderlyingFund.FundName,
+						UnderlyingFundNAVId = underlyingFundNAV.UnderlyingFundNAVID,
+						UpdateNAV = underlyingFundNAV.FundNAV
+					});
+		}
+
+		#endregion
+
+		#region UnderlyingFundNAVHistory
+
+		public IEnumerable<ErrorInfo> SaveUnderlyingFundNAVHistory(UnderlyingFundNAVHistory underlyingFundNAVHistroy) {
+			return underlyingFundNAVHistroy.Save();
+		}
+
+		#endregion
 	}
 }

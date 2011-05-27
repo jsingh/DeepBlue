@@ -24,7 +24,7 @@ namespace DeepBlue.Models.Deal {
 		public int DealId { get; set; }
 
 		[Required(ErrorMessage = "Distribution Amount is required")]
-		[Range((double)1, (double)decimal.MaxValue, ErrorMessage = "Distribution Amount is required")]
+		[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "Distribution Amount is required")]
 		public decimal? Amount { get; set; }
 
 		public DateTime? DistributionDate { get; set; }

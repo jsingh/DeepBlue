@@ -9,18 +9,9 @@
 		tr.remove();
 	}
 	tr=$("#UnderlyingFund_"+data.DealUnderlyingFundId,tbody);
-	var amount;
-	amount = parseFloat(data.CommittedAmount);	if(isNaN(amount)) { data.CommittedAmount=0; }
-	amount = parseFloat(data.UnfundedAmount);	if(isNaN(amount)) { data.UnfundedAmount=0; }
-	amount = parseFloat(data.GrossPurchasePrice);	if(isNaN(amount)) { data.GrossPurchasePrice=0; }
-	amount = parseFloat(data.ReassignedGPP);	if(isNaN(amount)) { data.ReassignedGPP=0; }
-	$("#SpnCommittedAmount",tr).html(jHelper.dollarAmount(data.CommittedAmount.toString()));
-	$("#SpnUnfundedAmount",tr).html(jHelper.dollarAmount(data.UnfundedAmount.toString()));
-	$("#SpnGrossPurchasePrice",tr).html(jHelper.dollarAmount(data.GrossPurchasePrice.toString()));
-	$("#SpnReassignedGPP",tr).html(jHelper.dollarAmount(data.ReassignedGPP.toString()));
-	var date=jHelper.formatDate(jHelper.parseJSONDate(data.RecordDate));
-	$("#SpnRecordDate",tr).html(date);
-	$(":input[name='RecordDate']",tr).val(date);
+	jHelper.formatDollar(tr);
+	jHelper.formatDateTxt(tr);
+	jHelper.formatDateHtml(tr);
 	deal.selectValue(tr);
 	jHelper.applyDatePicker(tr);
 	deal.setIndex($("#tblUnderlyingFund"));

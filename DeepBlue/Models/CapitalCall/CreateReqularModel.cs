@@ -15,7 +15,7 @@ namespace DeepBlue.Models.CapitalCall {
 
 		[DisplayName("Capital Amount:")]
 		[Required(ErrorMessage = "Capital Call Amount is required")]
-		[Range((double)1, (double)decimal.MaxValue, ErrorMessage = "Capital Call Amount is required")]
+		[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "Capital Call Amount is required")]
 		public decimal CapitalAmountCalled { get; set; }
 
 		public string CapitalCallNumber { get; set; }
@@ -32,7 +32,7 @@ namespace DeepBlue.Models.CapitalCall {
 
 		[DisplayName("New Investment Amount:")]
 		[Required(ErrorMessage = "New Investment Amount is required")]
-		[Range((double)1, (double)decimal.MaxValue, ErrorMessage = "New Investment Amount is required")]
+		[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "New Investment Amount is required")]
 		public decimal NewInvestmentAmount { get; set; }
 
 		[DisplayName("Existing Investment Amount:")]

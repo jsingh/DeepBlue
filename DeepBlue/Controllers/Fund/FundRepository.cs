@@ -9,7 +9,7 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Controllers.Fund {
 	public class FundRepository : IFundRepository {
 
-		#region IFundRepository Members
+		#region Fund
 
 		public List<FundListModel> GetAllFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -32,10 +32,10 @@ namespace DeepBlue.Controllers.Fund {
 			Helpers.FundLists funds = new Helpers.FundLists();
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<Helpers.FundList> fundListQuery = (from fund in context.Funds
-															  select new Helpers.FundList {  
-																		   FundId = fund.FundID,
-																		   FundName = fund.FundName
-																	   });
+															  select new Helpers.FundList {
+																  FundId = fund.FundID,
+																  FundName = fund.FundName
+															  });
 				fundListQuery = fundListQuery.OrderBy("FundName", true);
 				PaginatedList<Helpers.FundList> paginatedList = new PaginatedList<Helpers.FundList>(fundListQuery, pageIndex, pageSize);
 				funds.TotalPages = paginatedList.TotalPages;
@@ -53,6 +53,37 @@ namespace DeepBlue.Controllers.Fund {
 							  .Include("FundRateSchedules")
 							  .Include("InvestorFunds")
 							  .SingleOrDefault(fund => fund.FundID == fundId);
+			}
+		}
+
+		public List<AutoCompleteList> FindDealFunds(int underlyingFundId, string fundName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.Funds
+															  join deal in context.Deals on fund.FundID equals deal.FundID
+															  join dealUnderlyingFund in context.DealUnderlyingFunds on deal.DealID equals dealUnderlyingFund.DealID
+															  where fund.FundName.Contains(fundName) && dealUnderlyingFund.UnderlyingFundID == underlyingFundId
+															  group fund by fund.FundID into funds
+															  orderby funds.FirstOrDefault().FundName
+															  select new AutoCompleteList {
+																  id = funds.FirstOrDefault().FundID,
+																  label = funds.FirstOrDefault().FundName,
+																  value = funds.FirstOrDefault().FundName
+															  });
+				return new PaginatedList<AutoCompleteList>(fundListQuery, 1, 20);
+			}
+		}
+
+		public List<AutoCompleteList> FindFunds(string fundName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.Funds
+															  where fund.FundName.Contains(fundName)
+															  orderby fund.FundName
+															  select new AutoCompleteList {
+																  id = fund.FundID,
+																  label = fund.FundName,
+																  value = fund.FundName
+															  });
+				return new PaginatedList<AutoCompleteList>(fundListQuery, 1, 20);
 			}
 		}
 
@@ -76,19 +107,16 @@ namespace DeepBlue.Controllers.Fund {
 			}
 		}
 
-		public List<AutoCompleteList> FindFunds(string fundName) {
+		public decimal FindTotalCommittedAmount(int fundId, int investorTypeId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.Funds
-						where fund.FundName.Contains(fundName)
-						orderby fund.FundName
-						select new AutoCompleteList {
-							id = fund.FundID,
-							label = fund.FundName,
-							value = fund.FundName
-						});
-				return new PaginatedList<AutoCompleteList>(fundListQuery, 1, 20);
+				return context.InvestorFunds.Where(investorFund => investorFund.InvestorTypeId == investorTypeId && investorFund.FundID == fundId).Sum(invfund => invfund.TotalCommitment);
 			}
 		}
+
+		#endregion
+
+
+		#region Fund Rate Schedules
 
 		public List<FundRateSchedule> GetAllFundRateSchdules(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -155,12 +183,7 @@ namespace DeepBlue.Controllers.Fund {
 			}
 		}
 
-		public decimal FindTotalCommittedAmount(int fundId, int investorTypeId) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.InvestorFunds.Where(investorFund => investorFund.InvestorTypeId == investorTypeId && investorFund.FundID == fundId).Sum(invfund => invfund.TotalCommitment);
-			}
-		}
-
 		#endregion
+
 	}
 }

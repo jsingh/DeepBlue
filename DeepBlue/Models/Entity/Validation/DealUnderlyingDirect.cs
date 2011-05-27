@@ -24,13 +24,13 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "FMV is required")]
+			[Range(typeof(decimal),"0", "79228162514264337593543950335", ErrorMessage = "FMV is required")]
 			public global::System.Decimal FMV {
 				get;
 				set;
 			}
 
-			[Range((double)0, (double)100, ErrorMessage = "Percent is required")]
+			[Range(typeof(decimal),"0", "100", ErrorMessage = "Percent is required")]
 			public global::System.Decimal Percent {
 				get;
 				set;

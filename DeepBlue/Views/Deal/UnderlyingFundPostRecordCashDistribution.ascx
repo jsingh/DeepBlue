@@ -22,9 +22,10 @@
 	</td>
 	<td style="text-align: right">
 		<%: Html.Hidden("CashDistributionId","${CashDistributionId}")%>
+		<%: Html.Hidden("UnderlyingFundId", "${UnderlyingFundId}")%>
 		<%: Html.Span("", new { id = "UpdateLoading" })%>
 		<%: Html.Image("tick.png", new { @id = "add", @class = "default-button {{if CashDistributionId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addPRCD(this,${CashDistributionId});" })%>
-		{{if CashDistributionId>0}} &nbsp;&nbsp;<%: Html.Image("Edit.png", new { @class = "default-button show", @onclick = "javascript:dealActivity.editPRCD(this,${CashDistributionId});" })%>&nbsp;&nbsp;<%: Html.Image("Delete.png", new { @class = "default-button", @onclick="javascript:dealActivity.deletePRCD(${CashDistributionId},this);" })%>
+		{{if CashDistributionId>0}} &nbsp;&nbsp;<%: Html.Image("Edit.png", new { @class = "default-button show", @onclick = "javascript:dealActivity.editPRCD(this,${CashDistributionId});" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @class = "default-button", @onclick="javascript:dealActivity.deletePRCD(${CashDistributionId},this);" })%>
 		{{/if}}
 	</td>
 </tr>

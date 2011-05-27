@@ -28,7 +28,7 @@ namespace DeepBlue.Models.Deal {
 		public string DealName { get; set; }
 		
 		[Required(ErrorMessage = "Capital Call Amount is required")]
-		[Range((double)1, (double)decimal.MaxValue, ErrorMessage = "Capital Call Amount is required")]
+		[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "Capital Call Amount is required")]
 		public decimal? Amount { get; set; }
 
 		[Required(ErrorMessage = "Received Date is required")]

@@ -10,14 +10,16 @@ namespace DeepBlue.Controllers.Fund {
 
 	public interface IFundRepository {
 
-		#region EntiryType
+		#region Fund
 		List<FundListModel> GetAllFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		Helpers.FundLists GetAllFunds(int pageIndex, int pageSize);
 		Models.Entity.Fund FindFund(int fundId);
 		List<AutoCompleteList> FindFunds(string fundName);
+		List<AutoCompleteList> FindDealFunds(int underlyingFundId, string fundName);
 		bool TaxIdAvailable(string taxId, int fundId);
 		bool FundNameAvailable(string fundName, int fundId);
-		decimal FindTotalCommittedAmount(int fundId,int investorTypeId);
+		decimal FindTotalCommittedAmount(int fundId, int investorTypeId);
+		IEnumerable<ErrorInfo> SaveFund(Models.Entity.Fund fund);
 		#endregion
 
 		#region Fund Rate Schedules
@@ -28,13 +30,6 @@ namespace DeepBlue.Controllers.Fund {
 		FundRateSchedule FindRateSchedule(int id);
 		ManagementFeeRateSchedule FindManagementFeeRateSchedule(int id);
 		ManagementFeeRateScheduleTier FindManagementFeeRateScheduleTier(int id);
-		#endregion
-
-		#region Save Fund
-		IEnumerable<ErrorInfo> SaveFund(Models.Entity.Fund fund);
-		#endregion
-
-		#region Save Fund ManagementFeeRateSchedule
 		IEnumerable<ErrorInfo> SaveManagementFeeRateSchedule(ManagementFeeRateSchedule managementFeeRateSchedule);
 		#endregion
 	}

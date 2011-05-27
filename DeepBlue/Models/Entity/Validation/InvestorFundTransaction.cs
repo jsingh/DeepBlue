@@ -48,7 +48,7 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			[Required(ErrorMessage = "Amount is required")]
-			[Range(1, (double)decimal.MaxValue, ErrorMessage = "Amount is required")]
+			[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "Amount is required")]
 			public global::System.Decimal Amount {
 				get;
 				set;

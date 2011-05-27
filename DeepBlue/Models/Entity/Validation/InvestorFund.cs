@@ -41,7 +41,7 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			[Required(ErrorMessage="Total Commitment is required")]
-			[Range(1, (double)decimal.MaxValue, ErrorMessage = "Total Commitment is required")]
+			[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "Total Commitment is required")]
 			public global::System.Decimal TotalCommitment {
 				get;
 				set;

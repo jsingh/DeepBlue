@@ -21,7 +21,7 @@ namespace DeepBlue.Models.CapitalCall {
 
 		[DisplayName("Distribution Amount:")]
 		[Required(ErrorMessage = "Distribution Amount is required")]
-		[Range((double)1, (double)decimal.MaxValue, ErrorMessage = "Distribution Amount is required")]
+		[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "Distribution Amount is required")]
 		public decimal DistributionAmount { get; set; }
 
 		[DisplayName("Distribution Date:")]

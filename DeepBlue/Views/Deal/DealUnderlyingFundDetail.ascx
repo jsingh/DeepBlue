@@ -50,7 +50,7 @@
 					<%: Html.DropDownList("UnderlyingFundID", Model.UnderlyingFunds)%>
 				</td>
 				<td style="text-align: center">
-					<%: Html.TextBox("FundNav", "",new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+					<%: Html.TextBox("FundNAV", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td style="text-align: center">
 					<%: Html.TextBox("Percent", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
@@ -59,7 +59,7 @@
 					<%: Html.TextBox("CommittedAmount", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td style="text-align: center">
-					<%: Html.TextBox("UnfundedAmount", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+					<%: Html.TextBox("UnfundedAmount", "", new { @readonly="readonly", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td style="text-align: center">
 					<%: Html.TextBox("GrossPurchasePrice", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>

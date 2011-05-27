@@ -151,6 +151,7 @@
     </Compile>
     <Compile Include="Models\Deal\UnderlyingFundPostRecordCapitalCallModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundPostRecordCashDistributionModel.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundValuationModel.cs" />
     <Compile Include="Models\Entity\DeepBlue.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -159,9 +160,13 @@
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingFundNAVHistoryService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
     <Compile Include="Models\Entity\Validation\CashDistribution.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundCapitalCall.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundCapitalCallLineItem.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingFundNAV.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingFundNAVHistory.cs" />
     <Compile Include="Models\Fund\Enums.cs" />
     <Compile Include="Controllers\Fund\FundRepository.cs" />
     <Compile Include="Controllers\Fund\FundController.cs" />
@@ -597,6 +602,7 @@
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
+    <Content Include="Assets\javascripts\DealActivityUFValuation.js" />
     <Content Include="Assets\javascripts\DealActivityPRCashDistribution.js" />
     <Content Include="Assets\javascripts\DealActivity.js" />
     <Content Include="Assets\javascripts\DealActivityCapitalCall.js" />
@@ -742,14 +748,13 @@
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
     <Content Include="Views\Deal\Close.aspx" />
+    <Content Include="Views\Deal\UnderlyingFundValuation.ascx" />
     <Content Include="Views\Deal\UnderlyingFundPostRecordCashDistribution.ascx" />
     <Content Include="Views\Deal\UnderlyingFundPostRecordCapitalCall.ascx" />
     <Content Include="Views\Deal\UnderlyingFundCapitalCall.ascx" />
     <Content Include="Views\Deal\UnderlyingFundCashDistribution.ascx" />
-    <Content Include="Views\Deal\EditUnderlyingFundCashDistribution.aspx" />
     <Content Include="Views\Deal\EditDealClosing.aspx" />
     <Content Include="Views\Deal\EditUnderlyingFund.aspx" />
-    <Content Include="Views\Deal\EditUnderlyingFundCapitalCall.aspx" />
     <Content Include="Views\Deal\ExportDetail.aspx" />
     <Content Include="Views\Deal\DealDocumentDetail.ascx" />
     <Content Include="Views\Deal\DealExpenseDetail.ascx" />

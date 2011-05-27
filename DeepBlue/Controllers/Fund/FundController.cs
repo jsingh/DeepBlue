@@ -62,6 +62,16 @@ namespace DeepBlue.Controllers.Fund {
 		}
 
 		//
+		// GET: /Fund/FindDealFunds
+		[HttpGet]
+		public JsonResult FindDealFunds(int underlyingFundId, string term) {
+			if (underlyingFundId > 0)
+				return Json(FundRepository.FindDealFunds(underlyingFundId, term), JsonRequestBehavior.AllowGet);
+			else
+				return FindFunds(term);
+		}
+
+		//
 		// GET: /Fund/New
 		public ActionResult New() {
 			CreateModel model = new CreateModel();

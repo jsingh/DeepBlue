@@ -42,6 +42,7 @@ dealActivity.makeNewPRCC=function () {
 			$("#PRCapitalCallAddTemplate").tmpl(data).appendTo(bdy);
 		}
 		newRow=$("#UFPRCC_0",bdy);
+		$("#UnderlyingFundId",newRow).val(ufid);
 		dealActivity.editRow(newRow);
 		dealActivity.setUpRow(newRow);
 	}
@@ -58,7 +59,6 @@ dealActivity.addPRCC=function (img,id) {
 	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 	var url="/Deal/CreateUnderlyingFundPostRecordCapitalCall";
 	var param=jHelper.serialize(tr);
-	param[param.length]={ name: "UnderlyingFundId",value: dealActivity.getCCUnderlyingFund() };
 	$.post(url,param,function (data) {
 		loading.empty();
 		var arr=data.split("||");

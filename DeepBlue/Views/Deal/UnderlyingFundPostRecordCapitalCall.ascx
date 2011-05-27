@@ -22,9 +22,10 @@
 	</td>
 	<td style="text-align: right">
 		<%: Html.Hidden("UnderlyingFundCapitalCallLineItemId","${UnderlyingFundCapitalCallLineItemId}")%>
+		<%: Html.Hidden("UnderlyingFundId", "${UnderlyingFundId}")%>
 		<%: Html.Span("", new { id = "UpdateLoading" })%>
 		<%: Html.Image("tick.png", new { @id = "add", @class = "default-button {{if UnderlyingFundCapitalCallLineItemId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addPRCC(this,${UnderlyingFundCapitalCallLineItemId});" })%>
-		{{if UnderlyingFundCapitalCallLineItemId>0}} &nbsp;&nbsp;<%: Html.Image("Edit.png", new { @class = "default-button show", @onclick = "javascript:dealActivity.editPRCC(this,${UnderlyingFundCapitalCallLineItemId});" })%>&nbsp;&nbsp;<%: Html.Image("Delete.png", new { @class = "default-button", @onclick="javascript:dealActivity.deletePRCC(${UnderlyingFundCapitalCallLineItemId},this);" })%>
+		{{if UnderlyingFundCapitalCallLineItemId>0}} &nbsp;&nbsp;<%: Html.Image("Edit.png", new { @class = "default-button show", @onclick = "javascript:dealActivity.editPRCC(this,${UnderlyingFundCapitalCallLineItemId});" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @class = "default-button", @onclick="javascript:dealActivity.deletePRCC(${UnderlyingFundCapitalCallLineItemId},this);" })%>
 		{{/if}}
 	</td>
 </tr>

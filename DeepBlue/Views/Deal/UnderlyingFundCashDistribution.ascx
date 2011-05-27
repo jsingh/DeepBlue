@@ -33,9 +33,10 @@
 	</td>
 	<td style="text-align: right">
 		<%: Html.Hidden("UnderlyingFundCashDistributionId","${UnderlyingFundCashDistributionId}")%>
+		<%: Html.Hidden("UnderlyingFundId", "${UnderlyingFundId}")%>
 		<%: Html.Span("", new { id = "UpdateLoading" })%>
 		<%: Html.Image("tick.png", new { @id = "add", @class = "default-button {{if UnderlyingFundCashDistributionId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addCD(this,${UnderlyingFundCashDistributionId});" })%>
-		{{if UnderlyingFundCashDistributionId>0}} &nbsp;&nbsp;<%: Html.Image("Edit.png", new { @class = "default-button show", @onclick = "javascript:dealActivity.editCD(this,${UnderlyingFundCashDistributionId});" })%>&nbsp;&nbsp;<%: Html.Image("Delete.png", new { @class = "default-button", @onclick="javascript:dealActivity.deleteCD(${UnderlyingFundCashDistributionId},this);" })%>
+		{{if UnderlyingFundCashDistributionId>0}} &nbsp;&nbsp;<%: Html.Image("Edit.png", new { @class = "default-button show", @onclick = "javascript:dealActivity.editCD(this,${UnderlyingFundCashDistributionId});" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @class = "default-button", @onclick="javascript:dealActivity.deleteCD(${UnderlyingFundCashDistributionId},this);" })%>
 		{{/if}}
 	</td>
 </tr>

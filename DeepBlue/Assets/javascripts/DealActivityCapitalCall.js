@@ -42,6 +42,7 @@ dealActivity.makeNewCC=function () {
 			$("#CapitalCallAddTemplate").tmpl(data).appendTo(bdy);
 		}
 		newRow=$("#UFCC_0",bdy);
+		$("#UnderlyingFundId",newRow).val(ufid);
 		dealActivity.editRow(newRow);
 		dealActivity.setUpRow(newRow);
 	}
@@ -58,7 +59,6 @@ dealActivity.addCC=function (img,id) {
 	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 	var url="/Deal/CreateUnderlyingFundCapitalCall";
 	var param=jHelper.serialize(tr);
-	param[param.length]={ name: "UnderlyingFundId",value: dealActivity.getCCUnderlyingFund() };
 	$.post(url,param,function (data) {
 		loading.empty();
 		var arr=data.split("||");

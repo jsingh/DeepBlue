@@ -150,28 +150,28 @@
 			<%: Html.Span("${FundName}",new { @class = "show" })%>
 		</td>
 		<td style="text-align: center">
-			<%: Html.Span("${FundNav}", new { @class = "show", @id = "SpnFundNav" })%>
-			<%: Html.TextBox("FundNav", "${FundNav}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
+			<%: Html.Span("${FundNAV}", new { @class = "show money", @id = "SpnPercent" })%>
+			<%: Html.TextBox("FundNAV", "${FundNAV}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
 		<td style="text-align: center">
 			<%: Html.Span("${Percent}", new { @class = "show", @id = "SpnPercent" })%>
 			<%: Html.TextBox("Percent", "${Percent}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
 		<td style="text-align: center">
-			<%: Html.Span("${CommittedAmount}", new { @class = "show", @id = "SpnCommittedAmount" })%>
+			<%: Html.Span("${CommittedAmount}", new { @class = "show money", @id = "SpnCommittedAmount" })%>
 			<%: Html.TextBox("CommittedAmount","${CommittedAmount}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>	
 		<td style="text-align: center">
-			<%: Html.Span("${UnfundedAmount}", new { @class = "show", @id = "SpnUnfundedAmount" })%>
-			<%: Html.TextBox("UnfundedAmount","${UnfundedAmount}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
+			<%: Html.Span("${UnfundedAmount}", new { @class = "show money", @id = "SpnUnfundedAmount" })%>
+			<%: Html.TextBox("UnfundedAmount","${UnfundedAmount}",new { @class = "hide", @readonly="readonly", @onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
 		<td style="text-align: center">
-			<%: Html.Span("${GrossPurchasePrice}", new { @class = "show", @id = "SpnGrossPurchasePrice" })%>
+			<%: Html.Span("${GrossPurchasePrice}", new { @class = "show money", @id = "SpnGrossPurchasePrice" })%>
 			<%: Html.TextBox("GrossPurchasePrice","${GrossPurchasePrice}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>	
 		<td style="text-align: center">
-			<%: Html.Span("${RecordDate}", new { @class = "show", @id = "SpnRecordDate" })%>
-			<%: Html.TextBox("RecordDate", "",new { @class = "hide datefield", @id = "${DealUnderlyingFundId}_RecordDate" })%>
+			<%: Html.Span("${RecordDate}", new { @class = "show dispdate", @id = "SpnRecordDate" })%>
+			<%: Html.TextBox("RecordDate", "${RecordDate}",new { @class = "hide datefield", @id = "${DealUnderlyingFundId}_RecordDate" })%>
 		</td>
 		<td style="text-align: center" nowrap>
 			<%: Html.Image("Editbtn.png", new { @onclick = "javascript:deal.editUnderlyingFund(this);" })%>&nbsp;&nbsp;<%: Html.Image("Delete_Btn.png", new { @onclick = "javascript:deal.deleteUnderlyingFund(${DealUnderlyingFundId},this);" })%>

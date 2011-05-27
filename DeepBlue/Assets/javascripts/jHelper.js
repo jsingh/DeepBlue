@@ -156,8 +156,8 @@
 	,formatDollar: function (target) {
 		$(".money",target).each(function () {
 			var amt=parseFloat($(this).attr("val"));
-			if(isNaN(amt)) { amt=0; }
-			this.innerHTML=jHelper.dollarAmount(amt.toString());
+			if(isNaN(amt)) { amt=parseFloat($(this).html()); }
+			if(isNaN(amt)) { this.innerHTML=""; } else { this.innerHTML=jHelper.dollarAmount(amt.toString()); }
 		});
 	}
 	,formatDateHtml: function (target) {

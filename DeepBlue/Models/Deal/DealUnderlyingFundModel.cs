@@ -14,7 +14,6 @@ namespace DeepBlue.Models.Deal {
 			DealId = 0;
 			UnderlyingFundId = 0;
 			RecordDate = Convert.ToDateTime("01/01/1900");
-			FundNav = 0;
 			Percent = 0;
 			CommittedAmount = 0;
 		}
@@ -35,22 +34,21 @@ namespace DeepBlue.Models.Deal {
 		[DateRange()]
 		public DateTime? RecordDate { get; set; }
 
-		[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "FundNav is required")]
-		public decimal? FundNav { get; set; }
+		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Fund NAV is required")]
+		public decimal? FundNAV { get; set; }
 
-		[Range((double)0, (double)100, ErrorMessage = "Percent must be under 100%.")]
+		[Range(typeof(decimal), "0", "100", ErrorMessage = "Percent must be under 100%.")]
 		public decimal? Percent { get; set; }
 
-		[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "Committed Amount is required")]
+		[Range(typeof(decimal), "0", "79228162514264337593543950335", ErrorMessage = "Committed Amount is required")]
 		public decimal? CommittedAmount { get; set; }
 
-		[Range((double)decimal.MinValue, (double)decimal.MaxValue, ErrorMessage = "Unfunded Amount is required")]
 		public decimal? UnfundedAmount { get; set; }
 
-		[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "Gross Purchase Price is required")]
+		[Range(typeof(decimal), "0", "79228162514264337593543950335", ErrorMessage = "Gross Purchase Price is required")]
 		public decimal? GrossPurchasePrice { get; set; }
 
-		[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "Reassigned GPP is required")]
+		[Range(typeof(decimal), "0", "79228162514264337593543950335", ErrorMessage = "Reassigned GPP is required")]
 		public decimal? ReassignedGPP { get; set; }
 
 		public decimal? PostRecordDateCapitalCall { get; set; }

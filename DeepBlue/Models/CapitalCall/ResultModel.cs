@@ -13,13 +13,5 @@ namespace DeepBlue.Models.CapitalCall {
 		}
 
 		public string Result { get; set; }
-
-		//[Required]
-		//[Range((double)ConfigUtil.IDStartRange, double.MaxValue)]
-		//public global::System.Decimal CapitalCallAmount {
-		//    get;
-		//    set;
-		//}
-
 	}
 }

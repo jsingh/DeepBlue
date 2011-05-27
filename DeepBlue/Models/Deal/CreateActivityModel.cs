@@ -12,6 +12,7 @@ namespace DeepBlue.Models.Deal {
 			UnderlyingFundPostRecordCapitalCallModel = new UnderlyingFundPostRecordCapitalCallModel();
 			UnderlyingFundCashDistributionModel = new UnderlyingFundCashDistributionModel();
 			UnderlyingFundPostRecordCashDistributionModel = new UnderlyingFundPostRecordCashDistributionModel();
+			UnderlyingFundValuationModel = new UnderlyingFundValuationModel();
 		}
 
 		public UnderlyingFundCapitalCallModel UnderlyingFundCapitalCallModel { get; set; }
@@ -21,6 +22,8 @@ namespace DeepBlue.Models.Deal {
 		public UnderlyingFundCashDistributionModel UnderlyingFundCashDistributionModel { get; set; }
 
 		public UnderlyingFundPostRecordCashDistributionModel UnderlyingFundPostRecordCashDistributionModel { get; set; }
+
+		public UnderlyingFundValuationModel UnderlyingFundValuationModel { get; set; }
 	
 	}
 }

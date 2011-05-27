@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_Account", "Account", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Account), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundActivityHistory_ActivityType", "ActivityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.ActivityType), "FundActivityHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundActivityHistory), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Address_AddressType", "AddressType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.AddressType), "Address", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Address), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Address_Country", "COUNTRY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.COUNTRY), "Address", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Address), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Address_State", "STATE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.STATE), "Address", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Address), true)]
@@ -68,23 +69,27 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealClosingCost_DealClosingCostType", "DealClosingCostType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DealClosingCostType), "DealClosingCost", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealClosingCost), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingDirect_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "DealUnderlyingDirect", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingDirect), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingFund_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "DealUnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingFund), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingFundAdjustment_DealUnderlyingFund", "DealUnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.DealUnderlyingFund), "DealUnderlyingFundAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingFundAdjustment), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_DocumentType", "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DocumentType), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Equity_EquityType", "EquityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.EquityType), "Equity", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Equity), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Equity_Industry", "Industry", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Industry), "Equity", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Equity), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Equity_Issuer", "Issuer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Issuer), "Equity", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Equity), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Equity_ShareClassType", "ShareClassType", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.ShareClassType), "Equity", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Equity), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_EquitySplit_Equity", "Equity", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Equity), "EquitySplit", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.EquitySplit), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_File_FileType", "FileType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.FileType), "File", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.File), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_File", "File", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.File), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FixedIncome_FixedIncomeType", "FixedIncomeType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.FixedIncomeType), "FixedIncome", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FixedIncome), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FixedIncome_Industry", "Industry", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Industry), "FixedIncome", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FixedIncome), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FixedIncome_Issuer", "Issuer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Issuer), "FixedIncome", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FixedIncome), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundAccount_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "FundAccount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundAccount), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundActivityHistory_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "FundActivityHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundActivityHistory), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundClosing_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "FundClosing", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundClosing), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundRateSchedule_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "FundRateSchedule", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundRateSchedule), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFund_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Fund), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCall_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCashDistribution_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingFundCashDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCashDistribution), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAV_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundTransaction_FundClosing", "FundClosing", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.FundClosing), "InvestorFundTransaction", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundTransaction), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundRateSchedule_InvestorType", "InvestorType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.InvestorType), "FundRateSchedule", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundRateSchedule), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_Geography", "Geography", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Geography), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
@@ -108,13 +113,17 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_OptionFieldValueList_OptionField", "OptionField", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.OptionField), "OptionFieldValueList", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.OptionFieldValueList), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_ReportingFrequency", "ReportingFrequency", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.ReportingFrequency), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_ReportingType", "ReportingType", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.ReportingType), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_SecurityConversion_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "SecurityConversion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.SecurityConversion), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_SecurityConversion_SecurityTypeOld", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "SecurityConversion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.SecurityConversion), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_ShareClassType", "ShareClassType", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.ShareClassType), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "UnderlyingFund1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_UnderlyingFundType", "UnderlyingFundType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFundType), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCall_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "UnderlyingFundCapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCallLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCashDistribution_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "UnderlyingFundCashDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCashDistribution), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAV_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_UnderlyingFundCapitalCallID", "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), "UnderlyingFundCapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCallLineItem), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), "UnderlyingFundNAVHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAVHistory), true)]
 
 #endregion
 
@@ -181,6 +190,22 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<Account> _Accounts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<ActivityType> ActivityTypes
+        {
+            get
+            {
+                if ((_ActivityTypes == null))
+                {
+                    _ActivityTypes = base.CreateObjectSet<ActivityType>("ActivityTypes");
+                }
+                return _ActivityTypes;
+            }
+        }
+        private ObjectSet<ActivityType> _ActivityTypes;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -633,6 +658,22 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<DealUnderlyingFundAdjustment> DealUnderlyingFundAdjustments
+        {
+            get
+            {
+                if ((_DealUnderlyingFundAdjustments == null))
+                {
+                    _DealUnderlyingFundAdjustments = base.CreateObjectSet<DealUnderlyingFundAdjustment>("DealUnderlyingFundAdjustments");
+                }
+                return _DealUnderlyingFundAdjustments;
+            }
+        }
+        private ObjectSet<DealUnderlyingFundAdjustment> _DealUnderlyingFundAdjustments;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<DocumentType> DocumentTypes
         {
             get
@@ -661,6 +702,22 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<Equity> _Equities;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<EquitySplit> EquitySplits
+        {
+            get
+            {
+                if ((_EquitySplits == null))
+                {
+                    _EquitySplits = base.CreateObjectSet<EquitySplit>("EquitySplits");
+                }
+                return _EquitySplits;
+            }
+        }
+        private ObjectSet<EquitySplit> _EquitySplits;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -773,6 +830,22 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<FundAccount> _FundAccounts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<FundActivityHistory> FundActivityHistories
+        {
+            get
+            {
+                if ((_FundActivityHistories == null))
+                {
+                    _FundActivityHistories = base.CreateObjectSet<FundActivityHistory>("FundActivityHistories");
+                }
+                return _FundActivityHistories;
+            }
+        }
+        private ObjectSet<FundActivityHistory> _FundActivityHistories;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1209,6 +1282,22 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<SecurityConversion> SecurityConversions
+        {
+            get
+            {
+                if ((_SecurityConversions == null))
+                {
+                    _SecurityConversions = base.CreateObjectSet<SecurityConversion>("SecurityConversions");
+                }
+                return _SecurityConversions;
+            }
+        }
+        private ObjectSet<SecurityConversion> _SecurityConversions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<SecurityType> SecurityTypes
         {
             get
@@ -1337,6 +1426,38 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<UnderlyingFundNAV> UnderlyingFundNAVs
+        {
+            get
+            {
+                if ((_UnderlyingFundNAVs == null))
+                {
+                    _UnderlyingFundNAVs = base.CreateObjectSet<UnderlyingFundNAV>("UnderlyingFundNAVs");
+                }
+                return _UnderlyingFundNAVs;
+            }
+        }
+        private ObjectSet<UnderlyingFundNAV> _UnderlyingFundNAVs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<UnderlyingFundNAVHistory> UnderlyingFundNAVHistories
+        {
+            get
+            {
+                if ((_UnderlyingFundNAVHistories == null))
+                {
+                    _UnderlyingFundNAVHistories = base.CreateObjectSet<UnderlyingFundNAVHistory>("UnderlyingFundNAVHistories");
+                }
+                return _UnderlyingFundNAVHistories;
+            }
+        }
+        private ObjectSet<UnderlyingFundNAVHistory> _UnderlyingFundNAVHistories;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<UnderlyingFundType> UnderlyingFundTypes
         {
             get
@@ -1359,6 +1480,14 @@ namespace DeepBlue.Models.Entity
         public void AddToAccounts(Account account)
         {
             base.AddObject("Accounts", account);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ActivityTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToActivityTypes(ActivityType activityType)
+        {
+            base.AddObject("ActivityTypes", activityType);
         }
     
         /// <summary>
@@ -1586,6 +1715,14 @@ namespace DeepBlue.Models.Entity
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the DealUnderlyingFundAdjustments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDealUnderlyingFundAdjustments(DealUnderlyingFundAdjustment dealUnderlyingFundAdjustment)
+        {
+            base.AddObject("DealUnderlyingFundAdjustments", dealUnderlyingFundAdjustment);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the DocumentTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToDocumentTypes(DocumentType documentType)
@@ -1599,6 +1736,14 @@ namespace DeepBlue.Models.Entity
         public void AddToEquities(Equity equity)
         {
             base.AddObject("Equities", equity);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the EquitySplits EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToEquitySplits(EquitySplit equitySplit)
+        {
+            base.AddObject("EquitySplits", equitySplit);
         }
     
         /// <summary>
@@ -1655,6 +1800,14 @@ namespace DeepBlue.Models.Entity
         public void AddToFundAccounts(FundAccount fundAccount)
         {
             base.AddObject("FundAccounts", fundAccount);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the FundActivityHistories EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFundActivityHistories(FundActivityHistory fundActivityHistory)
+        {
+            base.AddObject("FundActivityHistories", fundActivityHistory);
         }
     
         /// <summary>
@@ -1874,6 +2027,14 @@ namespace DeepBlue.Models.Entity
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the SecurityConversions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSecurityConversions(SecurityConversion securityConversion)
+        {
+            base.AddObject("SecurityConversions", securityConversion);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the SecurityTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToSecurityTypes(SecurityType securityType)
@@ -1935,6 +2096,22 @@ namespace DeepBlue.Models.Entity
         public void AddToUnderlyingFundCashDistributions(UnderlyingFundCashDistribution underlyingFundCashDistribution)
         {
             base.AddObject("UnderlyingFundCashDistributions", underlyingFundCashDistribution);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UnderlyingFundNAVs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUnderlyingFundNAVs(UnderlyingFundNAV underlyingFundNAV)
+        {
+            base.AddObject("UnderlyingFundNAVs", underlyingFundNAV);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UnderlyingFundNAVHistories EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUnderlyingFundNAVHistories(UnderlyingFundNAVHistory underlyingFundNAVHistory)
+        {
+            base.AddObject("UnderlyingFundNAVHistories", underlyingFundNAVHistory);
         }
     
         /// <summary>
@@ -2542,6 +2719,138 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFund_Account", "UnderlyingFund", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="ActivityType")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ActivityType : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ActivityType object.
+        /// </summary>
+        /// <param name="activityTypeID">Initial value of the ActivityTypeID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="enabled">Initial value of the Enabled property.</param>
+        public static ActivityType CreateActivityType(global::System.Int32 activityTypeID, global::System.String name, global::System.Boolean enabled)
+        {
+            ActivityType activityType = new ActivityType();
+            activityType.ActivityTypeID = activityTypeID;
+            activityType.Name = name;
+            activityType.Enabled = enabled;
+            return activityType;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ActivityTypeID
+        {
+            get
+            {
+                return _ActivityTypeID;
+            }
+            set
+            {
+                if (_ActivityTypeID != value)
+                {
+                    OnActivityTypeIDChanging(value);
+                    ReportPropertyChanging("ActivityTypeID");
+                    _ActivityTypeID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ActivityTypeID");
+                    OnActivityTypeIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ActivityTypeID;
+        partial void OnActivityTypeIDChanging(global::System.Int32 value);
+        partial void OnActivityTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Enabled
+        {
+            get
+            {
+                return _Enabled;
+            }
+            set
+            {
+                OnEnabledChanging(value);
+                ReportPropertyChanging("Enabled");
+                _Enabled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Enabled");
+                OnEnabledChanged();
+            }
+        }
+        private global::System.Boolean _Enabled;
+        partial void OnEnabledChanging(global::System.Boolean value);
+        partial void OnEnabledChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_FundActivityHistory_ActivityType", "FundActivityHistory")]
+        public EntityCollection<FundActivityHistory> FundActivityHistories
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<FundActivityHistory>("DeepBlueModel.FK_FundActivityHistory_ActivityType", "FundActivityHistory");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<FundActivityHistory>("DeepBlueModel.FK_FundActivityHistory_ActivityType", "FundActivityHistory", value);
                 }
             }
         }
@@ -10700,12 +11009,14 @@ namespace DeepBlue.Models.Entity
         /// <param name="dealClosingID">Initial value of the DealClosingID property.</param>
         /// <param name="dealID">Initial value of the DealID property.</param>
         /// <param name="closeDate">Initial value of the CloseDate property.</param>
-        public static DealClosing CreateDealClosing(global::System.Int32 dealClosingID, global::System.Int32 dealID, global::System.DateTime closeDate)
+        /// <param name="isFinalClose">Initial value of the IsFinalClose property.</param>
+        public static DealClosing CreateDealClosing(global::System.Int32 dealClosingID, global::System.Int32 dealID, global::System.DateTime closeDate, global::System.Boolean isFinalClose)
         {
             DealClosing dealClosing = new DealClosing();
             dealClosing.DealClosingID = dealClosingID;
             dealClosing.DealID = dealID;
             dealClosing.CloseDate = closeDate;
+            dealClosing.IsFinalClose = isFinalClose;
             return dealClosing;
         }
 
@@ -10814,9 +11125,9 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> IsFinalClose
+        public global::System.Boolean IsFinalClose
         {
             get
             {
@@ -10831,8 +11142,8 @@ namespace DeepBlue.Models.Entity
                 OnIsFinalCloseChanged();
             }
         }
-        private Nullable<global::System.Boolean> _IsFinalClose;
-        partial void OnIsFinalCloseChanging(Nullable<global::System.Boolean> value);
+        private global::System.Boolean _IsFinalClose;
+        partial void OnIsFinalCloseChanging(global::System.Boolean value);
         partial void OnIsFinalCloseChanged();
 
         #endregion
@@ -11868,30 +12179,6 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> FundNav
-        {
-            get
-            {
-                return _FundNav;
-            }
-            set
-            {
-                OnFundNavChanging(value);
-                ReportPropertyChanging("FundNav");
-                _FundNav = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("FundNav");
-                OnFundNavChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _FundNav;
-        partial void OnFundNavChanging(Nullable<global::System.Decimal> value);
-        partial void OnFundNavChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public Nullable<global::System.Decimal> Percent
         {
             get
@@ -12193,6 +12480,296 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UnderlyingFund>("DeepBlueModel.FK_DealUnderlyingFund_UnderlyingFund", "UnderlyingFund", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DealUnderlyingFundAdjustment_DealUnderlyingFund", "DealUnderlyingFundAdjustment")]
+        public EntityCollection<DealUnderlyingFundAdjustment> DealUnderlyingFundAdjustments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DealUnderlyingFundAdjustment>("DeepBlueModel.FK_DealUnderlyingFundAdjustment_DealUnderlyingFund", "DealUnderlyingFundAdjustment");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DealUnderlyingFundAdjustment>("DeepBlueModel.FK_DealUnderlyingFundAdjustment_DealUnderlyingFund", "DealUnderlyingFundAdjustment", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="DealUnderlyingFundAdjustment")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class DealUnderlyingFundAdjustment : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new DealUnderlyingFundAdjustment object.
+        /// </summary>
+        /// <param name="dealUnderlyingFundAdjustmentID">Initial value of the DealUnderlyingFundAdjustmentID property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        public static DealUnderlyingFundAdjustment CreateDealUnderlyingFundAdjustment(global::System.Int32 dealUnderlyingFundAdjustmentID, global::System.Int32 createdBy, global::System.DateTime createdDate)
+        {
+            DealUnderlyingFundAdjustment dealUnderlyingFundAdjustment = new DealUnderlyingFundAdjustment();
+            dealUnderlyingFundAdjustment.DealUnderlyingFundAdjustmentID = dealUnderlyingFundAdjustmentID;
+            dealUnderlyingFundAdjustment.CreatedBy = createdBy;
+            dealUnderlyingFundAdjustment.CreatedDate = createdDate;
+            return dealUnderlyingFundAdjustment;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DealUnderlyingFundAdjustmentID
+        {
+            get
+            {
+                return _DealUnderlyingFundAdjustmentID;
+            }
+            set
+            {
+                if (_DealUnderlyingFundAdjustmentID != value)
+                {
+                    OnDealUnderlyingFundAdjustmentIDChanging(value);
+                    ReportPropertyChanging("DealUnderlyingFundAdjustmentID");
+                    _DealUnderlyingFundAdjustmentID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DealUnderlyingFundAdjustmentID");
+                    OnDealUnderlyingFundAdjustmentIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _DealUnderlyingFundAdjustmentID;
+        partial void OnDealUnderlyingFundAdjustmentIDChanging(global::System.Int32 value);
+        partial void OnDealUnderlyingFundAdjustmentIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> DealUnderlyingFundID
+        {
+            get
+            {
+                return _DealUnderlyingFundID;
+            }
+            set
+            {
+                OnDealUnderlyingFundIDChanging(value);
+                ReportPropertyChanging("DealUnderlyingFundID");
+                _DealUnderlyingFundID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DealUnderlyingFundID");
+                OnDealUnderlyingFundIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _DealUnderlyingFundID;
+        partial void OnDealUnderlyingFundIDChanging(Nullable<global::System.Int32> value);
+        partial void OnDealUnderlyingFundIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CommitmentAmount
+        {
+            get
+            {
+                return _CommitmentAmount;
+            }
+            set
+            {
+                OnCommitmentAmountChanging(value);
+                ReportPropertyChanging("CommitmentAmount");
+                _CommitmentAmount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CommitmentAmount");
+                OnCommitmentAmountChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CommitmentAmount;
+        partial void OnCommitmentAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnCommitmentAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> UnfundedAmount
+        {
+            get
+            {
+                return _UnfundedAmount;
+            }
+            set
+            {
+                OnUnfundedAmountChanging(value);
+                ReportPropertyChanging("UnfundedAmount");
+                _UnfundedAmount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UnfundedAmount");
+                OnUnfundedAmountChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _UnfundedAmount;
+        partial void OnUnfundedAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnUnfundedAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.Int32 _CreatedBy;
+        partial void OnCreatedByChanging(global::System.Int32 value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DealUnderlyingFundAdjustment_DealUnderlyingFund", "DealUnderlyingFund")]
+        public DealUnderlyingFund DealUnderlyingFund
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DealUnderlyingFund>("DeepBlueModel.FK_DealUnderlyingFundAdjustment_DealUnderlyingFund", "DealUnderlyingFund").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DealUnderlyingFund>("DeepBlueModel.FK_DealUnderlyingFundAdjustment_DealUnderlyingFund", "DealUnderlyingFund").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<DealUnderlyingFund> DealUnderlyingFundReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DealUnderlyingFund>("DeepBlueModel.FK_DealUnderlyingFundAdjustment_DealUnderlyingFund", "DealUnderlyingFund");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DealUnderlyingFund>("DeepBlueModel.FK_DealUnderlyingFundAdjustment_DealUnderlyingFund", "DealUnderlyingFund", value);
                 }
             }
         }
@@ -12797,6 +13374,302 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ShareClassType>("DeepBlueModel.FK_Equity_ShareClassType", "ShareClassType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_EquitySplit_Equity", "EquitySplit")]
+        public EntityCollection<EquitySplit> EquitySplits
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EquitySplit>("DeepBlueModel.FK_EquitySplit_Equity", "EquitySplit");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EquitySplit>("DeepBlueModel.FK_EquitySplit_Equity", "EquitySplit", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="EquitySplit")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class EquitySplit : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new EquitySplit object.
+        /// </summary>
+        /// <param name="equiteSplitID">Initial value of the EquiteSplitID property.</param>
+        /// <param name="equityID">Initial value of the EquityID property.</param>
+        /// <param name="splitFactor">Initial value of the SplitFactor property.</param>
+        /// <param name="splitDate">Initial value of the SplitDate property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        public static EquitySplit CreateEquitySplit(global::System.Int32 equiteSplitID, global::System.Int32 equityID, global::System.Int32 splitFactor, global::System.DateTime splitDate, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        {
+            EquitySplit equitySplit = new EquitySplit();
+            equitySplit.EquiteSplitID = equiteSplitID;
+            equitySplit.EquityID = equityID;
+            equitySplit.SplitFactor = splitFactor;
+            equitySplit.SplitDate = splitDate;
+            equitySplit.CreatedDate = createdDate;
+            equitySplit.CreatedBy = createdBy;
+            return equitySplit;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EquiteSplitID
+        {
+            get
+            {
+                return _EquiteSplitID;
+            }
+            set
+            {
+                if (_EquiteSplitID != value)
+                {
+                    OnEquiteSplitIDChanging(value);
+                    ReportPropertyChanging("EquiteSplitID");
+                    _EquiteSplitID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("EquiteSplitID");
+                    OnEquiteSplitIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _EquiteSplitID;
+        partial void OnEquiteSplitIDChanging(global::System.Int32 value);
+        partial void OnEquiteSplitIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EquityID
+        {
+            get
+            {
+                return _EquityID;
+            }
+            set
+            {
+                OnEquityIDChanging(value);
+                ReportPropertyChanging("EquityID");
+                _EquityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EquityID");
+                OnEquityIDChanged();
+            }
+        }
+        private global::System.Int32 _EquityID;
+        partial void OnEquityIDChanging(global::System.Int32 value);
+        partial void OnEquityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SplitFactor
+        {
+            get
+            {
+                return _SplitFactor;
+            }
+            set
+            {
+                OnSplitFactorChanging(value);
+                ReportPropertyChanging("SplitFactor");
+                _SplitFactor = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SplitFactor");
+                OnSplitFactorChanged();
+            }
+        }
+        private global::System.Int32 _SplitFactor;
+        partial void OnSplitFactorChanging(global::System.Int32 value);
+        partial void OnSplitFactorChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime SplitDate
+        {
+            get
+            {
+                return _SplitDate;
+            }
+            set
+            {
+                OnSplitDateChanging(value);
+                ReportPropertyChanging("SplitDate");
+                _SplitDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SplitDate");
+                OnSplitDateChanged();
+            }
+        }
+        private global::System.DateTime _SplitDate;
+        partial void OnSplitDateChanging(global::System.DateTime value);
+        partial void OnSplitDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.Int32 _CreatedBy;
+        partial void OnCreatedByChanging(global::System.Int32 value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_EquitySplit_Equity", "Equity")]
+        public Equity Equity
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Equity>("DeepBlueModel.FK_EquitySplit_Equity", "Equity").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Equity>("DeepBlueModel.FK_EquitySplit_Equity", "Equity").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Equity> EquityReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Equity>("DeepBlueModel.FK_EquitySplit_Equity", "Equity");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Equity>("DeepBlueModel.FK_EquitySplit_Equity", "Equity", value);
                 }
             }
         }
@@ -14785,6 +15658,28 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_FundActivityHistory_Fund", "FundActivityHistory")]
+        public EntityCollection<FundActivityHistory> FundActivityHistories
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<FundActivityHistory>("DeepBlueModel.FK_FundActivityHistory_Fund", "FundActivityHistory");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<FundActivityHistory>("DeepBlueModel.FK_FundActivityHistory_Fund", "FundActivityHistory", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_FundClosing_Fund", "FundClosing")]
         public EntityCollection<FundClosing> FundClosings
         {
@@ -14907,6 +15802,28 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundCashDistribution>("DeepBlueModel.FK_UnderlyingFundCashDistribution_Fund", "UnderlyingFundCashDistribution", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundNAV_Fund", "UnderlyingFundNAV")]
+        public EntityCollection<UnderlyingFundNAV> UnderlyingFundNAVs
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingFundNAV>("DeepBlueModel.FK_UnderlyingFundNAV_Fund", "UnderlyingFundNAV");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundNAV>("DeepBlueModel.FK_UnderlyingFundNAV_Fund", "UnderlyingFundNAV", value);
                 }
             }
         }
@@ -15473,6 +16390,270 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Fund>("DeepBlueModel.FK_FundAccount_Fund", "Fund", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="FundActivityHistory")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class FundActivityHistory : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new FundActivityHistory object.
+        /// </summary>
+        /// <param name="fundActivityHistoryID">Initial value of the FundActivityHistoryID property.</param>
+        /// <param name="fundID">Initial value of the FundID property.</param>
+        /// <param name="oldNumberOfShares">Initial value of the OldNumberOfShares property.</param>
+        /// <param name="newNumberOfShares">Initial value of the NewNumberOfShares property.</param>
+        /// <param name="activityID">Initial value of the ActivityID property.</param>
+        /// <param name="activityTypeID">Initial value of the ActivityTypeID property.</param>
+        public static FundActivityHistory CreateFundActivityHistory(global::System.Int32 fundActivityHistoryID, global::System.Int32 fundID, global::System.Int32 oldNumberOfShares, global::System.Int32 newNumberOfShares, global::System.Int32 activityID, global::System.Int32 activityTypeID)
+        {
+            FundActivityHistory fundActivityHistory = new FundActivityHistory();
+            fundActivityHistory.FundActivityHistoryID = fundActivityHistoryID;
+            fundActivityHistory.FundID = fundID;
+            fundActivityHistory.OldNumberOfShares = oldNumberOfShares;
+            fundActivityHistory.NewNumberOfShares = newNumberOfShares;
+            fundActivityHistory.ActivityID = activityID;
+            fundActivityHistory.ActivityTypeID = activityTypeID;
+            return fundActivityHistory;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FundActivityHistoryID
+        {
+            get
+            {
+                return _FundActivityHistoryID;
+            }
+            set
+            {
+                if (_FundActivityHistoryID != value)
+                {
+                    OnFundActivityHistoryIDChanging(value);
+                    ReportPropertyChanging("FundActivityHistoryID");
+                    _FundActivityHistoryID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("FundActivityHistoryID");
+                    OnFundActivityHistoryIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _FundActivityHistoryID;
+        partial void OnFundActivityHistoryIDChanging(global::System.Int32 value);
+        partial void OnFundActivityHistoryIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FundID
+        {
+            get
+            {
+                return _FundID;
+            }
+            set
+            {
+                OnFundIDChanging(value);
+                ReportPropertyChanging("FundID");
+                _FundID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundID");
+                OnFundIDChanged();
+            }
+        }
+        private global::System.Int32 _FundID;
+        partial void OnFundIDChanging(global::System.Int32 value);
+        partial void OnFundIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 OldNumberOfShares
+        {
+            get
+            {
+                return _OldNumberOfShares;
+            }
+            set
+            {
+                OnOldNumberOfSharesChanging(value);
+                ReportPropertyChanging("OldNumberOfShares");
+                _OldNumberOfShares = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("OldNumberOfShares");
+                OnOldNumberOfSharesChanged();
+            }
+        }
+        private global::System.Int32 _OldNumberOfShares;
+        partial void OnOldNumberOfSharesChanging(global::System.Int32 value);
+        partial void OnOldNumberOfSharesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NewNumberOfShares
+        {
+            get
+            {
+                return _NewNumberOfShares;
+            }
+            set
+            {
+                OnNewNumberOfSharesChanging(value);
+                ReportPropertyChanging("NewNumberOfShares");
+                _NewNumberOfShares = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NewNumberOfShares");
+                OnNewNumberOfSharesChanged();
+            }
+        }
+        private global::System.Int32 _NewNumberOfShares;
+        partial void OnNewNumberOfSharesChanging(global::System.Int32 value);
+        partial void OnNewNumberOfSharesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ActivityID
+        {
+            get
+            {
+                return _ActivityID;
+            }
+            set
+            {
+                OnActivityIDChanging(value);
+                ReportPropertyChanging("ActivityID");
+                _ActivityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ActivityID");
+                OnActivityIDChanged();
+            }
+        }
+        private global::System.Int32 _ActivityID;
+        partial void OnActivityIDChanging(global::System.Int32 value);
+        partial void OnActivityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ActivityTypeID
+        {
+            get
+            {
+                return _ActivityTypeID;
+            }
+            set
+            {
+                OnActivityTypeIDChanging(value);
+                ReportPropertyChanging("ActivityTypeID");
+                _ActivityTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ActivityTypeID");
+                OnActivityTypeIDChanged();
+            }
+        }
+        private global::System.Int32 _ActivityTypeID;
+        partial void OnActivityTypeIDChanging(global::System.Int32 value);
+        partial void OnActivityTypeIDChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_FundActivityHistory_ActivityType", "ActivityType")]
+        public ActivityType ActivityType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ActivityType>("DeepBlueModel.FK_FundActivityHistory_ActivityType", "ActivityType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ActivityType>("DeepBlueModel.FK_FundActivityHistory_ActivityType", "ActivityType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<ActivityType> ActivityTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ActivityType>("DeepBlueModel.FK_FundActivityHistory_ActivityType", "ActivityType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ActivityType>("DeepBlueModel.FK_FundActivityHistory_ActivityType", "ActivityType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_FundActivityHistory_Fund", "Fund")]
+        public Fund Fund
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_FundActivityHistory_Fund", "Fund").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_FundActivityHistory_Fund", "Fund").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Fund> FundReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_FundActivityHistory_Fund", "Fund");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Fund>("DeepBlueModel.FK_FundActivityHistory_Fund", "Fund", value);
                 }
             }
         }
@@ -23537,6 +24718,396 @@ namespace DeepBlue.Models.Entity
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="SecurityConversion")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class SecurityConversion : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new SecurityConversion object.
+        /// </summary>
+        /// <param name="securityConversionID">Initial value of the SecurityConversionID property.</param>
+        /// <param name="oldSecurityTypeID">Initial value of the OldSecurityTypeID property.</param>
+        /// <param name="oldSecurityID">Initial value of the OldSecurityID property.</param>
+        /// <param name="newSecurityTypeID">Initial value of the NewSecurityTypeID property.</param>
+        /// <param name="newSecurityID">Initial value of the NewSecurityID property.</param>
+        /// <param name="splitFactor">Initial value of the SplitFactor property.</param>
+        /// <param name="conversionDate">Initial value of the ConversionDate property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        public static SecurityConversion CreateSecurityConversion(global::System.Int32 securityConversionID, global::System.Int32 oldSecurityTypeID, global::System.Int32 oldSecurityID, global::System.Int32 newSecurityTypeID, global::System.Int32 newSecurityID, global::System.Int32 splitFactor, global::System.DateTime conversionDate, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        {
+            SecurityConversion securityConversion = new SecurityConversion();
+            securityConversion.SecurityConversionID = securityConversionID;
+            securityConversion.OldSecurityTypeID = oldSecurityTypeID;
+            securityConversion.OldSecurityID = oldSecurityID;
+            securityConversion.NewSecurityTypeID = newSecurityTypeID;
+            securityConversion.NewSecurityID = newSecurityID;
+            securityConversion.SplitFactor = splitFactor;
+            securityConversion.ConversionDate = conversionDate;
+            securityConversion.CreatedDate = createdDate;
+            securityConversion.CreatedBy = createdBy;
+            return securityConversion;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SecurityConversionID
+        {
+            get
+            {
+                return _SecurityConversionID;
+            }
+            set
+            {
+                if (_SecurityConversionID != value)
+                {
+                    OnSecurityConversionIDChanging(value);
+                    ReportPropertyChanging("SecurityConversionID");
+                    _SecurityConversionID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SecurityConversionID");
+                    OnSecurityConversionIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SecurityConversionID;
+        partial void OnSecurityConversionIDChanging(global::System.Int32 value);
+        partial void OnSecurityConversionIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 OldSecurityTypeID
+        {
+            get
+            {
+                return _OldSecurityTypeID;
+            }
+            set
+            {
+                OnOldSecurityTypeIDChanging(value);
+                ReportPropertyChanging("OldSecurityTypeID");
+                _OldSecurityTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("OldSecurityTypeID");
+                OnOldSecurityTypeIDChanged();
+            }
+        }
+        private global::System.Int32 _OldSecurityTypeID;
+        partial void OnOldSecurityTypeIDChanging(global::System.Int32 value);
+        partial void OnOldSecurityTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 OldSecurityID
+        {
+            get
+            {
+                return _OldSecurityID;
+            }
+            set
+            {
+                OnOldSecurityIDChanging(value);
+                ReportPropertyChanging("OldSecurityID");
+                _OldSecurityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("OldSecurityID");
+                OnOldSecurityIDChanged();
+            }
+        }
+        private global::System.Int32 _OldSecurityID;
+        partial void OnOldSecurityIDChanging(global::System.Int32 value);
+        partial void OnOldSecurityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NewSecurityTypeID
+        {
+            get
+            {
+                return _NewSecurityTypeID;
+            }
+            set
+            {
+                OnNewSecurityTypeIDChanging(value);
+                ReportPropertyChanging("NewSecurityTypeID");
+                _NewSecurityTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NewSecurityTypeID");
+                OnNewSecurityTypeIDChanged();
+            }
+        }
+        private global::System.Int32 _NewSecurityTypeID;
+        partial void OnNewSecurityTypeIDChanging(global::System.Int32 value);
+        partial void OnNewSecurityTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NewSecurityID
+        {
+            get
+            {
+                return _NewSecurityID;
+            }
+            set
+            {
+                OnNewSecurityIDChanging(value);
+                ReportPropertyChanging("NewSecurityID");
+                _NewSecurityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NewSecurityID");
+                OnNewSecurityIDChanged();
+            }
+        }
+        private global::System.Int32 _NewSecurityID;
+        partial void OnNewSecurityIDChanging(global::System.Int32 value);
+        partial void OnNewSecurityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SplitFactor
+        {
+            get
+            {
+                return _SplitFactor;
+            }
+            set
+            {
+                OnSplitFactorChanging(value);
+                ReportPropertyChanging("SplitFactor");
+                _SplitFactor = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SplitFactor");
+                OnSplitFactorChanged();
+            }
+        }
+        private global::System.Int32 _SplitFactor;
+        partial void OnSplitFactorChanging(global::System.Int32 value);
+        partial void OnSplitFactorChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime ConversionDate
+        {
+            get
+            {
+                return _ConversionDate;
+            }
+            set
+            {
+                OnConversionDateChanging(value);
+                ReportPropertyChanging("ConversionDate");
+                _ConversionDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ConversionDate");
+                OnConversionDateChanged();
+            }
+        }
+        private global::System.DateTime _ConversionDate;
+        partial void OnConversionDateChanging(global::System.DateTime value);
+        partial void OnConversionDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.Int32 _CreatedBy;
+        partial void OnCreatedByChanging(global::System.Int32 value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_SecurityConversion_SecurityType", "SecurityType")]
+        public SecurityType SecurityType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_SecurityConversion_SecurityType", "SecurityType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_SecurityConversion_SecurityType", "SecurityType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<SecurityType> SecurityTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_SecurityConversion_SecurityType", "SecurityType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SecurityType>("DeepBlueModel.FK_SecurityConversion_SecurityType", "SecurityType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_SecurityConversion_SecurityTypeOld", "SecurityType")]
+        public SecurityType SecurityType1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_SecurityConversion_SecurityTypeOld", "SecurityType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_SecurityConversion_SecurityTypeOld", "SecurityType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<SecurityType> SecurityType1Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_SecurityConversion_SecurityTypeOld", "SecurityType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SecurityType>("DeepBlueModel.FK_SecurityConversion_SecurityTypeOld", "SecurityType", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="SecurityType")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -23659,6 +25230,50 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DealUnderlyingDirect>("DeepBlueModel.FK_DealUnderlyingDirect_SecurityType", "DealUnderlyingDirect", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_SecurityConversion_SecurityType", "SecurityConversion")]
+        public EntityCollection<SecurityConversion> SecurityConversions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SecurityConversion>("DeepBlueModel.FK_SecurityConversion_SecurityType", "SecurityConversion");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SecurityConversion>("DeepBlueModel.FK_SecurityConversion_SecurityType", "SecurityConversion", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_SecurityConversion_SecurityTypeOld", "SecurityConversion")]
+        public EntityCollection<SecurityConversion> SecurityConversions1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SecurityConversion>("DeepBlueModel.FK_SecurityConversion_SecurityTypeOld", "SecurityConversion");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SecurityConversion>("DeepBlueModel.FK_SecurityConversion_SecurityTypeOld", "SecurityConversion", value);
                 }
             }
         }
@@ -25612,6 +27227,28 @@ namespace DeepBlue.Models.Entity
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundNAV_UnderlyingFund", "UnderlyingFundNAV")]
+        public EntityCollection<UnderlyingFundNAV> UnderlyingFundNAVs
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingFundNAV>("DeepBlueModel.FK_UnderlyingFundNAV_UnderlyingFund", "UnderlyingFundNAV");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundNAV>("DeepBlueModel.FK_UnderlyingFundNAV_UnderlyingFund", "UnderlyingFundNAV", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -26937,6 +28574,482 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundCashDistribution_UnderlyingFund", "UnderlyingFund", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="UnderlyingFundNAV")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class UnderlyingFundNAV : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new UnderlyingFundNAV object.
+        /// </summary>
+        /// <param name="underlyingFundNAVID">Initial value of the UnderlyingFundNAVID property.</param>
+        /// <param name="fundID">Initial value of the FundID property.</param>
+        /// <param name="underlyingFundID">Initial value of the UnderlyingFundID property.</param>
+        /// <param name="fundNAVDate">Initial value of the FundNAVDate property.</param>
+        public static UnderlyingFundNAV CreateUnderlyingFundNAV(global::System.Int32 underlyingFundNAVID, global::System.Int32 fundID, global::System.Int32 underlyingFundID, global::System.DateTime fundNAVDate)
+        {
+            UnderlyingFundNAV underlyingFundNAV = new UnderlyingFundNAV();
+            underlyingFundNAV.UnderlyingFundNAVID = underlyingFundNAVID;
+            underlyingFundNAV.FundID = fundID;
+            underlyingFundNAV.UnderlyingFundID = underlyingFundID;
+            underlyingFundNAV.FundNAVDate = fundNAVDate;
+            return underlyingFundNAV;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UnderlyingFundNAVID
+        {
+            get
+            {
+                return _UnderlyingFundNAVID;
+            }
+            set
+            {
+                if (_UnderlyingFundNAVID != value)
+                {
+                    OnUnderlyingFundNAVIDChanging(value);
+                    ReportPropertyChanging("UnderlyingFundNAVID");
+                    _UnderlyingFundNAVID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("UnderlyingFundNAVID");
+                    OnUnderlyingFundNAVIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _UnderlyingFundNAVID;
+        partial void OnUnderlyingFundNAVIDChanging(global::System.Int32 value);
+        partial void OnUnderlyingFundNAVIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FundID
+        {
+            get
+            {
+                return _FundID;
+            }
+            set
+            {
+                OnFundIDChanging(value);
+                ReportPropertyChanging("FundID");
+                _FundID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundID");
+                OnFundIDChanged();
+            }
+        }
+        private global::System.Int32 _FundID;
+        partial void OnFundIDChanging(global::System.Int32 value);
+        partial void OnFundIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UnderlyingFundID
+        {
+            get
+            {
+                return _UnderlyingFundID;
+            }
+            set
+            {
+                OnUnderlyingFundIDChanging(value);
+                ReportPropertyChanging("UnderlyingFundID");
+                _UnderlyingFundID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UnderlyingFundID");
+                OnUnderlyingFundIDChanged();
+            }
+        }
+        private global::System.Int32 _UnderlyingFundID;
+        partial void OnUnderlyingFundIDChanging(global::System.Int32 value);
+        partial void OnUnderlyingFundIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> FundNAV
+        {
+            get
+            {
+                return _FundNAV;
+            }
+            set
+            {
+                OnFundNAVChanging(value);
+                ReportPropertyChanging("FundNAV");
+                _FundNAV = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundNAV");
+                OnFundNAVChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _FundNAV;
+        partial void OnFundNAVChanging(Nullable<global::System.Decimal> value);
+        partial void OnFundNAVChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime FundNAVDate
+        {
+            get
+            {
+                return _FundNAVDate;
+            }
+            set
+            {
+                OnFundNAVDateChanging(value);
+                ReportPropertyChanging("FundNAVDate");
+                _FundNAVDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundNAVDate");
+                OnFundNAVDateChanged();
+            }
+        }
+        private global::System.DateTime _FundNAVDate;
+        partial void OnFundNAVDateChanging(global::System.DateTime value);
+        partial void OnFundNAVDateChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundNAV_Fund", "Fund")]
+        public Fund Fund
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_UnderlyingFundNAV_Fund", "Fund").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_UnderlyingFundNAV_Fund", "Fund").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Fund> FundReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_UnderlyingFundNAV_Fund", "Fund");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Fund>("DeepBlueModel.FK_UnderlyingFundNAV_Fund", "Fund", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundNAV_UnderlyingFund", "UnderlyingFund")]
+        public UnderlyingFund UnderlyingFund
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundNAV_UnderlyingFund", "UnderlyingFund").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundNAV_UnderlyingFund", "UnderlyingFund").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<UnderlyingFund> UnderlyingFundReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundNAV_UnderlyingFund", "UnderlyingFund");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundNAV_UnderlyingFund", "UnderlyingFund", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAVHistory")]
+        public EntityCollection<UnderlyingFundNAVHistory> UnderlyingFundNAVHistories
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingFundNAVHistory>("DeepBlueModel.FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAVHistory");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundNAVHistory>("DeepBlueModel.FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAVHistory", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="UnderlyingFundNAVHistory")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class UnderlyingFundNAVHistory : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new UnderlyingFundNAVHistory object.
+        /// </summary>
+        /// <param name="underlyingFundNAVHistoryID">Initial value of the UnderlyingFundNAVHistoryID property.</param>
+        /// <param name="fundNAVDate">Initial value of the FundNAVDate property.</param>
+        public static UnderlyingFundNAVHistory CreateUnderlyingFundNAVHistory(global::System.Int32 underlyingFundNAVHistoryID, global::System.DateTime fundNAVDate)
+        {
+            UnderlyingFundNAVHistory underlyingFundNAVHistory = new UnderlyingFundNAVHistory();
+            underlyingFundNAVHistory.UnderlyingFundNAVHistoryID = underlyingFundNAVHistoryID;
+            underlyingFundNAVHistory.FundNAVDate = fundNAVDate;
+            return underlyingFundNAVHistory;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UnderlyingFundNAVHistoryID
+        {
+            get
+            {
+                return _UnderlyingFundNAVHistoryID;
+            }
+            set
+            {
+                if (_UnderlyingFundNAVHistoryID != value)
+                {
+                    OnUnderlyingFundNAVHistoryIDChanging(value);
+                    ReportPropertyChanging("UnderlyingFundNAVHistoryID");
+                    _UnderlyingFundNAVHistoryID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("UnderlyingFundNAVHistoryID");
+                    OnUnderlyingFundNAVHistoryIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _UnderlyingFundNAVHistoryID;
+        partial void OnUnderlyingFundNAVHistoryIDChanging(global::System.Int32 value);
+        partial void OnUnderlyingFundNAVHistoryIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UnderlyingFundNAVID
+        {
+            get
+            {
+                return _UnderlyingFundNAVID;
+            }
+            set
+            {
+                OnUnderlyingFundNAVIDChanging(value);
+                ReportPropertyChanging("UnderlyingFundNAVID");
+                _UnderlyingFundNAVID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UnderlyingFundNAVID");
+                OnUnderlyingFundNAVIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UnderlyingFundNAVID;
+        partial void OnUnderlyingFundNAVIDChanging(Nullable<global::System.Int32> value);
+        partial void OnUnderlyingFundNAVIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> FundNAV
+        {
+            get
+            {
+                return _FundNAV;
+            }
+            set
+            {
+                OnFundNAVChanging(value);
+                ReportPropertyChanging("FundNAV");
+                _FundNAV = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundNAV");
+                OnFundNAVChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _FundNAV;
+        partial void OnFundNAVChanging(Nullable<global::System.Decimal> value);
+        partial void OnFundNAVChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime FundNAVDate
+        {
+            get
+            {
+                return _FundNAVDate;
+            }
+            set
+            {
+                OnFundNAVDateChanging(value);
+                ReportPropertyChanging("FundNAVDate");
+                _FundNAVDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundNAVDate");
+                OnFundNAVDateChanged();
+            }
+        }
+        private global::System.DateTime _FundNAVDate;
+        partial void OnFundNAVDateChanging(global::System.DateTime value);
+        partial void OnFundNAVDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Calculation
+        {
+            get
+            {
+                return _Calculation;
+            }
+            set
+            {
+                OnCalculationChanging(value);
+                ReportPropertyChanging("Calculation");
+                _Calculation = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Calculation");
+                OnCalculationChanged();
+            }
+        }
+        private global::System.String _Calculation;
+        partial void OnCalculationChanging(global::System.String value);
+        partial void OnCalculationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsAudited
+        {
+            get
+            {
+                return _IsAudited;
+            }
+            set
+            {
+                OnIsAuditedChanging(value);
+                ReportPropertyChanging("IsAudited");
+                _IsAudited = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsAudited");
+                OnIsAuditedChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsAudited;
+        partial void OnIsAuditedChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsAuditedChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV")]
+        public UnderlyingFundNAV UnderlyingFundNAV
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingFundNAV>("DeepBlueModel.FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingFundNAV>("DeepBlueModel.FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<UnderlyingFundNAV> UnderlyingFundNAVReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingFundNAV>("DeepBlueModel.FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UnderlyingFundNAV>("DeepBlueModel.FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV", value);
                 }
             }
         }

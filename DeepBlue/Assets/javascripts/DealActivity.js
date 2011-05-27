@@ -3,6 +3,7 @@
 	,newPRCDData: null
 	,newCCData: null
 	,newPRCCData: null
+	,newUFVData: null
 	,init: function () {
 		jHelper.resizeIframe();
 		$(".expandbtn").click(function () {
@@ -38,15 +39,30 @@
 		var UnderlyingFundName=$("#UnderlyingFundName",target);
 		var FundName=$("#FundName",target);
 		var DealName=$("#DealName",target);
+		var dealSearch="/Deal/FindFundDeals";
+		var ufid=parseInt(UnderlyingFundId.val());
+		if(isNaN(ufid)) { ufid=0; }
+		var fundSearch="/Fund/FindDealFunds";
+
 		UnderlyingFundName.blur(function () { if($.trim(this.value)=="") { UnderlyingFundId.val(0); } })
 		.autocomplete({ source: "/Deal/FindUnderlyingFunds",minLength: 1
-		,select: function (event,ui) { UnderlyingFundId.val(ui.item.id); },appendTo: "body",delay: 300
+		,select: function (event,ui) {
+			UnderlyingFundId.val(ui.item.id);
+			FundId.val(0);FundName.val("");
+			FundName.autocomplete("option","source",fundSearch+"?underlyingFundId="+UnderlyingFundId.val());
+		},appendTo: "body",delay: 300
 		});
 
-		var dealSearch="/Deal/FindFundDeals";
-
 		FundName.blur(function () { if($.trim(this.value)=="") { FundId.val(0);DealId.val(0);DealName.val(""); } })
-		.autocomplete({ source: "/Fund/FindFunds",minLength: 1,select: function (event,ui) {
+		.autocomplete({ source: fundSearch+"?underlyingFundId="+ufid,minLength: 1
+		,search: function (event,ui) {
+			var ufid=parseInt(UnderlyingFundId.val());
+			if(isNaN(ufid)) { ufid=0; }
+			if(ufid==0) {
+				alert("Underlying Fund is required");
+				return false;
+			}
+		},select: function (event,ui) {
 			FundId.val(ui.item.id);
 			DealId.val(0);DealName.val("");
 			DealName.autocomplete("option","source",dealSearch+"?fundId="+FundId.val());
@@ -54,7 +70,8 @@
 		});
 
 		DealName.blur(function () { if($.trim(this.value)=="") { DealId.val(0); } })
-		.autocomplete({ source: dealSearch+"?fundId="+FundId.val(),minLength: 1,search: function (event,ui) {
+		.autocomplete({ source: dealSearch+"?fundId="+FundId.val(),minLength: 1
+		,search: function (event,ui) {
 			var fundId=parseInt(FundId.val());
 			if(isNaN(fundId)) { fundId=0; }
 			if(fundId==0) {

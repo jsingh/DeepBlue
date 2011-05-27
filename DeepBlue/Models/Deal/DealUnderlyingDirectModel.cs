@@ -43,11 +43,11 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("RecordDate:")]
 		public DateTime? RecordDate { get; set; }
 
-		[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "FMV is required")]
+		[Range(typeof(decimal),"0", "79228162514264337593543950335", ErrorMessage = "FMV is required")]
 		[DisplayName("FMV:")]
 		public decimal? FMV { get; set; }
 
-		[Range((double)0, (double)100, ErrorMessage = "Percent must be under 100%.")]
+		[Range(typeof(decimal),"0", "100", ErrorMessage = "Percent must be under 100%.")]
 		[DisplayName("Percent:")]
 		public decimal? Percent { get; set; }
 
@@ -56,7 +56,7 @@ namespace DeepBlue.Models.Deal {
 		public int? NumberOfShares { get; set; }
 
 		[Required(ErrorMessage = "Purchase Price is required")]
-		[Range((double)0, (double)decimal.MaxValue, ErrorMessage = "Purchase Price is required")]
+		[Range(typeof(decimal),"0", "79228162514264337593543950335", ErrorMessage = "Purchase Price is required")]
 		[DisplayName("Purchase Price:")]
 		public decimal PurchasePrice { get; set; }
 

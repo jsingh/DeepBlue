@@ -1,12 +1,8 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
-
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<title>
-		<asp:ContentPlaceHolder ID="TitleContent" runat="server" />
-	</title>
+<head><title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
@@ -19,8 +15,7 @@
 	<%= Html.JavascriptInclueTag("menu.js")%>
 	<%= Html.JavascriptInclueTag("jsDate.js")%>
 	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
-	<%= Html.StylesheetLinkTag("site.css")%>
-	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
+	<%= Html.StylesheetLinkTag("site.css")%><asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
 </head>
 <body>
 	<div id="header">

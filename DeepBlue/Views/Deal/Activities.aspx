@@ -10,6 +10,7 @@
 	<%=Html.JavascriptInclueTag("DealActivityPRCapitalCall.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityCashDistribution.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityPRCashDistribution.js")%>
+	<%=Html.JavascriptInclueTag("DealActivityUFValuation.js")%>
 	<%=Html.JavascriptInclueTag("jAjaxTable.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
@@ -26,9 +27,7 @@
 				</div>
 				<div id="NewCapitalCall" class="group">
 					<div class="title">
-						<div class="cell">
-							<%: Html.Span("New Capital Call")%>
-						</div>
+						<%: Html.Span("New Capital Call")%>
 					</div>
 					<div class="search-tool">
 						<div class="cell" style="padding-left: 10px">
@@ -114,9 +113,7 @@
 				</div>
 				<div id="NewCashDistribution" class="group">
 					<div class="title">
-						<div class="cell">
-							<%: Html.Span("New Cash Distribution")%>
-						</div>
+						<%: Html.Span("New Cash Distribution")%>
 					</div>
 					<div class="search-tool">
 						<div class="cell" style="padding-left: 10px">
@@ -210,7 +207,54 @@
 					<div class="title">
 						<%: Html.Span("Underlying Fund Valuation")%>
 					</div>
+					<div class="search-tool">
+						<div class="cell" style="padding-left: 10px">
+							<%: Html.TextBox("UFV_UnderlyingFund", "Search Underlying Fund", new { @class = "ufsearch wm" })%></div>
+						<div class="cell" style="padding-left: 10px">
+							<%: Html.Anchor("Add Underlying Fund Valuation", "javascript:dealActivity.makeNewUFV();")%>
+						</div>
+					</div>
 					<div class="detail">
+						<div class="search-header">
+							<%: Html.Span("", new { @id="SpnUFVName" })%>
+						</div>
+						<div class="cell loading" id="UFVLoading">
+						</div>
+						<div class="clear">
+							<table cellpadding="0" cellspacing="0" border="0" id="UnderlyingFundValuationList"
+								class="grid">
+								<thead>
+									<tr>
+										<th style="width: 15%">
+											Underlying Fund Name
+										</th>
+										<th style="width: 12%">
+											Fund Name
+										</th>
+										<th style="width: 12%">
+											Reported NAV
+										</th>
+										<th style="width: 12%">
+											Reporting Date
+										</th>
+										<th style="width: 12%">
+											Calculated NAV
+										</th>
+										<th style="width: 12%">
+											Update NAV
+										</th>
+										<th style="width: 12%">
+											Update Date
+										</th>
+										<th>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+						<%:Html.Hidden("UFVUnderlyingFundId", new { @id = "UFVUnderlyingFundId" })%>
 					</div>
 				</div>
 				<div class="line">
@@ -261,11 +305,16 @@
 																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
 																	  OnSelect = "function(event, ui) { dealActivity.setCDUnderlyingFund(ui.item.id,ui.item.value);}"
 	})%>
+	<%= Html.jQueryAutoComplete("UFV_UnderlyingFund", new AutoCompleteOptions {
+																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
+																	  OnSelect = "function(event, ui) { dealActivity.setUFVUnderlyingFund(ui.item.id,ui.item.value);}"
+	})%>
 	<script type="text/javascript">
 		dealActivity.newCDData = <%= JsonSerializer.ToJsonObject(Model.UnderlyingFundCashDistributionModel)%>;
 		dealActivity.newPRCDData = <%= JsonSerializer.ToJsonObject(Model.UnderlyingFundPostRecordCashDistributionModel)%>;
 		dealActivity.newCCData = <%= JsonSerializer.ToJsonObject(Model.UnderlyingFundCapitalCallModel)%>;
 		dealActivity.newPRCCData = <%= JsonSerializer.ToJsonObject(Model.UnderlyingFundPostRecordCapitalCallModel)%>;
+		dealActivity.newUFVData = <%= JsonSerializer.ToJsonObject(Model.UnderlyingFundValuationModel)%>;
 	</script>
 	<script type="text/javascript">		dealActivity.init();</script>
 	<script id="CashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
@@ -279,5 +328,8 @@
 	</script>
 	<script id="PRCapitalCallAddTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("UnderlyingFundPostRecordCapitalCall", Model.UnderlyingFundPostRecordCapitalCallModel); %>
+	</script>
+	<script id="UFValuationAddTemplate" type="text/x-jquery-tmpl">
+		<% Html.RenderPartial("UnderlyingFundValuation", Model.UnderlyingFundValuationModel); %>
 	</script>
 </asp:Content>

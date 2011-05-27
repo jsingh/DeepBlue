@@ -46,7 +46,7 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			[Required(ErrorMessage="Capital Amount Called is required")]
-			[Range(1, (double)decimal.MaxValue, ErrorMessage = "Capital Amount Called is required")]
+			[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "Capital Amount Called is required")]
 			public global::System.Decimal CapitalAmountCalled {
 				get;
 				set;
