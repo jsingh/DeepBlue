@@ -42,7 +42,7 @@
 					<%: Html.TextBox("Date", "", new { @class = "datefield", @id = "0_Date" })%>
 				</td>
 				<td>
-					<%: Html.Image("add_btn.png", new { @onclick = "javascript:deal.addDealExpense(this);" })%>
+					<%: Html.Image("tick.png", new { @onclick = "javascript:deal.addDealExpense(this);" })%>
 					<%: Html.Hidden("DealClosingCostId","${DealClosingCostId}")%>
 				</td>
 				<td class="blank">

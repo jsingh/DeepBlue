@@ -86,7 +86,7 @@
 					<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_DirectRecordDate" })%>
 				</td>
 				<td style="text-align: center">
-					<%: Html.Image("add_btn.png", new { @onclick = "javascript:deal.addUnderlyingDirect(this);" })%>
+					<%: Html.Image("tick.png", new { @onclick = "javascript:deal.addUnderlyingDirect(this);" })%>
 					<%: Html.Hidden("DealUnderlyingDirectId", "${DealUnderlyingDirectId}")%>
 				</td>
 				<td class="blank">

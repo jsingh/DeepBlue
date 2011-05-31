@@ -14,6 +14,7 @@ namespace DeepBlue.Helpers {
 					 .Append(",minLength:" + options.MinLength.ToString())
 					 .Append((string.IsNullOrEmpty(options.OnSelect) ? "" : ",select:" + options.OnSelect.ToString()))
 					 .Append((string.IsNullOrEmpty(options.OnChange) ? "" : ",change:" + options.OnChange.ToString()))
+					 .Append((string.IsNullOrEmpty(options.OnSearch) ? "" : ",search:" + options.OnSearch.ToString()))
 					 .Append(",appendTo:\"" + options.AppendTo + "\"")
 					 .Append(",delay:" + options.Delay.ToString());
 			scriptSrc.Append("});});");

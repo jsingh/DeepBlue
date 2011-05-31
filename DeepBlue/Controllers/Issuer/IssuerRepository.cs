@@ -5,6 +5,7 @@ using System.Web;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
 using DeepBlue.Models.Issuer;
+using DeepBlue.Models.Deal;
 
 namespace DeepBlue.Controllers.Issuer {
 	public class IssuerRepository : IIssuerRepository {
@@ -157,6 +158,34 @@ namespace DeepBlue.Controllers.Issuer {
 				return false;
 			}
 		}
+
+		public List<AutoCompleteList> FindEquityDirects(int dealUnderlyingDirectId, string issuerName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from equity in context.Equities
+						join direct in
+							(from dealUnderlyingDirect in context.DealUnderlyingDirects
+							 where dealUnderlyingDirect.DealUnderlyingDirectID == dealUnderlyingDirectId
+							 && dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity
+							 group dealUnderlyingDirect by dealUnderlyingDirect.SecurityID into directs
+							 select new { SecurityID = directs.FirstOrDefault().SecurityID })
+										on equity.EquityID equals direct.SecurityID
+						where equity.Issuer.Name.Contains(issuerName)
+						orderby equity.Issuer.Name
+						select new AutoCompleteList {
+							id = equity.EquityID,
+							label = equity.Issuer.Name + ">" + (equity.EquityType != null ? equity.EquityType.Equity : "") + ">" + (equity.ShareClassType != null ? equity.ShareClassType.ShareClass : ""),
+							value = equity.Issuer.Name
+						}).Take(20).ToList();
+			}
+		}
+
+
+		public string FindEquitySymbol(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from equity in context.Equities where equity.EquityID == id select equity.Symbol).SingleOrDefault();
+			}
+		}
+
 		#endregion
 
 		#region FixedIncome
@@ -232,10 +261,64 @@ namespace DeepBlue.Controllers.Issuer {
 				return false;
 			}
 		}
+
+		public List<AutoCompleteList> FindFixedIncomeDirects(int dealUnderlyingDirectId, string issuerName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fixedIncome in context.FixedIncomes
+						join direct in
+							(from dealUnderlyingDirect in context.DealUnderlyingDirects
+							 where dealUnderlyingDirect.DealUnderlyingDirectID == dealUnderlyingDirectId
+							 && dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.FixedIncome
+							 group dealUnderlyingDirect by dealUnderlyingDirect.SecurityID into directs
+							 select new { SecurityID = directs.FirstOrDefault().SecurityID })
+										on fixedIncome.FixedIncomeID equals direct.SecurityID
+						where fixedIncome.Issuer.Name.Contains(issuerName)
+						orderby fixedIncome.Issuer.Name
+						select new AutoCompleteList {
+							id = fixedIncome.FixedIncomeID,
+							label = fixedIncome.Issuer.Name + ">" + (fixedIncome.FixedIncomeType != null ? fixedIncome.FixedIncomeType.FixedIncomeType1 : ""),
+							value = fixedIncome.Issuer.Name
+						}).Take(20).ToList();
+			}
+		}
+
+		public object FindFixedIncomeSecurityConversionModel(int fixedIncomeId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fixedIncome in context.FixedIncomes
+						join oldSecurityConversion in context.SecurityConversions on fixedIncome.FixedIncomeID equals oldSecurityConversion.OldSecurityID into oldSecurityConversions
+						from oldSecurityConversion in oldSecurityConversions.Where(sc => sc.OldSecurityTypeID == (int)Models.Deal.Enums.SecurityType.FixedIncome).DefaultIfEmpty()
+						join oldFixedIncome in context.FixedIncomes on oldSecurityConversion.OldSecurityID equals oldFixedIncome.FixedIncomeID into oldFixedIncomes
+						join securityType in context.SecurityTypes on oldSecurityConversion.OldSecurityTypeID equals securityType.SecurityTypeID into oldSecurityTypes
+						from oldFixedIncome in oldFixedIncomes.DefaultIfEmpty()
+						from securityType in oldSecurityTypes.DefaultIfEmpty()
+						where fixedIncome.FixedIncomeID == fixedIncomeId
+						select new {
+							OldSecurityName = (oldFixedIncome != null ? oldFixedIncome.Issuer.Name : string.Empty),
+							OldSecurityType = (securityType != null ? securityType.Name : string.Empty),
+							Symbol = fixedIncome.Symbol
+						}).FirstOrDefault();
+			}
+		}
+
+		public object FindEquitySecurityConversionModel(int equityId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from equity in context.Equities
+						join oldSecurityConversion in context.SecurityConversions on equity.EquityID equals oldSecurityConversion.OldSecurityID into oldSecurityConversions
+						from oldSecurityConversion in oldSecurityConversions.Where(sc => sc.OldSecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity).DefaultIfEmpty()
+						join oldEquity in context.Equities on oldSecurityConversion.OldSecurityID equals oldEquity.EquityID into oldEquities
+						join securityType in context.SecurityTypes on oldSecurityConversion.OldSecurityTypeID equals securityType.SecurityTypeID into oldSecurityTypes
+						from oldEquity in oldEquities.DefaultIfEmpty()
+						from securityType in oldSecurityTypes.DefaultIfEmpty()
+						where equity.EquityID == equityId
+						select new {
+							OldSecurityName = (oldEquity != null ? oldEquity.Issuer.Name : string.Empty),
+							OldSecurityType = (securityType != null ? securityType.Name : string.Empty),
+							Symbol = oldEquity.Symbol
+						}).FirstOrDefault();
+			}
+		}
+
 		#endregion
 
-
-
-	
 	}
 }

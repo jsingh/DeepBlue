@@ -224,9 +224,18 @@ namespace DeepBlue.Controllers.Admin {
 		List<CashDistributionType> GetAllCashDistributionTypes();
 		List<CashDistributionType> GetAllCashDistributionTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		CashDistributionType FindCashDistributionType(int id);
-		bool CashDistributionTypeNameAvailable(string shareclasstype, int cashDistributionTypeId);
+		bool CashDistributionTypeNameAvailable(string cashDistributiontype, int cashDistributionTypeId);
 		bool DeleteCashDistributionType(int id);
 		IEnumerable<ErrorInfo> SaveCashDistributionType(CashDistributionType cashDistributionType);
+		#endregion
+
+		#region ActivityTypes
+		List<ActivityType> GetAllActivityTypes();
+		List<ActivityType> GetAllActivityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		ActivityType FindActivityType(int id);
+		bool ActivityTypeNameAvailable(string activityType, int activityTypeId);
+		bool DeleteActivityType(int id);
+		IEnumerable<ErrorInfo> SaveActivityType(ActivityType activityType);
 		#endregion
 	}
 }

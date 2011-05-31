@@ -18,11 +18,11 @@
 		 OnSuccess = "cashDistributionType.onCreateSuccess"
 	 }, new { @id = "AddNewCashDistributionType" })) {%>
 	<div class="editor-label" style="width: 130px">
-		<%: Html.LabelFor(model => model.CashDistributionTypeName) %>
+		<%: Html.LabelFor(model => model.Name) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBoxFor(model => model.CashDistributionTypeName) %>
-		<%: Html.ValidationMessageFor(model => model.CashDistributionTypeName) %>
+		<%: Html.TextBoxFor(model => model.Name) %>
+		<%: Html.ValidationMessageFor(model => model.Name) %>
 	</div>
 	<div class="editor-label" style="width: 130px">
 		<%: Html.LabelFor(model => model.Enabled)%>

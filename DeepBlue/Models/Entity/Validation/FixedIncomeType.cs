@@ -19,7 +19,7 @@ namespace DeepBlue.Models.Entity {
 
 			[Required(ErrorMessage = "FixedIncomeType is required")]
 			[StringLength(100, ErrorMessage = "FixedIncomeType must be under 100 characters.")]
-			public global::System.String FixedIncomeType {
+			public global::System.String FixedIncomeType1 {
 				get;
 				set;
 			}

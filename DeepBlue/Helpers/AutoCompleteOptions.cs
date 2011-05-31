@@ -13,12 +13,14 @@ namespace DeepBlue.Helpers {
 			Source = string.Empty;
 			OnSelect = string.Empty;
 			OnChange =  string.Empty;
+			OnSearch = string.Empty;
 		}
 		public int MinLength { get; set; }
 		public string Source { get; set; }
 		public int Delay { get; set; }
 		public string AppendTo { get; set; }
 		public bool Disabled { get; set; }
+		public string OnSearch { get; set; }
 		public string OnSelect { get; set; }
 		public string OnChange { get; set; }
 	}

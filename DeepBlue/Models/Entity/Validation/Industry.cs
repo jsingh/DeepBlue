@@ -19,7 +19,7 @@ namespace DeepBlue.Models.Entity {
 
 			[Required(ErrorMessage = "Industry is required")]
 			[StringLength(100, ErrorMessage = "Industry Name must be under 100 characters.")]
-			public global::System.String Industry {
+			public global::System.String Industry1 {
 				get;
 				set;
 			}

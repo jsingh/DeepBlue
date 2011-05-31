@@ -186,6 +186,8 @@
 				<%: Html.ActionLink("Custom Field", "CustomField", "Admin",null, new { @class = (ViewData["PageName"] == "CustomField" ? "sel" : "") })%></li>
 			<li>
 				<%: Html.ActionLink("Data Type", "DataType", "Admin",null, new { @class = (ViewData["PageName"] == "DataType" ? "sel" : "") })%></li>
+		    <li>
+				<%: Html.ActionLink("Activity Type", "ActivityType", "Admin",null, new { @class = (ViewData["PageName"] == "ActivityType" ? "sel" : "") })%></li>
 		</ul>
 		<%} %>
 		<%} %>

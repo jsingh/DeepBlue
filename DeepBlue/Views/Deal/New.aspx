@@ -128,8 +128,8 @@
 			<%: Html.Span("${Date}",new { @class = "show", @id = "SpnDate" })%>
 			<%: Html.TextBox("Date", "${Date}", new {  @class="hide datefield", @id = "${DealClosingCostId}_DealExpenseDate" })%>
 		</td>
-		<td>
-			<%: Html.Image("Editbtn.png", new { @onclick = "javascript:deal.editDealExpense(this);" })%>&nbsp;&nbsp;<%: Html.Image("Delete_Btn.png", new { @onclick = "javascript:deal.deleteDealExpense(${DealClosingCostId},this);" })%>
+		<td style="text-align:right">
+			<%: Html.Image("Edit.png", new { @onclick = "javascript:deal.editDealExpense(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @onclick = "javascript:deal.deleteDealExpense(${DealClosingCostId},this);" })%>
 			<%: Html.Hidden("DealClosingCostId","${DealClosingCostId}")%>
 		</td>
 		<td class="blank">
@@ -173,8 +173,8 @@
 			<%: Html.Span("${RecordDate}", new { @class = "show dispdate", @id = "SpnRecordDate" })%>
 			<%: Html.TextBox("RecordDate", "${RecordDate}",new { @class = "hide datefield", @id = "${DealUnderlyingFundId}_RecordDate" })%>
 		</td>
-		<td style="text-align: center" nowrap>
-			<%: Html.Image("Editbtn.png", new { @onclick = "javascript:deal.editUnderlyingFund(this);" })%>&nbsp;&nbsp;<%: Html.Image("Delete_Btn.png", new { @onclick = "javascript:deal.deleteUnderlyingFund(${DealUnderlyingFundId},this);" })%>
+		<td style="text-align: right" nowrap>
+			<%: Html.Image("Edit.png", new { @onclick = "javascript:deal.editUnderlyingFund(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @onclick = "javascript:deal.deleteUnderlyingFund(${DealUnderlyingFundId},this);" })%>
 			<%: Html.Hidden("DealUnderlyingFundId","${DealUnderlyingFundId}")%>
 		</td>
 		<td class="blank" nowrap>
@@ -229,8 +229,8 @@
 			<%: Html.Span("${RecordDate}", new { @class = "show", @id = "SpnRecordDate" })%>
 			<%: Html.TextBox("RecordDate", "",new { @class = "hide datefield", @id = "${DealUnderlyingDirectId}_DirectRecordDate" })%>
 		</td>
-		<td style="text-align: center" nowrap>
-			<%: Html.Image("Editbtn.png", new { @onclick = "javascript:deal.editUnderlyingDirect(this);" })%>&nbsp;&nbsp;<%: Html.Image("Delete_Btn.png", new { @onclick = "javascript:deal.deleteUnderlyingDirect(${DealUnderlyingDirectId},this);" })%>
+		<td style="text-align: right" nowrap>
+			<%: Html.Image("Edit.png", new { @onclick = "javascript:deal.editUnderlyingDirect(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @onclick = "javascript:deal.deleteUnderlyingDirect(${DealUnderlyingDirectId},this);" })%>
 			<%: Html.Hidden("DealUnderlyingDirectId","${DealUnderlyingDirectId}")%>
 		</td>
 		<td class="blank" nowrap>

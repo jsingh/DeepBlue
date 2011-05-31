@@ -5,6 +5,7 @@ using System.Text;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
 using DeepBlue.Models.Issuer;
+using DeepBlue.Models.Deal;
 
 namespace DeepBlue.Controllers.Issuer {
 	public interface IIssuerRepository {
@@ -25,6 +26,9 @@ namespace DeepBlue.Controllers.Issuer {
 		Equity FindEquity(int equityId);
 		IEnumerable<ErrorInfo> SaveEquity(Equity equity);
 		bool DeleteEquity(int id);
+		List<AutoCompleteList> FindEquityDirects(int dealUnderlyingDirectId, string issuerName);
+		string FindEquitySymbol(int id);
+		object FindEquitySecurityConversionModel(int equityId);
 		#endregion
 
 		#region FixedIncome
@@ -33,6 +37,8 @@ namespace DeepBlue.Controllers.Issuer {
 		List<FixedIncome> GetAllFixedIncome(int issuerId);
 		IEnumerable<ErrorInfo> SaveFixedIncome(FixedIncome fixedIncome);
 		bool DeleteFixedIncome(int id);
+		List<AutoCompleteList> FindFixedIncomeDirects(int dealUnderlyingDirectId, string issuerName);
+		object FindFixedIncomeSecurityConversionModel(int fixedIncomeId);
 		#endregion
 	}
 }

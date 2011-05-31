@@ -517,6 +517,21 @@ namespace DeepBlue.Helpers {
 			return cashDistributionTypeList;
 		}
 
+		public static List<SelectListItem> GetActivityTypeSelectList(List<ActivityType> activityTypes) {
+			List<SelectListItem> activityTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			activityTypeList.Add(item);
+			foreach (var activityType in activityTypes) {
+				item = new SelectListItem();
+				item.Text = activityType.Name.ToString();
+				item.Value = activityType.ActivityTypeID.ToString();
+				activityTypeList.Add(item);
+			}
+			return activityTypeList;
+		}
+
 		public static List<SelectListItem> GetEmptySelectList() {
 			List<SelectListItem> lists = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();

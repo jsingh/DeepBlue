@@ -19,7 +19,7 @@ namespace DeepBlue.Models.Entity {
 
 			[Required(ErrorMessage = "ReportingFrequency is required")]
 			[StringLength(100, ErrorMessage = "Reporting Frequency Name must be under 100 characters.")]
-			public global::System.String ReportingFrequency {
+			public global::System.String ReportingFrequency1 {
 				get;
 				set;
 			}

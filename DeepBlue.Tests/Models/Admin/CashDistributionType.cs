@@ -51,7 +51,7 @@ namespace DeepBlue.Tests.Models.Admin {
 			if (!ifValidData) {
 				delta = 1;
 			}
-			cashdistributiontype.Name = GetString(100 + delta);
+			cashdistributiontype.Name = GetString(50 + delta);
 		}
 		#endregion
     }

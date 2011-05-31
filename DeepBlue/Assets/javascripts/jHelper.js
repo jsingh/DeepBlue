@@ -46,7 +46,7 @@
 	,parseJSONDate: function (date) {
 		try { return eval('new'+date.toString().replace(/\//g,' ')); } catch(e) { return date; }
 	}
-	,dollarAmount: function (Num) { // idea by David Turley
+	,dollarAmount: function (Num) {
 		dec=Num.indexOf(".");
 		end=((dec> -1)?""+Num.substring(dec,Num.length):".00");
 		Num=""+parseInt(Num);
@@ -88,32 +88,12 @@
 			var frm=document.getElementById(formId);
 			var message='';
 			if(isNaN(checkAutoComplete)) { checkAutoComplete=true; }
-			if(checkAutoComplete) {
-				$(".field-validation-error",frm).each(function () {
-					if(this.innerHTML!='') {
-						message+=this.innerHTML+"\n";
-					}
-				});
-			}
-			if(message!="") {
-				alert(message);
-				return false;
-			}
+			if(checkAutoComplete) { $(".field-validation-error",frm).each(function () { if(this.innerHTML!='') { message+=this.innerHTML+"\n"; } }); }
+			if(message!="") { alert(message);return false; }
 			Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
-			$(".field-validation-error",frm).each(function () {
-				if(this.innerHTML!='') {
-					message+=this.innerHTML+"\n";
-				}
-			});
-			if(message!="") {
-				alert(message);
-				return false;
-			} else {
-				return true;
-			}
-		} catch(e) {
-			alert(e);
-		}
+			$(".field-validation-error",frm).each(function () { if(this.innerHTML!='') { message+=this.innerHTML+"\n"; } });
+			if(message!="") { alert(message);return false; } else { return true; }
+		} catch(e) { alert(e); }
 		return true;
 	}
 	,resizeIframe: function (h) {
@@ -172,7 +152,8 @@
 	,waterMark: function (target) {
 		$(".wm",target).each(function () {
 			var v=this.value;
-			$(this).focus(function () { this.value=""; }).blur(function () { if($.trim(this.value)=="") { this.value=v; } });
+			$(this).focus(function () { this.value="";$(this).unbind('focus'); });
+			//.blur(function () { if($.trim(this.value)=="") { this.value=v; } });
 		});
 	}
 }

@@ -6,37 +6,43 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
 namespace DeepBlue.Helpers {
-	public class DateRange : ValidationAttribute {
 
-		public DateRange() {
-			Minimum = Convert.ToDateTime("01/01/1900");
-			Maximum = DateTime.MaxValue;
+	public class DateRangeAttribute : ValidationAttribute {
+		private const string DateFormat = "MM/dd/yyyy";
+		private const string DefaultErrorMessage =
+			   "'{0}' must be a date between {1:d} and {2:d}.";
+
+		public DateTime MinDate { get; set; }
+		public DateTime MaxDate { get; set; }
+
+		public DateRangeAttribute()
+			: base(DefaultErrorMessage) {
+			MinDate = ParseDate("01/01/1900");
+			MaxDate = DateTime.MaxValue;
 		}
 
-		public DateRange(DateTime minimum, DateTime maximum) {
-			Minimum = minimum;
-			Maximum = maximum;
-		}
-
-		public DateTime Maximum { get; private set; }
-		public DateTime Minimum { get; private set; }
-
-		public override string FormatErrorMessage(string name) {
-			return String.Format(CultureInfo.CurrentCulture, ErrorMessageString, name);
+		public DateRangeAttribute(string minDate, string maxDate)
+			: base(DefaultErrorMessage) {
+			MinDate = ParseDate(minDate);
+			MaxDate = ParseDate(maxDate);
 		}
 
 		public override bool IsValid(object value) {
-			if (value != null) {
-				DateTime date;
-				DateTime.TryParse(value.ToString(), out date);
-				if ((date - this.Minimum).TotalDays < 0)
-					return false;
-				else if ((this.Maximum - date).TotalDays < 0)
-					return false;
-				else
-					return true;
+			if (value == null || !(value is DateTime)) {
+				return true;
 			}
-			return false;
+			DateTime dateValue = (DateTime)value;
+			return MinDate <= dateValue && dateValue <= MaxDate;
+		}
+		public override string FormatErrorMessage(string name) {
+			return String.Format(CultureInfo.CurrentCulture,
+				ErrorMessageString,
+				name, MinDate, MaxDate);
+		}
+
+		private static DateTime ParseDate(string dateValue) {
+			return DateTime.ParseExact(dateValue, DateFormat,
+				 CultureInfo.InvariantCulture);
 		}
 	}
 }

@@ -83,8 +83,14 @@
     <Compile Include="Controllers\Document\IDocumentRepository.cs" />
     <Compile Include="Helpers\ExportPdfResult.cs" />
     <Compile Include="Helpers\ExportToPdf.cs" />
+    <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Helpers\JsonSerializer.cs" />
+    <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
+    <Compile Include="Models\Deal\EquitySplitModel.cs" />
+    <Compile Include="Models\Deal\NewHoldingPatternModel.cs" />
+    <Compile Include="Models\Deal\SecurityActivityModel.cs" />
+    <Compile Include="Models\Deal\SecurityConversionModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundActivityFields.cs" />
     <Compile Include="Models\Deal\CommunicationDetailModel.cs">
       <SubType>Code</SubType>
@@ -157,12 +163,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\Partial\ActivityTypeService.cs" />
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
+    <Compile Include="Models\Entity\Partial\EquitySplitService.cs" />
+    <Compile Include="Models\Entity\Partial\FundActivityHistory.cs" />
+    <Compile Include="Models\Entity\Partial\SecurityConversionService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVHistoryService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
+    <Compile Include="Models\Entity\Validation\ActivityType.cs" />
     <Compile Include="Models\Entity\Validation\CashDistribution.cs" />
+    <Compile Include="Models\Entity\Validation\CreatedByFields.cs" />
+    <Compile Include="Models\Entity\Validation\EquitySplit.cs" />
+    <Compile Include="Models\Entity\Validation\FundActivityHistory.cs" />
+    <Compile Include="Models\Entity\Validation\SecurityConversion.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundCapitalCall.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundCapitalCallLineItem.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundNAV.cs" />
@@ -593,6 +608,7 @@
     <Content Include="Assets\images\uup.png" />
     <Content Include="Assets\images\wbg.gif" />
     <Content Include="Assets\images\xls.png" />
+    <Content Include="Assets\javascripts\ActivityType.js" />
     <Content Include="Assets\javascripts\CapitalCall.js" />
     <Content Include="Assets\javascripts\CapitalCallDetail.js" />
     <Content Include="Assets\javascripts\CapitalCallReceive.js" />
@@ -602,6 +618,8 @@
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
+    <Content Include="Assets\javascripts\DealActivityEquitySplit.js" />
+    <Content Include="Assets\javascripts\DealActivitySecConversion.js" />
     <Content Include="Assets\javascripts\DealActivityUFValuation.js" />
     <Content Include="Assets\javascripts\DealActivityPRCashDistribution.js" />
     <Content Include="Assets\javascripts\DealActivity.js" />
@@ -692,9 +710,11 @@
     <Content Include="obj\Release\DeepBlue.dll" />
     <Content Include="obj\Release\DeepBlue.pdb" />
     <Content Include="obj\Release\TempPE\Models.Entity.DeepBlue.Designer.cs.dll" />
+    <Content Include="Views\Admin\ActivityType.aspx" />
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
     <Content Include="Views\Admin\CommunicationType.aspx" />
     <Content Include="Views\Admin\CashDistributionType.aspx" />
+    <Content Include="Views\Admin\EditActivityType.aspx" />
     <Content Include="Views\Admin\EditCashDistributionType.aspx" />
     <Content Include="Views\Admin\EditFixedIncomeType.aspx" />
     <Content Include="Views\Admin\FixedIncomeType.aspx" />
@@ -748,6 +768,8 @@
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
     <Content Include="Views\Deal\Close.aspx" />
+    <Content Include="Views\Deal\SecurityConversion.ascx" />
+    <Content Include="Views\Deal\EquitySplit.ascx" />
     <Content Include="Views\Deal\UnderlyingFundValuation.ascx" />
     <Content Include="Views\Deal\UnderlyingFundPostRecordCashDistribution.ascx" />
     <Content Include="Views\Deal\UnderlyingFundPostRecordCapitalCall.ascx" />

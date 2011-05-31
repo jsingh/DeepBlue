@@ -254,8 +254,7 @@ namespace DeepBlue.Controllers.Issuer {
 		public JsonResult FindFixedIncome(int fixedIncomeId) {
 			return Json(IssuerRepository.FindFixedIncomeModel(fixedIncomeId), JsonRequestBehavior.AllowGet);
 		}
-
-
+		
 		//
 		// GET: /Issuer/DeleteFixedIncome
 		[HttpGet]

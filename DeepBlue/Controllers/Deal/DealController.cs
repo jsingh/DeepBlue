@@ -11,6 +11,7 @@ using DeepBlue.Models.Entity;
 using System.Text;
 using DeepBlue.Controllers.Issuer;
 using DeepBlue.Models.Deal.Enums;
+using System.Globalization;
 
 namespace DeepBlue.Controllers.Deal {
 	public class DealController : Controller {
@@ -211,7 +212,7 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/CreateDealExpense
 		[HttpPost]
-		public string CreateDealExpense(FormCollection collection) {
+		public ActionResult CreateDealExpense(FormCollection collection) {
 			DealClosingCostModel model = new DealClosingCostModel();
 			this.TryUpdateModel(model);
 			ResultModel resultModel = new ResultModel();
@@ -243,8 +244,7 @@ namespace DeepBlue.Controllers.Deal {
 					}
 				}
 			}
-			return resultModel.Result;
-			//return View("Result", resultModel);
+			return View("Result", resultModel);
 		}
 
 		//
@@ -266,7 +266,7 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// POST: /Deal/CreateSellerInfo
 		[HttpPost]
-		public string CreateSellerInfo(FormCollection collection) {
+		public ActionResult CreateSellerInfo(FormCollection collection) {
 			DealSellerDetailModel model = new DealSellerDetailModel();
 			this.TryUpdateModel(model);
 			ResultModel resultModel = new ResultModel();
@@ -305,7 +305,7 @@ namespace DeepBlue.Controllers.Deal {
 					}
 				}
 			}
-			return resultModel.Result;
+			return View("Result", resultModel);
 		}
 		#endregion
 
@@ -313,7 +313,7 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/CreateDealUnderlyingFund
 		[HttpPost]
-		public string CreateDealUnderlyingFund(FormCollection collection) {
+		public ActionResult CreateDealUnderlyingFund(FormCollection collection) {
 			DealUnderlyingFundModel model = new DealUnderlyingFundModel();
 			this.TryUpdateModel(model);
 			ResultModel resultModel = new ResultModel();
@@ -349,7 +349,7 @@ namespace DeepBlue.Controllers.Deal {
 					}
 				}
 			}
-			return resultModel.Result;
+			return View("Result", resultModel);
 		}
 
 		//
@@ -372,7 +372,7 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/CreateDealUnderlyingDirect
 		[HttpPost]
-		public string CreateDealUnderlyingDirect(FormCollection collection) {
+		public ActionResult CreateDealUnderlyingDirect(FormCollection collection) {
 			DealUnderlyingDirectModel model = new DealUnderlyingDirectModel();
 			this.TryUpdateModel(model);
 			ResultModel resultModel = new ResultModel();
@@ -410,7 +410,7 @@ namespace DeepBlue.Controllers.Deal {
 					}
 				}
 			}
-			return resultModel.Result;
+			return View("Result", resultModel);
 		}
 
 		//
@@ -421,6 +421,11 @@ namespace DeepBlue.Controllers.Deal {
 			model.Equities = SelectListFactory.GetEquitySelectList(IssuerRepository.GetAllEquity(model.IssuerId));
 			model.FixedIncomes = SelectListFactory.GetFixedIncomeSelectList(IssuerRepository.GetAllFixedIncome(model.IssuerId));
 			return Json(model, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public JsonResult FindDealUnderlyingDirects(string term) {
+			return Json(DealRepository.FindDealUnderlyingDirects(term), JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -653,6 +658,9 @@ namespace DeepBlue.Controllers.Deal {
 			return result;
 		}
 
+		//
+		// GET: /Deal/ExportDetail
+		[HttpGet]
 		public ActionResult ExportDetail(FormCollection collection) {
 			DealExportModel model = new DealExportModel();
 			this.TryUpdateModel(model);
@@ -661,6 +669,7 @@ namespace DeepBlue.Controllers.Deal {
 			}
 			return View(model);
 		}
+
 		#endregion
 
 		#region UnderlyingFund
@@ -814,8 +823,142 @@ namespace DeepBlue.Controllers.Deal {
 			ViewData["PageName"] = "Activities";
 			CreateActivityModel model = new CreateActivityModel();
 			model.UnderlyingFundCashDistributionModel.CashDistributionTypes = SelectListFactory.GetCashDistributionTypeSelectList(AdminRepository.GetAllCashDistributionTypes());
+			model.ActivityTypes = SelectListFactory.GetActivityTypeSelectList(AdminRepository.GetAllActivityTypes());
+			List<Models.Entity.SecurityType> securityTypes = AdminRepository.GetAllSecurityTypes();
+			model.EquitySplitModel.SecurityTypes = SelectListFactory.GetSecurityTypeSelectList(securityTypes);
+			model.SecurityConversionModel.SecurityTypes = SelectListFactory.GetSecurityTypeSelectList(securityTypes);
 			return View(model);
 		}
+				 
+		#region SecurityActivities
+
+		//
+		// GET: /Deal/FindEquityDirects
+		[HttpGet]
+		public JsonResult FindEquityDirects(int dealUnderlyingDirectId, string term) {
+			return Json(IssuerRepository.FindEquityDirects(dealUnderlyingDirectId, term), JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/FindFixedIncomeDirects
+		[HttpGet]
+		public JsonResult FindFixedIncomeDirects(int dealUnderlyingDirectId, string term) {
+			return Json(IssuerRepository.FindFixedIncomeDirects(dealUnderlyingDirectId, term), JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/FindFixedIncomeSecurityConversionModel
+		[HttpGet]
+		public JsonResult FindFixedIncomeSecurityConversionModel(int fixedIncomeId) {
+			return Json(IssuerRepository.FindFixedIncomeSecurityConversionModel(fixedIncomeId), JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/FindEquitySecurityConversionModel
+		[HttpGet]
+		public JsonResult FindEquitySecurityConversionModel(int equityId) {
+			return Json(IssuerRepository.FindEquitySecurityConversionModel(equityId), JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// POST: /Deal/CreateSplitActivity
+		[HttpPost]
+		public ActionResult CreateSplitActivity(FormCollection collection) {
+			EquitySplitModel model = new EquitySplitModel();
+			this.TryUpdateModel(model);
+			ResultModel resultModel = new ResultModel();
+			if (ModelState.IsValid) {
+				EquitySplit equitySplit = DealRepository.FindEquitySplit(model.EquityId);
+				if (equitySplit == null) {
+					equitySplit = new EquitySplit();
+					equitySplit.CreatedBy = AppSettings.CreatedByUserId;
+					equitySplit.CreatedDate = DateTime.Now;
+				}
+				equitySplit.LastUpdatedBy = AppSettings.CreatedByUserId;
+				equitySplit.LastUpdatedDate = DateTime.Now;
+				equitySplit.EquityID = model.EquityId;
+				equitySplit.SplitFactor = model.SplitFactor ?? 0;
+				equitySplit.SplitDate = DateTime.Now;
+				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveEquitySplit(equitySplit);
+				if (errorInfo == null) {
+					List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.DealUnderlyingDirectId, model.ActivityTypeId,
+						model.SecurityTypeId, equitySplit.EquityID);
+					foreach (var pattern in newHoldingPatterns) {
+						errorInfo = CreateFundActivityHistory(pattern.FundId, pattern.OldNoOfShares, (pattern.OldNoOfShares * equitySplit.SplitFactor), equitySplit.EquiteSplitID, model.ActivityTypeId);
+						if (errorInfo != null)
+							break;
+					}
+				}
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		//
+		// POST: /Deal/CreateConversionActivity
+		[HttpPost]
+		public ActionResult CreateConversionActivity(FormCollection collection) {
+			SecurityConversionModel model = new SecurityConversionModel();
+			this.TryUpdateModel(model);
+			ResultModel resultModel = new ResultModel();
+			if (ModelState.IsValid) {
+				SecurityConversion securityConversion = DealRepository.FindSecurityConversion(model.NewSecurityId, model.NewSecurityTypeId);
+				if (securityConversion == null) {
+					securityConversion = new SecurityConversion();
+					securityConversion.CreatedBy = AppSettings.CreatedByUserId;
+					securityConversion.CreatedDate = DateTime.Now;
+				}
+				securityConversion.OldSecurityID = model.OldSecurityId;
+				securityConversion.OldSecurityTypeID = model.OldSecurityTypeId;
+				securityConversion.NewSecurityID = model.NewSecurityId;
+				securityConversion.NewSecurityTypeID = model.NewSecurityTypeId;
+				securityConversion.LastUpdatedBy = AppSettings.CreatedByUserId;
+				securityConversion.LastUpdatedDate = DateTime.Now;
+				securityConversion.SplitFactor = model.SplitFactor ?? 0;
+				securityConversion.ConversionDate = DateTime.Now;
+				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveSecurityConversion(securityConversion);
+				if (errorInfo == null) {
+					List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.DealUnderlyingDirectId, model.ActivityTypeId, model.NewSecurityTypeId, model.NewSecurityId);
+					foreach (var pattern in newHoldingPatterns) {
+						errorInfo = CreateFundActivityHistory(pattern.FundId, pattern.OldNoOfShares, (pattern.OldNoOfShares * securityConversion.SplitFactor), securityConversion.SecurityConversionID, model.ActivityTypeId);
+						if (errorInfo != null)
+							break;
+					}
+				}
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		private IEnumerable<ErrorInfo> CreateFundActivityHistory(int fundId, int oldNoOfShares, int newNoOfShares, int activityId, int activityTypeId) {
+			FundActivityHistory fundActivityHistory = new FundActivityHistory();
+			fundActivityHistory.ActivityID = activityId;
+			fundActivityHistory.ActivityTypeID = activityTypeId;
+			fundActivityHistory.FundID = fundId;
+			fundActivityHistory.OldNumberOfShares = oldNoOfShares;
+			fundActivityHistory.NewNumberOfShares = newNoOfShares;
+			return DealRepository.SaveFundActivityHistory(fundActivityHistory);
+		}
+
+		#endregion
 
 		#region UnderlyingFundCashDistribution
 
@@ -1345,6 +1488,30 @@ namespace DeepBlue.Controllers.Deal {
 			else {
 				return string.Empty;
 			}
+		}
+
+		#endregion
+
+		#region NewHoldingPattern
+		//
+		// GET: /Deal/NewHoldingPatternList
+		public ActionResult NewHoldingPatternList(int dealUnderlyingDirectId, int activityTypeId, int securityTypeId, int securityId) {
+			List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(dealUnderlyingDirectId, activityTypeId, securityTypeId, securityId);
+			FlexigridData flexgridData = new FlexigridData();
+			flexgridData.total = newHoldingPatterns.Count();
+			flexgridData.page = 1;
+			foreach (var pattern in newHoldingPatterns) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> { pattern.FundName, (pattern.OldNoOfShares > 0 ? FormatHelper.NumberFormat(pattern.OldNoOfShares) : string.Empty), (pattern.NewNoOfShares > 0 ? FormatHelper.NumberFormat(pattern.NewNoOfShares) : string.Empty) }
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/FindEquitySymbol
+		public string FindEquitySymbol(int id) {
+			return IssuerRepository.FindEquitySymbol(id);
 		}
 
 		#endregion

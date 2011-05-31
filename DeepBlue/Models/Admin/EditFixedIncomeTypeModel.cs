@@ -10,7 +10,7 @@ namespace DeepBlue.Models.Admin {
 	public class EditFixedIncomeTypeModel {
 		public EditFixedIncomeTypeModel() {
 			FixedIncomeTypeId = 0;
-			FixedIncomeType = string.Empty;
+			FixedIncomeType1 = string.Empty;
 		}
 
 		public int FixedIncomeTypeId { get; set; }
@@ -19,7 +19,7 @@ namespace DeepBlue.Models.Admin {
 		[StringLength(100, ErrorMessage = "Fixed Income Type must be under 100 characters.")]
 		[RemoteUID_(Action = "FixedIncomeTypeNameAvailable", Controller = "Admin", ValidateParameterName = "FixedIncomeType", Params = new string[] { "FixedIncomeTypeId" })]
 		[DisplayName("FixedIncomeType:")]
-		public string FixedIncomeType { get; set; }
+		public string FixedIncomeType1 { get; set; }
 
 		[DisplayName("Enabled:")]
 		public bool Enabled { get; set; }

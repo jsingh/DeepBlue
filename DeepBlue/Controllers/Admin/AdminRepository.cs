@@ -1318,6 +1318,62 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
+		#region IAdminRepository ActivityType 
+
+		public List<Models.Entity.ActivityType> GetAllActivityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.ActivityType> query = (from activityType in context.ActivityTypes
+																select activityType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<ActivityType> paginatedList = new PaginatedList<ActivityType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<ActivityType> GetAllActivityTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from activityType in context.ActivityTypes
+						where activityType.Enabled == true
+						orderby activityType.Name
+						select activityType).ToList();
+			}
+		}
+
+		public ActivityType FindActivityType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.ActivityTypes.SingleOrDefault(type => type.ActivityTypeID == id);
+			}
+		}
+
+		public bool ActivityTypeNameAvailable(string activityTypeName, int activityTypeID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.ActivityTypes
+						 where type.Name == activityTypeName && type.ActivityTypeID != activityTypeID
+						 select type.ActivityTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteActivityType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				ActivityType activityType = context.ActivityTypes.SingleOrDefault(type => type.ActivityTypeID == id);
+				if (activityType != null) {
+					if (activityType.FundActivityHistories.Count == 0) {
+						context.ActivityTypes.DeleteObject(activityType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveActivityType(ActivityType activityType) {
+			return activityType.Save();
+		}
+
+		#endregion
+
 
 	 
 	}

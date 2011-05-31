@@ -68,7 +68,7 @@
 					<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_RecordDate" })%>
 				</td>
 				<td style="text-align: center">
-					<%: Html.Image("add_btn.png", new { @onclick = "javascript:deal.addUnderlyingFund(this);" })%>
+					<%: Html.Image("tick.png", new { @onclick = "javascript:deal.addUnderlyingFund(this);" })%>
 					<%: Html.Hidden("DealUnderlyingFundId", "${DealUnderlyingFundId}")%>
 				</td>
 				<td class="blank">

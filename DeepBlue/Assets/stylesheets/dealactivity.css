@@ -19,13 +19,7 @@
 	font-size: 16px;
 	position: absolute;
 }
-.header a {
-	color: #977f7f;
-	margin: 20px;
-}
-.header a.select {
-	color: #9381bd;
-}
+
 #content {
 	overflow: hidden;
 }
@@ -71,9 +65,10 @@
 	width: auto;
 	padding: 0px 20px 0px 20px;
 	color: #977f7f;
+	margin:0px 20px 0px 10px;
 }
 .cell input {
-	width: 140px;
+	width: 189px;
 }
 .cell .checkbox {
 	width: auto;
@@ -89,6 +84,8 @@
 	color: Blue;
 }
 .search-header {
+	font-size: 13px;
+	font-weight: bold;
 	clear: both;
 	float: left;
 	margin-left: 28px;
@@ -107,5 +104,39 @@ input, select {
 	background-color: #DCE6F2;
 }
 .act-group {
-	float: left; width:100%;
+	float: left;
+	width: 100%;
+}
+.header a {
+	color: #977f7f;
+	margin: 20px;
+}
+.header a.select {
+	color: #9381bd;
+}
+.cell input.default-button {
+	width: auto;
+	border: 0px;
+}
+.sec-box {
+	float: left;
+	margin-bottom: 10px;
+	width: 100%;
+}
+.heading {
+	font-size: 13px;
+	font-weight: bold;
+	clear: both;
+	float: left;
+	color: #977f7f;
+	margin: 10px;
+}
+.grid th, .grid td {
+	padding: 10px;
+}
+.editor-label input, .editor-field input {
+	padding: 6px;
+}
+.editor-label {
+	padding: 8px;
 }

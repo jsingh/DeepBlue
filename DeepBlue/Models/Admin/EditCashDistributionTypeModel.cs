@@ -13,7 +13,7 @@ namespace DeepBlue.Models.Admin {
 	public class EditCashDistributionTypeModel {
 		public EditCashDistributionTypeModel() {
 			CashDistributionTypeId = 0;
-			CashDistributionTypeName = string.Empty;
+			Name = string.Empty;
 			Enabled = false;
 		}
 
@@ -23,7 +23,7 @@ namespace DeepBlue.Models.Admin {
 		[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
 		[RemoteUID_(Action = "CashDistributionTypeNameAvailable", Controller = "Admin", ValidateParameterName = "CashDistributionTypeName", Params = new string[] { "CashDistributionTypeId" })]
 		[DisplayName("Name:")]
-		public string CashDistributionTypeName { get; set; }
+		public string Name { get; set; }
 
 		[DisplayName("Enable:")]
 		public bool Enabled { get; set; }

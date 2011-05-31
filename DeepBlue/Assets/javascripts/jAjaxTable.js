@@ -4,6 +4,7 @@
 		// apply default properties
 		p=$.extend({
 			url: false, //ajax url
+			usepager: false,
 			method: 'POST', // data sending method
 			dataType: 'json', // type of data loaded
 			errormsg: 'Connection Error',
@@ -112,17 +113,19 @@
 				if(!p.url) return false;
 				if(!p.newp) p.newp=1;
 				if(p.page>p.pages) p.page=p.pages;
-				var dt=new Date();
-				var param=[
-					 { name: 'pageIndex',value: p.newp }
+				var param;
+				if(p.usepager) {
+					param=[
+					 { name: '_',value: (new Date()).getTime() }
+					,{ name: 'pageIndex',value: p.newp }
 					,{ name: 'pageSize',value: p.rp }
 					,{ name: 'sortName',value: p.sortname }
 					,{ name: 'sortOrder',value: p.sortorder }
 				];
+				} else { param=[{ name: '_',value: (new Date()).getTime()}] };
 				if(p.params) {
 					for(var pi=0;pi<p.params.length;pi++) param[param.length]=p.params[pi];
 				}
-				param[param.length]={ name: "t",value: dt.getTime() };
 				$.ajax({
 					type: p.method,
 					url: p.url,

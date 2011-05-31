@@ -18,11 +18,11 @@
 		 OnSuccess = "fixedIncomeType.onCreateFixedIncomeTypeSuccess"
 	 }, new { @id = "AddNewFixedIncomeType" })) {%>
 	<div class="editor-label" style="width: 130px">
-		<%: Html.LabelFor(model => model.FixedIncomeType) %>
+		<%: Html.LabelFor(model => model.FixedIncomeType1) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBoxFor(model => model.FixedIncomeType)%>
-		<%: Html.ValidationMessageFor(model => model.FixedIncomeType)%>
+		<%: Html.TextBoxFor(model => model.FixedIncomeType1)%>
+		<%: Html.ValidationMessageFor(model => model.FixedIncomeType1)%>
 	</div>
 	<div class="editor-label" style="width: 130px">
 		<%: Html.LabelFor(model => model.Enabled)%>

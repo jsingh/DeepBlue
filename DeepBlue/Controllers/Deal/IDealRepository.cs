@@ -46,6 +46,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<DealUnderlyingDirectDetail> GetAllDealUnderlyingDirects(int dealId);
 		List<DealUnderlyingDirectListModel> GetAllDealUnderlyingDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		IEnumerable<ErrorInfo> SaveDealUnderlyingDirect(DealUnderlyingDirect dealUnderlyingDirect);
+		List<AutoCompleteList> FindDealUnderlyingDirects(string fundName);
 		#endregion
 
 		#region DealClosing
@@ -121,6 +122,24 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region UnderlyingFundNAVHistory
 		IEnumerable<ErrorInfo> SaveUnderlyingFundNAVHistory(UnderlyingFundNAVHistory underlyingFundNAVHistroy);
+		#endregion
+
+		#region EquitySplit
+		EquitySplit FindEquitySplit(int equityId);
+		IEnumerable<ErrorInfo> SaveEquitySplit(EquitySplit equitySplit);
+		#endregion
+
+		#region SecurityConversion
+		SecurityConversion FindSecurityConversion(int newSecurityId, int newSecurityTypeId);
+		IEnumerable<ErrorInfo> SaveSecurityConversion(SecurityConversion securityConversion);
+		#endregion
+
+		#region FundActivityHistory
+		IEnumerable<ErrorInfo> SaveFundActivityHistory(FundActivityHistory fundActivityHistory);
+		#endregion
+
+		#region NewHoldingPattern
+		List<NewHoldingPatternModel> NewHoldingPatternList(int dealUnderlyingDirectId, int activityTypeId, int securityTypeId, int securityId);
 		#endregion
 	}
 }

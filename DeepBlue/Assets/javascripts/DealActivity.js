@@ -24,11 +24,12 @@
 	,selectTab: function (type,lnk) {
 		var UA=$("#UnderlyingActivity");
 		var SA=$("#SecurityActivity");
-		UA.hide();SA.hide();
+		var SUD=$("#SearchUDirect");
+		UA.hide();SA.hide();SUD.hide();
 		$(".tablnk").removeClass("select");$(lnk).addClass("select");
 		switch(type) {
 			case "U": UA.show();break;
-			case "S": SA.show();break;
+			case "S": SA.show();SUD.show();break;
 		}
 	}
 	/* Common Functions */

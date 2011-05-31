@@ -11,6 +11,8 @@
 	<%=Html.JavascriptInclueTag("DealActivityCashDistribution.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityPRCashDistribution.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityUFValuation.js")%>
+	<%=Html.JavascriptInclueTag("DealActivityEquitySplit.js")%>
+	<%=Html.JavascriptInclueTag("DealActivitySecConversion.js")%>
 	<%=Html.JavascriptInclueTag("jAjaxTable.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
@@ -19,7 +21,11 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div id="ActivityMain">
 		<div class="header">
-			<%: Html.Anchor("Underlying Activities", new { @class = "select tablnk", @onclick = "javascript:dealActivity.selectTab('U',this);" })%>|<%: Html.Anchor("Security Activities", new { @class = "tablnk", @onclick = "javascript:dealActivity.selectTab('S',this);" })%>
+			<div class="cell">
+				<%: Html.Anchor("Underlying Activities", new { @class = "select tablnk", @onclick = "javascript:dealActivity.selectTab('U',this);" })%>|<%: Html.Anchor("Security Activities", new { @class = "tablnk", @onclick = "javascript:dealActivity.selectTab('S',this);" })%></div>
+			<div id="SearchUDirect" class="cell" style="float: right; display: none;">
+				<%: Html.TextBox("S_UnderlyingDirect", "Search Underlying Direct", new { @class = "wm" , @style="width:250px" })%>
+			</div>
 		</div>
 		<div class="content">
 			<div id="UnderlyingActivity" class="act-group">
@@ -31,7 +37,7 @@
 					</div>
 					<div class="search-tool">
 						<div class="cell" style="padding-left: 10px">
-							<%: Html.TextBox("CC_UnderlyingFund", "Search Underlying Fund", new { @class = "ufsearch wm" })%></div>
+							<%: Html.TextBox("CC_UnderlyingFund", "Search Underlying Fund", new { @class = "wm" })%></div>
 						<div class="cell" style="padding-left: 10px">
 							<%: Html.Anchor("Make New Capital Call", "javascript:dealActivity.makeNewCC();")%>
 						</div>
@@ -117,7 +123,7 @@
 					</div>
 					<div class="search-tool">
 						<div class="cell" style="padding-left: 10px">
-							<%: Html.TextBox("CD_UnderlyingFund", "Search Underlying Fund", new { @class = "ufsearch wm" })%></div>
+							<%: Html.TextBox("CD_UnderlyingFund", "Search Underlying Fund", new { @class = "wm" })%></div>
 						<div class="cell" style="padding-left: 10px">
 							<%: Html.Anchor("Raise Distribution Call", "javascript:dealActivity.makeNewCD();")%>
 						</div>
@@ -209,7 +215,7 @@
 					</div>
 					<div class="search-tool">
 						<div class="cell" style="padding-left: 10px">
-							<%: Html.TextBox("UFV_UnderlyingFund", "Search Underlying Fund", new { @class = "ufsearch wm" })%></div>
+							<%: Html.TextBox("UFV_UnderlyingFund", "Search Underlying Fund", new { @class = "wm" })%></div>
 						<div class="cell" style="padding-left: 10px">
 							<%: Html.Anchor("Add Underlying Fund Valuation", "javascript:dealActivity.makeNewUFV();")%>
 						</div>
@@ -287,13 +293,59 @@
 				<div class="line">
 				</div>
 			</div>
-			<div id="SecurityActivity" class="act-group">
+			<div id="SecurityActivity" class="act-group" style="display: none">
+				<div class="line">
+				</div>
+				<div class="search-header">
+					<%: Html.Span("", new { @id="SpnUDirectName" })%>
+				</div>
+				<div class="clear sec-box">
+					<div class="editor-label">
+						<%: Html.Label("Corporate Action-") %>
+					</div>
+					<div class="editor-field" style="margin-left: 10px">
+						<%: Html.DropDownList("ActivityTypeId", Model.ActivityTypes, new { @onchange = "javascript:dealActivity.changeAType(this);" })%>
+					</div>
+					<div id="SplitDetail" style="display: none; height: 110px; clear: both;">
+						<%using (Html.Form(new { @id = "frmEquitySplit", @onsubmit = "return dealActivity.createSA(this);", @style = "float:left;" })) {%>
+						<% Html.RenderPartial("EquitySplit", Model.EquitySplitModel);%>
+						<%}%>
+					</div>
+					<div id="ConversionDetail" style="display: none; height: 110px; clear: both;">
+						<%using (Html.Form(new { @id = "frmSecurityConversion", @onsubmit = "return dealActivity.createSecConversion(this);", @style = "float:left;" })) {%>
+						<% Html.RenderPartial("SecurityConversion", Model.SecurityConversionModel);%>
+						<%}%>
+					</div>
+					<%: Html.Hidden("DealUnderlyingDirectId", "0", new { @id = "DealUnderlyingDirectId" })%>
+				</div>
+				<div class="line">
+				</div>
+				<div class="heading">
+					New Holding Pattern
+				</div>
+				<div class="cell" id="NHPLoading">
+				</div>
+				<div class="clear sec-box">
+					<table cellpadding="0" cellspacing="0" border="0" id="NewHoldingPatternList" class="grid">
+						<thead>
+							<tr>
+								<th style="width: 20%" align="center">
+									Fund Name
+								</th>
+								<th style="width: 20%" align="center">
+									Old Number of Shares
+								</th>
+								<th style="width: 20%" align="center">
+									New Number of Shares
+								</th>
+								<th>
+								</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div id="EditCD">
-	</div>
-	<div id="EditCC">
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
@@ -308,6 +360,34 @@
 	<%= Html.jQueryAutoComplete("UFV_UnderlyingFund", new AutoCompleteOptions {
 																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
 																	  OnSelect = "function(event, ui) { dealActivity.setUFVUnderlyingFund(ui.item.id,ui.item.value);}"
+	})%>
+	<%= Html.jQueryAutoComplete("S_UnderlyingDirect", new AutoCompleteOptions {
+																	  Source = "/Deal/FindDealUnderlyingDirects", MinLength = 1,
+																	  OnSelect = "function(event, ui) { dealActivity.selectUD(ui.item.id,ui.item.value);}"
+	})%>
+	<%= Html.jQueryAutoComplete("SplitEquityName", new AutoCompleteOptions {
+																	  Source = "/Deal/FindEquityDirects",	MinLength = 1,
+																	  OnSearch = "dealActivity.onESDirectSearch",
+																	  OnSelect = "function(event, ui) { dealActivity.setESDirect(ui.item.id,ui.item.value);}"
+	})%>
+	<%= Html.jQueryAutoComplete("NewSecurity", new AutoCompleteOptions {
+																	  Source = "/Deal/FindEquityDirects",	MinLength = 1,
+																	  OnSearch = "dealActivity.onNewSecuritySearch",
+																	  OnSelect = "function(event, ui) { dealActivity.setNewSecurity(ui.item.id,ui.item.value);}"
+	})%>
+	<%= Html.jQueryAutoComplete("OldSecurity", new AutoCompleteOptions {
+																	  Source = "/Deal/FindEquityDirects",	MinLength = 1,
+																	  OnSearch = "dealActivity.onOldSecuritySearch",
+																	  OnSelect = "function(event, ui) { dealActivity.setOldSecurity(ui.item.id,ui.item.value);}"
+	})%>
+	<%=Html.jQueryAjaxTable("NewHoldingPatternList", new AjaxTableOptions {
+	ActionName = "NewHoldingPatternList",
+	ControllerName = "Deal"
+	, HttpMethod = "GET"
+	, OnSubmit = "dealActivity.onNHPSubmit"
+	, OnSuccess = "dealActivity.onNHPSuccess"
+	, OnRowBound = "dealActivity.onNHPRowBound"
+	, Autoload = false
 	})%>
 	<script type="text/javascript">
 		dealActivity.newCDData = <%= JsonSerializer.ToJsonObject(Model.UnderlyingFundCashDistributionModel)%>;

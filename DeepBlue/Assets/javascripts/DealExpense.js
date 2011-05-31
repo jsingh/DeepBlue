@@ -30,10 +30,10 @@ deal.deleteDealExpense=function (id,img) {
 };
 deal.editDealExpense=function (img) {
 	var tr=$(img).parents("tr:first");
-	if(img.src.indexOf('save.png')> -1) {
+	if(img.src.indexOf('tick.png')> -1) {
 		deal.saveExpense(tr);
 	} else {
-		img.src="/Assets/images/save.png";
+		img.src="/Assets/images/tick.png";
 		deal.showElements(tr);
 	}
 };

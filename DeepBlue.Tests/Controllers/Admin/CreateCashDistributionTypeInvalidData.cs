@@ -80,7 +80,6 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
         #endregion
 
-
         private FormCollection GetInvalidformCollection() {
             FormCollection formCollection = new FormCollection();
 			formCollection.Add("Name", string.Empty);

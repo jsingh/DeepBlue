@@ -16,7 +16,7 @@ body {
 	font-family: Arial;
 	color: #000;
 }
-input, select {
+input[type="text"], select {
 	font-size: 12px;
 }
 h1 {
@@ -122,7 +122,7 @@ a img {
 	clear: right;
 	color: #A6A6A6;
 }
-.editor-field input {
+.editor-field input[type="text"] {
 	width: 200px;
 }
 .editor-field select {
@@ -367,13 +367,13 @@ a img {
 	height: 24px;
 	text-align: center;
 }
-.small-text input {
+.small-text input[type="text"] {
 	width: 130px;
 }
-.small-text-180 input {
+.small-text-180 input[type="text"] {
 	width: 160px;
 }
-.small-text-120 input {
+.small-text-120 input[type="text"] {
 	width: 120px;
 }
 .small-dropdown-120 select {
@@ -387,7 +387,7 @@ a img {
 	width: auto;
 	padding-top: 7px;
 }
-.transaction-info .editor-field input {
+.transaction-info .editor-field input[type="text"] {
 	width: 145px;
 }
 .transaction-info .editor-field select {
@@ -441,7 +441,7 @@ a img {
 .transaction-edit .edit-detail .editor-field {
 	width: auto;
 }
-.transaction-edit .edit-detail .editor-field input {
+.transaction-edit .edit-detail .editor-field input[type="text"] {
 	width: 150px;
 }
 .transaction-edit .split-detail {
@@ -743,5 +743,9 @@ h2 {
 #Edit, #Delete {
 	cursor: pointer;
 }
-.clear { clear:both; }
-.wm { color:#977f7f; }
+.clear {
+	clear: both;
+}
+.wm {
+	color: #977f7f;
+}

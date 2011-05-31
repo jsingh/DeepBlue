@@ -2,7 +2,8 @@
 	width: 180px;
 	float: left;
 	height: 25px;
-	line-height: 25px;    margin-right: 10px;
+	line-height: 25px;
+	margin-right: 10px;
 }
 .auto {
 	width: auto;
@@ -19,7 +20,8 @@
 	width: auto;
 }
 .checkbox, .rdo input {
-	border: 0px; margin-top:2px;
+	border: 0px;
+	margin-top: 2px;
 }
 .editor-label {
 	text-align: right;
@@ -43,6 +45,9 @@ h5 {
 }
 .grid {
 	width: 100%;
+}
+.grid th img, .grid td img {
+	cursor: pointer;
 }
 .grid th, .grid td {
 	padding: 5px;
@@ -107,7 +112,7 @@ h4 a {
 	display: none;
 }
 .show {
-	display:inline-block;
+	display: inline-block;
 }
 .seefull {
 	clear: both;
@@ -121,4 +126,6 @@ h4 a {
 .auto-width {
 	width: auto;
 }
-.checkbox input { border:0px; }
+.checkbox input {
+	border: 0px;
+}

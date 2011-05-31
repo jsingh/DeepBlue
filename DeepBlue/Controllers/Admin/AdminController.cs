@@ -1610,8 +1610,7 @@ namespace DeepBlue.Controllers.Admin {
 			else
 				return string.Empty;
 		}
-
-
+		
 		#endregion
 
 		#region Geography
@@ -2080,7 +2079,7 @@ namespace DeepBlue.Controllers.Admin {
 			FixedIncomeType fixedIncomeType = AdminRepository.FindFixedIncomeType(id);
 			if (fixedIncomeType != null) {
 				model.FixedIncomeTypeId = fixedIncomeType.FixedIncomeTypeID;
-				model.FixedIncomeType = fixedIncomeType.FixedIncomeType1;
+				model.FixedIncomeType1 = fixedIncomeType.FixedIncomeType1;
 				model.Enabled = fixedIncomeType.Enabled;
 			}
 			return View(model);
@@ -2093,7 +2092,7 @@ namespace DeepBlue.Controllers.Admin {
 			EditFixedIncomeTypeModel model = new EditFixedIncomeTypeModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
-			string ErrorMessage = FixedIncomeTypeNameAvailable(model.FixedIncomeType, model.FixedIncomeTypeId);
+			string ErrorMessage = FixedIncomeTypeNameAvailable(model.FixedIncomeType1, model.FixedIncomeTypeId);
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				ModelState.AddModelError("FixedIncome", ErrorMessage);
 			}
@@ -2104,7 +2103,7 @@ namespace DeepBlue.Controllers.Admin {
 					fixedIncomeType.CreatedBy = AppSettings.CreatedByUserId;
 					fixedIncomeType.CreatedDate = DateTime.Now;
 				}
-				fixedIncomeType.FixedIncomeType1 = model.FixedIncomeType;
+				fixedIncomeType.FixedIncomeType1 = model.FixedIncomeType1;
 				fixedIncomeType.Enabled = model.Enabled;
 				fixedIncomeType.EntityID = (int)ConfigUtil.CurrentEntityID;
 				fixedIncomeType.LastUpdatedBy = AppSettings.CreatedByUserId;
@@ -2186,7 +2185,7 @@ namespace DeepBlue.Controllers.Admin {
 			CashDistributionType cashDistributionType = AdminRepository.FindCashDistributionType(id);
 			if (cashDistributionType != null) {
 				model.CashDistributionTypeId = cashDistributionType.CashDistributionTypeID;
-				model.CashDistributionTypeName = cashDistributionType.Name;
+				model.Name = cashDistributionType.Name;
 				model.Enabled = cashDistributionType.Enabled;
 			}
 			return View(model);
@@ -2199,7 +2198,7 @@ namespace DeepBlue.Controllers.Admin {
 			EditCashDistributionTypeModel model = new EditCashDistributionTypeModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
-			string ErrorMessage = CashDistributionTypeAvailable(model.CashDistributionTypeName, model.CashDistributionTypeId);
+			string ErrorMessage = CashDistributionTypeAvailable(model.Name, model.CashDistributionTypeId);
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				ModelState.AddModelError("Name", ErrorMessage);
 			}
@@ -2208,7 +2207,7 @@ namespace DeepBlue.Controllers.Admin {
 				if (cashDistributionType == null) {
 					cashDistributionType = new CashDistributionType();
 				}
-				cashDistributionType.Name = model.CashDistributionTypeName;
+				cashDistributionType.Name = model.Name;
 				cashDistributionType.Enabled = model.Enabled;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCashDistributionType(cashDistributionType);
 				if (errorInfo != null) {
@@ -2245,6 +2244,108 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public string CashDistributionTypeAvailable(string CashDistributionType, int CashDistributionTypeId) {
 			if (AdminRepository.CashDistributionTypeNameAvailable(CashDistributionType, CashDistributionTypeId))
+				return "Name already exists.";
+			else
+				return string.Empty;
+		}
+		
+		#endregion
+
+		#region ActivityType
+
+		public ActionResult ActivityType() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "ActivityType";
+			return View();
+		}
+
+		//
+		// GET: /Admin/ActivityTypeList
+		[HttpGet]
+		public JsonResult ActivityTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DeepBlue.Models.Entity.ActivityType> activityTypes = AdminRepository.GetAllActivityTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var activityType in activityTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {activityType.ActivityTypeID,
+					  activityType.Name,
+					  activityType.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditActivityType
+		[HttpGet]
+		public ActionResult EditActivityType(int id) {
+			EditActivityTypeModel model = new EditActivityTypeModel();
+			ActivityType activityType = AdminRepository.FindActivityType(id);
+			if (activityType != null) {
+				model.ActivityTypeId = activityType.ActivityTypeID;
+				model.Name = activityType.Name;
+				model.Enabled = activityType.Enabled;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateActivityType
+		[HttpPost]
+		public ActionResult UpdateActivityType(FormCollection collection) {
+			EditActivityTypeModel model = new EditActivityTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = ActivityTypeAvailable(model.Name, model.ActivityTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				ActivityType activityType = AdminRepository.FindActivityType(model.ActivityTypeId);
+				if (activityType == null) {
+					activityType = new ActivityType();
+				}
+				activityType.Name = model.Name;
+				activityType.Enabled = model.Enabled;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveActivityType(activityType);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteActivityType(int id) {
+			if (AdminRepository.DeleteActivityType(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string ActivityTypeAvailable(string ActivityType, int ActivityTypeId) {
+			if (AdminRepository.ActivityTypeNameAvailable(ActivityType, ActivityTypeId))
 				return "Name already exists.";
 			else
 				return string.Empty;
