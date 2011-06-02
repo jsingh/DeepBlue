@@ -2,7 +2,7 @@
 	var tbody=$("#tbodyUnderlyingFund");
 	var tr=$("#UnderlyingFund_"+data.DealUnderlyingFundId,tbody);
 	if(!(tr.get(0))) {
-		$("#UnderlyingFundsRowTemplate").tmpl(data).appendTo("#tbodyUnderlyingFund");
+		$("#UnderlyingFundsRowTemplate").tmpl(data).prependTo("#tbodyUnderlyingFund");
 	} else {
 		tr.prev().remove();
 		$("#UnderlyingFundsRowTemplate").tmpl(data).insertAfter(tr);
@@ -15,6 +15,7 @@
 	deal.selectValue(tr);
 	jHelper.applyDatePicker(tr);
 	deal.setIndex($("#tblUnderlyingFund"));
+	$("#MakeNewDUFund").hide();
 };
 deal.deleteUnderlyingFund=function (id,img) {
 	if(confirm("Are you sure you want to delete this deal underlying fund?")) {
@@ -43,6 +44,7 @@ deal.saveUnderlyingFund=function (tr) {
 	if(dealId>0) {
 		var param=jHelper.serialize(tr);
 		param[param.length]={ name: "DealId",value: deal.getDealId() };
+		param[param.length]={ name: "FundId",value: deal.getFundId() };
 		var url="/Deal/CreateDealUnderlyingFund";
 		$.post(url,param,function (data) {
 			spnAjax.hide();

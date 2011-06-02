@@ -84,6 +84,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundAccount_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "FundAccount", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundAccount), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundActivityHistory_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "FundActivityHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundActivityHistory), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundClosing_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "FundClosing", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundClosing), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundExpense_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "FundExpense", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundExpense), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundRateSchedule_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "FundRateSchedule", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundRateSchedule), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFund_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Fund), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
@@ -91,6 +92,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCashDistribution_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingFundCashDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCashDistribution), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAV_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundTransaction_FundClosing", "FundClosing", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.FundClosing), "InvestorFundTransaction", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundTransaction), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundExpense_FundExpenseType", "FundExpenseType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.FundExpenseType), "FundExpense", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundExpense), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundRateSchedule_InvestorType", "InvestorType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.InvestorType), "FundRateSchedule", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundRateSchedule), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_Geography", "Geography", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Geography), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_Industry", "Industry", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Industry), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
@@ -862,6 +864,38 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<FundClosing> _FundClosings;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<FundExpense> FundExpenses
+        {
+            get
+            {
+                if ((_FundExpenses == null))
+                {
+                    _FundExpenses = base.CreateObjectSet<FundExpense>("FundExpenses");
+                }
+                return _FundExpenses;
+            }
+        }
+        private ObjectSet<FundExpense> _FundExpenses;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<FundExpenseType> FundExpenseTypes
+        {
+            get
+            {
+                if ((_FundExpenseTypes == null))
+                {
+                    _FundExpenseTypes = base.CreateObjectSet<FundExpenseType>("FundExpenseTypes");
+                }
+                return _FundExpenseTypes;
+            }
+        }
+        private ObjectSet<FundExpenseType> _FundExpenseTypes;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1816,6 +1850,22 @@ namespace DeepBlue.Models.Entity
         public void AddToFundClosings(FundClosing fundClosing)
         {
             base.AddObject("FundClosings", fundClosing);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the FundExpenses EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFundExpenses(FundExpense fundExpense)
+        {
+            base.AddObject("FundExpenses", fundExpense);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the FundExpenseTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFundExpenseTypes(FundExpenseType fundExpenseType)
+        {
+            base.AddObject("FundExpenseTypes", fundExpenseType);
         }
     
         /// <summary>
@@ -15702,6 +15752,28 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_FundExpense_Fund", "FundExpense")]
+        public EntityCollection<FundExpense> FundExpenses
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<FundExpense>("DeepBlueModel.FK_FundExpense_Fund", "FundExpense");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<FundExpense>("DeepBlueModel.FK_FundExpense_Fund", "FundExpense", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_FundRateSchedule_Fund", "FundRateSchedule")]
         public EntityCollection<FundRateSchedule> FundRateSchedules
         {
@@ -16872,6 +16944,374 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvestorFundTransaction>("DeepBlueModel.FK_InvestorFundTransaction_FundClosing", "InvestorFundTransaction", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="FundExpense")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class FundExpense : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new FundExpense object.
+        /// </summary>
+        /// <param name="fundExpenseID">Initial value of the FundExpenseID property.</param>
+        /// <param name="fundExpenseTypeID">Initial value of the FundExpenseTypeID property.</param>
+        /// <param name="fundID">Initial value of the FundID property.</param>
+        /// <param name="amount">Initial value of the Amount property.</param>
+        public static FundExpense CreateFundExpense(global::System.Int32 fundExpenseID, global::System.Int32 fundExpenseTypeID, global::System.Int32 fundID, global::System.Decimal amount)
+        {
+            FundExpense fundExpense = new FundExpense();
+            fundExpense.FundExpenseID = fundExpenseID;
+            fundExpense.FundExpenseTypeID = fundExpenseTypeID;
+            fundExpense.FundID = fundID;
+            fundExpense.Amount = amount;
+            return fundExpense;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FundExpenseID
+        {
+            get
+            {
+                return _FundExpenseID;
+            }
+            set
+            {
+                if (_FundExpenseID != value)
+                {
+                    OnFundExpenseIDChanging(value);
+                    ReportPropertyChanging("FundExpenseID");
+                    _FundExpenseID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("FundExpenseID");
+                    OnFundExpenseIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _FundExpenseID;
+        partial void OnFundExpenseIDChanging(global::System.Int32 value);
+        partial void OnFundExpenseIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FundExpenseTypeID
+        {
+            get
+            {
+                return _FundExpenseTypeID;
+            }
+            set
+            {
+                OnFundExpenseTypeIDChanging(value);
+                ReportPropertyChanging("FundExpenseTypeID");
+                _FundExpenseTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundExpenseTypeID");
+                OnFundExpenseTypeIDChanged();
+            }
+        }
+        private global::System.Int32 _FundExpenseTypeID;
+        partial void OnFundExpenseTypeIDChanging(global::System.Int32 value);
+        partial void OnFundExpenseTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FundID
+        {
+            get
+            {
+                return _FundID;
+            }
+            set
+            {
+                OnFundIDChanging(value);
+                ReportPropertyChanging("FundID");
+                _FundID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundID");
+                OnFundIDChanged();
+            }
+        }
+        private global::System.Int32 _FundID;
+        partial void OnFundIDChanging(global::System.Int32 value);
+        partial void OnFundIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                OnAmountChanging(value);
+                ReportPropertyChanging("Amount");
+                _Amount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Amount");
+                OnAmountChanged();
+            }
+        }
+        private global::System.Decimal _Amount;
+        partial void OnAmountChanging(global::System.Decimal value);
+        partial void OnAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> Date
+        {
+            get
+            {
+                return _Date;
+            }
+            set
+            {
+                OnDateChanging(value);
+                ReportPropertyChanging("Date");
+                _Date = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Date");
+                OnDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _Date;
+        partial void OnDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnDateChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_FundExpense_Fund", "Fund")]
+        public Fund Fund
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_FundExpense_Fund", "Fund").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_FundExpense_Fund", "Fund").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Fund> FundReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_FundExpense_Fund", "Fund");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Fund>("DeepBlueModel.FK_FundExpense_Fund", "Fund", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_FundExpense_FundExpenseType", "FundExpenseType")]
+        public FundExpenseType FundExpenseType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FundExpenseType>("DeepBlueModel.FK_FundExpense_FundExpenseType", "FundExpenseType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FundExpenseType>("DeepBlueModel.FK_FundExpense_FundExpenseType", "FundExpenseType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<FundExpenseType> FundExpenseTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FundExpenseType>("DeepBlueModel.FK_FundExpense_FundExpenseType", "FundExpenseType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FundExpenseType>("DeepBlueModel.FK_FundExpense_FundExpenseType", "FundExpenseType", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="FundExpenseType")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class FundExpenseType : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new FundExpenseType object.
+        /// </summary>
+        /// <param name="fundExpenseTypeID">Initial value of the FundExpenseTypeID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        public static FundExpenseType CreateFundExpenseType(global::System.Int32 fundExpenseTypeID, global::System.String name, global::System.Int32 entityID)
+        {
+            FundExpenseType fundExpenseType = new FundExpenseType();
+            fundExpenseType.FundExpenseTypeID = fundExpenseTypeID;
+            fundExpenseType.Name = name;
+            fundExpenseType.EntityID = entityID;
+            return fundExpenseType;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FundExpenseTypeID
+        {
+            get
+            {
+                return _FundExpenseTypeID;
+            }
+            set
+            {
+                if (_FundExpenseTypeID != value)
+                {
+                    OnFundExpenseTypeIDChanging(value);
+                    ReportPropertyChanging("FundExpenseTypeID");
+                    _FundExpenseTypeID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("FundExpenseTypeID");
+                    OnFundExpenseTypeIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _FundExpenseTypeID;
+        partial void OnFundExpenseTypeIDChanging(global::System.Int32 value);
+        partial void OnFundExpenseTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_FundExpense_FundExpenseType", "FundExpense")]
+        public EntityCollection<FundExpense> FundExpenses
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<FundExpense>("DeepBlueModel.FK_FundExpense_FundExpenseType", "FundExpense");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<FundExpense>("DeepBlueModel.FK_FundExpense_FundExpenseType", "FundExpense", value);
                 }
             }
         }

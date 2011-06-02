@@ -7,10 +7,11 @@
 <div class="fieldbox">
 	<h5>
 		Total Expenses -
-		<%:Html.Span("",new { @id = "SpnTotalExpenses" })%>
+		<%:Html.Span("",new { @id = "SpnTotalExpenses" })%>&nbsp;&nbsp;<%:Html.Anchor("Make new deal expense", "javascript:deal.showMakeNewHeader('MakeNewDEHeader');", new { @class = "make" })%>
 	</h5>
 	<br />
-	<table id="tblDealExpense" cellpadding="0" cellspacing="0" border="0" class="grid" style="width: 70%">
+	<table id="tblDealExpense" cellpadding="0" cellspacing="0" border="0" class="grid"
+		style="width: 65%">
 		<thead>
 			<tr>
 				<th style="width: 25%">
@@ -24,13 +25,9 @@
 				</th>
 				<th style="width: 18%;">
 				</th>
-				<th style="width: 7%;">
-				</th>
 			</tr>
 		</thead>
-		<tbody id="tbodyDealExpense">
-		</tbody>
-		<tfoot>
+		<thead id="MakeNewDEHeader" style="display:none">
 			<tr>
 				<td>
 					<%: Html.DropDownList("DealClosingCostTypeId", Model.DealClosingCostTypes)%>
@@ -41,14 +38,14 @@
 				<td>
 					<%: Html.TextBox("Date", "", new { @class = "datefield", @id = "0_Date" })%>
 				</td>
-				<td>
+				<td style="text-align: right">
+					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 					<%: Html.Image("tick.png", new { @onclick = "javascript:deal.addDealExpense(this);" })%>
 					<%: Html.Hidden("DealClosingCostId","${DealClosingCostId}")%>
 				</td>
-				<td class="blank">
-					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
-				</td>
 			</tr>
-		</tfoot>
+		</thead>
+		<tbody id="tbodyDealExpense">
+		</tbody>
 	</table>
 </div>

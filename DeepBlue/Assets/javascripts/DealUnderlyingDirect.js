@@ -2,7 +2,7 @@
 	var tbody=$("#tbodyUnderlyingDirect");
 	var tr=$("#UnderlyingDirect_"+data.DealUnderlyingDirectId,tbody);
 	if(!(tr.get(0))) {
-		$("#UnderlyingDirectsRowTemplate").tmpl(data).appendTo("#tbodyUnderlyingDirect");
+		$("#UnderlyingDirectsRowTemplate").tmpl(data).prependTo("#tbodyUnderlyingDirect");
 	} else {
 		tr.prev().remove();
 		$("#UnderlyingDirectsRowTemplate").tmpl(data).insertAfter(tr);
@@ -30,6 +30,7 @@
 	deal.selectValue(tr);
 	jHelper.applyDatePicker(tr);
 	deal.setIndex($("#tblUnderlyingDirect"));
+	$("#MakeNewDUDirect").hide();
 };
 deal.deleteUnderlyingDirect=function (id,img) {
 	if(confirm("Are you sure you want to delete this deal underlying direct?")) {

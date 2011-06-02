@@ -88,6 +88,8 @@
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
     <Compile Include="Models\Deal\EquitySplitModel.cs" />
+    <Compile Include="Models\Deal\ExpenseToDealModel.cs" />
+    <Compile Include="Models\Deal\FundExpenseModel.cs" />
     <Compile Include="Models\Deal\NewHoldingPatternModel.cs" />
     <Compile Include="Models\Deal\SecurityActivityModel.cs" />
     <Compile Include="Models\Deal\SecurityConversionModel.cs" />
@@ -167,6 +169,7 @@
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\EquitySplitService.cs" />
     <Compile Include="Models\Entity\Partial\FundActivityHistory.cs" />
+    <Compile Include="Models\Entity\Partial\FundExpenseService.cs" />
     <Compile Include="Models\Entity\Partial\SecurityConversionService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallService.cs" />
@@ -177,6 +180,7 @@
     <Compile Include="Models\Entity\Validation\CreatedByFields.cs" />
     <Compile Include="Models\Entity\Validation\EquitySplit.cs" />
     <Compile Include="Models\Entity\Validation\FundActivityHistory.cs" />
+    <Compile Include="Models\Entity\Validation\FundExpense.cs" />
     <Compile Include="Models\Entity\Validation\SecurityConversion.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundCapitalCall.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundCapitalCallLineItem.cs" />
@@ -609,6 +613,7 @@
     <Content Include="Assets\images\wbg.gif" />
     <Content Include="Assets\images\xls.png" />
     <Content Include="Assets\javascripts\ActivityType.js" />
+    <Content Include="Assets\javascripts\ajaxFileUpload.js" />
     <Content Include="Assets\javascripts\CapitalCall.js" />
     <Content Include="Assets\javascripts\CapitalCallDetail.js" />
     <Content Include="Assets\javascripts\CapitalCallReceive.js" />
@@ -626,6 +631,7 @@
     <Content Include="Assets\javascripts\DealActivityCapitalCall.js" />
     <Content Include="Assets\javascripts\DealActivityCashDistribution.js" />
     <Content Include="Assets\javascripts\DealActivityPRCapitalCall.js" />
+    <Content Include="Assets\javascripts\DealActivityFundExpense.js" />
     <Content Include="Assets\javascripts\IssuerFixedIncome.js" />
     <Content Include="Assets\javascripts\IssuerEquity.js" />
     <Content Include="Assets\javascripts\FixedIncomeType.js" />
@@ -768,6 +774,8 @@
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
     <Content Include="Views\Deal\Close.aspx" />
+    <Content Include="Views\Deal\ExpenseToDeal.ascx" />
+    <Content Include="Views\Deal\FundExpense.ascx" />
     <Content Include="Views\Deal\SecurityConversion.ascx" />
     <Content Include="Views\Deal\EquitySplit.ascx" />
     <Content Include="Views\Deal\UnderlyingFundValuation.ascx" />
@@ -872,7 +880,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
-          <DevelopmentServerPort>1010</DevelopmentServerPort>
+          <DevelopmentServerPort>8080</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/DeepBlue</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>

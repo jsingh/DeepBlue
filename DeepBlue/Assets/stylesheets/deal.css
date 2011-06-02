@@ -50,7 +50,7 @@ h5 {
 	cursor: pointer;
 }
 .grid th, .grid td {
-	padding: 5px;
+	padding: 2px;
 	color: #7f7f7f;
 }
 .grid th {
@@ -128,4 +128,12 @@ h4 a {
 }
 .checkbox input {
 	border: 0px;
+}
+.make {
+	font-size: 12px; margin-left:50px;
+	color: #4E98BF;
+	text-decoration: none;
+}
+.makenew-header{
+	 float: left; padding-top: 10px; display: none;
 }

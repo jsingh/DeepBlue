@@ -586,8 +586,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 			if (fund != null) {
 				detail.FundName = fund.FundName;
 				detail.FundId = fund.FundID;
-				detail.TotalCommitment = string.Format("{0:C}", fund.InvestorFunds.Sum(investorFund => investorFund.TotalCommitment));
-				detail.UnfundedAmount = string.Format("{0:C}", fund.InvestorFunds.Sum(investorFund => investorFund.UnfundedAmount ?? 0));
+				detail.TotalCommitment = FormatHelper.CurrencyFormat(fund.InvestorFunds.Sum(investorFund => investorFund.TotalCommitment));
+				detail.UnfundedAmount =  FormatHelper.CurrencyFormat( fund.InvestorFunds.Sum(investorFund => investorFund.UnfundedAmount ?? 0));
 				detail.CapitalCallNumber = (fund.CapitalCalls.Count + 1).ToString();
 				detail.DistributionNumber = (fund.CapitalDistributions.Count + 1).ToString();
 			}

@@ -13,6 +13,7 @@
 	<%=Html.JavascriptInclueTag("DealActivityUFValuation.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityEquitySplit.js")%>
 	<%=Html.JavascriptInclueTag("DealActivitySecConversion.js")%>
+	<%=Html.JavascriptInclueTag("DealActivityFundExpense.js")%>
 	<%=Html.JavascriptInclueTag("jAjaxTable.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
@@ -287,7 +288,36 @@
 					<div class="title">
 						<%: Html.Span("Fund Level Expenses")%>
 					</div>
+					<div class="search-tool">
+						<div class="cell" style="padding-left: 10px">
+							<%: Html.TextBox("FLE_Fund", "Search Fund", new { @class = "wm" })%></div>
+						<div class="cell">
+							<%: Html.Span("", new { @id = "SpnFLEDetLoading" })%></div>
+					</div>
 					<div class="detail">
+						<% Html.RenderPartial("FundExpense", Model.FundLevelExpenseModel);%>
+						<div class="cell clear">
+							<%: Html.Anchor("Add Expense to Deal", "javascript:dealActivity.makeNewExpenseDeal();")%>
+						</div>
+						<table cellpadding="0" cellspacing="0" border="0" id="ExpenseToDealList" class="grid">
+							<thead>
+								<tr>
+									<th style="width: 15%">
+										Deal No.
+									</th>
+									<th style="width: 15%">
+										Deal Name
+									</th>
+									<th style="width: 15%">
+										Expense Amount
+									</th>
+									<th>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				<div class="line">
@@ -380,6 +410,10 @@
 																	  OnSearch = "dealActivity.onOldSecuritySearch",
 																	  OnSelect = "function(event, ui) { dealActivity.setOldSecurity(ui.item.id,ui.item.value);}"
 	})%>
+	<%= Html.jQueryAutoComplete("FLE_Fund", new AutoCompleteOptions {
+																	  Source = "/Fund/FindFunds",	MinLength = 1,
+																	  OnSelect = "function(event, ui) { dealActivity.setFLEFund(ui.item.id,ui.item.value);}"
+	})%>
 	<%=Html.jQueryAjaxTable("NewHoldingPatternList", new AjaxTableOptions {
 	ActionName = "NewHoldingPatternList",
 	ControllerName = "Deal"
@@ -411,5 +445,8 @@
 	</script>
 	<script id="UFValuationAddTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("UnderlyingFundValuation", Model.UnderlyingFundValuationModel); %>
+	</script>
+	<script id="ExpenseToDealTemplate" type="text/x-jquery-tmpl">
+		<% Html.RenderPartial("ExpenseToDeal"); %>
 	</script>
 </asp:Content>

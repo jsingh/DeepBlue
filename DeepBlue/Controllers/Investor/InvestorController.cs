@@ -698,8 +698,8 @@ namespace DeepBlue.Controllers.Investor {
 				foreach (var fund in investor.InvestorFunds) {
 					FlexigridRow row = new FlexigridRow();
 					row.cell.Add(fund.Fund.FundName.ToString());
-					row.cell.Add(string.Format("{0:C}", fund.TotalCommitment));
-					row.cell.Add(string.Format("{0:C}", Convert.ToDecimal(fund.UnfundedAmount)));
+					row.cell.Add(FormatHelper.CurrencyFormat(fund.TotalCommitment));
+					row.cell.Add(FormatHelper.CurrencyFormat(Convert.ToDecimal(fund.UnfundedAmount)));
 					Models.Entity.InvestorType investorType = InvestorRepository.FindInvestorType((int)fund.InvestorTypeId);
 					if (investorType != null)
 						row.cell.Add(investorType.InvestorTypeName);

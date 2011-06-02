@@ -42,11 +42,11 @@ namespace DeepBlue.Controllers.CapitalCall {
 				List<Models.Entity.CapitalCall> calls = context.CapitalCalls.Where(capitalCallDetail => capitalCallDetail.FundID == fundId).ToList();
 				CapitalCallDetail detail = new CapitalCallDetail();
 				if (calls.Count > 0) {
-					detail.CapitalCommitted = string.Format("{0:C}", calls.Sum(capitalCall => capitalCall.CapitalAmountCalled));
+					detail.CapitalCommitted = FormatHelper.CurrencyFormat(calls.Sum(capitalCall => capitalCall.CapitalAmountCalled));
 					detail.FundName = calls.First().Fund.FundName;
-					detail.FundExpenses = string.Format("{0:C}", calls.Sum(capitalCall => capitalCall.FundExpenses ?? 0));
-					detail.ManagementFees = string.Format("{0:C}", calls.Sum(capitalCall => capitalCall.ManagementFees ?? 0));
-					detail.UnfundedAmount = string.Format("{0:C}", calls.Sum(capitalCall => capitalCall.Fund.InvestorFunds.Sum(fund => fund.UnfundedAmount ?? 0)));
+					detail.FundExpenses = FormatHelper.CurrencyFormat(calls.Sum(capitalCall => capitalCall.FundExpenses ?? 0));
+					detail.ManagementFees = FormatHelper.CurrencyFormat(calls.Sum(capitalCall => capitalCall.ManagementFees ?? 0));
+					detail.UnfundedAmount = FormatHelper.CurrencyFormat(calls.Sum(capitalCall => capitalCall.Fund.InvestorFunds.Sum(fund => fund.UnfundedAmount ?? 0)));
 				} else {
 					detail.FundName = (from fund in context.Funds
 									   where fund.FundID == fundId

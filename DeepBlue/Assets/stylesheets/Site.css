@@ -749,3 +749,7 @@ h2 {
 .wm {
 	color: #977f7f;
 }
+.tickbtn {
+	width: 24px;
+	height: 24px;
+}

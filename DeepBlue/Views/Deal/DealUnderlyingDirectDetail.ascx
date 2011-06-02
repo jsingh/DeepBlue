@@ -2,11 +2,13 @@
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <div class="line">
 </div>
-<div>
-	<%: Html.Image("UnderlyingDirects.png", new { @class="expandbtn" })%></div>
+<div style="float: left">
+	<%: Html.Image("UnderlyingDirects.png", new { @class = "expandbtn" })%></div>
+<div class="makenew-header">
+	<%:Html.Anchor("Make new deal underlying direct", "javascript:deal.showMakeNewHeader('MakeNewDUDirect');", new { @class = "make" })%></div>
 <div class="fieldbox">
 	<table id="tblUnderlyingDirect" cellpadding="0" cellspacing="0" border="0" class="grid"
-		style="width: 100%">
+		style="width: 99%">
 		<thead>
 			<tr>
 				<th>
@@ -44,13 +46,9 @@
 				</th>
 				<th>
 				</th>
-				<th>
-				</th>
 			</tr>
 		</thead>
-		<tbody id="tbodyUnderlyingDirect">
-		</tbody>
-		<tfoot>
+		<thead id="MakeNewDUDirect" style="display: none">
 			<tr>
 				<td style="text-align: center">
 					<%: Html.Span("", new { @id = "SpnIndex" }) %>
@@ -86,13 +84,13 @@
 					<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_DirectRecordDate" })%>
 				</td>
 				<td style="text-align: center">
+					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 					<%: Html.Image("tick.png", new { @onclick = "javascript:deal.addUnderlyingDirect(this);" })%>
 					<%: Html.Hidden("DealUnderlyingDirectId", "${DealUnderlyingDirectId}")%>
 				</td>
-				<td class="blank">
-					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
-				</td>
 			</tr>
-		</tfoot>
+		</thead>
+		<tbody id="tbodyUnderlyingDirect">
+		</tbody>
 	</table>
 </div>

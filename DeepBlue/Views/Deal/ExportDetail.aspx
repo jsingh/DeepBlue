@@ -124,7 +124,7 @@
 										<%: fund.NAV%>
 									</td>
 									<td class="dollarcell">
-										<%: string.Format("{0:C}",fund.Commitment)%>
+										<%: FormatHelper.CurrencyFormat(fund.Commitment)%>
 									</td>
 									<td class="datecell">
 										<%: (fund.RecordDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy")%>

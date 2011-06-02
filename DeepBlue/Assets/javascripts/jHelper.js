@@ -156,4 +156,6 @@
 			//.blur(function () { if($.trim(this.value)=="") { this.value=v; } });
 		});
 	}
+	,ajImg: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;"; }
+	,loading: function (t,v) { if(isNaN(v)) { v="Loading"; } $(t).html(this.ajImg()+v+"..."); }
 }

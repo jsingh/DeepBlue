@@ -138,6 +138,12 @@ namespace DeepBlue.Controllers.Deal {
 		IEnumerable<ErrorInfo> SaveFundActivityHistory(FundActivityHistory fundActivityHistory);
 		#endregion
 
+		#region FundExpense
+		IEnumerable<ErrorInfo> SaveFundExpense(FundExpense fundExpense);
+		FundExpense FindFundExpense(int fundId);
+		FundExpenseModel FindFundExpenseModel(int fundId);
+		#endregion
+
 		#region NewHoldingPattern
 		List<NewHoldingPatternModel> NewHoldingPatternList(int dealUnderlyingDirectId, int activityTypeId, int securityTypeId, int securityId);
 		#endregion

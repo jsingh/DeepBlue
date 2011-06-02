@@ -270,7 +270,7 @@ namespace DeepBlue.Controllers.Deal {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from underlyingFund in context.DealUnderlyingFunds
 						where underlyingFund.UnderlyingFundID == underlyingFundId
-						&& underlyingFund.Deal.FundID == fundId
+						&& underlyingFund.Deal.FundID == fundId && underlyingFund.DealClosingID != null
 						select underlyingFund).ToList();
 			}
 		}
@@ -415,9 +415,10 @@ namespace DeepBlue.Controllers.Deal {
 																orderby direct.Deal.DealName
 																select new AutoCompleteList {
 																	id = direct.DealUnderlyingDirectID,
-																	label = direct.Deal.DealName + ">" + 
+																	label = direct.Deal.DealName + ">" +
 																	(direct.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? (equity != null ? (equity.Symbol + ">" + equity.EquityType.Equity) : string.Empty) : (fixedIncome != null ? (fixedIncome.Symbol + ">" + fixedIncome.FixedIncomeType.FixedIncomeType1) : string.Empty))
-																	,value = direct.Deal.DealName
+																	,
+																	value = direct.Deal.DealName
 																});
 				return new PaginatedList<AutoCompleteList>(directListQuery, 1, 20);
 			}
@@ -1173,5 +1174,43 @@ namespace DeepBlue.Controllers.Deal {
 
 		#endregion
 
+		#region FundExpense
+
+		public FundExpense FindFundExpense(int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.FundExpenses.Where(fundExpense => fundExpense.FundID == fundId).SingleOrDefault();
+			}
+		}
+
+		public FundExpenseModel FindFundExpenseModel(int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				FundExpenseModel model = (from fundExpense in context.FundExpenses
+										  where fundExpense.FundID == fundId
+										  select new FundExpenseModel {
+											  Amount = fundExpense.Amount,
+											  Date = fundExpense.Date,
+											  FundExpenseId = fundExpense.FundExpenseID,
+											  FundExpenseTypeId = fundExpense.FundExpenseID,
+											  FundId = fundExpense.FundID
+										  }).SingleOrDefault();
+				if (model != null) {
+					model.ExpenseToDeals = (from deal in context.Deals
+											where deal.FundID == fundId
+											orderby deal.DealNumber descending
+											select new ExpenseToDealModel {
+												DealId = deal.DealID,
+												DealName = deal.DealName,
+												DealNo = deal.DealNumber
+											}).ToList();
+				}
+				return model;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveFundExpense(FundExpense fundExpense) {
+			return fundExpense.Save();
+		}
+
+		#endregion
 	}
 }

@@ -27,7 +27,7 @@
 				</div>
 				<div class="editor-label" style="clear: right; width: 75px; text-align: right;">
 					<b>
-						<%: Html.Span(string.Format("{0:C}", Model.OriginalCommitmentAmount))%></b>
+						<%: Html.Span(FormatHelper.CurrencyFormat(Model.OriginalCommitmentAmount))%></b>
 				</div>
 			</div>
 		</div>
@@ -46,7 +46,7 @@
 				</div>
 				<div class="editor-label" style="clear: right; width: 75px; text-align: right;">
 					<b>
-						<%: Html.Span(string.Format("{0:C}", Model.UnfundedAmount))%></b>
+						<%: Html.Span(FormatHelper.CurrencyFormat(Model.UnfundedAmount))%></b>
 				</div>
 			</div>
 		</div>

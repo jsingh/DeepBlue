@@ -129,13 +129,9 @@
 			<%: Html.TextBox("Date", "${Date}", new {  @class="hide datefield", @id = "${DealClosingCostId}_DealExpenseDate" })%>
 		</td>
 		<td style="text-align:right">
+			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new { @style = "display:none;", @id = "spnAjax" })%>
 			<%: Html.Image("Edit.png", new { @onclick = "javascript:deal.editDealExpense(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @onclick = "javascript:deal.deleteDealExpense(${DealClosingCostId},this);" })%>
 			<%: Html.Hidden("DealClosingCostId","${DealClosingCostId}")%>
-		</td>
-		<td class="blank">
-			<%using(Html.Div(new { @style="width:75px" })){%>
-		<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new { @style = "display:none;", @id = "spnAjax" })%>
-		<%}%>
 		</td>
 	</tr>
 	</script>
@@ -174,11 +170,9 @@
 			<%: Html.TextBox("RecordDate", "${RecordDate}",new { @class = "hide datefield", @id = "${DealUnderlyingFundId}_RecordDate" })%>
 		</td>
 		<td style="text-align: right" nowrap>
+			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 			<%: Html.Image("Edit.png", new { @onclick = "javascript:deal.editUnderlyingFund(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @onclick = "javascript:deal.deleteUnderlyingFund(${DealUnderlyingFundId},this);" })%>
 			<%: Html.Hidden("DealUnderlyingFundId","${DealUnderlyingFundId}")%>
-		</td>
-		<td class="blank" nowrap>
-			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 		</td>
 	</tr>
 	</script>
@@ -230,11 +224,9 @@
 			<%: Html.TextBox("RecordDate", "",new { @class = "hide datefield", @id = "${DealUnderlyingDirectId}_DirectRecordDate" })%>
 		</td>
 		<td style="text-align: right" nowrap>
+			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 			<%: Html.Image("Edit.png", new { @onclick = "javascript:deal.editUnderlyingDirect(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @onclick = "javascript:deal.deleteUnderlyingDirect(${DealUnderlyingDirectId},this);" })%>
 			<%: Html.Hidden("DealUnderlyingDirectId","${DealUnderlyingDirectId}")%>
-		</td>
-		<td class="blank" nowrap>
-			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 		</td>
 	</tr>
 	</script>

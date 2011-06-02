@@ -532,6 +532,21 @@ namespace DeepBlue.Helpers {
 			return activityTypeList;
 		}
 
+		public static List<SelectListItem> GetFundExpenseTypeSelectList(List<FundExpenseType> fundExpenseTypes) {
+			List<SelectListItem> fundExpenseTypeList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			fundExpenseTypeList.Add(item);
+			foreach (var fundExpenseType in fundExpenseTypes) {
+				item = new SelectListItem();
+				item.Text = fundExpenseType.Name.ToString();
+				item.Value = fundExpenseType.FundExpenseTypeID.ToString();
+				fundExpenseTypeList.Add(item);
+			}
+			return fundExpenseTypeList;
+		}
+
 		public static List<SelectListItem> GetEmptySelectList() {
 			List<SelectListItem> lists = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();

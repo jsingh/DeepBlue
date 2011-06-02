@@ -2,7 +2,7 @@
 	var tbody=$("#tbodyDealExpense");
 	var tr=$("#DealExpense_"+data.DealClosingCostId,tbody);
 	if(!(tr.get(0))) {
-		$("#DealExpensesRowTemplate").tmpl(data).appendTo("#tbodyDealExpense");
+		$("#DealExpensesRowTemplate").tmpl(data).prependTo("#tbodyDealExpense");
 	} else {
 		tr.prev().remove();
 		$("#DealExpensesRowTemplate").tmpl(data).insertAfter(tr);
@@ -16,6 +16,7 @@
 	deal.selectValue(tr);
 	jHelper.applyDatePicker(tr);
 	deal.calcTotalExpense();
+	$("#MakeNewDUFund").hide();
 };
 deal.deleteDealExpense=function (id,img) {
 	if(confirm("Are you sure you want to delete this deal expense?")) {

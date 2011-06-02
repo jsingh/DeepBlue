@@ -1374,7 +1374,16 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
+		#region IAdminRepository FundExpenseType
 
-	 
+		public List<FundExpenseType> GetAllFundExpenseTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fundExpense in context.FundExpenseTypes
+						orderby fundExpense.Name
+						select fundExpense).ToList();
+			}
+		}
+
+		#endregion
 	}
 }

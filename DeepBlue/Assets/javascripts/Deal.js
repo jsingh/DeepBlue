@@ -29,6 +29,7 @@
 			var src=this.src.replace("/"+fname,"");
 			fname="S_"+fname.replace("S_","");
 			this.src=src+"/"+fname;
+			$(".makenew-header",parent).show();
 			$(".fieldbox",parent).show();
 		},function () {
 			var parent=$(this).parent().parent();
@@ -36,6 +37,7 @@
 			var src=this.src.replace("/"+fname,"");
 			fname=fname.replace("S_","");
 			this.src=src+"/"+fname;
+			$(".makenew-header",parent).hide();
 			$(".fieldbox",parent).hide();
 		});
 	}
@@ -50,6 +52,9 @@
 	/* Deal Detail */
 	,getDealId: function () {
 		return parseInt($("#DealId","#NewDeal").val());
+	}
+	,getFundId: function () {
+		return parseInt($("#FundId","#NewDeal").val());
 	}
 	,setDealId: function (dealId) {
 		$("#DealId","#NewDeal").val(dealId);
@@ -129,7 +134,16 @@
 		var FullDealList=$("#FullDealList");$("tbody tr","#DealList").click(function () { deal.loadDeal($.trim($("td:eq(0) div",this).html()));FullDealList.dialog("close"); });
 	}
 	/* End Deal Detail */
-
+	/* Common functions */
+	,showMakeNewHeader: function (id) {
+		var makeNew=$("#"+id);
+		if(makeNew.css("display")=="none") {
+			makeNew.css("display","");
+		} else {
+			makeNew.css("display","none");
+		}
+	}
+	/* End Common functions */
 	/* Fund Details */
 	,seeFullFund: function () {
 		var FullFundList=$("#FullFundList");

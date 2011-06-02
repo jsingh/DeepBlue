@@ -237,5 +237,9 @@ namespace DeepBlue.Controllers.Admin {
 		bool DeleteActivityType(int id);
 		IEnumerable<ErrorInfo> SaveActivityType(ActivityType activityType);
 		#endregion
+
+		#region FundExpenseType
+		List<FundExpenseType> GetAllFundExpenseTypes();
+		#endregion
 	}
 }

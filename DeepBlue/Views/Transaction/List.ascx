@@ -15,7 +15,7 @@
 					<%: Html.Label("Committed Amount:") %>
 				</div>
 				<div class="display-field">
-					<%: Html.Span(string.Format("{0:C}",item.TotalCommitment))%>
+					<%: Html.Span(FormatHelper.CurrencyFormat(item.TotalCommitment))%>
 				</div>
 			</div>
 			<div class="editor-row">
@@ -23,7 +23,7 @@
 					<%: Html.Label("Unfunded Amount:")%>
 				</div>
 				<div class="display-field">
-					<%: Html.Span(string.Format("{0:C}",item.UnfundedAmount))%>
+					<%: Html.Span(FormatHelper.CurrencyFormat(item.UnfundedAmount))%>
 				</div>
 			</div>
 			<div class="editor-link">

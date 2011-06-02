@@ -2,11 +2,13 @@
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <div class="line">
 </div>
-<div>
+<div style="float: left">
 	<%: Html.Image("UnderlyingFunds.png", new { @class="expandbtn" })%></div>
+<div class="makenew-header">
+	<%:Html.Anchor("Make new deal underlying fund", "javascript:deal.showMakeNewHeader('MakeNewDUFund');", new { @class = "make" })%></div>
 <div class="fieldbox">
 	<table id="tblUnderlyingFund" cellpadding="0" cellspacing="0" border="0" class="grid"
-		style="width: 100%">
+		style="width: 99%">
 		<thead>
 			<tr>
 				<th>
@@ -35,13 +37,9 @@
 				</th>
 				<th>
 				</th>
-				<th>
-				</th>
 			</tr>
 		</thead>
-		<tbody id="tbodyUnderlyingFund">
-		</tbody>
-		<tfoot>
+		<thead id="MakeNewDUFund" style="display: none">
 			<tr>
 				<td style="text-align: center">
 					<%: Html.Span("", new { @id = "SpnIndex" }) %>
@@ -67,14 +65,14 @@
 				<td style="text-align: center">
 					<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_RecordDate" })%>
 				</td>
-				<td style="text-align: center">
+				<td style="text-align: right">
+					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 					<%: Html.Image("tick.png", new { @onclick = "javascript:deal.addUnderlyingFund(this);" })%>
 					<%: Html.Hidden("DealUnderlyingFundId", "${DealUnderlyingFundId}")%>
 				</td>
-				<td class="blank">
-					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
-				</td>
 			</tr>
-		</tfoot>
+		</thead>
+		<tbody id="tbodyUnderlyingFund">
+		</tbody>
 	</table>
 </div>

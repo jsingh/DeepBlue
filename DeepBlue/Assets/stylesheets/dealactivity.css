@@ -14,6 +14,9 @@
 .grid tfoot tr td {
 	text-align: center;
 }
+.grid th, .grid td {
+	padding: 6px;
+}
 #ActivityMain .header {
 	margin: 10px 0px 10px 0px;
 	font-size: 16px;
@@ -33,6 +36,9 @@
 }
 #ActivityMain .detail {
 	display: none;
+	clear: both;
+	float: left;
+	width: 100%;
 }
 #ActivityMain .title {
 	background: url(../images/plus.png) no-repeat scroll left top transparent;
@@ -65,9 +71,10 @@
 	width: auto;
 	padding: 0px 20px 0px 20px;
 	color: #977f7f;
-	margin:0px 20px 0px 10px;
+	margin: 0px 20px 0px 10px;
+	height: auto;
 }
-.cell input {
+.cell input[type="text"], .cell select {
 	width: 189px;
 }
 .cell .checkbox {
@@ -131,12 +138,19 @@ input, select {
 	color: #977f7f;
 	margin: 10px;
 }
-.grid th, .grid td {
-	padding: 10px;
-}
 .editor-label input, .editor-field input {
 	padding: 6px;
 }
 .editor-label {
 	padding: 8px;
+}
+#FLE {
+	float: left;
+	clear: both;
+	margin: 15px 0px 0px 17px;
+	width: 99%;
+}
+#FLE .cell {
+	margin: 5px;
+	padding: 0px;
 }

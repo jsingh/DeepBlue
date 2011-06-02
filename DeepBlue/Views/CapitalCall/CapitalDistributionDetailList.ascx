@@ -8,9 +8,9 @@
 	   row = new FlexigridRow();
 	   row.cell.Add(item.CapitalDistributionID.ToString());
 	   row.cell.Add(item.DistributionNumber.ToString());
-	   row.cell.Add(string.Format("{0:C}", item.DistributionAmount));
-	   row.cell.Add(string.Format("{0:C}", item.ReturnManagementFees));
-	   row.cell.Add(string.Format("{0:C}", item.ReturnFundExpenses));
+	   row.cell.Add(FormatHelper.CurrencyFormat(item.DistributionAmount));
+	   row.cell.Add(FormatHelper.CurrencyFormat(item.ReturnManagementFees));
+	   row.cell.Add(FormatHelper.CurrencyFormat(item.ReturnFundExpenses));
 	   row.cell.Add(item.CapitalDistributionDate.ToString("MM/dd/yyyy"));
 	   row.cell.Add(item.CapitalDistributionDueDate.ToString("MM/dd/yyyy"));
 	   flexData.rows.Add(row);

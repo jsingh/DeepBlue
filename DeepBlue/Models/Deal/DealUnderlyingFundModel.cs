@@ -26,6 +26,10 @@ namespace DeepBlue.Models.Deal {
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Deal is required")]
 		public int DealId { get; set; }
 
+		[Required(ErrorMessage = "Fund is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
+		public int FundId { get; set; }
+
 		[Required(ErrorMessage = "Fund Name is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund Name is required")]
 		public int UnderlyingFundId { get; set; }
