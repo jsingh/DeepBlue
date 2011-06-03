@@ -76,6 +76,13 @@ namespace DeepBlue.Controllers.Issuer {
 		}
 
 		//
+		// GET: /Fund/FindIssuers
+		[HttpGet]
+		public JsonResult FindIssuers(string term) {
+			return Json(IssuerRepository.FindIssuers(term), JsonRequestBehavior.AllowGet);
+		}
+
+		//
 		// GET: /Issuer/UpdateIssuer
 		[HttpPost]
 		public ActionResult UpdateIssuer(FormCollection collection) {

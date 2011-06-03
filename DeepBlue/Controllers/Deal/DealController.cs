@@ -1545,6 +1545,89 @@ namespace DeepBlue.Controllers.Deal {
 
 		#endregion
 
+		#region UnderlyingDirectValuation
+
+		//
+		// GET: /Deal/UnderlyingFundValuationList
+		[HttpGet]
+		public JsonResult UnderlyingDirectValuationList(int issuerId) {
+			return Json(DealRepository.UnderlyingDirectValuationList(issuerId), JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// POST : /Deal/CreateUnderlyingDirectValuation
+		[HttpPost]
+		public ActionResult CreateUnderlyingDirectValuation(FormCollection collection) {
+			UnderlyingDirectValuationModel model = new UnderlyingDirectValuationModel();
+			this.TryUpdateModel(model);
+			ResultModel resultModel = new ResultModel();
+			if (ModelState.IsValid) {
+				IEnumerable<ErrorInfo> errorInfo;
+				UnderlyingDirectLastPrice underlyingDirectLastPrice = DealRepository.FindUnderlyingDirectLastPrice(model.FundId, model.SecurityId, model.SecurityTypeId);
+				if (underlyingDirectLastPrice == null) {
+					underlyingDirectLastPrice = new UnderlyingDirectLastPrice();
+					underlyingDirectLastPrice.CreatedBy = AppSettings.CreatedByUserId;
+					underlyingDirectLastPrice.CreatedDate = DateTime.Now;	
+				}
+				underlyingDirectLastPrice.FundID = model.FundId;
+				underlyingDirectLastPrice.SecurityID = model.SecurityId;
+				underlyingDirectLastPrice.SecurityTypeID = model.SecurityTypeId;
+				underlyingDirectLastPrice.LastPrice = model.NewPrice;
+				underlyingDirectLastPrice.LastPriceDate = model.NewPriceDate;
+				underlyingDirectLastPrice.LastUpdatedBy = AppSettings.CreatedByUserId;
+				underlyingDirectLastPrice.LastUpdatedDate = DateTime.Now;
+				errorInfo = DealRepository.SaveUnderlyingDirectValuation(underlyingDirectLastPrice);
+				if (errorInfo == null) {
+					UnderlyingDirectLastPriceHistory lastPricehistory = new UnderlyingDirectLastPriceHistory();
+					lastPricehistory.UnderlyingDirectLastPriceID = underlyingDirectLastPrice.UnderlyingDirectLastPriceID;
+					lastPricehistory.LastPrice = underlyingDirectLastPrice.LastPrice;
+					lastPricehistory.LastPriceDate = underlyingDirectLastPrice.LastPriceDate;
+					lastPricehistory.LastUpdatedBy = AppSettings.CreatedByUserId;
+					lastPricehistory.LastUpdatedDate = DateTime.Now;
+					lastPricehistory.CreatedBy = AppSettings.CreatedByUserId;
+					lastPricehistory.CreatedDate = DateTime.Now;
+					errorInfo = DealRepository.SaveUnderlyingDirectValuationHistory(lastPricehistory);
+				}
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					resultModel.Result = "True||" + underlyingDirectLastPrice.UnderlyingDirectLastPriceID;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+		
+		//
+		// GET: /Deal/FindUnderlyingDirectValuation
+		[HttpGet]
+		public JsonResult FindUnderlyingDirectValuation(int id) {
+			UnderlyingDirectValuationModel model = DealRepository.FindUnderlyingDirectValuationModel(id);
+			if (model == null) {
+				model = new UnderlyingDirectValuationModel();
+			}
+			return Json(model, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public string DeleteUnderlyingDirectValuation(int id) {
+			if (DealRepository.DeleteUnderlyingDirectValuation(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		#endregion
+
 		#endregion
 
 		public ActionResult Result() {

@@ -17,6 +17,7 @@ namespace DeepBlue.Controllers.Issuer {
 		bool IssuerNameAvailable(string issuerName, int issuerId);
 		IEnumerable<ErrorInfo> SaveIssuer(Models.Entity.Issuer issuer);
 		Models.Entity.Issuer FindIssuer(int issuerId);
+		List<AutoCompleteList> FindIssuers(string issuerName);
 		EditIssuerModel FindIssuerModel(int issuerId);
 		#endregion
 

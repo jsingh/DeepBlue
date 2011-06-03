@@ -82,6 +82,8 @@
           <EntitySet Name="ShareClassType" EntityType="DeepBlueModel.Store.ShareClassType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="STATE" EntityType="DeepBlueModel.Store.STATE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TransactionType" EntityType="DeepBlueModel.Store.TransactionType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UnderlyingDirectLastPrice" EntityType="DeepBlueModel.Store.UnderlyingDirectLastPrice" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UnderlyingDirectLastPriceHistory" EntityType="DeepBlueModel.Store.UnderlyingDirectLastPriceHistory" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UnderlyingFund" EntityType="DeepBlueModel.Store.UnderlyingFund" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UnderlyingFundCapitalCall" EntityType="DeepBlueModel.Store.UnderlyingFundCapitalCall" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UnderlyingFundCapitalCallLineItem" EntityType="DeepBlueModel.Store.UnderlyingFundCapitalCallLineItem" store:Type="Tables" Schema="dbo" />
@@ -432,6 +434,18 @@
           <AssociationSet Name="FK_SecurityConversion_SecurityTypeOld" Association="DeepBlueModel.Store.FK_SecurityConversion_SecurityTypeOld">
             <End Role="SecurityType" EntitySet="SecurityType" />
             <End Role="SecurityConversion" EntitySet="SecurityConversion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UnderlyingDirectLastPrice_Fund" Association="DeepBlueModel.Store.FK_UnderlyingDirectLastPrice_Fund">
+            <End Role="Fund" EntitySet="Fund" />
+            <End Role="UnderlyingDirectLastPrice" EntitySet="UnderlyingDirectLastPrice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UnderlyingDirectLastPrice_SecurityType" Association="DeepBlueModel.Store.FK_UnderlyingDirectLastPrice_SecurityType">
+            <End Role="SecurityType" EntitySet="SecurityType" />
+            <End Role="UnderlyingDirectLastPrice" EntitySet="UnderlyingDirectLastPrice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice" Association="DeepBlueModel.Store.FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice">
+            <End Role="UnderlyingDirectLastPrice" EntitySet="UnderlyingDirectLastPrice" />
+            <End Role="UnderlyingDirectLastPriceHistory" EntitySet="UnderlyingDirectLastPriceHistory" />
           </AssociationSet>
           <AssociationSet Name="FK_UnderlyingFund_Account" Association="DeepBlueModel.Store.FK_UnderlyingFund_Account">
             <End Role="Account" EntitySet="Account" />
@@ -1548,6 +1562,35 @@
           <Property Name="EntityID" Type="int" Nullable="false" />
           <Property Name="Enabled" Type="bit" Nullable="false" />
           <Property Name="TransactionTypeName" Type="varchar" Nullable="false" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="UnderlyingDirectLastPrice">
+          <Key>
+            <PropertyRef Name="UnderlyingDirectLastPriceID" />
+          </Key>
+          <Property Name="UnderlyingDirectLastPriceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FundID" Type="int" Nullable="false" />
+          <Property Name="SecurityTypeID" Type="int" Nullable="false" />
+          <Property Name="SecurityID" Type="int" Nullable="false" />
+          <Property Name="LastPrice" Type="money" />
+          <Property Name="LastPriceDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="UnderlyingDirectLastPriceHistory">
+          <Key>
+            <PropertyRef Name="UnderlyingDirectLastPriceHistoryID" />
+          </Key>
+          <Property Name="UnderlyingDirectLastPriceHistoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UnderlyingDirectLastPriceID" Type="int" />
+          <Property Name="LastPrice" Type="money" />
+          <Property Name="LastPriceDate" Type="datetime" Nullable="false" />
+          <Property Name="IsAudited" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
         </EntityType>
         <EntityType Name="UnderlyingFund">
           <Key>
@@ -2723,6 +2766,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UnderlyingDirectLastPrice_Fund">
+          <End Role="Fund" Type="DeepBlueModel.Store.Fund" Multiplicity="1" />
+          <End Role="UnderlyingDirectLastPrice" Type="DeepBlueModel.Store.UnderlyingDirectLastPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fund">
+              <PropertyRef Name="FundID" />
+            </Principal>
+            <Dependent Role="UnderlyingDirectLastPrice">
+              <PropertyRef Name="FundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UnderlyingDirectLastPrice_SecurityType">
+          <End Role="SecurityType" Type="DeepBlueModel.Store.SecurityType" Multiplicity="1" />
+          <End Role="UnderlyingDirectLastPrice" Type="DeepBlueModel.Store.UnderlyingDirectLastPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SecurityType">
+              <PropertyRef Name="SecurityTypeID" />
+            </Principal>
+            <Dependent Role="UnderlyingDirectLastPrice">
+              <PropertyRef Name="SecurityTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice">
+          <End Role="UnderlyingDirectLastPrice" Type="DeepBlueModel.Store.UnderlyingDirectLastPrice" Multiplicity="0..1" />
+          <End Role="UnderlyingDirectLastPriceHistory" Type="DeepBlueModel.Store.UnderlyingDirectLastPriceHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnderlyingDirectLastPrice">
+              <PropertyRef Name="UnderlyingDirectLastPriceID" />
+            </Principal>
+            <Dependent Role="UnderlyingDirectLastPriceHistory">
+              <PropertyRef Name="UnderlyingDirectLastPriceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UnderlyingFund_Account">
           <End Role="Account" Type="DeepBlueModel.Store.Account" Multiplicity="0..1" />
           <End Role="UnderlyingFund" Type="DeepBlueModel.Store.UnderlyingFund" Multiplicity="*" />
@@ -3069,6 +3148,8 @@
           <EntitySet Name="ShareClassTypes" EntityType="DeepBlueModel.ShareClassType" />
           <EntitySet Name="STATEs" EntityType="DeepBlueModel.STATE" />
           <EntitySet Name="TransactionTypes" EntityType="DeepBlueModel.TransactionType" />
+          <EntitySet Name="UnderlyingDirectLastPrices" EntityType="DeepBlueModel.UnderlyingDirectLastPrice" />
+          <EntitySet Name="UnderlyingDirectLastPriceHistories" EntityType="DeepBlueModel.UnderlyingDirectLastPriceHistory" />
           <EntitySet Name="UnderlyingFunds" EntityType="DeepBlueModel.UnderlyingFund" />
           <EntitySet Name="UnderlyingFundCapitalCalls" EntityType="DeepBlueModel.UnderlyingFundCapitalCall" />
           <EntitySet Name="UnderlyingFundCapitalCallLineItems" EntityType="DeepBlueModel.UnderlyingFundCapitalCallLineItem" />
@@ -3356,6 +3437,10 @@
             <End Role="Fund" EntitySet="Funds" />
             <End Role="InvestorFundDocument" EntitySet="InvestorFundDocuments" />
           </AssociationSet>
+          <AssociationSet Name="FK_UnderlyingDirectLastPrice_Fund" Association="DeepBlueModel.FK_UnderlyingDirectLastPrice_Fund">
+            <End Role="Fund" EntitySet="Funds" />
+            <End Role="UnderlyingDirectLastPrice" EntitySet="UnderlyingDirectLastPrices" />
+          </AssociationSet>
           <AssociationSet Name="FK_UnderlyingFundCapitalCall_Fund" Association="DeepBlueModel.FK_UnderlyingFundCapitalCall_Fund">
             <End Role="Fund" EntitySet="Funds" />
             <End Role="UnderlyingFundCapitalCall" EntitySet="UnderlyingFundCapitalCalls" />
@@ -3472,9 +3557,17 @@
             <End Role="SecurityType" EntitySet="SecurityTypes" />
             <End Role="SecurityConversion" EntitySet="SecurityConversions" />
           </AssociationSet>
+          <AssociationSet Name="FK_UnderlyingDirectLastPrice_SecurityType" Association="DeepBlueModel.FK_UnderlyingDirectLastPrice_SecurityType">
+            <End Role="SecurityType" EntitySet="SecurityTypes" />
+            <End Role="UnderlyingDirectLastPrice" EntitySet="UnderlyingDirectLastPrices" />
+          </AssociationSet>
           <AssociationSet Name="FK_UnderlyingFund_ShareClassType" Association="DeepBlueModel.FK_UnderlyingFund_ShareClassType">
             <End Role="ShareClassType" EntitySet="ShareClassTypes" />
             <End Role="UnderlyingFund" EntitySet="UnderlyingFunds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice" Association="DeepBlueModel.FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice">
+            <End Role="UnderlyingDirectLastPrice" EntitySet="UnderlyingDirectLastPrices" />
+            <End Role="UnderlyingDirectLastPriceHistory" EntitySet="UnderlyingDirectLastPriceHistories" />
           </AssociationSet>
           <AssociationSet Name="FK_UnderlyingFund_UnderlyingFund" Association="DeepBlueModel.FK_UnderlyingFund_UnderlyingFund">
             <End Role="UnderlyingFund" EntitySet="UnderlyingFunds" />
@@ -4181,6 +4274,7 @@
           <NavigationProperty Name="FundRateSchedules" Relationship="DeepBlueModel.FK_FundRateSchedule_Fund" FromRole="Fund" ToRole="FundRateSchedule" />
           <NavigationProperty Name="InvestorFunds" Relationship="DeepBlueModel.FK_InvestorFund_Fund" FromRole="Fund" ToRole="InvestorFund" />
           <NavigationProperty Name="InvestorFundDocuments" Relationship="DeepBlueModel.FK_InvestorFundDocument_Fund" FromRole="Fund" ToRole="InvestorFundDocument" />
+          <NavigationProperty Name="UnderlyingDirectLastPrices" Relationship="DeepBlueModel.FK_UnderlyingDirectLastPrice_Fund" FromRole="Fund" ToRole="UnderlyingDirectLastPrice" />
           <NavigationProperty Name="UnderlyingFundCapitalCalls" Relationship="DeepBlueModel.FK_UnderlyingFundCapitalCall_Fund" FromRole="Fund" ToRole="UnderlyingFundCapitalCall" />
           <NavigationProperty Name="UnderlyingFundCashDistributions" Relationship="DeepBlueModel.FK_UnderlyingFundCashDistribution_Fund" FromRole="Fund" ToRole="UnderlyingFundCashDistribution" />
           <NavigationProperty Name="UnderlyingFundNAVs" Relationship="DeepBlueModel.FK_UnderlyingFundNAV_Fund" FromRole="Fund" ToRole="UnderlyingFundNAV" />
@@ -4683,6 +4777,7 @@
           <NavigationProperty Name="DealUnderlyingDirects" Relationship="DeepBlueModel.FK_DealUnderlyingDirect_SecurityType" FromRole="SecurityType" ToRole="DealUnderlyingDirect" />
           <NavigationProperty Name="SecurityConversions" Relationship="DeepBlueModel.FK_SecurityConversion_SecurityType" FromRole="SecurityType" ToRole="SecurityConversion" />
           <NavigationProperty Name="SecurityConversions1" Relationship="DeepBlueModel.FK_SecurityConversion_SecurityTypeOld" FromRole="SecurityType" ToRole="SecurityConversion" />
+          <NavigationProperty Name="UnderlyingDirectLastPrices" Relationship="DeepBlueModel.FK_UnderlyingDirectLastPrice_SecurityType" FromRole="SecurityType" ToRole="UnderlyingDirectLastPrice" />
         </EntityType>
         <EntityType Name="ShareClassType">
           <Key>
@@ -4718,6 +4813,39 @@
           <Property Name="Enabled" Type="Boolean" Nullable="false" />
           <Property Name="TransactionTypeName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="InvestorFundTransactions" Relationship="DeepBlueModel.FK_InvestorFundTransaction_TransactionType" FromRole="TransactionType" ToRole="InvestorFundTransaction" />
+        </EntityType>
+        <EntityType Name="UnderlyingDirectLastPrice">
+          <Key>
+            <PropertyRef Name="UnderlyingDirectLastPriceID" />
+          </Key>
+          <Property Name="UnderlyingDirectLastPriceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FundID" Type="Int32" Nullable="false" />
+          <Property Name="SecurityTypeID" Type="Int32" Nullable="false" />
+          <Property Name="SecurityID" Type="Int32" Nullable="false" />
+          <Property Name="LastPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LastPriceDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Fund" Relationship="DeepBlueModel.FK_UnderlyingDirectLastPrice_Fund" FromRole="UnderlyingDirectLastPrice" ToRole="Fund" />
+          <NavigationProperty Name="SecurityType" Relationship="DeepBlueModel.FK_UnderlyingDirectLastPrice_SecurityType" FromRole="UnderlyingDirectLastPrice" ToRole="SecurityType" />
+          <NavigationProperty Name="UnderlyingDirectLastPriceHistories" Relationship="DeepBlueModel.FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice" FromRole="UnderlyingDirectLastPrice" ToRole="UnderlyingDirectLastPriceHistory" />
+        </EntityType>
+        <EntityType Name="UnderlyingDirectLastPriceHistory">
+          <Key>
+            <PropertyRef Name="UnderlyingDirectLastPriceHistoryID" />
+          </Key>
+          <Property Name="UnderlyingDirectLastPriceHistoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnderlyingDirectLastPriceID" Type="Int32" />
+          <Property Name="LastPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LastPriceDate" Type="DateTime" Nullable="false" />
+          <Property Name="IsAudited" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="UnderlyingDirectLastPrice" Relationship="DeepBlueModel.FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice" FromRole="UnderlyingDirectLastPriceHistory" ToRole="UnderlyingDirectLastPrice" />
         </EntityType>
         <EntityType Name="UnderlyingFund">
           <Key>
@@ -5724,6 +5852,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UnderlyingDirectLastPrice_Fund">
+          <End Role="Fund" Type="DeepBlueModel.Fund" Multiplicity="1" />
+          <End Role="UnderlyingDirectLastPrice" Type="DeepBlueModel.UnderlyingDirectLastPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fund">
+              <PropertyRef Name="FundID" />
+            </Principal>
+            <Dependent Role="UnderlyingDirectLastPrice">
+              <PropertyRef Name="FundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UnderlyingFundCapitalCall_Fund">
           <End Role="Fund" Type="DeepBlueModel.Fund" Multiplicity="1" />
           <End Role="UnderlyingFundCapitalCall" Type="DeepBlueModel.UnderlyingFundCapitalCall" Multiplicity="*" />
@@ -6082,6 +6222,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UnderlyingDirectLastPrice_SecurityType">
+          <End Role="SecurityType" Type="DeepBlueModel.SecurityType" Multiplicity="1" />
+          <End Role="UnderlyingDirectLastPrice" Type="DeepBlueModel.UnderlyingDirectLastPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SecurityType">
+              <PropertyRef Name="SecurityTypeID" />
+            </Principal>
+            <Dependent Role="UnderlyingDirectLastPrice">
+              <PropertyRef Name="SecurityTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UnderlyingFund_ShareClassType">
           <End Role="ShareClassType" Type="DeepBlueModel.ShareClassType" Multiplicity="0..1" />
           <End Role="UnderlyingFund" Type="DeepBlueModel.UnderlyingFund" Multiplicity="*" />
@@ -6091,6 +6243,18 @@
             </Principal>
             <Dependent Role="UnderlyingFund">
               <PropertyRef Name="ShareClassTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice">
+          <End Role="UnderlyingDirectLastPrice" Type="DeepBlueModel.UnderlyingDirectLastPrice" Multiplicity="0..1" />
+          <End Role="UnderlyingDirectLastPriceHistory" Type="DeepBlueModel.UnderlyingDirectLastPriceHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnderlyingDirectLastPrice">
+              <PropertyRef Name="UnderlyingDirectLastPriceID" />
+            </Principal>
+            <Dependent Role="UnderlyingDirectLastPriceHistory">
+              <PropertyRef Name="UnderlyingDirectLastPriceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6995,6 +7159,29 @@
             <ScalarProperty Name="Enabled" ColumnName="Enabled" />
             <ScalarProperty Name="TransactionTypeName" ColumnName="TransactionTypeName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UnderlyingDirectLastPrices"><EntityTypeMapping TypeName="DeepBlueModel.UnderlyingDirectLastPrice"><MappingFragment StoreEntitySet="UnderlyingDirectLastPrice">
+            <ScalarProperty Name="UnderlyingDirectLastPriceID" ColumnName="UnderlyingDirectLastPriceID" />
+            <ScalarProperty Name="FundID" ColumnName="FundID" />
+            <ScalarProperty Name="SecurityTypeID" ColumnName="SecurityTypeID" />
+            <ScalarProperty Name="SecurityID" ColumnName="SecurityID" />
+            <ScalarProperty Name="LastPrice" ColumnName="LastPrice" />
+            <ScalarProperty Name="LastPriceDate" ColumnName="LastPriceDate" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UnderlyingDirectLastPriceHistories"><EntityTypeMapping TypeName="DeepBlueModel.UnderlyingDirectLastPriceHistory"><MappingFragment StoreEntitySet="UnderlyingDirectLastPriceHistory">
+            <ScalarProperty Name="UnderlyingDirectLastPriceHistoryID" ColumnName="UnderlyingDirectLastPriceHistoryID" />
+            <ScalarProperty Name="UnderlyingDirectLastPriceID" ColumnName="UnderlyingDirectLastPriceID" />
+            <ScalarProperty Name="LastPrice" ColumnName="LastPrice" />
+            <ScalarProperty Name="LastPriceDate" ColumnName="LastPriceDate" />
+            <ScalarProperty Name="IsAudited" ColumnName="IsAudited" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="UnderlyingFunds"><EntityTypeMapping TypeName="DeepBlueModel.UnderlyingFund"><MappingFragment StoreEntitySet="UnderlyingFund">
             <ScalarProperty Name="UnderlyingtFundID" ColumnName="UnderlyingtFundID" />
             <ScalarProperty Name="EntityID" ColumnName="EntityID" />
@@ -7108,7 +7295,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="DeepBlue">
+      <Diagram Name="DeepBlue" ZoomLevel="98">
         <EntityTypeShape EntityType="DeepBlueModel.Account" Width="1.5" PointX="6.75" PointY="9.375" Height="4.7149055989583317" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.ActivityType" Width="1.5" PointX="9.75" PointY="48.5" Height="1.5923063151041674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.Address" Width="1.5" PointX="0.75" PointY="34.625" Height="4.7149055989583388" IsExpanded="true" />
@@ -7148,7 +7335,7 @@
         <EntityTypeShape EntityType="DeepBlueModel.FileType" Width="1.5" PointX="9.5" PointY="57.125" Height="1.921000976562496" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.FixedIncome" Width="1.5" PointX="9" PointY="29.5" Height="3.893168945312496" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.FixedIncomeType" Width="1.5" PointX="6.75" PointY="51.875" Height="2.414042968749996" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.Fund" Width="1.5" PointX="0.75" PointY="13.75" Height="5.0436002604166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.Fund" Width="1.5" PointX="0.75" PointY="13.75" Height="5.2079475911458388" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.FundAccount" Width="1.5" PointX="3" PointY="0.75" Height="4.386210937499996" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.FundActivityHistory" Width="1.5" PointX="12" PointY="13.25" Height="2.2496956380208388" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.FundClosing" Width="1.5" PointX="3" PointY="35.875" Height="2.085348307291639" IsExpanded="true" />
@@ -7169,22 +7356,24 @@
         <EntityTypeShape EntityType="DeepBlueModel.InvestorFundTransaction" Width="1.5" PointX="12.25" PointY="42.25" Height="3.2357796223958246" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.InvestorType" Width="1.5" PointX="11.75" PointY="51.25" Height="2.0853483072916674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.Issuer" Width="1.5" PointX="6.75" PointY="33.625" Height="2.2496956380208246" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.ManagementFeeRateSchedule" Width="1.5" PointX="17" PointY="10.375" Height="2.9070849609374818" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.ManagementFeeRateScheduleTier" Width="1.5" PointX="19.25" PointY="10.375" Height="3.0714322916666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.ManagementFeeRateSchedule" Width="1.5" PointX="19" PointY="14.375" Height="2.9070849609374818" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.ManagementFeeRateScheduleTier" Width="1.5" PointX="21.25" PointY="14.375" Height="3.0714322916666674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.MODULE" Width="1.5" PointX="8.75" PointY="2" Height="1.4279589843749818" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.MultiplierType" Width="1.5" PointX="17" PointY="14.125" Height="1.4279589843749818" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.MultiplierType" Width="1.5" PointX="19" PointY="18.125" Height="1.4279589843749818" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.OptionField" Width="1.5" PointX="13.25" PointY="6.625" Height="2.2496956380208237" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.OptionFieldValueList" Width="1.5" PointX="15.5" PointY="5.75" Height="1.7566536458333246" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.Partner" Width="1.5" PointX="0.75" PointY="27.625" Height="2.249695638020853" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.PurchaseType" Width="1.5" PointX="0.75" PointY="30.625" Height="1.5923063151041639" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.RateScheduleType" Width="1.5" PointX="14.75" PointY="10.625" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.PurchaseType" Width="1.5" PointX="0.75" PointY="30.625" Height="1.592306315104171" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.RateScheduleType" Width="1.5" PointX="16.75" PointY="14.625" Height="2.5783902994791674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.ReportingFrequency" Width="1.5" PointX="6.75" PointY="36.625" Height="2.4140429687499818" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.ReportingType" Width="1.5" PointX="6.75" PointY="39.75" Height="2.4140429687499818" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.SecurityConversion" Width="1.5" PointX="7.5" PointY="62.5" Height="3.0714322916666603" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.SecurityType" Width="1.5" PointX="5.25" PointY="3.125" Height="1.9210009765624818" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.SecurityConversion" Width="1.5" PointX="7.5" PointY="62.875" Height="3.0714322916666603" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.SecurityType" Width="1.5" PointX="5.25" PointY="2" Height="2.0853483072916674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.ShareClassType" Width="1.5" PointX="6.75" PointY="42.875" Height="2.5783902994791674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.STATE" Width="1.5" PointX="1.5" PointY="45.5" Height="1.7566536458333246" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.TransactionType" Width="1.5" PointX="10" PointY="61" Height="1.756653645833353" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.UnderlyingDirectLastPrice" Width="1.5" PointX="14.5" PointY="9.875" Height="3.0714322916666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.UnderlyingDirectLastPriceHistory" Width="1.5" PointX="16.75" PointY="10.125" Height="2.5783902994791674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.UnderlyingFund" Width="1.5" PointX="9" PointY="19.5" Height="8.9879361979166674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.UnderlyingFundCapitalCall" Width="1.5" PointX="11.25" PointY="25.25" Height="3.4001269531249818" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.UnderlyingFundCapitalCallLineItem" Width="1.5" PointX="11.25" PointY="16.875" Height="3.0714322916666674" IsExpanded="true" />
@@ -7194,8 +7383,6 @@
         <EntityTypeShape EntityType="DeepBlueModel.UnderlyingFundType" Width="1.5" PointX="6.75" PointY="46.25" Height="1.4279589843749818" IsExpanded="true" />
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFund_Account" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="14.089905598958332" />
-          <ConnectorPoint PointX="8.3160744349011217" PointY="14.155980033859452" />
-          <ConnectorPoint PointX="8.4339255650988783" PointY="14.27383116405721" />
           <ConnectorPoint PointX="8.4410744349011217" PointY="14.280980033859452" />
           <ConnectorPoint PointX="8.5589255650988783" PointY="14.39883116405721" />
           <ConnectorPoint PointX="8.625" PointY="14.464905598958332" />
@@ -7219,9 +7406,7 @@
           <ConnectorPoint PointX="10.75" PointY="14.374847819010419" />
           <ConnectorPoint PointX="10.979166666666666" PointY="14.374847819010419" />
           <ConnectorPoint PointX="11.145833333333334" PointY="14.374847819010419" />
-          <ConnectorPoint PointX="11.416666666666666" PointY="14.374847819010419" />
-          <ConnectorPoint PointX="11.583333333333334" PointY="14.374847819010419" />
-          <ConnectorPoint PointX="11.666666666666666" PointY="14.374847819010419" />
+          <ConnectorPoint PointX="11.416666666666666" PointY="14.374847819010418" />
           <ConnectorPoint PointX="11.833333333333334" PointY="14.374847819010419" />
           <ConnectorPoint PointX="12" PointY="14.374847819010419" />
         </AssociationConnector>
@@ -7268,8 +7453,6 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_CapitalCall_CapitalCallType" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="60.332021484375" />
-          <ConnectorPoint PointX="8.4791666666666661" PointY="60.332021484375" />
-          <ConnectorPoint PointX="8.6458333333333339" PointY="60.332021484375" />
           <ConnectorPoint PointX="8.75" PointY="60.332021484375" />
           <ConnectorPoint PointX="8.75" PointY="19.02512695312501" />
           <ConnectorPoint PointX="9.3750004999999987" PointY="19.02512695312501" />
@@ -7277,14 +7460,18 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_CapitalCall_Fund" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="15.108653157552084" />
+          <ConnectorPoint PointX="2.7916666666666665" PointY="15.108653157552084" />
+          <ConnectorPoint PointX="2.9583333333333335" PointY="15.108653157552084" />
           <ConnectorPoint PointX="4.666666666666667" PointY="15.108653157552084" />
           <ConnectorPoint PointX="4.833333333333333" PointY="15.108653157552084" />
+          <ConnectorPoint PointX="5.5104191666666669" PointY="15.108653157552084" />
+          <ConnectorPoint PointX="5.6770858333333329" PointY="15.108653157552084" />
           <ConnectorPoint PointX="5.791666666666667" PointY="15.108653157552084" />
           <ConnectorPoint PointX="5.958333333333333" PointY="15.108653157552084" />
-          <ConnectorPoint PointX="6.916666666666667" PointY="15.108653157552084" />
-          <ConnectorPoint PointX="7.083333333333333" PointY="15.108653157552084" />
-          <ConnectorPoint PointX="8.4166666666666661" PointY="15.108653157552082" />
-          <ConnectorPoint PointX="8.7083333333333339" PointY="15.108653157552084" />
+          <ConnectorPoint PointX="6.104166666666667" PointY="15.108653157552084" />
+          <ConnectorPoint PointX="6.270833333333333" PointY="15.108653157552084" />
+          <ConnectorPoint PointX="8.4166666666666661" PointY="15.108653157552084" />
+          <ConnectorPoint PointX="8.5833333333333339" PointY="15.108653157552084" />
           <ConnectorPoint PointX="9.2916671666666648" PointY="15.108653157552084" />
           <ConnectorPoint PointX="9.4583338333333327" PointY="15.108653157552084" />
           <ConnectorPoint PointX="9.6666666666666661" PointY="15.108653157552084" />
@@ -7293,16 +7480,22 @@
           <ConnectorPoint PointX="10.125" PointY="13.714905598958332" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_CapitalCallLineItem_CapitalCall" ManuallyRouted="false">
-          <ConnectorPoint PointX="10.5" PointY="9.59375" />
-          <ConnectorPoint PointX="16.375" PointY="9.59375" />
-          <ConnectorPoint PointX="16.375" PointY="30.5" />
+          <ConnectorPoint PointX="10.5" PointY="9.40625" />
+          <ConnectorPoint PointX="15.041664166666665" PointY="9.40625" />
+          <ConnectorPoint PointX="15.208330833333333" PointY="9.40625" />
+          <ConnectorPoint PointX="16.34375" PointY="9.40625" />
+          <ConnectorPoint PointX="16.34375" PointY="30.5" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_CapitalCallLineItem_Investor" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="48.28125" />
           <ConnectorPoint PointX="4.666666666666667" PointY="48.28125" />
           <ConnectorPoint PointX="4.833333333333333" PointY="48.28125" />
-          <ConnectorPoint PointX="8.2291666666666661" PointY="48.28125" />
-          <ConnectorPoint PointX="8.6458333333333339" PointY="48.28125" />
+          <ConnectorPoint PointX="6.166666666666667" PointY="48.28125" />
+          <ConnectorPoint PointX="6.333333333333333" PointY="48.28125" />
+          <ConnectorPoint PointX="6.541666666666667" PointY="48.28125" />
+          <ConnectorPoint PointX="6.708333333333333" PointY="48.28125" />
+          <ConnectorPoint PointX="8.38541666666667" PointY="48.28125" />
+          <ConnectorPoint PointX="8.5520833333333375" PointY="48.28125" />
           <ConnectorPoint PointX="8.6666666666666661" PointY="48.28125" />
           <ConnectorPoint PointX="8.9270833333333339" PointY="48.28125" />
           <ConnectorPoint PointX="8.9791641666666653" PointY="48.28125" />
@@ -7323,10 +7516,10 @@
           <ConnectorPoint PointX="17.15625" PointY="34.3931689453125" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_CapitalDistribution_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="18.76821464503205" />
-          <ConnectorPoint PointX="2.5035744349011213" PointY="19.021789079933171" />
-          <ConnectorPoint PointX="2.6214255650988791" PointY="19.139640210130928" />
-          <ConnectorPoint PointX="2.8125" PointY="19.33071464503205" />
+          <ConnectorPoint PointX="2.25" PointY="18.932561975761221" />
+          <ConnectorPoint PointX="2.5035744349011213" PointY="19.186136410662343" />
+          <ConnectorPoint PointX="2.6214255650988791" PointY="19.3039875408601" />
+          <ConnectorPoint PointX="2.8125" PointY="19.495061975761221" />
           <ConnectorPoint PointX="2.8125" PointY="32.818105468750005" />
           <ConnectorPoint PointX="3" PointY="32.818105468750005" />
         </AssociationConnector>
@@ -7334,9 +7527,13 @@
           <ConnectorPoint PointX="4.5" PointY="33.509084472656248" />
           <ConnectorPoint PointX="4.885416666666667" PointY="33.509084472656248" />
           <ConnectorPoint PointX="5.052083333333333" PointY="33.509084472656248" />
-          <ConnectorPoint PointX="8.2291666666666661" PointY="33.509084472656248" />
-          <ConnectorPoint PointX="8.4400180914463174" PointY="33.509084472656248" />
-          <ConnectorPoint PointX="8.4791666666666661" PointY="33.509084472656248" />
+          <ConnectorPoint PointX="6.166666666666667" PointY="33.509084472656248" />
+          <ConnectorPoint PointX="6.333333333333333" PointY="33.509084472656248" />
+          <ConnectorPoint PointX="6.541666666666667" PointY="33.509084472656248" />
+          <ConnectorPoint PointX="6.708333333333333" PointY="33.509084472656248" />
+          <ConnectorPoint PointX="8.2733514247796514" PointY="33.509084472656248" />
+          <ConnectorPoint PointX="8.44001809144632" PointY="33.509084472656248" />
+          <ConnectorPoint PointX="8.5416666666666661" PointY="33.509084472656248" />
           <ConnectorPoint PointX="9.0364583333333339" PointY="33.509084472656248" />
           <ConnectorPoint PointX="10.65625" PointY="33.509084472656248" />
           <ConnectorPoint PointX="10.65625" PointY="40.5" />
@@ -7345,9 +7542,13 @@
           <ConnectorPoint PointX="4.5" PointY="33.53579223632812" />
           <ConnectorPoint PointX="4.885416666666667" PointY="33.53579223632812" />
           <ConnectorPoint PointX="5.052083333333333" PointY="33.53579223632812" />
-          <ConnectorPoint PointX="8.2291666666666661" PointY="33.53579223632812" />
-          <ConnectorPoint PointX="8.413310327774445" PointY="33.53579223632812" />
-          <ConnectorPoint PointX="8.4791666666666661" PointY="33.53579223632812" />
+          <ConnectorPoint PointX="6.166666666666667" PointY="33.53579223632812" />
+          <ConnectorPoint PointX="6.333333333333333" PointY="33.53579223632812" />
+          <ConnectorPoint PointX="6.541666666666667" PointY="33.53579223632812" />
+          <ConnectorPoint PointX="6.708333333333333" PointY="33.53579223632812" />
+          <ConnectorPoint PointX="8.2466436611077789" PointY="33.53579223632812" />
+          <ConnectorPoint PointX="8.4133103277744468" PointY="33.53579223632812" />
+          <ConnectorPoint PointX="8.5416666666666661" PointY="33.53579223632812" />
           <ConnectorPoint PointX="9.0364583333333339" PointY="33.53579223632812" />
           <ConnectorPoint PointX="10.666666666666666" PointY="33.53579223632812" />
           <ConnectorPoint PointX="10.833333333333334" PointY="33.53579223632812" />
@@ -7369,7 +7570,13 @@
           <ConnectorPoint PointX="3.8782861328125171" PointY="42.690826822916669" />
           <ConnectorPoint PointX="4.6979186666666672" PointY="42.690826822916669" />
           <ConnectorPoint PointX="4.8645853333333333" PointY="42.690826822916669" />
-          <ConnectorPoint PointX="8.2291666666666661" PointY="42.690826822916669" />
+          <ConnectorPoint PointX="6.166666666666667" PointY="42.690826822916669" />
+          <ConnectorPoint PointX="6.333333333333333" PointY="42.690826822916669" />
+          <ConnectorPoint PointX="6.541666666666667" PointY="42.690826822916669" />
+          <ConnectorPoint PointX="6.708333333333333" PointY="42.690826822916669" />
+          <ConnectorPoint PointX="8.36583884375" PointY="42.690826822916669" />
+          <ConnectorPoint PointX="8.5325055104166676" PointY="42.690826822916669" />
+          <ConnectorPoint PointX="8.5416666666666661" PointY="42.690826822916669" />
           <ConnectorPoint PointX="8.9270833333333339" PointY="42.690826822916669" />
           <ConnectorPoint PointX="8.9791641666666653" PointY="42.690826822916669" />
           <ConnectorPoint PointX="9.2083358333333347" PointY="42.690826822916669" />
@@ -7445,9 +7652,15 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorCommunication_Communication" ManuallyRouted="false">
           <ConnectorPoint PointX="5.25" PointY="9.9500634765625016" />
+          <ConnectorPoint PointX="5.5104191666666669" PointY="9.9500634765625016" />
+          <ConnectorPoint PointX="5.6770858333333329" PointY="9.9500634765625016" />
+          <ConnectorPoint PointX="6.104166666666667" PointY="9.9500634765625016" />
+          <ConnectorPoint PointX="6.270833333333333" PointY="9.9500634765625016" />
           <ConnectorPoint PointX="6.5" PointY="9.9500634765625016" />
           <ConnectorPoint PointX="6.5" PointY="14.214905598958332" />
           <ConnectorPoint PointX="8.2916666666666661" PointY="14.21490559895833" />
+          <ConnectorPoint PointX="8.5833333333333339" PointY="14.214905598958332" />
+          <ConnectorPoint PointX="8.6666666666666661" PointY="14.214905598958332" />
           <ConnectorPoint PointX="8.8333333333333339" PointY="14.214905598958332" />
           <ConnectorPoint PointX="9.2916671666666648" PointY="14.214905598958332" />
           <ConnectorPoint PointX="9.4583338333333327" PointY="14.214905598958332" />
@@ -7455,8 +7668,8 @@
           <ConnectorPoint PointX="10.208333333333334" PointY="14.214905598958332" />
           <ConnectorPoint PointX="10.979166666666666" PointY="14.214905598958332" />
           <ConnectorPoint PointX="11.145833333333334" PointY="14.214905598958332" />
-          <ConnectorPoint PointX="11.416666666666666" PointY="14.214905598958332" />
-          <ConnectorPoint PointX="11.583333333333334" PointY="14.214905598958332" />
+          <ConnectorPoint PointX="11.416666666666666" PointY="14.21490559895833" />
+          <ConnectorPoint PointX="11.708333333333334" PointY="14.214905598958332" />
           <ConnectorPoint PointX="11.75" PointY="14.214905598958332" />
           <ConnectorPoint PointX="11.75" PointY="15.749695638020839" />
           <ConnectorPoint PointX="11.791666666666666" PointY="15.749695638020839" />
@@ -7543,8 +7756,6 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Equity_Currency" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="50.616598307291667" />
-          <ConnectorPoint PointX="8.4791666666666661" PointY="50.616598307291667" />
-          <ConnectorPoint PointX="8.6458333333333339" PointY="50.616598307291667" />
           <ConnectorPoint PointX="8.6666666666666661" PointY="50.616598307291667" />
           <ConnectorPoint PointX="8.9270833333333339" PointY="50.616598307291667" />
           <ConnectorPoint PointX="9.09375" PointY="50.616598307291667" />
@@ -7552,10 +7763,6 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_FixedIncome_Currency" ManuallyRouted="false">
           <ConnectorPoint PointX="8.2500000000000018" PointY="48.5" />
-          <ConnectorPoint PointX="8.25357443490112" PointY="48.496425565098882" />
-          <ConnectorPoint PointX="8.3714255650988783" PointY="48.378574434901118" />
-          <ConnectorPoint PointX="8.50357443490112" PointY="48.246425565098882" />
-          <ConnectorPoint PointX="8.6214255650988783" PointY="48.128574434901118" />
           <ConnectorPoint PointX="8.625" PointY="48.125" />
           <ConnectorPoint PointX="8.625" PointY="31.446584472656248" />
           <ConnectorPoint PointX="8.6666666666666661" PointY="31.446584472656248" />
@@ -7564,6 +7771,8 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_CustomField_CustomFieldValue" ManuallyRouted="false">
           <ConnectorPoint PointX="12.5" PointY="5.075063476562498" />
+          <ConnectorPoint PointX="12.916666666666666" PointY="5.0750634765624971" />
+          <ConnectorPoint PointX="13.083333333333334" PointY="5.075063476562498" />
           <ConnectorPoint PointX="13.25" PointY="5.075063476562498" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_CustomField_OptionField" ManuallyRouted="false">
@@ -7581,6 +7790,8 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_OptionFieldValueList_CustomField" ManuallyRouted="false">
           <ConnectorPoint PointX="12.5" PointY="6.262563476562498" />
+          <ConnectorPoint PointX="15.041664166666665" PointY="6.2625634765624971" />
+          <ConnectorPoint PointX="15.208330833333333" PointY="6.262563476562498" />
           <ConnectorPoint PointX="15.5" PointY="6.262563476562498" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Deal_Deal" ManuallyRouted="false">
@@ -7590,10 +7801,10 @@
           <ConnectorPoint PointX="3.9784615384615383" PointY="21.747294921874996" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Deal_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="17.521893284054492" />
-          <ConnectorPoint PointX="2.4791666666666665" PointY="17.521893284054492" />
-          <ConnectorPoint PointX="2.6458333333333335" PointY="17.521893284054492" />
-          <ConnectorPoint PointX="3" PointY="17.521893284054492" />
+          <ConnectorPoint PointX="2.25" PointY="17.604066949419078" />
+          <ConnectorPoint PointX="2.4166666666666665" PointY="17.604066949419078" />
+          <ConnectorPoint PointX="2.6458333333333335" PointY="17.604066949419078" />
+          <ConnectorPoint PointX="3" PointY="17.604066949419078" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Deal_Partner" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="27.688460538461534" />
@@ -7602,8 +7813,8 @@
           <ConnectorPoint PointX="2.5660744349011204" PointY="27.372386103560412" />
           <ConnectorPoint PointX="2.7464255650988791" PointY="27.192034973362656" />
           <ConnectorPoint PointX="2.75" PointY="27.188460538461534" />
-          <ConnectorPoint PointX="2.75" PointY="19.62247871834936" />
-          <ConnectorPoint PointX="3" PointY="19.62247871834936" />
+          <ConnectorPoint PointX="2.75" PointY="19.663565551031652" />
+          <ConnectorPoint PointX="3" PointY="19.663565551031652" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Deal_PurchaseType" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="30.688460538461534" />
@@ -7616,8 +7827,8 @@
           <ConnectorPoint PointX="2.7535744349011204" PointY="30.184886103560412" />
           <ConnectorPoint PointX="2.8714255650988791" PointY="30.067034973362656" />
           <ConnectorPoint PointX="2.875" PointY="30.063460538461534" />
-          <ConnectorPoint PointX="2.875" PointY="20.672771435496792" />
-          <ConnectorPoint PointX="3" PointY="20.672771435496792" />
+          <ConnectorPoint PointX="2.875" PointY="20.69331485183794" />
+          <ConnectorPoint PointX="3" PointY="20.69331485183794" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_DealClosing_Deal" ManuallyRouted="false">
           <ConnectorPoint PointX="4.5" PointY="20.623647460937498" />
@@ -7738,12 +7949,14 @@
           <ConnectorPoint PointX="4.5" PointY="13.732452799479166" />
           <ConnectorPoint PointX="4.666666666666667" PointY="13.732452799479166" />
           <ConnectorPoint PointX="4.833333333333333" PointY="13.732452799479166" />
+          <ConnectorPoint PointX="5.5104191666666669" PointY="13.732452799479166" />
+          <ConnectorPoint PointX="5.6770858333333329" PointY="13.732452799479166" />
           <ConnectorPoint PointX="5.875" PointY="13.732452799479166" />
           <ConnectorPoint PointX="5.875" PointY="16" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_DealUnderlyingDirect_SecurityType" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="4.2139794921874909" />
-          <ConnectorPoint PointX="8.5" PointY="4.2139794921874909" />
+          <ConnectorPoint PointX="6.75" PointY="3.7879036458333246" />
+          <ConnectorPoint PointX="8.5" PointY="3.7879036458333246" />
           <ConnectorPoint PointX="8.5" PointY="15.375" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_DealUnderlyingFund_UnderlyingFund" ManuallyRouted="false">
@@ -7762,8 +7975,8 @@
           <ConnectorPoint PointX="15.75" PointY="21.144521484374998" />
           <ConnectorPoint PointX="15.916666666666666" PointY="21.144521484374998" />
           <ConnectorPoint PointX="16.083333333333332" PointY="21.144521484374998" />
-          <ConnectorPoint PointX="16.291666666666668" PointY="21.144521484374998" />
-          <ConnectorPoint PointX="16.458333333333332" PointY="21.144521484374998" />
+          <ConnectorPoint PointX="16.260416666666668" PointY="21.144521484374998" />
+          <ConnectorPoint PointX="16.427083333333332" PointY="21.144521484374998" />
           <ConnectorPoint PointX="16.5" PointY="21.144521484374998" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundDocument_DocumentType" ManuallyRouted="false">
@@ -7775,8 +7988,6 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Equity_EquityType" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="56.03125" />
-          <ConnectorPoint PointX="8.4791666666666661" PointY="56.03125" />
-          <ConnectorPoint PointX="8.6458333333333339" PointY="56.03125" />
           <ConnectorPoint PointX="8.6666666666666661" PointY="56.03125" />
           <ConnectorPoint PointX="8.8333333333333339" PointY="56.03125" />
           <ConnectorPoint PointX="9.0624975" PointY="56.03125" />
@@ -7784,10 +7995,6 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Equity_Industry" ManuallyRouted="false">
           <ConnectorPoint PointX="8.2257692307692309" PointY="29.742737630208325" />
-          <ConnectorPoint PointX="8.2535744349011217" PointY="29.770542834340215" />
-          <ConnectorPoint PointX="8.3714255650988783" PointY="29.888393964537972" />
-          <ConnectorPoint PointX="8.5035744349011217" PointY="30.020542834340215" />
-          <ConnectorPoint PointX="8.6214255650988783" PointY="30.138393964537972" />
           <ConnectorPoint PointX="8.6875" PointY="30.204468399439094" />
           <ConnectorPoint PointX="8.6875" PointY="36.200063476562505" />
           <ConnectorPoint PointX="8.7604166666666661" PointY="36.200063476562505" />
@@ -7802,7 +8009,7 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_Equity_ShareClassType" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="44.790182291666667" />
-          <ConnectorPoint PointX="8.4791666666666661" PointY="44.790182291666667" />
+          <ConnectorPoint PointX="8.5416666666666661" PointY="44.790182291666667" />
           <ConnectorPoint PointX="8.9270833333333339" PointY="44.790182291666667" />
           <ConnectorPoint PointX="9.1250025" PointY="44.790182291666667" />
           <ConnectorPoint PointX="9.1250025" PointY="37.90012695312501" />
@@ -7828,10 +8035,6 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_FixedIncome_FixedIncomeType" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="51.906152846153844" />
-          <ConnectorPoint PointX="8.25357443490112" PointY="51.902578411252726" />
-          <ConnectorPoint PointX="8.3714255650988783" PointY="51.784727281054963" />
-          <ConnectorPoint PointX="8.50357443490112" PointY="51.652578411252726" />
-          <ConnectorPoint PointX="8.6214255650988783" PointY="51.534727281054963" />
           <ConnectorPoint PointX="8.69107443490112" PointY="51.465078411252726" />
           <ConnectorPoint PointX="8.8089255650988783" PointY="51.347227281054963" />
           <ConnectorPoint PointX="8.84375" PointY="51.312402846153844" />
@@ -7840,11 +8043,9 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_FixedIncome_Industry" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="29.717352014823707" />
-          <ConnectorPoint PointX="8.2535744349011217" PointY="29.720926449724828" />
-          <ConnectorPoint PointX="8.3714255650988783" PointY="29.838777579922585" />
           <ConnectorPoint PointX="8.5" PointY="29.967352014823707" />
           <ConnectorPoint PointX="8.5" PointY="29" />
-          <ConnectorPoint PointX="8.5035744349011217" PointY="29.003574434901118" />
+          <ConnectorPoint PointX="8.5816994349011217" PointY="29.081699434901122" />
           <ConnectorPoint PointX="8.8558005650988783" PointY="29.355800565098878" />
           <ConnectorPoint PointX="8.8629494349011217" PointY="29.362949434901122" />
           <ConnectorPoint PointX="8.9808005650988783" PointY="29.480800565098878" />
@@ -7852,11 +8053,9 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_FixedIncome_Issuer" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="33.650383615384619" />
-          <ConnectorPoint PointX="8.25357443490112" PointY="33.6468091804835" />
-          <ConnectorPoint PointX="8.3714255650988783" PointY="33.528958050285738" />
           <ConnectorPoint PointX="8.40625" PointY="33.494133615384619" />
           <ConnectorPoint PointX="8.40625" PointY="33.986918945312496" />
-          <ConnectorPoint PointX="8.50357443490112" PointY="33.889594510411371" />
+          <ConnectorPoint PointX="8.56607443490112" PointY="33.827094510411371" />
           <ConnectorPoint PointX="8.9808005650988783" PointY="33.412368380213614" />
           <ConnectorPoint PointX="9" PointY="33.393168945312496" />
         </AssociationConnector>
@@ -7867,16 +8066,18 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_FundActivityHistory_Fund" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="14.944229736328126" />
-          <ConnectorPoint PointX="2.4166666666666665" PointY="14.944229736328126" />
-          <ConnectorPoint PointX="2.5833333333333335" PointY="14.944229736328126" />
+          <ConnectorPoint PointX="2.7916666666666665" PointY="14.944229736328126" />
+          <ConnectorPoint PointX="2.9583333333333335" PointY="14.944229736328126" />
           <ConnectorPoint PointX="4.666666666666667" PointY="14.944229736328126" />
           <ConnectorPoint PointX="4.833333333333333" PointY="14.944229736328126" />
+          <ConnectorPoint PointX="5.5104191666666669" PointY="14.944229736328126" />
+          <ConnectorPoint PointX="5.6770858333333329" PointY="14.944229736328126" />
           <ConnectorPoint PointX="5.791666666666667" PointY="14.944229736328126" />
           <ConnectorPoint PointX="5.958333333333333" PointY="14.944229736328126" />
-          <ConnectorPoint PointX="6.916666666666667" PointY="14.944229736328126" />
-          <ConnectorPoint PointX="7.083333333333333" PointY="14.944229736328126" />
-          <ConnectorPoint PointX="8.4166666666666661" PointY="14.944229736328124" />
-          <ConnectorPoint PointX="8.7083333333333339" PointY="14.944229736328126" />
+          <ConnectorPoint PointX="6.104166666666667" PointY="14.944229736328126" />
+          <ConnectorPoint PointX="6.270833333333333" PointY="14.944229736328126" />
+          <ConnectorPoint PointX="8.4166666666666661" PointY="14.944229736328126" />
+          <ConnectorPoint PointX="8.5833333333333339" PointY="14.944229736328126" />
           <ConnectorPoint PointX="9.2916671666666648" PointY="14.944229736328126" />
           <ConnectorPoint PointX="9.4583338333333327" PointY="14.944229736328126" />
           <ConnectorPoint PointX="9.6666666666666661" PointY="14.944229736328126" />
@@ -7887,30 +8088,32 @@
           <ConnectorPoint PointX="10.833333333333334" PointY="14.944229736328126" />
           <ConnectorPoint PointX="10.979166666666666" PointY="14.944229736328126" />
           <ConnectorPoint PointX="11.145833333333334" PointY="14.944229736328126" />
-          <ConnectorPoint PointX="11.416666666666666" PointY="14.944229736328126" />
-          <ConnectorPoint PointX="11.583333333333334" PointY="14.944229736328126" />
-          <ConnectorPoint PointX="11.666666666666666" PointY="14.944229736328126" />
+          <ConnectorPoint PointX="11.416666666666666" PointY="14.944229736328124" />
           <ConnectorPoint PointX="11.833333333333334" PointY="14.944229736328126" />
           <ConnectorPoint PointX="12" PointY="14.944229736328126" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_FundClosing_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="18.755522337339745" />
-          <ConnectorPoint PointX="2.5035744349011213" PointY="19.009096772240866" />
-          <ConnectorPoint PointX="2.6214255650988791" PointY="19.126947902438623" />
-          <ConnectorPoint PointX="2.6875" PointY="19.193022337339745" />
+          <ConnectorPoint PointX="2.25" PointY="18.919869668068916" />
+          <ConnectorPoint PointX="2.5035744349011213" PointY="19.173444102970038" />
+          <ConnectorPoint PointX="2.6214255650988791" PointY="19.291295233167794" />
+          <ConnectorPoint PointX="2.6875" PointY="19.357369668068916" />
           <ConnectorPoint PointX="2.6875" PointY="36.91767415364582" />
           <ConnectorPoint PointX="3" PointY="36.91767415364582" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_FundExpense_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="16.315273220803288" />
-          <ConnectorPoint PointX="2.75" PointY="16.315273220803288" />
+          <ConnectorPoint PointX="2.25" PointY="16.356360053485581" />
+          <ConnectorPoint PointX="2.4166666666666665" PointY="16.356360053485581" />
+          <ConnectorPoint PointX="2.6458333333333335" PointY="16.356360053485581" />
+          <ConnectorPoint PointX="2.75" PointY="16.356360053485581" />
           <ConnectorPoint PointX="2.75" PointY="15.25" />
           <ConnectorPoint PointX="4.666666666666667" PointY="15.25" />
           <ConnectorPoint PointX="4.833333333333333" PointY="15.25" />
+          <ConnectorPoint PointX="5.5104191666666669" PointY="15.25" />
+          <ConnectorPoint PointX="5.6770858333333329" PointY="15.25" />
           <ConnectorPoint PointX="5.791666666666667" PointY="15.25" />
           <ConnectorPoint PointX="5.958333333333333" PointY="15.25" />
-          <ConnectorPoint PointX="6.916666666666667" PointY="15.25" />
-          <ConnectorPoint PointX="7.083333333333333" PointY="15.25" />
+          <ConnectorPoint PointX="6.104166666666667" PointY="15.25" />
+          <ConnectorPoint PointX="6.270833333333333" PointY="15.25" />
           <ConnectorPoint PointX="8.4166666666666661" PointY="15.25" />
           <ConnectorPoint PointX="8.5833333333333339" PointY="15.25" />
           <ConnectorPoint PointX="9.2916671666666648" PointY="15.25" />
@@ -7925,21 +8128,27 @@
           <ConnectorPoint PointX="11.145833333333334" PointY="15.25" />
           <ConnectorPoint PointX="11.5" PointY="15.25" />
           <ConnectorPoint PointX="11.5" PointY="13" />
+          <ConnectorPoint PointX="11.541666666666666" PointY="13" />
+          <ConnectorPoint PointX="11.708333333333334" PointY="13" />
           <ConnectorPoint PointX="12.75" PointY="13" />
           <ConnectorPoint PointX="12.75" PointY="12.335348307291639" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_FundRateSchedule_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="14.315862868164068" />
-          <ConnectorPoint PointX="2.5" PointY="14.315862868164068" />
+          <ConnectorPoint PointX="2.25" PointY="18.261968308743995" />
+          <ConnectorPoint PointX="2.5" PointY="18.261968308743995" />
           <ConnectorPoint PointX="2.5" PointY="15.1875" />
+          <ConnectorPoint PointX="2.7916666666666665" PointY="15.1875" />
+          <ConnectorPoint PointX="2.9583333333333335" PointY="15.1875" />
           <ConnectorPoint PointX="4.666666666666667" PointY="15.1875" />
           <ConnectorPoint PointX="4.833333333333333" PointY="15.1875" />
+          <ConnectorPoint PointX="5.5104191666666669" PointY="15.1875" />
+          <ConnectorPoint PointX="5.6770858333333329" PointY="15.1875" />
           <ConnectorPoint PointX="5.791666666666667" PointY="15.1875" />
           <ConnectorPoint PointX="5.958333333333333" PointY="15.1875" />
-          <ConnectorPoint PointX="6.916666666666667" PointY="15.1875" />
-          <ConnectorPoint PointX="7.083333333333333" PointY="15.1875" />
-          <ConnectorPoint PointX="8.4166666666666661" PointY="15.187499999999998" />
-          <ConnectorPoint PointX="8.7083333333333339" PointY="15.1875" />
+          <ConnectorPoint PointX="6.104166666666667" PointY="15.1875" />
+          <ConnectorPoint PointX="6.270833333333333" PointY="15.1875" />
+          <ConnectorPoint PointX="8.4166666666666661" PointY="15.1875" />
+          <ConnectorPoint PointX="8.5833333333333339" PointY="15.1875" />
           <ConnectorPoint PointX="9.2916671666666648" PointY="15.1875" />
           <ConnectorPoint PointX="9.4583338333333327" PointY="15.1875" />
           <ConnectorPoint PointX="9.6666666666666661" PointY="15.1875" />
@@ -7950,7 +8159,7 @@
           <ConnectorPoint PointX="10.833333333333334" PointY="15.1875" />
           <ConnectorPoint PointX="10.979166666666666" PointY="15.1875" />
           <ConnectorPoint PointX="11.145833333333334" PointY="15.1875" />
-          <ConnectorPoint PointX="11.666666666666666" PointY="15.1875" />
+          <ConnectorPoint PointX="11.541666666666666" PointY="15.187499999999998" />
           <ConnectorPoint PointX="11.833333333333334" PointY="15.1875" />
           <ConnectorPoint PointX="11.875" PointY="15.1875" />
           <ConnectorPoint PointX="11.875" PointY="15.999695638020839" />
@@ -7959,6 +8168,8 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFund_Fund" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="15.59375" />
+          <ConnectorPoint PointX="2.4166666666666665" PointY="15.59375" />
+          <ConnectorPoint PointX="2.5833333333333335" PointY="15.59375" />
           <ConnectorPoint PointX="2.6666666666666665" PointY="15.59375" />
           <ConnectorPoint PointX="2.8333333333333335" PointY="15.59375" />
           <ConnectorPoint PointX="4.666666666666667" PointY="15.59375" />
@@ -7967,7 +8178,7 @@
           <ConnectorPoint PointX="4.96875" PointY="39.25" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundDocument_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.5" PointY="18.793600260416667" />
+          <ConnectorPoint PointX="1.5" PointY="18.957947591145839" />
           <ConnectorPoint PointX="1.5" PointY="21.5" />
           <ConnectorPoint PointX="2.375" PointY="21.5" />
           <ConnectorPoint PointX="2.375" PointY="35.26121093750001" />
@@ -7977,10 +8188,12 @@
           <ConnectorPoint PointX="2.7708333333333335" PointY="35.26121093750001" />
           <ConnectorPoint PointX="4.885416666666667" PointY="35.26121093750001" />
           <ConnectorPoint PointX="5.052083333333333" PointY="35.26121093750001" />
+          <ConnectorPoint PointX="6.166666666666667" PointY="35.26121093750001" />
+          <ConnectorPoint PointX="6.333333333333333" PointY="35.26121093750001" />
           <ConnectorPoint PointX="6.5" PointY="35.26121093750001" />
           <ConnectorPoint PointX="6.5" PointY="35.999695638020825" />
-          <ConnectorPoint PointX="8.2291666666666661" PointY="35.999695638020825" />
-          <ConnectorPoint PointX="8.3958333333333339" PointY="35.999695638020825" />
+          <ConnectorPoint PointX="6.541666666666667" PointY="35.999695638020825" />
+          <ConnectorPoint PointX="6.708333333333333" PointY="35.999695638020825" />
           <ConnectorPoint PointX="8.5" PointY="35.999695638020825" />
           <ConnectorPoint PointX="8.5" PointY="34.25" />
           <ConnectorPoint PointX="8.5416666666666661" PointY="34.25" />
@@ -7995,11 +8208,42 @@
           <ConnectorPoint PointX="13.833333333333334" PointY="35.030459094726552" />
           <ConnectorPoint PointX="14" PointY="35.030459094726552" />
         </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_UnderlyingDirectLastPrice_Fund" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="14.315862868164068" />
+          <ConnectorPoint PointX="2.875" PointY="14.315862868164068" />
+          <ConnectorPoint PointX="2.875" PointY="15.3125" />
+          <ConnectorPoint PointX="4.666666666666667" PointY="15.3125" />
+          <ConnectorPoint PointX="4.833333333333333" PointY="15.3125" />
+          <ConnectorPoint PointX="5.5104191666666669" PointY="15.3125" />
+          <ConnectorPoint PointX="5.6770858333333329" PointY="15.3125" />
+          <ConnectorPoint PointX="5.791666666666667" PointY="15.3125" />
+          <ConnectorPoint PointX="5.958333333333333" PointY="15.3125" />
+          <ConnectorPoint PointX="6.104166666666667" PointY="15.3125" />
+          <ConnectorPoint PointX="6.270833333333333" PointY="15.3125" />
+          <ConnectorPoint PointX="9.2916671666666648" PointY="15.3125" />
+          <ConnectorPoint PointX="9.4583338333333327" PointY="15.3125" />
+          <ConnectorPoint PointX="9.6666666666666661" PointY="15.3125" />
+          <ConnectorPoint PointX="9.8333333333333339" PointY="15.3125" />
+          <ConnectorPoint PointX="10.072918666666666" PointY="15.3125" />
+          <ConnectorPoint PointX="10.239585333333334" PointY="15.3125" />
+          <ConnectorPoint PointX="10.666666666666666" PointY="15.3125" />
+          <ConnectorPoint PointX="10.833333333333334" PointY="15.3125" />
+          <ConnectorPoint PointX="10.979166666666666" PointY="15.3125" />
+          <ConnectorPoint PointX="11.145833333333334" PointY="15.3125" />
+          <ConnectorPoint PointX="11.625" PointY="15.3125" />
+          <ConnectorPoint PointX="11.625" PointY="12.75" />
+          <ConnectorPoint PointX="12.666666666666666" PointY="12.75" />
+          <ConnectorPoint PointX="12.833333333333334" PointY="12.75" />
+          <ConnectorPoint PointX="14.25" PointY="12.75" />
+          <ConnectorPoint PointX="14.25" PointY="13.196432291666667" />
+          <ConnectorPoint PointX="15.25" PointY="13.196432291666667" />
+          <ConnectorPoint PointX="15.25" PointY="12.946432291666667" />
+        </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFundCapitalCall_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="18.13870781069712" />
-          <ConnectorPoint PointX="2.4791666666666665" PointY="18.13870781069712" />
-          <ConnectorPoint PointX="2.6458333333333335" PointY="18.13870781069712" />
-          <ConnectorPoint PointX="2.9375" PointY="18.13870781069712" />
+          <ConnectorPoint PointX="2.25" PointY="16.980213501452329" />
+          <ConnectorPoint PointX="2.4166666666666665" PointY="16.980213501452329" />
+          <ConnectorPoint PointX="2.6458333333333335" PointY="16.980213501452329" />
+          <ConnectorPoint PointX="2.9375" PointY="16.980213501452329" />
           <ConnectorPoint PointX="2.9375" PointY="22.124695638020825" />
           <ConnectorPoint PointX="4.666666666666667" PointY="22.124695638020825" />
           <ConnectorPoint PointX="4.833333333333333" PointY="22.124695638020825" />
@@ -8023,8 +8267,8 @@
           <ConnectorPoint PointX="12" PointY="25.25" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFundCashDistribution_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="16.918583252428888" />
-          <ConnectorPoint PointX="2.5625" PointY="16.918583252428888" />
+          <ConnectorPoint PointX="2.25" PointY="15.97505502674279" />
+          <ConnectorPoint PointX="2.5625" PointY="15.97505502674279" />
           <ConnectorPoint PointX="2.5625" PointY="21.874695638020825" />
           <ConnectorPoint PointX="2.5729166666666665" PointY="21.874695638020825" />
           <ConnectorPoint PointX="3.0208333333333335" PointY="21.874695638020825" />
@@ -8054,7 +8298,7 @@
           <ConnectorPoint PointX="15.031252" PointY="25.125" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFundNAV_Fund" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.9062519999999998" PointY="18.793600260416667" />
+          <ConnectorPoint PointX="1.9062519999999998" PointY="18.957947591145839" />
           <ConnectorPoint PointX="1.9062519999999998" PointY="21.25" />
           <ConnectorPoint PointX="2.4375" PointY="21.25" />
           <ConnectorPoint PointX="2.4375" PointY="22.5" />
@@ -8064,8 +8308,8 @@
           <ConnectorPoint PointX="4.833333333333333" PointY="22.5" />
           <ConnectorPoint PointX="4.885416666666667" PointY="22.5" />
           <ConnectorPoint PointX="5.052083333333333" PointY="22.5" />
-          <ConnectorPoint PointX="7.166666666666667" PointY="22.5" />
-          <ConnectorPoint PointX="7.333333333333333" PointY="22.5" />
+          <ConnectorPoint PointX="6.916666666666667" PointY="22.5" />
+          <ConnectorPoint PointX="7.083333333333333" PointY="22.5" />
           <ConnectorPoint PointX="8.4166666666666661" PointY="22.5" />
           <ConnectorPoint PointX="8.5833333333333339" PointY="22.5" />
           <ConnectorPoint PointX="8.625" PointY="22.5" />
@@ -8084,8 +8328,8 @@
           <ConnectorPoint PointX="15.114585333333334" PointY="24.689474283854167" />
           <ConnectorPoint PointX="15.916666666666666" PointY="24.689474283854167" />
           <ConnectorPoint PointX="16.083333333333332" PointY="24.689474283854167" />
-          <ConnectorPoint PointX="16.291666666666668" PointY="24.689474283854167" />
-          <ConnectorPoint PointX="16.458333333333332" PointY="24.689474283854167" />
+          <ConnectorPoint PointX="16.260416666666668" PointY="24.689474283854167" />
+          <ConnectorPoint PointX="16.427083333333332" PointY="24.689474283854167" />
           <ConnectorPoint PointX="16.875" PointY="24.689474283854167" />
           <ConnectorPoint PointX="16.875" PointY="23.999847819010412" />
           <ConnectorPoint PointX="17.25" PointY="23.999847819010412" />
@@ -8094,11 +8338,13 @@
           <ConnectorPoint PointX="4.5" PointY="36.980021472656233" />
           <ConnectorPoint PointX="4.885416666666667" PointY="36.980021472656233" />
           <ConnectorPoint PointX="5.052083333333333" PointY="36.980021472656233" />
+          <ConnectorPoint PointX="6.166666666666667" PointY="36.980021472656233" />
+          <ConnectorPoint PointX="6.333333333333333" PointY="36.980021472656233" />
           <ConnectorPoint PointX="6.5" PointY="36.980021472656233" />
           <ConnectorPoint PointX="6.5" PointY="39.289042968749982" />
-          <ConnectorPoint PointX="8.2291666666666661" PointY="39.289042968749982" />
-          <ConnectorPoint PointX="8.3958333333333339" PointY="39.289042968749982" />
-          <ConnectorPoint PointX="8.4791666666666661" PointY="39.289042968749982" />
+          <ConnectorPoint PointX="6.541666666666667" PointY="39.289042968749982" />
+          <ConnectorPoint PointX="6.708333333333333" PointY="39.289042968749982" />
+          <ConnectorPoint PointX="8.5416666666666661" PointY="39.289042968749982" />
           <ConnectorPoint PointX="8.9270833333333339" PointY="39.289042968749982" />
           <ConnectorPoint PointX="8.9791641666666653" PointY="39.289042968749982" />
           <ConnectorPoint PointX="9.2083358333333347" PointY="39.289042968749982" />
@@ -8143,8 +8389,8 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFund_Geography" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="7.2960014765624894" />
-          <ConnectorPoint PointX="8.2916666666666661" PointY="7.2960014765624877" />
-          <ConnectorPoint PointX="8.7083333333333339" PointY="7.2960014765624894" />
+          <ConnectorPoint PointX="8.4166666666666661" PointY="7.2960014765624885" />
+          <ConnectorPoint PointX="8.5833333333333339" PointY="7.2960014765624894" />
           <ConnectorPoint PointX="8.75" PointY="7.2960014765624894" />
           <ConnectorPoint PointX="8.75" PointY="14.75" />
           <ConnectorPoint PointX="9.2916671666666648" PointY="14.75" />
@@ -8162,10 +8408,6 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFund_InvestmentType" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="30.406152846153844" />
-          <ConnectorPoint PointX="8.25357443490112" PointY="30.402578411252723" />
-          <ConnectorPoint PointX="8.3714255650988783" PointY="30.284727281054966" />
-          <ConnectorPoint PointX="8.50357443490112" PointY="30.152578411252723" />
-          <ConnectorPoint PointX="8.6214255650988783" PointY="30.034727281054966" />
           <ConnectorPoint PointX="8.65625" PointY="29.999902846153844" />
           <ConnectorPoint PointX="8.65625" PointY="25.09073154947923" />
           <ConnectorPoint PointX="8.6666666666666661" PointY="25.09073154947923" />
@@ -8197,10 +8439,10 @@
           <ConnectorPoint PointX="2.25" PointY="48.171872500000006" />
           <ConnectorPoint PointX="4.666666666666667" PointY="48.171872500000006" />
           <ConnectorPoint PointX="4.833333333333333" PointY="48.171872500000006" />
-          <ConnectorPoint PointX="8.2291666666666661" PointY="48.171872500000006" />
-          <ConnectorPoint PointX="8.3958333333333339" PointY="48.171872500000006" />
-          <ConnectorPoint PointX="8.4791666666666661" PointY="48.171872500000006" />
-          <ConnectorPoint PointX="8.6458333333333339" PointY="48.171872500000006" />
+          <ConnectorPoint PointX="6.166666666666667" PointY="48.171872500000006" />
+          <ConnectorPoint PointX="6.333333333333333" PointY="48.171872500000006" />
+          <ConnectorPoint PointX="6.541666666666667" PointY="48.171872500000006" />
+          <ConnectorPoint PointX="6.708333333333333" PointY="48.171872500000006" />
           <ConnectorPoint PointX="8.6666666666666661" PointY="48.171872500000006" />
           <ConnectorPoint PointX="8.9270833333333339" PointY="48.171872500000006" />
           <ConnectorPoint PointX="8.9791641666666653" PointY="48.171872500000006" />
@@ -8244,10 +8486,12 @@
           <ConnectorPoint PointX="2.25" PointY="48.390627499999994" />
           <ConnectorPoint PointX="4.666666666666667" PointY="48.390627499999994" />
           <ConnectorPoint PointX="4.833333333333333" PointY="48.390627499999994" />
-          <ConnectorPoint PointX="8.2291666666666661" PointY="48.390627499999994" />
+          <ConnectorPoint PointX="6.166666666666667" PointY="48.390627499999994" />
+          <ConnectorPoint PointX="6.333333333333333" PointY="48.390627499999994" />
+          <ConnectorPoint PointX="6.541666666666667" PointY="48.390627499999994" />
+          <ConnectorPoint PointX="6.708333333333333" PointY="48.390627499999994" />
+          <ConnectorPoint PointX="8.2760391666666759" PointY="48.390627499999994" />
           <ConnectorPoint PointX="8.4427058333333438" PointY="48.390627499999994" />
-          <ConnectorPoint PointX="8.4791666666666661" PointY="48.390627499999994" />
-          <ConnectorPoint PointX="8.6458333333333339" PointY="48.390627499999994" />
           <ConnectorPoint PointX="8.6666666666666661" PointY="48.390627499999994" />
           <ConnectorPoint PointX="8.9270833333333339" PointY="48.390627499999994" />
           <ConnectorPoint PointX="8.9791641666666653" PointY="48.390627499999994" />
@@ -8275,8 +8519,10 @@
           <ConnectorPoint PointX="8.6666666666666661" PointY="52.292674153645834" />
           <ConnectorPoint PointX="8.5" PointY="52.292674153645834" />
           <ConnectorPoint PointX="8.5" PointY="51.625" />
-          <ConnectorPoint PointX="8.3958333333333339" PointY="51.625" />
-          <ConnectorPoint PointX="8.2291666666666661" PointY="51.625" />
+          <ConnectorPoint PointX="6.708333333333333" PointY="51.625" />
+          <ConnectorPoint PointX="6.541666666666667" PointY="51.625" />
+          <ConnectorPoint PointX="6.333333333333333" PointY="51.625" />
+          <ConnectorPoint PointX="6.166666666666667" PointY="51.625" />
           <ConnectorPoint PointX="4.75" PointY="51.625" />
           <ConnectorPoint PointX="4.75" PointY="46.828390299479167" />
           <ConnectorPoint PointX="3.75" PointY="46.828390299479167" />
@@ -8287,8 +8533,10 @@
         <AssociationConnector Association="DeepBlueModel.FK_InvestorFundTransaction_InvestorFund" ManuallyRouted="false">
           <ConnectorPoint PointX="5.1718779999999995" PointY="42.485779622395853" />
           <ConnectorPoint PointX="5.1718779999999995" PointY="42.625" />
-          <ConnectorPoint PointX="8.2291666666666661" PointY="42.625" />
-          <ConnectorPoint PointX="8.3958333333333339" PointY="42.625" />
+          <ConnectorPoint PointX="6.166666666666667" PointY="42.625" />
+          <ConnectorPoint PointX="6.333333333333333" PointY="42.625" />
+          <ConnectorPoint PointX="6.541666666666667" PointY="42.625" />
+          <ConnectorPoint PointX="6.708333333333333" PointY="42.625" />
           <ConnectorPoint PointX="8.43166566666667" PointY="42.625" />
           <ConnectorPoint PointX="8.9270833333333339" PointY="42.625" />
           <ConnectorPoint PointX="9" PointY="42.625" />
@@ -8316,38 +8564,34 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFund_Issuer" ManuallyRouted="false">
           <ConnectorPoint PointX="8.2407692307692333" PointY="33.625" />
-          <ConnectorPoint PointX="8.25357443490112" PointY="33.612194795868113" />
-          <ConnectorPoint PointX="8.3714255650988783" PointY="33.49434366567035" />
-          <ConnectorPoint PointX="8.50357443490112" PointY="33.362194795868113" />
+          <ConnectorPoint PointX="8.56607443490112" PointY="33.299694795868113" />
           <ConnectorPoint PointX="8.7464255650988783" PointY="33.11934366567035" />
           <ConnectorPoint PointX="8.796875" PointY="33.068894230769232" />
           <ConnectorPoint PointX="8.796875" PointY="26.417349824218782" />
           <ConnectorPoint PointX="9" PointY="26.417349824218782" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_ManagementFeeRateSchedule_RateScheduleType" ManuallyRouted="false">
-          <ConnectorPoint PointX="16.25" PointY="11.914195149739584" />
-          <ConnectorPoint PointX="16.291666666666668" PointY="11.914195149739584" />
-          <ConnectorPoint PointX="16.458333333333332" PointY="11.914195149739584" />
-          <ConnectorPoint PointX="17" PointY="11.914195149739584" />
+          <ConnectorPoint PointX="18.25" PointY="15.914195149739584" />
+          <ConnectorPoint PointX="19" PointY="15.914195149739584" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_ManagementFeeRateScheduleTier_ManagementFeeRateSchedule" ManuallyRouted="false">
-          <ConnectorPoint PointX="18.5" PointY="11.828542480468741" />
-          <ConnectorPoint PointX="19.25" PointY="11.828542480468741" />
+          <ConnectorPoint PointX="20.5" PointY="15.828542480468741" />
+          <ConnectorPoint PointX="21.25" PointY="15.828542480468741" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_ManagementFeeRateScheduleTier_MultiplierType" ManuallyRouted="false">
-          <ConnectorPoint PointX="18.5" PointY="14.838979492187491" />
-          <ConnectorPoint PointX="20" PointY="14.838979492187491" />
-          <ConnectorPoint PointX="20" PointY="13.446432291666667" />
+          <ConnectorPoint PointX="20.5" PointY="18.838979492187491" />
+          <ConnectorPoint PointX="22" PointY="18.838979492187491" />
+          <ConnectorPoint PointX="22" PointY="17.446432291666667" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_OptionFieldValueList_OptionField" ManuallyRouted="false">
           <ConnectorPoint PointX="14.75" PointY="7.0658268229166623" />
+          <ConnectorPoint PointX="15.041664166666665" PointY="7.0658268229166614" />
+          <ConnectorPoint PointX="15.208330833333333" PointY="7.0658268229166623" />
           <ConnectorPoint PointX="15.5" PointY="7.0658268229166623" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFund_ReportingFrequency" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="36.639999" />
-          <ConnectorPoint PointX="8.25357443490112" PointY="36.636424565098885" />
-          <ConnectorPoint PointX="8.3714255650988783" PointY="36.518573434901121" />
-          <ConnectorPoint PointX="8.50357443490112" PointY="36.386424565098878" />
+          <ConnectorPoint PointX="8.56607443490112" PointY="36.323924565098878" />
           <ConnectorPoint PointX="8.9026755650988783" PointY="35.987323434901121" />
           <ConnectorPoint PointX="8.921875" PointY="35.968124" />
           <ConnectorPoint PointX="8.921875" PointY="23.764113274739678" />
@@ -8355,47 +8599,66 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFund_ReportingType" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="39.764999" />
-          <ConnectorPoint PointX="8.25357443490112" PointY="39.761424565098885" />
-          <ConnectorPoint PointX="8.3714255650988783" PointY="39.643573434901121" />
-          <ConnectorPoint PointX="8.50357443490112" PointY="39.511424565098878" />
+          <ConnectorPoint PointX="8.56607443490112" PointY="39.448924565098878" />
           <ConnectorPoint PointX="8.9026755650988783" PointY="39.112323434901121" />
           <ConnectorPoint PointX="8.953125" PointY="39.061874" />
           <ConnectorPoint PointX="8.953125" PointY="20.687348319010411" />
           <ConnectorPoint PointX="9" PointY="20.687348319010411" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_SecurityConversion_SecurityType" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="3.6382377460937518" />
-          <ConnectorPoint PointX="8.625" PointY="3.6382377460937518" />
-          <ConnectorPoint PointX="8.625" PointY="15.3125" />
-          <ConnectorPoint PointX="7.25" PointY="15.3125" />
-          <ConnectorPoint PointX="7.25" PointY="22.625" />
-          <ConnectorPoint PointX="8.5625" PointY="22.625" />
-          <ConnectorPoint PointX="8.5625" PointY="62.125" />
-          <ConnectorPoint PointX="8.25" PointY="62.125" />
-          <ConnectorPoint PointX="8.25" PointY="62.5" />
+          <ConnectorPoint PointX="6.1875" PointY="4.0853483072916674" />
+          <ConnectorPoint PointX="6.1875" PointY="15.75" />
+          <ConnectorPoint PointX="7" PointY="15.75" />
+          <ConnectorPoint PointX="7" PointY="22.625" />
+          <ConnectorPoint PointX="7.75" PointY="22.625" />
+          <ConnectorPoint PointX="7.75" PointY="26.75" />
+          <ConnectorPoint PointX="6.708333333333333" PointY="26.75" />
+          <ConnectorPoint PointX="6.541666666666667" PointY="26.75" />
+          <ConnectorPoint PointX="6.25" PointY="26.75" />
+          <ConnectorPoint PointX="6.25" PointY="64.410716145833334" />
+          <ConnectorPoint PointX="7.5" PointY="64.410716145833334" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_SecurityConversion_SecurityTypeOld" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="4.6612422343749795" />
-          <ConnectorPoint PointX="8.375" PointY="4.6612422343749795" />
-          <ConnectorPoint PointX="8.375" PointY="14.75" />
-          <ConnectorPoint PointX="7" PointY="14.75" />
-          <ConnectorPoint PointX="7" PointY="22.5625" />
-          <ConnectorPoint PointX="8.3125" PointY="22.5625" />
-          <ConnectorPoint PointX="8.3125" PointY="61.875" />
-          <ConnectorPoint PointX="7.843748" PointY="61.875" />
-          <ConnectorPoint PointX="7.843748" PointY="62.5" />
+          <ConnectorPoint PointX="5.5937525" PointY="4.0853483072916674" />
+          <ConnectorPoint PointX="5.5937525" PointY="15.875" />
+          <ConnectorPoint PointX="5.791666666666667" PointY="15.875" />
+          <ConnectorPoint PointX="5.958333333333333" PointY="15.875" />
+          <ConnectorPoint PointX="6.916666666666667" PointY="15.875" />
+          <ConnectorPoint PointX="7.083333333333333" PointY="15.875" />
+          <ConnectorPoint PointX="7.25" PointY="15.875" />
+          <ConnectorPoint PointX="7.25" PointY="22.5625" />
+          <ConnectorPoint PointX="8" PointY="22.5625" />
+          <ConnectorPoint PointX="8" PointY="26.5" />
+          <ConnectorPoint PointX="7.833333333333333" PointY="26.5" />
+          <ConnectorPoint PointX="7.666666666666667" PointY="26.5" />
+          <ConnectorPoint PointX="6.625" PointY="26.5" />
+          <ConnectorPoint PointX="6.625" PointY="63.611606072916672" />
+          <ConnectorPoint PointX="7.5" PointY="63.611606072916672" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_UnderlyingDirectLastPrice_SecurityType" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="2.8626998229166687" />
+          <ConnectorPoint PointX="8.25" PointY="2.8626998229166687" />
+          <ConnectorPoint PointX="8.25" PointY="3.5529589843749818" />
+          <ConnectorPoint PointX="11.666666666666666" PointY="3.5529589843749814" />
+          <ConnectorPoint PointX="11.833333333333334" PointY="3.5529589843749818" />
+          <ConnectorPoint PointX="13" PointY="3.5529589843749818" />
+          <ConnectorPoint PointX="13" PointY="6.025126953124996" />
+          <ConnectorPoint PointX="15.1249975" PointY="6.025126953124996" />
+          <ConnectorPoint PointX="15.1249975" PointY="9.875" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFund_ShareClassType" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="42.889999" />
-          <ConnectorPoint PointX="8.25357443490112" PointY="42.886424565098885" />
-          <ConnectorPoint PointX="8.3714255650988783" PointY="42.768573434901121" />
-          <ConnectorPoint PointX="8.50357443490112" PointY="42.636424565098885" />
-          <ConnectorPoint PointX="8.6214255650988783" PointY="42.518573434901121" />
           <ConnectorPoint PointX="8.640625" PointY="42.499374" />
           <ConnectorPoint PointX="8.640625" PointY="27.080658961588558" />
           <ConnectorPoint PointX="8.6666666666666661" PointY="27.080658961588558" />
           <ConnectorPoint PointX="8.9583333333333339" PointY="27.080658961588558" />
           <ConnectorPoint PointX="9" PointY="27.080658961588558" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice" ManuallyRouted="false">
+          <ConnectorPoint PointX="16" PointY="11.414195149739584" />
+          <ConnectorPoint PointX="16.260416666666668" PointY="11.414195149739584" />
+          <ConnectorPoint PointX="16.427083333333332" PointY="11.414195149739584" />
+          <ConnectorPoint PointX="16.75" PointY="11.414195149739584" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFund_UnderlyingFund" ManuallyRouted="false">
           <ConnectorPoint PointX="9.5319230769230767" PointY="28.487936197916667" />
@@ -8405,10 +8668,6 @@
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFund_UnderlyingFundType" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="46.2961330594952" />
-          <ConnectorPoint PointX="8.25357443490112" PointY="46.292558624594079" />
-          <ConnectorPoint PointX="8.3714255650988783" PointY="46.174707494396316" />
-          <ConnectorPoint PointX="8.50357443490112" PointY="46.042558624594079" />
-          <ConnectorPoint PointX="8.6214255650988783" PointY="45.924707494396316" />
           <ConnectorPoint PointX="8.671875" PointY="45.8742580594952" />
           <ConnectorPoint PointX="8.671875" PointY="25.754040686849006" />
           <ConnectorPoint PointX="8.7916666666666661" PointY="25.754040686849006" />
@@ -8447,8 +8706,8 @@
           <ConnectorPoint PointX="13.958333333333334" PointY="24.283224283854167" />
           <ConnectorPoint PointX="15.916666666666666" PointY="24.283224283854167" />
           <ConnectorPoint PointX="16.083333333333332" PointY="24.283224283854167" />
-          <ConnectorPoint PointX="16.291666666666668" PointY="24.283224283854167" />
-          <ConnectorPoint PointX="16.458333333333332" PointY="24.283224283854167" />
+          <ConnectorPoint PointX="16.260416666666668" PointY="24.283224283854167" />
+          <ConnectorPoint PointX="16.427083333333332" PointY="24.283224283854167" />
           <ConnectorPoint PointX="16.791666666666668" PointY="24.283224283854167" />
           <ConnectorPoint PointX="16.958333333333332" PointY="24.283224283854167" />
           <ConnectorPoint PointX="17.25" PointY="24.283224283854167" />

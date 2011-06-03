@@ -11,6 +11,7 @@ namespace DeepBlue.Controllers.Issuer {
 	public class IssuerRepository : IIssuerRepository {
 
 		#region Issuer
+		
 		public List<IssuerDetailModel> GetAllIssuers() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from issuer in context.Issuers
@@ -39,6 +40,20 @@ namespace DeepBlue.Controllers.Issuer {
 		public Models.Entity.Issuer FindIssuer(int issuerId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.Issuers.Where(issuer => issuer.IssuerID == issuerId).SingleOrDefault();
+			}
+		}
+
+		public List<AutoCompleteList> FindIssuers(string issuerName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> issuerListQuery = (from issuer in context.Issuers
+															  where issuer.Name.Contains(issuerName)
+															  orderby issuer.Name
+															  select new AutoCompleteList {
+																  id = issuer.IssuerID,
+																  label = issuer.Name,
+																  value = issuer.Name
+															  });
+				return new PaginatedList<AutoCompleteList>(issuerListQuery, 1, 20);
 			}
 		}
 
@@ -88,6 +103,7 @@ namespace DeepBlue.Controllers.Issuer {
 				return model;
 			}
 		}
+
 		#endregion
 
 		#region Equity

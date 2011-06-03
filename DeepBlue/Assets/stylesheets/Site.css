@@ -123,10 +123,10 @@ a img {
 	color: #A6A6A6;
 }
 .editor-field input[type="text"] {
-	width: 200px;
+	width: 180px;
 }
 .editor-field select {
-	width: 203px;
+	width: 180px;
 }
 .radio input {
 	width: auto;

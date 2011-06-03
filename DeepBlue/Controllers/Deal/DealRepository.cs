@@ -1212,5 +1212,123 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
+
+		#region UnderlyingDirectValuation
+
+		public List<UnderlyingDirectValuationModel> UnderlyingDirectValuationList(int issuerId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var equityValuationQuery = (from equityDirect in context.DealUnderlyingDirects
+											join equity in context.Equities on equityDirect.SecurityID equals equity.EquityID
+											join directValuation in context.UnderlyingDirectLastPrices on new {
+												equityDirect.Deal.FundID,
+												equityDirect.SecurityID,
+												equityDirect.SecurityTypeID
+											} equals new {
+												directValuation.FundID,
+												directValuation.SecurityID,
+												directValuation.SecurityTypeID
+											} into directValuations
+											from directValuation in directValuations.DefaultIfEmpty()
+											where equity.IssuerID == issuerId
+											select new UnderlyingDirectValuationModel {
+												FundId = equityDirect.Deal.FundID,
+												FundName = equityDirect.Deal.Fund.FundName,
+												SecurityId = equityDirect.SecurityID,
+												Security = equity.Symbol,
+												SecurityTypeId = equityDirect.SecurityTypeID,
+												SecurityType = equityDirect.SecurityType.Name,
+												LastPrice = directValuation.LastPrice,
+												LastPriceDate = directValuation.LastPriceDate,
+												UnderlyingDirectLastPriceId = (directValuation != null ? directValuation.UnderlyingDirectLastPriceID : 0)
+											});
+
+				var fixedIncomeValuationQuery = (from fixedIncomeDirect in context.DealUnderlyingDirects
+												 join fixedIncome in context.FixedIncomes on fixedIncomeDirect.SecurityID equals fixedIncome.FixedIncomeID
+												 join directValuation in context.UnderlyingDirectLastPrices on new {
+													 fixedIncomeDirect.Deal.FundID,
+													 fixedIncomeDirect.SecurityID,
+													 fixedIncomeDirect.SecurityTypeID
+												 } equals new {
+													 directValuation.FundID,
+													 directValuation.SecurityID,
+													 directValuation.SecurityTypeID
+												 } into directValuations
+												 from directValuation in directValuations.DefaultIfEmpty()
+												 where fixedIncome.IssuerID == issuerId
+												 select new UnderlyingDirectValuationModel {
+													 FundId = fixedIncomeDirect.Deal.FundID,
+													 FundName = fixedIncomeDirect.Deal.Fund.FundName,
+													 SecurityId = fixedIncomeDirect.SecurityID,
+													 Security = fixedIncome.Symbol,
+													 SecurityTypeId = fixedIncomeDirect.SecurityTypeID,
+													 SecurityType = fixedIncomeDirect.SecurityType.Name,
+													 LastPrice = directValuation.LastPrice,
+													 LastPriceDate = directValuation.LastPriceDate,
+													 UnderlyingDirectLastPriceId = (directValuation != null ? directValuation.UnderlyingDirectLastPriceID : 0)
+												 });
+
+				return equityValuationQuery.Union(fixedIncomeValuationQuery).ToList();
+			}
+		}
+
+		public UnderlyingDirectValuationModel FindUnderlyingDirectValuationModel(int underlyingDirectLastPriceId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from directValuation in context.UnderlyingDirectLastPrices
+						join equity in context.Equities on  directValuation.SecurityID equals equity.EquityID into equities
+						from equity in equities.DefaultIfEmpty()
+						join fixedIncome in context.FixedIncomes on directValuation.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes
+						from fixedIncome in fixedIncomes.DefaultIfEmpty()
+						where directValuation.UnderlyingDirectLastPriceID == underlyingDirectLastPriceId
+						select new UnderlyingDirectValuationModel {
+							FundId = directValuation.FundID,
+							FundName = directValuation.Fund.FundName,
+							SecurityId = directValuation.SecurityID,
+							Security = (directValuation.SecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity ? (equity != null ? equity.Symbol : string.Empty) : (fixedIncome != null ? fixedIncome.Symbol : string.Empty)),
+							SecurityTypeId = directValuation.SecurityTypeID,
+							SecurityType = directValuation.SecurityType.Name,
+							LastPrice = directValuation.LastPrice,
+							LastPriceDate = directValuation.LastPriceDate,
+							UnderlyingDirectLastPriceId = directValuation.UnderlyingDirectLastPriceID
+						}).SingleOrDefault();
+			}
+		}
+
+		public UnderlyingDirectLastPrice FindUnderlyingDirectLastPrice(int fundId, int securityId, int securityTypeId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.UnderlyingDirectLastPrices.Where(lastPrice => lastPrice.FundID == fundId && lastPrice.SecurityID == securityId && lastPrice.SecurityTypeID == securityTypeId).SingleOrDefault();
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveUnderlyingDirectValuation(UnderlyingDirectLastPrice underlyingDirectLastPrice) {
+			return underlyingDirectLastPrice.Save();
+		}
+
+		public bool DeleteUnderlyingDirectValuation(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				UnderlyingDirectLastPrice underlyingDirectLastPrice = context.UnderlyingDirectLastPrices.Where(lastPrice => lastPrice.UnderlyingDirectLastPriceID == id).SingleOrDefault();
+				if (underlyingDirectLastPrice != null) {
+					List<UnderlyingDirectLastPriceHistory> underlyingDirectLastPriceHistories = underlyingDirectLastPrice.UnderlyingDirectLastPriceHistories.ToList();
+					foreach (var lastPriceHistory in underlyingDirectLastPriceHistories) {
+						context.UnderlyingDirectLastPriceHistories.DeleteObject(lastPriceHistory);
+					}
+					context.UnderlyingDirectLastPrices.DeleteObject(underlyingDirectLastPrice);
+					context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
+		}
+
+		#endregion
+
+		#region UnderlyingDirectValuationHistory
+
+		public IEnumerable<ErrorInfo> SaveUnderlyingDirectValuationHistory(UnderlyingDirectLastPriceHistory underlyingDirectLastPriceHistory) {
+			return underlyingDirectLastPriceHistory.Save();
+		}
+
+		#endregion
+
+		
 	}
 }

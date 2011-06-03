@@ -93,6 +93,7 @@
     <Compile Include="Models\Deal\NewHoldingPatternModel.cs" />
     <Compile Include="Models\Deal\SecurityActivityModel.cs" />
     <Compile Include="Models\Deal\SecurityConversionModel.cs" />
+    <Compile Include="Models\Deal\UnderlyingDirectValuationModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundActivityFields.cs" />
     <Compile Include="Models\Deal\CommunicationDetailModel.cs">
       <SubType>Code</SubType>
@@ -171,6 +172,8 @@
     <Compile Include="Models\Entity\Partial\FundActivityHistory.cs" />
     <Compile Include="Models\Entity\Partial\FundExpenseService.cs" />
     <Compile Include="Models\Entity\Partial\SecurityConversionService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingDirectLastPriceHistoryService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingDirectLastPriceService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVHistoryService.cs" />
@@ -182,6 +185,8 @@
     <Compile Include="Models\Entity\Validation\FundActivityHistory.cs" />
     <Compile Include="Models\Entity\Validation\FundExpense.cs" />
     <Compile Include="Models\Entity\Validation\SecurityConversion.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingDirectLastPrice.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingDirectLastPriceHistory.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundCapitalCall.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundCapitalCallLineItem.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundNAV.cs" />
@@ -625,6 +630,7 @@
     <Content Include="Assets\javascripts\CashDistributionType.js" />
     <Content Include="Assets\javascripts\DealActivityEquitySplit.js" />
     <Content Include="Assets\javascripts\DealActivitySecConversion.js" />
+    <Content Include="Assets\javascripts\DealActivityUDValuation.js" />
     <Content Include="Assets\javascripts\DealActivityUFValuation.js" />
     <Content Include="Assets\javascripts\DealActivityPRCashDistribution.js" />
     <Content Include="Assets\javascripts\DealActivity.js" />
@@ -778,6 +784,7 @@
     <Content Include="Views\Deal\FundExpense.ascx" />
     <Content Include="Views\Deal\SecurityConversion.ascx" />
     <Content Include="Views\Deal\EquitySplit.ascx" />
+    <Content Include="Views\Deal\UnderlyingDirectValuation.ascx" />
     <Content Include="Views\Deal\UnderlyingFundValuation.ascx" />
     <Content Include="Views\Deal\UnderlyingFundPostRecordCashDistribution.ascx" />
     <Content Include="Views\Deal\UnderlyingFundPostRecordCapitalCall.ascx" />

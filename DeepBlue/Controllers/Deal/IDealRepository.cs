@@ -147,5 +147,18 @@ namespace DeepBlue.Controllers.Deal {
 		#region NewHoldingPattern
 		List<NewHoldingPatternModel> NewHoldingPatternList(int dealUnderlyingDirectId, int activityTypeId, int securityTypeId, int securityId);
 		#endregion
+
+		#region UnderlyingDirectValuation
+		IEnumerable<ErrorInfo> SaveUnderlyingDirectValuation(UnderlyingDirectLastPrice underlyingDirectLastPrice);
+		List<UnderlyingDirectValuationModel> UnderlyingDirectValuationList(int issuerId);
+		UnderlyingDirectLastPrice FindUnderlyingDirectLastPrice(int fundId, int securityId, int securityTypeId);
+		UnderlyingDirectValuationModel FindUnderlyingDirectValuationModel(int underlyingDirectLastPriceId);
+		bool DeleteUnderlyingDirectValuation(int id);
+		#endregion
+
+		#region UnderlyingDirectValuationHistory
+		IEnumerable<ErrorInfo> SaveUnderlyingDirectValuationHistory(UnderlyingDirectLastPriceHistory underlyingDirectLastPriceHistory);
+		#endregion
+
 	}
 }

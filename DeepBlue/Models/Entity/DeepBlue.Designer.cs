@@ -88,6 +88,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundRateSchedule_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "FundRateSchedule", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundRateSchedule), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFund_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Fund), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectLastPrice_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingDirectLastPrice", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectLastPrice), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCall_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCashDistribution_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingFundCashDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCashDistribution), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAV_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), true)]
@@ -117,7 +118,9 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_ReportingType", "ReportingType", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.ReportingType), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_SecurityConversion_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "SecurityConversion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.SecurityConversion), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_SecurityConversion_SecurityTypeOld", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "SecurityConversion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.SecurityConversion), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectLastPrice_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "UnderlyingDirectLastPrice", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectLastPrice), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_ShareClassType", "ShareClassType", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.ShareClassType), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice", "UnderlyingDirectLastPrice", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingDirectLastPrice), "UnderlyingDirectLastPriceHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectLastPriceHistory), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "UnderlyingFund1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_UnderlyingFundType", "UnderlyingFundType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFundType), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCall_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), true)]
@@ -1396,6 +1399,38 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<UnderlyingDirectLastPrice> UnderlyingDirectLastPrices
+        {
+            get
+            {
+                if ((_UnderlyingDirectLastPrices == null))
+                {
+                    _UnderlyingDirectLastPrices = base.CreateObjectSet<UnderlyingDirectLastPrice>("UnderlyingDirectLastPrices");
+                }
+                return _UnderlyingDirectLastPrices;
+            }
+        }
+        private ObjectSet<UnderlyingDirectLastPrice> _UnderlyingDirectLastPrices;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<UnderlyingDirectLastPriceHistory> UnderlyingDirectLastPriceHistories
+        {
+            get
+            {
+                if ((_UnderlyingDirectLastPriceHistories == null))
+                {
+                    _UnderlyingDirectLastPriceHistories = base.CreateObjectSet<UnderlyingDirectLastPriceHistory>("UnderlyingDirectLastPriceHistories");
+                }
+                return _UnderlyingDirectLastPriceHistories;
+            }
+        }
+        private ObjectSet<UnderlyingDirectLastPriceHistory> _UnderlyingDirectLastPriceHistories;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<UnderlyingFund> UnderlyingFunds
         {
             get
@@ -2114,6 +2149,22 @@ namespace DeepBlue.Models.Entity
         public void AddToTransactionTypes(TransactionType transactionType)
         {
             base.AddObject("TransactionTypes", transactionType);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UnderlyingDirectLastPrices EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUnderlyingDirectLastPrices(UnderlyingDirectLastPrice underlyingDirectLastPrice)
+        {
+            base.AddObject("UnderlyingDirectLastPrices", underlyingDirectLastPrice);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UnderlyingDirectLastPriceHistories EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUnderlyingDirectLastPriceHistories(UnderlyingDirectLastPriceHistory underlyingDirectLastPriceHistory)
+        {
+            base.AddObject("UnderlyingDirectLastPriceHistories", underlyingDirectLastPriceHistory);
         }
     
         /// <summary>
@@ -15840,6 +15891,28 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectLastPrice_Fund", "UnderlyingDirectLastPrice")]
+        public EntityCollection<UnderlyingDirectLastPrice> UnderlyingDirectLastPrices
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingDirectLastPrice>("DeepBlueModel.FK_UnderlyingDirectLastPrice_Fund", "UnderlyingDirectLastPrice");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingDirectLastPrice>("DeepBlueModel.FK_UnderlyingDirectLastPrice_Fund", "UnderlyingDirectLastPrice", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCall_Fund", "UnderlyingFundCapitalCall")]
         public EntityCollection<UnderlyingFundCapitalCall> UnderlyingFundCapitalCalls
         {
@@ -25717,6 +25790,28 @@ namespace DeepBlue.Models.Entity
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectLastPrice_SecurityType", "UnderlyingDirectLastPrice")]
+        public EntityCollection<UnderlyingDirectLastPrice> UnderlyingDirectLastPrices
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingDirectLastPrice>("DeepBlueModel.FK_UnderlyingDirectLastPrice_SecurityType", "UnderlyingDirectLastPrice");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingDirectLastPrice>("DeepBlueModel.FK_UnderlyingDirectLastPrice_SecurityType", "UnderlyingDirectLastPrice", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -26304,6 +26399,684 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvestorFundTransaction>("DeepBlueModel.FK_InvestorFundTransaction_TransactionType", "InvestorFundTransaction", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="UnderlyingDirectLastPrice")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class UnderlyingDirectLastPrice : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new UnderlyingDirectLastPrice object.
+        /// </summary>
+        /// <param name="underlyingDirectLastPriceID">Initial value of the UnderlyingDirectLastPriceID property.</param>
+        /// <param name="fundID">Initial value of the FundID property.</param>
+        /// <param name="securityTypeID">Initial value of the SecurityTypeID property.</param>
+        /// <param name="securityID">Initial value of the SecurityID property.</param>
+        /// <param name="lastPriceDate">Initial value of the LastPriceDate property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        public static UnderlyingDirectLastPrice CreateUnderlyingDirectLastPrice(global::System.Int32 underlyingDirectLastPriceID, global::System.Int32 fundID, global::System.Int32 securityTypeID, global::System.Int32 securityID, global::System.DateTime lastPriceDate, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        {
+            UnderlyingDirectLastPrice underlyingDirectLastPrice = new UnderlyingDirectLastPrice();
+            underlyingDirectLastPrice.UnderlyingDirectLastPriceID = underlyingDirectLastPriceID;
+            underlyingDirectLastPrice.FundID = fundID;
+            underlyingDirectLastPrice.SecurityTypeID = securityTypeID;
+            underlyingDirectLastPrice.SecurityID = securityID;
+            underlyingDirectLastPrice.LastPriceDate = lastPriceDate;
+            underlyingDirectLastPrice.CreatedDate = createdDate;
+            underlyingDirectLastPrice.CreatedBy = createdBy;
+            return underlyingDirectLastPrice;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UnderlyingDirectLastPriceID
+        {
+            get
+            {
+                return _UnderlyingDirectLastPriceID;
+            }
+            set
+            {
+                if (_UnderlyingDirectLastPriceID != value)
+                {
+                    OnUnderlyingDirectLastPriceIDChanging(value);
+                    ReportPropertyChanging("UnderlyingDirectLastPriceID");
+                    _UnderlyingDirectLastPriceID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("UnderlyingDirectLastPriceID");
+                    OnUnderlyingDirectLastPriceIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _UnderlyingDirectLastPriceID;
+        partial void OnUnderlyingDirectLastPriceIDChanging(global::System.Int32 value);
+        partial void OnUnderlyingDirectLastPriceIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FundID
+        {
+            get
+            {
+                return _FundID;
+            }
+            set
+            {
+                OnFundIDChanging(value);
+                ReportPropertyChanging("FundID");
+                _FundID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundID");
+                OnFundIDChanged();
+            }
+        }
+        private global::System.Int32 _FundID;
+        partial void OnFundIDChanging(global::System.Int32 value);
+        partial void OnFundIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SecurityTypeID
+        {
+            get
+            {
+                return _SecurityTypeID;
+            }
+            set
+            {
+                OnSecurityTypeIDChanging(value);
+                ReportPropertyChanging("SecurityTypeID");
+                _SecurityTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityTypeID");
+                OnSecurityTypeIDChanged();
+            }
+        }
+        private global::System.Int32 _SecurityTypeID;
+        partial void OnSecurityTypeIDChanging(global::System.Int32 value);
+        partial void OnSecurityTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SecurityID
+        {
+            get
+            {
+                return _SecurityID;
+            }
+            set
+            {
+                OnSecurityIDChanging(value);
+                ReportPropertyChanging("SecurityID");
+                _SecurityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityID");
+                OnSecurityIDChanged();
+            }
+        }
+        private global::System.Int32 _SecurityID;
+        partial void OnSecurityIDChanging(global::System.Int32 value);
+        partial void OnSecurityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LastPrice
+        {
+            get
+            {
+                return _LastPrice;
+            }
+            set
+            {
+                OnLastPriceChanging(value);
+                ReportPropertyChanging("LastPrice");
+                _LastPrice = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastPrice");
+                OnLastPriceChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _LastPrice;
+        partial void OnLastPriceChanging(Nullable<global::System.Decimal> value);
+        partial void OnLastPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastPriceDate
+        {
+            get
+            {
+                return _LastPriceDate;
+            }
+            set
+            {
+                OnLastPriceDateChanging(value);
+                ReportPropertyChanging("LastPriceDate");
+                _LastPriceDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastPriceDate");
+                OnLastPriceDateChanged();
+            }
+        }
+        private global::System.DateTime _LastPriceDate;
+        partial void OnLastPriceDateChanging(global::System.DateTime value);
+        partial void OnLastPriceDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.Int32 _CreatedBy;
+        partial void OnCreatedByChanging(global::System.Int32 value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectLastPrice_Fund", "Fund")]
+        public Fund Fund
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_UnderlyingDirectLastPrice_Fund", "Fund").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_UnderlyingDirectLastPrice_Fund", "Fund").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Fund> FundReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_UnderlyingDirectLastPrice_Fund", "Fund");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Fund>("DeepBlueModel.FK_UnderlyingDirectLastPrice_Fund", "Fund", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectLastPrice_SecurityType", "SecurityType")]
+        public SecurityType SecurityType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_UnderlyingDirectLastPrice_SecurityType", "SecurityType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_UnderlyingDirectLastPrice_SecurityType", "SecurityType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<SecurityType> SecurityTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_UnderlyingDirectLastPrice_SecurityType", "SecurityType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SecurityType>("DeepBlueModel.FK_UnderlyingDirectLastPrice_SecurityType", "SecurityType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice", "UnderlyingDirectLastPriceHistory")]
+        public EntityCollection<UnderlyingDirectLastPriceHistory> UnderlyingDirectLastPriceHistories
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingDirectLastPriceHistory>("DeepBlueModel.FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice", "UnderlyingDirectLastPriceHistory");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingDirectLastPriceHistory>("DeepBlueModel.FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice", "UnderlyingDirectLastPriceHistory", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="UnderlyingDirectLastPriceHistory")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class UnderlyingDirectLastPriceHistory : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new UnderlyingDirectLastPriceHistory object.
+        /// </summary>
+        /// <param name="underlyingDirectLastPriceHistoryID">Initial value of the UnderlyingDirectLastPriceHistoryID property.</param>
+        /// <param name="lastPriceDate">Initial value of the LastPriceDate property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        public static UnderlyingDirectLastPriceHistory CreateUnderlyingDirectLastPriceHistory(global::System.Int32 underlyingDirectLastPriceHistoryID, global::System.DateTime lastPriceDate, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        {
+            UnderlyingDirectLastPriceHistory underlyingDirectLastPriceHistory = new UnderlyingDirectLastPriceHistory();
+            underlyingDirectLastPriceHistory.UnderlyingDirectLastPriceHistoryID = underlyingDirectLastPriceHistoryID;
+            underlyingDirectLastPriceHistory.LastPriceDate = lastPriceDate;
+            underlyingDirectLastPriceHistory.CreatedDate = createdDate;
+            underlyingDirectLastPriceHistory.CreatedBy = createdBy;
+            return underlyingDirectLastPriceHistory;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UnderlyingDirectLastPriceHistoryID
+        {
+            get
+            {
+                return _UnderlyingDirectLastPriceHistoryID;
+            }
+            set
+            {
+                if (_UnderlyingDirectLastPriceHistoryID != value)
+                {
+                    OnUnderlyingDirectLastPriceHistoryIDChanging(value);
+                    ReportPropertyChanging("UnderlyingDirectLastPriceHistoryID");
+                    _UnderlyingDirectLastPriceHistoryID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("UnderlyingDirectLastPriceHistoryID");
+                    OnUnderlyingDirectLastPriceHistoryIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _UnderlyingDirectLastPriceHistoryID;
+        partial void OnUnderlyingDirectLastPriceHistoryIDChanging(global::System.Int32 value);
+        partial void OnUnderlyingDirectLastPriceHistoryIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UnderlyingDirectLastPriceID
+        {
+            get
+            {
+                return _UnderlyingDirectLastPriceID;
+            }
+            set
+            {
+                OnUnderlyingDirectLastPriceIDChanging(value);
+                ReportPropertyChanging("UnderlyingDirectLastPriceID");
+                _UnderlyingDirectLastPriceID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UnderlyingDirectLastPriceID");
+                OnUnderlyingDirectLastPriceIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UnderlyingDirectLastPriceID;
+        partial void OnUnderlyingDirectLastPriceIDChanging(Nullable<global::System.Int32> value);
+        partial void OnUnderlyingDirectLastPriceIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LastPrice
+        {
+            get
+            {
+                return _LastPrice;
+            }
+            set
+            {
+                OnLastPriceChanging(value);
+                ReportPropertyChanging("LastPrice");
+                _LastPrice = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastPrice");
+                OnLastPriceChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _LastPrice;
+        partial void OnLastPriceChanging(Nullable<global::System.Decimal> value);
+        partial void OnLastPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime LastPriceDate
+        {
+            get
+            {
+                return _LastPriceDate;
+            }
+            set
+            {
+                OnLastPriceDateChanging(value);
+                ReportPropertyChanging("LastPriceDate");
+                _LastPriceDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastPriceDate");
+                OnLastPriceDateChanged();
+            }
+        }
+        private global::System.DateTime _LastPriceDate;
+        partial void OnLastPriceDateChanging(global::System.DateTime value);
+        partial void OnLastPriceDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsAudited
+        {
+            get
+            {
+                return _IsAudited;
+            }
+            set
+            {
+                OnIsAuditedChanging(value);
+                ReportPropertyChanging("IsAudited");
+                _IsAudited = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsAudited");
+                OnIsAuditedChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsAudited;
+        partial void OnIsAuditedChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsAuditedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.Int32 _CreatedBy;
+        partial void OnCreatedByChanging(global::System.Int32 value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice", "UnderlyingDirectLastPrice")]
+        public UnderlyingDirectLastPrice UnderlyingDirectLastPrice
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingDirectLastPrice>("DeepBlueModel.FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice", "UnderlyingDirectLastPrice").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingDirectLastPrice>("DeepBlueModel.FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice", "UnderlyingDirectLastPrice").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<UnderlyingDirectLastPrice> UnderlyingDirectLastPriceReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingDirectLastPrice>("DeepBlueModel.FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice", "UnderlyingDirectLastPrice");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UnderlyingDirectLastPrice>("DeepBlueModel.FK_UnderlyingDirectLastPriceHistory_UnderlyingDirectLastPrice", "UnderlyingDirectLastPrice", value);
                 }
             }
         }

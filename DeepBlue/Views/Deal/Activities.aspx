@@ -14,6 +14,7 @@
 	<%=Html.JavascriptInclueTag("DealActivityEquitySplit.js")%>
 	<%=Html.JavascriptInclueTag("DealActivitySecConversion.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityFundExpense.js")%>
+	<%=Html.JavascriptInclueTag("DealActivityUDValuation.js")%>
 	<%=Html.JavascriptInclueTag("jAjaxTable.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
@@ -270,7 +271,49 @@
 					<div class="title">
 						<%: Html.Span("Underlying Direct Valuation")%>
 					</div>
+					<div class="search-tool">
+						<div class="cell" style="padding-left: 10px">
+							<%: Html.TextBox("UDV_UnderlyingDirect", "Search Underlying Direct", new { @class = "wm" })%></div>
+						<div class="cell" style="padding-left: 10px">
+							<%: Html.Anchor("Add Underlying Direct Valuation", "#")%>
+						</div>
+					</div>
 					<div class="detail">
+						<div class="cell loading" id="UDVLoading">
+						</div>
+						<div class="clear">
+							<table cellpadding="0" cellspacing="0" border="0" id="UDValuationList" class="grid">
+								<thead>
+									<tr>
+										<th style="width: 12%">
+											Fund Name
+										</th>
+										<th style="width: 12%">
+											Security
+										</th>
+										<th style="width: 12%">
+											Security Type
+										</th>
+										<th style="width: 12%">
+											Last Price
+										</th>
+										<th style="width: 12%">
+											Last Price Date
+										</th>
+										<th style="width: 12%">
+											New Price
+										</th>
+										<th style="width: 12%">
+											New Price Date
+										</th>
+										<th>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 				<div class="line">
@@ -414,6 +457,10 @@
 																	  Source = "/Fund/FindFunds",	MinLength = 1,
 																	  OnSelect = "function(event, ui) { dealActivity.setFLEFund(ui.item.id,ui.item.value);}"
 	})%>
+	<%= Html.jQueryAutoComplete("UDV_UnderlyingDirect", new AutoCompleteOptions {
+																	  Source = "/Issuer/FindIssuers", MinLength = 1,
+																	  OnSelect = "function(event, ui) { dealActivity.loadUDV(ui.item.id);}"
+	})%>
 	<%=Html.jQueryAjaxTable("NewHoldingPatternList", new AjaxTableOptions {
 	ActionName = "NewHoldingPatternList",
 	ControllerName = "Deal"
@@ -448,5 +495,8 @@
 	</script>
 	<script id="ExpenseToDealTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("ExpenseToDeal"); %>
+	</script>
+	<script id="UDVAddTemplate" type="text/x-jquery-tmpl">
+		<% Html.RenderPartial("UnderlyingDirectValuation", Model.UnderlyingDirectValuationModel); %>
 	</script>
 </asp:Content>
