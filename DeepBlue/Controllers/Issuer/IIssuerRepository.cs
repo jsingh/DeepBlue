@@ -27,7 +27,7 @@ namespace DeepBlue.Controllers.Issuer {
 		Equity FindEquity(int equityId);
 		IEnumerable<ErrorInfo> SaveEquity(Equity equity);
 		bool DeleteEquity(int id);
-		List<AutoCompleteList> FindEquityDirects(int dealUnderlyingDirectId, string issuerName);
+		List<AutoCompleteList> FindEquityDirects(string issuerName);
 		string FindEquitySymbol(int id);
 		object FindEquitySecurityConversionModel(int equityId);
 		#endregion
@@ -38,7 +38,7 @@ namespace DeepBlue.Controllers.Issuer {
 		List<FixedIncome> GetAllFixedIncome(int issuerId);
 		IEnumerable<ErrorInfo> SaveFixedIncome(FixedIncome fixedIncome);
 		bool DeleteFixedIncome(int id);
-		List<AutoCompleteList> FindFixedIncomeDirects(int dealUnderlyingDirectId, string issuerName);
+		List<AutoCompleteList> FindFixedIncomeDirects(string issuerName);
 		object FindFixedIncomeSecurityConversionModel(int fixedIncomeId);
 		#endregion
 	}

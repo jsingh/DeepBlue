@@ -112,12 +112,13 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region UnderlyingFundValuation
 		List<UnderlyingFundValuationModel> GetAllUnderlyingFundValuations(int underlyingFundId);
-		UnderlyingFundValuationModel FindUnderlyingFundValuationModel(int underlyingFundNAVId);
+		UnderlyingFundValuationModel FindUnderlyingFundValuationModel(int underlyingFundId, int fundId);
 		UnderlyingFundNAV FindUnderlyingFundNAV(int underlyingFundId, int fundId);
 		bool DeleteUnderlyingFundValuation(int id);
 		decimal SumOfTotalCapitalCalls(int underlyingFundId, int fundId);
 		decimal SumOfTotalDistributions(int underlyingFundId, int fundId);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundNAV(UnderlyingFundNAV underlyingFundNAV);
+		decimal FindFundNAV(int underlyingFundId, int fundId);
 		#endregion
 
 		#region UnderlyingFundNAVHistory
@@ -145,7 +146,7 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region NewHoldingPattern
-		List<NewHoldingPatternModel> NewHoldingPatternList(int dealUnderlyingDirectId, int activityTypeId, int securityTypeId, int securityId);
+		List<NewHoldingPatternModel> NewHoldingPatternList(int activityTypeId, int securityTypeId, int securityId);
 		#endregion
 
 		#region UnderlyingDirectValuation

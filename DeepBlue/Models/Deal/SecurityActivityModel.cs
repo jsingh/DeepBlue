@@ -14,10 +14,6 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Corporate Action-")]
 		public int ActivityTypeId { get; set; }
 
-		[Required(ErrorMessage = "Deal Underlying Direct is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Deal Underlying Direct is required")]
-		public int DealUnderlyingDirectId { get; set; }
-
 		[Required(ErrorMessage = "Stock is required")]
 		[Range((int)1, int.MaxValue, ErrorMessage = "Stock is required")]
 		[DisplayName("1 Stock-")]

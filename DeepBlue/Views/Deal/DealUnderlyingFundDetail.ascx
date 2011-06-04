@@ -48,7 +48,7 @@
 					<%: Html.DropDownList("UnderlyingFundID", Model.UnderlyingFunds)%>
 				</td>
 				<td style="text-align: center">
-					<%: Html.TextBox("FundNAV", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+					<%: Html.TextBox("FundNAV", "", new { @id="FundNAV", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td style="text-align: center">
 					<%: Html.TextBox("Percent", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>

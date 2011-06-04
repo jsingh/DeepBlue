@@ -495,8 +495,6 @@
     <Content Include="Assets\images\btn-sprite.gif" />
     <Content Include="Assets\images\Cancel.png" />
     <Content Include="Assets\images\cancel_btn.png" />
-    <Content Include="Assets\images\Capital-Calls.png" />
-    <Content Include="Assets\images\Cash-Distributions.png" />
     <Content Include="Assets\images\Close.png" />
     <Content Include="Assets\images\content_top.png" />
     <Content Include="Assets\images\content_top_r.png" />
@@ -531,6 +529,7 @@
     <Content Include="Assets\images\hl.png" />
     <Content Include="Assets\images\invmanagement.png" />
     <Content Include="Assets\images\invoice_bg.png" />
+    <Content Include="Assets\images\largedel.png" />
     <Content Include="Assets\images\last.gif" />
     <Content Include="Assets\images\lightbox-blank.gif" />
     <Content Include="Assets\images\lightbox-btn-close.gif" />
@@ -544,9 +543,11 @@
     <Content Include="Assets\images\menuleft.png" />
     <Content Include="Assets\images\menuright.png" />
     <Content Include="Assets\images\menu_bg.gif" />
+    <Content Include="Assets\images\minus.png" />
     <Content Include="Assets\images\new_invoice.png" />
     <Content Include="Assets\images\next.gif" />
     <Content Include="Assets\images\pdf.png" />
+    <Content Include="Assets\images\plus.png" />
     <Content Include="Assets\images\prev.gif" />
     <Content Include="Assets\images\print.png" />
     <Content Include="Assets\images\report.png" />
@@ -568,8 +569,8 @@
     <Content Include="Assets\images\submnubg1.png" />
     <Content Include="Assets\images\submnubg2.png" />
     <Content Include="Assets\images\submnubg3.png" />
-    <Content Include="Assets\images\S_Capital-Calls.png" />
-    <Content Include="Assets\images\S_Cash-Distributions.png" />
+    <Content Include="Assets\images\S_CC.png" />
+    <Content Include="Assets\images\S_CD.png" />
     <Content Include="Assets\images\S_DealDocuments.png" />
     <Content Include="Assets\images\S_DealExpenses.png" />
     <Content Include="Assets\images\S_Equities.png" />
@@ -588,6 +589,7 @@
     <Content Include="Assets\images\textbox1_bg.png" />
     <Content Include="Assets\images\textbox_bg.png" />
     <Content Include="Assets\images\Tick.gif" />
+    <Content Include="Assets\images\tick.png" />
     <Content Include="Assets\images\tmenucenter.png" />
     <Content Include="Assets\images\tmenuleft.png" />
     <Content Include="Assets\images\tmenuright.png" />
@@ -615,6 +617,8 @@
     <Content Include="Assets\images\Update.png" />
     <Content Include="Assets\images\Upload.png" />
     <Content Include="Assets\images\uup.png" />
+    <Content Include="Assets\images\U_CC.png" />
+    <Content Include="Assets\images\U_CD.png" />
     <Content Include="Assets\images\wbg.gif" />
     <Content Include="Assets\images\xls.png" />
     <Content Include="Assets\javascripts\ActivityType.js" />

@@ -69,3 +69,10 @@ deal.loadUnderlyingFund=function (id) {
 		deal.loadUnderlyingFundData(data);
 	});
 };
+deal.FindFundNAV=function (ddl) {
+	var tr=$(ddl).parents("tr:first");
+	$.get("/Deal/FindFundNAV?_"+(new Date()).getTime()+"&underlyingFundId="+ddl.value+"&fundId="+deal.getFundId(),function (data) {
+		var FundNAV=$("#FundNAV",tr);
+		FundNAV.val(data);
+	});
+};

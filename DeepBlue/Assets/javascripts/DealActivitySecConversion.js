@@ -15,9 +15,11 @@ dealActivity.onOldSecuritySearch=function (event,ui) {
 	if(msg!="") { alert(msg);return false; }
 };
 dealActivity.changeNewSecurityType=function (ddl) {
+	$("#NewSecurityId").val(0);$("#NewSecurity").val("");
 	dealActivity.setSecConvAutoComplete(ddl.value,$("#NewSecurity"));
 };
 dealActivity.changeOldSecurityType=function (ddl) {
+	$("#OldSecurityId").val(0);$("#OldSecurity").val("");
 	dealActivity.setSecConvAutoComplete(ddl.value,$("#OldSecurity"));
 };
 dealActivity.setNewSecurity=function (id,name) {
@@ -55,10 +57,10 @@ dealActivity.setSecConvAutoComplete=function (stypeId,target) {
 		if(isNaN(stypeId)) { stypeId=0; }
 		switch(stypeId.toString()) {
 			case "1":
-				url="/Deal/FindEquityDirects?dealUnderlyingDirectId="+dealActivity.getUnderlyingDirectId();
+				url="/Deal/FindEquityDirects";
 				break;
 			case "2":
-				url="/Deal/FindFixedIncomeDirects?dealUnderlyingDirectId="+dealActivity.getUnderlyingDirectId();
+				url="/Deal/FindFixedIncomeDirects";
 				break;
 		}
 		if(stypeId>0) {

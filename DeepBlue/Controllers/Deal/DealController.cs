@@ -836,15 +836,15 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/FindEquityDirects
 		[HttpGet]
-		public JsonResult FindEquityDirects(int dealUnderlyingDirectId, string term) {
-			return Json(IssuerRepository.FindEquityDirects(dealUnderlyingDirectId, term), JsonRequestBehavior.AllowGet);
+		public JsonResult FindEquityDirects(string term) {
+			return Json(IssuerRepository.FindEquityDirects(term), JsonRequestBehavior.AllowGet);
 		}
 
 		//
 		// GET: /Deal/FindFixedIncomeDirects
 		[HttpGet]
-		public JsonResult FindFixedIncomeDirects(int dealUnderlyingDirectId, string term) {
-			return Json(IssuerRepository.FindFixedIncomeDirects(dealUnderlyingDirectId, term), JsonRequestBehavior.AllowGet);
+		public JsonResult FindFixedIncomeDirects(string term) {
+			return Json(IssuerRepository.FindFixedIncomeDirects(term), JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -882,8 +882,7 @@ namespace DeepBlue.Controllers.Deal {
 				equitySplit.SplitDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveEquitySplit(equitySplit);
 				if (errorInfo == null) {
-					List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.DealUnderlyingDirectId, model.ActivityTypeId,
-						model.SecurityTypeId, equitySplit.EquityID);
+					List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.ActivityTypeId, model.SecurityTypeId, equitySplit.EquityID);
 					foreach (var pattern in newHoldingPatterns) {
 						errorInfo = CreateFundActivityHistory(pattern.FundId, pattern.OldNoOfShares, (pattern.OldNoOfShares * equitySplit.SplitFactor), equitySplit.EquiteSplitID, model.ActivityTypeId);
 						if (errorInfo != null)
@@ -928,7 +927,7 @@ namespace DeepBlue.Controllers.Deal {
 				securityConversion.ConversionDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveSecurityConversion(securityConversion);
 				if (errorInfo == null) {
-					List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.DealUnderlyingDirectId, model.ActivityTypeId, model.NewSecurityTypeId, model.NewSecurityId);
+					List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.ActivityTypeId, model.NewSecurityTypeId, model.NewSecurityId);
 					foreach (var pattern in newHoldingPatterns) {
 						errorInfo = CreateFundActivityHistory(pattern.FundId, pattern.OldNoOfShares, (pattern.OldNoOfShares * securityConversion.SplitFactor), securityConversion.SecurityConversionID, model.ActivityTypeId);
 						if (errorInfo != null)
@@ -1083,8 +1082,7 @@ namespace DeepBlue.Controllers.Deal {
 			}
 			return Json(model, JsonRequestBehavior.AllowGet);
 		}
-
-
+		
 		//
 		// POST : /Deal/CreateUnderlyingFundPostRecordCashDistribution
 		[HttpPost]
@@ -1106,6 +1104,7 @@ namespace DeepBlue.Controllers.Deal {
 				cashDistribution.UnderlyingFundID = model.UnderlyingFundId;
 				cashDistribution.Amount = model.Amount ?? 0;
 				cashDistribution.DealID = model.DealId;
+				cashDistribution.DistributionDate = model.DistributionDate;
 				cashDistribution.LastUpdatedBy = AppSettings.CreatedByUserId;
 				cashDistribution.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveUnderlyingFundPostRecordCashDistribution(cashDistribution);
@@ -1388,8 +1387,8 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/FindUnderlyingFundValuation
 		[HttpGet]
-		public JsonResult FindUnderlyingFundValuation(int id) {
-			UnderlyingFundValuationModel model = DealRepository.FindUnderlyingFundValuationModel(id);
+		public JsonResult FindUnderlyingFundValuation(int underlyingFundId, int fundId) {
+			UnderlyingFundValuationModel model = DealRepository.FindUnderlyingFundValuationModel(underlyingFundId, fundId);
 			if (model == null) {
 				model = new UnderlyingFundValuationModel();
 			}
@@ -1401,14 +1400,10 @@ namespace DeepBlue.Controllers.Deal {
 			UnderlyingFundNAV underlyingFundNAV = DealRepository.FindUnderlyingFundNAV(underlyingFundId, fundId);
 			decimal existingFundNAV = 0;
 			DateTime existingFundNAVDate = Convert.ToDateTime("01/01/1900");
-			int existingFundId = 0;
-			int existingUnderlyingFundId = 0;
 			if (underlyingFundNAV == null) {
 				underlyingFundNAV = new UnderlyingFundNAV();
 			}
 			else {
-				existingFundId = underlyingFundNAV.FundID;
-				existingUnderlyingFundId = underlyingFundNAV.UnderlyingFundID;
 				existingFundNAV = underlyingFundNAV.FundNAV ?? 0;
 				existingFundNAVDate = underlyingFundNAV.FundNAVDate;
 			}
@@ -1425,9 +1420,7 @@ namespace DeepBlue.Controllers.Deal {
 				underlyingFundNAVHistory.Calculation = null;
 				underlyingFundNAVHistory.IsAudited = false;
 				if (existingFundNAV == underlyingFundNAV.FundNAV
-					&& existingFundNAVDate == underlyingFundNAV.FundNAVDate
-					&& existingFundId == underlyingFundNAV.FundID
-					&& existingUnderlyingFundId == underlyingFundNAV.UnderlyingFundID) {
+					&& existingFundNAVDate == underlyingFundNAV.FundNAVDate) {
 					underlyingFundNAVHistory.Calculation = underlyingFundNAV.FundNAV + ":" + DealRepository.SumOfTotalCapitalCalls(underlyingFundNAV.UnderlyingFundID, underlyingFundNAV.FundID) + ":" + DealRepository.SumOfTotalDistributions(underlyingFundNAV.UnderlyingFundID, underlyingFundNAV.FundID);
 				}
 				errorInfo = DealRepository.SaveUnderlyingFundNAVHistory(underlyingFundNAVHistory);
@@ -1447,7 +1440,7 @@ namespace DeepBlue.Controllers.Deal {
 				UnderlyingFundNAV underlyingFundNAV = CreateUnderlyingFundValuation(model.UnderlyingFundId, model.FundId, (model.UpdateNAV ?? 0), model.UpdateDate, out errorInfo);
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 				if (string.IsNullOrEmpty(resultModel.Result)) {
-					resultModel.Result = "True||" + underlyingFundNAV.UnderlyingFundNAVID;
+					resultModel.Result = "True||" + underlyingFundNAV.UnderlyingFundNAVID + "||" + underlyingFundNAV.FundID;
 				}
 			}
 			else {
@@ -1474,6 +1467,13 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		//
+		// GET: /Deal/FindFundNAV
+		[HttpGet]
+		public decimal FindFundNAV(int underlyingFundId, int fundId) {
+			return DealRepository.FindFundNAV(underlyingFundId, fundId);
+		}
+		
 		#endregion
 
 		#region FundLevelExpense
@@ -1524,8 +1524,8 @@ namespace DeepBlue.Controllers.Deal {
 		#region NewHoldingPattern
 		//
 		// GET: /Deal/NewHoldingPatternList
-		public ActionResult NewHoldingPatternList(int dealUnderlyingDirectId, int activityTypeId, int securityTypeId, int securityId) {
-			List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(dealUnderlyingDirectId, activityTypeId, securityTypeId, securityId);
+		public ActionResult NewHoldingPatternList(int activityTypeId, int securityTypeId, int securityId) {
+			List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(activityTypeId, securityTypeId, securityId);
 			FlexigridData flexgridData = new FlexigridData();
 			flexgridData.total = newHoldingPatterns.Count();
 			flexgridData.page = 1;

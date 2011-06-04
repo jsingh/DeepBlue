@@ -137,14 +137,24 @@
 		$(".money",target).each(function () {
 			var amt=parseFloat($(this).attr("val"));
 			if(isNaN(amt)) { amt=parseFloat($(this).html()); }
-			if(isNaN(amt)) { this.innerHTML=""; } else { this.innerHTML=jHelper.dollarAmount(amt.toString()); }
+			if(isNaN(amt)) { amt=0; }
+			if(amt>0) {
+				this.innerHTML=jHelper.dollarAmount(amt.toString());
+			} else {
+				this.innerHTML="";
+			}
 		});
 	}
 	,formatDateHtml: function (target) {
 		$(".dispdate",target).each(function () {
 			if($.trim(this.innerHTML)!="") {
 				try {
-					this.innerHTML=jHelper.formatDate(jHelper.parseJSONDate(this.innerHTML));
+					var dt=jHelper.formatDate(jHelper.parseJSONDate(this.innerHTML));
+					if(dt.toString()=="01/01/1") {
+						this.innerHTML="";
+					} else {
+						this.innerHTML=dt;
+					}
 				} catch(e) { alert(e); }
 			}
 		});

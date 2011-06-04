@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Deal {
 	public class UnderlyingFundPostRecordCashDistributionModel {
@@ -27,6 +28,8 @@ namespace DeepBlue.Models.Deal {
 		[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "Distribution Amount is required")]
 		public decimal? Amount { get; set; }
 
+		[Required(ErrorMessage = "Distribution Date is required")]
+		[DateRange()]
 		public DateTime? DistributionDate { get; set; }
 
 		public string DealName { get; set; }

@@ -218,9 +218,6 @@
 					<div class="search-tool">
 						<div class="cell" style="padding-left: 10px">
 							<%: Html.TextBox("UFV_UnderlyingFund", "Search Underlying Fund", new { @class = "wm" })%></div>
-						<div class="cell" style="padding-left: 10px">
-							<%: Html.Anchor("Add Underlying Fund Valuation", "javascript:dealActivity.makeNewUFV();")%>
-						</div>
 					</div>
 					<div class="detail">
 						<div class="search-header">
@@ -233,9 +230,6 @@
 								class="grid">
 								<thead>
 									<tr>
-										<th style="width: 15%">
-											Underlying Fund Name
-										</th>
 										<th style="width: 12%">
 											Fund Name
 										</th>
@@ -274,9 +268,6 @@
 					<div class="search-tool">
 						<div class="cell" style="padding-left: 10px">
 							<%: Html.TextBox("UDV_UnderlyingDirect", "Search Underlying Direct", new { @class = "wm" })%></div>
-						<div class="cell" style="padding-left: 10px">
-							<%: Html.Anchor("Add Underlying Direct Valuation", "#")%>
-						</div>
 					</div>
 					<div class="detail">
 						<div class="cell loading" id="UDVLoading">
@@ -434,10 +425,6 @@
 																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
 																	  OnSelect = "function(event, ui) { dealActivity.setUFVUnderlyingFund(ui.item.id,ui.item.value);}"
 	})%>
-	<%= Html.jQueryAutoComplete("S_UnderlyingDirect", new AutoCompleteOptions {
-																	  Source = "/Deal/FindDealUnderlyingDirects", MinLength = 1,
-																	  OnSelect = "function(event, ui) { dealActivity.selectUD(ui.item.id,ui.item.value);}"
-	})%>
 	<%= Html.jQueryAutoComplete("SplitEquityName", new AutoCompleteOptions {
 																	  Source = "/Deal/FindEquityDirects",	MinLength = 1,
 																	  OnSearch = "dealActivity.onESDirectSearch",
@@ -460,6 +447,10 @@
 	<%= Html.jQueryAutoComplete("UDV_UnderlyingDirect", new AutoCompleteOptions {
 																	  Source = "/Issuer/FindIssuers", MinLength = 1,
 																	  OnSelect = "function(event, ui) { dealActivity.loadUDV(ui.item.id);}"
+	})%>
+	<%= Html.jQueryAutoComplete("S_UnderlyingDirect", new AutoCompleteOptions {
+																	  Source = "/Issuer/FindIssuers",	MinLength = 1,
+																	  OnSelect = "function(event, ui) { dealActivity.selectUD(ui.item.id,ui.item.value);}"
 	})%>
 	<%=Html.jQueryAjaxTable("NewHoldingPatternList", new AjaxTableOptions {
 	ActionName = "NewHoldingPatternList",

@@ -6878,6 +6878,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _LastUpdatedBy;
         partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
         partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DistributionDate
+        {
+            get
+            {
+                return _DistributionDate;
+            }
+            set
+            {
+                OnDistributionDateChanging(value);
+                ReportPropertyChanging("DistributionDate");
+                _DistributionDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DistributionDate");
+                OnDistributionDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DistributionDate;
+        partial void OnDistributionDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnDistributionDateChanged();
 
         #endregion
     

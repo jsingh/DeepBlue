@@ -12,19 +12,19 @@ dealActivity.directSearchValid=function () {
 	var atypeId=dealActivity.getActivityTypeId();
 	var msg="";
 	if(atypeId==0) { msg+="Corporate Action is required\n"; }
-	var udid=dealActivity.getUnderlyingDirectId();
-	if(udid==0) { msg+="Underlying Direct is required\n"; }
+	/*var udid=dealActivity.getUnderlyingDirectId();
+	if(udid==0) { msg+="Underlying Direct is required\n"; }*/
 	return msg;
 };
 dealActivity.getActivityTypeId=function () {
 	return parseInt($("#ActivityTypeId").val());
 };
 dealActivity.checkUD=function () {
-	var udid=dealActivity.getUnderlyingDirectId();
+	/*var udid=dealActivity.getUnderlyingDirectId();
 	if(udid==0) {
 		alert("Underlying Direct is required");
 		return false;
-	}
+	}*/
 	return true;
 };
 dealActivity.changeAType=function (ddl) {
@@ -58,9 +58,9 @@ dealActivity.getEquityId=function (id) {
 dealActivity.selectUD=function (id,name) {
 	$("#DealUnderlyingDirectId").val(id);
 	$("#SpnUDirectName").html(name);
-	dealActivity.setESAutoComplete();
-	dealActivity.setSecConvAutoComplete($("#OldSecurityTypeId").val(),$("#OldSecurity"));
-	dealActivity.setSecConvAutoComplete($("#NewSecurityTypeId").val(),$("#NewSecurity"));
+//	dealActivity.setESAutoComplete();
+//	dealActivity.setSecConvAutoComplete($("#OldSecurityTypeId").val(),$("#OldSecurity"));
+//	dealActivity.setSecConvAutoComplete($("#NewSecurityTypeId").val(),$("#NewSecurity"));
 };
 dealActivity.getUnderlyingDirectId=function () {
 	var id=parseInt($("#DealUnderlyingDirectId").val());

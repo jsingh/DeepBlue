@@ -175,16 +175,9 @@ namespace DeepBlue.Controllers.Issuer {
 			}
 		}
 
-		public List<AutoCompleteList> FindEquityDirects(int dealUnderlyingDirectId, string issuerName) {
+		public List<AutoCompleteList> FindEquityDirects(string issuerName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from equity in context.Equities
-						join direct in
-							(from dealUnderlyingDirect in context.DealUnderlyingDirects
-							 where dealUnderlyingDirect.DealUnderlyingDirectID == dealUnderlyingDirectId
-							 && dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity
-							 group dealUnderlyingDirect by dealUnderlyingDirect.SecurityID into directs
-							 select new { SecurityID = directs.FirstOrDefault().SecurityID })
-										on equity.EquityID equals direct.SecurityID
 						where equity.Issuer.Name.Contains(issuerName)
 						orderby equity.Issuer.Name
 						select new AutoCompleteList {
@@ -194,8 +187,7 @@ namespace DeepBlue.Controllers.Issuer {
 						}).Take(20).ToList();
 			}
 		}
-
-
+		
 		public string FindEquitySymbol(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from equity in context.Equities where equity.EquityID == id select equity.Symbol).SingleOrDefault();
@@ -278,16 +270,9 @@ namespace DeepBlue.Controllers.Issuer {
 			}
 		}
 
-		public List<AutoCompleteList> FindFixedIncomeDirects(int dealUnderlyingDirectId, string issuerName) {
+		public List<AutoCompleteList> FindFixedIncomeDirects(string issuerName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from fixedIncome in context.FixedIncomes
-						join direct in
-							(from dealUnderlyingDirect in context.DealUnderlyingDirects
-							 where dealUnderlyingDirect.DealUnderlyingDirectID == dealUnderlyingDirectId
-							 && dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.FixedIncome
-							 group dealUnderlyingDirect by dealUnderlyingDirect.SecurityID into directs
-							 select new { SecurityID = directs.FirstOrDefault().SecurityID })
-										on fixedIncome.FixedIncomeID equals direct.SecurityID
 						where fixedIncome.Issuer.Name.Contains(issuerName)
 						orderby fixedIncome.Issuer.Name
 						select new AutoCompleteList {

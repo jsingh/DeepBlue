@@ -298,7 +298,13 @@ namespace DeepBlue.Controllers.Deal {
 			return errorInfo;
 		}
 
-
+		public decimal FindFundNAV(int underlyingFundId, int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fundNAV in context.UnderlyingFundNAVs
+						where fundNAV.UnderlyingFundID == underlyingFundId && fundNAV.FundID == fundId
+						select fundNAV.FundNAV ?? 0).FirstOrDefault();
+			}
+		}
 		#endregion
 
 		#region DealUnderlyingDirect
@@ -834,7 +840,8 @@ namespace DeepBlue.Controllers.Deal {
 						UnderlyingFundId = cashDistribution.UnderlyingFundID,
 						CashDistributionId = cashDistribution.CashDistributionID,
 						DealName = cashDistribution.Deal.DealName,
-						FundName = cashDistribution.Deal.Fund.FundName
+						FundName = cashDistribution.Deal.Fund.FundName,
+						 DistributionDate = cashDistribution.DistributionDate
 					});
 		}
 		#endregion
@@ -985,13 +992,16 @@ namespace DeepBlue.Controllers.Deal {
 
 		public List<UnderlyingFundValuationModel> GetAllUnderlyingFundValuations(int underlyingFundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return GetUnderlyingFundValuationModel(context, context.UnderlyingFundNAVs.Where(fundNAV => fundNAV.UnderlyingFundID == underlyingFundId)).ToList();
+				return GetUnderlyingFundValuationModel(context, underlyingFundId).ToList();
 			}
 		}
 
-		public UnderlyingFundValuationModel FindUnderlyingFundValuationModel(int underlyingFundNAVId) {
+		public UnderlyingFundValuationModel FindUnderlyingFundValuationModel(int underlyingFundId, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return GetUnderlyingFundValuationModel(context, context.UnderlyingFundNAVs.Where(fundNAV => fundNAV.UnderlyingFundNAVID == underlyingFundNAVId)).FirstOrDefault();
+				IQueryable<UnderlyingFundValuationModel> query = GetUnderlyingFundValuationModel(context, underlyingFundId);
+				return (from valuation in query
+						where valuation.FundId == fundId
+						select valuation).SingleOrDefault();
 			}
 		}
 
@@ -1035,34 +1045,59 @@ namespace DeepBlue.Controllers.Deal {
 			return underlyingFundNAV.Save();
 		}
 
-		private IQueryable<UnderlyingFundValuationModel> GetUnderlyingFundValuationModel(DeepBlueEntities context, IQueryable<UnderlyingFundNAV> underlyingFundNAVs) {
-			return (from underlyingFundNAV in underlyingFundNAVs
-					join capitalCall in context.UnderlyingFundCapitalCalls on new {
-						underlyingFundNAV.UnderlyingFundID,
-						underlyingFundNAV.FundID
-					} equals new { capitalCall.UnderlyingFundID, capitalCall.FundID } into capitalCalls
-					join distribution in context.UnderlyingFundCashDistributions on new {
-						underlyingFundNAV.UnderlyingFundID,
-						underlyingFundNAV.FundID
-					} equals new {
-						distribution.UnderlyingFundID,
-						distribution.FundID
-					}
-					into distributions
-					from capitalCall in capitalCalls.DefaultIfEmpty()
-					from distribution in distributions.DefaultIfEmpty()
-					select new UnderlyingFundValuationModel {
-						FundId = underlyingFundNAV.Fund.FundID,
-						FundName = underlyingFundNAV.Fund.FundName,
-						FundNAV = underlyingFundNAV.FundNAV,
-						FundNAVDate = underlyingFundNAV.FundNAVDate,
-						TotalCapitalCall = (capitalCalls.Count() > 0 ? capitalCalls.Sum(cc => cc.Amount) : 0),
-						TotalDistribution = (distributions.Count() > 0 ? distributions.Sum(ds => ds.Amount) : 0),
-						UnderlyingFundId = underlyingFundNAV.UnderlyingFundID,
-						UnderlyingFundName = underlyingFundNAV.UnderlyingFund.FundName,
-						UnderlyingFundNAVId = underlyingFundNAV.UnderlyingFundNAVID,
-						UpdateNAV = underlyingFundNAV.FundNAV
-					});
+		private IQueryable<UnderlyingFundValuationModel> GetUnderlyingFundValuationModel(DeepBlueEntities context, int underlyingFundId) {
+			var underlyingFundQuery = (from underlyingFund in context.DealUnderlyingFunds
+									   join deal in context.Deals on underlyingFund.DealID equals deal.DealID
+									   where underlyingFund.UnderlyingFundID == underlyingFundId
+									   group deal by deal.FundID into deals
+									   select new {
+										   FundID = deals.Key,
+										   UnderlyingFundID = underlyingFundId
+									   });
+
+			var query = (from dealUnderlyingFund in underlyingFundQuery
+						 join fund in context.Funds on dealUnderlyingFund.FundID equals fund.FundID
+						 join underlyingFund in context.UnderlyingFunds on dealUnderlyingFund.UnderlyingFundID equals underlyingFund.UnderlyingtFundID
+						 join underlyingFundNAV in context.UnderlyingFundNAVs on new {
+							 dealUnderlyingFund.UnderlyingFundID,
+							 dealUnderlyingFund.FundID
+						 } equals new {
+							 underlyingFundNAV.UnderlyingFundID,
+							 underlyingFundNAV.FundID
+						 } into underlyingFundNAVs
+						 from underlyingFundNAV in underlyingFundNAVs.DefaultIfEmpty()
+						 select new UnderlyingFundValuationModel {
+							 FundId = fund.FundID,
+							 FundName = fund.FundName,
+							 UnderlyingFundId = underlyingFund.UnderlyingtFundID,
+							 UnderlyingFundName = underlyingFund.FundName,
+							 FundNAV = (underlyingFundNAV != null ? underlyingFundNAV.FundNAV : 0),
+							 FundNAVDate = (underlyingFundNAV != null ? underlyingFundNAV.FundNAVDate : DateTime.MinValue),
+							 TotalCapitalCall = (from cc in context.UnderlyingFundCapitalCalls
+												 where cc.UnderlyingFundID == underlyingFund.UnderlyingtFundID
+												 && cc.FundID == fund.FundID
+												 && cc.NoticeDate >= underlyingFundNAV.FundNAVDate
+												 select cc.Amount).Sum(),
+							 TotalPostRecordCapitalCall = (from pcc in context.UnderlyingFundCapitalCallLineItems 
+														   where pcc.UnderlyingFundID == underlyingFund.UnderlyingtFundID
+														   && pcc.Deal.FundID == fund.FundID
+														   && pcc.ReceivedDate >= underlyingFundNAV.FundNAVDate
+														   select pcc.Amount).Sum(),
+							 TotalDistribution = (from ds in context.UnderlyingFundCashDistributions
+												  where ds.UnderlyingFundID == underlyingFund.UnderlyingtFundID
+												  && ds.FundID == fund.FundID
+												  && ds.NoticeDate >= underlyingFundNAV.FundNAVDate
+												  select ds.Amount).Sum(),
+							 TotalPostRecordDistribution = (from pds in context.CashDistributions
+															where pds.UnderlyingFundID == underlyingFund.UnderlyingtFundID
+															&& pds.Deal.FundID == fund.FundID
+															&& pds.DistributionDate >= underlyingFundNAV.FundNAVDate
+															select pds.Amount).Sum(),
+							 UnderlyingFundNAVId = (underlyingFundNAV != null ? underlyingFundNAV.UnderlyingFundNAVID : 0),
+							 UpdateNAV = (underlyingFundNAV != null ? underlyingFundNAV.FundNAV : 0)
+						 });
+
+			return query;
 		}
 
 		#endregion
@@ -1076,13 +1111,13 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region NewHoldingPattern
-
-		public List<NewHoldingPatternModel> NewHoldingPatternList(int dealUnderlyingDirectId, int activityTypeId, int securityTypeId, int securityId) {
+		
+		public List<NewHoldingPatternModel> NewHoldingPatternList(int activityTypeId, int securityTypeId, int securityId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<NewHoldingPatternModel> newHoldingPatternQuery = null;
 				var dealUnderlyingDirectQuery = (from direct in context.DealUnderlyingDirects
 												 where direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId
-												 && direct.DealUnderlyingDirectID == dealUnderlyingDirectId
+												 //&& direct.DealUnderlyingDirectID == dealUnderlyingDirectId
 												 group direct by direct.Deal.FundID into directs
 												 select new {
 													 FundId = directs.FirstOrDefault().Deal.FundID,
@@ -1274,7 +1309,7 @@ namespace DeepBlue.Controllers.Deal {
 		public UnderlyingDirectValuationModel FindUnderlyingDirectValuationModel(int underlyingDirectLastPriceId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from directValuation in context.UnderlyingDirectLastPrices
-						join equity in context.Equities on  directValuation.SecurityID equals equity.EquityID into equities
+						join equity in context.Equities on directValuation.SecurityID equals equity.EquityID into equities
 						from equity in equities.DefaultIfEmpty()
 						join fixedIncome in context.FixedIncomes on directValuation.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes
 						from fixedIncome in fixedIncomes.DefaultIfEmpty()
@@ -1328,6 +1363,9 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
+
+
+
 
 		
 	}

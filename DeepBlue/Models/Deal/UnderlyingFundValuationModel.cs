@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using DeepBlue.Helpers;
+using DeepBlue.Models.Entity;
 
 namespace DeepBlue.Models.Deal {
 	public class UnderlyingFundValuationModel {
@@ -15,6 +16,8 @@ namespace DeepBlue.Models.Deal {
 			UpdateDate = DateTime.Now;
 			TotalCapitalCall = 0;
 			TotalDistribution = 0;
+			TotalPostRecordCapitalCall = 0;
+			TotalPostRecordDistribution = 0;
 		}
 
 		public int UnderlyingFundNAVId { get; set; }
@@ -29,15 +32,22 @@ namespace DeepBlue.Models.Deal {
 
 		public decimal CalculateNAV {
 			get {
-				return (this.FundNAV ?? 0) + (this.TotalCapitalCall - this.TotalDistribution);
+				return (this.FundNAV ?? 0) + (((this.TotalCapitalCall ?? 0) + (this.TotalPostRecordCapitalCall ?? 0))
+											  - ((this.TotalDistribution ?? 0) + (this.TotalPostRecordDistribution ?? 0)));
 			}
 		}
 
+		public object Distributions { get; set; }
+
 		public decimal? FundNAV { get; set; }
 
-		public decimal TotalCapitalCall { get; set; }
+		public decimal? TotalCapitalCall { get; set; }
 
-		public decimal TotalDistribution { get; set; }
+		public decimal? TotalDistribution { get; set; }
+
+		public decimal? TotalPostRecordCapitalCall { get; set; }
+
+		public decimal? TotalPostRecordDistribution { get; set; }
 
 		public DateTime? FundNAVDate { get; set; }
 
