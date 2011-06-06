@@ -142,7 +142,7 @@
 			<%: Html.Span("", new { @id = "SpnIndex" }) %>
 		</td>
 		<td style="text-align: center">
-			<%: Html.DropDownList("UnderlyingFundId", Model.UnderlyingFunds, new { @class = "hide", @val = "${UnderlyingFundId}" })%>
+			<%: Html.DropDownList("UnderlyingFundId", Model.UnderlyingFunds, new { @class = "hide", @val = "${UnderlyingFundId}", @onchange = "javascript:deal.FindFundNAV(this);" })%>
 			<%: Html.Span("${FundName}",new { @class = "show" })%>
 		</td>
 		<td style="text-align: center">

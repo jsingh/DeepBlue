@@ -48,47 +48,51 @@
 						<div class="search-header">
 							<%: Html.Span("", new { @id="SpnCCUFName" })%>
 						</div>
-						<div class="cell loading" id="CCLoading">
+						<div class="cell" id="CCLoading">
 						</div>
 						<div class="clear">
-							<table cellpadding="0" cellspacing="0" border="0" id="CapitalCallList" class="grid">
-								<thead>
-									<tr>
-										<th style="width: 20%">
-											Fund Name
-										</th>
-										<th style="width: 20%">
-											Call Amount
-										</th>
-										<th style="width: 15%">
-											Notice Date
-										</th>
-										<th style="width: 15%">
-											Received Date
-										</th>
-										<th style="width: 15%">
-											Deemed Capital Call
-										</th>
-										<th>
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
-							<br />
+							<div id="CapitalCall" class="clear" style="display: none">
+								<%using (Html.Form(new { @id = "frmUFCapitalCall", @onsubmit = "return dealActivity.submitUFCapitalCall(this);" })) {%>
+								<table cellpadding="0" cellspacing="0" border="0" id="CapitalCallList" class="grid">
+									<thead>
+										<tr>
+											<th style="width: 20%">
+												Fund Name
+											</th>
+											<th style="width: 20%">
+												Call Amount
+											</th>
+											<th style="width: 15%">
+												Notice Date
+											</th>
+											<th style="width: 15%">
+												Received Date
+											</th>
+											<th style="width: 15%">
+												Deemed Capital Call
+											</th>
+											<th>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+								<br />
+								<center>
+									<%: Html.ImageButton("Save.png")%></center>
+								<%}%>
+							</div>
 							<div id="PRCapitalCall" class="clear" style="display: none">
 								<div class="line">
-								</div>
-								<div class="cell checkbox" style="margin-left: 183px;">
-									Post Record Date Capital Call&nbsp;&nbsp;&nbsp;<%: Html.CheckBox("IsPostRecordCapitalCall", false, new { @class = "checkbox", @onclick="javascript:dealActivity.checkPRCC(this);" })%>
 								</div>
 								<div class="cell" style="padding-left: 10px">
 									<%: Html.Anchor("Add New Post Record Date Capital Call", "javascript:dealActivity.makeNewPRCC();")%>
 								</div>
-								<div class="cell loading" id="PRCCLoading">
+								<div class="cell" id="PRCCLoading">
 								</div>
 								<div id="PRCCListBox" class="clear" style="display: none">
+									<%using (Html.Form(new { @id = "frmUFPRCapitalCall", @onsubmit = "return dealActivity.submitUFPRCapitalCall(this);" })) {%>
 									<table cellpadding="0" cellspacing="0" border="0" id="PRCapitalCallList" class="grid">
 										<thead>
 											<tr>
@@ -111,6 +115,10 @@
 										<tbody>
 										</tbody>
 									</table>
+									<br />
+									<center>
+										<%: Html.ImageButton("Save.png")%></center>
+									<%}%>
 								</div>
 							</div>
 						</div>
@@ -134,53 +142,51 @@
 						<div class="search-header">
 							<%: Html.Span("", new { @id="SpnCDUFName" })%>
 						</div>
-						<div class="cell loading" id="CDLoading">
+						<div class="cell" id="CDLoading">
 						</div>
 						<div class="clear">
-							<table cellpadding="0" cellspacing="0" border="0" id="CashDistributionList" class="grid">
-								<thead>
-									<tr>
-										<th style="width: 15%">
-											Fund Name
-										</th>
-										<th style="width: 12%">
-											Cash Distribution
-										</th>
-										<th style="width: 12%">
-											Amount
-										</th>
-										<th style="width: 12%">
-											Notice Date
-										</th>
-										<th style="width: 12%">
-											Record Date
-										</th>
-										<th style="width: 12%">
-											Deemed Distribution
-										</th>
-										<th style="width: 12%">
-											Netted Distribution
-										</th>
-										<th>
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
-							<br />
-							<div id="PRCashDistribution" class="clear">
+							<div id="CashDistribution" class="clear" style="display: none">
+								<%using (Html.Form(new { @id = "frmUFCashDistribution", @onsubmit = "return dealActivity.submitUFCashDistribution(this);" })) {%>
+								<table cellpadding="0" cellspacing="0" border="0" id="CashDistributionList" class="grid">
+									<thead>
+										<tr>
+											<th style="width: 15%">
+												Fund Name
+											</th>
+											<th style="width: 12%">
+												Amount
+											</th>
+											<th style="width: 12%">
+												Notice Date
+											</th>
+											<th style="width: 12%">
+												Record Date
+											</th>
+											<th style="width: 12%">
+												Distribution Type
+											</th>
+											<th>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+								<br />
+								<center>
+									<%: Html.ImageButton("Save.png")%></center>
+								<%}%>
+							</div>
+							<div id="PRCashDistribution" class="clear" style="display:none">
 								<div class="line">
-								</div>
-								<div class="cell checkbox">
-									Post Record Date Distribution
 								</div>
 								<div class="cell" style="padding-left: 10px">
 									<%: Html.Anchor("Add New Post Record Date Distribution", "javascript:dealActivity.makeNewPRCD();")%>
 								</div>
-								<div class="cell loading" id="PRCDLoading">
+								<div class="cell" id="PRCDLoading">
 								</div>
-								<div id="PRCDListBox" class="clear">
+								<div id="PRCDListBox" class="clear" style="display: none">
+									<%using (Html.Form(new { @id = "frmUFPRCashDistribution", @onsubmit = "return dealActivity.submitUFPRCashDistribution(this);" })) {%>
 									<table cellpadding="0" cellspacing="0" border="0" id="PRCashDistributionList" class="grid">
 										<thead>
 											<tr>
@@ -203,6 +209,10 @@
 										<tbody>
 										</tbody>
 									</table>
+									<br />
+									<center>
+										<%: Html.ImageButton("Save.png")%></center>
+									<%}%>
 								</div>
 							</div>
 						</div>
@@ -331,7 +341,7 @@
 					<div class="detail">
 						<% Html.RenderPartial("FundExpense", Model.FundLevelExpenseModel);%>
 						<div class="cell clear">
-							<%: Html.Anchor("Add Expense to Deal", "javascript:dealActivity.makeNewExpenseDeal();")%>
+							<%: Html.Anchor("Add Expense to Deal", "#")%>
 						</div>
 						<table cellpadding="0" cellspacing="0" border="0" id="ExpenseToDealList" class="grid">
 							<thead>

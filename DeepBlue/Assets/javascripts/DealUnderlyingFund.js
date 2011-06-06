@@ -71,8 +71,10 @@ deal.loadUnderlyingFund=function (id) {
 };
 deal.FindFundNAV=function (ddl) {
 	var tr=$(ddl).parents("tr:first");
+	var FundNAV=$("#FundNAV",tr);
+	FundNAV.attr("readonly","readonly").val("Loading FundNAV...");
 	$.get("/Deal/FindFundNAV?_"+(new Date()).getTime()+"&underlyingFundId="+ddl.value+"&fundId="+deal.getFundId(),function (data) {
-		var FundNAV=$("#FundNAV",tr);
-		FundNAV.val(data);
+		var fundNAV="";if(parseInt(data)>0) { fundNAV=data; }
+		FundNAV.removeAttr("readonly","readonly").val(fundNAV);
 	});
 };

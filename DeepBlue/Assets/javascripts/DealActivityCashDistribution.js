@@ -22,29 +22,12 @@
 	});
 };
 dealActivity.makeNewCD=function () {
-	var ufid=dealActivity.getCDUnderlyingFund();
+	var ufid=dealActivity.getCDUnderlyingFundId();
 	if(isNaN(ufid)) { ufid=0; }
 	if(ufid==0) {
 		alert("Underlying Fund is required");
 	} else {
-		var tbl=$("#CashDistributionList");
-		var bdy=$("tbody",tbl);
-		var newRow=$("#UFCD_0",bdy);
-		var emptyNewRow=$("#EmptyUFCD_0",bdy);
-		newRow.remove();
-		emptyNewRow.remove();
-		var rowsLength=$("tr",bdy).length;
-		var data=dealActivity.newCDData;
-		if(rowsLength>0) {
-			var row=$("tr:first",bdy);
-			$("#CashDistributionAddTemplate").tmpl(data).insertBefore(row);
-		} else {
-			$("#CashDistributionAddTemplate").tmpl(data).appendTo(bdy);
-		}
-		newRow=$("#UFCD_0",bdy);
-		$("#UnderlyingFundId",newRow).val(ufid);
-		dealActivity.editRow(newRow);
-		dealActivity.setUpRow(newRow);
+		dealActivity.loadCD(false);
 	}
 };
 dealActivity.editCD=function (img,id) {
@@ -80,29 +63,53 @@ dealActivity.deleteCD=function (id,img) {
 				alert(data);
 			} else {
 				spnloading.empty();
-				$("#"+trid).remove();
-				$("#Empty"+trid).remove();
+				$("input[type='text']",tr).val("");
+				$("select",tr).val("0");
+				tr.addClass("newrow");
+				$("#Delete",tr).remove();
 			}
 		});
 	}
 };
 dealActivity.setCDUnderlyingFund=function (id,name) {
 	$("#CDUnderlyingFundId").val(id);
+	$("#SpnCDUFName").html(name);
+	$("tbody","#CashDistributionList").empty();
+	$("tbody","#PRCashDistributionList").empty();
+	dealActivity.loadCD(true);
+};
+dealActivity.loadCD=function (isRefresh) {
 	var loading=$("#CDLoading");
 	var tbl=$("#CashDistributionList");
-	$("#SpnCDUFName").html(name);
-	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
-	$("#PRCashDistribution").hide();
-	$.getJSON("/Deal/UnderlyingFundCashDistributionList",{ "_": (new Date).getTime(),"underlyingFundId": id },function (data) {
-		$("#PRCashDistribution").show();
-		loading.empty();
-		var target=$("tbody",tbl);
+	$("#CashDistribution").show();
+	$("#PRCDListBox").hide();
+	var target=$("tbody",tbl);
+	var rowsLength=$("tr",target).length;
+	if(rowsLength==0) { isRefresh=true; }
+	if(isRefresh) {
 		target.empty();
-		$.each(data,function (i,item) { $("#CashDistributionAddTemplate").tmpl(item).appendTo(target); });
-		dealActivity.setUpRow($("tr",target));
-		dealActivity.loadPRCD();
-	});
+		$("#CashDistribution").hide();
+		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		$.getJSON("/Deal/UnderlyingFundCashDistributionList",{ "_": (new Date).getTime(),"underlyingFundId": dealActivity.getCDUnderlyingFundId() },function (data) {
+			$("#PRCashDistribution").show();
+			loading.empty();
+			$.each(data,function (i,item) { $("#CashDistributionAddTemplate").tmpl(item).appendTo(target); });
+			dealActivity.setUpRow($("tr",target));
+			rowsLength=$("tr",target).length;
+			if(rowsLength>0) { $("#CashDistribution").show(); }
+		});
+	}
 };
-dealActivity.getCDUnderlyingFund=function (id) {
+dealActivity.getCDUnderlyingFundId=function (id) {
 	return parseInt($("#CDUnderlyingFundId").val());
+};
+dealActivity.submitUFCashDistribution=function (frm) {
+	try {
+		var param=$(frm).serializeArray();
+		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#CashDistributionList").length)/2 };
+		$.post("/Deal/CreateUnderlyingFundCashDistribution",param,function (data) {
+			if($.trim(data)!="") { alert(data); } else { dealActivity.loadCD(true); }
+		});
+	} catch(e) { alert(e); }
+	return false;
 };

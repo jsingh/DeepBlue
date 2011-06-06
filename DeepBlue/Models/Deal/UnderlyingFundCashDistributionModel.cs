@@ -22,16 +22,12 @@ namespace DeepBlue.Models.Deal {
 		[Required(ErrorMessage = "Cash Distribution Type is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Cash Distribution Type is required")]
 		[DisplayName("Cash Distribution:")]
-		public int CashDistributionTypeId { get; set; }
+		public int? CashDistributionTypeId { get; set; }
 
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
 		[DisplayName("Paid Date:")]
 		public DateTime? PaidDate { get; set; }
-
-		public bool IsDeemedDistribution { get; set; }
-
-		public bool IsNettedDistribution { get; set; }
-
+		
 		public string CashDistributionType { get; set; }
 
 		public List<SelectListItem> CashDistributionTypes { get; set; }

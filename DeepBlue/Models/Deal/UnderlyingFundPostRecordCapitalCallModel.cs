@@ -9,7 +9,7 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.Deal {
 	public class UnderlyingFundPostRecordCapitalCallModel {
 
-		public int UnderlyingFundCapitalCallLineItemId { get; set; }
+		public int? UnderlyingFundCapitalCallLineItemId { get; set; }
 
 		[Required(ErrorMessage = "Underlying Fund is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Underlying Fund is required")]

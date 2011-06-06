@@ -27,24 +27,7 @@ dealActivity.makeNewCC=function () {
 	if(ufid==0) {
 		alert("Underlying Fund is required");
 	} else {
-		var tbl=$("#CapitalCallList");
-		var bdy=$("tbody",tbl);
-		var newRow=$("#UFCC_0",bdy);
-		var emptyNewRow=$("#EmptyUFCC_0",bdy);
-		newRow.remove();
-		emptyNewRow.remove();
-		var rowsLength=$("tr",bdy).length;
-		var data=dealActivity.newCCData;
-		if(rowsLength>0) {
-			var row=$("tr:first",bdy);
-			$("#CapitalCallAddTemplate").tmpl(data).insertBefore(row);
-		} else {
-			$("#CapitalCallAddTemplate").tmpl(data).appendTo(bdy);
-		}
-		newRow=$("#UFCC_0",bdy);
-		$("#UnderlyingFundId",newRow).val(ufid);
-		dealActivity.editRow(newRow);
-		dealActivity.setUpRow(newRow);
+		dealActivity.loadCC(false);
 	}
 };
 dealActivity.editCC=function (img,id) {
@@ -80,29 +63,52 @@ dealActivity.deleteCC=function (id,img) {
 				alert(data);
 			} else {
 				spnloading.empty();
-				$("#"+trid).remove();
-				$("#Empty"+trid).remove();
+				$("input[type='text']",tr).val("");
+				tr.addClass("newrow");
+				$("#Delete",tr).remove();
 			}
 		});
 	}
 };
 dealActivity.setCCUnderlyingFund=function (id,name) {
 	$("#CCUnderlyingFundId").val(id);
-	var loading=$("#CCLoading");
-	var tbl=$("#CapitalCallList");
 	$("#SpnCCUFName").html(name);
-	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
-	$("#PRCapitalCall").hide();
-	$.getJSON("/Deal/UnderlyingFundCapitalCallList",{ "_": (new Date).getTime(),"underlyingFundId": id },function (data) {
-		$("#PRCapitalCall").show();
-		loading.empty();
-		var target=$("tbody",tbl);
+	$("tbody","#CapitalCallList").empty();
+	$("tbody","#PRCapitalCallList").empty();
+	dealActivity.loadCC(true);
+};
+dealActivity.loadCC=function (isRefresh) {
+	var tbl=$("#CapitalCallList");
+	var loading=$("#CCLoading");
+	$("#CapitalCall").show();
+	$("#PRCapitalCall").show();
+	$("#PRCCListBox").hide();
+	var target=$("tbody",tbl);
+	var rowsLength=$("tr",target).length;
+	if(rowsLength==0) { isRefresh=true; }
+	if(isRefresh) {
 		target.empty();
-		$.each(data,function (i,item) { $("#CapitalCallAddTemplate").tmpl(item).appendTo(target); });
-		dealActivity.setUpRow($("tr",target));
-		dealActivity.loadPRCC();
-	});
+		$("#CapitalCall").hide();
+		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		$.getJSON("/Deal/UnderlyingFundCapitalCallList",{ "_": (new Date).getTime(),"underlyingFundId": dealActivity.getCCUnderlyingFund() },function (data) {
+			loading.empty();
+			$.each(data,function (i,item) { $("#CapitalCallAddTemplate").tmpl(item).appendTo(target); });
+			dealActivity.setUpRow($("tr",target));
+			rowsLength=$("tr",target).length;
+			if(rowsLength>0) { $("#CapitalCall").show(); }
+		});
+	}
 };
 dealActivity.getCCUnderlyingFund=function (id) {
 	return parseInt($("#CCUnderlyingFundId").val());
+};
+dealActivity.submitUFCapitalCall=function (frm) {
+	try {
+		var param=$(frm).serializeArray();
+		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#CapitalCallList").length)/2 };
+		$.post("/Deal/CreateUnderlyingFundCapitalCall",param,function (data) {
+			if($.trim(data)!="") { alert(data); } else { dealActivity.loadCC(true); }
+		});
+	} catch(e) { alert(e); }
+	return false;
 };

@@ -137,11 +137,10 @@
 		$(".money",target).each(function () {
 			var amt=parseFloat($(this).attr("val"));
 			if(isNaN(amt)) { amt=parseFloat($(this).html()); }
-			if(isNaN(amt)) { amt=0; }
-			if(amt>0) {
+			if(isNaN(amt)) { this.innerHTML=""; }
+			if(amt==0) { this.innerHTML=""; }
+			else {
 				this.innerHTML=jHelper.dollarAmount(amt.toString());
-			} else {
-				this.innerHTML="";
 			}
 		});
 	}

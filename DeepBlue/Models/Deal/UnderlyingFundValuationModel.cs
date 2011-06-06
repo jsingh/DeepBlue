@@ -29,7 +29,7 @@ namespace DeepBlue.Models.Deal {
 		[Required(ErrorMessage = "Fund is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
 		public int FundId { get; set; }
-
+	 
 		public decimal CalculateNAV {
 			get {
 				return (this.FundNAV ?? 0) + (((this.TotalCapitalCall ?? 0) + (this.TotalPostRecordCapitalCall ?? 0))

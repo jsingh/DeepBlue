@@ -45,7 +45,7 @@
 					<%: Html.Span("", new { @id = "SpnIndex" }) %>
 				</td>
 				<td style="text-align: center">
-					<%: Html.DropDownList("UnderlyingFundID", Model.UnderlyingFunds)%>
+					<%: Html.DropDownList("UnderlyingFundID", Model.UnderlyingFunds, new { @onchange = "javascript:deal.FindFundNAV(this);" })%>
 				</td>
 				<td style="text-align: center">
 					<%: Html.TextBox("FundNAV", "", new { @id="FundNAV", @onkeypress = "return jHelper.isCurrency(event);" })%>
