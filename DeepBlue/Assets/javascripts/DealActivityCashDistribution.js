@@ -106,8 +106,11 @@ dealActivity.getCDUnderlyingFundId=function (id) {
 dealActivity.submitUFCashDistribution=function (frm) {
 	try {
 		var param=$(frm).serializeArray();
+		var loading=$("#CDLoading");
+		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#CashDistributionList").length)/2 };
 		$.post("/Deal/CreateUnderlyingFundCashDistribution",param,function (data) {
+			loading.empty();
 			if($.trim(data)!="") { alert(data); } else { dealActivity.loadCD(true); }
 		});
 	} catch(e) { alert(e); }

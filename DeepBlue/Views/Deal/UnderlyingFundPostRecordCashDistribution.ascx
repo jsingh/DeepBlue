@@ -14,7 +14,7 @@
 		<%: Html.TextBox("Amount", "${Amount}", new { @class = "", @onkeypress = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td style="text-align: center">
-		<%: Html.TextBox("DistributionDate", "${DistributionDate}", new { @class = "datefield", @id = "${FundId}_PRCD_DistributionDate" })%>
+		<%: Html.TextBox("DistributionDate", "${DistributionDate}", new { @class = "datefield", @id = "${DealId}_PRCD_DistributionDate" })%>
 	</td>
 	<td style="text-align: right">
 		<%: Html.Hidden("CashDistributionId","${CashDistributionId}")%>

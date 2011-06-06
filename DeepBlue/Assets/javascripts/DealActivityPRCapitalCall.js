@@ -98,8 +98,11 @@ dealActivity.loadPRCC=function (isRefresh) {
 dealActivity.submitUFPRCapitalCall=function (frm) {
 	try {
 		var param=$(frm).serializeArray();
+		var loading=$("#PRCCLoading");
+		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#PRCapitalCallList").length)/2 };
 		$.post("/Deal/CreateUnderlyingFundPostRecordCapitalCall",param,function (data) {
+			loading.empty();
 			if($.trim(data)!="") { alert(data); } else { dealActivity.loadPRCC(true); }
 		});
 	} catch(e) { alert(e); }
