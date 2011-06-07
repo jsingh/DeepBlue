@@ -109,7 +109,7 @@ dealActivity.submitUFCapitalCall=function (frm) {
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#CapitalCallList").length)/2 };
 		$.post("/Deal/CreateUnderlyingFundCapitalCall",param,function (data) {
-			//loading.empty();
+			loading.empty();
 			if($.trim(data)!="") { alert(data); } else { dealActivity.loadCC(true); }
 		});
 	} catch(e) { alert(e); }

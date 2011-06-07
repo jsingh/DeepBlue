@@ -74,7 +74,9 @@ deal.FindFundNAV=function (ddl) {
 	var FundNAV=$("#FundNAV",tr);
 	FundNAV.attr("readonly","readonly").val("Loading FundNAV...");
 	$.get("/Deal/FindFundNAV?_"+(new Date()).getTime()+"&underlyingFundId="+ddl.value+"&fundId="+deal.getFundId(),function (data) {
-		var fundNAV="";if(parseInt(data)>0) { fundNAV=data; }
+		var fundNAV="";
+		data=parseFloat(data);
+		if(data>0) { fundNAV=data.toFixed(2); }
 		FundNAV.removeAttr("readonly","readonly").val(fundNAV);
 	});
 };
