@@ -154,6 +154,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<UnderlyingDirectValuationModel> UnderlyingDirectValuationList(int issuerId);
 		UnderlyingDirectLastPrice FindUnderlyingDirectLastPrice(int fundId, int securityId, int securityTypeId);
 		UnderlyingDirectValuationModel FindUnderlyingDirectValuationModel(int underlyingDirectLastPriceId);
+		decimal FindLastPurchasePrice(int fundId, int securityId, int securityTypeId);
 		bool DeleteUnderlyingDirectValuation(int id);
 		#endregion
 

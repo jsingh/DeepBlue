@@ -311,15 +311,19 @@ namespace DeepBlue.Controllers.Deal {
 
 		private IQueryable<DealUnderlyingDirectModel> GetDealUnderlyingDirectModel(DeepBlueEntities context, IQueryable<DealUnderlyingDirect> dealUnderlyingDirects) {
 			return (from dealUnderlyingDirect in dealUnderlyingDirects
+					join deal in context.Deals on dealUnderlyingDirect.DealID equals deal.DealID
 					join equity in context.Equities on dealUnderlyingDirect.SecurityID equals equity.EquityID into equities
 					join fixedIncome in context.FixedIncomes on dealUnderlyingDirect.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes
+					join directLastPrice in context.UnderlyingDirectLastPrices on new { deal.FundID, dealUnderlyingDirect.SecurityID, dealUnderlyingDirect.SecurityTypeID }
+					equals new { directLastPrice.FundID, directLastPrice.SecurityID, directLastPrice.SecurityTypeID } into directLastPrices
+					from directLastPrice in directLastPrices.DefaultIfEmpty()
 					from equity in equities.DefaultIfEmpty()
 					from fixedIncome in fixedIncomes.DefaultIfEmpty()
 					select new DealUnderlyingDirectModel {
 						FMV = dealUnderlyingDirect.FMV,
 						DealId = dealUnderlyingDirect.DealID,
 						DealUnderlyingDirectId = dealUnderlyingDirect.DealUnderlyingDirectID,
-						PurchasePrice = dealUnderlyingDirect.PurchasePrice,
+						PurchasePrice = (directLastPrice != null ? (directLastPrice.LastPrice ?? 0) : 0),
 						SecurityId = dealUnderlyingDirect.SecurityID,
 						SecurityTypeId = dealUnderlyingDirect.SecurityTypeID,
 						TaxCostBase = dealUnderlyingDirect.TaxCostBase,
@@ -809,8 +813,8 @@ namespace DeepBlue.Controllers.Deal {
 												   UnderlyingFundID = underlyingFundId
 											   });
 				var postRecordDistributions = (from distribution in context.CashDistributions
-											  where distribution.UnderlyingFundID == underlyingFundId && distribution.UnderluingFundCashDistributionID == null
-											  select distribution);
+											   where distribution.UnderlyingFundID == underlyingFundId && distribution.UnderluingFundCashDistributionID == null
+											   select distribution);
 				return (from dealUnderlyingFund in dealUnderlyingFundQuery
 						join deal in context.Deals on dealUnderlyingFund.DealID equals deal.DealID
 						join underlyingFund in context.UnderlyingFunds on dealUnderlyingFund.UnderlyingFundID equals underlyingFund.UnderlyingtFundID
@@ -1046,7 +1050,7 @@ namespace DeepBlue.Controllers.Deal {
 							DealName = deal.DealName,
 							FundId = deal.FundID,
 							FundName = deal.Fund.FundName,
-							ReceivedDate = capitalCall.ReceivedDate,
+							CapitalCallDate = capitalCall.CapitalCallDate,
 							UnderlyingFundCapitalCallLineItemId = capitalCall.UnderlyingFundCapitalCallLineItemID,
 							UnderlyingFundId = underlyingFund.UnderlyingtFundID
 						}).ToList();
@@ -1079,7 +1083,7 @@ namespace DeepBlue.Controllers.Deal {
 					select new UnderlyingFundPostRecordCapitalCallModel {
 						Amount = capitalCall.Amount,
 						DealId = capitalCall.DealID,
-						ReceivedDate = capitalCall.ReceivedDate,
+						CapitalCallDate = capitalCall.CapitalCallDate,
 						UnderlyingFundCapitalCallLineItemId = capitalCall.UnderlyingFundCapitalCallLineItemID,
 						UnderlyingFundId = capitalCall.UnderlyingFundID,
 						FundId = capitalCall.Deal.FundID,
@@ -1195,7 +1199,7 @@ namespace DeepBlue.Controllers.Deal {
 							 TotalPostRecordCapitalCall = (from pcc in context.UnderlyingFundCapitalCallLineItems
 														   where pcc.UnderlyingFundID == underlyingFund.UnderlyingtFundID
 														   && pcc.Deal.FundID == fund.FundID
-														   && pcc.ReceivedDate >= (underlyingFundNAV != null ? underlyingFundNAV.FundNAVDate : todayDate)
+														   && pcc.CapitalCallDate >= (underlyingFundNAV != null ? underlyingFundNAV.FundNAVDate : todayDate)
 														   && pcc.UnderlyingFundCapitalCallID == null
 														   select pcc.Amount).Sum(),
 							 TotalDistribution = (from ds in context.UnderlyingFundCashDistributions
@@ -1368,56 +1372,61 @@ namespace DeepBlue.Controllers.Deal {
 
 		public List<UnderlyingDirectValuationModel> UnderlyingDirectValuationList(int issuerId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				var equityValuationQuery = (from equityDirect in context.DealUnderlyingDirects
-											join equity in context.Equities on equityDirect.SecurityID equals equity.EquityID
+				var dealUnderlyingDirectsQuery = (from dealDirect in context.DealUnderlyingDirects
+												  group dealDirect by new { dealDirect.Deal.FundID, dealDirect.SecurityID, dealDirect.SecurityTypeID } into dealDirects
+												  select dealDirects);
+				var equityValuationQuery = (from equityDirect in dealUnderlyingDirectsQuery
+											join equity in context.Equities on equityDirect.Key.SecurityID equals equity.EquityID
+											join fund in context.Funds on equityDirect.Key.FundID equals fund.FundID
 											join directValuation in context.UnderlyingDirectLastPrices on new {
-												equityDirect.Deal.FundID,
-												equityDirect.SecurityID,
-												equityDirect.SecurityTypeID
+												equityDirect.Key.FundID,
+												equityDirect.Key.SecurityID,
+												equityDirect.Key.SecurityTypeID
 											} equals new {
 												directValuation.FundID,
 												directValuation.SecurityID,
 												directValuation.SecurityTypeID
 											} into directValuations
 											from directValuation in directValuations.DefaultIfEmpty()
-											where equity.IssuerID == issuerId
+											where equity.IssuerID == issuerId && equityDirect.Key.SecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity
 											select new UnderlyingDirectValuationModel {
-												FundId = equityDirect.Deal.FundID,
-												FundName = equityDirect.Deal.Fund.FundName,
-												SecurityId = equityDirect.SecurityID,
-												Security = equity.Symbol,
-												SecurityTypeId = equityDirect.SecurityTypeID,
-												SecurityType = equityDirect.SecurityType.Name,
+												FundId = fund.FundID,
+												FundName = fund.FundName,
+												DirectName = equity.Issuer.Name + ">" + equity.EquityType.Equity + ">" + equity.ShareClassType.ShareClass,
+												SecurityId = equityDirect.Key.SecurityID,
+												SecurityTypeId = equityDirect.Key.SecurityTypeID,
 												LastPrice = directValuation.LastPrice,
 												LastPriceDate = directValuation.LastPriceDate,
+												NewPrice = directValuation.LastPrice,
+												NewPriceDate = (directValuation != null ? directValuation.LastPriceDate : DateTime.Now),
 												UnderlyingDirectLastPriceId = (directValuation != null ? directValuation.UnderlyingDirectLastPriceID : 0)
 											});
-
-				var fixedIncomeValuationQuery = (from fixedIncomeDirect in context.DealUnderlyingDirects
-												 join fixedIncome in context.FixedIncomes on fixedIncomeDirect.SecurityID equals fixedIncome.FixedIncomeID
+				var fixedIncomeValuationQuery = (from fixedIncomeDirect in dealUnderlyingDirectsQuery
+												 join fixedIncome in context.FixedIncomes on fixedIncomeDirect.Key.SecurityID equals fixedIncome.FixedIncomeID
+												 join fund in context.Funds on fixedIncomeDirect.Key.FundID equals fund.FundID
 												 join directValuation in context.UnderlyingDirectLastPrices on new {
-													 fixedIncomeDirect.Deal.FundID,
-													 fixedIncomeDirect.SecurityID,
-													 fixedIncomeDirect.SecurityTypeID
+													 fixedIncomeDirect.Key.FundID,
+													 fixedIncomeDirect.Key.SecurityID,
+													 fixedIncomeDirect.Key.SecurityTypeID
 												 } equals new {
 													 directValuation.FundID,
 													 directValuation.SecurityID,
 													 directValuation.SecurityTypeID
 												 } into directValuations
 												 from directValuation in directValuations.DefaultIfEmpty()
-												 where fixedIncome.IssuerID == issuerId
+												 where fixedIncome.IssuerID == issuerId && fixedIncomeDirect.Key.SecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.FixedIncome
 												 select new UnderlyingDirectValuationModel {
-													 FundId = fixedIncomeDirect.Deal.FundID,
-													 FundName = fixedIncomeDirect.Deal.Fund.FundName,
-													 SecurityId = fixedIncomeDirect.SecurityID,
-													 Security = fixedIncome.Symbol,
-													 SecurityTypeId = fixedIncomeDirect.SecurityTypeID,
-													 SecurityType = fixedIncomeDirect.SecurityType.Name,
+													 FundId = fund.FundID,
+													 FundName = fund.FundName,
+													 DirectName = fixedIncome.Issuer.Name + ">" + fixedIncome.FixedIncomeType.FixedIncomeType1,
+													 SecurityId = fixedIncomeDirect.Key.SecurityID,
+													 SecurityTypeId = fixedIncomeDirect.Key.SecurityTypeID,
 													 LastPrice = directValuation.LastPrice,
 													 LastPriceDate = directValuation.LastPriceDate,
+													 NewPrice = directValuation.LastPrice,
+													 NewPriceDate = (directValuation != null ? directValuation.LastPriceDate : DateTime.Now),
 													 UnderlyingDirectLastPriceId = (directValuation != null ? directValuation.UnderlyingDirectLastPriceID : 0)
 												 });
-
 				return equityValuationQuery.Union(fixedIncomeValuationQuery).ToList();
 			}
 		}
@@ -1434,9 +1443,7 @@ namespace DeepBlue.Controllers.Deal {
 							FundId = directValuation.FundID,
 							FundName = directValuation.Fund.FundName,
 							SecurityId = directValuation.SecurityID,
-							Security = (directValuation.SecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity ? (equity != null ? equity.Symbol : string.Empty) : (fixedIncome != null ? fixedIncome.Symbol : string.Empty)),
 							SecurityTypeId = directValuation.SecurityTypeID,
-							SecurityType = directValuation.SecurityType.Name,
 							LastPrice = directValuation.LastPrice,
 							LastPriceDate = directValuation.LastPriceDate,
 							UnderlyingDirectLastPriceId = directValuation.UnderlyingDirectLastPriceID
@@ -1452,6 +1459,14 @@ namespace DeepBlue.Controllers.Deal {
 
 		public IEnumerable<ErrorInfo> SaveUnderlyingDirectValuation(UnderlyingDirectLastPrice underlyingDirectLastPrice) {
 			return underlyingDirectLastPrice.Save();
+		}
+
+		public decimal FindLastPurchasePrice(int fundId, int securityId, int securityTypeId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from lastPrice in context.UnderlyingDirectLastPrices
+						where lastPrice.FundID == fundId && lastPrice.SecurityID == securityId && lastPrice.SecurityTypeID == securityTypeId
+						select lastPrice.LastPrice ?? 0).SingleOrDefault();
+			}
 		}
 
 		public bool DeleteUnderlyingDirectValuation(int id) {
@@ -1479,6 +1494,6 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
-
+	
 	}
 }

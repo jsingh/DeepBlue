@@ -93,7 +93,7 @@ dealActivity.loadPRCD=function (isRefresh) {
 dealActivity.submitUFPRCashDistribution=function (frm) {
 	try {
 		var param=$(frm).serializeArray();
-		var loading=$("#PRCDLoading");
+		var loading=$("#SpnPRCDSaveLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#PRCashDistributionList").length)/2 };
 		$.post("/Deal/CreateUnderlyingFundPostRecordCashDistribution",param,function (data) {

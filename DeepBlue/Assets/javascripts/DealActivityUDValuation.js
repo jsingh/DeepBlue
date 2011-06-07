@@ -56,28 +56,47 @@ dealActivity.deleteUDV=function (id,img) {
 			} else {
 				spnloading.empty();
 				tr.addClass("newrow");
+				$("input[type='text']",tr).val("");
 				$("#LastPrice",tr).html("");
 				$("#LastPriceDate",tr).html("");
-				$("#editbtn",tr).remove();
-				$("#deletebtn",tr).remove();
-				$("#add",tr).show();
-				tr.attr("id","UDV_0");
-				emptyRow.attr("id","EmptyUDV_0");
-				dealActivity.editRow(tr);
 			}
 		});
 	}
 };
-dealActivity.loadUDV=function (id) {
+dealActivity.setUDV=function (id,name) {
+	$("#UDVIssuerId").val(id);
+	$("#SpnUDVName").html(name);
+	dealActivity.loadUDV();
+};
+dealActivity.getUDVIssuerId=function () {
+	return parseInt($("#UDVIssuerId").val());
+};
+dealActivity.loadUDV=function () {
 	var loading=$("#UDVLoading");
-	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 	var tbl=$("#UDValuationList");
-	$("tbody",tbl).empty();
-	$.getJSON("/Deal/UnderlyingDirectValuationList",{ "_": (new Date).getTime(),"issuerId": id },function (data) {
+	var target=$("tbody",tbl);
+	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+	target.empty();
+	$("#UDValuation").hide();
+	$.getJSON("/Deal/UnderlyingDirectValuationList",{ "_": (new Date).getTime(),"issuerId": dealActivity.getUDVIssuerId() },function (data) {
 		loading.empty();
-		var target=$("tbody",tbl);
-		target.empty();
 		$.each(data,function (i,item) { $("#UDVAddTemplate").tmpl(item).appendTo(target); });
 		dealActivity.setUpRow($("tr",target));
+		if($("tr",target).length>0) {
+			$("#UDValuation").show();
+		}
 	});
+};
+dealActivity.submitUDV=function (frm) {
+	try {
+		var param=$(frm).serializeArray();
+		var loading=$("#SpnUDVSaveLoading");
+		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#UDValuationList").length)/2 };
+		$.post("/Deal/CreateUnderlyingDirectValuation",param,function (data) {
+			loading.empty();
+			if($.trim(data)!="") { alert(data); } else { dealActivity.loadUDV(); }
+		});
+	} catch(e) { alert(e); }
+	return false;
 };

@@ -15,18 +15,16 @@ namespace DeepBlue.Models.Deal {
 		public int FundId { get; set; }
 
 		public string FundName { get; set; }
+
+		public string DirectName { get; set; }
 		
 		[Required(ErrorMessage = "Security Type is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Security Type is required")]
 		public int SecurityTypeId { get; set; }
 
-		public string SecurityType { get; set; }
-
 		[Required(ErrorMessage = "Security is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Security is required")]
 		public int SecurityId { get; set; }
-
-		public string Security { get; set; }
 
 		public decimal? LastPrice { get; set; }
 	
@@ -34,7 +32,7 @@ namespace DeepBlue.Models.Deal {
 
 		[Required(ErrorMessage = "New Price is required")]
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "New Price is required")]
-		public decimal NewPrice { get; set; }
+		public decimal? NewPrice { get; set; }
 
 		[Required(ErrorMessage = "New Price Date is required")]
 		[DateRange()]

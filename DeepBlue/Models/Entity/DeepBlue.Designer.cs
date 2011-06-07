@@ -29200,6 +29200,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _LastUpdatedBy;
         partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
         partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CapitalCallDate
+        {
+            get
+            {
+                return _CapitalCallDate;
+            }
+            set
+            {
+                OnCapitalCallDateChanging(value);
+                ReportPropertyChanging("CapitalCallDate");
+                _CapitalCallDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CapitalCallDate");
+                OnCapitalCallDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _CapitalCallDate;
+        partial void OnCapitalCallDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnCapitalCallDateChanged();
 
         #endregion
     

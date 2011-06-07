@@ -60,7 +60,7 @@
 					<%: Html.DropDownList("SecurityTypeId", Model.SecurityTypes, new { @id="SecurityTypeId", @onchange = "javascript:deal.changeSecurityType(this);" })%>
 				</td>
 				<td>
-					<%: Html.DropDownList("SecurityId", Model.Securities, new { @id = "SecurityId" })%>
+					<%: Html.DropDownList("SecurityId", Model.Securities, new { @id = "SecurityId", @onchange = "javascript:deal.changeSecurity(this);" })%>
 				</td>
 				<td>
 					<%: Html.TextBox("NumberOfShares", "", new { @id = "NumberOfShares", @onkeyup = "javascript:deal.calcFMV(this);", @onkeypress = "return jHelper.isNumeric(event);" })%>

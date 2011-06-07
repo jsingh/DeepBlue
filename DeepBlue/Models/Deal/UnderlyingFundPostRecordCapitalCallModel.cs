@@ -30,10 +30,10 @@ namespace DeepBlue.Models.Deal {
 		[Required(ErrorMessage = "Capital Call Amount is required")]
 		[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "Capital Call Amount is required")]
 		public decimal? Amount { get; set; }
-
-		[Required(ErrorMessage = "Received Date is required")]
+			 
+		[Required(ErrorMessage = "Capital Call Date is required")]
 		[DateRange()]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-		public DateTime? ReceivedDate { get; set; }
+		public DateTime? CapitalCallDate { get; set; }
 	}
 }

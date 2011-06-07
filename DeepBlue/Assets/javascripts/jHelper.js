@@ -136,8 +136,8 @@
 	,formatDollar: function (target) {
 		$(".money",target).each(function () {
 			var amt=parseFloat($(this).attr("val"));
-			if(isNaN(amt)) { amt=parseFloat($(this).html()); }
-			if(isNaN(amt)) { this.innerHTML=""; }
+			if(isNaN(parseFloat(amt))) { amt=$.trim($(this).html()); }
+			if(isNaN(parseFloat(amt))) { amt=0; }
 			if(amt==0) { this.innerHTML=""; }
 			else {
 				this.innerHTML=jHelper.dollarAmount(amt.toString());

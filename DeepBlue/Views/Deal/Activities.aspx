@@ -80,7 +80,8 @@
 								</table>
 								<br />
 								<center>
-									<%: Html.ImageButton("Save.png")%></center>
+									<span>
+										<%: Html.ImageButton("Save.png")%></span><span id="SpnCCSaveLoading"></span></center>
 								<%}%>
 							</div>
 							<div id="PRCapitalCall" class="clear" style="display: none">
@@ -117,7 +118,8 @@
 									</table>
 									<br />
 									<center>
-										<%: Html.ImageButton("Save.png")%></center>
+										<span>
+											<%: Html.ImageButton("Save.png")%></span><span id="SpnPRCCSaveLoading"></span></center>
 									<%}%>
 								</div>
 							</div>
@@ -174,10 +176,11 @@
 								</table>
 								<br />
 								<center>
-									<%: Html.ImageButton("Save.png")%></center>
+									<span>
+										<%: Html.ImageButton("Save.png")%></span><span id="SpnCDSaveLoading"></span></center>
 								<%}%>
 							</div>
-							<div id="PRCashDistribution" class="clear" style="display:none">
+							<div id="PRCashDistribution" class="clear" style="display: none">
 								<div class="line">
 								</div>
 								<div class="cell" style="padding-left: 10px">
@@ -211,7 +214,8 @@
 									</table>
 									<br />
 									<center>
-										<%: Html.ImageButton("Save.png")%></center>
+										<span>
+											<%: Html.ImageButton("Save.png")%></span><span id="SpnPRCDSaveLoading"></span></center>
 									<%}%>
 								</div>
 							</div>
@@ -280,20 +284,21 @@
 							<%: Html.TextBox("UDV_UnderlyingDirect", "Search Underlying Direct", new { @class = "wm" })%></div>
 					</div>
 					<div class="detail">
+						<div class="search-header">
+							<%: Html.Span("", new { @id="SpnUDVName" })%>
+						</div>
 						<div class="cell loading" id="UDVLoading">
 						</div>
-						<div class="clear">
+						<div class="clear" id="UDValuation" style="display: none">
+							<%using (Html.Form(new { @id = "frmUDValuation", @onsubmit = "return dealActivity.submitUDV(this);" })) {%>
 							<table cellpadding="0" cellspacing="0" border="0" id="UDValuationList" class="grid">
 								<thead>
 									<tr>
-										<th style="width: 12%">
+										<th style="width: 25%">
+											Direct Name
+										</th>
+										<th style="width: 20%">
 											Fund Name
-										</th>
-										<th style="width: 12%">
-											Security
-										</th>
-										<th style="width: 12%">
-											Security Type
 										</th>
 										<th style="width: 12%">
 											Last Price
@@ -314,6 +319,12 @@
 								<tbody>
 								</tbody>
 							</table>
+							<br />
+							<center>
+								<span>
+									<%: Html.ImageButton("Save.png")%></span><span id="SpnUDVSaveLoading"></span></center>
+							<%}%>
+							<%:Html.Hidden("UDVIssuerId","0", new { @id = "UDVIssuerId" })%>
 						</div>
 					</div>
 				</div>
@@ -456,7 +467,7 @@
 	})%>
 	<%= Html.jQueryAutoComplete("UDV_UnderlyingDirect", new AutoCompleteOptions {
 																	  Source = "/Issuer/FindIssuers", MinLength = 1,
-																	  OnSelect = "function(event, ui) { dealActivity.loadUDV(ui.item.id);}"
+																	  OnSelect = "function(event, ui) { dealActivity.setUDV(ui.item.id,ui.item.value);}"
 	})%>
 	<%= Html.jQueryAutoComplete("S_UnderlyingDirect", new AutoCompleteOptions {
 																	  Source = "/Issuer/FindIssuers",	MinLength = 1,

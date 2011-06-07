@@ -59,6 +59,7 @@ deal.saveUnderlyingDirect=function (tr) {
 	if(dealId>0) {
 		var param=jHelper.serialize(tr);
 		param[param.length]={ name: "DealId",value: deal.getDealId() };
+		param[param.length]={ name: "FundId",value: deal.getFundId() };
 		var url="/Deal/CreateDealUnderlyingDirect";
 		$.post(url,param,function (data) {
 			spnAjax.hide();
@@ -122,6 +123,9 @@ deal.loadSecurity=function (tr) {
 		});
 	}
 };
+deal.changeSecurity=function (ddl) {
+	deal.loadPurchasePrice($(ddl).parents("tr:first"));
+};
 deal.currentIssuerDDL=null;
 deal.loadIssuers=function (issuerName,issuerId) {
 	$(".issuerddl").each(function () {
@@ -148,4 +152,14 @@ deal.calcFMV=function (txt) {
 	if(isNaN(noofsha)) { noofsha=0; }
 	if(isNaN(price)) { price=0; }
 	FMV.val(noofsha*price);
+};
+deal.loadPurchasePrice=function (tr) {
+	var PurchasePrice=$("#PurchasePrice",tr);
+	var securityTypeId=$("#SecurityTypeId",tr).val();
+	var securityId=$("#SecurityId",tr).val();
+	PurchasePrice.val("Loading Purchase Price...");
+	$.get("/Deal/FindLastPurchasePrice?_"+(new Date()).getTime()+"&fundId="+deal.getFundId()+"&securityId="+securityId+"&securityTypeId="+securityTypeId,function (data) {
+		data=parseFloat(data);
+		if(data>0) { PurchasePrice.val(data.toFixed(2)); } else { PurchasePrice.val(""); }
+	});
 };

@@ -335,11 +335,11 @@ namespace DeepBlue.Controllers.Deal {
 					// Create Underlying Fund NAV 
 					UnderlyingFundNAV underlyingFundNAV = DealRepository.FindUnderlyingFundNAV(model.UnderlyingFundId, model.FundId);
 					bool isCreateFundNAV = false;
-					if (underlyingFundNAV == null) 
+					if (underlyingFundNAV == null)
 						isCreateFundNAV = true;
-					else if(underlyingFundNAV.FundNAV != model.FundNAV)
-						isCreateFundNAV=true;
-					if (isCreateFundNAV) 
+					else if (underlyingFundNAV.FundNAV != model.FundNAV)
+						isCreateFundNAV = true;
+					if (isCreateFundNAV)
 						CreateUnderlyingFundValuation(dealUnderlyingFund.UnderlyingFundID, model.FundId, (model.FundNAV ?? 0), DateTime.Now, out errorInfo);
 				}
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
@@ -399,12 +399,18 @@ namespace DeepBlue.Controllers.Deal {
 				dealUnderlyingDirect.TaxCostBase = model.TaxCostBase;
 				dealUnderlyingDirect.PurchasePrice = model.PurchasePrice;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveDealUnderlyingDirect(dealUnderlyingDirect);
-				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+				if (errorInfo == null) {
+					UnderlyingDirectLastPrice underlyingDirectLastPrice = DealRepository.FindUnderlyingDirectLastPrice(model.FundId, model.SecurityId, model.SecurityTypeId);
+					bool isCreateLastPrice = false;
+					if (underlyingDirectLastPrice == null)
+						isCreateLastPrice = true;
+					else if (underlyingDirectLastPrice.LastPrice != model.PurchasePrice)
+						isCreateLastPrice = true;
+					if (isCreateLastPrice)
+						errorInfo = SaveUnderlyingDirectValuation(model.FundId, model.SecurityId, model.SecurityTypeId, model.PurchasePrice, DateTime.Now, out underlyingDirectLastPrice);
 				}
-				else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
 					resultModel.Result = "True||" + dealUnderlyingDirect.DealUnderlyingDirectID;
 				}
 			}
@@ -1366,7 +1372,7 @@ namespace DeepBlue.Controllers.Deal {
 				}
 				capitalCallLineItem.UnderlyingFundID = model.UnderlyingFundId;
 				capitalCallLineItem.Amount = model.Amount ?? 0;
-				capitalCallLineItem.ReceivedDate = model.ReceivedDate;
+				capitalCallLineItem.CapitalCallDate = model.CapitalCallDate;
 				capitalCallLineItem.DealID = model.DealId;
 				capitalCallLineItem.LastUpdatedBy = AppSettings.CreatedByUserId;
 				capitalCallLineItem.LastUpdatedDate = DateTime.Now;
@@ -1584,7 +1590,7 @@ namespace DeepBlue.Controllers.Deal {
 		#region UnderlyingDirectValuation
 
 		//
-		// GET: /Deal/UnderlyingFundValuationList
+		// GET: /Deal/UnderlyingDirectValuationList
 		[HttpGet]
 		public JsonResult UnderlyingDirectValuationList(int issuerId) {
 			return Json(DealRepository.UnderlyingDirectValuationList(issuerId), JsonRequestBehavior.AllowGet);
@@ -1594,36 +1600,34 @@ namespace DeepBlue.Controllers.Deal {
 		// POST : /Deal/CreateUnderlyingDirectValuation
 		[HttpPost]
 		public ActionResult CreateUnderlyingDirectValuation(FormCollection collection) {
+			FormCollection rowCollection;
+			int totalRows = 0;
+			int.TryParse(collection["TotalRows"], out totalRows);
+			int index = 0; string[] values; string value;
+			ResultModel resultModel = new ResultModel();
+			for (index = 0; index < totalRows; index++) {
+				rowCollection = new FormCollection();
+				foreach (string key in collection.Keys) {
+					values = collection[key].Split((",").ToCharArray());
+					if (values.Length > index)
+						value = values[index];
+					else
+						value = string.Empty;
+					rowCollection.Add(key, value);
+				}
+				SaveUnderlyingDirectValuation(rowCollection);
+			}
+			return View("Result", resultModel);
+		}
+
+		private ResultModel SaveUnderlyingDirectValuation(FormCollection collection) {
 			UnderlyingDirectValuationModel model = new UnderlyingDirectValuationModel();
-			this.TryUpdateModel(model);
+			this.TryUpdateModel(model, collection);
 			ResultModel resultModel = new ResultModel();
 			if (ModelState.IsValid) {
 				IEnumerable<ErrorInfo> errorInfo;
-				UnderlyingDirectLastPrice underlyingDirectLastPrice = DealRepository.FindUnderlyingDirectLastPrice(model.FundId, model.SecurityId, model.SecurityTypeId);
-				if (underlyingDirectLastPrice == null) {
-					underlyingDirectLastPrice = new UnderlyingDirectLastPrice();
-					underlyingDirectLastPrice.CreatedBy = AppSettings.CreatedByUserId;
-					underlyingDirectLastPrice.CreatedDate = DateTime.Now;
-				}
-				underlyingDirectLastPrice.FundID = model.FundId;
-				underlyingDirectLastPrice.SecurityID = model.SecurityId;
-				underlyingDirectLastPrice.SecurityTypeID = model.SecurityTypeId;
-				underlyingDirectLastPrice.LastPrice = model.NewPrice;
-				underlyingDirectLastPrice.LastPriceDate = model.NewPriceDate;
-				underlyingDirectLastPrice.LastUpdatedBy = AppSettings.CreatedByUserId;
-				underlyingDirectLastPrice.LastUpdatedDate = DateTime.Now;
-				errorInfo = DealRepository.SaveUnderlyingDirectValuation(underlyingDirectLastPrice);
-				if (errorInfo == null) {
-					UnderlyingDirectLastPriceHistory lastPricehistory = new UnderlyingDirectLastPriceHistory();
-					lastPricehistory.UnderlyingDirectLastPriceID = underlyingDirectLastPrice.UnderlyingDirectLastPriceID;
-					lastPricehistory.LastPrice = underlyingDirectLastPrice.LastPrice;
-					lastPricehistory.LastPriceDate = underlyingDirectLastPrice.LastPriceDate;
-					lastPricehistory.LastUpdatedBy = AppSettings.CreatedByUserId;
-					lastPricehistory.LastUpdatedDate = DateTime.Now;
-					lastPricehistory.CreatedBy = AppSettings.CreatedByUserId;
-					lastPricehistory.CreatedDate = DateTime.Now;
-					errorInfo = DealRepository.SaveUnderlyingDirectValuationHistory(lastPricehistory);
-				}
+				UnderlyingDirectLastPrice underlyingDirectLastPrice;
+				errorInfo = SaveUnderlyingDirectValuation(model.FundId, model.SecurityId, model.SecurityTypeId, (model.NewPrice ?? 0), model.NewPriceDate, out underlyingDirectLastPrice);
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 				if (string.IsNullOrEmpty(resultModel.Result)) {
 					resultModel.Result = "True||" + underlyingDirectLastPrice.UnderlyingDirectLastPriceID;
@@ -1638,7 +1642,38 @@ namespace DeepBlue.Controllers.Deal {
 					}
 				}
 			}
-			return View("Result", resultModel);
+			return resultModel;
+		}
+
+		private IEnumerable<ErrorInfo> SaveUnderlyingDirectValuation(int fundId, int securityId, int securityTypeId, decimal newPrice, DateTime newPriceDate,
+			out UnderlyingDirectLastPrice underlyingDirectLastPrice) {
+			underlyingDirectLastPrice = DealRepository.FindUnderlyingDirectLastPrice(fundId, securityId, securityTypeId);
+			IEnumerable<ErrorInfo> errorInfo;
+			if (underlyingDirectLastPrice == null) {
+				underlyingDirectLastPrice = new UnderlyingDirectLastPrice();
+				underlyingDirectLastPrice.CreatedBy = AppSettings.CreatedByUserId;
+				underlyingDirectLastPrice.CreatedDate = DateTime.Now;
+			}
+			underlyingDirectLastPrice.FundID = fundId;
+			underlyingDirectLastPrice.SecurityID = securityId;
+			underlyingDirectLastPrice.SecurityTypeID = securityTypeId;
+			underlyingDirectLastPrice.LastPrice = newPrice;
+			underlyingDirectLastPrice.LastPriceDate = newPriceDate;
+			underlyingDirectLastPrice.LastUpdatedBy = AppSettings.CreatedByUserId;
+			underlyingDirectLastPrice.LastUpdatedDate = DateTime.Now;
+			errorInfo = DealRepository.SaveUnderlyingDirectValuation(underlyingDirectLastPrice);
+			if (errorInfo == null) {
+				UnderlyingDirectLastPriceHistory lastPricehistory = new UnderlyingDirectLastPriceHistory();
+				lastPricehistory.UnderlyingDirectLastPriceID = underlyingDirectLastPrice.UnderlyingDirectLastPriceID;
+				lastPricehistory.LastPrice = underlyingDirectLastPrice.LastPrice;
+				lastPricehistory.LastPriceDate = underlyingDirectLastPrice.LastPriceDate;
+				lastPricehistory.LastUpdatedBy = AppSettings.CreatedByUserId;
+				lastPricehistory.LastUpdatedDate = DateTime.Now;
+				lastPricehistory.CreatedBy = AppSettings.CreatedByUserId;
+				lastPricehistory.CreatedDate = DateTime.Now;
+				errorInfo = DealRepository.SaveUnderlyingDirectValuationHistory(lastPricehistory);
+			}
+			return errorInfo;
 		}
 
 		//
@@ -1650,6 +1685,13 @@ namespace DeepBlue.Controllers.Deal {
 				model = new UnderlyingDirectValuationModel();
 			}
 			return Json(model, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/FindLastPurchasePrice
+		[HttpGet]
+		public decimal FindLastPurchasePrice(int fundId, int securityId, int securityTypeId) {
+			return DealRepository.FindLastPurchasePrice(fundId, securityId, securityTypeId);
 		}
 
 		[HttpGet]
