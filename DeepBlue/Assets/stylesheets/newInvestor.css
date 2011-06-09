@@ -1,19 +1,20 @@
 ﻿.editor-field select, .editor-field dropdown {
-	width: 205px;
+	width: 184px;
 }
-.editor-field {	
-	 width:auto;
-}.editor-label {
-	width:135px;
+.editor-field {
+	width: auto;
 }
-#ContactInfoBox,#AccountInfoBox,.contactinfo,.accountinfo{
-	width:100%;
+.editor-label {
+	width: 135px;
 }
-.contactinfo-box,.accountinfo-box{
-	width:100%;float:left;
+#ContactInfoBox, #AccountInfoBox, .contactinfo, .accountinfo {
+	width: 100%;
 }
-.field-validation-error{
-	display:none;
+.contactinfo-box, .accountinfo-box {
+	width: 100%;
+	float: left;
 }
- 
- 
+.field-validation-error {
+	display: none;
+}
+

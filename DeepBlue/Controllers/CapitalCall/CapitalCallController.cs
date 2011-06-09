@@ -29,7 +29,16 @@ namespace DeepBlue.Controllers.CapitalCall {
 			InvestorRepository = investorRepository;
 		}
 
+		private string GetErrorMessage(IEnumerable<ErrorInfo> errorInfo) {
+			StringBuilder errors = new StringBuilder();
+			foreach (var err in errorInfo.ToList()) {
+				errors.Append(err.PropertyName + " : " + err.ErrorMessage + "\n");
+			}
+			return errors.ToString();
+		}
+
 		#region New Capital Call
+
 		//
 		// GET: /CapitalCall/New
 		public ActionResult New() {
@@ -47,6 +56,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
+				
+				// Attempt to create capital call.
+
 				Models.Entity.CapitalCall capitalCall = new Models.Entity.CapitalCall();
 				CapitalCallLineItem item;
 				capitalCall.CapitalAmountCalled = model.CapitalAmountCalled;
@@ -71,20 +83,30 @@ namespace DeepBlue.Controllers.CapitalCall {
 				}
 				List<InvestorFund> investorFunds = CapitalCallRepository.GetAllInvestorFunds(capitalCall.FundID);
 				if (investorFunds != null) {
+
+					// Find non managing total commitment.
 					decimal nonManagingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember).Sum(fund => fund.TotalCommitment);
+					// Find managing total commitment.
 					decimal managingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember).Sum(fund => fund.TotalCommitment);
+					// Calculate managing total commitment.
 					decimal totalCommitment = nonManagingMemberTotalCommitment + managingMemberTotalCommitment;
+
 					if (model.AddManagementFees) {
 						capitalCall.ManagementFeeStartDate = model.FromDate;
 						capitalCall.ManagementFeeEndDate = model.ToDate;
 						capitalCall.ManagementFees = model.ManagementFees ?? 0;
 						capitalCall.ManagementFeeInterest = 0;
 					}
+
+					// Check new investment amount and existing investment amount.
 					if (!((capitalCall.NewInvestmentAmount + capitalCall.ExistingInvestmentAmount) == (capitalCall.CapitalAmountCalled - capitalCall.ManagementFees - capitalCall.FundExpenses))) {
 						ModelState.AddModelError("NewInvestmentAmount", "(New Investment Amount + Existing Investment Amount) should be equal to (Capital Amount - Management Fees - Fund Expenses).");
 					}
 					else {
 						foreach (var investorFund in investorFunds) {
+
+							// Attempt to create capital call line item for each investor fund.
+
 							item = new CapitalCallLineItem();
 							item.CapitalAmountCalled = (investorFund.TotalCommitment / totalCommitment) * capitalCall.CapitalAmountCalled;
 							item.CreatedBy = AppSettings.CreatedByUserId;
@@ -131,17 +153,11 @@ namespace DeepBlue.Controllers.CapitalCall {
 			}
 			return View("Result", resultModel);
 		}
+
 		#endregion
 
-		private string GetErrorMessage(IEnumerable<ErrorInfo> errorInfo) {
-			StringBuilder errors = new StringBuilder();
-			foreach (var err in errorInfo.ToList()) {
-				errors.Append(err.PropertyName + " : " + err.ErrorMessage + "\n");
-			}
-			return errors.ToString();
-		}
-
 		#region Manual Capital Call
+
 		//
 		// GET: /CapitalCall/New
 		public ActionResult NewManualCapitalCall() {
@@ -160,6 +176,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 			List<InvestorFund> investorFunds = new List<InvestorFund>();
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
+
+				// Attempt to create manual capital call.
+				
 				Models.Entity.CapitalCall capitalCall = new Models.Entity.CapitalCall();
 				CapitalCallLineItem item;
 				capitalCall.CapitalAmountCalled = model.CapitalAmountCalled;
@@ -243,9 +262,11 @@ namespace DeepBlue.Controllers.CapitalCall {
 			}
 			return View("Result", resultModel);
 		}
+
 		#endregion
 
 		#region Receive Capital Call
+
 		//
 		// GET: /CapitalCall/Receive
 		[HttpGet]
@@ -275,6 +296,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
+
+				// Attempt to create capital call.
+
 				Models.Entity.CapitalCall capitalCall = CapitalCallRepository.FindCapitalCall(model.CapitalCallId);
 				if (capitalCall != null) {
 					CapitalCallLineItem item;
@@ -348,7 +372,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 			ManagementFeeDetail detail = new ManagementFeeDetail();
 			detail.Tiers = new FlexigridData();
 
+			// Add three months.
 			endDate = startDate.AddMonths(3);
+
 			Models.Entity.Fund fund = CapitalCallRepository.FindFund(fundId);
 			if (fund != null) {
 				decimal totalCommittedAmount = fund.InvestorFunds.Where(investorFund => investorFund.InvestorTypeId == (int)Models.Investor.Enums.InvestorType.NonManagingMember).Sum(invfund => invfund.TotalCommitment);
@@ -431,6 +457,10 @@ namespace DeepBlue.Controllers.CapitalCall {
 		#endregion
 
 		#region Distribution
+
+		//
+		// GET: /CapitalCall/NewCapitalDistribution
+		[HttpGet]
 		public ActionResult NewCapitalDistribution() {
 			ViewData["MenuName"] = "Fund Tracker";
 			ViewData["SubmenuName"] = "Capital Call";
@@ -438,6 +468,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 			return View();
 		}
 
+		//
+		// POST: /CapitalCall/CreateDistribution
+		[HttpPost]
 		public ActionResult CreateDistribution(FormCollection collection) {
 			CreateDistributionModel model = new CreateDistributionModel();
 			ResultModel resultModel = new ResultModel();
@@ -552,6 +585,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 			return View("Result", resultModel);
 		}
 
+		//
+		// GET: /CapitalCall/CapitalDistributionList
+		[HttpGet]
 		public ActionResult CapitalDistributionList(int? id) {
 			ViewData["MenuName"] = "Fund Tracker";
 			ViewData["SubmenuName"] = "Capital Call";
@@ -575,7 +611,10 @@ namespace DeepBlue.Controllers.CapitalCall {
 			ViewData["PageNo"] = pageIndex;
 			return View(capitalCalls);
 		}
+
 		#endregion
+
+		#region Capital Call Detail
 
 		//
 		//GET : /CapitalCall/FundDetail
@@ -671,6 +710,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 			}
 			return View(model);
 		}
+
+		#endregion
 
 		//
 		//GET : /CapitalCall/Result

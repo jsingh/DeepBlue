@@ -1,5 +1,5 @@
 ﻿.report-header, .report-content {
-	color: #a6a6a6;
+	color: #636262;
 	width: 99.8%;
 	position: absolute;
 	font-family: Calibri, Arial;
@@ -23,7 +23,7 @@
 	overflow-x: hidden;
 }
 .report-content a {
-	color: #a6a6a6;
+	color: #636262;
 }
 .title {
 	font-size: 16px;
@@ -41,7 +41,7 @@
 	font-size: 14px;
 }
 .export a {
-	color: #a6a6a6;
+	color: #636262;
 }
 #ReportList {
 	width: 100%;

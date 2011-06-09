@@ -13,11 +13,11 @@ namespace DeepBlue.Models.Deal {
 			UnderlyingFundCapitalCallId = 0;
 		}
 
-		public int? UnderlyingFundCapitalCallId { get; set; }
+		public int UnderlyingFundCapitalCallId { get; set; }
 
 		[DisplayName("Deemed Capital Call:")]
 		public bool? IsDeemedCapitalCall { get; set; }
 
 	}
- 
+
 }

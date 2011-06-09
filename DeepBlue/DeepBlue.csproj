@@ -84,6 +84,7 @@
     <Compile Include="Helpers\ExportPdfResult.cs" />
     <Compile Include="Helpers\ExportToPdf.cs" />
     <Compile Include="Helpers\FormatHelper.cs" />
+    <Compile Include="Helpers\FormCollectionHelper.cs" />
     <Compile Include="Helpers\JsonSerializer.cs" />
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />

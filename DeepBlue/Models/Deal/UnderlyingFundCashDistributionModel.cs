@@ -16,8 +16,7 @@ namespace DeepBlue.Models.Deal {
 			CashDistributionTypeId = 0;
 		}
 
-		[Range(0, int.MaxValue, ErrorMessage = "UnderlyingFundCashDistributionId is required")]
-		public int? UnderlyingFundCashDistributionId { get; set; }
+		public int UnderlyingFundCashDistributionId { get; set; }
 
 		[Required(ErrorMessage = "Cash Distribution Type is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Cash Distribution Type is required")]

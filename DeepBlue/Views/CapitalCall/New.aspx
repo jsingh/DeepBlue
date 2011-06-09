@@ -74,7 +74,7 @@
 							Fund Expense Amount:
 						</div>
 						<div class="editor-field" style="width: auto">
-							<%: Html.TextBox("FundExpenseAmount", "", new { @class = "datetxt",@onkeypress = "return jHelper.isCurrency(event);" })%>
+							<%: Html.TextBox("FundExpenseAmount", "", new { @class = "datetxt", @onkeypress = "return jHelper.isCurrency(event);" })%>
 						</div>
 					</div>
 					<div class="editor-label" style="width: 143px;">
@@ -84,7 +84,7 @@
 						<%: Html.LabelFor(model => model.NewInvestmentAmount) %>
 					</div>
 					<div class="editor-field" style="width: auto">
-						<%: Html.TextBoxFor(model => model.NewInvestmentAmount, new { @class = "datetxt", @onkeypress = "return jHelper.isCurrency(event);", @onkeyup="javascript:capitalCall.calcExistingInvestmentAmount();" })%>
+						<%: Html.TextBoxFor(model => model.NewInvestmentAmount, new { @class = "datetxt", @style="width:110px;", @onkeypress = "return jHelper.isCurrency(event);", @onkeyup="javascript:capitalCall.calcExistingInvestmentAmount();" })%>
 					</div>
 					<div class="editor-label fromcell" style="width: auto">
 						<%: Html.LabelFor(model => model.ExistingInvestmentAmount) %>

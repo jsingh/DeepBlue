@@ -119,7 +119,7 @@
 		$(iframe).dialog(param);
 	}
 	,formatDateTxt: function (target) {
-		$(".datefield",target).each(function () { if($.trim(this.value)!="") { this.value=jHelper.formatDate(jHelper.parseJSONDate(this.value)); } });
+		$(".datefield",target).each(function () { if($.trim(this.value)!="") { var dt=jHelper.formatDate(jHelper.parseJSONDate(this.value));if(dt.toString()=="01/01/1") { this.value=""; } else { this.value=dt; } } });
 	}
 	,checkValAttr: function (target) {
 		$("select",target).each(function () { var v=$(this).attr("val");if(v!="") { this.value=v; } });

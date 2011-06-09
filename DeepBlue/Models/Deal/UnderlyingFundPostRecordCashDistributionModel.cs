@@ -14,7 +14,7 @@ namespace DeepBlue.Models.Deal {
 			DealId = 0;
 		}
 
-		public int? CashDistributionId { get; set; }
+		public int CashDistributionId { get; set; }
 
 		[Required(ErrorMessage = "Underlying Fund is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Underlying Fund is required")]

@@ -1,27 +1,4 @@
-﻿dealActivity.findCC=function (id,isNew) {
-	var dt=new Date();
-	var url="/Deal/FindUnderlyingFundCapitalCall/"+id+"?t="+dt.getTime();
-	$("#CCLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...")
-	$.getJSON(url,function (data) {
-		$("#CCLoading").empty();
-		var tbl=$("#CapitalCallList");
-		var bdy=$("tbody",tbl);
-		var target;
-		var row=$("#UFCC_"+id);
-		var emptyRow=$("#EmptyUFCC_"+id);
-		if(row.get(0)) {
-			$("#CapitalCallAddTemplate").tmpl(data).insertAfter(row);
-			row.remove();emptyRow.remove();
-		} else {
-			row=$("tr:first",bdy);
-			$("#CapitalCallAddTemplate").tmpl(data).insertBefore(row);
-		}
-		row=$("#UFCC_"+id);
-		dealActivity.setUpRow(row);
-		if(isNew) { $("#UFCC_0",tbl).remove();$("#EmptyUFCC_0",tbl).remove(); }
-	});
-};
-dealActivity.makeNewCC=function () {
+﻿dealActivity.makeNewCC=function () {
 	var ufid=dealActivity.getCCUnderlyingFund();
 	if(isNaN(ufid)) { ufid=0; }
 	if(ufid==0) {
@@ -30,32 +7,12 @@ dealActivity.makeNewCC=function () {
 		dealActivity.loadCC(false);
 	}
 };
-dealActivity.editCC=function (img,id) {
-	var tr=$(img).parents("tr:first");
-	dealActivity.editRow(tr);
-};
-dealActivity.addCC=function (img,id) {
-	var tr=$(img).parents("tr:first");
-	var loading=$("#UpdateLoading",tr);
-	var isNew=false;
-	if(id==0) { isNew=true; }
-	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-	var url="/Deal/CreateUnderlyingFundCapitalCall";
-	var param=jHelper.serialize(tr);
-	$.post(url,param,function (data) {
-		loading.empty();
-		var arr=data.split("||");
-		if(arr[0]=="True") {
-			dealActivity.findCC(arr[1],isNew);
-		} else { alert(data); }
-	});
-};
-dealActivity.deleteCC=function (id,img) {
+dealActivity.deleteCC=function (index,id,img) {
 	if(confirm("Are you sure you want to delete this underlying fund capital call?")) {
 		var dt=new Date();
 		var url="/Deal/DeleteUnderlyingFundCapitalCall/"+id+"?t="+dt.getTime();
 		var tr=$(img).parents("tr:first");
-		var trid="UFCC_"+id;
+		var trid="UFCC_"+index;
 		var spnloading=$("#UpdateLoading",tr);
 		spnloading.html("<img src='/Assets/images/ajax.jpg'/>");
 		$.get(url,function (data) {
@@ -63,9 +20,8 @@ dealActivity.deleteCC=function (id,img) {
 				alert(data);
 			} else {
 				spnloading.empty();
-				$("input[type='text']",tr).val("");
-				tr.addClass("newrow");
-				$("#Delete",tr).remove();
+				$("#EmptyUFCC_"+index).remove();
+				$("#UFCC_"+index).remove();
 			}
 		});
 	}
@@ -90,14 +46,40 @@ dealActivity.loadCC=function (isRefresh) {
 		target.empty();
 		$("#CapitalCall").hide();
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
-		$.getJSON("/Deal/UnderlyingFundCapitalCallList",{ "_": (new Date).getTime(),"underlyingFundId": dealActivity.getCCUnderlyingFund() },function (data) {
+		$.getJSON("/Deal/UnderlyingFundCapitalCallList",{ "_": (new Date).getTime()
+			,"underlyingFundId": dealActivity.getCCUnderlyingFund()
+		,"pageIndex": $("#CCPageIndex").val()
+		,"pageSize": $("#CCPageSize").val()
+		},function (data) {
 			loading.empty();
-			$.each(data,function (i,item) { $("#CapitalCallAddTemplate").tmpl(item).appendTo(target); });
+			$.each(data,function (i,item) {
+				item["Index"]=i;
+				$("#CapitalCallAddTemplate").tmpl(item).appendTo(target);
+			});
 			dealActivity.setUpRow($("tr",target));
 			rowsLength=$("tr",target).length;
 			if(rowsLength>0) { $("#CapitalCall").show(); }
 		});
 	}
+};
+dealActivity.CC_BuildPager=function (page,total) {
+	var rp=$("#CCPageSize").val();
+	var pages=Math.ceil(total/p.rp);
+};
+dealActivity.CC_ChangePage=function (ctype,pages) {
+	var page=$("#CCPageIndex").val();
+	switch(ctype) {
+		case 'first': newp=1;break;
+		case 'prev': if(page>1) newp=parseInt(page)-1;break;
+		case 'next': if(page<pages) newp=parseInt(page)+1;break;
+		case 'last': newp=pages;break;
+	}
+	if(p.newp==page) return false;
+	$("#CCPageIndex").val(newp);
+	dealActivity.loadCC();
+};
+dealActivity.CC_ChangeRows=function (pageSize) {
+	$("#CCPageIndex").val(1);$("#CCPageSize").val(pageSize);dealActivity.loadCC();
 };
 dealActivity.getCCUnderlyingFund=function (id) {
 	return parseInt($("#CCUnderlyingFundId").val());

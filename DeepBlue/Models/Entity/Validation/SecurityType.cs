@@ -51,8 +51,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		private IEnumerable<ErrorInfo> Validate(SecurityType securityType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(securityType);
-			return errors;
+			return ValidationHelper.Validate(securityType);
 		}
 	}
 }

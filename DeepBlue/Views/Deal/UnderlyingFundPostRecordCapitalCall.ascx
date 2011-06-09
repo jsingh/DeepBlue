@@ -1,26 +1,26 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.UnderlyingFundPostRecordCapitalCallModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<tr id="EmptyUFPRCC_${FundId}" class='emptyrow'><td colspan="6">&nbsp;</td></tr>
-<tr id="UFPRCC_${FundId}" {{if UnderlyingFundCapitalCallLineItemId>0==false}}class="newrow"{{/if}}>
+<tr id="EmptyUFPRCC_${Index}" class='emptyrow'><td colspan="6">&nbsp;</td></tr>
+<tr id="UFPRCC_${Index}" {{if UnderlyingFundCapitalCallLineItemId>0==false}}class="newrow"{{/if}}>
 	<td style="text-align: center">
 		<%: Html.Span("${FundName}", new { @class = "show" })%>
-		<%: Html.Hidden("FundId", "${FundId}")%>
+		<%: Html.Hidden("${Index}_FundId", "${FundId}")%>
 	</td>
 	<td style="text-align: center">
 		<%: Html.Span("${DealName}", new { @class = "show" })%>
-		<%: Html.Hidden("DealId", "${DealId}")%>
+		<%: Html.Hidden("${Index}_DealId", "${DealId}")%>
 	</td>
 	<td style="text-align: center">
-		<%: Html.TextBox("Amount", "${Amount}", new { @class = "", @onkeypress = "return jHelper.isCurrency(event);" })%>
+		<%: Html.TextBox("${Index}_Amount", "{{if Amount>0}}${Amount}{{/if}}", new { @class = "", @onkeypress = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td style="text-align: center">
-		<%: Html.TextBox("CapitalCallDate", "${CapitalCallDate}", new { @class = "datefield", @id = "${FundId}_PRCC_CapitalCallDate" })%>
+		<%: Html.TextBox("${Index}_CapitalCallDate", "{{if UnderlyingFundCapitalCallLineItemId>0}}${CapitalCallDate}{{/if}}", new { @class = "datefield", @id = "${Index}_PRCC_CapitalCallDate" })%>
 	</td>
 	<td style="text-align: right">
-		<%: Html.Hidden("UnderlyingFundCapitalCallLineItemId","${UnderlyingFundCapitalCallLineItemId}")%>
-		<%: Html.Hidden("UnderlyingFundId", "${UnderlyingFundId}")%>
+		<%: Html.Hidden("${Index}_UnderlyingFundCapitalCallLineItemId", "${UnderlyingFundCapitalCallLineItemId}")%>
+		<%: Html.Hidden("${Index}_UnderlyingFundId", "${UnderlyingFundId}")%>
 		<%: Html.Span("", new { id = "UpdateLoading" })%>
-		{{if UnderlyingFundCapitalCallLineItemId>0}}&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @id="Delete", @class = "default-button", @onclick="javascript:dealActivity.deletePRCC(${UnderlyingFundCapitalCallLineItemId},this);" })%>
+		{{if UnderlyingFundCapitalCallLineItemId>0}}&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @id="Delete", @class = "default-button", @onclick="javascript:dealActivity.deletePRCC(${Index},${UnderlyingFundCapitalCallLineItemId},this);" })%>
 		{{/if}}
 	</td>
 </tr>

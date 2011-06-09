@@ -103,7 +103,7 @@ a img {
 	text-align: left;
 	padding: 5px 5px 5px 10px;
 	clear: left;
-	color: #A6A6A6;
+	color: #636262;
 }
 .editor-editbtn {
 	float: right;
@@ -120,7 +120,7 @@ a img {
 	padding: 5px;
 	float: left;
 	clear: right;
-	color: #A6A6A6;
+	color: #636262;
 }
 .editor-field input[type="text"] {
 	width: 180px;
@@ -140,7 +140,7 @@ a img {
 	float: left;
 	clear: right;
 	width: auto;
-	color: #A6A6A6;
+	color: #636262;
 }
 .editor-button {
 	width: 73px;
@@ -190,7 +190,7 @@ a img {
 	height: 34px;
 	text-align: left;
 	color: #939090;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: bold;
 	line-height: 34px;
 	width: 97%;
@@ -490,7 +490,7 @@ a img {
 	float: left;
 	width: 96%;
 	line-height: 24px;
-	color: #939090;
+	color: #4B4747;
 }
 .tab-left {
 	background-image: url(../images/tab_unsel_l.png);
@@ -513,7 +513,7 @@ a img {
 .tab-cnt {
 	clear: both;
 	width: 99%;
-	border: solid 1px gray;
+	    border: 1px solid #E3E3E3;
 	float: left;
 	margin-bottom: 10px;
 }
@@ -567,7 +567,7 @@ a img {
 }
 h2 {
 	font-size: 12px;
-	color: #A6A6A6;
+	color: #636262;
 }
 /* Menu */
 .topheader {

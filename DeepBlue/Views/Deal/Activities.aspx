@@ -46,7 +46,10 @@
 					</div>
 					<div class="detail">
 						<div class="search-header">
-							<%: Html.Span("", new { @id="SpnCCUFName" })%>
+							<div class="cell">
+								<%: Html.Span("", new { @id="SpnCCUFName" })%></div>
+							<div class="paging" id="CCPaging">
+							</div>
 						</div>
 						<div class="cell" id="CCLoading">
 						</div>
@@ -83,6 +86,8 @@
 									<span>
 										<%: Html.ImageButton("Save.png")%></span><span id="SpnCCSaveLoading"></span></center>
 								<%}%>
+								<%:Html.Hidden("CCPageIndex",1,new { @id="CCPageIndex" })%>
+								<%:Html.Hidden("CCPageSize",15,new { @id="CCPageSize" })%>
 							</div>
 							<div id="PRCapitalCall" class="clear" style="display: none">
 								<div class="line">
@@ -482,13 +487,6 @@
 	, OnRowBound = "dealActivity.onNHPRowBound"
 	, Autoload = false
 	})%>
-	<script type="text/javascript">
-		dealActivity.newCDData = <%= JsonSerializer.ToJsonObject(Model.UnderlyingFundCashDistributionModel)%>;
-		dealActivity.newPRCDData = <%= JsonSerializer.ToJsonObject(Model.UnderlyingFundPostRecordCashDistributionModel)%>;
-		dealActivity.newCCData = <%= JsonSerializer.ToJsonObject(Model.UnderlyingFundCapitalCallModel)%>;
-		dealActivity.newPRCCData = <%= JsonSerializer.ToJsonObject(Model.UnderlyingFundPostRecordCapitalCallModel)%>;
-		dealActivity.newUFVData = <%= JsonSerializer.ToJsonObject(Model.UnderlyingFundValuationModel)%>;
-	</script>
 	<script type="text/javascript">		dealActivity.init();</script>
 	<script id="CashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("UnderlyingFundCashDistribution", Model.UnderlyingFundCashDistributionModel); %>
@@ -510,5 +508,16 @@
 	</script>
 	<script id="UDVAddTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("UnderlyingDirectValuation", Model.UnderlyingDirectValuationModel); %>
+	</script>
+	<script id="PagingTemplate" type="text/x-jquery-tmpl">
+	<div class="cell">
+		<a href="${First}">First</a><a href="${Prev}">Prev</a><a href="${Next}">Next</a><a
+			href="${Last}">Last</a></div>
+	<div class="cell">
+		Rows:&nbsp;<select id="rows" style="width: 40px; padding: 0px;"><option value="15">15</option>
+			<option value="30">30</option>
+			<option value="60">60</option>
+			<option value="100">100</option>
+		</select></div>
 	</script>
 </asp:Content>

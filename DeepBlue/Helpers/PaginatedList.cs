@@ -20,4 +20,10 @@ namespace DeepBlue.Helpers {
 			this.AddRange(source.Skip(PageIndex * PageSize).Take(PageSize));
 		}
 	}
+
+	public class PaginatedListData {
+		public int page;
+		public int total;
+		public object rows;
+	}
 }

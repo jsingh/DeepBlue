@@ -193,7 +193,7 @@
 			<%: Html.Span("${SecurityType}", new { @class = "show" })%><%: Html.DropDownList("SecurityTypeId", Model.SecurityTypes, new { @class="hide",@val="${SecurityTypeId}", @id="SecurityTypeId",@onchange = "javascript:deal.changeSecurityType(this);" })%>
 		</td>
 		<td style="text-align: center">
-			<%: Html.Span("${Security}", new { @class = "show" })%><%: Html.DropDownList("SecurityId", Model.Securities, new { @class="hide", @val="${SecurityId}" ,@id = "SecurityId"})%>
+			<%: Html.Span("${Security}", new { @class = "show" })%><%: Html.DropDownList("SecurityId", Model.Securities, new { @class="hide", @val="${SecurityId}" ,@id = "SecurityId", @onchange = "javascript:deal.changeSecurity(this);" })%>
 		</td>
 		<td style="text-align: center">
 			<%: Html.Span("${NumberOfShares}", new { @class = "show", @id = "SpnNumberOfShares" })%>

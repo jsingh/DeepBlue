@@ -19,7 +19,6 @@
 	<div class="cc-main" id="CCDetail" style="display: none">
 		<% Html.EnableClientValidation(); %>
 		<% using (Ajax.BeginForm("CreateManualCapitalCall", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "manualCapitalCall.onCreateCapitalCallBegin", OnSuccess = "manualCapitalCall.onCreateCapitalCallSuccess" }, new { @id = "CapitalCall" })) {%>
-		
 		<div class="box">
 			<div class="box-top">
 				<div class="box-left">
@@ -239,10 +238,8 @@
 																	  Source = "/Investor/FindInvestors", MinLength = 1, 
 																	  OnSelect = "function(event, ui) { manualCapitalCall.selectInvestor(ui.item.id,ui.item.value);}"
 																	  })%>
-	<%= Html.jQueryFlexiGrid("InvestorList", new FlexigridOptions { Height = 0 })%>
-
+	<%= Html.jQueryFlexiGrid("InvestorList", new FlexigridOptions { Height = 0, ResizeWidth=false })%>
 	<script type="text/javascript">
 		manualCapitalCall.init();
 	</script>
-
 </asp:Content>
