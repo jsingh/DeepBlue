@@ -135,8 +135,9 @@ namespace DeepBlue.Helpers {
 				tagBuilder.AddCssClass("current");
 			}
 			if (string.IsNullOrEmpty(subMenuId) == false) {
-				tagBuilder.Attributes.Add("onmouseover", "menu.mopen(this,'" + subMenuId + "')");
-				tagBuilder.Attributes.Add("onmouseout", "menu.mclosetime()");
+				tagBuilder.Attributes.Add("onclick", "menu.mopen(this,'" + subMenuId + "')");
+				//tagBuilder.Attributes.Add("onmouseover", "menu.mopen(this,'" + subMenuId + "')");
+				//tagBuilder.Attributes.Add("onmouseout", "menu.mclosetime()");
 			}
 			tagBuilder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
 			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;

@@ -47,8 +47,7 @@
 	<div id="UpdateTargetId" style="display: none">
 	</div>
 	<ul id="modifyDealUL" style="display: none">
-		<li class='searchdeal'>
-			<br />
+		<li class='searchdeal' style="padding:10px;">
 			Search Deal&nbsp;&nbsp;<%: Html.TextBox("SearchDealName","",new { @id="SearchDealName", @style="width: 200px" })%>&nbsp;<a
 				href="javascript:deal.seeFullDeal();" style="text-decoration: underline">See full
 				list</a></li></ul>

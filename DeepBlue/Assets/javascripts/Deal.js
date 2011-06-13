@@ -162,7 +162,7 @@
 	}
 	,loadFundList: function () {
 		var pageIndex=1;
-		var pageSize=20;
+		var pageSize=8;
 		var sortName="FundName";
 		var sortOrder="asc";
 		var dt=new Date();

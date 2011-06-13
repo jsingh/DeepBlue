@@ -95,11 +95,6 @@ h4 a {
 	color: #558EE3;
 	white-space: nowrap;
 }
-.subext3, .subext {
-	background-image: url("../images/submnubg3.png");
-	height: 184px;
-	clear: both;
-}
 .fundname {
 	width: 200px;
 	overflow: hidden;
@@ -118,7 +113,7 @@ h4 a {
 	clear: both;
 	float: right;
 	color: #fff;
-	font-size: 15px;
+	font-size: 15px; margin-top:-5px;
 }
 .seefull a {
 	color: #fff;

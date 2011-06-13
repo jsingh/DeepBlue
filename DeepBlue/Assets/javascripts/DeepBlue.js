@@ -1,7 +1,7 @@
 ﻿var DeepBlue={
 	init: function () {
 		$(document).ready(function () {
-			$(".topmenu").hover(function () {
+			$(".topmenu").click(function () {
 				$(".tab-sel").each(function () {
 					if($(this).hasClass("current")==false) { $(this).removeClass("tab-sel") }
 				});

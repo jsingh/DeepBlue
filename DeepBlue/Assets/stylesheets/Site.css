@@ -663,6 +663,7 @@ h2 {
 	height: 70px;
 	padding: 0px 10px 0px 10px;
 	white-space: nowrap;
+	cursor:pointer;
 }
 .topmenu a {
 	color: #a27f7f;
@@ -686,7 +687,7 @@ h2 {
 	overflow: hidden;
 	text-align: center;
 }
-.subext {
+.subext,.subext3 {
 	background-image: url(../images/submnubg2.png);
 	height: 104px;
 	clear: both;
