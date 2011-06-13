@@ -43,7 +43,7 @@
 			jHelper.createDialog(url,{
 				title: "Deal Close",
 				autoOpen: true,
-				width: 800,
+				width: 1000,
 				modal: true,
 				position: 'top',
 				autoResize: true

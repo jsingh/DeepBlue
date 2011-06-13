@@ -56,7 +56,13 @@ dealActivity.submitUFPRCapitalCall=function (frm) {
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#PRCapitalCallList").length)/2 };
 		$.post("/Deal/CreateUnderlyingFundPostRecordCapitalCall",param,function (data) {
 			loading.empty();
-			if($.trim(data)!="") { alert(data); } else { dealActivity.loadPRCC(true); }
+			if($.trim(data)!="") {
+				dealActivity.processErrMsg(data,frm);
+			} else {
+				alert("Post Record Capital Call Saved");
+				dealActivity.resetCapitalCall();
+				//dealActivity.loadPRCC(true); 
+			}
 		});
 	} catch(e) { alert(e); }
 	return false;

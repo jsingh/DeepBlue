@@ -22,6 +22,8 @@ namespace DeepBlue.Models.Deal {
 
 		
 		/* Seller Information */
+		[Required(ErrorMessage = "Deal is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Deal is required")]
 		public int DealId { get; set; }
 
 		public int SellerContactId { get; set; }
@@ -29,23 +31,25 @@ namespace DeepBlue.Models.Deal {
 		[StringLength(100, ErrorMessage = "Contact Name must be under 100 characters.")]
 		[DisplayName("Cotact Name-")]
 		public string ContactName { get; set; }
-
-		[DisplayName("Phone-")]
+		
 		[StringLength(200, ErrorMessage = "Phone must be under 200 characters.")]
+		[DisplayName("Phone-")]
 		public string Phone { get; set; }
-
-		[DisplayName("Fax-")]
+		
 		[StringLength(200, ErrorMessage = "Fax must be under 200 characters.")]
+		[DisplayName("Fax-")]
 		public string Fax { get; set; }
 
-		[DisplayName("Seller Name-")]
 		[StringLength(30, ErrorMessage = "Seller must be under 30 characters.")]
+		[DisplayName("Seller Name-")]
 		public string SellerName { get; set; }
-
+		
+		[StringLength(200, ErrorMessage = "Company Name must be under 200 characters.")]
 		[DisplayName("Cotact Company-")]
 		public string CompanyName { get; set; }
 		
 		[EmailAttribute(ErrorMessage="Invalid Email")]
+		[StringLength(200, ErrorMessage = "Email must be under 200 characters.")]
 		[DisplayName("Email-")]
 		public string Email { get; set; }
 	}

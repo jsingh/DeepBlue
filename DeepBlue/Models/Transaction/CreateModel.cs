@@ -42,8 +42,7 @@ namespace DeepBlue.Models.Transaction {
 		public int InvestorTypeId { get; set; }
 
 		[Required(ErrorMessage = "Committed Amount is required")]
-		[Range(1, Double.MaxValue, ErrorMessage = "Invalid Committed Amount")]
-		[RegularExpression("^(\\+|-)?[0-9][0-9]*(\\.[0-9]*)?$", ErrorMessage = "Invalid Committed Amount")]
+		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Committed Amount is required")]
 		[DisplayName("Committed Amount:")]
 		public decimal TotalCommitment { get; set; }
 

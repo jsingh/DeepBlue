@@ -32,7 +32,6 @@ namespace DeepBlue.Controllers.Investor {
 
 		//
 		// GET: /Investor/
-
 		public ActionResult Index() {
 			return View();
 		}
@@ -44,14 +43,14 @@ namespace DeepBlue.Controllers.Investor {
 
 		//
 		// GET: /Investor/Details/5
-
 		public ActionResult Details(int id) {
 			return View();
 		}
 
+		#region New Investor
+
 		//
 		// GET: /Investor/New
-
 		public ActionResult New() {
 			ViewData["MenuName"] = "Investor";
 			ViewData["PageName"] = "New Investor Setup";
@@ -74,7 +73,6 @@ namespace DeepBlue.Controllers.Investor {
 
 		//
 		// POST: /Investor/Create
-
 		[HttpPost]
 		public ActionResult Create(FormCollection collection) {
 			CreateModel model = new CreateModel();
@@ -89,8 +87,8 @@ namespace DeepBlue.Controllers.Investor {
 				ModelState.AddModelError("SocialSecurityTaxId", ErrorMessage);
 			}
 			if (ModelState.IsValid) {
+				// Attempt to create new deal.
 				DeepBlue.Models.Entity.Investor investor = new DeepBlue.Models.Entity.Investor();
-				/*Investor*/
 				investor.Alias = model.Alias;
 				investor.IsDomestic = model.DomesticForeign;
 				investor.InvestorEntityTypeID = model.EntityType;
@@ -113,8 +111,9 @@ namespace DeepBlue.Controllers.Investor {
 				investor.EntityID = (int)ConfigUtil.CurrentEntityID;
 				investor.TaxExempt = false;
 
+				// Check investor country and state is valid.
 				if (model.Country > 0 && model.State > 0) {
-					/* Investor Address */
+					// Attempt to create new investor address.
 					InvestorAddress investorAddress = new InvestorAddress();
 					investorAddress.CreatedBy = AppSettings.CreatedByUserId;
 					investorAddress.CreatedDate = DateTime.Now;
@@ -143,6 +142,7 @@ namespace DeepBlue.Controllers.Investor {
 				InvestorAccount investorAccount;
 				for (int index = 0; index < model.AccountLength; index++) {
 					if (string.IsNullOrEmpty(collection[(index + 1).ToString() + "_" + "AccountNumber"]) == false) {
+						// Attempt to create new investor account.
 						investorAccount = new InvestorAccount();
 						investorAccount.Comments = string.Empty;
 						investorAccount.CreatedBy = AppSettings.CreatedByUserId;
@@ -174,6 +174,7 @@ namespace DeepBlue.Controllers.Investor {
 				for (int index = 0; index < model.ContactLength; index++) {
 					if (Convert.ToInt32(collection[(index + 1).ToString() + "_" + "ContactState"]) > 0 &&
 						Convert.ToInt32(collection[(index + 1).ToString() + "_" + "ContactCountry"]) > 0) {
+						// Attempt to create new investor contact.
 						investorContact = new InvestorContact();
 						investorContact.CreatedBy = AppSettings.CreatedByUserId;
 						investorContact.CreatedDate = DateTime.Now;
@@ -195,6 +196,7 @@ namespace DeepBlue.Controllers.Investor {
 						investorContact.Contact.Designation = collection[(index + 1).ToString() + "_" + "Designation"];
 						investorContact.Contact.EntityID = (int)ConfigUtil.CurrentEntityID;
 
+						// Attempt to create new investor contact address.
 						contactAddress = new ContactAddress();
 						contactAddress.CreatedBy = AppSettings.CreatedByUserId;
 						contactAddress.CreatedDate = DateTime.Now;
@@ -215,7 +217,7 @@ namespace DeepBlue.Controllers.Investor {
 						contactAddress.Address.PostalCode = collection[(index + 1).ToString() + "_" + "ContactZip"];
 						contactAddress.Address.State = Convert.ToInt32(collection[(index + 1).ToString() + "_" + "ContactState"]);
 
-						/* Add Communication Values */
+						/* Add Investor Contact Communication Values */
 						AddCommunication(investorContact.Contact, Models.Admin.Enums.CommunicationType.HomePhone, collection[(index + 1).ToString() + "_" + "ContactPhoneNumber"]);
 						AddCommunication(investorContact.Contact, Models.Admin.Enums.CommunicationType.Fax, collection[(index + 1).ToString() + "_" + "ContactFaxNumber"]);
 						AddCommunication(investorContact.Contact, Models.Admin.Enums.CommunicationType.Email, collection[(index + 1).ToString() + "_" + "ContactEmail"]);
@@ -232,9 +234,7 @@ namespace DeepBlue.Controllers.Investor {
 				AddCommunication(investor, Models.Admin.Enums.CommunicationType.Fax, model.Fax);
 				IEnumerable<ErrorInfo> errorInfo = InvestorRepository.SaveInvestor(investor);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result += SaveCustomValues(collection, investor.InvestorID);
@@ -252,7 +252,53 @@ namespace DeepBlue.Controllers.Investor {
 			return View("Result", resultModel);
 		}
 
+		private string SaveCustomValues(FormCollection collection, int key) {
+			System.Text.StringBuilder result = new StringBuilder();
+			IEnumerable<ErrorInfo> errorInfo;
+			// Get all investor custom fields.
+			List<CustomField> customFields = AdminRepository.GetAllCustomFields((int)Models.Admin.Enums.Module.Investor);
+			foreach (var field in customFields) {
+				var customFieldValue = collection["CustomField_" + field.CustomFieldID.ToString()];
+				if (customFieldValue != null) {
+					// Attempt to create new custom field value.
+					CustomFieldValue value = AdminRepository.FindCustomFieldValue(field.CustomFieldID, key);
+					if (value == null) {
+						value = new CustomFieldValue();
+					}
+					value.CreatedBy = AppSettings.CreatedByUserId;
+					value.CreatedDate = DateTime.Now;
+					value.CustomFieldID = field.CustomFieldID;
+					value.Key = key;
+					value.LastUpdatedBy = AppSettings.CreatedByUserId;
+					value.LastUpdatedDate = DateTime.Now;
+					switch ((CustomFieldDataType)field.DataTypeID) {
+						case CustomFieldDataType.Integer:
+							value.IntegerValue = (string.IsNullOrEmpty(customFieldValue) ? 0 : Convert.ToInt32(customFieldValue));
+							break;
+						case CustomFieldDataType.DateTime:
+							value.DateValue = (string.IsNullOrEmpty(customFieldValue) ? Convert.ToDateTime("01/01/1900") : Convert.ToDateTime(customFieldValue));
+							break;
+						case CustomFieldDataType.Text:
+							value.TextValue = customFieldValue;
+							break;
+						case CustomFieldDataType.Currency:
+							value.CurrencyValue = (string.IsNullOrEmpty(customFieldValue) ? 0 : Convert.ToDecimal(customFieldValue));
+							break;
+						case CustomFieldDataType.Boolean:
+							value.BooleanValue = (customFieldValue.Contains("true") ? true : false);
+							break;
+					}
+					errorInfo = value.Save();
+					if (errorInfo != null) {
+						result.Append(ValidationHelper.GetErrorInfo(errorInfo));
+					}
+				}
+			}
+			return result.ToString();
+		}
+
 		private void AddCommunication(DeepBlue.Models.Entity.Investor investor, DeepBlue.Models.Admin.Enums.CommunicationType communicationType, string value) {
+			// Attempt to create investor communication.
 			InvestorCommunication investorCommunication = investor.InvestorCommunications.SingleOrDefault(communication => communication.Communication.CommunicationTypeID == (int)communicationType);
 			if (investorCommunication == null) {
 				investorCommunication = new InvestorCommunication();
@@ -274,6 +320,7 @@ namespace DeepBlue.Controllers.Investor {
 		}
 
 		private void AddCommunication(DeepBlue.Models.Entity.Contact contact, DeepBlue.Models.Admin.Enums.CommunicationType communicationType, string value) {
+			// Attempt to create contact communication.
 			ContactCommunication contactCommunication = contact.ContactCommunications.SingleOrDefault(communication => communication.Communication.CommunicationTypeID == (int)communicationType);
 			if (contactCommunication == null) {
 				contactCommunication = new ContactCommunication();
@@ -293,6 +340,10 @@ namespace DeepBlue.Controllers.Investor {
 			contactCommunication.Communication.LastUpdatedDate = DateTime.Now;
 			contactCommunication.Communication.EntityID = (int)ConfigUtil.CurrentEntityID;
 		}
+
+		#endregion
+
+		#region Update Investor
 
 		//
 		// GET: /Investor/Edit/5
@@ -324,6 +375,8 @@ namespace DeepBlue.Controllers.Investor {
 			int contactAddressCount = Convert.ToInt32(collection["ContactInfoCount"]);
 			int accountCount = Convert.ToInt32(collection["AccountInfoCount"]);
 			ResultModel resultModel = new ResultModel();
+
+			// Attempt to update investor.
 			DeepBlue.Models.Entity.Investor investor = InvestorRepository.FindInvestor(Convert.ToInt32(collection["InvestorId"]));
 
 			InvestorContact investorContact;
@@ -494,50 +547,9 @@ namespace DeepBlue.Controllers.Investor {
 			return View("Result", resultModel);
 		}
 
-		private string SaveCustomValues(FormCollection collection, int key) {
-			System.Text.StringBuilder result = new StringBuilder();
-			IEnumerable<ErrorInfo> errorInfo;
-			List<CustomField> customFields = AdminRepository.GetAllCustomFields((int)Models.Admin.Enums.Module.Investor);
-			foreach (var field in customFields) {
-				var customFieldValue = collection["CustomField_" + field.CustomFieldID.ToString()];
-				if (customFieldValue != null) {
-					CustomFieldValue value = AdminRepository.FindCustomFieldValue(field.CustomFieldID, key);
-					if (value == null) {
-						value = new CustomFieldValue();
-					}
-					value.CreatedBy = AppSettings.CreatedByUserId;
-					value.CreatedDate = DateTime.Now;
-					value.CustomFieldID = field.CustomFieldID;
-					value.Key = key;
-					value.LastUpdatedBy = AppSettings.CreatedByUserId;
-					value.LastUpdatedDate = DateTime.Now;
-					switch ((CustomFieldDataType)field.DataTypeID) {
-						case CustomFieldDataType.Integer:
-							value.IntegerValue = (string.IsNullOrEmpty(customFieldValue) ? 0 : Convert.ToInt32(customFieldValue));
-							break;
-						case CustomFieldDataType.DateTime:
-							value.DateValue = (string.IsNullOrEmpty(customFieldValue) ? Convert.ToDateTime("01/01/1900") : Convert.ToDateTime(customFieldValue));
-							break;
-						case CustomFieldDataType.Text:
-							value.TextValue = customFieldValue;
-							break;
-						case CustomFieldDataType.Currency:
-							value.CurrencyValue = (string.IsNullOrEmpty(customFieldValue) ? 0 : Convert.ToDecimal(customFieldValue));
-							break;
-						case CustomFieldDataType.Boolean:
-							value.BooleanValue = (customFieldValue.Contains("true") ? true : false);
-							break;
-					}
-					errorInfo = value.Save();
-					if (errorInfo != null) {
-						foreach (var err in errorInfo.ToList()) {
-							result.Append(err.PropertyName + " : " + err.ErrorMessage + "\n");
-						}
-					}
-				}
-			}
-			return result.ToString();
-		}
+		#endregion
+
+		#region Delete Investor Details
 
 		//
 		// GET: /Investor/Delete
@@ -562,6 +574,8 @@ namespace DeepBlue.Controllers.Investor {
 			InvestorRepository.DeleteInvestorAccount(id);
 			return true;
 		}
+
+		#endregion
 
 		//
 		// GET: /Investor/InvestorNameAvailable

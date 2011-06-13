@@ -228,7 +228,7 @@
 								<%=Html.Image("add.png", new { @title = "Add New Bank Information", @onclick = "javascript:investor.createAccount(this);" })%>
 							</div>
 							<div class="delete">
-								<%=Html.Image("delete_icon.png", new { @title = "Delete Accout" , @onclick = "javascript:investor.deleteAccount(this);" })%>
+								<%=Html.Image("Delete_Btn.png", new { @title = "Delete Accout", @onclick = "javascript:investor.deleteAccount(this);" })%>
 							</div>
 						</div>
 						<div class="accountinfo-box">
@@ -342,7 +342,7 @@
 					<div id="ContactInfo" class="contactinfo">
 						<div>
 							<div class="delete">
-								<%=Html.Image("delete_icon.png", new { @title = "Delete Contact", @onclick = "javascript:investor.deleteContact(this);" })%>
+								<%=Html.Image("Delete_Btn.png", new { @title = "Delete Contact", @onclick = "javascript:investor.deleteContact(this);" })%>
 							</div>
 							<div class="add">
 								<%=Html.Image("add.png", new { @title = "Add New Contact", @onclick = "javascript:investor.createContact(this);" })%>

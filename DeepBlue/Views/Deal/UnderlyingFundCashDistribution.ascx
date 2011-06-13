@@ -21,8 +21,5 @@
 	<td style="text-align: right">
 		<%: Html.Hidden("${Index}_UnderlyingFundCashDistributionId", "${UnderlyingFundCashDistributionId}")%>
 		<%: Html.Hidden("${Index}_UnderlyingFundId", "${UnderlyingFundId}")%>
-		<%: Html.Span("", new { id = "UpdateLoading" })%>
-		{{if UnderlyingFundCashDistributionId>0}}&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @id="Delete", @class = "default-button", @onclick="javascript:dealActivity.deleteCD(${Index},${UnderlyingFundCashDistributionId},this);" })%>
-		{{/if}}
 	</td>
 </tr>

@@ -20,6 +20,7 @@ namespace DeepBlue.Controllers.Fund {
 		bool FundNameAvailable(string fundName, int fundId);
 		decimal FindTotalCommittedAmount(int fundId, int investorTypeId);
 		IEnumerable<ErrorInfo> SaveFund(Models.Entity.Fund fund);
+		string FindFundName(int fundId);
 		#endregion
 
 		#region Fund Rate Schedules

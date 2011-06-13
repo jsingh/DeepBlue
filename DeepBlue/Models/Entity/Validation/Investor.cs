@@ -9,7 +9,7 @@ using DeepBlue;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(InvestorMD))]
 	public partial class Investor {
-		public class InvestorMD {
+		public class InvestorMD : CreatedByFields {
 			#region Primitive Properties
 
 			[Required(ErrorMessage = "EntityID is required")]
@@ -90,19 +90,7 @@ namespace DeepBlue.Models.Entity {
 			}
 
 
-			[Required(ErrorMessage = "Created Date is required")]
-			[DateRange(ErrorMessage = "Created Date is required")]
-			public global::System.DateTime CreatedDate {
-				get;
-				set;
-			}
 
-			[Required(ErrorMessage = "CreatedBy is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
-			public global::System.Int32 CreatedBy {
-				get;
-				set;
-			}
 			#endregion
 		}
 

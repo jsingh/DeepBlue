@@ -206,6 +206,8 @@ namespace DeepBlue.Controllers.Transaction {
 				} else {
 					counterPartyInvestorFund.TotalCommitment += model.CommitmentAmount;
 					counterPartyInvestorFund.UnfundedAmount += model.CommitmentAmount;
+					counterPartyInvestorFund.LastUpdatedBy = AppSettings.CreatedByUserId;
+					counterPartyInvestorFund.LastUpdatedDate = DateTime.Now;
 				}
 
 				InvestorFundTransaction counterPartyFundTransaction = new InvestorFundTransaction();

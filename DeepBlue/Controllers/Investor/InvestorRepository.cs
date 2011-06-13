@@ -10,9 +10,9 @@ using DeepBlue.Helpers;
 
 namespace DeepBlue.Controllers.Investor {
 	public class InvestorRepository : IInvestorRepository {
-	
+
 		#region IInvestorRepository Investors
-	
+
 		public Models.Entity.Investor FindInvestor(int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				Models.Entity.Investor deepBlueinvestor = context.Investors
@@ -78,27 +78,34 @@ namespace DeepBlue.Controllers.Investor {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				DeepBlue.Models.Entity.Investor deepBlueInvestor = context.Investors.SingleOrDefault(investor => investor.InvestorID == investorId);
 				if (deepBlueInvestor != null) {
-					foreach (var investorAddress in deepBlueInvestor.InvestorAddresses.ToList()) {
+					List<InvestorAddress> investorAddresses = deepBlueInvestor.InvestorAddresses.ToList();
+					foreach (var investorAddress in investorAddresses) {
 						context.Addresses.DeleteObject(investorAddress.Address);
 						context.InvestorAddresses.DeleteObject(investorAddress);
 					}
-					foreach (var investorAccount in deepBlueInvestor.InvestorAccounts.ToList()) {
+					List<InvestorAccount> investorAccounts = deepBlueInvestor.InvestorAccounts.ToList();
+					foreach (var investorAccount in investorAccounts) {
 						context.InvestorAccounts.DeleteObject(investorAccount);
 					}
-					foreach (var investorContact in deepBlueInvestor.InvestorContacts.ToList()) {
-						foreach (var contactAddress in investorContact.Contact.ContactAddresses.ToList()) {
+					List<InvestorContact> investorContacts = deepBlueInvestor.InvestorContacts.ToList();
+					foreach (var investorContact in investorContacts) {
+						List<ContactAddress> contactAddresses = investorContact.Contact.ContactAddresses.ToList();
+						foreach (var contactAddress in contactAddresses) {
 							context.Addresses.DeleteObject(contactAddress.Address);
 							context.ContactAddresses.DeleteObject(contactAddress);
 						}
 						context.Contacts.DeleteObject(investorContact.Contact);
 						context.InvestorContacts.DeleteObject(investorContact);
 					}
-					foreach (var investorCommunication in deepBlueInvestor.InvestorCommunications.ToList()) {
+					List<InvestorCommunication> investorCommunications = deepBlueInvestor.InvestorCommunications.ToList();
+					foreach (var investorCommunication in investorCommunications) {
 						context.Communications.DeleteObject(investorCommunication.Communication);
 						context.InvestorCommunications.DeleteObject(investorCommunication);
 					}
-					foreach (var investorFund in deepBlueInvestor.InvestorFunds.ToList()) {
-						foreach (var investorFundTransaction in investorFund.InvestorFundTransactions.ToList()) {
+					List<InvestorFund> investorFunds = deepBlueInvestor.InvestorFunds.ToList();
+					foreach (var investorFund in investorFunds) {
+						List<InvestorFundTransaction> investorFundTransactions = investorFund.InvestorFundTransactions.ToList();
+						foreach (var investorFundTransaction in investorFundTransactions) {
 							context.InvestorFundTransactions.DeleteObject(investorFundTransaction);
 						}
 						context.InvestorFunds.DeleteObject(investorFund);
@@ -113,7 +120,8 @@ namespace DeepBlue.Controllers.Investor {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				InvestorContact investorContact = context.InvestorContacts.SingleOrDefault(contact => contact.ContactID == investorContactId);
 				if (investorContact != null) {
-					foreach (var contactAddress in investorContact.Contact.ContactAddresses.ToList()) {
+					List<ContactAddress> investorContactAddresses = investorContact.Contact.ContactAddresses.ToList();
+					foreach (var contactAddress in investorContactAddresses) {
 						context.Addresses.DeleteObject(contactAddress.Address);
 						context.ContactAddresses.DeleteObject(contactAddress);
 					}
@@ -153,11 +161,11 @@ namespace DeepBlue.Controllers.Investor {
 				IQueryable<AutoCompleteList> query = (from investor in context.Investors
 													  where investor.InvestorName.Contains(investorName)
 													  orderby investor.InvestorName
-															  select new AutoCompleteList {
-																  id = investor.InvestorID,
-																  label = investor.InvestorName + " (" + investor.Social + ")",
-																  value = investor.InvestorName 
-															  });
+													  select new AutoCompleteList {
+														  id = investor.InvestorID,
+														  label = investor.InvestorName + " (" + investor.Social + ")",
+														  value = investor.InvestorName
+													  });
 				return new PaginatedList<AutoCompleteList>(query, 1, 20);
 			}
 		}
@@ -214,6 +222,6 @@ namespace DeepBlue.Controllers.Investor {
 						 select investor.InvestorID).Count()) > 0 ? true : false;
 			}
 		}
-			#endregion
+		#endregion
 	}
 }

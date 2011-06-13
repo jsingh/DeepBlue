@@ -16,7 +16,7 @@
 	deal.selectValue(tr);
 	jHelper.applyDatePicker(tr);
 	deal.calcTotalExpense();
-	$("#MakeNewDUFund").hide();
+	$("#MakeNewDEHeader").hide();
 };
 deal.deleteDealExpense=function (id,img) {
 	if(confirm("Are you sure you want to delete this deal expense?")) {
@@ -69,16 +69,16 @@ deal.saveExpense=function (tr) {
 		deal.onDealSuccess=function () { deal.saveExpense(tr); }
 		$("#btnSaveDeal").click();
 	}
-}
+};
 deal.loadDealExpense=function (id) {
 	var dt=new Date();
 	var url="/Deal/FindDealClosingCost?dealClosingCostId="+id+"&t="+dt.getTime();
 	$.getJSON(url,function (data) {
 		deal.loadDealExpenseData(data);
 	});
-}
+};
 deal.calcTotalExpense=function () {
 	var total=0;
 	$("tbody tr","#tblDealExpense").each(function () { var amt=parseFloat($("#Amount",this).val());if(isNaN(amt)) { amt=0; } total+=amt; });
 	$("#SpnTotalExpenses").html(jHelper.dollarAmount(total.toString()));
-}
+};

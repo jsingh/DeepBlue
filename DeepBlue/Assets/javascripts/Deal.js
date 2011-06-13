@@ -139,6 +139,8 @@
 		var makeNew=$("#"+id);
 		if(makeNew.css("display")=="none") {
 			makeNew.css("display","");
+			$(":input[type='text']",makeNew).val("");
+			$("select",makeNew).val("0");
 		} else {
 			makeNew.css("display","none");
 		}

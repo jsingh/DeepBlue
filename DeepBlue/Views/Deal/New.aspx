@@ -159,7 +159,7 @@
 		</td>	
 		<td style="text-align: center">
 			<%: Html.Span("${UnfundedAmount}", new { @class = "show money", @id = "SpnUnfundedAmount" })%>
-			<%: Html.TextBox("UnfundedAmount","${UnfundedAmount}",new { @class = "hide", @readonly="readonly", @onkeypress = "return jHelper.isCurrency(event);" })%>
+			<%: Html.TextBox("UnfundedAmount","${UnfundedAmount}",new { @class = "hide",   @onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
 		<td style="text-align: center">
 			<%: Html.Span("${GrossPurchasePrice}", new { @class = "show money", @id = "SpnGrossPurchasePrice" })%>

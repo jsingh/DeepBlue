@@ -55,7 +55,10 @@ dealActivity.submitUFPRCashDistribution=function (frm) {
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#PRCashDistributionList").length)/2 };
 		$.post("/Deal/CreateUnderlyingFundPostRecordCashDistribution",param,function (data) {
 			loading.empty();
-			if($.trim(data)!="") { alert(data); } else { dealActivity.loadPRCD(true); }
+			if($.trim(data)!="") { dealActivity.processErrMsg(data,frm); } else {
+				alert("Post Record Date Cash Distribution Saved");
+				dealActivity.resetCashDistribution();
+			}
 		});
 	} catch(e) { alert(e); }
 	return false;

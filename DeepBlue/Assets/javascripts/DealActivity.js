@@ -108,5 +108,21 @@
 			$(this).removeClass("expand");
 		});
 	}
+	,processErrMsg: function (data,frm) {
+		var arr=data.split("\n");
+		var i;var msg='';var focus=false;
+		for(i=0;i<arr.length;i++) {
+			var v=arr[i];
+			if(v!="") {
+				var varr=v.split("||");
+				if(focus==false) {
+					$(":input[name='"+varr[0]+"']",frm).focus();
+					focus=true;
+				}
+				msg+=varr[1]+"\n";
+			}
+		}
+		alert(msg);
+	}
 	/* End Common Functions */
 }

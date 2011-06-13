@@ -92,8 +92,22 @@ dealActivity.submitUFCapitalCall=function (frm) {
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#CapitalCallList").length)/2 };
 		$.post("/Deal/CreateUnderlyingFundCapitalCall",param,function (data) {
 			loading.empty();
-			if($.trim(data)!="") { alert(data); } else { dealActivity.loadCC(true); }
+			if($.trim(data)!="") {
+				dealActivity.processErrMsg(data,frm);
+			} else {
+				alert("Capital Call Saved");
+				dealActivity.resetCapitalCall();
+			}
 		});
 	} catch(e) { alert(e); }
 	return false;
+};
+dealActivity.resetCapitalCall=function () {
+	$("#CapitalCall").hide();
+	$("#PRCapitalCall").hide();
+	$("tbody","#CapitalCallList").empty();
+	$("#CC_UnderlyingFund").val("");
+	$("#SpnCCUFName").empty();
+	$("#CCUnderlyingFundId").val(0);
+	$("#CC_UnderlyingFund").focus();
 };

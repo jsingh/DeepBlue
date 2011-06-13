@@ -8,7 +8,7 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(ShareClassTypeMD))]
 	public partial class ShareClassType {
-		public class ShareClassTypeMD {
+		public class ShareClassTypeMD : CreatedByFields {
 			#region Primitive Properties
 			[Required(ErrorMessage = "EntityID is required")]
 			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
@@ -24,41 +24,12 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage = "Created Date is required")]
-			[DateRange(ErrorMessage = "Created Date is required")]
-			public global::System.DateTime CreatedDate {
-				get;
-				set;
-			}
-
-			[Required(ErrorMessage = "CreatedBy is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
-			public global::System.Int32 CreatedBy {
-				get;
-				set;
-			}
-
-			[Required(ErrorMessage = "Last Updated Date is required")]
-			[DateRange(ErrorMessage = "Last Updated Date is required")]
-			public global::System.DateTime LastUpdatedDate {
-				get;
-				set;
-			}
-
-			[Required(ErrorMessage = "LastUpdatedBy is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "LastUpdatedBy is required")]
-			public global::System.Int32 LastUpdatedBy {
-				get;
-				set;
-			}
-
-
 			#endregion
 		}
 
 		public ShareClassType(IShareClassTypeService shareclasstypeservice)
 			: this() {
-				this.shareClasstypeService = shareclasstypeservice;
+			this.shareClasstypeService = shareclasstypeservice;
 		}
 
 		public ShareClassType() {

@@ -59,7 +59,7 @@
 							<%: Html.LabelFor(model => model.FromDate) %>
 						</div>
 						<div class="editor-field" style="width: auto;">
-							<%: Html.TextBox("FromDate", "", new { @class = "datetxt", @id = "FromDate", @onchange = "javascript:capitalCall.changeFromDate();" })%>&nbsp;<%: Html.LabelFor(model => model.ToDate) %>&nbsp;<%: Html.TextBox("ToDate", "", new { @class = "datetxt", @id = "ToDate", @onchange = "javascript:capitalCall.changeToDate();" })%>
+							<%: Html.TextBox("FromDate", "", new { @class = "datetxt", @id = "FromDate", @style="width:111px", @onchange = "javascript:capitalCall.changeFromDate();" })%>&nbsp;<%: Html.LabelFor(model => model.ToDate) %>&nbsp;<%: Html.TextBox("ToDate", "", new { @class = "datetxt", @id = "ToDate", @style = "width:111px", @onchange = "javascript:capitalCall.changeToDate();" })%>
 						</div>
 						<div class="editor-label" style="width: auto; clear: right">
 							Management Fees Amount:&nbsp;<%: Html.Span("",new { @id = "SpnMFA" })%>&nbsp;<%: Html.Span(Html.Image("detail.png", new { @onclick = "javascript:capitalCall.showDetail(this);" , @style="cursor:pointer", @align="absmiddle" , @title = "View Rate Schedule" }).ToHtmlString(), new { @id = "SpnDetail" , @style="display:none" })%>

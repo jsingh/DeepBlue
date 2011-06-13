@@ -60,20 +60,16 @@ namespace DeepBlue.Controllers.Document {
 				int? fundId = null;
 				switch (model.DocumentStatus) {
 					case (int)DocumentStatus.Investor:
-						if (model.InvestorId == 0) {
+						if (model.InvestorId == 0) 
 							ModelState.AddModelError("InvestorId", "Investor is required.");
-						}
-						else {
+						else 
 							investorId = model.InvestorId;
-						}
 						break;
 					case (int)DocumentStatus.Fund:
-						if (model.FundId == 0) {
+						if (model.FundId == 0) 
 							ModelState.AddModelError("FundId", "Fund is required.");
-						}
-						else {
+						else 
 							fundId = model.FundId;
-						}
 						break;
 				}
 				switch ((UploadType)model.UploadType) {
@@ -178,9 +174,7 @@ namespace DeepBlue.Controllers.Document {
 				return View("New", model);
 			}
 		}
-
-
-
+		
 		private Models.Entity.FileType CheckFileExtension(string extension, out string errorMessage) {
 			List<Models.Entity.FileType> fileTypes = AdminRepository.GetAllFileTypes();
 			Models.Entity.FileType fileType = null;

@@ -17,7 +17,7 @@
 			   imgname = "pdf.png";
 			   break;
 		   case "word":
-			   imgname = "word.png";
+			   imgname = "doc.png";
 			   break;
 		   case "excel":
 			   imgname = "xls.png";

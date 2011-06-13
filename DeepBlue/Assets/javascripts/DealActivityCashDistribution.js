@@ -65,8 +65,20 @@ dealActivity.submitUFCashDistribution=function (frm) {
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#CashDistributionList").length)/2 };
 		$.post("/Deal/CreateUnderlyingFundCashDistribution",param,function (data) {
 			loading.empty();
-			if($.trim(data)!="") { alert(data); } else { dealActivity.loadCD(true); }
+			if($.trim(data)!="") { dealActivity.processErrMsg(data,frm); } else {
+				alert("Cash Distribution Saved");
+				dealActivity.resetCashDistribution();
+			}
 		});
 	} catch(e) { alert(e); }
 	return false;
+};
+dealActivity.resetCashDistribution=function () {
+	$("#CashDistribution").hide();
+	$("#PRCashDistribution").hide();
+	$("tbody","#CashDistributionList").empty();
+	$("#CD_UnderlyingFund").val("");
+	$("#SpnCDUFName").empty();
+	$("#CDUnderlyingFundId").val(0);
+	$("#CD_UnderlyingFund").focus();
 };

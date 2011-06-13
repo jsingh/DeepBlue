@@ -113,6 +113,12 @@ namespace DeepBlue.Controllers.Fund {
 			}
 		}
 
+		public string FindFundName(int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.Funds.Where(fund => fund.FundID == fundId).Select(fund => fund.FundName).SingleOrDefault();
+			}
+		}
+
 		#endregion
 
 
@@ -184,6 +190,5 @@ namespace DeepBlue.Controllers.Fund {
 		}
 
 		#endregion
-
 	}
 }

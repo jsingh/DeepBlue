@@ -32,8 +32,7 @@ namespace DeepBlue.Models.Transaction {
 		public decimal UnfundedAmount { get; set; }
 
 		[Required(ErrorMessage = "Commitment Amount is required")]
-		[Range(1,Double.MaxValue,ErrorMessage="Invalid Commitment Amount")]
-		[RegularExpression("^(\\+|-)?[0-9][0-9]*(\\.[0-9]*)?$", ErrorMessage = "Invalid Committed Amount")]
+		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Commitment Amount is required")]
 		[DisplayName("Commitment Amount:")]
 		public decimal CommitmentAmount { get; set; }
 
@@ -69,9 +68,8 @@ namespace DeepBlue.Models.Transaction {
 		
 		public int InvestorFundId { get; set; }
 
-		[Required(ErrorMessage = "Invalid Commitment Amount is required")]
-		[Range(1, Double.MaxValue, ErrorMessage = "Invalid Commitment Amount")]
-		[RegularExpression("^(\\+|-)?[0-9][0-9]*(\\.[0-9]*)?$", ErrorMessage = "Invalid Committed Amount")]
+		[Required(ErrorMessage = "Commitment Amount is required")]
+		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Commitment Amount is required")]
 		[DisplayName("Commitment Amount:")]
 		public decimal CommitmentAmount { get; set; }
 

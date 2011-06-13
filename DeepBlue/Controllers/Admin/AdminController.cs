@@ -2255,7 +2255,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public ActionResult ActivityType() {
 			ViewData["MenuName"] = "Admin";
-			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["SubmenuName"] = "AdminCustomField";
 			ViewData["PageName"] = "ActivityType";
 			return View();
 		}
