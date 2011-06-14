@@ -92,6 +92,7 @@
     <Compile Include="Models\Deal\ExpenseToDealModel.cs" />
     <Compile Include="Models\Deal\FundExpenseModel.cs" />
     <Compile Include="Models\Deal\NewHoldingPatternModel.cs" />
+    <Compile Include="Models\Deal\ReconcileModel.cs" />
     <Compile Include="Models\Deal\SecurityActivityModel.cs" />
     <Compile Include="Models\Deal\SecurityConversionModel.cs" />
     <Compile Include="Models\Deal\UnderlyingDirectValuationModel.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Models\Deal\UnderlyingFundPostRecordCapitalCallModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundPostRecordCashDistributionModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundValuationModel.cs" />
+    <Compile Include="Models\Deal\UnfundedAdjustmentModel.cs" />
     <Compile Include="Models\Entity\DeepBlue.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -169,6 +171,7 @@
     </Compile>
     <Compile Include="Models\Entity\Partial\ActivityTypeService.cs" />
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
+    <Compile Include="Models\Entity\Partial\DealUnderlyingFundAdjustmentService.cs" />
     <Compile Include="Models\Entity\Partial\EquitySplitService.cs" />
     <Compile Include="Models\Entity\Partial\FundActivityHistory.cs" />
     <Compile Include="Models\Entity\Partial\FundExpenseService.cs" />
@@ -181,6 +184,7 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
     <Compile Include="Models\Entity\Validation\ActivityType.cs" />
     <Compile Include="Models\Entity\Validation\CashDistribution.cs" />
+    <Compile Include="Models\Entity\Validation\DealUnderlyingFundAdjustment.cs" />
     <Compile Include="Models\Entity\Validation\CreatedByFields.cs" />
     <Compile Include="Models\Entity\Validation\EquitySplit.cs" />
     <Compile Include="Models\Entity\Validation\FundActivityHistory.cs" />
@@ -636,6 +640,7 @@
     <Content Include="Assets\javascripts\DealActivityEquitySplit.js" />
     <Content Include="Assets\javascripts\DealActivitySecConversion.js" />
     <Content Include="Assets\javascripts\DealActivityUDValuation.js" />
+    <Content Include="Assets\javascripts\DealActivityUFAdjustment.js" />
     <Content Include="Assets\javascripts\DealActivityUFValuation.js" />
     <Content Include="Assets\javascripts\DealActivityPRCashDistribution.js" />
     <Content Include="Assets\javascripts\DealActivity.js" />
@@ -643,6 +648,7 @@
     <Content Include="Assets\javascripts\DealActivityCashDistribution.js" />
     <Content Include="Assets\javascripts\DealActivityPRCapitalCall.js" />
     <Content Include="Assets\javascripts\DealActivityFundExpense.js" />
+    <Content Include="Assets\javascripts\DealReconcile.js" />
     <Content Include="Assets\javascripts\IssuerFixedIncome.js" />
     <Content Include="Assets\javascripts\IssuerEquity.js" />
     <Content Include="Assets\javascripts\FixedIncomeType.js" />
@@ -705,6 +711,7 @@
     <Content Include="Assets\stylesheets\deal.css" />
     <Content Include="Assets\stylesheets\dealactivity.css" />
     <Content Include="Assets\stylesheets\dealclose.css" />
+    <Content Include="Assets\stylesheets\dealreconcile.css" />
     <Content Include="Assets\stylesheets\dealreport.css" />
     <Content Include="Assets\stylesheets\distribution.css" />
     <Content Include="Assets\stylesheets\document.css" />
@@ -787,6 +794,7 @@
     <Content Include="Views\Deal\Close.aspx" />
     <Content Include="Views\Deal\ExpenseToDeal.ascx" />
     <Content Include="Views\Deal\FundExpense.ascx" />
+    <Content Include="Views\Deal\Reconcile.aspx" />
     <Content Include="Views\Deal\SecurityConversion.ascx" />
     <Content Include="Views\Deal\EquitySplit.ascx" />
     <Content Include="Views\Deal\UnderlyingDirectValuation.ascx" />
@@ -808,6 +816,7 @@
     <Content Include="Views\Deal\DealDetail.ascx" />
     <Content Include="Views\Deal\New.aspx" />
     <Content Include="Views\Deal\UnderlyingFunds.aspx" />
+    <Content Include="Views\Deal\UnfundedAdjustment.ascx" />
     <Content Include="Views\Document\List.ascx" />
     <Content Include="Views\Document\New.aspx" />
     <Content Include="Views\Document\Search.aspx" />

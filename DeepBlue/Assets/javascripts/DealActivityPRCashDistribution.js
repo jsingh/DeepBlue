@@ -56,7 +56,7 @@ dealActivity.submitUFPRCashDistribution=function (frm) {
 		$.post("/Deal/CreateUnderlyingFundPostRecordCashDistribution",param,function (data) {
 			loading.empty();
 			if($.trim(data)!="") { dealActivity.processErrMsg(data,frm); } else {
-				alert("Post Record Date Cash Distribution Saved");
+				alert("Post Record Date Cash Distributions Saved");
 				dealActivity.resetCashDistribution();
 			}
 		});

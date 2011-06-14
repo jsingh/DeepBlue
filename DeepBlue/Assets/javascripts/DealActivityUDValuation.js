@@ -95,7 +95,15 @@ dealActivity.submitUDV=function (frm) {
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#UDValuationList").length)/2 };
 		$.post("/Deal/CreateUnderlyingDirectValuation",param,function (data) {
 			loading.empty();
-			if($.trim(data)!="") { alert(data); } else { dealActivity.loadUDV(); }
+			if($.trim(data)!="") { alert(data); } else {
+				alert("Underlying Direct Valuations Saved");
+				var tbl=$("#UDValuationList");var target=$("tbody",tbl);
+				target.empty();$("#UDValuation").hide();
+				$("#UDVIssuerId").val(0);
+				$("#SpnUDVName").html("");
+				$("#UDV_UnderlyingDirect").val("");
+				$("#UDV_UnderlyingDirect").focus();
+			}
 		});
 	} catch(e) { alert(e); }
 	return false;

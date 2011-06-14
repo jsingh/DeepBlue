@@ -66,7 +66,7 @@ dealActivity.submitUFCashDistribution=function (frm) {
 		$.post("/Deal/CreateUnderlyingFundCashDistribution",param,function (data) {
 			loading.empty();
 			if($.trim(data)!="") { dealActivity.processErrMsg(data,frm); } else {
-				alert("Cash Distribution Saved");
+				alert("Cash Distributions Saved");
 				dealActivity.resetCashDistribution();
 			}
 		});

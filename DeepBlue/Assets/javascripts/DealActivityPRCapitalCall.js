@@ -59,7 +59,7 @@ dealActivity.submitUFPRCapitalCall=function (frm) {
 			if($.trim(data)!="") {
 				dealActivity.processErrMsg(data,frm);
 			} else {
-				alert("Post Record Capital Call Saved");
+				alert("Post Record Capital Calls Saved");
 				dealActivity.resetCapitalCall();
 				//dealActivity.loadPRCC(true); 
 			}

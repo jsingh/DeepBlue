@@ -48,8 +48,6 @@ dealActivity.loadCC=function (isRefresh) {
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		$.getJSON("/Deal/UnderlyingFundCapitalCallList",{ "_": (new Date).getTime()
 			,"underlyingFundId": dealActivity.getCCUnderlyingFund()
-		,"pageIndex": $("#CCPageIndex").val()
-		,"pageSize": $("#CCPageSize").val()
 		},function (data) {
 			loading.empty();
 			$.each(data,function (i,item) {
@@ -61,25 +59,6 @@ dealActivity.loadCC=function (isRefresh) {
 			if(rowsLength>0) { $("#CapitalCall").show(); }
 		});
 	}
-};
-dealActivity.CC_BuildPager=function (page,total) {
-	var rp=$("#CCPageSize").val();
-	var pages=Math.ceil(total/p.rp);
-};
-dealActivity.CC_ChangePage=function (ctype,pages) {
-	var page=$("#CCPageIndex").val();
-	switch(ctype) {
-		case 'first': newp=1;break;
-		case 'prev': if(page>1) newp=parseInt(page)-1;break;
-		case 'next': if(page<pages) newp=parseInt(page)+1;break;
-		case 'last': newp=pages;break;
-	}
-	if(p.newp==page) return false;
-	$("#CCPageIndex").val(newp);
-	dealActivity.loadCC();
-};
-dealActivity.CC_ChangeRows=function (pageSize) {
-	$("#CCPageIndex").val(1);$("#CCPageSize").val(pageSize);dealActivity.loadCC();
 };
 dealActivity.getCCUnderlyingFund=function (id) {
 	return parseInt($("#CCUnderlyingFundId").val());
@@ -95,7 +74,7 @@ dealActivity.submitUFCapitalCall=function (frm) {
 			if($.trim(data)!="") {
 				dealActivity.processErrMsg(data,frm);
 			} else {
-				alert("Capital Call Saved");
+				alert("Capital Calls Saved");
 				dealActivity.resetCapitalCall();
 			}
 		});

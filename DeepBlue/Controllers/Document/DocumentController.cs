@@ -229,7 +229,7 @@ namespace DeepBlue.Controllers.Document {
 			if (string.IsNullOrEmpty(toDate) == false)
 				documentToDate = Convert.ToDateTime(toDate);
 			else
-				documentToDate = DateTime.Now;
+				documentToDate = DateTime.MaxValue;
 			List<DocumentDetail> documentDetails = DocumentRepository.FindDocuments(pageIndex, pageSize, sortName, sortOrder, documentFromDate, documentToDate, investorId, fundId, documentTypeId, documentStatus, ref totalRows);
 			ViewData["TotalRows"] = totalRows;
 			ViewData["PageNo"] = pageIndex;

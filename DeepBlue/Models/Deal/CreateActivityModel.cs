@@ -18,6 +18,7 @@ namespace DeepBlue.Models.Deal {
 			SecurityConversionModel = new SecurityConversionModel();
 			FundLevelExpenseModel = new FundExpenseModel();
 			UnderlyingDirectValuationModel = new UnderlyingDirectValuationModel();
+			UnfundedAdjustmentModel = new UnfundedAdjustmentModel();
 		}
 
 		public UnderlyingFundCapitalCallModel UnderlyingFundCapitalCallModel { get; set; }
@@ -37,6 +38,8 @@ namespace DeepBlue.Models.Deal {
 		public FundExpenseModel FundLevelExpenseModel { get; set; }
 
 		public UnderlyingDirectValuationModel UnderlyingDirectValuationModel { get; set; }
+
+		public UnfundedAdjustmentModel UnfundedAdjustmentModel { get; set; }
 
 		public List<SelectListItem> ActivityTypes { get; set; }
 	

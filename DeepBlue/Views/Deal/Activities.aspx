@@ -15,6 +15,7 @@
 	<%=Html.JavascriptInclueTag("DealActivitySecConversion.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityFundExpense.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityUDValuation.js")%>
+	<%=Html.JavascriptInclueTag("DealActivityUFAdjustment.js")%>
 	<%=Html.JavascriptInclueTag("jAjaxTable.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
@@ -48,8 +49,6 @@
 						<div class="search-header">
 							<div class="cell">
 								<%: Html.Span("", new { @id="SpnCCUFName" })%></div>
-							<div class="paging" id="CCPaging">
-							</div>
 						</div>
 						<div class="cell" id="CCLoading">
 						</div>
@@ -86,8 +85,6 @@
 									<span>
 										<%: Html.ImageButton("Save.png")%></span><span id="SpnCCSaveLoading"></span></center>
 								<%}%>
-								<%:Html.Hidden("CCPageIndex",1,new { @id="CCPageIndex" })%>
-								<%:Html.Hidden("CCPageSize",15,new { @id="CCPageSize" })%>
 							</div>
 							<div id="PRCapitalCall" class="clear" style="display: none">
 								<div class="line">
@@ -339,7 +336,45 @@
 					<div class="title">
 						<%: Html.Span("Unfunded Adjustments")%>
 					</div>
+					<div class="search-tool">
+						<div class="cell" style="padding-left: 10px">
+							<%: Html.TextBox("UFA_UnderlyingFund", "Search Underlying Fund", new { @class = "wm" })%></div>
+					</div>
 					<div class="detail">
+						<div class="search-header">
+							<div class="cell">
+								<%: Html.Span("", new { @id="SpnUFAUFName" })%></div>
+						</div>
+						<div class="cell" id="UFALoading">
+						</div>
+						<div id="UFAdjustment" style="display: none" class="clear">
+							<%using (Html.Form(new { @id = "frmUFAAdjustment", @onsubmit = "return dealActivity.submitUFA(this);" })) {%>
+							<table cellpadding="0" cellspacing="0" border="0" id="UnfundedAdjustmentList" class="grid">
+								<thead>
+									<tr>
+										<th style="width: 20%">
+											Fund Name
+										</th>
+										<th style="width: 20%">
+											Commitment Amount
+										</th>
+										<th style="width: 15%">
+											Unfunded Amount
+										</th>
+										<th>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+							<br />
+							<center>
+								<span>
+									<%: Html.ImageButton("Save.png")%></span><span id="SpnUFASaveLoading"></span></center>
+							<%}%>
+						</div>
+						<%:Html.Hidden("UFAUnderlyingFundId", new { @id = "UFAUnderlyingFundId" })%>
 					</div>
 				</div>
 				<div class="line">
@@ -487,6 +522,10 @@
 	, OnRowBound = "dealActivity.onNHPRowBound"
 	, Autoload = false
 	})%>
+	<%= Html.jQueryAutoComplete("UFA_UnderlyingFund", new AutoCompleteOptions {
+																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
+																	  OnSelect = "function(event, ui) { dealActivity.setUFAUnderlyingFund(ui.item.id,ui.item.value);}"
+	})%>
 	<script type="text/javascript">		dealActivity.init();</script>
 	<script id="CashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("UnderlyingFundCashDistribution", Model.UnderlyingFundCashDistributionModel); %>
@@ -509,15 +548,7 @@
 	<script id="UDVAddTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("UnderlyingDirectValuation", Model.UnderlyingDirectValuationModel); %>
 	</script>
-	<script id="PagingTemplate" type="text/x-jquery-tmpl">
-	<div class="cell">
-		<a href="${First}">First</a><a href="${Prev}">Prev</a><a href="${Next}">Next</a><a
-			href="${Last}">Last</a></div>
-	<div class="cell">
-		Rows:&nbsp;<select id="rows" style="width: 40px; padding: 0px;"><option value="15">15</option>
-			<option value="30">30</option>
-			<option value="60">60</option>
-			<option value="100">100</option>
-		</select></div>
+	<script id="UFAAddTemplate" type="text/x-jquery-tmpl"> 
+		<% Html.RenderPartial("UnfundedAdjustment", Model.UnfundedAdjustmentModel); %>
 	</script>
 </asp:Content>

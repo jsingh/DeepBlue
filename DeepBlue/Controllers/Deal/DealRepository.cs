@@ -179,7 +179,6 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-
 		public void DeleteDealClosingCost(int dealClosingCostId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				DealClosingCost dealClosingCost = context.DealClosingCosts.SingleOrDefault(dealClose => dealClose.DealClosingCostID == dealClosingCostId);
@@ -1251,7 +1250,7 @@ namespace DeepBlue.Controllers.Deal {
 											select new UnderlyingDirectValuationModel {
 												FundId = fund.FundID,
 												FundName = fund.FundName,
-												DirectName = equity.Issuer.Name + ">" + (equity.EquityType != null ? equity.EquityType.Equity : string.Empty) + ">" + (equity.ShareClassType != null ?  equity.ShareClassType.ShareClass : string.Empty),
+												DirectName = equity.Issuer.Name + ">" + (equity.EquityType != null ? equity.EquityType.Equity : string.Empty) + ">" + (equity.ShareClassType != null ? equity.ShareClassType.ShareClass : string.Empty),
 												SecurityId = equityDirect.Key.SecurityID,
 												SecurityTypeId = equityDirect.Key.SecurityTypeID,
 												LastPrice = directValuation.LastPrice,
@@ -1350,6 +1349,110 @@ namespace DeepBlue.Controllers.Deal {
 
 		public IEnumerable<ErrorInfo> SaveUnderlyingDirectValuationHistory(UnderlyingDirectLastPriceHistory underlyingDirectLastPriceHistory) {
 			return underlyingDirectLastPriceHistory.Save();
+		}
+
+		#endregion
+
+		#region Reconcile
+		public List<ReconcileListModel> GetAllReconciles(int pageIndex, int pageSize, DateTime fromDate, DateTime toDate, int underlyingFundId, int fundId, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var capitalCalls = (from capitalCall in context.UnderlyingFundCapitalCalls
+									where capitalCall.ReceivedDate >= fromDate && capitalCall.ReceivedDate <= toDate
+									&& (fundId > 0 ? capitalCall.FundID == fundId : capitalCall.FundID > 0)
+									select new ReconcileListModel {
+										EventType = 1,
+										CapitalCallAmount = capitalCall.Amount,
+										FundName = capitalCall.Fund.FundName,
+										PaymentOrReceivedDate = capitalCall.ReceivedDate,
+										UnderlyingFundName = capitalCall.UnderlyingFund.FundName,
+										DistributionAmount = 0,
+										PaidOnOrReceivedOn = false
+									});
+				var postRecordCapitalCalls = (from capitalCall in context.UnderlyingFundCapitalCallLineItems
+											  where capitalCall.CapitalCallDate >= fromDate && capitalCall.CapitalCallDate <= toDate
+											  && (fundId > 0 ? capitalCall.Deal.FundID == fundId : capitalCall.Deal.FundID > 0)
+											  && capitalCall.UnderlyingFundCapitalCallID == null
+											  select new ReconcileListModel {
+												  EventType = 2,
+												  CapitalCallAmount = capitalCall.Amount,
+												  FundName = capitalCall.Deal.Fund.FundName,
+												  PaymentOrReceivedDate = capitalCall.CapitalCallDate,
+												  UnderlyingFundName = capitalCall.UnderlyingFund.FundName,
+												  DistributionAmount = 0,
+												  PaidOnOrReceivedOn = false,
+											  });
+				var cashDistributions = (from cashDistribution in context.UnderlyingFundCashDistributions
+										 where cashDistribution.ReceivedDate >= fromDate && cashDistribution.ReceivedDate <= toDate
+										 && (fundId > 0 ? cashDistribution.FundID == fundId : cashDistribution.FundID > 0)
+										 select new ReconcileListModel {
+											 EventType = 3,
+											 CapitalCallAmount = 0,
+											 FundName = cashDistribution.Fund.FundName,
+											 PaymentOrReceivedDate = cashDistribution.ReceivedDate,
+											 UnderlyingFundName = cashDistribution.UnderlyingFund.FundName,
+											 DistributionAmount = cashDistribution.Amount,
+											 PaidOnOrReceivedOn = false,
+										 });
+				var postRecordCashDistributions = (from cashDistribution in context.CashDistributions
+												   where cashDistribution.DistributionDate >= fromDate && cashDistribution.DistributionDate <= toDate
+												   && (fundId > 0 ? cashDistribution.Deal.FundID == fundId : cashDistribution.Deal.FundID > 0)
+												   && cashDistribution.UnderluingFundCashDistributionID == null
+												   select new ReconcileListModel {
+													   EventType = 4,
+													   CapitalCallAmount = 0,
+													   FundName = cashDistribution.Deal.Fund.FundName,
+													   PaymentOrReceivedDate = cashDistribution.DistributionDate,
+													   UnderlyingFundName = cashDistribution.UnderlyingFund.FundName,
+													   DistributionAmount = cashDistribution.Amount,
+													   PaidOnOrReceivedOn = false
+												   });
+				PaginatedList<ReconcileListModel> paginatedList = new PaginatedList<ReconcileListModel>(capitalCalls.Union(postRecordCapitalCalls).Union(cashDistributions).Union(postRecordCashDistributions).OrderByDescending(re => re.PaymentOrReceivedDate), pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList.ToList();
+			}
+		}
+		#endregion
+
+		#region UnfundedAdjustment
+
+		public List<UnfundedAdjustmentModel> GetAllUnfundedAdjustments(int underlyingFundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from dealUnderlyingFund in context.DealUnderlyingFunds
+						join adjustment in context.DealUnderlyingFundAdjustments on dealUnderlyingFund.DealUnderlyingtFundID equals adjustment.DealUnderlyingFundID into dealUnderlyingFundAdjustments
+						from adjustment in dealUnderlyingFundAdjustments.DefaultIfEmpty()
+						where dealUnderlyingFund.UnderlyingFundID == underlyingFundId
+						select new UnfundedAdjustmentModel {
+							CommitmentAmount = (adjustment != null ? adjustment.CommitmentAmount : 0),
+							UnfundedAmount = (adjustment != null ? adjustment.UnfundedAmount : 0),
+							DealUnderlyingFundAdjustmentId = (adjustment != null ? adjustment.DealUnderlyingFundAdjustmentID : 0),
+							DealUnderlyingFundId = dealUnderlyingFund.DealUnderlyingtFundID,
+							FundId = dealUnderlyingFund.Deal.Fund.FundID,
+							FundName = dealUnderlyingFund.Deal.Fund.FundName,
+							UnderlyingFundId = dealUnderlyingFund.UnderlyingFundID							 
+						}).ToList();
+			}
+		}
+
+		public DealUnderlyingFundAdjustment FindDealUnderlyingFundAdjustment(int dealUnderlyingFundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DealUnderlyingFundAdjustments.Where(adjustment => adjustment.DealUnderlyingFundID == dealUnderlyingFundId).SingleOrDefault();
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveDealUnderlyingFundAdjustment(DealUnderlyingFundAdjustment dealUnderlyingFundAdjustment) {
+			return dealUnderlyingFundAdjustment.Save();
+		}
+
+		public bool DeleteUnfundedAdjustment(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				DealUnderlyingFundAdjustment dealUnderlyingFundAdjustment = context.DealUnderlyingFundAdjustments.Where(adjustment => adjustment.DealUnderlyingFundAdjustmentID == id).SingleOrDefault();
+				if (dealUnderlyingFundAdjustment != null) {
+					context.DealUnderlyingFundAdjustments.DeleteObject(dealUnderlyingFundAdjustment);
+					context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
 		}
 
 		#endregion

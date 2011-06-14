@@ -1,8 +1,12 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+<head>
+	<title>
+		<asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+	</title>
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
@@ -15,7 +19,8 @@
 	<%= Html.JavascriptInclueTag("menu.js")%>
 	<%= Html.JavascriptInclueTag("jsDate.js")%>
 	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
-	<%= Html.StylesheetLinkTag("site.css")%><asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
+	<%= Html.StylesheetLinkTag("site.css")%><asp:ContentPlaceHolder ID="HeaderContent"
+		runat="server" />
 </head>
 <body>
 	<div id="header">
@@ -90,6 +95,9 @@
 			</li>
 			<li>
 				<%: Html.ActionLink("Activities", "Activities", "Deal", null, new { @class = (ViewData["PageName"] == "Activities" ? "sel" : "") })%>
+			</li>
+			<li>
+				<%: Html.ActionLink("Reconcile", "Reconcile", "Deal", null, new { @class = (ViewData["PageName"] == "Reconcile" ? "sel" : "") })%>
 			</li>
 		</ul>
 		<%using (Html.InnerSubMenu("DealFundList", (ViewData["SubmenuName"] == "Create New Deal"))) {%>
@@ -186,7 +194,7 @@
 				<%: Html.ActionLink("Custom Field", "CustomField", "Admin",null, new { @class = (ViewData["PageName"] == "CustomField" ? "sel" : "") })%></li>
 			<li>
 				<%: Html.ActionLink("Data Type", "DataType", "Admin",null, new { @class = (ViewData["PageName"] == "DataType" ? "sel" : "") })%></li>
-		    <li>
+			<li>
 				<%: Html.ActionLink("Activity Type", "ActivityType", "Admin",null, new { @class = (ViewData["PageName"] == "ActivityType" ? "sel" : "") })%></li>
 		</ul>
 		<%} %>

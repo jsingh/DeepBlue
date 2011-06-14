@@ -1342,10 +1342,20 @@ namespace DeepBlue.Controllers.Deal {
 
 					underlyingFundCapitalCallLineItem.UnderlyingFundID = underlyingFundCapitalCall.UnderlyingFundID;
 					underlyingFundCapitalCallLineItem.DealID = dealUnderlyingFund.DealID;
+
+					// Update capital call amount to deal underlying fund and reduce unfunded amount.
+
+					dealUnderlyingFund.UnfundedAmount = dealUnderlyingFund.UnfundedAmount - underlyingFundCapitalCallLineItem.Amount;
+
 					errorInfo = DealRepository.SaveUnderlyingFundPostRecordCapitalCall(underlyingFundCapitalCallLineItem);
+
+					if (errorInfo == null)
+						errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
+
 					if (errorInfo != null)
 						break;
 				}
+
 			}
 			return errorInfo;
 		}
@@ -1776,6 +1786,108 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
+
+		#region UnfundedAdjustment
+
+		//
+		// GET: /Deal/UnfundedAdjustmentList
+		[HttpGet]
+		public JsonResult UnfundedAdjustmentList(int underlyingFundId) {
+			return Json(DealRepository.GetAllUnfundedAdjustments(underlyingFundId), JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// POST : /Deal/CreateUnfundedAdjustment
+		[HttpPost]
+		public ActionResult CreateUnfundedAdjustment(FormCollection collection) {
+			FormCollection rowCollection;
+			int totalRows = 0;
+			int.TryParse(collection["TotalRows"], out totalRows);
+			int index = 0; string[] values; string value;
+			ResultModel resultModel = new ResultModel();
+			for (index = 0; index < totalRows; index++) {
+				rowCollection = new FormCollection();
+				foreach (string key in collection.Keys) {
+					values = collection[key].Split((",").ToCharArray());
+					if (values.Length > index)
+						value = values[index];
+					else
+						value = string.Empty;
+					rowCollection.Add(key, value);
+				}
+				SaveUnfundedAdjustment(rowCollection);
+			}
+			return View("Result", resultModel);
+		}
+
+		private ResultModel SaveUnfundedAdjustment(FormCollection collection) {
+			UnfundedAdjustmentModel model = new UnfundedAdjustmentModel();
+			this.TryUpdateModel(model, collection);
+			ResultModel resultModel = new ResultModel();
+			if (ModelState.IsValid) {
+				IEnumerable<ErrorInfo> errorInfo;
+				DealUnderlyingFundAdjustment dealUnderlyingFundAdjustment = DealRepository.FindDealUnderlyingFundAdjustment(model.DealUnderlyingFundId);
+				if (dealUnderlyingFundAdjustment == null) {
+					dealUnderlyingFundAdjustment = new DealUnderlyingFundAdjustment();
+					dealUnderlyingFundAdjustment.CreatedBy = AppSettings.CreatedByUserId;
+					dealUnderlyingFundAdjustment.CreatedDate = DateTime.Now;
+				}
+				dealUnderlyingFundAdjustment.LastUpdatedBy = AppSettings.CreatedByUserId;
+				dealUnderlyingFundAdjustment.LastUpdatedDate = DateTime.Now;
+				dealUnderlyingFundAdjustment.CommitmentAmount = model.CommitmentAmount;
+				dealUnderlyingFundAdjustment.UnfundedAmount = model.UnfundedAmount;
+				dealUnderlyingFundAdjustment.DealUnderlyingFundID = model.DealUnderlyingFundId;
+				errorInfo = DealRepository.SaveDealUnderlyingFundAdjustment(dealUnderlyingFundAdjustment);
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return resultModel;
+		}
+
+		[HttpGet]
+		public string DeleteUnfundedAdjustment(int id) {
+			if (DealRepository.DeleteUnfundedAdjustment(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		#endregion
+
+		#endregion
+
+		#region Reconcile
+
+		//
+		// GET: /Deal/Reconcile
+		[HttpGet]
+		public ActionResult Reconcile() {
+			ViewData["MenuName"] = "DealManagement";
+			ViewData["SubmenuName"] = "Reconcile";
+			ViewData["PageName"] = "Reconcile";
+			return View(new ReconcileModel());
+		}
+
+		//
+		// POST: /Deal/ReconcileList
+		[HttpPost]
+		public JsonResult ReconcileList(FormCollection collection) {
+			ReconcileModel model = new ReconcileModel();
+			this.TryUpdateModel(model, collection);
+			int totalRows = 0;
+			var allReconciles = DealRepository.GetAllReconciles(model.PageIndex, model.PageSize, (model.FromDate ?? Convert.ToDateTime("01/01/1900")), (model.ToDate ?? DateTime.MaxValue), (model.UnderlyingFundId ?? 0), (model.FundId ?? 0), ref totalRows).ToList();
+			return Json(new { Total = totalRows, Results = allReconciles }, JsonRequestBehavior.AllowGet);
+		}
 
 		#endregion
 

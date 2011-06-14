@@ -51,30 +51,30 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public DealUnderlyingFund(IDealUnderlyingFundService purchaseTypeService)
+		public DealUnderlyingFund(IDealUnderlyingFundService dealUnderlyingFundService)
 			: this() {
-			this.DealUnderlyingFundService = purchaseTypeService;
+			this.DealUnderlyingFundService = dealUnderlyingFundService;
 		}
 
 		public DealUnderlyingFund() {
 		}
 
-		private IDealUnderlyingFundService _purchaseTypeService;
+		private IDealUnderlyingFundService _dealUnderlyingFundService;
 		public IDealUnderlyingFundService DealUnderlyingFundService {
 			get {
-				if (_purchaseTypeService == null) {
-					_purchaseTypeService = new DealUnderlyingFundService();
+				if (_dealUnderlyingFundService == null) {
+					_dealUnderlyingFundService = new DealUnderlyingFundService();
 				}
-				return _purchaseTypeService;
+				return _dealUnderlyingFundService;
 			}
 			set {
-				_purchaseTypeService = value;
+				_dealUnderlyingFundService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var purchaseType = this;
-			IEnumerable<ErrorInfo> errors = Validate(purchaseType);
+			var dealUnderlyingFund = this;
+			IEnumerable<ErrorInfo> errors = Validate(dealUnderlyingFund);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -82,8 +82,8 @@ namespace DeepBlue.Models.Entity {
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(DealUnderlyingFund purchaseType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(purchaseType);
+		private IEnumerable<ErrorInfo> Validate(DealUnderlyingFund dealUnderlyingFund) {
+			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(dealUnderlyingFund);
 			return errors;
 		}
 	}

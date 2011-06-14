@@ -158,5 +158,16 @@ namespace DeepBlue.Controllers.Deal {
 		IEnumerable<ErrorInfo> SaveUnderlyingDirectValuationHistory(UnderlyingDirectLastPriceHistory underlyingDirectLastPriceHistory);
 		#endregion
 
+		#region UnfundedAdjustment
+		List<UnfundedAdjustmentModel> GetAllUnfundedAdjustments(int underlyingFundId);
+		DealUnderlyingFundAdjustment FindDealUnderlyingFundAdjustment(int dealUnderlyingFundId);
+		IEnumerable<ErrorInfo> SaveDealUnderlyingFundAdjustment(DealUnderlyingFundAdjustment dealUnderlyingFundAdjustment);
+		bool DeleteUnfundedAdjustment(int id);
+		#endregion
+
+		#region Reconcile
+		List<ReconcileListModel> GetAllReconciles(int pageSize, int pageIndex, DateTime fromDate, DateTime toDate, int underlyingFundId, int fundId, ref int totalRows);
+		#endregion
+
 	}
 }

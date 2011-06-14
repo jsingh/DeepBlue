@@ -1,0 +1,86 @@
+﻿.search-header {
+	position: absolute;
+	top: 0px;
+	height: 50px;
+	color: #636262;
+	margin: 2px;
+	width: 100%;
+	font-family: Calibri,Arial;
+	font-size: 14px;
+}
+.search-content {
+	position: absolute;
+	top: 50px;
+	bottom: 0px;
+	top: 70px;
+	width: 100%;
+	color: #636262;
+	overflow: auto;
+	overflow-x: hidden;
+}
+.line {
+	background-color: #E3E3E3;
+	clear: both;
+	height: 1px;
+	margin: 5px 0;
+	width: 100%;
+}
+.left-col {
+	float: left;
+}
+.right-col {
+	float: right;
+}
+.title {
+	font-size: 16px;
+	float: left;
+	width: 100%;
+	margin: 5px 0 0;
+}
+input, select {
+	padding: 3px;
+}
+.grid-header {
+	position: absolute;
+	top: 0px;
+	height: 35px;
+	width: 100%;
+}
+.grid-body {
+	position: absolute;
+	top: 35px;
+	bottom: 0px;
+	width: 99%;
+	overflow: auto;
+	overflow-x: hidden;
+}
+.grid {
+	width: 100%;
+}
+.grid tr td {
+	background-color: #F2F2F2;
+}
+.grid tr th {
+	background-color: White;
+	color: #636262;
+}
+.grid tr td, .grid tr th {
+	padding: 8px;
+	font-weight: bold;
+}
+.grid .red {
+	color: red;
+}
+.grid .blue {
+	color: blue;
+}
+.grid .emptyrow td {
+	padding: 0;
+	background-color: White;
+}
+.grid tfoot tr td {
+	background-color: White;
+	text-align: center;
+	padding: 0;
+	color: #636262;
+}
