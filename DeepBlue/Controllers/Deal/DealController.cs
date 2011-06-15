@@ -1516,6 +1516,8 @@ namespace DeepBlue.Controllers.Deal {
 			DateTime existingFundNAVDate = Convert.ToDateTime("01/01/1900");
 			if (underlyingFundNAV == null) {
 				underlyingFundNAV = new UnderlyingFundNAV();
+				underlyingFundNAV.CreatedBy = AppSettings.CreatedByUserId;
+				underlyingFundNAV.CreatedDate = DateTime.Now;
 			}
 			else {
 				existingFundNAV = underlyingFundNAV.FundNAV ?? 0;
@@ -1525,8 +1527,9 @@ namespace DeepBlue.Controllers.Deal {
 			underlyingFundNAV.FundID = fundId;
 			underlyingFundNAV.FundNAV = fundNAV;
 			underlyingFundNAV.FundNAVDate = fundNAVDate;
+			underlyingFundNAV.LastUpdatedBy = AppSettings.CreatedByUserId;
+			underlyingFundNAV.LastUpdatedDate = DateTime.Now;
 			errorInfo = DealRepository.SaveUnderlyingFundNAV(underlyingFundNAV);
-
 			if (errorInfo == null) {
 
 				// Attempt to create underlying fund navigation history.
