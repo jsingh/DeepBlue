@@ -68,6 +68,10 @@ issuer.saveFixedIncome=function (tr) {
 		$.post(url,param,function (data) {
 			spnAjax.hide();
 			if(data.indexOf("True||")> -1) {
+				var tr=$(".footer","#tblFixedIncome");
+				$(":input[type='text']",tr).val("");
+				$("select",tr).val(0);
+				$(":input[type='checkbox']",tr).each(function () { this.checked=false; });
 				var id=data.split("||")[1];
 				issuer.loadFixedIncome(id);
 				if(issuer.onCloseDialog) {

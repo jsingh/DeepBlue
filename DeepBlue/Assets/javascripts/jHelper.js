@@ -100,23 +100,35 @@
 		$("document").ready(function () {
 			var theFrame=$("#iframe_modal",parent.document.body);
 			if(theFrame) {
-				var bdyheight=$("body").height();
+				var body=$(theFrame).contents().find('body');
+				var bdyheight=body.height();
 				if(parseInt(h)>0) { bdyheight+=h; }
 				theFrame.height(bdyheight);
 			}
 		});
 	}
 	,createDialog: function (url,param) {
-		$("#addDialog").remove();
-		var iframe=document.createElement("div");
-		iframe.id="addDialog";
-		iframe.innerHTML+="<div id='loading'><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</div>";
-		iframe.innerHTML+='<iframe id="iframe_modal" allowtransparency="true" marginheight="0" marginwidth="0"  width="100%" frameborder="0" class="externalSite"  />';
-		var ifrm=$("#iframe_modal",iframe).get(0);
-		$(ifrm).css("height","100px").unbind('load');
-		$(ifrm).load(function () { $("#loading",iframe).remove(); });
-		ifrm.src=url;
-		$(iframe).dialog(param);
+		var iframe=document.getElementById("addDialog");
+		if(iframe) {
+			$("#loading",iframe).show();
+			var ifrm=$("#iframe_modal",iframe).empty().get(0);
+			$(ifrm).contents().find('body').empty();
+			ifrm.src=url;
+			$(iframe).dialog('open');
+		} else {
+			iframe=document.createElement("div");
+			iframe.id="addDialog";
+			iframe.innerHTML+="<div id='loading'><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</div>";
+			iframe.innerHTML+='<iframe id="iframe_modal" allowtransparency="true" marginheight="0" marginwidth="0" scrolling="no" width="100%" frameborder="0" class="externalSite" />';
+			var ifrm=$("#iframe_modal",iframe).get(0);
+			$(ifrm).css("height","100px").unbind('load');
+			$("body").append(iframe);
+			$(iframe).dialog(param);
+			ifrm.src=url;
+			$(ifrm).load(function () {
+				$("#loading",iframe).hide();
+			});
+		}
 	}
 	,formatDateTxt: function (target) {
 		$(".datefield",target).each(function () { if($.trim(this.value)!="") { var dt=jHelper.formatDate(jHelper.parseJSONDate(this.value));if(dt.toString()=="01/01/1") { this.value=""; } else { this.value=dt; } } });

@@ -24,9 +24,6 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Description:")]
 		public string Description { get; set; }
 
-		[DisplayName("Incentive Fee:")]
-		public decimal? IncentiveFee { get; set; }
-
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
 		[DisplayName("Fiscal Year End:")]
 		public DateTime? FiscalYearEnd { get; set; }
@@ -40,6 +37,8 @@ namespace DeepBlue.Models.Deal {
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Issuer is required")]
 		[DisplayName("Issuer:")]
 		public int IssuerId { get; set; }
+
+		public string IssuerName { get; set; }
 
 		[DisplayName("Fees Included:")]
 		public bool IsFeesIncluded { get; set; }
@@ -70,14 +69,23 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Fund Structure:")]
 		public int? FundStructureId { get; set; }
 
-		[DisplayName("Tax Rate:")]
-		public decimal? TaxRate { get; set; }
-
 		[DisplayName("Taxable:")]
 		public bool Taxable { get; set; }
 
+		[DisplayName("Tax Rate:")]
+		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.##;-0.##;\\}")]
+		[Range(typeof(decimal), "0", "100", ErrorMessage = "Tax Rate must be under 100%.")]
+		public decimal? TaxRate { get; set; }
+
 		[DisplayName("Management Fee:")]
+		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.##;-0.##;\\}")]
+		[Range(typeof(decimal), "0", "100", ErrorMessage = "Management Fee must be under 100%.")]
 		public decimal? ManagementFee { get; set; }
+
+		[DisplayName("Incentive Fee:")]
+		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.##;-0.##;\\}")]
+		[Range(typeof(decimal), "0", "100", ErrorMessage = "Incentive Fee must be under 100%.")]
+		public decimal? IncentiveFee { get; set; }
 
 		[DisplayName("Exempt:")]
 		public bool Exempt { get; set; }
@@ -97,7 +105,7 @@ namespace DeepBlue.Models.Deal {
 
 		[DisplayName("Domestic:")]
 		public bool IsDomestic { get; set; }
- 
+
 		/* Contact Info */
 
 		public int ContactId { get; set; }
@@ -159,8 +167,6 @@ namespace DeepBlue.Models.Deal {
 		public List<SelectListItem> ReportingTypes { get; set; }
 
 		public List<SelectListItem> Reportings { get; set; }
-
-		public List<SelectListItem> Issuers { get; set; }
 
 		public List<SelectListItem> FundStructures { get; set; }
 

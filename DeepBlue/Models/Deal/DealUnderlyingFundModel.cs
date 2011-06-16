@@ -59,6 +59,12 @@ namespace DeepBlue.Models.Deal {
 
 		public decimal? PostRecordDateDistribution { get; set; }
 
+		public decimal NetPurchasePrice {
+			get {
+				return ((PostRecordDateCapitalCall ?? 0) - (PostRecordDateDistribution ?? 0));
+			}
+		}
+
 		public int? DealClosingId { get; set; }
 	}
 }

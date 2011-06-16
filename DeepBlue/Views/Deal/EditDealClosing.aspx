@@ -44,27 +44,30 @@
 						<th style="width: 25%">
 							Fund Name
 						</th>
-						<th id="thCommitmentAmount" style="width: 25%">
+						<th id="thCommitmentAmount" style="width: 15%">
 							Commitment Amount
-						</th>
-						<th id="thReassignedGPP" style="width: 25%; display: none;">
-							Reassigned GPP
 						</th>
 						<th id="thGPP" style="width: 12%">
 							Gross Purchase Price
 						</th>
-						<th style="width: 12%">
+						<th id="thReassignedGPP" style="width: 27%; display: none;">
+							Reassigned GPP
+						</th>
+						<th>
 							Post Record Capital Call
 						</th>
-						<th style="width: 16%">
+						<th>
 							Post Record Distribution
+						</th>
+						<th>
+							Net Purchase Price
 						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<%foreach (var dealUnderlyingFund in Model.DealUnderlyingFunds) {%>
 					<tr class="emptyrow">
-						<td colspan="5">
+						<td colspan="8">
 							&nbsp;
 						</td>
 					</tr>
@@ -76,19 +79,22 @@
 							<%: Html.Literal(dealUnderlyingFund.FundName)%>
 						</td>
 						<td>
-							<%: Html.TextBox(dealUnderlyingFund.DealUnderlyingFundId + "_" + "CommittedAmount", dealUnderlyingFund.CommittedAmount, new {  @onkeypress = "return jHelper.isCurrency(event);" })%>
+							<%: Html.TextBox(dealUnderlyingFund.DealUnderlyingFundId + "_" + "CommittedAmount",  string.Format("{0:0.##;-0.##;\\}", dealUnderlyingFund.CommittedAmount), new {  @onkeypress = "return jHelper.isCurrency(event);" })%>
+						</td>
+						<td>
+							<%: Html.TextBox(dealUnderlyingFund.DealUnderlyingFundId + "_" + "GrossPurchasePrice", string.Format("{0:0.##;-0.##;\\}", dealUnderlyingFund.GrossPurchasePrice), new {  @onkeypress = "return jHelper.isCurrency(event);" })%>
 						</td>
 						<td style="display: none;">
-							<%: Html.TextBox(dealUnderlyingFund.DealUnderlyingFundId + "_" + "ReassignedGPP", dealUnderlyingFund.ReassignedGPP, new { @id="ReassignedGPP", @onkeyup = "javascript:dealClose.calcAmount();", @onkeypress = "return jHelper.isCurrency(event);" })%>
+							<%: Html.TextBox(dealUnderlyingFund.DealUnderlyingFundId + "_" + "ReassignedGPP", string.Format("{0:0.##;-0.##;\\}", dealUnderlyingFund.ReassignedGPP), new { @id="ReassignedGPP", @onkeyup = "javascript:dealClose.calcAmount();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 						</td>
 						<td>
-							<%: Html.TextBox(dealUnderlyingFund.DealUnderlyingFundId + "_" + "GrossPurchasePrice", dealUnderlyingFund.GrossPurchasePrice, new {  @onkeypress = "return jHelper.isCurrency(event);" })%>
+							<%: Html.TextBox(dealUnderlyingFund.DealUnderlyingFundId + "_" + "PostRecordDateCapitalCall",string.Format("{0:0.##;-0.##;\\}", dealUnderlyingFund.PostRecordDateCapitalCall), new { @id = "PostRecordDateCapitalCall", @onkeyup = "javascript:dealClose.calcAmount();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 						</td>
 						<td>
-							<%: Html.TextBox(dealUnderlyingFund.DealUnderlyingFundId + "_" + "PostRecordDateCapitalCall", dealUnderlyingFund.PostRecordDateCapitalCall, new { @id = "PostRecordDateCapitalCall", @onkeyup = "javascript:dealClose.calcAmount();", @onkeypress = "return jHelper.isCurrency(event);" })%>
+							<%: Html.TextBox(dealUnderlyingFund.DealUnderlyingFundId + "_" + "PostRecordDateDistribution", string.Format("{0:0.##;-0.##;\\}", dealUnderlyingFund.PostRecordDateDistribution), new { @id = "PostRecordDateDistribution", @onkeyup = "javascript:dealClose.calcAmount();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 						</td>
-						<td>
-							<%: Html.TextBox(dealUnderlyingFund.DealUnderlyingFundId + "_" + "PostRecordDateDistribution", dealUnderlyingFund.PostRecordDateDistribution, new { @id = "PostRecordDateDistribution", @onkeyup = "javascript:dealClose.calcAmount();", @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<td style="text-align: right">
+							<%: string.Format("{0:C}",dealUnderlyingFund.NetPurchasePrice)%>
 						</td>
 					</tr>
 					<%}%>
@@ -103,7 +109,7 @@
 			<table cellspacing="0" cellpadding="0" border="0" class="grid" id="tblDealUnderlyingDirect">
 				<thead>
 					<tr>
-						<th style="width: 10%;">
+						<th style="width: 7%;">
 						</th>
 						<th style="width: 20%">
 							No Of Shares
@@ -120,12 +126,18 @@
 						<th>
 							&nbsp;
 						</th>
+						<th>
+							&nbsp;
+						</th>
+						<th>
+							&nbsp;
+						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<%foreach (var dealUnderlyingDirect in Model.DealUnderlyingDirects) {%>
 					<tr class="emptyrow">
-						<td colspan="5">
+						<td colspan="8">
 							&nbsp;
 						</td>
 					</tr>
@@ -137,10 +149,22 @@
 							<%: Html.TextBox(dealUnderlyingDirect.DealUnderlyingDirectId + "_" + "NumberOfShares", dealUnderlyingDirect.NumberOfShares, new {  @onkeypress = "return jHelper.isNumeric(event);" })%>
 						</td>
 						<td>
-							<%: Html.TextBox(dealUnderlyingDirect.DealUnderlyingDirectId + "_" + "PurchasePrice", dealUnderlyingDirect.PurchasePrice, new {  @onkeypress = "return jHelper.isCurrency(event);" })%>
+							<%: Html.TextBox(dealUnderlyingDirect.DealUnderlyingDirectId + "_" + "PurchasePrice", string.Format("{0:0.##;-0.##;\\}", dealUnderlyingDirect.PurchasePrice), new {  @onkeypress = "return jHelper.isCurrency(event);" })%>
 						</td>
 						<td>
-							<%: Html.TextBox(dealUnderlyingDirect.DealUnderlyingDirectId + "_" + "FMV", dealUnderlyingDirect.FMV, new {  @onkeypress = "return jHelper.isCurrency(event);" })%>
+							<%: Html.TextBox(dealUnderlyingDirect.DealUnderlyingDirectId + "_" + "FMV",  string.Format("{0:0.##;-0.##;\\}", dealUnderlyingDirect.FMV), new {  @onkeypress = "return jHelper.isCurrency(event);" })%>
+						</td>
+						<td>
+							&nbsp;
+						</td>
+						<td>
+							&nbsp;
+						</td>
+						<td>
+							&nbsp;
+						</td>
+						<td>
+							&nbsp;
 						</td>
 					</tr>
 					<%}%>
@@ -154,14 +178,14 @@
 			<div class="editor-label auto-width">
 				Total Reassigned GPP:&nbsp;<b><span id="SpnRGPP">
 					<%if (Model.DealUnderlyingFunds.Count > 0) { %>
-					$<%=Model.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.ReassignedGPP)%>
+					<%=string.Format("{0:C}",Model.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.ReassignedGPP))%>
 					<%}%></span></b>&nbsp;&nbsp;Total Post Record Capital Call:&nbsp;<b><span id="SpnPRCC">
 						<%if (Model.DealUnderlyingFunds.Count > 0) { %>
-						$<%=Model.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.PostRecordDateCapitalCall)%>
+						<%=string.Format("{0:C}", Model.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.PostRecordDateCapitalCall))%>
 						<%}%>
 					</span></b>&nbsp;&nbsp;Total Post Record Capital Distribution:&nbsp;<b><span id="SpnPRCD">
 						<%if (Model.DealUnderlyingFunds.Count > 0) { %>
-						$<%=Model.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.PostRecordDateCapitalCall)%>
+						<%=string.Format("{0:C}",Model.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.PostRecordDateCapitalCall))%>
 						<%}%></span></b>
 			</div>
 		</div>

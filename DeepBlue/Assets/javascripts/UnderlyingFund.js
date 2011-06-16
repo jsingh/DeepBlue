@@ -1,6 +1,17 @@
 ﻿var underlyingFund={
 	init: function () {
 		jHelper.resizeIframe();
+		$(document).ready(function () {
+			underlyingFund.formatPercent("TaxRate");
+			underlyingFund.formatPercent("ManagementFee");
+			underlyingFund.formatPercent("IncentiveFee");
+		});
+	}
+	,formatPercent: function (txtid) {
+		var txt=$("#"+txtid);
+		if($.trim(txt.val())!="") {
+			txt.val(txt.val()+"%");
+		}
 	}
 	,add: function (id) {
 		var dt=new Date();
@@ -28,7 +39,7 @@
 		}
 	}
 	,onSubmit: function (formId) {
-		return jHelper.formSubmit(formId);
+		return jHelper.formSubmit(formId,false);
 	}
 	,onRowBound: function (tr,data) {
 		var lastcell=$("td:last div",tr);
@@ -52,6 +63,14 @@
 			alert(UpdateTargetId.html())
 		} else {
 			parent.underlyingFund.closeDialog(true);
+		}
+	}
+	,selectIssuer: function (id) {
+		$("#IssuerId").val(id);
+	}
+	,checkIssuer: function (txt) {
+		if($.trim(txt.value)=="") {
+			$("#IssuerId").val(0);
 		}
 	}
 }

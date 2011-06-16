@@ -15,4 +15,9 @@
 .auto-width {
 	width: auto;
 }
-.checkbox { padding-top:10px; }
+.checkbox {
+	padding-top: 10px;
+}
+.grid th, .grid td {
+	padding: 10px;
+}

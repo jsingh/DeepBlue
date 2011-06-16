@@ -36,8 +36,10 @@
 			$("#CountryId").val(data.CountryId);
 			$.each(data.Equities,function (index,item) { issuer.loadEquityData(item); });
 			$.each(data.FixedIncomes,function (index,item) { issuer.loadFixedIncomeData(item); });
-			jHelper.resizeIframe();
 			jHelper.applyDatePicker($("#FixedIncomeDetail"));
+			setTimeout(function () {
+				jHelper.resizeIframe(20);
+			},500);
 		});
 	}
 	,add: function (id) {
@@ -46,7 +48,7 @@
 		jHelper.createDialog(url,{
 			title: "Issuer",
 			autoOpen: true,
-			width: 1000,
+			width: 1100,
 			modal: true,
 			position: 'top',
 			autoResize: true
@@ -66,7 +68,6 @@
 		}
 	}
 	,onSubmit: function (formId,saveExit) {
-		issuer.onIssuerSuccess=null;
 		issuer.isSaveExit=saveExit;
 		return jHelper.formSubmit(formId);
 	}

@@ -22,7 +22,7 @@
 		<%: Html.LabelFor(model => model.IssuerId) %>
 	</div>
 	<div class="editor-field auto-width">
-		<%: Html.DropDownListFor(model => model.IssuerId,Model.Issuers)%>
+		<%: Html.TextBox("Issuer", Model.IssuerName, new { @id = "Issuer", @onblur="javascript:underlyingFund.checkIssuer(this);" })%>
 	</div>
 	<div class="editor-label rightcol">
 		<%: Html.LabelFor(model => model.FundName) %>
@@ -88,19 +88,19 @@
 		<%: Html.LabelFor(model => model.TaxRate) %>
 	</div>
 	<div class="editor-field auto-width">
-		<%: Html.TextBoxFor(model => model.TaxRate, new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+		<%: Html.EditorFor(model => model.TaxRate)%>
 	</div>
 	<div class="editor-label">
 		<%: Html.LabelFor(model => model.ManagementFee) %>
 	</div>
 	<div class="editor-field auto-width">
-		<%: Html.TextBoxFor(model => model.ManagementFee, new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+		<%: Html.EditorFor(model => model.ManagementFee)%>
 	</div>
 	<div class="editor-label rightcol">
 		<%: Html.LabelFor(model => model.IncentiveFee) %>
 	</div>
 	<div class="editor-field auto-width">
-		<%: Html.TextBoxFor(model => model.IncentiveFee, new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+		<%: Html.EditorFor(model => model.IncentiveFee)%>
 	</div>
 	<div class="editor-label">
 		<%: Html.LabelFor(model => model.TerminationYear) %>
@@ -150,7 +150,7 @@
 	<div class="editor-field auto-width">
 		<%: Html.DropDownListFor(model => model.ManagerContactId,Model.ManagerContacts)%>
 	</div>
-	<div class="editor-label">
+	<div class="editor-label auto-width">
 		<%: Html.LabelFor(model => model.Taxable)%>
 	</div>
 	<div class="editor-field auto-width checkbox">
@@ -253,6 +253,7 @@
 	<%: Html.HiddenFor(model => model.UnderlyingFundId)%>
 	<%: Html.ValidationMessageFor(model => model.FundName)%>
 	<%: Html.ValidationMessageFor(model => model.FundTypeId)%>
+	<%: Html.HiddenFor(model => model.IssuerId)%>
 	<%: Html.ValidationMessageFor(model => model.IssuerId)%>
 	<%: Html.ValidationMessageFor(model => model.BankName)%>
 	<%: Html.ValidationMessageFor(model => model.Account)%>
@@ -266,5 +267,9 @@
 	<script type="text/javascript">
 		underlyingFund.init();
 	</script>
+	<%= Html.jQueryAutoComplete("Issuer", new AutoCompleteOptions {
+																	  Source = "/Issuer/FindIssuers",	MinLength = 1,
+																	  OnSelect = "function(event, ui) { underlyingFund.selectIssuer(ui.item.id);}"
+	})%>
 	<%=Html.jQueryDatePicker("FiscalYearEnd")%>
 </asp:Content>

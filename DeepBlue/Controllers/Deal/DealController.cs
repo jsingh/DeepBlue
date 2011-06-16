@@ -741,7 +741,6 @@ namespace DeepBlue.Controllers.Deal {
 			model.Reportings = SelectListFactory.GetReportingFrequencySelectList(AdminRepository.GetAllReportingFrequencies());
 			model.Industries = SelectListFactory.GetIndustrySelectList(AdminRepository.GetAllIndusties());
 			model.Geographyes = SelectListFactory.GetGeographySelectList(AdminRepository.GetAllGeographies());
-			model.Issuers = SelectListFactory.GetIssuerSelectList(IssuerRepository.GetAllIssuers());
 			model.FundStructures = SelectListFactory.GetEmptySelectList();
 			model.InvestmentTypes = SelectListFactory.GetInvestmentTypeSelectList(AdminRepository.GetAllInvestmentTypes());
 			model.ManagerContacts = SelectListFactory.GetEmptySelectList();
@@ -751,8 +750,11 @@ namespace DeepBlue.Controllers.Deal {
 
 		[HttpPost]
 		public ActionResult UpdateUnderlyingFund(FormCollection collection) {
+			collection["TaxRate"] = (collection["TaxRate"] != null ? collection["TaxRate"].Replace("%", "") : string.Empty);
+			collection["ManagementFee"] = (collection["ManagementFee"] != null ? collection["ManagementFee"].Replace("%", "") : string.Empty);
+			collection["IncentiveFee"] = (collection["IncentiveFee"] != null ? collection["IncentiveFee"].Replace("%", "") : string.Empty);
 			CreateUnderlyingFundModel model = new CreateUnderlyingFundModel();
-			this.TryUpdateModel(model);
+			this.TryUpdateModel(model, collection);
 			ResultModel resultModel = new ResultModel();
 			string ErrorMessage = UnderlyingFundNameAvailable(model.FundName, model.UnderlyingFundId);
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
@@ -763,9 +765,7 @@ namespace DeepBlue.Controllers.Deal {
 				if (underlyingFund == null) {
 					underlyingFund = new UnderlyingFund();
 				}
-
 				underlyingFund.EntityID = (int)ConfigUtil.CurrentEntityID;
-
 				underlyingFund.IsFeesIncluded = model.IsFeesIncluded;
 				underlyingFund.FundName = model.FundName;
 				underlyingFund.FundTypeID = model.FundTypeId;

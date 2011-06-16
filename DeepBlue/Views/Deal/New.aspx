@@ -72,7 +72,7 @@
 		<table cellpadding="0" cellspacing="0" border="0" id="FundList">
 			<thead>
 				<tr>
-					<th sortname="FundID" style="width: 10%;" align="center">
+					<th sortname="FundId" style="width: 10%;" align="center">
 						ID
 					</th>
 					<th sortname="FundName" style="width: 90%">
