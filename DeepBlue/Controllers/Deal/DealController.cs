@@ -212,6 +212,13 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		//
+		// GET: /Deal/GetDealDetail
+		[HttpGet]
+		public JsonResult GetDealDetail(int id) {
+			return Json(DealRepository.GetDealDetail(id), JsonRequestBehavior.AllowGet);
+		}
+
+		//
 		// GET: /Deal/FindFundDeals
 		[HttpGet]
 		public JsonResult FindFundDeals(int fundId, string term) {
@@ -366,12 +373,11 @@ namespace DeepBlue.Controllers.Deal {
 
 					UnderlyingFundNAV underlyingFundNAV = DealRepository.FindUnderlyingFundNAV(model.UnderlyingFundId, model.FundId);
 					bool isCreateFundNAV = false;
-					if (underlyingFundNAV == null)
-						isCreateFundNAV = true;
-					else if (underlyingFundNAV.FundNAV != model.FundNAV)
-						isCreateFundNAV = true;
 
-					// If the user changes the fund navigation then create underlying fund valuation.
+					if (underlyingFundNAV == null)
+						isCreateFundNAV = true;		// Create new underlying fund valuation.
+					else if (underlyingFundNAV.FundNAV != model.FundNAV)
+						isCreateFundNAV = true; 	// If the user changes the fund navigation then update underlying fund valuation.
 
 					if (isCreateFundNAV)
 						CreateUnderlyingFundValuation(dealUnderlyingFund.UnderlyingFundID, model.FundId, (model.FundNAV ?? 0), DateTime.Now, out errorInfo);
@@ -536,6 +542,13 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		//
+		// GET: /Deal/GetDealCloseDetails
+		[HttpGet]
+		public JsonResult GetDealCloseDetails(int id, int dealId) {
+			return Json(DealRepository.FindDealClosingModel(id, dealId), JsonRequestBehavior.AllowGet);
+		}
+
+		//
 		// GET: /Deal/UpdateDealClosing
 		[HttpPost]
 		public ActionResult UpdateDealClosing(FormCollection collection) {
@@ -637,7 +650,7 @@ namespace DeepBlue.Controllers.Deal {
 			flexgridData.page = pageIndex;
 			foreach (var dealClose in dealClosings) {
 				flexgridData.rows.Add(new FlexigridRow {
-					cell = new List<object> { dealClose.DealClosingId, dealClose.DealName, dealClose.FundName, dealClose.CloseDate.ToString("MM/dd/yyyy") }
+					cell = new List<object> { dealClose.DealClosingId, dealClose.DealNumber, dealClose.DealCloseName, dealClose.CloseDate.ToString("MM/dd/yyyy"), FormatHelper.CurrencyFormat(dealClose.TotalNetPurchasePrice) }
 				});
 			}
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);
@@ -1488,6 +1501,7 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region UnderlyingFundValuation
+
 		//
 		// GET: /Deal/UnderlyingFundValuationList
 		[HttpGet]
@@ -1506,8 +1520,34 @@ namespace DeepBlue.Controllers.Deal {
 			return Json(model, JsonRequestBehavior.AllowGet);
 		}
 
-		private UnderlyingFundNAV CreateUnderlyingFundValuation(int underlyingFundId, int fundId, decimal fundNAV, DateTime fundNAVDate,
-			out IEnumerable<ErrorInfo> errorInfo) {
+		//
+		// POST : /Deal/CreateUnderlyingFundValuation
+		[HttpPost]
+		public ActionResult CreateUnderlyingFundValuation(FormCollection collection) {
+			UnderlyingFundValuationModel model = new UnderlyingFundValuationModel();
+			this.TryUpdateModel(model);
+			ResultModel resultModel = new ResultModel();
+			if (ModelState.IsValid) {
+				IEnumerable<ErrorInfo> errorInfo;
+				UnderlyingFundNAV underlyingFundNAV = CreateUnderlyingFundValuation(model.UnderlyingFundId, model.FundId, (model.UpdateNAV ?? 0), model.UpdateDate, out errorInfo);
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					resultModel.Result = "True||" + underlyingFundNAV.UnderlyingFundNAVID + "||" + underlyingFundNAV.FundID;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		private UnderlyingFundNAV CreateUnderlyingFundValuation(int underlyingFundId, int fundId, decimal fundNAV, DateTime fundNAVDate, out IEnumerable<ErrorInfo> errorInfo) {
 
 			// Attempt to create deal underlying fund valuation.
 
@@ -1540,6 +1580,11 @@ namespace DeepBlue.Controllers.Deal {
 				underlyingFundNAVHistory.FundNAVDate = underlyingFundNAV.FundNAVDate;
 				underlyingFundNAVHistory.Calculation = null;
 				underlyingFundNAVHistory.IsAudited = false;
+				underlyingFundNAVHistory.CreatedBy = AppSettings.CreatedByUserId;
+				underlyingFundNAVHistory.CreatedDate = DateTime.Now;
+				underlyingFundNAVHistory.LastUpdatedBy = AppSettings.CreatedByUserId;
+				underlyingFundNAVHistory.LastUpdatedDate = DateTime.Now;
+
 				if (existingFundNAV == underlyingFundNAV.FundNAV
 					&& existingFundNAVDate == underlyingFundNAV.FundNAVDate) {
 					underlyingFundNAVHistory.Calculation = underlyingFundNAV.FundNAV + ":" + DealRepository.SumOfTotalCapitalCalls(underlyingFundNAV.UnderlyingFundID, underlyingFundNAV.FundID) + ":" + DealRepository.SumOfTotalDistributions(underlyingFundNAV.UnderlyingFundID, underlyingFundNAV.FundID);
@@ -1548,34 +1593,7 @@ namespace DeepBlue.Controllers.Deal {
 			}
 			return underlyingFundNAV;
 		}
-
-		//
-		// POST : /Deal/CreateUnderlyingFundValuation
-		[HttpPost]
-		public ActionResult CreateUnderlyingFundValuation(FormCollection collection) {
-			UnderlyingFundValuationModel model = new UnderlyingFundValuationModel();
-			this.TryUpdateModel(model);
-			ResultModel resultModel = new ResultModel();
-			if (ModelState.IsValid) {
-				IEnumerable<ErrorInfo> errorInfo;
-				UnderlyingFundNAV underlyingFundNAV = CreateUnderlyingFundValuation(model.UnderlyingFundId, model.FundId, (model.UpdateNAV ?? 0), model.UpdateDate, out errorInfo);
-				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
-				if (string.IsNullOrEmpty(resultModel.Result)) {
-					resultModel.Result = "True||" + underlyingFundNAV.UnderlyingFundNAVID + "||" + underlyingFundNAV.FundID;
-				}
-			}
-			else {
-				foreach (var values in ModelState.Values.ToList()) {
-					foreach (var err in values.Errors.ToList()) {
-						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
-							resultModel.Result += err.ErrorMessage + "\n";
-						}
-					}
-				}
-			}
-			return View("Result", resultModel);
-		}
-
+		
 		//
 		// GET: /Deal/DeleteUnderlyingFundValuation
 		[HttpGet]

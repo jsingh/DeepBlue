@@ -137,6 +137,18 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public object GetDealDetail(int dealId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from deal in context.Deals
+						where deal.DealID == dealId
+						select new {
+							FundName = deal.Fund.FundName,
+							DealName = deal.DealName,
+							DealNumber = deal.DealNumber,
+							FundId = deal.FundID
+						}).SingleOrDefault();
+			}
+		}
 		#endregion
 
 		#region DealExpense
@@ -423,6 +435,7 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region DealClosing
+
 		public IEnumerable<ErrorInfo> SaveDealClosing(DealClosing dealClosing) {
 			return dealClosing.Save();
 		}
@@ -487,7 +500,8 @@ namespace DeepBlue.Controllers.Deal {
 															CloseDate = dealClose.CloseDate,
 															DealClosingId = dealClose.DealClosingID,
 															DealName = dealClose.Deal.DealName,
-															FundName = dealClose.Deal.Fund.FundName
+															FundName = dealClose.Deal.Fund.FundName,
+															DealNumber = dealClose.DealNumber
 														});
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<DealCloseListModel> paginatedList = new PaginatedList<DealCloseListModel>(query, pageIndex, pageSize);
@@ -495,6 +509,7 @@ namespace DeepBlue.Controllers.Deal {
 				return paginatedList;
 			}
 		}
+
 		#endregion
 
 		#region DealReport
@@ -1051,29 +1066,29 @@ namespace DeepBlue.Controllers.Deal {
 							 TotalCapitalCall = (from cc in context.UnderlyingFundCapitalCalls
 												 where cc.UnderlyingFundID == underlyingFund.UnderlyingtFundID
 												 && cc.FundID == fund.FundID
-												 && cc.NoticeDate >= (underlyingFundNAV != null ? underlyingFundNAV.FundNAVDate : todayDate)
+												 && cc.NoticeDate >= (underlyingFundNAV != null ? EntityFunctions.TruncateTime(underlyingFundNAV.FundNAVDate) : todayDate)
 												 select cc.Amount).Sum(),
 							 TotalPostRecordCapitalCall = (from pcc in context.UnderlyingFundCapitalCallLineItems
 														   where pcc.UnderlyingFundID == underlyingFund.UnderlyingtFundID
 														   && pcc.Deal.FundID == fund.FundID
-														   && pcc.CapitalCallDate >= (underlyingFundNAV != null ? underlyingFundNAV.FundNAVDate : todayDate)
+														   && pcc.CapitalCallDate >= (underlyingFundNAV != null ? EntityFunctions.TruncateTime(underlyingFundNAV.FundNAVDate) : todayDate)
 														   && pcc.UnderlyingFundCapitalCallID == null
 														   select pcc.Amount).Sum(),
 							 TotalDistribution = (from ds in context.UnderlyingFundCashDistributions
 												  where ds.UnderlyingFundID == underlyingFund.UnderlyingtFundID
 												  && ds.FundID == fund.FundID
-												  && ds.NoticeDate >= (underlyingFundNAV != null ? underlyingFundNAV.FundNAVDate : todayDate)
+												  && ds.NoticeDate >= (underlyingFundNAV != null ? EntityFunctions.TruncateTime(underlyingFundNAV.FundNAVDate) : todayDate)
 												  select ds.Amount).Sum(),
 							 TotalPostRecordDistribution = (from pds in context.CashDistributions
 															where pds.UnderlyingFundID == underlyingFund.UnderlyingtFundID
 															&& pds.Deal.FundID == fund.FundID
-															&& pds.DistributionDate >= (underlyingFundNAV != null ? underlyingFundNAV.FundNAVDate : todayDate)
+															&& pds.DistributionDate >= (underlyingFundNAV != null ? EntityFunctions.TruncateTime(underlyingFundNAV.FundNAVDate) : todayDate)
 															&& pds.UnderluingFundCashDistributionID == null
 															select pds.Amount).Sum(),
 							 UnderlyingFundNAVId = (underlyingFundNAV != null ? underlyingFundNAV.UnderlyingFundNAVID : 0),
 							 UpdateNAV = underlyingFundNAV.FundNAV
 						 });
-
+		 
 			return query;
 		}
 
@@ -1356,7 +1371,7 @@ namespace DeepBlue.Controllers.Deal {
 		public List<ReconcileListModel> GetAllReconciles(int pageIndex, int pageSize, DateTime fromDate, DateTime toDate, int underlyingFundId, int fundId, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				var reconciles = (from capitalCall in context.UnderlyingFundCapitalCalls
-								  where capitalCall.ReceivedDate >= fromDate && capitalCall.ReceivedDate <= toDate
+								  where capitalCall.ReceivedDate >= EntityFunctions.TruncateTime(fromDate) && capitalCall.ReceivedDate <= EntityFunctions.TruncateTime(toDate)
 								  && (fundId > 0 ? capitalCall.FundID == fundId : capitalCall.FundID > 0)
 								  select new ReconcileListModel {
 									  EventType = 1,
@@ -1368,43 +1383,43 @@ namespace DeepBlue.Controllers.Deal {
 									  PaidOnOrReceivedOn = false
 								  })
 								.Union(from capitalCall in context.UnderlyingFundCapitalCallLineItems
-									where capitalCall.CapitalCallDate >= fromDate && capitalCall.CapitalCallDate <= toDate
-									&& (fundId > 0 ? capitalCall.Deal.FundID == fundId : capitalCall.Deal.FundID > 0)
-									&& capitalCall.UnderlyingFundCapitalCallID == null
-								select new ReconcileListModel {
-									EventType = 2,
-									CapitalCallAmount = capitalCall.Amount,
-									FundName = capitalCall.Deal.Fund.FundName,
-									PaymentOrReceivedDate = capitalCall.CapitalCallDate,
-									UnderlyingFundName = capitalCall.UnderlyingFund.FundName,
-									DistributionAmount = 0,
-									PaidOnOrReceivedOn = false,
-								})
+									   where capitalCall.CapitalCallDate >= EntityFunctions.TruncateTime(fromDate) && capitalCall.CapitalCallDate <= EntityFunctions.TruncateTime(toDate)
+									   && (fundId > 0 ? capitalCall.Deal.FundID == fundId : capitalCall.Deal.FundID > 0)
+									   && capitalCall.UnderlyingFundCapitalCallID == null
+									   select new ReconcileListModel {
+										   EventType = 2,
+										   CapitalCallAmount = capitalCall.Amount,
+										   FundName = capitalCall.Deal.Fund.FundName,
+										   PaymentOrReceivedDate = capitalCall.CapitalCallDate,
+										   UnderlyingFundName = capitalCall.UnderlyingFund.FundName,
+										   DistributionAmount = 0,
+										   PaidOnOrReceivedOn = false,
+									   })
 								.Union(from cashDistribution in context.UnderlyingFundCashDistributions
-								where cashDistribution.ReceivedDate >= fromDate && cashDistribution.ReceivedDate <= toDate
-								&& (fundId > 0 ? cashDistribution.FundID == fundId : cashDistribution.FundID > 0)
-								select new ReconcileListModel {
-									EventType = 3,
-									CapitalCallAmount = 0,
-									FundName = cashDistribution.Fund.FundName,
-									PaymentOrReceivedDate = cashDistribution.ReceivedDate,
-									UnderlyingFundName = cashDistribution.UnderlyingFund.FundName,
-									DistributionAmount = cashDistribution.Amount,
-									PaidOnOrReceivedOn = false,
-								})
+									   where cashDistribution.ReceivedDate >= EntityFunctions.TruncateTime(fromDate) && cashDistribution.ReceivedDate <= EntityFunctions.TruncateTime(toDate)
+									   && (fundId > 0 ? cashDistribution.FundID == fundId : cashDistribution.FundID > 0)
+									   select new ReconcileListModel {
+										   EventType = 3,
+										   CapitalCallAmount = 0,
+										   FundName = cashDistribution.Fund.FundName,
+										   PaymentOrReceivedDate = cashDistribution.ReceivedDate,
+										   UnderlyingFundName = cashDistribution.UnderlyingFund.FundName,
+										   DistributionAmount = cashDistribution.Amount,
+										   PaidOnOrReceivedOn = false,
+									   })
 								.Union(from cashDistribution in context.CashDistributions
-								where cashDistribution.DistributionDate >= fromDate && cashDistribution.DistributionDate <= toDate
-								&& (fundId > 0 ? cashDistribution.Deal.FundID == fundId : cashDistribution.Deal.FundID > 0)
-								&& cashDistribution.UnderluingFundCashDistributionID == null
-									select new ReconcileListModel {
-									EventType = 4,
-									CapitalCallAmount = 0,
-									FundName = cashDistribution.Deal.Fund.FundName,
-									PaymentOrReceivedDate = cashDistribution.DistributionDate,
-									UnderlyingFundName = cashDistribution.UnderlyingFund.FundName,
-									DistributionAmount = cashDistribution.Amount,
-									PaidOnOrReceivedOn = false
-								});
+									   where cashDistribution.DistributionDate >= EntityFunctions.TruncateTime(fromDate) && cashDistribution.DistributionDate <= EntityFunctions.TruncateTime(toDate)
+									   && (fundId > 0 ? cashDistribution.Deal.FundID == fundId : cashDistribution.Deal.FundID > 0)
+									   && cashDistribution.UnderluingFundCashDistributionID == null
+									   select new ReconcileListModel {
+										   EventType = 4,
+										   CapitalCallAmount = 0,
+										   FundName = cashDistribution.Deal.Fund.FundName,
+										   PaymentOrReceivedDate = cashDistribution.DistributionDate,
+										   UnderlyingFundName = cashDistribution.UnderlyingFund.FundName,
+										   DistributionAmount = cashDistribution.Amount,
+										   PaidOnOrReceivedOn = false
+									   });
 				PaginatedList<ReconcileListModel> paginatedList = new PaginatedList<ReconcileListModel>(reconciles.OrderByDescending(re => re.PaymentOrReceivedDate), pageIndex, pageSize);
 				totalRows = paginatedList.TotalCount;
 				return paginatedList.ToList();

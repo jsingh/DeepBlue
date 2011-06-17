@@ -113,7 +113,8 @@ h4 a {
 	clear: both;
 	float: right;
 	color: #fff;
-	font-size: 15px; margin-top:-5px;
+	font-size: 15px;
+	margin-top: -5px;
 }
 .seefull a {
 	color: #fff;
@@ -125,10 +126,25 @@ h4 a {
 	border: 0px;
 }
 .make {
-	font-size: 12px; margin-left:50px;
+	font-size: 12px;
+	margin-left: 50px;
 	color: #4E98BF;
 	text-decoration: none;
 }
-.makenew-header{
-	 float: left; padding-top: 10px; display: none;
+.makenew-header {
+	float: left;
+	padding-top: 10px;
+	display: none;
+}
+.right-search {
+	float: right;
+	margin: 5px 0 5px 0;
+}
+.left-search {
+	float: left;
+	margin: 5px 0 5px 0;
+	padding-top: 10px;
+}
+.blue {
+	color: Blue;
 }

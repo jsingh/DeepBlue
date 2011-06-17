@@ -237,6 +237,13 @@ namespace DeepBlue.Helpers {
 			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
+
+		public static MvcHtmlString InputCheckBox(this HtmlHelper helper, string name, object htmlAttributes) {
+			TagBuilder tag = new TagBuilder("input");
+			tag.Attributes.Add("type", "checkbox");
+			tag.Attributes.Add("name", name);
+			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+		}
 		#endregion
 	}
 }

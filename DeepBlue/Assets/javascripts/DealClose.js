@@ -2,9 +2,10 @@
 	init: function () {
 		jHelper.resizeIframe();
 		$("document").ready(function () {
-			dealClose.checkInputBox($("#tblDealUnderlyingFund"));
-			dealClose.checkInputBox($("#tblDealUnderlyingDirect"));
-			dealClose.finalClose(document.getElementById("IsFinalClose"));
+			//dealClose.checkInputBox($("#tblDealUnderlyingFund"));
+			//dealClose.checkInputBox($("#tblDealUnderlyingDirect"));
+			//dealClose.finalClose(document.getElementById("IsFinalClose"));
+			jHelper.waterMark();
 		});
 	}
 	,checkInputBox: function (table) {
@@ -25,33 +26,68 @@
 	}
 	,selectDeal: function (id) {
 		dealClose.setDealId(id);
-		dealClose.onGridSubmit();
+		$("#SpnLoading").show();
+		$.getJSON("/Deal/GetDealDetail/"+id,function (data) {
+			$("#SpnLoading").hide();
+			$("#SpnFundName").html(data.FundName);
+			$("#SpnDealNo").html(data.DealNumber);
+			$("#SpnDealName").html(data.DealName);
+			dealClose.onGridSubmit();
+		});
 	}
 	,getDealId: function () { return $("#DealId").val(); }
 	,setDealId: function (id) { $("#DealId").val(id); }
 	,onGridSubmit: function () {
 		var param=[{ name: "dealId",value: dealClose.getDealId()}];
 		var grid=$("#DealCloseList");
-		grid.flexOptions({ params: param });
-		grid.flexReload();
+		grid.ajaxTableOptions({ params: param });
+		grid.ajaxTableReload();
 	}
 	,add: function (id) {
 		var dealId=parseInt(dealClose.getDealId());
 		if(dealId>0) {
-			var dt=new Date();
-			var url="/Deal/EditDealClosing?id="+id+"&dealId="+dealClose.getDealId()+"&t="+dt.getTime();
-			jHelper.createDialog(url,{
-				title: "Deal Close",
-				autoOpen: true,
-				width: 1000,
-				modal: true,
-				position: 'top',
-				autoResize: true
+			$.getJSON("/Deal/GetDealCloseDetails",
+			{ "_": (new Date).getTime(),"id": 0,"dealId": dealId }
+			,function (data) {
+				$("#DealClosingId").val(data.DealClosingId);
+				$("#DealNumber").val(data.DealNumber);
+				$("#SpnDealCloseNo").html("Deal Close "+data.DealNumber);
+				if(data.CloseDate!=null) {
+					$("#CloseDate").val(jHelper.formatDate(jHelper.parseJSONDate(data.CloseDate)));
+				} else {
+					$("#CloseDate").val("");
+				}
+				var tblduflist=$("#DealUnderlyingFundList");
+				$("tbody",tblduflist).empty();$("tfoot",tblduflist).empty();
+				$("#DUFundsTemplate").tmpl(data).appendTo(tblduflist);
+				tbldirectlist=$("#DealUnderlyingDirects");
+				$("tbody",tbldirectlist).empty();$("tfoot",tbldirectlist).empty();
+				$("#DUDirectsTemplate").tmpl(data).appendTo(tbldirectlist);
+
+				$("tbody tr",tblduflist).each(function () {
+					var dcid=parseInt($("#DealClosingId",this).val());
+					if(dcid==$("#DealClosingId").val()) {
+						var chk=$("#chk",tr).get(0);if(chk) { chk.checked=true; }
+					}
+				});
 			});
 		} else {
 			alert("Deal is required");
 			$("#Deal").focus();
 		}
+	}
+	,saveDealClose: function (isFinalClose,loadingId) {
+		var loading=$("#"+loadingId);
+		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		var param=$("#frmDealClose").serializeArray();
+		$.post("/Deal/UpdateDealClosing",param,function (data) {
+			loading.empty();
+			if($.trim(data)!="") {
+				alert(data);
+			} else {
+				dealClose.onGridSubmit();
+			}
+		});
 	}
 	,onSubmit: function (formId) {
 		return jHelper.formSubmit(formId,false);
@@ -59,7 +95,7 @@
 	,closeDialog: function (reload) {
 		$("#addDialog").dialog('close');
 		if(reload==true) {
-			$("#DealCloseList").flexReload();
+			$("#DealCloseList").ajaxTableReload();
 		}
 	}
 	,onCreateBegin: function () {

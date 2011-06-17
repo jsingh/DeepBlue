@@ -1704,6 +1704,10 @@
           <Property Name="FundNAVDate" Type="datetime" Nullable="false" />
           <Property Name="Calculation" Type="varchar" MaxLength="200" />
           <Property Name="IsAudited" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
         </EntityType>
         <EntityType Name="UnderlyingFundType">
           <Key>
@@ -4996,6 +5000,10 @@
           <Property Name="FundNAVDate" Type="DateTime" Nullable="false" />
           <Property Name="Calculation" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
           <Property Name="IsAudited" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
           <NavigationProperty Name="UnderlyingFundNAV" Relationship="DeepBlueModel.FK_UnderlyingFundNAVHistory_UnderlyingFundNAV" FromRole="UnderlyingFundNAVHistory" ToRole="UnderlyingFundNAV" />
         </EntityType>
         <EntityType Name="UnderlyingFundType">
@@ -7288,6 +7296,10 @@
             <ScalarProperty Name="FundNAVDate" ColumnName="FundNAVDate" />
             <ScalarProperty Name="Calculation" ColumnName="Calculation" />
             <ScalarProperty Name="IsAudited" ColumnName="IsAudited" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+            <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="UnderlyingFundTypes"><EntityTypeMapping TypeName="DeepBlueModel.UnderlyingFundType"><MappingFragment StoreEntitySet="UnderlyingFundType">
             <ScalarProperty Name="UnderlyingFundTypeID" ColumnName="UnderlyingFundTypeID" />
@@ -7313,7 +7325,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="DeepBlue">
+      <Diagram Name="DeepBlue" ZoomLevel="98">
         <EntityTypeShape EntityType="DeepBlueModel.Account" Width="1.5" PointX="6.75" PointY="8.375" Height="4.7149055989583317" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.ActivityType" Width="1.5" PointX="9.75" PointY="48.5" Height="1.5923063151041674" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.Address" Width="1.5" PointX="0.75" PointY="34.625" Height="4.7149055989583388" IsExpanded="true" />
@@ -7397,7 +7409,7 @@
         <EntityTypeShape EntityType="DeepBlueModel.UnderlyingFundCapitalCallLineItem" Width="1.5" PointX="11.25" PointY="16.75" Height="3.2357796223958246" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.UnderlyingFundCashDistribution" Width="1.5" PointX="14.25" PointY="25.125" Height="3.728821614583353" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.UnderlyingFundNAV" Width="1.5" PointX="17.25" PointY="22.5" Height="2.9070849609374818" IsExpanded="true" />
-        <EntityTypeShape EntityType="DeepBlueModel.UnderlyingFundNAVHistory" Width="1.5" PointX="19.5" PointY="23" Height="2.0853483072916674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeepBlueModel.UnderlyingFundNAVHistory" Width="1.5" PointX="19.5" PointY="22.625" Height="2.742737630208353" IsExpanded="true" />
         <EntityTypeShape EntityType="DeepBlueModel.UnderlyingFundType" Width="1.5" PointX="6.75" PointY="46.25" Height="1.4279589843749818" IsExpanded="true" />
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFund_Account" ManuallyRouted="false">
           <ConnectorPoint PointX="8.25" PointY="10.732452799479166" />
@@ -8756,8 +8768,8 @@
           <ConnectorPoint PointX="11.25" PointY="19.985779622395825" />
         </AssociationConnector>
         <AssociationConnector Association="DeepBlueModel.FK_UnderlyingFundNAVHistory_UnderlyingFundNAV" ManuallyRouted="false">
-          <ConnectorPoint PointX="18.75" PointY="24.042674153645834" />
-          <ConnectorPoint PointX="19.5" PointY="24.042674153645834" />
+          <ConnectorPoint PointX="18.75" PointY="23.996368815104177" />
+          <ConnectorPoint PointX="19.5" PointY="23.996368815104177" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

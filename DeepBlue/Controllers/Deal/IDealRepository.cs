@@ -19,6 +19,7 @@ namespace DeepBlue.Controllers.Deal {
 		bool DealNameAvailable(string dealName, int dealId, int fundId);
 		int GetMaxDealNumber(int fundId);
 		List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		object GetDealDetail(int dealId);
 		#endregion
 
 		#region DealExpense

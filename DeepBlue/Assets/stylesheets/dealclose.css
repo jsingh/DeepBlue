@@ -21,3 +21,38 @@
 .grid th, .grid td {
 	padding: 10px;
 }
+input[type='text'] {
+	padding: 3px;
+}
+.dc-box {
+	float: left;
+	clear: both;
+	width: 100%;
+	margin: 5px 0;
+}
+.dc-box .cell {
+	font-size: 16px;
+	margin: 3px;
+}
+.dc-box .link a {
+	font-size: 12px;
+	font-weight: normal;
+}
+#content {
+	color: #977F7F;
+}
+.fundslist {
+	float: left;
+	clear: both;
+	width: 100%;
+	background-color: #dce6f2;
+}
+.fundslist .line {
+	background-color: #000;
+}
+#NewDealClose .editor-label, #NewDealClose .editor-field {
+	padding: 15px;
+}
+.grid .arow td {  background-color:#bfbfbf; }
+.savefooter { float:left; width:100%; }
+.savefooter .cell { float:right;width:auto; padding-right:10px; font-size:12px; height:auto; } 
