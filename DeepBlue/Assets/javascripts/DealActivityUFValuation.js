@@ -19,6 +19,7 @@
 		}
 		row=$("#UFV_"+fundid);
 		dealActivity.setUpRow(row);
+
 	});
 };
 dealActivity.makeNewUFV=function () {

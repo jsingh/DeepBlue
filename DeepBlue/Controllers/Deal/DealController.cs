@@ -557,7 +557,7 @@ namespace DeepBlue.Controllers.Deal {
 			ResultModel resultModel = new ResultModel();
 			string[] dealUnderlyingFundIds = (collection["DealUnderlyingFundId"] == null ? string.Empty : collection["DealUnderlyingFundId"]).ToString().Split((",").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 			string[] dealUnderlyingDirectIds = (collection["DealUnderlyingDirectId"] == null ? string.Empty : collection["DealUnderlyingDirectId"]).ToString().Split((",").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-			string ErrorMessage = DealCloseDateAvailable(model.CloseDate ?? Convert.ToDateTime("01/01/1900"), model.DealId, model.DealClosingId);
+			string ErrorMessage = DealCloseDateAvailable(model.CloseDate, model.DealId, model.DealClosingId);
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				ModelState.AddModelError("CloseDate", ErrorMessage);
 			}
@@ -570,7 +570,7 @@ namespace DeepBlue.Controllers.Deal {
 					dealClosing = new DealClosing();
 					dealClosing.DealNumber = DealRepository.GetMaxDealClosingNumber(model.DealId);
 				}
-				dealClosing.CloseDate = model.CloseDate ?? Convert.ToDateTime("01/01/1900");
+				dealClosing.CloseDate = model.CloseDate;
 				dealClosing.DealID = model.DealId;
 				dealClosing.IsFinalClose = model.IsFinalClose;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveDealClosing(dealClosing);
@@ -603,16 +603,107 @@ namespace DeepBlue.Controllers.Deal {
 
 							dealUnderlyingDirect.NumberOfShares = DataTypeHelper.ToInt32(collection[dealUnderlyingDirect.DealUnderlyingDirectID.ToString() + "_" + "NumberOfShares"]);
 							dealUnderlyingDirect.PurchasePrice = DataTypeHelper.ToDecimal(collection[dealUnderlyingDirect.DealUnderlyingDirectID.ToString() + "_" + "PurchasePrice"]);
-							dealUnderlyingDirect.FMV = DataTypeHelper.ToDecimal(collection[dealUnderlyingDirect.DealUnderlyingDirectID.ToString() + "_" + "FMV"]);
-							dealUnderlyingDirect.DealClosingID = null;
+							dealUnderlyingDirect.FMV = dealUnderlyingDirect.NumberOfShares * dealUnderlyingDirect.PurchasePrice;
 							dealUnderlyingDirect.DealClosingID = dealClosing.DealClosingID;
+							
 						}
 						else if (dealUnderlyingDirect.DealClosingID == dealClosing.DealClosingID) {
 							dealUnderlyingDirect.DealClosingID = null;
 						}
 						errorInfo = DealRepository.SaveDealUnderlyingDirect(dealUnderlyingDirect);
+						if (errorInfo != null) {
+							break;
+						}
+						else {
+
+							// Check the user changes the purchase price.
+
+							UnderlyingDirectLastPrice underlyingDirectLastPrice = DealRepository.FindUnderlyingDirectLastPrice(model.FundId, dealUnderlyingDirect.SecurityID, dealUnderlyingDirect.SecurityTypeID);
+							bool isCreateLastPrice = false;
+							if (underlyingDirectLastPrice == null)
+								isCreateLastPrice = true;
+							else if (underlyingDirectLastPrice.LastPrice != dealUnderlyingDirect.PurchasePrice)
+								isCreateLastPrice = true;
+
+							// If the user changes the purchase price then create underlying direct valuation.
+
+							if (isCreateLastPrice)
+								errorInfo = SaveUnderlyingDirectValuation(model.FundId, dealUnderlyingDirect.SecurityID, dealUnderlyingDirect.SecurityTypeID, dealUnderlyingDirect.PurchasePrice, DateTime.Now, out underlyingDirectLastPrice);
+						}
+					}
+				}
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		//
+		// GET: /Deal/UpdateFinalDealClosing
+		[HttpPost]
+		public ActionResult UpdateFinalDealClosing(FormCollection collection) {
+			CreateDealCloseModel model = new CreateDealCloseModel();
+			this.TryUpdateModel(model);
+			ResultModel resultModel = new ResultModel();
+			string ErrorMessage = DealCloseDateAvailable(model.CloseDate, model.DealId, model.DealClosingId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("CloseDate", ErrorMessage);
+			}
+			// Attempt to create deal closing.
+			DealClosing dealClosing = DealRepository.FindDealClosing(model.DealClosingId);
+			if (dealClosing == null) {
+				ModelState.AddModelError("DealClosingId", "DealClosingId is required");
+			}
+			if (ModelState.IsValid) {
+				dealClosing.CloseDate = model.CloseDate;
+				dealClosing.DealID = model.DealId;
+				dealClosing.IsFinalClose = model.IsFinalClose;
+				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveDealClosing(dealClosing);
+				if (errorInfo == null) {
+					List<DealUnderlyingFund> dealUnderlyingFunds = DealRepository.GetDealUnderlyingFunds(dealClosing.DealID, dealClosing.DealClosingID);
+					foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
+						// Update deal underlying fund changes.
+						dealUnderlyingFund.PostRecordDateCapitalCall = DataTypeHelper.ToDecimal(collection[dealUnderlyingFund.DealUnderlyingtFundID.ToString() + "_" + "PostRecordDateCapitalCall"]);
+						dealUnderlyingFund.PostRecordDateDistribution = DataTypeHelper.ToDecimal(collection[dealUnderlyingFund.DealUnderlyingtFundID.ToString() + "_" + "PostRecordDateDistribution"]);
+						dealUnderlyingFund.ReassignedGPP = DataTypeHelper.ToDecimal(collection[dealUnderlyingFund.DealUnderlyingtFundID.ToString() + "_" + "ReassignedGPP"]);
+						errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
 						if (errorInfo != null)
 							break;
+					}
+					List<DealUnderlyingDirect> dealUnderlyingDirects = DealRepository.GetDealUnderlyingDirects(dealClosing.DealID, dealClosing.DealClosingID);
+					foreach (var dealUnderlyingDirect in dealUnderlyingDirects) {
+						// Update deal underlying direct changes.
+						dealUnderlyingDirect.NumberOfShares = DataTypeHelper.ToInt32(collection[dealUnderlyingDirect.DealUnderlyingDirectID.ToString() + "_" + "NumberOfShares"]);
+						dealUnderlyingDirect.PurchasePrice = DataTypeHelper.ToDecimal(collection[dealUnderlyingDirect.DealUnderlyingDirectID.ToString() + "_" + "PurchasePrice"]);
+						dealUnderlyingDirect.FMV = dealUnderlyingDirect.NumberOfShares * dealUnderlyingDirect.PurchasePrice;
+						errorInfo = DealRepository.SaveDealUnderlyingDirect(dealUnderlyingDirect);
+						if (errorInfo != null) {
+							break;
+						}
+						else {
+
+							// Check the user changes the purchase price.
+
+							UnderlyingDirectLastPrice underlyingDirectLastPrice = DealRepository.FindUnderlyingDirectLastPrice(model.FundId, dealUnderlyingDirect.SecurityID, dealUnderlyingDirect.SecurityTypeID);
+							bool isCreateLastPrice = false;
+							if (underlyingDirectLastPrice == null)
+								isCreateLastPrice = true;
+							else if (underlyingDirectLastPrice.LastPrice != dealUnderlyingDirect.PurchasePrice)
+								isCreateLastPrice = true;
+
+							// If the user changes the purchase price then create underlying direct valuation.
+
+							if (isCreateLastPrice)
+								errorInfo = SaveUnderlyingDirectValuation(model.FundId, dealUnderlyingDirect.SecurityID, dealUnderlyingDirect.SecurityTypeID, dealUnderlyingDirect.PurchasePrice, DateTime.Now, out underlyingDirectLastPrice);
+						}
 					}
 				}
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
@@ -680,7 +771,7 @@ namespace DeepBlue.Controllers.Deal {
 			flexgridData.page = pageIndex;
 			foreach (var deal in deals) {
 				flexgridData.rows.Add(new FlexigridRow {
-					cell = new List<object> { deal.DealId, deal.DealNumber.ToString() + ".", deal.DealName, deal.FundName, (deal.SellerName == null ? string.Empty : deal.SellerName) }
+					cell = new List<object> { deal.DealId, deal.DealNumber.ToString() + ".", deal.DealName, deal.FundName, FormatHelper.CurrencyFormat(deal.CommittedAmount), FormatHelper.CurrencyFormat(deal.UnfundedAmount), FormatHelper.CurrencyFormat(deal.TotalAmount) }
 				});
 			}
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);
@@ -1593,7 +1684,7 @@ namespace DeepBlue.Controllers.Deal {
 			}
 			return underlyingFundNAV;
 		}
-		
+
 		//
 		// GET: /Deal/DeleteUnderlyingFundValuation
 		[HttpGet]
@@ -1911,6 +2002,33 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
+
+		#region Directs
+		public ActionResult Directs() {
+			ViewData["MenuName"] = "DealManagement";
+			ViewData["SubmenuName"] = "AddDirects";
+			ViewData["PageName"] = "AddDirects";
+			CreateIssuerModel model = new CreateIssuerModel();
+			model.Countries = SelectListFactory.GetCountrySelectList(AdminRepository.GetAllCountries());
+			model.EquityTypes = SelectListFactory.GetEquityTypeSelectList(AdminRepository.GetAllEquityTypes());
+			model.FixedIncomeTypes = SelectListFactory.GetFixedIncomeTypesSelectList(AdminRepository.GetAllFixedIncomeTypes());
+			model.Industries = SelectListFactory.GetIndustrySelectList(AdminRepository.GetAllIndusties());
+			model.Currencies = SelectListFactory.GetCurrencySelectList(AdminRepository.GetAllCurrencies());
+			model.ShareClassTypes = SelectListFactory.GetShareClassTypeSelectList(AdminRepository.GetAllShareClassTypes());
+			model.EquityDetailModel.Currencies = model.Currencies;
+			model.EquityDetailModel.ShareClassTypes = model.ShareClassTypes;
+			model.EquityDetailModel.EquityTypes = model.EquityTypes;
+			return View(model);
+		}
+		#endregion
+
+		#region UnderlyingFund
+
+		public ActionResult AddUnderlyingFunds() {
+			return View();
+		}
+		#endregion
+
 
 		public ActionResult Result() {
 			return View();

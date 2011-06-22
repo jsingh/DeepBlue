@@ -88,8 +88,11 @@
     <Compile Include="Helpers\JsonSerializer.cs" />
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
+    <Compile Include="Models\Deal\CreateIssuerModel.cs" />
+    <Compile Include="Models\Deal\EquityDetailModel.cs" />
     <Compile Include="Models\Deal\EquitySplitModel.cs" />
     <Compile Include="Models\Deal\ExpenseToDealModel.cs" />
+    <Compile Include="Models\Deal\FixedIncomeDetailModel.cs" />
     <Compile Include="Models\Deal\FundExpenseModel.cs" />
     <Compile Include="Models\Deal\NewHoldingPatternModel.cs" />
     <Compile Include="Models\Deal\ReconcileModel.cs" />
@@ -648,6 +651,7 @@
     <Content Include="Assets\javascripts\DealActivityCashDistribution.js" />
     <Content Include="Assets\javascripts\DealActivityPRCapitalCall.js" />
     <Content Include="Assets\javascripts\DealActivityFundExpense.js" />
+    <Content Include="Assets\javascripts\DealDirect.js" />
     <Content Include="Assets\javascripts\DealReconcile.js" />
     <Content Include="Assets\javascripts\IssuerFixedIncome.js" />
     <Content Include="Assets\javascripts\IssuerEquity.js" />
@@ -703,6 +707,7 @@
     <Content Include="Assets\javascripts\TransactionController.js" />
     <Content Include="Assets\javascripts\UnderlyingFund.js" />
     <Content Include="Assets\javascripts\UnderlyingFundType.js" />
+    <Content Include="Assets\stylesheets\addufund.css" />
     <Content Include="Assets\stylesheets\adminbackend.css" />
     <Content Include="Assets\stylesheets\adminflexigrid.css" />
     <Content Include="Assets\stylesheets\capitalcall.css" />
@@ -711,6 +716,7 @@
     <Content Include="Assets\stylesheets\deal.css" />
     <Content Include="Assets\stylesheets\dealactivity.css" />
     <Content Include="Assets\stylesheets\dealclose.css" />
+    <Content Include="Assets\stylesheets\dealdirect.css" />
     <Content Include="Assets\stylesheets\dealreconcile.css" />
     <Content Include="Assets\stylesheets\dealreport.css" />
     <Content Include="Assets\stylesheets\distribution.css" />
@@ -721,6 +727,7 @@
     <Content Include="Assets\stylesheets\issuer.css" />
     <Content Include="Assets\stylesheets\jquery-ui-1.8.10.custom.css" />
     <Content Include="Assets\stylesheets\newInvestor.css" />
+    <Content Include="Assets\stylesheets\popup.css" />
     <Content Include="Assets\stylesheets\report.css" />
     <Content Include="bin\DeepBlue.dll" />
     <Content Include="bin\DeepBlue.pdb" />
@@ -791,7 +798,10 @@
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
+    <Content Include="Views\Deal\AddUnderlyingFunds.aspx" />
     <Content Include="Views\Deal\Close.aspx" />
+    <Content Include="Views\Deal\DirectEquityDetail.ascx" />
+    <Content Include="Views\Deal\Directs.aspx" />
     <Content Include="Views\Deal\ExpenseToDeal.ascx" />
     <Content Include="Views\Deal\FundExpense.ascx" />
     <Content Include="Views\Deal\Reconcile.aspx" />

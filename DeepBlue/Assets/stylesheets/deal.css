@@ -32,59 +32,27 @@
 	width: 180px;
 }
 h5, .editor-label, .editor-field {
-	color: #636262;
-}
-.editor-label input, .editor-field input {
-	border: solid 1px #d9d9d9;
-	padding: 3px;
-	color: #7f7f97;
+	color: #000;
 }
 h5 {
-	font-size: 15px;
-	font-weight: normal;
+	font-size: 16px;
+	font-weight: bold;
 }
 .grid {
 	width: 100%;
 }
-.grid th img, .grid td img {
-	cursor: pointer;
-}
-.grid th, .grid td {
-	padding: 2px;
-	color: #7f7f7f;
-}
-.grid th {
-	font-weight: normal;
-}
-.grid tbody tr {
-	background-color: #f2f2f2;
-}
-.grid .emptyrow td {
-	background-color: White;
-	padding: 0;
-}
 .expandbtn {
 	cursor: pointer;
+	float: left;
+	width: 10%;
 }
 #DealDeail {
 	float: left;
 }
-.grid input, .grid select {
-	width: 98%;
-}
-.grid .blank {
-	background-color: #fff;
-}
 #tblDealExpense tr td {
 	text-align: center;
 }
-.line {
-	height: 1px;
-	margin: 5px 0px 5px 0px;
-	background-color: #E3E3E3;
-	clear: both;
-	width: 100%;
-}
+
 h4 {
 	font-size: 16px;
 	font-weight: normal;
@@ -99,9 +67,6 @@ h4 a {
 	width: 200px;
 	overflow: hidden;
 	float: left;
-}
-.searchdeal {
-	font-size: 12pt;
 }
 .hide {
 	display: none;
@@ -147,4 +112,133 @@ h4 a {
 }
 .blue {
 	color: Blue;
+}
+.dealdetail {
+	float: left;
+}
+.dealdetail .cell {
+	font-size: 14px;
+	font-weight: bold;
+}
+.section {
+	margin: 15px 65px;
+	float: left;
+	width: 100%;
+}
+#DealMain .content {
+	clear: both;
+	float: left;
+	width: 100%;
+}
+.expandheader {
+	padding: 15px 0px 15px 65px;
+	cursor: pointer;
+	float: left;
+	width: 90%;
+	background-image: url(../images/downarrow.png);
+	background-position: center right;
+	background-repeat: no-repeat;
+}
+.expandsel {
+	background-image: url(../images/expandbg.png);
+	background-repeat: repeat-x;
+	background-position: left top;
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	font-size: 14px;
+	padding: 0 0 0 70px;
+	width: 100%;
+}
+.expandheader #title {
+	display: none;
+}
+.expandimg {
+	float: left;
+}
+.expandtitle {
+	float: left;
+	width: 200px;
+}
+.expandaddbtn {
+	float: left;
+	padding-left: 30px;
+	display: none;
+	background-image: url(../images/btn_bg.png);
+	background-repeat: no-repeat;
+	width: 151px;
+	height: 31px;
+	margin: 10px 0 0 70px;
+	line-height: 33px;
+}
+.expandaddbtn a {
+	color: #000;
+	font-size: 11px;
+	font-weight: bold;
+}
+#SellerInfo {
+	background-color: #E9EAEC;
+	float: left;
+	width: 100%;
+}
+.headerbar {
+	background-image: url(../images/expandbg.png);
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	font-size: 14px;
+	padding: 0px 0 0 65px;
+}
+.headerbar .leftcol {
+	float: left;
+}
+
+.dealhead_tr {
+	background-color: #BABFC5;
+	height: 33px;
+	color: #1e1c1d;
+}
+.ddleft {
+	background-image: url(../images/dropdown_l.png);
+	float: left;
+	height: 27px;
+	width: 6px;
+}
+.ddcenter {
+	background-image: url(../images/dropdown_c.png);
+	background-repeat: repeat-x;
+	float: left;
+	height: 27px;
+	width: 150px;
+}
+.ddright {
+	background-image: url(../images/dropdown_r.png);
+	float: left;
+	height: 27px;
+	width: 28px;
+}
+.grid .row td,.grid .arow td {
+	padding: 5px;
+	background-color: #F5F5F5;
+	font-size: 12px;
+	border-bottom: solid 2px #B5B5B5;border-top: solid 2px #fff;
+}
+.grid .arow td {
+	background-color: #E9EAEC;
+}
+.grid {
+	border-top: solid 2px #B5B5B5;
+}
+.grid thead tr th, .grid tfoot tr td {
+	border-top: solid 2px #fff;
+	border-bottom: solid 2px #B5B5B5;
+	background-color: #BABFC5;
+	padding: 5px;
+	font-weight: bold;
+}
+.grid tbody tr td img {
+	cursor: pointer;
+}
+.grid td input[type='text'], .grid td select {
+	width: 90%;
 }

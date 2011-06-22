@@ -18,7 +18,7 @@
 	<td style="text-align: right">
 		<%: Html.Hidden("DealId","${DealId}")%>
 		<%: Html.Span("", new { id = "UpdateLoading" })%>
-		<%: Html.Image("tick.png", new { @id = "add", @class = "default-button {{if DealId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addETD(this,${DealId});" })%>
+		<%: Html.Image("add.png", new { @id = "add", @class = "default-button {{if DealId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addETD(this,${DealId});" })%>
 		{{if DealId>0}} &nbsp;&nbsp;<%: Html.Image("Edit.png", new { @class = "default-button show", @onclick = "javascript:dealActivity.editETD(this,${DealId});" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @class = "default-button", @onclick="javascript:dealActivity.deleteETD(${DealId},this);" })%>
 		{{/if}}
 	</td>

@@ -4,6 +4,7 @@
 	,init: function () {
 		$(document).ready(function () {
 			deal.loadFundList();
+			jHelper.waterMark();
 			$("#Deal_Management").removeClass("subext").addClass("subext3");
 			var FullDealList=$("#FullDealList");
 			FullDealList.dialog({ title: "Deal List",autoOpen: false,width: 625,modal: true,position: 'top',autoResize: false,open: function () { $("#DealList").flexReload(); } });
@@ -24,21 +25,23 @@
 	}
 	,initDealEvents: function () {
 		$(".expandbtn").toggle(function () {
-			var parent=$(this).parent().parent();
-			var fname=this.src.substring(this.src.lastIndexOf('/')+1);
-			var src=this.src.replace("/"+fname,"");
-			fname="S_"+fname.replace("S_","");
-			this.src=src+"/"+fname;
-			$(".makenew-header",parent).show();
-			$(".fieldbox",parent).show();
+			var header=$(this);
+			var parent=header.parent();
+			parent.addClass("expandsel");
+			$("#img",header).hide();
+			$("#title",header).show();
+			$(".expandaddbtn",parent).show();
+			$(".makenew-header",parent.parent()).show();
+			$(".fieldbox",parent.parent()).show();
 		},function () {
-			var parent=$(this).parent().parent();
-			var fname=this.src.substring(this.src.lastIndexOf('/')+1);
-			var src=this.src.replace("/"+fname,"");
-			fname=fname.replace("S_","");
-			this.src=src+"/"+fname;
-			$(".makenew-header",parent).hide();
-			$(".fieldbox",parent).hide();
+			var header=$(this);
+			var parent=header.parent();
+			parent.removeClass("expandsel");
+			$("#img",header).show();
+			$("#title",header).hide();
+			$(".expandaddbtn",parent).hide();
+			$(".makenew-header",parent.parent()).hide();
+			$(".fieldbox",parent.parent()).hide();
 		});
 	}
 	,selectPartner: function (checked) {
@@ -63,6 +66,8 @@
 		var dt=new Date();
 		var url="/Deal/FindDeal/?dealId="+dealId+"&t="+dt.getTime();
 		$("#NewDeal").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		$("#SaveDealBox").show();
+		$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/mdeal.png");
 		$.getJSON(url,function (data) {
 			deal.loadTemplate(data);
 		});
@@ -126,6 +131,9 @@
 	,onDealSubmit: function (formId) {
 		return deal.checkForm(document.getElementById(formId));
 	}
+	,saveDeal: function () {
+		$("#btnSaveDeal","#AddNewDeal").click();
+	}
 	,seeFullDeal: function () {
 		var FullDealList=$("#FullDealList");
 		FullDealList.dialog("open");
@@ -161,6 +169,14 @@
 		});
 	}
 	,loadFundList: function () {
+		var DealFundList=$("#DealFundList");
+		var data={};
+		$("#FundListTemplate").tmpl(data).appendTo(DealFundList);
+		$("#M_Fund").autocomplete({ source: "/Fund/FindFunds",minLength: 1,select: function (event,ui) {
+			deal.selectFund(this,ui.item.id,ui.item.label);
+		},appendTo: "body",delay: 300
+		});
+		return;
 		var pageIndex=1;
 		var pageSize=8;
 		var sortName="FundName";
@@ -168,7 +184,6 @@
 		var dt=new Date();
 		var url="/Fund/GetAllFunds/?pageIndex="+pageIndex+"&pageSize="+pageSize+"&t="+dt.getTime();
 		var FundList=document.getElementById("FundList");
-		var DealFundList=$("#DealFundList");
 		DealFundList.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		$.getJSON(url,function (data) {
 			DealFundList.empty();
@@ -193,6 +208,8 @@
 		var dt=new Date();
 		var url="/Deal/FindFund/?fundId="+fundId+"&t="+dt.getTime();
 		$("#NewDeal").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		$("#SaveDealBox").show();
+		$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/cnewdeal.png");
 		$.getJSON(url,function (data) {
 			data.FundName=fundName;
 			data.FundId=fundId;

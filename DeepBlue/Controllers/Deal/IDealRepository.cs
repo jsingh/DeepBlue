@@ -32,8 +32,9 @@ namespace DeepBlue.Controllers.Deal {
 		#region DealUnderlyingFund
 		DealUnderlyingFund FindDealUnderlyingFund(int dealUnderlyingFundId);
 		DealUnderlyingFundModel FindDealUnderlyingFundModel(int dealUnderlyingFundId);
-		List<DealUnderlyingFundDetail> GetAllDealUnderlyingFundDetails(int dealId);
+		List<DealUnderlyingFundModel> GetAllDealUnderlyingFundDetails(int dealId);
 		List<DealUnderlyingFund> GetDealUnderlyingFunds(int dealId);
+		List<DealUnderlyingFund> GetDealUnderlyingFunds(int dealId,int dealClosingId);
 		List<DealUnderlyingFund> GetAllNotClosingDealUnderlyingFunds(int underlyingFundId, int dealId);
 		List<DealUnderlyingFund> GetAllClosingDealUnderlyingFunds(int underlyingFundId, int fundId);
 		void DeleteDealUnderlyingFund(int dealUnderlyingFundId);
@@ -44,7 +45,7 @@ namespace DeepBlue.Controllers.Deal {
 		DealUnderlyingDirect FindDealUnderlyingDirect(int dealUnderlyingDirectId);
 		DealUnderlyingDirectModel FindDealUnderlyingDirectModel(int dealUnderlyingDirectId);
 		void DeleteDealUnderlyingDirect(int dealUnderlyingDirectId);
-		List<DealUnderlyingDirectDetail> GetAllDealUnderlyingDirects(int dealId);
+		List<DealUnderlyingDirectModel> GetAllDealUnderlyingDirects(int dealId);
 		List<DealUnderlyingDirectListModel> GetAllDealUnderlyingDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		IEnumerable<ErrorInfo> SaveDealUnderlyingDirect(DealUnderlyingDirect dealUnderlyingDirect);
 		List<AutoCompleteList> FindDealUnderlyingDirects(string fundName);
@@ -57,6 +58,7 @@ namespace DeepBlue.Controllers.Deal {
 		int GetMaxDealClosingNumber(int dealId);
 		bool DealCloseDateAvailable(DateTime dealCloseDate, int dealId, int dealCloseId);
 		List<DealUnderlyingDirect> GetDealUnderlyingDirects(int dealId);
+		List<DealUnderlyingDirect> GetDealUnderlyingDirects(int dealId,int dealCloseId);
 		List<DealCloseListModel> GetAllDealClosingLists(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int dealId);
 		#endregion
 

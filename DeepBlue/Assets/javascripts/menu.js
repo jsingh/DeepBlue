@@ -9,6 +9,7 @@
 		menu.mcancelclosetime();
 		if(menu.ddmenuitem) { menu.ddmenuitem.style.display='none'; }
 		$(".mdiv").hide();
+		$(".subul").hide();
 		menu.ddmenuitem=document.getElementById(id);
 		if(menu.ddmenuitem) {
 			menu.ddmenuitem.style.display='block';
@@ -20,8 +21,7 @@
 		menu.msubcancelclosetime();
 		menu.mcancelclosetime();
 		var smenu=document.getElementById(id);
-		var ullength=$("ul",smenu).length;
-		if(ullength>0) {
+		if($.trim($(smenu).html())!="") {
 			$(".innersub-select").hide().removeClass("innersub-select");
 			if(id!='') {
 				if(menu.subddmenuitem) menu.subddmenuitem.style.display='none';

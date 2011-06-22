@@ -31,6 +31,8 @@
 	jHelper.applyDatePicker(tr);
 	deal.setIndex($("#tblUnderlyingDirect"));
 	$("#MakeNewDUDirect").hide();
+		$("tr:odd","#tbodyUnderlyingDirect").removeClass("row").removeClass("arow").addClass("arow");
+	$("tr:even","#tbodyUnderlyingDirect").removeClass("row").removeClass("arow").addClass("row");
 };
 deal.deleteUnderlyingDirect=function (id,img) {
 	if(confirm("Are you sure you want to delete this deal underlying direct?")) {
@@ -41,10 +43,10 @@ deal.deleteUnderlyingDirect=function (id,img) {
 };
 deal.editUnderlyingDirect=function (img) {
 	var tr=$(img).parents("tr:first");
-	if(img.src.indexOf('tick.png')> -1) {
+	if(img.src.indexOf('savebtn.png')> -1) {
 		deal.saveUnderlyingDirect(tr);
 	} else {
-		img.src="/Assets/images/tick.png";
+		img.src="/Assets/images/savebtn.png";
 		deal.showElements(tr);
 	}
 };

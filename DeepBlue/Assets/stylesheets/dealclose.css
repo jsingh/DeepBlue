@@ -19,7 +19,7 @@
 	padding-top: 10px;
 }
 .grid th, .grid td {
-	padding: 10px;
+	padding: 5px 10px 5px 5px;
 }
 input[type='text'] {
 	padding: 3px;
@@ -28,31 +28,45 @@ input[type='text'] {
 	float: left;
 	clear: both;
 	width: 100%;
-	margin: 5px 0;
 }
-.dc-box .cell {
-	font-size: 16px;
-	margin: 3px;
-}
-.dc-box .link a {
-	font-size: 12px;
-	font-weight: normal;
-}
-#content {
-	color: #977F7F;
-}
+
 .fundslist {
 	float: left;
 	clear: both;
 	width: 100%;
-	background-color: #dce6f2;
 }
-.fundslist .line {
-	background-color: #000;
+#NewDealClose, #FinalDealClose {
+	float: left;
+	width: 100%;
 }
-#NewDealClose .editor-label, #NewDealClose .editor-field {
-	padding: 15px;
+.grid .arow td {
+	background-color: #bfbfbf;
 }
-.grid .arow td {  background-color:#bfbfbf; }
-.savefooter { float:left; width:100%; }
-.savefooter .cell { float:right;width:auto; padding-right:10px; font-size:12px; height:auto; } 
+.savefooter {
+	float: left;
+     width: 97%;margin:20px 0px 20px 0px;
+}
+.savefooter .cell {
+	float: right;
+	width: auto;
+	padding-right: 10px;
+	font-size: 12px;
+	height: auto;
+}
+.closetitle {
+	    background-color: #FFFFFF;
+    clear: both;
+    color: #354866;
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0 30px;
+    padding: 12px 12px 12px 65px;
+    width: 100%;
+}
+.closedetail {
+	clear: both;
+	margin: 10px 0 10px 65px;
+	float: left;
+}
+.tabledetail { padding-left:65px; }

@@ -1,6 +1,5 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.UnfundedAdjustmentModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<tr id="EmptyUFA_${DealUnderlyingFundAdjustmentId}" class='emptyrow'><td colspan="6">&nbsp;</td></tr>
 <tr id="UFA_${DealUnderlyingFundAdjustmentId}" {{if DealUnderlyingFundAdjustmentId>0==false}}class="newrow"{{/if}}>
 	<td style="text-align: center">
 		<%: Html.Span("${FundName}", new { @class = "show" })%>

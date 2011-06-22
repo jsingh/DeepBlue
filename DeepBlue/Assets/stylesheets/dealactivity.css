@@ -25,13 +25,17 @@
 #content {
 	overflow: hidden;
 }
-#ActivityMain .content {
+#ActivityMain {
+	float: left;
 	clear: both;
-	position: absolute;
-	top: 35px;
-	bottom: 0px;
-	width: 100%;
+}
+#ActivityMain .content {
+	bottom: 0;
+	clear: both;
 	overflow: auto;
+	position: absolute;
+	top: 102px;
+	width: 100%;
 }
 #ActivityMain .detail {
 	display: none;
@@ -130,16 +134,13 @@ input, select {
 	margin-bottom: 10px;
 	width: 100%;
 }
-.heading {
+.subheading {
 	font-size: 13px;
 	font-weight: bold;
 	clear: both;
 	float: left;
 	color: #977f7f;
 	margin: 10px;
-}
-.editor-label input, .editor-field input {
-	padding: 6px;
 }
 .editor-label {
 	padding: 8px;
@@ -154,6 +155,44 @@ input, select {
 	margin: 5px;
 	padding: 0px;
 }
-.paging { float:right; font-size:12px; }
-.paging a { color:#977F7F;   margin:5px;   }
-.paging .cell { padding:0;margin:0 0 0 20px; }
+.paging {
+	float: right;
+	font-size: 12px;
+}
+.paging a {
+	color: #977F7F;
+	margin: 5px;
+}
+.paging .cell {
+	padding: 0;
+	margin: 0 0 0 20px;
+}
+#UATab {
+	background-image: url(../images/uatab.png);
+	background-repeat: no-repeat;
+	width: 219px;
+	height: 43px;
+	float: left;margin-left: 65px; cursor:pointer;
+}
+#SATab {
+	background-image: url(../images/satab.png);
+	background-repeat: no-repeat;
+	width: 215px;
+	height: 43px;
+	float: left;
+	margin-left: 5px; cursor:pointer;
+}
+#UATab.select {
+	background-image: url(../images/uatabsel.png);
+}
+#SATab.select {
+	background-image: url(../images/satabsel.png);
+}
+.tabbg {
+	float: left;
+	width: 100%;
+	background-image: url(../images/tabbg.png);
+	background-position: left bottom;
+	background-repeat: repeat-x;
+	padding-bottom: 3px;
+}

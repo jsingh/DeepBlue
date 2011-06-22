@@ -9,7 +9,7 @@ namespace DeepBlue.Controllers {
 		//
 		// GET: /Home/
 		public ActionResult Index() {
-			ViewData["MenuName"] = "Investor";
+			ViewData["MenuName"] = "DealManagement";
 			return View();
 		}
 

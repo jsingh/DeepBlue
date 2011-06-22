@@ -17,6 +17,8 @@
 	jHelper.applyDatePicker(tr);
 	deal.calcTotalExpense();
 	$("#MakeNewDEHeader").hide();
+	$("tr:odd","#tbodyDealExpense").removeClass("row").removeClass("arow").addClass("arow");
+	$("tr:even","#tbodyDealExpense").removeClass("row").removeClass("arow").addClass("row");
 };
 deal.deleteDealExpense=function (id,img) {
 	if(confirm("Are you sure you want to delete this deal expense?")) {
@@ -31,10 +33,10 @@ deal.deleteDealExpense=function (id,img) {
 };
 deal.editDealExpense=function (img) {
 	var tr=$(img).parents("tr:first");
-	if(img.src.indexOf('tick.png')> -1) {
+	if(img.src.indexOf('savebtn.png')> -1) {
 		deal.saveExpense(tr);
 	} else {
-		img.src="/Assets/images/tick.png";
+		img.src="/Assets/images/savebtn.png";
 		deal.showElements(tr);
 	}
 };

@@ -50,7 +50,8 @@ dealActivity.loadCD=function (isRefresh) {
 			$.each(data,function (i,item) { item["Index"]=i;$("#CashDistributionAddTemplate").tmpl(item).appendTo(target); });
 			dealActivity.setUpRow($("tr",target));
 			rowsLength=$("tr",target).length;
-			if(rowsLength>0) { $("#CashDistribution").show(); }
+			if(rowsLength>0) { $("#CashDistribution").show(); }	$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");
+			$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
 		});
 	}
 };

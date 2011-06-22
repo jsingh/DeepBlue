@@ -141,6 +141,7 @@ namespace DeepBlue.Controllers.Issuer {
 			else
 				return string.Empty;
 		}
+
 		#endregion
 
 		#region Equity

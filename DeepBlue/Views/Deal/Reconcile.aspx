@@ -69,7 +69,7 @@
 				<tfoot style="display: none">
 					<tr>
 						<td colspan="6">
-							<%: Html.Anchor("View More", "javascript:dealReconcile.viewMore();", new { @style = "color: #636262;" })%>
+							<%: Html.Anchor("View More", "javascript:dealReconcile.viewMore();", new { @style = "color: #000;" })%>
 						</td>
 					</tr>
 				</tfoot>

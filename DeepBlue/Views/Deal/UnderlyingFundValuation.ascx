@@ -1,6 +1,5 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.UnderlyingFundValuationModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<tr id="EmptyUFV_${FundId}" class='emptyrow'><td colspan="6">&nbsp;</td></tr>
 <tr id="UFV_${FundId}" {{if UnderlyingFundNAVId==0}}class="newrow"{{/if}}>
 	<td style="text-align: center">
 		<%: Html.Span("${FundName}")%>
@@ -26,7 +25,7 @@
 	<td style="text-align: right">
 		<%: Html.Hidden("UnderlyingFundNAVId","${UnderlyingFundNAVId}")%>
 		<%: Html.Span("", new { id = "UpdateLoading" })%>
-		<%: Html.Image("tick.png", new { @id = "add", @class = "default-button {{if UnderlyingFundNAVId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addUFV(this,${UnderlyingFundNAVId});" })%>
+		<%: Html.Image("add.png", new { @id = "add", @class = "default-button {{if UnderlyingFundNAVId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addUFV(this,${UnderlyingFundNAVId});" })%>
 		{{if UnderlyingFundNAVId>0}} &nbsp;&nbsp;<%: Html.Image("Edit.png", new { @class = "default-button show", @onclick = "javascript:dealActivity.editUFV(this,${UnderlyingFundNAVId});" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @class = "default-button", @onclick="javascript:dealActivity.deleteUFV(${FundId},${UnderlyingFundNAVId},this);" })%>
 		{{/if}}
 	</td>

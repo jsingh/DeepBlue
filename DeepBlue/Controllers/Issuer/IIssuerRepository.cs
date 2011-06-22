@@ -23,7 +23,7 @@ namespace DeepBlue.Controllers.Issuer {
 
 		#region Equity
 		List<Equity> GetAllEquity(int issuerId);
-		EquityDetailModel FindEquityModel(int equityId);
+		DeepBlue.Models.Issuer.EquityDetailModel FindEquityModel(int equityId);
 		Equity FindEquity(int equityId);
 		IEnumerable<ErrorInfo> SaveEquity(Equity equity);
 		bool DeleteEquity(int id);
@@ -33,7 +33,7 @@ namespace DeepBlue.Controllers.Issuer {
 		#endregion
 
 		#region FixedIncome
-		FixedIncomeDetailModel FindFixedIncomeModel(int fixedIncomeId);
+		DeepBlue.Models.Issuer.FixedIncomeDetailModel FindFixedIncomeModel(int fixedIncomeId);
 		FixedIncome FindFixedIncome(int fixedIncomeId);
 		List<FixedIncome> GetAllFixedIncome(int issuerId);
 		IEnumerable<ErrorInfo> SaveFixedIncome(FixedIncome fixedIncome);

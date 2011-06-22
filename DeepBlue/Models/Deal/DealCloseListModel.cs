@@ -18,7 +18,17 @@ namespace DeepBlue.Models.Deal {
 
 		public DateTime CloseDate { get; set; }
 
-		public decimal? TotalNetPurchasePrice { get; set; }
+		public decimal? TotalGrossPurchasePrice { get; set; }
+
+		public decimal? TotalPostRecordCapitalCall { get; set; }
+
+		public decimal? TotalPostRecordDateDistribution { get; set; }
+
+		public decimal? TotalNetPurchasePrice {
+			get {
+				return ((this.TotalGrossPurchasePrice ?? 0) + (this.TotalPostRecordCapitalCall ?? 0) - (this.TotalPostRecordDateDistribution ?? 0));
+			}
+		}
 
 	}
 		

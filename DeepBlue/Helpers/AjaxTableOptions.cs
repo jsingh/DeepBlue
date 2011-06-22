@@ -20,6 +20,8 @@ namespace DeepBlue.Helpers {
 			SortOrder = "asc";
 			Autoload = true;
 			AppendExistRows = false;
+			RowClass = string.Empty;
+			AlternateRowClass = string.Empty;
 		}
 		public string HttpMethod { get; set; }
 		public string ActionName { get; set; }
@@ -36,5 +38,7 @@ namespace DeepBlue.Helpers {
 		public bool Autoload  { get; set; }
 		public bool AppendExistRows { get; set; }
 		public string OnChangeSort { get; set; }
+		public string RowClass { get; set; }
+		public string AlternateRowClass { get; set; }
 	}
 }

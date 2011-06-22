@@ -119,6 +119,12 @@ namespace DeepBlue.Helpers {
 			if (string.IsNullOrEmpty(options.OnChangeSort) == false) {
 				scriptSrc.Append(",onChangeSort:" + options.OnChangeSort + "");
 			}
+			if (string.IsNullOrEmpty(options.RowClass) == false) {
+				scriptSrc.Append(",rowClass:'" + options.RowClass + "'");
+			}
+			if (string.IsNullOrEmpty(options.AlternateRowClass) == false) {
+				scriptSrc.Append(",alternateRowClass:'" + options.AlternateRowClass + "'");
+			}
 			if (options.AppendExistRows) { scriptSrc.Append(",appendExistRows:true"); }
 			scriptSrc.Append(",rpOptions:[");
 			string rows = string.Empty;

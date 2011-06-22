@@ -43,14 +43,19 @@
 		</div>
 		<div id="DealUnderlyingDirects" class="content">
 		</div>
+		<div class="editor-field auto" id="SaveDealBox" style="display: none; float: right;">
+			<div class="cell">
+				<%: Html.Span("", new { id = "UpdateLoading" })%></div>
+			<div class="cell auto">
+				<%: Html.ImageButton("cnewdeal.png", new { @id = "btnDummySaveDeal",  onclick = "javascript:deal.saveDeal();" })%></div>
+		</div>
 	</div>
 	<div id="UpdateTargetId" style="display: none">
 	</div>
 	<ul id="modifyDealUL" style="display: none">
-		<li class='searchdeal' style="padding:10px;">
-			Search Deal&nbsp;&nbsp;<%: Html.TextBox("SearchDealName","",new { @id="SearchDealName", @style="width: 200px" })%>&nbsp;<a
-				href="javascript:deal.seeFullDeal();" style="text-decoration: underline">See full
-				list</a></li></ul>
+		<li class='searchdeal' style="padding: 10px;">Search Deal&nbsp;&nbsp;<%: Html.TextBox("SearchDealName","",new { @id="SearchDealName", @style="width: 200px" })%>&nbsp;<a
+			href="javascript:deal.seeFullDeal();" style="text-decoration: underline">See full
+			list</a></li></ul>
 	<div id="FullDealList">
 		<table cellpadding="0" cellspacing="0" border="0" id="DealList">
 			<thead>
@@ -88,11 +93,14 @@
 	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List", ControllerName = "Fund", HttpMethod = "GET", SortName = "FundName", Paging = true, OnSuccess = "deal.onFundListSuccess", Autoload = false, ResizeWidth=false, RowsLength=20 })%>
 	<script type="text/javascript">		deal.init();</script>
 	<script id="FundListTemplate" type="text/x-jquery-tmpl">
-		<ul>{{each FundDetails}}<li>
-		<a href='#' id='Fund_${FundId}' style='cursor:pointer' onclick='javascript:deal.selectFund(this,${FundId},"${FundName}");'>${FundName}</a>
-		</li>{{/each}}
-		</ul>
-		<div class='seefull'><a href='javascript:deal.seeFullFund();'>See Full List</a></div>
+	<div class="heading">
+			<div class="leftcol">
+				<span class="title">INVESTMENTS</span><span class="arrow"></span><span class="pname">CREATE
+					NEW DEAL</span></div>
+			<div class="rightcol">
+				<%: Html.TextBox("M_Fund","Search Fund", new { @class="wm", @style="width:150px", @id="M_Fund" })%>
+			</div>
+		</div>
 	</script>
 	<script id="DealTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("DealDetail", Model); %>
@@ -113,7 +121,6 @@
 		<% Html.RenderPartial("DealUnderlyingDirectDetail",Model); %><div class="line"></div>
 	</script>
 	<script id="DealExpensesRowTemplate" type="text/x-jquery-tmpl"> 
-	<tr class='emptyrow'><td colspan="5">&nbsp;</td></tr>
 		<tr id="DealExpense_${DealClosingCostId}">
 		<td>
 			<%: Html.DropDownList("DealClosingCostTypeId", Model.DealClosingCostTypes, new { @class="hide", @val = "${DealClosingCostTypeId}" })%>
@@ -135,7 +142,6 @@
 	</tr>
 	</script>
 	<script id="UnderlyingFundsRowTemplate" type="text/x-jquery-tmpl">
-	<tr class='emptyrow'><td colspan="5">&nbsp;</td></tr>
 	<tr id="UnderlyingFund_${DealUnderlyingFundId}">
 		<td style="text-align:center">
 			<%: Html.Span("", new { @id = "SpnIndex" }) %>
@@ -176,11 +182,6 @@
 	</tr>
 	</script>
 	<script id="UnderlyingDirectsRowTemplate" type="text/x-jquery-tmpl"> 
-	<tr class='emptyrow'>
-		<td colspan="5">
-			&nbsp;
-		</td>
-	</tr>
 	<tr id="UnderlyingDirect_${DealUnderlyingDirectId}">
 		<td style="text-align: center">
 			<%: Html.Span("", new { @id = "SpnIndex" }) %>

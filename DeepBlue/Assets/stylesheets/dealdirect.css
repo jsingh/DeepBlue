@@ -1,0 +1,17 @@
+﻿.smalltab {
+	background-image: url(../images/smalltabunsel.png);
+	background-repeat: repeat-x;
+	min-width: 120px;
+	float: left;
+	height: 27px;
+	line-height: 27px;
+	text-align: center;
+}
+.tabsel {
+	background-image: url(../images/smalltabsel.png);
+}
+.last {
+	background-image: url(../images/smalltablast.png);
+	width: 3px;
+	min-width: 3px;
+}

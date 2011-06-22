@@ -23,6 +23,8 @@
 			onSuccess: false,
 			onRowClick: false,
 			onRowBound: false,
+			rowClass: '',
+			alternateRowClass: '',
 			onSubmit: false // using a custom populate function
 		},p);
 		$(t)
@@ -46,7 +48,11 @@
 					 data.rows,
 					 function (i,row) {
 					 	var tr=document.createElement('tr');
-					 	if(i%2) tr.className='erow';
+					 	if(i%2==0) {
+					 		$(tr).addClass(p.rowClass);
+					 	} else {
+					 		$(tr).addClass(p.alternateRowClass);
+					 	}
 					 	tr.id='row'+i;
 					 	var i=0;
 					 	var celllength=$("thead tr th",t).length;

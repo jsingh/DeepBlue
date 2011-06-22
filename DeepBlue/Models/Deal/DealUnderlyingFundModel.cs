@@ -61,9 +61,19 @@ namespace DeepBlue.Models.Deal {
 
 		public decimal NetPurchasePrice {
 			get {
-				return ((PostRecordDateCapitalCall ?? 0) - (PostRecordDateDistribution ?? 0));
+				return ((this.GrossPurchasePrice ?? 0) + (this.PostRecordDateCapitalCall ?? 0) - (this.PostRecordDateDistribution ?? 0));
 			}
 		}
+
+		public string FormatNPP { get { return FormatHelper.CurrencyFormat(this.NetPurchasePrice); } }
+
+		public decimal AdjustedCost {
+			get {
+				return (this.ReassignedGPP ?? 0) + (this.PostRecordDateCapitalCall ?? 0) - (this.PostRecordDateDistribution ?? 0);
+			}
+		}
+
+		public string FormatAJC { get { return FormatHelper.CurrencyFormat(this.AdjustedCost); } }
 
 		public int? DealClosingId { get; set; }
 	}

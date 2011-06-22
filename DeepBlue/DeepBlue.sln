@@ -6,10 +6,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepBlue.Tests", "..\DeepBlue.Tests\DeepBlue.Tests.csproj", "{AB315A5E-A038-4105-8750-74AC180F6ACD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EDE4514E-FAFA-4924-B6AB-F497C6208847}"
-	ProjectSection(SolutionItems) = preProject
-		DeepBlue.vsmdi = DeepBlue.vsmdi
-		Local.testsettings = Local.testsettings
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution

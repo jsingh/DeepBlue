@@ -77,6 +77,8 @@ namespace DeepBlue.Models.Deal {
 
 		public int? DealClosingId { get; set; }
 
+		public string FormatFMV { get { return FormatHelper.CurrencyFormat(this.FMV); } }
+		
 		public List<SelectListItem> Equities { get; set; }
 
 		public List<SelectListItem> FixedIncomes { get; set; }

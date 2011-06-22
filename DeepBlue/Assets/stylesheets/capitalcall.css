@@ -6,7 +6,7 @@
 	float: left;
 }
 .editor-label {
-	width: auto;
+	width: auto; font-weight:bold;
 	padding: 10px 5px;
 }
 .editor-field {
@@ -61,5 +61,5 @@
 	padding: 5px;
 }
 label {
-	color: #636262;
+	color: #000;
 }

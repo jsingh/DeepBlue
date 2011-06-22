@@ -22,18 +22,33 @@
 	<%=Html.StylesheetLinkTag("dealactivity.css")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+	<div class="navigation">
+		<div class="heading">
+			<div class="leftcol">
+				<div class="title">
+					INVESTMENTS</div>
+				<div class="arrow">
+				</div>
+				<div class="pname">
+					ACTIVITIES
+				</div>
+			</div>
+		</div>
+	</div>
 	<div id="ActivityMain">
 		<div class="header">
-			<div class="cell">
-				<%: Html.Anchor("Underlying Activities", new { @class = "select tablnk", @onclick = "javascript:dealActivity.selectTab('U',this);" })%>|<%: Html.Anchor("Security Activities", new { @class = "tablnk", @onclick = "javascript:dealActivity.selectTab('S',this);" })%></div>
+			<div class="tabbg">
+				<%using (Html.Div(new { @id="UATab", @class="select", @onclick = "javascript:dealActivity.selectTab('U',this);" })) {%>&nbsp;
+				<%}%>
+				<%using (Html.Div(new { @id="SATab", @onclick = "javascript:dealActivity.selectTab('S',this);" })) {%>&nbsp;					
+				<%}%>
+			</div>
 			<div id="SearchUDirect" class="cell" style="float: right; display: none;">
 				<%: Html.TextBox("S_UnderlyingDirect", "Search Underlying Direct", new { @class = "wm" , @style="width:250px" })%>
 			</div>
 		</div>
 		<div class="content">
 			<div id="UnderlyingActivity" class="act-group">
-				<div class="line">
-				</div>
 				<div id="NewCapitalCall" class="group">
 					<div class="title">
 						<%: Html.Span("New Capital Call")%>
@@ -445,7 +460,7 @@
 				</div>
 				<div class="line">
 				</div>
-				<div class="heading">
+				<div class="subheading">
 					New Holding Pattern
 				</div>
 				<div class="cell" id="NHPLoading">

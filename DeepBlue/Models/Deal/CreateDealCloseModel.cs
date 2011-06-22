@@ -19,6 +19,10 @@ namespace DeepBlue.Models.Deal {
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Deal is required")]
 		public int DealId { get; set; }
 
+		[Required(ErrorMessage = "Fund is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
+		public int FundId { get; set; }
+
 		[Required(ErrorMessage = "Deal Close Number is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Deal Close Number is required")]
 		[DisplayName("Deal Close #:")]
@@ -28,7 +32,7 @@ namespace DeepBlue.Models.Deal {
 		[DateRange()]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
 		[DisplayName("Close Date:")]
-		public DateTime? CloseDate { get; set; }
+		public DateTime CloseDate { get; set; }
 
 		[DisplayName("Final Close:")]
 		public bool IsFinalClose { get; set; }
@@ -43,33 +47,27 @@ namespace DeepBlue.Models.Deal {
 			}
 		}
 
-		private decimal? TotalGrossPurchasePrice { get { return this.DealUnderlyingFunds.Sum(fund => fund.GrossPurchasePrice); } }
-
-		private decimal? TotalPostRecordDateCapitalCall { get { return this.DealUnderlyingFunds.Sum(fund => fund.PostRecordDateCapitalCall); } }
-
-		private decimal? TotalPostRecordDateDistribution { get { return this.DealUnderlyingFunds.Sum(fund => fund.PostRecordDateDistribution); } }
-
 		public string TotalGPP {
 			get {
-				return FormatHelper.CurrencyFormat(this.TotalGrossPurchasePrice);
+				return FormatHelper.CurrencyFormat(this.DealUnderlyingFunds.Sum(fund => fund.GrossPurchasePrice));
 			}
 		}
 
 		public string TotalPRCC {
 			get {
-				return FormatHelper.CurrencyFormat(this.TotalPostRecordDateCapitalCall);
+				return FormatHelper.CurrencyFormat(this.DealUnderlyingFunds.Sum(fund => fund.PostRecordDateCapitalCall));
 			}
 		}
 
 		public string TotalPRCD {
 			get {
-				return FormatHelper.CurrencyFormat(this.TotalPostRecordDateDistribution);
+				return FormatHelper.CurrencyFormat(this.DealUnderlyingFunds.Sum(fund => fund.PostRecordDateDistribution));
 			}
 		}
 
 		public string TotalNPP {
 			get {
-				return FormatHelper.CurrencyFormat((this.TotalGrossPurchasePrice ?? 0) + ((this.TotalPostRecordDateCapitalCall ?? 0) - (this.TotalPostRecordDateDistribution ?? 0)));
+				return FormatHelper.CurrencyFormat(this.DealUnderlyingFunds.Sum(fund => fund.NetPurchasePrice));
 			}
 		}
 
@@ -90,6 +88,53 @@ namespace DeepBlue.Models.Deal {
 				return FormatHelper.CurrencyFormat(this.DealUnderlyingDirects.Sum(direct => direct.FMV));
 			}
 		}
+
+		#region FinalClose
+
+		public string TotalRGPP {
+			get {
+				return FormatHelper.CurrencyFormat(this.DealUnderlyingFunds.Where(fund => fund.DealClosingId > 0).Sum(fund => fund.ReassignedGPP));
+			}
+		}
+
+		public string TotalFinalPRCC {
+			get {
+				return FormatHelper.CurrencyFormat(this.DealUnderlyingFunds.Where(fund => fund.DealClosingId > 0).Sum(fund => fund.PostRecordDateCapitalCall));
+			}
+		}
+
+		public string TotalFinalPRCD {
+			get {
+				return FormatHelper.CurrencyFormat(this.DealUnderlyingFunds.Where(fund => fund.DealClosingId > 0).Sum(fund => fund.PostRecordDateDistribution));
+			}
+		}
+
+		public string TotalAJC {
+			get {
+				return FormatHelper.CurrencyFormat(this.DealUnderlyingFunds.Where(fund => fund.DealClosingId > 0).Sum(fund => fund.AdjustedCost));
+			}
+		}
+
+		public string TotalFinalNoOfShares {
+			get {
+				return FormatHelper.NumberFormat(this.DealUnderlyingDirects.Where(fund => fund.DealClosingId > 0).Sum(direct => direct.NumberOfShares));
+			}
+		}
+
+		public string TotalFinalPurchasePrice {
+			get {
+				return FormatHelper.CurrencyFormat(this.DealUnderlyingDirects.Where(fund => fund.DealClosingId > 0).Sum(direct => direct.PurchasePrice));
+			}
+		}
+
+		public string TotalFinalFMV {
+			get {
+				return FormatHelper.CurrencyFormat(this.DealUnderlyingDirects.Where(fund => fund.DealClosingId > 0).Sum(direct => direct.FMV));
+			}
+		}
+
+		#endregion
+
 	}
 
 }

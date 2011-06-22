@@ -16,6 +16,7 @@
 	<%= Html.JavascriptInclueTag("jsDate.js")%>
 	<%= Html.JavascriptInclueTag("jHelper.js")%>
 	<%= Html.StylesheetLinkTag("site.css")%>
+	<%= Html.StylesheetLinkTag("popup.css")%>
 	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
 </head>
 <body>

@@ -16,8 +16,14 @@ body {
 	font-family: Arial;
 	color: #000;
 }
+#mainbdy {
+	background-image: url("../images/bg.jpg");
+	background-repeat: repeat;
+}
 input[type="text"], select {
 	font-size: 12px;
+	padding: 4px;
+	border: solid 1px #9C9C9C;
 }
 h1 {
 	font-size: 15px;
@@ -40,14 +46,11 @@ a img {
 	clear: both;
 	width: 100%;
 }
-#header, #footer, #submenu {
-	left: 3px;
+#header, #footer, #submenu, #innersubmenu {
+	left: 0;
+	right: 0;
 	overflow: hidden;
 	position: absolute;
-	right: 0;
-}
-#submenu {
-	top: 100px;
 }
 #footer {
 	bottom: 0;
@@ -58,13 +61,12 @@ a img {
 	font-size: 12px;
 	color: #A27F7F;
 	clear: both;
-	margin-left: 3px;
-	width: 99.2%;
+	width: 100%;
 }
 #footer .footercontent {
-	color: #A27F7F;
+	color: #FFFFFF;
 	height: 35px;
-	padding-top: 5px;
+	padding-top: 10px;
 	text-align: center;
 }
 #arrow {
@@ -78,10 +80,19 @@ a img {
 	position: absolute;
 	top: 1px;
 }
+#topheader {
+	background-image: url(../images/titlebg.png);
+	background-repeat: repeat-x;
+	font-size: 14px;
+	color: #fff;
+	text-transform: uppercase;
+	line-height: 32px;
+	padding-left: 65px;
+}
 /* Content */
 #content {
 	bottom: 35px;
-	left: 5px;
+	left: 0px;
 	overflow: hidden;
 	position: absolute;
 	right: 0;
@@ -89,7 +100,7 @@ a img {
 	overflow-x: hidden;
 	overflow-y: auto;
 	clear: both;
-	width: 99%;
+	width: 100%;
 }
 /* Editor */
 .editor-row {
@@ -103,7 +114,8 @@ a img {
 	text-align: left;
 	padding: 5px 5px 5px 10px;
 	clear: left;
-	color: #636262;
+	color: #000;
+	font-weight: bold;
 }
 .editor-editbtn {
 	float: right;
@@ -120,7 +132,7 @@ a img {
 	padding: 5px;
 	float: left;
 	clear: right;
-	color: #636262;
+	color: #000;
 }
 .editor-field input[type="text"] {
 	width: 180px;
@@ -140,7 +152,7 @@ a img {
 	float: left;
 	clear: right;
 	width: auto;
-	color: #636262;
+	color: #000;
 }
 .editor-button {
 	width: 73px;
@@ -196,11 +208,10 @@ a img {
 	width: 97%;
 }
 .box-content {
-	border: solid 1px #E3E3E3;
+	border: solid 1px #C1ACAC;
 	padding-top: 10px;
 	width: 715px;
 	float: left;
-	background-color: #fff;
 }
 .contactinfo-right {
 	float: left;
@@ -513,7 +524,7 @@ a img {
 .tab-cnt {
 	clear: both;
 	width: 99%;
-	    border: 1px solid #E3E3E3;
+	border: 1px solid #E3E3E3;
 	float: left;
 	margin-bottom: 10px;
 }
@@ -567,7 +578,7 @@ a img {
 }
 h2 {
 	font-size: 12px;
-	color: #636262;
+	color: #000;
 }
 /* Menu */
 .topheader {
@@ -575,52 +586,13 @@ h2 {
 	float: left;
 	height: 32px;
 }
-.topheader .left, .topheader .right, .topheader .center {
-	float: left;
-	width: 3px;
-	height: 36px;
-	background-repeat: no-repeat;
-}
-.topheader .center {
-	width: 99%;
-	background-image: url(../images/tmenucenter.png);
-	background-repeat: repeat-x;
-	line-height: 33px;
-	font-size: 12px;
-	font-family: Arial;
-	color: #A27F7F;
-}
-.topheader .center span {
-	padding-left: 15px;
-}
-.topheader .left {
-	background-image: url(../images/tmenuleft.png);
-}
-.topheader .right {
-	background-image: url(../images/tmenuright.png);
-}
 .dbmenu {
 	width: 100%;
 	float: left;
 	height: 78px;
-}
-.dbmenu .left, .dbmenu .right, .dbmenu .center {
-	float: left;
-	width: 3px;
-	height: 78px;
-	background-repeat: no-repeat;
-}
-.dbmenu .center {
-	width: 99%;
 	background-image: url(../images/menucenter.png);
 	background-repeat: repeat-x;
-	overflow: hidden;
-}
-.dbmenu .left {
-	background-image: url(../images/menuleft.png);
-}
-.dbmenu .right {
-	background-image: url(../images/menuright.png);
+	padding: 0px 65px 0px 65px;
 }
 #menu .menu-content {
 	float: left;
@@ -631,42 +603,46 @@ h2 {
 }
 .mdiv {
 	clear: both;
-	text-align: left; /*position: absolute;*/
+	text-align: left;
 	overflow: hidden;
 	display: none;
 	top: 24px;
-	width: 99.1%;
-	margin-left: 1px;
-	padding-left: 5px;
-	background-image: url(../images/submnubg1.png);
-	background-repeat: repeat-x;
+	width: 100%;
 	font-size: 12px;
-	margin-top: 10px;
+}
+.mdiv ul {
+	width: 100%;
 }
 .mdiv li {
 	list-style: none;
 	float: left;
-	padding: 15px;
+	padding: 13px 27px 13px 13px;
 }
 .mdiv li a {
-	color: #000000;
+	color: #27599E;
 	padding: 5px;
 }
 .mdiv a:hover {
-	color: #ffffff;
+	color: #27599E;
 }
 .topmenu {
 	float: left;
 	text-align: center;
 	color: #a27f7f;
 	font-size: 12px;
-	height: 70px;
-	padding: 0px 10px 0px 10px;
+	height: 86px;
+	padding: 0px 38px 0px 38px;
 	white-space: nowrap;
-	cursor:pointer;
+	cursor: pointer;
 }
 .topmenu a {
-	color: #a27f7f;
+	color: #FFFFFF;
+}
+.sep {
+	background-image: url(../images/sep.png);
+	width: 2px;
+	height: 86px;
+	float: left;
 }
 .tab-sel {
 	background-image: url(../images/smenucenter.png);
@@ -680,22 +656,52 @@ h2 {
 	display: none;
 	overflow: hidden;
 	clear: both;
+	height: 47px;
 }
 .subul ul li {
-	padding: 8px;
-	min-width: 120px;
+	padding: 15px;
 	overflow: hidden;
 	text-align: center;
+	color: #000;
+	float: left;
 }
-.subext,.subext3 {
-	background-image: url(../images/submnubg2.png);
-	height: 104px;
+.heading {
+	border: 0px solid red;
+	float: left;
+	padding: 17px 0 12px 0;
+	width: 94%;
+}
+.heading .title {
+	color: #000;
+	float: left;
+}
+.heading .arrow {
+	font-size: 18px;
+	padding: 0 5px;
+	float: left;
+	height: 12px;
+	width: 10px;
+	background-image: url(../images/navarrow.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.heading .pname {
+	color: #29589E;
+	float: left;
+}
+.heading .leftcol {
+	float: left;
+}
+.heading .rightcol {
+	float: right;
+	margin-top: -5px;
+}
+.subext, .subext3 {
 	clear: both;
 }
 .subext3 .subul, .subext .subul {
 	border-top: solid 1px #d9d9d9;
-	margin-right: 5px;
-	width: 99%;
+	width: 100%;
 }
 .sub-select, .innersub-select {
 	display: block;
@@ -703,12 +709,26 @@ h2 {
 #submenu {
 	z-index: 1;
 	clear: both;
+	padding-left: 65px;
+	background-image: url(../images/fsmbg.png);
+	background-repeat: repeat-x;
+	top: 110px;
+}
+#innersubmenu, .navigation {
+	top: 153px;
+	background-image: url(../images/smbg.png);
+	background-repeat: repeat-x;
+	padding-left: 65px;
+}
+.navigation {
+	height: 47px;
+	width: 100%;
 }
 #menu a, #submenu a {
 	font-size: 15px;
 }
 .mdiv .sel {
-	color: White;
+	color: #021E43;
 }
 #submenu, .topmenu a {
 	font-family: Calibri, Arial;
@@ -748,9 +768,27 @@ h2 {
 	clear: both;
 }
 .wm {
-	color: #977f7f;
+	color: #133F80;
+	text-transform: uppercase;
 }
 .tickbtn {
 	width: 24px;
 	height: 24px;
+}
+input[type="text"].ui-autocomplete-input {
+	background-image: url(../images/autocbg.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding-left: 26px;
+}
+.line {
+	background-color: #E3E3E3;
+	clear: both;
+	width: 100%;
+	background-image: url(../images/line.png);
+	background-repeat: repeat-x;
+	height: 2px;
+}
+label {
+	font-weight: bold;
 }

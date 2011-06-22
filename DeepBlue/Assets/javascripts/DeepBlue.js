@@ -3,7 +3,9 @@
 		$(document).ready(function () {
 			$(".topmenu").click(function () {
 				$(".tab-sel").each(function () {
-					if($(this).hasClass("current")==false) { $(this).removeClass("tab-sel") }
+					//if($(this).hasClass("current")==false) {
+					 $(this).removeClass("tab-sel"); 
+					// }
 				});
 				var showmenu=$(this);
 				var arrow=$("#arrow");
@@ -31,7 +33,8 @@
 	,layout: function () {
 		var header=document.getElementById("header");
 		var submenu=document.getElementById("submenu");
+		var innersubmenu=document.getElementById("innersubmenu");
 		var content=document.getElementById("content");
-		content.style.top=$(header).height()+$(submenu).height()+"px";
+		content.style.top=$(header).height()+$(submenu).height()+$(innersubmenu).height()+"px";
 	}
 }

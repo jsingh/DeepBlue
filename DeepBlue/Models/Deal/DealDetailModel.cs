@@ -36,12 +36,12 @@ namespace DeepBlue.Models.Deal {
 
 		[Required(ErrorMessage = "Deal Name is required")]
 		[StringLength(50, ErrorMessage = "Deal Name must be under 50 characters.")]
-		[DisplayName("Deal Name -")]
+		[DisplayName("Deal Name")]
 		public string DealName { get; set; }
 
 		[Required(ErrorMessage = "Deal Number is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Deal Number is required")]
-		[DisplayName("Deal No.-")]
+		[DisplayName("DEAL NO.")]
 		public int DealNumber { get; set; }
 
 		[DisplayName("Contact-")]

@@ -95,9 +95,9 @@ namespace DeepBlue.Controllers.Issuer {
 							 IssuerId = issuer.IssuerID
 						 }).SingleOrDefault();
 				if (model != null) {
-					IQueryable<EquityDetailModel> queryEquities = GetEquityModel(context, model.IssuerId, 0);
+					IQueryable<DeepBlue.Models.Issuer.EquityDetailModel> queryEquities = GetEquityModel(context, model.IssuerId, 0);
 					model.Equities = (queryEquities != null ? queryEquities.ToList() : null);
-					IQueryable<FixedIncomeDetailModel> queryFixedIncomes = GetFixedIncomeModel(context, model.IssuerId, 0);
+					IQueryable<DeepBlue.Models.Issuer.FixedIncomeDetailModel> queryFixedIncomes = GetFixedIncomeModel(context, model.IssuerId, 0);
 					model.FixedIncomes = (queryFixedIncomes != null ? queryFixedIncomes.ToList() : null);
 				}
 				return model;
@@ -108,7 +108,7 @@ namespace DeepBlue.Controllers.Issuer {
 
 		#region Equity
 
-		private IQueryable<EquityDetailModel> GetEquityModel(DeepBlueEntities context, int issuerId, int equityId) {
+		private IQueryable<DeepBlue.Models.Issuer.EquityDetailModel> GetEquityModel(DeepBlueEntities context, int issuerId, int equityId) {
 			IQueryable<Equity> equities = null;
 			if (issuerId > 0) {
 				equities = context.Equities.Where(deepBlueEquity => deepBlueEquity.IssuerID == issuerId);
@@ -118,7 +118,7 @@ namespace DeepBlue.Controllers.Issuer {
 			}
 			if (equities != null) {
 				return (from equity in equities
-						select new EquityDetailModel {
+						select new DeepBlue.Models.Issuer.EquityDetailModel {
 							EquityId = equity.EquityID,
 							Symbol = equity.Symbol,
 							IssuerId = equity.IssuerID,
@@ -139,7 +139,7 @@ namespace DeepBlue.Controllers.Issuer {
 
 		}
 
-		public EquityDetailModel FindEquityModel(int equityId) {
+		public DeepBlue.Models.Issuer.EquityDetailModel FindEquityModel(int equityId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return GetEquityModel(context, 0, equityId).SingleOrDefault();
 			}
@@ -198,7 +198,7 @@ namespace DeepBlue.Controllers.Issuer {
 
 		#region FixedIncome
 
-		private IQueryable<FixedIncomeDetailModel> GetFixedIncomeModel(DeepBlueEntities context, int issuerId, int fixedIncomeId) {
+		private IQueryable<DeepBlue.Models.Issuer.FixedIncomeDetailModel> GetFixedIncomeModel(DeepBlueEntities context, int issuerId, int fixedIncomeId) {
 			IQueryable<FixedIncome> fixedIncomes = null;
 			if (issuerId > 0) {
 				fixedIncomes = context.FixedIncomes.Where(deepBlueFixedIncome => deepBlueFixedIncome.IssuerID == issuerId);
@@ -208,7 +208,7 @@ namespace DeepBlue.Controllers.Issuer {
 			}
 			if (fixedIncomes != null) {
 				return (from fixedIncome in fixedIncomes
-						select new FixedIncomeDetailModel {
+						select new DeepBlue.Models.Issuer.FixedIncomeDetailModel {
 							CouponInformation = fixedIncome.CouponInformation,
 							CurrencyId = fixedIncome.CurrencyID,
 							FaceValue = fixedIncome.FaceValue,
@@ -247,9 +247,9 @@ namespace DeepBlue.Controllers.Issuer {
 			}
 		}
 
-		public FixedIncomeDetailModel FindFixedIncomeModel(int fixedIncomeId) {
+		public DeepBlue.Models.Issuer.FixedIncomeDetailModel FindFixedIncomeModel(int fixedIncomeId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<FixedIncomeDetailModel> queryFixedIncomes = GetFixedIncomeModel(context, 0, fixedIncomeId);
+				IQueryable<DeepBlue.Models.Issuer.FixedIncomeDetailModel> queryFixedIncomes = GetFixedIncomeModel(context, 0, fixedIncomeId);
 				return queryFixedIncomes.SingleOrDefault();
 			}
 		}
@@ -321,5 +321,8 @@ namespace DeepBlue.Controllers.Issuer {
 
 		#endregion
 
+
+
+		 
 	}
 }

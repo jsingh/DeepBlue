@@ -51,6 +51,5 @@ namespace DeepBlue.Models.Issuer {
 
 		public List<SelectListItem> Currencies { get; set; }
 
-
 	}
 }

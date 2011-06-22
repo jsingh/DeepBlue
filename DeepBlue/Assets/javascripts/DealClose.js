@@ -27,7 +27,9 @@
 	,selectDeal: function (id) {
 		dealClose.setDealId(id);
 		$("#SpnLoading").show();
+		$("#DealCloseMain").hide();
 		$.getJSON("/Deal/GetDealDetail/"+id,function (data) {
+			$("#DealCloseMain").show();
 			$("#SpnLoading").hide();
 			$("#SpnFundName").html(data.FundName);
 			$("#SpnDealNo").html(data.DealNumber);
@@ -45,38 +47,185 @@
 	}
 	,add: function (id) {
 		var dealId=parseInt(dealClose.getDealId());
+		var newDealClose=$("#NewDealClose");
+		var finalDealClose=$("#FinalDealClose");
+		newDealClose.hide();finalDealClose.hide();
 		if(dealId>0) {
+			newDealClose.show();
+			if(id>0) {
+				finalDealClose.show();
+				$("#SpnDCTitle").html("Edit Deal Close");
+			} else {
+				$("#SpnDCTitle").html("New Deal Close");
+			}
 			$.getJSON("/Deal/GetDealCloseDetails",
-			{ "_": (new Date).getTime(),"id": 0,"dealId": dealId }
+			{ "_": (new Date).getTime(),"id": id,"dealId": dealId }
 			,function (data) {
 				$("#DealClosingId").val(data.DealClosingId);
 				$("#DealNumber").val(data.DealNumber);
+				$("#FundId").val(data.FundId);
 				$("#SpnDealCloseNo").html("Deal Close "+data.DealNumber);
 				if(data.CloseDate!=null) {
-					$("#CloseDate").val(jHelper.formatDate(jHelper.parseJSONDate(data.CloseDate)));
+					var d=jHelper.formatDate(jHelper.parseJSONDate(data.CloseDate));
+					if(d=="01/01/1") { d=""; }
+					$("#CloseDate","#frmDealClose").val(d);
+					$("#CloseDate","#frmFinalDealClose").val(d);
 				} else {
-					$("#CloseDate").val("");
+					$("#CloseDate","#frmDealClose").val("");
+					$("#CloseDate","#frmFinalDealClose").val("");
 				}
 				var tblduflist=$("#DealUnderlyingFundList");
-				$("tbody",tblduflist).empty();$("tfoot",tblduflist).empty();
+				dealClose.clearTable(tblduflist);
 				$("#DUFundsTemplate").tmpl(data).appendTo(tblduflist);
-				tbldirectlist=$("#DealUnderlyingDirects");
-				$("tbody",tbldirectlist).empty();$("tfoot",tbldirectlist).empty();
-				$("#DUDirectsTemplate").tmpl(data).appendTo(tbldirectlist);
+				jHelper.formatDollar(tblduflist);
 
-				$("tbody tr",tblduflist).each(function () {
-					var dcid=parseInt($("#DealClosingId",this).val());
-					if(dcid==$("#DealClosingId").val()) {
-						var chk=$("#chk",tr).get(0);if(chk) { chk.checked=true; }
-					}
-				});
+				var tbldirectlist=$("#DealUnderlyingDirects");
+				dealClose.clearTable(tbldirectlist);
+				$("#DUDirectsTemplate").tmpl(data).appendTo(tbldirectlist);
+				jHelper.formatDollar(tbldirectlist);
+
+				dealClose.checkDealCloseId(tblduflist);
+				dealClose.checkDealCloseId(tbldirectlist);
+
+				if(id>0) {
+					var finaltblduflist=$("#FinalDealUnderlyingFundList");
+					dealClose.clearTable(finaltblduflist);
+					$("#FinalDUFundsTemplate").tmpl(data).appendTo(finaltblduflist);
+					jHelper.formatDollar(finaltblduflist);
+
+					var finaltbldirectlist=$("#FinalDealUnderlyingDirects");
+					dealClose.clearTable(finaltbldirectlist);
+					$("#FinalDUDirectsTemplate").tmpl(data).appendTo(finaltbldirectlist);
+					jHelper.formatDollar(finaltbldirectlist);
+
+					dealClose.addRowClass(finaltblduflist);
+					dealClose.addRowClass(finaltbldirectlist);
+				}
 			});
 		} else {
 			alert("Deal is required");
 			$("#Deal").focus();
 		}
 	}
-	,saveDealClose: function (isFinalClose,loadingId) {
+	,addRowClass: function (tbl) {
+		$("tbody tr:odd",tbl).addClass("arow");
+		$("tbody tr:even",tbl).addClass("row");
+	}
+	,clearTable: function (tbl) {
+		$("tbody",tbl).empty();$("tfoot",tbl).empty();
+	}
+	,checkDealCloseId: function (tbl) {
+		$("tbody tr",tbl).each(function () {
+			var dcid=parseInt($("#DealClosingId",this).val());
+			if(dcid>0) {
+				var chk=$("#chk",this).get(0);if(chk) { chk.checked=true; }
+			}
+		});
+	}
+	,calcCloseUF: function () {
+		var tbl=$("#DealUnderlyingFundList");
+		var totalGPP=0;var totalPRCC=0;var totalPRCD=0;var totalNPP=0;
+		$("tbody tr",tbl).each(function () {
+			var gpp=parseFloat($("#GrossPurchasePrice",this).val());
+			var prcc=parseFloat($("#PostRecordDateCapitalCall",this).val());
+			var prcd=parseFloat($("#PostRecordDateDistribution",this).val());
+			if(isNaN(gpp)) { gpp=0; } if(isNaN(prcc)) { prc=0; } if(isNaN(prcd)) { prcd=0; }
+			var npp=gpp+(prcc-prcd);
+			totalGPP=totalGPP+gpp;
+			totalPRCC=totalPRCC+prcc;
+			totalPRCD=totalPRCD+prcd;
+			$("#SpnNPP",this).html(jHelper.dollarAmount(npp.toString()));
+		});
+		totalNPP=totalGPP+(totalPRCC-totalPRCD);
+		$("tfoot tr:first",tbl).each(function () {
+			$("#SpnTotalGPP",this).html(jHelper.dollarAmount(totalGPP.toString()));
+			$("#SpnTotalPRCC",this).html(jHelper.dollarAmount(totalPRCC.toString()));
+			$("#SpnTotalPRCD",this).html(jHelper.dollarAmount(totalPRCD.toString()));
+			$("#SpnTotalNPP",this).html(jHelper.dollarAmount(totalNPP.toString()));
+		});
+	}
+	,calcCloseUD: function () {
+		var tbl=$("#DealUnderlyingDirects");
+		var totalNOS=0;var totalPrice=0;var totalFMV=0;
+		$("tbody tr",tbl).each(function () {
+			var nos=parseInt($("#NumberOfShares",this).val());
+			var price=parseFloat($("#PurchasePrice",this).val());
+			if(isNaN(nos)) { nos=0; } if(isNaN(price)) { price=0; }
+			var fmv=parseFloat(nos*price);
+			totalNOS+=nos;
+			totalPrice+=price;
+			$("#SpnFMV",this).html(jHelper.dollarAmount(fmv.toString()));
+		});
+		totalFMV=parseFloat(totalNOS*totalPrice);
+		$("tfoot tr:first",tbl).each(function () {
+			$("#SpnTotalNoOfShares",this).html(jHelper.dollarAmount(totalNOS.toString()));
+			$("#SpnTotalPurchasePrice",this).html(jHelper.dollarAmount(totalPrice.toString()));
+			$("#SpnTotalFMV",this).html(jHelper.dollarAmount(totalFMV.toString()));
+		});
+	}
+	,calcFlinalCloseUF: function () {
+		var tbl=$("#FinalDealUnderlyingFundList");
+		var totalGPP=0;var totalPRCC=0;var totalPRCD=0;var totalNPP=0;
+		$("tbody tr",tbl).each(function () {
+			var gpp=parseFloat($("#ReassignedGPP",this).val());
+			var prcc=parseFloat($("#PostRecordDateCapitalCall",this).val());
+			var prcd=parseFloat($("#PostRecordDateDistribution",this).val());
+			if(isNaN(gpp)) { gpp=0; } if(isNaN(prcc)) { prc=0; } if(isNaN(prcd)) { prcd=0; }
+			var npp=gpp+(prcc-prcd);
+			totalGPP=totalGPP+gpp;
+			totalPRCC=totalPRCC+prcc;
+			totalPRCD=totalPRCD+prcd;
+			$("#SpnAJC",this).html(jHelper.dollarAmount(npp.toString()));
+		});
+		totalNPP=totalGPP+(totalPRCC-totalPRCD);
+		$("tfoot tr:first",tbl).each(function () {
+			$("#SpnTotalGPP",this).html(jHelper.dollarAmount(totalGPP.toString()));
+			$("#SpnTotalPRCC",this).html(jHelper.dollarAmount(totalPRCC.toString()));
+			$("#SpnTotalPRCD",this).html(jHelper.dollarAmount(totalPRCD.toString()));
+			$("#SpnTotalAJC",this).html(jHelper.dollarAmount(totalNPP.toString()));
+		});
+	}
+	,calcFlinalCloseUD: function () {
+		var tbl=$("#FinalDealUnderlyingDirects");
+		var totalNOS=0;var totalPrice=0;var totalFMV=0;
+		$("tbody tr",tbl).each(function () {
+			var nos=parseInt($("#NumberOfShares",this).val());
+			var price=parseFloat($("#PurchasePrice",this).val());
+			if(isNaN(nos)) { nos=0; } if(isNaN(price)) { price=0; }
+			var fmv=parseFloat(nos*price);
+			totalNOS+=nos;
+			totalPrice+=price;
+			$("#SpnFMV",this).html(jHelper.dollarAmount(fmv.toString()));
+		});
+		totalFMV=parseFloat(totalNOS*totalPrice);
+		$("tfoot tr:first",tbl).each(function () {
+			$("#SpnTotalNoOfShares",this).html(jHelper.dollarAmount(totalNOS.toString()));
+			$("#SpnTotalPurchasePrice",this).html(jHelper.dollarAmount(totalPrice.toString()));
+			$("#SpnTotalFMV",this).html(jHelper.dollarAmount(totalFMV.toString()));
+		});
+	}
+	,editRow: function (img) {
+		var tr=$(img).parents("tr:first");var isShow=false;
+		var chk=$(":input[type='checkbox']",tr).get(0);
+		if(chk) { chk.checked=true; }
+		if(img.src.indexOf('add.png')> -1) { isShow=true;img.src="/Assets/images/Edit.png"; } else {
+			// img.src="/Assets/images/tick.png";
+		}
+		this.showElements(tr,isShow);
+	}
+	,editChkRow: function (chk) {
+		this.showElements($(chk).parents("tr:first"),!chk.checked);
+	}
+	,showElements: function (tr,isShow) {
+		if(isShow==false) {
+			$(".hide",tr).css("display","block");
+			$(".show",tr).css("display","none");
+		} else {
+			$(".hide",tr).css("display","none");
+			$(".show",tr).css("display","block");
+		}
+	}
+	,saveDealClose: function (loadingId) {
 		var loading=$("#"+loadingId);
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		var param=$("#frmDealClose").serializeArray();
@@ -85,9 +234,36 @@
 			if($.trim(data)!="") {
 				alert(data);
 			} else {
+				alert("New Deal Close Saved");
+				dealClose.resetForm();
 				dealClose.onGridSubmit();
 			}
 		});
+	}
+	,saveFinalDealClose: function (loadingId) {
+		var loading=$("#"+loadingId);
+		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		var param=$("#frmFinalDealClose").serializeArray();
+		param[param.length]={ name: "IsFinalClose",value: "true" };
+		param[param.length]={ name: "DealId",value: dealClose.getDealId() };
+		param[param.length]={ name: "DealNumber",value: $("#DealNumber").val() };
+		param[param.length]={ name: "DealClosingId",value: $("#DealClosingId").val() };
+		param[param.length]={ name: "FundId",value: $("#FundId").val() };
+		$.post("/Deal/UpdateFinalDealClosing",param,function (data) {
+			loading.empty();
+			if($.trim(data)!="") {
+				alert(data);
+			} else {
+				alert("Final Deal Close Saved");
+				dealClose.resetForm();
+				dealClose.onGridSubmit();
+			}
+		});
+	}
+	,resetForm: function () {
+		$("#NewDealClose").hide();
+		$("#FinalDealClose").hide();
+		$("#SpnDCTitle").html("New Deal Close");
 	}
 	,onSubmit: function (formId) {
 		return jHelper.formSubmit(formId,false);
@@ -102,8 +278,8 @@
 		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 	}
 	,onGridSuccess: function (t) {
-		$("tr",t).each(function () {
-			$("td:last div",this).html("<img id='Edit' src='/Assets/images/Edit.gif'/>");
+		$("tbody tr",t).each(function () {
+			$("td:last",this).html("<img id='Edit' src='/Assets/images/Edit.png'/>");
 		});
 	}
 	,onRowClick: function (row) {

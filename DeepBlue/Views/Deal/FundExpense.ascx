@@ -15,7 +15,7 @@
 	<div class="cell">
 		<%: Html.DropDownListFor(model => model.FundExpenseTypeId, Model.FundExpenseTypes)%></div>
 	<div class="cell">
-		<%: Html.ImageButton("tick.png", new { @class = "tickbtn" })%></div>
+		<%: Html.ImageButton("add.png", new { @class = "tickbtn" })%></div>
 	<div class="cell">
 		<%: Html.Span("", new { @id = "SpnFLELoading" }) %>
 	</div>

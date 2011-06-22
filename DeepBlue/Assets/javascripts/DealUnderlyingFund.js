@@ -16,6 +16,8 @@
 	jHelper.applyDatePicker(tr);
 	deal.setIndex($("#tblUnderlyingFund"));
 	$("#MakeNewDUFund").hide();
+		$("tr:odd","#tbodyUnderlyingFund").removeClass("row").removeClass("arow").addClass("arow");
+	$("tr:even","#tbodyUnderlyingFund").removeClass("row").removeClass("arow").addClass("row");
 };
 deal.deleteUnderlyingFund=function (id,img) {
 	if(confirm("Are you sure you want to delete this deal underlying fund?")) {
@@ -26,10 +28,10 @@ deal.deleteUnderlyingFund=function (id,img) {
 };
 deal.editUnderlyingFund=function (img) {
 	var tr=$(img).parents("tr:first");
-	if(img.src.indexOf('tick.png')> -1) {
+	if(img.src.indexOf('savebtn.png')> -1) {
 		deal.saveUnderlyingFund(tr);
 	} else {
-		img.src="/Assets/images/tick.png";
+		img.src="/Assets/images/savebtn.png";
 		deal.showElements(tr);
 	}
 };

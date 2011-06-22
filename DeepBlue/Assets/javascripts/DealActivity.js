@@ -25,8 +25,11 @@
 		var UA=$("#UnderlyingActivity");
 		var SA=$("#SecurityActivity");
 		var SUD=$("#SearchUDirect");
+		$("#UATab").removeClass("select");
+		$("#SATab").removeClass("select");
+		$(lnk).addClass("select");
 		UA.hide();SA.hide();SUD.hide();
-		$(".tablnk").removeClass("select");$(lnk).addClass("select");
+		$(".tablnk").removeClass("select");
 		switch(type) {
 			case "U": UA.show();break;
 			case "S": SA.show();SUD.show();break;

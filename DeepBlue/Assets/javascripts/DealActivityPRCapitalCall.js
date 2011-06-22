@@ -44,7 +44,8 @@ dealActivity.loadPRCC=function (isRefresh) {
 			});
 			dealActivity.setUpRow($("tr",target));
 			rowsLength=$("tr",target).length;
-			if(rowsLength>0) { $("#PRCCListBox").show(); }
+			if(rowsLength>0) { $("#PRCCListBox").show(); }	$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");
+			$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
 		});
 	}
 };

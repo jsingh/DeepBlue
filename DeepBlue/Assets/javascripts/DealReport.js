@@ -6,8 +6,7 @@
 			var pos=$(lnk).position();
 			var menu=$("#ExportMenu");
 			$("li",menu).hover(function () { $(this).addClass("sel"); },function () { $(this).removeClass("sel"); });
-			menu.css({ "left": pos.left-55,"top": pos.top+20 });
-			lnk.toggle(function () { menu.show(); },function () { menu.hide(); });
+			lnk.toggle(function () { menu.show(); },function () { menu.hide(); });jHelper.waterMark();
 		});
 	}
 	,onSubmit: function (p) {
@@ -24,7 +23,7 @@
 		if(!tfoot) {
 			tfoot=document.createElement("tfoot");
 			var trviewmore=document.createElement("tr");
-			var td=document.createElement("td");td.colSpan=6;
+			var td=document.createElement("td");td.colSpan=7;
 			td.innerHTML="<a href='javascript:dealReport.viewMore();'>View More</a>";
 			$(trviewmore).append(td);
 			$(tfoot).append(trviewmore);
@@ -35,11 +34,10 @@
 	,onRowBound: function (tr,row) {
 		var trempty=document.createElement("tr");
 		var td=document.createElement("td");
-		td.colSpan=6;
-		trempty.className="emptyrow";
+
 		$(trempty).append(td);
 		$("td:last",tr).html("<img id='expandimg' src='/Assets/images/arrow_down.png'/>");
-		$(tr).before(trempty);
+
 	}
 	,onRowClick: function (row,tr) {
 		var dealId=row.cell[0];
@@ -51,10 +49,11 @@
 		if(expandimg.src.indexOf("arrow_down.png")> -1) { expandimg.src=expandimg.src.replace("arrow_down.png","arrow_up.png");$(tr).addClass("expandrow"); } else { expandimg.src=expandimg.src.replace("arrow_up.png","arrow_down.png");$(tr).removeClass("expandrow"); }
 		if(!trExpand) {
 			trExpand=document.createElement("tr");
-			trExpand.className=tr.className;
+			// trExpand.style.background = "#E4E5EA";
 			trExpand.id="Deal_"+dealId;
 			var td=document.createElement("td");
-			td.colSpan=6;
+			td.colSpan=10;
+			td.className="expandRowBg";
 			td.innerHTML="<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...";
 			$(trExpand).append(td);
 			$(tr).after(trExpand);
@@ -63,10 +62,11 @@
 				$("#DealDetailTemplate").tmpl(data).appendTo(td);
 				var tblUnderlyingFund=$("#tblUnderlyingFund",trExpand);
 				var tblUnderlyingDirect=$("#tblUnderlyingDirect",trExpand);
-				dealReport.setIndex(tblUnderlyingFund);
-				dealReport.setIndex(tblUnderlyingDirect);
+
+
 				dealReport.setDateValue(tblUnderlyingFund);
 				dealReport.setDateValue(tblUnderlyingDirect);
+
 				dealReport.setDollarValue(tblUnderlyingFund);
 				dealReport.setDollarValue(tblUnderlyingDirect);
 			});
@@ -81,12 +81,20 @@
 	}
 	,setDollarValue: function (tbl) {
 		$(".dollarcell",tbl).each(function () {
-			this.innerHTML=jHelper.dollarAmount(this.innerHTML.toString());
+			var amt;
+			try {
+				amt=jHelper.dollarAmount(this.innerHTML.toString());
+				if(amt=="$NaN.00") { amt=""; }
+			} catch(e) { amt=""; }
+			this.innerHTML=amt;
 		});
 	}
 	,setDateValue: function (tbl) {
 		$(".datecell",tbl).each(function () {
-			var date=jHelper.formatDate(jHelper.parseJSONDate(this.innerHTML));
+			var date;
+			try {
+				date=jHelper.formatDate(jHelper.parseJSONDate(this.innerHTML.toString()));
+			} catch(e) { date=""; }
 			this.innerHTML=date;
 		});
 	}

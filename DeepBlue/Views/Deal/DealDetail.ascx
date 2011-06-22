@@ -1,57 +1,56 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.CreateModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
+<div class="section">
+	<div class="dealdetail">
+		<div class="cell" style="overflow: hidden">
+			${FundName}
+		</div>
+		<div class="cell" style="text-align: left">
+			<%: Html.LabelFor(model => model.DealNumber) %>&nbsp;${DealNumber}</div>
+		<div class="cell auto" style="margin-left: 25px">
+			<%: Html.LabelFor(model => model.DealName) %>&nbsp;<%: Html.TextBox("DealName","${DealName}") %></div>
+	</div>
+</div>
 <div class="line">
 </div>
-<div class="editor-label auto">
-	<div class="cell" style="overflow:hidden">
-		<h4>
-			<%: Html.Anchor("${FundName}","#", new { @id="lnkFundName" })%></h4>
+<div class="section" style="padding: 15px 0px;">
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.ContactId) %>
 	</div>
-	<div class="cell" style="text-align: left">
-		<%: Html.LabelFor(model => model.DealNumber) %>&nbsp;${DealNumber}</div>
-	<div class="cell auto" style="margin-left: 25px">
-		<%: Html.LabelFor(model => model.DealName) %>&nbsp;<%: Html.TextBox("DealName","${DealName}") %></div>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.FundId) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBox("FundName", "${FundName}", new { @id = "FundName", @onblur="javascript:deal.checkFund(this);" })%>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.ContactId) %>
-</div>
-<div class="editor-field">
-	<%: Html.DropDownListFor(model => model.ContactId, Model.Contacts, new { @val = "${ContactId}" })%>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.PurchaseTypeId) %>
-</div>
-<div class="editor-field">
-	<%: Html.DropDownListFor(model => model.PurchaseTypeId, Model.PurchaseTypes, new { @val = "${PurchaseTypeId}" })%>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.IsPartnered) %>
-</div>
-<div class="editor-field rdo" style="width: auto">
-	<div class="cell" style="width: 240px">
-		<%: Html.RadioButton("IsPartnered","true", false, new { @id = "IsPartneredYes", @style = "border:0px;", @onclick = "javascript:deal.selectPartner(!this.checked);" })%>
-		&nbsp;Yes&nbsp;
-		<%: Html.RadioButton("IsPartnered", "false", true, new { @id = "IsPartneredNo", @style = "border:0px;", @onclick = "javascript:deal.selectPartner(this.checked);" })%>
-		&nbsp;No
+	<div class="editor-field">
+		<%: Html.DropDownListFor(model => model.ContactId, Model.Contacts, new { @val = "${ContactId}" })%>
 	</div>
-	<div class="cell auto" id="divPartnerName" style="display: none;">
-		<%: Html.LabelFor(model => model.PartnerName)%>&nbsp;<%: Html.TextBox("PartnerName","${PartnerName}")%></div>
-</div>
-<div class="editor-label">
-</div>
-<div class="editor-field auto">
-	<div class="cell auto">
-		<%: Html.ImageButton("Save.png", new { @id = "btnSaveDeal", style = "width: 73px; height: 26px;border:0;", onclick = "return deal.onDealSubmit('AddNewDeal');" })%></div>
-	<div class="cell auto">
-		<%: Html.Span("", new { id = "UpdateLoading" })%>
+	<div class="editor-label" style="clear: right">
+		<%: Html.LabelFor(model => model.IsPartnered) %>
 	</div>
+	<div class="editor-field rdo" style="width: auto; clear: right;">
+		<div class="cell" style="width: 240px">
+			<%: Html.RadioButton("IsPartnered","true", false, new { @id = "IsPartneredYes", @style = "border:0px;", @onclick = "javascript:deal.selectPartner(!this.checked);" })%>
+			&nbsp;Yes&nbsp;
+			<%: Html.RadioButton("IsPartnered", "false", true, new { @id = "IsPartneredNo", @style = "border:0px;", @onclick = "javascript:deal.selectPartner(this.checked);" })%>
+			&nbsp;No
+		</div>
+	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.PurchaseTypeId) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.DropDownListFor(model => model.PurchaseTypeId, Model.PurchaseTypes, new { @val = "${PurchaseTypeId}" })%>
+	</div>
+	<div class="editor-label" id="divPartnerName" style="display: none; clear: right;
+		width: auto;">
+		<div class="editor-label">
+			<%: Html.LabelFor(model => model.PartnerName)%></div>
+		<div class="editor-field">
+			<%: Html.TextBox("PartnerName","${PartnerName}")%></div>
+	</div>
+	<div class="editor-label">
+	</div>
+	<div class="editor-field auto" style="display: none">
+		<div class="cell auto">
+			<%: Html.ImageButton("cnewdeal.png", new { @id = "btnSaveDeal",  onclick = "return deal.onDealSubmit('AddNewDeal');" })%></div>
+	</div>
+	<%: Html.Hidden("FundId", "${FundId}", new { @id = "FundId" })%>
+	<%: Html.Hidden("DealId", "${DealId}", new { @id = "DealId" })%>
+	<%: Html.Hidden("DealNumber", "${DealNumber}", new { @id = "DealNumber" })%>
 </div>
-<%: Html.Hidden("FundId", "${FundId}", new { @id = "FundId" })%>
-<%: Html.Hidden("DealId", "${DealId}", new { @id = "DealId" })%>
-<%: Html.Hidden("DealNumber", "${DealNumber}", new { @id = "DealNumber" })%>
