@@ -19,7 +19,8 @@
 		}
 		row=$("#UFV_"+fundid);
 		dealActivity.setUpRow(row);
-
+		$("tr:odd",bdy).removeClass("row").removeClass("arow").addClass("arow");
+		$("tr:even",bdy).removeClass("row").removeClass("arow").addClass("row");
 	});
 };
 dealActivity.makeNewUFV=function () {
@@ -77,6 +78,8 @@ dealActivity.setUFVUnderlyingFund=function (id,name) {
 		target.empty();
 		$.each(data,function (i,item) { $("#UFValuationAddTemplate").tmpl(item).appendTo(target); });
 		dealActivity.setUpRow($("tr",target));
+		$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");
+		$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
 	});
 };
 dealActivity.getUFVUnderlyingFund=function (id) {

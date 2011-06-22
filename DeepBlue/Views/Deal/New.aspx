@@ -155,10 +155,6 @@
 			<%: Html.TextBox("FundNAV", "${FundNAV}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
 		<td style="text-align: center">
-			<%: Html.Span("${Percent}", new { @class = "show", @id = "SpnPercent" })%>
-			<%: Html.TextBox("Percent", "${Percent}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
-		</td>
-		<td style="text-align: center">
 			<%: Html.Span("${CommittedAmount}", new { @class = "show money", @id = "SpnCommittedAmount" })%>
 			<%: Html.TextBox("CommittedAmount","${CommittedAmount}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>	
@@ -206,10 +202,6 @@
 		<td style="text-align: center">
 			<%: Html.Span("${FMV}", new { @class = "show money", @id = "SpnFMV", @val="${FMV}" })%>
 			<%: Html.TextBox("FMV","${FMV}",new { @class = "hide",@readonly="readonly",@id="FMV",@onkeypress = "return jHelper.isCurrency(event);" })%>
-		</td>
-		<td style="text-align: center">
-			<%: Html.Span("{{if Percent>0}}${Percent}{{/if}}", new { @class = "show", @id = "SpnPercent" })%>
-			<%: Html.TextBox("Percent","{{if Percent>0}}${Percent}{{/if}}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
 		<td style="text-align: center">
 			<%: Html.Span("${TaxCostBase}", new { @class = "show money", @id = "SpnTaxCostBase", @val="${TaxCostBase}" })%>

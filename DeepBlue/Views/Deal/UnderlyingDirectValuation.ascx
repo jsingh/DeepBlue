@@ -1,6 +1,5 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.UnderlyingDirectValuationModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<tr id="EmptyUDV_${UnderlyingDirectLastPriceId}" class='emptyrow'><td colspan="6">&nbsp;</td></tr>
 <tr id="UDV_${UnderlyingDirectLastPriceId}" {{if UnderlyingDirectLastPriceId==0}}class="newrow"{{/if}}>
 	<td style="text-align: center">
 		<%: Html.Span("${DirectName}")%>

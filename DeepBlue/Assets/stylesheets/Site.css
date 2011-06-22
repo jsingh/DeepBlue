@@ -22,7 +22,7 @@ body {
 }
 input[type="text"], select {
 	font-size: 12px;
-	padding: 4px;
+	padding: 3px;
 	border: solid 1px #9C9C9C;
 }
 h1 {
@@ -38,7 +38,7 @@ a {
 	text-decoration: none;
 }
 a img {
-	border: 0px;
+	border: 0px;  cursor: pointer;
 }
 /* Header & Footer */
 #topheader, #menu, #header {
@@ -184,7 +184,7 @@ a img {
 	float: left;
 	background-image: url(../images/box_left.png);
 	background-repeat: no-repeat;
-	width: 10px;
+	width: 9px;
 	height: 34px;
 }
 .box-right {
@@ -201,7 +201,7 @@ a img {
 	width: 697px;
 	height: 34px;
 	text-align: left;
-	color: #939090;
+	color: #000;
 	font-size: 13px;
 	font-weight: bold;
 	line-height: 34px;
@@ -303,7 +303,7 @@ a img {
 }
 .box-content {
 	padding: 9px;
-	width: 97%;
+	width: 96.7%;
 }
 
 .editor-label {
@@ -740,9 +740,7 @@ h2 {
 .checkbox input {
 	width: auto;
 }
-.search-header, .search-main {
-	margin: 10px;
-}
+ 
 .search-main {
 	width: 100%;
 	float: left;
@@ -792,3 +790,20 @@ input[type="text"].ui-autocomplete-input {
 label {
 	font-weight: bold;
 }
+#equitysymboldiv{
+padding-top:100px; padding-bottom:30px;
+}
+#equitysymboldiv table{
+background-color:#cbd2DA;
+ line-height:35px;
+}
+#fixincomediv{
+padding-top:100px; padding-bottom:100px;
+}
+
+#fixincomediv table{
+background-color:#cbd2DA;
+ line-height:35px;
+}
+
+.hasDatepicker { background-image:url(../images/datepicker.png); background-position:right center; background-repeat:no-repeat; }

@@ -33,9 +33,6 @@
 						Fund NAV
 					</th>
 					<th>
-						Percentage
-					</th>
-					<th>
 						Commitment
 					</th>
 					<th>
@@ -61,9 +58,6 @@
 					</td>
 					<td style="text-align: center">
 						<%: Html.TextBox("FundNAV", "", new { @id="FundNAV", @onkeypress = "return jHelper.isCurrency(event);" })%>
-					</td>
-					<td style="text-align: center">
-						<%: Html.TextBox("Percent", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</td>
 					<td style="text-align: center">
 						<%: Html.TextBox("CommittedAmount", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>

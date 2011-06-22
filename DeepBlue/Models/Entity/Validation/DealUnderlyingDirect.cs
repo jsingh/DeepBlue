@@ -29,13 +29,7 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-
-			[Range(typeof(decimal),"0", "100", ErrorMessage = "Percent is required")]
-			public global::System.Decimal Percent {
-				get;
-				set;
-			}
-
+			 
 			[Range((int)0, int.MaxValue, ErrorMessage = "NumberOfShares is required")]
 			public global::System.Int32 NumberOfShares {
 				get;

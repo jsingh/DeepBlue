@@ -40,8 +40,7 @@ namespace DeepBlue.Models.Deal {
 
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Fund NAV is required")]
 		public decimal? FundNAV { get; set; }
-
-		[Range(typeof(decimal), "1", "100", ErrorMessage = "Percent must be under 100%.")]
+		
 		public decimal? Percent { get; set; }
 
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Committed Amount is required")]

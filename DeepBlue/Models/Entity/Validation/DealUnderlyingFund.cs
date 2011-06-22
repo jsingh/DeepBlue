@@ -36,12 +36,7 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-
-            [Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Percent is required")]
-			public global::System.Decimal Percent {
-				get;
-				set;
-			}
+           
 
             [Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "CommittedAmount is required")]
 			public global::System.Decimal CommittedAmount {

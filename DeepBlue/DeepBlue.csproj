@@ -803,6 +803,7 @@
     <Content Include="Views\Deal\DirectEquityDetail.ascx" />
     <Content Include="Views\Deal\Directs.aspx" />
     <Content Include="Views\Deal\ExpenseToDeal.ascx" />
+    <Content Include="Views\Deal\FixedIncomeDetail.ascx" />
     <Content Include="Views\Deal\FundExpense.ascx" />
     <Content Include="Views\Deal\Reconcile.aspx" />
     <Content Include="Views\Deal\SecurityConversion.ascx" />

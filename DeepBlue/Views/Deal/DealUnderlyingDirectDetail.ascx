@@ -41,9 +41,6 @@
 					<th>
 						FMV
 					</th>
-					<th>
-						Percentage
-					</th>
 					<th nowrap>
 						Tax Cost Base
 					</th>
@@ -73,9 +70,6 @@
 					</td>
 					<td>
 						<%: Html.TextBox("NumberOfShares", "", new { @id = "NumberOfShares", @onkeyup = "javascript:deal.calcFMV(this);", @onkeypress = "return jHelper.isNumeric(event);" })%>
-					</td>
-					<td>
-						<%: Html.TextBox("PurchasePrice", "", new { @id = "PurchasePrice", @onkeyup = "javascript:deal.calcFMV(this);", @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</td>
 					<td>
 						<%: Html.TextBox("FMV", "", new { @readonly="readonly", @id="FMV", @onkeypress = "return jHelper.isCurrency(event);" })%>

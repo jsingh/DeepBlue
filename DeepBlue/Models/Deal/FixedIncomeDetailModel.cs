@@ -41,5 +41,7 @@ namespace DeepBlue.Models.Deal {
 
 		public string FixedIncomeType { get; set; }
 
+        public int? ISINO { get; set; }
+
 	}
 }

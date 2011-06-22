@@ -22,7 +22,8 @@ dealActivity.loadUFA=function () {
 		});
 		dealActivity.setUpRow($("tr",target));
 		rowsLength=$("tr",target).length;
-		if(rowsLength>0) { $("#UFAdjustment").show(); }
+		if(rowsLength>0) { $("#UFAdjustment").show(); }$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");
+				$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
 	});
 };
 dealActivity.submitUFA=function (frm) {

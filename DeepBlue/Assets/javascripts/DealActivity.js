@@ -6,16 +6,6 @@
 	,newUFVData: null
 	,init: function () {
 		jHelper.resizeIframe();
-		$(".expandbtn").click(function () {
-			var parent=$(this).parent().parent();
-			if(this.src.indexOf("S_")>0) {
-				$(".fieldbox",parent).hide();
-				this.src=this.src.replace("S_","U_");
-			} else {
-				$(".fieldbox",parent).show();
-				this.src=this.src.replace("U_","S_");
-			}
-		});
 		$(document).ready(function () {
 			dealActivity.expand();
 			jHelper.waterMark($("body"));
@@ -99,16 +89,18 @@
 		$("#add",tr).show();
 	}
 	,expand: function () {
-		$(".title","#ActivityMain").toggle(function () {
+		$(".headerbox").click(function () {
+			$(this).hide();
 			var parent=$(this).parent();
+			$(".expandheader",parent).show();
 			$(".detail",parent).show();
-			$(".search-tool",parent).show();
-			$(this).addClass("expand");
-		},function () {
-			var parent=$(this).parent();
+		});
+		$(".expandtitle",".expandheader").click(function () {
+			var expandheader=$(this).parents(".expandheader:first");
+			var parent=$(expandheader).parent();
+			expandheader.hide();
 			$(".detail",parent).hide();
-			$(".search-tool",parent).hide();
-			$(this).removeClass("expand");
+			$(".headerbox",parent).show();
 		});
 	}
 	,processErrMsg: function (data,frm) {
@@ -128,4 +120,15 @@
 		alert(msg);
 	}
 	/* End Common Functions */
+	,selectDirTab: function (type,lnk) {
+		var UA=$("#EQdetail");
+		var SA=$("#FixedIncome");
+		UA.hide();SA.hide();
+		$(".tablnk").removeClass("tabselected");
+		$(lnk).addClass("tabselected");
+		switch(type) {
+			case "E": UA.show();break;
+			case "F": SA.show();break;
+		}
+	}
 }

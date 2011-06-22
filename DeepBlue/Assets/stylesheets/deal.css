@@ -168,8 +168,9 @@ h4 a {
 	background-repeat: no-repeat;
 	width: 151px;
 	height: 31px;
-	margin: 10px 0 0 70px;
+	margin: 10px 0 0 130px;
 	line-height: 33px;
+ padding-right:420px;
 }
 .expandaddbtn a {
 	color: #000;
@@ -236,9 +237,38 @@ h4 a {
 	padding: 5px;
 	font-weight: bold;
 }
+.grid thead tr td {  background-color:transparent; padding:5px; }
 .grid tbody tr td img {
 	cursor: pointer;
 }
 .grid td input[type='text'], .grid td select {
 	width: 90%;
+}
+
+.issuerbtn {
+	float: right;
+	padding-left: 30px;
+	display: none;
+	background-image: url(../images/btn_issuer.png);
+	background-repeat: no-repeat;
+	width: 252px;
+	height: 31px;
+	margin: 10px 0 0 70px;
+	line-height: 33px;
+}
+.issuerbtn a {
+	color: #000;
+	font-size: 11px;
+	font-weight: bold;
+}
+.subheader {
+background-image: url(../images/dir_subheadbg.png);
+background-repeat:repeat-x; height:130px;
+
+}
+.direct{
+float:right; padding-right:120px; padding-bottom:100px;
+}
+.close{
+clear:right; float:right; margin-right:120px; margin-top:-20px;
 }

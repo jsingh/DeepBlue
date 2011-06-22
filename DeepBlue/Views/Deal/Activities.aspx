@@ -38,74 +38,84 @@
 	<div id="ActivityMain">
 		<div class="header">
 			<div class="tabbg">
-				<%using (Html.Div(new { @id="UATab", @class="select", @onclick = "javascript:dealActivity.selectTab('U',this);" })) {%>&nbsp;
+				<%using (Html.Div(new { @id = "UATab", @class = "select", @onclick = "javascript:dealActivity.selectTab('U',this);" })) {%>&nbsp;
 				<%}%>
-				<%using (Html.Div(new { @id="SATab", @onclick = "javascript:dealActivity.selectTab('S',this);" })) {%>&nbsp;					
+				<%using (Html.Div(new { @id = "SATab", @onclick = "javascript:dealActivity.selectTab('S',this);" })) {%>&nbsp;
 				<%}%>
-			</div>
-			<div id="SearchUDirect" class="cell" style="float: right; display: none;">
-				<%: Html.TextBox("S_UnderlyingDirect", "Search Underlying Direct", new { @class = "wm" , @style="width:250px" })%>
+				<div id="SearchUDirect" class="cell" style="float: right; display: none; margin: 10px 50px 0px 0px;">
+					<%: Html.TextBox("S_UnderlyingDirect", "Search Underlying Direct", new { @class = "wm" , @style="width:200px" })%>
+				</div>
 			</div>
 		</div>
 		<div class="content">
 			<div id="UnderlyingActivity" class="act-group">
-				<div id="NewCapitalCall" class="group">
-					<div class="title">
-						<%: Html.Span("New Capital Call")%>
-					</div>
-					<div class="search-tool">
-						<div class="cell" style="padding-left: 10px">
-							<%: Html.TextBox("CC_UnderlyingFund", "Search Underlying Fund", new { @class = "wm" })%></div>
-						<div class="cell" style="padding-left: 10px">
-							<%: Html.Anchor("Make New Capital Call", "javascript:dealActivity.makeNewCC();")%>
+				<div class="act-box">
+					<div id="NewCapitalCall" class="group">
+						<div class="headerbox">
+							<div class="title">
+								<%: Html.Span("New Capital Call")%>
+							</div>
 						</div>
-					</div>
-					<div class="detail">
-						<div class="search-header">
-							<div class="cell">
-								<%: Html.Span("", new { @id="SpnCCUFName" })%></div>
+						<div class="expandheader expandsel" style="display: none">
+							<div class="expandbtn">
+								<div class="expandtitle" style="display: block;">
+									New Capital Call
+								</div>
+							</div>
+							<div class="addbtn" style="display: block;">
+								<%: Html.Anchor(Html.Image("mncc.png").ToHtmlString(), "javascript:dealActivity.makeNewCC();")%></div>
+							<div style="display: block; float: right; margin-right: 15%;">
+								<%: Html.Span("", new { @id="SpnCCUFName" })%>
+								<%: Html.TextBox("CC_UnderlyingFund", "Search Underlying Fund", new { @style="width:200px", @class = "wm" })%></div>
 						</div>
-						<div class="cell" id="CCLoading">
-						</div>
-						<div class="clear">
-							<div id="CapitalCall" class="clear" style="display: none">
-								<%using (Html.Form(new { @id = "frmUFCapitalCall", @onsubmit = "return dealActivity.submitUFCapitalCall(this);" })) {%>
-								<table cellpadding="0" cellspacing="0" border="0" id="CapitalCallList" class="grid">
-									<thead>
-										<tr>
-											<th style="width: 20%">
-												Fund Name
-											</th>
-											<th style="width: 20%">
-												Call Amount
-											</th>
-											<th style="width: 15%">
-												Notice Date
-											</th>
-											<th style="width: 15%">
-												Received Date
-											</th>
-											<th style="width: 15%">
-												Deemed Capital Call
-											</th>
-											<th>
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-								<br />
-								<center>
-									<span>
-										<%: Html.ImageButton("Save.png")%></span><span id="SpnCCSaveLoading"></span></center>
+						<div class="detail">
+							<div class="search-header">
+								<div class="cell">
+								</div>
+							</div>
+							<div class="cell" id="CCLoading">
+							</div>
+							<div id="CapitalCall" class="gridbox" style="display: none;">
+								<div style="clear: both; width: 100%">
+									<%using (Html.Form(new { @id = "frmUFCapitalCall", @onsubmit = "return dealActivity.submitUFCapitalCall(this);" })) {%>
+									<table cellpadding="0" cellspacing="0" border="0" id="CapitalCallList" class="grid">
+										<thead>
+											<tr>
+												<th style="width: 20%">
+													Fund Name
+												</th>
+												<th style="width: 20%">
+													Call Amount
+												</th>
+												<th style="width: 15%">
+													Notice Date
+												</th>
+												<th style="width: 15%">
+													Received Date
+												</th>
+												<th style="width: 15%">
+													Deemed Capital Call
+												</th>
+												<th>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+									<br />
+									<center>
+										<span>
+											<%: Html.ImageButton("Save.png")%></span><span id="SpnCCSaveLoading"></span></center>
+								</div>
 								<%}%>
 							</div>
-							<div id="PRCapitalCall" class="clear" style="display: none">
-								<div class="line">
-								</div>
-								<div class="cell" style="padding-left: 10px">
-									<%: Html.Anchor("Add New Post Record Date Capital Call", "javascript:dealActivity.makeNewPRCC();")%>
+							<div id="PRCapitalCall" class="gridbox" style="display: none">
+								<div class="subheader">
+									<div class="name">
+										Post Record Capital Call</div>
+									<div class="addbtn">
+										<%: Html.Anchor(Html.Image("addnewprcc.png").ToHtmlString(), "javascript:dealActivity.makeNewPRCC();")%></div>
 								</div>
 								<div class="cell" id="PRCCLoading">
 								</div>
@@ -140,87 +150,58 @@
 									<%}%>
 								</div>
 							</div>
+							<%:Html.Hidden("CCUnderlyingFundId", new { @id = "CCUnderlyingFundId" })%>
 						</div>
-						<%:Html.Hidden("CCUnderlyingFundId", new { @id = "CCUnderlyingFundId" })%>
 					</div>
 				</div>
 				<div class="line">
 				</div>
-				<div id="NewCashDistribution" class="group">
-					<div class="title">
-						<%: Html.Span("New Cash Distribution")%>
-					</div>
-					<div class="search-tool">
-						<div class="cell" style="padding-left: 10px">
-							<%: Html.TextBox("CD_UnderlyingFund", "Search Underlying Fund", new { @class = "wm" })%></div>
-						<div class="cell" style="padding-left: 10px">
-							<%: Html.Anchor("Raise Distribution Call", "javascript:dealActivity.makeNewCD();")%>
-						</div>
-					</div>
-					<div class="detail">
-						<div class="search-header">
-							<%: Html.Span("", new { @id="SpnCDUFName" })%>
-						</div>
-						<div class="cell" id="CDLoading">
-						</div>
-						<div class="clear">
-							<div id="CashDistribution" class="clear" style="display: none">
-								<%using (Html.Form(new { @id = "frmUFCashDistribution", @onsubmit = "return dealActivity.submitUFCashDistribution(this);" })) {%>
-								<table cellpadding="0" cellspacing="0" border="0" id="CashDistributionList" class="grid">
-									<thead>
-										<tr>
-											<th style="width: 15%">
-												Fund Name
-											</th>
-											<th style="width: 12%">
-												Amount
-											</th>
-											<th style="width: 12%">
-												Notice Date
-											</th>
-											<th style="width: 12%">
-												Record Date
-											</th>
-											<th style="width: 12%">
-												Distribution Type
-											</th>
-											<th>
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-								<br />
-								<center>
-									<span>
-										<%: Html.ImageButton("Save.png")%></span><span id="SpnCDSaveLoading"></span></center>
-								<%}%>
+				<div class="act-box">
+					<div id="NewCashDistribution" class="group">
+						<div class="headerbox">
+							<div class="title">
+								<%: Html.Span("New Cash Distribution")%>
 							</div>
-							<div id="PRCashDistribution" class="clear" style="display: none">
-								<div class="line">
+						</div>
+						<div class="expandheader expandsel" style="display: none">
+							<div class="expandbtn">
+								<div id="title" class="expandtitle" style="display: block;">
+									<div class="expandtitle">
+										New Cash Distribution</div>
 								</div>
-								<div class="cell" style="padding-left: 10px">
-									<%: Html.Anchor("Add New Post Record Date Distribution", "javascript:dealActivity.makeNewPRCD();")%>
-								</div>
-								<div class="cell" id="PRCDLoading">
-								</div>
-								<div id="PRCDListBox" class="clear" style="display: none">
-									<%using (Html.Form(new { @id = "frmUFPRCashDistribution", @onsubmit = "return dealActivity.submitUFPRCashDistribution(this);" })) {%>
-									<table cellpadding="0" cellspacing="0" border="0" id="PRCashDistributionList" class="grid">
+							</div>
+							<div class="addbtn" style="display: block;">
+								<%: Html.Anchor(Html.Image("rdc.png").ToHtmlString(), "javascript:dealActivity.makeNewCD();")%>
+							</div>
+							<div style="display: block; float: right; margin-right: 15%;">
+								<%: Html.TextBox("CD_UnderlyingFund", "Search Underlying Fund", new { @style = "width:200px", @class = "wm" })%></div>
+						</div>
+						<div class="detail">
+							<div class="search-header">
+								<%: Html.Span("", new { @id="SpnCDUFName" })%>
+							</div>
+							<div class="cell" id="CDLoading">
+							</div>
+							<div class="clear">
+								<div id="CashDistribution" class="gridbox" style="display: none">
+									<%using (Html.Form(new { @id = "frmUFCashDistribution", @onsubmit = "return dealActivity.submitUFCashDistribution(this);" })) {%>
+									<table cellpadding="0" cellspacing="0" border="0" id="CashDistributionList" class="grid">
 										<thead>
 											<tr>
 												<th style="width: 15%">
 													Fund Name
 												</th>
 												<th style="width: 12%">
-													Deal Name
+													Amount
 												</th>
 												<th style="width: 12%">
-													Distribution Amount
+													Notice Date
 												</th>
 												<th style="width: 12%">
-													Distribution Date
+													Record Date
+												</th>
+												<th style="width: 12%">
+													Distribution Type
 												</th>
 												<th>
 												</th>
@@ -232,149 +213,271 @@
 									<br />
 									<center>
 										<span>
-											<%: Html.ImageButton("Save.png")%></span><span id="SpnPRCDSaveLoading"></span></center>
+											<%: Html.ImageButton("Save.png")%></span><span id="SpnCDSaveLoading"></span></center>
 									<%}%>
 								</div>
+								<div id="PRCashDistribution" class="gridbox" style="display: none">
+									<div class="subheader">
+										<div class="name">
+											Post Record Date Distribution</div>
+										<div class="addbtn">
+											<%: Html.Anchor(Html.Image("anprcd.png").ToHtmlString(), "javascript:dealActivity.makeNewPRCD();")%></div>
+									</div>
+									<div class="cell" id="PRCDLoading">
+									</div>
+									<div id="PRCDListBox" class="clear" style="display: none">
+										<%using (Html.Form(new { @id = "frmUFPRCashDistribution", @onsubmit = "return dealActivity.submitUFPRCashDistribution(this);" })) {%>
+										<table cellpadding="0" cellspacing="0" border="0" id="PRCashDistributionList" class="grid">
+											<thead>
+												<tr>
+													<th style="width: 15%">
+														Fund Name
+													</th>
+													<th style="width: 12%">
+														Deal Name
+													</th>
+													<th style="width: 12%">
+														Distribution Amount
+													</th>
+													<th style="width: 12%">
+														Distribution Date
+													</th>
+													<th>
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+										<br />
+										<center>
+											<span>
+												<%: Html.ImageButton("Save.png")%></span><span id="SpnPRCDSaveLoading"></span></center>
+										<%}%>
+									</div>
+								</div>
+							</div>
+							<%:Html.Hidden("CDUnderlyingFundId", new { @id = "CDUnderlyingFundId" })%>
+						</div>
+					</div>
+				</div>
+				<div class="line">
+				</div>
+				<div class="act-box">
+					<div id="UnderlyingFundValuation" class="group">
+						<div class="headerbox">
+							<div class="title">
+								<%: Html.Span("Underlying Fund Valuation")%>
 							</div>
 						</div>
-						<%:Html.Hidden("CDUnderlyingFundId", new { @id = "CDUnderlyingFundId" })%>
-					</div>
-				</div>
-				<div class="line">
-				</div>
-				<div id="UnderlyingFundValuation" class="group">
-					<div class="title">
-						<%: Html.Span("Underlying Fund Valuation")%>
-					</div>
-					<div class="search-tool">
-						<div class="cell" style="padding-left: 10px">
-							<%: Html.TextBox("UFV_UnderlyingFund", "Search Underlying Fund", new { @class = "wm" })%></div>
-					</div>
-					<div class="detail">
-						<div class="search-header">
-							<%: Html.Span("", new { @id="SpnUFVName" })%>
+						<div class="expandheader expandsel" style="display: none">
+							<div class="expandbtn">
+								<div class="expandtitle" style="display: block;">
+									<div class="expandtitle">
+										Underlying Fund Valuation</div>
+								</div>
+							</div>
+							<div style="display: block; float: right; margin-right: 15%;">
+								<%: Html.TextBox("UFV_UnderlyingFund", "Search Underlying Fund", new { @style = "width:200px",  @class = "wm" })%></div>
 						</div>
-						<div class="cell loading" id="UFVLoading">
-						</div>
-						<div class="clear">
-							<table cellpadding="0" cellspacing="0" border="0" id="UnderlyingFundValuationList"
-								class="grid">
-								<thead>
-									<tr>
-										<th style="width: 12%">
-											Fund Name
-										</th>
-										<th style="width: 12%">
-											Reported NAV
-										</th>
-										<th style="width: 12%">
-											Reporting Date
-										</th>
-										<th style="width: 12%">
-											Calculated NAV
-										</th>
-										<th style="width: 12%">
-											Update NAV
-										</th>
-										<th style="width: 12%">
-											Update Date
-										</th>
-										<th>
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
-						</div>
-						<%:Html.Hidden("UFVUnderlyingFundId", new { @id = "UFVUnderlyingFundId" })%>
-					</div>
-				</div>
-				<div class="line">
-				</div>
-				<div id="UnderlyingDirectValuation" class="group">
-					<div class="title">
-						<%: Html.Span("Underlying Direct Valuation")%>
-					</div>
-					<div class="search-tool">
-						<div class="cell" style="padding-left: 10px">
-							<%: Html.TextBox("UDV_UnderlyingDirect", "Search Underlying Direct", new { @class = "wm" })%></div>
-					</div>
-					<div class="detail">
-						<div class="search-header">
-							<%: Html.Span("", new { @id="SpnUDVName" })%>
-						</div>
-						<div class="cell loading" id="UDVLoading">
-						</div>
-						<div class="clear" id="UDValuation" style="display: none">
-							<%using (Html.Form(new { @id = "frmUDValuation", @onsubmit = "return dealActivity.submitUDV(this);" })) {%>
-							<table cellpadding="0" cellspacing="0" border="0" id="UDValuationList" class="grid">
-								<thead>
-									<tr>
-										<th style="width: 25%">
-											Direct Name
-										</th>
-										<th style="width: 20%">
-											Fund Name
-										</th>
-										<th style="width: 12%">
-											Last Price
-										</th>
-										<th style="width: 12%">
-											Last Price Date
-										</th>
-										<th style="width: 12%">
-											New Price
-										</th>
-										<th style="width: 12%">
-											New Price Date
-										</th>
-										<th>
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
-							<br />
-							<center>
-								<span>
-									<%: Html.ImageButton("Save.png")%></span><span id="SpnUDVSaveLoading"></span></center>
-							<%}%>
-							<%:Html.Hidden("UDVIssuerId","0", new { @id = "UDVIssuerId" })%>
+						<div class="detail">
+							<div class="search-header">
+								<%: Html.Span("", new { @id="SpnUFVName" })%>
+							</div>
+							<div class="cell loading" id="UFVLoading">
+							</div>
+							<div class="gridbox">
+								<table cellpadding="0" cellspacing="0" border="0" id="UnderlyingFundValuationList"
+									class="grid">
+									<thead>
+										<tr>
+											<th style="width: 12%">
+												Fund Name
+											</th>
+											<th style="width: 12%">
+												Reported NAV
+											</th>
+											<th style="width: 12%">
+												Reporting Date
+											</th>
+											<th style="width: 12%">
+												Calculated NAV
+											</th>
+											<th style="width: 12%">
+												Update NAV
+											</th>
+											<th style="width: 12%">
+												Update Date
+											</th>
+											<th>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+							<%:Html.Hidden("UFVUnderlyingFundId", new { @id = "UFVUnderlyingFundId" })%>
 						</div>
 					</div>
 				</div>
 				<div class="line">
 				</div>
-				<div id="UnfundedAdjustments" class="group">
-					<div class="title">
-						<%: Html.Span("Unfunded Adjustments")%>
-					</div>
-					<div class="search-tool">
-						<div class="cell" style="padding-left: 10px">
-							<%: Html.TextBox("UFA_UnderlyingFund", "Search Underlying Fund", new { @class = "wm" })%></div>
-					</div>
-					<div class="detail">
-						<div class="search-header">
-							<div class="cell">
-								<%: Html.Span("", new { @id="SpnUFAUFName" })%></div>
+				<div class="act-box">
+					<div id="UnderlyingDirectValuation" class="group">
+						<div class="headerbox">
+							<div class="title">
+								<%: Html.Span("Underlying Direct Valuation")%>
+							</div>
 						</div>
-						<div class="cell" id="UFALoading">
+						<div class="expandheader expandsel" style="display: none">
+							<div class="expandbtn">
+								<div class="expandtitle" style="display: block;">
+									Underlying Direct Valuation
+								</div>
+							</div>
+							<div style="display: block; float: right; margin-right: 15%;">
+								<%: Html.TextBox("UDV_UnderlyingDirect", "Search Underlying Direct", new { @style = "width:200px", @class = "wm" })%>
+							</div>
 						</div>
-						<div id="UFAdjustment" style="display: none" class="clear">
-							<%using (Html.Form(new { @id = "frmUFAAdjustment", @onsubmit = "return dealActivity.submitUFA(this);" })) {%>
-							<table cellpadding="0" cellspacing="0" border="0" id="UnfundedAdjustmentList" class="grid">
+						<div class="detail">
+							<div class="search-header">
+								<%: Html.Span("", new { @id="SpnUDVName" })%>
+							</div>
+							<div class="cell loading" id="UDVLoading">
+							</div>
+							<div class="gridbox" id="UDValuation" style="display: none">
+								<%using (Html.Form(new { @id = "frmUDValuation", @onsubmit = "return dealActivity.submitUDV(this);" })) {%>
+								<table cellpadding="0" cellspacing="0" border="0" id="UDValuationList" class="grid">
+									<thead>
+										<tr>
+											<th style="width: 25%">
+												Direct Name
+											</th>
+											<th style="width: 20%">
+												Fund Name
+											</th>
+											<th style="width: 12%">
+												Last Price
+											</th>
+											<th style="width: 12%">
+												Last Price Date
+											</th>
+											<th style="width: 12%">
+												New Price
+											</th>
+											<th style="width: 12%">
+												New Price Date
+											</th>
+											<th>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+								<br />
+								<center>
+									<span>
+										<%: Html.ImageButton("Save.png")%></span><span id="SpnUDVSaveLoading"></span></center>
+								<%}%>
+								<%:Html.Hidden("UDVIssuerId","0", new { @id = "UDVIssuerId" })%>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="line">
+				</div>
+				<div class="act-box">
+					<div id="UnfundedAdjustments" class="group">
+						<div class="headerbox">
+							<div class="title">
+								<%: Html.Span("Unfunded Adjustments")%>
+							</div>
+						</div>
+						<div class="expandheader expandsel" style="display: none">
+							<div class="expandbtn">
+								<div class="expandtitle" style="display: block;">
+									Unfunded Adjustments
+								</div>
+							</div>
+							<div style="display: block; float: right; margin-right: 15%;">
+								<%: Html.TextBox("UFA_UnderlyingFund", "Search Underlying Fund", new { @style = "width:200px", @class = "wm" })%>
+							</div>
+						</div>
+						<div class="detail">
+							<div class="search-header">
+								<div class="cell">
+									<%: Html.Span("", new { @id="SpnUFAUFName" })%></div>
+							</div>
+							<div class="cell" id="UFALoading">
+							</div>
+							<div id="UFAdjustment" style="display: none" class="gridbox">
+								<%using (Html.Form(new { @id = "frmUFAAdjustment", @onsubmit = "return dealActivity.submitUFA(this);" })) {%>
+								<table cellpadding="0" cellspacing="0" border="0" id="UnfundedAdjustmentList" class="grid">
+									<thead>
+										<tr>
+											<th style="width: 20%">
+												Fund Name
+											</th>
+											<th style="width: 20%">
+												Commitment Amount
+											</th>
+											<th style="width: 15%">
+												Unfunded Amount
+											</th>
+											<th>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+								<br />
+								<center>
+									<span>
+										<%: Html.ImageButton("Save.png")%></span><span id="SpnUFASaveLoading"></span></center>
+								<%}%>
+							</div>
+							<%:Html.Hidden("UFAUnderlyingFundId", new { @id = "UFAUnderlyingFundId" })%>
+						</div>
+					</div>
+				</div>
+				<div class="line">
+				</div>
+				<div class="act-box">
+					<div id="FundLevelExpenses" class="group">
+						<div class="headerbox">
+							<div class="title">
+								<%: Html.Span("Fund Level Expenses")%>
+							</div>
+						</div>
+						<div class="expandheader expandsel" style="display: none">
+							<div class="expandbtn">
+								<div class="expandtitle" style="display: block;">
+									Fund Level Expenses
+								</div>
+							</div>
+							<div style="display: block; float: right; margin-right: 15%;">
+								<%: Html.Span("", new { @id = "SpnFLEDetLoading" })%><%: Html.TextBox("FLE_Fund", "Search Fund", new { @style = "width:200px", @class = "wm" })%>
+							</div>
+						</div>
+						<div class="detail">
+							<% Html.RenderPartial("FundExpense", Model.FundLevelExpenseModel);%>
+							<div class="cell clear">
+								<%: Html.Anchor(Html.Image("addexpense.png").ToHtmlString(), "#")%>
+							</div>
+							<table cellpadding="0" cellspacing="0" border="0" id="ExpenseToDealList" class="grid">
 								<thead>
 									<tr>
-										<th style="width: 20%">
-											Fund Name
-										</th>
-										<th style="width: 20%">
-											Commitment Amount
+										<th style="width: 15%">
+											Deal No.
 										</th>
 										<th style="width: 15%">
-											Unfunded Amount
+											Deal Name
+										</th>
+										<th style="width: 15%">
+											Expense Amount
 										</th>
 										<th>
 										</th>
@@ -383,51 +486,7 @@
 								<tbody>
 								</tbody>
 							</table>
-							<br />
-							<center>
-								<span>
-									<%: Html.ImageButton("Save.png")%></span><span id="SpnUFASaveLoading"></span></center>
-							<%}%>
 						</div>
-						<%:Html.Hidden("UFAUnderlyingFundId", new { @id = "UFAUnderlyingFundId" })%>
-					</div>
-				</div>
-				<div class="line">
-				</div>
-				<div id="FundLevelExpenses" class="group">
-					<div class="title">
-						<%: Html.Span("Fund Level Expenses")%>
-					</div>
-					<div class="search-tool">
-						<div class="cell" style="padding-left: 10px">
-							<%: Html.TextBox("FLE_Fund", "Search Fund", new { @class = "wm" })%></div>
-						<div class="cell">
-							<%: Html.Span("", new { @id = "SpnFLEDetLoading" })%></div>
-					</div>
-					<div class="detail">
-						<% Html.RenderPartial("FundExpense", Model.FundLevelExpenseModel);%>
-						<div class="cell clear">
-							<%: Html.Anchor("Add Expense to Deal", "#")%>
-						</div>
-						<table cellpadding="0" cellspacing="0" border="0" id="ExpenseToDealList" class="grid">
-							<thead>
-								<tr>
-									<th style="width: 15%">
-										Deal No.
-									</th>
-									<th style="width: 15%">
-										Deal Name
-									</th>
-									<th style="width: 15%">
-										Expense Amount
-									</th>
-									<th>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
 					</div>
 				</div>
 				<div class="line">
@@ -446,12 +505,12 @@
 					<div class="editor-field" style="margin-left: 10px">
 						<%: Html.DropDownList("ActivityTypeId", Model.ActivityTypes, new { @onchange = "javascript:dealActivity.changeAType(this);" })%>
 					</div>
-					<div id="SplitDetail" style="display: none; height: 110px; clear: both;">
+					<div id="SplitDetail" style="display: none; clear: both; margin-left: 88px;">
 						<%using (Html.Form(new { @id = "frmEquitySplit", @onsubmit = "return dealActivity.createSA(this);", @style = "float:left;" })) {%>
 						<% Html.RenderPartial("EquitySplit", Model.EquitySplitModel);%>
 						<%}%>
 					</div>
-					<div id="ConversionDetail" style="display: none; height: 110px; clear: both;">
+					<div id="ConversionDetail" style="display: none; margin-left: 60px; clear: both;">
 						<%using (Html.Form(new { @id = "frmSecurityConversion", @onsubmit = "return dealActivity.createSecConversion(this);", @style = "float:left;" })) {%>
 						<% Html.RenderPartial("SecurityConversion", Model.SecurityConversionModel);%>
 						<%}%>

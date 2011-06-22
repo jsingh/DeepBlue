@@ -52,8 +52,6 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("FMV:")]
 		public decimal? FMV { get; set; }
 
-		[Required(ErrorMessage = "Percent is required")]
-		[Range(typeof(decimal), "1", "100", ErrorMessage = "Percent must be under 100%.")]
 		[DisplayName("Percent:")]
 		public decimal? Percent { get; set; }
 

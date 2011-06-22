@@ -84,7 +84,8 @@ dealActivity.loadUDV=function () {
 		dealActivity.setUpRow($("tr",target));
 		if($("tr",target).length>0) {
 			$("#UDValuation").show();
-		}
+		}$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");
+				$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
 	});
 };
 dealActivity.submitUDV=function (frm) {
@@ -103,6 +104,7 @@ dealActivity.submitUDV=function (frm) {
 				$("#SpnUDVName").html("");
 				$("#UDV_UnderlyingDirect").val("");
 				$("#UDV_UnderlyingDirect").focus();
+				
 			}
 		});
 	} catch(e) { alert(e); }

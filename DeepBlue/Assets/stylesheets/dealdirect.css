@@ -15,3 +15,50 @@
 	width: 3px;
 	min-width: 3px;
 }
+.subheader{
+    padding-top: 30px;
+}
+
+.tabcell{
+width: 180px;
+
+	height: 25px;
+	line-height: 25px;
+	margin-right: 10px;
+}
+
+.tabselected{
+ background-image: url(../images/Newtab_sel.png);
+    background-repeat: no-repeat;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    height: 40px;
+    margin: 0;
+    padding: 0 0 0 3px;
+    text-align: center;
+    width: 213px;
+     float:left;
+     line-height:40px;
+}
+
+.tabUnselected{
+ background-image: url(../images/Newtab_unsel.png);
+    background-repeat: no-repeat;
+    cursor: pointer;
+    font-weight: bold;
+    height: 40px;
+    margin: 0;
+    padding: 0 0 0 3px;
+    text-align: center;
+    width: 215px;
+ float:right;
+  padding-right:680px;
+ line-height:40px;
+}
+.tabselected a,.tabUnselected a{
+ color:Black;
+}
+.tab{
+float:left; padding:50px; padding-right:340px;
+}

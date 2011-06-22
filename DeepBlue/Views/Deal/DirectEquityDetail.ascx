@@ -1,7 +1,13 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.EquityDetailModel>" %>
 <%: Html.HiddenFor(model => model.EquityId) %>
 <%: Html.HiddenFor(model => model.IssuerId) %>
-<div class="editor-label">
+
+<div id="equitysymboldiv" >
+<table cellpadding="0" cellspacing="0" width="100%" >
+ <tr>
+  <td>
+  <div class="line"></div>
+  <div class="editor-label">
 	<%: Html.LabelFor(model => model.Symbol) %>
 </div>
 <div class="editor-field">
@@ -49,4 +55,9 @@
 </div>
 <div class="editor-field">
 	<%: Html.DropDownListFor(model => model.EquityTypeId, Model.EquityTypes)%>
+</div>
+  <div class="line"></div>
+  </td>
+ </tr>
+</table>
 </div>
