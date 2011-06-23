@@ -30,6 +30,7 @@ dealActivity.setCDUnderlyingFund=function (id,name) {
 	$("#SpnCDUFName").html(name);
 	$("tbody","#CashDistributionList").empty();
 	$("tbody","#PRCashDistributionList").empty();
+	$("#CDDetail").attr("issearch","true").show();
 	dealActivity.loadCD(true);
 };
 dealActivity.loadCD=function (isRefresh) {
@@ -63,7 +64,7 @@ dealActivity.submitUFCashDistribution=function (frm) {
 		var param=$(frm).serializeArray();
 		var loading=$("#SpnCDSaveLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#CashDistributionList").length)/2 };
+		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#CashDistributionList").length)};
 		$.post("/Deal/CreateUnderlyingFundCashDistribution",param,function (data) {
 			loading.empty();
 			if($.trim(data)!="") { dealActivity.processErrMsg(data,frm); } else {

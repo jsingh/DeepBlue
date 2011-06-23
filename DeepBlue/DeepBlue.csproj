@@ -94,6 +94,7 @@
     <Compile Include="Models\Deal\ExpenseToDealModel.cs" />
     <Compile Include="Models\Deal\FixedIncomeDetailModel.cs" />
     <Compile Include="Models\Deal\FundExpenseModel.cs" />
+    <Compile Include="Models\Deal\IssuerDetailModel.cs" />
     <Compile Include="Models\Deal\NewHoldingPatternModel.cs" />
     <Compile Include="Models\Deal\ReconcileModel.cs" />
     <Compile Include="Models\Deal\SecurityActivityModel.cs" />
@@ -798,13 +799,14 @@
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
-    <Content Include="Views\Deal\AddUnderlyingFunds.aspx" />
+    <Content Include="Views\Deal\UnderlyingFunds.aspx" />
     <Content Include="Views\Deal\Close.aspx" />
     <Content Include="Views\Deal\DirectEquityDetail.ascx" />
     <Content Include="Views\Deal\Directs.aspx" />
     <Content Include="Views\Deal\ExpenseToDeal.ascx" />
     <Content Include="Views\Deal\FixedIncomeDetail.ascx" />
     <Content Include="Views\Deal\FundExpense.ascx" />
+    <Content Include="Views\Deal\IssuerDetail.ascx" />
     <Content Include="Views\Deal\Reconcile.aspx" />
     <Content Include="Views\Deal\SecurityConversion.ascx" />
     <Content Include="Views\Deal\EquitySplit.ascx" />
@@ -826,7 +828,6 @@
     <Content Include="Views\Deal\SellerDetail.ascx" />
     <Content Include="Views\Deal\DealDetail.ascx" />
     <Content Include="Views\Deal\New.aspx" />
-    <Content Include="Views\Deal\UnderlyingFunds.aspx" />
     <Content Include="Views\Deal\UnfundedAdjustment.ascx" />
     <Content Include="Views\Document\List.ascx" />
     <Content Include="Views\Document\New.aspx" />

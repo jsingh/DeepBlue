@@ -93,13 +93,20 @@
 			$(this).hide();
 			var parent=$(this).parent();
 			$(".expandheader",parent).show();
-			$(".detail",parent).show();
+			var detail=$(".detail",parent);
+			var display=detail.attr("issearch");
+			if(display!="true") {
+				detail.hide();
+			} else {
+				detail.show();
+			}
 		});
 		$(".expandtitle",".expandheader").click(function () {
 			var expandheader=$(this).parents(".expandheader:first");
 			var parent=$(expandheader).parent();
 			expandheader.hide();
-			$(".detail",parent).hide();
+			var detail=$(".detail",parent);
+			detail.hide();
 			$(".headerbox",parent).show();
 		});
 	}
@@ -120,15 +127,4 @@
 		alert(msg);
 	}
 	/* End Common Functions */
-	,selectDirTab: function (type,lnk) {
-		var UA=$("#EQdetail");
-		var SA=$("#FixedIncome");
-		UA.hide();SA.hide();
-		$(".tablnk").removeClass("tabselected");
-		$(lnk).addClass("tabselected");
-		switch(type) {
-			case "E": UA.show();break;
-			case "F": SA.show();break;
-		}
-	}
 }

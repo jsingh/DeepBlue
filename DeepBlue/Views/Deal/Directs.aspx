@@ -5,10 +5,10 @@
 	Directs
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
+	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
 	<%=Html.StylesheetLinkTag("dealdirect.css")%>
 	<%=Html.JavascriptInclueTag("DealDirect.js")%>
-    <%=Html.JavascriptInclueTag("DealActivity.js")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="navigation">
@@ -26,106 +26,74 @@
 	<div class="headerbar">
 		<div class="leftcol">
 			Underlying Direct</div>
-		<div class="leftcol expandaddbtn" style="display: block">
-			<%: Html.Anchor("Add new issuer", "javascript:dealDirect.add(0);")%>
+		<div class="addbtn" style="display: block">
+			<%: Html.Anchor(Html.Image("addnewissuer.png").ToHtmlString(), "javascript:dealDirect.add();")%>
 		</div>
-        <div class="rightcol">
-				<%: Html.TextBox("M_Fund","Search Issuer", new { @class="wm", @style="width:150px", @id="M_Fund" })%>
-			</div>
+		<div style="display: block; float: right; margin-right: 15%;">
+			<%: Html.Span("", new { @id = "SpnIssuerLoading" })%>
+			<%: Html.TextBox("S_Issuer", "Search Issuer", new { @class = "wm", @style = "width:150px", @id = "S_Issuer" })%>
+		</div>
 	</div>
-    <div class="subheader">
-   
-		<div class="editor-label">
-			Issuer Name:
+	<div class="subheader" id="AddNewIssuer" style="display: none">
+		<%using (Html.Form(new { @id = "frmAddNewIssuer", @onsubmit = "return dealDirect.createNewIssuer(this);" })) {%>
+		<div id="NewIssuerDetail">
 		</div>
-         <div class="editor-field">
-			<%: Html.TextBox("Name", "Enter Name")%>
+		<div class="addissuer">
+			<div class="btn">
+				<%: Html.Span("", new { @id = "SpnNewLoading" })%></div>
+			<div class="btn">
+				<%: Html.ImageButton("addissuer.png")%></div>
+			<div class="btnclose">
+				<%: Html.Image("issuerclose.png", new { @onclick = "javascript:dealDirect.close();" })%>
+			</div>
 		</div>
-        <div class="editor-label" style="clear: right">
-			Parent Name
-		</div>
-         <div class="editor-field">
-			<%: Html.TextBox("Name", "Enter Name")%>
-		</div>
-        <div class="editor-label" style="clear: right">
-			Country
-		</div>
-         <div class="editor-field">
-			<%: Html.TextBox("Name", "Enter Name")%>
-		</div>
-        <div class="issuerbtn" style="display: block">
-			<%: Html.Anchor("Add issuer", "javascript:void(0);")%>
-         
-		</div>
-        <div class="close">
-          <%: Html.Image("close_icon.png")%>  Close
-        </div>
-        
-    </div>
-	<div>
-		<%using (Html.Form(new { @onsubmit = "javascript:dealDirect.save(this);" })) {%>
-		<div class="editor-field">
-			<%: Html.HiddenFor(model => model.IssuerId)%>
-		</div>
-		<div class="editor-label">
-			<%: Html.LabelFor(model => model.Name)%>
-		</div>
-		<div class="editor-field">
-			<%: Html.TextBox("Name", "Enter Name")%>
-		</div>
-		
-		<div class="editor-label" style="clear: right">
-			<%: Html.LabelFor(model => model.CountryId)%>
-		</div>
-		<div class="editor-field">
-			<%: Html.TextBox("Country", "Enter Country")%>
-		</div>
-        <div class="editor-label" style="clear: right">
-			Issuer rating
-		</div>
-		<div class="editor-field">
-			<%: Html.TextBox("rating")%>
+		<%}%>
+	</div>
+	<div id="DirectMain" style="display: none">
+		<%using (Html.Form(new { @id = "frmIssuer", @onsubmit = "return dealDirect.save(this);" })) {%>
+		<div id="IssuerDetail">
 		</div>
 		<div class="editor-label">
 			<%: Html.Label("Security Type")%>
 		</div>
 		<div class="editor-field" style="width: auto;">
-			<div class="smalltab tabsel">
-				Security Type
+			<div id="equitytab" class="sel" onclick="javascript:dealDirect.selectTab('E',this);">
+				&nbsp;
 			</div>
-			<div class="smalltab">
-				Fixed Income
-			</div>
-			<div class="smalltab last">
+			<div id="fitab" onclick="javascript:dealDirect.selectTab('F',this);">
+				&nbsp;
 			</div>
 		</div>
-        <br />
-        <div class="tab"  >
-             <div class="tabselected">
-				<%: Html.Anchor("Equity", new { @class = "select tablnk", @onclick = "javascript:dealActivity.selectDirTab('E',this);" })%>
-              </div>
-              <div class="tabUnselected">
-                <%: Html.Anchor("FixedIncome", new { @class = "tablnk", @onclick = "javascript:dealActivity.selectDirTab('F',this);" })%>
-           </div>
-        </div>
-       	    
-
-		<div id="EquityDetail" class="subdetail">
-        <div id="EQdetail">
-			<%Html.RenderPartial("DirectEquityDetail", Model.EquityDetailModel);%>
+		<div class="subdetail">
+			<div class="line">
+			</div>
+			<div id="EQdetail">
+			</div>
+			<div id="FixedIncome" style="display: none">
+			</div>
+			<div class="line">
+			</div>
 		</div>
-		<div id="FixedIncome" class="subdetail" style="display: none">
-        <%Html.RenderPartial("FixedIncomeDetail", Model.FixedIncomeDetailModel);%>
+		<div class="direct">
+			<%: Html.Span("", new { @id = "SpnSaveIssuerLoading" } )%>&nbsp;&nbsp;&nbsp;
+			<%: Html.ImageButton("add_direct.png")%>
 		</div>
-		<%: Html.HiddenFor(model => model.CountryId)%>
 		<%}%>
-        </div>
-        <div class="direct">
-      <%: Html.Image("add_direct.png")%>
-    </div>
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%--<script id="DirectTemplate" type="text/x-jquery-tmpl">
-	</script>--%>
+	<script type="text/javascript">		dealDirect.init();</script>
+	<%= Html.jQueryAutoComplete("S_Issuer", new AutoCompleteOptions {
+																	  Source = "/Issuer/FindIssuers", MinLength = 1,
+																	  OnSelect = "function(event, ui) { dealDirect.load(ui.item.id);}"
+	})%>
+	<script id="IssuerDetailTemplate" type="text/x-jquery-tmpl"> 
+		<%Html.RenderPartial("IssuerDetail", Model.IssuerDetailModel);%>
+	</script>
+	<script id="EquityDetailTemplate" type="text/x-jquery-tmpl"> 
+		<%Html.RenderPartial("DirectEquityDetail", Model.EquityDetailModel);%>
+	</script>
+	<script id="FixedIncomeDetailTemplate" type="text/x-jquery-tmpl">
+		<%Html.RenderPartial("FixedIncomeDetail", Model.FixedIncomeDetailModel);%>
+	</script>
 </asp:Content>

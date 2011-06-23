@@ -1,10 +1,19 @@
 ﻿var underlyingFund={
-	init: function () {
+	tempSave: false
+	,init: function () {
 		jHelper.resizeIframe();
+		jHelper.waterMark();
+		underlyingFund.setUp();
+	}
+	,setUp: function () {
 		$(document).ready(function () {
 			underlyingFund.formatPercent("TaxRate");
 			underlyingFund.formatPercent("ManagementFee");
 			underlyingFund.formatPercent("IncentiveFee");
+			underlyingFund.expand();
+			$("#Issuer").autocomplete({ source: "/Issuer/FindIssuers",minLength: 1
+			,select: function (event,ui) { $("#IssuerId").val(ui.item.id); },appendTo: "body",delay: 300
+			});
 		});
 	}
 	,formatPercent: function (txtid) {
@@ -72,5 +81,72 @@
 		if($.trim(txt.value)=="") {
 			$("#IssuerId").val(0);
 		}
+	}
+	,expand: function () {
+		$(".headerbox").click(function () {
+			$(this).hide();
+			var parent=$(this).parent();
+			$(".expandheader",parent).show();
+			var detail=$(".detail",parent);
+			var display=detail.attr("issearch");
+			detail.show();
+		});
+		$(".expandtitle",".expandheader").click(function () {
+			var expandheader=$(this).parents(".expandheader:first");
+			var parent=$(expandheader).parent();
+			expandheader.hide();
+			var detail=$(".detail",parent);
+			detail.hide();
+			$(".headerbox",parent).show();
+		});
+	}
+	,load: function (id) {
+		var addUnderlyingfund=$("#AddUnderlyingFund");
+		addUnderlyingfund.empty();
+		if($("#AddNewIssuer").css("display")=="block") {
+			addUnderlyingfund.css("top","245px");
+		}
+		addUnderlyingfund.show();
+		$.getJSON("/Deal/FindUnderlyingFund",{ "_": (new Date).getTime(),"issuerId": id },function (data) {
+			$("#UnderlyingFundTemplate").tmpl(data).appendTo(addUnderlyingfund);
+			underlyingFund.setUp();
+			jHelper.checkValAttr(addUnderlyingfund);
+			jHelper.formatDateTxt(addUnderlyingfund);
+			$("#Description").val($.trim($("#Description").val()));
+			$("#Address").val($.trim($("#Address").val()));
+		});
+	}
+	,save: function (frm) {
+		try {
+			var loading=$("#SpnSaveLoading");
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			$.post("/Deal/UpdateUnderlyingFund",$(frm).serializeArray(),function (data) {
+				loading.empty();
+				$("#BILoading").empty();
+				$("#CILoading").empty();
+				var arr=data.split("||");
+				if(arr[0]=="True") {
+					if(underlyingFund.tempSave==false) {
+						alert("Underlying Fund Added.");
+						$("#AddUnderlyingFund").hide();
+						$("#S_UnderlyingFund").val("");
+					}
+					$("#UnderlyingFundId").val(arr[1]);
+				} else { alert(data); }
+				underlyingFund.tempSave=false;
+			});
+		} catch(e) { alert(e); }
+		return false;
+	}
+	,saveTemp: function (loadingId) {
+		var loading=$("#"+loadingId);
+		underlyingFund.tempSave=true;
+		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		$("#btnSave").click();
+	}
+	,reset: function (targetId) {
+		var target=$("#"+targetId);
+		$(":input[type='text']",target).val("");
+		$("textarea",target).val("");
 	}
 }

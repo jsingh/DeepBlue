@@ -132,13 +132,11 @@ namespace DeepBlue.Models.Deal {
 		public string Email { get; set; }
 
 		/* Bank Info */
-
-		[Required(ErrorMessage = "BankName is required")]
+	 
 		[StringLength(50, ErrorMessage = "Bank Name must be under 50 characters.")]
 		[DisplayName("Bank Name:")]
 		public string BankName { get; set; }
 
-		[Required(ErrorMessage = "Account No is required")]
 		[StringLength(40, ErrorMessage = "Account No must be under 40 characters.")]
 		[DisplayName("Account No:")]
 		public string Account { get; set; }

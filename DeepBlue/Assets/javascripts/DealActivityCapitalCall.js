@@ -31,6 +31,7 @@ dealActivity.setCCUnderlyingFund=function (id,name) {
 	$("#SpnCCUFName").html(name);
 	$("tbody","#CapitalCallList").empty();
 	$("tbody","#PRCapitalCallList").empty();
+	$("#CCDetail").attr("issearch","true").show();
 	dealActivity.loadCC(true);
 };
 dealActivity.loadCC=function (isRefresh) {
@@ -70,7 +71,7 @@ dealActivity.submitUFCapitalCall=function (frm) {
 		var param=$(frm).serializeArray();
 		var loading=$("#SpnCCSaveLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#CapitalCallList").length)/2 };
+		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#CapitalCallList").length)};
 		$.post("/Deal/CreateUnderlyingFundCapitalCall",param,function (data) {
 			loading.empty();
 			if($.trim(data)!="") {

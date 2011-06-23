@@ -38,7 +38,8 @@ a {
 	text-decoration: none;
 }
 a img {
-	border: 0px;  cursor: pointer;
+	border: 0px;
+	cursor: pointer;
 }
 /* Header & Footer */
 #topheader, #menu, #header {
@@ -158,7 +159,7 @@ a img {
 	width: 73px;
 	margin: 0 auto;
 	margin-bottom: 10px;
-	clear: both;
+	clear: both;height:30px;
 }
 .dropdown, .checkbox, .button, .textarea {
 	background-image: none;
@@ -729,6 +730,14 @@ h2 {
 }
 .mdiv .sel {
 	color: #021E43;
+	font-weight: bold;
+}
+.subul a {
+	color: #27599E;
+}
+.subul a.sel {
+	font-weight: bold;
+	color: #021E43;
 }
 #submenu, .topmenu a {
 	font-family: Calibri, Arial;
@@ -740,7 +749,7 @@ h2 {
 .checkbox input {
 	width: auto;
 }
- 
+
 .search-main {
 	width: 100%;
 	float: left;
@@ -767,7 +776,6 @@ h2 {
 }
 .wm {
 	color: #133F80;
-	text-transform: uppercase;
 }
 .tickbtn {
 	width: 24px;
@@ -790,20 +798,26 @@ input[type="text"].ui-autocomplete-input {
 label {
 	font-weight: bold;
 }
-#equitysymboldiv{
-padding-top:100px; padding-bottom:30px;
+#equitysymboldiv {
+	padding-top: 100px;
+	padding-bottom: 30px;
 }
-#equitysymboldiv table{
-background-color:#cbd2DA;
- line-height:35px;
+#equitysymboldiv table {
+	background-color: #cbd2DA;
+	line-height: 35px;
 }
-#fixincomediv{
-padding-top:100px; padding-bottom:100px;
-}
-
-#fixincomediv table{
-background-color:#cbd2DA;
- line-height:35px;
+#fixincomediv {
+	padding-top: 100px;
+	padding-bottom: 100px;
 }
 
-.hasDatepicker { background-image:url(../images/datepicker.png); background-position:right center; background-repeat:no-repeat; }
+#fixincomediv table {
+	background-color: #cbd2DA;
+	line-height: 35px;
+}
+
+.hasDatepicker {
+	background-image: url(../images/datepicker.png);
+	background-position: right center;
+	background-repeat: no-repeat;
+}

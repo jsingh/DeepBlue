@@ -43,7 +43,7 @@
 	clear: both;
 	float: left;
 	width: 100%;
-	margin-bottom: 37px;
+	margin-bottom: 20px;
 }
 #ActivityMain .title {
 	background: url(../images/greenplus.png) no-repeat scroll left top transparent;
@@ -140,12 +140,15 @@ input, select {
 	width: 100%;
 }
 .subheading {
-	font-size: 13px;
+	font-size: 16px;
 	font-weight: bold;
 	clear: both;
 	float: left;
-	color: #977f7f;
+	color: #000;
 	margin: 10px;
+}
+#SecurityActivity {
+	 background-color:#E9EAEC;
 }
 .editor-label {
 	padding: 8px;
@@ -226,10 +229,11 @@ input, select {
 }
 .addbtn {
 	float: left;
-	margin-left: 90px;
+	margin-left: 123px;
 	margin-top: 6px;
 }
 .subheader .name {
 	float: left;
 }
- 
+#ConversionDetail input[type='text']  { width:200px; }
+#ConversionDetail select { width:204px; }

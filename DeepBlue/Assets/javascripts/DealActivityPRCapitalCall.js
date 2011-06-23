@@ -54,7 +54,7 @@ dealActivity.submitUFPRCapitalCall=function (frm) {
 		var param=$(frm).serializeArray();
 		var loading=$("#SpnPRCCSaveLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#PRCapitalCallList").length)/2 };
+		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#PRCapitalCallList").length)};
 		$.post("/Deal/CreateUnderlyingFundPostRecordCapitalCall",param,function (data) {
 			loading.empty();
 			if($.trim(data)!="") {

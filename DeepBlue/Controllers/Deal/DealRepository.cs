@@ -354,7 +354,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		public List<DealUnderlyingDirectModel> GetAllDealUnderlyingDirects(int dealId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return  GetDealUnderlyingDirectModel(context, context.DealUnderlyingDirects.Where(direct => direct.DealID == dealId)).ToList();
+				return GetDealUnderlyingDirectModel(context, context.DealUnderlyingDirects.Where(direct => direct.DealID == dealId)).ToList();
 			}
 		}
 
@@ -582,10 +582,10 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public CreateUnderlyingFundModel FindUnderlyingFundModel(int underlyingFundId) {
+		public CreateUnderlyingFundModel FindUnderlyingFundModel(int issuerId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				CreateUnderlyingFundModel model = (from underlyingFund in context.UnderlyingFunds
-												   where underlyingFund.UnderlyingtFundID == underlyingFundId
+												   where underlyingFund.IssuerID == issuerId
 												   select new CreateUnderlyingFundModel {
 													   FundName = underlyingFund.FundName,
 													   FundTypeId = underlyingFund.FundTypeID,
@@ -622,13 +622,18 @@ namespace DeepBlue.Controllers.Deal {
 													   AuditorName = underlyingFund.AuditorName,
 													   Exempt = underlyingFund.Exempt,
 													   IsDomestic = underlyingFund.IsDomestic
-												   }).SingleOrDefault();
+												   }).FirstOrDefault();
 				if (model != null) {
 					List<CommunicationDetailModel> communications = GetContactCommunications(context, model.ContactId);
 					model.Address = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.MailingAddress);
 					model.Email = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.Email);
 					model.Phone = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.HomePhone);
 					model.WebAddress = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebAddress);
+				}
+				else {
+					model = new CreateUnderlyingFundModel();
+					model.IssuerId = issuerId;
+					model.IssuerName = context.Issuers.Where(issuer => issuer.IssuerID == issuerId).Select(issuer => issuer.Name).SingleOrDefault();
 				}
 				return model;
 			}
@@ -1454,6 +1459,61 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		#endregion
+
+		#region Direct
+		public CreateIssuerModel FindIssuerModel(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				CreateIssuerModel createIssuerModel = new CreateIssuerModel();
+				createIssuerModel.IssuerDetailModel = (from issuer in context.Issuers
+													   join country in context.COUNTRies on issuer.CountryID equals country.CountryID into countries
+													   from country in countries.DefaultIfEmpty()
+													   where issuer.IssuerID == id
+													   select new IssuerDetailModel {
+														   CountryId = issuer.CountryID,
+														   IssuerId = issuer.IssuerID,
+														   Name = issuer.Name,
+														   ParentName = issuer.ParentName,
+														   Country = (country != null ? country.CountryName : string.Empty)
+													   }).SingleOrDefault();
+				createIssuerModel.EquityDetailModel = (from equity in context.Equities
+													   where equity.IssuerID == id
+													   select new EquityDetailModel {
+														   EquityId = equity.EquityID,
+														   CurrencyId = equity.CurrencyID,
+														   EquityType = (equity.EquityType != null ? equity.EquityType.Equity : string.Empty),
+														   EquityTypeId = equity.EquityTypeID,
+														   Industry = (equity.Industry != null ? equity.Industry.Industry1 : string.Empty),
+														   IndustryId = equity.IndustryID,
+														   IssuerId = equity.IssuerID,
+														   Public = equity.Public,
+														   ShareClassType = (equity.ShareClassType != null ? equity.ShareClassType.ShareClass : string.Empty),
+														   ShareClassTypeId = equity.ShareClassTypeID,
+														   Symbol = equity.Symbol,
+													   }).FirstOrDefault();
+				createIssuerModel.FixedIncomeDetailModel = (from fixedIncome in context.FixedIncomes
+															where fixedIncome.IssuerID == id
+															select new FixedIncomeDetailModel {
+																CouponInformation = fixedIncome.CouponInformation,
+																CurrencyId = fixedIncome.CurrencyID,
+																FaceValue = fixedIncome.FaceValue,
+																FirstAccrualDate = fixedIncome.FirstAccrualDate,
+																FirstCouponDate = fixedIncome.FirstCouponDate,
+																FixedIncomeId = fixedIncome.FixedIncomeID,
+																FixedIncomeType = (fixedIncome.FixedIncomeType != null ? fixedIncome.FixedIncomeType.FixedIncomeType1 : string.Empty),
+																Symbol = fixedIncome.Symbol,
+																Maturity = fixedIncome.Maturity,
+																FixedIncomeTypeId = fixedIncome.FixedIncomeTypeID,
+																Frequency = fixedIncome.Frequency,
+																IndustryId = fixedIncome.IndustryID,
+																IssuedDate = fixedIncome.IssuedDate,
+																IssuerId = fixedIncome.IssuerID,
+																Industry = (fixedIncome.Industry != null ? fixedIncome.Industry.Industry1 : string.Empty)
+															}).FirstOrDefault();
+
+				return createIssuerModel;
+			}
+		}
 		#endregion
 
 	}

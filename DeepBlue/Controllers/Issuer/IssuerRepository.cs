@@ -12,10 +12,10 @@ namespace DeepBlue.Controllers.Issuer {
 
 		#region Issuer
 		
-		public List<IssuerDetailModel> GetAllIssuers() {
+		public List<DeepBlue.Models.Issuer.IssuerDetailModel> GetAllIssuers() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from issuer in context.Issuers
-						select new IssuerDetailModel { IssuerId = issuer.IssuerID, Name = issuer.Name }).ToList();
+						select new DeepBlue.Models.Issuer.IssuerDetailModel { IssuerId = issuer.IssuerID, Name = issuer.Name }).ToList();
 			}
 		}
 

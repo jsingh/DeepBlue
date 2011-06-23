@@ -1,16 +1,20 @@
 ﻿dealActivity.setFLEFund=function (id,name) {
 	$("#FLE_FundName").html(name);
 	$("#FLE_FundId").val(id);
+	$("#FLEDetail").attr("issearch","true").show();
 	var sl=$("#SpnFLEDetLoading");
 	jHelper.loading(sl);
 	var frm=$("#frmFundExpense");
 	$.getJSON("/Deal/FindFundExpense/?_"+(new Date()).getTime()+"&fundId="+id,function (data) {
-		sl.empty();var fetypeid=0;var amt="";if(data!=null) {
+		sl.empty();var fetypeid=0;var amt="";
+		if(data!=null) {
 			fetypeid=data.FundExpenseTypeId;amt=data.Amount;
 			var bdy=$("tbody","#ExpenseToDealList");
 			bdy.empty();
 			$.each(data.ExpenseToDeals,function (index,item) { dealActivity.loadExpenseDealData(item,bdy); });
 		}
+		$("tr:odd",bdy).removeClass("row").removeClass("arow").addClass("arow");
+		$("tr:even",bdy).removeClass("row").removeClass("arow").addClass("row");
 		$("#FundExpenseTypeId").val(fetypeid);
 		$("#Amount").val(amt);
 	});

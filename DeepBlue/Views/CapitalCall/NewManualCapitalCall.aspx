@@ -190,7 +190,7 @@
 									</td>
 									<td style="width: 5%">
 										<div>
-											<%: Html.Image("Delete.png", new { @onclick = "javascript:manualCapitalCall.deleteInvestor(this);" })%>
+											<%: Html.Image("largedel.png", new { @onclick = "javascript:manualCapitalCall.deleteInvestor(this);" })%>
 										</div>
 									</td>
 								</tr>

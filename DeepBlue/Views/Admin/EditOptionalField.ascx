@@ -10,6 +10,6 @@
 		<%: Html.CheckBox(Model.Index.ToString() + "_" + "IsDefault", Model.IsDefault)%>
 	</td>
 	<td>
-		<%: Html.Image("Delete.png", new {  @onclick = "javascript:customField.deleteOptionalField(" + Model.OptionFieldId.ToString() + ",this);" })%>
+		<%: Html.Image("largedel.png", new { @onclick = "javascript:customField.deleteOptionalField(" + Model.OptionFieldId.ToString() + ",this);" })%>
 	</td>
 </tr>

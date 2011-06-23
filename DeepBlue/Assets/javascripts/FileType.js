@@ -31,7 +31,7 @@
 		return jHelper.formSubmit(formId);
 	}
 	,onRowBound: function (tr,row) {
-		$("td:last div",tr).html("<img id='Edit' src='/Assets/images/Edit.gif'/>&nbsp;&nbsp;&nbsp;<img id='Delete' src='/Assets/images/Delete.png'/>");
+		$("td:last div",tr).html("<img id='Edit' src='/Assets/images/Edit.gif'/>&nbsp;&nbsp;&nbsp;<img id='Delete' src='/Assets/images/largedel.png'/>");
 		$("td:not(:last)",tr).click(function () { fileType.add(row.cell[0]); });
 		$("#Edit",tr).click(function () { fileType.add(row.cell[0]); });
 		$("#Delete",tr).click(function () { fileType.deleteType(row.cell[0]); });

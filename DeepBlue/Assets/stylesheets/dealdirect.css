@@ -1,64 +1,83 @@
-﻿.smalltab {
-	background-image: url(../images/smalltabunsel.png);
-	background-repeat: repeat-x;
-	min-width: 120px;
-	float: left;
+﻿#equitytab {
+	width: 109px;
 	height: 27px;
-	line-height: 27px;
-	text-align: center;
+	float: left;
+	background-image: url(../images/equitytab.png);
+	background-repeat: no-repeat;
+	cursor: pointer;
 }
-.tabsel {
-	background-image: url(../images/smalltabsel.png);
+#fitab {
+	width: 98px;
+	height: 27px;
+	float: left;
+	background-image: url(../images/fitab.png);
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+#equitytab.sel {
+	width: 98px;
+	background-image: url(../images/equitytabsel.png);
+}
+#fitab.sel {
+	width: 109px;
+	background-image: url(../images/fitabsel.png);
 }
 .last {
 	background-image: url(../images/smalltablast.png);
 	width: 3px;
 	min-width: 3px;
 }
-.subheader{
-    padding-top: 30px;
+.subheader {
+	padding-top: 30px;
 }
-
-.tabcell{
-width: 180px;
-
+.tabcell {
+	width: 180px;
 	height: 25px;
 	line-height: 25px;
 	margin-right: 10px;
 }
 
-.tabselected{
- background-image: url(../images/Newtab_sel.png);
-    background-repeat: no-repeat;
-    color: #FFFFFF;
-    cursor: pointer;
-    font-weight: bold;
-    height: 40px;
-    margin: 0;
-    padding: 0 0 0 3px;
-    text-align: center;
-    width: 213px;
-     float:left;
-     line-height:40px;
+#equitysymboldiv, #fixincomediv {
+	float: left;
+	background-color: #CBD2DA;
+	padding: 20px;
+	width: 100%;
 }
-
-.tabUnselected{
- background-image: url(../images/Newtab_unsel.png);
-    background-repeat: no-repeat;
-    cursor: pointer;
-    font-weight: bold;
-    height: 40px;
-    margin: 0;
-    padding: 0 0 0 3px;
-    text-align: center;
-    width: 215px;
- float:right;
-  padding-right:680px;
- line-height:40px;
+.subdetail {
+	width: 100%;
+	float: left;
+	margin-top: 20px;
 }
-.tabselected a,.tabUnselected a{
- color:Black;
+#EQdetail, #FixedIncome, #DirectMain, #IssuerDetail {
+	width: 100%;
+	float: left;
 }
-.tab{
-float:left; padding:50px; padding-right:340px;
+#IssuerDetail { margin-top:20px; }
+.direct {
+	float: right;
+	padding-right: 235px;
+	padding-bottom: 100px;
+	margin-top: 20px;
+}
+.addissuer {
+	float: right;
+	clear: both;
+	margin-right: 22%;
+	margin-top: 20px;
+}
+.addissuer .btn {
+	float: left;cursor:pointer;
+}
+.addissuer .btnclose {
+	float: left;
+	margin-left: 35px;
+	margin-top: 10px; cursor:pointer;
+}
+.editor-field input[type='checkbox']{
+   margin-top: 5px;
+}
+.addbtn {
+	float: left;
+	margin-left: 123px;
+	margin-top: 6px;
 }

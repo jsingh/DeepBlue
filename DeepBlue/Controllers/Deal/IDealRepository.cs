@@ -34,7 +34,7 @@ namespace DeepBlue.Controllers.Deal {
 		DealUnderlyingFundModel FindDealUnderlyingFundModel(int dealUnderlyingFundId);
 		List<DealUnderlyingFundModel> GetAllDealUnderlyingFundDetails(int dealId);
 		List<DealUnderlyingFund> GetDealUnderlyingFunds(int dealId);
-		List<DealUnderlyingFund> GetDealUnderlyingFunds(int dealId,int dealClosingId);
+		List<DealUnderlyingFund> GetDealUnderlyingFunds(int dealId, int dealClosingId);
 		List<DealUnderlyingFund> GetAllNotClosingDealUnderlyingFunds(int underlyingFundId, int dealId);
 		List<DealUnderlyingFund> GetAllClosingDealUnderlyingFunds(int underlyingFundId, int fundId);
 		void DeleteDealUnderlyingFund(int dealUnderlyingFundId);
@@ -58,7 +58,7 @@ namespace DeepBlue.Controllers.Deal {
 		int GetMaxDealClosingNumber(int dealId);
 		bool DealCloseDateAvailable(DateTime dealCloseDate, int dealId, int dealCloseId);
 		List<DealUnderlyingDirect> GetDealUnderlyingDirects(int dealId);
-		List<DealUnderlyingDirect> GetDealUnderlyingDirects(int dealId,int dealCloseId);
+		List<DealUnderlyingDirect> GetDealUnderlyingDirects(int dealId, int dealCloseId);
 		List<DealCloseListModel> GetAllDealClosingLists(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int dealId);
 		#endregion
 
@@ -70,7 +70,7 @@ namespace DeepBlue.Controllers.Deal {
 		#region UnderlyingFund
 		List<UnderlyingFundListModel> GetAllUnderlyingFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		List<UnderlyingFund> GetAllUnderlyingFunds();
-		CreateUnderlyingFundModel FindUnderlyingFundModel(int underlyingFundId);
+		CreateUnderlyingFundModel FindUnderlyingFundModel(int issuerId);
 		UnderlyingFund FindUnderlyingFund(int underlyingFundId);
 		IEnumerable<ErrorInfo> SaveUnderlyingFund(UnderlyingFund underlyingFund);
 		bool UnderlyingFundNameAvailable(string fundName, int underlyingFundId);
@@ -170,6 +170,10 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region Reconcile
 		List<ReconcileListModel> GetAllReconciles(int pageSize, int pageIndex, DateTime fromDate, DateTime toDate, int underlyingFundId, int fundId, ref int totalRows);
+		#endregion
+
+		#region Direct
+		CreateIssuerModel FindIssuerModel(int id);
 		#endregion
 
 	}

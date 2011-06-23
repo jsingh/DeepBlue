@@ -1287,7 +1287,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 
-		
+
 		#endregion
 
 		#region ShareClassType
@@ -1610,7 +1610,7 @@ namespace DeepBlue.Controllers.Admin {
 			else
 				return string.Empty;
 		}
-		
+
 		#endregion
 
 		#region Geography
@@ -1826,7 +1826,12 @@ namespace DeepBlue.Controllers.Admin {
 				return string.Empty;
 		}
 
-
+		//
+		// GET: /Admin/FindIndustrys
+		[HttpGet]
+		public JsonResult FindIndustrys(string term) {
+			return Json(AdminRepository.FindIndustrys(term), JsonRequestBehavior.AllowGet);
+		}
 		#endregion
 
 		#region File Type
@@ -2148,7 +2153,7 @@ namespace DeepBlue.Controllers.Admin {
 				return string.Empty;
 		}
 		#endregion
-		
+
 		#region CashDistributionType
 
 		public ActionResult CashDistributionType() {
@@ -2248,7 +2253,7 @@ namespace DeepBlue.Controllers.Admin {
 			else
 				return string.Empty;
 		}
-		
+
 		#endregion
 
 		#region ActivityType
@@ -2352,6 +2357,15 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 
+		#endregion
+
+		#region Country
+		//
+		// GET: /Admin/FindCountrys
+		[HttpGet]
+		public JsonResult FindCountrys(string term) {
+			return Json(AdminRepository.FindCountrys(term), JsonRequestBehavior.AllowGet);
+		}
 		#endregion
 
 		public ActionResult Result() {

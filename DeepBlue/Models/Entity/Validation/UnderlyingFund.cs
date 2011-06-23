@@ -23,8 +23,8 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-		 
-			[Required(ErrorMessage="FundName is required")]
+
+			[Required(ErrorMessage = "FundName is required")]
 			[StringLength(100, ErrorMessage = "FundName must be under 100 characters.")]
 			public global::System.String FundName {
 				get;
@@ -45,20 +45,20 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-						
+
 			#endregion
 		}
 
-		public UnderlyingFund(IUnderlyingFundService underlyingFundTypeservice)
+		public UnderlyingFund(IUnderlyingFundService underlyingFundservice)
 			: this() {
-			this.underlyingFundTypeService = underlyingFundTypeService;
+			this.underlyingFundService = underlyingFundService;
 		}
 
 		public UnderlyingFund() {
 		}
 
 		private IUnderlyingFundService _UnderlyingFundService;
-		public IUnderlyingFundService underlyingFundTypeService {
+		public IUnderlyingFundService underlyingFundService {
 			get {
 				if (_UnderlyingFundService == null) {
 					_UnderlyingFundService = new UnderlyingFundService();
@@ -71,21 +71,25 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var underlyingFundType = this;
-			IEnumerable<ErrorInfo> errors = Validate(underlyingFundType);
+			var underlyingFund = this;
+			IEnumerable<ErrorInfo> errors = Validate(underlyingFund);
 			if (errors.Any()) {
 				return errors;
 			}
-			underlyingFundTypeService.SaveUnderlyingFund(this);
+			underlyingFundService.SaveUnderlyingFund(this);
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(UnderlyingFund underlyingFundType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(underlyingFundType);
-			errors = errors.Union(ValidationHelper.Validate(underlyingFundType.Account));
-			errors = errors.Union(ValidationHelper.Validate(underlyingFundType.Contact));
-			foreach (ContactCommunication comm in underlyingFundType.Contact.ContactCommunications) {
-				errors = errors.Union(ValidationHelper.Validate(comm.Communication));
+		private IEnumerable<ErrorInfo> Validate(UnderlyingFund underlyingFund) {
+			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(underlyingFund);
+			if (underlyingFund.Account != null) {
+				errors = errors.Union(ValidationHelper.Validate(underlyingFund.Account));
+			}
+			if (underlyingFund.Contact != null) {
+				errors = errors.Union(ValidationHelper.Validate(underlyingFund.Contact));
+				foreach (ContactCommunication comm in underlyingFund.Contact.ContactCommunications) {
+					errors = errors.Union(ValidationHelper.Validate(comm.Communication));
+				}
 			}
 			return errors;
 		}

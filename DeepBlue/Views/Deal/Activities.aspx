@@ -65,15 +65,15 @@
 							<div class="addbtn" style="display: block;">
 								<%: Html.Anchor(Html.Image("mncc.png").ToHtmlString(), "javascript:dealActivity.makeNewCC();")%></div>
 							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.Span("", new { @id="SpnCCUFName" })%>
 								<%: Html.TextBox("CC_UnderlyingFund", "Search Underlying Fund", new { @style="width:200px", @class = "wm" })%></div>
 						</div>
-						<div class="detail">
+						<div class="detail" id="CCDetail">
 							<div class="search-header">
 								<div class="cell">
+									<%: Html.Span("", new { @id="SpnCCUFName" })%>
 								</div>
-							</div>
-							<div class="cell" id="CCLoading">
+								<div class="cell" id="CCLoading">
+								</div>
 							</div>
 							<div id="CapitalCall" class="gridbox" style="display: none;">
 								<div style="clear: both; width: 100%">
@@ -114,10 +114,10 @@
 								<div class="subheader">
 									<div class="name">
 										Post Record Capital Call</div>
-									<div class="addbtn">
+									<div class="addbtn" style="margin-left: 82px;">
 										<%: Html.Anchor(Html.Image("addnewprcc.png").ToHtmlString(), "javascript:dealActivity.makeNewPRCC();")%></div>
-								</div>
-								<div class="cell" id="PRCCLoading">
+									<div class="cell" id="PRCCLoading">
+									</div>
 								</div>
 								<div id="PRCCListBox" class="clear" style="display: none">
 									<%using (Html.Form(new { @id = "frmUFPRCapitalCall", @onsubmit = "return dealActivity.submitUFPRCapitalCall(this);" })) {%>
@@ -176,11 +176,12 @@
 							<div style="display: block; float: right; margin-right: 15%;">
 								<%: Html.TextBox("CD_UnderlyingFund", "Search Underlying Fund", new { @style = "width:200px", @class = "wm" })%></div>
 						</div>
-						<div class="detail">
+						<div class="detail" id="CDDetail">
 							<div class="search-header">
-								<%: Html.Span("", new { @id="SpnCDUFName" })%>
-							</div>
-							<div class="cell" id="CDLoading">
+								<div class="cell">
+									<%: Html.Span("", new { @id="SpnCDUFName" })%></div>
+								<div class="cell" id="CDLoading">
+								</div>
 							</div>
 							<div class="clear">
 								<div id="CashDistribution" class="gridbox" style="display: none">
@@ -220,17 +221,17 @@
 									<div class="subheader">
 										<div class="name">
 											Post Record Date Distribution</div>
-										<div class="addbtn">
+										<div class="addbtn" style="margin-left: 51px;">
 											<%: Html.Anchor(Html.Image("anprcd.png").ToHtmlString(), "javascript:dealActivity.makeNewPRCD();")%></div>
-									</div>
-									<div class="cell" id="PRCDLoading">
+										<div class="cell" id="PRCDLoading">
+										</div>
 									</div>
 									<div id="PRCDListBox" class="clear" style="display: none">
 										<%using (Html.Form(new { @id = "frmUFPRCashDistribution", @onsubmit = "return dealActivity.submitUFPRCashDistribution(this);" })) {%>
 										<table cellpadding="0" cellspacing="0" border="0" id="PRCashDistributionList" class="grid">
 											<thead>
 												<tr>
-													<th style="width: 15%">
+													<th style="width: 15%;">
 														Fund Name
 													</th>
 													<th style="width: 12%">
@@ -280,11 +281,12 @@
 							<div style="display: block; float: right; margin-right: 15%;">
 								<%: Html.TextBox("UFV_UnderlyingFund", "Search Underlying Fund", new { @style = "width:200px",  @class = "wm" })%></div>
 						</div>
-						<div class="detail">
+						<div class="detail" id="UFVDetail">
 							<div class="search-header">
-								<%: Html.Span("", new { @id="SpnUFVName" })%>
-							</div>
-							<div class="cell loading" id="UFVLoading">
+								<div class="cell">
+									<%: Html.Span("", new { @id="SpnUFVName" })%></div>
+								<div class="cell loading" id="UFVLoading">
+								</div>
 							</div>
 							<div class="gridbox">
 								<table cellpadding="0" cellspacing="0" border="0" id="UnderlyingFundValuationList"
@@ -340,7 +342,7 @@
 								<%: Html.TextBox("UDV_UnderlyingDirect", "Search Underlying Direct", new { @style = "width:200px", @class = "wm" })%>
 							</div>
 						</div>
-						<div class="detail">
+						<div class="detail" id="UDVDetail">
 							<div class="search-header">
 								<%: Html.Span("", new { @id="SpnUDVName" })%>
 							</div>
@@ -405,12 +407,12 @@
 								<%: Html.TextBox("UFA_UnderlyingFund", "Search Underlying Fund", new { @style = "width:200px", @class = "wm" })%>
 							</div>
 						</div>
-						<div class="detail">
+						<div class="detail" id="UFADetail">
 							<div class="search-header">
 								<div class="cell">
 									<%: Html.Span("", new { @id="SpnUFAUFName" })%></div>
-							</div>
-							<div class="cell" id="UFALoading">
+								<div class="cell" id="UFALoading">
+								</div>
 							</div>
 							<div id="UFAdjustment" style="display: none" class="gridbox">
 								<%using (Html.Form(new { @id = "frmUFAAdjustment", @onsubmit = "return dealActivity.submitUFA(this);" })) {%>
@@ -458,34 +460,40 @@
 									Fund Level Expenses
 								</div>
 							</div>
-							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.Span("", new { @id = "SpnFLEDetLoading" })%><%: Html.TextBox("FLE_Fund", "Search Fund", new { @style = "width:200px", @class = "wm" })%>
-							</div>
-						</div>
-						<div class="detail">
-							<% Html.RenderPartial("FundExpense", Model.FundLevelExpenseModel);%>
-							<div class="cell clear">
+							<div class="addbtn" style="display: block;">
 								<%: Html.Anchor(Html.Image("addexpense.png").ToHtmlString(), "#")%>
 							</div>
-							<table cellpadding="0" cellspacing="0" border="0" id="ExpenseToDealList" class="grid">
-								<thead>
-									<tr>
-										<th style="width: 15%">
-											Deal No.
-										</th>
-										<th style="width: 15%">
-											Deal Name
-										</th>
-										<th style="width: 15%">
-											Expense Amount
-										</th>
-										<th>
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
+							<div class="cell">
+								<%: Html.Span("", new { @id = "SpnFLEDetLoading" })%>
+							</div>
+							<div style="display: block; float: right; margin-right: 15%;">
+								<%: Html.TextBox("FLE_Fund", "Search Fund", new { @style = "width:200px", @class = "wm" })%>
+							</div>
+						</div>
+						<div class="detail" id="FLEDetail">
+							<div class="gridbox">
+								<% Html.RenderPartial("FundExpense", Model.FundLevelExpenseModel);%></div>
+							<div class="gridbox">
+								<table cellpadding="0" cellspacing="0" border="0" id="ExpenseToDealList" class="grid">
+									<thead>
+										<tr>
+											<th style="width: 15%">
+												Deal No.
+											</th>
+											<th style="width: 15%">
+												Deal Name
+											</th>
+											<th style="width: 15%">
+												Expense Amount
+											</th>
+											<th>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -493,12 +501,14 @@
 				</div>
 			</div>
 			<div id="SecurityActivity" class="act-group" style="display: none">
-				<div class="line">
+				<div class="expandheader expandsel" style="display: none" id="SATitle">
+					<div class="expandbtn">
+						<div class="expandtitle" style="display: block;">
+							<%: Html.Span("", new { @id="SpnUDirectName" })%>
+						</div>
+					</div>
 				</div>
-				<div class="search-header">
-					<%: Html.Span("", new { @id="SpnUDirectName" })%>
-				</div>
-				<div class="clear sec-box">
+				<div class="clear sec-box" id="SADetailBox" style="display: none; margin-top: 30px;">
 					<div class="editor-label">
 						<%: Html.Label("Corporate Action-") %>
 					</div>
@@ -519,29 +529,33 @@
 				</div>
 				<div class="line">
 				</div>
-				<div class="subheading">
-					New Holding Pattern
+				<div class="gridbox" style="margin-bottom: 20px;display:none;" id="NHPList">
+					<div class="subheading">
+						New Holding Pattern
+					</div>
+					<div class="cell" id="NHPLoading">
+					</div>
+					<div class="clear sec-box">
+						<table cellpadding="0" cellspacing="0" border="0" id="NewHoldingPatternList" class="grid">
+							<thead>
+								<tr>
+									<th style="width: 20%" align="center">
+										Fund Name
+									</th>
+									<th style="width: 20%" align="center">
+										Old Number of Shares
+									</th>
+									<th style="width: 20%" align="center">
+										New Number of Shares
+									</th>
+									<th>
+									</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
 				</div>
-				<div class="cell" id="NHPLoading">
-				</div>
-				<div class="clear sec-box">
-					<table cellpadding="0" cellspacing="0" border="0" id="NewHoldingPatternList" class="grid">
-						<thead>
-							<tr>
-								<th style="width: 20%" align="center">
-									Fund Name
-								</th>
-								<th style="width: 20%" align="center">
-									Old Number of Shares
-								</th>
-								<th style="width: 20%" align="center">
-									New Number of Shares
-								</th>
-								<th>
-								</th>
-							</tr>
-						</thead>
-					</table>
+				<div class="line">
 				</div>
 			</div>
 		</div>

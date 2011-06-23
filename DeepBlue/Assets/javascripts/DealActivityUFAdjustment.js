@@ -13,6 +13,7 @@ dealActivity.loadUFA=function () {
 	var rowsLength=$("tr",target).length;
 	target.empty();
 	$("#UFAdjustment").hide();
+	$("#UFADetail").attr("issearch","true").show();
 	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 	$.getJSON("/Deal/UnfundedAdjustmentList",{ "_": (new Date).getTime(),"underlyingFundId": dealActivity.getUFAUnderlyingFund() },function (data) {
 		loading.empty();
@@ -22,8 +23,9 @@ dealActivity.loadUFA=function () {
 		});
 		dealActivity.setUpRow($("tr",target));
 		rowsLength=$("tr",target).length;
-		if(rowsLength>0) { $("#UFAdjustment").show(); }$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");
-				$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
+		if(rowsLength>0) { $("#UFAdjustment").show(); }
+		$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");
+		$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
 	});
 };
 dealActivity.submitUFA=function (frm) {
@@ -31,7 +33,7 @@ dealActivity.submitUFA=function (frm) {
 		var param=$(frm).serializeArray();
 		var loading=$("#SpnUFASaveLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#UnfundedAdjustmentList").length)/2 };
+		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#UnfundedAdjustmentList").length)};
 		$.post("/Deal/CreateUnfundedAdjustment",param,function (data) {
 			loading.empty();
 			if($.trim(data)!="") { alert(data); } else {

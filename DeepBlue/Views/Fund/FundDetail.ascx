@@ -84,7 +84,7 @@
 					<%: Html.Label("Investor:") %>&nbsp;<%: Html.DropDownList(index.ToString() + "_" + "InvestorTypeId", Model.InvestorTypes,new { @id = "InvestorTypeId", @onchange="javascript:fund.changeInvestorType(this);", @class="investortype ddlist" , @val = rateSchedule.InvestorTypeId.ToString() } )%>
 				</div>
 				<div id="DeleteRateSchedule" style="float: right;">
-					<%:Html.Anchor(Html.Image("Delete.png").ToHtmlString() + "&nbsp;Delete Rate Schedule", "#" , new { @onclick="javascript:fund.deleteInvestorType(this);" })%>
+					<%:Html.Anchor(Html.Image("largedel.png").ToHtmlString() + "&nbsp;Delete Rate Schedule", "#", new { @onclick = "javascript:fund.deleteInvestorType(this);" })%>
 				</div>
 			</div>
 			<div class="rate-grid" style="width: 100%">

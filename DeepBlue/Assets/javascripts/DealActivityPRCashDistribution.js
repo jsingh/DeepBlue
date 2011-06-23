@@ -53,7 +53,7 @@ dealActivity.submitUFPRCashDistribution=function (frm) {
 		var param=$(frm).serializeArray();
 		var loading=$("#SpnPRCDSaveLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#PRCashDistributionList").length)/2 };
+		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#PRCashDistributionList").length)};
 		$.post("/Deal/CreateUnderlyingFundPostRecordCashDistribution",param,function (data) {
 			loading.empty();
 			if($.trim(data)!="") { dealActivity.processErrMsg(data,frm); } else {

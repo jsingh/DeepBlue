@@ -38,11 +38,12 @@ namespace DeepBlue.Helpers {
 			StringBuilder errors = new StringBuilder();
 			if (errorInfo != null) {
 				foreach (var err in errorInfo.ToList()) {
-					errors.Append(err.PropertyName + " : " + err.ErrorMessage + "\n");
+					errors.Append(err.ErrorMessage + "\n");
 				}
 			}
 			return errors.ToString();
 		}
+		
 	}
 
 	public class ErrorInfo {

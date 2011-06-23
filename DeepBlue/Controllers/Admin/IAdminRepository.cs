@@ -174,6 +174,7 @@ namespace DeepBlue.Controllers.Admin {
 		bool IndustryNameAvailable(string industry, int industryId);
 		bool DeleteIndustry(int id);
 		IEnumerable<ErrorInfo> SaveIndustry(Industry industry);
+		List<AutoCompleteList> FindIndustrys(string industryName);
 		#endregion
 
 		#region FileType
@@ -240,6 +241,10 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region FundExpenseType
 		List<FundExpenseType> GetAllFundExpenseTypes();
+		#endregion
+
+		#region Country
+		List<AutoCompleteList> FindCountrys(string countryName);
 		#endregion
 	}
 }

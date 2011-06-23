@@ -71,6 +71,7 @@ dealActivity.setUFVUnderlyingFund=function (id,name) {
 	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 	$("#PRValuation").hide();
 	$("tbody",tbl).empty();
+	$("#UFVDetail").attr("issearch","true").show();
 	$.getJSON("/Deal/UnderlyingFundValuationList",{ "_": (new Date).getTime(),"underlyingFundId": id },function (data) {
 		$("#PRValuation").show();
 		loading.empty();

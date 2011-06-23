@@ -31,12 +31,6 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage = "Symbol is required")]
-			[StringLength(50, ErrorMessage = "Symbol must be under 50 characters.")]
-			public global::System.String Symbol {
-				get;
-				set;
-			}
 			#endregion
 		}
 

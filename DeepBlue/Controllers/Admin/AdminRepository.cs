@@ -8,7 +8,7 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Controllers.Admin {
 	public class AdminRepository : IAdminRepository {
 
-		#region IAdminRepository InvestorEntityType Members
+		#region  InvestorEntityType Members
 
 		public List<Models.Entity.InvestorEntityType> GetAllInvestorEntityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -54,7 +54,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region IAdminRepository InvestorType Members
+		#region  InvestorType Members
 
 		public List<Models.Entity.InvestorType> GetAllInvestorTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -110,7 +110,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository FundClosing
+		#region  FundClosing
 
 		public List<Models.Entity.FundClosing> GetAllFundClosings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -163,7 +163,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository CustomField Members
+		#region  CustomField Members
 
 		public List<Models.Entity.CustomField> GetAllCustomFields(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -263,7 +263,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region IAdminRepository DataType Members
+		#region  DataType Members
 
 		public List<DataType> GetAllDataTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -310,7 +310,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository Module
+		#region  Module
 
 		public List<Models.Entity.MODULE> GetAllModules(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -356,7 +356,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region IAdminRepository Get
+		#region  Get
 
 		public List<COUNTRY> GetAllCountries() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -393,7 +393,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository CommunicationType Members
+		#region  CommunicationType Members
 
 		public List<Models.Entity.CommunicationType> GetAllCommunicationTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -456,7 +456,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository CommunicationGrouping Members
+		#region  CommunicationGrouping Members
 
 		public List<Models.Entity.CommunicationGrouping> GetAllCommunicationGroupings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -511,7 +511,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository PurchaseType Members
+		#region  PurchaseType Members
 
 		public List<Models.Entity.PurchaseType> GetAllPurchaseTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -566,7 +566,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository DealClosingCostType Members
+		#region  DealClosingCostType Members
 
 		public List<Models.Entity.DealClosingCostType> GetAllDealClosingCostTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -621,7 +621,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository DocumentTypes
+		#region  DocumentTypes
 		public List<DocumentType> GetAllDocumentTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from document in context.DocumentTypes
@@ -631,7 +631,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region IAdminRepository Communication
+		#region  Communication
 		public string GetContactCommunicationValue(int contactId, Models.Admin.Enums.CommunicationType communicationType) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from contactCommunication in context.ContactCommunications
@@ -641,7 +641,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region IAdminRepository SecurityType Members
+		#region  SecurityType Members
 
 		public List<Models.Entity.SecurityType> GetAllSecurityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -696,7 +696,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository UnderlingFundType
+		#region  UnderlingFundType
 
 		public List<Models.Entity.UnderlyingFundType> GetAllUnderlyingFundTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -750,7 +750,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region IAdminRepository ShareClassType
+		#region  ShareClassType
 
 		public List<Models.Entity.ShareClassType> GetAllShareClassTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -796,7 +796,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region IAdminRepository ReportingType
+		#region  ReportingType
 
 		public List<Models.Entity.ReportingType> GetAllReportingTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -853,7 +853,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository ReportingFrequency
+		#region  ReportingFrequency
 
 		public List<Models.Entity.ReportingFrequency> GetAllReportingFrequencies(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -908,7 +908,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region IAdminRepository Geography
+		#region  Geography
 
 		public List<Models.Entity.Geography> GetAllGeographys(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -963,7 +963,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region IAdminRepository Industry
+		#region  Industry
 
 		public List<Models.Entity.Industry> GetAllIndustrys(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -1016,9 +1016,23 @@ namespace DeepBlue.Controllers.Admin {
 						select industry).ToList();
 			}
 		}
+
+		public List<AutoCompleteList> FindIndustrys(string industryName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> industryListQuery = (from industry in context.Industries
+																 where industry.Industry1.Contains(industryName)
+																  orderby industry.Industry1
+																 select new AutoCompleteList {
+																	 id = industry.IndustryID,
+																	 label = industry.Industry1,
+																	 value = industry.Industry1
+																 });
+				return new PaginatedList<AutoCompleteList>(industryListQuery, 1, 20);
+			}
+		}
 		#endregion
 
-		#region IAdminRepository FileType
+		#region  FileType
 
 		public List<Models.Entity.FileType> GetAllFileTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -1073,7 +1087,7 @@ namespace DeepBlue.Controllers.Admin {
 		 
 		#endregion
 
-		#region IAdminRepository EquityType Members
+		#region  EquityType Members
 
 		public List<Models.Entity.EquityType> GetAllEquityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -1129,7 +1143,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository FixedIncomeType Members
+		#region  FixedIncomeType Members
 
 		public List<Models.Entity.FixedIncomeType> GetAllFixedIncomeTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -1185,7 +1199,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository Currency
+		#region  Currency
 
 		public List<Models.Entity.Currency> GetAllCurrencies(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -1240,7 +1254,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region IAdminRepository ShareClassType
+		#region  ShareClassType
 		public List<ShareClassType> GetAllShareClassTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from shareClassType in context.ShareClassTypes
@@ -1251,7 +1265,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region IAdminRepository InvestmentType
+		#region  InvestmentType
 		public List<InvestmentType> GetAllInvestmentTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from investmentType in context.InvestmentTypes
@@ -1262,7 +1276,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region IAdminRepository CashDistributionType Members
+		#region  CashDistributionType Members
 		
 		public List<Models.Entity.CashDistributionType> GetAllCashDistributionTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -1318,7 +1332,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository ActivityType 
+		#region  ActivityType 
 
 		public List<Models.Entity.ActivityType> GetAllActivityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -1374,7 +1388,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region IAdminRepository FundExpenseType
+		#region  FundExpenseType
 
 		public List<FundExpenseType> GetAllFundExpenseTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -1384,6 +1398,22 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
+		#endregion
+
+		#region Country
+		public List<AutoCompleteList> FindCountrys(string countryName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> countryListQuery = (from country in context.COUNTRies
+																 where country.CountryName.Contains(countryName)
+																 orderby country.CountryName
+																 select new AutoCompleteList {
+																	 id = country.CountryID,
+																	 label = country.CountryName,
+																	 value = country.CountryName
+																 });
+				return new PaginatedList<AutoCompleteList>(countryListQuery, 1, 20);
+			}
+		}
 		#endregion
 	}
 }

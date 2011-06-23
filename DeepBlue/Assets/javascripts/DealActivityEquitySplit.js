@@ -22,8 +22,8 @@ dealActivity.getActivityTypeId=function () {
 dealActivity.checkUD=function () {
 	/*var udid=dealActivity.getUnderlyingDirectId();
 	if(udid==0) {
-		alert("Underlying Direct is required");
-		return false;
+	alert("Underlying Direct is required");
+	return false;
 	}*/
 	return true;
 };
@@ -58,9 +58,9 @@ dealActivity.getEquityId=function (id) {
 dealActivity.selectUD=function (id,name) {
 	$("#DealUnderlyingDirectId").val(id);
 	$("#SpnUDirectName").html(name);
-//	dealActivity.setESAutoComplete();
-//	dealActivity.setSecConvAutoComplete($("#OldSecurityTypeId").val(),$("#OldSecurity"));
-//	dealActivity.setSecConvAutoComplete($("#NewSecurityTypeId").val(),$("#NewSecurity"));
+	$("#SATitle").show();
+	$("#SADetailBox").show();
+	$("#NHPList").show();
 };
 dealActivity.getUnderlyingDirectId=function () {
 	var id=parseInt($("#DealUnderlyingDirectId").val());
@@ -88,9 +88,6 @@ dealActivity.loadNHP=function (securityTypeId,securityId) {
 	grid.ajaxTableReload();
 };
 dealActivity.onNHPRowBound=function (tr,row,t) {
-	var emptyRow=document.createElement("tr");var td=document.createElement("td");td.colSpan=4;
-	emptyRow.className="emptyrow";td.innerHTML="&nbsp;";
-	$(emptyRow).append(td);$(tr).after(emptyRow);
 };
 dealActivity.createSA=function (frm) {
 	var param=$(frm).serializeArray();

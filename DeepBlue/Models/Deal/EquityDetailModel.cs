@@ -17,9 +17,9 @@ namespace DeepBlue.Models.Deal {
 
 		[Required(ErrorMessage = "Equity Type is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Equity Type is required")]
+		[DisplayName("Equity Type")]
 		public int EquityTypeId { get; set; }
 
-		[Required(ErrorMessage = "Symbol is required")]
 		[StringLength(50, ErrorMessage = "Symbol must be under 50 characters.")]
 		[DisplayName("Stock Symbol")]
 		public string Symbol { get; set; }
@@ -39,6 +39,7 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Industry")]
 		public int? IndustryId { get; set; }
 
+		[DisplayName("Currency")]
 		public int? CurrencyId { get; set; }
 
 		public string EquityType { get; set; }

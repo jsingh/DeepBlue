@@ -11,7 +11,7 @@ namespace DeepBlue.Controllers.Issuer {
 	public interface IIssuerRepository {
 
 		#region Issuer
-		List<IssuerDetailModel> GetAllIssuers();
+		List<DeepBlue.Models.Issuer.IssuerDetailModel> GetAllIssuers();
 		List<IssuerListModel> GetAllIssuers(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		bool DeleteIssuer(int issuerId);
 		bool IssuerNameAvailable(string issuerName, int issuerId);

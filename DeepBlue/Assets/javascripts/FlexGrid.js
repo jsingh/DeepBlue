@@ -49,7 +49,7 @@
 					 		if(row.cell.length>i) {
 					 			switch($(this).attr("datatype")) {
 					 				case "Boolean":
-					 					if(row.cell[i]==true) { div.innerHTML="<img src='/Assets/images/add.png' />"; }
+					 					if(row.cell[i]==true) { div.innerHTML="<img src='/Assets/images/tick.gif' />"; }
 					 					break;
 					 				case "money":
 					 					div.innerHTML=jHelper.dollarAmount(row.cell[i].toString());

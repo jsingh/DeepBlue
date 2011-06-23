@@ -1,1 +1,89 @@
-﻿
+﻿.smalltab {
+	background-image: url(../images/smalltabunsel.png);
+	background-repeat: repeat-x;
+	min-width: 120px;
+	float: left;
+	height: 27px;
+	line-height: 27px;
+	text-align: center;
+}
+.tabsel {
+	background-image: url(../images/smalltabsel.png);
+}
+.last {
+	background-image: url(../images/smalltablast.png);
+	width: 3px;
+	min-width: 3px;
+}
+
+#AddUnderlyingFund {
+	bottom: 0;
+	clear: both;
+	float: left;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: absolute;
+	top: 125px;
+	width: 100%;
+}
+#AddUnderlyingFund .content {
+    clear: both;
+    float: left;
+    overflow: auto;
+    padding-bottom: 30px;
+    width: 100%;
+}
+#AddUnderlyingFund .title {
+	background: url(../images/plus.png) no-repeat scroll left top transparent;
+	font-size: 14px;
+	height: 30px;
+	line-height: 15px;
+	padding-left: 20px;
+	cursor: pointer;
+	color: #02766F;
+	width: 200px;
+	float: left;
+	margin: 10px 0px 0px 90px;
+	font-weight: bold;
+}
+#content {
+	overflow: hidden;
+}
+#AddUnderlyingFund .title a {
+	color: #7f7f97;
+}
+#AddUnderlyingFund .expand {
+	background-image: url(../images/minus.png);
+}
+.savebox {
+	float: right;
+	clear: both;
+	    margin-top: 10px;
+	margin-right: 40%;
+}
+.savebox .btn {
+	float: left;
+}
+.savebox .resetbtn {
+    float: left;
+    font-weight: bold;
+    margin-left: 24px;
+    margin-top: 5px; cursor:pointer;
+}
+.expandtitle {
+	padding-left: 51px;
+}
+.headerbox {
+	padding-left: 30px;  width: 100%;
+}
+.detail {
+	background-color: #E9EAEC;
+	clear: both;
+	float: left;
+	margin: 0;
+	padding: 20px 0;
+	width: 100%;
+}
+.editor-field input[type='checkbox']{
+   margin-top: 5px; margin-left: 7px;
+}
