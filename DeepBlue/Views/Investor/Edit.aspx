@@ -12,7 +12,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="edit-investor">
 		<div class="search">
-			<div class="editor-label auto-width">
+			<div class="editor-label auto-width" style="padding:8px;">
 				<%: Html.Label("Investor:") %>
 			</div>
 			<div class="editor-field auto-width">
@@ -59,7 +59,7 @@
 								&nbsp;</div>
 							<div class="editor-button" style="width: 210px;">
 								<div style="float: left; padding: 0 0 10px 5px;">
-									<%: Html.Image("DeleteBtn.png", new { @id = "Delete", @style="cursor:pointer" , @onclick = "javascript:editInvestor.deleteInvestor(this);" })%>
+									<%: Html.Image("Delete.png", new { @id = "Delete", @style = "cursor:pointer", @onclick = "javascript:editInvestor.deleteInvestor(this);" })%>
 								</div>
 								<div style="float: left; padding: 0 0 10px 5px; display: none;">
 									<%: Html.ImageButton("Update.png", new { @id = "Update", @class="default-button" })%>
@@ -74,7 +74,7 @@
 								<div class="editor-row">
 									<div class="editor-editbtn">
 										<div class="EditInvestorInfo" style="float: left">
-											<%: Html.Anchor(Html.Image("Editbtn.png",new { @title = "Edit" }).ToHtmlString(), "#", new {   @onclick = "javascript:editInvestor.editInvestorInfo(this);" })%>
+											<%: Html.Anchor(Html.Image("Edit.png", new { @title = "Edit" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.editInvestorInfo(this);" })%>
 										</div>
 										<div class="UpdateInvestorInfo" style="float: left; display: none;">
 											<%: Html.Anchor(Html.Image("Update.png").ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.updateInvestorInfo(this);" })%>&nbsp;&nbsp;
@@ -133,7 +133,7 @@
 									<div class="editor-row">
 										<div class="editor-editbtn">
 											<div class="EditInvestorInfo" style="float: left">
-												<%: Html.Anchor(Html.Image("Editbtn.png",new { @title = "Edit" }).ToHtmlString(), "#", new {   @onclick = "javascript:editInvestor.editInvestorInfo(this);" })%>
+												<%: Html.Anchor(Html.Image("Edit.png", new { @title = "Edit" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.editInvestorInfo(this);" })%>
 											</div>
 											<div class="UpdateInvestorInfo" style="float: left; display: none;">
 												<%: Html.Anchor(Html.Image("Update.png").ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.updateInvestorInfo(this);" })%>&nbsp;&nbsp;
@@ -233,9 +233,9 @@
 											<div class="EditInvestorInfo" style="float: left">
 												<%: Html.Anchor(Html.Image("add.png", new { @title = "Add Contact" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.addContactInfo(this);" })%>
 												&nbsp;&nbsp;
-												<%: Html.Anchor(Html.Image("Editbtn.png",new { @title = "Edit Contact" }).ToHtmlString(), "#", new {   @onclick = "javascript:editInvestor.editInvestorInfo(this);" })%>
+												<%: Html.Anchor(Html.Image("Edit.png", new { @title = "Edit Contact" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.editInvestorInfo(this);" })%>
 												&nbsp;&nbsp;
-												<%: Html.Anchor(Html.Image("DeleteBtn.png", new { @title = "Delete Contact" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.deleteContact(this,'" + Model.ContactInformations.Count.ToString() + "_ContactId');" })%>
+												<%: Html.Anchor(Html.Image("Delete.png", new { @title = "Delete Contact" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.deleteContact(this,'" + Model.ContactInformations.Count.ToString() + "_ContactId');" })%>
 											</div>
 											<div class="UpdateInvestorInfo" style="float: left; display: none;">
 												<%: Html.Anchor(Html.Image("Update.png").ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.updateInvestorInfo(this);" })%>&nbsp;&nbsp;
@@ -378,9 +378,9 @@
 											<div class="EditInvestorInfo" style="float: left">
 												<%: Html.Anchor(Html.Image("add.png", new { @title = "Add Account" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.addAccountInfo(this);" })%>
 												&nbsp;&nbsp;
-												<%: Html.Anchor(Html.Image("Editbtn.png",new { @title = "Edit" }).ToHtmlString(), "#", new {   @onclick = "javascript:editInvestor.editInvestorInfo(this);" })%>
+												<%: Html.Anchor(Html.Image("Edit.png", new { @title = "Edit" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.editInvestorInfo(this);" })%>
 												&nbsp;&nbsp;
-												<%: Html.Anchor(Html.Image("DeleteBtn.png", new { @title = "Delete Contact" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.deleteAccount(this,'" + Model.ContactInformations.Count.ToString() + "_AccountId');" })%>
+												<%: Html.Anchor(Html.Image("Delete.png", new { @title = "Delete Contact" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.deleteAccount(this,'" + Model.ContactInformations.Count.ToString() + "_AccountId');" })%>
 											</div>
 											<div class="UpdateInvestorInfo" style="float: left; display: none;">
 												<%: Html.Anchor(Html.Image("Update.png").ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.updateInvestorInfo(this);" })%>&nbsp;&nbsp;

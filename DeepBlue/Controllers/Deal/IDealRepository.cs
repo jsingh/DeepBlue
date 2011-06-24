@@ -49,6 +49,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<DealUnderlyingDirectListModel> GetAllDealUnderlyingDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		IEnumerable<ErrorInfo> SaveDealUnderlyingDirect(DealUnderlyingDirect dealUnderlyingDirect);
 		List<AutoCompleteList> FindDealUnderlyingDirects(string fundName);
+		List<AutoCompleteList> FindIssuers(string issuerName);
 		#endregion
 
 		#region DealClosing

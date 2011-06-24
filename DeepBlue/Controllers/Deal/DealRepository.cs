@@ -6,6 +6,7 @@ using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
 using DeepBlue.Models.Deal;
 using System.Data.Objects;
+using System.Data.Objects.SqlClient;
 
 namespace DeepBlue.Controllers.Deal {
 	public class DealRepository : IDealRepository {
@@ -62,6 +63,8 @@ namespace DeepBlue.Controllers.Deal {
 												  PartnerName = deal.Partner.PartnerName,
 												  PurchaseTypeId = deal.PurchaseTypeID,
 												  SellerContactId = deal.SellerContactID,
+												  IsDealClose = deal.DealClosings.Where(closeDeal => closeDeal.IsFinalClose == true)
+																.Select(closeDeal => closeDeal.IsFinalClose).FirstOrDefault()
 											  }).SingleOrDefault();
 
 				if ((dealDetail.SellerContactId ?? 0) > 0) {
@@ -329,11 +332,11 @@ namespace DeepBlue.Controllers.Deal {
 						NumberOfShares = dealUnderlyingDirect.NumberOfShares ?? 0,
 						Percent = dealUnderlyingDirect.Percent ?? 0,
 						RecordDate = dealUnderlyingDirect.RecordDate,
-						SecurityType = dealUnderlyingDirect.SecurityType.Name,
+						SecurityType = (dealUnderlyingDirect.SecurityType != null ? dealUnderlyingDirect.SecurityType.Name : string.Empty),
 						DealClosingId = dealUnderlyingDirect.DealClosingID,
-						IssuerId = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Issuer.IssuerID : fixedIncome.Issuer.IssuerID),
-						IssuerName = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Issuer.Name : fixedIncome.Issuer.Name),
-						Security = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? equity.Symbol : fixedIncome.Symbol),
+						IssuerId = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? (equity != null ? equity.Issuer.IssuerID : 0) : (fixedIncome != null ? fixedIncome.Issuer.IssuerID : 0)),
+						IssuerName = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? (equity != null ? equity.Issuer.Name : string.Empty) : (fixedIncome != null ? fixedIncome.Issuer.Name : string.Empty)),
+						Security = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? (equity != null ? equity.Symbol : string.Empty) : (fixedIncome != null ? fixedIncome.Symbol : string.Empty)),
 					});
 		}
 
@@ -425,6 +428,31 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public List<AutoCompleteList> FindIssuers(string issuerName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				string equitySecurityTypeId = ((int)DeepBlue.Models.Deal.Enums.SecurityType.Equity).ToString();
+				string fixedIncomeSecurityTypeId = ((int)DeepBlue.Models.Deal.Enums.SecurityType.FixedIncome).ToString();
+				IQueryable<AutoCompleteList> issuerListQuery = (from equity in context.Equities
+																where equity.Issuer.Name.Contains(issuerName)
+																orderby equity.Issuer.Name
+																select new AutoCompleteList {
+																	id = equity.IssuerID,
+																	label = equity.Issuer.Name + ">>Equity>>" + equity.Symbol,
+																	value = equity.Issuer.Name + "||" + equitySecurityTypeId + "||" + SqlFunctions.StringConvert((double)equity.EquityID, 10),
+																}).Union(
+																(from fixedIncome in context.FixedIncomes
+																 where fixedIncome.Issuer.Name.Contains(issuerName)
+																 orderby fixedIncome.Issuer.Name
+																 select new AutoCompleteList {
+																	 id = fixedIncome.IssuerID,
+																	 label = fixedIncome.Issuer.Name + ">>FixedIncome>>" + fixedIncome.Symbol,
+																	 value = fixedIncome.Issuer.Name + "||" + fixedIncomeSecurityTypeId + "||" + SqlFunctions.StringConvert((double)fixedIncome.FixedIncomeID, 10)
+																 }))
+																.OrderBy(list => list.label);
+				return new PaginatedList<AutoCompleteList>(issuerListQuery, 1, 20);
+			}
+		}
+
 		#endregion
 
 		#region DealClosing
@@ -449,6 +477,7 @@ namespace DeepBlue.Controllers.Deal {
 					model = new CreateDealCloseModel();
 					model.DealNumber = GetMaxDealClosingNumber(dealId);
 					model.DealId = dealId;
+					model.FundId = context.Deals.Where(deal => deal.DealID == dealId).Select(deal => deal.FundID).SingleOrDefault();
 				}
 				if (dealId > 0) {
 					IQueryable<DealUnderlyingDirect> dealUnderlyingDirects = context.DealUnderlyingDirects.Where(direct => direct.DealID == dealId && (direct.DealClosingID == null || direct.DealClosingID == dealClosingId));

@@ -6,6 +6,7 @@
 			//dealClose.checkInputBox($("#tblDealUnderlyingDirect"));
 			//dealClose.finalClose(document.getElementById("IsFinalClose"));
 			jHelper.waterMark();
+			dealClose.expand();
 		});
 	}
 	,checkInputBox: function (table) {
@@ -35,6 +36,11 @@
 			$("#SpnDealNo").html(data.DealNumber);
 			$("#SpnDealName").html(data.DealName);
 			dealClose.onGridSubmit();
+			$("#SpnDCTitle").html("New Deal Close");
+			$("#SpnDCTitlelbl").html("New Deal Close");
+			$("#NDHeaderBox").click();
+			$("#NDDetail").hide();
+			$("#FinalDealClose").hide();
 		});
 	}
 	,getDealId: function () { return $("#DealId").val(); }
@@ -46,21 +52,28 @@
 		grid.ajaxTableReload();
 	}
 	,add: function (id) {
+		$("#SpnGridLoading").show();
 		var dealId=parseInt(dealClose.getDealId());
 		var newDealClose=$("#NewDealClose");
 		var finalDealClose=$("#FinalDealClose");
-		newDealClose.hide();finalDealClose.hide();
+		newDealClose.hide();
+		finalDealClose.hide();
+		newDealClose.show();
 		if(dealId>0) {
-			newDealClose.show();
-			if(id>0) {
-				finalDealClose.show();
-				$("#SpnDCTitle").html("Edit Deal Close");
-			} else {
-				$("#SpnDCTitle").html("New Deal Close");
-			}
 			$.getJSON("/Deal/GetDealCloseDetails",
 			{ "_": (new Date).getTime(),"id": id,"dealId": dealId }
 			,function (data) {
+				$("#SpnGridLoading").hide();
+				if(id>0) {
+					finalDealClose.show();
+					$("#SpnDCTitle").html("Edit Deal Close");
+					$("#SpnDCTitlelbl").html("Edit Deal Close");
+				} else {
+					$("#NDDetail").show();
+					$("#SpnDCTitle").html("New Deal Close");
+					$("#SpnDCTitlelbl").html("New Deal Close");
+				}
+				$("#NDHeaderBox").click();
 				$("#DealClosingId").val(data.DealClosingId);
 				$("#DealNumber").val(data.DealNumber);
 				$("#FundId").val(data.FundId);
@@ -88,6 +101,7 @@
 				dealClose.checkDealCloseId(tbldirectlist);
 
 				if(id>0) {
+					$("#FDHeaderBox").click();
 					var finaltblduflist=$("#FinalDealUnderlyingFundList");
 					dealClose.clearTable(finaltblduflist);
 					$("#FinalDUFundsTemplate").tmpl(data).appendTo(finaltblduflist);
@@ -208,7 +222,9 @@
 		var tr=$(img).parents("tr:first");var isShow=false;
 		var chk=$(":input[type='checkbox']",tr).get(0);
 		if(chk) { chk.checked=true; }
-		if(img.src.indexOf('add.png')> -1) { isShow=true;img.src="/Assets/images/Edit.png"; } else {
+		if(img.src.indexOf('add.png')> -1) {
+			isShow=true;img.src="/Assets/images/Edit.png";
+		} else {
 			// img.src="/Assets/images/tick.png";
 		}
 		this.showElements(tr,isShow);
@@ -231,13 +247,23 @@
 		var param=$("#frmDealClose").serializeArray();
 		$.post("/Deal/UpdateDealClosing",param,function (data) {
 			loading.empty();
-			if($.trim(data)!="") {
-				alert(data);
-			} else {
-				alert("New Deal Close Saved");
-				dealClose.resetForm();
-				dealClose.onGridSubmit();
-			}
+			var arr=data.split("||");
+			if(arr[0]=="True") {
+				var dcid=parseInt($("#DealClosingId").val());
+				if(isNaN(dcid)) { dcid=0; }
+				if(dcid>0) {
+					alert("Deal Close Saved");
+				} else {
+					alert("New Deal Close Saved");
+				}
+				if(confirm("Do you want to add a final deal close?")) {
+					dealClose.onGridSubmit();
+					dealClose.add(arr[1]);
+				} else {
+					dealClose.resetForm();
+					dealClose.onGridSubmit();
+				}
+			} else { alert(data); }
 		});
 	}
 	,saveFinalDealClose: function (loadingId) {
@@ -257,6 +283,7 @@
 				alert("Final Deal Close Saved");
 				dealClose.resetForm();
 				dealClose.onGridSubmit();
+				dealClose.add(0);
 			}
 		});
 	}
@@ -264,6 +291,7 @@
 		$("#NewDealClose").hide();
 		$("#FinalDealClose").hide();
 		$("#SpnDCTitle").html("New Deal Close");
+		$("#SpnDCTitlelbl").html("New Deal Close");
 	}
 	,onSubmit: function (formId) {
 		return jHelper.formSubmit(formId,false);
@@ -327,5 +355,25 @@
 			totPRD+=prd;
 		});
 		$("#SpnRGPP").html("$"+totRGPP);$("#SpnPRCC").html("$"+totPRCC);$("#SpnPRCD").html("$"+totPRD);
+	}
+	,expand: function () {
+		$(".headerbox").click(function () {
+			$(".headerbox").show();
+			$(".expandheader").hide();
+			$(".detail").hide();
+			$(this).hide();
+			var parent=$(this).parent();
+			$(".expandheader",parent).show();
+			var detail=$(".detail",parent);
+			detail.show();
+		});
+		$(".expandtitle",".expandheader").click(function () {
+			var expandheader=$(this).parents(".expandheader:first");
+			var parent=$(expandheader).parent();
+			expandheader.hide();
+			var detail=$(".detail",parent);
+			detail.hide();
+			$(".headerbox",parent).show();
+		});
 	}
 }

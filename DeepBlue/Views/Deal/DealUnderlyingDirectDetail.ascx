@@ -12,76 +12,73 @@
 		</div>
 	</div>
 	<div class="expandaddbtn">
-		<%:Html.Anchor("Add new directs", "javascript:deal.showMakeNewHeader('MakeNewDUDirect');")%></div>
+		<%: Html.Anchor(Html.Image("add_new_dir.png").ToHtmlString(), "javascript:deal.showMakeNewHeader('MakeNewDUDirect');")%>
+	</div>
 </div>
 <div class="fieldbox">
-	<div class="section" style="width:90%;">
+	<div class="section" style="width: 90%;">
 		<table id="tblUnderlyingDirect" cellpadding="0" cellspacing="0" border="0" class="grid"
 			style="width: 100%">
 			<thead>
 				<tr class="dealhead_tr">
-					<th>
+					<th style="display: none;">
 						No.
 					</th>
-					<th style="width: 10%">
-						Issuer
+					<th style="width: 5%">
+						Close
 					</th>
-					<th style="width: 10%">
-						Security Type
+					<th>
+						Company
 					</th>
-					<th style="width: 10%">
-						Security
-					</th>
-					<th nowrap>
+					<th style="width: 12%">
 						No. of Shares
 					</th>
-					<th nowrap>
+					<th style="width: 12%">
 						Purchase Price
 					</th>
-					<th>
-						FMV
+					<th style="width: 12%">
+						Tax Cost Basic
 					</th>
-					<th nowrap>
-						Tax Cost Base
-					</th>
-					<th nowrap>
+					<th style="width: 12%">
 						Tax Cost Date
 					</th>
-					<th>
+					<th style="width: 10%">
+						Fair Market Value
+					</th>
+					<th style="width: 12%">
 						Record Date
 					</th>
-					<th>
+					<th style="width: 5%">
 					</th>
 				</tr>
 			</thead>
 			<thead id="MakeNewDUDirect" style="display: none">
 				<tr>
-					<td style="text-align: center">
+					<td style="text-align: center; display: none;">
 						<%: Html.Span("", new { @id = "SpnIndex" }) %>
 					</td>
-					<td>
-						<%: Html.DropDownList("IssuerId", Model.Issuers, new { @id="IssuerId", @class="issuerddl", @onchange = "javascript:deal.changeIssuer(this);" })%>
+					<td style="text-align: center;">
 					</td>
 					<td>
-						<%: Html.DropDownList("SecurityTypeId", Model.SecurityTypes, new { @id="SecurityTypeId", @onchange = "javascript:deal.changeSecurityType(this);" })%>
-					</td>
-					<td>
-						<%: Html.DropDownList("SecurityId", Model.Securities, new { @id = "SecurityId", @onchange = "javascript:deal.changeSecurity(this);" })%>
+						<%: Html.TextBox("Issuer", "", new { @id = "Issuer", @style = "width:78%" })%>
+						<%: Html.Hidden("IssuerId", "0")%>
+						<%: Html.Hidden("SecurityTypeId","0")%>
+						<%: Html.Hidden("SecurityId", "0")%>
 					</td>
 					<td>
 						<%: Html.TextBox("NumberOfShares", "", new { @id = "NumberOfShares", @onkeyup = "javascript:deal.calcFMV(this);", @onkeypress = "return jHelper.isNumeric(event);" })%>
 					</td>
 					<td>
-						<%: Html.TextBox("FMV", "", new { @readonly="readonly", @id="FMV", @onkeypress = "return jHelper.isCurrency(event);" })%>
-					</td>
-					<td>
-						<%: Html.TextBox("Percent", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBox("PurchasePrice", "", new { @onkeypress = "return jHelper.isCurrency(event);", @onkeyup = "javascript:deal.calcFMV(this);" })%>
 					</td>
 					<td>
 						<%: Html.TextBox("TaxCostBase", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</td>
 					<td>
 						<%: Html.TextBox("TaxCostDate", "", new { @class = "datefield", @id = "0_DirectTaxCostDate" })%>
+					</td>
+					<td>
+						<%: Html.TextBox("FMV", "", new { @readonly = "readonly", @id = "FMV", @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</td>
 					<td>
 						<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_DirectRecordDate" })%>
@@ -91,7 +88,6 @@
 						<%: Html.Image("add.png", new { @onclick = "javascript:deal.addUnderlyingDirect(this);" })%>
 						<%: Html.Hidden("DealUnderlyingDirectId", "${DealUnderlyingDirectId}")%>
 					</td>
-                    
 				</tr>
 			</thead>
 			<tbody id="tbodyUnderlyingDirect">

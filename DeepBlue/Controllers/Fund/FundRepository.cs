@@ -120,8 +120,7 @@ namespace DeepBlue.Controllers.Fund {
 		}
 
 		#endregion
-
-
+		
 		#region Fund Rate Schedules
 
 		public List<FundRateSchedule> GetAllFundRateSchdules(int fundId) {
@@ -190,5 +189,6 @@ namespace DeepBlue.Controllers.Fund {
 		}
 
 		#endregion
+
 	}
 }

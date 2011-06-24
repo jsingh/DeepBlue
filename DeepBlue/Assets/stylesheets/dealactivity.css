@@ -79,7 +79,7 @@
 	padding-left: 65px;
 	background-image: url(../images/actdownarrow.png);
 	background-position: right center;
-	background-repeat: no-repeat;
+	background-repeat: no-repeat; float:left;
 }
 .cell {
 	float: left;

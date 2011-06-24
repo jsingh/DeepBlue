@@ -114,7 +114,7 @@
 								<%: Html.DropDownList("CurrencyId", Model.Currencies)%>
 							</td>
 							<td style="text-align: center; width: 100px;" nowrap>
-								<%: Html.Image("add_btn.png", new { @onclick = "javascript:issuer.addEquity(this);" })%>
+								<%: Html.Image("add.png", new { @onclick = "javascript:issuer.addEquity(this);" })%>
 								<%: Html.Hidden("EquityId", "0")%>
 							</td>
 							<td class="blank" style="width: 100px;" nowrap>
@@ -186,7 +186,7 @@
 								<%: Html.TextBox("CouponInformation")%>
 							</div>
 							<div class="cell" style="width: 145px">
-								<%: Html.Image("add_btn.png", new { @onclick = "javascript:issuer.addFixedIncome(this);" })%>
+								<%: Html.Image("add.png", new { @onclick = "javascript:issuer.addFixedIncome(this);" })%>
 								<%: Html.Hidden("FixedIncomeId", "0")%>
 							</div>
 							<div class="cell" style="width: 40px">
@@ -259,7 +259,7 @@
 		</td>
 		<td style="text-align: center">
 			<%: Html.CheckBox("Public",false, new { @class = "hide", @val = "${Public}" })%>
-			<%: Html.Span("{{if Public==true}}<img src='/Assets/images/tick.gif'/>{{/if}}",new { @class = "show" })%>
+			<%: Html.Span("{{if Public==true}}<img src='/Assets/images/tick.png'/>{{/if}}",new { @class = "show" })%>
 		</td>
 		<td style="text-align: center">
 			<%: Html.DropDownList("ShareClassTypeId", Model.ShareClassTypes, new { @class = "hide", @val = "${ShareClassTypeId}" })%>
@@ -274,7 +274,7 @@
 			<%: Html.Span("${Currency}",new { @class = "show" })%>
 		</td>
 		<td style="text-align: center;width:200px;" nowrap>
-			<%: Html.Image("Editbtn.png", new { @onclick = "javascript:issuer.editEquity(this);" })%>&nbsp;&nbsp;<%: Html.Image("Delete_Btn.png", new { @onclick = "javascript:issuer.deleteEquity(${EquityId},this);" })%>
+			<%: Html.Image("Edit.png", new { @onclick = "javascript:issuer.editEquity(this);" })%>&nbsp;&nbsp;<%: Html.Image("Delete.png", new { @onclick = "javascript:issuer.deleteEquity(${EquityId},this);" })%>
 			<%: Html.Hidden("EquityId","${EquityId}")%>
 		</td>
 		<td class="blank" nowrap style="width:100px;" nowrap>
@@ -312,7 +312,7 @@
 			<%: Html.Span("${CouponInformation}", new { @class = "show" })%>
 		</div>
 		<div class="cell" style="width: 145px">
-			<%: Html.Image("Editbtn.png", new { @onclick = "javascript:issuer.editFixedIncome(this);" })%>&nbsp;&nbsp;<%: Html.Image("Delete_Btn.png", new { @onclick = "javascript:issuer.deleteFixedIncome(${FixedIncomeId},this);" })%>
+			<%: Html.Image("Edit.png", new { @onclick = "javascript:issuer.editFixedIncome(this);" })%>&nbsp;&nbsp;<%: Html.Image("Delete.png", new { @onclick = "javascript:issuer.deleteFixedIncome(${FixedIncomeId},this);" })%>
 			<%: Html.Hidden("FixedIncomeId", "${FixedIncomeId}")%>
 		</div>
 		<div class="cell" style="width: 40px">

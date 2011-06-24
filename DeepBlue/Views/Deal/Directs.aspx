@@ -31,54 +31,56 @@
 		</div>
 		<div style="display: block; float: right; margin-right: 15%;">
 			<%: Html.Span("", new { @id = "SpnIssuerLoading" })%>
-			<%: Html.TextBox("S_Issuer", "Search Issuer", new { @class = "wm", @style = "width:150px", @id = "S_Issuer" })%>
+			<%: Html.TextBox("S_Issuer", "SEARCH ISSUER", new { @class = "wm", @style = "width:150px", @id = "S_Issuer" })%>
 		</div>
 	</div>
-	<div class="subheader" id="AddNewIssuer" style="display: none">
-		<%using (Html.Form(new { @id = "frmAddNewIssuer", @onsubmit = "return dealDirect.createNewIssuer(this);" })) {%>
-		<div id="NewIssuerDetail">
-		</div>
-		<div class="addissuer">
-			<div class="btn">
-				<%: Html.Span("", new { @id = "SpnNewLoading" })%></div>
-			<div class="btn">
-				<%: Html.ImageButton("addissuer.png")%></div>
-			<div class="btnclose">
-				<%: Html.Image("issuerclose.png", new { @onclick = "javascript:dealDirect.close();" })%>
+	<div id="DirectDetailBox">
+		<div class="subheader" id="AddNewIssuer" style="display: none">
+			<%using (Html.Form(new { @id = "frmAddNewIssuer", @onsubmit = "return dealDirect.createNewIssuer(this);" })) {%>
+			<div id="NewIssuerDetail">
 			</div>
-		</div>
-		<%}%>
-	</div>
-	<div id="DirectMain" style="display: none">
-		<%using (Html.Form(new { @id = "frmIssuer", @onsubmit = "return dealDirect.save(this);" })) {%>
-		<div id="IssuerDetail">
-		</div>
-		<div class="editor-label">
-			<%: Html.Label("Security Type")%>
-		</div>
-		<div class="editor-field" style="width: auto;">
-			<div id="equitytab" class="sel" onclick="javascript:dealDirect.selectTab('E',this);">
-				&nbsp;
+			<div class="addissuer">
+				<div class="btn">
+					<%: Html.Span("", new { @id = "SpnNewLoading" })%></div>
+				<div class="btn">
+					<%: Html.ImageButton("addissuer.png")%></div>
+				<div class="btnclose">
+					<%: Html.Image("issuerclose.png", new { @onclick = "javascript:dealDirect.close();" })%>
+				</div>
 			</div>
-			<div id="fitab" onclick="javascript:dealDirect.selectTab('F',this);">
-				&nbsp;
-			</div>
+			<%}%>
 		</div>
-		<div class="subdetail">
-			<div class="line">
+		<div id="DirectMain" style="display: none">
+			<%using (Html.Form(new { @id = "frmIssuer", @onsubmit = "return dealDirect.save(this);" })) {%>
+			<div id="IssuerDetail">
 			</div>
-			<div id="EQdetail">
+			<div class="editor-label">
+				<%: Html.Label("Security Type")%>
 			</div>
-			<div id="FixedIncome" style="display: none">
+			<div class="editor-field" style="width: auto;">
+				<div id="equitytab" class="sel" onclick="javascript:dealDirect.selectTab('E',this);">
+					&nbsp;
+				</div>
+				<div id="fitab" onclick="javascript:dealDirect.selectTab('F',this);">
+					&nbsp;
+				</div>
 			</div>
-			<div class="line">
+			<div class="subdetail">
+				<div class="line">
+				</div>
+				<div id="EQdetail">
+				</div>
+				<div id="FixedIncome" style="display: none">
+				</div>
+				<div class="line">
+				</div>
 			</div>
+			<div class="direct">
+				<%: Html.Span("", new { @id = "SpnSaveIssuerLoading" } )%>&nbsp;&nbsp;&nbsp;
+				<%: Html.ImageButton("add_direct.png")%>
+			</div>
+			<%}%>
 		</div>
-		<div class="direct">
-			<%: Html.Span("", new { @id = "SpnSaveIssuerLoading" } )%>&nbsp;&nbsp;&nbsp;
-			<%: Html.ImageButton("add_direct.png")%>
-		</div>
-		<%}%>
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">

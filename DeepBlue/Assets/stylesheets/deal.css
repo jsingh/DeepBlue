@@ -4,6 +4,10 @@
 	height: 25px;
 	line-height: 25px;
 	margin-right: 10px;
+     font-weight:bold;
+}
+.cell a{
+ color:Black;
 }
 .auto {
 	width: auto;
@@ -161,16 +165,14 @@ h4 a {
 	width: 200px;
 }
 .expandaddbtn {
-	float: left;
+ float : left;
 	padding-left: 30px;
 	display: none;
-	background-image: url(../images/btn_bg.png);
-	background-repeat: no-repeat;
-	width: 151px;
+    width: 151px;
 	height: 31px;
-	margin: 10px 0 0 130px;
+	margin: 10px 0 0 70px;
 	line-height: 33px;
-	padding-right: 420px;
+
 }
 .expandaddbtn a {
 	color: #000;
@@ -236,7 +238,7 @@ h4 a {
 	border-bottom: solid 2px #B5B5B5;
 	background-color: #BABFC5;
 	padding: 5px;
-	font-weight: bold;
+	font-weight: bold; white-space:nowrap;
 }
 .grid thead tr td {
 	background-color: transparent;
@@ -260,4 +262,23 @@ h4 a {
 	float: right;
 	margin-right: 120px;
 	margin-top: -20px;
+}
+.direct{
+float:right; padding-right:120px; padding-bottom:100px;
+}
+.issuerbtn {
+	float: right;
+	padding-left: 30px;
+	display: none;
+	background-image: url(../images/btn_issuer.png);
+	background-repeat: no-repeat;
+	width: 252px;
+	height: 31px;
+	margin: 10px 0 0 70px;
+	line-height: 33px;
+}
+.issuerbtn a {
+	color: #000;
+	font-size: 11px;
+	font-weight: bold;
 }

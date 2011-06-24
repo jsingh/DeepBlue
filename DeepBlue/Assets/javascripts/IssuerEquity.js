@@ -5,7 +5,6 @@
 		if(!(tr.get(0))) {
 			$("#EquityRowTemplate").tmpl(data).appendTo("#tbodyEquity");
 		} else {
-			tr.prev().remove();
 			$("#EquityRowTemplate").tmpl(data).insertAfter(tr);
 			tr.remove();
 		}
@@ -72,6 +71,9 @@ issuer.deleteEquity=function (id,img) {
 	if(confirm("Are you sure you want to delete this equity?")) {
 		var tr=$(img).parents("tr:first");
 		var url="/Issuer/DeleteEquity/"+id;
-		$.get(url,function (data) { tr.prev().remove();tr.remove();issuer.setIndex($("#tblEquity")); });
+		$.get(url,function (data) {
+			tr.remove();
+			issuer.setIndex($("#tblEquity"));
+		});
 	}
 };

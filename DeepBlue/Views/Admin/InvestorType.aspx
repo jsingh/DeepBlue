@@ -13,7 +13,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="admin-main">
 		<div class="admin-header">
-			<a href="javascript:investorType.add(0);">
+			<a href="javascript:investorType.add(0);" style="font-weight:bold;">
 				<%: Html.Image("add_icon.png") %>
 				&nbsp;Add Investor Type</a>
 		</div>

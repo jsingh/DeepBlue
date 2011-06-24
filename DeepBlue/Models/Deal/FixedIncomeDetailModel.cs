@@ -25,6 +25,7 @@ namespace DeepBlue.Models.Deal {
 		public string Symbol { get; set; }
 
 		[DisplayName("Face Value")]
+		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Face Value is required")]
 		public decimal? FaceValue { get; set; }
 
 		[DisplayName("Maturity")]

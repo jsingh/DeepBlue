@@ -37,6 +37,8 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Final Close:")]
 		public bool IsFinalClose { get; set; }
 
+        public string DealName { get; set; }
+
 		public List<DealUnderlyingFundModel> DealUnderlyingFunds { get; set; }
 
 		public List<DealUnderlyingDirectModel> DealUnderlyingDirects { get; set; }

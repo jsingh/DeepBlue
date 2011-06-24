@@ -4,6 +4,9 @@
 		jHelper.resizeIframe();
 		jHelper.waterMark();
 		underlyingFund.setUp();
+		dealDirect.onCreateNewIssuer=function (id) {
+			underlyingFund.load(id);
+		}
 	}
 	,setUp: function () {
 		$(document).ready(function () {
@@ -52,7 +55,7 @@
 	}
 	,onRowBound: function (tr,data) {
 		var lastcell=$("td:last div",tr);
-		lastcell.html("<img id='Edit' src='/Assets/images/Edit.gif'/>");
+		lastcell.html("<img id='Edit' src='/Assets/images/Edit.png'/>");
 		$("#Edit",lastcell).click(function () { underlyingFund.add(data.cell[0]); });
 		$("td:not(:last)",tr).click(function () { underlyingFund.add(data.cell[0]); });
 	}

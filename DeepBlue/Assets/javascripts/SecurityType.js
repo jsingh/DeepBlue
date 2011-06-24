@@ -32,7 +32,7 @@
 	}
 	,onGridSuccess: function (t) {
 		$("tr",t).each(function () {
-			$("td:last div",this).html("<img id='Edit' src='/Assets/images/Edit.gif'/>");
+			$("td:last div",this).html("<img id='Edit' src='/Assets/images/Edit.png'/>");
 		});
 	}
 	,onRowClick: function (row) {
@@ -40,7 +40,7 @@
 	}
 	,onRowBound: function (tr,data) {
 		if(data.cell[2]==true) {
-			$("td:eq(2) div",tr).html("<img id='Edit' src='/Assets/images/Tick.gif'/>");
+			$("td:eq(2) div",tr).html("<img id='Edit' src='/Assets/images/tick.png'/>");
 		}
 	}
 	,closeDialog: function (reload) {

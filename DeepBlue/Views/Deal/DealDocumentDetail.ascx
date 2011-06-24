@@ -1,4 +1,4 @@
-﻿e<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.CreateModel>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.CreateModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <div class="line">
 </div>
@@ -11,29 +11,33 @@
 				Deal Documents</div>
 		</div>
 	</div>
+    <div class="expandaddbtn">
+    <%: Html.Anchor(Html.Image("add_doc.png").ToHtmlString(), "javascript:void(0);")%>
+		
+        </div>
 </div>
 <div class="fieldbox">
 	<div class="section">
     <div class="editor-label">
-			<%: Html.Label("Document Type-") %>
+			<%: Html.Label("Document Type") %>
 		</div>
 		<div class="editor-field">
 			<%: Html.DropDownList("DocumentType", Model.DocumentTypes)%>
 		</div>
 		<div class="editor-label" style="clear: right">
-			<%: Html.Label("Document Date -") %>
+			<%: Html.Label("Document Date ") %>
 		</div>
 		<div class="editor-field">
-			<%: Html.TextBox("DocumentDate")%>
+			<%: Html.TextBox("DocumentDate", "", new { @class = "hasDatepicker" })%>
 		</div>
 		<div class="editor-label">
-			<%: Html.Label("Fund -") %>
+			<%: Html.Label("For") %>
 		</div>
 		<div class="editor-field">
 			<%: Html.TextBox("Fund")%>
 		</div>
-		<div class="editor-label">
-			<%: Html.Label("File/Link -") %>
+		<div class="editor-label" style="clear: right">
+			<%: Html.Label("File / Link ") %>
 		</div>
 		<div class="editor-field">
 			<%: Html.File("File", new { })%>

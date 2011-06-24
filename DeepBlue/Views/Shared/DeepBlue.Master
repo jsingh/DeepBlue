@@ -192,10 +192,6 @@
 		<%using (Html.InnerSubMenu("Deal_SubMenu", (ViewData["SubmenuName"] == "AdminDeal"))) {%>
 		<ul>
 			<li>
-				<%: Html.ActionLink("Underlying Fund", "UnderlyingFunds", "Deal", null, new { @class = (ViewData["PageName"] == "UnderlyingFund" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Direct", "Index", "Issuer", null, new { @class = (ViewData["PageName"] == "Issuer" ? "sel" : "") })%></li>
-			<li>
 				<%: Html.ActionLink("Purchase Type", "PurchaseType", "Admin", null, new { @class = (ViewData["PageName"] == "PurchaseType" ? "sel" : "") })%></li>
 			<li>
 				<%: Html.ActionLink("Deal Closing Cost Type", "DealClosingCostType", "Admin", null, new { @class = (ViewData["PageName"] == "DealClosingCostType" ? "sel" : "") })%></li>

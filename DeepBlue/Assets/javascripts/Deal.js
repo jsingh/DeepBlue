@@ -66,9 +66,9 @@
 		var dt=new Date();
 		var url="/Deal/FindDeal/?dealId="+dealId+"&t="+dt.getTime();
 		$("#NewDeal").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
-		$("#SaveDealBox").show();
-		$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/mdeal.png");
 		$.getJSON(url,function (data) {
+			$("#SaveDealBox").show();
+			$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/mdeal.png");
 			deal.loadTemplate(data);
 		});
 	}
@@ -92,6 +92,12 @@
 		$.each(data.DealExpenses,function (index,item) { deal.loadDealExpenseData(item); });
 		$.each(data.DealUnderlyingFunds,function (index,item) { deal.loadUnderlyingFundData(item); });
 		$.each(data.DealUnderlyingDirects,function (index,item) { deal.loadUnderlyingDirectData(item); });
+
+		var trUF=$("tr:first","#MakeNewDUFund");
+		deal.applyUFAutocomplete(trUF);
+		var trDirect=$("tr:first","#MakeNewDUDirect");
+		deal.applyUDAutocomplete(trDirect);
+
 		var dealMain=$("#DealMain");
 		deal.selectValue(dealMain);
 		jHelper.applyDatePicker(dealMain);
@@ -265,8 +271,10 @@
 			}
 		} catch(e) { alert(e); }
 	}
+
 	,showElements: function (tr) {
 		$(".hide",tr).css("display","block");
 		$(".show",tr).css("display","none");
 	}
+
 }

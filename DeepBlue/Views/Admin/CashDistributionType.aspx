@@ -13,7 +13,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="admin-main">
 		<div class="admin-header">
-			<a href="javascript:cashDistributionType.add(0);">
+			<a href="javascript:cashDistributionType.add(0);" style="font-weight:bold;">
 				<%: Html.Image("add_icon.png") %>
 				&nbsp;Add Cash Distribution Type</a>
 		</div>

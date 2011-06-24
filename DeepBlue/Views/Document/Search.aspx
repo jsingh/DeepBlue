@@ -33,18 +33,18 @@
 				<%: Html.LabelFor(model => model.DocumentTypeId) %>
 			</div>
 			<div class="editor-field">
-				<%: Html.DropDownListFor(model => model.DocumentTypeId, Model.DocumentTypes, new { @style = "width:242px" })%>
+				<%: Html.DropDownListFor(model => model.DocumentTypeId, Model.DocumentTypes, new { @style = "width:190px" })%>
 			</div>
 			<div class="editor-label">
 				<%: Html.DropDownListFor(model => model.DocumentStatus,Model.DocumentStatusTypes, new { @onchange = "javascript:documentSearch.changeType(this);" })%>
 			</div>
 			<div class="editor-field">
 				<div id="InvestorRow">
-					<%: Html.TextBoxFor(model => model.InvestorName, new { @style = "width:238px", @onblur = "javascript:documentSearch.InvestorBlur(this);" })%>
+					<%: Html.TextBoxFor(model => model.InvestorName, new { @style = "width:160px", @onblur = "javascript:documentSearch.InvestorBlur(this);" })%>
 					<%: Html.ValidationMessageFor(model => model.InvestorId) %>
 				</div>
 				<div id="FundRow" style="display: none">
-					<%: Html.TextBoxFor(model => model.FundName, new { @style = "width:238px", @onblur = "javascript:documentSearch.FundBlur(this);" })%>
+					<%: Html.TextBoxFor(model => model.FundName, new { @style = "width:160px", @onblur = "javascript:documentSearch.FundBlur(this);" })%>
 					<%: Html.ValidationMessageFor(model => model.FundId) %>
 				</div>
 			</div>

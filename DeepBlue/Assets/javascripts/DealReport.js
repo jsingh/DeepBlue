@@ -23,7 +23,8 @@
 		if(!tfoot) {
 			tfoot=document.createElement("tfoot");
 			var trviewmore=document.createElement("tr");
-			var td=document.createElement("td");td.colSpan=7;
+			var td = document.createElement("td"); td.colSpan = 7;
+			td.style.textAlign = "center";
 			td.innerHTML="<a href='javascript:dealReport.viewMore();'>View More</a>";
 			$(trviewmore).append(td);
 			$(tfoot).append(trviewmore);

@@ -632,7 +632,12 @@ namespace DeepBlue.Controllers.Deal {
 						}
 					}
 				}
-				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				if (errorInfo == null) {
+					resultModel.Result = "True||" + dealClosing.DealClosingID;
+				}
+				else {
+					resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				}
 			}
 			else {
 				foreach (var values in ModelState.Values.ToList()) {
@@ -2055,6 +2060,13 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		//
+		// GET: /Deal/FindIssuers
+		[HttpGet]
+		public JsonResult FindIssuers(string term) {
+			return Json(DealRepository.FindIssuers(term), JsonRequestBehavior.AllowGet);
+		}
+
+		//
 		// POST: /Deal/CreateIssuer
 		[HttpPost]
 		public ActionResult CreateIssuer(FormCollection collection) {
@@ -2100,34 +2112,39 @@ namespace DeepBlue.Controllers.Deal {
 			this.TryUpdateModel(model, collection);
 			errorInfo = ValidationHelper.Validate(model);
 			resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
-
-			EquityDetailModel equityDetailModel = new EquityDetailModel();
-			this.TryUpdateModel(equityDetailModel, collection);
-			errorInfo = ValidationHelper.Validate(equityDetailModel);
-			resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
-
-			FixedIncomeDetailModel fixedIncomeDetailModel = new FixedIncomeDetailModel();
-			this.TryUpdateModel(fixedIncomeDetailModel, collection);
-			errorInfo = ValidationHelper.Validate(fixedIncomeDetailModel);
-			resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
-
 			string ErrorMessage = IssuerNameAvailable(model.Name, model.IssuerId);
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				resultModel.Result += ErrorMessage + "\n";
 			}
-
 			if (string.IsNullOrEmpty(resultModel.Result)) {
-				equityDetailModel.CurrencyId = DataTypeHelper.ToInt32(collection["EQ_CurrencyId"]);
-				fixedIncomeDetailModel.CurrencyId = DataTypeHelper.ToInt32(collection["FI_CurrencyId"]);
-				equityDetailModel.IndustryId = DataTypeHelper.ToInt32(collection["EQ_IndustryId"]);
-				fixedIncomeDetailModel.IndustryId = DataTypeHelper.ToInt32(collection["FI_IndustryId"]);
-				equityDetailModel.Symbol = collection["EQ_Symbol"];
 				Models.Entity.Issuer issuer = null;
 				errorInfo = SaveIssuer(model, out issuer);
-				if (errorInfo == null)
-					errorInfo = SaveEquity(equityDetailModel);
-				if (errorInfo == null)
-					errorInfo = SaveFixedIncom(fixedIncomeDetailModel);
+				if (errorInfo == null) {
+					EquityDetailModel equityDetailModel = new EquityDetailModel();
+					this.TryUpdateModel(equityDetailModel, collection);
+					if (equityDetailModel.EquityTypeId > 0) {
+						equityDetailModel.CurrencyId = DataTypeHelper.ToInt32(collection["EQ_CurrencyId"]);
+						equityDetailModel.IndustryId = DataTypeHelper.ToInt32(collection["EQ_IndustryId"]);
+						equityDetailModel.Symbol = collection["EQ_Symbol"];
+						errorInfo = ValidationHelper.Validate(equityDetailModel);
+						if (errorInfo.Any() == false) {
+							errorInfo = SaveEquity(equityDetailModel);
+						}
+					}
+				}
+				if (errorInfo == null) {
+					FixedIncomeDetailModel fixedIncomeDetailModel = new FixedIncomeDetailModel();
+					this.TryUpdateModel(fixedIncomeDetailModel, collection);
+					if (fixedIncomeDetailModel.FixedIncomeTypeId > 0) {
+						fixedIncomeDetailModel.CurrencyId = DataTypeHelper.ToInt32(collection["FI_CurrencyId"]);
+						fixedIncomeDetailModel.IndustryId = DataTypeHelper.ToInt32(collection["FI_IndustryId"]);
+						fixedIncomeDetailModel.Symbol = collection["FI_Symbol"];
+						errorInfo = ValidationHelper.Validate(fixedIncomeDetailModel);
+						if (errorInfo.Any() == false) {
+							errorInfo = SaveFixedIncome(fixedIncomeDetailModel);
+						}
+					}
+				}
 				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				if (string.IsNullOrEmpty(resultModel.Result)) {
 					resultModel.Result = "True||" + issuer.IssuerID + "||" + issuer.Name;
@@ -2152,7 +2169,7 @@ namespace DeepBlue.Controllers.Deal {
 			return IssuerRepository.SaveEquity(equity);
 		}
 
-		private IEnumerable<ErrorInfo> SaveFixedIncom(FixedIncomeDetailModel model) {
+		private IEnumerable<ErrorInfo> SaveFixedIncome(FixedIncomeDetailModel model) {
 			Models.Entity.FixedIncome fixedIncome = IssuerRepository.FindFixedIncome(model.FixedIncomeId);
 			if (fixedIncome == null) {
 				fixedIncome = new Models.Entity.FixedIncome();
@@ -2192,6 +2209,7 @@ namespace DeepBlue.Controllers.Deal {
 			else
 				return string.Empty;
 		}
+
 		#endregion
 
 		public ActionResult Result() {

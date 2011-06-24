@@ -15,23 +15,27 @@
 	width: 3px;
 	min-width: 3px;
 }
-
+#UnderlyingFundDetail {
+	position: absolute;
+	float: left;
+	width: 100%;
+	    top: 97px;
+	bottom: 0px;
+	overflow: auto;
+	overflow-x: hidden;
+}
 #AddUnderlyingFund {
-	bottom: 0;
 	clear: both;
 	float: left;
-	overflow-x: hidden;
-	overflow-y: auto;
-	position: absolute;
-	top: 125px;
 	width: 100%;
+	margin-top: 20px;
 }
 #AddUnderlyingFund .content {
-    clear: both;
-    float: left;
-    overflow: auto;
-    padding-bottom: 30px;
-    width: 100%;
+	clear: both;
+	float: left;
+	overflow: auto;
+	padding-bottom: 30px;
+	width: 100%;
 }
 #AddUnderlyingFund .title {
 	background: url(../images/plus.png) no-repeat scroll left top transparent;
@@ -58,23 +62,25 @@
 .savebox {
 	float: right;
 	clear: both;
-	    margin-top: 10px;
+	margin-top: 10px;
 	margin-right: 40%;
 }
 .savebox .btn {
 	float: left;
 }
 .savebox .resetbtn {
-    float: left;
-    font-weight: bold;
-    margin-left: 24px;
-    margin-top: 5px; cursor:pointer;
+	float: left;
+	font-weight: bold;
+	margin-left: 24px;
+	margin-top: 5px;
+	cursor: pointer;
 }
 .expandtitle {
 	padding-left: 51px;
 }
 .headerbox {
-	padding-left: 30px;  width: 100%;
+	padding-left: 30px;
+	width: 100%;
 }
 .detail {
 	background-color: #E9EAEC;
@@ -84,6 +90,7 @@
 	padding: 20px 0;
 	width: 100%;
 }
-.editor-field input[type='checkbox']{
-   margin-top: 5px; margin-left: 7px;
+.editor-field input[type='checkbox'] {
+	margin-top: 5px;
+	margin-left: 7px;
 }

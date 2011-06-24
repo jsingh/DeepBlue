@@ -32,7 +32,7 @@
 	}
 	,onRowBound: function (tr,data) {
 		var lastcell=$("td:last div",tr);
-		lastcell.html("<img id='Edit' src='/Assets/images/Edit.gif'/>");
+		lastcell.html("<img id='Edit' src='/Assets/images/Edit.png'/>");
 		$("#Edit",lastcell).click(function () { dataType.add(data.cell[0]); });
 		$("td:not(:last)",tr).click(function () { dataType.add(data.cell[0]); });
 	}

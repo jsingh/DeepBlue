@@ -43,7 +43,7 @@
 				<%using (Html.Div(new { @id = "SATab", @onclick = "javascript:dealActivity.selectTab('S',this);" })) {%>&nbsp;
 				<%}%>
 				<div id="SearchUDirect" class="cell" style="float: right; display: none; margin: 10px 50px 0px 0px;">
-					<%: Html.TextBox("S_UnderlyingDirect", "Search Underlying Direct", new { @class = "wm" , @style="width:200px" })%>
+					<%: Html.TextBox("S_UnderlyingDirect", "SEARCH UNDERLYING DIRECT", new { @class = "wm" , @style="width:200px" })%>
 				</div>
 			</div>
 		</div>
@@ -65,7 +65,7 @@
 							<div class="addbtn" style="display: block;">
 								<%: Html.Anchor(Html.Image("mncc.png").ToHtmlString(), "javascript:dealActivity.makeNewCC();")%></div>
 							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.TextBox("CC_UnderlyingFund", "Search Underlying Fund", new { @style="width:200px", @class = "wm" })%></div>
+								<%: Html.TextBox("CC_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style="width:200px", @class = "wm" })%></div>
 						</div>
 						<div class="detail" id="CCDetail">
 							<div class="search-header">
@@ -174,7 +174,7 @@
 								<%: Html.Anchor(Html.Image("rdc.png").ToHtmlString(), "javascript:dealActivity.makeNewCD();")%>
 							</div>
 							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.TextBox("CD_UnderlyingFund", "Search Underlying Fund", new { @style = "width:200px", @class = "wm" })%></div>
+								<%: Html.TextBox("CD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px", @class = "wm" })%></div>
 						</div>
 						<div class="detail" id="CDDetail">
 							<div class="search-header">
@@ -279,7 +279,7 @@
 								</div>
 							</div>
 							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.TextBox("UFV_UnderlyingFund", "Search Underlying Fund", new { @style = "width:200px",  @class = "wm" })%></div>
+								<%: Html.TextBox("UFV_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px",  @class = "wm" })%></div>
 						</div>
 						<div class="detail" id="UFVDetail">
 							<div class="search-header">
@@ -339,7 +339,7 @@
 								</div>
 							</div>
 							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.TextBox("UDV_UnderlyingDirect", "Search Underlying Direct", new { @style = "width:200px", @class = "wm" })%>
+								<%: Html.TextBox("UDV_UnderlyingDirect", "SEARCH UNDERLYING DIRECT", new { @style = "width:200px", @class = "wm" })%>
 							</div>
 						</div>
 						<div class="detail" id="UDVDetail">
@@ -404,7 +404,7 @@
 								</div>
 							</div>
 							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.TextBox("UFA_UnderlyingFund", "Search Underlying Fund", new { @style = "width:200px", @class = "wm" })%>
+								<%: Html.TextBox("UFA_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px", @class = "wm" })%>
 							</div>
 						</div>
 						<div class="detail" id="UFADetail">
@@ -467,7 +467,7 @@
 								<%: Html.Span("", new { @id = "SpnFLEDetLoading" })%>
 							</div>
 							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.TextBox("FLE_Fund", "Search Fund", new { @style = "width:200px", @class = "wm" })%>
+								<%: Html.TextBox("FLE_Fund", "SEARCH FUND", new { @style = "width:200px", @class = "wm" })%>
 							</div>
 						</div>
 						<div class="detail" id="FLEDetail">

@@ -75,11 +75,13 @@
 		return { name: $(input).attr("name"),value: $(input).val() };
 	}
 	,loadDropDown: function (ddl,data) {
-		ddl.options.length=null;
-		if(data!=null) {
-			for(i=0;i<data.length;i++) {
-				listItem=new Option(data[i].Text,data[i].Value,false,false);
-				ddl.options[ddl.options.length]=listItem;
+		if(ddl) {
+			ddl.options.length=null;
+			if(data!=null) {
+				for(i=0;i<data.length;i++) {
+					listItem=new Option(data[i].Text,data[i].Value,false,false);
+					ddl.options[ddl.options.length]=listItem;
+				}
 			}
 		}
 	}

@@ -31,7 +31,7 @@
 	}
 	,onGridSuccess: function (t) {
 		$("tr",t).each(function () {
-			$("td:last div",this).html("<img src='/Assets/images/Edit.gif'/>");
+			$("td:last div",this).html("<img src='/Assets/images/Edit.png'/>");
 		});
 	}
 	,onRowClick: function (row) {

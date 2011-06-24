@@ -1,7 +1,11 @@
 ﻿var dealDirect={
 	init: function () {
 		jHelper.waterMark();
+		dealDirect.onCreateNewIssuer=function (id) {
+			dealDirect.load(id);
+		}
 	}
+	,onCreateNewIssuer: null
 	,setUpNewIssuer: function () {
 		$("#I_Country","#frmAddNewIssuer")
 			.blur(function () { if($.trim(this.value)=="") { $("#CountryId","#frmAddNewIssuer").val(0); } })
@@ -50,7 +54,6 @@
 					$("#DirectMain").hide();
 					$("#AddNewIssuer").hide();
 					$("#S_Issuer").val("");
-					//dealDirect.load(arr[1]);
 				} else { alert(data); }
 			});
 		} catch(e) { alert(e); }
@@ -66,7 +69,9 @@
 				if(arr[0]=="True") {
 					alert("Issuer Saved.");
 					$("#AddNewIssuer").hide();
-					//dealDirect.load(arr[1]);
+					if(dealDirect.onCreateNewIssuer) {
+						dealDirect.onCreateNewIssuer(arr[1]);
+					}
 				} else { alert(data); }
 			});
 		} catch(e) { alert(e); }
@@ -82,7 +87,6 @@
 	}
 	,close: function () {
 		$('#AddNewIssuer').hide();
-		$("#AddUnderlyingFund").css("top","125px");
 	}
 	,load: function (id) {
 		var issuerDetail=$("#IssuerDetail");
@@ -90,7 +94,7 @@
 		var fixedIncome=$("#FixedIncome");
 		var loading=$("#SpnIssuerLoading");
 		$("#DirectMain").hide();
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		issuerDetail.empty();eqDetail.empty();fixedIncome.empty();
 		$.getJSON("/Deal/FindIssuer",{ "_": (new Date).getTime(),"id": id },function (data) {
 			$("#DirectMain").show();

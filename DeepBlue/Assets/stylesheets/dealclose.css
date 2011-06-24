@@ -44,7 +44,8 @@ input[type='text'] {
 }
 .savefooter {
 	float: left;
-     width: 97%;margin:20px 0px 20px 0px;
+	width: 97%;
+	margin: 20px 0px 20px 0px;
 }
 .savefooter .cell {
 	float: right;
@@ -54,19 +55,75 @@ input[type='text'] {
 	height: auto;
 }
 .closetitle {
-	    background-color: #FFFFFF;
-    clear: both;
-    color: #354866;
-    float: left;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 10px 0 30px;
-    padding: 12px 12px 12px 65px;
-    width: 100%;
+	background-color: #FFFFFF;
+	clear: both;
+	color: #354866;
+	float: left;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 10px 0 30px;
+	padding: 12px 12px 12px 65px;
+	width: 100%;
 }
 .closedetail {
 	clear: both;
 	margin: 10px 0 10px 65px;
 	float: left;
 }
-.tabledetail { padding-left:65px; }
+.tabledetail {
+	padding-left: 65px;
+}
+
+.underfund {
+	background-image: url("../images/add_under_funds.png");
+	background-repeat: no-repeat;
+	float: right;
+	height: 30px;
+	padding-left: 59%;
+	width: 153px;
+}
+.underDirect {
+	background-image: url("../images/add_under_directs.png");
+	background-repeat: no-repeat;
+	float: right;
+	height: 30px;
+	padding-left: 59%;
+	width: 153px;
+}
+.act-box {
+	float: left;
+	width: 100%;
+	background-image: url(../images/acboxbg.png);
+	background-position: left top;
+	background-repeat: repeat-x;
+}
+.headerbox {
+	width: 70%;
+	padding-left: 65px;
+	background-image: url(../images/actdownarrow.png);
+	background-position: right center;
+	background-repeat: no-repeat;
+	float: left;
+}
+.headerbox .title {
+	background: url(../images/greenplus.png) no-repeat scroll left top transparent;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;
+	color: #005F54;
+	width: 200px;
+	float: left;
+	margin: 10px 0;
+	padding: 0 0 0 24px;
+}
+#LoadingDetail {
+    clear: both;
+    height: 25px;
+    margin: 0 auto;
+    padding: 0 0;
+    width: 200px;
+}
+
+.section {
+	margin-top: 10px;
+}

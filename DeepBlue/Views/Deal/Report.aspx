@@ -23,7 +23,7 @@
 					DEAL REPORT<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%></div>
 			</div>
 			<div class="rightcol">
-				<%: Html.TextBox("FundName", "Search Fund", new { @id = "FundName", @class = "wm",  @style = "width:200px" })%>
+				<%: Html.TextBox("FundName", "SEARCH FUND", new { @id = "FundName", @class = "wm",  @style = "width:200px" })%>
 			</div>
 		</div>
 	</div>
@@ -66,22 +66,22 @@
 					<th style="display: none">
 						DealId
 					</th>
-					<th align="center" sortname="DealNumber" style="width: 10%">
+					<th align="left" sortname="DealNumber" style="width: 10%">
 						<span>Deal No.</span>
 					</th>
-					<th align="center" sortname="DealName">
+					<th align="left" sortname="DealName">
 						<span>Deal Name</span>
 					</th>
-					<th align="center" sortname="FundName">
+					<th align="left" sortname="FundName">
 						<span>Fund Name (S)</span>
 					</th>
-					<th align="center" sortname="FundName">
+					<th align="left" sortname="FundName">
 						<span>Committed Amount</span>
 					</th>
-					<th align="center" sortname="FundName">
+					<th align="left" sortname="FundName">
 						<span>Unfunded Amount</span>
 					</th>
-					<th align="center" sortname="FundName">
+					<th align="left" sortname="FundName">
 						<span>Total Amount</span>
 					</th>
 					<th style="width: 2%">
@@ -149,9 +149,9 @@
 						<td>
 							${FundName}
 						</td>
-                        <td class="dollarcell" style="text-align:right">${GrossPurchasePrice}
+                        <td class="dollarcell" style="text-align:right;padding-right:20px;">${GrossPurchasePrice}
                         </td>
-						<td  style="text-align:right">
+						<td  style="text-align:left;padding-left:10px;">
 							${FundNAV}
 						</td>
 						<td class="dollarcell" style="text-align:right">
@@ -159,7 +159,7 @@
 						</td>
                         <td class="dollarcell" style="text-align:right">${UnfundedAmount}
                         </td>
-						<td class="datecell" style="text-align:center">
+						<td class="datecell" style="text-align:left;padding-left:15px;">
 							${RecordDate}
 						</td>
                         <td>${Percent}
@@ -172,7 +172,7 @@
 						</td>
                         <td>
                         </td>
-						<td style="text-align:right">${TotalFundNAV}
+						<td style="text-align:left;padding-left:10px;">${TotalFundNAV}
 						</td>
 						<td  style="text-align:right">${TotalCommitted}
 						</td>
@@ -238,22 +238,22 @@
 						<td>
 							${Security}
 						</td>
-						<td  style="text-align:center">
+						<td  style="text-align:left;padding-left:15px;">
 							${NumberOfShares}
 						</td>
                         <td class="dollarcell" style="text-align:right">${PurchasePrice}
                         </td>
-                        <td class="dollarcell" style="text-align:right">${TaxCostBase}
+                        <td class="dollarcell" style="text-align:left;padding-left:15px;">${TaxCostBase}
                         </td>
-                        <td class="datecell" style="text-align:center">${TaxtCostDate}
+                        <td class="datecell" style="text-align:left;padding-left:15px;">${TaxtCostDate}
                         </td>
 						<td  style="text-align:right">
 							${FormatFMV}
 						</td>
-						<td class="datecell" style="text-align:center">
+						<td class="datecell" style="text-align:left;padding-left:15px;">
 							${RecordDate}
 						</td>
-                        <td style="text-align:center">${Percentage}
+                        <td style="text-align:left;padding-left:10px;">${Percentage}
                         </td>
 					</tr>
 					{{/each}}

@@ -45,7 +45,7 @@
 					<div class="editor-field">
 						<%: Html.TextBoxFor(model => model.CapitalDistributionDate) %>
 					</div>
-					<div class="editor-label" style="clear: right">
+					<div class="editor-label" style="padding-left:44%">
 						<%: Html.LabelFor(model => model.CapitalDistributionDueDate) %>
 					</div>
 					<div class="editor-field">
@@ -115,7 +115,7 @@
 								<b>
 									<%: Html.Span("",new { @id="SpnCommittedAmount"})%></b>
 							</div>
-							<div class="editor-label" style="width: 109px">
+							<div class="editor-label" style="width: 120px">
 								Unfunded Amount:
 							</div>
 							<div class="editor-label" style="clear: right">

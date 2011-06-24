@@ -81,3 +81,4 @@
 	margin-left: 123px;
 	margin-top: 6px;
 }
+#DirectDetailBox { float:left; position:absolute; top:98px; bottom:0px; width:100%; overflow:auto; overflow-x:hidden; }

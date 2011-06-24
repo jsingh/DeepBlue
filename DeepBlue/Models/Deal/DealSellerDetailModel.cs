@@ -29,28 +29,28 @@ namespace DeepBlue.Models.Deal {
 		public int SellerContactId { get; set; }
 
 		[StringLength(100, ErrorMessage = "Contact Name must be under 100 characters.")]
-		[DisplayName("Cotact Name-")]
+		[DisplayName("Contact Name")]
 		public string ContactName { get; set; }
 		
 		[StringLength(200, ErrorMessage = "Phone must be under 200 characters.")]
-		[DisplayName("Phone-")]
+		[DisplayName("Phone")]
 		public string Phone { get; set; }
 		
 		[StringLength(200, ErrorMessage = "Fax must be under 200 characters.")]
-		[DisplayName("Fax-")]
+		[DisplayName("Fax")]
 		public string Fax { get; set; }
 
 		[StringLength(30, ErrorMessage = "Seller must be under 30 characters.")]
-		[DisplayName("Seller Name-")]
+		[DisplayName("Seller Name")]
 		public string SellerName { get; set; }
 		
 		[StringLength(200, ErrorMessage = "Company Name must be under 200 characters.")]
-		[DisplayName("Cotact Company-")]
+		[DisplayName("Contact Company")]
 		public string CompanyName { get; set; }
 		
 		[EmailAttribute(ErrorMessage="Invalid Email")]
 		[StringLength(200, ErrorMessage = "Email must be under 200 characters.")]
-		[DisplayName("Email-")]
+		[DisplayName("Email")]
 		public string Email { get; set; }
 	}
 }

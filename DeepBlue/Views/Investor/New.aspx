@@ -228,7 +228,7 @@
 								<%=Html.Image("add.png", new { @title = "Add New Bank Information", @onclick = "javascript:investor.createAccount(this);" })%>
 							</div>
 							<div class="delete">
-								<%=Html.Image("Delete_Btn.png", new { @title = "Delete Accout", @onclick = "javascript:investor.deleteAccount(this);" })%>
+								<%=Html.Image("Delete.png", new { @title = "Delete Accout", @onclick = "javascript:investor.deleteAccount(this);" })%>
 							</div>
 						</div>
 						<div class="accountinfo-box">
@@ -342,7 +342,7 @@
 					<div id="ContactInfo" class="contactinfo">
 						<div>
 							<div class="delete">
-								<%=Html.Image("Delete_Btn.png", new { @title = "Delete Contact", @onclick = "javascript:investor.deleteContact(this);" })%>
+								<%=Html.Image("Delete.png", new { @title = "Delete Contact", @onclick = "javascript:investor.deleteContact(this);" })%>
 							</div>
 							<div class="add">
 								<%=Html.Image("add.png", new { @title = "Add New Contact", @onclick = "javascript:investor.createContact(this);" })%>
@@ -450,7 +450,7 @@
 							</div>
 							<div class="contactinfo-right">
 								<div class="editor-row">
-									<div class="editor-label">
+									<div class="editor-label" style="width:255px;">
 										<%: Html.LabelFor(model => model.DistributionNotices) %>
 									</div>
 									<div class="editor-field checkbox">
@@ -458,7 +458,7 @@
 									</div>
 								</div>
 								<div class="editor-row">
-									<div class="editor-label">
+									<div class="editor-label" style="width:255px;">
 										<%: Html.LabelFor(model => model.Financials)%>
 									</div>
 									<div class="editor-field checkbox">
@@ -466,7 +466,7 @@
 									</div>
 								</div>
 								<div class="editor-row">
-									<div class="editor-label">
+									<div class="editor-label" style="width:255px;">
 										<%: Html.LabelFor(model => model.K1)%>
 									</div>
 									<div class="editor-field checkbox">
@@ -474,7 +474,7 @@
 									</div>
 								</div>
 								<div class="editor-row">
-									<div class="editor-label">
+									<div class="editor-label" style="width:255px;">
 										<%: Html.LabelFor(model => model.InvestorLetters)%>
 									</div>
 									<div class="editor-field checkbox">

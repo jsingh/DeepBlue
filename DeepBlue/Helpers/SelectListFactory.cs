@@ -11,7 +11,7 @@ using DeepBlue.Controllers.Admin;
 
 namespace DeepBlue.Helpers {
 	public class SelectListFactory {
-		
+
 		public static List<SelectListItem> GetStateSelectList(List<STATE> states) {
 			List<SelectListItem> stateList = new List<SelectListItem>();
 			stateList = new List<SelectListItem>();
@@ -21,7 +21,7 @@ namespace DeepBlue.Helpers {
 			stateList.Add(item);
 			foreach (var state in states) {
 				item = new SelectListItem();
-				item.Text = state.Name.ToString();
+				item.Text = state.Name;
 				item.Value = state.StateID.ToString();
 				stateList.Add(item);
 			}
@@ -36,7 +36,7 @@ namespace DeepBlue.Helpers {
 			countryList.Add(item);
 			foreach (var country in countries) {
 				item = new SelectListItem();
-				item.Text = country.CountryName.ToString();
+				item.Text = country.CountryName;
 				item.Value = country.CountryID.ToString();
 				countryList.Add(item);
 			}
@@ -51,7 +51,7 @@ namespace DeepBlue.Helpers {
 			addressTypeList.Add(item);
 			foreach (var addressType in addressTypes) {
 				item = new SelectListItem();
-				item.Text = addressType.AddressTypeName.ToString();
+				item.Text = addressType.AddressTypeName;
 				item.Value = addressType.AddressTypeID.ToString();
 				addressTypeList.Add(item);
 			}
@@ -66,7 +66,7 @@ namespace DeepBlue.Helpers {
 			investorEntityTypeList.Add(item);
 			foreach (var investorEntityType in investorEntityTypes) {
 				item = new SelectListItem();
-				item.Text = investorEntityType.InvestorEntityTypeName.ToString();
+				item.Text = investorEntityType.InvestorEntityTypeName;
 				item.Value = investorEntityType.InvestorEntityTypeID.ToString();
 				investorEntityTypeList.Add(item);
 			}
@@ -115,7 +115,7 @@ namespace DeepBlue.Helpers {
 			fundList.Add(item);
 			foreach (var fund in funds) {
 				item = new SelectListItem();
-				item.Text = fund.FundName.ToString();
+				item.Text = fund.FundName;
 				item.Value = fund.FundID.ToString();
 				fundList.Add(item);
 			}
@@ -130,7 +130,7 @@ namespace DeepBlue.Helpers {
 			investorTypeList.Add(item);
 			foreach (var investorType in investorTypes) {
 				item = new SelectListItem();
-				item.Text = investorType.InvestorTypeName.ToString();
+				item.Text = investorType.InvestorTypeName;
 				item.Value = investorType.InvestorTypeID.ToString();
 				investorTypeList.Add(item);
 			}
@@ -154,7 +154,7 @@ namespace DeepBlue.Helpers {
 			documentTypeList.Add(item);
 			foreach (var documentType in documentTypes) {
 				item = new SelectListItem();
-				item.Text = documentType.DocumentTypeName.ToString();
+				item.Text = documentType.DocumentTypeName;
 				item.Value = documentType.DocumentTypeID.ToString();
 				documentTypeList.Add(item);
 			}
@@ -240,7 +240,7 @@ namespace DeepBlue.Helpers {
 			communicationGroupingList.Add(item);
 			foreach (var communicationGrouping in communicationGroupings) {
 				item = new SelectListItem();
-				item.Text = communicationGrouping.CommunicationGroupingName.ToString();
+				item.Text = communicationGrouping.CommunicationGroupingName;
 				item.Value = communicationGrouping.CommunicationGroupingID.ToString();
 				communicationGroupingList.Add(item);
 			}
@@ -255,7 +255,7 @@ namespace DeepBlue.Helpers {
 			purchaseTypeList.Add(item);
 			foreach (var purchaseType in purchaseTypes) {
 				item = new SelectListItem();
-				item.Text = purchaseType.Name.ToString();
+				item.Text = purchaseType.Name;
 				item.Value = purchaseType.PurchaseTypeID.ToString();
 				purchaseTypeList.Add(item);
 			}
@@ -270,7 +270,7 @@ namespace DeepBlue.Helpers {
 			dealClosingCostTypeList.Add(item);
 			foreach (var dealClosingCostType in dealClosingCostTypes) {
 				item = new SelectListItem();
-				item.Text = dealClosingCostType.Name.ToString();
+				item.Text = dealClosingCostType.Name;
 				item.Value = dealClosingCostType.DealClosingCostTypeID.ToString();
 				dealClosingCostTypeList.Add(item);
 			}
@@ -285,7 +285,7 @@ namespace DeepBlue.Helpers {
 			underlyingFundList.Add(item);
 			foreach (var underlyingFund in underlyingFunds) {
 				item = new SelectListItem();
-				item.Text = underlyingFund.FundName.ToString();
+				item.Text = underlyingFund.FundName;
 				item.Value = underlyingFund.UnderlyingtFundID.ToString();
 				underlyingFundList.Add(item);
 			}
@@ -300,7 +300,7 @@ namespace DeepBlue.Helpers {
 			issuerList.Add(item);
 			foreach (var issuer in issuers) {
 				item = new SelectListItem();
-				item.Text = issuer.Name.ToString();
+				item.Text = issuer.Name;
 				item.Value = issuer.IssuerId.ToString();
 				issuerList.Add(item);
 			}
@@ -315,7 +315,7 @@ namespace DeepBlue.Helpers {
 			securityTypeList.Add(item);
 			foreach (var securityType in securityTypes) {
 				item = new SelectListItem();
-				item.Text = securityType.Name.ToString();
+				item.Text = securityType.Name;
 				item.Value = securityType.SecurityTypeID.ToString();
 				securityTypeList.Add(item);
 			}
@@ -330,7 +330,7 @@ namespace DeepBlue.Helpers {
 			equityList.Add(item);
 			foreach (var equity in equities) {
 				item = new SelectListItem();
-				item.Text = equity.Symbol.ToString();
+				item.Text = equity.Symbol;
 				item.Value = equity.EquityID.ToString();
 				equityList.Add(item);
 			}
@@ -345,7 +345,7 @@ namespace DeepBlue.Helpers {
 			equityTypeList.Add(item);
 			foreach (var equityType in equityTypes) {
 				item = new SelectListItem();
-				item.Text = equityType.Equity.ToString();
+				item.Text = equityType.Equity;
 				item.Value = equityType.EquityTypeID.ToString();
 				equityTypeList.Add(item);
 			}
@@ -360,7 +360,7 @@ namespace DeepBlue.Helpers {
 			fixedIncomeList.Add(item);
 			foreach (var fixedIncome in fixedIncomes) {
 				item = new SelectListItem();
-				item.Text = fixedIncome.Symbol.ToString();
+				item.Text = fixedIncome.Symbol;
 				item.Value = fixedIncome.FixedIncomeID.ToString();
 				fixedIncomeList.Add(item);
 			}
@@ -375,13 +375,13 @@ namespace DeepBlue.Helpers {
 			fixedIncomeTypeList.Add(item);
 			foreach (var fixedIncomeType in fixedIncomeTypes) {
 				item = new SelectListItem();
-				item.Text = fixedIncomeType.FixedIncomeType1.ToString();
+				item.Text = fixedIncomeType.FixedIncomeType1;
 				item.Value = fixedIncomeType.FixedIncomeTypeID.ToString();
 				fixedIncomeTypeList.Add(item);
 			}
 			return fixedIncomeTypeList;
 		}
-		
+
 		public static List<SelectListItem> GetUnderlyingFundTypeSelectList(List<UnderlyingFundType> underlyingFundTypes) {
 			List<SelectListItem> underlyingFundTypeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
@@ -390,7 +390,7 @@ namespace DeepBlue.Helpers {
 			underlyingFundTypeList.Add(item);
 			foreach (var underlyingFundType in underlyingFundTypes) {
 				item = new SelectListItem();
-				item.Text = underlyingFundType.Name.ToString();
+				item.Text = underlyingFundType.Name;
 				item.Value = underlyingFundType.UnderlyingFundTypeID.ToString();
 				underlyingFundTypeList.Add(item);
 			}
@@ -405,7 +405,7 @@ namespace DeepBlue.Helpers {
 			reportingTypeList.Add(item);
 			foreach (var reportingType in reportingTypes) {
 				item = new SelectListItem();
-				item.Text = reportingType.Reporting.ToString();
+				item.Text = reportingType.Reporting;
 				item.Value = reportingType.ReportingTypeID.ToString();
 				reportingTypeList.Add(item);
 			}
@@ -420,7 +420,7 @@ namespace DeepBlue.Helpers {
 			reportingFrequencyList.Add(item);
 			foreach (var reportingFrequency in reportingFrequencys) {
 				item = new SelectListItem();
-				item.Text = reportingFrequency.ReportingFrequency1.ToString();
+				item.Text = reportingFrequency.ReportingFrequency1;
 				item.Value = reportingFrequency.ReportingFrequencyID.ToString();
 				reportingFrequencyList.Add(item);
 			}
@@ -435,7 +435,7 @@ namespace DeepBlue.Helpers {
 			industryList.Add(item);
 			foreach (var industry in industrys) {
 				item = new SelectListItem();
-				item.Text = industry.Industry1.ToString();
+				item.Text = industry.Industry1;
 				item.Value = industry.IndustryID.ToString();
 				industryList.Add(item);
 			}
@@ -450,7 +450,7 @@ namespace DeepBlue.Helpers {
 			geographyList.Add(item);
 			foreach (var geography in geographys) {
 				item = new SelectListItem();
-				item.Text = geography.Geography1.ToString();
+				item.Text = geography.Geography1;
 				item.Value = geography.GeographyID.ToString();
 				geographyList.Add(item);
 			}
@@ -465,7 +465,7 @@ namespace DeepBlue.Helpers {
 			currencyList.Add(item);
 			foreach (var currency in currencies) {
 				item = new SelectListItem();
-				item.Text = currency.Currency1.ToString();
+				item.Text = currency.Currency1;
 				item.Value = currency.CurrencyID.ToString();
 				currencyList.Add(item);
 			}
@@ -480,7 +480,7 @@ namespace DeepBlue.Helpers {
 			shareClassTypeList.Add(item);
 			foreach (var shareClassType in shareClassTypes) {
 				item = new SelectListItem();
-				item.Text = shareClassType.ShareClass.ToString();
+				item.Text = shareClassType.ShareClass;
 				item.Value = shareClassType.ShareClassTypeID.ToString();
 				shareClassTypeList.Add(item);
 			}
@@ -495,7 +495,7 @@ namespace DeepBlue.Helpers {
 			investmentTypeList.Add(item);
 			foreach (var investmentType in investmentTypes) {
 				item = new SelectListItem();
-				item.Text = investmentType.Investment.ToString();
+				item.Text = investmentType.Investment;
 				item.Value = investmentType.InvestmentTypeID.ToString();
 				investmentTypeList.Add(item);
 			}
@@ -510,7 +510,7 @@ namespace DeepBlue.Helpers {
 			cashDistributionTypeList.Add(item);
 			foreach (var cashDistributionType in cashDistributionTypes) {
 				item = new SelectListItem();
-				item.Text = cashDistributionType.Name.ToString();
+				item.Text = cashDistributionType.Name;
 				item.Value = cashDistributionType.CashDistributionTypeID.ToString();
 				cashDistributionTypeList.Add(item);
 			}
@@ -525,7 +525,7 @@ namespace DeepBlue.Helpers {
 			activityTypeList.Add(item);
 			foreach (var activityType in activityTypes) {
 				item = new SelectListItem();
-				item.Text = activityType.Name.ToString();
+				item.Text = activityType.Name;
 				item.Value = activityType.ActivityTypeID.ToString();
 				activityTypeList.Add(item);
 			}
@@ -540,7 +540,7 @@ namespace DeepBlue.Helpers {
 			fundExpenseTypeList.Add(item);
 			foreach (var fundExpenseType in fundExpenseTypes) {
 				item = new SelectListItem();
-				item.Text = fundExpenseType.Name.ToString();
+				item.Text = fundExpenseType.Name;
 				item.Value = fundExpenseType.FundExpenseTypeID.ToString();
 				fundExpenseTypeList.Add(item);
 			}

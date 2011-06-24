@@ -36,7 +36,7 @@
 		</div>
 		<div class="editor-field">
 			<div id="InvestorRow">
-				<%: Html.TextBoxFor(model => model.InvestorName, new { @onblur="javascript:documentUpload.InvestorBlur(this);" }) %>
+				<%: Html.TextBoxFor(model => model.InvestorName, new { @onblur = "javascript:documentUpload.InvestorBlur(this);", @style = "width:155px" })%>
 				<%: Html.ValidationMessageFor(model => model.InvestorId) %>
 			</div>
 			<div id="FundRow" style="display: none">

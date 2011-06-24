@@ -68,5 +68,11 @@
 		<%: Html.TextBox("FI_Industry", "${Industry}", new { @id = "FI_Industry", @style = "width:157px;" })%>
 		<%: Html.Hidden("FI_IndustryId", "${IndustryId}")%>
 	</div>
+	<div class="editor-label" style="clear: right">
+		<%: Html.LabelFor(model => model.Symbol) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.TextBox("FI_Symbol", "${Symbol}")%>
+	</div>
 	<%: Html.Hidden("FixedIncomeId","${FixedIncomeId}")%>
 </div>

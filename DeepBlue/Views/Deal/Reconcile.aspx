@@ -20,7 +20,7 @@
 			<div class="left-col" style="margin-left: 10px; display: none" id="ReportLoading">
 				<%:Html.Image("ajax.jpg")%>&nbsp;Loading....</div>
 			<div class="left-col" style="margin-left: 15%;">
-				<%: Html.Label("Date Range:") %>&nbsp;<%: Html.EditorFor(model => model.FromDate)%>&nbsp;To&nbsp;<%:Html.EditorFor(model => model.ToDate)%>&nbsp;&nbsp;<%: Html.TextBox("Fund", "Search Fund", new { @class = "wm", @id = "Fund", @style = "width:180px", @onblur = "javascript:dealReconcile.clearFund(this);" })%>
+				<%: Html.Label("Date Range:") %>&nbsp;<%: Html.EditorFor(model => model.FromDate)%>&nbsp;To&nbsp;<%:Html.EditorFor(model => model.ToDate)%>&nbsp;&nbsp;<%: Html.TextBox("Fund", "SEARCH FUND", new { @class = "wm", @id = "Fund", @style = "width:180px", @onblur = "javascript:dealReconcile.clearFund(this);" })%>
 			</div>
 			<div class="left-col" style="margin-left: 20px;">
 				<%: Html.ImageButton("search.png", new { @onclick = "javascript:dealReconcile.submit();" })%></div>

@@ -116,7 +116,7 @@
 								<b>
 									<%: Html.Span("",new { @id="CommittedAmount"})%></b>
 							</div>
-							<div class="editor-label" style="width: 109px">
+							<div class="editor-label" style="width: 120px">
 								Unfunded Amount:
 							</div>
 							<div class="editor-label" style="clear: right">

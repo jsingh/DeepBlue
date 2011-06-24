@@ -44,21 +44,23 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("DEAL NO.")]
 		public int DealNumber { get; set; }
 
-		[DisplayName("Contact-")]
+		[DisplayName("Contact")]
 		public int? ContactId { get; set; }
 
 		[Required(ErrorMessage = "Purchase Type is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Purchase Type is required")]
-		[DisplayName("Purchase Type-")]
+		[DisplayName("Purchase Type")]
 		public int? PurchaseTypeId { get; set; }
 
 		public int? SellerContactId { get; set; }
 
-		[DisplayName("Partnered-")]
+		[DisplayName("Partnered")]
 		public bool IsPartnered { get; set; }
 
-		[DisplayName("Partner Name-")]
+		[DisplayName("Partner Name")]
 		public string PartnerName { get; set; }
+
+		public bool IsDealClose { get; set; }
 
 		public DealSellerDetailModel SellerInfo { get; set; }
 

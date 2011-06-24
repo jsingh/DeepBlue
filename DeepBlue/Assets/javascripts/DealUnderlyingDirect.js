@@ -4,19 +4,10 @@
 	if(!(tr.get(0))) {
 		$("#UnderlyingDirectsRowTemplate").tmpl(data).prependTo("#tbodyUnderlyingDirect");
 	} else {
-		tr.prev().remove();
 		$("#UnderlyingDirectsRowTemplate").tmpl(data).insertAfter(tr);
 		tr.remove();
 	}
 	tr=$("#UnderlyingDirect_"+data.DealUnderlyingDirectId,tbody);
-	var Security=$("#SecurityId",tr).get(0);
-	if(Security) {
-		if(data.SecurityTypeId==1) {
-			jHelper.loadDropDown(Security,data.Equities);
-		} else if(data.SecurityTypeId==2) {
-			jHelper.loadDropDown(Security,data.FixedIncomes);
-		}
-	}
 	var date;
 	jHelper.formatDollar(tr);
 	date=jHelper.formatDate(jHelper.parseJSONDate(data.RecordDate));
@@ -30,23 +21,51 @@
 	deal.selectValue(tr);
 	jHelper.applyDatePicker(tr);
 	deal.setIndex($("#tblUnderlyingDirect"));
+	deal.applyUDAutocomplete(tr);
 	$("#MakeNewDUDirect").hide();
-		$("tr:odd","#tbodyUnderlyingDirect").removeClass("row").removeClass("arow").addClass("arow");
+	$("tr:odd","#tbodyUnderlyingDirect").removeClass("row").removeClass("arow").addClass("arow");
 	$("tr:even","#tbodyUnderlyingDirect").removeClass("row").removeClass("arow").addClass("row");
+};
+deal.applyUDAutocomplete=function (tr) {
+	var issuer=$("#Issuer",tr);
+	var issuerId=$("#IssuerId",tr);
+	var securityTypeId=$("#SecurityTypeId",tr);
+	var securityId=$("#SecurityId",tr);
+	issuer
+	.blur(function () {
+		if($.trim(this.value)=="") {
+			issuerId.val(0);
+			securityTypeId.val(0);
+			securityId.val(0);
+		}
+	})
+	.autocomplete({ source: "/Deal/FindIssuers",minLength: 1,
+		select: function (event,ui) {
+			var arr=ui.item.value.split("||");
+			issuerId.val(ui.item.id);
+			setTimeout(function () { issuer.val($.trim(arr[0])); },100);
+			securityTypeId.val($.trim(arr[1]));
+			securityId.val($.trim(arr[2]));
+		},
+		appendTo: "body",delay: 300
+	});
 };
 deal.deleteUnderlyingDirect=function (id,img) {
 	if(confirm("Are you sure you want to delete this deal underlying direct?")) {
 		var tr=$(img).parents("tr:first");
 		var url="/Deal/DeleteDealUnderlyingDirect/"+id;
-		$.get(url,function (data) { tr.prev().remove();tr.remove();deal.setIndex($("#tblUnderlyingDirect")); });
+		$.get(url,function (data) {
+			tr.remove();
+			deal.setIndex($("#tblUnderlyingDirect"));
+		});
 	}
 };
 deal.editUnderlyingDirect=function (img) {
 	var tr=$(img).parents("tr:first");
-	if(img.src.indexOf('savebtn.png')> -1) {
+	if(img.src.indexOf('save.png')> -1) {
 		deal.saveUnderlyingDirect(tr);
 	} else {
-		img.src="/Assets/images/savebtn.png";
+		img.src="/Assets/images/save.png";
 		deal.showElements(tr);
 	}
 };
@@ -154,6 +173,9 @@ deal.calcFMV=function (txt) {
 	if(isNaN(noofsha)) { noofsha=0; }
 	if(isNaN(price)) { price=0; }
 	FMV.val(noofsha*price);
+};
+deal.Reset=function () {
+	$(":input[type='text']","#SellerInfo").val("");
 };
 deal.loadPurchasePrice=function (tr) {
 	var PurchasePrice=$("#PurchasePrice",tr);

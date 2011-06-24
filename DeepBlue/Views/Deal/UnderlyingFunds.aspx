@@ -2,7 +2,7 @@
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	AddUnderlyingFunds
+	Add Underlying Funds
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
@@ -10,7 +10,7 @@
 	<%=Html.StylesheetLinkTag("deal.css") %>
 	<%=Html.StylesheetLinkTag("dealdirect.css")%>
 	<%=Html.StylesheetLinkTag("addufund.css")%>
-	<%= Html.JavascriptInclueTag("UnderlyingFund.js")%>
+	<%=Html.JavascriptInclueTag("UnderlyingFund.js")%>
 	<%=Html.JavascriptInclueTag("DealDirect.js")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
@@ -37,25 +37,27 @@
 			<%: Html.TextBox("S_UnderlyingFund", "SEARCH ISSUER", new { @id="S_UnderlyingFund", @style = "width:200px", @class = "wm" })%>
 		</div>
 	</div>
-	<div class="subheader" id="AddNewIssuer" style="display: none">
-		<%using (Html.Form(new { @id = "frmAddNewIssuer", @onsubmit = "return dealDirect.createNewIssuer(this);" })) {%>
-		<div id="NewIssuerDetail">
-		</div>
-		<div class="addissuer">
-			<div class="btn">
-				<%: Html.Span("", new { @id = "SpnNewLoading" })%></div>
-			<div class="btn">
-				<%: Html.ImageButton("addissuer.png")%></div>
-			<div class="btnclose">
-				<%: Html.Image("issuerclose.png", new { @onclick = "javascript:dealDirect.close();" })%>
+	<div id="UnderlyingFundDetail">
+		<div class="subheader" id="AddNewIssuer" style="display: none">
+			<%using (Html.Form(new { @id = "frmAddNewIssuer", @onsubmit = "return dealDirect.createNewIssuer(this);" })) {%>
+			<div id="NewIssuerDetail">
 			</div>
+			<div class="addissuer">
+				<div class="btn">
+					<%: Html.Span("", new { @id = "SpnNewLoading" })%></div>
+				<div class="btn">
+					<%: Html.ImageButton("addissuer.png")%></div>
+				<div class="btnclose">
+					<%: Html.Image("issuerclose.png", new { @onclick = "javascript:dealDirect.close();" })%>
+				</div>
+			</div>
+			<%}%>
+		</div>
+		<%using (Html.Form(new { @id = "frmUnderlyingFund", @onsubmit = "return underlyingFund.save(this);" })) {%>
+		<div id="AddUnderlyingFund" style="display: none">
 		</div>
 		<%}%>
 	</div>
-	<%using (Html.Form(new { @id = "frmUnderlyingFund", @onsubmit = "return underlyingFund.save(this);" })) {%>
-	<div id="AddUnderlyingFund" style="display: none">
-	</div>
-	<%}%>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<script type="text/javascript">		underlyingFund.init();</script>

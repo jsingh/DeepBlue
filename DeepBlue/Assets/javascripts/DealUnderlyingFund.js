@@ -4,7 +4,6 @@
 	if(!(tr.get(0))) {
 		$("#UnderlyingFundsRowTemplate").tmpl(data).prependTo("#tbodyUnderlyingFund");
 	} else {
-		tr.prev().remove();
 		$("#UnderlyingFundsRowTemplate").tmpl(data).insertAfter(tr);
 		tr.remove();
 	}
@@ -16,22 +15,39 @@
 	jHelper.applyDatePicker(tr);
 	deal.setIndex($("#tblUnderlyingFund"));
 	$("#MakeNewDUFund").hide();
-		$("tr:odd","#tbodyUnderlyingFund").removeClass("row").removeClass("arow").addClass("arow");
+	deal.applyUFAutocomplete(tr);
+	$("tr:odd","#tbodyUnderlyingFund").removeClass("row").removeClass("arow").addClass("arow");
 	$("tr:even","#tbodyUnderlyingFund").removeClass("row").removeClass("arow").addClass("row");
+};
+deal.applyUFAutocomplete=function (tr) {
+	var underlyingFund=$("#UnderlyingFund",tr);
+	var underlyingFundId=$("#UnderlyingFundId",tr);
+	underlyingFund
+	.blur(function () { if($.trim(this.value)=="") { underlyingFundId.val(0); } })
+	.autocomplete({ source: "/Deal/FindUnderlyingFunds",minLength: 1,
+		select: function (event,ui) {
+			underlyingFundId.val(ui.item.id);
+			deal.FindFundNAV(ui.item.id,tr);
+		}
+	,appendTo: "body",delay: 300
+	});
 };
 deal.deleteUnderlyingFund=function (id,img) {
 	if(confirm("Are you sure you want to delete this deal underlying fund?")) {
 		var tr=$(img).parents("tr:first");
 		var url="/Deal/DeleteDealUnderlyingFund/"+id;
-		$.get(url,function (data) { tr.prev().remove();tr.remove();deal.setIndex($("#tblUnderlyingFund")); });
+		$.get(url,function (data) {
+			tr.remove();
+			deal.setIndex($("#tblUnderlyingFund"));
+		});
 	}
 };
 deal.editUnderlyingFund=function (img) {
 	var tr=$(img).parents("tr:first");
-	if(img.src.indexOf('savebtn.png')> -1) {
+	if(img.src.indexOf('save.png')> -1) {
 		deal.saveUnderlyingFund(tr);
 	} else {
-		img.src="/Assets/images/savebtn.png";
+		img.src="/Assets/images/save.png";
 		deal.showElements(tr);
 	}
 };
@@ -71,11 +87,10 @@ deal.loadUnderlyingFund=function (id) {
 		deal.loadUnderlyingFundData(data);
 	});
 };
-deal.FindFundNAV=function (ddl) {
-	var tr=$(ddl).parents("tr:first");
+deal.FindFundNAV=function (ufid,tr) {
 	var FundNAV=$("#FundNAV",tr);
 	FundNAV.attr("readonly","readonly").val("Loading FundNAV...");
-	$.get("/Deal/FindFundNAV?_"+(new Date()).getTime()+"&underlyingFundId="+ddl.value+"&fundId="+deal.getFundId(),function (data) {
+	$.get("/Deal/FindFundNAV?_"+(new Date()).getTime()+"&underlyingFundId="+ufid+"&fundId="+deal.getFundId(),function (data) {
 		var fundNAV="";
 		data=parseFloat(data);
 		if(data>0) { fundNAV=data.toFixed(2); }

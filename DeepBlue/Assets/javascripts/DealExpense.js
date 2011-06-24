@@ -4,7 +4,6 @@
 	if(!(tr.get(0))) {
 		$("#DealExpensesRowTemplate").tmpl(data).prependTo("#tbodyDealExpense");
 	} else {
-		tr.prev().remove();
 		$("#DealExpensesRowTemplate").tmpl(data).insertAfter(tr);
 		tr.remove();
 	}
@@ -25,7 +24,6 @@ deal.deleteDealExpense=function (id,img) {
 		var tr=$(img).parents("tr:first");
 		var url="/Deal/DeleteDealClosingCost/"+id;
 		$.get(url,function (data) {
-			tr.prev().remove();
 			tr.remove();
 			deal.calcTotalExpense();
 		});
@@ -33,10 +31,10 @@ deal.deleteDealExpense=function (id,img) {
 };
 deal.editDealExpense=function (img) {
 	var tr=$(img).parents("tr:first");
-	if(img.src.indexOf('savebtn.png')> -1) {
+	if(img.src.indexOf('save.png')> -1) {
 		deal.saveExpense(tr);
 	} else {
-		img.src="/Assets/images/savebtn.png";
+		img.src="/Assets/images/save.png";
 		deal.showElements(tr);
 	}
 };

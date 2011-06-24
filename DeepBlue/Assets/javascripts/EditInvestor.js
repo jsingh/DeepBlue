@@ -391,13 +391,13 @@
 					});
 				} else if(type=="checkbox") {
 					if(this.checked) {
-						disp.html("<img src='/Assets/images/Tick.gif' />");
+						disp.html("<img src='/Assets/images/tick.png' />");
 					} else {
 						disp.html("");
 					}
 					$(this).change(function () {
 						if(this.checked) {
-							disp.html("<img src='/Assets/images/Tick.gif' />");
+							disp.html("<img src='/Assets/images/tick.png' />");
 						} else {
 							disp.html("");
 						}
