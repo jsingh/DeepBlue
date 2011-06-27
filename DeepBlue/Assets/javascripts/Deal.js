@@ -24,24 +24,32 @@
 		issuer.isCreateDealPage=true;
 	}
 	,initDealEvents: function () {
-		$(".expandbtn").toggle(function () {
-			var header=$(this);
+
+		$(".expandimg").click(function () {
+			$(".expandtitle").hide();
+			$(".expandimg").show();
+			$(".expandsel").removeClass("expandsel");
+			$(".fieldbox").hide();
+			$(".expandaddbtn").hide();
+			var header=$(this).parent();
 			var parent=header.parent();
 			parent.addClass("expandsel");
 			$("#img",header).hide();
 			$("#title",header).show();
+			$("#title .expandtitle",header).show();
 			$(".expandaddbtn",parent).show();
 			$(".makenew-header",parent.parent()).show();
 			$(".fieldbox",parent.parent()).show();
-		},function () {
-			var header=$(this);
-			var parent=header.parent();
-			parent.removeClass("expandsel");
-			$("#img",header).show();
-			$("#title",header).hide();
+		});
+
+		$(".expandbtn #title").click(function () {
+			var parent=$(this).parents(".expandheader:first");
+			var content=parent.parent();
+			$(".fieldbox",content).hide();
+			$(parent).removeClass("expandsel");
 			$(".expandaddbtn",parent).hide();
-			$(".makenew-header",parent.parent()).hide();
-			$(".fieldbox",parent.parent()).hide();
+			$(".expandimg",parent).show();
+			$(this).hide();
 		});
 	}
 	,selectPartner: function (checked) {
@@ -106,6 +114,8 @@
 		deal.initMVCValidation();
 		deal.setIndex($("#tblUnderlyingFund"));
 		deal.setIndex($("#tblUnderlyingDirect"));
+		deal.calcDUF();
+		deal.calcDUD();
 	}
 	,setIndex: function (target) {
 		var index=0;

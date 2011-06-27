@@ -389,26 +389,22 @@ namespace DeepBlue.Controllers.Investor {
 			investor.Notes = collection["Notes"];
 			if (string.IsNullOrEmpty(investor.LastName))
 				investor.LastName = "n/a";
-			if (investor.CreatedBy == 0)
-				investor.CreatedBy = AppSettings.CreatedByUserId;
 			if (string.IsNullOrEmpty(collection["StateOfResidency"]) == false)
 				investor.ResidencyState = Convert.ToInt32(collection["StateOfResidency"]);
 			if (string.IsNullOrEmpty(collection["EntityType"]) == false)
 				investor.InvestorEntityTypeID = Convert.ToInt32(collection["EntityType"]);
 
+			investor.LastUpdatedBy = AppSettings.CreatedByUserId;
+			investor.LastUpdatedDate = DateTime.Now;
 			// Assign address details
 			for (index = 1; index < addressCount + 1; index++) {
 				if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "AddressId"]) == false) {
 					InvestorAddress investorAddress = investor.InvestorAddresses.SingleOrDefault(address => address.AddressID == Convert.ToInt32(collection[index.ToString() + "_" + "AddressId"]));
 					if (investorAddress == null) {
 						investorAddress = new InvestorAddress();
-						investorAddress.Address = new Address();
-					}
-					if (investorAddress.CreatedBy == 0) {
 						investorAddress.CreatedBy = AppSettings.CreatedByUserId;
 						investorAddress.CreatedDate = DateTime.Now;
-					}
-					if (investorAddress.Address.CreatedBy == 0) {
+						investorAddress.Address = new Address();
 						investorAddress.Address.CreatedBy = AppSettings.CreatedByUserId;
 						investorAddress.Address.CreatedDate = DateTime.Now;
 					}
@@ -440,13 +436,9 @@ namespace DeepBlue.Controllers.Investor {
 					investorContact = investor.InvestorContacts.SingleOrDefault(contact => contact.ContactID == Convert.ToInt32(collection[index.ToString() + "_" + "ContactId"]));
 					if (investorContact == null) {
 						investorContact = new InvestorContact();
-						investorContact.Contact = new Contact();
-					}
-					if (investorContact.CreatedBy == 0) {
 						investorContact.CreatedBy = AppSettings.CreatedByUserId;
 						investorContact.CreatedDate = DateTime.Now;
-					}
-					if (investorContact.Contact.CreatedBy == 0) {
+						investorContact.Contact = new Contact();
 						investorContact.Contact.CreatedBy = AppSettings.CreatedByUserId;
 						investorContact.Contact.CreatedDate = DateTime.Now;
 					}
@@ -470,17 +462,15 @@ namespace DeepBlue.Controllers.Investor {
 					// Assign address details
 					if (investorContactAddress == null) {
 						investorContactAddress = new ContactAddress();
-						investorContactAddress.Address = new Address();
-					}
-					if (investorContactAddress.CreatedBy == 0) {
 						investorContactAddress.CreatedBy = AppSettings.CreatedByUserId;
 						investorContactAddress.CreatedDate = DateTime.Now;
-					}
-					if (investorContactAddress.Address.CreatedBy == 0) {
+						investorContactAddress.Address = new Address();
 						investorContactAddress.Address.CreatedBy = AppSettings.CreatedByUserId;
 						investorContactAddress.Address.CreatedDate = DateTime.Now;
 					}
 					investorContactAddress.EntityID = (int)ConfigUtil.CurrentEntityID;
+					investorContactAddress.LastUpdatedBy = AppSettings.CreatedByUserId;
+					investorContactAddress.LastUpdatedDate = DateTime.Now;
 					investorContactAddress.Address.AddressTypeID = (int)DeepBlue.Models.Admin.Enums.AddressType.Work;
 					investorContactAddress.Address.EntityID = (int)ConfigUtil.CurrentEntityID;
 					investorContactAddress.Address.Address1 = collection[index.ToString() + "_" + "ContactAddress1"];
@@ -510,11 +500,9 @@ namespace DeepBlue.Controllers.Investor {
 					investorAccount = investor.InvestorAccounts.SingleOrDefault(account => account.InvestorAccountID == Convert.ToInt32(collection[index.ToString() + "_" + "AccountId"]));
 					if (investorAccount == null) {
 						investorAccount = new InvestorAccount();
-						investor.InvestorAccounts.Add(investorAccount);
-					}
-					if (investorAccount.CreatedBy == 0) {
 						investorAccount.CreatedBy = AppSettings.CreatedByUserId;
 						investorAccount.CreatedDate = DateTime.Now;
+						investor.InvestorAccounts.Add(investorAccount);
 					}
 					investorAccount.EntityID = (int)ConfigUtil.CurrentEntityID;
 					investorAccount.Account = collection[index.ToString() + "_" + "AccountNumber"];
@@ -554,9 +542,13 @@ namespace DeepBlue.Controllers.Investor {
 		//
 		// GET: /Investor/Delete
 		[HttpGet]
-		public bool Delete(int id) {
-			//InvestorRepository.Delete(id);
-			return true;
+		public string Delete(int id) {
+			if (AdminRepository.DeleteModule(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
 		}
 
 		//

@@ -66,22 +66,22 @@
 					<th style="display: none">
 						DealId
 					</th>
-					<th align="left" sortname="DealNumber" style="width: 10%">
+					<th align="center" style="width: 10%">
 						<span>Deal No.</span>
 					</th>
-					<th align="left" sortname="DealName">
+					<th align="left">
 						<span>Deal Name</span>
 					</th>
-					<th align="left" sortname="FundName">
+					<th align="left">
 						<span>Fund Name (S)</span>
 					</th>
-					<th align="left" sortname="FundName">
+					<th align="right">
 						<span>Committed Amount</span>
 					</th>
-					<th align="left" sortname="FundName">
+					<th align="right">
 						<span>Unfunded Amount</span>
 					</th>
-					<th align="left" sortname="FundName">
+					<th align="right">
 						<span>Total Amount</span>
 					</th>
 					<th style="width: 2%">
@@ -118,7 +118,6 @@
 			<table id="tblUnderlyingFund" class="grid" cellpadding="0" cellspacing="0" border="0">
 				<thead>
 					<tr class="tblUnderlyingFund_tr">
-					 
 						<th>
 							Fund Name
 						</th>

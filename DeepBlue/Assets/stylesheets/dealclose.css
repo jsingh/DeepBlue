@@ -117,13 +117,20 @@ input[type='text'] {
 	padding: 0 0 0 24px;
 }
 #LoadingDetail {
-    clear: both;
-    height: 25px;
-    margin: 0 auto;
-    padding: 0 0;
-    width: 200px;
+	clear: both;
+	height: 25px;
+	margin: 0 auto;
+	padding: 0 0;
+	width: 200px;
 }
 
 .section {
 	margin-top: 10px;
+}
+#DealCloseMain {
+	position: absolute;
+	top: 46px;
+	bottom: 0px;
+	overflow: auto;
+	overflow-x: hidden;
 }

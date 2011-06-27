@@ -26,7 +26,7 @@ namespace DeepBlue.Controllers.Investor {
 		#endregion
 		 
 		#region Delete
-		void Delete(int investorId);
+		bool Delete(int investorId);
 		void DeleteInvestorContact(int investorContactId);
 		void DeleteInvestorAccount(int investorAccountId);
 		#endregion

@@ -135,13 +135,16 @@ h4 a {
 	width: 100%;
 }
 .expandheader {
-	padding: 15px 0px 15px 65px;
+	padding: 0px 0px 0px 65px;
 	cursor: pointer;
 	float: left;
 	width: 90%;
 	background-image: url(../images/downarrow.png);
 	background-position: center right;
 	background-repeat: no-repeat;
+}
+.expandheader .expandimg {
+  padding: 15px 0 8px 0;
 }
 .expandsel {
 	background-image: url(../images/expandbg.png);
@@ -240,6 +243,7 @@ h4 a {
 	padding: 5px;
 	font-weight: bold; white-space:nowrap;
 }
+.grid thead tr th { text-align:center; }
 .grid thead tr td {
 	background-color: transparent;
 	padding: 5px;

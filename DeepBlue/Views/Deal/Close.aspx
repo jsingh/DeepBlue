@@ -46,43 +46,47 @@
 		</div>
 		<div class="line">
 		</div>
-		<div class="dc-box">
-			<div class="section">
-				<div class="dealdetail">
-					<div class="cell">
-						Existing Deal Closes
+		<div class="dc-box" id="ExistingDealClosing" style="display: none">
+			<div class="dc-box">
+				<div class="section">
+					<div class="dealdetail">
+						<div class="cell">
+							Existing Deal Closes
+						</div>
 					</div>
+				</div>
+			</div>
+			<div class="dc-box">
+				<div class="section">
+					<table id="DealCloseList" class="grid" cellpadding="0" cellspacing="0" border="0"
+						style="width: 70%;">
+						<thead>
+							<tr>
+								<th style="display: none;">
+								</th>
+								<th style="width: 5%" align="center">
+									No.
+								</th>
+								<th style="width: 10%" align="center">
+									Deal Close
+								</th>
+								<th style="width: 10%" align="center">
+									Close Date
+								</th>
+								<th style="width: 20%" align="right">
+									Total Net Purchase Price
+								</th>
+								<th align="right">
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
 		<div class="dc-box">
-			<div class="section">
-				<table id="DealCloseList" class="grid" cellpadding="0" cellspacing="0" border="0"
-					style="width: 70%;">
-					<thead>
-						<tr>
-							<th style="display: none;">
-							</th>
-							<th style="width: 5%" align="center">
-								No.
-							</th>
-							<th style="width: 10%" align="center">
-								Deal Close
-							</th>
-							<th style="width: 10%" align="center">
-								Close Date
-							</th>
-							<th style="width: 20%" align="right">
-								Total Net Purchase Price
-							</th>
-							<th align="right">
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
 			<div id="LoadingDetail">
 				<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...", new { @id = "SpnGridLoading", @style="display:none;" })%>
 			</div>
@@ -101,7 +105,7 @@
 							<div class="expandtitle">
 								<%: Html.Span("New Deal Close", new { @id = "SpnDCTitle" })%></div>
 						</div>
-						<div class="expandaddbtn" style="display: block;">
+						<div id="NewDealCloseBtn" class="expandaddbtn" style="display: none;">
 							<%: Html.Anchor(Html.Image("adddealclose.png").ToHtmlString(),"javascript:dealClose.add(0);")%></div>
 					</div>
 					<div id="NDDetail" class="detail" style="display: none">
@@ -110,7 +114,7 @@
 								<%: Html.Span("", new { @id = "SpnDealCloseNo" })%>
 							</div>
 							<div class="editor-field">
-								<%: Html.TextBoxFor(model => model.CloseDate) %>
+								<%: Html.TextBox("CloseDate", "", new { @id = "New_CloseDate" })%>
 							</div>
 						</div>
 						<%: Html.HiddenFor(model => model.DealNumber)%>
@@ -203,7 +207,7 @@
 								<%: Html.Span("Final Deal Close")%></div>
 						</div>
 						<div style="display: block; float: left;">
-							<%: Html.TextBoxFor(model => model.CloseDate) %></div>
+							<%: Html.TextBox("CloseDate", "", new { @id = "Final_CloseDate" })%></div>
 					</div>
 					<div class="detail" style="display: none">
 						<div class="dc-box">
@@ -281,7 +285,7 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryDatePicker("CloseDate")%>
+	<%=Html.jQueryDatePicker("New_CloseDate")%><%=Html.jQueryDatePicker("Final_CloseDate")%>
 	<%=Html.jQueryAutoComplete("Deal", new AutoCompleteOptions { Source = "/Deal/FindDeals", MinLength = 1, OnSelect = "function(event, ui) { dealClose.selectDeal(ui.item.id);}" })%>
 	<%=Html.jQueryAjaxTable("DealCloseList", new AjaxTableOptions {
 		ActionName = "DealClosingList",
@@ -302,7 +306,7 @@
 			<td style="text-align:center">
 				<%: Html.InputCheckBox("DealUnderlyingFundId", false , new { @onchange="javascript:dealClose.editChkRow(this);", @id="chk", @value="${DealUnderlyingFundId}" })%>
 			</td>
-			<td style="text-align:center">
+			<td style="text-align:left">
 				${FundName}
 			</td>
 			<td style="text-align: right">
@@ -362,7 +366,7 @@
 				<td style="text-align:center">
 					<%:Html.InputCheckBox("DealUnderlyingDirectId", false, new { @onchange="javascript:dealClose.editChkRow(this);",  @id="chk", @value="${DealUnderlyingDirectId}" })%>
 				</td>
-				<td style="text-align:center">
+				<td style="text-align:left">
 					${IssuerName}
 				</td>
 				<td style="text-align:right"><%: Html.Span("${NumberOfShares}", new { @class="show" })%>
@@ -422,7 +426,6 @@
 					<%:Html.Span("${AdjustedCost}", new { @id="SpnAJC", @class="money" })%> 
 				</td>
 				<td style="text-align: right">
-					<%: Html.Hidden("${DealUnderlyingFundId}_DealClosingId","${DealClosingId}",  new { @id="DealClosingId" })%>
 					<%: Html.Image("Edit.png", new { @onclick = "javascript:dealClose.editRow(this);" })%>
 				</td>
 			</tr>
@@ -469,8 +472,7 @@
 					<%:Html.Span("${FormatFMV}", new { @id="SpnFMV" })%>   
 				</td>
 				<td style="text-align:right">
-					<%: Html.Hidden("${DealUnderlyingDirectId}_DealClosingId","${DealClosingId}",  new { @id="DealClosingId" })%>
-						<%: Html.Image("Edit.png", new { @onclick = "javascript:dealClose.editRow(this);" })%>
+					<%: Html.Image("Edit.png", new { @onclick = "javascript:dealClose.editRow(this);" })%>
 				</td>
 			</tr>
 			{{/if}}

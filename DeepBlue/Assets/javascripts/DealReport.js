@@ -12,7 +12,7 @@
 	,onSubmit: function (p) {
 		var reportCnt=$("#ReportContent");
 		var h=reportCnt.height();
-		p.rp=parseInt((h/55));
+		p.rp=parseInt((h/45));
 		p.newp=dealReport.pageIndex;
 		$("#ReportLoading").show();
 		return true;
@@ -23,8 +23,8 @@
 		if(!tfoot) {
 			tfoot=document.createElement("tfoot");
 			var trviewmore=document.createElement("tr");
-			var td = document.createElement("td"); td.colSpan = 7;
-			td.style.textAlign = "center";
+			var td=document.createElement("td");td.colSpan=7;
+			td.style.textAlign="center";
 			td.innerHTML="<a href='javascript:dealReport.viewMore();'>View More</a>";
 			$(trviewmore).append(td);
 			$(tfoot).append(trviewmore);
@@ -113,6 +113,7 @@
 		var grid=$("#ReportList");
 		$("#FundId").val(id);
 		var param=[{ name: "fundId",value: id}];
+		dealReport.pageIndex=1;
 		$("tbody",grid).empty();
 		grid.ajaxTableOptions({ params: param });
 		grid.ajaxTableReload();
@@ -126,6 +127,7 @@
 		} else {
 			url="/Deal/ExportDetail?IsPrint=true&FundId="+fundId+"&SortName="+$("#SortName").val()+"&SortOrder="+$("#SortOrder").val();
 		}
+
 		window.open(url,"exportdeal",features);
 	}
 }

@@ -61,16 +61,16 @@
 						<%: Html.Hidden("UnderlyingFundId", "0")%>
 					</td>
 					<td style="text-align: center">
-						<%: Html.TextBox("GrossPurchasePrice", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBox("GrossPurchasePrice", "", new { @id = "GrossPurchasePrice", @onkeyup = "javascript:deal.calcDUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</td>
 					<td style="text-align: center">
-						<%: Html.TextBox("FundNAV", "", new { @id="FundNAV", @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBox("FundNAV", "", new { @id = "FundNAV", @onkeyup = "javascript:deal.calcDUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</td>
 					<td style="text-align: center">
-						<%: Html.TextBox("CommittedAmount", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBox("CommittedAmount", "", new { @id = "CommittedAmount", @onkeyup = "javascript:deal.calcDUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</td>
 					<td style="text-align: center">
-						<%: Html.TextBox("UnfundedAmount", "", new {  @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBox("UnfundedAmount", "", new { @id = "UnfundedAmount", @onkeyup = "javascript:deal.calcDUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</td>
 					<td style="text-align: center">
 						<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_RecordDate" })%>
@@ -84,6 +84,31 @@
 			</thead>
 			<tbody id="tbodyUnderlyingFund">
 			</tbody>
+			<tfoot>
+				<tr>
+					<td style="text-align: left;">
+						Total
+					</td>
+					<td>
+					</td>
+					<td style="text-align: right">
+						<%:Html.Span("", new { @id = "SpnTotalFundGPP" })%>
+					</td>
+					<td style="text-align: right">
+						<%:Html.Span("", new { @id = "SpnTotalFundNAV" })%>
+					</td>
+					<td style="text-align: right">
+						<%:Html.Span("", new { @id = "SpnTotalCAmount" })%>
+					</td>
+					<td style="text-align: right">
+						<%:Html.Span("", new { @id = "SpnTotalUAmount" })%>
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 </div>

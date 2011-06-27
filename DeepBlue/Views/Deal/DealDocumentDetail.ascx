@@ -11,14 +11,13 @@
 				Deal Documents</div>
 		</div>
 	</div>
-    <div class="expandaddbtn">
-    <%: Html.Anchor(Html.Image("add_doc.png").ToHtmlString(), "javascript:void(0);")%>
-		
-        </div>
+	<div class="expandaddbtn">
+		<%: Html.Anchor(Html.Image("add_doc.png").ToHtmlString(), "javascript:void(0);")%>
+	</div>
 </div>
 <div class="fieldbox">
 	<div class="section">
-    <div class="editor-label">
+		<div class="editor-label">
 			<%: Html.Label("Document Type") %>
 		</div>
 		<div class="editor-field">
@@ -42,27 +41,29 @@
 		<div class="editor-field">
 			<%: Html.File("File", new { })%>
 		</div>
-		<table cellpadding="0" cellspacing="0" border="0" class="grid" style="width: 80%; padding-top:20px;">
-			<thead>
-				<tr class="dealhead_tr">
-					<th>
-						Document Type
-					</th>
-					<th style="width: 20%">
-						Document Date
-					</th>
-					<th style="width: 20%">
-						For
-					</th>
-					<th style="width: 20%">
-						File/Link
-					</th>
-					<th style="width: 20%">
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
+		<div style="clear: both"><br />
+			<table cellpadding="0" cellspacing="0" border="0" class="grid" style="width: 80%;">
+				<thead>
+					<tr class="dealhead_tr">
+						<th>
+							Document Type
+						</th>
+						<th style="width: 20%">
+							Document Date
+						</th>
+						<th style="width: 20%">
+							For
+						</th>
+						<th style="width: 20%">
+							File/Link
+						</th>
+						<th style="width: 20%">
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>

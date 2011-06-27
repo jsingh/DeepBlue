@@ -92,6 +92,7 @@
     <Compile Include="Models\Deal\EquityDetailModel.cs" />
     <Compile Include="Models\Deal\EquitySplitModel.cs" />
     <Compile Include="Models\Deal\ExpenseToDealModel.cs" />
+    <Compile Include="Models\Deal\FinalDealCloseModel.cs" />
     <Compile Include="Models\Deal\FixedIncomeDetailModel.cs" />
     <Compile Include="Models\Deal\FundExpenseModel.cs" />
     <Compile Include="Models\Deal\IssuerDetailModel.cs" />

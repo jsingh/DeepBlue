@@ -159,7 +159,8 @@ a img {
 	width: 73px;
 	margin: 0 auto;
 	margin-bottom: 10px;
-	clear: both;height:30px;
+	clear: both;
+	height: 30px;
 }
 .dropdown, .checkbox, .button, .textarea {
 	background-image: none;
@@ -608,7 +609,7 @@ h2 {
 	overflow: hidden;
 	display: none;
 	top: 24px;
-	width: 100%;
+	width: 1000px;
 	font-size: 12px;
 }
 .mdiv ul {
@@ -632,7 +633,7 @@ h2 {
 	color: #a27f7f;
 	font-size: 12px;
 	height: 86px;
-	padding: 0px 38px 0px 38px;
+	padding: 0px 36px;
 	white-space: nowrap;
 	cursor: pointer;
 }
@@ -819,5 +820,10 @@ label {
 .hasDatepicker {
 	background-image: url(../images/datepicker.png);
 	background-position: right center;
+	background-repeat: no-repeat;
+}
+input.ui-autocomplete-loading[type="text"] {
+	background-image: url(../images/ajax.jpg);
+	background-position: left center;
 	background-repeat: no-repeat;
 }

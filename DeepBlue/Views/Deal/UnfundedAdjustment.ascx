@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.UnfundedAdjustmentModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <tr id="UFA_${DealUnderlyingFundAdjustmentId}" {{if DealUnderlyingFundAdjustmentId>0==false}}class="newrow"{{/if}}>
-	<td style="text-align: center">
+	<td style="text-align: left;">
 		<%: Html.Span("${FundName}", new { @class = "show" })%>
 		<%: Html.Hidden("FundId", "${FundId}")%>
 	</td>
@@ -16,7 +16,7 @@
 		<%: Html.Hidden("DealUnderlyingFundId", "${DealUnderlyingFundId}")%>
 		<%: Html.Hidden("UnderlyingFundId", "${UnderlyingFundId}")%>	
 		<%: Html.Span("", new { id = "UpdateLoading" })%>
-		{{if DealUnderlyingFundAdjustmentId>0}}<%: Html.Image("largedel.png", new { @id="deletebtn", @class = "default-button", @onclick="javascript:dealActivity.deleteUFA(${DealUnderlyingFundAdjustmentId},this);" })%>
+		{{if DealUnderlyingFundAdjustmentId>0}}<%: Html.Image("largedel.png", new { @id="deletebtn", @style="display:none", @class = "default-button", @onclick="javascript:dealActivity.deleteUFA(${DealUnderlyingFundAdjustmentId},this);" })%>
 		{{/if}}
 	</td>
 </tr>

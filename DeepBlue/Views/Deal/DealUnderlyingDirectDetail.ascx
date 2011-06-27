@@ -36,14 +36,14 @@
 					<th style="width: 12%">
 						Purchase Price
 					</th>
+					<th style="width: 10%">
+						Fair Market Value
+					</th>
 					<th style="width: 12%">
 						Tax Cost Basic
 					</th>
 					<th style="width: 12%">
 						Tax Cost Date
-					</th>
-					<th style="width: 10%">
-						Fair Market Value
 					</th>
 					<th style="width: 12%">
 						Record Date
@@ -72,13 +72,13 @@
 						<%: Html.TextBox("PurchasePrice", "", new { @onkeypress = "return jHelper.isCurrency(event);", @onkeyup = "javascript:deal.calcFMV(this);" })%>
 					</td>
 					<td>
+						<%: Html.TextBox("FMV", "", new { @readonly = "readonly", @id = "FMV", @style = "background-color: #DADADA;", @onkeypress = "return jHelper.isCurrency(event);" })%>
+					</td>
+					<td>
 						<%: Html.TextBox("TaxCostBase", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</td>
 					<td>
 						<%: Html.TextBox("TaxCostDate", "", new { @class = "datefield", @id = "0_DirectTaxCostDate" })%>
-					</td>
-					<td>
-						<%: Html.TextBox("FMV", "", new { @readonly = "readonly", @id = "FMV", @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</td>
 					<td>
 						<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_DirectRecordDate" })%>
@@ -92,6 +92,32 @@
 			</thead>
 			<tbody id="tbodyUnderlyingDirect">
 			</tbody>
+			<tfoot>
+				<tr>
+					<td style="text-align: left;">
+						Total
+					</td>
+					<td>
+					</td>
+					<td style="text-align: right">
+						<%:Html.Span("", new { @id = "SpnTotalNOS" })%>
+					</td>
+					<td style="text-align: right">
+						<%:Html.Span("", new { @id = "SpnTotalPP" })%>
+					</td>
+					<td style="text-align: right">
+						<%:Html.Span("", new { @id = "SpnTotalFMV" })%>
+					</td>
+					<td style="text-align: right">
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 </div>

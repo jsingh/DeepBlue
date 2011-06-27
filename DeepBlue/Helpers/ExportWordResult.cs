@@ -17,7 +17,9 @@ namespace DeepBlue.Helpers {
 
 		public ExportWordResult(string url, string fileName)
         {
+           
             Url = url;
+            
             FileName = fileName;
         }
 

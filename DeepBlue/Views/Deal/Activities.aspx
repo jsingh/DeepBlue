@@ -419,13 +419,13 @@
 								<table cellpadding="0" cellspacing="0" border="0" id="UnfundedAdjustmentList" class="grid">
 									<thead>
 										<tr>
-											<th style="width: 20%">
+											<th style="width: 25%">
 												Fund Name
 											</th>
 											<th style="width: 20%">
 												Commitment Amount
 											</th>
-											<th style="width: 15%">
+											<th style="width: 20%">
 												Unfunded Amount
 											</th>
 											<th>
@@ -460,9 +460,6 @@
 									Fund Level Expenses
 								</div>
 							</div>
-							<div class="addbtn" style="display: block;">
-								<%: Html.Anchor(Html.Image("addexpense.png").ToHtmlString(), "#")%>
-							</div>
 							<div class="cell">
 								<%: Html.Span("", new { @id = "SpnFLEDetLoading" })%>
 							</div>
@@ -473,27 +470,6 @@
 						<div class="detail" id="FLEDetail">
 							<div class="gridbox">
 								<% Html.RenderPartial("FundExpense", Model.FundLevelExpenseModel);%></div>
-							<div class="gridbox">
-								<table cellpadding="0" cellspacing="0" border="0" id="ExpenseToDealList" class="grid">
-									<thead>
-										<tr>
-											<th style="width: 15%">
-												Deal No.
-											</th>
-											<th style="width: 15%">
-												Deal Name
-											</th>
-											<th style="width: 15%">
-												Expense Amount
-											</th>
-											<th>
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -529,7 +505,7 @@
 				</div>
 				<div class="line">
 				</div>
-				<div class="gridbox" style="margin-bottom: 20px;display:none;" id="NHPList">
+				<div class="gridbox" style="margin-bottom: 20px; display: none;" id="NHPList">
 					<div class="subheading">
 						New Holding Pattern
 					</div>
@@ -563,7 +539,7 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%= Html.jQueryAutoComplete("CC_UnderlyingFund", new AutoCompleteOptions {
-																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
+																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1, 
 																	  OnSelect = "function(event, ui) { dealActivity.setCCUnderlyingFund(ui.item.id,ui.item.value);}"
 	})%>
 	<%= Html.jQueryAutoComplete("CD_UnderlyingFund", new AutoCompleteOptions {

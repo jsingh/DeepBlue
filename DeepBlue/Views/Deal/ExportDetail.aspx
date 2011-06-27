@@ -121,10 +121,10 @@
 										<%: fund.FundName%>
 									</td>
 									<td>
-										<%: fund.NAV%>
+										<%: fund.FundNAV%>
 									</td>
 									<td class="dollarcell">
-										<%: FormatHelper.CurrencyFormat(fund.Commitment)%>
+										<%: FormatHelper.CurrencyFormat(fund.CommittedAmount)%>
 									</td>
 									<td class="datecell">
 										<%: (fund.RecordDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy")%>
@@ -137,7 +137,7 @@
 						<br />
 						Underlying Funds
 					</td>
-					<td colspan="2" style="paddin-left: 20px; text-align: center; vertical-align: top;">
+					<td colspan="2" style="padding-left: 20px; text-align: center; vertical-align: top;">
 						<table cellspacing="1" cellpadding="0" border="0" id="tblUnderlyingDirect">
 							<thead>
 								<tr>
@@ -174,16 +174,16 @@
 										<%: directIndex%>&nbsp;.
 									</td>
 									<td>
-										<%: direct.Company%>
+										<%: direct.IssuerId%>
 									</td>
 									<td>
 										<%: direct.Security%>
 									</td>
 									<td>
-										<%: direct.NoOfShares%>
+										<%: direct.NumberOfShares%>
 									</td>
 									<td>
-										<%: direct.Percentage%>
+										<%: direct.Percent%>
 									</td>
 									<td>
 										<%: direct.FMV%>

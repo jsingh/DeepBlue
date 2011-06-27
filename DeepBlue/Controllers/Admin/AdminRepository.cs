@@ -230,8 +230,7 @@ namespace DeepBlue.Controllers.Admin {
 				return context.CustomFieldValues.SingleOrDefault(fieldValue => fieldValue.CustomFieldID == customFieldId && fieldValue.Key == key);
 			}
 		}
-
-
+		
 		public bool CustomFieldTextAvailable(string customFieldText, int customFieldId, int moduleId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return ((from field in context.CustomFields

@@ -1,6 +1,7 @@
 ﻿dealActivity.setFLEFund=function (id,name) {
 	$("#FLE_FundName").html(name);
 	$("#FLE_FundId").val(id);
+	$("#FLEDetail").show();
 	$("#FLEDetail").attr("issearch","true").show();
 	var sl=$("#SpnFLEDetLoading");
 	jHelper.loading(sl);
@@ -9,12 +10,7 @@
 		sl.empty();var fetypeid=0;var amt="";
 		if(data!=null) {
 			fetypeid=data.FundExpenseTypeId;amt=data.Amount;
-			var bdy=$("tbody","#ExpenseToDealList");
-			bdy.empty();
-			$.each(data.ExpenseToDeals,function (index,item) { dealActivity.loadExpenseDealData(item,bdy); });
 		}
-		$("tr:odd",bdy).removeClass("row").removeClass("arow").addClass("arow");
-		$("tr:even",bdy).removeClass("row").removeClass("arow").addClass("row");
 		$("#FundExpenseTypeId").val(fetypeid);
 		$("#Amount").val(amt);
 	});
@@ -37,14 +33,16 @@ dealActivity.editETD=function (img,id) {
 };
 dealActivity.SaveFundLevelExpense=function (frm) {
 	var sl=$("#SpnFLELoading");
-	jHelper.loading(sl);
+	sl.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 	$.post("/Deal/CreateFundExpense",$(frm).serializeArray(),function (data) {
 		sl.empty();
 		var arr=data.split("||");
 		if(arr[0]!="True") {
 			alert(data);
 		} else {
-			$("#FundExpenseTypeId",frm).val(arr[1]);
+			alert("Fund Expense Saved.");
+			$("#FLE_Fund").val("");
+			$("#FLEDetail").hide();
 		}
 	});
 	return false;

@@ -19,6 +19,40 @@
 	$("tr:odd","#tbodyUnderlyingFund").removeClass("row").removeClass("arow").addClass("arow");
 	$("tr:even","#tbodyUnderlyingFund").removeClass("row").removeClass("arow").addClass("row");
 };
+deal.calcDUF=function () {
+	var tbl=$("#tblUnderlyingFund");
+	var totalGPP=0;var totalNAV=0;var totalCA=0;var totalUFA=0;
+	$("tr",tbl).each(function () {
+		var fundNAV=$("#FundNAV",this);
+		var ca=$("#CommittedAmount",this);
+		var ufa=$("#UnfundedAmount",this);
+		var gpp=$("#GrossPurchasePrice",this);
+		if(fundNAV.get(0)) {
+			var a=parseFloat(fundNAV.val());
+			if(isNaN(a)) { a=0; }
+			totalNAV+=a;
+		}
+		if(ca.get(0)) {
+			var a=parseFloat(ca.val());
+			if(isNaN(a)) { a=0; }
+			totalCA+=a;
+		}
+		if(ufa.get(0)) {
+			var a=parseFloat(ufa.val());
+			if(isNaN(a)) { a=0; }
+			totalUFA+=a;
+		}
+		if(gpp.get(0)) {
+			var a=parseFloat(gpp.val());
+			if(isNaN(a)) { a=0; }
+			totalGPP+=a;
+		}
+	});
+	$("#SpnTotalFundGPP",tbl).html(jHelper.dollarAmount(totalGPP.toString()));
+	$("#SpnTotalFundNAV",tbl).html(jHelper.dollarAmount(totalNAV.toString()));
+	$("#SpnTotalCAmount",tbl).html(jHelper.dollarAmount(totalCA.toString()));
+	$("#SpnTotalUAmount",tbl).html(jHelper.dollarAmount(totalUFA.toString()));
+};
 deal.applyUFAutocomplete=function (tr) {
 	var underlyingFund=$("#UnderlyingFund",tr);
 	var underlyingFundId=$("#UnderlyingFundId",tr);

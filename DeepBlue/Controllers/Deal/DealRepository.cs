@@ -148,7 +148,10 @@ namespace DeepBlue.Controllers.Deal {
 							FundName = deal.Fund.FundName,
 							DealName = deal.DealName,
 							DealNumber = deal.DealNumber,
-							FundId = deal.FundID
+							FundId = deal.FundID,
+							TotalDealClosing = deal.DealClosings.Count(),
+							TotalUnderlyingFundNotClosing = deal.DealUnderlyingFunds.Where(dealUnderlyingFund => dealUnderlyingFund.DealClosingID == null && dealUnderlyingFund.DealID == dealId).Count(),
+							TotalUnderlyingDirectNotClosing = deal.DealUnderlyingDirects.Where(dealUnderlyingDirect => dealUnderlyingDirect.DealClosingID == null && dealUnderlyingDirect.DealID == dealId).Count(),
 						}).SingleOrDefault();
 			}
 		}
@@ -252,6 +255,10 @@ namespace DeepBlue.Controllers.Deal {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				DealUnderlyingFund dealUnderlyingFund = context.DealUnderlyingFunds.SingleOrDefault(underlyingFund => underlyingFund.DealUnderlyingtFundID == dealUnderlyingFundId);
 				if (dealUnderlyingFund != null) {
+					List<DealUnderlyingFundAdjustment> dealUnderlyingFundAdjustments = dealUnderlyingFund.DealUnderlyingFundAdjustments.ToList();
+					foreach (var adjustment in dealUnderlyingFundAdjustments) {
+						context.DealUnderlyingFundAdjustments.DeleteObject(adjustment);
+					}
 					context.DealUnderlyingFunds.DeleteObject(dealUnderlyingFund);
 					context.SaveChanges();
 				}
@@ -277,6 +284,12 @@ namespace DeepBlue.Controllers.Deal {
 		public List<DealUnderlyingFund> GetDealUnderlyingFunds(int dealId, int dealCloseId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.DealUnderlyingFunds.Where(dealUnderlyingFund => dealUnderlyingFund.DealID == dealId && dealUnderlyingFund.DealClosingID == dealCloseId).ToList();
+			}
+		}
+
+		public List<DealUnderlyingFund> GetAllDealClosingUnderlyingFunds(int dealId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DealUnderlyingFunds.Where(dealUnderlyingFund => dealUnderlyingFund.DealID == dealId && dealUnderlyingFund.DealClosingID != null).ToList();
 			}
 		}
 
@@ -394,6 +407,12 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public List<DealUnderlyingDirect> GetAllDealClosingUnderlyingDirects(int dealId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DealUnderlyingDirects.Where(dealUnderlyingDirect => dealUnderlyingDirect.DealID == dealId && dealUnderlyingDirect.DealClosingID != null).ToList();
+			}
+		}
+
 		public void DeleteDealUnderlyingDirect(int dealUnderlyingDirectId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				DealUnderlyingDirect dealUnderlyingDirect = context.DealUnderlyingDirects.SingleOrDefault(underlyingFund => underlyingFund.DealUnderlyingDirectID == dealUnderlyingDirectId);
@@ -489,9 +508,26 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public FinalDealCloseModel GetFinalDealClosingModel(int dealId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				FinalDealCloseModel model = new FinalDealCloseModel();
+				IQueryable<DealUnderlyingDirect> dealUnderlyingDirects = context.DealUnderlyingDirects.Where(direct => direct.DealID == dealId && direct.DealClosingID != null);
+				model.DealUnderlyingDirects = GetDealUnderlyingDirectModel(context, dealUnderlyingDirects).ToList();
+				IQueryable<DealUnderlyingFund> dealUnderlyingFunds = context.DealUnderlyingFunds.Where(fund => fund.DealID == dealId && fund.DealClosingID != null);
+				model.DealUnderlyingFunds = GetDealUnderlyingFundModel(context, dealUnderlyingFunds).ToList();
+				return model;
+			}
+		}
+
 		public DealClosing FindDealClosing(int dealClosingId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.DealClosings.Where(dealClosing => dealClosing.DealClosingID == dealClosingId).SingleOrDefault();
+			}
+		}
+
+		public List<DealClosing> GetAllDealClosing(int dealId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DealClosings.Where(dealClosing => dealClosing.DealID == dealId).ToList();
 			}
 		}
 
@@ -1455,8 +1491,8 @@ namespace DeepBlue.Controllers.Deal {
 						from adjustment in dealUnderlyingFundAdjustments.DefaultIfEmpty()
 						where dealUnderlyingFund.UnderlyingFundID == underlyingFundId
 						select new UnfundedAdjustmentModel {
-							CommitmentAmount = (adjustment != null ? adjustment.CommitmentAmount : 0),
-							UnfundedAmount = (adjustment != null ? adjustment.UnfundedAmount : 0),
+							CommitmentAmount = (adjustment != null ? adjustment.CommitmentAmount : dealUnderlyingFund.CommittedAmount),
+							UnfundedAmount = (adjustment != null ? adjustment.UnfundedAmount : dealUnderlyingFund.UnfundedAmount),
 							DealUnderlyingFundAdjustmentId = (adjustment != null ? adjustment.DealUnderlyingFundAdjustmentID : 0),
 							DealUnderlyingFundId = dealUnderlyingFund.DealUnderlyingtFundID,
 							FundId = dealUnderlyingFund.Deal.Fund.FundID,

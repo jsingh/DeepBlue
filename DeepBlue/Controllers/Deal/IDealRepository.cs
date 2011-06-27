@@ -35,6 +35,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<DealUnderlyingFundModel> GetAllDealUnderlyingFundDetails(int dealId);
 		List<DealUnderlyingFund> GetDealUnderlyingFunds(int dealId);
 		List<DealUnderlyingFund> GetDealUnderlyingFunds(int dealId, int dealClosingId);
+		List<DealUnderlyingFund> GetAllDealClosingUnderlyingFunds(int dealId);
 		List<DealUnderlyingFund> GetAllNotClosingDealUnderlyingFunds(int underlyingFundId, int dealId);
 		List<DealUnderlyingFund> GetAllClosingDealUnderlyingFunds(int underlyingFundId, int fundId);
 		void DeleteDealUnderlyingFund(int dealUnderlyingFundId);
@@ -47,6 +48,7 @@ namespace DeepBlue.Controllers.Deal {
 		void DeleteDealUnderlyingDirect(int dealUnderlyingDirectId);
 		List<DealUnderlyingDirectModel> GetAllDealUnderlyingDirects(int dealId);
 		List<DealUnderlyingDirectListModel> GetAllDealUnderlyingDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<DealUnderlyingDirect> GetAllDealClosingUnderlyingDirects(int dealId);
 		IEnumerable<ErrorInfo> SaveDealUnderlyingDirect(DealUnderlyingDirect dealUnderlyingDirect);
 		List<AutoCompleteList> FindDealUnderlyingDirects(string fundName);
 		List<AutoCompleteList> FindIssuers(string issuerName);
@@ -55,7 +57,9 @@ namespace DeepBlue.Controllers.Deal {
 		#region DealClosing
 		IEnumerable<ErrorInfo> SaveDealClosing(DealClosing dealClosing);
 		CreateDealCloseModel FindDealClosingModel(int dealClosingId, int dealId);
+		FinalDealCloseModel GetFinalDealClosingModel(int dealId);
 		DealClosing FindDealClosing(int dealClosingId);
+		List<DealClosing> GetAllDealClosing(int dealId);
 		int GetMaxDealClosingNumber(int dealId);
 		bool DealCloseDateAvailable(DateTime dealCloseDate, int dealId, int dealCloseId);
 		List<DealUnderlyingDirect> GetDealUnderlyingDirects(int dealId);

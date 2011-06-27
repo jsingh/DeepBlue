@@ -517,7 +517,7 @@
 			var dt=new Date();
 			var url="/Investor/Delete/"+InvestorId+"?t="+dt.getTime();
 			$.get(url,function (data) {
-				if(data!="True") {
+				if($.trim(data)!="") {
 					alert(data);
 				} else {
 					$(editinfo).remove();

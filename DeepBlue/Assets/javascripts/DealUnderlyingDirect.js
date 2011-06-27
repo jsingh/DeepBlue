@@ -26,6 +26,33 @@
 	$("tr:odd","#tbodyUnderlyingDirect").removeClass("row").removeClass("arow").addClass("arow");
 	$("tr:even","#tbodyUnderlyingDirect").removeClass("row").removeClass("arow").addClass("row");
 };
+deal.calcDUD=function () {
+	var tbl=$("#tblUnderlyingDirect");
+	var totalNOS=0;var totalPP=0;var totalFMV=0;
+	$("tr",tbl).each(function () {
+		var nos=$("#NumberOfShares",this);
+		var pp=$("#PurchasePrice",this);
+		var fmv=$("#FMV",this);
+		if(nos.get(0)) {
+			var a=parseFloat(nos.val());
+			if(isNaN(a)) { a=0; }
+			totalNOS+=a;
+		}
+		if(pp.get(0)) {
+			var a=parseFloat(pp.val());
+			if(isNaN(a)) { a=0; }
+			totalPP+=a;
+		}
+		if(fmv.get(0)) {
+			var a=parseFloat(fmv.val());
+			if(isNaN(a)) { a=0; }
+			totalFMV+=a;
+		}
+	});
+	$("#SpnTotalNOS",tbl).html(jHelper.dollarAmount(totalNOS.toString()));
+	$("#SpnTotalPP",tbl).html(jHelper.dollarAmount(totalPP.toString()));
+	$("#SpnTotalFMV",tbl).html(jHelper.dollarAmount(totalFMV.toString()));
+};
 deal.applyUDAutocomplete=function (tr) {
 	var issuer=$("#Issuer",tr);
 	var issuerId=$("#IssuerId",tr);
@@ -46,8 +73,9 @@ deal.applyUDAutocomplete=function (tr) {
 			setTimeout(function () { issuer.val($.trim(arr[0])); },100);
 			securityTypeId.val($.trim(arr[1]));
 			securityId.val($.trim(arr[2]));
+			deal.loadPurchasePrice(tr);
 		},
-		appendTo: "body",delay: 300
+		appendTo: "#content",delay: 300
 	});
 };
 deal.deleteUnderlyingDirect=function (id,img) {
@@ -173,6 +201,7 @@ deal.calcFMV=function (txt) {
 	if(isNaN(noofsha)) { noofsha=0; }
 	if(isNaN(price)) { price=0; }
 	FMV.val(noofsha*price);
+	deal.calcDUD();
 };
 deal.Reset=function () {
 	$(":input[type='text']","#SellerInfo").val("");
@@ -185,5 +214,6 @@ deal.loadPurchasePrice=function (tr) {
 	$.get("/Deal/FindLastPurchasePrice?_"+(new Date()).getTime()+"&fundId="+deal.getFundId()+"&securityId="+securityId+"&securityTypeId="+securityTypeId,function (data) {
 		data=parseFloat(data);
 		if(data>0) { PurchasePrice.val(data.toFixed(2)); } else { PurchasePrice.val(""); }
+		deal.calcFMV(PurchasePrice);
 	});
 };

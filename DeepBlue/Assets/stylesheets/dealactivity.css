@@ -156,7 +156,7 @@ input, select {
 #FLE {
 	float: left;
 	clear: both;
-	margin: 15px 0px 0px 17px;
+	margin: 15px 0px 0px 0px;
 	width: 99%;
 }
 #FLE .cell {

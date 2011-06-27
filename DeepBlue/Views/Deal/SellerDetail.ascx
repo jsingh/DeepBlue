@@ -54,7 +54,7 @@
 			<div class="editor-label">
 			</div>
 			<%: Html.Hidden("DealId", "${DealId}")%>
-			<div class="editor-field auto" style="padding-left: 36%;">
+			<div class="editor-field auto" style="padding-left: 30%;width:auto;">
 				<div class="cell auto">
 					<%: Html.ImageButton("save.png", new { style = "width: 73px; height: 26px;border:0;" })%></div>
 				<div class="cell auto" style="font-weight:bold;">

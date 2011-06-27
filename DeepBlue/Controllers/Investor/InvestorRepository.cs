@@ -74,10 +74,13 @@ namespace DeepBlue.Controllers.Investor {
 			}
 		}
 
-		public void Delete(int investorId) {
+		public bool Delete(int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				DeepBlue.Models.Entity.Investor deepBlueInvestor = context.Investors.SingleOrDefault(investor => investor.InvestorID == investorId);
 				if (deepBlueInvestor != null) {
+					if (deepBlueInvestor.CapitalCallLineItems.Count > 0 && deepBlueInvestor.CapitalDistributionLineItems.Count > 0) {
+						return false;
+					}
 					List<InvestorAddress> investorAddresses = deepBlueInvestor.InvestorAddresses.ToList();
 					foreach (var investorAddress in investorAddresses) {
 						context.Addresses.DeleteObject(investorAddress.Address);
@@ -110,9 +113,14 @@ namespace DeepBlue.Controllers.Investor {
 						}
 						context.InvestorFunds.DeleteObject(investorFund);
 					}
+					List<InvestorFundDocument> investorFundDocuments = deepBlueInvestor.InvestorFundDocuments.ToList();
+					foreach (var document in investorFundDocuments) {
+						context.InvestorFundDocuments.DeleteObject(document);
+					}
 					context.Investors.DeleteObject(deepBlueInvestor);
 					context.SaveChanges();
 				}
+				return true;
 			}
 		}
 
