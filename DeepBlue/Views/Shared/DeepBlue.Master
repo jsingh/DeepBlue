@@ -25,7 +25,16 @@
 <body id="mainbdy">
 	<div id="header">
 		<div id="topheader" class="topheader">
-			WILLOWRIDGE
+			<div class="cname">
+				WILLOWRIDGE</div>
+			<div class="uparrow">
+			</div>
+			<div class="key">
+			</div>
+			<div class="ques">
+			</div>
+			<div class="setting">
+			</div>
 		</div>
 		<div id="menu" class="dbmenu">
 			<% using (Html.TopMenu((ViewData["MenuName"] == "DealManagement"), "Deal_Management")) {%>
@@ -36,18 +45,6 @@
 			<% using (Html.TopMenu((ViewData["MenuName"] == "Fund Tracker"), "Fund_Management")) {%>
 			<%: Html.TopMenuLink("", "fund.png")%>
 			<%}%>
-			<div class="sep">
-				<div style="float: right;">
-					<div class="uparrow">
-					</div>
-					<div class="key">
-					</div>
-					<div class="ques">
-					</div>
-					<div class="setting">
-					</div>
-				</div>
-			</div>
 			<% using (Html.TopMenu((ViewData["MenuName"] == "Investor"), "Investor_Management")) {%>
 			<%: Html.TopMenuLink("","invmanagement.png")%>
 			<%}%>
@@ -203,6 +200,8 @@
 				<%: Html.ActionLink("Share Class Type", "ShareClassType", "Admin", null, new { @class = (ViewData["PageName"] == "ShareClassType" ? "sel" : "") })%></li>
 			<li>
 				<%: Html.ActionLink("Cash Distribution Type", "CashDistributionType", "Admin", null, new { @class = (ViewData["PageName"] == "CashDistributionType" ? "sel" : "") })%></li>
+			<li>
+				<%: Html.ActionLink("Fund Expense Type", "FundExpenseType", "Admin", null, new { @class = (ViewData["PageName"] == "FundExpenseType" ? "sel" : "") })%></li>
 		</ul>
 		<%} %>
 		<%using (Html.InnerSubMenu("CusField_SubMenu", (ViewData["SubmenuName"] == "AdminCustomField"))) {%>

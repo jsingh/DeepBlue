@@ -1,11 +1,18 @@
-﻿ .editor-field input[type="text"] {
+﻿.editor-field input[type="text"] {
 	width: 170px;
 }
 .editor-field select {
 	width: 174px;
 }
-label { font-weight:normal; }
-
+label {
+	font-weight: normal;
+}
 input[type="text"], select {
-    padding: 2px;
+	padding: 2px;
+}
+.status {
+	height: 20px;
+}
+.editor-button {
+    height: 20px;
 }

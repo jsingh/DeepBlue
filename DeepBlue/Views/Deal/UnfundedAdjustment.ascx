@@ -1,23 +1,26 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.UnfundedAdjustmentModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<tr id="UFA_${DealUnderlyingFundAdjustmentId}" {{if DealUnderlyingFundAdjustmentId>0==false}}class="newrow"{{/if}}>
+<tr id="UFA_${DealUnderlyingFundId}" {{if DealUnderlyingFundId>0==false}}class="newrow"{{/if}}>
 	<td style="text-align: left;">
-		<%: Html.Span("${FundName}", new { @class = "show" })%>
-		<%: Html.Hidden("FundId", "${FundId}")%>
-	</td>
-	<td style="text-align: center">
-		<%: Html.TextBox("CommitmentAmount", "{{if CommitmentAmount>0}}${CommitmentAmount}{{/if}}", new { @class = "", @onkeypress = "return jHelper.isCurrency(event);" })%>
-	</td>
-	 <td style="text-align: center">
-		<%: Html.TextBox("UnfundedAmount", "{{if UnfundedAmount>0}}${UnfundedAmount}{{/if}}", new { @class = "", @onkeypress = "return jHelper.isCurrency(event);" })%>
+		<%: Html.Span("${FundName}")%>
 	</td>
 	<td style="text-align: right">
-		<%: Html.Hidden("DealUnderlyingFundAdjustmentId", "${DealUnderlyingFundAdjustmentId}")%>
+		<%: Html.Span("${CommitmentAmount}", new { @class = "money" })%>
+	</td>
+	 <td style="text-align: right">
+		<%: Html.Span("${UnfundedAmount}", new { @class = "money" })%>
+	</td>
+	<td style="text-align: right">
+		<%: Html.TextBox("CommitmentAmount", "{{if CommitmentAmount>0}}${CommitmentAmount}{{/if}}", new { @class = "hide", @onkeypress = "return jHelper.isCurrency(event);" })%>
+	</td>
+	<td style="text-align: right">
+		<%: Html.TextBox("UnfundedAmount", "{{if UnfundedAmount>0}}${UnfundedAmount}{{/if}}", new { @class = "hide", @onkeypress = "return jHelper.isCurrency(event);" })%>
+	</td>
+	<td style="text-align: right">
 		<%: Html.Hidden("DealUnderlyingFundId", "${DealUnderlyingFundId}")%>
-		<%: Html.Hidden("UnderlyingFundId", "${UnderlyingFundId}")%>	
 		<%: Html.Span("", new { id = "UpdateLoading" })%>
-		{{if DealUnderlyingFundAdjustmentId>0}}<%: Html.Image("largedel.png", new { @id="deletebtn", @style="display:none", @class = "default-button", @onclick="javascript:dealActivity.deleteUFA(${DealUnderlyingFundAdjustmentId},this);" })%>
-		{{/if}}
+		<%: Html.Image("save.png", new { @id = "add", @class = "default-button {{if DealUnderlyingFundId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addUFA(this,${DealUnderlyingFundId});" })%>
+		<%: Html.Image("Edit.png", new { @class = "default-button show", @onclick = "javascript:dealActivity.editUFA(this,${DealUnderlyingFundId});" })%>
 	</td>
 </tr>
 

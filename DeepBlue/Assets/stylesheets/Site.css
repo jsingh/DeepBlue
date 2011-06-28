@@ -827,3 +827,20 @@ input.ui-autocomplete-loading[type="text"] {
 	background-position: left center;
 	background-repeat: no-repeat;
 }
+.setting, .ques, .key, .arrow {
+	background-repeat: no-repeat;
+	height: 34px;
+	float: right; margin:0px 10px 0px 10px;
+}
+.setting {
+	background-image: url(../images/setting.png);
+	width: 27px;
+}
+.ques {
+	background-image: url(../images/ques.png);
+	width: 15px;
+	margin-right: 20%;
+}
+.cname {
+	float: left;
+}

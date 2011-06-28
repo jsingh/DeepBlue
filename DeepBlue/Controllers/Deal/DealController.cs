@@ -1742,6 +1742,13 @@ namespace DeepBlue.Controllers.Deal {
 		#region FundLevelExpense
 
 		//
+		// POST : /Deal/FundExpenseList
+		[HttpGet]
+		public JsonResult FundExpenseList(int fundId) {
+			return Json(DealRepository.GetAllFundExpenses(fundId), JsonRequestBehavior.AllowGet);
+		}
+
+		//
 		// POST : /Deal/FundExpense
 		[HttpPost]
 		public ActionResult CreateFundExpense(FormCollection collection) {
@@ -1752,14 +1759,14 @@ namespace DeepBlue.Controllers.Deal {
 
 				// Attempt to create fund expense.
 
-				FundExpense fundExpense = DealRepository.FindFundExpense(model.FundId);
+				FundExpense fundExpense = DealRepository.FindFundExpense(model.FundExpenseId);
 				if (fundExpense == null) {
 					fundExpense = new FundExpense();
 				}
 				fundExpense.FundID = model.FundId;
 				fundExpense.FundExpenseTypeID = model.FundExpenseTypeId;
 				fundExpense.Amount = model.Amount;
-				fundExpense.Date = DateTime.Now;
+				fundExpense.Date = model.Date;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveFundExpense(fundExpense);
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 				if (string.IsNullOrEmpty(resultModel.Result)) {
@@ -1781,8 +1788,8 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// POST : /Deal/FindFundExpense
 		[HttpGet]
-		public JsonResult FindFundExpense(int fundId) {
-			return Json(DealRepository.FindFundExpenseModel(fundId), JsonRequestBehavior.AllowGet);
+		public JsonResult FindFundExpense(int fundExpenseId) {
+			return Json(DealRepository.FindFundExpenseModel(fundExpenseId), JsonRequestBehavior.AllowGet);
 		}
 
 		#endregion
@@ -1942,63 +1949,53 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		//
-		// POST : /Deal/CreateUnfundedAdjustment
-		[HttpPost]
-		public ActionResult CreateUnfundedAdjustment(FormCollection collection) {
-			FormCollection rowCollection;
-			int totalRows = 0;
-			int.TryParse(collection["TotalRows"], out totalRows);
-			int index = 0; string[] values; string value;
-			ResultModel resultModel = new ResultModel();
-			for (index = 0; index < totalRows; index++) {
-				rowCollection = new FormCollection();
-				foreach (string key in collection.Keys) {
-					values = collection[key].Split((",").ToCharArray());
-					if (values.Length > index)
-						value = values[index];
-					else
-						value = string.Empty;
-					rowCollection.Add(key, value);
-				}
-				SaveUnfundedAdjustment(rowCollection);
-			}
-			return View("Result", resultModel);
+		// GET: /Deal/FindUnfundedAdjustment
+		[HttpGet]
+		public JsonResult FindUnfundedAdjustment(int dealUnderlyingFundId) {
+			return Json(DealRepository.FindUnfundedAdjustmentModel(dealUnderlyingFundId), JsonRequestBehavior.AllowGet);
 		}
 
-		private ResultModel SaveUnfundedAdjustment(FormCollection collection) {
+		//
+		// POST : /Deal/CreateUnfundedAdjustment
+		[HttpPost]
+		public ActionResult UpdateUnfundedAdjustment(FormCollection collection) {
 			UnfundedAdjustmentModel model = new UnfundedAdjustmentModel();
 			this.TryUpdateModel(model, collection);
 			ResultModel resultModel = new ResultModel();
-			IEnumerable<ErrorInfo> errorInfo = ValidationHelper.Validate(model);
-			if (errorInfo.Any() == false) {
-				DealUnderlyingFundAdjustment dealUnderlyingFundAdjustment = DealRepository.FindDealUnderlyingFundAdjustment(model.DealUnderlyingFundId);
-				if (dealUnderlyingFundAdjustment == null) {
-					dealUnderlyingFundAdjustment = new DealUnderlyingFundAdjustment();
-					dealUnderlyingFundAdjustment.CreatedBy = AppSettings.CreatedByUserId;
-					dealUnderlyingFundAdjustment.CreatedDate = DateTime.Now;
+			if (ModelState.IsValid) {
+				IEnumerable<ErrorInfo> errorInfo = null;
+				DealUnderlyingFund dealUnderlyingFund = DealRepository.FindDealUnderlyingFund(model.DealUnderlyingFundId);
+				if (dealUnderlyingFund != null) {
+					dealUnderlyingFund.CommittedAmount = model.CommitmentAmount;
+					dealUnderlyingFund.UnfundedAmount = model.UnfundedAmount;
+					errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
+					if (errorInfo == null) {
+						DealUnderlyingFundAdjustment dealUnderlyingFundAdjustment = new DealUnderlyingFundAdjustment();
+						dealUnderlyingFundAdjustment.CreatedBy = AppSettings.CreatedByUserId;
+						dealUnderlyingFundAdjustment.CreatedDate = DateTime.Now;
+						dealUnderlyingFundAdjustment.LastUpdatedBy = AppSettings.CreatedByUserId;
+						dealUnderlyingFundAdjustment.LastUpdatedDate = DateTime.Now;
+						dealUnderlyingFundAdjustment.CommitmentAmount = model.CommitmentAmount;
+						dealUnderlyingFundAdjustment.UnfundedAmount = model.UnfundedAmount;
+						dealUnderlyingFundAdjustment.DealUnderlyingFundID = model.DealUnderlyingFundId;
+						errorInfo = DealRepository.SaveDealUnderlyingFundAdjustment(dealUnderlyingFundAdjustment);
+					}
+					resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+					if (string.IsNullOrEmpty(resultModel.Result)) {
+						resultModel.Result = "True||" + dealUnderlyingFund.DealUnderlyingtFundID;
+					}
 				}
-				dealUnderlyingFundAdjustment.LastUpdatedBy = AppSettings.CreatedByUserId;
-				dealUnderlyingFundAdjustment.LastUpdatedDate = DateTime.Now;
-				dealUnderlyingFundAdjustment.CommitmentAmount = model.CommitmentAmount;
-				dealUnderlyingFundAdjustment.UnfundedAmount = model.UnfundedAmount;
-				dealUnderlyingFundAdjustment.DealUnderlyingFundID = model.DealUnderlyingFundId;
-				errorInfo = DealRepository.SaveDealUnderlyingFundAdjustment(dealUnderlyingFundAdjustment);
-				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 			}
 			else {
-				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
 			}
-			return resultModel;
-		}
-
-		[HttpGet]
-		public string DeleteUnfundedAdjustment(int id) {
-			if (DealRepository.DeleteUnfundedAdjustment(id) == false) {
-				return "Cann't Delete! Child record found!";
-			}
-			else {
-				return string.Empty;
-			}
+			return View("Result", resultModel);
 		}
 
 		#endregion

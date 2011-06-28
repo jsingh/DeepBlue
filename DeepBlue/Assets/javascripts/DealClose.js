@@ -55,13 +55,13 @@
 			var total=data.TotalUnderlyingFundNotClosing+data.TotalUnderlyingDirectNotClosing;
 			if(data.TotalDealClosing>0) {
 				$("#ExistingDealClosing").show();
-			}
-			if(total==0) {
-				$("#FDHeaderBox").click();
-				dealClose.loadFinalDealClose();
-			} else {
-				$("#NewDealClose").show();
-				$("#NewDealCloseBtn").show();
+				if(total==0) {
+					$("#FDHeaderBox").click();
+					dealClose.loadFinalDealClose();
+				} else {
+					$("#NewDealClose").show();
+					$("#NewDealCloseBtn").show();
+				}
 			}
 		});
 	}

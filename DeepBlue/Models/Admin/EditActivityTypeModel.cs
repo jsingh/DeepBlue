@@ -10,23 +10,18 @@ using System.Web.Mvc;
 
 
 namespace DeepBlue.Models.Admin {
-	public class EditActivityTypeModel {
-		public EditActivityTypeModel() {
-			ActivityTypeId = 0;
+	public class EditFundExpenseTypeModel {
+		public EditFundExpenseTypeModel() {
+			FundExpenseTypeId = 0;
 			Name = string.Empty;
-			Enabled = false;
 		}
 
-		public int ActivityTypeId { get; set; }
+		public int FundExpenseTypeId { get; set; }
 
 		[Required(ErrorMessage = "Name is required")]
-		[StringLength(100, ErrorMessage = "Name must be under 100 characters.")]
-		[RemoteUID_(Action = "ActivityTypeNameAvailable", Controller = "Admin", ValidateParameterName = "ActivityTypeName", Params = new string[] { "ActivityTypeId" })]
+		[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
+		[RemoteUID_(Action = "FundExpenseTypeAvailable", Controller = "Admin", ValidateParameterName = "FundExpenseTypeName", Params = new string[] { "FundExpenseTypeId" })]
 		[DisplayName("Name:")]
 		public string Name { get; set; }
-
-		[DisplayName("Enable:")]
-		public bool Enabled { get; set; }
-
 	}
 }

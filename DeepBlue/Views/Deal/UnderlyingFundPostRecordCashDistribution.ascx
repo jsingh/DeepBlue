@@ -1,11 +1,11 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.UnderlyingFundPostRecordCashDistributionModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <tr id="UFPRCD_${Index}" {{if CashDistributionId>0==false}}class="newrow"{{/if}}>
-	<td style="text-align: center">
+	<td style="text-align: left">
 		<%: Html.Span("${FundName}", new { @class = "show" })%>
 		<%: Html.Hidden("${Index}_FundId", "${FundId}")%>
 	</td>
-	<td style="text-align: center">
+	<td style="text-align: left">
 		<%: Html.Span("${DealName}", new { @class = "show" })%>
 		<%: Html.Hidden("${Index}_DealId", "${DealId}")%>
 	</td>

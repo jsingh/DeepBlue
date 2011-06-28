@@ -1,9 +1,5 @@
 ﻿var dealActivity={
-	newCDData: null
-	,newPRCDData: null
-	,newCCData: null
-	,newPRCCData: null
-	,newUFVData: null
+	newFLEData: null
 	,init: function () {
 		jHelper.resizeIframe();
 		$(document).ready(function () {

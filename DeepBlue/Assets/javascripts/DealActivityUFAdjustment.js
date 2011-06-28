@@ -28,43 +28,45 @@ dealActivity.loadUFA=function () {
 		$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
 	});
 };
-dealActivity.submitUFA=function (frm) {
-	try {
-		var param=$(frm).serializeArray();
-		var loading=$("#SpnUFASaveLoading");
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#UnfundedAdjustmentList").length)};
-		$.post("/Deal/CreateUnfundedAdjustment",param,function (data) {
-			loading.empty();
-			if($.trim(data)!="") { alert(data); } else {
-				alert("Unfunded Adjustments Saved");
-				var tbl=$("#UnfundedAdjustmentList");var target=$("tbody",tbl);
-				target.empty();$("#UFAdjustment").hide();
-				$("#UFAUnderlyingFundId").val(0);
-				$("#SpnUFAUFName").html("");$("#UFA_UnderlyingFund").val("");
-				$("#UFA_UnderlyingFund").focus();
-			}
-		});
-	} catch(e) { alert(e); }
-	return false;
+dealActivity.editUFA=function (img,id) {
+	var tr=$(img).parents("tr:first");
+	$("#UFA_NCA").html("New Commitment Amount");
+	$("#UFA_NUA").html("New Unfunded Amount");
+	dealActivity.editRow(tr);
 };
-dealActivity.deleteUFA=function (id,img) {
-	if(confirm("Are you sure you want to delete this unfunded adjustment?")) {
-		var dt=new Date();
-		var url="/Deal/DeleteUnfundedAdjustment/"+id+"?t="+dt.getTime();
-		var trid="UFA_"+id;
-		var tr=$("#UFA_"+id);
-		var emptyRow=$("#EmptyUFA_"+id);
-		var spnloading=$("#UpdateLoading",tr);
-		spnloading.html("<img src='/Assets/images/ajax.jpg'/>");
-		$.get(url,function (data) {
-			if(data!="") {
-				alert(data);
-			} else {
-				spnloading.empty();
-				tr.addClass("newrow");
-				$("input[type='text']",tr).val("");
-			}
-		});
-	}
+dealActivity.addUFA=function (img,id) {
+	var tr=$(img).parents("tr:first");
+	var loading=$("#UpdateLoading",tr);
+	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+	var url="/Deal/UpdateUnfundedAdjustment";
+	var param=jHelper.serialize(tr);
+	$.post(url,param,function (data) {
+		loading.empty();
+		var arr=data.split("||");
+		if(arr[0]=="True") {
+			dealActivity.findUFA(arr[1]);
+		} else { alert(data); }
+	});
+};
+dealActivity.findUFA=function (dufid) {
+	var url="/Deal/FindUnfundedAdjustment/?_"+(new Date()).getTime()+"&dealUnderlyingFundId="+dufid;
+	$("#UFALoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...")
+	$.getJSON(url,function (data) {
+		$("#UFALoading").empty();
+		var tbl=$("#UnfundedAdjustmentList");
+		var bdy=$("tbody",tbl);
+		var target;
+		var row=$("#UFA_"+dufid);
+		if(row.get(0)) {
+			$("#UFAAddTemplate").tmpl(data).insertAfter(row);
+			row.remove();
+		} else {
+			row=$("tr:first",bdy);
+			$("#UFAAddTemplate").tmpl(data).insertBefore(row);
+		}
+		row=$("#UFA_"+dufid);
+		dealActivity.setUpRow(row);
+		$("tr:odd",bdy).removeClass("row").removeClass("arow").addClass("arow");
+		$("tr:even",bdy).removeClass("row").removeClass("arow").addClass("row");
+	});
 };

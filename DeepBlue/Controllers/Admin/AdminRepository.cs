@@ -1389,12 +1389,56 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region  FundExpenseType
 
+		public List<Models.Entity.FundExpenseType> GetAllFundExpenseTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.FundExpenseType> query = (from fundExpenseType in context.FundExpenseTypes
+																   select fundExpenseType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<FundExpenseType> paginatedList = new PaginatedList<FundExpenseType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
 		public List<FundExpenseType> GetAllFundExpenseTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from fundExpense in context.FundExpenseTypes
 						orderby fundExpense.Name
 						select fundExpense).ToList();
 			}
+		}
+
+
+		public FundExpenseType FindFundExpenseType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.FundExpenseTypes.SingleOrDefault(type => type.FundExpenseTypeID == id);
+			}
+		}
+
+		public bool FundExpenseTypeNameAvailable(string fundExpenseTypeName, int fundExpenseTypeID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.FundExpenseTypes
+						 where type.Name == fundExpenseTypeName && type.FundExpenseTypeID != fundExpenseTypeID
+						 select type.FundExpenseTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteFundExpenseType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				FundExpenseType fundExpenseType = context.FundExpenseTypes.SingleOrDefault(type => type.FundExpenseTypeID == id);
+				if (fundExpenseType != null) {
+					if (fundExpenseType.FundExpenses.Count == 0) {
+						context.FundExpenseTypes.DeleteObject(fundExpenseType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveFundExpenseType(FundExpenseType fundExpenseType) {
+			return fundExpenseType.Save();
 		}
 
 		#endregion

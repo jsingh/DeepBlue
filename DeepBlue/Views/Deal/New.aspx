@@ -98,7 +98,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%=Html.jQueryFlexiGrid("DealList", new FlexigridOptions { ActionName = "DealList", ControllerName = "Deal", HttpMethod = "GET", SortName = "DealName", Paging = true, OnSuccess = "deal.onDealListSuccess", Autoload = false, ResizeWidth=false, RowsLength=20 })%>
 	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List", ControllerName = "Fund", HttpMethod = "GET", SortName = "FundName", Paging = true, OnSuccess = "deal.onFundListSuccess", Autoload = false, ResizeWidth=false, RowsLength=20 })%>
-	<script type="text/javascript">		deal.init();</script>
+	<script type="text/javascript">deal.init();</script>
 	<script id="FundListTemplate" type="text/x-jquery-tmpl">
 		<div class="heading">
 			<div class="leftcol">

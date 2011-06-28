@@ -145,8 +145,9 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region FundExpense
 		IEnumerable<ErrorInfo> SaveFundExpense(FundExpense fundExpense);
-		FundExpense FindFundExpense(int fundId);
-		FundExpenseModel FindFundExpenseModel(int fundId);
+		List<FundExpenseModel> GetAllFundExpenses(int fundId);
+		FundExpense FindFundExpense(int fundExpenseId);
+		FundExpenseModel FindFundExpenseModel(int fundExpenseId);
 		#endregion
 
 		#region NewHoldingPattern
@@ -168,9 +169,8 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region UnfundedAdjustment
 		List<UnfundedAdjustmentModel> GetAllUnfundedAdjustments(int underlyingFundId);
-		DealUnderlyingFundAdjustment FindDealUnderlyingFundAdjustment(int dealUnderlyingFundId);
+		UnfundedAdjustmentModel FindUnfundedAdjustmentModel(int dealUnderlyingFundId);
 		IEnumerable<ErrorInfo> SaveDealUnderlyingFundAdjustment(DealUnderlyingFundAdjustment dealUnderlyingFundAdjustment);
-		bool DeleteUnfundedAdjustment(int id);
 		#endregion
 
 		#region Reconcile

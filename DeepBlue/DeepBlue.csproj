@@ -86,6 +86,7 @@
     <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Helpers\FormCollectionHelper.cs" />
     <Compile Include="Helpers\JsonSerializer.cs" />
+    <Compile Include="Models\Admin\EditFundExpenseTypeModel.cs" />
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
     <Compile Include="Models\Deal\CreateIssuerModel.cs" />
@@ -176,6 +177,7 @@
     </Compile>
     <Compile Include="Models\Entity\Partial\ActivityTypeService.cs" />
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
+    <Compile Include="Models\Entity\Partial\FundExpenseTypeService.cs" />
     <Compile Include="Models\Entity\Partial\DealUnderlyingFundAdjustmentService.cs" />
     <Compile Include="Models\Entity\Partial\EquitySplitService.cs" />
     <Compile Include="Models\Entity\Partial\FundActivityHistory.cs" />
@@ -189,6 +191,7 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
     <Compile Include="Models\Entity\Validation\ActivityType.cs" />
     <Compile Include="Models\Entity\Validation\CashDistribution.cs" />
+    <Compile Include="Models\Entity\Validation\FundExpenseType.cs" />
     <Compile Include="Models\Entity\Validation\DealUnderlyingFundAdjustment.cs" />
     <Compile Include="Models\Entity\Validation\CreatedByFields.cs" />
     <Compile Include="Models\Entity\Validation\EquitySplit.cs" />
@@ -642,6 +645,7 @@
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
+    <Content Include="Assets\javascripts\FundExpenseType.js" />
     <Content Include="Assets\javascripts\DealActivityEquitySplit.js" />
     <Content Include="Assets\javascripts\DealActivitySecConversion.js" />
     <Content Include="Assets\javascripts\DealActivityUDValuation.js" />
@@ -747,6 +751,8 @@
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
     <Content Include="Views\Admin\CommunicationType.aspx" />
     <Content Include="Views\Admin\CashDistributionType.aspx" />
+    <Content Include="Views\Admin\EditFundExpenseType.aspx" />
+    <Content Include="Views\Admin\FundExpenseType.aspx" />
     <Content Include="Views\Admin\EditActivityType.aspx" />
     <Content Include="Views\Admin\EditCashDistributionType.aspx" />
     <Content Include="Views\Admin\EditFixedIncomeType.aspx" />
@@ -804,7 +810,6 @@
     <Content Include="Views\Deal\Close.aspx" />
     <Content Include="Views\Deal\DirectEquityDetail.ascx" />
     <Content Include="Views\Deal\Directs.aspx" />
-    <Content Include="Views\Deal\ExpenseToDeal.ascx" />
     <Content Include="Views\Deal\FixedIncomeDetail.ascx" />
     <Content Include="Views\Deal\FundExpense.ascx" />
     <Content Include="Views\Deal\IssuerDetail.ascx" />

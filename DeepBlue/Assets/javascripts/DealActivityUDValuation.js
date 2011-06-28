@@ -85,8 +85,9 @@ dealActivity.loadUDV=function () {
 		dealActivity.setUpRow($("tr",target));
 		if($("tr",target).length>0) {
 			$("#UDValuation").show();
-		}$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");
-				$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
+		}
+		$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");
+		$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
 	});
 };
 dealActivity.submitUDV=function (frm) {
@@ -94,7 +95,7 @@ dealActivity.submitUDV=function (frm) {
 		var param=$(frm).serializeArray();
 		var loading=$("#SpnUDVSaveLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#UDValuationList").length)};
+		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#UDValuationList").length) };
 		$.post("/Deal/CreateUnderlyingDirectValuation",param,function (data) {
 			loading.empty();
 			if($.trim(data)!="") { alert(data); } else {
@@ -105,7 +106,7 @@ dealActivity.submitUDV=function (frm) {
 				$("#SpnUDVName").html("");
 				$("#UDV_UnderlyingDirect").val("");
 				$("#UDV_UnderlyingDirect").focus();
-				
+
 			}
 		});
 	} catch(e) { alert(e); }

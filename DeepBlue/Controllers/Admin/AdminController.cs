@@ -2368,6 +2368,107 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
+		#region FundExpenseType
+
+		public ActionResult FundExpenseType() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "AdminDeal";
+			ViewData["PageName"] = "FundExpenseType";
+			return View();
+		}
+
+		//
+		// GET: /Admin/FundExpenseTypeList
+		[HttpGet]
+		public JsonResult FundExpenseTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DeepBlue.Models.Entity.FundExpenseType> fundExpenseTypes = AdminRepository.GetAllFundExpenseTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var fundExpenseType in fundExpenseTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {fundExpenseType.FundExpenseTypeID,
+					  fundExpenseType.Name}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditFundExpenseType
+		[HttpGet]
+		public ActionResult EditFundExpenseType(int id) {
+			EditFundExpenseTypeModel model = new EditFundExpenseTypeModel();
+			FundExpenseType fundExpenseType = AdminRepository.FindFundExpenseType(id);
+			if (fundExpenseType != null) {
+				model.FundExpenseTypeId = fundExpenseType.FundExpenseTypeID;
+				model.Name = fundExpenseType.Name;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateFundExpenseType
+		[HttpPost]
+		public ActionResult UpdateFundExpenseType(FormCollection collection) {
+			EditFundExpenseTypeModel model = new EditFundExpenseTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = FundExpenseTypeAvailable(model.Name, model.FundExpenseTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				FundExpenseType fundExpenseType = AdminRepository.FindFundExpenseType(model.FundExpenseTypeId);
+				if (fundExpenseType == null) {
+					fundExpenseType = new FundExpenseType();
+				}
+				fundExpenseType.Name = model.Name;
+				fundExpenseType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFundExpenseType(fundExpenseType);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteFundExpenseType(int id) {
+			if (AdminRepository.DeleteFundExpenseType(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string FundExpenseTypeAvailable(string FundExpenseType, int FundExpenseTypeId) {
+			if (AdminRepository.FundExpenseTypeNameAvailable(FundExpenseType, FundExpenseTypeId))
+				return "Name already exists.";
+			else
+				return string.Empty;
+		}
+
+
+		#endregion
+
 		public ActionResult Result() {
 			return View();
 		}

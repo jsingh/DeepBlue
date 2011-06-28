@@ -1258,35 +1258,34 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region FundExpense
 
-		public FundExpense FindFundExpense(int fundId) {
+		public FundExpense FindFundExpense(int fundExpenseId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.FundExpenses.Where(fundExpense => fundExpense.FundID == fundId).SingleOrDefault();
+				return context.FundExpenses.Where(fundExpense => fundExpense.FundExpenseID == fundExpenseId).SingleOrDefault();
 			}
 		}
 
-		public FundExpenseModel FindFundExpenseModel(int fundId) {
+		public List<FundExpenseModel> GetAllFundExpenses(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				FundExpenseModel model = (from fundExpense in context.FundExpenses
-										  where fundExpense.FundID == fundId
-										  select new FundExpenseModel {
-											  Amount = fundExpense.Amount,
-											  Date = fundExpense.Date,
-											  FundExpenseId = fundExpense.FundExpenseID,
-											  FundExpenseTypeId = fundExpense.FundExpenseID,
-											  FundId = fundExpense.FundID
-										  }).SingleOrDefault();
-				if (model != null) {
-					model.ExpenseToDeals = (from deal in context.Deals
-											where deal.FundID == fundId
-											orderby deal.DealNumber descending
-											select new ExpenseToDealModel {
-												DealId = deal.DealID,
-												DealName = deal.DealName,
-												DealNo = deal.DealNumber
-											}).ToList();
-				}
-				return model;
+				return GetFundExpenseModel(context.FundExpenses.Where(fundExpense => fundExpense.FundID == fundId)).ToList();
 			}
+		}
+
+		public FundExpenseModel FindFundExpenseModel(int fundExpenseId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return GetFundExpenseModel(context.FundExpenses.Where(fundExpense => fundExpense.FundExpenseID == fundExpenseId)).SingleOrDefault();
+			}
+		}
+
+		private IQueryable<FundExpenseModel> GetFundExpenseModel(IQueryable<FundExpense> fundExpenses) {
+			return (from fundExpense in fundExpenses
+					select new FundExpenseModel {
+						Amount = fundExpense.Amount,
+						Date = fundExpense.Date,
+						FundExpenseId = fundExpense.FundExpenseID,
+						FundExpenseTypeId = fundExpense.FundExpenseTypeID,
+						FundId = fundExpense.FundID,
+						FundExpenseType = fundExpense.FundExpenseType.Name
+					}).OrderByDescending(fundExpense => fundExpense.Date);
 		}
 
 		public IEnumerable<ErrorInfo> SaveFundExpense(FundExpense fundExpense) {
@@ -1486,42 +1485,28 @@ namespace DeepBlue.Controllers.Deal {
 
 		public List<UnfundedAdjustmentModel> GetAllUnfundedAdjustments(int underlyingFundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from dealUnderlyingFund in context.DealUnderlyingFunds
-						join adjustment in context.DealUnderlyingFundAdjustments on dealUnderlyingFund.DealUnderlyingtFundID equals adjustment.DealUnderlyingFundID into dealUnderlyingFundAdjustments
-						from adjustment in dealUnderlyingFundAdjustments.DefaultIfEmpty()
-						where dealUnderlyingFund.UnderlyingFundID == underlyingFundId
-						select new UnfundedAdjustmentModel {
-							CommitmentAmount = (adjustment != null ? adjustment.CommitmentAmount : dealUnderlyingFund.CommittedAmount),
-							UnfundedAmount = (adjustment != null ? adjustment.UnfundedAmount : dealUnderlyingFund.UnfundedAmount),
-							DealUnderlyingFundAdjustmentId = (adjustment != null ? adjustment.DealUnderlyingFundAdjustmentID : 0),
-							DealUnderlyingFundId = dealUnderlyingFund.DealUnderlyingtFundID,
-							FundId = dealUnderlyingFund.Deal.Fund.FundID,
-							FundName = dealUnderlyingFund.Deal.Fund.FundName,
-							UnderlyingFundId = dealUnderlyingFund.UnderlyingFundID
-						}).ToList();
+				return GetUnfundedAdjustmentModel(context.DealUnderlyingFunds.Where(dealUnderlyingFund => dealUnderlyingFund.UnderlyingFundID == underlyingFundId)).ToList();
 			}
 		}
 
-		public DealUnderlyingFundAdjustment FindDealUnderlyingFundAdjustment(int dealUnderlyingFundId) {
+		public UnfundedAdjustmentModel FindUnfundedAdjustmentModel(int dealUnderlyingFundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.DealUnderlyingFundAdjustments.Where(adjustment => adjustment.DealUnderlyingFundID == dealUnderlyingFundId).SingleOrDefault();
+				return GetUnfundedAdjustmentModel(context.DealUnderlyingFunds.Where(dealUnderlyingFund => dealUnderlyingFund.DealUnderlyingtFundID == dealUnderlyingFundId)).SingleOrDefault();
 			}
+		}
+
+		private IQueryable<UnfundedAdjustmentModel> GetUnfundedAdjustmentModel(IQueryable<DealUnderlyingFund> dealUnderlyingFunds) {
+			return (from dealUnderlyingFund in dealUnderlyingFunds
+					select new UnfundedAdjustmentModel {
+						CommitmentAmount = dealUnderlyingFund.CommittedAmount,
+						UnfundedAmount = dealUnderlyingFund.UnfundedAmount,
+						DealUnderlyingFundId = dealUnderlyingFund.DealUnderlyingtFundID,
+						FundName = dealUnderlyingFund.Deal.Fund.FundName
+					});
 		}
 
 		public IEnumerable<ErrorInfo> SaveDealUnderlyingFundAdjustment(DealUnderlyingFundAdjustment dealUnderlyingFundAdjustment) {
 			return dealUnderlyingFundAdjustment.Save();
-		}
-
-		public bool DeleteUnfundedAdjustment(int id) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				DealUnderlyingFundAdjustment dealUnderlyingFundAdjustment = context.DealUnderlyingFundAdjustments.Where(adjustment => adjustment.DealUnderlyingFundAdjustmentID == id).SingleOrDefault();
-				if (dealUnderlyingFundAdjustment != null) {
-					context.DealUnderlyingFundAdjustments.DeleteObject(dealUnderlyingFundAdjustment);
-					context.SaveChanges();
-					return true;
-				}
-				return false;
-			}
 		}
 
 		#endregion

@@ -72,7 +72,7 @@
 								<div class="cell">
 									<%: Html.Span("", new { @id="SpnCCUFName" })%>
 								</div>
-								<div class="cell" id="CCLoading">
+								<div class="loadingcell" id="CCLoading">
 								</div>
 							</div>
 							<div id="CapitalCall" class="gridbox" style="display: none;">
@@ -116,7 +116,7 @@
 										Post Record Capital Call</div>
 									<div class="addbtn" style="margin-left: 82px;">
 										<%: Html.Anchor(Html.Image("addnewprcc.png").ToHtmlString(), "javascript:dealActivity.makeNewPRCC();")%></div>
-									<div class="cell" id="PRCCLoading">
+									<div class="selectloading" id="PRCCLoading">
 									</div>
 								</div>
 								<div id="PRCCListBox" class="clear" style="display: none">
@@ -150,7 +150,7 @@
 									<%}%>
 								</div>
 							</div>
-							<%:Html.Hidden("CCUnderlyingFundId", new { @id = "CCUnderlyingFundId" })%>
+							<%:Html.Hidden("CCUnderlyingFundId", "0", new { @id = "CCUnderlyingFundId" })%>
 						</div>
 					</div>
 				</div>
@@ -180,7 +180,7 @@
 							<div class="search-header">
 								<div class="cell">
 									<%: Html.Span("", new { @id="SpnCDUFName" })%></div>
-								<div class="cell" id="CDLoading">
+								<div class="loadingcell" id="CDLoading">
 								</div>
 							</div>
 							<div class="clear">
@@ -189,7 +189,7 @@
 									<table cellpadding="0" cellspacing="0" border="0" id="CashDistributionList" class="grid">
 										<thead>
 											<tr>
-												<th style="width: 15%">
+												<th style="width: 20%">
 													Fund Name
 												</th>
 												<th style="width: 12%">
@@ -223,7 +223,7 @@
 											Post Record Date Distribution</div>
 										<div class="addbtn" style="margin-left: 51px;">
 											<%: Html.Anchor(Html.Image("anprcd.png").ToHtmlString(), "javascript:dealActivity.makeNewPRCD();")%></div>
-										<div class="cell" id="PRCDLoading">
+										<div class="selectloading" id="PRCDLoading">
 										</div>
 									</div>
 									<div id="PRCDListBox" class="clear" style="display: none">
@@ -231,16 +231,16 @@
 										<table cellpadding="0" cellspacing="0" border="0" id="PRCashDistributionList" class="grid">
 											<thead>
 												<tr>
-													<th style="width: 15%;">
+													<th style="width: 20%;">
 														Fund Name
 													</th>
-													<th style="width: 12%">
+													<th style="width: 20%">
 														Deal Name
 													</th>
-													<th style="width: 12%">
+													<th style="width: 15%">
 														Distribution Amount
 													</th>
-													<th style="width: 12%">
+													<th style="width: 15%">
 														Distribution Date
 													</th>
 													<th>
@@ -258,7 +258,7 @@
 									</div>
 								</div>
 							</div>
-							<%:Html.Hidden("CDUnderlyingFundId", new { @id = "CDUnderlyingFundId" })%>
+							<%:Html.Hidden("CDUnderlyingFundId", "0", new { @id = "CDUnderlyingFundId" })%>
 						</div>
 					</div>
 				</div>
@@ -285,7 +285,7 @@
 							<div class="search-header">
 								<div class="cell">
 									<%: Html.Span("", new { @id="SpnUFVName" })%></div>
-								<div class="cell loading" id="UFVLoading">
+								<div class="loadingcell" id="UFVLoading">
 								</div>
 							</div>
 							<div class="gridbox">
@@ -319,7 +319,7 @@
 									</tbody>
 								</table>
 							</div>
-							<%:Html.Hidden("UFVUnderlyingFundId", new { @id = "UFVUnderlyingFundId" })%>
+							<%:Html.Hidden("UFVUnderlyingFundId", "0", new { @id = "UFVUnderlyingFundId" })%>
 						</div>
 					</div>
 				</div>
@@ -344,9 +344,10 @@
 						</div>
 						<div class="detail" id="UDVDetail">
 							<div class="search-header">
-								<%: Html.Span("", new { @id="SpnUDVName" })%>
-							</div>
-							<div class="cell loading" id="UDVLoading">
+								<div class="cell">
+									<%: Html.Span("", new { @id="SpnUDVName" })%></div>
+								<div class="loadingcell" id="UDVLoading">
+								</div>
 							</div>
 							<div class="gridbox" id="UDValuation" style="display: none">
 								<%using (Html.Form(new { @id = "frmUDValuation", @onsubmit = "return dealActivity.submitUDV(this);" })) {%>
@@ -411,22 +412,25 @@
 							<div class="search-header">
 								<div class="cell">
 									<%: Html.Span("", new { @id="SpnUFAUFName" })%></div>
-								<div class="cell" id="UFALoading">
+								<div class="loadingcell" id="UFALoading">
 								</div>
 							</div>
 							<div id="UFAdjustment" style="display: none" class="gridbox">
-								<%using (Html.Form(new { @id = "frmUFAAdjustment", @onsubmit = "return dealActivity.submitUFA(this);" })) {%>
 								<table cellpadding="0" cellspacing="0" border="0" id="UnfundedAdjustmentList" class="grid">
 									<thead>
 										<tr>
-											<th style="width: 25%">
+											<th style="width: 20%">
 												Fund Name
 											</th>
-											<th style="width: 20%">
+											<th style="width: 15%">
 												Commitment Amount
 											</th>
-											<th style="width: 20%">
+											<th style="width: 15%">
 												Unfunded Amount
+											</th>
+											<th style="width: 15%;" id="UFA_NCA">
+											</th>
+											<th style="width: 15%;" id="UFA_NUA">
 											</th>
 											<th>
 											</th>
@@ -435,13 +439,8 @@
 									<tbody>
 									</tbody>
 								</table>
-								<br />
-								<center>
-									<span>
-										<%: Html.ImageButton("Save.png")%></span><span id="SpnUFASaveLoading"></span></center>
-								<%}%>
 							</div>
-							<%:Html.Hidden("UFAUnderlyingFundId", new { @id = "UFAUnderlyingFundId" })%>
+							<%:Html.Hidden("UFAUnderlyingFundId","0", new { @id = "UFAUnderlyingFundId" })%>
 						</div>
 					</div>
 				</div>
@@ -460,6 +459,8 @@
 									Fund Level Expenses
 								</div>
 							</div>
+							<div class="addbtn" style="margin-left: 82px;">
+								<%: Html.Anchor(Html.Image("addexpense.png").ToHtmlString(), "javascript:dealActivity.makeNewFLE();")%></div>
 							<div class="cell">
 								<%: Html.Span("", new { @id = "SpnFLEDetLoading" })%>
 							</div>
@@ -468,8 +469,34 @@
 							</div>
 						</div>
 						<div class="detail" id="FLEDetail">
-							<div class="gridbox">
-								<% Html.RenderPartial("FundExpense", Model.FundLevelExpenseModel);%></div>
+							<div class="search-header">
+								<div class="cell">
+									<%:Html.Span("", new { @id = "FLE_FundName" })%></div>
+								<div class="loadingcell" id="FLELoading">
+								</div>
+							</div>
+							<div class="gridbox" id="FLE">
+								<table cellpadding="0" cellspacing="0" border="0" id="FundExpenseList" class="grid">
+									<thead>
+										<tr>
+											<th style="width: 20%">
+												Expense Type
+											</th>
+											<th style="width: 15%">
+												Amount
+											</th>
+											<th style="width: 15%">
+												Date
+											</th>
+											<th style="width: 50%">
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+								<%:Html.Hidden("FLE_FundId", "0", new { @id = "FLE_FundId" })%>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -515,7 +542,7 @@
 						<table cellpadding="0" cellspacing="0" border="0" id="NewHoldingPatternList" class="grid">
 							<thead>
 								<tr>
-									<th style="width: 20%" align="center">
+									<th style="width: 20%" align="left">
 										Fund Name
 									</th>
 									<th style="width: 20%" align="center">
@@ -584,13 +611,17 @@
 	, OnSubmit = "dealActivity.onNHPSubmit"
 	, OnSuccess = "dealActivity.onNHPSuccess"
 	, OnRowBound = "dealActivity.onNHPRowBound"
+	, RowClass = "row"
+	, AlternateRowClass = "arow"
 	, Autoload = false
 	})%>
 	<%= Html.jQueryAutoComplete("UFA_UnderlyingFund", new AutoCompleteOptions {
 																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
 																	  OnSelect = "function(event, ui) { dealActivity.setUFAUnderlyingFund(ui.item.id,ui.item.value);}"
 	})%>
-	<script type="text/javascript">		dealActivity.init();</script>
+	<%=Html.jQueryDatePicker("FE_Date")%>
+	<script type="text/javascript">dealActivity.init();dealActivity.newFLEData=<%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.FundExpenseModel())%>;
+	</script>
 	<script id="CashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("UnderlyingFundCashDistribution", Model.UnderlyingFundCashDistributionModel); %>
 	</script>
@@ -606,13 +637,13 @@
 	<script id="UFValuationAddTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("UnderlyingFundValuation", Model.UnderlyingFundValuationModel); %>
 	</script>
-	<script id="ExpenseToDealTemplate" type="text/x-jquery-tmpl">
-		<% Html.RenderPartial("ExpenseToDeal"); %>
-	</script>
 	<script id="UDVAddTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("UnderlyingDirectValuation", Model.UnderlyingDirectValuationModel); %>
 	</script>
 	<script id="UFAAddTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("UnfundedAdjustment", Model.UnfundedAdjustmentModel); %>
+	</script>
+	<script id="FLEAddTemplate" type="text/x-jquery-tmpl"> 
+		<% Html.RenderPartial("FundExpense", Model.FundLevelExpenseModel); %>
 	</script>
 </asp:Content>

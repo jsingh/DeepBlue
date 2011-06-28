@@ -241,6 +241,11 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region FundExpenseType
 		List<FundExpenseType> GetAllFundExpenseTypes();
+		List<FundExpenseType> GetAllFundExpenseTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		FundExpenseType FindFundExpenseType(int id);
+		bool FundExpenseTypeNameAvailable(string fundExpenseType, int fundExpenseTypeId);
+		bool DeleteFundExpenseType(int id);
+		IEnumerable<ErrorInfo> SaveFundExpenseType(FundExpenseType fundExpenseType);
 		#endregion
 
 		#region Country

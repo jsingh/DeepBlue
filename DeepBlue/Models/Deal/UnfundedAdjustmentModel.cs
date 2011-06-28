@@ -7,19 +7,9 @@ using System.ComponentModel.DataAnnotations;
 namespace DeepBlue.Models.Deal {
 	public class UnfundedAdjustmentModel {
 
-		[Required(ErrorMessage = "Underlying Fund is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Underlying Fund is required")]
-		public int UnderlyingFundId { get; set; }
-
 		[Required(ErrorMessage = "Deal Underlying Fund is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Deal Underlying Fund is required")]
 		public int DealUnderlyingFundId { get; set; }
-
-		public int DealUnderlyingFundAdjustmentId { get; set; }
-
-		[Required(ErrorMessage = "Fund is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
-		public int FundId { get; set; }
 
 		public string FundName { get; set; }
 
