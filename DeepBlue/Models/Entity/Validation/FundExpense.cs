@@ -8,7 +8,7 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(FundExpenseMD))]
 	public partial class FundExpense {
-		public class FundExpenseMD {
+		public class FundExpenseMD : CreatedByFields {
 			#region Primitive Properties
 
 			[Required(ErrorMessage = "Fund is required")]

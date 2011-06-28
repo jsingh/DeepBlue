@@ -1762,11 +1762,15 @@ namespace DeepBlue.Controllers.Deal {
 				FundExpense fundExpense = DealRepository.FindFundExpense(model.FundExpenseId);
 				if (fundExpense == null) {
 					fundExpense = new FundExpense();
+					fundExpense.CreatedBy = AppSettings.CreatedByUserId;
+					fundExpense.CreatedDate = DateTime.Now;
 				}
 				fundExpense.FundID = model.FundId;
 				fundExpense.FundExpenseTypeID = model.FundExpenseTypeId;
 				fundExpense.Amount = model.Amount;
 				fundExpense.Date = model.Date;
+				fundExpense.LastUpdatedBy = AppSettings.CreatedByUserId;
+				fundExpense.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveFundExpense(fundExpense);
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 				if (string.IsNullOrEmpty(resultModel.Result)) {

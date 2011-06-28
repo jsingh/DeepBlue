@@ -17200,6 +17200,102 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.DateTime> _Date;
         partial void OnDateChanging(Nullable<global::System.DateTime> value);
         partial void OnDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _CreatedDate;
+        partial void OnCreatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _CreatedBy;
+        partial void OnCreatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
 
         #endregion
     
