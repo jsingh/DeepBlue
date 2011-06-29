@@ -9,7 +9,7 @@
 			<%: Html.LabelFor(model => model.DealNumber) %>&nbsp;${DealNumber}</div>
 		<div class="cell auto" style="margin-left: 25px">
 			<%: Html.LabelFor(model => model.DealName) %>&nbsp;<%: Html.TextBox("DealName","${DealName}") %></div>
-		{{if IsDealClose=true}}
+		{{if IsDealClose==true}}
 		<div class="cell auto" style="float: right;">
 			<%: Html.Image("greenclosedeal.png")%>
 		</div>
@@ -42,8 +42,7 @@
 	<div class="editor-field">
 		<%: Html.DropDownListFor(model => model.PurchaseTypeId, Model.PurchaseTypes, new { @val = "${PurchaseTypeId}" })%>
 	</div>
-	<div class="editor-label" id="divPartnerName" style="clear: right;
-		width: auto;">
+	<div class="editor-label" id="divPartnerName">
 		<div class="editor-label">
 			<%: Html.LabelFor(model => model.PartnerName)%></div>
 		<div class="editor-field">

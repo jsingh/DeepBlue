@@ -71,8 +71,12 @@ deal.deleteUnderlyingFund=function (id,img) {
 		var tr=$(img).parents("tr:first");
 		var url="/Deal/DeleteDealUnderlyingFund/"+id;
 		$.get(url,function (data) {
-			tr.remove();
-			deal.setIndex($("#tblUnderlyingFund"));
+			if($.trim(data)!="") {
+				alert(data);
+			} else {
+				tr.remove();
+				deal.setIndex($("#tblUnderlyingFund"));
+			}
 		});
 	}
 };

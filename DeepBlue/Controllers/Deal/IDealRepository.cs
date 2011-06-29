@@ -38,15 +38,16 @@ namespace DeepBlue.Controllers.Deal {
 		List<DealUnderlyingFund> GetAllDealClosingUnderlyingFunds(int dealId);
 		List<DealUnderlyingFund> GetAllNotClosingDealUnderlyingFunds(int underlyingFundId, int dealId);
 		List<DealUnderlyingFund> GetAllClosingDealUnderlyingFunds(int underlyingFundId, int fundId);
-		void DeleteDealUnderlyingFund(int dealUnderlyingFundId);
+		bool DeleteDealUnderlyingFund(int dealUnderlyingFundId);
 		IEnumerable<ErrorInfo> SaveDealUnderlyingFund(DealUnderlyingFund dealUnderlyingFund);
 		#endregion
 
 		#region DealUnderlyingDirect
 		DealUnderlyingDirect FindDealUnderlyingDirect(int dealUnderlyingDirectId);
 		DealUnderlyingDirectModel FindDealUnderlyingDirectModel(int dealUnderlyingDirectId);
-		void DeleteDealUnderlyingDirect(int dealUnderlyingDirectId);
+		bool DeleteDealUnderlyingDirect(int dealUnderlyingDirectId);
 		List<DealUnderlyingDirectModel> GetAllDealUnderlyingDirects(int dealId);
+		List<DealUnderlyingDirect> GetAllDealUnderlyingDirects(int oldSecurityTypeId,int oldSecurityId);
 		List<DealUnderlyingDirectListModel> GetAllDealUnderlyingDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		List<DealUnderlyingDirect> GetAllDealClosingUnderlyingDirects(int dealId);
 		IEnumerable<ErrorInfo> SaveDealUnderlyingDirect(DealUnderlyingDirect dealUnderlyingDirect);
@@ -137,6 +138,7 @@ namespace DeepBlue.Controllers.Deal {
 		#region SecurityConversion
 		SecurityConversion FindSecurityConversion(int newSecurityId, int newSecurityTypeId);
 		IEnumerable<ErrorInfo> SaveSecurityConversion(SecurityConversion securityConversion);
+		IEnumerable<ErrorInfo> SaveSecurityConversionDetail(SecurityConversionDetail securityConversionDetail);
 		#endregion
 
 		#region FundActivityHistory
@@ -151,7 +153,7 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region NewHoldingPattern
-		List<NewHoldingPatternModel> NewHoldingPatternList(int activityTypeId, int securityTypeId, int securityId);
+		List<NewHoldingPatternModel> NewHoldingPatternList(int activityTypeId, int activityId, int securityTypeId, int securityId);
 		#endregion
 
 		#region UnderlyingDirectValuation

@@ -66,13 +66,13 @@
 						<%: Html.Hidden("SecurityId", "0")%>
 					</td>
 					<td>
-						<%: Html.TextBox("NumberOfShares", "", new { @id = "NumberOfShares", @onkeyup = "javascript:deal.calcFMV(this);", @onkeypress = "return jHelper.isNumeric(event);" })%>
+						<%: Html.TextBox("NumberOfShares", "", new { @id = "NumberOfShares", @onkeypress = "return jHelper.isNumeric(event);" })%>
 					</td>
 					<td>
-						<%: Html.TextBox("PurchasePrice", "", new { @onkeypress = "return jHelper.isCurrency(event);", @onkeyup = "javascript:deal.calcFMV(this);" })%>
+						<%: Html.TextBox("PurchasePrice", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</td>
 					<td>
-						<%: Html.TextBox("FMV", "", new { @readonly = "readonly", @id = "FMV", @style = "background-color: #DADADA;", @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBox("FMV", "", new {  @id = "FMV",  @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</td>
 					<td>
 						<%: Html.TextBox("TaxCostBase", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>

@@ -286,16 +286,8 @@ namespace DeepBlue.Controllers.Issuer {
 		public object FindFixedIncomeSecurityConversionModel(int fixedIncomeId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from fixedIncome in context.FixedIncomes
-						join oldSecurityConversion in context.SecurityConversions on fixedIncome.FixedIncomeID equals oldSecurityConversion.OldSecurityID into oldSecurityConversions
-						from oldSecurityConversion in oldSecurityConversions.Where(sc => sc.OldSecurityTypeID == (int)Models.Deal.Enums.SecurityType.FixedIncome).DefaultIfEmpty()
-						join oldFixedIncome in context.FixedIncomes on oldSecurityConversion.OldSecurityID equals oldFixedIncome.FixedIncomeID into oldFixedIncomes
-						join securityType in context.SecurityTypes on oldSecurityConversion.OldSecurityTypeID equals securityType.SecurityTypeID into oldSecurityTypes
-						from oldFixedIncome in oldFixedIncomes.DefaultIfEmpty()
-						from securityType in oldSecurityTypes.DefaultIfEmpty()
 						where fixedIncome.FixedIncomeID == fixedIncomeId
 						select new {
-							OldSecurityName = (oldFixedIncome != null ? oldFixedIncome.Issuer.Name : string.Empty),
-							OldSecurityType = (securityType != null ? securityType.Name : string.Empty),
 							Symbol = fixedIncome.Symbol
 						}).FirstOrDefault();
 			}
@@ -304,25 +296,14 @@ namespace DeepBlue.Controllers.Issuer {
 		public object FindEquitySecurityConversionModel(int equityId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from equity in context.Equities
-						join oldSecurityConversion in context.SecurityConversions on equity.EquityID equals oldSecurityConversion.OldSecurityID into oldSecurityConversions
-						from oldSecurityConversion in oldSecurityConversions.Where(sc => sc.OldSecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity).DefaultIfEmpty()
-						join oldEquity in context.Equities on oldSecurityConversion.OldSecurityID equals oldEquity.EquityID into oldEquities
-						join securityType in context.SecurityTypes on oldSecurityConversion.OldSecurityTypeID equals securityType.SecurityTypeID into oldSecurityTypes
-						from oldEquity in oldEquities.DefaultIfEmpty()
-						from securityType in oldSecurityTypes.DefaultIfEmpty()
 						where equity.EquityID == equityId
 						select new {
-							OldSecurityName = (oldEquity != null ? oldEquity.Issuer.Name : string.Empty),
-							OldSecurityType = (securityType != null ? securityType.Name : string.Empty),
-							Symbol = oldEquity.Symbol
+							Symbol = equity.Symbol
 						}).FirstOrDefault();
 			}
 		}
 
 		#endregion
-
-
-
-		 
+			 
 	}
 }

@@ -99,10 +99,10 @@
 				<%: Html.ActionLink("Deal Report", "Report", "Deal", null, new { @class = (ViewData["PageName"] == "DealReport" ? "sel" : "") })%>
 			</li>
 			<li>
-				<%: Html.ActionLink("Add Directs", "Directs", "Deal", null, new { @class = (ViewData["PageName"] == "AddDirects" ? "sel" : "") })%>
+				<%: Html.ActionLink("Direct Library", "Directs", "Deal", null, new { @class = (ViewData["PageName"] == "AddDirects" ? "sel" : "") })%>
 			</li>
 			<li>
-				<%: Html.ActionLink("Add Underlying Funds", "UnderlyingFunds", "Deal", null, new { @class = (ViewData["PageName"] == "UnderlyingFunds" ? "sel" : "") })%>
+				<%: Html.ActionLink("Underlying Funds Library", "UnderlyingFunds", "Deal", null, new { @class = (ViewData["PageName"] == "UnderlyingFunds" ? "sel" : "") })%>
 			</li>
 			<li>
 				<%: Html.ActionLink("Activities", "Activities", "Deal", null, new { @class = (ViewData["PageName"] == "Activities" ? "sel" : "") })%>

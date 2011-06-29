@@ -83,8 +83,12 @@ deal.deleteUnderlyingDirect=function (id,img) {
 		var tr=$(img).parents("tr:first");
 		var url="/Deal/DeleteDealUnderlyingDirect/"+id;
 		$.get(url,function (data) {
-			tr.remove();
-			deal.setIndex($("#tblUnderlyingDirect"));
+			if($.trim(data)!="") {
+				alert(data);
+			} else {
+				tr.remove();
+				deal.setIndex($("#tblUnderlyingDirect"));
+			}
 		});
 	}
 };
@@ -194,14 +198,14 @@ deal.loadIssuers=function (issuerName,issuerId) {
 	}
 };
 deal.calcFMV=function (txt) {
-	var tr=$(txt).parents("tr:first");
+	/*var tr=$(txt).parents("tr:first");
 	var noofsha=parseFloat($("#NumberOfShares",tr).val());
 	var price=parseFloat($("#PurchasePrice",tr).val());
 	var FMV=$("#FMV",tr);
 	if(isNaN(noofsha)) { noofsha=0; }
 	if(isNaN(price)) { price=0; }
 	FMV.val(noofsha*price);
-	deal.calcDUD();
+	deal.calcDUD();*/
 };
 deal.Reset=function () {
 	$(":input[type='text']","#SellerInfo").val("");

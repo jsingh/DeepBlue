@@ -4,10 +4,10 @@
 	height: 25px;
 	line-height: 25px;
 	margin-right: 10px;
-     font-weight:bold;
+	font-weight: bold;
 }
-.cell a{
- color:Black;
+.cell a {
+	color: Black;
 }
 .auto {
 	width: auto;
@@ -144,7 +144,7 @@ h4 a {
 	background-repeat: no-repeat;
 }
 .expandheader .expandimg {
-  padding: 15px 0 8px 0;
+	padding: 15px 0 8px 0;
 }
 .expandsel {
 	background-image: url(../images/expandbg.png);
@@ -168,14 +168,13 @@ h4 a {
 	width: 200px;
 }
 .expandaddbtn {
- float : left;
+	float: left;
 	padding-left: 30px;
 	display: none;
-    width: 151px;
+	width: 151px;
 	height: 31px;
 	margin: 10px 0 0 70px;
 	line-height: 33px;
-
 }
 .expandaddbtn a {
 	color: #000;
@@ -241,9 +240,12 @@ h4 a {
 	border-bottom: solid 2px #B5B5B5;
 	background-color: #BABFC5;
 	padding: 5px;
-	font-weight: bold; white-space:nowrap;
+	font-weight: bold;
+	white-space: nowrap;
 }
-.grid thead tr th { text-align:center; }
+.grid thead tr th {
+	text-align: center;
+}
 .grid thead tr td {
 	background-color: transparent;
 	padding: 5px;
@@ -267,8 +269,10 @@ h4 a {
 	margin-right: 120px;
 	margin-top: -20px;
 }
-.direct{
-float:right; padding-right:120px; padding-bottom:100px;
+.direct {
+	float: right;
+	padding-right: 120px;
+	padding-bottom: 100px;
 }
 .issuerbtn {
 	float: right;
@@ -285,4 +289,11 @@ float:right; padding-right:120px; padding-bottom:100px;
 	color: #000;
 	font-size: 11px;
 	font-weight: bold;
+}
+#divPartnerName {
+	clear: right;
+	width: auto;
+	display: none;
+	padding: 0;
+	margin: 0;
 }

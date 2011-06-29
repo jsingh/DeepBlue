@@ -177,6 +177,7 @@
     </Compile>
     <Compile Include="Models\Entity\Partial\ActivityTypeService.cs" />
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
+    <Compile Include="Models\Entity\Partial\SecurityConversionDetailService.cs" />
     <Compile Include="Models\Entity\Partial\FundExpenseTypeService.cs" />
     <Compile Include="Models\Entity\Partial\DealUnderlyingFundAdjustmentService.cs" />
     <Compile Include="Models\Entity\Partial\EquitySplitService.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
     <Compile Include="Models\Entity\Validation\ActivityType.cs" />
     <Compile Include="Models\Entity\Validation\CashDistribution.cs" />
+    <Compile Include="Models\Entity\Validation\SecurityConversionDetail.cs" />
     <Compile Include="Models\Entity\Validation\FundExpenseType.cs" />
     <Compile Include="Models\Entity\Validation\DealUnderlyingFundAdjustment.cs" />
     <Compile Include="Models\Entity\Validation\CreatedByFields.cs" />

@@ -205,15 +205,15 @@
 		</td>
 		<td style="text-align: right;">
 			<%: Html.Span("${NumberOfShares}", new { @class = "show", @id = "SpnNumberOfShares" })%>
-			<%: Html.TextBox("NumberOfShares", "${NumberOfShares}",new { @class = "hide",@id="NumberOfShares",@onkeyup="javascript:deal.calcFMV(this);",@onkeypress = "return jHelper.isNumeric(event);" })%>
+			<%: Html.TextBox("NumberOfShares", "${NumberOfShares}",new { @class = "hide", @id="NumberOfShares", @onkeypress = "return jHelper.isNumeric(event);" })%>
 		</td>
 		<td style="text-align: right;">
 			<%: Html.Span("${PurchasePrice}", new { @class = "show money", @id = "SpnPurchasePrice", @val="${PurchasePrice}" })%>
-			<%: Html.TextBox("PurchasePrice","${PurchasePrice}",new { @class = "hide",@id="PurchasePrice",@onkeyup="javascript:deal.calcFMV(this);",@onkeypress = "return jHelper.isCurrency(event);" })%>
+			<%: Html.TextBox("PurchasePrice","${PurchasePrice}",new { @class = "hide",@id="PurchasePrice", @onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>	
         <td style="text-align: right;">
 			<%: Html.Span("${FMV}", new { @class = "show money", @id = "SpnFMV", @val="${FMV}" })%>
-			<%: Html.TextBox("FMV","${FMV}",new { @class = "hide",@readonly="readonly", @style="background-color: #DADADA;", @id="FMV",@onkeypress = "return jHelper.isCurrency(event);" })%>
+			<%: Html.TextBox("FMV","${FMV}",new { @class = "hide", @id="FMV",@onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>	
 		<td style="text-align: right;">
 			<%: Html.Span("${TaxCostBase}", new { @class = "show", @id = "SpnTaxCostBase", @val="${TaxCostBase}" })%>

@@ -24,29 +24,33 @@ dealActivity.changeOldSecurityType=function (ddl) {
 };
 dealActivity.setNewSecurity=function (id,name) {
 	$("#NewSecurityId").val(id);
+	dealActivity.loadNewSecurityData();
 };
 dealActivity.setOldSecurity=function (id,name) {
 	$("#OldSecurityId").val(id);
-	dealActivity.loadOldSecurityData();
 };
-dealActivity.loadOldSecurityData=function () {
-	var id=$("#OldSecurityId").val();
-	var stypeId=$("#OldSecurityTypeId").val();
+dealActivity.loadNewSecurityData=function () {
+	var id=$("#NewSecurityId").val();
+	var stypeId=$("#NewSecurityTypeId").val();
 	var url="";
+	$("#SpnNewSymbollbl").hide();
+	$("#SpnNewSymbol").hide();
 	switch(stypeId.toString()) {
 		case "1":
 			url="/Deal/FindEquitySecurityConversionModel?_"+(new Date()).getTime()+"&equityId="+id;
+			$("#SpnNewSymbollbl").show();
+			$("#SpnNewSymbol").show();
 			break;
-		case "2":
-			url="/Deal/FindFixedIncomeSecurityConversionModel?_"+(new Date()).getTime()+"&fixedIncomeId="+id;
-			break;
+		/*case "2":
+		url="/Deal/FindFixedIncomeSecurityConversionModel?_"+(new Date()).getTime()+"&fixedIncomeId="+id;
+		break;*/ 
 	}
 	var newSymbol=$("#SpnNewSymbol");
 	newSymbol.html("");
 	if(url!="") {
 		$.getJSON(url,function (data) {
 			newSymbol.html(data.Symbol);
-			dealActivity.loadNHP($("#OldSecurityTypeId").val(),$("#OldSecurityId").val());
+
 		});
 	}
 };
@@ -75,11 +79,18 @@ dealActivity.createSecConversion=function (frm) {
 	$("#SpnSecCoversionLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 	$.post("/Deal/CreateConversionActivity?_"+(new Date()).getTime(),param,function (data) {
 		$("#SpnSecCoversionLoading").empty();
-		if($.trim(data)!="") {
-			alert(data);
-		} else {
-			dealActivity.loadOldSecurityData();
-		}
+		var arr=data.split("||");
+		if(arr[0]=="True") {
+			alert("Conversion Saved.");
+			var frm=$("#frmSecurityConversion");
+			$("#NHPList").show();
+			dealActivity.loadNHP($("#OldSecurityTypeId").val(),$("#OldSecurityId").val(),arr[1]);
+			$(":input[type='text']",frm).val("");
+			$(":input[type='hidden']",frm).val("0");
+			$("select",frm).val("0");
+			$("#SpnNewSymbollbl").hide();
+			$("#SpnNewSymbol").hide();
+		} else { alert(data); }
 	});
 	return false;
 };

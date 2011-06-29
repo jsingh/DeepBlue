@@ -409,8 +409,13 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/DeleteDealUnderlyingFund/1
 		[HttpGet]
-		public void DeleteDealUnderlyingFund(int id) {
-			DealRepository.DeleteDealUnderlyingFund(id);
+		public string DeleteDealUnderlyingFund(int id) {
+			if (DealRepository.DeleteDealUnderlyingFund(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
 		}
 
 		#endregion
@@ -496,8 +501,13 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/DeleteDealUnderlyingDirect/1
 		[HttpGet]
-		public void DeleteDealUnderlyingDirect(int id) {
-			DealRepository.DeleteDealUnderlyingDirect(id);
+		public string DeleteDealUnderlyingDirect(int id) {
+			if (DealRepository.DeleteDealUnderlyingDirect(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
 		}
 
 		#endregion
@@ -1075,9 +1085,9 @@ namespace DeepBlue.Controllers.Deal {
 				equitySplit.SplitDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveEquitySplit(equitySplit);
 				if (errorInfo == null) {
-					List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.ActivityTypeId, model.SecurityTypeId, equitySplit.EquityID);
+					List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.ActivityTypeId, equitySplit.EquiteSplitID, model.SecurityTypeId, equitySplit.EquityID);
 					foreach (var pattern in newHoldingPatterns) {
-						errorInfo = CreateFundActivityHistory(pattern.FundId, pattern.OldNoOfShares, (pattern.OldNoOfShares * equitySplit.SplitFactor), equitySplit.EquiteSplitID, model.ActivityTypeId);
+						errorInfo = CreateFundActivityHistory(pattern.FundId, pattern.OldNoOfShares, pattern.NewNoOfShares, equitySplit.EquiteSplitID, model.ActivityTypeId);
 						if (errorInfo != null)
 							break;
 					}
@@ -1120,14 +1130,50 @@ namespace DeepBlue.Controllers.Deal {
 				securityConversion.ConversionDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveSecurityConversion(securityConversion);
 				if (errorInfo == null) {
-					List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.ActivityTypeId, model.NewSecurityTypeId, model.NewSecurityId);
-					foreach (var pattern in newHoldingPatterns) {
-						errorInfo = CreateFundActivityHistory(pattern.FundId, pattern.OldNoOfShares, (pattern.OldNoOfShares * securityConversion.SplitFactor), securityConversion.SecurityConversionID, model.ActivityTypeId);
-						if (errorInfo != null)
+
+					// Get All Deal Underlying Directs
+
+					List<DealUnderlyingDirect> dealUnderlyingDirects = DealRepository.GetAllDealUnderlyingDirects(securityConversion.OldSecurityTypeID, securityConversion.OldSecurityID);
+					foreach (var dealUnderlyingDirect in dealUnderlyingDirects) {
+
+						SecurityConversionDetail securityConversionDetail = new SecurityConversionDetail();
+						securityConversionDetail.SecurityConversionID = securityConversion.SecurityConversionID;
+
+						// Set old number of shares and fmv.
+						securityConversionDetail.OldNumberOfShares = dealUnderlyingDirect.NumberOfShares;
+						securityConversionDetail.OldFMV = dealUnderlyingDirect.FMV;
+
+						// Update Deal Underlying Direct number of shares and fmv.
+						dealUnderlyingDirect.NumberOfShares = securityConversionDetail.OldNumberOfShares * securityConversion.SplitFactor;
+						dealUnderlyingDirect.FMV = dealUnderlyingDirect.NumberOfShares * dealUnderlyingDirect.PurchasePrice;
+
+						// Set new number of shares and fmv.
+						securityConversionDetail.NewNumberOfShares = dealUnderlyingDirect.NumberOfShares;
+						securityConversionDetail.NewFMV = dealUnderlyingDirect.FMV;
+
+						securityConversionDetail.DealUnderlyingDirectID = dealUnderlyingDirect.DealUnderlyingDirectID;
+
+						errorInfo = DealRepository.SaveDealUnderlyingDirect(dealUnderlyingDirect);
+						if (errorInfo == null)
+							errorInfo = DealRepository.SaveSecurityConversionDetail(securityConversionDetail);
+						else
 							break;
 					}
+
+					if (errorInfo == null) {
+						List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.ActivityTypeId, securityConversion.SecurityConversionID, model.OldSecurityTypeId, model.OldSecurityId);
+						foreach (var pattern in newHoldingPatterns) {
+							errorInfo = CreateFundActivityHistory(pattern.FundId, pattern.OldNoOfShares, pattern.NewNoOfShares, securityConversion.SecurityConversionID, model.ActivityTypeId);
+							if (errorInfo != null)
+								break;
+						}
+					}
+
 				}
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					resultModel.Result = "True||" + securityConversion.SecurityConversionID;
+				}
 			}
 			else {
 				foreach (var values in ModelState.Values.ToList()) {
@@ -1141,13 +1187,13 @@ namespace DeepBlue.Controllers.Deal {
 			return View("Result", resultModel);
 		}
 
-		private IEnumerable<ErrorInfo> CreateFundActivityHistory(int fundId, int oldNoOfShares, int newNoOfShares, int activityId, int activityTypeId) {
+		private IEnumerable<ErrorInfo> CreateFundActivityHistory(int fundId, int? oldNoOfShares, int? newNoOfShares, int activityId, int activityTypeId) {
 			FundActivityHistory fundActivityHistory = new FundActivityHistory();
 			fundActivityHistory.ActivityID = activityId;
 			fundActivityHistory.ActivityTypeID = activityTypeId;
 			fundActivityHistory.FundID = fundId;
-			fundActivityHistory.OldNumberOfShares = oldNoOfShares;
-			fundActivityHistory.NewNumberOfShares = newNoOfShares;
+			fundActivityHistory.OldNumberOfShares = oldNoOfShares ?? 0;
+			fundActivityHistory.NewNumberOfShares = newNoOfShares ?? 0;
 			return DealRepository.SaveFundActivityHistory(fundActivityHistory);
 		}
 
@@ -1801,8 +1847,8 @@ namespace DeepBlue.Controllers.Deal {
 		#region NewHoldingPattern
 		//
 		// GET: /Deal/NewHoldingPatternList
-		public ActionResult NewHoldingPatternList(int activityTypeId, int securityTypeId, int securityId) {
-			List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(activityTypeId, securityTypeId, securityId);
+		public ActionResult NewHoldingPatternList(int activityTypeId,int activityId, int securityTypeId, int securityId) {
+			List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(activityTypeId, activityId, securityTypeId, securityId);
 			FlexigridData flexgridData = new FlexigridData();
 			flexgridData.total = newHoldingPatterns.Count();
 			flexgridData.page = 1;

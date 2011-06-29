@@ -251,7 +251,7 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public void DeleteDealUnderlyingFund(int dealUnderlyingFundId) {
+		public bool DeleteDealUnderlyingFund(int dealUnderlyingFundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				DealUnderlyingFund dealUnderlyingFund = context.DealUnderlyingFunds.SingleOrDefault(underlyingFund => underlyingFund.DealUnderlyingtFundID == dealUnderlyingFundId);
 				if (dealUnderlyingFund != null) {
@@ -262,6 +262,7 @@ namespace DeepBlue.Controllers.Deal {
 					context.DealUnderlyingFunds.DeleteObject(dealUnderlyingFund);
 					context.SaveChanges();
 				}
+				return true;
 			}
 		}
 
@@ -374,6 +375,12 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public List<DealUnderlyingDirect> GetAllDealUnderlyingDirects(int oldSecurityTypeId, int oldSecurityId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DealUnderlyingDirects.Where(direct => direct.SecurityTypeID == oldSecurityTypeId && direct.SecurityID == oldSecurityId).ToList();
+			}
+		}
+
 		public List<DealUnderlyingDirectListModel> GetAllDealUnderlyingDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<DealUnderlyingDirectListModel> query = (from dealUnderlyingDirect in context.DealUnderlyingDirects
@@ -413,13 +420,18 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public void DeleteDealUnderlyingDirect(int dealUnderlyingDirectId) {
+		public bool DeleteDealUnderlyingDirect(int dealUnderlyingDirectId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				DealUnderlyingDirect dealUnderlyingDirect = context.DealUnderlyingDirects.SingleOrDefault(underlyingFund => underlyingFund.DealUnderlyingDirectID == dealUnderlyingDirectId);
 				if (dealUnderlyingDirect != null) {
+					List<SecurityConversionDetail> securityConversionDetails = dealUnderlyingDirect.SecurityConversionDetails.ToList();
+					foreach (var conversionDetail in securityConversionDetails) {
+						context.SecurityConversionDetails.DeleteObject(conversionDetail);
+					}
 					context.DealUnderlyingDirects.DeleteObject(dealUnderlyingDirect);
 					context.SaveChanges();
 				}
+				return true;
 			}
 		}
 
@@ -1159,56 +1171,37 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region NewHoldingPattern
 
-		public List<NewHoldingPatternModel> NewHoldingPatternList(int activityTypeId, int securityTypeId, int securityId) {
+		public List<NewHoldingPatternModel> NewHoldingPatternList(int activityTypeId, int activityId, int securityTypeId, int securityId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<NewHoldingPatternModel> newHoldingPatternQuery = null;
-				var dealUnderlyingDirectQuery = (from direct in context.DealUnderlyingDirects
-												 where direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId
-												 //&& direct.DealUnderlyingDirectID == dealUnderlyingDirectId
-												 group direct by direct.Deal.FundID into directs
-												 select new {
-													 FundId = directs.FirstOrDefault().Deal.FundID,
-													 FundName = directs.FirstOrDefault().Deal.Fund.FundName,
-													 SecurityId = directs.FirstOrDefault().SecurityID,
-													 SumOfShares = (directs.Count() > 0 ? directs.Sum(d => d.NumberOfShares) : 0)
-												 });
 				switch ((DeepBlue.Models.Deal.Enums.ActivityType)activityTypeId) {
 					case Models.Deal.Enums.ActivityType.Split:
-						newHoldingPatternQuery = (from direct in dealUnderlyingDirectQuery
-												  join equitySplit in context.EquitySplits on direct.SecurityId equals equitySplit.EquityID into equitySplits
-												  from equitySplit in equitySplits.DefaultIfEmpty()
+						newHoldingPatternQuery = (from direct in context.DealUnderlyingDirects
+												  where direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId
+												  group direct by direct.Deal.FundID into directs
+												  join fund in context.Funds on directs.Key equals fund.FundID
+												  from equitySplit in context.EquitySplits 
+												  where equitySplit.EquiteSplitID == activityId
 												  select new NewHoldingPatternModel {
-													  FundId = direct.FundId,
-													  FundName = direct.FundName,
-													  OldNoOfShares = direct.SumOfShares ?? 0,
-													  SplitFactor = (equitySplit != null ? equitySplit.SplitFactor : 0)
+													  FundId = fund.FundID,
+													  FundName = fund.FundName,
+													  OldNoOfShares = directs.Sum(d => d.NumberOfShares),
+													  NewNoOfShares = directs.Sum(d => d.NumberOfShares) * equitySplit.SplitFactor,
 												  });
 						break;
 					case Models.Deal.Enums.ActivityType.Conversion:
-						switch ((DeepBlue.Models.Deal.Enums.SecurityType)securityTypeId) {
-							case Models.Deal.Enums.SecurityType.Equity:
-								newHoldingPatternQuery = (from direct in dealUnderlyingDirectQuery
-														  join securityConversion in context.SecurityConversions.Where(sc => sc.NewSecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity) on direct.SecurityId equals securityConversion.NewSecurityID into securityConversions
-														  from securityConversion in securityConversions.DefaultIfEmpty()
-														  select new NewHoldingPatternModel {
-															  FundId = direct.FundId,
-															  FundName = direct.FundName,
-															  OldNoOfShares = direct.SumOfShares ?? 0,
-															  SplitFactor = (securityConversion != null ? securityConversion.SplitFactor : 0)
-														  });
-								break;
-							case Models.Deal.Enums.SecurityType.FixedIncome:
-								newHoldingPatternQuery = (from direct in dealUnderlyingDirectQuery
-														  join securityConversion in context.SecurityConversions.Where(sc => sc.NewSecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.FixedIncome) on direct.SecurityId equals securityConversion.NewSecurityID into securityConversions
-														  from securityConversion in securityConversions.DefaultIfEmpty()
-														  select new NewHoldingPatternModel {
-															  FundId = direct.FundId,
-															  FundName = direct.FundName,
-															  OldNoOfShares = direct.SumOfShares ?? 0,
-															  SplitFactor = (securityConversion != null ? securityConversion.SplitFactor : 0)
-														  });
-								break;
-						}
+						newHoldingPatternQuery = (from direct in context.DealUnderlyingDirects
+												  where direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId
+												  group direct by direct.Deal.FundID into directs
+												  join fund in context.Funds on directs.Key equals fund.FundID
+												  from securityConversion in context.SecurityConversions
+												  where securityConversion.SecurityConversionID == activityId
+												  select new NewHoldingPatternModel {
+													  FundId = fund.FundID,
+													  FundName = fund.FundName,
+													  NewNoOfShares = directs.Sum(d => d.NumberOfShares),
+													  OldNoOfShares = securityConversion.SecurityConversionDetails.Sum(cd => cd.OldNumberOfShares)
+												  });
 						break;
 				}
 				if (newHoldingPatternQuery != null)
@@ -1246,6 +1239,9 @@ namespace DeepBlue.Controllers.Deal {
 			return securityConversion.Save();
 		}
 
+		public IEnumerable<ErrorInfo> SaveSecurityConversionDetail(SecurityConversionDetail securityConversionDetail) {
+			return securityConversionDetail.Save();
+		}
 		#endregion
 
 		#region FundActivityHistory

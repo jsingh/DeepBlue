@@ -10,14 +10,8 @@ namespace DeepBlue.Models.Deal {
 
 		public string FundName { get; set; }
 
-		public int OldNoOfShares { get; set; }
+		public int? OldNoOfShares { get; set; }
 
-		public int SplitFactor { get; set; }
-
-		public int NewNoOfShares {
-			get {
-				return (OldNoOfShares * SplitFactor);
-			}
-		}
+		public int? NewNoOfShares { get; set; }
 	}
 }

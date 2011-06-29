@@ -1,7 +1,7 @@
 ﻿dealActivity.setESDirect=function (id,name) {
 	$("#EquityId").val(id);
 	dealActivity.loadEquitySymbol(id,$("#SpnSymbol"));
-	dealActivity.loadNHP(1,dealActivity.getEquityId());
+	//dealActivity.loadNHP(1,dealActivity.getEquityId());
 };
 dealActivity.onESDirectSearch=function (event,ui) {
 	var msg=dealActivity.directSearchValid();
@@ -31,6 +31,7 @@ dealActivity.changeAType=function (ddl) {
 	var SplitDetail=$("#SplitDetail");
 	var ConversionDetail=$("#ConversionDetail");
 	SplitDetail.hide();
+	$("#NHPList").hide();
 	ConversionDetail.hide();
 	switch(ddl.value) {
 		case "1":
@@ -77,11 +78,12 @@ dealActivity.onNHPSuccess=function (t,p) {
 dealActivity.loadEquitySymbol=function (id,target) {
 	$.get("/Deal/FindEquitySymbol/"+id,function (data) { target.html(data); });
 };
-dealActivity.loadNHP=function (securityTypeId,securityId) {
+dealActivity.loadNHP=function (securityTypeId,securityId,activityId) {
 	var atypeId=dealActivity.getActivityTypeId();
 	var grid=$("#NewHoldingPatternList");
 	var param=[{ name: "dealUnderlyingDirectId",value: dealActivity.getUnderlyingDirectId() }
 					 ,{ name: "activityTypeId",value: atypeId }
+					 ,{ name: "activityId",value: activityId }
 					 ,{ name: "securityTypeId",value: securityTypeId }
 					 ,{ name: "securityId",value: securityId}];
 	grid.ajaxTableOptions({ params: param });
@@ -99,7 +101,7 @@ dealActivity.createSA=function (frm) {
 		if($.trim(data)!="") {
 			alert(data);
 		} else {
-			dealActivity.loadNHP(1,dealActivity.getEquityId());
+			//dealActivity.loadNHP(1,dealActivity.getEquityId());
 			//jHelper.resetFields(frm);
 		}
 	});

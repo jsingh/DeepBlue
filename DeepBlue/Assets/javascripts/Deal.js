@@ -54,12 +54,8 @@
 	}
 	,selectPartner: function (checked) {
 		var divPartnerName=document.getElementById("divPartnerName");
-		if(checked)
-			divPartnerName.style.display="none";
-		else
-			divPartnerName.style.display="";
+		if(checked) { divPartnerName.style.display="none"; } else { divPartnerName.style.display="block"; }
 	}
-
 	/* Deal Detail */
 	,getDealId: function () {
 		return parseInt($("#DealId","#NewDeal").val());
@@ -95,7 +91,9 @@
 		IsPartneredYes.checked=data.IsPartnered;
 		IsPartneredNo.checked=!data.IsPartnered;
 		if(IsPartneredYes.checked) {
-			$("#divPartnerName").css("display","");
+			$("#divPartnerName").show();
+		} else {
+			$("#divPartnerName").hide();
 		}
 		$.each(data.DealExpenses,function (index,item) { deal.loadDealExpenseData(item); });
 		$.each(data.DealUnderlyingFunds,function (index,item) { deal.loadUnderlyingFundData(item); });
@@ -148,7 +146,9 @@
 		return deal.checkForm(document.getElementById(formId));
 	}
 	,saveDeal: function () {
-		$("#btnSaveDeal","#AddNewDeal").click();
+		try {
+			$("#btnSaveDeal","#AddNewDeal").click();
+		} catch(e) { alert(e); }
 	}
 	,seeFullDeal: function () {
 		var FullDealList=$("#FullDealList");

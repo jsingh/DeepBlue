@@ -42,9 +42,6 @@
 				<%}%>
 				<%using (Html.Div(new { @id = "SATab", @onclick = "javascript:dealActivity.selectTab('S',this);" })) {%>&nbsp;
 				<%}%>
-				<div id="SearchUDirect" class="cell" style="float: right; display: none; margin: 10px 50px 0px 0px;">
-					<%: Html.TextBox("S_UnderlyingDirect", "SEARCH UNDERLYING DIRECT", new { @class = "wm" , @style="width:200px" })%>
-				</div>
 			</div>
 		</div>
 		<div class="content">
@@ -511,7 +508,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="clear sec-box" id="SADetailBox" style="display: none; margin-top: 30px;">
+				<div class="clear sec-box" id="SADetailBox" style="display: block; margin-top: 30px;">
 					<div class="editor-label">
 						<%: Html.Label("Corporate Action-") %>
 					</div>
@@ -523,7 +520,7 @@
 						<% Html.RenderPartial("EquitySplit", Model.EquitySplitModel);%>
 						<%}%>
 					</div>
-					<div id="ConversionDetail" style="display: none; margin-left: 60px; clear: both;">
+					<div id="ConversionDetail" style="display: none; margin-left: 75px; clear: both;">
 						<%using (Html.Form(new { @id = "frmSecurityConversion", @onsubmit = "return dealActivity.createSecConversion(this);", @style = "float:left;" })) {%>
 						<% Html.RenderPartial("SecurityConversion", Model.SecurityConversionModel);%>
 						<%}%>
@@ -545,10 +542,10 @@
 									<th style="width: 20%" align="left">
 										Fund Name
 									</th>
-									<th style="width: 20%" align="center">
+									<th style="width: 20%" align="right">
 										Old Number of Shares
 									</th>
-									<th style="width: 20%" align="center">
+									<th style="width: 20%" align="right">
 										New Number of Shares
 									</th>
 									<th>
@@ -599,10 +596,6 @@
 	<%= Html.jQueryAutoComplete("UDV_UnderlyingDirect", new AutoCompleteOptions {
 																	  Source = "/Issuer/FindIssuers", MinLength = 1,
 																	  OnSelect = "function(event, ui) { dealActivity.setUDV(ui.item.id,ui.item.value);}"
-	})%>
-	<%= Html.jQueryAutoComplete("S_UnderlyingDirect", new AutoCompleteOptions {
-																	  Source = "/Issuer/FindIssuers",	MinLength = 1,
-																	  OnSelect = "function(event, ui) { dealActivity.selectUD(ui.item.id,ui.item.value);}"
 	})%>
 	<%=Html.jQueryAjaxTable("NewHoldingPatternList", new AjaxTableOptions {
 	ActionName = "NewHoldingPatternList",

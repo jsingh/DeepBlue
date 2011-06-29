@@ -55,6 +55,7 @@
 			var total=data.TotalUnderlyingFundNotClosing+data.TotalUnderlyingDirectNotClosing;
 			if(data.TotalDealClosing>0) {
 				$("#ExistingDealClosing").show();
+            }
 				if(total==0) {
 					$("#FDHeaderBox").click();
 					dealClose.loadFinalDealClose();
@@ -62,7 +63,7 @@
 					$("#NewDealClose").show();
 					$("#NewDealCloseBtn").show();
 				}
-			}
+			
 		});
 	}
 	,getDealId: function () { return $("#DealId").val(); }
