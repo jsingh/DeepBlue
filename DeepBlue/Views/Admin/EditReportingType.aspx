@@ -18,7 +18,7 @@
 		<%: Html.TextBoxFor(model => model.Reporting) %>
 		<%: Html.ValidationMessageFor(model => model.Reporting) %>
 	</div>
-	<div class="editor-label" style="width: 57px">
+	<div class="editor-label" style="width: 87px">
 		<%: Html.LabelFor(model => model.Enabled)%>
 	</div>
 	<div class="editor-field">

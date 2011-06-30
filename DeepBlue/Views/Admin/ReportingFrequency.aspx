@@ -43,8 +43,6 @@
 	,HttpMethod = "GET"
 	,SortName = "ReportingFrequency1"
 	,Paging = true
-	,OnSuccess = "reportingFrequency.onGridSuccess"
-	,OnRowClick = "reportingFrequency.onRowClick"
 	,OnRowBound = "reportingFrequency.onRowBound"
 })%>
 </asp:Content>

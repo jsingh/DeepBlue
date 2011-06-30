@@ -42,8 +42,6 @@
 	,HttpMethod = "GET"
 	,SortName = "Reporting"
 	,Paging = true
-	,OnSuccess = "reportingType.onGridSuccess"
-	,OnRowClick = "reportingType.onRowClick"
 	,OnRowBound = "reportingType.onRowBound"
 })%>
 </asp:Content>
