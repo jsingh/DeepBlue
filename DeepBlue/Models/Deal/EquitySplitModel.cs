@@ -5,9 +5,14 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Web.Mvc;
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Deal {
 	public class EquitySplitModel : SecurityActivityModel {
+
+		public EquitySplitModel() {
+			SplitDate = DateTime.Now;
+		}
 	 
 		[Required(ErrorMessage = "Direct is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Direct is required")]
@@ -21,6 +26,12 @@ namespace DeepBlue.Models.Deal {
 
 		[DisplayName("Direct Symbol-")]
 		public string Symbol { get; set; }
+
+		[Required(ErrorMessage = "Split Date is required")]
+		[DateRange(ErrorMessage = "Split Date is required")]
+		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+		[DisplayName("Split Date-")]
+		public DateTime SplitDate { get; set; }
 
 	}
 }

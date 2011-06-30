@@ -2,7 +2,7 @@
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	ReportingType
+	Reporting Type
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("ReportingType.js")%>
@@ -24,7 +24,7 @@
 							ID
 						</th>
 						<th sortname="Reporting" style="width: 80%">
-							ShareClass
+							Reporting Type
 						</th>
 						<th datatype="Boolean" sortname="Enabled" align="center" style="width: 10%;">
 							Enable

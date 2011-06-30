@@ -193,8 +193,6 @@
 			<li>
 				<%: Html.ActionLink("Deal Closing Cost Type", "DealClosingCostType", "Admin", null, new { @class = (ViewData["PageName"] == "DealClosingCostType" ? "sel" : "") })%></li>
 			<li>
-				<%: Html.ActionLink("Security Type", "SecurityType", "Admin", null, new { @class = (ViewData["PageName"] == "SecurityType" ? "sel" : "") })%></li>
-			<li>
 				<%: Html.ActionLink("Underlying Fund Type", "UnderlyingFundType", "Admin", null, new { @class = (ViewData["PageName"] == "UnderlyingFundType" ? "sel" : "") })%></li>
 			<li>
 				<%: Html.ActionLink("Share Class Type", "ShareClassType", "Admin", null, new { @class = (ViewData["PageName"] == "ShareClassType" ? "sel" : "") })%></li>
@@ -202,6 +200,10 @@
 				<%: Html.ActionLink("Cash Distribution Type", "CashDistributionType", "Admin", null, new { @class = (ViewData["PageName"] == "CashDistributionType" ? "sel" : "") })%></li>
 			<li>
 				<%: Html.ActionLink("Fund Expense Type", "FundExpenseType", "Admin", null, new { @class = (ViewData["PageName"] == "FundExpenseType" ? "sel" : "") })%></li>
+			<li>
+				<%: Html.ActionLink("Reporting", "ReportingFrequency", "Admin", null, new { @class = (ViewData["PageName"] == "ReportingFrequency" ? "sel" : "") })%></li>
+			<li>
+				<%: Html.ActionLink("Reporting Type", "ReportingType", "Admin", null, new { @class = (ViewData["PageName"] == "ReportingType" ? "sel" : "") })%></li>
 		</ul>
 		<%} %>
 		<%using (Html.InnerSubMenu("CusField_SubMenu", (ViewData["SubmenuName"] == "AdminCustomField"))) {%>
@@ -210,8 +212,6 @@
 				<%: Html.ActionLink("Custom Field", "CustomField", "Admin",null, new { @class = (ViewData["PageName"] == "CustomField" ? "sel" : "") })%></li>
 			<li>
 				<%: Html.ActionLink("Data Type", "DataType", "Admin",null, new { @class = (ViewData["PageName"] == "DataType" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Activity Type", "ActivityType", "Admin",null, new { @class = (ViewData["PageName"] == "ActivityType" ? "sel" : "") })%></li>
 		</ul>
 		<%} %>
 	</div>

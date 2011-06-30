@@ -2,7 +2,7 @@
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Add Underlying Funds
+	Underlying Fund Library
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
@@ -22,7 +22,8 @@
 				<div class="arrow">
 				</div>
 				<div class="pname">
-					ADD UNDERLYING FUNDS<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%></div>
+					UNDERLYING FUND LIBRARY
+					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%></div>
 			</div>
 		</div>
 	</div>
@@ -33,8 +34,11 @@
 		<div class="addbtn" style="display: block">
 			<%: Html.Anchor(Html.Image("addnewissuer.png").ToHtmlString(), "javascript:dealDirect.add();")%>
 		</div>
+		<div class="addbtn" style="display: block">
+			<%: Html.Anchor(Html.Image("addnufund.png").ToHtmlString(), "javascript:underlyingFund.load(0,0);")%>
+		</div>
 		<div style="float: right; padding-right: 50px;">
-			<%: Html.TextBox("S_UnderlyingFund", "SEARCH ISSUER", new { @id="S_UnderlyingFund", @style = "width:200px", @class = "wm" })%>
+			<%: Html.TextBox("S_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @id = "S_UnderlyingFund", @style = "width:200px", @class = "wm" })%>
 		</div>
 	</div>
 	<div id="UnderlyingFundDetail">
@@ -62,8 +66,8 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<script type="text/javascript">		underlyingFund.init();</script>
 	<%= Html.jQueryAutoComplete("S_UnderlyingFund", new AutoCompleteOptions {
-																	  Source = "/Issuer/FindIssuers",	MinLength = 1,
-																	  OnSelect = "function(event, ui) { underlyingFund.load(ui.item.id);}"
+																		  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
+																		  OnSelect = "function(event, ui) { underlyingFund.load(ui.item.id,0);}"
 	})%>
 	<%= Html.jQueryAutoComplete("Issuer", new AutoCompleteOptions {
 																	  Source = "/Issuer/FindIssuers",	MinLength = 1,
@@ -136,7 +140,7 @@
 				<label>
 					Fees Included</label>
 			</div>
-			<div class="editor-field" style="width: auto;">
+			<div class="editor-field" style="width: auto;padding: 3px 0 0;">
 				<%: Html.CheckBox("IsFeesIncluded", false, new { @val = "${IsFeesIncluded}" })%>
 			</div>
 			<div class="editor-label">

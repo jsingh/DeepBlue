@@ -3,7 +3,7 @@
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	EditReportingType
+	Edit Reporting Type
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%= Html.JavascriptInclueTag("ReportingType.js")%>

@@ -76,7 +76,7 @@
 }
 .flexigrid div.iDiv input, .flexigrid div.iDiv select, .flexigrid div.iDiv textarea {
 	font-family: Arial;
-font-size: 12px;
+	font-size: 12px;
 }
 .flexigrid div.iDiv input.tb {
 	border: 0px;
@@ -128,14 +128,12 @@ font-size: 12px;
 }
 .flexigrid tr.erow td {
 	/*background: #f7f7f7;*/
-	background: #E9EAEC;	
-	/*border-bottom: 2px solid #B5B5B5;*/
+	background: #E9EAEC; /*border-bottom: 2px solid #B5B5B5;*/
 	padding-top: 5px;
-	border-top:2px solid #FFFFFF;
+	border-top: 2px solid #FFFFFF;
 }
 .flexigrid tr.erow td.sorted {
-	background: #e3e3e3;
-	/*border-bottom: 1px solid #e3e3e3;*/
+	background: #e3e3e3; /*border-bottom: 1px solid #e3e3e3;*/
 }
 .flexigrid tr.erow td.sorted div {
 }
@@ -143,12 +141,11 @@ font-size: 12px;
 	background: #d9ebf5;
 }
 .flexigrid div.pDiv {
-	/*background: url(../images/wbg.gif) repeat-x 0 -1px;
-	border: 1px solid #ccc;*/
+	/*background: url(../images/wbg.gif) repeat-x 0 -1px; 	border: 1px solid #ccc;*/
 	overflow: hidden;
 	white-space: nowrap;
 	position: relative;
-	top:-3px;
+	top: -3px;
 }
 .flexigrid div.pDiv div.pDiv2 {
 	margin: 3px;
@@ -161,7 +158,7 @@ div.pGroup {
 	background: none;
 	height: 24px;
 	margin: 0px 5px;
-	font-weight:bold;
+	font-weight: bold;
 }
 .flexigrid div.pDiv .pPageStat, .flexigrid div.pDiv .pcontrol {
 	position: relative;
@@ -225,37 +222,31 @@ div.pGroup {
 	overflow: hidden;
 }
 .hDiv table th {
-	padding: 4px;
-	/*background: url("../images/fhbg.gif") repeat-x scroll center bottom #FAFAFA;
-	border-top: 1px solid #CCCCCC;*/
-	font-weight: bold;
-	/*border-right: 1px solid #DDDDDD;*/
-	background-color:#BABFC5;
-	border-bottom:2px solid #B5B5B5;
-	border-top:2px solid #FFFFFF;
+	padding: 4px; /*background: url("../images/fhbg.gif") repeat-x scroll center bottom #FAFAFA; 	border-top: 1px solid #CCCCCC;*/
+	font-weight: bold; /*border-right: 1px solid #DDDDDD;*/
+	background-color: #BABFC5;
+	border-bottom: 2px solid #B5B5B5;
+	border-top: 2px solid #FFFFFF;
 }
 .hDiv th.sorted {
-	/*background: url("../images/wbg.gif") repeat-x scroll 0 -1px transparent;
-	border-bottom: 0 solid #CCCCCC;
-	border-right: 1px solid #DDDDDD;*/
-	background-color:#BABFC5;
-	border-bottom:2px solid #B5B5B5;
+	/*background: url("../images/wbg.gif") repeat-x scroll 0 -1px transparent; 	border-bottom: 0 solid #CCCCCC; 	border-right: 1px solid #DDDDDD;*/
+	background-color: #BABFC5;
+	border-bottom: 2px solid #B5B5B5;
 }
 .hDiv table th, .bDiv table td {
-	padding: 5px;
-	/*border-right: 1px solid #DDDDDD;*/
-	border-bottom:2px solid #B5B5B5;
-	border-top:2px solid #FFFFFF;
-	cursor: default;
-	/*height:34px;*/
+	padding: 5px; /*border-right: 1px solid #DDDDDD;*/
+	border-bottom: 2px solid #B5B5B5;
+	border-top: 2px solid #FFFFFF;
+	cursor: default; /*height:34px;*/
 }
 .hDiv, .bDiv {
 	border-left: 1px solid #DDDDDD;
-	border-bottom:2px solid #B5B5B5;
-	border-top:2px solid #B5B5B5;
+	border-bottom: 2px solid #B5B5B5;
+	border-top: 2px solid #B5B5B5;
 }
 .bDiv {
-	border-bottom: 1px solid #DDDDDD;background-color:#F5F5F5;
+	border-bottom: 1px solid #DDDDDD;
+	background-color: #F5F5F5;
 }
 .hDiv span.sasc {
 	background: url("../images/up.png") no-repeat scroll right center transparent;
@@ -268,4 +259,10 @@ div.pGroup {
 .bDivBox {
 	overflow: auto;
 	overflow-x: hidden;
+}
+.pDiv .pGLoading {
+	background: url("../images/load.png") no-repeat scroll left center transparent;
+	float: left;
+	padding: 8px 0 0 23px;
+	display:none;
 }

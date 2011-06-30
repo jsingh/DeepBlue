@@ -613,6 +613,8 @@
 																	  OnSelect = "function(event, ui) { dealActivity.setUFAUnderlyingFund(ui.item.id,ui.item.value);}"
 	})%>
 	<%=Html.jQueryDatePicker("FE_Date")%>
+	<%=Html.jQueryDatePicker("SplitDate")%>
+	<%=Html.jQueryDatePicker("ConversionDate")%>
 	<script type="text/javascript">dealActivity.init();dealActivity.newFLEData=<%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.FundExpenseModel())%>;
 	</script>
 	<script id="CashDistributionAddTemplate" type="text/x-jquery-tmpl"> 

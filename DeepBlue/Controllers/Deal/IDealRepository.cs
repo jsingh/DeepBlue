@@ -76,7 +76,7 @@ namespace DeepBlue.Controllers.Deal {
 		#region UnderlyingFund
 		List<UnderlyingFundListModel> GetAllUnderlyingFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		List<UnderlyingFund> GetAllUnderlyingFunds();
-		CreateUnderlyingFundModel FindUnderlyingFundModel(int issuerId);
+		CreateUnderlyingFundModel FindUnderlyingFundModel(int underlyingFundId,int issuerId);
 		UnderlyingFund FindUnderlyingFund(int underlyingFundId);
 		IEnumerable<ErrorInfo> SaveUnderlyingFund(UnderlyingFund underlyingFund);
 		bool UnderlyingFundNameAvailable(string fundName, int underlyingFundId);

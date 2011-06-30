@@ -2,7 +2,7 @@
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Close
+	Deal Close
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
@@ -20,10 +20,16 @@
 				<div class="arrow">
 				</div>
 				<div class="pname">
-					CLOSE DEAL<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%></div>
+					CLOSE DEAL
+				</div>
 			</div>
 			<div class="rightcol">
-				<%: Html.TextBox("Deal","SEARCH DEAL", new { @id="Deal", @class="wm", @style = "width:200px" })%>
+				<div class="cell auto" style="margin:0;padding:0 10px 0 0;">
+					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none;" })%>
+				</div>
+				<div class="cell">
+					<%: Html.TextBox("Deal", "SEARCH DEAL", new { @id = "Deal", @class = "wm", @style = "width:160px" })%>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -41,6 +47,9 @@
 					<div style="margin-left: 25px;" class="cell auto">
 						<label>
 							Deal Name-<%: Html.Span("", new { @id = "SpnDealName", @style = "padding-left:10px;" })%></label></div>
+					<div id="LoadingDetail" class="cell auto">
+						<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...", new { @id = "SpnGridLoading", @style="display:none;" })%>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -84,11 +93,6 @@
 						</tbody>
 					</table>
 				</div>
-			</div>
-		</div>
-		<div class="dc-box">
-			<div id="LoadingDetail">
-				<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...", new { @id = "SpnGridLoading", @style="display:none;" })%>
 			</div>
 		</div>
 		<div class="dc-box">

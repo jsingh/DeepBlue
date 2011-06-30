@@ -42,7 +42,6 @@ namespace DeepBlue.Controllers.Document {
 			return View(model);
 		}
 
-
 		//
 		// POST: /Document/Create
 		[HttpPost]

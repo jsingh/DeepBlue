@@ -33,6 +33,18 @@
 	</tr>
 	<tr>
 		<td>
+			<%: Html.LabelFor(model => model.SplitDate) %>
+		</td>
+		<td>
+			<%: Html.EditorFor(model => model.SplitDate) %>
+		</td>
+		<td>
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr>
+		<td>
 		</td>
 		<td>
 		</td>
@@ -44,4 +56,3 @@
 		</td>
 	</tr>
 </table>
- 

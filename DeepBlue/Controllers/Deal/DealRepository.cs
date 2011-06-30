@@ -150,11 +150,14 @@ namespace DeepBlue.Controllers.Deal {
 							DealNumber = deal.DealNumber,
 							FundId = deal.FundID,
 							TotalDealClosing = deal.DealClosings.Count(),
+							TotalUnderlyingFundClosing = deal.DealUnderlyingFunds.Where(dealUnderlyingFund => dealUnderlyingFund.DealClosingID != null && dealUnderlyingFund.DealID == dealId).Count(),
+							TotalUnderlyingDirectClosing = deal.DealUnderlyingDirects.Where(dealUnderlyingDirect => dealUnderlyingDirect.DealClosingID != null && dealUnderlyingDirect.DealID == dealId).Count(),
 							TotalUnderlyingFundNotClosing = deal.DealUnderlyingFunds.Where(dealUnderlyingFund => dealUnderlyingFund.DealClosingID == null && dealUnderlyingFund.DealID == dealId).Count(),
 							TotalUnderlyingDirectNotClosing = deal.DealUnderlyingDirects.Where(dealUnderlyingDirect => dealUnderlyingDirect.DealClosingID == null && dealUnderlyingDirect.DealID == dealId).Count(),
 						}).SingleOrDefault();
 			}
 		}
+
 		#endregion
 
 		#region DealExpense
@@ -659,10 +662,10 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public CreateUnderlyingFundModel FindUnderlyingFundModel(int issuerId) {
+		public CreateUnderlyingFundModel FindUnderlyingFundModel(int underlyingFundId, int issuerId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				CreateUnderlyingFundModel model = (from underlyingFund in context.UnderlyingFunds
-												   where underlyingFund.IssuerID == issuerId
+												   where underlyingFund.UnderlyingtFundID == underlyingFundId
 												   select new CreateUnderlyingFundModel {
 													   FundName = underlyingFund.FundName,
 													   FundTypeId = underlyingFund.FundTypeID,
@@ -699,7 +702,7 @@ namespace DeepBlue.Controllers.Deal {
 													   AuditorName = underlyingFund.AuditorName,
 													   Exempt = underlyingFund.Exempt,
 													   IsDomestic = underlyingFund.IsDomestic
-												   }).FirstOrDefault();
+												   }).SingleOrDefault();
 				if (model != null) {
 					List<CommunicationDetailModel> communications = GetContactCommunications(context, model.ContactId);
 					model.Address = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.MailingAddress);
@@ -1180,7 +1183,7 @@ namespace DeepBlue.Controllers.Deal {
 												  where direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId
 												  group direct by direct.Deal.FundID into directs
 												  join fund in context.Funds on directs.Key equals fund.FundID
-												  from equitySplit in context.EquitySplits 
+												  from equitySplit in context.EquitySplits
 												  where equitySplit.EquiteSplitID == activityId
 												  select new NewHoldingPatternModel {
 													  FundId = fund.FundID,

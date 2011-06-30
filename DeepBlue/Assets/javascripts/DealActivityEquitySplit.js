@@ -101,8 +101,10 @@ dealActivity.createSA=function (frm) {
 		if($.trim(data)!="") {
 			alert(data);
 		} else {
+			alert("Spilt Saved");
+			$("#SpnSymbol").empty();
 			//dealActivity.loadNHP(1,dealActivity.getEquityId());
-			//jHelper.resetFields(frm);
+			jHelper.resetFields(frm);
 		}
 	});
 	return false;

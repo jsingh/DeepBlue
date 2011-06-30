@@ -342,6 +342,17 @@ namespace DeepBlue.Controllers.Deal {
 
 		#endregion
 
+		#region DealDocument
+		//
+		// POST: /Document/Create
+		[HttpPost]
+		[AcceptVerbs(HttpVerbs.Post)]
+		public ActionResult CreateDocument() {
+			var f = Request.Files;
+			return null;
+		}
+		#endregion
+
 		#region DealUnderlyingFund
 		//
 		// GET: /Deal/CreateDealUnderlyingFund
@@ -863,29 +874,9 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		[HttpGet]
-		public ActionResult EditUnderlyingFund(int? id) {
-			CreateUnderlyingFundModel model = DealRepository.FindUnderlyingFundModel(id ?? 0);
-			if (model == null) {
-				model = new CreateUnderlyingFundModel();
-			}
-			model.UnderlyingFundTypes = SelectListFactory.GetUnderlyingFundTypeSelectList(AdminRepository.GetAllUnderlyingFundTypes());
-			model.ReportingTypes = SelectListFactory.GetReportingTypeSelectList(AdminRepository.GetAllReportingTypes());
-			model.Reportings = SelectListFactory.GetReportingFrequencySelectList(AdminRepository.GetAllReportingFrequencies());
-			model.Industries = SelectListFactory.GetIndustrySelectList(AdminRepository.GetAllIndusties());
-			model.Geographyes = SelectListFactory.GetGeographySelectList(AdminRepository.GetAllGeographies());
-			model.FundStructures = SelectListFactory.GetEmptySelectList();
-			model.InvestmentTypes = SelectListFactory.GetInvestmentTypeSelectList(AdminRepository.GetAllInvestmentTypes());
-			model.ManagerContacts = SelectListFactory.GetEmptySelectList();
-			model.FundRegisteredOffices = SelectListFactory.GetEmptySelectList();
-			return View(model);
-		}
-
-		[HttpGet]
-		public ActionResult FindUnderlyingFund(int issuerId) {
-			CreateUnderlyingFundModel model = DealRepository.FindUnderlyingFundModel(issuerId);
-			if (model == null) {
-				model = new CreateUnderlyingFundModel();
-			}
+		public ActionResult FindUnderlyingFund(int underlyingFundId, int issuerId) {
+			CreateUnderlyingFundModel model = DealRepository.FindUnderlyingFundModel(underlyingFundId, issuerId);
+			if (model == null) model = new CreateUnderlyingFundModel();
 			return Json(model, JsonRequestBehavior.AllowGet);
 		}
 
@@ -1082,7 +1073,7 @@ namespace DeepBlue.Controllers.Deal {
 				equitySplit.LastUpdatedDate = DateTime.Now;
 				equitySplit.EquityID = model.EquityId;
 				equitySplit.SplitFactor = model.SplitFactor ?? 0;
-				equitySplit.SplitDate = DateTime.Now;
+				equitySplit.SplitDate = model.SplitDate;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveEquitySplit(equitySplit);
 				if (errorInfo == null) {
 					List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.ActivityTypeId, equitySplit.EquiteSplitID, model.SecurityTypeId, equitySplit.EquityID);
@@ -1127,7 +1118,7 @@ namespace DeepBlue.Controllers.Deal {
 				securityConversion.LastUpdatedBy = AppSettings.CreatedByUserId;
 				securityConversion.LastUpdatedDate = DateTime.Now;
 				securityConversion.SplitFactor = model.SplitFactor ?? 0;
-				securityConversion.ConversionDate = DateTime.Now;
+				securityConversion.ConversionDate = model.ConversionDate;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveSecurityConversion(securityConversion);
 				if (errorInfo == null) {
 
@@ -1847,7 +1838,7 @@ namespace DeepBlue.Controllers.Deal {
 		#region NewHoldingPattern
 		//
 		// GET: /Deal/NewHoldingPatternList
-		public ActionResult NewHoldingPatternList(int activityTypeId,int activityId, int securityTypeId, int securityId) {
+		public ActionResult NewHoldingPatternList(int activityTypeId, int activityId, int securityTypeId, int securityId) {
 			List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(activityTypeId, activityId, securityTypeId, securityId);
 			FlexigridData flexgridData = new FlexigridData();
 			flexgridData.total = newHoldingPatterns.Count();

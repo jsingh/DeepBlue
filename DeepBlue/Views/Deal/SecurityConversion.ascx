@@ -40,7 +40,19 @@
 			<%: Html.LabelFor(model => model.SplitFactor) %>
 		</td>
 		<td>
-			<%: Html.TextBoxFor(model => model.SplitFactor) %>&nbsp;Stocks
+			<%: Html.TextBoxFor(model => model.SplitFactor, new { @style = "width:216px" })%>&nbsp;Stocks
+		</td>
+	</tr>
+	<tr>
+		<td>
+		</td>
+		<td>
+		</td>
+		<td>
+			<%: Html.LabelFor(model => model.ConversionDate) %>
+		</td>
+		<td>
+			<%: Html.EditorFor(model => model.ConversionDate)%>
 		</td>
 	</tr>
 	<tr>

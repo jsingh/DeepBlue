@@ -19,7 +19,7 @@
 				<div class="arrow">
 				</div>
 				<div class="pname">
-					ADD DIRECTS</div>
+					DIRECT LIBRARY</div>
 			</div>
 		</div>
 	</div>

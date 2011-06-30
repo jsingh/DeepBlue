@@ -16,7 +16,7 @@ namespace DeepBlue.Models.Admin {
 		[Required(ErrorMessage = "Reporting is required.")]
 		[StringLength(100, ErrorMessage = "Reporting must be under 100 characters.")]
 		[RemoteUID_(Action = "ReportingTypeAvailable", Controller = "Admin", ValidateParameterName = "Reporting", Params = new string[] { "ReportingTypeId" })]
-		[DisplayName("Reporting:")]
+		[DisplayName("Reporting Type:")]
 		public string Reporting { get; set; }
 
 		[DisplayName("Enable:")]

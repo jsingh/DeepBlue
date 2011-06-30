@@ -114,6 +114,7 @@
 		deal.setIndex($("#tblUnderlyingDirect"));
 		deal.calcDUF();
 		deal.calcDUD();
+		$("#DocumentDate").datepicker({ changeMonth: true,changeYear: true });
 	}
 	,setIndex: function (target) {
 		var index=0;

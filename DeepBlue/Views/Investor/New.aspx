@@ -2,7 +2,7 @@
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="TitleCnt" ContentPlaceHolderID="TitleContent" runat="server">
-	Create Investor
+	Investor
 </asp:Content>
 <asp:Content ID="HeaderCnt" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%= Html.JavascriptInclueTag("Investor.js")%><%=Html.StylesheetLinkTag("newInvestor.css")%>

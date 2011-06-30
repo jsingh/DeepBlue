@@ -2,7 +2,7 @@
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Search
+	Document Search
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("DocumentSearch.js")%>
@@ -61,13 +61,13 @@
 						<th sortname="DocumentDate" style="width: 10%;" align="center">
 							Date
 						</th>
-						<th sortname="FileName" style="width: 20%;">
+						<th sortname="FileName" style="width: 30%;">
 							File Name
 						</th>
-						<th sortname="DocumentType" style="width: 35%;">
+						<th sortname="DocumentType" style="width: 20%;">
 							Document Type
 						</th>
-						<th sortname="InvestorName" style="width: 25%" id="InvestorNameColumn">
+						<th sortname="InvestorName" style="width: 30%" id="InvestorNameColumn">
 							Investor Name
 						</th>
 						<th sortname="FundName" style="display: none; width: 25%;" id="FundNameCloumn">

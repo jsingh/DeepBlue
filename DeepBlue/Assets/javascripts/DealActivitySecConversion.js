@@ -15,7 +15,10 @@ dealActivity.onOldSecuritySearch=function (event,ui) {
 	if(msg!="") { alert(msg);return false; }
 };
 dealActivity.changeNewSecurityType=function (ddl) {
-	$("#NewSecurityId").val(0);$("#NewSecurity").val("");
+	$("#NewSecurityId").val(0);
+	$("#NewSecurity").val("");
+	$("#SpnNewSymbollbl").hide();
+	$("#SpnNewSymbol").hide();
 	dealActivity.setSecConvAutoComplete(ddl.value,$("#NewSecurity"));
 };
 dealActivity.changeOldSecurityType=function (ddl) {
@@ -85,9 +88,7 @@ dealActivity.createSecConversion=function (frm) {
 			var frm=$("#frmSecurityConversion");
 			$("#NHPList").show();
 			dealActivity.loadNHP($("#OldSecurityTypeId").val(),$("#OldSecurityId").val(),arr[1]);
-			$(":input[type='text']",frm).val("");
-			$(":input[type='hidden']",frm).val("0");
-			$("select",frm).val("0");
+			jHelper.resetFields(frm);
 			$("#SpnNewSymbollbl").hide();
 			$("#SpnNewSymbol").hide();
 		} else { alert(data); }

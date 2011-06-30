@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Web.Mvc;
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Deal {
 	public class SecurityActivityModel {

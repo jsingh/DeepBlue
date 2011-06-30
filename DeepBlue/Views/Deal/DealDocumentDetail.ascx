@@ -27,7 +27,7 @@
 			<%: Html.Label("Document Date ") %>
 		</div>
 		<div class="editor-field">
-			<%: Html.TextBox("DocumentDate", "", new { @class = "hasDatepicker" })%>
+			<%: Html.TextBox("DocumentDate")%>
 		</div>
 		<div class="editor-label">
 			<%: Html.Label("For") %>
@@ -40,8 +40,16 @@
 		</div>
 		<div class="editor-field">
 			<%: Html.File("File", new { })%>
+			<%--	<div id="file-uploader-demo1">
+				<noscript>
+						<p>
+								Please enable JavaScript to use file uploader.</p>
+						<!-- or put a simple form for upload here -->
+				</noscript>--%>
 		</div>
-		<div style="clear: both"><br />
+		</div>
+		<div style="clear: both">
+			<br />
 			<table cellpadding="0" cellspacing="0" border="0" class="grid" style="width: 80%;">
 				<thead>
 					<tr class="dealhead_tr">

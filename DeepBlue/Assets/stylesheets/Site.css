@@ -693,10 +693,13 @@ h2 {
 }
 .heading .leftcol {
 	float: left;
+	border: solid 0px red;
 }
 .heading .rightcol {
 	float: right;
 	margin-top: -5px;
+	border: solid 0px red;
+	width: auto;
 }
 .subext, .subext3 {
 	clear: both;
@@ -827,7 +830,7 @@ input.ui-autocomplete-loading[type="text"] {
 	background-position: left center;
 	background-repeat: no-repeat;
 }
-.setting, .ques, .key, .arrow {
+.setting, .ques, .key, .uparrow {
 	background-repeat: no-repeat;
 	height: 34px;
 	float: right;
@@ -840,6 +843,14 @@ input.ui-autocomplete-loading[type="text"] {
 .ques {
 	background-image: url(../images/ques.png);
 	width: 15px;
+}
+.key {
+	background-image: url(../images/key.png);
+	width: 26px;
+}
+.uparrow {
+	background-image: url(../images/up_arrow.png);
+	width: 21px;
 	margin-right: 20%;
 }
 .cname {

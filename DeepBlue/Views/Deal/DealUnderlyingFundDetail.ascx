@@ -12,7 +12,7 @@
 		</div>
 	</div>
 	<div class="expandaddbtn">
-		<%: Html.Anchor(Html.Image("add_funds.png").ToHtmlString(), "javascript:deal.showMakeNewHeader('MakeNewDUFund');")%>
+		<%: Html.Anchor(Html.Image("addgp.png").ToHtmlString(), "javascript:deal.showMakeNewHeader('MakeNewDUFund');")%>
 	</div>
 </div>
 <div class="fieldbox">

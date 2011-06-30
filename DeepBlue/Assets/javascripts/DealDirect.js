@@ -4,8 +4,12 @@
 		dealDirect.onCreateNewIssuer=function (id) {
 			dealDirect.load(id);
 		}
+		dealDirect.onAddIssuer=function () {
+			$("#Name","#NewIssuerDetail").focus();
+		}
 	}
 	,onCreateNewIssuer: null
+	,onAddIssuer: null
 	,setUpNewIssuer: function () {
 		$("#I_Country","#frmAddNewIssuer")
 			.blur(function () { if($.trim(this.value)=="") { $("#CountryId","#frmAddNewIssuer").val(0); } })
@@ -84,6 +88,8 @@
 		var data={ "IssuerId": 0,"CountryId": 0 };
 		$("#IssuerDetailTemplate").tmpl(data).appendTo(newIssuerDetail);
 		dealDirect.setUpNewIssuer();
+		if(dealDirect.onAddIssuer)
+			dealDirect.onAddIssuer();
 	}
 	,close: function () {
 		$('#AddNewIssuer').hide();

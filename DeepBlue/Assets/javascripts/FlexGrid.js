@@ -116,6 +116,7 @@
 				stat=stat.replace(/{to}/,r2);
 				stat=stat.replace(/{total}/,p.total);
 				$('.pPageStat',this.pDiv).html(stat);
+				$('.pGLoading',this.pDiv).hide();
 			}
 			,resize: function () {
 				if(p.resizeWidth) {
@@ -135,6 +136,7 @@
 				}
 				this.loading=true;
 				if(!p.url) { return false; }
+				$('.pGLoading',this.pDiv).show();
 				$('.pPageStat',this.pDiv).html(p.procmsg);
 				$('.pReload',this.pDiv).addClass('loading');
 				$(g.block).css({ top: g.bDiv.offsetTop });
@@ -248,7 +250,7 @@
 			g.pDiv.className='pDiv';
 			g.pDiv.innerHTML='<div class="pDiv2"></div>';
 			$(g.hDiv).before(g.pDiv);
-			var html=' <div class="pGroup"> <div class="pFirst pButton"><span></span></div><div class="pPrev pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pcontrol">Page <input type="text" size="4" value="1" /> of <span> 1 </span></span></div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pNext pButton"><span></span></div><div class="pLast pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pReload pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pPageStat"></span></div>';
+			var html='<div class="pGroup"> <div class="pFirst pButton"><span></span></div><div class="pPrev pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pcontrol">Page <input type="text" size="4" value="1" /> of <span> 1 </span></span></div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pNext pButton"><span></span></div><div class="pLast pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pReload pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pPageStat"></span></div>';
 			$('div',g.pDiv).html(html);
 			$('.pReload',g.pDiv).click(function () { g.populate() });
 			$('.pFirst',g.pDiv).click(function () { g.changePage('first') });
@@ -257,12 +259,14 @@
 			$('.pLast',g.pDiv).click(function () { g.changePage('last') });
 			$('.pcontrol input',g.pDiv).keydown(function (e) { if(e.keyCode==13) { g.changePage('input'); } });
 			if($.browser.msie&&$.browser.version<7) { $('.pButton',g.pDiv).hover(function () { $(this).addClass('pBtnOver'); },function () { $(this).removeClass('pBtnOver'); }); }
+			$(g.pDiv).prepend("<div class='pGroup pGLoading'><span class='pLoadingStat'>Loading...</span></div>");
 			if(p.useRp) {
 				var opt="";
 				for(var nx=0;nx<p.rpOptions.length;nx++) {
 					if(p.rp==p.rpOptions[nx]) { sel='selected="selected"'; } else { sel=''; }
 					opt+="<option value='"+p.rpOptions[nx]+"' "+sel+" >"+p.rpOptions[nx]+"&nbsp;&nbsp;</option>";
 				};
+
 				$('.pDiv2',g.pDiv).prepend("<div class='pGroup'>Rows:&nbsp;<select name='rp'>"+opt+"</select></div> <div class='btnseparator'></div>");
 				$('select',g.pDiv).change(
 					function () {
@@ -281,8 +285,8 @@
 		g.block.className='gBlock';
 		var gh=$(g.bDiv).height();
 		var gtop=g.bDiv.offsetTop;
-		$(g.block).css({ width: '100%',height: 100,background: 'white',position: 'absolute',marginBottom: (gh* -1),zIndex: 1,top: gtop,left: '0px' });
-		$(g.block).fadeTo(0,p.blockOpacity);
+		//$(g.block).css({ width: '100%',height: 100,background: 'white',position: 'absolute',marginBottom: (gh* -1),zIndex: 1,top: gtop,left: '0px' });
+		//$(g.block).fadeTo(0,p.blockOpacity);
 		t.p=p;
 		t.grid=g;
 		if(p.url&&p.autoload) {

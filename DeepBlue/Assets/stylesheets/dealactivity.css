@@ -233,6 +233,9 @@ input, select {
 #ConversionDetail select {
 	width: 204px;
 }
+#ConversionDetail #ConversionDate {
+	width: 120px;
+}
 #FEFooter td {
 	text-align: center;
 	background-color: transparent;
@@ -245,4 +248,8 @@ input, select {
 	width: auto;
 	float: right;
 }
-.selectloading{ float:left; margin:10px; font-weight:normal; }
+.selectloading {
+	float: left;
+	margin: 10px;
+	font-weight: normal;
+}

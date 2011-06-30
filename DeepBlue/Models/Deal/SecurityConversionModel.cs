@@ -4,9 +4,14 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Deal {
 	public class SecurityConversionModel : SecurityActivityModel {
+
+		public SecurityConversionModel() {
+			ConversionDate = DateTime.Now;
+		}
 
 		[Required(ErrorMessage = "Old Direct is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Old Direct is required")]
@@ -33,5 +38,11 @@ namespace DeepBlue.Models.Deal {
 
 		[DisplayName("New Direct Symbol-")]
 		public string NewSymbol { get; set; }
+
+		[Required(ErrorMessage = "Conversion Date is required")]
+		[DateRange(ErrorMessage = "Conversion Date is required")]
+		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+		[DisplayName("Conversion Date-")]
+		public DateTime ConversionDate { get; set; }
 	}
 }

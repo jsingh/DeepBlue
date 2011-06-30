@@ -5,7 +5,11 @@
 		jHelper.waterMark();
 		underlyingFund.setUp();
 		dealDirect.onCreateNewIssuer=function (id) {
-			underlyingFund.load(id);
+			underlyingFund.load(0,id);
+		}
+		dealDirect.onAddIssuer=function () {
+			$("#Name","#NewIssuerDetail").focus();
+			$("#UnderlyingFundDetail").scrollTop(0);
 		}
 	}
 	,setUp: function () {
@@ -24,18 +28,6 @@
 		if($.trim(txt.val())!="") {
 			txt.val(txt.val()+"%");
 		}
-	}
-	,add: function (id) {
-		var dt=new Date();
-		var url="/Deal/EditUnderlyingFund/"+id+"?t="+dt.getTime();
-		jHelper.createDialog(url,{
-			title: "Underlying Fund",
-			autoOpen: true,
-			width: 800,
-			modal: true,
-			position: 'top',
-			autoResize: true
-		});
 	}
 	,deleteUnderlyingFund: function (id,img) {
 		if(confirm("Are you sure you want to delete this underlying fund?")) {
@@ -87,6 +79,9 @@
 	}
 	,expand: function () {
 		$(".headerbox").click(function () {
+			$(".headerbox").show();
+			$(".expandheader").hide();
+			$(".detail").hide();
 			$(this).hide();
 			var parent=$(this).parent();
 			$(".expandheader",parent).show();
@@ -103,14 +98,13 @@
 			$(".headerbox",parent).show();
 		});
 	}
-	,load: function (id) {
+	,load: function (id,issuerId) {
 		var addUnderlyingfund=$("#AddUnderlyingFund");
-		addUnderlyingfund.empty();
-		if($("#AddNewIssuer").css("display")=="block") {
-			addUnderlyingfund.css("top","245px");
-		}
+		addUnderlyingfund.css("text-align","center").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		addUnderlyingfund.show();
-		$.getJSON("/Deal/FindUnderlyingFund",{ "_": (new Date).getTime(),"issuerId": id },function (data) {
+		$.getJSON("/Deal/FindUnderlyingFund",{ "_": (new Date).getTime(),"underlyingFundId": id,"issuerId": issuerId },function (data) {
+			addUnderlyingfund.empty();
+			addUnderlyingfund.css("text-align","left");
 			$("#UnderlyingFundTemplate").tmpl(data).appendTo(addUnderlyingfund);
 			underlyingFund.setUp();
 			jHelper.checkValAttr(addUnderlyingfund);
