@@ -4,6 +4,7 @@
 		jHelper.resizeIframe();
 		jHelper.waterMark();
 		underlyingFund.setUp();
+		dealDirect.isUnderlyingFundModel=true;
 		dealDirect.onCreateNewIssuer=function (id) {
 			underlyingFund.load(0,id);
 		}

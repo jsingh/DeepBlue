@@ -116,6 +116,34 @@
 		deal.calcDUD();
 		$("#DocumentDate").datepicker({ changeMonth: true,changeYear: true });
 	}
+	,uploadDocument: function () {
+		return false;
+		try {
+			$.ajaxFileUpload(
+			{
+				url: '/Deal/CreateDocument',
+				secureuri: false,
+				fileElementId: 'fileToUpload',
+				formId: 'frmDocumentInfo',
+				dataType: 'json',
+				success: function (data,status) {
+					if(typeof (data.error)!='undefined') {
+						if(data.error!='') {
+							alert(data.error);
+						} else {
+							alert(data.msg);
+						}
+					}
+				},
+				error: function (data,status,e) {
+					alert(data.msg+","+status+","+e);
+				}
+			}
+		);
+		} catch(e) {
+			alert(e);
+		}
+	}
 	,setIndex: function (target) {
 		var index=0;
 		$("tbody tr",target).each(function () { index=deal.putIndex(this,index); });

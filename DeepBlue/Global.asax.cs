@@ -37,7 +37,6 @@ namespace DeepBlue {
 					new { controller = "Admin", action = "List", id = @"\d+" } // Parameter defaults
 				);
 
-			 
 		}
 
 		protected void Application_Start() {

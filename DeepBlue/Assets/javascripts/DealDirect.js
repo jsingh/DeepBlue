@@ -10,6 +10,7 @@
 	}
 	,onCreateNewIssuer: null
 	,onAddIssuer: null
+	,isUnderlyingFundModel: false
 	,setUpNewIssuer: function () {
 		$("#I_Country","#frmAddNewIssuer")
 			.blur(function () { if($.trim(this.value)=="") { $("#CountryId","#frmAddNewIssuer").val(0); } })
@@ -86,6 +87,7 @@
 		addIssuer.show();
 		var newIssuerDetail=$("#NewIssuerDetail");newIssuerDetail.empty();
 		var data={ "IssuerId": 0,"CountryId": 0 };
+		data.IsUnderlyingFundModel=dealDirect.isUnderlyingFundModel;
 		$("#IssuerDetailTemplate").tmpl(data).appendTo(newIssuerDetail);
 		dealDirect.setUpNewIssuer();
 		if(dealDirect.onAddIssuer)

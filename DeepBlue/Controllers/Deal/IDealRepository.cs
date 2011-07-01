@@ -106,6 +106,10 @@ namespace DeepBlue.Controllers.Deal {
 		bool DeleteUnderlyingFundCapitalCall(int id);
 		#endregion
 
+		#region UnderlyingFundManualCapitalCall
+		List<UnderlyingFundManualCapitalCallModel> GetAllManualUnderlyingFundCapitalCalls(int underlyingFundId);
+		#endregion
+
 		#region UnderlyingFundPostRecordCapitalCall
 		UnderlyingFundCapitalCallLineItem FindUnderlyingFundPostRecordCapitalCall(int underlyingFundCapitalCallLineItemId);
 		UnderlyingFundCapitalCallLineItem FindUnderlyingFundPostRecordCapitalCall(int underlyingFundCapitalCallId, int underlyingFundId, int dealId);

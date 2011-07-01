@@ -38,15 +38,26 @@
 		<div class="editor-label" style="clear: right">
 			<%: Html.Label("File / Link ") %>
 		</div>
-		<div class="editor-field">
-			<%: Html.File("File", new { })%>
-			<%--	<div id="file-uploader-demo1">
-				<noscript>
-						<p>
-								Please enable JavaScript to use file uploader.</p>
-						<!-- or put a simple form for upload here -->
-				</noscript>--%>
+		<div class="editor-field" style="width: auto;">
+			<div class="cell" style="padding: 0; margin: 0; width: auto;">
+				<%: Html.File("File", new { @id="fileToUpload" })%></div>
+			<%--<div class="cell" style="padding: 0pt; background-color: White; height: 16px; width: 100px;
+				margin: 5px 0pt 0pt 5px;">
+				<div id="DocProgress" style="background-color: Red; float: left; height: 16px; width: 10px;">
+					&nbsp;
+				</div>
+			</div>
+			<div class="cell" style="padding: 0; margin: 0;">
+				<%: Html.Span("", new { @id = "SpnDocProgress" })%>
+			</div>--%>
 		</div>
+		<div class="editor-label" style="width: 317px">
+		</div>
+		<div class="editor-field" style="width: auto;">
+			<%: Html.ImageButton("Save.png", new { @id = "btnSaveDocument" })%>
+		</div>
+		<div class="cell" style="padding: 0; margin: 0;">
+			<%: Html.Span("", new { @id = "SpnDocLoading" })%>
 		</div>
 		<div style="clear: both">
 			<br />

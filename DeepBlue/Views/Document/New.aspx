@@ -9,14 +9,23 @@
 	<%=Html.JavascriptInclueTag("DocumentUpload.js")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+	<div class="navigation">
+		<div class="heading">
+			<div class="leftcol">
+				<div class="title">
+					DOCUMENT MANAGEMENT</div>
+				<div class="arrow">
+				</div>
+				<div class="pname">
+					DOCUMENT UPLOAD</div>
+			</div>
+		</div>
+	</div>
 	<div class="doc-upload">
 		<% Html.EnableClientValidation(); %>
 		<% using (Html.BeginForm("Create", "Document", FormMethod.Post, new { @id = "AddNewDocument", @enctype = "multipart/form-data" })) {%>
 		<%: Html.HiddenFor(model => model.InvestorId)%>
 		<%: Html.HiddenFor(model => model.FundId)%>
-		<div class="editor-label" style="width: 200px">
-			<b>Document Upload</b>
-		</div>
 		<div class="editor-label">
 			<%: Html.LabelFor(model => model.DocumentTypeId) %>
 		</div>
@@ -60,11 +69,8 @@
 			<%: Html.Span("",new { id = "UpdateLoading" })%>
 		</div>
 		<div class="editor-button" style="width: 165px">
-			<div style="float: left; padding: 0 0 10px 5px;">
+			<div style="float: left; padding: 0 0 10px 50px;">
 				<%: Html.ImageButton("Save.png", new { @class="default-button", onclick = "return documentUpload.onSubmit('AddNewDocument');" })%>
-			</div>
-			<div style="float: left; padding: 0 0 10px 5px;">
-				<%: Html.Image("Close.png", new { @class="default-button", onclick = "javascript:parent.documentUpload.closeDialog(false);" })%>
 			</div>
 		</div>
 	</div>

@@ -83,10 +83,12 @@
     <Compile Include="Controllers\Document\IDocumentRepository.cs" />
     <Compile Include="Helpers\ExportPdfResult.cs" />
     <Compile Include="Helpers\ExportToPdf.cs" />
+    <Compile Include="Helpers\FileUpload.cs" />
     <Compile Include="Helpers\FileUploadHandler.cs" />
     <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Helpers\FormCollectionHelper.cs" />
     <Compile Include="Helpers\JsonSerializer.cs" />
+    <Compile Include="Helpers\ProgressModule.cs" />
     <Compile Include="Models\Admin\EditFundExpenseTypeModel.cs" />
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
@@ -167,6 +169,7 @@
     <Compile Include="Models\Deal\UnderlyingFundListModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Deal\UnderlyingFundManualCapitalCallModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundPostRecordCapitalCallModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundPostRecordCashDistributionModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundValuationModel.cs" />
@@ -733,6 +736,7 @@
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
+    <Content Include="Assets\javascripts\DealActivityManualCC.js" />
     <Content Include="Assets\javascripts\fileuploader.js" />
     <Content Include="Assets\javascripts\FundExpenseType.js" />
     <Content Include="Assets\javascripts\DealActivityEquitySplit.js" />
@@ -757,6 +761,7 @@
     <Content Include="Assets\javascripts\Industry.js" />
     <Content Include="Assets\javascripts\Geography.js" />
     <Content Include="Assets\javascripts\Issuer.js" />
+    <Content Include="Assets\javascripts\jquery.uploadProgress.js" />
     <Content Include="Assets\javascripts\ReportingFrequency.js" />
     <Content Include="Assets\javascripts\ReportingType.js" />
     <Content Include="Assets\javascripts\jAjaxTable.js" />
@@ -896,6 +901,7 @@
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
+    <Content Include="Views\Deal\ManualUnderlyingFundCapitalCall.ascx" />
     <Content Include="Views\Deal\UnderlyingFunds.aspx" />
     <Content Include="Views\Deal\Close.aspx" />
     <Content Include="Views\Deal\DirectEquityDetail.ascx" />

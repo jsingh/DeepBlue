@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace DeepBlue.Models.Deal {
 	public class IssuerDetailModel {
-
+		
 		public int IssuerId { get; set; }
 
 		[Required(ErrorMessage = "Name is required.")]
@@ -32,5 +32,7 @@ namespace DeepBlue.Models.Deal {
 		public int? IssuerRatingId { get; set; }
 
 		public List<SelectListItem> IssuerRatings { get; set; }
+
+		public bool IsUnderlyingFundModel { get; set; }
 	}
 }

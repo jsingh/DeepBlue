@@ -12,7 +12,19 @@
 	<%=Html.StylesheetLinkTag("document.css")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-	<div class="admin-main">
+	<div class="navigation">
+		<div class="heading">
+			<div class="leftcol">
+				<div class="title">
+					DOCUMENT MANAGEMENT</div>
+				<div class="arrow">
+				</div>
+				<div class="pname">
+					DOCUMENT SEARCH</div>
+			</div>
+		</div>
+	</div>
+	<div class="admin-main" style="top:46px;">
 		<% using (Html.BeginForm("", "", FormMethod.Get, new { @id = "SearchDocument", @onsubmit = "return false;" })) {%>
 		<%: Html.HiddenFor(model => model.InvestorId)%>
 		<%: Html.HiddenFor(model => model.FundId)%>
@@ -91,7 +103,7 @@
 	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions {
 																	  Source = "/Fund/FindFunds", MinLength = 1,
 																	  OnSelect = "function(event, ui) { documentSearch.selectFund(ui.item.id);}"})%>
-	<%=Html.jQueryFlexiGrid("SearchDocumentList", new FlexigridOptions { ActionName = "List", ControllerName = "Document", HttpMethod = "GET", SortName = "DocumentDate", SortOrder = "desc", Paging = true, Autoload = false, Height = 300 })%>
+	<%=Html.jQueryFlexiGrid("SearchDocumentList", new FlexigridOptions { ActionName = "List", ControllerName = "Document", HttpMethod = "GET", SortName = "DocumentDate", SortOrder = "desc", Paging = true, Autoload = false, Height = 300, RowOptions = new int[] { 10, 20, 50, 100 }, RowsLength = 10 })%>
 	<script type="text/javascript">
 		documentSearch.init();
 	</script>

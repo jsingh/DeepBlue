@@ -32,7 +32,7 @@
 			Underlying Fund
 		</div>
 		<div class="addbtn" style="display: block">
-			<%: Html.Anchor(Html.Image("addnewissuer.png").ToHtmlString(), "javascript:dealDirect.add();")%>
+			<%: Html.Anchor(Html.Image("addgp.png").ToHtmlString(), "javascript:dealDirect.add();")%>
 		</div>
 		<div class="addbtn" style="display: block">
 			<%: Html.Anchor(Html.Image("addnufund.png").ToHtmlString(), "javascript:underlyingFund.load(0,0);")%>
@@ -50,7 +50,7 @@
 				<div class="btn">
 					<%: Html.Span("", new { @id = "SpnNewLoading" })%></div>
 				<div class="btn">
-					<%: Html.ImageButton("addissuer.png")%></div>
+					<%: Html.ImageButton("addgp.png")%></div>
 				<div class="btnclose">
 					<%: Html.Image("issuerclose.png", new { @onclick = "javascript:dealDirect.close();" })%>
 				</div>
@@ -82,7 +82,7 @@
 			<%: Html.Hidden("UnderlyingFundId", "${UnderlyingFundId}")%>
 			<div class="editor-label">
 				<label>
-					Issuer Name</label>
+					GP</label>
 			</div>
 			<div class="editor-field">
 				<%: Html.TextBox("Issuer", "${IssuerName}", new { @id = "Issuer", @style="width:157px", @onblur = "javascript:underlyingFund.checkIssuer(this);" })%>

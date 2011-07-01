@@ -7,6 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("DealActivity.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityCapitalCall.js")%>
+	<%=Html.JavascriptInclueTag("DealActivityManualCC.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityPRCapitalCall.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityCashDistribution.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityPRCashDistribution.js")%>
@@ -148,6 +149,113 @@
 								</div>
 							</div>
 							<%:Html.Hidden("CCUnderlyingFundId", "0", new { @id = "CCUnderlyingFundId" })%>
+						</div>
+					</div>
+				</div>
+				<div class="line">
+				</div>
+				<div class="act-box">
+					<div id="NewManualCapitalCall" class="group">
+						<div class="headerbox">
+							<div class="title">
+								<%: Html.Span("New Manual Capital Call")%>
+							</div>
+						</div>
+						<div class="expandheader expandsel" style="display: none">
+							<div class="expandbtn">
+								<div class="expandtitle" style="display: block;">
+									New Manual Capital Call
+								</div>
+							</div>
+							<div class="addbtn" style="display: block;">
+								<%: Html.Anchor(Html.Image("mncc.png").ToHtmlString(), "javascript:dealActivity.makeNewManualCC();")%></div>
+							<div style="display: block; float: right; margin-right: 15%;">
+								<%: Html.TextBox("ManualCC_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style="width:200px", @class = "wm" })%></div>
+						</div>
+						<div class="detail" id="ManualCCDetail">
+							<div class="search-header">
+								<div class="cell">
+									<%: Html.Span("", new { @id="SpnManualCCUFName" })%>
+								</div>
+								<div class="loadingcell" id="ManualCCLoading">
+								</div>
+							</div>
+							<div id="ManualCapitalCall" class="gridbox" style="display: none;">
+								<div style="clear: both; width: 100%">
+									<%using (Html.Form(new { @id = "frmManualUFCapitalCall", @onsubmit = "return dealActivity.submitManualUFCapitalCall(this);" })) {%>
+									<table cellpadding="0" cellspacing="0" border="0" id="ManualCapitalCallList" class="grid">
+										<thead>
+											<tr>
+												<th style="width: 20%">
+													Fund Name
+												</th>
+												<th style="width: 20%">
+													Call Amount
+												</th>
+												<th style="width: 15%">
+													Notice Date
+												</th>
+												<th style="width: 15%">
+													Received Date
+												</th>
+												<th style="width: 15%">
+													Deemed Capital Call
+												</th>
+												<th>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+									<br />
+									<center>
+										<span>
+											<%: Html.ImageButton("Save.png")%></span><span id="SpnManualCCSaveLoading"></span></center>
+								</div>
+								<%}%>
+							</div>
+							<div id="ManualPRCapitalCall" class="gridbox" style="display: none">
+								<div class="subheader">
+									<div class="name">
+										Manual Post Record Capital Call</div>
+									<div class="addbtn" style="margin-left: 82px;">
+										<%: Html.Anchor(Html.Image("addnewprcc.png").ToHtmlString(), "javascript:dealActivity.makeNewManualPRCC();")%></div>
+									<div class="selectloading" id="Div6">
+									</div>
+								</div>
+								<div id="ManualPRCCListBox" class="clear" style="display: none">
+									<%using (Html.Form(new { @id = "frmManualPUFPRCapitalCall", @onsubmit = "return dealActivity.submitManualUFPRCapitalCall(this);" })) {%>
+									<table cellpadding="0" cellspacing="0" border="0" id="ManualPRCapitalCallList" class="grid">
+										<thead>
+											<tr>
+												<th style="width: 20%">
+													Fund Name
+												</th>
+												<th style="width: 20%">
+													Deal Name
+												</th>
+												<th style="width: 15%">
+													Capital Call Amount
+												</th>
+												<th style="width: 15%">
+													Capital Call Date
+												</th>
+												<th>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+									<br />
+									<center>
+										<span>
+											<%: Html.ImageButton("Save.png")%></span><span id="SpnManualPRCCSaveLoading"></span></center>
+									<%}%>
+								</div>
+							</div>
+							<%:Html.Hidden("ManualCCUnderlyingFundId", "0", new { @id = "ManualCCUnderlyingFundId" })%>
 						</div>
 					</div>
 				</div>
@@ -566,6 +674,10 @@
 																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1, 
 																	  OnSelect = "function(event, ui) { dealActivity.setCCUnderlyingFund(ui.item.id,ui.item.value);}"
 	})%>
+	<%= Html.jQueryAutoComplete("ManualCC_UnderlyingFund", new AutoCompleteOptions {
+																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
+																	  OnSelect = "function(event, ui) { dealActivity.setManualCCUnderlyingFund(ui.item.id,ui.item.value);}"
+	})%>
 	<%= Html.jQueryAutoComplete("CD_UnderlyingFund", new AutoCompleteOptions {
 																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
 																	  OnSelect = "function(event, ui) { dealActivity.setCDUnderlyingFund(ui.item.id,ui.item.value);}"
@@ -625,6 +737,9 @@
 	</script>
 	<script id="CapitalCallAddTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("UnderlyingFundCapitalCall", Model.UnderlyingFundCapitalCallModel); %>
+	</script>
+	<script id="ManualCapitalCallAddTemplate" type="text/x-jquery-tmpl">
+		<% Html.RenderPartial("ManualUnderlyingFundCapitalCall"); %>
 	</script>
 	<script id="PRCapitalCallAddTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("UnderlyingFundPostRecordCapitalCall", Model.UnderlyingFundPostRecordCapitalCallModel); %>

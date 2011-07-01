@@ -27,7 +27,7 @@
 		<div class="leftcol">
 			Underlying Direct</div>
 		<div class="addbtn" style="display: block">
-			<%: Html.Anchor(Html.Image("addnewissuer.png").ToHtmlString(), "javascript:dealDirect.add();")%>
+			<%: Html.Anchor(Html.Image("addcompany.png").ToHtmlString(), "javascript:dealDirect.add();")%>
 		</div>
 		<div style="display: block; float: right; margin-right: 15%;">
 			<%: Html.Span("", new { @id = "SpnIssuerLoading" })%>
@@ -43,7 +43,7 @@
 				<div class="btn">
 					<%: Html.Span("", new { @id = "SpnNewLoading" })%></div>
 				<div class="btn">
-					<%: Html.ImageButton("addissuer.png")%></div>
+					<%: Html.ImageButton("addcompany.png")%></div>
 				<div class="btnclose">
 					<%: Html.Image("issuerclose.png", new { @onclick = "javascript:dealDirect.close();" })%>
 				</div>

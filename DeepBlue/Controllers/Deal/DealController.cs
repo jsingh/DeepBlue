@@ -12,6 +12,7 @@ using System.Text;
 using DeepBlue.Controllers.Issuer;
 using DeepBlue.Models.Deal.Enums;
 using System.Globalization;
+using System.IO;
 
 namespace DeepBlue.Controllers.Deal {
 	public class DealController : Controller {
@@ -347,9 +348,10 @@ namespace DeepBlue.Controllers.Deal {
 		// POST: /Document/Create
 		[HttpPost]
 		[AcceptVerbs(HttpVerbs.Post)]
-		public ActionResult CreateDocument() {
-			var f = Request.Files;
-			return null;
+		public string CreateDocument(FormCollection collection) {
+			string error = string.Empty;
+			string data = string.Empty;
+			return JsonSerializer.ToJsonObject(new { error = error, data = data }).ToString();
 		}
 		#endregion
 
@@ -1553,6 +1555,15 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		#endregion
+
+		#region UnderlyingFundManualCapitalCall
+		//
+		// GET: /Deal/UnderlyingFundManualCapitalCallList
+		[HttpGet]
+		public JsonResult UnderlyingFundManualCapitalCallList(int underlyingFundId) {
+			return Json(DealRepository.GetAllManualUnderlyingFundCapitalCalls(underlyingFundId), JsonRequestBehavior.AllowGet);
+		}
 		#endregion
 
 		#region UnderlyingFundPostRecordCapitalCall

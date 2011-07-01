@@ -965,6 +965,39 @@ namespace DeepBlue.Controllers.Deal {
 
 		#endregion
 
+		#region UnderlyingFundManualCapitalCall
+
+		public List<UnderlyingFundManualCapitalCallModel> GetAllManualUnderlyingFundCapitalCalls(int underlyingFundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var dealUnderlyingFundQuery = (from underlyingFund in context.DealUnderlyingFunds
+											   join deal in context.Deals on underlyingFund.DealID equals deal.DealID
+											   where underlyingFund.UnderlyingFundID == underlyingFundId && underlyingFund.DealClosingID != null
+											   group deal by deal.FundID into deals
+											   select new {
+												   FundID = deals.Key,
+												   UnderlyingFundID = underlyingFundId
+											   });
+				var newCapitalCallQuery = (from dealUnderlyingFund in dealUnderlyingFundQuery
+										   join fund in context.Funds on dealUnderlyingFund.FundID equals fund.FundID
+										   join underlyingFund in context.UnderlyingFunds on dealUnderlyingFund.UnderlyingFundID equals underlyingFund.UnderlyingtFundID
+										   select new UnderlyingFundManualCapitalCallModel {
+											   FundId = fund.FundID,
+											   FundName = fund.FundName,
+											   UnderlyingFundId = underlyingFund.UnderlyingtFundID,
+											   Deals = (from deal in fund.Deals
+														select new CapitalCallDealDetailModel {
+															CommitmentAmount = deal.DealUnderlyingFunds.Sum(duf => duf.CommittedAmount),
+															DealId = deal.DealID,
+															DealName = deal.DealName,
+															DealNumber = deal.DealNumber
+														})
+										   });
+				return newCapitalCallQuery.OrderBy(cc => cc.FundName).ToList();
+			}
+		}
+
+		#endregion
+
 		#region UnderlyingFundPostRecordCapitalCall
 
 		public UnderlyingFundCapitalCallLineItem FindUnderlyingFundPostRecordCapitalCall(int underlyingFundCapitalCallLineItemId) {

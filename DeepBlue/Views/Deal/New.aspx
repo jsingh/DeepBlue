@@ -14,8 +14,6 @@
 	<%=Html.JavascriptInclueTag("Issuer.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
-	<%=Html.JavascriptInclueTag("fileuploader.js")%>
-	<%=Html.StylesheetLinkTag("fileuploader.css")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div id="DealMain">
@@ -35,8 +33,10 @@
 		<%}%>
 		<div id="DealExpenses" class="content">
 		</div>
+		<%using (Html.Form(new { @id = "frmDocumentInfo", @name = "frmDocumentInfo", @action = "/Deal/CreateDocument", @method = "POST", @onsubmit = "return deal.uploadDocument();" })) {%>
 		<div id="DealDocuments" class="content">
 		</div>
+		<%}%>
 		<%using (Html.Form(new { @id = "frmSellerInfo", @onsubmit = "return deal.saveSellerInfo(this);" })) {%>
 		<div id="DealSellerInfo" class="content">
 		</div>

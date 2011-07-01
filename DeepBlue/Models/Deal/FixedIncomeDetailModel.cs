@@ -64,5 +64,7 @@ namespace DeepBlue.Models.Deal {
 
 		public List<SelectListItem> FixedIncomeTypes { get; set; }
 
+
+
 	}
 }

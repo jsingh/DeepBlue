@@ -3,13 +3,13 @@
 <%: Html.Hidden("IssuerId", "${IssuerId}")%>
 <%: Html.Hidden("CountryId", "${CountryId}")%>
 <div class="editor-label">
-	<%: Html.LabelFor(model => model.Name)%>
+	{{if IsUnderlyingFundModel==true}}GP{{else}}Company{{/if}}
 </div>
 <div class="editor-field">
 	<%: Html.TextBox("Name", "${Name}", new { @class = "wm" })%>
 </div>
 <div class="editor-label" style="clear: right">
-	<%: Html.LabelFor(model => model.ParentName)%>
+	{{if IsUnderlyingFundModel==true}}GP Parent{{else}}Company Parent{{/if}}
 </div>
 <div class="editor-field">
 	<%: Html.TextBox("ParentName", "${ParentName}", new { @class = "wm" })%>
