@@ -91,9 +91,12 @@
     <Compile Include="Helpers\ProgressModule.cs" />
     <Compile Include="Models\Admin\EditFundExpenseTypeModel.cs" />
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
+    <Compile Include="Models\Deal\ActivityDealModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundManualCashDistributionModel.cs" />
     <Compile Include="Models\Deal\CreateIssuerModel.cs" />
     <Compile Include="Models\Deal\EquityDetailModel.cs" />
+    <Compile Include="Models\Deal\EquityListModel.cs" />
     <Compile Include="Models\Deal\EquitySplitModel.cs" />
     <Compile Include="Models\Deal\ExpenseToDealModel.cs" />
     <Compile Include="Models\Deal\FinalDealCloseModel.cs" />
@@ -234,12 +237,7 @@
     <Compile Include="Models\Entity\Validation\FixedIncome.cs" />
     <Compile Include="Models\Entity\Validation\FixedIncomeType.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundCashDistribution.cs" />
-    <Compile Include="Models\Issuer\EquityDetailModel.cs" />
-    <Compile Include="Models\Issuer\FixedIncomeDetailModel.cs" />
-    <Compile Include="Models\Issuer\EditIssuerModel.cs" />
-    <Compile Include="Controllers\Issuer\IssuerController.cs" />
-    <Compile Include="Controllers\Issuer\IssuerRepository.cs" />
-    <Compile Include="Controllers\Issuer\IIssuerRepository.cs" />
+    <Compile Include="Models\Investor\ListModel.cs" />
     <Compile Include="Controllers\Report\ReportRepository.cs" />
     <Compile Include="Controllers\Report\IReportRepository.cs" />
     <Compile Include="Controllers\Report\ReportController.cs" />
@@ -427,7 +425,6 @@
     <Compile Include="Models\Entity\Validation\ShareClassType.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFund.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundType.cs" />
-    <Compile Include="Models\Issuer\IssuerDetailModel.cs" />
     <Compile Include="Models\Document\SearchModel.cs" />
     <Compile Include="Models\Document\CreateModel.cs" />
     <Compile Include="Models\Document\Enums.cs" />
@@ -467,8 +464,6 @@
     <Compile Include="Models\Fund\FundRateScheduleDetail.cs" />
     <Compile Include="Models\Fund\ResultModel.cs" />
     <Compile Include="Models\Investor\ResultModel.cs" />
-    <Compile Include="Models\Issuer\IssuerListModel.cs" />
-    <Compile Include="Models\Issuer\ResultModel.cs" />
     <Compile Include="Models\Report\CapitalCallSummaryModel.cs" />
     <Compile Include="Models\Report\CapitalCallReportDetail.cs" />
     <Compile Include="Models\Report\CapitalCallItem.cs" />
@@ -481,7 +476,6 @@
     <Compile Include="Controllers\Investor\InvestorRepository.cs" />
     <Compile Include="Models\Investor\EditModel.cs" />
     <Compile Include="Models\Investor\Enums.cs" />
-    <Compile Include="Models\Investor\ListModel.cs" />
     <Compile Include="Models\Transaction\EditModel.cs" />
     <Compile Include="Models\Transaction\Enums.cs" />
     <Compile Include="Models\Transaction\ErrorModel.cs" />
@@ -609,6 +603,7 @@
     <Content Include="Assets\images\line.png" />
     <Content Include="Assets\images\load.gif" />
     <Content Include="Assets\images\load.png" />
+    <Content Include="Assets\images\loading.gif" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\magnifier.png" />
     <Content Include="Assets\images\mdeal.png" />
@@ -635,6 +630,7 @@
     <Content Include="Assets\images\ques.png" />
     <Content Include="Assets\images\rdc.png" />
     <Content Include="Assets\images\report.png" />
+    <Content Include="Assets\images\rmdc.png" />
     <Content Include="Assets\images\satab.png" />
     <Content Include="Assets\images\satabsel.png" />
     <Content Include="Assets\images\save.png" />
@@ -697,8 +693,16 @@
     <Content Include="Assets\images\top_bar_r.png" />
     <Content Include="Assets\images\top_bg.gif" />
     <Content Include="Assets\images\transaction.png" />
+    <Content Include="Assets\images\treeminus.gif" />
+    <Content Include="Assets\images\treeplus.gif" />
     <Content Include="Assets\images\uatab.png" />
     <Content Include="Assets\images\uatabsel.png" />
+    <Content Include="Assets\images\uatabsel_c.png" />
+    <Content Include="Assets\images\uatabsel_l.png" />
+    <Content Include="Assets\images\uatabsel_r.png" />
+    <Content Include="Assets\images\uatab_c.png" />
+    <Content Include="Assets\images\uatab_l.png" />
+    <Content Include="Assets\images\uatab_r.png" />
     <Content Include="Assets\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Assets\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Assets\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -736,6 +740,7 @@
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
+    <Content Include="Assets\javascripts\DealActivityManualCD.js" />
     <Content Include="Assets\javascripts\DealActivityManualCC.js" />
     <Content Include="Assets\javascripts\fileuploader.js" />
     <Content Include="Assets\javascripts\FundExpenseType.js" />
@@ -752,15 +757,12 @@
     <Content Include="Assets\javascripts\DealActivityFundExpense.js" />
     <Content Include="Assets\javascripts\DealDirect.js" />
     <Content Include="Assets\javascripts\DealReconcile.js" />
-    <Content Include="Assets\javascripts\IssuerFixedIncome.js" />
-    <Content Include="Assets\javascripts\IssuerEquity.js" />
     <Content Include="Assets\javascripts\FixedIncomeType.js" />
     <Content Include="Assets\javascripts\EquityType.js" />
     <Content Include="Assets\javascripts\DealClose.js" />
     <Content Include="Assets\javascripts\FileType.js" />
     <Content Include="Assets\javascripts\Industry.js" />
     <Content Include="Assets\javascripts\Geography.js" />
-    <Content Include="Assets\javascripts\Issuer.js" />
     <Content Include="Assets\javascripts\jquery.uploadProgress.js" />
     <Content Include="Assets\javascripts\ReportingFrequency.js" />
     <Content Include="Assets\javascripts\ReportingType.js" />
@@ -901,6 +903,7 @@
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
+    <Content Include="Views\Deal\ManualUnderlyingFundCashDistribution.ascx" />
     <Content Include="Views\Deal\ManualUnderlyingFundCapitalCall.ascx" />
     <Content Include="Views\Deal\UnderlyingFunds.aspx" />
     <Content Include="Views\Deal\Close.aspx" />
@@ -934,9 +937,6 @@
     <Content Include="Views\Document\List.ascx" />
     <Content Include="Views\Document\New.aspx" />
     <Content Include="Views\Document\Search.aspx" />
-    <Content Include="Views\Issuer\EditIssuer.aspx" />
-    <Content Include="Views\Issuer\Index.aspx" />
-    <Content Include="Views\Issuer\Result.ascx" />
     <Content Include="Views\Report\CapitalCallSummary.aspx" />
     <Content Include="Views\Report\CashDistributionSummary.aspx" />
     <Content Include="Views\Shared\CustomFieldList.ascx" />
@@ -998,7 +998,10 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Controllers\Issuer\" />
     <Folder Include="Files\Documents\2\1\" />
+    <Folder Include="Models\Issuer\" />
+    <Folder Include="Views\Issuer\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

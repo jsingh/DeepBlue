@@ -19,7 +19,7 @@
 			underlyingFund.formatPercent("ManagementFee");
 			underlyingFund.formatPercent("IncentiveFee");
 			underlyingFund.expand();
-			$("#Issuer").autocomplete({ source: "/Issuer/FindIssuers",minLength: 1
+			$("#Issuer").autocomplete({ source: "/Deal/FindIssuers",minLength: 1
 			,select: function (event,ui) { $("#IssuerId").val(ui.item.id); },appendTo: "body",delay: 300
 			});
 		});

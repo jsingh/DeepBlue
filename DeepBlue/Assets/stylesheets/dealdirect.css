@@ -36,13 +36,6 @@
 	line-height: 25px;
 	margin-right: 10px;
 }
-
-#equitysymboldiv, #fixincomediv {
-	float: left;
-	background-color: #CBD2DA;
-	padding: 20px;
-	width: 100%;
-}
 .subdetail {
 	width: 100%;
 	float: left;
@@ -52,7 +45,9 @@
 	width: 100%;
 	float: left;
 }
-#IssuerDetail { margin-top:20px; }
+#IssuerDetail {
+	margin-top: 20px;
+}
 .direct {
 	float: right;
 	padding-right: 235px;
@@ -66,19 +61,100 @@
 	margin-top: 20px;
 }
 .addissuer .btn {
-	float: left;cursor:pointer;
+	float: left;
+	cursor: pointer;
 }
 .addissuer .btnclose {
 	float: left;
 	margin-left: 35px;
-	margin-top: 10px; cursor:pointer;
+	margin-top: 10px;
+	cursor: pointer;
 }
-.editor-field input[type='checkbox']{
-   margin-top: 5px;
+.editor-field input[type='checkbox'] {
+	margin-top: 5px;
 }
 .addbtn {
 	float: left;
 	margin-left: 123px;
 	margin-top: 6px;
 }
-#DirectDetailBox { float:left; position:absolute; top:98px; bottom:0px; width:100%; overflow:auto; overflow-x:hidden; }
+#DirectDetailBox {
+	float: left;
+	position: absolute;
+	top: 98px;
+	bottom: 0px;
+	width: 100%;
+	overflow: auto;
+	overflow-x: hidden;
+}
+#equitysymboldiv {
+	padding-top: 100px;
+	padding-bottom: 30px;
+}
+#equitysymboldiv table {
+	background-color: #cbd2DA;
+	line-height: 35px;
+}
+#fixincomediv {
+	padding-top: 100px;
+	padding-bottom: 100px;
+}
+#fixincomediv table {
+	background-color: #cbd2DA;
+	line-height: 35px;
+}
+#equitysymboldiv, #fixincomediv {
+	clear: both;
+	float: left;
+	background-color: #CBD2DA;
+	padding: 20px;
+	width: 100%;
+}
+#existingEquity {
+	clear: both;
+	float: left;
+	display: none;
+	width: 85%;
+	margin-left: 10px;
+}
+.db-tab {
+	float: left;
+	clear: both;
+	margin: 0 0 0 5px;
+}
+.db-left {
+	background-image: url("../images/uatab_l.png");
+	background-position: left top;
+	background-repeat: no-repeat;
+	float: left;
+	height: 29px;
+	margin: 0 2px;
+	padding: 0 0 0 8px;
+	cursor:pointer;
+}
+.db-center {
+	background-image: url("../images/uatab_c.png");
+	background-position: left top;
+	background-repeat: repeat-x;
+	float: left;
+	line-height: 29px;
+}
+.db-right {
+	background-image: url("../images/uatab_r.png");
+	background-position: right top;
+	background-repeat: no-repeat;
+	color: #000000;
+	float: left;
+	height: 29px;
+	padding: 0 8px 0 0;
+}
+.tabselect {
+	background-image: url("../images/uatabsel_l.png");
+}
+.tabselect .db-center{
+	background-image: url("../images/uatabsel_c.png");
+}
+.tabselect .db-right{
+	background-image: url("../images/uatabsel_r.png");
+}
+#existingEquity .flexigrid {    margin: 10px 0 20px; }

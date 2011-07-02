@@ -1,6 +1,11 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.UnderlyingFundCapitalCallModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <tr id="UFCC_${Index}" {{if UnderlyingFundCapitalCallId>0==false }}class="newrow"{{/if}}>
+	{{if IsManualCapitalCall==true}}
+	<td style="text-align:center;">
+		<%: Html.Image("treeminus.gif", new { @onclick = "javascript:dealActivity.expandMCCTree(${Index},this);" })%>
+	</td>
+	{{/if}}
 	<td style="text-align: left">
 		<%: Html.Span("${FundName}", new { @class = "show" })%>
 		<%: Html.Hidden("${Index}_FundId", "${FundId}")%>

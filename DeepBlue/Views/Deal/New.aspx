@@ -11,7 +11,6 @@
 	<%=Html.JavascriptInclueTag("DealExpense.js")%>
 	<%=Html.JavascriptInclueTag("DealUnderlyingFund.js")%>
 	<%=Html.JavascriptInclueTag("DealUnderlyingDirect.js")%>
-	<%=Html.JavascriptInclueTag("Issuer.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
 </asp:Content>

@@ -70,7 +70,8 @@
 																		  OnSelect = "function(event, ui) { underlyingFund.load(ui.item.id,0);}"
 	})%>
 	<%= Html.jQueryAutoComplete("Issuer", new AutoCompleteOptions {
-																	  Source = "/Issuer/FindIssuers",	MinLength = 1,
+	Source = "/Deal/FindIssuers",
+	MinLength = 1,
 																	  OnSelect = "function(event, ui) { underlyingFund.selectIssuer(ui.item.id);}"
 	})%>
 	<script id="IssuerDetailTemplate" type="text/x-jquery-tmpl"> 

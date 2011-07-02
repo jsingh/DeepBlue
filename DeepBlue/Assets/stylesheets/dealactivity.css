@@ -51,7 +51,7 @@
 	font-weight: bold;
 	cursor: pointer;
 	color: #005F54;
-	width: 200px;
+	width: 500px;
 	float: left;
 	margin: 10px 0;
 	padding: 0 0 0 24px;
@@ -252,4 +252,7 @@ input, select {
 	float: left;
 	margin: 10px;
 	font-weight: normal;
+}
+ .childrowcell {
+	background-color: transparent;
 }

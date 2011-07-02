@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<dynamic>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<tr id="ManualUFCC_Deal_${Index}" class="mcc">
+<tr id="ManualUFCD_Deal_${Index}" class="mcc">
 	<td></td>
 	<td class="childrowcell" colspan=6>
 		<table cellpadding=0 cellspacing=0 border=0 style="width:60%" class="grid">

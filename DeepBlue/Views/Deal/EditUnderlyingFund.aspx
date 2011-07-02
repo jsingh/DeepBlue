@@ -268,7 +268,8 @@
 		underlyingFund.init();
 	</script>
 	<%= Html.jQueryAutoComplete("Issuer", new AutoCompleteOptions {
-																	  Source = "/Issuer/FindIssuers",	MinLength = 1,
+	Source = "/Deal/FindIssuers",
+	MinLength = 1,
 																	  OnSelect = "function(event, ui) { underlyingFund.selectIssuer(ui.item.id);}"
 	})%>
 	<%=Html.jQueryDatePicker("FiscalYearEnd")%>

@@ -66,7 +66,7 @@ deal.applyUDAutocomplete=function (tr) {
 			securityId.val(0);
 		}
 	})
-	.autocomplete({ source: "/Deal/FindIssuers",minLength: 1,
+	.autocomplete({ source: "/Deal/FindEquityFixedIncomeIssuers",minLength: 1,
 		select: function (event,ui) {
 			var arr=ui.item.value.split("||");
 			issuerId.val(ui.item.id);
@@ -140,7 +140,6 @@ deal.loadUnderlyingDirect=function (id) {
 deal.changeIssuer=function (ddl) {
 	if(ddl.value=="-1") {
 		deal.currentIssuerDDL=ddl;
-		issuer.add(0,true); // Call add issuer
 	} else {
 		deal.loadSecurity($(ddl).parents("tr:first"));
 	}
@@ -189,8 +188,6 @@ deal.loadIssuers=function (issuerName,issuerId) {
 				this.options[i]=null;
 			}
 		}
-		this.options[this.options.length]=listItem;
-		listItem=new Option("--Add Issuer--","-1",false,false);
 		this.options[this.options.length]=listItem;
 	});
 	if(deal.currentIssuerDDL) {

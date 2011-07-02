@@ -9,6 +9,8 @@
 	<%=Html.StylesheetLinkTag("deal.css")%>
 	<%=Html.StylesheetLinkTag("dealdirect.css")%>
 	<%=Html.JavascriptInclueTag("DealDirect.js")%>
+	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
+	<%=Html.StylesheetLinkTag("flexigrid.css") %>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="navigation">
@@ -66,14 +68,12 @@
 				</div>
 			</div>
 			<div class="subdetail">
-				<div class="line">
-				</div>
+				
 				<div id="EQdetail">
 				</div>
 				<div id="FixedIncome" style="display: none">
 				</div>
-				<div class="line">
-				</div>
+			
 			</div>
 			<div class="direct">
 				<%: Html.Span("", new { @id = "SpnSaveIssuerLoading" } )%>&nbsp;&nbsp;&nbsp;
@@ -86,7 +86,8 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<script type="text/javascript">		dealDirect.init();</script>
 	<%= Html.jQueryAutoComplete("S_Issuer", new AutoCompleteOptions {
-																	  Source = "/Issuer/FindIssuers", MinLength = 1,
+	Source = "/Deal/FindIssuers",
+	MinLength = 1,
 																	  OnSelect = "function(event, ui) { dealDirect.load(ui.item.id);}"
 	})%>
 	<script id="IssuerDetailTemplate" type="text/x-jquery-tmpl"> 

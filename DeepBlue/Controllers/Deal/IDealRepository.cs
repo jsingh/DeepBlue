@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
-using DeepBlue.Models.Issuer;
 using DeepBlue.Models.Deal;
 
 namespace DeepBlue.Controllers.Deal {
@@ -52,7 +51,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<DealUnderlyingDirect> GetAllDealClosingUnderlyingDirects(int dealId);
 		IEnumerable<ErrorInfo> SaveDealUnderlyingDirect(DealUnderlyingDirect dealUnderlyingDirect);
 		List<AutoCompleteList> FindDealUnderlyingDirects(string fundName);
-		List<AutoCompleteList> FindIssuers(string issuerName);
+		List<AutoCompleteList> FindEquityFixedIncomeIssuers(string issuerName);
 		#endregion
 
 		#region DealClosing
@@ -88,6 +87,10 @@ namespace DeepBlue.Controllers.Deal {
 		IEnumerable<ErrorInfo> SaveUnderlyingFundCashDistribution(UnderlyingFundCashDistribution underlyingFundCashDistribution);
 		List<UnderlyingFundCashDistributionModel> GetAllUnderlyingFundCashDistributions(int underlyingFundId);
 		bool DeleteUnderlyingFundCashDistribution(int id);
+		#endregion
+
+		#region UnderlyingFundManualCashDistribution
+		List<UnderlyingFundManualCashDistributionModel> GetAllManualUnderlyingFundCashDistributions(int underlyingFundId);
 		#endregion
 
 		#region UnderlyingFundPostRecordCashDistribution
@@ -185,6 +188,32 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region Direct
 		CreateIssuerModel FindIssuerModel(int id);
+		bool DeleteIssuer(int issuerId);
+		bool IssuerNameAvailable(string issuerName, int issuerId);
+		IEnumerable<ErrorInfo> SaveIssuer(Models.Entity.Issuer issuer);
+		Models.Entity.Issuer FindIssuer(int issuerId);
+		List<AutoCompleteList> FindIssuers(string issuerName);
+		List<DeepBlue.Models.Entity.Issuer> GetAllIssuers();
+
+		#region Equity
+		List<Equity> GetAllEquity(int issuerId);
+		List<EquityListModel> GetAllEquity(int issuerId, int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		Equity FindEquity(int equityId);
+		IEnumerable<ErrorInfo> SaveEquity(Equity equity);
+		bool DeleteEquity(int id);
+		List<AutoCompleteList> FindEquityDirects(string issuerName);
+		string FindEquitySymbol(int id);
+		object FindEquitySecurityConversionModel(int equityId);
+		#endregion
+
+		#region FixedIncome
+		FixedIncome FindFixedIncome(int fixedIncomeId);
+		List<FixedIncome> GetAllFixedIncome(int issuerId);
+		IEnumerable<ErrorInfo> SaveFixedIncome(FixedIncome fixedIncome);
+		bool DeleteFixedIncome(int id);
+		List<AutoCompleteList> FindFixedIncomeDirects(string issuerName);
+		object FindFixedIncomeSecurityConversionModel(int fixedIncomeId);
+		#endregion
 		#endregion
 
 	}

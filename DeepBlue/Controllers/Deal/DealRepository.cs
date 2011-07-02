@@ -462,7 +462,7 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public List<AutoCompleteList> FindIssuers(string issuerName) {
+		public List<AutoCompleteList> FindEquityFixedIncomeIssuers(string issuerName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				string equitySecurityTypeId = ((int)DeepBlue.Models.Deal.Enums.SecurityType.Equity).ToString();
 				string fixedIncomeSecurityTypeId = ((int)DeepBlue.Models.Deal.Enums.SecurityType.FixedIncome).ToString();
@@ -833,6 +833,43 @@ namespace DeepBlue.Controllers.Deal {
 
 		#endregion
 
+		#region UnderlyingFundManualCashDistribution
+
+		public List<UnderlyingFundManualCashDistributionModel> GetAllManualUnderlyingFundCashDistributions(int underlyingFundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var dealUnderlyingFundQuery = (from underlyingFund in context.DealUnderlyingFunds
+											   join deal in context.Deals on underlyingFund.DealID equals deal.DealID
+											   where underlyingFund.UnderlyingFundID == underlyingFundId && underlyingFund.DealClosingID != null
+											   group deal by deal.FundID into deals
+											   select new {
+												   FundID = deals.Key,
+												   UnderlyingFundID = underlyingFundId
+											   });
+				var newCashDistributionQuery = (from dealUnderlyingFund in dealUnderlyingFundQuery
+												join fund in context.Funds on dealUnderlyingFund.FundID equals fund.FundID
+												join underlyingFund in context.UnderlyingFunds on dealUnderlyingFund.UnderlyingFundID equals underlyingFund.UnderlyingtFundID
+												select new UnderlyingFundManualCashDistributionModel {
+													FundId = fund.FundID,
+													FundName = fund.FundName,
+													UnderlyingFundId = underlyingFund.UnderlyingtFundID,
+													UnderlyingFundName = underlyingFund.FundName,
+													Deals = (from dealuf in context.DealUnderlyingFunds
+															 where dealuf.UnderlyingFundID == underlyingFund.UnderlyingtFundID && dealuf.Deal.FundID == fund.FundID && dealuf.DealClosingID != null
+															 group dealuf by dealuf.DealID into deals
+															 select new ActivityDealModel {
+																 CommitmentAmount = deals.Sum(duf => duf.CommittedAmount),
+																 DealId = deals.FirstOrDefault().DealID,
+																 FundId = deals.FirstOrDefault().Deal.FundID,
+																 DealName = deals.FirstOrDefault().Deal.DealName,
+																 DealNumber = deals.FirstOrDefault().Deal.DealNumber
+															 })
+												});
+				return newCashDistributionQuery.OrderBy(cd => cd.FundName).ToList();
+			}
+		}
+
+		#endregion
+
 		#region UnderlyingFundPostRecordCashDistribution
 
 		public List<UnderlyingFundPostRecordCashDistributionModel> GetAllUnderlyingFundPostRecordCashDistributions(int underlyingFundId) {
@@ -984,12 +1021,15 @@ namespace DeepBlue.Controllers.Deal {
 											   FundId = fund.FundID,
 											   FundName = fund.FundName,
 											   UnderlyingFundId = underlyingFund.UnderlyingtFundID,
-											   Deals = (from deal in fund.Deals
-														select new CapitalCallDealDetailModel {
-															CommitmentAmount = deal.DealUnderlyingFunds.Sum(duf => duf.CommittedAmount),
-															DealId = deal.DealID,
-															DealName = deal.DealName,
-															DealNumber = deal.DealNumber
+											   Deals = (from dealuf in context.DealUnderlyingFunds
+														where dealuf.UnderlyingFundID == underlyingFund.UnderlyingtFundID && dealuf.Deal.FundID == fund.FundID && dealuf.DealClosingID != null
+														group dealuf by dealuf.DealID into deals
+														select new ActivityDealModel {
+															CommitmentAmount = deals.Sum(duf => duf.CommittedAmount),
+															DealId =  deals.FirstOrDefault().DealID,
+															FundId = deals.FirstOrDefault().Deal.FundID,
+															DealName = deals.FirstOrDefault().Deal.DealName,
+															DealNumber = deals.FirstOrDefault().Deal.DealNumber
 														})
 										   });
 				return newCapitalCallQuery.OrderBy(cc => cc.FundName).ToList();
@@ -1544,6 +1584,13 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region Direct
+
+		public List<DeepBlue.Models.Entity.Issuer> GetAllIssuers() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.Issuers.OrderBy(issuer => issuer.Name).ToList();
+			}
+		}
+
 		public CreateIssuerModel FindIssuerModel(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				CreateIssuerModel createIssuerModel = new CreateIssuerModel();
@@ -1558,7 +1605,7 @@ namespace DeepBlue.Controllers.Deal {
 														   ParentName = issuer.ParentName,
 														   Country = (country != null ? country.CountryName : string.Empty)
 													   }).SingleOrDefault();
-				createIssuerModel.EquityDetailModel = (from equity in context.Equities
+				/* createIssuerModel.EquityDetailModel = (from equity in context.Equities
 													   where equity.IssuerID == id
 													   select new EquityDetailModel {
 														   EquityId = equity.EquityID,
@@ -1592,10 +1639,197 @@ namespace DeepBlue.Controllers.Deal {
 																IssuerId = fixedIncome.IssuerID,
 																Industry = (fixedIncome.Industry != null ? fixedIncome.Industry.Industry1 : string.Empty)
 															}).FirstOrDefault();
-
+				 */
 				return createIssuerModel;
 			}
 		}
+
+		public Models.Entity.Issuer FindIssuer(int issuerId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.Issuers.Where(issuer => issuer.IssuerID == issuerId).SingleOrDefault();
+			}
+		}
+
+
+		public List<AutoCompleteList> FindIssuers(string issuerName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> issuerListQuery = (from issuer in context.Issuers
+																where issuer.Name.Contains(issuerName)
+																orderby issuer.Name
+																select new AutoCompleteList {
+																	id = issuer.IssuerID,
+																	label = issuer.Name,
+																	value = issuer.Name
+																});
+				return new PaginatedList<AutoCompleteList>(issuerListQuery, 1, 20);
+			}
+		}
+
+		public bool DeleteIssuer(int issuerId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				Models.Entity.Issuer issuer = context.Issuers.SingleOrDefault(field => field.IssuerID == issuerId);
+				if (issuer != null) {
+					if (issuer.Equities.Count == 0 && issuer.FixedIncomes.Count == 0 && issuer.UnderlyingFunds.Count == 0) {
+						context.Issuers.DeleteObject(issuer);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public bool IssuerNameAvailable(string issuerName, int issuerId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from issuer in context.Issuers
+						 where issuer.Name == issuerName && issuer.IssuerID != issuerId
+						 select issuer.IssuerID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveIssuer(Models.Entity.Issuer issuer) {
+			return issuer.Save();
+		}
+
+
+		#region Equity
+
+		public List<Equity> GetAllEquity(int issuerId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from equity in context.Equities
+						where equity.IssuerID == issuerId
+						select equity).ToList();
+			}
+		}
+
+		public List<EquityListModel> GetAllEquity(int issuerId, int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<EquityListModel> query = (from equity in context.Equities
+													 where equity.IssuerID == issuerId
+													 select new EquityListModel {
+														 EquityId = equity.EquityID,
+														 EquityType = equity.EquityType.Equity,
+														 Industry = equity.Industry.Industry1,
+														 Symbol = equity.Symbol
+													 });
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<EquityListModel> paginatedList = new PaginatedList<EquityListModel>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public Equity FindEquity(int equityId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.Equities.Where(equity => equity.EquityID == equityId).SingleOrDefault();
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveEquity(Equity equity) {
+			return equity.Save();
+		}
+
+		public bool DeleteEquity(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				Equity equity = context.Equities.SingleOrDefault(field => field.EquityID == id);
+				if (equity != null) {
+					context.Equities.DeleteObject(equity);
+					context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
+		}
+
+		public List<AutoCompleteList> FindEquityDirects(string issuerName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from equity in context.Equities
+						where equity.Issuer.Name.Contains(issuerName)
+						orderby equity.Issuer.Name
+						select new AutoCompleteList {
+							id = equity.EquityID,
+							label = equity.Issuer.Name + ">" + (equity.EquityType != null ? equity.EquityType.Equity : "") + ">" + (equity.ShareClassType != null ? equity.ShareClassType.ShareClass : ""),
+							value = equity.Issuer.Name
+						}).Take(20).ToList();
+			}
+		}
+
+		public string FindEquitySymbol(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from equity in context.Equities where equity.EquityID == id select equity.Symbol).SingleOrDefault();
+			}
+		}
+
+		#endregion
+
+		#region FixedIncome
+
+		public List<FixedIncome> GetAllFixedIncome(int issuerId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fixedIncome in context.FixedIncomes
+						where fixedIncome.IssuerID == issuerId
+						select fixedIncome).ToList();
+			}
+		}
+
+		public FixedIncome FindFixedIncome(int fixedIncomeId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fixedIncome in context.FixedIncomes
+						where fixedIncome.FixedIncomeID == fixedIncomeId
+						select fixedIncome).SingleOrDefault();
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveFixedIncome(FixedIncome fixedIncome) {
+			return fixedIncome.Save();
+		}
+
+		public bool DeleteFixedIncome(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				FixedIncome fixedIncome = context.FixedIncomes.SingleOrDefault(field => field.FixedIncomeID == id);
+				if (fixedIncome != null) {
+					context.FixedIncomes.DeleteObject(fixedIncome);
+					context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
+		}
+
+		public List<AutoCompleteList> FindFixedIncomeDirects(string issuerName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fixedIncome in context.FixedIncomes
+						where fixedIncome.Issuer.Name.Contains(issuerName)
+						orderby fixedIncome.Issuer.Name
+						select new AutoCompleteList {
+							id = fixedIncome.FixedIncomeID,
+							label = fixedIncome.Issuer.Name + ">" + (fixedIncome.FixedIncomeType != null ? fixedIncome.FixedIncomeType.FixedIncomeType1 : ""),
+							value = fixedIncome.Issuer.Name
+						}).Take(20).ToList();
+			}
+		}
+
+		public object FindFixedIncomeSecurityConversionModel(int fixedIncomeId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fixedIncome in context.FixedIncomes
+						where fixedIncome.FixedIncomeID == fixedIncomeId
+						select new {
+							Symbol = fixedIncome.Symbol
+						}).FirstOrDefault();
+			}
+		}
+
+		public object FindEquitySecurityConversionModel(int equityId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from equity in context.Equities
+						where equity.EquityID == equityId
+						select new {
+							Symbol = equity.Symbol
+						}).FirstOrDefault();
+			}
+		}
+
+		#endregion
 		#endregion
 
 	}

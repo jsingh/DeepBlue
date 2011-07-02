@@ -7,7 +7,8 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("FundClosing.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
-	<%=Html.StylesheetLinkTag("flexigrid.css") %>	<%=Html.StylesheetLinkTag("adminbackend.css") %>
+	<%=Html.StylesheetLinkTag("flexigrid.css") %>	
+	<%=Html.StylesheetLinkTag("adminbackend.css") %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="admin-main">

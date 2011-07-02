@@ -114,6 +114,15 @@
 			jHelper.checkValAttr(fixedIncome);
 			jHelper.formatDateTxt(fixedIncome);
 			dealDirect.setUpIssuer();
+			$("#tblExistingEquity").flexigrid({ usepager: true
+			,url: "/Deal/DirectEquityList"
+			,onRowBound: dealDirect.onEquityRowBound
+			,method: "GET"
+			,sortname: "EquityID"
+			,sortorder: "desc"
+			,autoload: false
+			,height: 0
+			});
 		});
 	}
 	,selectTab: function (type,lnk) {
@@ -130,6 +139,19 @@
 			case "F": FI.show();fitab.addClass("sel");
 				break;
 		}
+	}
+	,tabEquitySelect: function (type) {
+		$("#NewEqTab").removeClass("tabselect");
+		$("#ExistingEqTab").removeClass("tabselect");
+		$("#equitysymboldiv").hide();
+		$("#existingEquity").hide();
+		switch(type) {
+			case "N": $("#NewEqTab").addClass("tabselect");$("#equitysymboldiv").show();break;
+			case "E": $("#ExistingEqTab").addClass("tabselect");$("#existingEquity").show();dealDirect.existingEQRefresh();break;
+		}
+	}
+	,existingEQRefresh: function () {
+		$("#tblExistingEquity").flexReload();
 	}
 }
 

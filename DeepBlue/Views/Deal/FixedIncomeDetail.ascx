@@ -1,11 +1,13 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.FixedIncomeDetailModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
+<div class="line">
+</div>
 <div id="fixincomediv">
 	<div class="editor-label">
 		<%: Html.LabelFor(model => model.FaceValue) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("FaceValue", "${FaceValue}") %>
+		<%: Html.TextBox("FaceValue", "${FaceValue}", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.LabelFor(model => model.ISINO) %>
@@ -41,7 +43,7 @@
 		<%: Html.LabelFor(model => model.Frequency) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("Frequency", "${Frequency}")%>
+		<%: Html.TextBox("Frequency", "${Frequency}", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.LabelFor(model => model.FirstCouponDate) %>
@@ -75,4 +77,6 @@
 		<%: Html.TextBox("FI_Symbol", "${Symbol}")%>
 	</div>
 	<%: Html.Hidden("FixedIncomeId","${FixedIncomeId}")%>
+</div>
+<div class="line">
 </div>

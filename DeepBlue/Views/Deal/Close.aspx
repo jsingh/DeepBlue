@@ -263,7 +263,7 @@
 											<th style="width: 15%">
 												Price
 											</th>
-											<th style="width: 25%">
+											<th style="width: 2%;white-space:nowrap;">
 												Adjusted Fair Market Value
 											</th>
 											<th>
@@ -380,7 +380,8 @@
 					<%: Html.TextBox("${DealUnderlyingDirectId}_PurchasePrice", "${PurchasePrice}", new { @class="hide",  @id="PurchasePrice", @onkeyup="javascript:dealClose.calcCloseUD();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td style="text-align:right">
-					<%:Html.Span("${FormatFMV}", new { @id="SpnFMV" })%>   
+					<%:Html.Span("${FormatFMV}", new { @class="show", @id="SpnFMV" })%>   
+					<%: Html.TextBox("${DealUnderlyingDirectId}_FMV", "${FMV}", new { @class="hide", @id="FMV", @onkeyup="javascript:dealClose.calcCloseUD();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td style="text-align:right">
 					<%: Html.Hidden("${DealUnderlyingDirectId}_DealClosingId","${DealClosingId}",  new { @id="DealClosingId" })%>
@@ -473,7 +474,8 @@
 					<%: Html.TextBox("${DealUnderlyingDirectId}_PurchasePrice", "{{if PurchasePrice>0}}${PurchasePrice}{{/if}}", new { @class="hide",  @id="PurchasePrice", @onkeyup="javascript:dealClose.calcFlinalCloseUD();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td style="text-align:right">
-					<%:Html.Span("${FormatFMV}", new { @id="SpnFMV" })%>   
+					<%:Html.Span("${FormatFMV}", new { @id="SpnFMV",@class="show" })%>   
+					<%: Html.TextBox("${DealUnderlyingDirectId}_FMV", "${FMV}", new { @class="hide", @id="FMV", @onkeyup="javascript:dealClose.calcFlinalCloseUD();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td style="text-align:right">
 					<%: Html.Image("Edit.png", new { @onclick = "javascript:dealClose.editRow(this);" })%>

@@ -178,13 +178,12 @@
 		$("tbody tr",tbl).each(function () {
 			var nos=parseInt($("#NumberOfShares",this).val());
 			var price=parseFloat($("#PurchasePrice",this).val());
-			if(isNaN(nos)) { nos=0; } if(isNaN(price)) { price=0; }
-			var fmv=parseFloat(nos*price);
+			var fmv=parseFloat($("#FMV",this).val());
+			if(isNaN(nos)) { nos=0; } if(isNaN(price)) { price=0; } if(isNaN(fmv)) { fmv=0; }
 			totalNOS+=nos;
 			totalPrice+=price;
-			$("#SpnFMV",this).html(jHelper.dollarAmount(fmv.toString()));
+			totalFMV+=fmv;
 		});
-		totalFMV=parseFloat(totalNOS*totalPrice);
 		$("tfoot tr:first",tbl).each(function () {
 			$("#SpnTotalNoOfShares",this).html(jHelper.dollarAmount(totalNOS.toString()));
 			$("#SpnTotalPurchasePrice",this).html(jHelper.dollarAmount(totalPrice.toString()));
@@ -219,13 +218,12 @@
 		$("tbody tr",tbl).each(function () {
 			var nos=parseInt($("#NumberOfShares",this).val());
 			var price=parseFloat($("#PurchasePrice",this).val());
-			if(isNaN(nos)) { nos=0; } if(isNaN(price)) { price=0; }
-			var fmv=parseFloat(nos*price);
+			var fmv=parseFloat($("#FMV",this).val());
+			if(isNaN(nos)) { nos=0; } if(isNaN(price)) { price=0; } if(isNaN(fmv)) { fmv=0; }
 			totalNOS+=nos;
 			totalPrice+=price;
-			$("#SpnFMV",this).html(jHelper.dollarAmount(fmv.toString()));
+			totalFMV+=fmv;
 		});
-		totalFMV=parseFloat(totalNOS*totalPrice);
 		$("tfoot tr:first",tbl).each(function () {
 			$("#SpnTotalNoOfShares",this).html(jHelper.dollarAmount(totalNOS.toString()));
 			$("#SpnTotalPurchasePrice",this).html(jHelper.dollarAmount(totalPrice.toString()));

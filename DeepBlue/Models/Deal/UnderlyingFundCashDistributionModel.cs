@@ -31,6 +31,8 @@ namespace DeepBlue.Models.Deal {
 
 		public List<SelectListItem> CashDistributionTypes { get; set; }
 
+		public bool IsManualCapitalCall { get; set; }
+
 	}
 
 	 

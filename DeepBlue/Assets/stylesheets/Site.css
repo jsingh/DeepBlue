@@ -802,23 +802,6 @@ input[type="text"].ui-autocomplete-input {
 label {
 	font-weight: bold;
 }
-#equitysymboldiv {
-	padding-top: 100px;
-	padding-bottom: 30px;
-}
-#equitysymboldiv table {
-	background-color: #cbd2DA;
-	line-height: 35px;
-}
-#fixincomediv {
-	padding-top: 100px;
-	padding-bottom: 100px;
-}
-
-#fixincomediv table {
-	background-color: #cbd2DA;
-	line-height: 35px;
-}
 
 .hasDatepicker {
 	background-image: url(../images/datepicker.png);

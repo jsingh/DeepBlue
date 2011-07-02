@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using DeepBlue.Models;
 using DeepBlue.Models.Entity;
 using DeepBlue.Models.Document;
-using DeepBlue.Models.Issuer;
 using DeepBlue.Controllers.Admin;
 
 namespace DeepBlue.Helpers {
@@ -292,7 +291,7 @@ namespace DeepBlue.Helpers {
 			return underlyingFundList;
 		}
 
-		public static List<SelectListItem> GetIssuerSelectList(List<IssuerDetailModel> issuers) {
+		public static List<SelectListItem> GetIssuerSelectList(List<Issuer> issuers) {
 			List<SelectListItem> issuerList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();
 			item.Text = "--Select One--";
@@ -301,7 +300,7 @@ namespace DeepBlue.Helpers {
 			foreach (var issuer in issuers) {
 				item = new SelectListItem();
 				item.Text = issuer.Name;
-				item.Value = issuer.IssuerId.ToString();
+				item.Value = issuer.IssuerID.ToString();
 				issuerList.Add(item);
 			}
 			return issuerList;
