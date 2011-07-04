@@ -8,7 +8,7 @@
 	<%=Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<style type="text/css">
 		body {
-			font-family: Calibri, Arial;
+			font-family:  Arial;
 			font-size: 14px;
 		}
 		table {

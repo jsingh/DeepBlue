@@ -253,6 +253,19 @@ input, select {
 	margin: 10px;
 	font-weight: normal;
 }
- .childrowcell {
+.childrowcell {
 	background-color: transparent;
+}
+.ismanual {
+}
+.rightsbox {
+	display: block;
+	float: right;
+	margin-right: 15%;
+}
+.manualact {
+	float: left;
+	padding: 0pt;
+	font-size: 12px;
+	margin: -8px 0pt 0pt 80px;
 }

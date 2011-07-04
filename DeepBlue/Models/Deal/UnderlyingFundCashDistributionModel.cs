@@ -26,12 +26,24 @@ namespace DeepBlue.Models.Deal {
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
 		[DisplayName("Paid Date:")]
 		public DateTime? PaidDate { get; set; }
+
+		public decimal? TotalCommitmentAmount {
+			get {
+				decimal? totalCommitmentAmount = 0;
+				if (this.Deals != null) {
+					totalCommitmentAmount = Deals.Sum(deal => deal.CommitmentAmount);
+				}
+				return totalCommitmentAmount;
+			}
+		}
 		
 		public string CashDistributionType { get; set; }
 
 		public List<SelectListItem> CashDistributionTypes { get; set; }
 
-		public bool IsManualCapitalCall { get; set; }
+		public bool IsManualCashDistribution { get; set; }
+
+		public IEnumerable<ActivityDealModel> Deals { get; set; }
 
 	}
 

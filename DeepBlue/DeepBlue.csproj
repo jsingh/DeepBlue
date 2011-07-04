@@ -93,7 +93,6 @@
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
     <Compile Include="Models\Deal\ActivityDealModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
-    <Compile Include="Models\Deal\UnderlyingFundManualCashDistributionModel.cs" />
     <Compile Include="Models\Deal\CreateIssuerModel.cs" />
     <Compile Include="Models\Deal\EquityDetailModel.cs" />
     <Compile Include="Models\Deal\EquityListModel.cs" />
@@ -172,7 +171,6 @@
     <Compile Include="Models\Deal\UnderlyingFundListModel.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Deal\UnderlyingFundManualCapitalCallModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundPostRecordCapitalCallModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundPostRecordCashDistributionModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundValuationModel.cs" />
@@ -612,8 +610,8 @@
     <Content Include="Assets\images\menuright.png" />
     <Content Include="Assets\images\menu_bg.gif" />
     <Content Include="Assets\images\minus.gif" />
-    <Content Include="Assets\images\minus.png" />
     <Content Include="Assets\images\mncc.png" />
+    <Content Include="Assets\images\mrdc.png" />
     <Content Include="Assets\images\navarrow.png" />
     <Content Include="Assets\images\Newtab_sel.png" />
     <Content Include="Assets\images\Newtab_unsel.png" />
@@ -630,7 +628,6 @@
     <Content Include="Assets\images\ques.png" />
     <Content Include="Assets\images\rdc.png" />
     <Content Include="Assets\images\report.png" />
-    <Content Include="Assets\images\rmdc.png" />
     <Content Include="Assets\images\satab.png" />
     <Content Include="Assets\images\satabsel.png" />
     <Content Include="Assets\images\save.png" />
@@ -740,8 +737,6 @@
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
-    <Content Include="Assets\javascripts\DealActivityManualCD.js" />
-    <Content Include="Assets\javascripts\DealActivityManualCC.js" />
     <Content Include="Assets\javascripts\fileuploader.js" />
     <Content Include="Assets\javascripts\FundExpenseType.js" />
     <Content Include="Assets\javascripts\DealActivityEquitySplit.js" />

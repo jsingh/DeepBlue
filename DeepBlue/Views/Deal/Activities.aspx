@@ -7,7 +7,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("DealActivity.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityCapitalCall.js")%>
-	<%=Html.JavascriptInclueTag("DealActivityManualCC.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityPRCapitalCall.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityCashDistribution.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityManualCD.js")%>
@@ -62,8 +61,15 @@
 								</div>
 							</div>
 							<div class="addbtn" style="display: block;">
-								<%: Html.Anchor(Html.Image("mncc.png").ToHtmlString(), "javascript:dealActivity.makeNewCC();")%></div>
-							<div style="display: block; float: right; margin-right: 15%;">
+								<div style="float: left">
+									<%: Html.Anchor(Html.Image("mncc.png").ToHtmlString(), "javascript:dealActivity.makeNewCC();")%>
+								</div>
+								<div class="manualact">
+									<%: Html.CheckBox("IsManualCapitalCall", false, new { @onchange = "javascript:dealActivity.showManualCCCtl('CCDetail');" })%>&nbsp;Manual
+									Capital Call
+								</div>
+							</div>
+							<div class="rightsbox">
 								<%: Html.TextBox("CC_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style="width:200px", @class = "wm" })%></div>
 						</div>
 						<div class="detail" id="CCDetail">
@@ -80,6 +86,8 @@
 									<table cellpadding="0" cellspacing="0" border="0" id="CapitalCallList" class="grid">
 										<thead>
 											<tr>
+												<th style="width: 5%; display: none;" class="ismanual">
+												</th>
 												<th style="width: 20%">
 													Fund Name
 												</th>
@@ -95,7 +103,8 @@
 												<th style="width: 15%">
 													Deemed Capital Call
 												</th>
-												<th>
+												<th style="display: none;" class="ismanual">
+													Total Commitment Amount
 												</th>
 											</tr>
 										</thead>
@@ -156,76 +165,6 @@
 				<div class="line">
 				</div>
 				<div class="act-box">
-					<div id="NewManualCapitalCall" class="group">
-						<div class="headerbox">
-							<div class="title">
-								<%: Html.Span("New Manual Capital Call")%>
-							</div>
-						</div>
-						<div class="expandheader expandsel" style="display: none">
-							<div class="expandbtn">
-								<div class="expandtitle" style="display: block;">
-									New Manual Capital Call
-								</div>
-							</div>
-							<div class="addbtn" style="display: block;">
-								<%: Html.Anchor(Html.Image("mncc.png").ToHtmlString(), "javascript:dealActivity.makeNewManualCC();")%></div>
-							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.TextBox("ManualCC_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style="width:200px", @class = "wm" })%></div>
-						</div>
-						<div class="detail" id="ManualCCDetail">
-							<div class="search-header">
-								<div class="cell">
-									<%: Html.Span("", new { @id="SpnManualCCUFName" })%>
-								</div>
-								<div class="loadingcell" id="ManualCCLoading">
-								</div>
-							</div>
-							<div id="ManualCapitalCall" class="gridbox" style="display: none;">
-								<%using (Html.Form(new { @id = "frmManualUFCapitalCall", @onsubmit = "return dealActivity.submitManualUFCapitalCall(this);" })) {%>
-								<div style="clear: both; width: 100%">
-									<%: Html.Hidden("IsManualCapitalCall","true")%>
-									<table cellpadding="0" cellspacing="0" border="0" id="ManualCapitalCallList" class="grid">
-										<thead>
-											<tr>
-												<th style="width: 5%">
-												</th>
-												<th style="width: 20%">
-													Fund Name
-												</th>
-												<th style="width: 20%">
-													Call Amount
-												</th>
-												<th style="width: 15%">
-													Notice Date
-												</th>
-												<th style="width: 15%">
-													Received Date
-												</th>
-												<th style="width: 15%">
-													Deemed Capital Call
-												</th>
-												<th>
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
-									<br />
-									<center>
-										<span>
-											<%: Html.ImageButton("Save.png")%></span><span id="SpnManualCCSaveLoading"></span></center>
-								</div>
-								<%}%>
-							</div>
-							<%:Html.Hidden("ManualCCUnderlyingFundId", "0", new { @id = "ManualCCUnderlyingFundId" })%>
-						</div>
-					</div>
-				</div>
-				<div class="line">
-				</div>
-				<div class="act-box">
 					<div id="NewCashDistribution" class="group">
 						<div class="headerbox">
 							<div class="title">
@@ -240,9 +179,15 @@
 								</div>
 							</div>
 							<div class="addbtn" style="display: block;">
-								<%: Html.Anchor(Html.Image("rdc.png").ToHtmlString(), "javascript:dealActivity.makeNewCD();")%>
+								<div style="float: left">
+									<%: Html.Anchor(Html.Image("rdc.png").ToHtmlString(), "javascript:dealActivity.makeNewCD();")%>
+								</div>
+								<div class="manualact">
+									<%: Html.CheckBox("IsManualCashDistribution", false, new { @onchange = "javascript:dealActivity.showManualCDCtl('CDDetail');" })%>&nbsp;Manual
+									Cash Distribution
+								</div>
 							</div>
-							<div style="display: block; float: right; margin-right: 15%;">
+							<div class="rightsbox">
 								<%: Html.TextBox("CD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px", @class = "wm" })%></div>
 						</div>
 						<div class="detail" id="CDDetail">
@@ -258,22 +203,25 @@
 									<table cellpadding="0" cellspacing="0" border="0" id="CashDistributionList" class="grid">
 										<thead>
 											<tr>
-												<th style="width: 20%">
-													Fund Name
-												</th>
-												<th style="width: 12%">
-													Amount
-												</th>
-												<th style="width: 12%">
-													Notice Date
-												</th>
-												<th style="width: 12%">
-													Record Date
-												</th>
-												<th style="width: 12%">
-													Distribution Type
+												<th style="width: 5%; display: none;" class="ismanual">
 												</th>
 												<th>
+													Fund Name
+												</th>
+												<th>
+													Amount
+												</th>
+												<th>
+													Notice Date
+												</th>
+												<th>
+													Record Date
+												</th>
+												<th>
+													Distribution Type
+												</th>
+												<th style="display: none;" class="ismanual">
+													Total Commitment Amount
 												</th>
 											</tr>
 										</thead>
@@ -328,78 +276,6 @@
 								</div>
 							</div>
 							<%:Html.Hidden("CDUnderlyingFundId", "0", new { @id = "CDUnderlyingFundId" })%>
-						</div>
-					</div>
-				</div>
-				<div class="line">
-				</div>
-				<div class="act-box">
-					<div id="NewManualCashDistribution" class="group">
-						<div class="headerbox">
-							<div class="title">
-								<%: Html.Span("New Manual Cash Distribution")%>
-							</div>
-						</div>
-						<div class="expandheader expandsel" style="display: none">
-							<div class="expandbtn">
-								<div class="expandtitle" style="display: block;">
-									<div class="expandtitle">
-										New Manual Cash Distribution</div>
-								</div>
-							</div>
-							<div class="addbtn" style="display: block;">
-								<%: Html.Anchor(Html.Image("mrdc.png").ToHtmlString(), "javascript:dealActivity.makeManualNewCD();")%>
-							</div>
-							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.TextBox("ManualCD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px", @class = "wm" })%></div>
-						</div>
-						<div class="detail" id="ManualCDDetail">
-							<div class="search-header">
-								<div class="cell">
-									<%: Html.Span("", new { @id = "SpnManualCDUFName" })%></div>
-								<div class="loadingcell" id="ManualCDLoading">
-								</div>
-							</div>
-							<div class="clear">
-								<div id="ManualCashDistribution" class="gridbox" style="display: none">
-									<%using (Html.Form(new { @id = "frmManualUFCashDistribution", @onsubmit = "return dealActivity.submitManualUFCashDistribution(this);" })) {%>
-									<%: Html.Hidden("IsManualCapitalCall","true")%>
-									<table cellpadding="0" cellspacing="0" border="0" id="ManualCashDistributionList"
-										class="grid">
-										<thead>
-											<tr>
-												<th style="width: 5%">
-												</th>
-												<th style="width: 20%">
-													Fund Name
-												</th>
-												<th style="width: 12%">
-													Amount
-												</th>
-												<th style="width: 12%">
-													Notice Date
-												</th>
-												<th style="width: 12%">
-													Record Date
-												</th>
-												<th style="width: 12%">
-													Distribution Type
-												</th>
-												<th>
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
-									<br />
-									<center>
-										<span>
-											<%: Html.ImageButton("Save.png")%></span><span id="SpnManualCDSaveLoading"></span></center>
-									<%}%>
-								</div>
-							</div>
-							<%:Html.Hidden("ManualCDUnderlyingFundId", "0", new { @id = "ManualCDUnderlyingFundId" })%>
 						</div>
 					</div>
 				</div>
@@ -772,18 +648,12 @@
 	</script>
 	<script id="CashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("UnderlyingFundCashDistribution", Model.UnderlyingFundCashDistributionModel); %>
-	</script>
-	<script id="ManualCashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
-		<% Html.RenderPartial("UnderlyingFundCashDistribution", Model.UnderlyingFundCashDistributionModel); %>
 		<% Html.RenderPartial("ManualUnderlyingFundCashDistribution"); %>
 	</script>
 	<script id="PRCashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("UnderlyingFundPostRecordCashDistribution", Model.UnderlyingFundPostRecordCashDistributionModel); %>
 	</script>
 	<script id="CapitalCallAddTemplate" type="text/x-jquery-tmpl">
-		<% Html.RenderPartial("UnderlyingFundCapitalCall", Model.UnderlyingFundCapitalCallModel); %>
-	</script>
-	<script id="ManualCapitalCallAddTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("UnderlyingFundCapitalCall", Model.UnderlyingFundCapitalCallModel); %>
 		<% Html.RenderPartial("ManualUnderlyingFundCapitalCall"); %>
 	</script>

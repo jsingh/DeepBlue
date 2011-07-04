@@ -730,7 +730,7 @@ h2 {
 	width: 100%;
 }
 #menu a, #submenu a {
-	font-size: 15px;
+	font-size: 12px;
 }
 .mdiv .sel {
 	color: #021E43;
@@ -744,7 +744,7 @@ h2 {
 	color: #021E43;
 }
 #submenu, .topmenu a {
-	font-family: Calibri, Arial;
+	font-family: Arial;
 }
 
 .topmenu a img {

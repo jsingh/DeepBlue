@@ -13,5 +13,10 @@ namespace DeepBlue.Helpers {
 		public static Int32 ToInt32(string value) {
 			return (string.IsNullOrEmpty(value) ? 0 : Convert.ToInt32(value));
 		}
+
+		public static DateTime ToDateTime(string value) {
+			return (string.IsNullOrEmpty(value) ? Convert.ToDateTime("01/01/1900") : Convert.ToDateTime(value));
+		}
+
 	}
 }

@@ -88,11 +88,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<UnderlyingFundCashDistributionModel> GetAllUnderlyingFundCashDistributions(int underlyingFundId);
 		bool DeleteUnderlyingFundCashDistribution(int id);
 		#endregion
-
-		#region UnderlyingFundManualCashDistribution
-		List<UnderlyingFundManualCashDistributionModel> GetAllManualUnderlyingFundCashDistributions(int underlyingFundId);
-		#endregion
-
+		
 		#region UnderlyingFundPostRecordCashDistribution
 		List<UnderlyingFundPostRecordCashDistributionModel> GetAllUnderlyingFundPostRecordCashDistributions(int underlyingFundId);
 		CashDistribution FindUnderlyingFundPostRecordCashDistribution(int cashDistributionId);
@@ -108,11 +104,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<UnderlyingFundCapitalCallModel> GetAllUnderlyingFundCapitalCalls(int underlyingFundId);
 		bool DeleteUnderlyingFundCapitalCall(int id);
 		#endregion
-
-		#region UnderlyingFundManualCapitalCall
-		List<UnderlyingFundManualCapitalCallModel> GetAllManualUnderlyingFundCapitalCalls(int underlyingFundId);
-		#endregion
-
+		
 		#region UnderlyingFundPostRecordCapitalCall
 		UnderlyingFundCapitalCallLineItem FindUnderlyingFundPostRecordCapitalCall(int underlyingFundCapitalCallLineItemId);
 		UnderlyingFundCapitalCallLineItem FindUnderlyingFundPostRecordCapitalCall(int underlyingFundCapitalCallId, int underlyingFundId, int dealId);

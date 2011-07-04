@@ -1,11 +1,9 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.UnderlyingFundCapitalCallModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <tr id="UFCC_${Index}" {{if UnderlyingFundCapitalCallId>0==false }}class="newrow"{{/if}}>
-	{{if IsManualCapitalCall==true}}
-	<td style="text-align:center;">
+	<td style="text-align:center;display:none;" class="ismanual">
 		<%: Html.Image("treeminus.gif", new { @onclick = "javascript:dealActivity.expandMCCTree(${Index},this);" })%>
 	</td>
-	{{/if}}
 	<td style="text-align: left">
 		<%: Html.Span("${FundName}", new { @class = "show" })%>
 		<%: Html.Hidden("${Index}_FundId", "${FundId}")%>
@@ -22,7 +20,8 @@
 	<td style="text-align: center">
 		<%: Html.CheckBox("${Index}_IsDeemedCapitalCall", false, new { @class = "", @val = "${IsDeemedCapitalCall}" })%>
 	</td>
-	<td style="text-align: right">
+	<td style="text-align: right;display:none;" class="ismanual">
+		<%: Html.Span("${TotalCommitmentAmount}", new { @class = "money" })%>
 		<%: Html.Hidden("${Index}_UnderlyingFundCapitalCallId", "${UnderlyingFundCapitalCallId}")%>
 		<%: Html.Hidden("${Index}_UnderlyingFundId", "${UnderlyingFundId}")%>
 	</td>

@@ -1226,9 +1226,9 @@ namespace DeepBlue.Controllers.Deal {
 					rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(UnderlyingFundCashDistributionModel));
 					model = new UnderlyingFundCashDistributionModel();
 					this.TryUpdateModel(model, rowCollection);
-					bool isManualCapitalCall = false;
-					Boolean.TryParse(Request["IsManualCapitalCall"], out isManualCapitalCall);
-					model.IsManualCapitalCall = isManualCapitalCall;
+					bool isManualCashDistribution = false;
+					Boolean.TryParse(Request["IsManualCashDistribution"], out isManualCashDistribution);
+					model.IsManualCashDistribution = isManualCashDistribution;
 					errorInfo = ValidationHelper.Validate(model);
 					if (errorInfo.Any() == false) {
 						errorInfo = SaveUnderlyingFundCashDistribution(model);
@@ -1283,10 +1283,13 @@ namespace DeepBlue.Controllers.Deal {
 					cashDistribution.UnderluingFundCashDistributionID = underlyingFundCashDistribution.UnderlyingFundCashDistributionID;
 
 					// Calculate distribution amount = (Deal Underlying Fund Committed Amount) / (Total Deal Underlying Fund Committed Amount) * Total Cash Distribution Amount.
-					if (model.IsManualCapitalCall == true)
+					if (model.IsManualCashDistribution == true) {
 						cashDistribution.Amount = DataTypeHelper.ToDecimal(Request[underlyingFundCashDistribution.FundID.ToString() + "_" + dealUnderlyingFund.DealID.ToString() + "_" + "CallAmount"]);
-					else
+						cashDistribution.DistributionDate = DataTypeHelper.ToDateTime(Request[underlyingFundCashDistribution.FundID.ToString() + "_" + dealUnderlyingFund.DealID.ToString() + "_" + "Date"]);
+					}
+					else {
 						cashDistribution.Amount = ((dealUnderlyingFund.CommittedAmount ?? 0) / (dealUnderlyingFunds.Sum(fund => fund.CommittedAmount ?? 0))) * underlyingFundCashDistribution.Amount;
+					}
 
 					cashDistribution.UnderlyingFundID = underlyingFundCashDistribution.UnderlyingFundID;
 					cashDistribution.DealID = dealUnderlyingFund.DealID;
@@ -1316,17 +1319,7 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
-
-		#region UnderlyingFundManualCashDistribution
-		//
-		// GET: /Deal/UnderlyingFundManualCapitalCallList
-		[HttpGet]
-		public JsonResult UnderlyingFundManualCashDistributionList(int underlyingFundId) {
-			return Json(DealRepository.GetAllManualUnderlyingFundCashDistributions(underlyingFundId), JsonRequestBehavior.AllowGet);
-		}
-
-		#endregion
-
+		
 		#region UnderlyingFundPostRecordCashDistribution
 
 		//
@@ -1484,7 +1477,6 @@ namespace DeepBlue.Controllers.Deal {
 			return View("Result", resultModel);
 		}
 
-
 		private IEnumerable<ErrorInfo> SaveUnderlyingFundCapitalCall(UnderlyingFundCapitalCallModel model) {
 			IEnumerable<ErrorInfo> errorInfo = null;
 			// Attempt to create underlying fund capital call.
@@ -1530,11 +1522,15 @@ namespace DeepBlue.Controllers.Deal {
 					underlyingFundCapitalCallLineItem.UnderlyingFundCapitalCallID = underlyingFundCapitalCall.UnderlyingFundCapitalCallID;
 
 					// Calculate capital call amount = (Deal Underlying Fund Committed Amount) / (Total Deal Underlying Fund Committed Amount) * Total Capital Call Amount.
-					if (model.IsManualCapitalCall)
+					if (model.IsManualCapitalCall) {
 						underlyingFundCapitalCallLineItem.Amount = DataTypeHelper.ToDecimal(Request[underlyingFundCapitalCall.FundID.ToString() + "_" + dealUnderlyingFund.DealID.ToString() + "_" + "CallAmount"]);
-					else
+						underlyingFundCapitalCallLineItem.CapitalCallDate = DataTypeHelper.ToDateTime(Request[underlyingFundCapitalCall.FundID.ToString() + "_" + dealUnderlyingFund.DealID.ToString() + "_" + "Date"]);
+					}
+					else {
 						underlyingFundCapitalCallLineItem.Amount = ((dealUnderlyingFund.CommittedAmount ?? 0) / (dealUnderlyingFunds.Sum(fund => fund.CommittedAmount ?? 0))) * underlyingFundCapitalCall.Amount;
+					}
 
+					underlyingFundCapitalCallLineItem.ReceivedDate = underlyingFundCapitalCall.ReceivedDate;
 					underlyingFundCapitalCallLineItem.UnderlyingFundID = underlyingFundCapitalCall.UnderlyingFundID;
 					underlyingFundCapitalCallLineItem.DealID = dealUnderlyingFund.DealID;
 
@@ -1575,16 +1571,7 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
-
-		#region UnderlyingFundManualCapitalCall
-		//
-		// GET: /Deal/UnderlyingFundManualCapitalCallList
-		[HttpGet]
-		public JsonResult UnderlyingFundManualCapitalCallList(int underlyingFundId) {
-			return Json(DealRepository.GetAllManualUnderlyingFundCapitalCalls(underlyingFundId), JsonRequestBehavior.AllowGet);
-		}
-		#endregion
-
+				
 		#region UnderlyingFundPostRecordCapitalCall
 		//
 		// GET: /Deal/UnderlyingFundPostRecordCapitalCallList

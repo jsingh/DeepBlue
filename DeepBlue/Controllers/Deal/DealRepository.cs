@@ -809,7 +809,17 @@ namespace DeepBlue.Controllers.Deal {
 													FundId = fund.FundID,
 													FundName = fund.FundName,
 													UnderlyingFundId = underlyingFund.UnderlyingtFundID,
-													UnderlyingFundName = underlyingFund.FundName
+													UnderlyingFundName = underlyingFund.FundName,
+													Deals = (from dealuf in context.DealUnderlyingFunds
+															 where dealuf.UnderlyingFundID == underlyingFund.UnderlyingtFundID && dealuf.Deal.FundID == fund.FundID && dealuf.DealClosingID != null
+															 group dealuf by dealuf.DealID into deals
+															 select new ActivityDealModel {
+																 CommitmentAmount = deals.Sum(duf => duf.CommittedAmount),
+																 DealId = deals.FirstOrDefault().DealID,
+																 FundId = deals.FirstOrDefault().Deal.FundID,
+																 DealName = deals.FirstOrDefault().Deal.DealName,
+																 DealNumber = deals.FirstOrDefault().Deal.DealNumber
+															 })
 												});
 				return newCashDistributionQuery.OrderBy(cd => cd.FundName).ToList();
 			}
@@ -828,43 +838,6 @@ namespace DeepBlue.Controllers.Deal {
 					return true;
 				}
 				return false;
-			}
-		}
-
-		#endregion
-
-		#region UnderlyingFundManualCashDistribution
-
-		public List<UnderlyingFundManualCashDistributionModel> GetAllManualUnderlyingFundCashDistributions(int underlyingFundId) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				var dealUnderlyingFundQuery = (from underlyingFund in context.DealUnderlyingFunds
-											   join deal in context.Deals on underlyingFund.DealID equals deal.DealID
-											   where underlyingFund.UnderlyingFundID == underlyingFundId && underlyingFund.DealClosingID != null
-											   group deal by deal.FundID into deals
-											   select new {
-												   FundID = deals.Key,
-												   UnderlyingFundID = underlyingFundId
-											   });
-				var newCashDistributionQuery = (from dealUnderlyingFund in dealUnderlyingFundQuery
-												join fund in context.Funds on dealUnderlyingFund.FundID equals fund.FundID
-												join underlyingFund in context.UnderlyingFunds on dealUnderlyingFund.UnderlyingFundID equals underlyingFund.UnderlyingtFundID
-												select new UnderlyingFundManualCashDistributionModel {
-													FundId = fund.FundID,
-													FundName = fund.FundName,
-													UnderlyingFundId = underlyingFund.UnderlyingtFundID,
-													UnderlyingFundName = underlyingFund.FundName,
-													Deals = (from dealuf in context.DealUnderlyingFunds
-															 where dealuf.UnderlyingFundID == underlyingFund.UnderlyingtFundID && dealuf.Deal.FundID == fund.FundID && dealuf.DealClosingID != null
-															 group dealuf by dealuf.DealID into deals
-															 select new ActivityDealModel {
-																 CommitmentAmount = deals.Sum(duf => duf.CommittedAmount),
-																 DealId = deals.FirstOrDefault().DealID,
-																 FundId = deals.FirstOrDefault().Deal.FundID,
-																 DealName = deals.FirstOrDefault().Deal.DealName,
-																 DealNumber = deals.FirstOrDefault().Deal.DealNumber
-															 })
-												});
-				return newCashDistributionQuery.OrderBy(cd => cd.FundName).ToList();
 			}
 		}
 
@@ -978,7 +951,17 @@ namespace DeepBlue.Controllers.Deal {
 										   select new UnderlyingFundCapitalCallModel {
 											   FundId = fund.FundID,
 											   FundName = fund.FundName,
-											   UnderlyingFundId = underlyingFund.UnderlyingtFundID
+											   UnderlyingFundId = underlyingFund.UnderlyingtFundID,
+											   Deals = (from dealuf in context.DealUnderlyingFunds
+														where dealuf.UnderlyingFundID == underlyingFund.UnderlyingtFundID && dealuf.Deal.FundID == fund.FundID && dealuf.DealClosingID != null
+														group dealuf by dealuf.DealID into deals
+														select new ActivityDealModel {
+															CommitmentAmount = deals.Sum(duf => duf.CommittedAmount),
+															DealId = deals.FirstOrDefault().DealID,
+															FundId = deals.FirstOrDefault().Deal.FundID,
+															DealName = deals.FirstOrDefault().Deal.DealName,
+															DealNumber = deals.FirstOrDefault().Deal.DealNumber
+														})
 										   });
 				return newCapitalCallQuery.OrderBy(cc => cc.FundName).ToList();
 			}
@@ -1001,43 +984,7 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
-
-		#region UnderlyingFundManualCapitalCall
-
-		public List<UnderlyingFundManualCapitalCallModel> GetAllManualUnderlyingFundCapitalCalls(int underlyingFundId) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				var dealUnderlyingFundQuery = (from underlyingFund in context.DealUnderlyingFunds
-											   join deal in context.Deals on underlyingFund.DealID equals deal.DealID
-											   where underlyingFund.UnderlyingFundID == underlyingFundId && underlyingFund.DealClosingID != null
-											   group deal by deal.FundID into deals
-											   select new {
-												   FundID = deals.Key,
-												   UnderlyingFundID = underlyingFundId
-											   });
-				var newCapitalCallQuery = (from dealUnderlyingFund in dealUnderlyingFundQuery
-										   join fund in context.Funds on dealUnderlyingFund.FundID equals fund.FundID
-										   join underlyingFund in context.UnderlyingFunds on dealUnderlyingFund.UnderlyingFundID equals underlyingFund.UnderlyingtFundID
-										   select new UnderlyingFundManualCapitalCallModel {
-											   FundId = fund.FundID,
-											   FundName = fund.FundName,
-											   UnderlyingFundId = underlyingFund.UnderlyingtFundID,
-											   Deals = (from dealuf in context.DealUnderlyingFunds
-														where dealuf.UnderlyingFundID == underlyingFund.UnderlyingtFundID && dealuf.Deal.FundID == fund.FundID && dealuf.DealClosingID != null
-														group dealuf by dealuf.DealID into deals
-														select new ActivityDealModel {
-															CommitmentAmount = deals.Sum(duf => duf.CommittedAmount),
-															DealId =  deals.FirstOrDefault().DealID,
-															FundId = deals.FirstOrDefault().Deal.FundID,
-															DealName = deals.FirstOrDefault().Deal.DealName,
-															DealNumber = deals.FirstOrDefault().Deal.DealNumber
-														})
-										   });
-				return newCapitalCallQuery.OrderBy(cc => cc.FundName).ToList();
-			}
-		}
-
-		#endregion
-
+		
 		#region UnderlyingFundPostRecordCapitalCall
 
 		public UnderlyingFundCapitalCallLineItem FindUnderlyingFundPostRecordCapitalCall(int underlyingFundCapitalCallLineItemId) {
