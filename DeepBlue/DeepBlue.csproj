@@ -93,6 +93,8 @@
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
     <Compile Include="Models\Deal\ActivityDealModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundDocumentModel.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundStockDistributionModel.cs" />
     <Compile Include="Models\Deal\CreateIssuerModel.cs" />
     <Compile Include="Models\Deal\EquityDetailModel.cs" />
     <Compile Include="Models\Deal\EquityListModel.cs" />
@@ -182,6 +184,8 @@
     </Compile>
     <Compile Include="Models\Entity\Partial\ActivityTypeService.cs" />
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingFundStockDistributionLineItemService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingFundStockDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\SecurityConversionDetailService.cs" />
     <Compile Include="Models\Entity\Partial\FundExpenseTypeService.cs" />
     <Compile Include="Models\Entity\Partial\DealUnderlyingFundAdjustmentService.cs" />
@@ -197,6 +201,8 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
     <Compile Include="Models\Entity\Validation\ActivityType.cs" />
     <Compile Include="Models\Entity\Validation\CashDistribution.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingFundSockDistributionLineItem.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingFundSockDistribution.cs" />
     <Compile Include="Models\Entity\Validation\SecurityConversionDetail.cs" />
     <Compile Include="Models\Entity\Validation\FundExpenseType.cs" />
     <Compile Include="Models\Entity\Validation\DealUnderlyingFundAdjustment.cs" />
@@ -737,6 +743,7 @@
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
+    <Content Include="Assets\javascripts\DealActivityStockDistribution.js" />
     <Content Include="Assets\javascripts\fileuploader.js" />
     <Content Include="Assets\javascripts\FundExpenseType.js" />
     <Content Include="Assets\javascripts\DealActivityEquitySplit.js" />
@@ -898,6 +905,9 @@
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
+    <Content Include="Views\Deal\ManualUnderlyingFundStockDistribution.ascx" />
+    <Content Include="Views\Deal\UnderlyingFundDetail.ascx" />
+    <Content Include="Views\Deal\UnderlyingFundStockDistribution.ascx" />
     <Content Include="Views\Deal\ManualUnderlyingFundCashDistribution.ascx" />
     <Content Include="Views\Deal\ManualUnderlyingFundCapitalCall.ascx" />
     <Content Include="Views\Deal\UnderlyingFunds.aspx" />

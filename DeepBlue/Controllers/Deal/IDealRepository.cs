@@ -46,7 +46,7 @@ namespace DeepBlue.Controllers.Deal {
 		DealUnderlyingDirectModel FindDealUnderlyingDirectModel(int dealUnderlyingDirectId);
 		bool DeleteDealUnderlyingDirect(int dealUnderlyingDirectId);
 		List<DealUnderlyingDirectModel> GetAllDealUnderlyingDirects(int dealId);
-		List<DealUnderlyingDirect> GetAllDealUnderlyingDirects(int oldSecurityTypeId,int oldSecurityId);
+		List<DealUnderlyingDirect> GetAllDealUnderlyingDirects(int oldSecurityTypeId, int oldSecurityId);
 		List<DealUnderlyingDirectListModel> GetAllDealUnderlyingDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		List<DealUnderlyingDirect> GetAllDealClosingUnderlyingDirects(int dealId);
 		IEnumerable<ErrorInfo> SaveDealUnderlyingDirect(DealUnderlyingDirect dealUnderlyingDirect);
@@ -75,11 +75,20 @@ namespace DeepBlue.Controllers.Deal {
 		#region UnderlyingFund
 		List<UnderlyingFundListModel> GetAllUnderlyingFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		List<UnderlyingFund> GetAllUnderlyingFunds();
-		CreateUnderlyingFundModel FindUnderlyingFundModel(int underlyingFundId,int issuerId);
+		CreateUnderlyingFundModel FindUnderlyingFundModel(int underlyingFundId, int issuerId);
 		UnderlyingFund FindUnderlyingFund(int underlyingFundId);
 		IEnumerable<ErrorInfo> SaveUnderlyingFund(UnderlyingFund underlyingFund);
 		bool UnderlyingFundNameAvailable(string fundName, int underlyingFundId);
 		List<AutoCompleteList> FindUnderlyingFunds(string fundName);
+		UnderlyingFundDocument FindUnderlyingFundDocument(int underlyingFundDocumentId);
+		#endregion
+
+		#region UnderlyingFundStockDistribution
+		UnderlyingFundStockDistribution FindUnderlyingFundStockDistribution(int underlyingFundStockDistributionId);
+		IEnumerable<ErrorInfo> SaveUnderlyingFundStockDistribution(UnderlyingFundStockDistribution underlyingFundStockDistribution);
+		List<UnderlyingFundStockDistributionModel> GetAllUnderlyingFundStockDistributions(int underlyingFundId);
+		List<StockDealUnderlyingDirectModel> GetAllStockDistributionDirectList(int underlyingFundId, int fundId);
+		List<AutoCompleteList> FindStockIssuers(int underlyingFundId, int fundId, string issuerName);
 		#endregion
 
 		#region UnderlyingFundCashDistribution
@@ -88,7 +97,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<UnderlyingFundCashDistributionModel> GetAllUnderlyingFundCashDistributions(int underlyingFundId);
 		bool DeleteUnderlyingFundCashDistribution(int id);
 		#endregion
-		
+
 		#region UnderlyingFundPostRecordCashDistribution
 		List<UnderlyingFundPostRecordCashDistributionModel> GetAllUnderlyingFundPostRecordCashDistributions(int underlyingFundId);
 		CashDistribution FindUnderlyingFundPostRecordCashDistribution(int cashDistributionId);
@@ -104,7 +113,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<UnderlyingFundCapitalCallModel> GetAllUnderlyingFundCapitalCalls(int underlyingFundId);
 		bool DeleteUnderlyingFundCapitalCall(int id);
 		#endregion
-		
+
 		#region UnderlyingFundPostRecordCapitalCall
 		UnderlyingFundCapitalCallLineItem FindUnderlyingFundPostRecordCapitalCall(int underlyingFundCapitalCallLineItemId);
 		UnderlyingFundCapitalCallLineItem FindUnderlyingFundPostRecordCapitalCall(int underlyingFundCapitalCallId, int underlyingFundId, int dealId);

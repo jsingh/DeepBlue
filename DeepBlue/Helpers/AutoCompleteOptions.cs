@@ -29,9 +29,11 @@ namespace DeepBlue.Helpers {
 			id = 0;
 			label = string.Empty;
 			value = string.Empty;
+			otherid = 0;
 		}
 		public int id { get; set; }
 		public string label { get; set; }
 		public string value { get; set; }
+		public int otherid { get; set; }
 	}
 }

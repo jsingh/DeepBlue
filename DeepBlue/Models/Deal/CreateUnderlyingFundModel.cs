@@ -174,5 +174,9 @@ namespace DeepBlue.Models.Deal {
 
 		public List<SelectListItem> ManagerContacts { get; set; }
 
+		public List<SelectListItem> DocumentTypes { get; set; }
+
+		public List<SelectListItem> UploadTypes { get; set; }
+
 	}
 }

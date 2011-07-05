@@ -7,24 +7,16 @@
 		dealActivity.loadCC(false);
 	}
 };
-dealActivity.deleteCC=function (index,id,img) {
-	if(confirm("Are you sure you want to delete this underlying fund capital call?")) {
-		var dt=new Date();
-		var url="/Deal/DeleteUnderlyingFundCapitalCall/"+id+"?t="+dt.getTime();
-		var tr=$(img).parents("tr:first");
-		var trid="UFCC_"+index;
-		var spnloading=$("#UpdateLoading",tr);
-		spnloading.html("<img src='/Assets/images/ajax.jpg'/>");
-		$.get(url,function (data) {
-			if(data!="") {
-				alert(data);
-			} else {
-				spnloading.empty();
-				$("#EmptyUFCC_"+index).remove();
-				$("#UFCC_"+index).remove();
-			}
-		});
+dealActivity.expandMCCTree=function (index,img) {
+	var display="";
+	if(img.src.indexOf('treeplus')>0) {
+		display="";
+		img.src=img.src.replace("treeplus.gif","treeminus.gif");
+	} else {
+		display="none";
+		img.src=img.src.replace("treeminus.gif","treeplus.gif");
 	}
+	$("#ManualUFCC_Deal_"+index).css("display",display);
 };
 dealActivity.setCCUnderlyingFund=function (id,name) {
 	$("#CCUnderlyingFundId").val(id);
@@ -77,29 +69,29 @@ dealActivity.submitUFCapitalCall=function (frm) {
 		var totalRows=($("tbody tr","#CapitalCallList").length);
 		var isManual=chk.checked;
 		var isError=false;
-		if(totalRows>0&&isManual) {
-			var msg="";var isFocus=false;
-			$(".manualcamount").each(function () {
-				var amount=parseFloat(this.value);if(isNaN(amount)) { amount=0; }
-				if(amount>0) {
-					var parentRow=$(this).parents("tr:first");
-					var dealname=$(".dealname",parentRow).html();
-					var date=$(".manualdate",parentRow).val();
-					if($.trim(date)=="") {
-						msg+=dealname+" Notice Date is required\n";
-						if(isFocus==false) {
-							$(".manualdate",parentRow).focus();
-							isFocus=true;
-						}
-					}
-				}
-			});
-			if(msg!="") {
-				alert(msg);
-				isError=true;
-				loading.empty();
-			}
+		/*if(totalRows>0&&isManual) {
+		var msg="";var isFocus=false;
+		$(".manualcamount").each(function () {
+		var amount=parseFloat(this.value);if(isNaN(amount)) { amount=0; }
+		if(amount>0) {
+		var parentRow=$(this).parents("tr:first");
+		var dealname=$(".dealname",parentRow).html();
+		var date=$(".manualdate",parentRow).val();
+		if($.trim(date)=="") {
+		msg+=dealname+" Notice Date is required\n";
+		if(isFocus==false) {
+		$(".manualdate",parentRow).focus();
+		isFocus=true;
 		}
+		}
+		}
+		});
+		if(msg!="") {
+		alert(msg);
+		isError=true;
+		loading.empty();
+		}
+		}*/
 		if(isError==false) {
 			param[param.length]={ name: "TotalRows",value: totalRows };
 			param[param.length]={ name: "IsManualCapitalCall",value: isManual };

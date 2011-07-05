@@ -2,7 +2,9 @@
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <tr id="UFCD_${Index}" {{if UnderlyingFundCashDistributionId>0==false}}class="newrow"{{/if}}>
 	<td style="text-align:center;display:none;" class="ismanual">
+		{{if Deals.length>1}}
 		<%: Html.Image("treeminus.gif", new { @onclick = "javascript:dealActivity.expandMCDTree(${Index},this);" })%>
+		{{/if}}
 	</td>
 	<td style="text-align: left">
 		<%: Html.Span("${FundName}", new { @class = "show" })%>

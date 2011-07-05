@@ -1,5 +1,6 @@
 ﻿var underlyingFund={
 	tempSave: false
+	,onAfterUnderlyingFundSave: null
 	,init: function () {
 		jHelper.resizeIframe();
 		jHelper.waterMark();
@@ -112,6 +113,12 @@
 			jHelper.formatDateTxt(addUnderlyingfund);
 			$("#Description").val($.trim($("#Description").val()));
 			$("#Address").val($.trim($("#Address").val()));
+			if(id>0) {
+				$("#btnSave").attr("src","/Assets/images/muf.png");
+			} else {
+				$("#btnSave").attr("src","/Assets/images/adduf.png");
+			}
+			$("#Doc_DocumentDate").datepicker({ changeMonth: true,changeYear: true });
 		});
 	}
 	,save: function (frm) {
@@ -120,10 +127,14 @@
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 			$.post("/Deal/UpdateUnderlyingFund",$(frm).serializeArray(),function (data) {
 				loading.empty();
+				$("#SpnDocLoading").empty();
 				$("#BILoading").empty();
 				$("#CILoading").empty();
 				var arr=data.split("||");
 				if(arr[0]=="True") {
+					if(underlyingFund.onAfterUnderlyingFundSave) {
+						underlyingFund.onAfterUnderlyingFundSave();
+					}
 					if(underlyingFund.tempSave==false) {
 						alert("Underlying Fund Added.");
 						$("#AddUnderlyingFund").hide();
@@ -146,5 +157,33 @@
 		var target=$("#"+targetId);
 		$(":input[type='text']",target).val("");
 		$("textarea",target).val("");
+	}
+	,saveDocument: function (frm) {
+		try {
+			var loading=$("#SpnDocLoading");
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			var ufid=parseInt($("#UnderlyingFundId").val());
+			underlyingFund.tempSave=false;
+			underlyingFund.onAfterUnderlyingFundSave=null;
+			if(ufid>0) {
+				var param=$(frm).serializeArray();
+				param[param.length]={ "UnderlyingFundId": ufid };
+			} else {
+				underlyingFund.tempSave=true;
+				underlyingFund.onAfterUnderlyingFundSave=function () { underlyingFund.saveDocument(frm); }
+				$("#btnSave").click();
+			}
+		} catch(e) { alert(e); }
+		return false;
+	}
+	,changeUploadType: function (uploadType) {
+		var FileRow=document.getElementById("FileRow");
+		var LinkRow=document.getElementById("LinkRow");
+		FileRow.style.display="none";
+		LinkRow.style.display="none";
+		if(uploadType.value=="1")
+			FileRow.style.display="";
+		else
+			LinkRow.style.display="";
 	}
 }

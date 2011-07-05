@@ -7,23 +7,16 @@
 		dealActivity.loadCD(false);
 	}
 };
-dealActivity.deleteCD=function (index,id,img) {
-	if(confirm("Are you sure you want to delete this underlying fund cash distribution?")) {
-		var dt=new Date();
-		var url="/Deal/DeleteUnderlyingFundCashDistribution/"+id+"?t="+dt.getTime();
-		var tr=$(img).parents("tr:first");
-		var trid="UFCD_"+id;
-		var spnloading=$("#UpdateLoading",tr);
-		spnloading.html("<img src='/Assets/images/ajax.jpg'/>");
-		$.get(url,function (data) {
-			if(data!="") {
-				alert(data);
-			} else {
-				spnloading.empty();
-				$("#EmptyUFCD_"+index).remove();$("#UFCD_"+index).remove();
-			}
-		});
+dealActivity.expandMCDTree=function (index,img) {
+	var display="";
+	if(img.src.indexOf('treeplus')>0) {
+		display="";
+		img.src=img.src.replace("treeplus.gif","treeminus.gif");
+	} else {
+		display="none";
+		img.src=img.src.replace("treeminus.gif","treeplus.gif");
 	}
+	$("#ManualUFCD_Deal_"+index).css("display",display);
 };
 dealActivity.setCDUnderlyingFund=function (id,name) {
 	$("#CDUnderlyingFundId").val(id);
@@ -71,29 +64,29 @@ dealActivity.submitUFCashDistribution=function (frm) {
 		var totalRows=($("tbody tr","#CashDistributionList").length);
 		var isManual=chk.checked;
 		var isError=false;
-		if(totalRows>0&&isManual) {
-			var msg="";var isFocus=false;
-			$(".manualcamount").each(function () {
-				var amount=parseFloat(this.value);if(isNaN(amount)) { amount=0; }
-				if(amount>0) {
-					var parentRow=$(this).parents("tr:first");
-					var dealname=$(".dealname",parentRow).html();
-					var date=$(".manualdate",parentRow).val();
-					if($.trim(date)=="") {
-						msg+=dealname+" Distribution Date is required\n";
-						if(isFocus==false) {
-							$(".manualdate",parentRow).focus();
-							isFocus=true;
-						}
-					}
-				}
-			});
-			if(msg!="") {
-				alert(msg);
-				isError=true;
-				loading.empty();
-			}
+		/*if(totalRows>0&&isManual) {
+		var msg="";var isFocus=false;
+		$(".manualcamount").each(function () {
+		var amount=parseFloat(this.value);if(isNaN(amount)) { amount=0; }
+		if(amount>0) {
+		var parentRow=$(this).parents("tr:first");
+		var dealname=$(".dealname",parentRow).html();
+		var date=$(".manualdate",parentRow).val();
+		if($.trim(date)=="") {
+		msg+=dealname+" Distribution Date is required\n";
+		if(isFocus==false) {
+		$(".manualdate",parentRow).focus();
+		isFocus=true;
 		}
+		}
+		}
+		});
+		if(msg!="") {
+		alert(msg);
+		isError=true;
+		loading.empty();
+		}
+		}*/
 		if(isError==false) {
 			param[param.length]={ name: "TotalRows",value: ($("tbody tr","#CashDistributionList").length) };
 			param[param.length]={ name: "IsManualCashDistribution",value: isManual };

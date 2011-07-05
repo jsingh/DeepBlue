@@ -868,6 +868,8 @@ namespace DeepBlue.Controllers.Deal {
 			model.InvestmentTypes = SelectListFactory.GetInvestmentTypeSelectList(AdminRepository.GetAllInvestmentTypes());
 			model.ManagerContacts = SelectListFactory.GetEmptySelectList();
 			model.FundRegisteredOffices = SelectListFactory.GetEmptySelectList();
+			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
+			model.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
 			return View(model);
 		}
 
@@ -1000,11 +1002,32 @@ namespace DeepBlue.Controllers.Deal {
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
+		//[HttpPost]
+		//public ActionResult CreateUnderlyingFundDocument(FormCollection collection) {
+		//    //UnderlyingFundDocumentModel model = new UnderlyingFundDocumentModel();
+		//    //this.TryUpdateModel(model, collection);
+		//    //ResultModel resultModel = new ResultModel();
+		//    //if (ModelState.IsValid) {
+		//    //    UnderlyingFundDocument underlyingFundDocument = 
+		//    //}
+		//    //else {
+		//    //    foreach (var values in ModelState.Values.ToList()) {
+		//    //        foreach (var err in values.Errors.ToList()) {
+		//    //            if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+		//    //                resultModel.Result += err.ErrorMessage + "\n";
+		//    //            }
+		//    //        }
+		//    //    }
+		//    //}
+		//    //return View("Result", resultModel);
+		//}
+
 		[HttpGet]
 		public JsonResult FindUnderlyingFunds(string term) {
 			return Json(DealRepository.FindUnderlyingFunds(term), JsonRequestBehavior.AllowGet);
 		}
 
+	 
 		#endregion
 
 		#region Activities
@@ -1283,9 +1306,8 @@ namespace DeepBlue.Controllers.Deal {
 					cashDistribution.UnderluingFundCashDistributionID = underlyingFundCashDistribution.UnderlyingFundCashDistributionID;
 
 					// Calculate distribution amount = (Deal Underlying Fund Committed Amount) / (Total Deal Underlying Fund Committed Amount) * Total Cash Distribution Amount.
-					if (model.IsManualCashDistribution == true) {
+					if (model.IsManualCashDistribution == true && dealUnderlyingFunds.Count > 1) {
 						cashDistribution.Amount = DataTypeHelper.ToDecimal(Request[underlyingFundCashDistribution.FundID.ToString() + "_" + dealUnderlyingFund.DealID.ToString() + "_" + "CallAmount"]);
-						cashDistribution.DistributionDate = DataTypeHelper.ToDateTime(Request[underlyingFundCashDistribution.FundID.ToString() + "_" + dealUnderlyingFund.DealID.ToString() + "_" + "Date"]);
 					}
 					else {
 						cashDistribution.Amount = ((dealUnderlyingFund.CommittedAmount ?? 0) / (dealUnderlyingFunds.Sum(fund => fund.CommittedAmount ?? 0))) * underlyingFundCashDistribution.Amount;
@@ -1319,7 +1341,7 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
-		
+
 		#region UnderlyingFundPostRecordCashDistribution
 
 		//
@@ -1522,9 +1544,8 @@ namespace DeepBlue.Controllers.Deal {
 					underlyingFundCapitalCallLineItem.UnderlyingFundCapitalCallID = underlyingFundCapitalCall.UnderlyingFundCapitalCallID;
 
 					// Calculate capital call amount = (Deal Underlying Fund Committed Amount) / (Total Deal Underlying Fund Committed Amount) * Total Capital Call Amount.
-					if (model.IsManualCapitalCall) {
+					if (model.IsManualCapitalCall && dealUnderlyingFunds.Count > 1) {
 						underlyingFundCapitalCallLineItem.Amount = DataTypeHelper.ToDecimal(Request[underlyingFundCapitalCall.FundID.ToString() + "_" + dealUnderlyingFund.DealID.ToString() + "_" + "CallAmount"]);
-						underlyingFundCapitalCallLineItem.CapitalCallDate = DataTypeHelper.ToDateTime(Request[underlyingFundCapitalCall.FundID.ToString() + "_" + dealUnderlyingFund.DealID.ToString() + "_" + "Date"]);
 					}
 					else {
 						underlyingFundCapitalCallLineItem.Amount = ((dealUnderlyingFund.CommittedAmount ?? 0) / (dealUnderlyingFunds.Sum(fund => fund.CommittedAmount ?? 0))) * underlyingFundCapitalCall.Amount;
@@ -1571,7 +1592,7 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
-				
+
 		#region UnderlyingFundPostRecordCapitalCall
 		//
 		// GET: /Deal/UnderlyingFundPostRecordCapitalCallList
@@ -1674,6 +1695,94 @@ namespace DeepBlue.Controllers.Deal {
 			else {
 				return string.Empty;
 			}
+		}
+
+		#endregion
+
+		#region UnderlyingFundStockDistribution
+
+		//
+		// POST : /Deal/CreateUnderlyingFundStockDistribution
+		[HttpPost]
+		public ActionResult CreateUnderlyingFundStockDistribution(FormCollection collection) {
+			int totalRows = 0;
+			int.TryParse(collection["TotalRows"], out totalRows);
+			int rowIndex = 0;
+			ResultModel resultModel = new ResultModel();
+			FormCollection rowCollection;
+			UnderlyingFundStockDistributionModel model = null;
+			IEnumerable<ErrorInfo> errorInfo = null;
+
+			// Validate each rows.
+			for (rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+				resultModel.Result = string.Empty;
+				rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(UnderlyingFundStockDistributionModel));
+				model = new UnderlyingFundStockDistributionModel();
+				this.TryUpdateModel(model, rowCollection);
+				errorInfo = ValidationHelper.Validate(model);
+				if (errorInfo.Any()) {
+					foreach (var err in errorInfo) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false)
+							resultModel.Result += rowIndex + "_" + err.PropertyName + "||" + err.ErrorMessage + "\n";
+					}
+					break;
+				}
+			}
+
+			if (string.IsNullOrEmpty(resultModel.Result)) {
+				for (rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+					resultModel.Result = string.Empty;
+					rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(UnderlyingFundStockDistributionModel));
+					model = new UnderlyingFundStockDistributionModel();
+					this.TryUpdateModel(model, rowCollection);
+					bool isManualStockDistribution = false;
+					Boolean.TryParse(Request["IsManualStockDistribution"], out isManualStockDistribution);
+					model.IsManualStockDistribution = isManualStockDistribution;
+					errorInfo = ValidationHelper.Validate(model);
+					if (errorInfo.Any() == false) {
+						errorInfo = SaveUnderlyingFundStockDistribution(model);
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		private IEnumerable<ErrorInfo> SaveUnderlyingFundStockDistribution(UnderlyingFundStockDistributionModel model) {
+			IEnumerable<ErrorInfo> errorInfo = null;
+			// Attempt to create underlying fund cash distribution.
+
+			UnderlyingFundStockDistribution underlyingFundStockDistribution = new UnderlyingFundStockDistribution();
+			underlyingFundStockDistribution.UnderlyingFundID = model.UnderlyingFundId;
+			underlyingFundStockDistribution.FundID = model.FundId;
+
+			//errorInfo = DealRepository.SaveUnderlyingFundStockDistribution(underlyingFundStockDistribution);
+			if (errorInfo == null) {
+
+				// Attempt to create cash distribution to each deal underlying fund.
+
+			}
+			return errorInfo;
+		}
+
+		//
+		// GET: /Deal/UnderlyingFundStockDistributionList
+		[HttpGet]
+		public JsonResult UnderlyingFundStockDistributionList(int underlyingFundId) {
+			return Json(DealRepository.GetAllUnderlyingFundStockDistributions(underlyingFundId), JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/StockDistributionDirectList
+		[HttpGet]
+		public JsonResult StockDistributionDirectList(int underlyingFundId, int fundId) {
+			return Json(DealRepository.GetAllStockDistributionDirectList(underlyingFundId,fundId), JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/FindStockIssuers
+		[HttpGet]
+		public JsonResult FindStockIssuers(int underlyingFundId, int fundId, string term) {
+			return Json(DealRepository.FindStockIssuers(underlyingFundId, fundId, term), JsonRequestBehavior.AllowGet);
 		}
 
 		#endregion

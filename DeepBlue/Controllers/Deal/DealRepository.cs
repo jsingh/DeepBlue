@@ -756,6 +756,13 @@ namespace DeepBlue.Controllers.Deal {
 				return new PaginatedList<AutoCompleteList>(fundListQuery, 1, 20);
 			}
 		}
+
+		public UnderlyingFundDocument FindUnderlyingFundDocument(int underlyingFundDocumentId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.UnderlyingFundDocuments.Where(document => document.UnderlyingFundDocumentID == underlyingFundDocumentId).SingleOrDefault();
+			}
+		}
+		
 		#endregion
 
 		#region Communication
@@ -774,6 +781,120 @@ namespace DeepBlue.Controllers.Deal {
 			return (from communication in communications
 					where communication.CommunicationTypeId == (int)communicationType
 					select communication.CommunicationValue).SingleOrDefault();
+		}
+
+		#endregion
+
+		#region UnderlyingFundStockDistribution
+
+		public UnderlyingFundStockDistribution FindUnderlyingFundStockDistribution(int underlyingFundStockDistributionId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from cashDistribution in context.UnderlyingFundStockDistributions
+						where cashDistribution.UnderlyingFundStockDistributionID == underlyingFundStockDistributionId
+						select cashDistribution).SingleOrDefault();
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveUnderlyingFundStockDistribution(UnderlyingFundStockDistribution underlyingFundStockDistribution) {
+			return underlyingFundStockDistribution.Save();
+		}
+
+		public List<UnderlyingFundStockDistributionModel> GetAllUnderlyingFundStockDistributions(int underlyingFundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var dealUnderlyingFundQuery = (from underlyingFund in context.DealUnderlyingFunds
+											   join deal in context.Deals on underlyingFund.DealID equals deal.DealID
+											   where underlyingFund.UnderlyingFundID == underlyingFundId && underlyingFund.DealClosingID != null
+											   group deal by deal.FundID into deals
+											   select new {
+												   FundID = deals.Key,
+												   UnderlyingFundID = underlyingFundId
+											   });
+				var newStockDistributionQuery = (from dealUnderlyingFund in dealUnderlyingFundQuery
+												 join fund in context.Funds on dealUnderlyingFund.FundID equals fund.FundID
+												 join underlyingFund in context.UnderlyingFunds on dealUnderlyingFund.UnderlyingFundID equals underlyingFund.UnderlyingtFundID
+												 select new UnderlyingFundStockDistributionModel {
+													 FundId = fund.FundID,
+													 FundName = fund.FundName,
+													 UnderlyingFundId = underlyingFund.UnderlyingtFundID,
+													 UnderlyingFundName = underlyingFund.FundName
+												 });
+				return newStockDistributionQuery.OrderBy(cd => cd.FundName).ToList();
+			}
+		}
+
+		public List<AutoCompleteList> FindStockIssuers(int underlyingFundId, int fundId, string issuerName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var dealUnderlyingFundListQuery = (from dealUnderlyingFund in context.DealUnderlyingFunds
+												   where dealUnderlyingFund.UnderlyingFundID == underlyingFundId
+												   && dealUnderlyingFund.Deal.FundID == fundId
+												   select new { DealID = dealUnderlyingFund.DealID });
+				IQueryable<AutoCompleteList> issuerListQuery = (from dealUnderlyingDirect in context.DealUnderlyingDirects
+																join equity in context.Equities on dealUnderlyingDirect.SecurityID equals equity.EquityID
+																join dealUnderlyingFund in dealUnderlyingFundListQuery on dealUnderlyingDirect.DealID equals dealUnderlyingFund.DealID
+																where dealUnderlyingDirect.SecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity
+																&& equity.Issuer.Name.Contains(issuerName)
+																select new AutoCompleteList {
+																	id = equity.EquityID,
+																	label = equity.Issuer.Name + ">" + (equity.EquityType != null ? equity.EquityType.Equity : string.Empty) + ">" + (equity.ShareClassType != null ? equity.ShareClassType.ShareClass : string.Empty),
+																	value = equity.Issuer.Name,
+																	otherid = (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity
+																}).Union((from dealUnderlyingDirect in context.DealUnderlyingDirects
+																		  join dealUnderlyingFund in dealUnderlyingFundListQuery on dealUnderlyingDirect.DealID equals dealUnderlyingFund.DealID
+																		  join fixedIncome in context.FixedIncomes on dealUnderlyingDirect.SecurityID equals fixedIncome.FixedIncomeID
+																		  where dealUnderlyingDirect.SecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.FixedIncome
+																		  && fixedIncome.Issuer.Name.Contains(issuerName)
+																		  select new AutoCompleteList {
+																			  id = fixedIncome.FixedIncomeID,
+																			  label = fixedIncome.Issuer.Name + ">" + (fixedIncome.FixedIncomeType != null ? fixedIncome.FixedIncomeType.FixedIncomeType1 : string.Empty),
+																			  value = fixedIncome.Issuer.Name,
+																			  otherid = (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity
+																		  })).OrderBy(list => list.label);
+				return new PaginatedList<AutoCompleteList>(issuerListQuery, 1, 20);
+			}
+		}
+
+		public List<StockDealUnderlyingDirectModel> GetAllStockDistributionDirectList(int underlyingFundId, int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from dealUnderlyingDirect in context.DealUnderlyingDirects
+						join equity in context.Equities on dealUnderlyingDirect.SecurityID equals equity.EquityID
+						where dealUnderlyingDirect.Deal.FundID == fundId 
+						&& dealUnderlyingDirect.Deal.DealUnderlyingFunds.Where(fund => fund.UnderlyingFundID == underlyingFundId).Count() > 0
+						&& dealUnderlyingDirect.SecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity
+						select new StockDealUnderlyingDirectModel {
+							DealUnderlyingDirectId = dealUnderlyingDirect.DealUnderlyingDirectID,
+							FMV = dealUnderlyingDirect.FMV,
+							NumberOfShares = dealUnderlyingDirect.NumberOfShares,
+							PurchasePrice = dealUnderlyingDirect.PurchasePrice,
+							SecurityId = dealUnderlyingDirect.SecurityID,
+							SecurityTypeId = dealUnderlyingDirect.SecurityTypeID,
+							TaxCostBase = dealUnderlyingDirect.TaxCostBase,
+							TaxCostDate = dealUnderlyingDirect.TaxCostDate,
+							DealId = dealUnderlyingDirect.DealID,
+							DealName = dealUnderlyingDirect.Deal.DealName,
+							DealNumber = dealUnderlyingDirect.Deal.DealNumber,
+							DirectName = equity.Issuer.Name + ">" + (equity.EquityType != null ? equity.EquityType.Equity : string.Empty) + ">" + (equity.ShareClassType != null ? equity.ShareClassType.ShareClass : string.Empty),
+						}).Union(
+							(from dealUnderlyingDirect in context.DealUnderlyingDirects
+							join fixedIncome in context.FixedIncomes on dealUnderlyingDirect.SecurityID equals fixedIncome.FixedIncomeID
+							where dealUnderlyingDirect.Deal.FundID == fundId 
+							&& dealUnderlyingDirect.Deal.DealUnderlyingFunds.Where(fund => fund.UnderlyingFundID == underlyingFundId).Count() > 0
+							&& dealUnderlyingDirect.SecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.FixedIncome
+							select new StockDealUnderlyingDirectModel {
+							DealUnderlyingDirectId = dealUnderlyingDirect.DealUnderlyingDirectID,
+							FMV = dealUnderlyingDirect.FMV,
+							NumberOfShares = dealUnderlyingDirect.NumberOfShares,
+							PurchasePrice = dealUnderlyingDirect.PurchasePrice,
+							SecurityId = dealUnderlyingDirect.SecurityID,
+							SecurityTypeId = dealUnderlyingDirect.SecurityTypeID,
+							TaxCostBase = dealUnderlyingDirect.TaxCostBase,
+							TaxCostDate = dealUnderlyingDirect.TaxCostDate,
+							DealId = dealUnderlyingDirect.DealID,
+							DealName = dealUnderlyingDirect.Deal.DealName,
+							DealNumber = dealUnderlyingDirect.Deal.DealNumber,
+							 DirectName =  fixedIncome.Issuer.Name + ">" + (fixedIncome.FixedIncomeType != null ? fixedIncome.FixedIncomeType.FixedIncomeType1 : string.Empty),
+						})).ToList();
+
+			}
 		}
 
 		#endregion
@@ -984,7 +1105,7 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
-		
+
 		#region UnderlyingFundPostRecordCapitalCall
 
 		public UnderlyingFundCapitalCallLineItem FindUnderlyingFundPostRecordCapitalCall(int underlyingFundCapitalCallLineItemId) {

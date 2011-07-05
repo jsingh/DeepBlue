@@ -130,7 +130,7 @@
 	height: 29px;
 	margin: 0 2px;
 	padding: 0 0 0 8px;
-	cursor:pointer;
+	cursor: pointer;
 }
 .db-center {
 	background-image: url("../images/uatab_c.png");
@@ -151,10 +151,12 @@
 .tabselect {
 	background-image: url("../images/uatabsel_l.png");
 }
-.tabselect .db-center{
+.tabselect .db-center {
 	background-image: url("../images/uatabsel_c.png");
 }
-.tabselect .db-right{
+.tabselect .db-right {
 	background-image: url("../images/uatabsel_r.png");
 }
-#existingEquity .flexigrid {    margin: 10px 0 20px; }
+#existingEquity .flexigrid {
+	margin: 10px 0 20px;
+}

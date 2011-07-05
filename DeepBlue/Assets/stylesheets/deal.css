@@ -226,18 +226,18 @@ h4 a {
 	padding: 5px;
 	background-color: #F5F5F5;
 	font-size: 12px;
-	border-bottom: solid 2px #B5B5B5;
-	border-top: solid 2px #fff;
+	border-bottom: solid 1px #B5B5B5;
+	border-top: solid 1px #fff;
 }
 .grid .arow td {
 	background-color: #E9EAEC;
 }
 .grid {
-	border-top: solid 2px #B5B5B5;
+	border-top: solid 1px #B5B5B5;
 }
 .grid thead tr th, .grid tfoot tr td {
-	border-top: solid 2px #fff;
-	border-bottom: solid 2px #B5B5B5;
+	border-top: solid 1px #fff;
+	border-bottom: solid 1px #B5B5B5;
 	background-color: #BABFC5;
 	padding: 5px;
 	font-weight: bold;

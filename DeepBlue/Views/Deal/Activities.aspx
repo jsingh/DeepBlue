@@ -9,8 +9,8 @@
 	<%=Html.JavascriptInclueTag("DealActivityCapitalCall.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityPRCapitalCall.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityCashDistribution.js")%>
-	<%=Html.JavascriptInclueTag("DealActivityManualCD.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityPRCashDistribution.js")%>
+	<%=Html.JavascriptInclueTag("DealActivityStockDistribution.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityUFValuation.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityEquitySplit.js")%>
 	<%=Html.JavascriptInclueTag("DealActivitySecConversion.js")%>
@@ -86,7 +86,7 @@
 									<table cellpadding="0" cellspacing="0" border="0" id="CapitalCallList" class="grid">
 										<thead>
 											<tr>
-												<th style="width: 5%; display: none;" class="ismanual">
+												<th id="CCExpand" style="width: 5%; display: none;" class="ismanual">
 												</th>
 												<th style="width: 20%">
 													Fund Name
@@ -103,7 +103,7 @@
 												<th style="width: 15%">
 													Deemed Capital Call
 												</th>
-												<th style="display: none;" class="ismanual">
+												<th id="CCTC" style="display: none;" class="ismanual">
 													Total Commitment Amount
 												</th>
 											</tr>
@@ -276,6 +276,70 @@
 								</div>
 							</div>
 							<%:Html.Hidden("CDUnderlyingFundId", "0", new { @id = "CDUnderlyingFundId" })%>
+						</div>
+					</div>
+				</div>
+				<div class="line">
+				</div>
+				<div class="act-box">
+					<div id="New Stock Distribution" class="group">
+						<div class="headerbox">
+							<div class="title">
+								<%: Html.Span("New Stock Distribution")%>
+							</div>
+						</div>
+						<div class="expandheader expandsel" style="display: none">
+							<div class="expandbtn">
+								<div class="expandtitle" style="display: block;">
+									<div class="expandtitle">
+										New Stock Distribution</div>
+								</div>
+							</div>
+							<div class="addbtn" style="display: block;">
+								<div class="manualact">
+									<%: Html.CheckBox("IsManualStockDistribution", false, new { @onchange = "javascript:dealActivity.showManualSDCtl('SDDetail');" })%>&nbsp;Manual
+									Stock Distribution
+								</div>
+							</div>
+							<div class="rightsbox">
+								<%: Html.TextBox("SD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px", @class = "wm" })%></div>
+						</div>
+						<div class="detail" id="SDDetail">
+							<div class="search-header">
+								<div class="cell">
+									<%: Html.Span("", new { @id="SpnSDUFName" })%></div>
+								<div class="loadingcell" id="SDLoading">
+								</div>
+							</div>
+							<div class="clear">
+								<div id="StockDistribution" class="gridbox" style="display: none">
+									<%using (Html.Form(new { @id = "frmUFStockDistribution", @onsubmit = "return dealActivity.submitUFStockDistribution(this);" })) {%>
+									<table cellpadding="0" cellspacing="0" border="0" id="StockDistributionList" class="grid">
+										<thead>
+											<tr>
+												<th style="width: 5%; display: none;" class="ismanual">
+												</th>
+												<th style="width: 25%">
+													Fund Name
+												</th>
+												<th style="width: 25%">
+													Issuer
+												</th>
+												<th>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+									<br />
+									<center>
+										<span>
+											<%: Html.ImageButton("Save.png")%></span><span id="SpnSDSaveLoading"></span></center>
+									<%}%>
+								</div>
+							</div>
+							<%:Html.Hidden("SDUnderlyingFundId", "0", new { @id = "SDUnderlyingFundId" })%>
 						</div>
 					</div>
 				</div>
@@ -586,17 +650,13 @@
 																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1, 
 																	  OnSelect = "function(event, ui) { dealActivity.setCCUnderlyingFund(ui.item.id,ui.item.value);}"
 	})%>
-	<%= Html.jQueryAutoComplete("ManualCC_UnderlyingFund", new AutoCompleteOptions {
-																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
-																	  OnSelect = "function(event, ui) { dealActivity.setManualCCUnderlyingFund(ui.item.id,ui.item.value);}"
-	})%>
 	<%= Html.jQueryAutoComplete("CD_UnderlyingFund", new AutoCompleteOptions {
 																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
 																	  OnSelect = "function(event, ui) { dealActivity.setCDUnderlyingFund(ui.item.id,ui.item.value);}"
 	})%>
-	<%= Html.jQueryAutoComplete("ManualCD_UnderlyingFund", new AutoCompleteOptions {
+	<%= Html.jQueryAutoComplete("SD_UnderlyingFund", new AutoCompleteOptions {
 																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
-																	  OnSelect = "function(event, ui) { dealActivity.setManualCDUnderlyingFund(ui.item.id,ui.item.value);}"
+																	  OnSelect = "function(event, ui) { dealActivity.setSDUnderlyingFund(ui.item.id,ui.item.value);}"
 	})%>
 	<%= Html.jQueryAutoComplete("UFV_UnderlyingFund", new AutoCompleteOptions {
 																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
@@ -644,8 +704,7 @@
 	<%=Html.jQueryDatePicker("FE_Date")%>
 	<%=Html.jQueryDatePicker("SplitDate")%>
 	<%=Html.jQueryDatePicker("ConversionDate")%>
-	<script type="text/javascript">dealActivity.init();dealActivity.newFLEData=<%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.FundExpenseModel())%>;
-	</script>
+	<script type="text/javascript">dealActivity.init();dealActivity.newFLEData=<%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.FundExpenseModel())%>;</script>
 	<script id="CashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("UnderlyingFundCashDistribution", Model.UnderlyingFundCashDistributionModel); %>
 		<% Html.RenderPartial("ManualUnderlyingFundCashDistribution"); %>
@@ -659,6 +718,13 @@
 	</script>
 	<script id="PRCapitalCallAddTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("UnderlyingFundPostRecordCapitalCall", Model.UnderlyingFundPostRecordCapitalCallModel); %>
+	</script>
+	<script id="StockDistributionAddTemplate" type="text/x-jquery-tmpl"> 
+		<% Html.RenderPartial("UnderlyingFundStockDistribution"); %>
+		<% Html.RenderPartial("ManualUnderlyingFundStockDistribution"); %>
+	</script>
+	<script id="StockDistributionDirectTemplate" type="text/x-jquery-tmpl"> 
+		<% Html.RenderPartial("ManualUnderlyingFundStockDistribution"); %>
 	</script>
 	<script id="UFValuationAddTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("UnderlyingFundValuation", Model.UnderlyingFundValuationModel); %>
