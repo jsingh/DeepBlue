@@ -83,16 +83,20 @@
     <Compile Include="Controllers\Document\IDocumentRepository.cs" />
     <Compile Include="Helpers\ExportPdfResult.cs" />
     <Compile Include="Helpers\ExportToPdf.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\FileUpload.cs" />
     <Compile Include="Helpers\FileUploadHandler.cs" />
     <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Helpers\FormCollectionHelper.cs" />
     <Compile Include="Helpers\JsonSerializer.cs" />
-    <Compile Include="Helpers\ProgressModule.cs" />
     <Compile Include="Models\Admin\EditFundExpenseTypeModel.cs" />
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
     <Compile Include="Models\Deal\ActivityDealModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
+    <Compile Include="Models\Deal\FixedIncomeDocumentModel.cs" />
+    <Compile Include="Models\Deal\EquityDocumentModel.cs" />
+    <Compile Include="Models\Deal\UnderlyingDirectDocumentModel.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundDocumentList.cs" />
     <Compile Include="Models\Deal\UnderlyingFundDocumentModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundStockDistributionModel.cs" />
     <Compile Include="Models\Deal\CreateIssuerModel.cs" />
@@ -184,6 +188,9 @@
     </Compile>
     <Compile Include="Models\Entity\Partial\ActivityTypeService.cs" />
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingDirectDocumentService.cs" />
+    <Compile Include="Models\Entity\Partial\FileService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingFundDocumentService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundStockDistributionLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundStockDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\SecurityConversionDetailService.cs" />
@@ -201,6 +208,9 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
     <Compile Include="Models\Entity\Validation\ActivityType.cs" />
     <Compile Include="Models\Entity\Validation\CashDistribution.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingDirectDocument.cs" />
+    <Compile Include="Models\Entity\Validation\File.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingFundDocument.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundSockDistributionLineItem.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundSockDistribution.cs" />
     <Compile Include="Models\Entity\Validation\SecurityConversionDetail.cs" />
@@ -765,7 +775,6 @@
     <Content Include="Assets\javascripts\FileType.js" />
     <Content Include="Assets\javascripts\Industry.js" />
     <Content Include="Assets\javascripts\Geography.js" />
-    <Content Include="Assets\javascripts\jquery.uploadProgress.js" />
     <Content Include="Assets\javascripts\ReportingFrequency.js" />
     <Content Include="Assets\javascripts\ReportingType.js" />
     <Content Include="Assets\javascripts\jAjaxTable.js" />
@@ -907,6 +916,7 @@
     <Content Include="Views\Deal\Activities.aspx" />
     <Content Include="Views\Deal\ManualUnderlyingFundStockDistribution.ascx" />
     <Content Include="Views\Deal\UnderlyingFundDetail.ascx" />
+    <Content Include="Views\Deal\UnderlyingFundDocumentList.ascx" />
     <Content Include="Views\Deal\UnderlyingFundStockDistribution.ascx" />
     <Content Include="Views\Deal\ManualUnderlyingFundCashDistribution.ascx" />
     <Content Include="Views\Deal\ManualUnderlyingFundCapitalCall.ascx" />
