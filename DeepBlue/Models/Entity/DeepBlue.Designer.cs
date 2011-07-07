@@ -64,12 +64,12 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingDirect_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "DealUnderlyingDirect", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingDirect), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingFund_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "DealUnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "UnderlyingFundCapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCallLineItem), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "UnderlyingFundStockDistributionLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistributionLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingDirect_DealClosing", "DealClosing", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.DealClosing), "DealUnderlyingDirect", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingDirect), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingFund_DealClosing", "DealClosing", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.DealClosing), "DealUnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealClosingCost_DealClosingCostType", "DealClosingCostType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DealClosingCostType), "DealClosingCost", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealClosingCost), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingDirect_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "DealUnderlyingDirect", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingDirect), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_SecurityConversionDetail_DealUnderlyingDirect", "DealUnderlyingDirect", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DealUnderlyingDirect), "SecurityConversionDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.SecurityConversionDetail), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_DealUnderlyingDirect", "DealUnderlyingDirect", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DealUnderlyingDirect), "UnderlyingFundStockDistributionLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistributionLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingFund_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "DealUnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingFundAdjustment_DealUnderlyingFund", "DealUnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.DealUnderlyingFund), "DealUnderlyingFundAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingFundAdjustment), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_DocumentType", "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DocumentType), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
@@ -139,6 +139,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundDocument_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "UnderlyingFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAV_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistribution_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "UnderlyingFundStockDistributionLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistributionLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_UnderlyingFundCapitalCallID", "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), "UnderlyingFundCapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCallLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), "UnderlyingFundNAVHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAVHistory), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_UnderlyingFundStockDistribution", "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), "UnderlyingFundStockDistributionLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistributionLineItem), true)]
@@ -11247,6 +11248,28 @@ namespace DeepBlue.Models.Entity
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_Deal", "UnderlyingFundStockDistributionLineItem")]
+        public EntityCollection<UnderlyingFundStockDistributionLineItem> UnderlyingFundStockDistributionLineItems
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingFundStockDistributionLineItem>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_Deal", "UnderlyingFundStockDistributionLineItem");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundStockDistributionLineItem>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_Deal", "UnderlyingFundStockDistributionLineItem", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -12320,28 +12343,6 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SecurityConversionDetail>("DeepBlueModel.FK_SecurityConversionDetail_DealUnderlyingDirect", "SecurityConversionDetail", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_DealUnderlyingDirect", "UnderlyingFundStockDistributionLineItem")]
-        public EntityCollection<UnderlyingFundStockDistributionLineItem> UnderlyingFundStockDistributionLineItems
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingFundStockDistributionLineItem>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_DealUnderlyingDirect", "UnderlyingFundStockDistributionLineItem");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundStockDistributionLineItem>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_DealUnderlyingDirect", "UnderlyingFundStockDistributionLineItem", value);
                 }
             }
         }
@@ -29691,6 +29692,28 @@ namespace DeepBlue.Models.Entity
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_UnderlyingFund", "UnderlyingFundStockDistributionLineItem")]
+        public EntityCollection<UnderlyingFundStockDistributionLineItem> UnderlyingFundStockDistributionLineItems
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingFundStockDistributionLineItem>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_UnderlyingFund", "UnderlyingFundStockDistributionLineItem");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundStockDistributionLineItem>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_UnderlyingFund", "UnderlyingFundStockDistributionLineItem", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -32606,13 +32629,15 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         /// <param name="underlyingFundStockDistributionLineItemID">Initial value of the UnderlyingFundStockDistributionLineItemID property.</param>
         /// <param name="underlyingFundStockDistributionID">Initial value of the UnderlyingFundStockDistributionID property.</param>
-        /// <param name="dealUnderlyingDirectID">Initial value of the DealUnderlyingDirectID property.</param>
-        public static UnderlyingFundStockDistributionLineItem CreateUnderlyingFundStockDistributionLineItem(global::System.Int32 underlyingFundStockDistributionLineItemID, global::System.Int32 underlyingFundStockDistributionID, global::System.Int32 dealUnderlyingDirectID)
+        /// <param name="underlyingFundID">Initial value of the UnderlyingFundID property.</param>
+        /// <param name="dealID">Initial value of the DealID property.</param>
+        public static UnderlyingFundStockDistributionLineItem CreateUnderlyingFundStockDistributionLineItem(global::System.Int32 underlyingFundStockDistributionLineItemID, global::System.Int32 underlyingFundStockDistributionID, global::System.Int32 underlyingFundID, global::System.Int32 dealID)
         {
             UnderlyingFundStockDistributionLineItem underlyingFundStockDistributionLineItem = new UnderlyingFundStockDistributionLineItem();
             underlyingFundStockDistributionLineItem.UnderlyingFundStockDistributionLineItemID = underlyingFundStockDistributionLineItemID;
             underlyingFundStockDistributionLineItem.UnderlyingFundStockDistributionID = underlyingFundStockDistributionID;
-            underlyingFundStockDistributionLineItem.DealUnderlyingDirectID = dealUnderlyingDirectID;
+            underlyingFundStockDistributionLineItem.UnderlyingFundID = underlyingFundID;
+            underlyingFundStockDistributionLineItem.DealID = dealID;
             return underlyingFundStockDistributionLineItem;
         }
 
@@ -32675,24 +32700,96 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 DealUnderlyingDirectID
+        public global::System.Int32 UnderlyingFundID
         {
             get
             {
-                return _DealUnderlyingDirectID;
+                return _UnderlyingFundID;
             }
             set
             {
-                OnDealUnderlyingDirectIDChanging(value);
-                ReportPropertyChanging("DealUnderlyingDirectID");
-                _DealUnderlyingDirectID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DealUnderlyingDirectID");
-                OnDealUnderlyingDirectIDChanged();
+                OnUnderlyingFundIDChanging(value);
+                ReportPropertyChanging("UnderlyingFundID");
+                _UnderlyingFundID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UnderlyingFundID");
+                OnUnderlyingFundIDChanged();
             }
         }
-        private global::System.Int32 _DealUnderlyingDirectID;
-        partial void OnDealUnderlyingDirectIDChanging(global::System.Int32 value);
-        partial void OnDealUnderlyingDirectIDChanged();
+        private global::System.Int32 _UnderlyingFundID;
+        partial void OnUnderlyingFundIDChanging(global::System.Int32 value);
+        partial void OnUnderlyingFundIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DealID
+        {
+            get
+            {
+                return _DealID;
+            }
+            set
+            {
+                OnDealIDChanging(value);
+                ReportPropertyChanging("DealID");
+                _DealID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DealID");
+                OnDealIDChanged();
+            }
+        }
+        private global::System.Int32 _DealID;
+        partial void OnDealIDChanging(global::System.Int32 value);
+        partial void OnDealIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> NumberOfShares
+        {
+            get
+            {
+                return _NumberOfShares;
+            }
+            set
+            {
+                OnNumberOfSharesChanging(value);
+                ReportPropertyChanging("NumberOfShares");
+                _NumberOfShares = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NumberOfShares");
+                OnNumberOfSharesChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _NumberOfShares;
+        partial void OnNumberOfSharesChanging(Nullable<global::System.Decimal> value);
+        partial void OnNumberOfSharesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> FMV
+        {
+            get
+            {
+                return _FMV;
+            }
+            set
+            {
+                OnFMVChanging(value);
+                ReportPropertyChanging("FMV");
+                _FMV = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FMV");
+                OnFMVChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _FMV;
+        partial void OnFMVChanging(Nullable<global::System.Decimal> value);
+        partial void OnFMVChanged();
 
         #endregion
     
@@ -32704,16 +32801,16 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_DealUnderlyingDirect", "DealUnderlyingDirect")]
-        public DealUnderlyingDirect DealUnderlyingDirect
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_Deal", "Deal")]
+        public Deal Deal
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DealUnderlyingDirect>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_DealUnderlyingDirect", "DealUnderlyingDirect").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Deal>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_Deal", "Deal").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DealUnderlyingDirect>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_DealUnderlyingDirect", "DealUnderlyingDirect").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Deal>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_Deal", "Deal").Value = value;
             }
         }
         /// <summary>
@@ -32721,17 +32818,55 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<DealUnderlyingDirect> DealUnderlyingDirectReference
+        public EntityReference<Deal> DealReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DealUnderlyingDirect>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_DealUnderlyingDirect", "DealUnderlyingDirect");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Deal>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_Deal", "Deal");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DealUnderlyingDirect>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_DealUnderlyingDirect", "DealUnderlyingDirect", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Deal>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_Deal", "Deal", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_UnderlyingFund", "UnderlyingFund")]
+        public UnderlyingFund UnderlyingFund
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_UnderlyingFund", "UnderlyingFund").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_UnderlyingFund", "UnderlyingFund").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<UnderlyingFund> UnderlyingFundReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_UnderlyingFund", "UnderlyingFund");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_UnderlyingFund", "UnderlyingFund", value);
                 }
             }
         }

@@ -319,13 +319,31 @@
 											<tr>
 												<th style="width: 5%; display: none;" class="ismanual">
 												</th>
-												<th style="width: 25%">
+												<th style="width: 15%">
 													Fund Name
 												</th>
-												<th style="width: 25%">
+												<th>
 													Issuer
 												</th>
-												<th>
+												<th style="width: 10%">
+													NumberOfShares
+												</th>
+												<th style="width: 10%">
+													FMV
+												</th>
+												<th style="width: 10%">
+													Notice Date
+												</th>
+												<th style="width: 10%">
+													Distribution Date
+												</th>
+												<th style="width: 10%">
+													Tax Cost Base
+												</th>
+												<th style="width: 10%">
+													Tax Cost Date
+												</th>
+												<th style="width: 1%">
 												</th>
 											</tr>
 										</thead>

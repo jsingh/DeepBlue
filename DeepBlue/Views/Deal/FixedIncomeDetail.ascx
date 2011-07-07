@@ -76,6 +76,33 @@
 	<div class="editor-field">
 		<%: Html.TextBox("FI_Symbol", "${Symbol}")%>
 	</div>
+	<div class="editor-label">
+		<%: Html.Label("Document Type") %>
+	</div>
+	<div class="editor-field">
+		<%: Html.DropDownList("FixedIncomeDocumentTypeId", Model.DocumentTypes)%>
+	</div>
+	<div class="editor-label" style="clear: right">
+		<%: Html.Label("Document Date") %>
+	</div>
+	<div class="editor-field">
+		<%: Html.TextBox("FixedIncomeDocumentDate", "", new { @class = "datefield", @id = "FixedIncomeDocumentDate" })%>
+	</div>
+	<div class="editor-label">
+		<%: Html.DropDownList("FixedIncomeUploadTypeId", Model.UploadTypes, new { @style = "width:80px", @onchange = "javascript:dealDirect.changeUploadType(this,'fixincomediv');" })%>
+	</div>
+	<div id="FileRow" class="editor-field" style="width: auto;">
+		<div class="cell" style="padding: 0; margin: 0; width: auto;">
+			<%: Html.File("FixedIncomeFile", new { @id = "equityFileToUpload" })%>
+			<%: Html.Hidden("FixedIncomeFileId")%>
+		</div>
+		<div class="cell" style="padding: 0; margin: 0;">
+			<%: Html.Span("", new { @id = "SpnFixedIncomeDocLoading" })%>
+		</div>
+	</div>
+	<div id="LinkRow" style="display: none; width: auto;" class="editor-field">
+		<%: Html.TextBox("FixedIncomeFilePath")%>
+	</div>
 	<%: Html.Hidden("FixedIncomeId","${FixedIncomeId}")%>
 </div>
 <div class="line">

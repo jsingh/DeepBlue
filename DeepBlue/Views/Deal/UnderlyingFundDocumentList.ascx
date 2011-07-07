@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<List<DeepBlue.Models.Document.DocumentDetail>>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<List<DeepBlue.Models.Deal.UnderlyingFundDocumentList>>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <% FlexigridData flexData = new FlexigridData();%>
 <% flexData.total = Convert.ToInt32(ViewData["TotalRows"]);
@@ -6,11 +6,10 @@
    FlexigridRow row;
    foreach (var item in Model) {
 	   row = new FlexigridRow();
+	   row.cell.Add(item.UnderlyingFundDocumentId);
+	   row.cell.Add(item.DocumentType);
 	   row.cell.Add((item.DocumentDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"));
 	   row.cell.Add(item.FileName);
-	   row.cell.Add(item.DocumentType);
-	   row.cell.Add(item.InvestorName);
-	   row.cell.Add(item.FundName);
 	   string imgname = string.Empty;
 	   switch (item.FileTypeName.ToLower()) {
 		   case "pdf":
@@ -41,6 +40,7 @@
 		   }
 	   }
 	   row.cell.Add(Html.Anchor(Html.Image(imgname).ToHtmlString(), href, new { @target = "_blank" }).ToHtmlString());
+	   row.cell.Add(Html.Image("largedel.png", new { @style = "cursor:pointer;", @onclick = "javascript:underlyingFund.deleteDocument(" + item.UnderlyingFundDocumentId + ",this);" }).ToHtmlString());
 	   flexData.rows.Add(row);
    } %>
 <%= JsonSerializer.ToJsonObject(flexData)%>

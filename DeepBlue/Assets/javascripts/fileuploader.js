@@ -28,23 +28,21 @@ jQuery.extend({
 
 		return io
 	},
-	createUploadForm: function (id,fileElementId,tempFormId) {
+	createUploadForm: function (id,tempFormId,additionalParam) {
 		//create form	
 		var tempForm=$("#"+tempFormId);
 		var formId='jUploadForm'+id;
 		var fileId='jUploadFile'+id;
 		var form=$('<form  action="" method="POST" name="'+formId+'" id="'+formId+'" enctype="multipart/form-data"></form>');
-		var oldElement=$('#'+fileElementId);
-		var newElement=$(oldElement).clone();
-		$(oldElement).attr('id',fileId);
-		$(oldElement).before(newElement);
-		$(oldElement).appendTo(form);
 		//set attributes
 		$(form).css('position','absolute');
 		$(form).css('top','-1200px');
 		$(form).css('left','-1200px');
 		$(form).appendTo('body');
 		if(tempForm.get(0)) {
+			$(":input[type='file']",tempForm).each(function () {
+				$(form).append($(this).clone());
+			});
 			var param=$(tempForm).serializeArray();
 			var i;
 			for(i=0;i<param.length;i++) {
@@ -56,20 +54,35 @@ jQuery.extend({
 				});
 				$(form).append(input);
 			}
+			i=0;
+			if(additionalParam) {
+				for(i=0;i<additionalParam.length;i++) {
+					var input=document.createElement("input");
+					$(input).attr({
+						type: 'hidden',
+						name: additionalParam[i].name,
+						value: additionalParam[i].value
+					});
+					$(form).append(input);
+				}
+			}
 		} else {
 			return tempForm;
 		}
+		$(form).append(input);
 		return form;
 	},
 
 	ajaxFileUpload: function (s) {
 		// TODO introduce global settings, allowing the client to modify them for all requests, not only timeout		
 		s=jQuery.extend({},jQuery.ajaxSettings,s);
-		var id=new Date().getTime()
-		var form=jQuery.createUploadForm(id,s.fileElementId,s.formId);
+		var id=new Date().getTime();
+		var prsid=0;//Math.floor(Math.random()*10000000);
+		var form=jQuery.createUploadForm(id,s.formId,s.param);
 		var io=jQuery.createUploadIframe(id,s.secureuri);
 		var frameId='jUploadFrame'+id;
 		var formId='jUploadForm'+id;
+		s.isComplete=false;
 		// Watch for a new set of requests
 		if(s.global&&!jQuery.active++) {
 			jQuery.event.trigger("ajaxStart");
@@ -127,9 +140,10 @@ jQuery.extend({
 					jQuery.event.trigger("ajaxStop");
 
 				// Process result
-				if(s.complete)
+				s.isComplete=true;
+				if(s.complete) {
 					s.complete(xml,status);
-
+				}
 				jQuery(io).unbind()
 
 				setTimeout(function () {
@@ -147,6 +161,7 @@ jQuery.extend({
 
 			}
 		}
+
 		// Timeout checker
 		if(s.timeout>0) {
 			setTimeout(function () {
@@ -167,7 +182,6 @@ jQuery.extend({
 				form.enctype='multipart/form-data';
 			}
 			$(form).submit();
-
 		} catch(e) {
 			jQuery.handleError(s,xml,null,e);
 		}
@@ -179,9 +193,8 @@ jQuery.extend({
 		}
 		return { abort: function () { } };
 
-	},
-
-	uploadHttpData: function (r,type) {
+	}
+	,uploadHttpData: function (r,type) {
 		var data=!type;
 		data=type=="xml"||data?r.responseXML:r.responseText;
 		// If the type is "script", eval it in global context

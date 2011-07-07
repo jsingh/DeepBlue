@@ -2,12 +2,32 @@
 	$.addFlex=function (t,p) {
 		if(t.grid) { return false; }
 		p=$.extend({
-			height: 0,url: false,method: 'POST',dataType: 'json',errormsg: 'Connection Error',usepager: false,
-			page: 1,total: 1,useRp: true,rp: 20,rpOptions: [20,50,100],
-			title: false,pagestat: 'Displaying {from} to {to} of {total} items',procmsg: 'Loading...',
-			nomsg: 'No items',hideOnSubmit: true,autoload: true,blockOpacity: 0.5,
-			sortname: '',sortorder: '',resizeWidth: true,onChangeSort: false,
-			onSuccess: false,onRowClick: false,onRowBound: false,onSubmit: false
+			height: 0
+			,url: false
+			,method: 'POST'
+			,dataType: 'json'
+			,errormsg: 'Connection Error'
+			,usepager: false
+			,page: 1
+			,total: 1
+			,useRp: true
+			,rp: 20
+			,rpOptions: [20,50,100]
+			,title: false
+			,pagestat: 'Displaying {from} to {to} of {total} items'
+			,procmsg: 'Loading...'
+			,nomsg: 'No items'
+			,hideOnSubmit: true
+			,autoload: true
+			,blockOpacity: 0.5
+			,sortname: ''
+			,sortorder: ''
+			,resizeWidth: true
+			,onChangeSort: false
+			,onSuccess: false
+			,onRowClick: false
+			,onRowBound: false
+			,onSubmit: false
 		},p);
 		$(t).show();
 		var g={
@@ -126,7 +146,7 @@
 					if(g.hDiv) { $(g.hDiv).width(adw); }
 					if(g.bDiv) { $(g.bDiv).width(adw); }
 					if(g.bDivBox) { $(g.bDivBox).width(w); }
-				}
+				} 
 			}
 			,populate: function () {
 				if(this.loading) { return true; }

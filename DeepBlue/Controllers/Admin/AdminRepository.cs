@@ -1087,6 +1087,20 @@ namespace DeepBlue.Controllers.Admin {
 		 
 		#endregion
 
+		#region File
+
+		public IEnumerable<ErrorInfo> SaveFile(File file) {
+			return file.Save();
+		}
+
+		public File FindFile(int fileId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.Files.Where(file => file.FileID == fileId).SingleOrDefault();
+			}
+		}
+
+		#endregion
+
 		#region  EquityType
 
 		public List<Models.Entity.EquityType> GetAllEquityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {

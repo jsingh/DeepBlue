@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.ComponentModel;
 
 namespace DeepBlue.Models.Deal {
-	public class EquityDetailModel {
+	public class EquityDetailModel : EquityDocumentModel {
 
 		public int EquityId { get; set; }
 
@@ -49,6 +49,10 @@ namespace DeepBlue.Models.Deal {
 		public string Industry { get; set; }
 
 		public string ShareClassType { get; set; }
+
+		public List<SelectListItem> DocumentTypes { get; set; }
+
+		public List<SelectListItem> UploadTypes { get; set; }
 
 		public List<SelectListItem> Currencies { get; set; }
 

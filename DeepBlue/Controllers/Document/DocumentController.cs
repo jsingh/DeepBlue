@@ -59,29 +59,21 @@ namespace DeepBlue.Controllers.Document {
 				int? fundId = null;
 				switch (model.DocumentStatus) {
 					case (int)DocumentStatus.Investor:
-						if (model.InvestorId == 0) 
+						if (model.InvestorId == 0)
 							ModelState.AddModelError("InvestorId", "Investor is required.");
-						else 
+						else
 							investorId = model.InvestorId;
 						break;
 					case (int)DocumentStatus.Fund:
-						if (model.FundId == 0) 
+						if (model.FundId == 0)
 							ModelState.AddModelError("FundId", "Fund is required.");
-						else 
+						else
 							fundId = model.FundId;
 						break;
 				}
 				switch ((UploadType)model.UploadType) {
 					case UploadType.Link:
-						Regex regex = new Regex(
-									@"^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)"
-									+ @"*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$",
-									RegexOptions.IgnoreCase
-									| RegexOptions.Multiline
-									| RegexOptions.IgnorePatternWhitespace
-									| RegexOptions.Compiled
-									);
-						if (regex.IsMatch(model.FilePath) == false) {
+						if (FileHelper.CheckFilePath(model.FilePath) == false) {
 							ModelState.AddModelError("FilePath", "Invalid Link.");
 						}
 						else {
@@ -105,7 +97,7 @@ namespace DeepBlue.Controllers.Document {
 				}
 				if (ModelState.IsValid) {
 					string errorMessage = string.Empty;
-					Models.Entity.FileType fileType = CheckFileExtension(ext, out errorMessage);
+					Models.Entity.FileType fileType = FileHelper.CheckFileExtension(AdminRepository.GetAllFileTypes(), ext, out errorMessage);
 					if (fileType == null) {
 						ModelState.AddModelError("File", errorMessage);
 					}
@@ -124,7 +116,17 @@ namespace DeepBlue.Controllers.Document {
 
 						investorFundDocument.File = new Models.Entity.File();
 						if (model.File != null) {
-							fileUpload = new UploadFile(model.File, "DocumentUploadPath", (int)ConfigUtil.CurrentEntityID, (investorId != null ? investorId : fundId), model.DocumentTypeId, Path.GetFileName(model.File.FileName));
+							string appSettingName = string.Empty;
+							int? key = 0;
+							if (investorId != null) {
+								key = investorId;
+								appSettingName = "InvestorDocumentUploadPath";
+							}
+							else {
+								key = fundId;
+								appSettingName = "FundDocumentUploadPath";
+							}
+							fileUpload = new UploadFile(model.File, appSettingName, (int)ConfigUtil.CurrentEntityID, key, model.DocumentTypeId, Path.GetFileName(model.File.FileName));
 							fileUpload.Upload();
 							investorFundDocument.File.FileName = fileUpload.FileName;
 							investorFundDocument.File.FilePath = fileUpload.FilePath;
@@ -173,31 +175,8 @@ namespace DeepBlue.Controllers.Document {
 				return View("New", model);
 			}
 		}
-		
-		private Models.Entity.FileType CheckFileExtension(string extension, out string errorMessage) {
-			List<Models.Entity.FileType> fileTypes = AdminRepository.GetAllFileTypes();
-			Models.Entity.FileType fileType = null;
-			errorMessage = "*.";
-			foreach (var type in fileTypes) {
-				errorMessage += type.FileExtension + ",";
-				if (fileType == null) {
-					var arrExtensions = type.FileExtension.Split((",").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-					foreach (var ext in arrExtensions) {
-						if (ext.ToLower() == extension.Replace(".", "").ToLower()) {
-							fileType = type;
-							break;
-						}
-					}
-				}
-				else {
-					break;
-				}
-			}
-			if (fileType == null) {
-				errorMessage += "  files only allowed";
-			}
-			return fileType;
-		}
+
+
 
 		//
 		// GET: /Document/Search

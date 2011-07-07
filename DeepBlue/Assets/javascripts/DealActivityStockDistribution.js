@@ -62,9 +62,9 @@ dealActivity.loadSD=function (isRefresh) {
 					,select: function (event,ui) {
 						$("#SecurityTypeId",row).val(ui.item.otherid);
 						$("#SecurityId",row).val(ui.item.id);
-						$.getJSON("/Deal/StockDistributionDirectList?underlyingFundId="+underlyingFundId+"&fundId="+fundId
+						$("#ManualUFSD_Deal_"+index).remove();
+						$.getJSON("/Deal/StockDistributionDirectList?securityTypeId="+ui.item.otherid+"&securityId="+ui.item.id+"&fundId="+fundId
 						,function (data) {
-							$("#ManualUFSD_Deal_"+index).remove();
 							var tempData={ "Index": index,Directs: data };
 							$("#StockDistributionDirectTemplate").tmpl(tempData).insertAfter(row);
 							dealActivity.setUpRow($("#ManualUFSD_Deal_"+index));

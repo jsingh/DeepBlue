@@ -42,25 +42,48 @@
 				$("#FI_IndustryId","#frmIssuer").val(ui.item.id);
 			},appendTo: "body",delay: 300
 		});
-		$("#FI_Maturity").datepicker({ changeMonth: true,changeYear: true });
-		$("#FI_IssuedDate").datepicker({ changeMonth: true,changeYear: true });
-		$("#FI_FirstCouponDate").datepicker({ changeMonth: true,changeYear: true });
-		$("#FI_FirstAccrualDate").datepicker({ changeMonth: true,changeYear: true });
+		$(".datefield","#DirectMain").each(function () {
+			$(this).datepicker({ changeMonth: true,changeYear: true });
+		});
 	}
 	,save: function (frm) {
 		try {
 			var loading=$("#SpnSaveIssuerLoading");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			$.post("/Deal/UpdateIssuer",$(frm).serializeArray(),function (data) {
-				loading.empty();
-				var arr=data.split("||");
-				if(arr[0]=="True") {
-					alert("Underlying Direct Added.");
-					$("#DirectMain").hide();
-					$("#AddNewIssuer").hide();
-					$("#S_Issuer").val("");
-				} else { alert(data); }
-			});
+			$.ajaxFileUpload(
+				{
+					url: '/Deal/UpdateIssuer',
+					secureuri: false,
+					formId: 'frmIssuer',
+					dataType: 'json',
+					success: function (data,status) {
+						loading.empty();
+						var arr=data.data.split("||");
+						if(arr[0]=="True") {
+							alert("Underlying Direct Added.");
+							$("#DirectMain").hide();
+							$("#AddNewIssuer").hide();
+							$("#S_Issuer").val("");
+						} else {
+							alert(data.data);
+						}
+					}
+					,error: function (data,status,e) {
+						loading.empty();
+						alert(data.msg+","+status+","+e);
+					}
+				});
+
+			/*$.post("/Deal/UpdateIssuer",$(frm).serializeArray(),function (data) {
+			loading.empty();
+			var arr=data.split("||");
+			if(arr[0]=="True") {
+			alert("Underlying Direct Added.");
+			$("#DirectMain").hide();
+			$("#AddNewIssuer").hide();
+			$("#S_Issuer").val("");
+			} else { alert(data); }
+			}); */
 		} catch(e) { alert(e); }
 		return false;
 	}
@@ -152,6 +175,16 @@
 	}
 	,existingEQRefresh: function () {
 		$("#tblExistingEquity").flexReload();
+	}
+	,changeUploadType: function (uploadType,target) {
+		var FileRow=$("#FileRow","#"+target).get(0);
+		var LinkRow=$("#LinkRow","#"+target).get(0);
+		FileRow.style.display="none";
+		LinkRow.style.display="none";
+		if(uploadType.value=="1")
+			FileRow.style.display="";
+		else
+			LinkRow.style.display="";
 	}
 }
 

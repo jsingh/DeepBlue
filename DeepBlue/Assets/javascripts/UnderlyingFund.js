@@ -100,6 +100,9 @@
 			$(".headerbox",parent).show();
 		});
 	}
+	,getUnderlyingFundId: function () {
+		return parseInt($("#UnderlyingFundId").val());
+	}
 	,load: function (id,issuerId) {
 		var addUnderlyingfund=$("#AddUnderlyingFund");
 		addUnderlyingfund.css("text-align","center").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
@@ -119,7 +122,30 @@
 				$("#btnSave").attr("src","/Assets/images/adduf.png");
 			}
 			$("#Doc_DocumentDate").datepicker({ changeMonth: true,changeYear: true });
+			var p=new Array();
+			p[p.length]={ "name": "UnderlyingFundId","value": underlyingFund.getUnderlyingFundId() };
+			$("#DocumentList").flexigrid({
+				usepager: true
+				,url: "/Deal/UnderlyingFundDocumentList"
+				,params: p
+				,rpOptions: [15,20,50,100]
+				,rp: 15
+				,resizeWidth: true
+				,method: "GET"
+				,sortname: "DocumentDate"
+				,sortorder: "desc"
+				,autoload: true
+				,height: 200
+				,resizeWidth: false
+			});
 		});
+	}
+	,documentRefresh: function () {
+		var grid=$("#DocumentList");
+		var p=new Array();
+		p[p.length]={ "name": "UnderlyingFundId","value": underlyingFund.getUnderlyingFundId() };
+		grid.flexOptions({ params: p });
+		grid.flexReload();
 	}
 	,save: function (frm) {
 		try {
@@ -162,12 +188,34 @@
 		try {
 			var loading=$("#SpnDocLoading");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			var ufid=parseInt($("#UnderlyingFundId").val());
+			var ufid=underlyingFund.getUnderlyingFundId();
 			underlyingFund.tempSave=false;
 			underlyingFund.onAfterUnderlyingFundSave=null;
 			if(ufid>0) {
-				var param=$(frm).serializeArray();
-				param[param.length]={ "UnderlyingFundId": ufid };
+				var p=new Array();
+				p[p.length]={ "name": "UnderlyingFundId","value": ufid };
+				$.ajaxFileUpload(
+				{
+					url: '/Deal/CreateUnderlyingFundDocument',
+					secureuri: false,
+					formId: 'frmDocumentInfo',
+					param: p,
+					dataType: 'json',
+					success: function (data,status) {
+						loading.empty();
+						if($.trim(data.data)!="") {
+							alert(data.data);
+						} else {
+							alert("Document Saved");
+							underlyingFund.documentRefresh();
+							jHelper.resetFields($("#frmDocumentInfo"));
+						}
+					}
+					,error: function (data,status,e) {
+						loading.empty();
+						alert(data.msg+","+status+","+e);
+					}
+				});
 			} else {
 				underlyingFund.tempSave=true;
 				underlyingFund.onAfterUnderlyingFundSave=function () { underlyingFund.saveDocument(frm); }
@@ -175,6 +223,33 @@
 			}
 		} catch(e) { alert(e); }
 		return false;
+	}
+	,uploadDocument: function () {
+		return false;
+		try {
+			$.ajaxFileUpload(
+			{
+				url: '/Deal/CreateDocument',
+				secureuri: false,
+				formId: 'frmDocumentInfo',
+				dataType: 'json',
+				success: function (data,status) {
+					if(typeof (data.error)!='undefined') {
+						if(data.error!='') {
+							alert(data.error);
+						} else {
+							alert(data.msg);
+						}
+					}
+				},
+				error: function (data,status,e) {
+					alert(data.msg+","+status+","+e);
+				}
+			}
+		);
+		} catch(e) {
+			alert(e);
+		}
 	}
 	,changeUploadType: function (uploadType) {
 		var FileRow=document.getElementById("FileRow");
@@ -185,5 +260,17 @@
 			FileRow.style.display="";
 		else
 			LinkRow.style.display="";
+	}
+	,deleteDocument: function (id,img) {
+		if(confirm("Are you sure you want to delete this document?")) {
+			img.src="/Assets/images/ajax.jpg";
+			$.get("/Deal/DeleteUnderlyingFundDocumentFile/"+id,function (data) {
+				if($.trim(data)!="") {
+					alert(data);
+				} else {
+					underlyingFund.documentRefresh();
+				}
+			});
+		}
 	}
 }

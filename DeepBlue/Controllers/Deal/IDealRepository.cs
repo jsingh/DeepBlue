@@ -81,14 +81,19 @@ namespace DeepBlue.Controllers.Deal {
 		bool UnderlyingFundNameAvailable(string fundName, int underlyingFundId);
 		List<AutoCompleteList> FindUnderlyingFunds(string fundName);
 		UnderlyingFundDocument FindUnderlyingFundDocument(int underlyingFundDocumentId);
+		List<UnderlyingFundDocumentList> GetAllUnderlyingFundDocuments(int underlyingFundId, int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		IEnumerable<ErrorInfo> SaveUnderlyingFundDocument(UnderlyingFundDocument underlyingFundDocument);
+		bool DeleteUnderlyingFundDocument(int underlyingFundDocumentId);
 		#endregion
 
 		#region UnderlyingFundStockDistribution
 		UnderlyingFundStockDistribution FindUnderlyingFundStockDistribution(int underlyingFundStockDistributionId);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundStockDistribution(UnderlyingFundStockDistribution underlyingFundStockDistribution);
+		IEnumerable<ErrorInfo> SaveUnderlyingFundStockDistributionLineItem(UnderlyingFundStockDistributionLineItem underlyingFundStockDistributionLineItem);
 		List<UnderlyingFundStockDistributionModel> GetAllUnderlyingFundStockDistributions(int underlyingFundId);
-		List<StockDealUnderlyingDirectModel> GetAllStockDistributionDirectList(int underlyingFundId, int fundId);
+		List<StockDistributionLineItemModel> GetAllStockDistributionDirectList(int securityTypeId, int securityId, int fundId);
 		List<AutoCompleteList> FindStockIssuers(int underlyingFundId, int fundId, string issuerName);
+		List<Models.Entity.Deal> GetAllDeals(int securityTypeId, int securityId, int fundId);
 		#endregion
 
 		#region UnderlyingFundCashDistribution
@@ -195,6 +200,7 @@ namespace DeepBlue.Controllers.Deal {
 		Models.Entity.Issuer FindIssuer(int issuerId);
 		List<AutoCompleteList> FindIssuers(string issuerName);
 		List<DeepBlue.Models.Entity.Issuer> GetAllIssuers();
+		IEnumerable<ErrorInfo> SaveUnderlyingDirectDocument(UnderlyingDirectDocument underlyingDirectDocument);
 
 		#region Equity
 		List<Equity> GetAllEquity(int issuerId);

@@ -231,7 +231,7 @@
 	<div>
 		<div class="headerbox">
 			<div class="title">
-				<%: Html.Span("Document")%>
+				<%: Html.Span("DOCUMENT INFORMATION")%>
 			</div>
 			<div style="float: right; padding-right: 200px; vertical-align: middle; padding-top: 10px;">
 				<%: Html.ImageButton("downarrow.png")%>
@@ -240,17 +240,17 @@
 		<div class="expandheader expandsel" style="display: none">
 			<div class="expandbtn">
 				<div class="expandtitle">
-					Document
+					DOCUMENT INFORMATION
 				</div>
 			</div>
 		</div>
 		<div class="detail" style="display: none; padding-left: 65px;" id="DocumentInformation">
-			<%using (Html.Form(new { @onsubmit = "return underlyingFund.saveDocument(this);" })) {%>
+			<%using (Html.Form(new { @id = "frmDocumentInfo", @onsubmit = "return underlyingFund.saveDocument(this);" })) {%>
 			<div class="editor-label">
 				<%: Html.Label("Document Type") %>
 			</div>
 			<div class="editor-field">
-				<%: Html.DropDownList("DocumentType", Model.DocumentTypes)%>
+				<%: Html.DropDownList("DocumentTypeId", Model.DocumentTypes)%>
 			</div>
 			<div class="editor-label" style="clear: right">
 				<%: Html.Label("Document Date ") %>
@@ -263,19 +263,11 @@
 			</div>
 			<div id="FileRow" class="editor-field">
 				<div class="cell" style="padding: 0; margin: 0; width: auto;">
-					<%: Html.File("File", new { @id="fileToUpload" })%></div>
-				<%--<div class="cell" style="padding: 0pt; background-color: White; height: 16px; width: 100px;
-				margin: 5px 0pt 0pt 5px;">
-				<div id="DocProgress" style="background-color: Red; float: left; height: 16px; width: 10px;">
-					&nbsp;
-				</div>
-			</div>
-			<div class="cell" style="padding: 0; margin: 0;">
-				<%: Html.Span("", new { @id = "SpnDocProgress" })%>
-			</div>--%>
+					<%: Html.File("File", new { @id = "fileToUpload" })%></div>
 			</div>
 			<div id="LinkRow" style="display: none" class="editor-field">
 				<%: Html.TextBox("FilePath")%>
+				<%: Html.Hidden("FileId", "0")%>
 			</div>
 			<div class="editor-field" style="width: auto;">
 			</div>
@@ -287,24 +279,27 @@
 			<div class="cell" style="padding: 0; margin: 0;">
 				<%: Html.Span("", new { @id = "SpnDocLoading" })%>
 			</div>
-			<div style="clear: both;">
+			<div style="clear: both; width: 70%;">
 				<br />
-				<table cellpadding="0" cellspacing="0" border="0" class="grid" style="width: 80%;">
+				<table id="DocumentList" cellpadding="0" cellspacing="0" border="0">
 					<thead>
 						<tr class="dealhead_tr">
-							<th>
+							<th style="display: none">
+								ID
+							</th>
+							<th style="width: 30%">
 								Document Type
 							</th>
-							<th style="width: 20%">
+							<th style="width: 20%;" align="center">
 								Document Date
 							</th>
-							<th style="width: 20%">
-								For
+							<th style="width: 30%">
+								File Name
 							</th>
-							<th style="width: 20%">
+							<th style="width: 10%" align="center">
 								File/Link
 							</th>
-							<th style="width: 20%">
+							<th style="width: 10%" align="center">
 							</th>
 						</tr>
 					</thead>

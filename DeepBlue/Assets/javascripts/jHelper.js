@@ -144,6 +144,7 @@
 	}
 	,resetFields: function (target) {
 		$(":input:text",target).val("");
+		$(":input:[type='file']",target).val("");
 		$(":input[type='hidden']",target).val("");
 		$(":input:checkbox",target).each(function () { this.checked==false; });
 		$("select",target).val(0);

@@ -185,6 +185,11 @@ namespace DeepBlue.Controllers.Admin {
 		IEnumerable<ErrorInfo> SaveFileType(FileType fileType);
 		List<FileType> GetAllFileTypes();
 		#endregion
+		
+		#region File
+		IEnumerable<ErrorInfo> SaveFile(File file);
+		File FindFile(int fileId);
+		#endregion
 
 		#region EquityType
 		List<EquityType> GetAllEquityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);

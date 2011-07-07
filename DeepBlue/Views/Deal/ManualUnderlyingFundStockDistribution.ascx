@@ -8,14 +8,8 @@
 				<tr>
 					<th>Deal Number</th>
 					<th>Deal Name</th>
-					<th>Issuer Name</th>
-					<th>NumberOfShares</th>
-					<th>PurchasePrice</th>
-					<th>FMV</th>
-					<th>TaxCostBase</th>
-					<th>TaxCostDate</th>
-					<th>NoticeDate</th>
-					<th>DistributionDate</th>
+					<th style="width:18%">NumberOfShares</th>
+					<th style="width:18%">FMV</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,14 +17,8 @@
 				<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
 					<td>Deal ${direct.DealNumber}</td>
 					<td class="dealname">${direct.DealName}</td>
-					<td>${direct.DirectName}</td>
-					<td><%: Html.TextBox("NumberOfShares","${direct.NumberOfShares}")%> </td>
-					<td><%: Html.TextBox("PurchasePrice", "${direct.PurchasePrice}")%> </td>
-					<td><%: Html.TextBox("FMV", "${direct.FMV}")%> </td>
-					<td><%: Html.TextBox("TaxCostBase", "${direct.TaxCostBase}")%> </td>
-					<td><%: Html.TextBox("TaxCostDate", "${direct.TaxCostDate}", new { @class = "datefield" })%> </td>
-					<td><%: Html.TextBox("NoticeDate", "${direct.NoticeDate}", new { @class = "datefield" })%> </td>
-					<td><%: Html.TextBox("DistributionDate", "${direct.DistributionDate}", new { @class = "datefield" })%> </td>
+					<td style="text-align:center"><%: Html.TextBox("${direct.FundId}_${direct.DealId}_NumberOfShares", "")%></td>
+					<td style="text-align:center"><%: Html.TextBox("${direct.FundId}_${direct.DealId}_FMV", "")%></td>
 				</tr>
 			{{/each}}
 			</tbody>

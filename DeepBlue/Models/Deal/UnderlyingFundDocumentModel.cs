@@ -22,6 +22,8 @@ namespace DeepBlue.Models.Deal {
 		[DateRange(ErrorMessage = "Document Date is required.")]
 		public DateTime DocumentDate { get; set; }
 
+		public int? FileId { get; set; }
+
 		[Required(ErrorMessage = "Upload Type is required.")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Upload Type is required.")]
 		public int UploadTypeId { get; set; }

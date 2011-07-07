@@ -12,6 +12,24 @@
 		<%: Html.Hidden("${Index}_SecurityId", "", new { @id = "SecurityId" })%>
 		<%: Html.Hidden("${Index}_SecurityTypeId", "", new { @id = "SecurityTypeId" })%>
 	</td>
+	<td style="text-align: center">
+		<%: Html.TextBox("${Index}_NumberOfShares", "", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
+	</td>
+	<td style="text-align: center">
+		<%: Html.TextBox("${Index}_FMV", "", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
+	</td>
+	<td style="text-align: center">
+		<%: Html.TextBox("${Index}_NoticeDate", "", new { @id = "${Index}_NoticeDate", @class = "datefield" })%>
+	</td>
+	<td style="text-align: center">
+		<%: Html.TextBox("${Index}_DistributionDate", "", new { @id = "${Index}_DistributionDate", @class = "datefield" })%>
+	</td>
+	<td style="text-align: center">
+		<%: Html.TextBox("${Index}_TaxCostBase", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+	</td>
+	<td style="text-align: center">
+		<%: Html.TextBox("${Index}_TaxCostDate", "", new { @id = "${Index}_TaxCostDate", @class = "datefield" })%>
+	</td>
 	<td style="text-align: right;">
 		<%: Html.Hidden("${Index}_UnderlyingFundStockDistributionId", "${UnderlyingFundStockDistributionId}")%>
 		<%: Html.Hidden("${Index}_UnderlyingFundId", "${UnderlyingFundId}", new { @id = "UnderlyingFundId" })%>

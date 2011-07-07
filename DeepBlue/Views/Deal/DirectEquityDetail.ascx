@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.EquityDetailModel>" %>
+<%@ Import Namespace="DeepBlue.Helpers" %>
 <%--<div class="db-tab">
 	<div class="db-left tabselect" id="NewEqTab" onclick="javascript:dealDirect.tabEquitySelect('N');">
 		<div class="db-center">
@@ -66,6 +67,33 @@
 	</div>
 	<div class="editor-field">
 		<%: Html.DropDownList("EquityTypeId", Model.EquityTypes, new { @id = "EquityType", @val = "${EquityTypeId}" })%>
+	</div>
+	<div class="editor-label">
+		<%: Html.Label("Document Type") %>
+	</div>
+	<div class="editor-field">
+		<%: Html.DropDownList("EquityDocumentTypeId", Model.DocumentTypes)%>
+	</div>
+	<div class="editor-label" style="clear: right">
+		<%: Html.Label("Document Date") %>
+	</div>
+	<div class="editor-field">
+		<%: Html.TextBox("EquityDocumentDate", "", new { @class = "datefield", @id = "EquityDocumentDate" })%>
+	</div>
+	<div class="editor-label">
+		<%: Html.DropDownList("EquityUploadTypeId", Model.UploadTypes, new { @style = "width:80px", @onchange = "javascript:dealDirect.changeUploadType(this,'equitysymboldiv');" })%>
+	</div>
+	<div id="FileRow" class="editor-field" style="width: auto;">
+		<div class="cell" style="padding: 0; margin: 0; width: auto;">
+			<%: Html.File("EquityFile", new { @id = "equityFileToUpload" })%>
+			<%: Html.Hidden("EquityFileId")%>
+		</div>
+		<div class="cell" style="padding: 0; margin: 0;">
+			<%: Html.Span("", new { @id = "SpnEquityDocLoading" })%>
+		</div>
+	</div>
+	<div id="LinkRow" style="display: none; width: auto;" class="editor-field">
+		<%: Html.TextBox("EquityFilePath")%>
 	</div>
 	<%: Html.Hidden("EquityId", "${EquityId}") %>
 </div>

@@ -12,6 +12,9 @@
 	<%=Html.StylesheetLinkTag("addufund.css")%>
 	<%=Html.JavascriptInclueTag("UnderlyingFund.js")%>
 	<%=Html.JavascriptInclueTag("DealDirect.js")%>
+	<%=Html.JavascriptInclueTag("fileuploader.js")%>
+	<%=Html.JavascriptInclueTag("flexgrid.js")%>
+	<%=Html.StylesheetLinkTag("flexigrid.css")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="navigation">

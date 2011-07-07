@@ -14,9 +14,16 @@ namespace DeepBlue.Helpers {
 			_AppSettingName = appSettingName;
 		}
 
+		public UploadFile(string appSettingName) {
+			_AppSettingName = appSettingName;
+		}
+
+
 		private object[] _Arguments;
 
 		private string _AppSettingName;
+
+		private FileInfo _FileInfo;
 
 		private HttpPostedFileBase _UploadFile;
 
@@ -26,19 +33,50 @@ namespace DeepBlue.Helpers {
 
 		public long Size { get; private set; }
 
+		public FileInfo FileInfo {
+			get {
+				return this._FileInfo;
+			}
+		}
+
 		public bool Upload() {
 			string rootPath = HttpContext.Current.Server.MapPath("/");
 			string uploadFilePath = Path.Combine(rootPath, string.Format(ConfigurationManager.AppSettings[_AppSettingName], _Arguments));
 			string directoryName = Path.GetDirectoryName(uploadFilePath);
-			if (Directory.Exists(directoryName)==false) {
+			if (Directory.Exists(directoryName) == false) {
 				Directory.CreateDirectory(directoryName);
 			}
 			_UploadFile.SaveAs(uploadFilePath);
-			FileInfo fileInfo = new FileInfo(uploadFilePath);
-			FileName = fileInfo.Name;
+			_FileInfo = new FileInfo(uploadFilePath);
+			FileName = _FileInfo.Name;
 			FilePath = directoryName.Replace(rootPath, "");
-			Size = fileInfo.Length;
+			Size = _FileInfo.Length;
 			return true;
 		}
+
+
+		public bool Move(string tempFileName, params object[] args) {
+			if (File.Exists(tempFileName)) {
+				FileInfo tempFileInfo = new FileInfo(tempFileName);
+				string rootPath = HttpContext.Current.Server.MapPath("/");
+				string uploadFilePath = Path.Combine(rootPath, string.Format(ConfigurationManager.AppSettings[_AppSettingName], args));
+				string directoryName = Path.GetDirectoryName(uploadFilePath);
+				if (Directory.Exists(directoryName) == false) {
+					Directory.CreateDirectory(directoryName);
+				}
+				if (File.Exists(tempFileName)) {
+					File.Move(tempFileName, uploadFilePath);
+				}
+				_FileInfo = new FileInfo(uploadFilePath);
+				FileName = _FileInfo.Name;
+				FilePath = directoryName.Replace(rootPath, "");
+				Size = _FileInfo.Length;
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
 	}
 }

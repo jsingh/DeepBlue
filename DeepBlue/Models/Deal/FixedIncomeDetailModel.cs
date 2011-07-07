@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.ComponentModel;
 
 namespace DeepBlue.Models.Deal {
-	public class FixedIncomeDetailModel {
+	public class FixedIncomeDetailModel : FixedIncomeDocumentModel {
 
 		public int FixedIncomeId { get; set; }
 
@@ -64,7 +64,9 @@ namespace DeepBlue.Models.Deal {
 
 		public List<SelectListItem> FixedIncomeTypes { get; set; }
 
+		public List<SelectListItem> DocumentTypes { get; set; }
 
+		public List<SelectListItem> UploadTypes { get; set; }
 
 	}
 }
