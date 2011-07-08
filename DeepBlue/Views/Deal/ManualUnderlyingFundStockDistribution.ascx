@@ -3,7 +3,7 @@
 <tr id="ManualUFSD_Deal_${Index}" class="mcc">
 	<td class="ismanual" style="display:none"></td>
 	<td class="childrowcell ismanual"  style="display:none" colspan=6>
-		<table cellpadding=0 cellspacing=0 border=0 style="width:100%" class="grid">
+		<div class="gbox"><table cellpadding=0 cellspacing=0 border=0 style="width:100%" class="grid">
 			<thead>
 				<tr>
 					<th>Deal Number</th>
@@ -22,6 +22,6 @@
 				</tr>
 			{{/each}}
 			</tbody>
-		</table>
+		</table></div>
 	</td>
 </tr>

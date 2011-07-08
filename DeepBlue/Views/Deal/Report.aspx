@@ -60,37 +60,39 @@
 	<div class="line">
 	</div>
 	<div id="ReportContent" class="report-content">
-		<table cellpadding="0" class="grid" cellspacing="0" border="0" id="ReportList">
-			<thead>
-				<tr class="report_tr">
-					<th style="display: none">
-						DealId
-					</th>
-					<th align="center" style="width: 10%">
-						<span>Deal No.</span>
-					</th>
-					<th align="left">
-						<span>Deal Name</span>
-					</th>
-					<th align="left">
-						<span>Fund Name (S)</span>
-					</th>
-					<th align="right">
-						<span>Committed Amount</span>
-					</th>
-					<th align="right">
-						<span>Unfunded Amount</span>
-					</th>
-					<th align="right">
-						<span>Total Amount</span>
-					</th>
-					<th style="width: 2%">
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
+		<div class="gbox">
+			<table cellpadding="0" class="grid" cellspacing="0" border="0" id="ReportList">
+				<thead>
+					<tr class="report_tr">
+						<th style="display: none">
+							DealId
+						</th>
+						<th align="center" style="width: 10%">
+							<span>Deal No.</span>
+						</th>
+						<th align="left">
+							<span>Deal Name</span>
+						</th>
+						<th align="left">
+							<span>Fund Name (S)</span>
+						</th>
+						<th align="right">
+							<span>Committed Amount</span>
+						</th>
+						<th align="right">
+							<span>Unfunded Amount</span>
+						</th>
+						<th align="right">
+							<span>Total Amount</span>
+						</th>
+						<th style="width: 2%">
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	<%: Html.Hidden("FundId","0",new  { @id="FundId"}) %>
 	<%: Html.Hidden("SortName", "DealName", new { @id = "SortName" })%>
@@ -115,7 +117,7 @@
 	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { dealReport.selectFund(ui.item.id);}" })%>
 	<script id="DealDetailTemplate" type="text/x-jquery-tmpl"> 
 		<div class="treerow">
-			<table id="tblUnderlyingFund" class="grid" cellpadding="0" cellspacing="0" border="0">
+			<div class="gbox"><table id="tblUnderlyingFund" class="grid" cellpadding="0" cellspacing="0" border="0">
 				<thead>
 					<tr class="tblUnderlyingFund_tr">
 						<th>
@@ -184,7 +186,7 @@
 						</tr>
 				</tfoot>
 				{{/if}}
-			</table>
+			</table></div><div class="gbox">
             <table cellpadding="0" cellspacing="0" border="0" class="grid">
 				<thead>
 					<tr>
@@ -192,8 +194,8 @@
                         </th>
                      </tr>
 					 </thead>
-               </thead>
-			</table><br/><br/>
+               </thead></div>
+			</table><br/><br/><div class="gbox">
 			<table id="tblUnderlyingDirect" class="grid" cellpadding="0" cellspacing="0" border="0">
 				<thead>
 					<tr class="tblUnderlyingDirect_tr">
@@ -281,7 +283,7 @@
                     </tr>
 				</tfoot>
 				{{/if}}
-			</table>
+			</table></div><div class="gbox">
              <table cellpadding="0" cellspacing="0" border="0" class="grid">
 				<thead>
 					<tr>
@@ -290,7 +292,7 @@
                      </tr>
 					 </thead>
                </thead>
-			</table>
+			</table></div>
 		 </div>
 		 
 	</script>

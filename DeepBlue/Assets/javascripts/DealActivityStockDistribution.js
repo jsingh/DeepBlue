@@ -50,7 +50,7 @@ dealActivity.loadSD=function (isRefresh) {
 			$(".mcc",target).removeAttr("class");
 			$("tr",target).each(function () {
 				var issuer=$("#Issuer",this).get(0);
-				var underlyingFundId=$("#UnderlyingFundId",this).val();
+				var underlyingFundId=dealActivity.getSDUnderlyingFundId();
 				var fundId=$("#FundId",this).val();
 				var index=$("#Index",this).val();
 				var row=this;

@@ -6,23 +6,23 @@
 		<%: Html.Image("treeminus.gif", new { @onclick = "javascript:dealActivity.expandMCDTree(${Index},this);" })%>
 		{{/if}}
 	</td>
-	<td style="text-align: left">
+	<td class="lalign">
 		<%: Html.Span("${FundName}", new { @class = "show" })%>
 		<%: Html.Hidden("${Index}_FundId", "${FundId}")%>
 	</td>
-	<td style="text-align: center">
+	<td class="ralign">
 		<%: Html.TextBox("${Index}_Amount", "{{if Amount>0}}${Amount}{{/if}}", new { @class = "", @onkeypress = "return jHelper.isCurrency(event);" })%>
 	</td>
-	<td style="text-align: center">
+	<td class="calign">
 		<%: Html.TextBox("${Index}_NoticeDate", "{{if UnderlyingFundCashDistributionId>0}}${NoticeDate}{{/if}}", new { @class = "datefield", @id = "${Index}_CD_NoticeDate" })%>
 	</td>
-	<td style="text-align: center">
+	<td class="calign">
 		<%: Html.TextBox("${Index}_ReceivedDate", "{{if UnderlyingFundCashDistributionId>0}}${ReceivedDate}{{/if}}", new { @class = "datefield", @id = "${Index}_CD_ReceivedDate" })%>
 	</td>
-	<td style="text-align: center">
+	<td class="lalign">
 		<%: Html.DropDownList("${Index}_CashDistributionTypeId", Model.CashDistributionTypes, new { @style = "width:160px", @val = "${CashDistributionTypeId}" })%>
 	</td>
-	<td style="text-align: right;display:none;" class="ismanual">
+	<td style="display:none;" class="ralign ismanual">
 		<%: Html.Span("${TotalCommitmentAmount}", new { @class = "money" })%>
 		<%: Html.Hidden("${Index}_UnderlyingFundCashDistributionId", "${UnderlyingFundCashDistributionId}")%>
 		<%: Html.Hidden("${Index}_UnderlyingFundId", "${UnderlyingFundId}")%>

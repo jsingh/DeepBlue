@@ -37,43 +37,47 @@
 	</div>
 	<div class="search-content">
 		<div class="grid-header">
-			<table cellpadding="0" cellspacing="0" border="0" class="grid">
-				<thead>
-					<tr>
-						<th style="width: 20%;">
-							Underlying Fund Name
-						</th>
-						<th style="width: 20%;">
-							Fund Name
-						</th>
-						<th style="width: 15%;">
-							Capital Call Amount
-						</th>
-						<th style="width: 15%;">
-							Distribution Amount
-						</th>
-						<th style="width: 15%;">
-							Payment Date / Received Date
-						</th>
-						<th style="width: 15%;">
-							Paid On / Received On
-						</th>
-					</tr>
-				</thead>
-			</table>
+			<div class="gbox">
+				<table cellpadding="0" cellspacing="0" border="0" class="grid">
+					<thead>
+						<tr>
+							<th style="width: 20%;">
+								Underlying Fund Name
+							</th>
+							<th style="width: 20%;">
+								Fund Name
+							</th>
+							<th style="width: 15%;">
+								Capital Call Amount
+							</th>
+							<th style="width: 15%;">
+								Distribution Amount
+							</th>
+							<th style="width: 15%;">
+								Payment Date / Received Date
+							</th>
+							<th style="width: 15%;">
+								Paid On / Received On
+							</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
 		</div>
 		<div id="ReconcileBox" class="grid-body">
-			<table cellpadding="0" cellspacing="0" border="0" class="grid" id="ReconcileList">
-				<tbody>
-				</tbody>
-				<tfoot style="display: none">
-					<tr>
-						<td colspan="6">
-							<%: Html.Anchor("View More", "javascript:dealReconcile.viewMore();", new { @style = "color: #000;" })%>
-						</td>
-					</tr>
-				</tfoot>
-			</table>
+			<div class="gbox">
+				<table cellpadding="0" cellspacing="0" border="0" class="grid" id="ReconcileList">
+					<tbody>
+					</tbody>
+					<tfoot style="display: none">
+						<tr>
+							<td colspan="6">
+								<%: Html.Anchor("View More", "javascript:dealReconcile.viewMore();", new { @style = "color: #000;" })%>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
 		</div>
 	</div>
 </asp:Content>

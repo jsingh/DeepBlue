@@ -41,6 +41,10 @@ namespace DeepBlue.Models.Deal {
 		[Range((int)1, int.MaxValue, ErrorMessage = "NumberOfShares is required")]
 		public int NumberOfShares { get; set; }
 
+		[Required(ErrorMessage = "Purchase Price is required")]
+		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Purchase Price is required")]
+		public decimal PurchasePrice { get; set; }
+
 		[Required(ErrorMessage = "Notice Date is required")]
 		[DateRange(ErrorMessage = "Notice Date is required")]
 		public DateTime NoticeDate { get; set; }
@@ -52,10 +56,6 @@ namespace DeepBlue.Models.Deal {
 		[Required(ErrorMessage = "Tax Cost Base is required")]
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Tax Cost Base is required")]
 		public decimal TaxCostBase { get; set; }
-
-		[Required(ErrorMessage = "FMV is required")]
-		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "FMV is required")]
-		public decimal FMV { get; set; }
 
 		[Required(ErrorMessage = "Tax Cost Date is required")]
 		[DateRange(ErrorMessage = "Tax Cost Date is required")]
@@ -76,9 +76,9 @@ namespace DeepBlue.Models.Deal {
 
 		public int DealNumber { get; set; }
 
-		public int UnderlyingFundId { get; set; }
-
 		public int? NumberOfShares { get; set; }
+
+		public decimal? PurchasePrice { get; set; }
 
 		public decimal? FMV { get; set; }
 

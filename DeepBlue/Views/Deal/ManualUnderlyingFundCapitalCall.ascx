@@ -4,7 +4,7 @@
 <tr id="ManualUFCC_Deal_${Index}" class="mcc">
 	<td class="ismanual"></td>
 	<td class="childrowcell ismanual" colspan=6>
-		<table cellpadding=0 cellspacing=0 border=0 style="width:60%" class="grid">
+		<div class="gbox"><table cellpadding=0 cellspacing=0 border=0 style="width:60%" class="grid">
 			<thead>
 				<tr>
 					<th style="width:5%">Deal Number</th>
@@ -21,7 +21,7 @@
 					<td style="text-align:right"><%: Html.TextBox("${deal.FundId}_${deal.DealId}_CallAmount", "", new { @class = "manualcamount" })%></td>
 				</tr>
 			{{/each}}
-		</table>
+		</table></div>
 	</td>
 </tr>
 {{/if}}

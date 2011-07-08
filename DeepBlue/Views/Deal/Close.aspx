@@ -24,7 +24,7 @@
 				</div>
 			</div>
 			<div class="rightcol">
-				<div class="cell auto" style="margin:0;padding:0 10px 0 0;">
+				<div class="cell auto" style="margin: 0; padding: 0 10px 0 0;">
 					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none;" })%>
 				</div>
 				<div class="cell">
@@ -67,31 +67,33 @@
 			</div>
 			<div class="dc-box">
 				<div class="section">
-					<table id="DealCloseList" class="grid" cellpadding="0" cellspacing="0" border="0"
-						style="width: 70%;">
-						<thead>
-							<tr>
-								<th style="display: none;">
-								</th>
-								<th style="width: 5%" align="center">
-									No.
-								</th>
-								<th style="width: 10%" align="center">
-									Deal Close
-								</th>
-								<th style="width: 10%" align="center">
-									Close Date
-								</th>
-								<th style="width: 20%" align="right">
-									Total Net Purchase Price
-								</th>
-								<th align="right">
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
+					<div class="gbox">
+						<table id="DealCloseList" class="grid" cellpadding="0" cellspacing="0" border="0"
+							style="width: 70%;">
+							<thead>
+								<tr>
+									<th style="display: none;">
+									</th>
+									<th style="width: 5%" align="center">
+										No.
+									</th>
+									<th style="width: 10%; text-align: left;" align="left">
+										Deal Close
+									</th>
+									<th style="width: 10%" align="center">
+										Close Date
+									</th>
+									<th style="width: 20%; text-align: right;" align="right">
+										Total Net Purchase Price
+									</th>
+									<th align="right">
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -111,6 +113,8 @@
 						</div>
 						<div id="NewDealCloseBtn" class="expandaddbtn" style="display: none;">
 							<%: Html.Anchor(Html.Image("adddealclose.png").ToHtmlString(),"javascript:dealClose.add(0);")%></div>
+						<div class="rightuarrow">
+						</div>
 					</div>
 					<div id="NDDetail" class="detail" style="display: none">
 						<div class="closedetail">
@@ -135,22 +139,22 @@
 									<tr>
 										<th style="width: 5%">
 										</th>
-										<th style="width: 15%">
+										<th class="lalign" style="width: 15%">
 											Fund Name
 										</th>
-										<th style="width: 15%">
+										<th class="ralign" style="width: 15%">
 											Commitment Amount
 										</th>
-										<th style="width: 15%">
+										<th class="ralign" style="width: 15%">
 											Gross Purchase Price
 										</th>
-										<th style="width: 15%">
+										<th class="ralign" style="width: 15%">
 											Post Record Capital Call
 										</th>
-										<th style="width: 15%">
+										<th class="ralign" style="width: 15%">
 											Post Record Distribution
 										</th>
-										<th style="width: 15%">
+										<th class="ralign" style="width: 15%">
 											Net Purchase Price
 										</th>
 										<th>
@@ -167,18 +171,18 @@
 								style="width: 90%;">
 								<thead>
 									<tr>
-										<th style="width: 5%">
+										<th class="lalign" style="width: 5%">
 										</th>
-										<th style="width: 15%">
+										<th class="lalign" style="width: 15%">
 											Direct Name
 										</th>
-										<th style="width: 15%">
+										<th class="lalign" style="width: 15%">
 											No. Of Shares
 										</th>
-										<th style="width: 15%">
+										<th class="ralign" style="width: 15%">
 											Price
 										</th>
-										<th style="width: 15%">
+										<th class="ralign" style="width: 15%">
 											Fair Market Value
 										</th>
 										<th>
@@ -212,6 +216,8 @@
 						</div>
 						<div style="display: block; float: left;">
 							<%: Html.TextBox("CloseDate", "", new { @id = "Final_CloseDate" })%></div>
+						<div class="rightuarrow">
+						</div>
 					</div>
 					<div class="detail" style="display: none">
 						<div class="dc-box">
@@ -223,19 +229,19 @@
 									border="0" style="width: 90%;">
 									<thead>
 										<tr>
-											<th style="width: 15%">
+											<th class="lalign" style="width: 15%">
 												Fund Name
 											</th>
-											<th style="width: 15%">
+											<th class="ralign" style="width: 15%">
 												Reallocated Gross Purchase
 											</th>
-											<th style="width: 15%">
+											<th class="ralign" style="width: 15%">
 												Post Record Capital Call
 											</th>
-											<th style="width: 15%">
+											<th class="ralign" style="width: 15%">
 												Post Record Distribution
 											</th>
-											<th style="width: 15%">
+											<th class="ralign" style="width: 15%">
 												Adjusted Cost
 											</th>
 											<th>
@@ -254,16 +260,16 @@
 									border="0" style="width: 90%;">
 									<thead>
 										<tr>
-											<th style="width: 15%">
+											<th class="lalign" style="width: 15%">
 												Direct Name
 											</th>
-											<th style="width: 15%">
+											<th class="lalign" style="width: 15%">
 												No. Of Shares
 											</th>
-											<th style="width: 15%">
+											<th class="ralign" style="width: 15%">
 												Price
 											</th>
-											<th style="width: 2%;white-space:nowrap;">
+											<th class="ralign" style="width: 2%; white-space: nowrap;">
 												Adjusted Fair Market Value
 											</th>
 											<th>
@@ -307,31 +313,31 @@
 	<tbody>
 		{{each(i, df) DealUnderlyingFunds}}
 		<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
-			<td style="text-align:center">
+			<td class="calign">
 				<%: Html.InputCheckBox("DealUnderlyingFundId", false , new { @onchange="javascript:dealClose.editChkRow(this);", @id="chk", @value="${DealUnderlyingFundId}" })%>
 			</td>
-			<td style="text-align:left">
+			<td class="lalign">
 				${FundName}
 			</td>
-			<td style="text-align: right">
+			<td class="ralign">
 				<%: Html.Span("${CommittedAmount}", new { @class="show money" })%>
 				<%: Html.TextBox("${DealUnderlyingFundId}_CommittedAmount", "${CommittedAmount}", new { @class="hide", @id="CommittedAmount", @onkeypress = "return jHelper.isCurrency(event);" })%>
 			</td>
-			<td style="text-align: right"><%: Html.Span("${GrossPurchasePrice}", new { @class="show money" })%>
+			<td class="ralign"><%: Html.Span("${GrossPurchasePrice}", new { @class="show money" })%>
 				<%: Html.TextBox("${DealUnderlyingFundId}_GrossPurchasePrice", "${GrossPurchasePrice}", new { @class="hide",@id="GrossPurchasePrice",@onkeyup="javascript:dealClose.calcCloseUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 			</td>
-			<td style="text-align: right"><%: Html.Span("${PostRecordDateCapitalCall}", new { @class="show money" })%>
+			<td class="ralign"><%: Html.Span("${PostRecordDateCapitalCall}", new { @class="show money" })%>
 				<%: Html.TextBox("${DealUnderlyingFundId}_PostRecordDateCapitalCall", "${PostRecordDateCapitalCall}", new { @class="hide",@id="PostRecordDateCapitalCall", @onkeyup="javascript:dealClose.calcCloseUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 			</td>
-			<td style="text-align: right"><%: Html.Span("${PostRecordDateDistribution}", new { @class="show money" })%>
+			<td class="ralign"><%: Html.Span("${PostRecordDateDistribution}", new { @class="show money" })%>
 				<%: Html.TextBox("${DealUnderlyingFundId}_PostRecordDateDistribution", "${PostRecordDateDistribution}", new { @class="hide", @id="PostRecordDateDistribution",@onkeyup="javascript:dealClose.calcCloseUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 			</td>
-			<td style="text-align: right">
+			<td class="ralign">
 				<%:Html.Span("${NetPurchasePrice}", new { @id="SpnNPP", @class="money" })%> 
 			</td>
-			<td style="text-align: right">
+			<td class="ralign">
 				<%: Html.Hidden("${DealUnderlyingFundId}_DealClosingId","${DealClosingId}",  new { @id="DealClosingId" })%>
-				<%: Html.Image("Edit.png", new { @onclick = "javascript:dealClose.editRow(this);" })%>
+				<%: Html.Image("Edit.png", new { @class="gbutton", @onclick = "javascript:dealClose.editRow(this);" })%>
 			</td>
 		</tr>
 		{{/each}}
@@ -340,22 +346,22 @@
 		<tr>
 			<td>
 			</td>
-			<td style="text-align:center">
+			<td class="lalign">
 				Total
 			</td>
-			<td style="text-align: right">
+			<td class="ralign">
 				<%: Html.Span("${TotalCA}", new { @id="SpnTotalCA" })%>
 			</td>
-			<td style="text-align: right">
+			<td class="ralign">
 				<%: Html.Span("${TotalGPP}", new { @id = "SpnTotalGPP" })%>
 			</td>
-			<td style="text-align: right">
+			<td class="ralign">
 				<%: Html.Span("${TotalPRCC}", new { @id = "SpnTotalPRCC" })%>
 			</td>
-			<td style="text-align: right">
+			<td class="ralign">
 				<%: Html.Span("${TotalPRCD}", new { @id = "SpnTotalPRCD" })%>
 			</td>
-			<td style="text-align: right">
+			<td class="ralign">
 				<%: Html.Span("${TotalNPP}", new { @id = "SpnTotalNPP" })%>
 			</td>
 			<td>
@@ -367,42 +373,42 @@
 		<tbody>
 			{{each(i, direct)  DealUnderlyingDirects}}
 			<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
-				<td style="text-align:center">
+				<td class="calign">
 					<%:Html.InputCheckBox("DealUnderlyingDirectId", false, new { @onchange="javascript:dealClose.editChkRow(this);",  @id="chk", @value="${DealUnderlyingDirectId}" })%>
 				</td>
-				<td style="text-align:left">
+				<td class="lalign">
 					${IssuerName}
 				</td>
-				<td style="text-align:right"><%: Html.Span("${NumberOfShares}", new { @class="show" })%>
+				<td class="lalign"><%: Html.Span("${NumberOfShares}", new { @class="show" })%>
 					<%: Html.TextBox("${DealUnderlyingDirectId}_NumberOfShares", "${NumberOfShares}", new { @class="hide", @id="NumberOfShares", @onkeyup="javascript:dealClose.calcCloseUD();",  @onkeypress = "return jHelper.isNumeric(event);" })%>
 				</td>
-				<td style="text-align:right"><%: Html.Span("${PurchasePrice}", new { @class="show money" })%>
+				<td class="ralign"><%: Html.Span("${PurchasePrice}", new { @class="show money" })%>
 					<%: Html.TextBox("${DealUnderlyingDirectId}_PurchasePrice", "${PurchasePrice}", new { @class="hide",  @id="PurchasePrice", @onkeyup="javascript:dealClose.calcCloseUD();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
-				<td style="text-align:right">
+				<td class="ralign">
 					<%:Html.Span("${FormatFMV}", new { @class="show", @id="SpnFMV" })%>   
 					<%: Html.TextBox("${DealUnderlyingDirectId}_FMV", "${FMV}", new { @class="hide", @id="FMV", @onkeyup="javascript:dealClose.calcCloseUD();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
-				<td style="text-align:right">
+				<td class="ralign">
 					<%: Html.Hidden("${DealUnderlyingDirectId}_DealClosingId","${DealClosingId}",  new { @id="DealClosingId" })%>
-						<%: Html.Image("Edit.png", new { @onclick = "javascript:dealClose.editRow(this);" })%>
+						<%: Html.Image("Edit.png", new {  @class ="gbutton", @onclick = "javascript:dealClose.editRow(this);" })%>
 				</td>
 			</tr>
 			{{/each}}
 		</tbody>
 		<tfoot>
 			<tr>
-				<td style="text-align:left">Total
+				<td class="lalign">Total
 				</td>
 				<td>
 				</td>
-				<td style="text-align:right">
+				<td class="lalign">
 					<%: Html.Span("${TotalNoOfShares}", new { @id="SpnTotalNoOfShares" })%>
 				</td>
-				<td style="text-align:right">
+				<td class="ralign">
 					<%: Html.Span("${TotalPurchasePrice}", new { @id = "SpnTotalPurchasePrice" })%>
 				</td>
-				<td style="text-align:right">
+				<td class="ralign">
 					<%: Html.Span("${TotalFMV}", new { @id = "SpnTotalFMV" })%>
 				</td>
 				<td>
@@ -415,23 +421,23 @@
 			{{each(i, df) DealUnderlyingFunds}}
 			{{if DealClosingId>0}}
 			<tr>
-				<td style="text-align:left">
+				<td class="lalign">
 					${FundName}
 				</td>
-				<td style="text-align: right"><%: Html.Span("${ReassignedGPP}", new { @class="show money" })%>
+				<td class="ralign"><%: Html.Span("${ReassignedGPP}", new { @class="show money" })%>
 					<%: Html.TextBox("${DealUnderlyingFundId}_ReassignedGPP", "{{if ReassignedGPP>0}}${ReassignedGPP}{{/if}}", new { @class="hide", @id="ReassignedGPP",@onkeyup="javascript:dealClose.calcFlinalCloseUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
-				<td style="text-align: right"><%: Html.Span("${PostRecordDateCapitalCall}", new { @class="show money" })%>
+				<td class="ralign"><%: Html.Span("${PostRecordDateCapitalCall}", new { @class="show money" })%>
 					<%: Html.TextBox("${DealUnderlyingFundId}_PostRecordDateCapitalCall", "{{if PostRecordDateCapitalCall>0}}${PostRecordDateCapitalCall}{{/if}}", new { @class="hide",@id="PostRecordDateCapitalCall", @onkeyup="javascript:dealClose.calcFlinalCloseUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
-				<td style="text-align: right"><%: Html.Span("${PostRecordDateDistribution}", new { @class="show money" })%>
+				<td class="ralign"><%: Html.Span("${PostRecordDateDistribution}", new { @class="show money" })%>
 					<%: Html.TextBox("${DealUnderlyingFundId}_PostRecordDateDistribution", "{{if PostRecordDateDistribution>0}}${PostRecordDateDistribution}{{/if}}", new { @class="hide", @id="PostRecordDateDistribution",@onkeyup="javascript:dealClose.calcFlinalCloseUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
-				<td style="text-align: right">
+				<td class="ralign">
 					<%:Html.Span("${AdjustedCost}", new { @id="SpnAJC", @class="money" })%> 
 				</td>
-				<td style="text-align: right">
-					<%: Html.Image("Edit.png", new { @onclick = "javascript:dealClose.editRow(this);" })%>
+				<td class="ralign">
+					<%: Html.Image("Edit.png", new {  @class ="gbutton", @onclick = "javascript:dealClose.editRow(this);" })%>
 				</td>
 			</tr>
 			{{/if}}
@@ -439,19 +445,19 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td style="text-align:left">
+				<td class="lalign">
 					Total
 				</td>
-				<td style="text-align: right">
+				<td class="ralign">
 					<%: Html.Span("${TotalRGPP}", new { @id = "SpnTotalGPP" })%>
 				</td>
-				<td style="text-align: right">
+				<td class="ralign">
 					<%: Html.Span("${TotalFinalPRCC}", new { @id = "SpnTotalPRCC" })%>
 				</td>
-				<td style="text-align: right">
+				<td class="ralign">
 					<%: Html.Span("${TotalFinalPRCD}", new { @id = "SpnTotalPRCD" })%>
 				</td>
-				<td style="text-align: right">
+				<td class="ralign">
 					<%: Html.Span("${TotalAJC}", new { @id = "SpnTotalAJC" })%>
 				</td>
 				<td>
@@ -464,21 +470,21 @@
 			{{each(i, direct)  DealUnderlyingDirects}}
 			{{if DealClosingId>0}}
 			<tr>
-				<td style="text-align:left">
+				<td class="lalign">
 					${IssuerName}
 				</td>
-				<td style="text-align:right"><%: Html.Span("${NumberOfShares}", new { @class="show" })%>
+				<td class="lalign"><%: Html.Span("${NumberOfShares}", new { @class="show" })%>
 					<%: Html.TextBox("${DealUnderlyingDirectId}_NumberOfShares", "{{if NumberOfShares>0}}${NumberOfShares}{{/if}}", new { @class="hide", @id="NumberOfShares", @onkeyup="javascript:dealClose.calcFlinalCloseUD();",  @onkeypress = "return jHelper.isNumeric(event);" })%>
 				</td>
-				<td style="text-align:right"><%: Html.Span("${PurchasePrice}", new { @class="show money" })%>
+				<td class="ralign"><%: Html.Span("${PurchasePrice}", new { @class="show money" })%>
 					<%: Html.TextBox("${DealUnderlyingDirectId}_PurchasePrice", "{{if PurchasePrice>0}}${PurchasePrice}{{/if}}", new { @class="hide",  @id="PurchasePrice", @onkeyup="javascript:dealClose.calcFlinalCloseUD();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
-				<td style="text-align:right">
+				<td class="ralign">
 					<%:Html.Span("${FormatFMV}", new { @id="SpnFMV",@class="show" })%>   
 					<%: Html.TextBox("${DealUnderlyingDirectId}_FMV", "${FMV}", new { @class="hide", @id="FMV", @onkeyup="javascript:dealClose.calcFlinalCloseUD();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 				</td>
-				<td style="text-align:right">
-					<%: Html.Image("Edit.png", new { @onclick = "javascript:dealClose.editRow(this);" })%>
+				<td class="ralign">
+					<%: Html.Image("Edit.png", new { @class ="gbutton", @onclick = "javascript:dealClose.editRow(this);" })%>
 				</td>
 			</tr>
 			{{/if}}
@@ -486,16 +492,16 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td style="text-align:left">
+				<td class="lalign">
 					Total
 				</td>
-				<td style="text-align:right">
+				<td class="lalign">
 					<%: Html.Span("${TotalFinalNoOfShares}", new { @id="SpnTotalNoOfShares" })%>
 				</td>
-				<td style="text-align:right">
+				<td class="ralign">
 					<%: Html.Span("${TotalFinalPurchasePrice}", new { @id = "SpnTotalPurchasePrice" })%>
 				</td>
-				<td style="text-align:right">
+				<td class="ralign">
 					<%: Html.Span("${TotalFinalFMV}", new { @id = "SpnTotalFMV" })%>
 				</td>
 				<td>

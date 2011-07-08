@@ -83,34 +83,36 @@
 							<div id="CapitalCall" class="gridbox" style="display: none;">
 								<%using (Html.Form(new { @id = "frmUFCapitalCall", @onsubmit = "return dealActivity.submitUFCapitalCall(this);" })) {%>
 								<div style="clear: both; width: 100%">
-									<table cellpadding="0" cellspacing="0" border="0" id="CapitalCallList" class="grid">
-										<thead>
-											<tr>
-												<th id="CCExpand" style="width: 5%; display: none;" class="ismanual">
-												</th>
+									<div class="gbox">
+										<table cellpadding="0" cellspacing="0" border="0" id="CapitalCallList" class="grid">
+											<thead>
+												<tr>
+													<th id="CCExpand" style="width: 5%; display: none;" class="ismanual">
+													</th>
 												<th style="width: 20%">
-													Fund Name
-												</th>
+														Fund Name
+													</th>
 												<th style="width: 20%">
-													Call Amount
-												</th>
+														Call Amount
+													</th>
 												<th style="width: 15%">
-													Notice Date
-												</th>
+														Notice Date
+													</th>
 												<th style="width: 15%">
-													Received Date
-												</th>
+														Received Date
+													</th>
 												<th style="width: 15%">
-													Deemed Capital Call
-												</th>
+														Deemed Capital Call
+													</th>
 												<th id="CCTC" style="display: none;" class="ismanual">
-													Total Commitment Amount
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
+														Total Commitment Amount
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
 									<br />
 									<center>
 										<span>
@@ -129,28 +131,30 @@
 								</div>
 								<div id="PRCCListBox" class="clear" style="display: none">
 									<%using (Html.Form(new { @id = "frmUFPRCapitalCall", @onsubmit = "return dealActivity.submitUFPRCapitalCall(this);" })) {%>
-									<table cellpadding="0" cellspacing="0" border="0" id="PRCapitalCallList" class="grid">
-										<thead>
-											<tr>
+									<div class="gbox">
+										<table cellpadding="0" cellspacing="0" border="0" id="PRCapitalCallList" class="grid">
+											<thead>
+												<tr>
 												<th style="width: 20%">
-													Fund Name
-												</th>
+														Fund Name
+													</th>
 												<th style="width: 20%">
-													Deal Name
-												</th>
+														Deal Name
+													</th>
 												<th style="width: 15%">
-													Capital Call Amount
-												</th>
+														Capital Call Amount
+													</th>
 												<th style="width: 15%">
-													Capital Call Date
-												</th>
-												<th>
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
+														Capital Call Date
+													</th>
+													<th>
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
 									<br />
 									<center>
 										<span>
@@ -200,34 +204,36 @@
 							<div class="clear">
 								<div id="CashDistribution" class="gridbox" style="display: none">
 									<%using (Html.Form(new { @id = "frmUFCashDistribution", @onsubmit = "return dealActivity.submitUFCashDistribution(this);" })) {%>
-									<table cellpadding="0" cellspacing="0" border="0" id="CashDistributionList" class="grid">
-										<thead>
-											<tr>
-												<th style="width: 5%; display: none;" class="ismanual">
-												</th>
+									<div class="gbox">
+										<table cellpadding="0" cellspacing="0" border="0" id="CashDistributionList" class="grid">
+											<thead>
+												<tr>
+													<th style="width: 5%; display: none;" class="ismanual">
+													</th>
 												<th>
-													Fund Name
-												</th>
+														Fund Name
+													</th>
 												<th>
-													Amount
-												</th>
+														Amount
+													</th>
 												<th>
-													Notice Date
-												</th>
+														Notice Date
+													</th>
 												<th>
-													Record Date
-												</th>
+														Record Date
+													</th>
 												<th>
-													Distribution Type
-												</th>
+														Distribution Type
+													</th>
 												<th style="display: none;" class="ismanual">
-													Total Commitment Amount
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
+														Total Commitment Amount
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
 									<br />
 									<center>
 										<span>
@@ -245,28 +251,30 @@
 									</div>
 									<div id="PRCDListBox" class="clear" style="display: none">
 										<%using (Html.Form(new { @id = "frmUFPRCashDistribution", @onsubmit = "return dealActivity.submitUFPRCashDistribution(this);" })) {%>
-										<table cellpadding="0" cellspacing="0" border="0" id="PRCashDistributionList" class="grid">
-											<thead>
-												<tr>
+										<div class="gbox">
+											<table cellpadding="0" cellspacing="0" border="0" id="PRCashDistributionList" class="grid">
+												<thead>
+													<tr>
 													<th style="width: 20%;">
-														Fund Name
-													</th>
+															Fund Name
+														</th>
 													<th style="width: 20%">
-														Deal Name
-													</th>
+															Deal Name
+														</th>
 													<th style="width: 15%">
-														Distribution Amount
-													</th>
+															Distribution Amount
+														</th>
 													<th style="width: 15%">
-														Distribution Date
-													</th>
-													<th>
-													</th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
+															Distribution Date
+														</th>
+														<th>
+														</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
 										<br />
 										<center>
 											<span>
@@ -314,42 +322,44 @@
 							<div class="clear">
 								<div id="StockDistribution" class="gridbox" style="display: none">
 									<%using (Html.Form(new { @id = "frmUFStockDistribution", @onsubmit = "return dealActivity.submitUFStockDistribution(this);" })) {%>
-									<table cellpadding="0" cellspacing="0" border="0" id="StockDistributionList" class="grid">
-										<thead>
-											<tr>
-												<th style="width: 5%; display: none;" class="ismanual">
-												</th>
+									<div class="gbox">
+										<table cellpadding="0" cellspacing="0" border="0" id="StockDistributionList" class="grid">
+											<thead>
+												<tr>
+													<th style="width: 5%; display: none;" class="ismanual">
+													</th>
 												<th style="width: 15%">
-													Fund Name
-												</th>
+														Fund Name
+													</th>
 												<th>
-													Issuer
-												</th>
+														Issuer
+													</th>
 												<th style="width: 10%">
-													NumberOfShares
-												</th>
+														NumberOfShares
+													</th>
 												<th style="width: 10%">
 													FMV
-												</th>
+													</th>
 												<th style="width: 10%">
-													Notice Date
-												</th>
+														Notice Date
+													</th>
 												<th style="width: 10%">
-													Distribution Date
-												</th>
+														Distribution Date
+													</th>
 												<th style="width: 10%">
-													Tax Cost Base
-												</th>
+														Tax Cost Base
+													</th>
 												<th style="width: 10%">
-													Tax Cost Date
-												</th>
-												<th style="width: 1%">
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
+														Tax Cost Date
+													</th>
+													<th style="width: 1%">
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
 									<br />
 									<center>
 										<span>
@@ -387,7 +397,7 @@
 								<div class="loadingcell" id="UFVLoading">
 								</div>
 							</div>
-							<div class="gridbox">
+							<div class="gbox">
 								<table cellpadding="0" cellspacing="0" border="0" id="UnderlyingFundValuationList"
 									class="grid">
 									<thead>
@@ -450,34 +460,36 @@
 							</div>
 							<div class="gridbox" id="UDValuation" style="display: none">
 								<%using (Html.Form(new { @id = "frmUDValuation", @onsubmit = "return dealActivity.submitUDV(this);" })) {%>
-								<table cellpadding="0" cellspacing="0" border="0" id="UDValuationList" class="grid">
-									<thead>
-										<tr>
+								<div class="gbox">
+									<table cellpadding="0" cellspacing="0" border="0" id="UDValuationList" class="grid">
+										<thead>
+											<tr>
 											<th style="width: 25%">
-												Direct Name
-											</th>
+													Direct Name
+												</th>
 											<th style="width: 20%">
-												Fund Name
-											</th>
+													Fund Name
+												</th>
 											<th style="width: 12%">
-												Last Price
-											</th>
+													Last Price
+												</th>
 											<th style="width: 12%">
-												Last Price Date
-											</th>
+													Last Price Date
+												</th>
 											<th style="width: 12%">
-												New Price
-											</th>
+													New Price
+												</th>
 											<th style="width: 12%">
-												New Price Date
-											</th>
-											<th>
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
+													New Price Date
+												</th>
+												<th>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
 								<br />
 								<center>
 									<span>
@@ -515,29 +527,31 @@
 								</div>
 							</div>
 							<div id="UFAdjustment" style="display: none" class="gridbox">
-								<table cellpadding="0" cellspacing="0" border="0" id="UnfundedAdjustmentList" class="grid">
-									<thead>
-										<tr>
+								<div class="gbox">
+									<table cellpadding="0" cellspacing="0" border="0" id="UnfundedAdjustmentList" class="grid">
+										<thead>
+											<tr>
 											<th style="width: 20%">
-												Fund Name
-											</th>
+													Fund Name
+												</th>
 											<th style="width: 15%">
-												Commitment Amount
-											</th>
+													Commitment Amount
+												</th>
 											<th style="width: 15%">
-												Unfunded Amount
-											</th>
+													Unfunded Amount
+												</th>
 											<th style="width: 15%;" id="UFA_NCA">
-											</th>
+												</th>
 											<th style="width: 15%;" id="UFA_NUA">
-											</th>
-											<th>
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
+												</th>
+												<th>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
 							</div>
 							<%:Html.Hidden("UFAUnderlyingFundId","0", new { @id = "UFAUnderlyingFundId" })%>
 						</div>
@@ -575,25 +589,27 @@
 								</div>
 							</div>
 							<div class="gridbox" id="FLE">
-								<table cellpadding="0" cellspacing="0" border="0" id="FundExpenseList" class="grid">
-									<thead>
-										<tr>
+								<div class="gbox">
+									<table cellpadding="0" cellspacing="0" border="0" id="FundExpenseList" class="grid">
+										<thead>
+											<tr>
 											<th style="width: 20%">
-												Expense Type
-											</th>
+													Expense Type
+												</th>
 											<th style="width: 15%">
-												Amount
-											</th>
+													Amount
+												</th>
 											<th style="width: 15%">
-												Date
-											</th>
-											<th style="width: 50%">
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
+													Date
+												</th>
+												<th style="width: 50%">
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
 								<%:Html.Hidden("FLE_FundId", "0", new { @id = "FLE_FundId" })%>
 							</div>
 						</div>
@@ -638,23 +654,25 @@
 					<div class="cell" id="NHPLoading">
 					</div>
 					<div class="clear sec-box">
-						<table cellpadding="0" cellspacing="0" border="0" id="NewHoldingPatternList" class="grid">
-							<thead>
-								<tr>
+						<div class="gbox">
+							<table cellpadding="0" cellspacing="0" border="0" id="NewHoldingPatternList" class="grid">
+								<thead>
+									<tr>
 									<th style="width: 20%" align="left">
-										Fund Name
-									</th>
+											Fund Name
+										</th>
 									<th style="width: 20%" align="right">
-										Old Number of Shares
-									</th>
+											Old Number of Shares
+										</th>
 									<th style="width: 20%" align="right">
-										New Number of Shares
-									</th>
-									<th>
-									</th>
-								</tr>
-							</thead>
-						</table>
+											New Number of Shares
+										</th>
+										<th>
+										</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
 					</div>
 				</div>
 				<div class="line">

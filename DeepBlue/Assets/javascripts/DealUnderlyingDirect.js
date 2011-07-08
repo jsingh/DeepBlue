@@ -49,7 +49,7 @@ deal.calcDUD=function () {
 			totalFMV+=a;
 		}
 	});
-	$("#SpnTotalNOS",tbl).html(jHelper.dollarAmount(totalNOS.toString()));
+	$("#SpnTotalNOS",tbl).html(totalNOS.toString());
 	$("#SpnTotalPP",tbl).html(jHelper.dollarAmount(totalPP.toString()));
 	$("#SpnTotalFMV",tbl).html(jHelper.dollarAmount(totalFMV.toString()));
 };

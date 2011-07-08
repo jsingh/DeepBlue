@@ -896,12 +896,19 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public List<Models.Entity.Deal> GetAllDeals(int securityTypeId, int securityId, int fundId) {
+		public List<StockDistributionLineItemModel> GetAllDeals(int securityTypeId, int securityId, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from deal in context.Deals
 						where deal.FundID == fundId
 						&& deal.DealUnderlyingDirects.Where(direct => direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId).Count() > 0
-						select deal).ToList();
+						select new StockDistributionLineItemModel {
+							 DealId = deal.DealID,
+							 DealName = deal.DealName,
+							 DealNumber = deal.DealNumber,
+							 FundId = deal.FundID,
+							 NumberOfShares = deal.DealUnderlyingDirects.Where(direct => direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId).Sum(direct => direct.NumberOfShares),
+							 PurchasePrice = deal.DealUnderlyingDirects.Where(direct => direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId).Sum(direct => direct.PurchasePrice)
+						}).ToList();
 			}
 		}
 
@@ -1923,6 +1930,7 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
+
 		#endregion
 
 	}

@@ -16,7 +16,7 @@
 		<%: Html.TextBox("${Index}_NumberOfShares", "", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
 	</td>
 	<td style="text-align: center">
-		<%: Html.TextBox("${Index}_FMV", "", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
+		<%: Html.TextBox("${Index}_PurchasePrice", "", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td style="text-align: center">
 		<%: Html.TextBox("${Index}_NoticeDate", "", new { @id = "${Index}_NoticeDate", @class = "datefield" })%>

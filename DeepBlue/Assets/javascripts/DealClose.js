@@ -371,6 +371,7 @@
 			var actbox=$(this).parents(".act-box:first");
 			actbox.show();
 			var parent=$(this).parent();
+
 			$(".expandheader",parent).show();
 			var detail=$(".detail",parent);
 			detail.show();

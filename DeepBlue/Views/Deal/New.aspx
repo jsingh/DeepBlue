@@ -130,21 +130,21 @@
 	</script>
 	<script id="DealExpensesRowTemplate" type="text/x-jquery-tmpl"> 
 		<tr id="DealExpense_${DealClosingCostId}">
-		<td style="text-align: left;">
+		<td class="lalign">
 			<%: Html.DropDownList("DealClosingCostTypeId", Model.DealClosingCostTypes, new { @class="hide", @val = "${DealClosingCostTypeId}" })%>
 			<%: Html.Span("${Description}",new { @class = "show" })%>
 		</td>
-		<td style="text-align:right;">
+		<td class="ralign">
 			<%: Html.Span("${Amount}",new { @class = "show" , @id = "SpnAmount" })%>
 			<%: Html.TextBox("Amount", "${Amount}", new {  @class="hide", @onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
-		<td style="text-align: center;">
+		<td class="calign">
 			<%: Html.Span("${Date}",new { @class = "show", @id = "SpnDate" })%>
 			<%: Html.TextBox("Date", "${Date}", new {  @class="hide datefield", @id = "${DealClosingCostId}_DealExpenseDate" })%>
 		</td>
-		<td style="text-align:right">
+		<td class="ralign">
 			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new { @style = "display:none;", @id = "spnAjax" })%>
-			<%: Html.Image("Edit.png", new { @onclick = "javascript:deal.editDealExpense(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @onclick = "javascript:deal.deleteDealExpense(${DealClosingCostId},this);" })%>
+			<%: Html.Image("Edit.png", new { @class="gbutton", @onclick = "javascript:deal.editDealExpense(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new {  @class="gbutton", @onclick = "javascript:deal.deleteDealExpense(${DealClosingCostId},this);" })%>
 			<%: Html.Hidden("DealClosingCostId","${DealClosingCostId}")%>
 		</td>
 	</tr>
@@ -154,27 +154,27 @@
 		<td style="text-align:center; display:none;">
 			<%: Html.Span("", new { @id = "SpnIndex" }) %>
 		</td>
-		<td style="text-align:center;">
+		<td class="lalign">
 			{{if DealClosingId>0}}<%: Html.Image("close.gif")%>{{/if}}
 		</td>
-		<td style="text-align:left;">
+		<td class="lalign">
 			<%: Html.Span("${FundName}",new { @class = "show" })%>
 			<%: Html.TextBox("UnderlyingFund", "${FundName}", new { @class = "hide", @id="UnderlyingFund", @style="width:78%" })%>
 			<%: Html.Hidden("UnderlyingFundId","${UnderlyingFundId}")%>
 		</td>
-        <td style="text-align: right;">
+        <td class="ralign">
 			<%: Html.Span("${GrossPurchasePrice}", new { @class = "show money", @id = "SpnGrossPurchasePrice" })%>
 			<%: Html.TextBox("GrossPurchasePrice","${GrossPurchasePrice}",new { @class = "hide",  @id = "GrossPurchasePrice", @onkeyup = "javascript:deal.calcDUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>	
-		<td style="text-align: right;">
+		<td class="lalign">
 			<%: Html.Span("${FundNAV}", new { @class = "show money", @id = "SpnPercent" })%>
 			<%: Html.TextBox("FundNAV", "${FundNAV}",new { @class = "hide", @onkeyup="javascript:deal.calcDUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
-		<td style="text-align: right;">
+		<td class="ralign">
 			<%: Html.Span("${CommittedAmount}", new { @class = "show money", @id = "SpnCommittedAmount" })%>
 			<%: Html.TextBox("CommittedAmount","${CommittedAmount}",new { @class = "hide", @onkeyup="javascript:deal.calcDUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>	
-		<td style="text-align: right;">
+		<td class="ralign">
 			<%: Html.Span("${UnfundedAmount}", new { @class = "show money", @id = "SpnUnfundedAmount" })%>
 			<%: Html.TextBox("UnfundedAmount","${UnfundedAmount}",new { @class = "hide", @onkeyup="javascript:deal.calcDUF();",  @onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
@@ -182,9 +182,9 @@
 			<%: Html.Span("${RecordDate}", new { @class = "show dispdate", @id = "SpnRecordDate" })%>
 			<%: Html.TextBox("RecordDate", "${RecordDate}",new { @class = "hide datefield", @id = "${DealUnderlyingFundId}_RecordDate" })%>
 		</td>
-		<td style="text-align: right" nowrap>
+		<td style="text-align: right;" nowrap>
 			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
-			<%: Html.Image("Edit.png", new { @onclick = "javascript:deal.editUnderlyingFund(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @onclick = "javascript:deal.deleteUnderlyingFund(${DealUnderlyingFundId},this);" })%>
+			<%: Html.Image("Edit.png", new { @class="gbutton", @onclick = "javascript:deal.editUnderlyingFund(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @class="gbutton", @onclick = "javascript:deal.deleteUnderlyingFund(${DealUnderlyingFundId},this);" })%>
 			<%: Html.Hidden("DealUnderlyingFundId","${DealUnderlyingFundId}")%>
 		</td>
 	</tr>
@@ -194,43 +194,43 @@
 		<td style="text-align: center;display:none;">
 			<%: Html.Span("", new { @id = "SpnIndex" }) %>
 		</td>
-		<td style="text-align:center;">
+		<td class="lalign">
 			{{if DealClosingId>0}}<%: Html.Image("close.gif")%>{{/if}}
 		</td>
-		<td style="text-align: left;">
+		<td class="lalign">
 			<%: Html.Span("${IssuerName}",new { @class = "show" })%>
 			<%: Html.TextBox("Issuer", "${IssuerName}", new { @class = "hide", @id = "Issuer", @style = "width:78%" })%>
 			<%: Html.Hidden("IssuerId", "${IssuerId}")%>
 			<%: Html.Hidden("SecurityTypeId","${SecurityTypeId}")%>
 			<%: Html.Hidden("SecurityId", "${SecurityId}")%>
 		</td>
-		<td style="text-align: right;">
+		<td class="lalign">
 			<%: Html.Span("${NumberOfShares}", new { @class = "show", @id = "SpnNumberOfShares" })%>
-			<%: Html.TextBox("NumberOfShares", "${NumberOfShares}",new { @class = "hide", @id="NumberOfShares", @onkeypress = "return jHelper.isNumeric(event);" })%>
+			<%: Html.TextBox("NumberOfShares", "${NumberOfShares}",new { @class = "hide", @onkeyup="javascript:deal.calcDUD();", @id="NumberOfShares", @onkeypress = "return jHelper.isNumeric(event);" })%>
 		</td>
-		<td style="text-align: right;">
+		<td class="ralign">
 			<%: Html.Span("${PurchasePrice}", new { @class = "show money", @id = "SpnPurchasePrice", @val="${PurchasePrice}" })%>
-			<%: Html.TextBox("PurchasePrice","${PurchasePrice}",new { @class = "hide",@id="PurchasePrice", @onkeypress = "return jHelper.isCurrency(event);" })%>
+			<%: Html.TextBox("PurchasePrice","${PurchasePrice}",new { @class = "hide",@id="PurchasePrice", @onkeyup="javascript:deal.calcDUD();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>	
-        <td style="text-align: right;">
+        <td class="ralign">
 			<%: Html.Span("${FMV}", new { @class = "show money", @id = "SpnFMV", @val="${FMV}" })%>
-			<%: Html.TextBox("FMV","${FMV}",new { @class = "hide", @id="FMV",@onkeypress = "return jHelper.isCurrency(event);" })%>
+			<%: Html.TextBox("FMV","${FMV}",new { @class = "hide", @id="FMV", @onkeyup="javascript:deal.calcDUD();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>	
-		<td style="text-align: right;">
+		<td class="lalign">
 			<%: Html.Span("${TaxCostBase}", new { @class = "show", @id = "SpnTaxCostBase", @val="${TaxCostBase}" })%>
-			<%: Html.TextBox("TaxCostBase","${TaxCostBase}",new { @class = "hide",@onkeypress = "return jHelper.isCurrency(event);" })%>
+			<%: Html.TextBox("TaxCostBase","${TaxCostBase}",new { @class = "hide", @onkeypress = "return jHelper.isCurrency(event);" })%>
 		</td>
-		<td style="text-align: center;">
+		<td class="calign">
 			<%: Html.Span("${TaxCostDate}", new { @class = "show", @id = "SpnTaxCostDate" })%>
 			<%: Html.TextBox("TaxCostDate", "",new { @class = "hide datefield", @id = "${DealUnderlyingDirectId}_DirectTaxCostDate" })%>
 		</td>
-		<td style="text-align: center">
+		<td class="calign">
 			<%: Html.Span("${RecordDate}", new { @class = "show", @id = "SpnRecordDate" })%>
 			<%: Html.TextBox("RecordDate", "",new { @class = "hide datefield", @id = "${DealUnderlyingDirectId}_DirectRecordDate" })%>
 		</td>
 		<td style="text-align: right" nowrap>
 			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
-			<%: Html.Image("Edit.png", new { @onclick = "javascript:deal.editUnderlyingDirect(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @onclick = "javascript:deal.deleteUnderlyingDirect(${DealUnderlyingDirectId},this);" })%>
+			<%: Html.Image("Edit.png", new { @class="gbutton", @onclick = "javascript:deal.editUnderlyingDirect(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @class="gbutton", @onclick = "javascript:deal.deleteUnderlyingDirect(${DealUnderlyingDirectId},this);" })%>
 			<%: Html.Hidden("DealUnderlyingDirectId","${DealUnderlyingDirectId}")%>
 		</td>
 	</tr>

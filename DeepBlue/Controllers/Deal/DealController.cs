@@ -1893,35 +1893,39 @@ namespace DeepBlue.Controllers.Deal {
 			underlyingFundStockDistribution.FundID = model.FundId;
 			underlyingFundStockDistribution.DistributionDate = model.DistributionDate;
 			underlyingFundStockDistribution.NoticeDate = model.NoticeDate;
-			underlyingFundStockDistribution.FMV = model.FMV;
+
 			underlyingFundStockDistribution.NumberOfShares = model.NumberOfShares;
+			underlyingFundStockDistribution.PurchasePrice = model.PurchasePrice;
+
+			underlyingFundStockDistribution.FMV = underlyingFundStockDistribution.NumberOfShares * underlyingFundStockDistribution.PurchasePrice;
+
 			underlyingFundStockDistribution.SecurityID = model.SecurityId;
 			underlyingFundStockDistribution.SecurityTypeID = model.SecurityTypeId;
 			underlyingFundStockDistribution.TaxCostBase = model.TaxCostBase;
 			underlyingFundStockDistribution.TaxCostDate = model.TaxCostDate;
-			underlyingFundStockDistribution.PurchasePrice = 0;
+
 			errorInfo = DealRepository.SaveUnderlyingFundStockDistribution(underlyingFundStockDistribution);
 			if (errorInfo == null) {
 
 				// Attempt to create stock distribution to each deal.
-				List<Models.Entity.Deal> deals = DealRepository.GetAllDeals(underlyingFundStockDistribution.SecurityTypeID, underlyingFundStockDistribution.SecurityID, underlyingFundStockDistribution.FundID);
+				List<StockDistributionLineItemModel> deals = DealRepository.GetAllDeals(underlyingFundStockDistribution.SecurityTypeID, underlyingFundStockDistribution.SecurityID, underlyingFundStockDistribution.FundID);
 				foreach (var deal in deals) {
 					UnderlyingFundStockDistributionLineItem stockDistributionItem = new UnderlyingFundStockDistributionLineItem();
-					stockDistributionItem.DealID = deal.DealID;
+					stockDistributionItem.DealID = deal.DealId;
 					stockDistributionItem.UnderlyingFundID = underlyingFundStockDistribution.UnderlyingFundID;
 
 					// Calculate capital call amount = (Deal Underlying Fund Committed Amount) / (Total Deal Underlying Fund Committed Amount) * Total Capital Call Amount.
 					if (model.IsManualStockDistribution) {
-						stockDistributionItem.FMV = DataTypeHelper.ToDecimal(Request[underlyingFundStockDistribution.FundID.ToString() + "_" + deal.DealID.ToString() + "_" + "FMV"]);
-						stockDistributionItem.NumberOfShares = DataTypeHelper.ToDecimal(Request[underlyingFundStockDistribution.FundID.ToString() + "_" + deal.DealID.ToString() + "_" + "NumberOfShares"]);
+						stockDistributionItem.FMV = DataTypeHelper.ToDecimal(Request[underlyingFundStockDistribution.FundID.ToString() + "_" + deal.DealId.ToString() + "_" + "FMV"]);
+						stockDistributionItem.NumberOfShares = DataTypeHelper.ToDecimal(Request[underlyingFundStockDistribution.FundID.ToString() + "_" + deal.DealId.ToString() + "_" + "NumberOfShares"]);
 					}
 					else {
-						stockDistributionItem.FMV = underlyingFundStockDistribution.FMV;
-						stockDistributionItem.NumberOfShares = underlyingFundStockDistribution.NumberOfShares;
+						stockDistributionItem.NumberOfShares = (((decimal)deal.NumberOfShares / (decimal)deals.Sum(d => d.NumberOfShares)) * underlyingFundStockDistribution.NumberOfShares);
+						stockDistributionItem.FMV = stockDistributionItem.NumberOfShares * underlyingFundStockDistribution.PurchasePrice;
 					}
 
 					stockDistributionItem.UnderlyingFundStockDistributionID = underlyingFundStockDistribution.UnderlyingFundStockDistributionID;
-					errorInfo = DealRepository.SaveUnderlyingFundStockDistribution(underlyingFundStockDistribution);
+					errorInfo = DealRepository.SaveUnderlyingFundStockDistributionLineItem(stockDistributionItem);
 					if (errorInfo != null)
 						break;
 				}
@@ -2555,8 +2559,6 @@ namespace DeepBlue.Controllers.Deal {
 			return JsonSerializer.ToJsonObject(new { error = string.Empty, data = resultModel.Result }).ToString();
 		}
 
-
-
 		private string ValidateUnderlyingDirectDocument(UnderlyingDirectDocumentModel model) {
 			ResultModel resultModel = new ResultModel();
 			Models.Document.UploadType uploadType = (Models.Document.UploadType)model.UploadTypeId;
@@ -2617,7 +2619,6 @@ namespace DeepBlue.Controllers.Deal {
 			}
 			return resultModel.Result;
 		}
-
 
 		private string SaveUnderlyingDirectDocument(UnderlyingDirectDocumentModel model) {
 			ResultModel resultModel = new ResultModel();

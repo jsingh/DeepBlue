@@ -32,12 +32,17 @@
 			var header=$(this).parent();
 			var parent=header.parent();
 			parent.addClass("expandsel");
+			$(".rightuarrow").remove();
+			var d=document.createElement("div");
+			$(d).addClass("rightuarrow");
+			parent.append(d);
 			$("#img",header).hide();
 			$("#title",header).show();
 			$("#title .expandtitle",header).show();
 			$(".expandaddbtn",parent).show();
 			$(".makenew-header",parent.parent()).show();
 			$(".fieldbox",parent.parent()).show();
+
 		});
 
 		$(".expandbtn #title").click(function () {

@@ -19,6 +19,7 @@
 	}
 	,onSuccess: function (t,p) {
 		$("#ReportLoading").hide();
+		$("tbody tr",t).addClass("row");
 		var tfoot=$("tfoot",t).get(0);
 		if(!tfoot) {
 			tfoot=document.createElement("tfoot");

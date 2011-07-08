@@ -111,18 +111,7 @@
 .treerow {
 	margin: 30px;
 }
-#ReportList tbody tr td {
-	padding: 10px;
-	background-color: #F5F5F5;
-	border-bottom: solid 2px #D8DCDF;
-}
-#ReportList .grid thead tr th, #ReportList .grid tfoot tr td {
-	background-color: #BABFC5;
-	border-bottom: 2px solid #B5B5B5;
-	border-top: 2px solid #FFFFFF;
-	font-weight: bold;
-	padding: 5px;
-}
+ 
 .titlebox {
 	margin: 10px 0px 10px 65px;
 	clear: both;

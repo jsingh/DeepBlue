@@ -53,10 +53,6 @@ h5 {
 #DealDeail {
 	float: left;
 }
-#tblDealExpense tr td {
-	text-align: center;
-}
-
 h4 {
 	font-size: 16px;
 	font-weight: normal;
@@ -197,12 +193,6 @@ h4 a {
 .headerbar .leftcol {
 	float: left;
 }
-
-.dealhead_tr {
-	background-color: #BABFC5;
-	height: 33px;
-	color: #1e1c1d;
-}
 .ddleft {
 	background-image: url(../images/dropdown_l.png);
 	float: left;
@@ -222,41 +212,74 @@ h4 a {
 	height: 27px;
 	width: 28px;
 }
-.grid .row td, .grid .arow td {
-	padding: 5px;
-	background-color: #F5F5F5;
-	font-size: 12px;
-	border-bottom: solid 1px #B5B5B5;
-	border-top: solid 1px #fff;
+
+/* Grid */
+.gbox {
+	background-image: url(../images/line.png);
+	background-repeat: repeat-x;
+	background-position: left top;
+	padding-top: 2px;
+}
+.grid .row td, .grid .arow td  {
+    background-color: #F5F5F5;
+    font-size: 12px;
+    height: 37px;
+    height: 36px;
+    padding: 0 15px;
+    white-space:nowrap;
 }
 .grid .arow td {
 	background-color: #E9EAEC;
 }
-.grid {
-	border-top: solid 1px #B5B5B5;
+.grid tr td, .grid tr th {
+	background-image: url(../images/line.png);
+	background-repeat: repeat-x;
+	background-position: left bottom;
 }
 .grid thead tr th, .grid tfoot tr td {
-	border-top: solid 1px #fff;
-	border-bottom: solid 1px #B5B5B5;
 	background-color: #BABFC5;
-	padding: 5px;
-	font-weight: bold;
+	 padding: 10px 15px;   
+	font-weight: normal;
+	color: #000000;
 	white-space: nowrap;
 }
 .grid thead tr th {
-	text-align: center;
+    font-weight: normal;
+    padding: 10px 15px;
+    text-align: center;
+}
+.grid tfoot tr td {
+    padding: 10px 15px;   
+     font-weight: bold;
 }
 .grid thead tr td {
 	background-color: transparent;
-	padding: 5px;
-}
+          padding: 5px 15px;
+} 
 .grid tbody tr td img {
 	cursor: pointer;
 }
 .grid td input[type='text'], .grid td select {
-	width: 90%;
+	width: 95%;
 }
-
+.grid .ralign, .grid .ralign input[type='text'] {
+	text-align: right;
+}
+.grid .lalign, .grid .lalign input[type='text'] {
+	text-align: left;
+}
+.grid .calign, .grid .calign input[type='text'] {
+	text-align: center;
+}
+.grid .gbutton {
+	 display:none;
+}
+.grid tbody tr:hover .gbutton {
+	display:table-cell;
+}
+.grid tbody tr:hover td {
+}
+/* End Grid */
 .subheader {
 	background-image: url(../images/dir_subheadbg.png);
 	background-repeat: repeat-x;
@@ -296,4 +319,13 @@ h4 a {
 	display: none;
 	padding: 0;
 	margin: 0;
+}
+.rightuarrow{
+    background-image: url("../images/rightuarrow.png");
+    background-repeat: no-repeat;
+    float: right;
+    height: 9px;
+    margin-right: 132px;
+    margin-top: 21px;
+    width: 16px;
 }

@@ -13,7 +13,7 @@
 	</div>
 	<div class="expandaddbtn">
 		<%: Html.Anchor(Html.Image("add_doc.png").ToHtmlString(), "javascript:void(0);")%>
-	</div>
+	</div> 
 </div>
 <div class="fieldbox">
 	<div class="section">
@@ -61,28 +61,30 @@
 		</div>
 		<div style="clear: both">
 			<br />
-			<table cellpadding="0" cellspacing="0" border="0" class="grid" style="width: 80%;">
-				<thead>
-					<tr class="dealhead_tr">
-						<th>
-							Document Type
-						</th>
-						<th style="width: 20%">
-							Document Date
-						</th>
-						<th style="width: 20%">
-							For
-						</th>
-						<th style="width: 20%">
-							File/Link
-						</th>
-						<th style="width: 20%">
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
+			<div class="gbox">
+				<table cellpadding="0" cellspacing="0" border="0" class="grid" style="width: 80%;">
+					<thead>
+						<tr>
+							<th>
+								Document Type
+							</th>
+							<th style="width: 20%">
+								Document Date
+							</th>
+							<th style="width: 20%">
+								For
+							</th>
+							<th style="width: 20%">
+								File/Link
+							</th>
+							<th style="width: 20%">
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

@@ -96,7 +96,7 @@
 			<div class="title">
 				<%: Html.Span("CONTACT INFORMATION")%>
 			</div>
-			<div style="float: right; padding-right: 200px; vertical-align: middle; padding-top: 10px;">
+			<div class="rightdarrow">
 				<%: Html.ImageButton("downarrow.png")%>
 			</div>
 		</div>
@@ -105,6 +105,8 @@
 				<div class="expandtitle">
 					Contact Information
 				</div>
+			</div>
+			<div class="rightuarrow">
 			</div>
 		</div>
 		<div class="detail" style="display: none" id="ContactInformation">
@@ -160,7 +162,7 @@
 			<div class="title">
 				<%: Html.Span("BANK INFORMATION")%>
 			</div>
-			<div style="float: right; padding-right: 200px; vertical-align: middle; padding-top: 10px;">
+			<div class="rightdarrow">
 				<%: Html.ImageButton("downarrow.png")%>
 			</div>
 		</div>
@@ -169,6 +171,8 @@
 				<div class="expandtitle">
 					Bank Information
 				</div>
+			</div>
+			<div class="rightuarrow">
 			</div>
 		</div>
 		<div class="detail" style="display: none" id="BankInformation">
@@ -233,7 +237,7 @@
 			<div class="title">
 				<%: Html.Span("DOCUMENT INFORMATION")%>
 			</div>
-			<div style="float: right; padding-right: 200px; vertical-align: middle; padding-top: 10px;">
+			<div class="rightdarrow">
 				<%: Html.ImageButton("downarrow.png")%>
 			</div>
 		</div>
@@ -242,7 +246,8 @@
 				<div class="expandtitle">
 					DOCUMENT INFORMATION
 				</div>
-			</div>
+			</div>	<div class="rightuarrow">
+						</div>
 		</div>
 		<div class="detail" style="display: none; padding-left: 65px;" id="DocumentInformation">
 			<%using (Html.Form(new { @id = "frmDocumentInfo", @onsubmit = "return underlyingFund.saveDocument(this);" })) {%>
@@ -283,7 +288,7 @@
 				<br />
 				<table id="DocumentList" cellpadding="0" cellspacing="0" border="0">
 					<thead>
-						<tr class="dealhead_tr">
+						<tr>
 							<th style="display: none">
 								ID
 							</th>
