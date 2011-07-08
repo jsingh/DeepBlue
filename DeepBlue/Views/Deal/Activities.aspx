@@ -89,22 +89,22 @@
 												<tr>
 													<th id="CCExpand" style="width: 5%; display: none;" class="ismanual">
 													</th>
-												<th style="width: 20%">
+													<th style="width: 20%">
 														Fund Name
 													</th>
-												<th style="width: 20%">
+													<th style="width: 20%">
 														Call Amount
 													</th>
-												<th style="width: 15%">
+													<th style="width: 15%">
 														Notice Date
 													</th>
-												<th style="width: 15%">
+													<th style="width: 15%">
 														Received Date
 													</th>
-												<th style="width: 15%">
+													<th style="width: 15%">
 														Deemed Capital Call
 													</th>
-												<th id="CCTC" style="display: none;" class="ismanual">
+													<th id="CCTC" style="display: none;" class="ismanual">
 														Total Commitment Amount
 													</th>
 												</tr>
@@ -135,16 +135,16 @@
 										<table cellpadding="0" cellspacing="0" border="0" id="PRCapitalCallList" class="grid">
 											<thead>
 												<tr>
-												<th style="width: 20%">
+													<th style="width: 20%">
 														Fund Name
 													</th>
-												<th style="width: 20%">
+													<th style="width: 20%">
 														Deal Name
 													</th>
-												<th style="width: 15%">
+													<th style="width: 15%">
 														Capital Call Amount
 													</th>
-												<th style="width: 15%">
+													<th style="width: 15%">
 														Capital Call Date
 													</th>
 													<th>
@@ -210,22 +210,22 @@
 												<tr>
 													<th style="width: 5%; display: none;" class="ismanual">
 													</th>
-												<th>
+													<th>
 														Fund Name
 													</th>
-												<th>
+													<th>
 														Amount
 													</th>
-												<th>
+													<th>
 														Notice Date
 													</th>
-												<th>
+													<th>
 														Record Date
 													</th>
-												<th>
+													<th>
 														Distribution Type
 													</th>
-												<th style="display: none;" class="ismanual">
+													<th style="display: none;" class="ismanual">
 														Total Commitment Amount
 													</th>
 												</tr>
@@ -255,16 +255,16 @@
 											<table cellpadding="0" cellspacing="0" border="0" id="PRCashDistributionList" class="grid">
 												<thead>
 													<tr>
-													<th style="width: 20%;">
+														<th style="width: 20%;">
 															Fund Name
 														</th>
-													<th style="width: 20%">
+														<th style="width: 20%">
 															Deal Name
 														</th>
-													<th style="width: 15%">
+														<th style="width: 15%">
 															Distribution Amount
 														</th>
-													<th style="width: 15%">
+														<th style="width: 15%">
 															Distribution Date
 														</th>
 														<th>
@@ -328,28 +328,28 @@
 												<tr>
 													<th style="width: 5%; display: none;" class="ismanual">
 													</th>
-												<th style="width: 15%">
+													<th style="width: 15%">
 														Fund Name
 													</th>
-												<th>
+													<th>
 														Issuer
 													</th>
-												<th style="width: 10%">
+													<th style="width: 10%">
 														NumberOfShares
 													</th>
-												<th style="width: 10%">
-													FMV
+													<th style="width: 10%">
+														Purchase Price
 													</th>
-												<th style="width: 10%">
+													<th style="width: 10%">
 														Notice Date
 													</th>
-												<th style="width: 10%">
+													<th style="width: 10%">
 														Distribution Date
 													</th>
-												<th style="width: 10%">
+													<th style="width: 10%">
 														Tax Cost Base
 													</th>
-												<th style="width: 10%">
+													<th style="width: 10%">
 														Tax Cost Date
 													</th>
 													<th style="width: 1%">
@@ -464,22 +464,22 @@
 									<table cellpadding="0" cellspacing="0" border="0" id="UDValuationList" class="grid">
 										<thead>
 											<tr>
-											<th style="width: 25%">
+												<th style="width: 25%">
 													Direct Name
 												</th>
-											<th style="width: 20%">
+												<th style="width: 20%">
 													Fund Name
 												</th>
-											<th style="width: 12%">
+												<th style="width: 12%">
 													Last Price
 												</th>
-											<th style="width: 12%">
+												<th style="width: 12%">
 													Last Price Date
 												</th>
-											<th style="width: 12%">
+												<th style="width: 12%">
 													New Price
 												</th>
-											<th style="width: 12%">
+												<th style="width: 12%">
 													New Price Date
 												</th>
 												<th>
@@ -531,18 +531,18 @@
 									<table cellpadding="0" cellspacing="0" border="0" id="UnfundedAdjustmentList" class="grid">
 										<thead>
 											<tr>
-											<th style="width: 20%">
+												<th style="width: 20%">
 													Fund Name
 												</th>
-											<th style="width: 15%">
+												<th style="width: 15%">
 													Commitment Amount
 												</th>
-											<th style="width: 15%">
+												<th style="width: 15%">
 													Unfunded Amount
 												</th>
-											<th style="width: 15%;" id="UFA_NCA">
+												<th style="width: 15%;" id="UFA_NCA">
 												</th>
-											<th style="width: 15%;" id="UFA_NUA">
+												<th style="width: 15%;" id="UFA_NUA">
 												</th>
 												<th>
 												</th>
@@ -593,13 +593,13 @@
 									<table cellpadding="0" cellspacing="0" border="0" id="FundExpenseList" class="grid">
 										<thead>
 											<tr>
-											<th style="width: 20%">
+												<th style="width: 20%">
 													Expense Type
 												</th>
-											<th style="width: 15%">
+												<th style="width: 15%">
 													Amount
 												</th>
-											<th style="width: 15%">
+												<th style="width: 15%">
 													Date
 												</th>
 												<th style="width: 50%">
@@ -658,13 +658,13 @@
 							<table cellpadding="0" cellspacing="0" border="0" id="NewHoldingPatternList" class="grid">
 								<thead>
 									<tr>
-									<th style="width: 20%" align="left">
+										<th style="width: 20%" align="left">
 											Fund Name
 										</th>
-									<th style="width: 20%" align="right">
+										<th style="width: 20%" align="right">
 											Old Number of Shares
 										</th>
-									<th style="width: 20%" align="right">
+										<th style="width: 20%" align="right">
 											New Number of Shares
 										</th>
 										<th>
