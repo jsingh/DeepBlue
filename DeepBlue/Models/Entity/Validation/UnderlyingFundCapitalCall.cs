@@ -9,7 +9,7 @@ using DeepBlue.Models.Entity.Partial;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(UnderlyingFundCapitalCallMD))]
 	public partial class UnderlyingFundCapitalCall {
-		public class UnderlyingFundCapitalCallMD {
+		public class UnderlyingFundCapitalCallMD : CreatedByFields {
 			#region Primitive Properties
 
 			[Required(ErrorMessage = "Fund is required")]
@@ -39,14 +39,7 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-
-			[Required(ErrorMessage = "Paid Date is required")]
-			[DateRange()]
-			public global::System.DateTime PaidDate {
-				get;
-				set;
-			}
-
+ 
 			[Required(ErrorMessage = "Received Date is required")]
 			[DateRange()]
 			public global::System.DateTime ReceivedDate {
@@ -56,16 +49,16 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public UnderlyingFundCapitalCall(IUnderlyingFundCapitalCallService underlyingFundCapitalCallservice)
+		public UnderlyingFundCapitalCall(IUnderlyingFundCapitalCallService UnderlyingFundCapitalCallService)
 			: this() {
-			this.underlyingFundCapitalCallService = underlyingFundCapitalCallService;
+				this.UnderlyingFundCapitalCallService = UnderlyingFundCapitalCallService;
 		}
 
 		public UnderlyingFundCapitalCall() {
 		}
 
 		private IUnderlyingFundCapitalCallService _UnderlyingFundCapitalCallService;
-		public IUnderlyingFundCapitalCallService underlyingFundCapitalCallService {
+		public IUnderlyingFundCapitalCallService UnderlyingFundCapitalCallService {
 			get {
 				if (_UnderlyingFundCapitalCallService == null) {
 					_UnderlyingFundCapitalCallService = new UnderlyingFundCapitalCallService();
@@ -83,7 +76,7 @@ namespace DeepBlue.Models.Entity {
 			if (errors.Any()) {
 				return errors;
 			}
-			underlyingFundCapitalCallService.SaveUnderlyingFundCapitalCall(this);
+			UnderlyingFundCapitalCallService.SaveUnderlyingFundCapitalCall(this);
 			return null;
 		}
 

@@ -50,40 +50,39 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public CapitalDistribution(ICapitalDistributionService capitalCallservice)
+		public CapitalDistribution(ICapitalDistributionService capitalDistributionService)
 			: this() {
-			this.capitalCallservice = capitalCallservice;
+			this.capitalDistributionService = capitalDistributionService;
 		}
 
 		public CapitalDistribution() {
 		}
 
-		private ICapitalDistributionService _capitalCallService;
-		public ICapitalDistributionService capitalCallservice {
+		private ICapitalDistributionService _capitalDistributionService;
+		public ICapitalDistributionService capitalDistributionService {
 			get {
-				if (_capitalCallService == null) {
-					_capitalCallService = new CapitalDistributionService();
+				if (_capitalDistributionService == null) {
+					_capitalDistributionService = new CapitalDistributionService();
 				}
-				return _capitalCallService;
+				return _capitalDistributionService;
 			}
 			set {
-				_capitalCallService = value;
+				_capitalDistributionService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var capitalCall = this;
-			IEnumerable<ErrorInfo> errors = Validate(capitalCall);
+			var capitalDistribution = this;
+			IEnumerable<ErrorInfo> errors = Validate(capitalDistribution);
 			if (errors.Any()) {
 				return errors;
 			}
-			capitalCallservice.SaveCapitalDistribution(this);
+			capitalDistributionService.SaveCapitalDistribution(this);
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(CapitalDistribution capitalCallclosing) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(capitalCallclosing);
-			return errors;
+		private IEnumerable<ErrorInfo> Validate(CapitalDistribution capitalDistribution) {
+			return ValidationHelper.Validate(capitalDistribution);
 		}
 	}
 }

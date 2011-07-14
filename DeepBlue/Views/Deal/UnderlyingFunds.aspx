@@ -12,7 +12,7 @@
 	<%=Html.StylesheetLinkTag("addufund.css")%>
 	<%=Html.JavascriptInclueTag("UnderlyingFund.js")%>
 	<%=Html.JavascriptInclueTag("DealDirect.js")%>
-	<%=Html.JavascriptInclueTag("fileuploader.js")%>
+	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
 	<%=Html.JavascriptInclueTag("flexgrid.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css")%>
 </asp:Content>

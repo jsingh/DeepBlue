@@ -167,7 +167,7 @@ namespace DeepBlue.Controllers.Investor {
 		public List<AutoCompleteList> FindInvestors(string investorName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> query = (from investor in context.Investors
-													  where investor.InvestorName.Contains(investorName)
+													  where investor.InvestorName.StartsWith(investorName)
 													  orderby investor.InvestorName
 													  select new AutoCompleteList {
 														  id = investor.InvestorID,
@@ -181,7 +181,7 @@ namespace DeepBlue.Controllers.Investor {
 		public List<AutoCompleteList> FindOtherInvestors(string investorName, int excludeInvestorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> query = (from investor in context.Investors
-													  where investor.InvestorName.Contains(investorName) && investor.InvestorID != excludeInvestorId
+													  where investor.InvestorName.StartsWith(investorName) && investor.InvestorID != excludeInvestorId
 													  orderby investor.InvestorName
 													  select new AutoCompleteList {
 														  id = investor.InvestorID,

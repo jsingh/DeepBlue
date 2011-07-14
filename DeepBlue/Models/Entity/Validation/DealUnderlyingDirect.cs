@@ -17,6 +17,20 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
+			[Required(ErrorMessage = "SecurityTypeID is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "SecurityTypeID is required")]
+			public global::System.Int32 SecurityTypeID {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "SecurityID is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "SecurityID is required")]
+			public global::System.Int32 SecurityID {
+				get;
+				set;
+			}
+
 			[Required(ErrorMessage = "RecordDate is required")]
 			[DateRange()]
 			public global::System.DateTime RecordDate {
@@ -24,13 +38,19 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Range(typeof(decimal),"0", "79228162514264337593543950335", ErrorMessage = "FMV is required")]
+			[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "FMV is required")]
 			public global::System.Decimal FMV {
 				get;
 				set;
 			}
+
+			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "PurchasePrice is required")]
+			public global::System.Decimal PurchasePrice {
+				get;
+				set;
+			}
 			 
-			[Range((int)0, int.MaxValue, ErrorMessage = "NumberOfShares is required")]
+			[Range((int)1, int.MaxValue, ErrorMessage = "NumberOfShares is required")]
 			public global::System.Int32 NumberOfShares {
 				get;
 				set;

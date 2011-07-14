@@ -24,9 +24,11 @@ namespace DeepBlue.Models.Deal {
 
 		public decimal? TotalPostRecordDateDistribution { get; set; }
 
+		public decimal? TotalFMV { get; set; }
+
 		public decimal? TotalNetPurchasePrice {
 			get {
-				return ((this.TotalGrossPurchasePrice ?? 0) + (this.TotalPostRecordCapitalCall ?? 0) - (this.TotalPostRecordDateDistribution ?? 0));
+				return ((this.TotalGrossPurchasePrice ?? 0) + (this.TotalPostRecordCapitalCall ?? 0) - (this.TotalPostRecordDateDistribution ?? 0)) + (TotalFMV ?? 0);
 			}
 		}
 

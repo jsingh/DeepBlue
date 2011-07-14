@@ -1,5 +1,5 @@
 ﻿#equitytab {
-	width: 109px;
+	width: 61px;
 	height: 27px;
 	float: left;
 	background-image: url(../images/equitytab.png);
@@ -15,7 +15,7 @@
 	cursor: pointer;
 }
 #equitytab.sel {
-	width: 98px;
+	width: 68px;
 	background-image: url(../images/equitytabsel.png);
 }
 #fitab.sel {
@@ -103,7 +103,7 @@
 	background-color: #cbd2DA;
 	line-height: 35px;
 }
-#equitysymboldiv, #fixincomediv {
+#equitysymboldiv, #fixincomediv,#fidocument,#eqdocument {
 	clear: both;
 	float: left;
 	background-color: #CBD2DA;

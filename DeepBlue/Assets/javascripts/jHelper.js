@@ -43,21 +43,16 @@
 	,formatDate: function (dateobj) {
 		return $.datepicker.formatDate('mm/dd/yy',dateobj);
 	}
+	,trimTextArea: function (target) {
+		$("textarea",target).each(function () { this.value=$.trim(this.value); });
+	}
 	,parseJSONDate: function (date) {
 		try { return eval('new'+date.toString().replace(/\//g,' ')); } catch(e) { return date; }
 	}
 	,dollarAmount: function (Num) {
-		dec=Num.indexOf(".");
-		end=((dec> -1)?""+Num.substring(dec,Num.length):".00");
-		Num=""+parseInt(Num);
-		var temp1="";var temp2="";
-		if(end.length==2) { end+="0"; } if(end.length==1) { end+="00"; } if(end=="") { end+=".00"; }
-		var count=0;
-		for(var k=Num.length-1;k>=0;k--) { var oneChar=Num.charAt(k);if(count==3) { temp1+=",";temp1+=oneChar;count=1;continue; } else { temp1+=oneChar;count++; } }
-		for(var k=temp1.length-1;k>=0;k--) { var oneChar=temp1.charAt(k);temp2+=oneChar; }
-		temp2="$"+temp2+end;
-		if(parseFloat(Num)<0) { temp2=temp2.replace("$-,","$(").replace("$-","$(")+")"; }
-		return temp2;
+		var t=document.createElement("input");t.type="text";
+		$(t).val(Num).formatCurrency();
+		return $(t).val();
 	}
 	,serialize: function (target) {
 		var param=[];
@@ -183,4 +178,32 @@
 	}
 	,ajImg: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;"; }
 	,loading: function (t,v) { if(isNaN(v)) { v="Loading"; } $(t).html(this.ajImg()+v+"..."); }
+	,setUpToolTip: function (target) {
+		$(".tooltiptxt",target).each(function () { jHelper.tooltip(this); });
+	}
+	,tooltip: function (target) {
+		$(target).unbind('mouseover')
+		.mouseover(function () {
+			$(".tooltip").remove();
+			var t=document.createElement("div");
+			var mtop=0;//parseInt($(target).attr("top"));
+			if(isNaN(mtop)) { mtop=0; }
+			t.className="tooltip";
+			$(target).after(t);
+			setTimeout(function () {
+				var v=$(target).val();
+				if($.trim(v)=="") {
+					$(t).hide();
+				} else {
+					$(t).html(v);
+					var p=$(target).offset();
+					$(t).css({ "margin-top": "-49px","left": p.left+50 })
+					$(t).fadeIn('slow');
+				}
+			},100);
+		})
+		.mouseout(function () {
+			$(".tooltip").fadeOut('slow');
+		});
+	}
 }

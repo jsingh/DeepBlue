@@ -9,6 +9,10 @@ using System.ComponentModel;
 namespace DeepBlue.Models.Deal {
 	public class EquityDetailModel : EquityDocumentModel {
 
+		public EquityDetailModel() {
+			EquityCurrencyId = (int)DeepBlue.Models.Deal.Enums.Currency.USD;
+		}
+
 		public int EquityId { get; set; }
 
 		[Required(ErrorMessage = "Issuer is required")]
@@ -22,31 +26,33 @@ namespace DeepBlue.Models.Deal {
 
 		[StringLength(50, ErrorMessage = "Symbol must be under 50 characters.")]
 		[DisplayName("Stock Symbol")]
-		public string Symbol { get; set; }
+		public string EquitySymbol { get; set; }
 
 		[DisplayName("Is Public")]
 		public bool Public { get; set; }
 
 		[DisplayName("ISIN No./Cousip")]
-		public int? ISINO { get; set; }
-
-		[DisplayName("Seniority")]
-		public string Seniority { get; set; }
+		[StringLength(50, ErrorMessage = "SIN No./Cousip must be under 50 characters.")]
+		public string EquityISINO { get; set; }
 
 		[DisplayName("Share Class")]
 		public int? ShareClassTypeId { get; set; }
 
 		[DisplayName("Industry")]
-		public int? IndustryId { get; set; }
+		public int? EquityIndustryId { get; set; }
 
 		[DisplayName("Currency")]
-		public int? CurrencyId { get; set; }
+		public int? EquityCurrencyId { get; set; }
+
+		[DisplayName("Comments")]
+		[StringLength(105, ErrorMessage = "EquityComments must be under 105 characters.")]
+		public string EquityComments { get; set; }
 
 		public string EquityType { get; set; }
 
-		public string Currency { get; set; }
+		public string EquityCurrency { get; set; }
 
-		public string Industry { get; set; }
+		public string EquityIndustry { get; set; }
 
 		public string ShareClassType { get; set; }
 

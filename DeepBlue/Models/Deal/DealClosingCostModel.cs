@@ -14,7 +14,7 @@ namespace DeepBlue.Models.Deal {
 			DealClosingCostTypeId = 0;
 			DealId = 0;
 			Amount = 0;
-			Date = Convert.ToDateTime("01/01/1900");
+			Date = DateTime.MinValue;
 		}
 
 		public int? DealClosingCostId { get; set; }

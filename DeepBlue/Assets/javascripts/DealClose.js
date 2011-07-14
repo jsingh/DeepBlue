@@ -119,12 +119,12 @@
 				var tblduflist=$("#DealUnderlyingFundList");
 				dealClose.clearTable(tblduflist);
 				$("#DUFundsTemplate").tmpl(data).appendTo(tblduflist);
-				jHelper.formatDollar(tblduflist);
+				jHelper.formatDollar(tblduflist,true);
 
 				var tbldirectlist=$("#DealUnderlyingDirects");
 				dealClose.clearTable(tbldirectlist);
 				$("#DUDirectsTemplate").tmpl(data).appendTo(tbldirectlist);
-				jHelper.formatDollar(tbldirectlist);
+				jHelper.formatDollar(tbldirectlist,true);
 
 				dealClose.checkDealCloseId(tblduflist);
 				dealClose.checkDealCloseId(tbldirectlist);

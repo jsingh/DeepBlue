@@ -6,6 +6,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
+	<%=Html.JavascriptInclueTag("jquery.tooltip.min.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.JavascriptInclueTag("Deal.js")%>
 	<%=Html.JavascriptInclueTag("DealExpense.js")%>
@@ -95,6 +96,8 @@
 			</thead>
 		</table>
 	</div>
+	<div class="tooltip">
+	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%=Html.jQueryFlexiGrid("DealList", new FlexigridOptions { ActionName = "DealList", ControllerName = "Deal", HttpMethod = "GET", SortName = "DealName", Paging = true, OnSuccess = "deal.onDealListSuccess", Autoload = false, ResizeWidth=false, RowsLength=20 })%>
@@ -159,7 +162,7 @@
 		</td>
 		<td class="lalign">
 			<%: Html.Span("${FundName}",new { @class = "show" })%>
-			<%: Html.TextBox("UnderlyingFund", "${FundName}", new { @class = "hide", @id="UnderlyingFund", @style="width:78%" })%>
+			<%: Html.TextBox("UnderlyingFund", "${FundName}", new { @class = "hide tooltiptxt", @id="UnderlyingFund",  @top = "198",  @style="width:78%" })%>
 			<%: Html.Hidden("UnderlyingFundId","${UnderlyingFundId}")%>
 		</td>
         <td class="ralign">
@@ -199,7 +202,7 @@
 		</td>
 		<td class="lalign">
 			<%: Html.Span("${IssuerName}",new { @class = "show" })%>
-			<%: Html.TextBox("Issuer", "${IssuerName}", new { @class = "hide", @id = "Issuer", @style = "width:78%" })%>
+			<%: Html.TextBox("Issuer", "${IssuerName}", new { @class = "hide tooltiptxt", @id = "Issuer",   @top = "198", @style = "width:78%" })%>
 			<%: Html.Hidden("IssuerId", "${IssuerId}")%>
 			<%: Html.Hidden("SecurityTypeId","${SecurityTypeId}")%>
 			<%: Html.Hidden("SecurityId", "${SecurityId}")%>

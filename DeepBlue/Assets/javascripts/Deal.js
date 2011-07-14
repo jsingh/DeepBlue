@@ -108,6 +108,7 @@
 		deal.applyUDAutocomplete(trDirect);
 
 		var dealMain=$("#DealMain");
+		dealMain.show();
 		deal.selectValue(dealMain);
 		jHelper.applyDatePicker(dealMain);
 		deal.setFundAutoComplete();
@@ -168,6 +169,11 @@
 				if(deal.onDealSuccess) {
 					deal.onDealSuccess();
 					deal.onDealSuccess=null;
+				} else {
+					alert("Deal Saved");
+					$("#SearchDealName").val("");
+					$("#M_Fund").val("");
+					$("#DealMain").hide();
 				}
 			} else {
 				alert(UpdateTargetId.html())
@@ -179,6 +185,7 @@
 	}
 	,saveDeal: function () {
 		try {
+			deal.onDealSuccess=null;
 			$("#btnSaveDeal","#AddNewDeal").click();
 		} catch(e) { alert(e); }
 	}
@@ -193,6 +200,7 @@
 	/* Common functions */
 	,showMakeNewHeader: function (id) {
 		var makeNew=$("#"+id);
+		jHelper.setUpToolTip(makeNew);
 		if(makeNew.css("display")=="none") {
 			makeNew.css("display","");
 			$(":input[type='text']",makeNew).val("");

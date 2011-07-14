@@ -17,6 +17,7 @@
 	<%=Html.JavascriptInclueTag("DealActivityFundExpense.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityUDValuation.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityUFAdjustment.js")%>
+	<%=Html.JavascriptInclueTag("DealReconcile.js")%>
 	<%=Html.JavascriptInclueTag("jAjaxTable.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
@@ -42,6 +43,8 @@
 				<%using (Html.Div(new { @id = "UATab", @class = "select", @onclick = "javascript:dealActivity.selectTab('U',this);" })) {%>&nbsp;
 				<%}%>
 				<%using (Html.Div(new { @id = "SATab", @onclick = "javascript:dealActivity.selectTab('S',this);" })) {%>&nbsp;
+				<%}%>
+				<%using (Html.Div(new { @id = "RETab", @onclick = "javascript:dealActivity.selectTab('R',this);" })) {%>&nbsp;
 				<%}%>
 			</div>
 		</div>
@@ -678,6 +681,30 @@
 				<div class="line">
 				</div>
 			</div>
+			<div id="Reconciliation" class="act-group" style="display: none">
+				<div class="navigation">
+					<div class="heading">
+						<div class="leftcol">
+							RECONCILIATION
+						</div>
+						<div class="rightcol">
+							<div style="float: left">
+								<%: Html.Span("", new { @id = "SpnReconLoading" }) %>
+							</div>
+							<div style="float: left">
+								<%using (Html.Form(new { @id = "frmReconcile", @onsubmit = "return dealReconcile.submit();" })) { %>
+								<%: Html.TextBox("StartDate", "START DATE", new { @id = "ReconStartDate", @class = "wm", @style = "width:100px" })%>&nbsp;&nbsp;
+								<%: Html.TextBox("EndDate", "END DATE", new { @id = "ReconEndDate", @class = "wm", @style = "width:100px" })%>&nbsp;&nbsp;
+								<%: Html.TextBox("ReconcileFundName", "SEARCH FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:200px" })%>
+								<%: Html.Hidden("FundId","", new { @id = "ReconcileFundId" })%>
+								<%}%>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="ReconcilReport">
+				</div>
+			</div>
 		</div>
 	</div>
 </asp:Content>
@@ -717,6 +744,10 @@
 																	  Source = "/Fund/FindFunds",	MinLength = 1,
 																	  OnSelect = "function(event, ui) { dealActivity.setFLEFund(ui.item.id,ui.item.value);}"
 	})%>
+	<%= Html.jQueryAutoComplete("ReconcileFundName", new AutoCompleteOptions {
+																	  Source = "/Fund/FindFunds",	MinLength = 1,
+																	  OnSelect = "function(event, ui) { dealReconcile.setFundId(ui.item.id);}"
+	})%>
 	<%= Html.jQueryAutoComplete("UDV_UnderlyingDirect", new AutoCompleteOptions {
 	Source = "/Deal/FindIssuers",
 	MinLength = 1,
@@ -740,6 +771,8 @@
 	<%=Html.jQueryDatePicker("FE_Date")%>
 	<%=Html.jQueryDatePicker("SplitDate")%>
 	<%=Html.jQueryDatePicker("ConversionDate")%>
+	<%=Html.jQueryDatePicker("ReconStartDate")%>
+	<%=Html.jQueryDatePicker("ReconEndDate")%>
 	<script type="text/javascript">dealActivity.init();dealActivity.newFLEData=<%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.FundExpenseModel())%>;</script>
 	<script id="CashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("UnderlyingFundCashDistribution", Model.UnderlyingFundCashDistributionModel); %>
@@ -773,5 +806,11 @@
 	</script>
 	<script id="FLEAddTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("FundExpense", Model.FundLevelExpenseModel); %>
+	</script>
+	<script id="ReconcileReportTemplate" type="text/x-jquery-tmpl"> 
+		<% Html.RenderPartial("ReconcileReport"); %>
+	</script>
+	<script id="ReconcileGridTemplate" type="text/x-jquery-tmpl"> 
+		<% Html.RenderPartial("ReconcileGrid"); %>
 	</script>
 </asp:Content>

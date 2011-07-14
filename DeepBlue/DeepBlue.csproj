@@ -89,12 +89,15 @@
     <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Helpers\FormCollectionHelper.cs" />
     <Compile Include="Helpers\JsonSerializer.cs" />
+    <Compile Include="Models\Admin\EditCurrencyModel.cs" />
     <Compile Include="Models\Admin\EditFundExpenseTypeModel.cs" />
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
     <Compile Include="Models\Deal\ActivityDealModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
     <Compile Include="Models\Deal\FixedIncomeDocumentModel.cs" />
     <Compile Include="Models\Deal\EquityDocumentModel.cs" />
+    <Compile Include="Models\Deal\ReconcileModel.cs" />
+    <Compile Include="Models\Deal\ReconcileReportModel.cs" />
     <Compile Include="Models\Deal\UnderlyingDirectDocumentModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundDocumentList.cs" />
     <Compile Include="Models\Deal\UnderlyingFundDocumentModel.cs" />
@@ -109,7 +112,7 @@
     <Compile Include="Models\Deal\FundExpenseModel.cs" />
     <Compile Include="Models\Deal\IssuerDetailModel.cs" />
     <Compile Include="Models\Deal\NewHoldingPatternModel.cs" />
-    <Compile Include="Models\Deal\ReconcileModel.cs" />
+    <Compile Include="Models\Deal\ReconcileSearchModel.cs" />
     <Compile Include="Models\Deal\SecurityActivityModel.cs" />
     <Compile Include="Models\Deal\SecurityConversionModel.cs" />
     <Compile Include="Models\Deal\UnderlyingDirectValuationModel.cs" />
@@ -181,6 +184,7 @@
     <Compile Include="Models\Deal\UnderlyingFundPostRecordCashDistributionModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundValuationModel.cs" />
     <Compile Include="Models\Deal\UnfundedAdjustmentModel.cs" />
+    <Compile Include="Models\Document\ResultModel.cs" />
     <Compile Include="Models\Entity\DeepBlue.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -188,6 +192,8 @@
     </Compile>
     <Compile Include="Models\Entity\Partial\ActivityTypeService.cs" />
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
+    <Compile Include="Models\Entity\Partial\CapitalCallLineItemService.cs" />
+    <Compile Include="Models\Entity\Partial\CapitalDistributionLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingDirectDocumentService.cs" />
     <Compile Include="Models\Entity\Partial\FileService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundDocumentService.cs" />
@@ -208,6 +214,8 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
     <Compile Include="Models\Entity\Validation\ActivityType.cs" />
     <Compile Include="Models\Entity\Validation\CashDistribution.cs" />
+    <Compile Include="Models\Entity\Validation\CapitalCallLineItem.cs" />
+    <Compile Include="Models\Entity\Validation\CapitalDistributionLineItem.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingDirectDocument.cs" />
     <Compile Include="Models\Entity\Validation\File.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundDocument.cs" />
@@ -753,8 +761,9 @@
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
+    <Content Include="Assets\javascripts\Currency.js" />
     <Content Include="Assets\javascripts\DealActivityStockDistribution.js" />
-    <Content Include="Assets\javascripts\fileuploader.js" />
+    <Content Include="Assets\javascripts\jquery.fileuploader.js" />
     <Content Include="Assets\javascripts\FundExpenseType.js" />
     <Content Include="Assets\javascripts\DealActivityEquitySplit.js" />
     <Content Include="Assets\javascripts\DealActivitySecConversion.js" />
@@ -775,6 +784,8 @@
     <Content Include="Assets\javascripts\FileType.js" />
     <Content Include="Assets\javascripts\Industry.js" />
     <Content Include="Assets\javascripts\Geography.js" />
+    <Content Include="Assets\javascripts\jquery.formatCurrency.js" />
+    <Content Include="Assets\javascripts\jquery.tooltip.min.js" />
     <Content Include="Assets\javascripts\ReportingFrequency.js" />
     <Content Include="Assets\javascripts\ReportingType.js" />
     <Content Include="Assets\javascripts\jAjaxTable.js" />
@@ -859,6 +870,8 @@
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
     <Content Include="Views\Admin\CommunicationType.aspx" />
     <Content Include="Views\Admin\CashDistributionType.aspx" />
+    <Content Include="Views\Admin\EditCurrency.aspx" />
+    <Content Include="Views\Admin\Currency.aspx" />
     <Content Include="Views\Admin\EditFundExpenseType.aspx" />
     <Content Include="Views\Admin\FundExpenseType.aspx" />
     <Content Include="Views\Admin\EditActivityType.aspx" />
@@ -915,6 +928,8 @@
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
     <Content Include="Views\Deal\ManualUnderlyingFundStockDistribution.ascx" />
+    <Content Include="Views\Deal\ReconcileGrid.ascx" />
+    <Content Include="Views\Deal\ReconcileReport.ascx" />
     <Content Include="Views\Deal\UnderlyingFundDetail.ascx" />
     <Content Include="Views\Deal\UnderlyingFundDocumentList.ascx" />
     <Content Include="Views\Deal\UnderlyingFundStockDistribution.ascx" />
@@ -951,6 +966,7 @@
     <Content Include="Views\Deal\UnfundedAdjustment.ascx" />
     <Content Include="Views\Document\List.ascx" />
     <Content Include="Views\Document\New.aspx" />
+    <Content Include="Views\Document\Result.ascx" />
     <Content Include="Views\Document\Search.aspx" />
     <Content Include="Views\Report\CapitalCallSummary.aspx" />
     <Content Include="Views\Report\CashDistributionSummary.aspx" />

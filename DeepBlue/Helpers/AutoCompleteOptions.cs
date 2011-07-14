@@ -30,10 +30,13 @@ namespace DeepBlue.Helpers {
 			label = string.Empty;
 			value = string.Empty;
 			otherid = 0;
+			othervalues = new List<object>();
 		}
 		public int id { get; set; }
 		public string label { get; set; }
 		public string value { get; set; }
 		public int otherid { get; set; }
+		public int otherid2 { get; set; }
+		public List<object> othervalues { get; set; }
 	}
 }

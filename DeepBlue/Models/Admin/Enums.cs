@@ -54,4 +54,5 @@ namespace DeepBlue.Models.Admin.Enums {
 		Company = 8,
 		MailingAddress = 9
 	}
+	
 }

@@ -49,7 +49,7 @@
 	}
 	,onRowBound: function (tr,data) {
 		var lastcell=$("td:last div",tr);
-		lastcell.html("<img id='Edit' src='/Assets/images/Edit.png'/>");
+		lastcell.html("<img id='Edit' class='gbutton' src='/Assets/images/Edit.png'/>");
 		$("#Edit",lastcell).click(function () { underlyingFund.add(data.cell[0]); });
 		$("td:not(:last)",tr).click(function () { underlyingFund.add(data.cell[0]); });
 	}

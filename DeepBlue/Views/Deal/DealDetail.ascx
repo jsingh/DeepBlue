@@ -8,7 +8,7 @@
 		<div class="cell" style="text-align: left">
 			<%: Html.LabelFor(model => model.DealNumber) %>&nbsp;${DealNumber}</div>
 		<div class="cell auto" style="margin-left: 25px">
-			<%: Html.LabelFor(model => model.DealName) %>&nbsp;<%: Html.TextBox("DealName","${DealName}") %></div>
+			<%: Html.LabelFor(model => model.DealName) %>&nbsp;<%: Html.TextBox("DealName", "${DealName}", new { @style = "width:184px" })%></div>
 		{{if IsDealClose==true}}
 		<div class="cell auto" style="float: right;">
 			<%: Html.Image("greenclosedeal.png")%>

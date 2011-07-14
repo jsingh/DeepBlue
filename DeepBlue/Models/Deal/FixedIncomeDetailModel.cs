@@ -9,6 +9,10 @@ using System.ComponentModel;
 namespace DeepBlue.Models.Deal {
 	public class FixedIncomeDetailModel : FixedIncomeDocumentModel {
 
+		public FixedIncomeDetailModel() {
+			FixedIncomeCurrencyId = (int)DeepBlue.Models.Deal.Enums.Currency.USD;
+		}
+
 		public int FixedIncomeId { get; set; }
 
 		[Required(ErrorMessage = "Issuer is required")]
@@ -21,8 +25,8 @@ namespace DeepBlue.Models.Deal {
 		public int FixedIncomeTypeId { get; set; }
 
 		[StringLength(50, ErrorMessage = "Symbol must be under 50 characters.")]
-		[DisplayName("Stock Symbol")]
-		public string Symbol { get; set; }
+		[DisplayName("Security Name")]
+		public string FixedIncomeSymbol { get; set; }
 
 		[DisplayName("Face Value")]
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Face Value is required")]
@@ -35,7 +39,7 @@ namespace DeepBlue.Models.Deal {
 		public DateTime? IssuedDate { get; set; }
 
 		[DisplayName("Currency")]
-		public int? CurrencyId { get; set; }
+		public int? FixedIncomeCurrencyId { get; set; }
 
 		[DisplayName("Frequency")]
 		public int? Frequency { get; set; }
@@ -47,10 +51,10 @@ namespace DeepBlue.Models.Deal {
 		public DateTime? FirstCouponDate { get; set; }
 
 		[DisplayName("Industry")]
-		public int? IndustryId { get; set; }
+		public int? FixedIncomeIndustryId { get; set; }
 
 		[DisplayName("Industry")]
-		public string Industry { get; set; }
+		public string FixedIncomeIndustry { get; set; }
 
 		[DisplayName("Coupon Information")]
 		public string CouponInformation { get; set; }
@@ -58,7 +62,12 @@ namespace DeepBlue.Models.Deal {
 		public string FixedIncomeType { get; set; }
 
 		[DisplayName("ISIN No./Cousip")]
-		public int? ISINO { get; set; }
+		[StringLength(50, ErrorMessage = "SIN No./Cousip must be under 50 characters.")]
+		public string FixedIncomeISINO { get; set; }
+
+		[DisplayName("Comments")]
+		[StringLength(105, ErrorMessage = "FixedIncomeComments must be under 105 characters.")]
+		public string FixedIncomeComments { get; set; }
 
 		public List<SelectListItem> Currencies { get; set; }
 

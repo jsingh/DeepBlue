@@ -8,7 +8,7 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(UnderlyingFundCapitalCallLineItemMD))]
 	public partial class UnderlyingFundCapitalCallLineItem {
-		public class UnderlyingFundCapitalCallLineItemMD {
+		public class UnderlyingFundCapitalCallLineItemMD : CreatedByFields {
 			#region Primitive Properties
 			[Required(ErrorMessage = "UnderlyingFundID is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "UnderlyingFundID is required")]

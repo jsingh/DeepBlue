@@ -61,7 +61,7 @@ namespace DeepBlue.Controllers.Fund {
 				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.Funds
 															  join deal in context.Deals on fund.FundID equals deal.FundID
 															  join dealUnderlyingFund in context.DealUnderlyingFunds on deal.DealID equals dealUnderlyingFund.DealID
-															  where fund.FundName.Contains(fundName) && dealUnderlyingFund.UnderlyingFundID == underlyingFundId
+															  where fund.FundName.StartsWith(fundName) && dealUnderlyingFund.UnderlyingFundID == underlyingFundId
 															  group fund by fund.FundID into funds
 															  orderby funds.FirstOrDefault().FundName
 															  select new AutoCompleteList {
@@ -76,7 +76,7 @@ namespace DeepBlue.Controllers.Fund {
 		public List<AutoCompleteList> FindFunds(string fundName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.Funds
-															  where fund.FundName.Contains(fundName)
+															  where fund.FundName.StartsWith(fundName)
 															  orderby fund.FundName
 															  select new AutoCompleteList {
 																  id = fund.FundID,

@@ -130,7 +130,7 @@ h4 a {
 	float: left;
 	width: 100%;
 }
-.expandheader {
+.expandheader, .recon-expandheader {
 	padding: 0px 0px 0px 65px;
 	cursor: pointer;
 	float: left;
@@ -139,7 +139,7 @@ h4 a {
 	background-position: center right;
 	background-repeat: no-repeat;
 }
-.expandheader .expandimg {
+.expandheader .expandimg, .recon-expandheader .expandimg {
 	padding: 15px 0 8px 0;
 }
 .expandsel {
@@ -153,15 +153,16 @@ h4 a {
 	padding: 0 0 0 70px;
 	width: 100%;
 }
-.expandheader #title {
+.expandheader #title, .recon-expandheader #title {
 	display: none;
 }
 .expandimg {
 	float: left;
 }
-.expandtitle {
+.expandtitle, .recon-expandtitle {
 	float: left;
 	width: 200px;
+	white-space: nowrap;
 }
 .expandaddbtn {
 	float: left;
@@ -220,13 +221,13 @@ h4 a {
 	background-position: left top;
 	padding-top: 2px;
 }
-.grid .row td, .grid .arow td  {
-    background-color: #F5F5F5;
-    font-size: 12px;
-    height: 37px;
-    height: 36px;
-    padding: 0 15px;
-    white-space:nowrap;
+.grid .row td, .grid .arow td {
+	background-color: #F5F5F5;
+	font-size: 12px;
+	height: 37px;
+	height: 36px;
+	padding: 0 15px;
+	white-space: nowrap;
 }
 .grid .arow td {
 	background-color: #E9EAEC;
@@ -238,24 +239,24 @@ h4 a {
 }
 .grid thead tr th, .grid tfoot tr td {
 	background-color: #BABFC5;
-	 padding: 10px 15px;   
+	padding: 10px 15px;
 	font-weight: normal;
 	color: #000000;
 	white-space: nowrap;
 }
 .grid thead tr th {
-    font-weight: normal;
-    padding: 10px 15px;
-    text-align: center;
+	font-weight: normal;
+	padding: 10px 15px;
+	text-align: center;
 }
 .grid tfoot tr td {
-    padding: 10px 15px;   
-     font-weight: bold;
+	padding: 10px 15px;
+	font-weight: bold;
 }
 .grid thead tr td {
 	background-color: transparent;
-          padding: 5px 15px;
-} 
+	padding: 5px 15px;
+}
 .grid tbody tr td img {
 	cursor: pointer;
 }
@@ -272,10 +273,10 @@ h4 a {
 	text-align: center;
 }
 .grid .gbutton {
-	 display:none;
+	display: none;
 }
 .grid tbody tr:hover .gbutton {
-	display:table-cell;
+	display: table-cell;
 }
 .grid tbody tr:hover td {
 }
@@ -320,12 +321,12 @@ h4 a {
 	padding: 0;
 	margin: 0;
 }
-.rightuarrow{
-    background-image: url("../images/rightuarrow.png");
-    background-repeat: no-repeat;
-    float: right;
-    height: 9px;
-    margin-right: 132px;
-    margin-top: 21px;
-    width: 16px;
+.rightuarrow {
+	background-image: url("../images/rightuarrow.png");
+	background-repeat: no-repeat;
+	float: right;
+	height: 9px;
+	margin-right: 132px;
+	margin-top: 21px;
+	width: 16px;
 }

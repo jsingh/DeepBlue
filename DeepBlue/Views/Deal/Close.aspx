@@ -24,11 +24,11 @@
 				</div>
 			</div>
 			<div class="rightcol">
-				<div class="cell auto" style="margin: 0; padding: 0 10px 0 0;">
+				<div style="margin: 0; padding: 0 10px 0 0;float:left;">
 					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none;" })%>
 				</div>
-				<div class="cell">
-					<%: Html.TextBox("Deal", "SEARCH DEAL", new { @id = "Deal", @class = "wm", @style = "width:160px" })%>
+				<div style="float:left">
+					<%: Html.TextBox("Deal", "SEARCH DEAL", new { @id = "Deal", @class = "wm", @style = "width:200px" })%>
 				</div>
 			</div>
 		</div>

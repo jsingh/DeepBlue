@@ -8,7 +8,7 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(CashDistributionMD))]
 	public partial class CashDistribution {
-		public class CashDistributionMD {
+		public class CashDistributionMD : CreatedByFields {
 			#region Primitive Properties
 			[Required(ErrorMessage = "UnderlyingFundID is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "UnderlyingFundID is required")]

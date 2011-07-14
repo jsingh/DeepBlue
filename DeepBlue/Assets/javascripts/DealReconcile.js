@@ -1,43 +1,22 @@
 ﻿var dealReconcile={
-	isViewMore: false
-	,init: function () {
-		$(document).ready(function () {
-			jHelper.waterMark($("body"));
-			$("#PageIndex").val(1);
-			dealReconcile.calcPageSize();
-		});
-		$(window).resize(function () {
-			dealReconcile.calcPageSize();
-		});
+	setFundId: function (id) {
+		$("#ReconcileFundId").val(id);
+		dealReconcile.submit();
 	}
-	,calcPageSize: function () {
-		var pageSize=parseInt($("#ReconcileBox").height()/40);
-		$("#PageSize").val(pageSize);
-	}
-	,setFund: function (id,name) {
-		$("#FundId").val(id);
-		this.isViewMore=false;
-		this.search();
-	}
-	,clearFund: function (txt) {
-		if($.trim(txt.value)=="") {
-			$("#FundId").val(0);
-			this.isViewMore=false;
-			this.search();
-		}
+	,getFundId: function () {
+		return parseInt($("#ReconcileFundId").val());
 	}
 	,submit: function () {
-		this.isViewMore=false;
-		this.search();
-	}
-	,search: function () {
 		try {
 			var frm=document.getElementById("frmReconcile");
-			var loading=$("#SpnLoading");
+			var loading=$("#SpnReconLoading");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
-			if(dealReconcile.isViewMore==false) {
-				$("#PageIndex").val(1);
-			}
+			var sdate=$("#ReconStartDate",frm);
+			var edate=$("#ReconEndDate",frm);
+			sdate.val(sdate.val().replace("START DATE",""));
+			edate.val(edate.val().replace("END DATE",""));
+			var target=$("#ReconcilReport");
+			target.empty();
 			$.ajax({
 				type: "POST",
 				url: "/Deal/ReconcileList",
@@ -45,30 +24,16 @@
 				dataType: "json",
 				cache: false,
 				success: function (data) {
-					var i;var tbl=$("#ReconcileList");
-					var target=$("tbody",tbl);
-					if(dealReconcile.isViewMore==false) {
-						target.empty();
-					}
 					loading.empty();
-					var ps=parseInt($("#PageSize").val());
-					var pages=Math.ceil(data.Total/ps);
-					if(data.Results.length>0&&pages>1) {
-						$("tfoot",tbl).show();
-					} else {
-						$("tfoot",tbl).hide();
-					}
-					for(i=0;i<data.Results.length;i++) {
-						var row=data.Results[i];
-						var item={ EventType: row.EventType
-										,UnderlyingFundName: row.UnderlyingFundName
-										,FundName: row.FundName
-										,FormatCCAmount: jHelper.dollarAmount(row.CapitalCallAmount.toString())
-										,FormatDAmount: jHelper.dollarAmount(row.DistributionAmount.toString())
-										,FormatPRDate: jHelper.formatDate(jHelper.parseJSONDate(row.PaymentOrReceivedDate.toString()))
-						};
-						$("#ReconcileTemplate").tmpl(item).appendTo(target);
-					}
+					var item={
+						UFCCItems: function () { return { Items: dealReconcile.findJSON(data.Results,1)} }
+						,UFCDItems: function () { return { Items: dealReconcile.findJSON(data.Results,2)} }
+						,CCItems: function () { return { Items: dealReconcile.findJSON(data.Results,3)} }
+						,CDItems: function () { return { Items: dealReconcile.findJSON(data.Results,4)} }
+					};
+					$("#ReconcileReportTemplate").tmpl(item).appendTo(target);
+					jHelper.applyDatePicker(target);
+					dealReconcile.expand();
 				},
 				error: function (data) { try { if(p.onError) { p.onError(data); } } catch(e) { } }
 			});
@@ -77,10 +42,54 @@
 		}
 		return false;
 	}
-	,viewMore: function () {
-		var pi=$("#PageIndex").val();
-		$("#PageIndex").val(parseInt(pi)+1);
-		dealReconcile.isViewMore=true;
-		this.search();
+	,findJSON: function (data,typeId) {
+		var arr=[];
+		$.each(data,function (i,item) {
+			if(item.ReconcileTypeId==typeId)
+				arr.push(item);
+		});
+		return arr;
+	}
+	,save: function (img) {
+		var tr=$(img).parents("tr:first");
+		var param=jHelper.serialize(tr);
+		img.src="/Assets/images/ajax.jpg";
+		$.post("/Deal/SaveReconcile",param,function (data) {
+			img.src="/Assets/images/save.png";
+			if($.trim(data)!="") {
+				alert(data);
+			} else {
+				alert("Reconcile Saved.");
+			}
+		});
+	}
+	,expand: function () {
+		$(".recon-headerbox").unbind('click').click(function () {
+			$(".recon-headerbox").show();
+			$(".recon-expandheader").hide();
+			$(".recon-detail").hide();
+			$(this).hide();
+			var parent=$(this).parent();
+			$(".recon-expandheader",parent).show();
+			var detail=$(".recon-detail",parent);
+			var display=detail.attr("issearch");
+			if(display!="true") {
+				detail.hide();
+			} else {
+				detail.show();
+			}
+		});
+		$(".recon-expandtitle",".recon-expandheader").unbind('click').click(function () {
+			var expandheader=$(this).parents(".recon-expandheader:first");
+			var parent=$(expandheader).parent();
+			expandheader.hide();
+			var detail=$(".recon-detail",parent);
+			detail.hide();
+			$(".recon-headerbox",parent).show();
+		});
 	}
 }
+$.extend(window,{
+	formatDate: function (dt) { return jHelper.formatDate(jHelper.parseJSONDate(dt)); }
+	,formatCurrency: function (d) { return jHelper.dollarAmount(d.toString()); }
+});

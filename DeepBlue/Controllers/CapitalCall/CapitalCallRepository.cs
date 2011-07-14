@@ -11,10 +11,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		#region ICapitalCallRepository Members
 
-		public IEnumerable<ErrorInfo> SaveCapitalCall(Models.Entity.CapitalCall capitalCall) {
-			return capitalCall.Save();
-		}
-
+	
 		public List<Models.Entity.CapitalCall> GetCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<Models.Entity.CapitalCall> query = (from capitalCall in context.CapitalCalls
@@ -83,8 +80,32 @@ namespace DeepBlue.Controllers.CapitalCall {
 			}
 		}
 
+		public CapitalCallLineItem FindCapitalCallLineItem(int capitalCallLineItemId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.CapitalCallLineItems.Where(capitalCallLineItem => capitalCallLineItem.CapitalCallLineItemID == capitalCallLineItemId).SingleOrDefault();
+			}
+		}
+
+		public CapitalDistributionLineItem FindCapitalDistributionLineItem(int capitalDistributionLineItemId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.CapitalDistributionLineItems.Where(capitalDistributionLineItem => capitalDistributionLineItem.CapitalDistributionLineItemID == capitalDistributionLineItemId).SingleOrDefault();
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveCapitalCall(Models.Entity.CapitalCall capitalCall) {
+			return capitalCall.Save();
+		}
+
+		public IEnumerable<ErrorInfo> SaveCapitalCallLineItem(CapitalCallLineItem capitalCallLineItem) {
+			return capitalCallLineItem.Save();
+		}
+
 		public IEnumerable<ErrorInfo> SaveCapitalDistribution(CapitalDistribution capitalDistribution) {
 			return capitalDistribution.Save();
+		}
+
+		public IEnumerable<ErrorInfo> SaveCapitalDistributionLineItem(CapitalDistributionLineItem capitalDistributionLineItem) {
+			return capitalDistributionLineItem.Save();
 		}
 
 		public List<CapitalDistribution> GetCapitalDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId) {

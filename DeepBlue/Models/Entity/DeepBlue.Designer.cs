@@ -4541,7 +4541,8 @@ namespace DeepBlue.Models.Entity
         /// <param name="investmentAmount">Initial value of the InvestmentAmount property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        public static CapitalCallLineItem CreateCapitalCallLineItem(global::System.Int32 capitalCallLineItemID, global::System.Int32 capitalCallID, global::System.Int32 investorID, global::System.Decimal capitalAmountCalled, global::System.Decimal investmentAmount, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        /// <param name="isReconciled">Initial value of the IsReconciled property.</param>
+        public static CapitalCallLineItem CreateCapitalCallLineItem(global::System.Int32 capitalCallLineItemID, global::System.Int32 capitalCallID, global::System.Int32 investorID, global::System.Decimal capitalAmountCalled, global::System.Decimal investmentAmount, global::System.DateTime createdDate, global::System.Int32 createdBy, global::System.Boolean isReconciled)
         {
             CapitalCallLineItem capitalCallLineItem = new CapitalCallLineItem();
             capitalCallLineItem.CapitalCallLineItemID = capitalCallLineItemID;
@@ -4551,6 +4552,7 @@ namespace DeepBlue.Models.Entity
             capitalCallLineItem.InvestmentAmount = investmentAmount;
             capitalCallLineItem.CreatedDate = createdDate;
             capitalCallLineItem.CreatedBy = createdBy;
+            capitalCallLineItem.IsReconciled = isReconciled;
             return capitalCallLineItem;
         }
 
@@ -4943,6 +4945,78 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _LastUpdatedBy;
         partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
         partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsReconciled
+        {
+            get
+            {
+                return _IsReconciled;
+            }
+            set
+            {
+                OnIsReconciledChanging(value);
+                ReportPropertyChanging("IsReconciled");
+                _IsReconciled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsReconciled");
+                OnIsReconciledChanged();
+            }
+        }
+        private global::System.Boolean _IsReconciled;
+        partial void OnIsReconciledChanging(global::System.Boolean value);
+        partial void OnIsReconciledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ReconciliationMethod
+        {
+            get
+            {
+                return _ReconciliationMethod;
+            }
+            set
+            {
+                OnReconciliationMethodChanging(value);
+                ReportPropertyChanging("ReconciliationMethod");
+                _ReconciliationMethod = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ReconciliationMethod");
+                OnReconciliationMethodChanged();
+            }
+        }
+        private global::System.String _ReconciliationMethod;
+        partial void OnReconciliationMethodChanging(global::System.String value);
+        partial void OnReconciliationMethodChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> PaidON
+        {
+            get
+            {
+                return _PaidON;
+            }
+            set
+            {
+                OnPaidONChanging(value);
+                ReportPropertyChanging("PaidON");
+                _PaidON = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PaidON");
+                OnPaidONChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _PaidON;
+        partial void OnPaidONChanging(Nullable<global::System.DateTime> value);
+        partial void OnPaidONChanged();
 
         #endregion
     
@@ -6111,7 +6185,8 @@ namespace DeepBlue.Models.Entity
         /// <param name="distributionAmount">Initial value of the DistributionAmount property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        public static CapitalDistributionLineItem CreateCapitalDistributionLineItem(global::System.Int32 capitalDistributionLineItemID, global::System.Int32 capitalDistributionID, global::System.Int32 investorID, global::System.Decimal distributionAmount, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        /// <param name="isReconciled">Initial value of the IsReconciled property.</param>
+        public static CapitalDistributionLineItem CreateCapitalDistributionLineItem(global::System.Int32 capitalDistributionLineItemID, global::System.Int32 capitalDistributionID, global::System.Int32 investorID, global::System.Decimal distributionAmount, global::System.DateTime createdDate, global::System.Int32 createdBy, global::System.Boolean isReconciled)
         {
             CapitalDistributionLineItem capitalDistributionLineItem = new CapitalDistributionLineItem();
             capitalDistributionLineItem.CapitalDistributionLineItemID = capitalDistributionLineItemID;
@@ -6120,6 +6195,7 @@ namespace DeepBlue.Models.Entity
             capitalDistributionLineItem.DistributionAmount = distributionAmount;
             capitalDistributionLineItem.CreatedDate = createdDate;
             capitalDistributionLineItem.CreatedBy = createdBy;
+            capitalDistributionLineItem.IsReconciled = isReconciled;
             return capitalDistributionLineItem;
         }
 
@@ -6464,6 +6540,78 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _LastUpdatedBy;
         partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
         partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsReconciled
+        {
+            get
+            {
+                return _IsReconciled;
+            }
+            set
+            {
+                OnIsReconciledChanging(value);
+                ReportPropertyChanging("IsReconciled");
+                _IsReconciled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsReconciled");
+                OnIsReconciledChanged();
+            }
+        }
+        private global::System.Boolean _IsReconciled;
+        partial void OnIsReconciledChanging(global::System.Boolean value);
+        partial void OnIsReconciledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ReconciliationMethod
+        {
+            get
+            {
+                return _ReconciliationMethod;
+            }
+            set
+            {
+                OnReconciliationMethodChanging(value);
+                ReportPropertyChanging("ReconciliationMethod");
+                _ReconciliationMethod = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ReconciliationMethod");
+                OnReconciliationMethodChanged();
+            }
+        }
+        private global::System.String _ReconciliationMethod;
+        partial void OnReconciliationMethodChanging(global::System.String value);
+        partial void OnReconciliationMethodChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> PaidON
+        {
+            get
+            {
+                return _PaidON;
+            }
+            set
+            {
+                OnPaidONChanging(value);
+                ReportPropertyChanging("PaidON");
+                _PaidON = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PaidON");
+                OnPaidONChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _PaidON;
+        partial void OnPaidONChanging(Nullable<global::System.DateTime> value);
+        partial void OnPaidONChanged();
 
         #endregion
     
@@ -13530,6 +13678,54 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _CurrencyID;
         partial void OnCurrencyIDChanging(Nullable<global::System.Int32> value);
         partial void OnCurrencyIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Comments
+        {
+            get
+            {
+                return _Comments;
+            }
+            set
+            {
+                OnCommentsChanging(value);
+                ReportPropertyChanging("Comments");
+                _Comments = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Comments");
+                OnCommentsChanged();
+            }
+        }
+        private global::System.String _Comments;
+        partial void OnCommentsChanging(global::System.String value);
+        partial void OnCommentsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ISIN
+        {
+            get
+            {
+                return _ISIN;
+            }
+            set
+            {
+                OnISINChanging(value);
+                ReportPropertyChanging("ISIN");
+                _ISIN = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ISIN");
+                OnISINChanged();
+            }
+        }
+        private global::System.String _ISIN;
+        partial void OnISINChanging(global::System.String value);
+        partial void OnISINChanged();
 
         #endregion
     
@@ -15218,6 +15414,54 @@ namespace DeepBlue.Models.Entity
         private global::System.String _CouponInformation;
         partial void OnCouponInformationChanging(global::System.String value);
         partial void OnCouponInformationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Comments
+        {
+            get
+            {
+                return _Comments;
+            }
+            set
+            {
+                OnCommentsChanging(value);
+                ReportPropertyChanging("Comments");
+                _Comments = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Comments");
+                OnCommentsChanged();
+            }
+        }
+        private global::System.String _Comments;
+        partial void OnCommentsChanging(global::System.String value);
+        partial void OnCommentsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ISIN
+        {
+            get
+            {
+                return _ISIN;
+            }
+            set
+            {
+                OnISINChanging(value);
+                ReportPropertyChanging("ISIN");
+                _ISIN = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ISIN");
+                OnISINChanged();
+            }
+        }
+        private global::System.String _ISIN;
+        partial void OnISINChanging(global::System.String value);
+        partial void OnISINChanged();
 
         #endregion
     
@@ -29739,7 +29983,8 @@ namespace DeepBlue.Models.Entity
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
         /// <param name="isPostRecordDateTransaction">Initial value of the IsPostRecordDateTransaction property.</param>
-        public static UnderlyingFundCapitalCall CreateUnderlyingFundCapitalCall(global::System.Int32 underlyingFundCapitalCallID, global::System.Int32 underlyingFundID, global::System.Int32 fundID, global::System.Decimal amount, global::System.Boolean isDeemedCapitalCall, global::System.DateTime createdDate, global::System.Int32 createdBy, global::System.Boolean isPostRecordDateTransaction)
+        /// <param name="isReconciled">Initial value of the IsReconciled property.</param>
+        public static UnderlyingFundCapitalCall CreateUnderlyingFundCapitalCall(global::System.Int32 underlyingFundCapitalCallID, global::System.Int32 underlyingFundID, global::System.Int32 fundID, global::System.Decimal amount, global::System.Boolean isDeemedCapitalCall, global::System.DateTime createdDate, global::System.Int32 createdBy, global::System.Boolean isPostRecordDateTransaction, global::System.Boolean isReconciled)
         {
             UnderlyingFundCapitalCall underlyingFundCapitalCall = new UnderlyingFundCapitalCall();
             underlyingFundCapitalCall.UnderlyingFundCapitalCallID = underlyingFundCapitalCallID;
@@ -29750,6 +29995,7 @@ namespace DeepBlue.Models.Entity
             underlyingFundCapitalCall.CreatedDate = createdDate;
             underlyingFundCapitalCall.CreatedBy = createdBy;
             underlyingFundCapitalCall.IsPostRecordDateTransaction = isPostRecordDateTransaction;
+            underlyingFundCapitalCall.IsReconciled = isReconciled;
             return underlyingFundCapitalCall;
         }
 
@@ -30046,6 +30292,78 @@ namespace DeepBlue.Models.Entity
         private global::System.Boolean _IsPostRecordDateTransaction;
         partial void OnIsPostRecordDateTransactionChanging(global::System.Boolean value);
         partial void OnIsPostRecordDateTransactionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsReconciled
+        {
+            get
+            {
+                return _IsReconciled;
+            }
+            set
+            {
+                OnIsReconciledChanging(value);
+                ReportPropertyChanging("IsReconciled");
+                _IsReconciled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsReconciled");
+                OnIsReconciledChanged();
+            }
+        }
+        private global::System.Boolean _IsReconciled;
+        partial void OnIsReconciledChanging(global::System.Boolean value);
+        partial void OnIsReconciledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ReconciliationMethod
+        {
+            get
+            {
+                return _ReconciliationMethod;
+            }
+            set
+            {
+                OnReconciliationMethodChanging(value);
+                ReportPropertyChanging("ReconciliationMethod");
+                _ReconciliationMethod = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ReconciliationMethod");
+                OnReconciliationMethodChanged();
+            }
+        }
+        private global::System.String _ReconciliationMethod;
+        partial void OnReconciliationMethodChanging(global::System.String value);
+        partial void OnReconciliationMethodChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> PaidON
+        {
+            get
+            {
+                return _PaidON;
+            }
+            set
+            {
+                OnPaidONChanging(value);
+                ReportPropertyChanging("PaidON");
+                _PaidON = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PaidON");
+                OnPaidONChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _PaidON;
+        partial void OnPaidONChanging(Nullable<global::System.DateTime> value);
+        partial void OnPaidONChanged();
 
         #endregion
     
@@ -30595,7 +30913,8 @@ namespace DeepBlue.Models.Entity
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
         /// <param name="isPostRecordDateTransaction">Initial value of the IsPostRecordDateTransaction property.</param>
-        public static UnderlyingFundCashDistribution CreateUnderlyingFundCashDistribution(global::System.Int32 underlyingFundCashDistributionID, global::System.Int32 underlyingFundID, global::System.Int32 fundID, global::System.Int32 cashDistributionTypeID, global::System.Decimal amount, global::System.DateTime createdDate, global::System.Int32 createdBy, global::System.Boolean isPostRecordDateTransaction)
+        /// <param name="isReconciled">Initial value of the IsReconciled property.</param>
+        public static UnderlyingFundCashDistribution CreateUnderlyingFundCashDistribution(global::System.Int32 underlyingFundCashDistributionID, global::System.Int32 underlyingFundID, global::System.Int32 fundID, global::System.Int32 cashDistributionTypeID, global::System.Decimal amount, global::System.DateTime createdDate, global::System.Int32 createdBy, global::System.Boolean isPostRecordDateTransaction, global::System.Boolean isReconciled)
         {
             UnderlyingFundCashDistribution underlyingFundCashDistribution = new UnderlyingFundCashDistribution();
             underlyingFundCashDistribution.UnderlyingFundCashDistributionID = underlyingFundCashDistributionID;
@@ -30606,6 +30925,7 @@ namespace DeepBlue.Models.Entity
             underlyingFundCashDistribution.CreatedDate = createdDate;
             underlyingFundCashDistribution.CreatedBy = createdBy;
             underlyingFundCashDistribution.IsPostRecordDateTransaction = isPostRecordDateTransaction;
+            underlyingFundCashDistribution.IsReconciled = isReconciled;
             return underlyingFundCashDistribution;
         }
 
@@ -30926,6 +31246,78 @@ namespace DeepBlue.Models.Entity
         private global::System.Boolean _IsPostRecordDateTransaction;
         partial void OnIsPostRecordDateTransactionChanging(global::System.Boolean value);
         partial void OnIsPostRecordDateTransactionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsReconciled
+        {
+            get
+            {
+                return _IsReconciled;
+            }
+            set
+            {
+                OnIsReconciledChanging(value);
+                ReportPropertyChanging("IsReconciled");
+                _IsReconciled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsReconciled");
+                OnIsReconciledChanged();
+            }
+        }
+        private global::System.Boolean _IsReconciled;
+        partial void OnIsReconciledChanging(global::System.Boolean value);
+        partial void OnIsReconciledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ReconciliationMethod
+        {
+            get
+            {
+                return _ReconciliationMethod;
+            }
+            set
+            {
+                OnReconciliationMethodChanging(value);
+                ReportPropertyChanging("ReconciliationMethod");
+                _ReconciliationMethod = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ReconciliationMethod");
+                OnReconciliationMethodChanged();
+            }
+        }
+        private global::System.String _ReconciliationMethod;
+        partial void OnReconciliationMethodChanging(global::System.String value);
+        partial void OnReconciliationMethodChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> PaidON
+        {
+            get
+            {
+                return _PaidON;
+            }
+            set
+            {
+                OnPaidONChanging(value);
+                ReportPropertyChanging("PaidON");
+                _PaidON = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PaidON");
+                OnPaidONChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _PaidON;
+        partial void OnPaidONChanging(Nullable<global::System.DateTime> value);
+        partial void OnPaidONChanged();
 
         #endregion
     

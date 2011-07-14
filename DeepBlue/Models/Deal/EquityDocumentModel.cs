@@ -9,6 +9,10 @@ namespace DeepBlue.Models.Deal {
 
 	public class EquityDocumentModel {
 
+		public EquityDocumentModel() {
+			EquityDocumentDate = DateTime.Now;
+		}
+
 		public int EquityDocumentTypeId { get; set; }
 
 		public DateTime EquityDocumentDate { get; set; }
@@ -16,6 +20,8 @@ namespace DeepBlue.Models.Deal {
 		public int EquityUploadTypeId { get; set; }
 
 		public string EquityFilePath { get; set; }
+
+		public HttpPostedFileBase EquityFile { get; set; }
 
 	}
 }

@@ -6,7 +6,7 @@
 	{{if IsUnderlyingFundModel==true}}GP{{else}}Company{{/if}}
 </div>
 <div class="editor-field">
-	<%: Html.TextBox("Name", "${Name}", new { @class = "wm" })%>
+	<%: Html.TextBox("Name", "${Name}", new { @class = "wm", @onkeyup = "javascript:dealDirect.copyName(this);" })%>
 </div>
 <div class="editor-label" style="clear: right">
 	{{if IsUnderlyingFundModel==true}}GP Parent{{else}}Company Parent{{/if}}

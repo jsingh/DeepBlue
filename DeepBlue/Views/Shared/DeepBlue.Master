@@ -4,9 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>
-		<asp:ContentPlaceHolder ID="TitleContent" runat="server" />
-	</title>
+	<title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
@@ -14,13 +12,14 @@
 	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
+	<%= Html.JavascriptInclueTag("jquery.formatCurrency.js")%>
 	<%= Html.JavascriptInclueTag("jHelper.js")%>
 	<%= Html.JavascriptInclueTag("DeepBlue.js")%>
 	<%= Html.JavascriptInclueTag("menu.js")%>
 	<%= Html.JavascriptInclueTag("jsDate.js")%>
 	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
-	<%= Html.StylesheetLinkTag("site.css")%><asp:ContentPlaceHolder ID="HeaderContent"
-		runat="server" />
+	<%= Html.StylesheetLinkTag("site.css")%>
+	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
 </head>
 <body id="mainbdy">
 	<div id="header">
@@ -222,7 +221,7 @@
 		<div class="footercontent">
 			Copyright 2011 DeepBlue&nbsp;<%=ConfigurationManager.AppSettings["CurrentVersion"]%></div>
 	</div>
-	<script type="text/javascript">		DeepBlue.init();</script>
+	<script type="text/javascript">DeepBlue.init();</script>
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
 </body>
 </html>

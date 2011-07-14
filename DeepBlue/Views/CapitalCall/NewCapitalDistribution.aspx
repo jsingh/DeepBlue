@@ -43,13 +43,13 @@
 						<%: Html.LabelFor(model => model.CapitalDistributionDate) %>
 					</div>
 					<div class="editor-field">
-						<%: Html.TextBoxFor(model => model.CapitalDistributionDate) %>
+						<%: Html.TextBoxFor(model => model.CapitalDistributionDate, new { @style = "width:82px;" })%>
 					</div>
-					<div class="editor-label" style="padding-left:44%">
+					<div class="editor-label"  style="clear: right">
 						<%: Html.LabelFor(model => model.CapitalDistributionDueDate) %>
 					</div>
 					<div class="editor-field">
-						<%: Html.TextBoxFor(model => model.CapitalDistributionDueDate) %>
+						<%: Html.TextBoxFor(model => model.CapitalDistributionDueDate, new { @style = "width:82px;" })%>
 					</div>
 					<div class="editor-label" style="width: 207px">
 						<%: Html.CheckBoxFor(model => model.AddPreferredReturn, new { @onclick="javascript:distribution.showControl(this,'PreferredAmountBox');" }) %>&nbsp;<%: Html.LabelFor(model => model.AddPreferredReturn) %>

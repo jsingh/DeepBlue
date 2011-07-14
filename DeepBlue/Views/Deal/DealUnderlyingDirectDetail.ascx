@@ -61,7 +61,7 @@
 						<td class="lalign">
 						</td>
 						<td class="lalign">
-							<%: Html.TextBox("Issuer", "", new { @id = "Issuer", @style = "width:78%" })%>
+							<%: Html.TextBox("Issuer", "", new { @id = "Issuer", @class = "tooltiptxt", @top = "198", @style = "width:78%" })%>
 							<%: Html.Hidden("IssuerId", "0")%>
 							<%: Html.Hidden("SecurityTypeId","0")%>
 							<%: Html.Hidden("SecurityId", "0")%>

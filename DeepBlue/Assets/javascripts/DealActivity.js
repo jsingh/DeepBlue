@@ -10,15 +10,18 @@
 	,selectTab: function (type,lnk) {
 		var UA=$("#UnderlyingActivity");
 		var SA=$("#SecurityActivity");
+		var RE=$("#Reconciliation");
 		var SUD=$("#SearchUDirect");
 		$("#UATab").removeClass("select");
 		$("#SATab").removeClass("select");
+		$("#RETab").removeClass("select");
 		$(lnk).addClass("select");
-		UA.hide();SA.hide();SUD.hide();
+		UA.hide();SA.hide();SUD.hide();RE.hide();
 		$(".tablnk").removeClass("select");
 		switch(type) {
 			case "U": UA.show();break;
 			case "S": SA.show();SUD.show();break;
+			case "R": RE.show();SUD.show();break;
 		}
 	}
 	/* Common Functions */
@@ -85,7 +88,7 @@
 		$("#add",tr).show();
 	}
 	,expand: function () {
-		$(".headerbox").click(function () {
+		$(".headerbox").unbind('click').click(function () {
 			$(".headerbox").show();
 			$(".expandheader").hide();
 			$(".detail").hide();
@@ -100,7 +103,7 @@
 				detail.show();
 			}
 		});
-		$(".expandtitle",".expandheader").click(function () {
+		$(".expandtitle",".expandheader").unbind('click').click(function () {
 			var expandheader=$(this).parents(".expandheader:first");
 			var parent=$(expandheader).parent();
 			expandheader.hide();

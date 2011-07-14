@@ -2469,6 +2469,114 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
+		#region Currency
+
+		public ActionResult Currency() {
+			ViewData["MenuCurrency"] = "Admin";
+			ViewData["SubmenuCurrency"] = "AdminCustomField";
+			ViewData["PageCurrency"] = "Currency";
+			return View();
+		}
+
+		//
+		// GET: /Admin/CurrencyList
+		[HttpGet]
+		public JsonResult CurrencyList(int pageIndex, int pageSize, string sortCurrency, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DeepBlue.Models.Entity.Currency> currencys = AdminRepository.GetAllCurrencies(pageIndex, pageSize, sortCurrency, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var currency in currencys) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {currency.CurrencyID,
+					  currency.Currency1,
+					  currency.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditCurrency
+		[HttpGet]
+		public ActionResult EditCurrency(int id) {
+			EditCurrencyModel model = new EditCurrencyModel();
+			Currency currency = AdminRepository.FindCurrency(id);
+			if (currency != null) {
+				model.CurrencyId = currency.CurrencyID;
+				model.Currency = currency.Currency1;
+				model.Enabled = currency.Enabled;
+			}
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/UpdateCurrency
+		[HttpPost]
+		public ActionResult UpdateCurrency(FormCollection collection) {
+			EditCurrencyModel model = new EditCurrencyModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = CurrencyAvailable(model.Currency, model.CurrencyId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Currency", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				Currency currency = AdminRepository.FindCurrency(model.CurrencyId);
+				if (currency == null) {
+					currency = new Currency();
+					currency.CreatedBy = AppSettings.CreatedByUserId;
+					currency.CreatedDate = DateTime.Now;
+				}
+				currency.Currency1 = model.Currency;
+				currency.Enabled = model.Enabled;
+				currency.LastUpdatedBy = AppSettings.CreatedByUserId;
+				currency.LastUpdatedDate = DateTime.Now;
+				currency.EntityID = (int)ConfigUtil.CurrentEntityID;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCurrency(currency);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True";
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteCurrency(int id) {
+			if (AdminRepository.DeleteCurrency(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string CurrencyAvailable(string Currency, int CurrencyId) {
+			if (AdminRepository.CurrencyNameAvailable(Currency, CurrencyId))
+				return "Currency already exists.";
+			else
+				return string.Empty;
+		}
+
+
+		#endregion
+
 		public ActionResult Result() {
 			return View();
 		}

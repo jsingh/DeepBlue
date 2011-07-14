@@ -1,41 +1,25 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.EquityDetailModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<%--<div class="db-tab">
-	<div class="db-left tabselect" id="NewEqTab" onclick="javascript:dealDirect.tabEquitySelect('N');">
-		<div class="db-center">
-			<div class="db-right">
-				New Equity
-			</div>
-		</div>
-	</div>
-	<div class="db-left" id="ExistingEqTab" onclick="javascript:dealDirect.tabEquitySelect('E');">
-		<div class="db-center">
-			<div class="db-right">
-				Existing Equities
-			</div>
-		</div>
-	</div>
-</div>--%>
 <div class="line">
 </div>
 <div id="equitysymboldiv">
 	<div class="editor-label">
-		<%: Html.LabelFor(model => model.Symbol) %>
+		<%: Html.LabelFor(model => model.EquitySymbol)%>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("EQ_Symbol", "${Symbol}")%>
+		<%: Html.TextBox("EquitySymbol", "${EquitySymbol}")%>
 	</div>
 	<div class="editor-label" style="clear: right">
-		<%: Html.LabelFor(model => model.ISINO) %>
+		<%: Html.LabelFor(model => model.EquityISINO) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("ISINO", "${ISINO}") %>
+		<%: Html.TextBox("EquityISINO", "${EquityISINO}")%>
 	</div>
 	<div class="editor-label" style="clear: right">
-		<%: Html.LabelFor(model => model.Seniority) %>
+		<%: Html.LabelFor(model => model.EquityCurrencyId)%>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("Seniority", "${Seniority}")%>
+		<%: Html.DropDownList("EquityCurrencyId", Model.Currencies, new { @id = "EquityCurrencyId", @val = "${CurrencyId}" })%>
 	</div>
 	<div class="editor-label">
 		<%: Html.LabelFor(model => model.Public) %>
@@ -44,30 +28,38 @@
 		<%: Html.CheckBox("Public", false, new { @val = "${Public}", @id = "Public" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
-		<%: Html.LabelFor(model => model.IndustryId) %>
+		<%: Html.LabelFor(model => model.EquityIndustryId)%>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("EQ_Industry", "${Industry}", new { @id = "EQ_Industry", @style = "width:157px;" })%>
-		<%: Html.Hidden("EQ_IndustryId", "${IndustryId}")%>
+		<%: Html.TextBox("EquityIndustry", "${EquityIndustry}", new { @id = "EquityIndustry", @style = "width:157px;" })%>
+		<%: Html.Hidden("EquityIndustryId", "${EquityIndustryId}", new { @id = "EquityIndustryId" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
-		<%: Html.LabelFor(model => model.CurrencyId) %>
-	</div>
-	<div class="editor-field">
-		<%: Html.DropDownList("EQ_CurrencyId", Model.Currencies, new { @id = "Currency", @val = "${CurrencyId}" })%>
-	</div>
-	<div class="editor-label">
 		<%: Html.LabelFor(model => model.ShareClassTypeId) %>
 	</div>
 	<div class="editor-field">
 		<%: Html.DropDownList("ShareClassTypeId", Model.ShareClassTypes, new { @id = "ShareClassType", @val = "${ShareClassTypeId}" })%>
 	</div>
-	<div class="editor-label" style="clear: right">
+	<div class="editor-label">
 		<%: Html.LabelFor(model => model.EquityTypeId) %>
 	</div>
 	<div class="editor-field">
 		<%: Html.DropDownList("EquityTypeId", Model.EquityTypes, new { @id = "EquityType", @val = "${EquityTypeId}" })%>
 	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.EquityComments) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.TextArea("EquityComments","${EquityComments}", 5, 50, new { })%>
+	</div>
+	<%: Html.Hidden("EquityId", "${EquityId}") %>
+</div>
+<div class="line">
+</div>
+<br />
+<div class="line">
+</div>
+<div id="eqdocument">
 	<div class="editor-label">
 		<%: Html.Label("Document Type") %>
 	</div>
@@ -78,7 +70,7 @@
 		<%: Html.Label("Document Date") %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("EquityDocumentDate", "", new { @class = "datefield", @id = "EquityDocumentDate" })%>
+		<%: Html.TextBox("EquityDocumentDate", "${EquityDocumentDate}", new { @class = "datefield", @id = "EquityDocumentDate" })%>
 	</div>
 	<div class="editor-label">
 		<%: Html.DropDownList("EquityUploadTypeId", Model.UploadTypes, new { @style = "width:80px", @onchange = "javascript:dealDirect.changeUploadType(this,'equitysymboldiv');" })%>
@@ -95,27 +87,6 @@
 	<div id="LinkRow" style="display: none; width: auto;" class="editor-field">
 		<%: Html.TextBox("EquityFilePath")%>
 	</div>
-	<%: Html.Hidden("EquityId", "${EquityId}") %>
-</div>
-<div id="existingEquity">
-	<table cellpadding="0" cellspacing="0" border="0" id="tblExistingEquity">
-		<thead>
-			<tr>
-				<th>
-					Equity Id
-				</th>
-				<th>
-					Stock Symbol
-				</th>
-				<th>
-					Industry
-				</th>
-				<th>
-					Equity Type
-				</th>
-			</tr>
-		</thead>
-	</table>
 </div>
 <div class="line">
 </div>

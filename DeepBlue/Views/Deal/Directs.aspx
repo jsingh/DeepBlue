@@ -11,7 +11,7 @@
 	<%=Html.JavascriptInclueTag("DealDirect.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css") %>
-	<%=Html.JavascriptInclueTag("fileuploader.js")%>
+	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="navigation">
@@ -34,7 +34,7 @@
 		</div>
 		<div style="display: block; float: right; margin-right: 15%;">
 			<%: Html.Span("", new { @id = "SpnIssuerLoading" })%>
-			<%: Html.TextBox("S_Issuer", "SEARCH ISSUER", new { @class = "wm", @style = "width:150px", @id = "S_Issuer" })%>
+			<%: Html.TextBox("S_Issuer", "SEARCH ISSUER", new { @class = "wm", @style = "width:200px", @id = "S_Issuer" })%>
 		</div>
 	</div>
 	<div id="DirectDetailBox">

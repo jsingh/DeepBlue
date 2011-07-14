@@ -9,6 +9,10 @@ namespace DeepBlue.Models.Deal {
 
 	public class FixedIncomeDocumentModel {
 
+		public FixedIncomeDocumentModel() {
+			FixedIncomeDocumentDate = DateTime.Now;
+		}
+
 		public int FixedIncomeDocumentTypeId { get; set; }
 
 		public DateTime FixedIncomeDocumentDate { get; set; }
@@ -16,6 +20,8 @@ namespace DeepBlue.Models.Deal {
 		public int FixedIncomeUploadTypeId { get; set; }
 
 		public string FixedIncomeFilePath { get; set; }
+
+		public HttpPostedFileBase FixedIncomeFile { get; set; }
 
 	}
 }

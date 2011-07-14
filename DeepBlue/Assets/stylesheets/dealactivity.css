@@ -74,8 +74,8 @@
 	float: left;
 	width: 100%;
 }
-.headerbox {
-	width: 70%;
+.headerbox,.recon-headerbox {
+	width: 90%;
 	padding-left: 65px;
 	background-image: url(../images/actdownarrow.png);
 	background-position: right center;
@@ -114,7 +114,7 @@
 input, select {
 	padding: 3px;
 }
-.grid input, .grid select {
+.grid input[type='text'], .grid select {
 	width: 95%;
 }
 .loading {
@@ -185,11 +185,23 @@ input, select {
 	margin-left: 5px;
 	cursor: pointer;
 }
+#RETab {
+	background-image: url(../images/recontab.png);
+	background-repeat: no-repeat;
+	width: 215px;
+	height: 43px;
+	float: left;
+	margin-left: 5px;
+	cursor: pointer;
+}
 #UATab.select {
 	background-image: url(../images/uatabsel.png);
 }
 #SATab.select {
 	background-image: url(../images/satabsel.png);
+}
+#RETab.select {
+	background-image: url(../images/recontabsel.png);
 }
 .tabbg {
 	float: left;
@@ -269,4 +281,7 @@ input, select {
 	font-size: 12px;
 	margin: -8px 0pt 0pt 80px;
 }
- 
+#ReconcilReport .gridbox {
+	margin-top:20px;
+	margin-bottom:20px;
+}

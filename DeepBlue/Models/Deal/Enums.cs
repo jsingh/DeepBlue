@@ -21,4 +21,19 @@ namespace DeepBlue.Models.Deal.Enums {
 		Conversion = 2,
 		Merger = 3
 	}
+
+	public enum Currency {
+		USD = 1,
+		AUD = 2,
+		CAD = 3,
+		EUR = 4,
+		JPY = 5
+	}
+
+	public enum ReconcileType {
+		UnderlyingFundCapitalCall = 1,
+		UnderlyingFundCashDistribution = 2,
+		CapitalCall = 3,
+		CapitalDistribution = 4
+	}
 }

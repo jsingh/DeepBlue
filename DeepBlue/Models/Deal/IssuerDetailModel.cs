@@ -9,6 +9,11 @@ using System.Web.Mvc;
 
 namespace DeepBlue.Models.Deal {
 	public class IssuerDetailModel {
+
+		public IssuerDetailModel() {
+			CountryId = (int)DeepBlue.Models.Admin.Enums.DefaultCountry.USA;
+			Country = "United States";
+		}
 		
 		public int IssuerId { get; set; }
 

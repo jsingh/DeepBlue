@@ -7,6 +7,7 @@ using DeepBlue.Helpers;
 using DeepBlue.Models.Deal;
 using System.Data.Objects;
 using System.Data.Objects.SqlClient;
+using DeepBlue.Models.Deal.Enums;
 
 namespace DeepBlue.Controllers.Deal {
 	public class DealRepository : IDealRepository {
@@ -100,7 +101,7 @@ namespace DeepBlue.Controllers.Deal {
 		public List<AutoCompleteList> FindDeals(string dealName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> dealListQuery = (from deal in context.Deals
-															  where deal.DealName.Contains(dealName)
+															  where deal.DealName.StartsWith(dealName)
 															  orderby deal.DealName
 															  select new AutoCompleteList {
 																  id = deal.DealID,
@@ -114,7 +115,7 @@ namespace DeepBlue.Controllers.Deal {
 		public List<AutoCompleteList> FindDeals(int fundId, string dealName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> dealListQuery = (from deal in context.Deals
-															  where deal.DealName.Contains(dealName) && deal.FundID == fundId
+															  where deal.DealName.StartsWith(dealName) && deal.FundID == fundId
 															  orderby deal.DealName
 															  select new AutoCompleteList {
 																  id = deal.DealID,
@@ -449,7 +450,7 @@ namespace DeepBlue.Controllers.Deal {
 																join fixedIncome in context.FixedIncomes on direct.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes
 																from equity in equities.DefaultIfEmpty()
 																from fixedIncome in fixedIncomes.DefaultIfEmpty()
-																where direct.Deal.DealName.Contains(directName)
+																where direct.Deal.DealName.StartsWith(directName)
 																orderby direct.Deal.DealName
 																select new AutoCompleteList {
 																	id = direct.DealUnderlyingDirectID,
@@ -464,23 +465,27 @@ namespace DeepBlue.Controllers.Deal {
 
 		public List<AutoCompleteList> FindEquityFixedIncomeIssuers(string issuerName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				string equitySecurityTypeId = ((int)DeepBlue.Models.Deal.Enums.SecurityType.Equity).ToString();
-				string fixedIncomeSecurityTypeId = ((int)DeepBlue.Models.Deal.Enums.SecurityType.FixedIncome).ToString();
+				int equitySecurityTypeId = ((int)DeepBlue.Models.Deal.Enums.SecurityType.Equity);
+				int fixedIncomeSecurityTypeId = ((int)DeepBlue.Models.Deal.Enums.SecurityType.FixedIncome);
 				IQueryable<AutoCompleteList> issuerListQuery = (from equity in context.Equities
-																where equity.Issuer.Name.Contains(issuerName)
+																where equity.Issuer.Name.StartsWith(issuerName)
 																orderby equity.Issuer.Name
 																select new AutoCompleteList {
 																	id = equity.IssuerID,
 																	label = equity.Issuer.Name + ">>Equity>>" + equity.Symbol,
-																	value = equity.Issuer.Name + "||" + equitySecurityTypeId + "||" + SqlFunctions.StringConvert((double)equity.EquityID, 10),
+																	value = equity.Issuer.Name,
+																	otherid = equitySecurityTypeId,
+																	otherid2 = equity.EquityID
 																}).Union(
 																(from fixedIncome in context.FixedIncomes
-																 where fixedIncome.Issuer.Name.Contains(issuerName)
+																 where fixedIncome.Issuer.Name.StartsWith(issuerName)
 																 orderby fixedIncome.Issuer.Name
 																 select new AutoCompleteList {
 																	 id = fixedIncome.IssuerID,
 																	 label = fixedIncome.Issuer.Name + ">>FixedIncome>>" + fixedIncome.Symbol,
-																	 value = fixedIncome.Issuer.Name + "||" + fixedIncomeSecurityTypeId + "||" + SqlFunctions.StringConvert((double)fixedIncome.FixedIncomeID, 10)
+																	 value = fixedIncome.Issuer.Name,
+																	 otherid = fixedIncomeSecurityTypeId,
+																	 otherid2 = fixedIncome.FixedIncomeID
 																 }))
 																.OrderBy(list => list.label);
 				return new PaginatedList<AutoCompleteList>(issuerListQuery, 1, 20);
@@ -584,7 +589,10 @@ namespace DeepBlue.Controllers.Deal {
 																					  .Sum(fund => fund.PostRecordDateCapitalCall),
 															TotalPostRecordDateDistribution = dealClose.Deal.DealUnderlyingFunds
 																					  .Where(fund => fund.DealClosingID == dealClose.DealClosingID)
-																					  .Sum(fund => fund.PostRecordDateDistribution)
+																					  .Sum(fund => fund.PostRecordDateDistribution),
+															TotalFMV = dealClose.Deal.DealUnderlyingDirects
+															.Where(direct => direct.DealClosingID == dealClose.DealClosingID)
+															.Sum(direct => direct.FMV)
 														});
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<DealCloseListModel> paginatedList = new PaginatedList<DealCloseListModel>(query, pageIndex, pageSize);
@@ -746,7 +754,7 @@ namespace DeepBlue.Controllers.Deal {
 		public List<AutoCompleteList> FindUnderlyingFunds(string fundName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.UnderlyingFunds
-															  where fund.FundName.Contains(fundName)
+															  where fund.FundName.StartsWith(fundName)
 															  orderby fund.FundName
 															  select new AutoCompleteList {
 																  id = fund.UnderlyingtFundID,
@@ -872,7 +880,7 @@ namespace DeepBlue.Controllers.Deal {
 				IQueryable<AutoCompleteList> issuerListQuery = (from dealUnderlyingDirect in context.DealUnderlyingDirects
 																join equity in context.Equities on dealUnderlyingDirect.SecurityID equals equity.EquityID
 																where dealUnderlyingDirect.SecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity
-																&& equity.Issuer.Name.Contains(issuerName)
+																&& equity.Issuer.Name.StartsWith(issuerName)
 																&& dealUnderlyingDirect.Deal.FundID == fundId
 																&& dealUnderlyingDirect.Deal.DealUnderlyingFunds.Where(uf => uf.UnderlyingFundID == underlyingFundId).Count() > 0
 																select new AutoCompleteList {
@@ -883,7 +891,7 @@ namespace DeepBlue.Controllers.Deal {
 																}).Union((from dealUnderlyingDirect in context.DealUnderlyingDirects
 																		  join fixedIncome in context.FixedIncomes on dealUnderlyingDirect.SecurityID equals fixedIncome.FixedIncomeID
 																		  where dealUnderlyingDirect.SecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.FixedIncome
-																		  && fixedIncome.Issuer.Name.Contains(issuerName)
+																		  && fixedIncome.Issuer.Name.StartsWith(issuerName)
 																		  && dealUnderlyingDirect.Deal.FundID == fundId
 																		  && dealUnderlyingDirect.Deal.DealUnderlyingFunds.Where(uf => uf.UnderlyingFundID == underlyingFundId).Count() > 0
 																		  select new AutoCompleteList {
@@ -902,12 +910,12 @@ namespace DeepBlue.Controllers.Deal {
 						where deal.FundID == fundId
 						&& deal.DealUnderlyingDirects.Where(direct => direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId).Count() > 0
 						select new StockDistributionLineItemModel {
-							 DealId = deal.DealID,
-							 DealName = deal.DealName,
-							 DealNumber = deal.DealNumber,
-							 FundId = deal.FundID,
-							 NumberOfShares = deal.DealUnderlyingDirects.Where(direct => direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId).Sum(direct => direct.NumberOfShares),
-							 PurchasePrice = deal.DealUnderlyingDirects.Where(direct => direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId).Sum(direct => direct.PurchasePrice)
+							DealId = deal.DealID,
+							DealName = deal.DealName,
+							DealNumber = deal.DealNumber,
+							FundId = deal.FundID,
+							NumberOfShares = deal.DealUnderlyingDirects.Where(direct => direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId).Sum(direct => direct.NumberOfShares),
+							PurchasePrice = deal.DealUnderlyingDirects.Where(direct => direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId).Sum(direct => direct.PurchasePrice)
 						}).ToList();
 			}
 		}
@@ -1591,61 +1599,73 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region Reconcile
-		public List<ReconcileListModel> GetAllReconciles(int pageIndex, int pageSize, DateTime fromDate, DateTime toDate, int underlyingFundId, int fundId, ref int totalRows) {
+		public List<ReconcileReportModel> GetAllReconciles(DateTime startDate, DateTime endDate, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				var reconciles = (from capitalCall in context.UnderlyingFundCapitalCalls
-								  where capitalCall.ReceivedDate >= EntityFunctions.TruncateTime(fromDate) && capitalCall.ReceivedDate <= EntityFunctions.TruncateTime(toDate)
-								  && (fundId > 0 ? capitalCall.FundID == fundId : capitalCall.FundID > 0)
-								  select new ReconcileListModel {
-									  EventType = 1,
-									  CapitalCallAmount = capitalCall.Amount,
-									  FundName = capitalCall.Fund.FundName,
-									  PaymentOrReceivedDate = capitalCall.ReceivedDate,
-									  UnderlyingFundName = capitalCall.UnderlyingFund.FundName,
-									  DistributionAmount = 0,
-									  PaidOnOrReceivedOn = false
-								  })
-								.Union(from capitalCall in context.UnderlyingFundCapitalCallLineItems
-									   where capitalCall.CapitalCallDate >= EntityFunctions.TruncateTime(fromDate) && capitalCall.CapitalCallDate <= EntityFunctions.TruncateTime(toDate)
-									   && (fundId > 0 ? capitalCall.Deal.FundID == fundId : capitalCall.Deal.FundID > 0)
-									   && capitalCall.UnderlyingFundCapitalCallID == null
-									   select new ReconcileListModel {
-										   EventType = 2,
-										   CapitalCallAmount = capitalCall.Amount,
-										   FundName = capitalCall.Deal.Fund.FundName,
-										   PaymentOrReceivedDate = capitalCall.CapitalCallDate,
-										   UnderlyingFundName = capitalCall.UnderlyingFund.FundName,
-										   DistributionAmount = 0,
-										   PaidOnOrReceivedOn = false,
+				return (from capitalCall in context.UnderlyingFundCapitalCalls
+						where capitalCall.ReceivedDate >= EntityFunctions.TruncateTime(startDate)
+						&& capitalCall.ReceivedDate <= EntityFunctions.TruncateTime(endDate)
+						&& capitalCall.FundID == fundId
+						&& capitalCall.IsReconciled == false
+						select new ReconcileReportModel {
+							Amount = capitalCall.Amount,
+							IsReconciled = capitalCall.IsReconciled,
+							CounterParty = capitalCall.UnderlyingFund.FundName,
+							FundName = capitalCall.Fund.FundName,
+							PaidOn = capitalCall.PaidON,
+							PaymentDate = capitalCall.ReceivedDate,
+							Type = "Underlying Fund",
+							ReconcileTypeId = (int)ReconcileType.UnderlyingFundCapitalCall,
+							id = capitalCall.UnderlyingFundCapitalCallID
+						})
+						.Union(from cashDistribution in context.UnderlyingFundCashDistributions
+							   where cashDistribution.ReceivedDate >= EntityFunctions.TruncateTime(startDate)
+							   && cashDistribution.ReceivedDate <= EntityFunctions.TruncateTime(endDate)
+							   && cashDistribution.FundID == fundId
+							   && cashDistribution.IsReconciled == false
+							   select new ReconcileReportModel {
+								   Amount = cashDistribution.Amount,
+								   IsReconciled = cashDistribution.IsReconciled,
+								   CounterParty = cashDistribution.UnderlyingFund.FundName,
+								   FundName = cashDistribution.Fund.FundName,
+								   PaidOn = cashDistribution.PaidON,
+								   PaymentDate = cashDistribution.ReceivedDate,
+								   Type = "Underlying Fund",
+								   ReconcileTypeId = (int)ReconcileType.UnderlyingFundCashDistribution,
+								   id = cashDistribution.UnderlyingFundCashDistributionID
+							   })
+								.Union(from investorCapitalCallItem in context.CapitalCallLineItems
+									   where investorCapitalCallItem.CapitalCall.CapitalCallDate >= EntityFunctions.TruncateTime(startDate)
+									   && investorCapitalCallItem.CapitalCall.CapitalCallDate <= EntityFunctions.TruncateTime(endDate)
+									   && investorCapitalCallItem.CapitalCall.FundID == fundId
+									   && investorCapitalCallItem.IsReconciled == false
+									   select new ReconcileReportModel {
+										   Amount = investorCapitalCallItem.CapitalAmountCalled,
+										   IsReconciled = investorCapitalCallItem.IsReconciled,
+										   CounterParty = investorCapitalCallItem.Investor.InvestorName,
+										   FundName = investorCapitalCallItem.CapitalCall.Fund.FundName,
+										   PaidOn = investorCapitalCallItem.PaidON,
+										   PaymentDate = investorCapitalCallItem.CapitalCall.CapitalCallDate,
+										   Type = "Investor",
+										   ReconcileTypeId = (int)ReconcileType.CapitalCall,
+										   id = investorCapitalCallItem.CapitalCallLineItemID
 									   })
-								.Union(from cashDistribution in context.UnderlyingFundCashDistributions
-									   where cashDistribution.ReceivedDate >= EntityFunctions.TruncateTime(fromDate) && cashDistribution.ReceivedDate <= EntityFunctions.TruncateTime(toDate)
-									   && (fundId > 0 ? cashDistribution.FundID == fundId : cashDistribution.FundID > 0)
-									   select new ReconcileListModel {
-										   EventType = 3,
-										   CapitalCallAmount = 0,
-										   FundName = cashDistribution.Fund.FundName,
-										   PaymentOrReceivedDate = cashDistribution.ReceivedDate,
-										   UnderlyingFundName = cashDistribution.UnderlyingFund.FundName,
-										   DistributionAmount = cashDistribution.Amount,
-										   PaidOnOrReceivedOn = false,
+								.Union(from investorCapitalDistributiontem in context.CapitalDistributionLineItems
+									   where investorCapitalDistributiontem.CapitalDistribution.CapitalDistributionDate >= EntityFunctions.TruncateTime(startDate)
+										&& investorCapitalDistributiontem.CapitalDistribution.CapitalDistributionDate <= EntityFunctions.TruncateTime(endDate)
+										&& investorCapitalDistributiontem.CapitalDistribution.FundID == fundId
+										&& investorCapitalDistributiontem.IsReconciled == false
+									   select new ReconcileReportModel {
+										   Amount = investorCapitalDistributiontem.DistributionAmount,
+										   IsReconciled = investorCapitalDistributiontem.IsReconciled,
+										   CounterParty = investorCapitalDistributiontem.Investor.InvestorName,
+										   FundName = investorCapitalDistributiontem.CapitalDistribution.Fund.FundName,
+										   PaidOn = investorCapitalDistributiontem.PaidON,
+										   PaymentDate = investorCapitalDistributiontem.CapitalDistribution.CapitalDistributionDate,
+										   Type = "Investor",
+										   ReconcileTypeId = (int)ReconcileType.CapitalDistribution,
+										   id = investorCapitalDistributiontem.CapitalDistributionLineItemID
 									   })
-								.Union(from cashDistribution in context.CashDistributions
-									   where cashDistribution.DistributionDate >= EntityFunctions.TruncateTime(fromDate) && cashDistribution.DistributionDate <= EntityFunctions.TruncateTime(toDate)
-									   && (fundId > 0 ? cashDistribution.Deal.FundID == fundId : cashDistribution.Deal.FundID > 0)
-									   && cashDistribution.UnderluingFundCashDistributionID == null
-									   select new ReconcileListModel {
-										   EventType = 4,
-										   CapitalCallAmount = 0,
-										   FundName = cashDistribution.Deal.Fund.FundName,
-										   PaymentOrReceivedDate = cashDistribution.DistributionDate,
-										   UnderlyingFundName = cashDistribution.UnderlyingFund.FundName,
-										   DistributionAmount = cashDistribution.Amount,
-										   PaidOnOrReceivedOn = false
-									   });
-				PaginatedList<ReconcileListModel> paginatedList = new PaginatedList<ReconcileListModel>(reconciles.OrderByDescending(re => re.PaymentOrReceivedDate), pageIndex, pageSize);
-				totalRows = paginatedList.TotalCount;
-				return paginatedList.ToList();
+								.ToList();
 			}
 		}
 		#endregion
@@ -1746,11 +1766,11 @@ namespace DeepBlue.Controllers.Deal {
 				return context.Issuers.Where(issuer => issuer.IssuerID == issuerId).SingleOrDefault();
 			}
 		}
-		
+
 		public List<AutoCompleteList> FindIssuers(string issuerName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> issuerListQuery = (from issuer in context.Issuers
-																where issuer.Name.Contains(issuerName)
+																where issuer.Name.StartsWith(issuerName)
 																orderby issuer.Name
 																select new AutoCompleteList {
 																	id = issuer.IssuerID,
@@ -1844,7 +1864,7 @@ namespace DeepBlue.Controllers.Deal {
 		public List<AutoCompleteList> FindEquityDirects(string issuerName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from equity in context.Equities
-						where equity.Issuer.Name.Contains(issuerName)
+						where equity.Issuer.Name.StartsWith(issuerName)
 						orderby equity.Issuer.Name
 						select new AutoCompleteList {
 							id = equity.EquityID,
@@ -1899,7 +1919,7 @@ namespace DeepBlue.Controllers.Deal {
 		public List<AutoCompleteList> FindFixedIncomeDirects(string issuerName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from fixedIncome in context.FixedIncomes
-						where fixedIncome.Issuer.Name.Contains(issuerName)
+						where fixedIncome.Issuer.Name.StartsWith(issuerName)
 						orderby fixedIncome.Issuer.Name
 						select new AutoCompleteList {
 							id = fixedIncome.FixedIncomeID,
@@ -1932,6 +1952,6 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#endregion
-
+		 
 	}
 }

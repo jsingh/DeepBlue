@@ -10,10 +10,10 @@
 		<%: Html.TextBox("FaceValue", "${FaceValue}", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
-		<%: Html.LabelFor(model => model.ISINO) %>
+		<%: Html.LabelFor(model => model.FixedIncomeISINO) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("ISINO", "${ISINO}") %>
+		<%: Html.TextBox("FixedIncomeISINO", "${FixedIncomeISINO}")%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.LabelFor(model => model.Maturity) %>
@@ -34,10 +34,10 @@
 		<%: Html.TextBox("CouponInformation", "${CouponInformation}")%>
 	</div>
 	<div class="editor-label" style="clear: right">
-		<%: Html.LabelFor(model => model.CurrencyId) %>
+		<%: Html.LabelFor(model => model.FixedIncomeCurrencyId) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.DropDownList("FI_CurrencyId", Model.Currencies, new { @val = "${CurrencyId}" })%>
+		<%: Html.DropDownList("FixedIncomeCurrencyId", Model.Currencies, new { @val = "${FixedIncomeCurrencyId}" })%>
 	</div>
 	<div class="editor-label">
 		<%: Html.LabelFor(model => model.Frequency) %>
@@ -64,18 +64,35 @@
 		<%: Html.DropDownList("FixedIncomeTypeId", Model.FixedIncomeTypes, new { @val = "${FixedIncomeTypeId}" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
-		<%: Html.LabelFor(model => model.IndustryId) %>
+		<%: Html.LabelFor(model => model.FixedIncomeIndustryId) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("FI_Industry", "${Industry}", new { @id = "FI_Industry", @style = "width:157px;" })%>
-		<%: Html.Hidden("FI_IndustryId", "${IndustryId}")%>
+		<%: Html.TextBox("FixedIncomeIndustry", "${FixedIncomeIndustry}", new { @id = "FixedIncomeIndustry", @style = "width:157px;" })%>
+		<%: Html.Hidden("FixedIncomeIndustryId", "${FixedIncomeIndustryId}")%>
 	</div>
 	<div class="editor-label" style="clear: right">
-		<%: Html.LabelFor(model => model.Symbol) %>
+		<%: Html.LabelFor(model => model.FixedIncomeSymbol) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("FI_Symbol", "${Symbol}")%>
+		<%: Html.TextBox("FixedIncomeSymbol", "${FixedIncomeSymbol}")%>
 	</div>
+	<div id="LinkRow" style="display: none; width: auto;" class="editor-field">
+		<%: Html.TextBox("FixedIncomeFilePath")%>
+	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.FixedIncomeComments) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.TextArea("FixedIncomeComments","${FixedIncomeComments}", 5, 50, new { })%>
+	</div>
+	<%: Html.Hidden("FixedIncomeId","${FixedIncomeId}")%>
+</div>
+<div class="line">
+</div>
+<br />
+<div class="line">
+</div>
+<div id="fidocument">
 	<div class="editor-label">
 		<%: Html.Label("Document Type") %>
 	</div>
@@ -86,7 +103,7 @@
 		<%: Html.Label("Document Date") %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("FixedIncomeDocumentDate", "", new { @class = "datefield", @id = "FixedIncomeDocumentDate" })%>
+		<%: Html.TextBox("FixedIncomeDocumentDate", "${FixedIncomeDocumentDate}", new { @class = "datefield", @id = "FixedIncomeDocumentDate" })%>
 	</div>
 	<div class="editor-label">
 		<%: Html.DropDownList("FixedIncomeUploadTypeId", Model.UploadTypes, new { @style = "width:80px", @onchange = "javascript:dealDirect.changeUploadType(this,'fixincomediv');" })%>
@@ -100,10 +117,6 @@
 			<%: Html.Span("", new { @id = "SpnFixedIncomeDocLoading" })%>
 		</div>
 	</div>
-	<div id="LinkRow" style="display: none; width: auto;" class="editor-field">
-		<%: Html.TextBox("FixedIncomeFilePath")%>
-	</div>
-	<%: Html.Hidden("FixedIncomeId","${FixedIncomeId}")%>
 </div>
 <div class="line">
 </div>

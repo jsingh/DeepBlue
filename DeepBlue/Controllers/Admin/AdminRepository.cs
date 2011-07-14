@@ -1020,7 +1020,7 @@ namespace DeepBlue.Controllers.Admin {
 		public List<AutoCompleteList> FindIndustrys(string industryName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> industryListQuery = (from industry in context.Industries
-																 where industry.Industry1.Contains(industryName)
+																 where industry.Industry1.StartsWith(industryName)
 																  orderby industry.Industry1
 																 select new AutoCompleteList {
 																	 id = industry.IndustryID,
@@ -1219,7 +1219,7 @@ namespace DeepBlue.Controllers.Admin {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<Models.Entity.Currency> query = (from currency in context.Currencies
 															select currency);
-				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				query = query.OrderBy("CurrencyID", (sortOrder == "asc"));
 				PaginatedList<Models.Entity.Currency> paginatedList = new PaginatedList<Models.Entity.Currency>(query, pageIndex, pageSize);
 				totalRows = paginatedList.TotalCount;
 				return paginatedList;
@@ -1462,7 +1462,7 @@ namespace DeepBlue.Controllers.Admin {
 		public List<AutoCompleteList> FindCountrys(string countryName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> countryListQuery = (from country in context.COUNTRies
-																 where country.CountryName.Contains(countryName)
+																 where country.CountryName.StartsWith(countryName)
 																 orderby country.CountryName
 																 select new AutoCompleteList {
 																	 id = country.CountryID,

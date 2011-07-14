@@ -94,4 +94,35 @@
 		Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
 		return this.showErrorMessage(frm);
 	}
+	,save: function (frm) {
+		try {
+			var loading=$("#SpnDocLoading");
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			$.ajaxFileUpload(
+				{
+					url: '/Document/Create',
+					secureuri: false,
+					formId: 'AddNewDocument',
+					dataType: 'json',
+					success: function (data,status) {
+						loading.empty();
+						if($.trim(data.data)!="") {
+							alert(data.data);
+						} else {
+							alert("Document Saved");
+							jHelper.resetFields($("#AddNewDocument"));
+							$("#FundId").val(0);
+							$("#InvestorId").val(0);
+						}
+					}
+					,error: function (data,status,e) {
+						loading.empty();
+						alert(data.msg+","+status+","+e);
+					}
+				});
+		} catch(e) {
+			alert(e);
+		}
+		return false;
+	}
 }

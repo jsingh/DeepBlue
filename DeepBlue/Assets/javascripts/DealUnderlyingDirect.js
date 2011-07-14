@@ -22,6 +22,7 @@
 	jHelper.applyDatePicker(tr);
 	deal.setIndex($("#tblUnderlyingDirect"));
 	deal.applyUDAutocomplete(tr);
+	jHelper.setUpToolTip(tr);
 	$("#MakeNewDUDirect").hide();
 	$("tr:odd","#tbodyUnderlyingDirect").removeClass("row").removeClass("arow").addClass("arow");
 	$("tr:even","#tbodyUnderlyingDirect").removeClass("row").removeClass("arow").addClass("row");
@@ -68,11 +69,9 @@ deal.applyUDAutocomplete=function (tr) {
 	})
 	.autocomplete({ source: "/Deal/FindEquityFixedIncomeIssuers",minLength: 1,
 		select: function (event,ui) {
-			var arr=ui.item.value.split("||");
 			issuerId.val(ui.item.id);
-			setTimeout(function () { issuer.val($.trim(arr[0])); },100);
-			securityTypeId.val($.trim(arr[1]));
-			securityId.val($.trim(arr[2]));
+			securityTypeId.val(ui.item.otherid);
+			securityId.val(ui.item.otherid2);
 			deal.loadPurchasePrice(tr);
 		},
 		appendTo: "#content",delay: 300

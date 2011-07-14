@@ -8,7 +8,7 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(UnderlyingFundNAVMD))]
 	public partial class UnderlyingFundNAV {
-		public class UnderlyingFundNAVMD {
+		public class UnderlyingFundNAVMD : CreatedByFields {
 			#region Primitive Properties
 			[Required(ErrorMessage = "Fund is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]

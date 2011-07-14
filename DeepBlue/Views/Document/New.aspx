@@ -6,6 +6,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.StylesheetLinkTag("document.css")%>
+	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
 	<%=Html.JavascriptInclueTag("DocumentUpload.js")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
@@ -22,8 +23,7 @@
 		</div>
 	</div>
 	<div class="doc-upload">
-		<% Html.EnableClientValidation(); %>
-		<% using (Html.BeginForm("Create", "Document", FormMethod.Post, new { @id = "AddNewDocument", @enctype = "multipart/form-data" })) {%>
+		<% using (Html.Form(new { @id = "AddNewDocument", @onsubmit = "return documentUpload.save(this);", @enctype = "multipart/form-data" })) {%>
 		<%: Html.HiddenFor(model => model.InvestorId)%>
 		<%: Html.HiddenFor(model => model.FundId)%>
 		<div class="editor-label">
@@ -45,11 +45,11 @@
 		</div>
 		<div class="editor-field">
 			<div id="InvestorRow">
-				<%: Html.TextBoxFor(model => model.InvestorName, new { @onblur = "javascript:documentUpload.InvestorBlur(this);", @style = "width:155px" })%>
+				<%: Html.TextBoxFor(model => model.InvestorName, new { @onblur = "javascript:documentUpload.InvestorBlur(this);", @style = "width:164px" })%>
 				<%: Html.ValidationMessageFor(model => model.InvestorId) %>
 			</div>
 			<div id="FundRow" style="display: none">
-				<%: Html.TextBoxFor(model => model.FundName, new { @onblur = "javascript:documentUpload.FundBlur(this);" })%>
+				<%: Html.TextBoxFor(model => model.FundName, new { @onblur = "javascript:documentUpload.FundBlur(this);", @style = "width:164px" })%>
 				<%: Html.ValidationMessageFor(model => model.FundId) %>
 			</div>
 		</div>
@@ -57,7 +57,7 @@
 			<%: Html.DropDownListFor(model => model.UploadType,Model.UploadTypes, new { @onchange = "javascript:documentUpload.changeUploadType(this);" })%>
 		</div>
 		<div id="FileRow" class="editor-field">
-			<%: Html.File("File", new { @id = "File" })%>
+			<%: Html.File("File", new { @id = "File", @multiple="multiple" })%>
 			<%: Html.ValidationMessageFor(model => model.File)%>
 		</div>
 		<div id="LinkRow" style="display: none" class="editor-field">
@@ -68,9 +68,12 @@
 			<%: Html.ValidationMessageFor(model => model.ModelErrorMessage)%>
 			<%: Html.Span("",new { id = "UpdateLoading" })%>
 		</div>
-		<div class="editor-button" style="width: 165px">
+		<div class="editor-button" style="width: auto">
 			<div style="float: left; padding: 0 0 10px 50px;">
-				<%: Html.ImageButton("Save.png", new { @class="default-button", onclick = "return documentUpload.onSubmit('AddNewDocument');" })%>
+				<%: Html.ImageButton("Save.png", new { @class="default-button" })%>
+			</div>
+			<div style="float: left; padding: 0;">
+				<%: Html.Span("", new { @id = "SpnDocLoading" })%>
 			</div>
 		</div>
 	</div>

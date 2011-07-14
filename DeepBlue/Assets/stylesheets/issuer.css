@@ -31,7 +31,7 @@ body {
 .expandbtn {
 	cursor: pointer;
 }
-.grid input, .grid select {
+.grid input[type='text'], .grid select {
 	width: 94%;
 }
 

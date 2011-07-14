@@ -13,6 +13,7 @@
 	jHelper.formatDateHtml(tr);
 	deal.selectValue(tr);
 	jHelper.applyDatePicker(tr);
+	jHelper.setUpToolTip(tr);
 	deal.setIndex($("#tblUnderlyingFund"));
 	$("#MakeNewDUFund").hide();
 	deal.applyUFAutocomplete(tr);

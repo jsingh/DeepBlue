@@ -839,3 +839,14 @@ input.ui-autocomplete-loading[type="text"] {
 .cname {
 	float: left;
 }
+.tooltip {
+	    background-color: #F2F2A4;
+    border: 1px solid #AB9C9C;
+    color: Black;
+    display: none;
+    font-size: 11px;
+    min-width: 100px;
+    padding: 5px;
+    position: absolute;
+    white-space: nowrap;
+}

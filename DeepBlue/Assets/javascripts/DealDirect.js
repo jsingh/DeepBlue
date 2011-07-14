@@ -28,18 +28,18 @@
 				$("#CountryId","#frmIssuer").val(ui.item.id);
 			},appendTo: "body",delay: 300
 		});
-		$("#EQ_Industry","#frmIssuer")
-		.blur(function () { if($.trim(this.value)=="") { $("#EQ_IndustryId","#frmIssuer").val(0); } })
+		$("#EquityIndustry","#frmIssuer")
+		.blur(function () { if($.trim(this.value)=="") { $("#EquityIndustryId","#frmIssuer").val(0); } })
 		.autocomplete({ source: "/Admin/FindIndustrys",minLength: 1
 			,select: function (event,ui) {
-				$("#EQ_IndustryId","#frmIssuer").val(ui.item.id);
+				$("#EquityIndustryId","#frmIssuer").val(ui.item.id);
 			},appendTo: "body",delay: 300
 		});
-		$("#FI_Industry","#frmIssuer")
-		.blur(function () { if($.trim(this.value)=="") { $("#FI_IndustryId","#frmIssuer").val(0); } })
+		$("#FixedIncomeIndustry","#frmIssuer")
+		.blur(function () { if($.trim(this.value)=="") { $("#FixedIncomeIndustryId","#frmIssuer").val(0); } })
 		.autocomplete({ source: "/Admin/FindIndustrys",minLength: 1
 			,select: function (event,ui) {
-				$("#FI_IndustryId","#frmIssuer").val(ui.item.id);
+				$("#FixedIncomeIndustryId","#frmIssuer").val(ui.item.id);
 			},appendTo: "body",delay: 300
 		});
 		$(".datefield","#DirectMain").each(function () {
@@ -109,7 +109,7 @@
 		var addIssuer=$("#AddNewIssuer");
 		addIssuer.show();
 		var newIssuerDetail=$("#NewIssuerDetail");newIssuerDetail.empty();
-		var data={ "IssuerId": 0,"CountryId": 0 };
+		var data={ "IssuerId": 0,"CountryId": 225,"Country": "United States" };
 		data.IsUnderlyingFundModel=dealDirect.isUnderlyingFundModel;
 		$("#IssuerDetailTemplate").tmpl(data).appendTo(newIssuerDetail);
 		dealDirect.setUpNewIssuer();
@@ -136,6 +136,9 @@
 			jHelper.checkValAttr(eqDetail);
 			jHelper.checkValAttr(fixedIncome);
 			jHelper.formatDateTxt(fixedIncome);
+			jHelper.formatDateTxt(eqDetail);
+			jHelper.trimTextArea(fixedIncome);
+			jHelper.trimTextArea(eqDetail);
 			dealDirect.setUpIssuer();
 			$("#tblExistingEquity").flexigrid({ usepager: true
 			,url: "/Deal/DirectEquityList"
@@ -185,6 +188,9 @@
 			FileRow.style.display="";
 		else
 			LinkRow.style.display="";
+	}
+	,copyName: function (txt) {
+		$("#ParentName").val(txt.value);
 	}
 }
 
