@@ -25,15 +25,20 @@
 				cache: false,
 				success: function (data) {
 					loading.empty();
-					var item={
-						UFCCItems: function () { return { Items: dealReconcile.findJSON(data.Results,1)} }
+					if($.trim(data.Error)!="") {
+						alert(data.Error);
+					}
+					if(data.Results!=null) {
+						var item={
+							UFCCItems: function () { return { Items: dealReconcile.findJSON(data.Results,1)} }
 						,UFCDItems: function () { return { Items: dealReconcile.findJSON(data.Results,2)} }
 						,CCItems: function () { return { Items: dealReconcile.findJSON(data.Results,3)} }
 						,CDItems: function () { return { Items: dealReconcile.findJSON(data.Results,4)} }
-					};
-					$("#ReconcileReportTemplate").tmpl(item).appendTo(target);
-					jHelper.applyDatePicker(target);
-					dealReconcile.expand();
+						};
+						$("#ReconcileReportTemplate").tmpl(item).appendTo(target);
+						jHelper.applyDatePicker(target);
+						dealReconcile.expand();
+					}
 				},
 				error: function (data) { try { if(p.onError) { p.onError(data); } } catch(e) { } }
 			});

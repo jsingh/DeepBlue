@@ -693,8 +693,8 @@
 							</div>
 							<div style="float: left">
 								<%using (Html.Form(new { @id = "frmReconcile", @onsubmit = "return dealReconcile.submit();" })) { %>
-								<%: Html.TextBox("StartDate", "START DATE", new { @id = "ReconStartDate", @class = "wm", @style = "width:100px" })%>&nbsp;&nbsp;
-								<%: Html.TextBox("EndDate", "END DATE", new { @id = "ReconEndDate", @class = "wm", @style = "width:100px" })%>&nbsp;&nbsp;
+								<%: Html.TextBox("StartDate", "START DATE", new { @id = "ReconStartDate",  @style = "width:100px" })%>&nbsp;&nbsp;
+								<%: Html.TextBox("EndDate", "END DATE", new { @id = "ReconEndDate",   @style = "width:100px" })%>&nbsp;&nbsp;
 								<%: Html.TextBox("ReconcileFundName", "SEARCH FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:200px" })%>
 								<%: Html.Hidden("FundId","", new { @id = "ReconcileFundId" })%>
 								<%}%>
@@ -771,8 +771,8 @@
 	<%=Html.jQueryDatePicker("FE_Date")%>
 	<%=Html.jQueryDatePicker("SplitDate")%>
 	<%=Html.jQueryDatePicker("ConversionDate")%>
-	<%=Html.jQueryDatePicker("ReconStartDate")%>
-	<%=Html.jQueryDatePicker("ReconEndDate")%>
+	<%=Html.jQueryDatePicker("ReconStartDate", new DatePickerOptions { OnSelect = "dealReconcile.submit" })%>
+	<%=Html.jQueryDatePicker("ReconEndDate", new DatePickerOptions { OnSelect = "dealReconcile.submit" })%>
 	<script type="text/javascript">dealActivity.init();dealActivity.newFLEData=<%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.FundExpenseModel())%>;</script>
 	<script id="CashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("UnderlyingFundCashDistribution", Model.UnderlyingFundCashDistributionModel); %>
