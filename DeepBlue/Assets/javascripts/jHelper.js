@@ -54,6 +54,11 @@
 		$(t).val(Num).formatCurrency();
 		return $(t).val();
 	}
+	,numberFormat: function (Num) {
+		var t=document.createElement("input");t.type="text";
+		$(t).val(Num).formatCurrency({ "roundToDecimalPlace": 0 });
+		return $(t).val().replace("$","");
+	}
 	,serialize: function (target) {
 		var param=[];
 		$(":input",target).each(function () {

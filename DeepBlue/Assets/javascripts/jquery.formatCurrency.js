@@ -1,4 +1,3 @@
-
 (function($){$.formatCurrency={};$.formatCurrency.regions=[];$.formatCurrency.regions['']={symbol:'$',positiveFormat:'%s%n',negativeFormat:'(%s%n)',decimalSymbol:'.',digitGroupSymbol:',',groupDigits:true};$.fn.formatCurrency=function(destination,settings){if(arguments.length==1&&typeof destination!=="string"){settings=destination;destination=false;}
 var defaults={name:"formatCurrency",colorize:false,region:'',global:true,checkZero:true,roundToDecimalPlace:2,eventOnDecimalsEntered:false};defaults=$.extend(defaults,$.formatCurrency.regions['']);settings=$.extend(defaults,settings);if(settings.region.length>0){settings=$.extend(settings,getRegionOrCulture(settings.region));}
 settings.regex=generateRegex(settings);return this.each(function(){$this=$(this);var num='0';num=$this[$this.is('input, select, textarea')?'val':'html']();if(num.search('\\(')>=0){num='-'+num;}
