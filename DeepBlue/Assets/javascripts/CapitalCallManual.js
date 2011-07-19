@@ -1,33 +1,5 @@
 ﻿var manualCapitalCall={
-	init: function () {
-		$(document).ready(function () {
-			/*	setTimeout(function () {
-			$("#CCDetail").hide();
-			$("#InvestorDetail").hide();
-			},200); */
-			$("#Investor").focus(function () {
-				this.value="";
-			});
-		});
-	}
-	,selectFund: function (id) {
-		$("#SpnLoading").show();
-		var dt=new Date();
-		var url="/CapitalCall/FundDetail?id="+id+"&t="+dt.getTime();
-		$("#lnkPCC").attr("href","#");
-		$.getJSON(url,function (data) {
-			$("#lnkPCC").attr("href","/CapitalCall/List/"+id);
-			$("#SpnLoading").hide();
-			$("#CCDetail").show();
-			$("#FundId").val(data.FundId);
-			$("#TitleFundName").html(data.FundName);
-			$("#CommittedAmount").html(data.TotalCommitment);
-			$("#UnfundedAmount").html(data.UnfundedAmount);
-			$("#CapitalCallNumber").val(data.CapitalCallNumber);
-			$("#SpnCapitalCallNumber").html(data.CapitalCallNumber);
-		});
-	}
-	,calcCCA: function () {
+	calcCCA: function () {
 		this.calc("txtCapitalAmountCalled","CapitalAmountCalled","SpnCapitalAmountCalled");
 	}
 	,calcMFIAmt: function () {
@@ -76,8 +48,9 @@
 			this.calcCCA();this.calcMFIAmt();this.calcIAI();this.calcMF();this.calcFE();
 		}
 	}
-	,save: function (frm) {
+	,save: function (frmid) {
 		try {
+			var frm=$("#"+frmid);
 			var loading=$("#ManualUpdateLoading");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 			var param=$(frm).serializeArray();

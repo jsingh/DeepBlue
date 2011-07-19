@@ -1,6 +1,7 @@
 ﻿var capitalCall={
 	init: function () {
 		$(document).ready(function () {
+			jHelper.waterMark();
 			$("#TierDetailMain").dialog({
 				title: "Rate Schedule Detail",
 				autoOpen: false,
@@ -25,27 +26,11 @@
 			$("#CCDetail").show();
 			$("#FundId").val(data.FundId);
 			$("#TitleFundName").html(data.FundName);
-			$("#CommittedAmount").html(data.TotalCommitment);
-			$("#UnfundedAmount").html(data.UnfundedAmount);
+			$("#CommittedAmount").html(jHelper.dollarAmount(data.TotalCommitment));
+			$("#UnfundedAmount").html(jHelper.dollarAmount(data.UnfundedAmount));
 			$("#CapitalCallNumber").val(data.CapitalCallNumber);
+			$("#SpnCapitalCallNumber").html(data.CapitalCallNumber);
 		});
-	}
-	,onSubmit: function (formId) {
-		var frm=document.getElementById(formId);
-		var message='';
-		Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
-		$(".field-validation-error",frm).each(function () {
-			if(this.innerHTML!='') {
-				message+=this.innerHTML+"\n";
-			}
-		});
-		if(message!="") {
-			alert(message);
-			return false;
-		} else {
-			return true;
-		}
-		return true;
 	}
 	,selectMFee: function (chk) {
 		if(chk.checked)
@@ -62,6 +47,7 @@
 	,changeFromDate: function () {
 		var fromDate=$("#FromDate").val();
 		var toDate=$("#ToDate").val();
+		this.resetManFee();
 		if(fromDate!=""&&toDate!="") {
 			var diff=Date.DateDiff("d",fromDate,toDate);
 			if(diff<=0) {
@@ -74,6 +60,7 @@
 	,changeToDate: function () {
 		var fromDate=$("#FromDate").val();
 		var toDate=$("#ToDate").val();
+		this.resetManFee();
 		if(fromDate!=""&&toDate!="") {
 			var diff=Date.DateDiff("d",fromDate,toDate);
 			if(diff<=0) {
@@ -84,7 +71,14 @@
 			}
 		}
 	}
+	,resetManFee: function () {
+		$("#SpnMFA","#CapitalCall").html("");
+		$("#SpnDetail","#CapitalCall").show();
+		$("#ManagementFees","#CapitalCall").val(0);
+		capitalCall.calcExistingInvestmentAmount();
+	}
 	,calcManFee: function () {
+		this.resetManFee();
 		var fundId=$("#FundId").val();
 		var fromDate=$("#FromDate").val();
 		var toDate=$("#ToDate").val();
@@ -93,39 +87,82 @@
 		//var endDate=$.datepicker.formatDate('mm/dd/yy',Date.DateAdd("m",3,fromDate));
 		var dt=new Date();
 		var url="/CapitalCall/CalculateManagementFee/?fundId="+fundId+"&startDate="+fromDate+"&endDate="+toDate+"&t="+dt.getTime();
-		$("#SpnMFA").html("<img src='/Assets/images/ajax.jpg'>&nbsp;Calculating...")
-		$("#SpnDetail").hide();
+		$("#SpnMFA","#CapitalCall").html("<img src='/Assets/images/ajax.jpg'>&nbsp;Calculating...")
+		$("#SpnDetail","#CapitalCall").hide();
 		$.getJSON(url,function (data) {
-			$("#SpnMFA").html("$"+data.ManagementFee.toFixed(2));
-			$("#SpnDetail").show();
-			$("#ManagementFees").val(data.ManagementFee.toFixed(2));
+			$("#SpnMFA","#CapitalCall").html(jHelper.dollarAmount(data.ManagementFee));
+			$("#SpnDetail","#CapitalCall").show();
+			$("#ManagementFees","#CapitalCall").val(data.ManagementFee.toFixed(2));
 			$("#TierDetail").flexAddData(data.Tiers);
+			capitalCall.calcExistingInvestmentAmount();
 		});
 	}
 	,showDetail: function (img) {
 		$("#TierDetailMain").dialog("open");
 	}
-	,onCreateCapitalCallBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-	}
-	,onCreateCapitalCallSuccess: function () {
-		$("#UpdateLoading").html("");
-		var UpdateTargetId=$("#UpdateTargetId");
-		if(jQuery.trim(UpdateTargetId.html())!="") {
-			alert(UpdateTargetId.html())
-		} else {
-			location.href="/CapitalCall/New";
-		}
-	}
 	,calcExistingInvestmentAmount: function () {
-		var newInvestmentAmount=parseFloat($("#NewInvestmentAmount").val());
-		var capitalAmountCalled=parseFloat($("#CapitalAmountCalled").val());
+		var newInvestmentAmount=parseFloat($("#NewInvestmentAmount","#CapitalCall").val());
+		var capitalAmountCalled=parseFloat($("#CapitalAmountCalled","#CapitalCall").val());
 		if(isNaN(newInvestmentAmount)) { newInvestmentAmount=0; }
 		if(isNaN(capitalAmountCalled)) { capitalAmountCalled=0; }
-		var existingInvAmount=(capitalAmountCalled-newInvestmentAmount);
+		var fundExpenseAmount=parseFloat($("#FundExpenseAmount","#CapitalCall").val());
+		if(isNaN(fundExpenseAmount)) { fundExpenseAmount=0; }
+		var fundExpenseAmount=parseFloat($("#FundExpenseAmount","#CapitalCall").val());
+		if(isNaN(fundExpenseAmount)) { fundExpenseAmount=0; }
+		var managementFees=parseFloat($("#ManagementFees","#CapitalCall").val());
+		if(isNaN(managementFees)) { managementFees=0; }
+		var existingInvAmount=((capitalAmountCalled-fundExpenseAmount-managementFees)-newInvestmentAmount);
 		if(existingInvAmount<=0) { existingInvAmount=0; }
-		$("#ExistingInvestmentAmount").val(existingInvAmount);
-		$("#SpnExistingInvestmentAmount").html(jHelper.dollarAmount(existingInvAmount.toString()));
+		$("#ExistingInvestmentAmount","#CapitalCall").val(existingInvAmount);
+		$("#SpnExistingInvestmentAmount","#CapitalCall").html(jHelper.dollarAmount(existingInvAmount.toString()));
 	}
-
+	,selectTab: function (type,lnk) {
+		var CC=$("#NewCapitalCall");
+		var MCC=$("#NewManualCapitalCall");
+		$("#NewCCTab").removeClass("select");
+		$("#ManCCTab").removeClass("select");
+		CC.hide();MCC.hide();
+		$(lnk).addClass("select");
+		switch(type) {
+			case "C": CC.show();break;
+			case "M": MCC.show();break;
+		}
+	}
+	,save: function (frmid) {
+		try {
+			var frm=$("#"+frmid);
+			var loading=$("#UpdateLoading");
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			var param=$(frm).serializeArray();
+			param[param.length]={ name: "FundId",value: $("#FundId").val() };
+			param[param.length]={ name: "CapitalCallNumber",value: $("#CapitalCallNumber").val() };
+			$.post("/CapitalCall/Create",param,function (data) {
+				loading.empty();
+				var arr=data.split("||");
+				if($.trim(arr[0])!="True") {
+					alert(data);
+				} else {
+					alert("Capital Call Saved.");
+					$("#SpnCapitalCallNumber").html(arr[1]);
+					$("#CapitalCallNumber").val(arr[1]);
+					$("#SpnMFA").html("");
+					$("#SpnExistingInvestmentAmount").html("");
+					var chkmfee=$("#AddManagementFees").get(0);
+					if(chkmfee) {
+						chkmfee.checked=false;
+						capitalCall.selectMFee(chkmfee);
+					}
+					var chkae=$("#AddFundExpenses").get(0);
+					if(chkae) {
+						chkae.checked=false;
+						capitalCall.selectFundExp(chkae);
+					}
+					jHelper.resetFields(frm);
+				}
+			});
+		} catch(e) {
+			alert(e);
+		}
+		return false;
+	}
 }

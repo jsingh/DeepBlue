@@ -9,6 +9,7 @@ using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
 using DeepBlue.Controllers.Investor;
 using System.Text;
+using DeepBlue.Models.CapitalCall.Enums;
 
 namespace DeepBlue.Controllers.CapitalCall {
 	public class CapitalCallController : Controller {
@@ -35,8 +36,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 		// GET: /CapitalCall/New
 		public ActionResult New() {
 			ViewData["MenuName"] = "Fund Tracker";
-			ViewData["SubmenuName"] = "Capital Call";
-			ViewData["PageName"] = "New Capital Call";
+			ViewData["SubmenuName"] = "CapitalCall";
+			ViewData["PageName"] = "CapitalCall";
 			return View();
 		}
 
@@ -44,15 +45,19 @@ namespace DeepBlue.Controllers.CapitalCall {
 		// POST: /CapitalCall/Create
 		[HttpPost]
 		public ActionResult Create(FormCollection collection) {
-			CreateReqularModel model = new CreateReqularModel();
+			CreateCapitalCallModel model = new CreateCapitalCallModel();
 			ResultModel resultModel = new ResultModel();
-			this.TryUpdateModel(model);
+			this.TryUpdateModel(model, collection);
+			if ((model.NewInvestmentAmount ?? 0) <= 0) {
+				ModelState.AddModelError("NewInvestmentAmount", "New Investment Amount is required");
+			}
 			if (ModelState.IsValid) {
 
 				// Attempt to create capital call.
 
 				Models.Entity.CapitalCall capitalCall = new Models.Entity.CapitalCall();
 				CapitalCallLineItem item;
+
 				capitalCall.CapitalAmountCalled = model.CapitalAmountCalled;
 				capitalCall.CapitalCallDate = model.CapitalCallDate;
 				capitalCall.CapitalCallDueDate = model.CapitalCallDueDate;
@@ -67,10 +72,10 @@ namespace DeepBlue.Controllers.CapitalCall {
 				capitalCall.FundID = model.FundId;
 				capitalCall.FundExpenses = 0;
 				capitalCall.ManagementFees = 0;
-				capitalCall.CapitalCallNumber = model.CapitalCallNumber;
+				capitalCall.CapitalCallNumber = Convert.ToString(CapitalCallRepository.FindCapitalCallNumber(model.FundId));
 				capitalCall.InvestmentAmount = (capitalCall.NewInvestmentAmount ?? 0) + (capitalCall.ExistingInvestmentAmount ?? 0);
 				capitalCall.InvestedAmountInterest = 0;
-				if (model.AddFundExpenses) {
+				if ((model.AddFundExpenses ?? false)) {
 					capitalCall.FundExpenses = model.FundExpenseAmount ?? 0;
 				}
 				List<InvestorFund> investorFunds = CapitalCallRepository.GetAllInvestorFunds(capitalCall.FundID);
@@ -83,7 +88,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 					// Calculate managing total commitment.
 					decimal totalCommitment = nonManagingMemberTotalCommitment + managingMemberTotalCommitment;
 
-					if (model.AddManagementFees) {
+					if ((model.AddManagementFees ?? false)) {
 						capitalCall.ManagementFeeStartDate = model.FromDate;
 						capitalCall.ManagementFeeEndDate = model.ToDate;
 						capitalCall.ManagementFees = model.ManagementFees ?? 0;
@@ -131,6 +136,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 								resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 							}
 						}
+						if (string.IsNullOrEmpty(resultModel.Result)) {
+							resultModel.Result += "True||" + (CapitalCallRepository.FindCapitalCallNumber(model.FundId));
+						}
 					}
 				}
 			}
@@ -151,46 +159,37 @@ namespace DeepBlue.Controllers.CapitalCall {
 		#region Manual Capital Call
 
 		//
-		// GET: /CapitalCall/NewManualCapitalCall
-		public ActionResult NewManualCapitalCall() {
-			ViewData["MenuName"] = "Fund Tracker";
-			ViewData["SubmenuName"] = "Capital Call";
-			ViewData["PageName"] = "New Manual Capital Call";
-			return View();
-		}
-
-		//
 		// POST: /CapitalCall/CreateManualCapitalCall
 		[HttpPost]
 		public ActionResult CreateManualCapitalCall(FormCollection collection) {
-			CreateManualModel model = new CreateManualModel();
+			CreateCapitalCallModel model = new CreateCapitalCallModel();
 			ResultModel resultModel = new ResultModel();
 			List<InvestorFund> investorFunds = new List<InvestorFund>();
-			this.TryUpdateModel(model);
+			this.TryUpdateModel(model, collection);
 			if (ModelState.IsValid) {
 
 				// Attempt to create manual capital call.
 
 				Models.Entity.CapitalCall capitalCall = new Models.Entity.CapitalCall();
 				CapitalCallLineItem item;
+
 				capitalCall.CapitalAmountCalled = model.CapitalAmountCalled;
 				capitalCall.CapitalCallDate = model.CapitalCallDate;
 				capitalCall.CapitalCallDueDate = model.CapitalCallDueDate;
-				capitalCall.CapitalCallNumber = string.Empty;
 				capitalCall.CapitalCallTypeID = (int)Models.CapitalCall.Enums.CapitalCallType.Manual;
 				capitalCall.CreatedBy = AppSettings.CreatedByUserId;
 				capitalCall.CreatedDate = DateTime.Now;
 				capitalCall.LastUpdatedBy = AppSettings.CreatedByUserId;
 				capitalCall.LastUpdatedDate = DateTime.Now;
 				capitalCall.ExistingInvestmentAmount = model.ExistingInvestmentAmount ?? 0;
-				capitalCall.NewInvestmentAmount = model.NewInvestmentAmount ?? 0;
+				capitalCall.NewInvestmentAmount = model.NewInvestmentAmount;
 				capitalCall.FundID = model.FundId;
-				capitalCall.InvestedAmountInterest = model.InvestedAmount ?? 0;
+				capitalCall.InvestmentAmount = model.InvestedAmount ?? 0;
 				capitalCall.InvestedAmountInterest = model.InvestedAmountInterest ?? 0;
 				capitalCall.FundExpenses = model.FundExpenses ?? 0;
 				capitalCall.ManagementFees = model.ManagementFees ?? 0;
 				capitalCall.ManagementFeeInterest = model.ManagementFeeInterest ?? 0;
-				capitalCall.CapitalCallNumber = model.CapitalCallNumber;
+				capitalCall.CapitalCallNumber = Convert.ToString(CapitalCallRepository.FindCapitalCallNumber(model.FundId));
 				int index;
 				for (index = 1; index < model.InvestorCount + 1; index++) {
 					item = new CapitalCallLineItem();
@@ -198,24 +197,12 @@ namespace DeepBlue.Controllers.CapitalCall {
 					item.CreatedDate = DateTime.Now;
 					item.LastUpdatedBy = AppSettings.CreatedByUserId;
 					item.LastUpdatedDate = DateTime.Now;
-					if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "CapitalAmountCalled"]) == false) {
-						item.CapitalAmountCalled = Convert.ToDecimal(collection[index.ToString() + "_" + "CapitalAmountCalled"]);
-					}
-					if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "ManagementFeeInterest"]) == false) {
-						item.ManagementFeeInterest = Convert.ToDecimal(collection[index.ToString() + "_" + "ManagementFeeInterest"]);
-					}
-					if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "InvestedAmountInterest"]) == false) {
-						item.InvestedAmountInterest = Convert.ToDecimal(collection[index.ToString() + "_" + "InvestedAmountInterest"]);
-					}
-					if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "ManagementFees"]) == false) {
-						item.ManagementFees = Convert.ToDecimal(collection[index.ToString() + "_" + "ManagementFees"]);
-					}
-					if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "FundExpenses"]) == false) {
-						item.FundExpenses = Convert.ToDecimal(collection[index.ToString() + "_" + "FundExpenses"]);
-					}
-					if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "InvestorId"]) == false) {
-						item.InvestorID = Convert.ToInt32(collection[index.ToString() + "_" + "InvestorId"]);
-					}
+					item.CapitalAmountCalled = DataTypeHelper.ToDecimal(collection[index.ToString() + "_" + "CapitalAmountCalled"]);
+					item.ManagementFeeInterest = DataTypeHelper.ToDecimal(collection[index.ToString() + "_" + "ManagementFeeInterest"]);
+					item.InvestedAmountInterest = DataTypeHelper.ToDecimal(collection[index.ToString() + "_" + "InvestedAmountInterest"]);
+					item.ManagementFees = DataTypeHelper.ToDecimal(collection[index.ToString() + "_" + "ManagementFees"]);
+					item.FundExpenses = DataTypeHelper.ToDecimal(collection[index.ToString() + "_" + "FundExpenses"]);
+					item.InvestorID = DataTypeHelper.ToInt32(collection[index.ToString() + "_" + "InvestorId"]);
 					if (item.InvestorID > 0) {
 						InvestorFund investorFund = InvestorRepository.FindInvestorFund(item.InvestorID, capitalCall.FundID);
 						if (investorFund != null) {
@@ -239,6 +226,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 							errorInfo = InvestorRepository.SaveInvestorFund(investorFund);
 							resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 						}
+					}
+					if (string.IsNullOrEmpty(resultModel.Result)) {
+						resultModel.Result += "True||" + (CapitalCallRepository.FindCapitalCallNumber(model.FundId));
 					}
 				}
 			}
@@ -475,15 +465,15 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		#endregion
 
-		#region Distribution
+		#region Capital Distribution
 
 		//
 		// GET: /CapitalCall/NewCapitalDistribution
 		[HttpGet]
 		public ActionResult NewCapitalDistribution() {
 			ViewData["MenuName"] = "Fund Tracker";
-			ViewData["SubmenuName"] = "Capital Call";
-			ViewData["PageName"] = "New Capital Distribution";
+			ViewData["SubmenuName"] = "CapitalDistribution";
+			ViewData["PageName"] = "CapitalDistribution";
 			return View();
 		}
 
@@ -493,7 +483,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 		public ActionResult CreateDistribution(FormCollection collection) {
 			CreateDistributionModel model = new CreateDistributionModel();
 			ResultModel resultModel = new ResultModel();
-			this.TryUpdateModel(model);
+			this.TryUpdateModel(model, collection);
 			if (ModelState.IsValid) {
 
 				// Attempt to create cash distribution.
@@ -502,24 +492,20 @@ namespace DeepBlue.Controllers.CapitalCall {
 				CapitalDistributionLineItem item;
 				distribution.CapitalDistributionDate = model.CapitalDistributionDate;
 				distribution.CapitalDistributionDueDate = model.CapitalDistributionDueDate;
-				if (model.AddPreferredReturn)
-					distribution.PreferredReturn = model.PreferredReturn;
-				if (model.AddReturnManagementFees)
-					distribution.ReturnManagementFees = model.ReturnManagementFees;
-				if (model.AddReturnFundExpenses)
-					distribution.ReturnFundExpenses = model.ReturnFundExpenses;
-				if (model.AddPreferredCatchUp)
-					distribution.PreferredCatchUp = model.PreferredCatchUp;
-				if (model.AddProfits) {
-					distribution.Profits = model.GPProfits;
-					distribution.LPProfits = model.LPProfits;
-				}
+
+				distribution.PreferredReturn = model.PreferredReturn;
+				distribution.ReturnManagementFees = model.ReturnManagementFees;
+				distribution.ReturnFundExpenses = model.ReturnFundExpenses;
+				distribution.PreferredCatchUp = model.PreferredCatchUp;
+				distribution.Profits = model.GPProfits;
+				distribution.LPProfits = model.LPProfits;
+
 				distribution.CreatedBy = AppSettings.CreatedByUserId;
 				distribution.CreatedDate = DateTime.Now;
 				distribution.LastUpdatedBy = AppSettings.CreatedByUserId;
 				distribution.LastUpdatedDate = DateTime.Now;
 				distribution.DistributionAmount = model.DistributionAmount;
-				distribution.DistributionNumber = model.DistributionNumber;
+				distribution.DistributionNumber = Convert.ToString(CapitalCallRepository.FindCapitalCallDistributionNumber(model.FundId));
 				distribution.FundID = model.FundId;
 				distribution.IsManual = false;
 
@@ -602,6 +588,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 				}
 				IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalDistribution(distribution);
 				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					resultModel.Result += "True||" + (CapitalCallRepository.FindCapitalCallDistributionNumber(model.FundId));
+				}
 			}
 			if (ModelState.IsValid == false) {
 				foreach (var values in ModelState.Values.ToList()) {
@@ -643,28 +632,121 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		#endregion
 
+		#region Manual Capital Distribution
+		//
+		// POST: /CapitalCall/CreateManualDistribution
+		[HttpPost]
+		public ActionResult CreateManualDistribution(FormCollection collection) {
+			CreateDistributionModel model = new CreateDistributionModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model, collection);
+			if (ModelState.IsValid) {
+
+				// Attempt to create cash distribution.
+
+				CapitalDistribution distribution = new CapitalDistribution();
+				CapitalDistributionLineItem item;
+				distribution.CapitalDistributionDate = model.CapitalDistributionDate;
+				distribution.CapitalDistributionDueDate = model.CapitalDistributionDueDate;
+
+				distribution.PreferredReturn = model.PreferredReturn;
+				distribution.ReturnManagementFees = model.ReturnManagementFees;
+				distribution.ReturnFundExpenses = model.ReturnFundExpenses;
+				distribution.PreferredCatchUp = model.PreferredCatchUp;
+				distribution.Profits = model.GPProfits;
+				distribution.LPProfits = model.LPProfits;
+
+				distribution.CreatedBy = AppSettings.CreatedByUserId;
+				distribution.CreatedDate = DateTime.Now;
+				distribution.LastUpdatedBy = AppSettings.CreatedByUserId;
+				distribution.LastUpdatedDate = DateTime.Now;
+				distribution.DistributionAmount = model.DistributionAmount;
+				distribution.DistributionNumber = Convert.ToString(CapitalCallRepository.FindCapitalCallDistributionNumber(model.FundId));
+				distribution.FundID = model.FundId;
+				distribution.IsManual = true;
+
+				int index;
+
+				for (index = 1; index < model.InvestorCount + 1; index++) {
+					// Attempt to create cash distribution of each investor.
+
+					item = new CapitalDistributionLineItem();
+					item.CapitalReturn = 0;
+					item.CreatedBy = AppSettings.CreatedByUserId;
+					item.CreatedDate = DateTime.Now;
+					item.LastUpdatedBy = AppSettings.CreatedByUserId;
+					item.LastUpdatedDate = DateTime.Now;
+					item.InvestorID = DataTypeHelper.ToInt32(collection[index.ToString() + "_" + "InvestorId"]);
+					item.DistributionAmount = DataTypeHelper.ToDecimal(collection[index.ToString() + "_" + "DistributionAmount"]);
+					item.ReturnManagementFees = DataTypeHelper.ToDecimal(collection[index.ToString() + "_" + "ReturnManagementFees"]);
+					item.ReturnFundExpenses = DataTypeHelper.ToDecimal(collection[index.ToString() + "_" + "ReturnFundExpenses"]);
+					item.Profits = DataTypeHelper.ToDecimal(collection[index.ToString() + "_" + "GPProfits"]);
+					item.PreferredReturn = DataTypeHelper.ToDecimal(collection[index.ToString() + "_" + "PreferredReturn"]);
+					if (item.InvestorID > 0) {
+						distribution.CapitalDistributionLineItems.Add(item);
+					}
+				}
+				if (distribution.CapitalDistributionLineItems.Count == 0) {
+					ModelState.AddModelError("InvestorCount", "Select any one investor");
+				}
+				else {
+					IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalDistribution(distribution);
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+					if (string.IsNullOrEmpty(resultModel.Result)) {
+						resultModel.Result += "True||" + (CapitalCallRepository.FindCapitalCallDistributionNumber(model.FundId));
+					}
+				}
+			}
+			if (ModelState.IsValid == false) {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+		#endregion
+
 		#region Capital Call Detail
+
+		//
+		//GET : /CapitalCall/Detail
+		[HttpGet]
+		public ActionResult Detail(int? fundId, int? typeId) {
+			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["SubmenuName"] = "CapitalCall";
+			ViewData["PageName"] = "Detail";
+			if ((typeId ?? 0) == 0) {
+				typeId = (int)DetailType.CapitalCall;
+			}
+			DetailModel model = new DetailModel();
+			model.FundId = fundId ?? 0;
+			model.DetailType = (DetailType)typeId;
+			return View("Detail", model);
+		}
+
+		//
+		//GET : /CapitalCall/FindDetail
+		[HttpGet]
+		public JsonResult FindDetail(int fundId) {
+			return Json(CapitalCallRepository.FindDetail(fundId), JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		//GET : /CapitalCall/GetCapitalCallInvestors
+		[HttpGet]
+		public JsonResult GetCapitalCallInvestors(int capitalCallId) {
+			return Json(new { Investors = CapitalCallRepository.GetCapitalCallInvestors(capitalCallId) }, JsonRequestBehavior.AllowGet);
+		}
 
 		//
 		//GET : /CapitalCall/FundDetail
 		[HttpGet]
 		public JsonResult FundDetail(int id) {
-			Models.Entity.Fund fund = CapitalCallRepository.FindFund(id);
-			FundDetail detail = new FundDetail();
-			if (fund != null) {
-				detail.FundName = fund.FundName;
-				detail.FundId = fund.FundID;
-				detail.TotalCommitment = FormatHelper.CurrencyFormat(fund.InvestorFunds.Sum(investorFund => investorFund.TotalCommitment));
-				detail.UnfundedAmount = FormatHelper.CurrencyFormat(fund.InvestorFunds.Sum(investorFund => investorFund.UnfundedAmount ?? 0));
-				detail.CapitalCallNumber = (fund.CapitalCalls.Count + 1).ToString();
-				detail.DistributionNumber = (fund.CapitalDistributions.Count + 1).ToString();
-			}
-			return Json(detail, JsonRequestBehavior.AllowGet);
-		}
-
-		//GET : /CapitalCall/CapitalCallDetail
-		public JsonResult CapitalCallDetail(int id) {
-			return Json(CapitalCallRepository.FindCapitalCallDetail(id), JsonRequestBehavior.AllowGet);
+			return Json(CapitalCallRepository.FindFundDetail(id), JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -734,8 +816,10 @@ namespace DeepBlue.Controllers.CapitalCall {
 			ListModel model = new ListModel();
 			model.FundId = id ?? 0;
 			if (model.FundId > 0) {
-				Models.Entity.Fund fund = CapitalCallRepository.FindFund(model.FundId);
-				model.FundName = fund.FundName;
+				FundDetail fundDetail = CapitalCallRepository.FindFundDetail(model.FundId);
+				if (fundDetail != null) {
+					model.FundName = fundDetail.FundName;
+				}
 			}
 			return View(model);
 		}

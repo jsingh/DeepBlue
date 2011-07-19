@@ -94,7 +94,4 @@
 		});
 	}
 }
-$.extend(window,{
-	formatDate: function (dt) { return jHelper.formatDate(jHelper.parseJSONDate(dt)); }
-	,formatCurrency: function (d) { return jHelper.dollarAmount(d.toString()); }
-});
+ 

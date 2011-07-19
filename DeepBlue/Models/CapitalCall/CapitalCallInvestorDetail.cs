@@ -6,11 +6,9 @@ using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.CapitalCall {
 
-	public class CapitalCallDetail {
+	public class CapitalCallInvestorDetail {
 
-		public int CapitalCallId { get; set; }
-
-		public string Number { get; set; }
+		public string InvestorName { get; set; }
 
 		public decimal? CapitalCallAmount { get; set; }
 

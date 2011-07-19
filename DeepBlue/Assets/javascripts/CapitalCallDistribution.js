@@ -1,10 +1,8 @@
 ﻿var distribution={
 	init: function () {
-		/*$(document).ready(function () {
-			setTimeout(function () {
-				$("#CCDetail").hide();
-			},200);
-		});*/
+		$(document).ready(function () {
+			jHelper.waterMark();
+		});
 	}
 	,selectFund: function (id) {
 		$("#SpnLoading").show();
@@ -17,42 +15,16 @@
 			$("#SpnLoading").hide();
 			$("#CCDetail").show();
 			$("#FundId").val(data.FundId);
+
 			$("#TitleFundName").html(data.FundName);
-			$("#SpnCommittedAmount").html(data.TotalCommitment);
-			$("#CommittedAmount").val(jHelper.cfloat(data.TotalCommitment.replace("$","").replace(",","")));
-			$("#UnfundedAmount").html(data.UnfundedAmount);
+			$("#SpnDAmount").html(jHelper.dollarAmount(data.TotalDistribution));
+			$("#SpnProfitAmount").html(jHelper.dollarAmount(data.TotalProfit));
 			$("#SpnDistributionNumber").html(data.DistributionNumber);
+			$("#SpnManualDistributionNumber").html(data.DistributionNumber);
+
+			$("#CommittedAmount").val(data.TotalCommitment);
 			$("#DistributionNumber").val(data.DistributionNumber);
 		});
-	}
-	,onSubmit: function (formId) {
-		var frm=document.getElementById(formId);
-		var message='';
-		Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
-		$(".field-validation-error",frm).each(function () {
-			if(this.innerHTML!='') {
-				message+=this.innerHTML+"\n";
-			}
-		});
-		if(message!="") {
-			alert(message);
-			return false;
-		} else {
-			return true;
-		}
-		return true;
-	}
-	,onCreateCapitalCallBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-	}
-	,onCreateCapitalCallSuccess: function () {
-		$("#UpdateLoading").html("");
-		var UpdateTargetId=$("#UpdateTargetId");
-		if(jQuery.trim(UpdateTargetId.html())!="") {
-			alert(UpdateTargetId.html())
-		} else {
-			location.href="/CapitalCall/CapitalDistributionList";
-		}
 	}
 	,showControl: function (chk,boxId) {
 		var box=document.getElementById(boxId);
@@ -69,6 +41,44 @@
 		var ReturnManagementFees=jHelper.cfloat($("#ReturnManagementFees").val());
 		var ReturnFundExpenses=jHelper.cfloat($("#ReturnFundExpenses").val());
 		var PreferredCatchUp=jHelper.cfloat($("#PreferredCatchUp").val());
-		var profit = (DistributionAmount-PreferredReturn-ReturnManagementFees-ReturnFundExpenses-PreferredCatchUp);
+		var profit=(DistributionAmount-PreferredReturn-ReturnManagementFees-ReturnFundExpenses-PreferredCatchUp);
+	}
+	,selectTab: function (type,lnk) {
+		var CD=$("#NewCapitalDistribution");
+		var MCD=$("#ManualCapitalDistribution");
+		$("#NewCDTab").removeClass("select");
+		$("#ManCDTab").removeClass("select");
+		CD.hide();MCD.hide();
+		$(lnk).addClass("select");
+		switch(type) {
+			case "C": CD.show();break;
+			case "M": MCD.show();break;
+		}
+	}
+	,save: function (frmid) {
+		try {
+			var frm=$("#"+frmid);
+			var loading=$("#UpdateLoading");
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			var param=$(frm).serializeArray();
+			param[param.length]={ name: "FundId",value: $("#FundId").val() };
+			param[param.length]={ name: "DistributionNumber",value: $("#DistributionNumber").val() };
+			$.post("/CapitalCall/CreateDistribution",param,function (data) {
+				loading.empty();
+				var arr=data.split("||");
+				if($.trim(arr[0])!="True") {
+					alert(data);
+				} else {
+					alert("Capital Distribution Saved.");
+					$("#SpnDistributionNumber").html(arr[1]);
+					$("#DistributionNumber").val(arr[1]);
+					$("#SpnManualDistributionNumber").html(arr[1]);
+					jHelper.resetFields(frm);
+				}
+			});
+		} catch(e) {
+			alert(e);
+		}
+		return false;
 	}
 }

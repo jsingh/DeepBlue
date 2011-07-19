@@ -211,4 +211,12 @@
 			$(".tooltip").fadeOut('slow');
 		});
 	}
+	,applyGridClass: function (target) {
+		$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
+		$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");
+	}
 }
+$.extend(window,{
+	formatDate: function (dt) { return jHelper.formatDate(jHelper.parseJSONDate(dt)); }
+	,formatCurrency: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } return jHelper.dollarAmount(d.toString()); }
+});

@@ -10,13 +10,17 @@ namespace DeepBlue.Models.CapitalCall {
 
 		public string FundName { get; set; }
 
-		public string TotalCommitment { get; set; }
+		public decimal? TotalCommitment { get; set; }
 
-		public string UnfundedAmount { get; set; }
+		public decimal? UnfundedAmount { get; set; }
 
-		public string CapitalCallNumber { get; set; }
+		public decimal? TotalDistribution { get; set; }
 
-		public string DistributionNumber { get; set; }
+		public decimal? TotalProfit { get; set; }
+
+		public int? CapitalCallNumber { get; set; }
+
+		public int? DistributionNumber { get; set; }
 
 	}
 }

@@ -11,7 +11,6 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		#region ICapitalCallRepository Members
 
-	
 		public List<Models.Entity.CapitalCall> GetCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<Models.Entity.CapitalCall> query = (from capitalCall in context.CapitalCalls
@@ -24,32 +23,12 @@ namespace DeepBlue.Controllers.CapitalCall {
 			}
 		}
 
-
 		public List<Models.Entity.CapitalCall> GetCapitalCalls(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from capitalCall in context.CapitalCalls
 						where capitalCall.FundID == fundId
-						orderby capitalCall.CapitalCallID descending 
+						orderby capitalCall.CapitalCallID descending
 						select capitalCall).ToList();
-			}
-		}
-
-		public CapitalCallDetail FindCapitalCallDetail(int fundId) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				List<Models.Entity.CapitalCall> calls = context.CapitalCalls.Where(capitalCallDetail => capitalCallDetail.FundID == fundId).ToList();
-				CapitalCallDetail detail = new CapitalCallDetail();
-				if (calls.Count > 0) {
-					detail.CapitalCommitted = FormatHelper.CurrencyFormat(calls.Sum(capitalCall => capitalCall.CapitalAmountCalled));
-					detail.FundName = calls.First().Fund.FundName;
-					detail.FundExpenses = FormatHelper.CurrencyFormat(calls.Sum(capitalCall => capitalCall.FundExpenses ?? 0));
-					detail.ManagementFees = FormatHelper.CurrencyFormat(calls.Sum(capitalCall => capitalCall.ManagementFees ?? 0));
-					detail.UnfundedAmount = FormatHelper.CurrencyFormat(calls.Sum(capitalCall => capitalCall.Fund.InvestorFunds.Sum(fund => fund.UnfundedAmount ?? 0)));
-				} else {
-					detail.FundName = (from fund in context.Funds
-									   where fund.FundID == fundId
-									   select fund.FundName).FirstOrDefault();
-				}
-				return detail;
 			}
 		}
 
@@ -111,8 +90,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 		public List<CapitalDistribution> GetCapitalDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<CapitalDistribution> query = (from capitalDistribution in context.CapitalDistributions
-															   where capitalDistribution.FundID == fundId
-															   select capitalDistribution);
+														 where capitalDistribution.FundID == fundId
+														 select capitalDistribution);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<CapitalDistribution> paginatedList = new PaginatedList<CapitalDistribution>(query, pageIndex, pageSize);
 				totalRows = paginatedList.TotalCount;
@@ -123,9 +102,98 @@ namespace DeepBlue.Controllers.CapitalCall {
 		public List<CapitalDistribution> GetCapitalDistributions(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from capitalDistribution in context.CapitalDistributions
-														 where capitalDistribution.FundID == fundId
-														 orderby capitalDistribution.CapitalDistributionID descending
-														 select capitalDistribution).ToList();
+						where capitalDistribution.FundID == fundId
+						orderby capitalDistribution.CapitalDistributionID descending
+						select capitalDistribution).ToList();
+			}
+		}
+
+		public int FindCapitalCallNumber(int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				int? totalCapitalCalls = context.CapitalCalls.Where(capitalCall => capitalCall.FundID == fundId).Count();
+				return (totalCapitalCalls ?? 0) + 1;
+			}
+		}
+
+		public int FindCapitalCallDistributionNumber(int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				int? totalCapitalDistribution = context.CapitalDistributions.Where(capitalDistribution => capitalDistribution.FundID == fundId).Count();
+				return (totalCapitalDistribution ?? 0) + 1;
+			}
+		}
+
+		public FundDetail FindFundDetail(int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fund in context.Funds
+						where fund.FundID == fundId
+						select new FundDetail {
+							CapitalCallNumber = fund.CapitalCalls.Count() + 1,
+							DistributionNumber = fund.CapitalDistributions.Count() + 1,
+							FundId = fund.FundID,
+							FundName = fund.FundName,
+							TotalCommitment = fund.CapitalCalls.Sum(capitalCall => capitalCall.CapitalAmountCalled),
+							UnfundedAmount = fund.InvestorFunds.Sum(investorFund => investorFund.UnfundedAmount),
+							TotalDistribution = fund.CapitalDistributions.Sum(capitalDistribution => capitalDistribution.DistributionAmount),
+							TotalProfit = fund.CapitalDistributions.Sum(capitalDistribution => capitalDistribution.Profits)
+						}).SingleOrDefault();
+			}
+		}
+
+		public DetailModel FindDetail(int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fund in context.Funds
+						where fund.FundID == fundId
+						select new DetailModel {
+							FundId = fund.FundID,
+							FundName = fund.FundName,
+							CapitalCommitted = fund.CapitalCalls.Sum(capitalCall => capitalCall.CapitalAmountCalled),
+							UnfundedAmount = fund.InvestorFunds.Sum(investorFund => investorFund.UnfundedAmount),
+							FundExpenses = fund.CapitalCalls.Sum(capitalCall => capitalCall.FundExpenses),
+							ManagementFees = fund.CapitalCalls.Sum(capitalCall => capitalCall.ManagementFees),
+							CapitalDistributed = fund.CapitalDistributions.Sum(capitalDistribution => capitalDistribution.DistributionAmount),
+							ReturnFundExpenses = fund.CapitalDistributions.Sum(capitalDistribution => capitalDistribution.ReturnFundExpenses),
+							ReturnManagementFees = fund.CapitalDistributions.Sum(capitalDistribution => capitalDistribution.ReturnManagementFees),
+							ProfitsReturned = fund.CapitalDistributions.Sum(capitalDistribution => capitalDistribution.PreferredReturn),
+							CapitalDistributions = (from capitalDistribution in fund.CapitalDistributions
+													orderby capitalDistribution.CapitalDistributionID descending
+													select new CapitalDistributionDetail {
+														CapitalDistributed = capitalDistribution.DistributionAmount,
+														Number = capitalDistribution.DistributionNumber,
+														CapitalDistrubutionId = capitalDistribution.CapitalDistributionID,
+														CapitalDistributionDate = capitalDistribution.CapitalDistributionDate,
+														CapitalDistributionDueDate = capitalDistribution.CapitalDistributionDueDate,
+														Profit = (capitalDistribution.Profits ?? 0) + (capitalDistribution.LPProfits ?? 0),
+														ProfitReturn = capitalDistribution.PreferredReturn,
+														ReturnFundExpenses = capitalDistribution.ReturnFundExpenses,
+														ReturnManagementFees = capitalDistribution.ReturnManagementFees
+													}),
+							CapitalCalls = (from capitalCall in fund.CapitalCalls
+											orderby capitalCall.CapitalCallID descending
+											select new CapitalCallDetail {
+												CapitalCallId = capitalCall.CapitalCallID,
+												CapitalCallAmount = capitalCall.CapitalAmountCalled,
+												CapitalCallDate = capitalCall.CapitalCallDate,
+												CapitalCallDueDate = capitalCall.CapitalCallDueDate,
+												FundExpenses = capitalCall.FundExpenses,
+												ManagementFees = capitalCall.ManagementFees,
+												Number = capitalCall.CapitalCallNumber
+											})
+						}).SingleOrDefault();
+			}
+		}
+
+		public List<CapitalCallInvestorDetail> GetCapitalCallInvestors(int capitalCallId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from capitalCallLineItem in context.CapitalCallLineItems
+						where capitalCallLineItem.CapitalCallID == capitalCallId
+						select new CapitalCallInvestorDetail {
+							CapitalCallAmount = capitalCallLineItem.CapitalAmountCalled,
+							CapitalCallDate = capitalCallLineItem.CapitalCall.CapitalCallDate,
+							CapitalCallDueDate = capitalCallLineItem.CapitalCall.CapitalCallDueDate,
+							FundExpenses = capitalCallLineItem.FundExpenses,
+							InvestorName = capitalCallLineItem.Investor.InvestorName,
+							ManagementFees = capitalCallLineItem.ManagementFees
+						}).ToList();
 			}
 		}
 

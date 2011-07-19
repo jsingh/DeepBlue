@@ -24,10 +24,10 @@
 				</div>
 			</div>
 			<div class="rightcol">
-				<div style="margin: 0; padding: 0 10px 0 0;float:left;">
+				<div style="margin: 0; padding: 0 10px 0 0; float: left;">
 					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none;" })%>
 				</div>
-				<div style="float:left">
+				<div style="float: left">
 					<%: Html.TextBox("Deal", "SEARCH DEAL", new { @id = "Deal", @class = "wm", @style = "width:200px" })%>
 				</div>
 			</div>
@@ -67,9 +67,9 @@
 			</div>
 			<div class="dc-box">
 				<div class="section">
-					<div class="gbox">
+					<div class="gbox" style="width: 700px;">
 						<table id="DealCloseList" class="grid" cellpadding="0" cellspacing="0" border="0"
-							style="width: 70%;">
+							style="width: 100%;">
 							<thead>
 								<tr>
 									<th style="display: none;">
@@ -133,63 +133,67 @@
 							Underlying Funds
 						</div>
 						<div class="dc-box tabledetail">
-							<table id="DealUnderlyingFundList" class="grid" cellpadding="0" cellspacing="0" border="0"
-								style="width: 90%;">
-								<thead>
-									<tr>
-										<th style="width: 5%">
-										</th>
-										<th class="lalign" style="width: 15%">
-											Fund Name
-										</th>
-										<th class="ralign" style="width: 15%">
-											Commitment Amount
-										</th>
-										<th class="ralign" style="width: 15%">
-											Gross Purchase Price
-										</th>
-										<th class="ralign" style="width: 15%">
-											Post Record Capital Call
-										</th>
-										<th class="ralign" style="width: 15%">
-											Post Record Distribution
-										</th>
-										<th class="ralign" style="width: 15%">
-											Net Purchase Price
-										</th>
-										<th>
-										</th>
-									</tr>
-								</thead>
-							</table>
+							<div class="gbox" style="width:90%">
+								<table id="DealUnderlyingFundList" class="grid" cellpadding="0" cellspacing="0" border="0"
+									style="width: 100%;">
+									<thead>
+										<tr>
+											<th style="width: 5%">
+											</th>
+											<th class="lalign" style="width: 15%">
+												Fund Name
+											</th>
+											<th class="ralign" style="width: 15%">
+												Commitment Amount
+											</th>
+											<th class="ralign" style="width: 15%">
+												Gross Purchase Price
+											</th>
+											<th class="ralign" style="width: 15%">
+												Post Record Capital Call
+											</th>
+											<th class="ralign" style="width: 15%">
+												Post Record Distribution
+											</th>
+											<th class="ralign" style="width: 15%">
+												Net Purchase Price
+											</th>
+											<th>
+											</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
 						</div>
 						<div class="closetitle">
 							Underlying Directs
 						</div>
 						<div class="dc-box tabledetail">
-							<table id="DealUnderlyingDirects" class="grid" cellpadding="0" cellspacing="0" border="0"
-								style="width: 90%;">
-								<thead>
-									<tr>
-										<th class="lalign" style="width: 5%">
-										</th>
-										<th class="lalign" style="width: 15%">
-											Direct Name
-										</th>
-										<th class="lalign" style="width: 15%">
-											No. Of Shares
-										</th>
-										<th class="ralign" style="width: 15%">
-											Price
-										</th>
-										<th class="ralign" style="width: 15%">
-											Fair Market Value
-										</th>
-										<th>
-										</th>
-									</tr>
-								</thead>
-							</table>
+							<div class="gbox" style="width:90%">
+								<table id="DealUnderlyingDirects" class="grid" cellpadding="0" cellspacing="0" border="0"
+									style="width: 100%;">
+									<thead>
+										<tr>
+											<th class="lalign" style="width: 5%">
+											</th>
+											<th class="lalign" style="width: 15%">
+												Direct Name
+											</th>
+											<th class="lalign" style="width: 15%">
+												No. Of Shares
+											</th>
+											<th class="ralign" style="width: 15%">
+												Price
+											</th>
+											<th class="ralign" style="width: 15%">
+												Fair Market Value
+											</th>
+											<th>
+											</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
 						</div>
 						<div class="savefooter">
 							<div class="cell">
@@ -224,9 +228,9 @@
 							<div class="closetitle" style="margin-top: 0">
 								All Underlying Funds
 							</div>
-							<div class="dc-box tabledetail">
+							<div class="dc-box tabledetail"><div class="gbox" style="width:90%">
 								<table id="FinalDealUnderlyingFundList" class="grid" cellpadding="0" cellspacing="0"
-									border="0" style="width: 90%;">
+									border="0" style="width: 100%;">
 									<thead>
 										<tr>
 											<th class="lalign" style="width: 15%">
@@ -248,16 +252,16 @@
 											</th>
 										</tr>
 									</thead>
-								</table>
+								</table></div>
 							</div>
 						</div>
 						<div class="dc-box">
 							<div class="closetitle">
 								All Underlying Directs
 							</div>
-							<div class="dc-box tabledetail">
+							<div class="dc-box tabledetail"><div class="gbox" style="width:90%">
 								<table id="FinalDealUnderlyingDirects" class="grid" cellpadding="0" cellspacing="0"
-									border="0" style="width: 90%;">
+									border="0" style="width: 100%;">
 									<thead>
 										<tr>
 											<th class="lalign" style="width: 15%">
@@ -276,7 +280,7 @@
 											</th>
 										</tr>
 									</thead>
-								</table>
+								</table></div>
 							</div>
 						</div>
 						<div class="savefooter">

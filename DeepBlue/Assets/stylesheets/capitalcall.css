@@ -1,12 +1,10 @@
-﻿.cc-header, .cc-main {
-	margin: 10px;
-}
-.cc-main {
+﻿.cc-main, .cc-header {
 	width: 100%;
 	float: left;
 }
 .editor-label {
-	width: auto; font-weight:bold;
+	width: auto;
+	font-weight: bold;
 	padding: 10px 5px;
 }
 .editor-field {
@@ -24,7 +22,7 @@
 	float: left;
 }
 .fromcell {
-	width: 169px;
+	width: auto;
 	clear: right;
 	text-align: right;
 	padding-right: 0px;
@@ -56,10 +54,167 @@
 }
 .investor-detail {
 	clear: both;
+	width: 95%;
 }
 #FundDetails .editor-label {
 	padding: 5px;
 }
 label {
 	color: #000;
+}
+.cc-box {
+	float: left;
+	clear: both;
+	width: 100%;
+}
+.section {
+	margin-top: 10px;
+}
+.section {
+	float: left;
+	margin: 10px 48px;
+	width: 100%;
+}
+.cell {
+	float: left;
+	font-weight: bold;
+	height: 25px;
+	line-height: 25px;
+	margin-right: 10px;
+	width: 180px;
+}
+.ccdetail .cell {
+	width: auto;
+	white-space: nowrap;
+	margin: 0px 20px 0px 20px;
+}
+#NewCCTab, #NewCDTab, #NewCCDetailTab {
+	background-image: url(../images/newcctab.png);
+	background-repeat: no-repeat;
+	width: 213px;
+	height: 40px;
+	float: left;
+	margin-left: 65px;
+	cursor: pointer;
+}
+#ManCCTab, #ManCDTab, #ManCDetailTab {
+	background-image: url(../images/mancctab.png);
+	background-repeat: no-repeat;
+	width: 213px;
+	height: 40px;
+	float: left;
+	margin-left: 5px;
+	cursor: pointer;
+}
+#SerCCTab, #SerCDTab {
+	float: right;
+	padding: 9px 25px 0 10px;
+}
+#NewCCTab.select {
+	background-image: url(../images/newcctabsel.png);
+}
+#ManCCTab.select {
+	background-image: url(../images/mancctabsel.png);
+}
+#NewCDTab {
+	background-image: url(../images/newcdtab.png);
+	width: 230px;
+}
+#ManCDTab {
+	background-image: url(../images/mancdtab.png);
+	width: 240px;
+}
+#NewCCDetailTab {
+	background-image: url(../images/ccdetailtab.png);
+	width: 225px;
+}
+#ManCDetailTab {
+	background-image: url(../images/cdetailtab.png);
+	width: 225px;
+}
+#NewCDTab.select {
+	background-image: url(../images/newcdtabsel.png);
+	width: 230px;
+}
+#ManCDTab.select {
+	background-image: url(../images/mancdtabsel.png);
+	width: 240px;
+}
+#NewCCDetailTab.select {
+	background-image: url(../images/ccdetailtabsel.png);
+	width: 230px;
+}
+#ManCDetailTab.select {
+	background-image: url(../images/cdetailtabsel.png);
+	width: 240px;
+}
+.tabbg {
+	float: left;
+	width: 100%;
+	background-image: url(../images/tabbg.png);
+	background-position: left bottom;
+	background-repeat: repeat-x;
+	padding-bottom: 3px;
+}
+
+.cc-box-main {
+	float: left;
+	width: 100%;
+	position: absolute;
+	top: 150px;
+	bottom: 0px;
+	overflow: auto;
+	overflow-x: hidden;
+}
+.cc-box .header {
+	margin: 10px 0;
+}
+.cc-box-det {
+	background-color: #CBD2DA;
+	clear: both;
+	float: left;
+	padding: 20px 20px 0;
+	width: 100%;
+}
+.cc-box-det .editor-label {
+	text-align: right;
+}
+.mancctbl td {
+	padding: 10px 10px 10px 5px;
+	text-align: right;
+}
+.dist-detail .editor-label {
+	width: 155px;
+}
+.dist-detail .editor-field input[type='text'] {
+	width: 120px;
+}
+.dist-detail .editor-button {
+	margin: 0 0 0 25%;
+	padding-top: 10px;
+	width: auto;
+}
+.dist-detail .editor-field {
+	width: 125px;
+}
+.dist-detail .editor-field {
+}
+.dist-detail .editor-field span {
+	font-weight: bold;
+}
+.cc-det-report {
+	position: absolute;
+	bottom: 0pt;
+	top: 94px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 97%;
+}
+.exploading {
+	background-image: url("../images/ajax.jpg");
+	background-repeat: no-repeat;
+	height: 20px;
+	margin: 10px;
+	width: 100%;
+	padding-left: 20px;
 }

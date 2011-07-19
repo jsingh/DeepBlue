@@ -4,7 +4,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+	<title>
+		<asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+	</title>
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
@@ -111,10 +113,16 @@
 		<%using (Html.SubMenu("Fund_Management", true, (ViewData["MenuName"] == "Fund Tracker"))) {%>
 		<ul>
 			<li>
-				<%: Html.ActionLink("Fund Setup", "Index", "Fund", null, new { @onmouseover = "menu.msubopen(this,'')", @class = (ViewData["PageName"] == "Fund Setup" ? "sel" : "") })%>
+				<%: Html.ActionLink("Capital Call", "New", "CapitalCall", null, new { @class = (ViewData["PageName"] == "CapitalCall" ? "sel" : "") })%>
 			</li>
 			<li>
-				<%: Html.SubMenuLink("Capital Call", "CC_Submenu", (ViewData["SubmenuName"] == "Capital Call"))%>
+				<%: Html.ActionLink("Capital Distribution", "NewCapitalDistribution", "CapitalCall", null, new { @class = (ViewData["PageName"] == "CapitalDistribution" ? "sel" : "") })%>
+			</li>
+			<li>
+				<%: Html.ActionLink("Detail", "Detail", "CapitalCall", null, new { @class = (ViewData["PageName"] == "Detail" ? "sel" : "") })%>
+			</li>
+			<li>
+				<%: Html.ActionLink("Fund Setup", "Index", "Fund", null, new { @onmouseover = "menu.msubopen(this,'')", @class = (ViewData["PageName"] == "Fund Setup" ? "sel" : "") })%>
 			</li>
 		</ul>
 		<%}%>
@@ -152,22 +160,6 @@
 		<%using (Html.InnerSubMenu("DealFundList", (ViewData["SubmenuName"] == "Create New Deal"))) {%>
 		<%}%>
 		<%using (Html.InnerSubMenu("ModifyDealBox", (ViewData["SubmenuName"] == "Modify Deal"))) {%>
-		<%}%>
-		<%using (Html.InnerSubMenu("CC_Submenu", (ViewData["SubmenuName"] == "Capital Call"))) {%>
-		<ul>
-			<li>
-				<%: Html.ActionLink("Capital Call Detail", "List", "CapitalCall", null, new { @class = (ViewData["PageName"] == "Capital Call List" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("New Capital Call", "New", "CapitalCall", null, new { @class = (ViewData["PageName"] == "New Capital Call" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Manual Capital Call", "NewManualCapitalCall", "CapitalCall", null, new { @class = (ViewData["PageName"] == "New Manual Capital Call" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("New Capital Distribution", "NewCapitalDistribution", "CapitalCall", null, new { @class = (ViewData["PageName"] == "New Capital Distribution" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Capital Distribution Detail", "CapitalDistributionList", "CapitalCall", null, new { @class = (ViewData["PageName"] == "Capital Distribution List" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.Anchor("Capital Call Reconcile")%></li>
-		</ul>
 		<%}%>
 		<%using (Html.InnerSubMenu("Inv_SubMenu", (ViewData["SubmenuName"] == "AdminInvestor"))) {%>
 		<ul>
@@ -221,7 +213,7 @@
 		<div class="footercontent">
 			Copyright 2011 DeepBlue&nbsp;<%=ConfigurationManager.AppSettings["CurrentVersion"]%></div>
 	</div>
-	<script type="text/javascript">DeepBlue.init();</script>
+	<script type="text/javascript">		DeepBlue.init();</script>
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
 </body>
 </html>

@@ -8,4 +8,9 @@ namespace DeepBlue.Models.CapitalCall.Enums {
 		Reqular = 1,
 		Manual = 2
 	}
+
+	public enum DetailType {
+		CapitalCall = 1,
+		CapitalDistribution = 2
+	}
 }

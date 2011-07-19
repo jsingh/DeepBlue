@@ -92,6 +92,9 @@
     <Compile Include="Models\Admin\EditCurrencyModel.cs" />
     <Compile Include="Models\Admin\EditFundExpenseTypeModel.cs" />
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallInvestorDetail.cs" />
+    <Compile Include="Models\CapitalCall\CapitalDistributionDetail.cs" />
+    <Compile Include="Models\CapitalCall\DetailModel.cs" />
     <Compile Include="Models\Deal\ActivityDealModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
     <Compile Include="Models\Deal\FixedIncomeDocumentModel.cs" />
@@ -345,7 +348,7 @@
     <Compile Include="Models\CapitalCall\CapitalCallDetail.cs" />
     <Compile Include="Models\CapitalCall\CreateDistributionModel.cs" />
     <Compile Include="Models\CapitalCall\CreateManualModel.cs" />
-    <Compile Include="Models\CapitalCall\CreateReqularModel.cs" />
+    <Compile Include="Models\CapitalCall\CreateCapitalCallModel.cs" />
     <Compile Include="Models\CapitalCall\CapitalDistributionListModel.cs" />
     <Compile Include="Models\CapitalCall\Enums.cs" />
     <Compile Include="Models\CapitalCall\FundDetail.cs" />
@@ -761,6 +764,7 @@
     <Content Include="Assets\javascripts\CommunicationGrouping.js" />
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
+    <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
     <Content Include="Assets\javascripts\Currency.js" />
     <Content Include="Assets\javascripts\DealActivityStockDistribution.js" />
     <Content Include="Assets\javascripts\jquery.fileuploader.js" />
@@ -801,7 +805,7 @@
     <Content Include="Assets\javascripts\jquery.layoutengine.js" />
     <Content Include="Assets\javascripts\jquery.PrintArea.js" />
     <Content Include="Assets\javascripts\jquery.tmpl.min.js" />
-    <Content Include="Assets\javascripts\ManualCapitalCall.js" />
+    <Content Include="Assets\javascripts\CapitalCallManual.js" />
     <Content Include="Assets\javascripts\DataType.js" />
     <Content Include="Assets\javascripts\CustomField.js" />
     <Content Include="Assets\javascripts\DocumentSearch.js" />
@@ -843,7 +847,6 @@
     <Content Include="Assets\stylesheets\dealdirect.css" />
     <Content Include="Assets\stylesheets\dealreconcile.css" />
     <Content Include="Assets\stylesheets\dealreport.css" />
-    <Content Include="Assets\stylesheets\distribution.css" />
     <Content Include="Assets\stylesheets\document.css" />
     <Content Include="Assets\stylesheets\exportdeal.css" />
     <Content Include="Assets\stylesheets\fileuploader.css" />
@@ -917,13 +920,17 @@
     <Content Include="Views\Admin\SecurityType.aspx" />
     <Content Include="Views\Admin\ShareClassType.aspx" />
     <Content Include="Views\Admin\UnderlyingFundType.aspx" />
+    <Content Include="Views\CapitalCall\CapitalCallDetail.ascx" />
+    <Content Include="Views\CapitalCall\CapitalCallInvestorDetail.ascx" />
     <Content Include="Views\CapitalCall\CapitalCallList.ascx" />
     <Content Include="Views\CapitalCall\CapitalDistributionDetailList.ascx" />
+    <Content Include="Views\CapitalCall\CapitalDistributionInvestorDetail.ascx" />
+    <Content Include="Views\CapitalCall\CapitalDistributionDetail.ascx" />
+    <Content Include="Views\CapitalCall\Detail.aspx" />
     <Content Include="Views\CapitalCall\NewCapitalDistribution.aspx" />
     <Content Include="Views\CapitalCall\CapitalDistributionList.aspx" />
     <Content Include="Views\CapitalCall\List.aspx" />
     <Content Include="Views\CapitalCall\New.aspx" />
-    <Content Include="Views\CapitalCall\NewManualCapitalCall.aspx" />
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />

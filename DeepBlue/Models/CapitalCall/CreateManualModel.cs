@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.CapitalCall {
-	public class CreateManualModel {
+	public class CreateManualModel_ {
 
 		[DisplayName("Fund:")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
