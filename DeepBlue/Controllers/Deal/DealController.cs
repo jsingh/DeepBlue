@@ -2365,7 +2365,23 @@ namespace DeepBlue.Controllers.Deal {
 			string error = string.Empty;
 			List<ReconcileReportModel> allReconciles = null;
 			if (ModelState.IsValid) {
-				allReconciles = DealRepository.GetAllReconciles((model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.MaxValue), model.FundId);
+				switch ((DeepBlue.Models.Deal.Enums.ReconcileType)model.ReconcileType) {
+					case ReconcileType.All:
+						allReconciles = DealRepository.GetAllReconciles((model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.MaxValue), model.FundId);
+						break;
+					case ReconcileType.UnderlyingFundCapitalCall:
+						allReconciles = DealRepository.GetAllUnderlyingCapitalCallReconciles((model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.MaxValue), model.FundId);
+						break;
+					case ReconcileType.UnderlyingFundCashDistribution:
+						allReconciles = DealRepository.GetAllUnderlyingDistributionReconciles((model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.MaxValue), model.FundId);
+						break;
+					case ReconcileType.CapitalCall:
+						allReconciles = DealRepository.GetAllCapitalCallReconciles((model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.MaxValue), model.FundId);
+						break;
+					case ReconcileType.CapitalDistribution:
+						allReconciles = DealRepository.GetAllCapitalDistributionReconciles((model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.MaxValue), model.FundId);
+						break;
+				}
 			}
 			else {
 				foreach (var values in ModelState.Values.ToList()) {
@@ -2380,14 +2396,38 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		//
-		// POST: /Deal/ReconcileList
+		// POST: /Deal/CreateReconcile
 		[HttpPost]
-		public string SaveReconcile(FormCollection collection) {
-			ReconcileModel model = new ReconcileModel();
-			this.TryUpdateModel(model, collection);
+		public ActionResult CreateReconcile(FormCollection collection) {
+			int totalRows = 0;
+			int.TryParse(collection["TotalRows"], out totalRows);
+			int rowIndex = 0;
 			ResultModel resultModel = new ResultModel();
-			if (ModelState.IsValid) {
-				IEnumerable<ErrorInfo> errorInfo = null;
+			FormCollection rowCollection;
+			ReconcileModel model = null;
+			IEnumerable<ErrorInfo> errorInfo = null;
+			// Validate each rows.
+			for (rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+				rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(ReconcileModel));
+				model = new ReconcileModel();
+				this.TryUpdateModel(model, rowCollection);
+				IEnumerable<ErrorInfo> validateErrorInfo = ValidationHelper.Validate(model);
+				if (validateErrorInfo.Any() == false) {
+					if (model.IsReconciled) {
+						errorInfo = SaveReconcile(model);
+						if (errorInfo!=null)
+							break;
+					}
+				}
+			}
+			resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			return View("Result", resultModel);
+		}
+
+		private IEnumerable<ErrorInfo> SaveReconcile(ReconcileModel model) {
+			ResultModel resultModel = new ResultModel();
+			IEnumerable<ErrorInfo> errorInfo = ValidationHelper.Validate(model);
+			if (errorInfo.Any() == false) {
 				switch ((ReconcileType)model.ReconcileTypeId) {
 					case ReconcileType.CapitalCall:
 						CapitalCallLineItem capitalCallLineItem = CapitalCallRepository.FindCapitalCallLineItem(model.Id);
@@ -2430,18 +2470,8 @@ namespace DeepBlue.Controllers.Deal {
 						}
 						break;
 				}
-				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 			}
-			else {
-				foreach (var values in ModelState.Values.ToList()) {
-					foreach (var err in values.Errors.ToList()) {
-						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
-							resultModel.Result += err.ErrorMessage + "\n";
-						}
-					}
-				}
-			}
-			return resultModel.Result;
+			return errorInfo;
 		}
 
 		#endregion

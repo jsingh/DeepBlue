@@ -126,7 +126,7 @@ label {
 }
 #NewCCDetailTab {
 	background-image: url(../images/ccdetailtab.png);
-	width: 225px;
+	width: 215px;
 }
 #ManCDetailTab {
 	background-image: url(../images/cdetailtab.png);
@@ -142,11 +142,11 @@ label {
 }
 #NewCCDetailTab.select {
 	background-image: url(../images/ccdetailtabsel.png);
-	width: 230px;
+	width: 213px;
 }
 #ManCDetailTab.select {
 	background-image: url(../images/cdetailtabsel.png);
-	width: 240px;
+	width: 225px;
 }
 .tabbg {
 	float: left;
@@ -203,12 +203,22 @@ label {
 	font-weight: bold;
 }
 .cc-det-report {
-	position: absolute;
-	bottom: 0pt;
-	top: 94px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	width: 97%;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    top: 94px;
+    left:20px;
+    right:15px;
+    padding:10px 2px 10px 0; 
+    margin:0;
+    width:auto;
+}
+.cc-report-main{
+	 background-color: #CBD2DA;
+}
+.cc-report-main .grid tr th{
+	 white-space:normal;
 }
 .exploading {
 	background-image: url("../images/ajax.jpg");

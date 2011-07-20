@@ -743,6 +743,13 @@ namespace DeepBlue.Controllers.CapitalCall {
 		}
 
 		//
+		//GET : /CapitalCall/GetCapitalDistributionInvestors
+		[HttpGet]
+		public JsonResult GetCapitalDistributionInvestors(int capitalDistributionId) {
+			return Json(new { Investors = CapitalCallRepository.GetCapitalDistributionInvestors(capitalDistributionId) }, JsonRequestBehavior.AllowGet);
+		}
+
+		//
 		//GET : /CapitalCall/FundDetail
 		[HttpGet]
 		public JsonResult FundDetail(int id) {
@@ -806,24 +813,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 			}
 			return Json(model, JsonRequestBehavior.AllowGet);
 		}
-
-		//
-		//GET : /CapitalCall/List
-		public ActionResult List(int? id) {
-			ViewData["MenuName"] = "Fund Tracker";
-			ViewData["SubmenuName"] = "Capital Call";
-			ViewData["PageName"] = "Capital Call List";
-			ListModel model = new ListModel();
-			model.FundId = id ?? 0;
-			if (model.FundId > 0) {
-				FundDetail fundDetail = CapitalCallRepository.FindFundDetail(model.FundId);
-				if (fundDetail != null) {
-					model.FundName = fundDetail.FundName;
-				}
-			}
-			return View(model);
-		}
-
+ 
 		#endregion
 
 		//

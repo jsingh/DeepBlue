@@ -1,4 +1,45 @@
-﻿.fund-main {
+﻿.cc-box {
+	clear: both;
+	float: left;
+	width: 100%;
+}
+.cc-box .header {
+	margin: 10px 0;
+}
+.tabbg {
+	background-image: url("../images/tabbg.png");
+	background-position: left bottom;
+	background-repeat: repeat-x;
+	float: left;
+	padding-bottom: 3px;
+	width: 100%;
+}
+#NewCCTab.select {
+	background-image: url("../images/newcctabsel.png");
+}
+#NewCCTab, #NewCDTab, #NewCCDetailTab {
+	background-image: url("../images/newcctab.png");
+	background-repeat: no-repeat;
+	cursor: pointer;
+	float: left;
+	height: 40px;
+	margin-left: 65px;
+	width: 213px;
+}
+#ManCCTab, #ManCDTab, #ManCDetailTab {
+    background-image: url("../images/mancctab.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 40px;
+    margin-left: 5px;
+    width: 213px;
+}
+#SerCCTab, #SerCDTab {
+    float: right;
+    padding: 9px 25px 0 10px;
+}
+.fund-main {
 	width: 95%;
 	margin: 10px auto;
 }
@@ -19,7 +60,8 @@
 .editor-field input {
 	width: 175px;
 }
-.rate-sch-main { color:#a6a6a6;
+.rate-sch-main {
+	color: #a6a6a6;
 	width: 800px;
 }
 .rate-header {

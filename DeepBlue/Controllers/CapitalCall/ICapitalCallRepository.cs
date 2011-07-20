@@ -20,10 +20,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 		FundDetail FindFundDetail(int fundId);
 		int FindCapitalCallNumber(int fundId);
 		int FindCapitalCallDistributionNumber(int fundId);
-
 		DetailModel FindDetail(int fundId);
 		List<CapitalCallInvestorDetail> GetCapitalCallInvestors(int capitalCallId);
-
+		List<CapitalDistributionInvestorDetail> GetCapitalDistributionInvestors(int capitalDistributionId);
 		IEnumerable<ErrorInfo> SaveCapitalCall(Models.Entity.CapitalCall capitalCall);
 		IEnumerable<ErrorInfo> SaveCapitalCallLineItem(CapitalCallLineItem capitalCallLineItem);
 		IEnumerable<ErrorInfo> SaveCapitalDistribution(CapitalDistribution capitalDistribution);

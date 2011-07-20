@@ -190,6 +190,10 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region Reconcile
 		List<ReconcileReportModel> GetAllReconciles(DateTime startDate, DateTime endDate, int fundId);
+		List<ReconcileReportModel> GetAllUnderlyingCapitalCallReconciles(DateTime startDate, DateTime endDate, int fundId);
+		List<ReconcileReportModel> GetAllUnderlyingDistributionReconciles(DateTime startDate, DateTime endDate, int fundId);
+		List<ReconcileReportModel> GetAllCapitalCallReconciles(DateTime startDate, DateTime endDate, int fundId);
+		List<ReconcileReportModel> GetAllCapitalDistributionReconciles(DateTime startDate, DateTime endDate, int fundId);
 		#endregion
 
 		#region Direct

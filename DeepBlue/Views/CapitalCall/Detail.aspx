@@ -22,9 +22,9 @@
 	<div class="cc-box">
 		<div class="header">
 			<div class="tabbg">
-				<%using (Html.Div(new { @id = "NewCCDetailTab", @class = "select", @onclick = "javascript:capitalCallDetail.selectTab('C',this);" })) {%>&nbsp;
+				<%using (Html.Div(new { @id = "NewCCDetailTab", @class = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalCall ? "select" : ""), @onclick = "javascript:capitalCallDetail.selectTab('C',this);" })) {%>&nbsp;
 				<%}%>
-				<%using (Html.Div(new { @id = "ManCDetailTab", @onclick = "javascript:capitalCallDetail.selectTab('M',this);" })) {%>&nbsp;
+				<%using (Html.Div(new { @id = "ManCDetailTab", @class = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalDistribution ? "select" : ""), @onclick = "javascript:capitalCallDetail.selectTab('M',this);" })) {%>&nbsp;
 				<%}%>
 				<%using (Html.Div(new { @id = "SerCDTab" })) {%>&nbsp;
 				<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>&nbsp;<%: Html.TextBox("Fund","SEARCH FUND", new { @class="wm", @style = "width:200px" })%>
@@ -44,10 +44,10 @@
 		</div>
 		<div class="line">
 		</div>
-		<div id="CapitalCallReport">
-		</div>
-		<div id="CapitalDistributionReport" style="display:none">
-		</div>
+		<%using(Html.Div(new { @id = "CapitalCallReport", @style=(Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalCall ? "display:block" : "display:none") })){%>
+		<%}%>
+		<%using (Html.Div(new { @id = "CapitalDistributionReport", @style = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalDistribution ? "display:block" : "display:none") })) {%>
+		<%}%>
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
@@ -60,29 +60,29 @@
 		<% Html.RenderPartial("CapitalDistributionDetail"); %>
 	</script>
 	<script id="CCInvestorTemplate" type="text/x-jquery-tmpl">
-	<div class="gbox" style="margin:10px 0 10px 0;">
+	<div class="gbox" style="margin:10px 0;">
 	<table cellpadding="0" cellspacing="0" border="0" class="grid">
 		<thead>
 			<tr>
-				<th style="width: 12%; text-align: left;">
+				<th style="width: 15%; text-align: left;">
 					Investor Name
 				</th>
-				<th style="width: 10%; text-align: right">
+				<th style="width:20%;text-align: right">
 					Capital Call Amount
 				</th>
-				<th style="width: 10%; text-align: right">
+				<th style="width:15%;text-align: right">
 					Management Fees
 				</th>
-				<th style="width: 10%; text-align: right">
+				<th style="width:15%;text-align: right">
 					Fund Expenses
 				</th>
-				<th style="width: 5%; text-align: right">
+				<th style="width:15%;text-align: right">
 					Capital Call Date
 				</th>
-				<th style="width: 5%; text-align: right">
+				<th style="width:15%;text-align: right">
 					Capital Call Due Date
 				</th>
-				<th style="width: 5%" align="center">
+				<th style="width:5%;">
 				</th>
 			</tr>
 		</thead>
@@ -107,7 +107,73 @@
 			<td style="text-align: right">
 				${formatDate(cc.CapitalCallDueDate)}
 			</td>
-			<td style="width: 5%" align="center">
+			<td>
+			</td>
+		</tr>
+		{{/each}}
+		</tbody>
+	</table>
+	</div>
+	</script>
+	<script id="CDInvestorTemplate" type="text/x-jquery-tmpl">
+	<div class="gbox" style="margin:10px 0;">
+	<table cellpadding="0" cellspacing="0" border="0" class="grid">
+		<thead>
+			<tr>
+				<th style="text-align:left;width:12%;">
+					Investor Name
+				</th>
+				<th style="text-align: right">
+					Capital Distribution Amount
+				</th>
+				<th style="text-align: right">
+					Return Management Fees
+				</th>
+				<th style="text-align: right">
+					Return Fund Expenses
+				</th>
+				<th style=" text-align: right">
+					Capital Distribution Date
+				</th>
+				<th style="text-align: right">
+					Capital Distribution Due Date
+				</th>
+				<th style="text-align: right">
+					Profits (%)
+				</th>
+				<th style="text-align: right">
+					Profits Returned
+				</th><th></th>
+			</tr>
+		</thead>
+		<tbody>
+		{{each(i,cc) Investors}}
+		<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
+			<td>
+				${cc.InvestorName}
+			</td>
+			<td style="text-align: right">
+				${formatCurrency(cc.CapitalDistributed)}
+			</td>
+			<td style="text-align: right">
+				${formatCurrency(cc.ReturnManagementFees)}
+			</td>
+			<td style="text-align: right">
+				${formatCurrency(cc.ReturnFundExpenses)}
+			</td>
+			<td style="text-align: right">
+				${formatDate(cc.CapitalDistributionDate)}
+			</td>
+			<td style="text-align: right">
+				${formatDate(cc.CapitalDistributionDueDate)}
+			</td>
+			<td style="text-align: right">
+				${formatPercentage(cc.Profit)}
+			</td>
+			<td style="text-align: right">
+				${formatCurrency(cc.ProfitReturn)}
+			</td>
+			<td>
 			</td>
 		</tr>
 		{{/each}}

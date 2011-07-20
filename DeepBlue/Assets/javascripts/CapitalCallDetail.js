@@ -20,6 +20,7 @@
 			$("#SpnLoading").hide();
 			$("#CaptialCallDetail").show();
 			$("#TitleFundName").html(data.FundName);
+			$("#Fund").val(data.FundName);
 			$("#CapitalCallReportTemplate").tmpl(data).prependTo(ccReportTarget);
 			$("#CapitalDistributionReportTemplate").tmpl(data).prependTo(cdReportTarget);
 		});
@@ -67,6 +68,39 @@
 			$.getJSON("/CapitalCall/GetCapitalCallInvestors?_"+(new Date).getTime()+"&capitalCallId="+id,function (data) {
 				$(expandTD).empty();
 				$("#CCInvestorTemplate").tmpl(data).appendTo(expandTD);
+			});
+			$(tr).after(expandTR);
+		}
+		$(expandTR).css("display",display);
+	}
+	,expandCD: function (img,id) {
+		var tr=$(img).parents("tr:first");
+		var expandTR=$("#CD_"+id).get(0);
+		var display="";
+		var imgsrc="";
+		$(".expandrow").css("display","none");
+		if(img.src.indexOf("downarrow.png")>0) {
+			imgsrc="/Assets/images/rightuarrow.png";
+		} else {
+			imgsrc="/Assets/images/downarrow.png";
+			display="none";
+		}
+		$(".ccexpandrow").attr("src","/Assets/images/downarrow.png");
+		img.src=imgsrc;
+		if(!expandTR) {
+			expandTR=document.createElement("tr");
+			expandTR.id="CD_"+id;
+			expandTR.className="expandrow";
+			var expandTD=document.createElement("td");
+			expandTD.colSpan=9;
+			$(expandTR).append(expandTD);
+			var div=document.createElement("div");
+			div.className="exploading";
+			div.innerHTML="Loading...";
+			$(expandTD).append(div);
+			$.getJSON("/CapitalCall/GetCapitalDistributionInvestors?_"+(new Date).getTime()+"&capitalDistributionId="+id,function (data) {
+				$(expandTD).empty();
+				$("#CDInvestorTemplate").tmpl(data).appendTo(expandTD);
 			});
 			$(tr).after(expandTR);
 		}

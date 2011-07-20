@@ -197,6 +197,23 @@ namespace DeepBlue.Controllers.CapitalCall {
 			}
 		}
 
+		public List<CapitalDistributionInvestorDetail> GetCapitalDistributionInvestors(int capitalDistributionId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from capitalDistributionLineItem in context.CapitalDistributionLineItems
+						where capitalDistributionLineItem.CapitalDistributionID == capitalDistributionId
+						select new CapitalDistributionInvestorDetail {
+							CapitalDistributed = capitalDistributionLineItem.DistributionAmount,
+							CapitalDistributionDate = capitalDistributionLineItem.CapitalDistribution.CapitalDistributionDate,
+							CapitalDistributionDueDate = capitalDistributionLineItem.CapitalDistribution.CapitalDistributionDueDate,
+							InvestorName = capitalDistributionLineItem.Investor.InvestorName,
+							Profit = capitalDistributionLineItem.Profits,
+							ProfitReturn = capitalDistributionLineItem.PreferredReturn,
+							ReturnFundExpenses = capitalDistributionLineItem.ReturnFundExpenses,
+							ReturnManagementFees = capitalDistributionLineItem.ReturnManagementFees
+						}).ToList();
+			}
+		}
+
 		#endregion
 	}
 }

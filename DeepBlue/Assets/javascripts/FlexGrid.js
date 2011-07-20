@@ -126,8 +126,13 @@
 				}
 			},
 			buildpager: function () {
-				$('.pcontrol input',this.pDiv).val(p.page);
-				$('.pcontrol span',this.pDiv).html(p.pages);
+				$(".pDiv",g.gDiv).each(function () {
+					g.setUpPager(this);
+				});
+			}
+			,setUpPager: function (pDiv) {
+				$('.pcontrol input',pDiv).val(p.page);
+				$('.pcontrol span',pDiv).html(p.pages);
 				var r1=(p.page-1)*p.rp+1;
 				var r2=r1+p.rp-1;
 				if(p.total<r2) { r2=p.total; }
@@ -135,18 +140,24 @@
 				stat=stat.replace(/{from}/,r1);
 				stat=stat.replace(/{to}/,r2);
 				stat=stat.replace(/{total}/,p.total);
-				$('.pPageStat',this.pDiv).html(stat);
-				$('.pGLoading',this.pDiv).hide();
+				$('.pPageStat',pDiv).html(stat);
+				$('.pGLoading',pDiv).hide();
+				$("#rp",pDiv).val(p.rp);
 			}
 			,resize: function () {
-				if(p.resizeWidth) {
-					var w=g.gDiv.offsetWidth;
+				var w=g.gDiv.offsetWidth;
+				$(g.gDiv).width(w);
+				$(g.gTLDiv).width(w);
+				$(g.gTCDiv).width(w-20);
+				$(g.gBLDiv).width(w);
+				$(g.gBCDiv).width(w-20);
+				/*if(p.resizeWidth) {
 					var adw=w-20;
 					if(g.pDiv) { $(g.pDiv).width(adw); }
 					if(g.hDiv) { $(g.hDiv).width(adw); }
 					if(g.bDiv) { $(g.bDiv).width(adw); }
 					if(g.bDivBox) { $(g.bDivBox).width(w); }
-				}
+				}*/
 			}
 			,populate: function () {
 				if(this.loading) { return true; }
@@ -161,8 +172,8 @@
 				$('.pReload',this.pDiv).addClass('loading');
 				$(g.block).css({ top: g.bDiv.offsetTop });
 				/*if(p.hideOnSubmit) {
-					$(g.block).height($(g.bDiv).height());
-					$(this.gDiv).prepend(g.block);
+				$(g.block).height($(g.bDiv).height());
+				$(this.gDiv).prepend(g.block);
 				}*/
 				if($.browser.opera) { $(t).css('visibility','hidden'); }
 				if(!p.newp) { p.newp=1; }
@@ -216,9 +227,49 @@
 					this.populate();
 				}
 			},
+			setPagingEvent: function (pDiv) {
+				$('.pReload',pDiv).click(function () { g.populate() });
+				$('.pFirst',pDiv).click(function () { g.changePage('first') });
+				$('.pPrev',pDiv).click(function () { g.changePage('prev') });
+				$('.pNext',pDiv).click(function () { g.changePage('next') });
+				$('.pLast',pDiv).click(function () { g.changePage('last') });
+				$('.pcontrol input',pDiv).keydown(function (e) { if(e.keyCode==13) { g.changePage('input'); } });
+				if($.browser.msie&&$.browser.version<7) { $('.pButton',pDiv).hover(function () { $(this).addClass('pBtnOver'); },function () { $(this).removeClass('pBtnOver'); }); }
+				$(pDiv).prepend("<div class='pGroup pGLoading'><span class='pLoadingStat'>Loading...</span></div>");
+				if(p.useRp) {
+					var opt="";
+					for(var nx=0;nx<p.rpOptions.length;nx++) {
+						if(p.rp==p.rpOptions[nx]) { sel='selected="selected"'; } else { sel=''; }
+						opt+="<option value='"+p.rpOptions[nx]+"' "+sel+" >"+p.rpOptions[nx]+"&nbsp;&nbsp;</option>";
+					};
+					$('.pDiv2',pDiv).prepend("<div class='pGroup'><table cellpadding=0 cellspacing=0><tr><td>Rows:&nbsp;</td><td><select id='rp' name='rp'>"+opt+"</select></td></tr></table></div> <div class='btnseparator'></div>");
+					$('select',pDiv).change(
+					function () {
+						if(p.onRpChange) {
+							p.onRpChange(+this.value);
+						} else {
+							p.newp=1;
+							p.rp= +this.value;
+							g.populate();
+						}
+					}
+				);
+				}
+			},
 			pager: 0
 		};
 		g.gDiv=document.createElement('div');
+
+		g.gTLDiv=document.createElement('div');
+		g.gTCDiv=document.createElement('div');
+		g.gTRDiv=document.createElement('div');
+
+		g.gCDiv=document.createElement('div');
+
+		g.gBLDiv=document.createElement('div');
+		g.gBCDiv=document.createElement('div');
+		g.gBRDiv=document.createElement('div');
+
 		g.hDiv=document.createElement('div');
 		g.bDivBox=document.createElement('div');
 		g.bDiv=document.createElement('div');
@@ -226,8 +277,30 @@
 		if(p.usepager) { g.pDiv=document.createElement('div'); }
 		g.hTable=document.createElement("table");
 		g.gDiv.className='flexigrid';
+
+		g.gTLDiv.className="ftlDiv";
+		g.gTCDiv.className="ftcDiv";
+		g.gTRDiv.className="ftrDiv";
+
+		g.gBLDiv.className="fblDiv";
+		g.gBCDiv.className="fbcDiv";
+		g.gBRDiv.className="fbrDiv";
+
+		g.gCDiv.className="fcDiv";
+
 		$(t).before(g.gDiv);
-		$(g.gDiv).append(t);
+
+		$(g.gDiv).append(g.gTLDiv);
+		$(g.gTLDiv).append(g.gTCDiv);
+		$(g.gTLDiv).append(g.gTRDiv);
+
+		$(g.gDiv).append(g.gCDiv);
+		$(g.gCDiv).append(t);
+
+		$(g.gDiv).append(g.gBLDiv);
+		$(g.gBLDiv).append(g.gBCDiv);
+		$(g.gBLDiv).append(g.gBRDiv);
+
 		g.hDiv.className='hDiv';
 		$(t).before(g.hDiv);
 		g.hTable.cellPadding=0;
@@ -270,37 +343,16 @@
 		if(p.usepager) {
 			g.pDiv.className='pDiv';
 			g.pDiv.innerHTML='<div class="pDiv2"></div>';
-			$(g.hDiv).before(g.pDiv);
-			var html='<div class="pGroup"> <div class="pFirst pButton"><span></span></div><div class="pPrev pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pcontrol">Page <input type="text" size="4" value="1" /> of <span> 1 </span></span></div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pNext pButton"><span></span></div><div class="pLast pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pReload pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pPageStat"></span></div>';
+			var html='<div class="pGroup"> <div class="pFirst pButton"><span></span></div><div class="pPrev pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pcontrol">Page <input type="text" size="4" value="1" /> of <span> 1 </span></span></div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pNext pButton"><span></span></div><div class="pLast pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pReload pButton"><span></span></div></div>';
+			//html+='<div class="btnseparator"></div><div class="pGroup"><span class="pPageStat"></span></div>';
 			$('div',g.pDiv).html(html);
-			$('.pReload',g.pDiv).click(function () { g.populate() });
-			$('.pFirst',g.pDiv).click(function () { g.changePage('first') });
-			$('.pPrev',g.pDiv).click(function () { g.changePage('prev') });
-			$('.pNext',g.pDiv).click(function () { g.changePage('next') });
-			$('.pLast',g.pDiv).click(function () { g.changePage('last') });
-			$('.pcontrol input',g.pDiv).keydown(function (e) { if(e.keyCode==13) { g.changePage('input'); } });
-			if($.browser.msie&&$.browser.version<7) { $('.pButton',g.pDiv).hover(function () { $(this).addClass('pBtnOver'); },function () { $(this).removeClass('pBtnOver'); }); }
-			$(g.pDiv).prepend("<div class='pGroup pGLoading'><span class='pLoadingStat'>Loading...</span></div>");
-			if(p.useRp) {
-				var opt="";
-				for(var nx=0;nx<p.rpOptions.length;nx++) {
-					if(p.rp==p.rpOptions[nx]) { sel='selected="selected"'; } else { sel=''; }
-					opt+="<option value='"+p.rpOptions[nx]+"' "+sel+" >"+p.rpOptions[nx]+"&nbsp;&nbsp;</option>";
-				};
 
-				$('.pDiv2',g.pDiv).prepend("<div class='pGroup'>Rows:&nbsp;<select name='rp'>"+opt+"</select></div> <div class='btnseparator'></div>");
-				$('select',g.pDiv).change(
-					function () {
-						if(p.onRpChange) {
-							p.onRpChange(+this.value);
-						} else {
-							p.newp=1;
-							p.rp= +this.value;
-							g.populate();
-						}
-					}
-				);
-			}
+			$(g.hDiv).before(g.pDiv);
+			$(g.bDiv).after($(g.pDiv).clone());
+
+			$(".pDiv",g.gDiv).each(function () {
+				g.setPagingEvent(this);
+			});
 		}
 		$(g.pDiv,g.sDiv).append("<div style='clear:both'></div>");
 		g.block.className='gBlock';
@@ -327,7 +379,10 @@
 		$(g.bDiv).before(g.bDivBox);
 		$(g.bDivBox).append(g.bDiv);
 		g.resize();
-		$(window).resize(function () { g.resize(); });
+		try {
+			//$(g.gDiv).jqTransform();
+		} catch(e) { alert(e); }
+		$(window).resize(function () { $(g.gDiv).css("width","");g.resize(); });
 		return t;
 	};
 

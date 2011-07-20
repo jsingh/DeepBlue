@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<dynamic>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<div class="cc-box-main">
+<div class="cc-box-main cc-report-main">
 	<div class="line">
 	</div>
 	<div class="cc-box-det dist-detail">
@@ -36,30 +36,30 @@
 	<div class="line">
 	</div>
 	<div class="cc-box-det cc-det-report">
-		{{if CapitalCalls.length>1}}
+		{{if CapitalCalls.length>0}}
 		<div class="gbox">
 			<table cellpadding="0" cellspacing="0" class="grid">
 				<thead>
 					<tr>
-						<th style="width: 12%;text-align:left;">
+						<th style="width: 15%;text-align:left;">
 							Capital Call Number
 						</th>
-						<th style="width: 10%;text-align: right">
+						<th style="width:20%;text-align: right">
 							Capital Call Amount
 						</th>
-						<th style="width: 10%;text-align: right">
+						<th style="width:15%;text-align: right">
 							Management Fees
 						</th>
-						<th style="width: 10%;text-align: right">
+						<th style="width:15%;text-align: right">
 							Fund Expenses
 						</th>
-						<th style="width: 5%; text-align: right">
+						<th style="width:15%;text-align: right">
 							Capital Call Date
 						</th>
-						<th style="width: 5%;text-align: right">
+						<th style="width:15%;text-align: right">
 							Capital Call Due Date
 						</th>
-						<th style="width: 5%" align="center">
+						<th style="width:5%">
 						</th>
 					</tr>
 				</thead>

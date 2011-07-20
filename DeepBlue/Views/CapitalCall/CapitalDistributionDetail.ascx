@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<dynamic>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<div class="cc-box-main">
+<div class="cc-box-main cc-report-main">
 	<div class="line">
 	</div>
 	<div class="cc-box-det dist-detail">
@@ -43,12 +43,12 @@
 	<div class="line">
 	</div>
 	<div class="cc-box-det cc-det-report">
-		{{if CapitalDistributions.length>1}}
+		{{if CapitalDistributions.length>0}}
 		<div class="gbox">
 			<table cellpadding="0" cellspacing="0" class="grid">
 				<thead>
 					<tr>
-						<th style="text-align:left;">
+						<th style="text-align:left;width:12%;">
 							Capital Distribution #
 						</th>
 						<th style="text-align: right">
@@ -98,7 +98,7 @@
 							${formatDate(cd.CapitalDistributionDueDate)}
 						</td>
 						<td style="text-align: right">
-							${cd.Profit}
+							${formatPercentage(cd.Profit)}
 						</td>
 						<td style="text-align: right">
 							${formatCurrency(cd.ProfitReturn)}

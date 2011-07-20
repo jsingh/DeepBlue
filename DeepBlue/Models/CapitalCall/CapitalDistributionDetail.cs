@@ -6,24 +6,11 @@ using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.CapitalCall {
 
-	public class CapitalDistributionDetail {
+	public class CapitalDistributionDetail : CapitalDistributionInvestorDetail {
 
 		public int CapitalDistrubutionId { get; set; }
 
 		public string Number { get; set; }
-
-		public decimal? CapitalDistributed { get; set; }
-
-		public decimal? ReturnManagementFees { get; set; }
-
-		public decimal? ReturnFundExpenses { get; set; }
-
-		public DateTime CapitalDistributionDate { get; set; }
-
-		public DateTime CapitalDistributionDueDate { get; set; }
-
-		public decimal? Profit { get; set; }
-
-		public decimal? ProfitReturn { get; set; }
+	
 	}
 }

@@ -219,4 +219,5 @@
 $.extend(window,{
 	formatDate: function (dt) { return jHelper.formatDate(jHelper.parseJSONDate(dt)); }
 	,formatCurrency: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } return jHelper.dollarAmount(d.toString()); }
+	,formatPercentage: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } if(d==0) { return ""; } else { return d; } }
 });

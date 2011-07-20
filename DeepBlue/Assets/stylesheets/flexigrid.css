@@ -97,7 +97,7 @@
 }
 .flexigrid span.cdropleft {
 	display: block;
-	background: url(../images/prev.gif) no-repeat -4px center;
+	background: url(../images/prev.png) no-repeat -4px center;
 	width: 24px;
 	height: 24px;
 	position: relative;
@@ -107,7 +107,7 @@
 }
 .flexigrid div.hDiv span.cdropright {
 	display: block;
-	background: url(../images/next.gif) no-repeat 12px center;
+	background: url(../images/next.png) no-repeat 12px center;
 	width: 24px;
 	height: 24px;
 	float: right;
@@ -140,10 +140,10 @@
 	background: #d9ebf5;
 }
 .flexigrid div.bDiv tr td .gbutton {
-	 visibility:hidden;
+	visibility: hidden;
 }
 .flexigrid div.bDiv tr:hover td .gbutton {
-	visibility:visible;
+	visibility: visible;
 }
 .flexigrid div.pDiv {
 	/*background: url(../images/wbg.gif) repeat-x 0 -1px; 	border: 1px solid #ccc;*/
@@ -163,7 +163,6 @@ div.pGroup {
 	background: none;
 	height: 24px;
 	margin: 0px 5px;
-	font-weight: bold;
 }
 .flexigrid div.pDiv .pPageStat, .flexigrid div.pDiv .pcontrol {
 	position: relative;
@@ -206,19 +205,19 @@ div.pGroup {
 	background: url(../images/magnifier.png) no-repeat center;
 }
 .flexigrid .pFirst {
-	background: url(../images/first.gif) no-repeat center;
+	background: url(../images/first.png) no-repeat center;
 }
 .flexigrid .pPrev {
-	background: url(../images/prev.gif) no-repeat center;
+	background: url(../images/prev.png) no-repeat center;
 }
 .flexigrid .pNext {
-	background: url(../images/next.gif) no-repeat center;
+	background: url(../images/next.png) no-repeat center;
 }
 .flexigrid .pLast {
-	background: url(../images/last.gif) no-repeat center;
+	background: url(../images/last.png) no-repeat center;
 }
 .flexigrid .pReload {
-	background: url(../images/load.png) no-repeat center;
+	background: url(../images/refresh.gif) no-repeat center;
 }
 .flexigrid .pReload.loading {
 	background: url(../images/load.gif) no-repeat center;
@@ -226,46 +225,93 @@ div.pGroup {
 .flexigrid.ie div.hDiv th div, .flexigrid.ie div.bDiv td div, div.colCopy.ie div /* common inner cell properties*/ /* common inner cell properties*/ {
 	overflow: hidden;
 }
-.hDiv table th {
+.flexigrid .hDiv table th {
 	padding: 4px; /*background: url("../images/fhbg.gif") repeat-x scroll center bottom #FAFAFA; 	border-top: 1px solid #CCCCCC;*/
 	font-weight: normal; /*border-right: 1px solid #DDDDDD;*/
 	background-color: #BABFC5;
 	border-bottom: 1px solid #B5B5B5;
 	border-top: 1px solid #FFFFFF;
-	text-align:left;
+	text-align: left;
 }
-.hDiv th.sorted {
+.flexigrid .hDiv th.sorted {
 	/*background: url("../images/wbg.gif") repeat-x scroll 0 -1px transparent; 	border-bottom: 0 solid #CCCCCC; 	border-right: 1px solid #DDDDDD;*/
 	background-color: #BABFC5;
 	border-bottom: 1px solid #B5B5B5;
 }
-.hDiv table th, .bDiv table td {
-	padding: 5px; /*border-right: 1px solid #DDDDDD;*/
+.flexigrid .hDiv table th, .bDiv table td {
+	padding: 8px 10px; /*border-right: 1px solid #DDDDDD;*/
 	border-bottom: 1px solid #B5B5B5;
 	border-top: 1px solid #FFFFFF;
 	cursor: default; /*height:34px;*/
 }
-.hDiv  {
+.flexigrid .hDiv {
 	border-top: 1px solid #B5B5B5;
 }
-.bDiv {
+.flexigrid .bDiv {
 	background-color: #F5F5F5;
 }
-.hDiv span.sasc {
+.flexigrid .hDiv span.sasc {
 	background: url("../images/up.png") no-repeat scroll right center transparent;
 	padding-right: 10px;
 }
-.hDiv span.sdesc {
+.flexigrid .hDiv span.sdesc {
 	background: url("../images/dn.png") no-repeat scroll right center transparent;
 	padding-right: 10px;
 }
-.bDivBox {
+.flexigrid .bDivBox {
 	overflow: auto;
 	overflow-x: hidden;
+	padding-bottom: 10px;
 }
-.pDiv .pGLoading {
-	background: url("../images/load.png") no-repeat scroll left center transparent;
+.flexigrid .pDiv .pGLoading {
+	background: url("../images/refresh.gif") no-repeat scroll left center transparent;
 	float: left;
 	padding: 8px 0 0 23px;
-	display:none;
+	display: none;
+}
+.flexigrid .ftlDiv, .flexigrid .ftcDiv, .flexigrid .ftrDiv, .flexigrid .fblDiv, .flexigrid .fbcDiv, .flexigrid .fbrDiv {
+	height: 10px;
+}
+.flexigrid .fcDiv {
+	clear: both;
+	padding: 10px 20px 0px 20px;
+	background-color: #EFEFEF;
+}
+.flexigrid .ftcDiv {
+	background-color: #EFEFEF;
+	float: left;
+}
+.flexigrid .ftlDiv {
+	background-image: url(../images/box_tl.png);
+	background-position: left top;
+	background-repeat: no-repeat;
+	padding-left: 10px;
+	height: 10px;
+}
+.flexigrid .ftrDiv {
+	background-image: url(../images/box_tr.png);
+	background-position: right top;
+	background-repeat: no-repeat;
+	width: 10px;
+	height: 10px;
+	float: left;
+}
+.flexigrid .fbcDiv {
+	background-color: #EFEFEF;
+	float: left;
+}
+.flexigrid .fblDiv {
+	background-image: url(../images/box_bl.png);
+	background-position: left top;
+	background-repeat: no-repeat;
+	padding-left: 10px;
+	height: 10px;
+}
+.flexigrid .fbrDiv {
+	background-image: url(../images/box_br.png);
+	background-position: right top;
+	background-repeat: no-repeat;
+	width: 10px;
+	height: 10px;
+	float: left;
 }

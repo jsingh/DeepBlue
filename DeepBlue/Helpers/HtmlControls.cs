@@ -209,6 +209,21 @@ namespace DeepBlue.Helpers {
 		}
 		#endregion
 
+		#region Tab
+		public static MvcTab Tab(this HtmlHelper helper, object htmlAttributes) {
+			TagBuilder tagBuilder = new TagBuilder("div");
+			tagBuilder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			tagBuilder.AddCssClass("section-tab");
+			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
+			httpResponse.Write(tagBuilder.ToString(TagRenderMode.StartTag) + "<div class=left></div><div class=center>");
+			return new MvcTab(helper.ViewContext.HttpContext.Response);
+		}
+		public static MvcTab Tab(this HtmlHelper helper) {
+			return Tab(helper, new { });
+		}
+		#endregion
+
+
 		#region Form
 		public static MvcForm Form(this HtmlHelper helper, object htmlAttributes) {
 			TagBuilder tagBuilder = new TagBuilder("form");

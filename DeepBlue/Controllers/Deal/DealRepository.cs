@@ -1599,75 +1599,120 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region Reconcile
+
+		private IQueryable<ReconcileReportModel> GetAllReconciles(DeepBlueEntities context, DateTime startDate, DateTime endDate, int fundId,ReconcileType reconcileType) {
+			IQueryable<ReconcileReportModel> query = null;
+			switch (reconcileType) {
+				case ReconcileType.UnderlyingFundCapitalCall:
+					query = (from capitalCall in context.UnderlyingFundCapitalCalls
+							where capitalCall.ReceivedDate >= EntityFunctions.TruncateTime(startDate)
+							&& capitalCall.ReceivedDate <= EntityFunctions.TruncateTime(endDate)
+							&& capitalCall.FundID == fundId
+							&& capitalCall.IsReconciled == false
+							select new ReconcileReportModel {
+								Amount = capitalCall.Amount,
+								IsReconciled = capitalCall.IsReconciled,
+								CounterParty = capitalCall.UnderlyingFund.FundName,
+								FundName = capitalCall.Fund.FundName,
+								PaidOn = capitalCall.PaidON,
+								PaymentDate = capitalCall.ReceivedDate,
+								Type = "Underlying Fund",
+								ReconcileTypeId = (int)ReconcileType.UnderlyingFundCapitalCall,
+								id = capitalCall.UnderlyingFundCapitalCallID
+							});
+					break;
+				case ReconcileType.UnderlyingFundCashDistribution:
+					query = (from cashDistribution in context.UnderlyingFundCashDistributions
+							 where cashDistribution.ReceivedDate >= EntityFunctions.TruncateTime(startDate)
+							 && cashDistribution.ReceivedDate <= EntityFunctions.TruncateTime(endDate)
+							 && cashDistribution.FundID == fundId
+							 && cashDistribution.IsReconciled == false
+							 select new ReconcileReportModel {
+								 Amount = cashDistribution.Amount,
+								 IsReconciled = cashDistribution.IsReconciled,
+								 CounterParty = cashDistribution.UnderlyingFund.FundName,
+								 FundName = cashDistribution.Fund.FundName,
+								 PaidOn = cashDistribution.PaidON,
+								 PaymentDate = cashDistribution.ReceivedDate,
+								 Type = "Underlying Fund",
+								 ReconcileTypeId = (int)ReconcileType.UnderlyingFundCashDistribution,
+								 id = cashDistribution.UnderlyingFundCashDistributionID
+							 });
+					break;
+				case ReconcileType.CapitalCall:
+					query = (from investorCapitalCallItem in context.CapitalCallLineItems
+							 where investorCapitalCallItem.CapitalCall.CapitalCallDate >= EntityFunctions.TruncateTime(startDate)
+							 && investorCapitalCallItem.CapitalCall.CapitalCallDate <= EntityFunctions.TruncateTime(endDate)
+							 && investorCapitalCallItem.CapitalCall.FundID == fundId
+							 && investorCapitalCallItem.IsReconciled == false
+							 select new ReconcileReportModel {
+								 Amount = investorCapitalCallItem.CapitalAmountCalled,
+								 IsReconciled = investorCapitalCallItem.IsReconciled,
+								 CounterParty = investorCapitalCallItem.Investor.InvestorName,
+								 FundName = investorCapitalCallItem.CapitalCall.Fund.FundName,
+								 PaidOn = investorCapitalCallItem.PaidON,
+								 PaymentDate = investorCapitalCallItem.CapitalCall.CapitalCallDueDate,
+								 Type = "Investor",
+								 ReconcileTypeId = (int)ReconcileType.CapitalCall,
+								 id = investorCapitalCallItem.CapitalCallLineItemID
+							 });
+					break;
+				case ReconcileType.CapitalDistribution:
+					query = (from investorCapitalDistributiontem in context.CapitalDistributionLineItems
+							 where investorCapitalDistributiontem.CapitalDistribution.CapitalDistributionDate >= EntityFunctions.TruncateTime(startDate)
+							  && investorCapitalDistributiontem.CapitalDistribution.CapitalDistributionDate <= EntityFunctions.TruncateTime(endDate)
+							  && investorCapitalDistributiontem.CapitalDistribution.FundID == fundId
+							  && investorCapitalDistributiontem.IsReconciled == false
+							 select new ReconcileReportModel {
+								 Amount = investorCapitalDistributiontem.DistributionAmount,
+								 IsReconciled = investorCapitalDistributiontem.IsReconciled,
+								 CounterParty = investorCapitalDistributiontem.Investor.InvestorName,
+								 FundName = investorCapitalDistributiontem.CapitalDistribution.Fund.FundName,
+								 PaidOn = investorCapitalDistributiontem.PaidON,
+								 PaymentDate = investorCapitalDistributiontem.CapitalDistribution.CapitalDistributionDueDate,
+								 Type = "Investor",
+								 ReconcileTypeId = (int)ReconcileType.CapitalDistribution,
+								 id = investorCapitalDistributiontem.CapitalDistributionLineItemID
+							 });
+					break;
+			}
+			return query;
+		}
+
 		public List<ReconcileReportModel> GetAllReconciles(DateTime startDate, DateTime endDate, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from capitalCall in context.UnderlyingFundCapitalCalls
-						where capitalCall.ReceivedDate >= EntityFunctions.TruncateTime(startDate)
-						&& capitalCall.ReceivedDate <= EntityFunctions.TruncateTime(endDate)
-						&& capitalCall.FundID == fundId
-						&& capitalCall.IsReconciled == false
-						select new ReconcileReportModel {
-							Amount = capitalCall.Amount,
-							IsReconciled = capitalCall.IsReconciled,
-							CounterParty = capitalCall.UnderlyingFund.FundName,
-							FundName = capitalCall.Fund.FundName,
-							PaidOn = capitalCall.PaidON,
-							PaymentDate = capitalCall.ReceivedDate,
-							Type = "Underlying Fund",
-							ReconcileTypeId = (int)ReconcileType.UnderlyingFundCapitalCall,
-							id = capitalCall.UnderlyingFundCapitalCallID
-						})
-						.Union(from cashDistribution in context.UnderlyingFundCashDistributions
-							   where cashDistribution.ReceivedDate >= EntityFunctions.TruncateTime(startDate)
-							   && cashDistribution.ReceivedDate <= EntityFunctions.TruncateTime(endDate)
-							   && cashDistribution.FundID == fundId
-							   && cashDistribution.IsReconciled == false
-							   select new ReconcileReportModel {
-								   Amount = cashDistribution.Amount,
-								   IsReconciled = cashDistribution.IsReconciled,
-								   CounterParty = cashDistribution.UnderlyingFund.FundName,
-								   FundName = cashDistribution.Fund.FundName,
-								   PaidOn = cashDistribution.PaidON,
-								   PaymentDate = cashDistribution.ReceivedDate,
-								   Type = "Underlying Fund",
-								   ReconcileTypeId = (int)ReconcileType.UnderlyingFundCashDistribution,
-								   id = cashDistribution.UnderlyingFundCashDistributionID
-							   })
-								.Union(from investorCapitalCallItem in context.CapitalCallLineItems
-									   where investorCapitalCallItem.CapitalCall.CapitalCallDate >= EntityFunctions.TruncateTime(startDate)
-									   && investorCapitalCallItem.CapitalCall.CapitalCallDate <= EntityFunctions.TruncateTime(endDate)
-									   && investorCapitalCallItem.CapitalCall.FundID == fundId
-									   && investorCapitalCallItem.IsReconciled == false
-									   select new ReconcileReportModel {
-										   Amount = investorCapitalCallItem.CapitalAmountCalled,
-										   IsReconciled = investorCapitalCallItem.IsReconciled,
-										   CounterParty = investorCapitalCallItem.Investor.InvestorName,
-										   FundName = investorCapitalCallItem.CapitalCall.Fund.FundName,
-										   PaidOn = investorCapitalCallItem.PaidON,
-										   PaymentDate = investorCapitalCallItem.CapitalCall.CapitalCallDate,
-										   Type = "Investor",
-										   ReconcileTypeId = (int)ReconcileType.CapitalCall,
-										   id = investorCapitalCallItem.CapitalCallLineItemID
-									   })
-								.Union(from investorCapitalDistributiontem in context.CapitalDistributionLineItems
-									   where investorCapitalDistributiontem.CapitalDistribution.CapitalDistributionDate >= EntityFunctions.TruncateTime(startDate)
-										&& investorCapitalDistributiontem.CapitalDistribution.CapitalDistributionDate <= EntityFunctions.TruncateTime(endDate)
-										&& investorCapitalDistributiontem.CapitalDistribution.FundID == fundId
-										&& investorCapitalDistributiontem.IsReconciled == false
-									   select new ReconcileReportModel {
-										   Amount = investorCapitalDistributiontem.DistributionAmount,
-										   IsReconciled = investorCapitalDistributiontem.IsReconciled,
-										   CounterParty = investorCapitalDistributiontem.Investor.InvestorName,
-										   FundName = investorCapitalDistributiontem.CapitalDistribution.Fund.FundName,
-										   PaidOn = investorCapitalDistributiontem.PaidON,
-										   PaymentDate = investorCapitalDistributiontem.CapitalDistribution.CapitalDistributionDate,
-										   Type = "Investor",
-										   ReconcileTypeId = (int)ReconcileType.CapitalDistribution,
-										   id = investorCapitalDistributiontem.CapitalDistributionLineItemID
-									   })
-								.ToList();
+				return GetAllReconciles(context, startDate,endDate,fundId,ReconcileType.UnderlyingFundCapitalCall)
+						.Union(GetAllReconciles(context, startDate,endDate,fundId,ReconcileType.UnderlyingFundCashDistribution))
+						.Union(GetAllReconciles(context, startDate,endDate,fundId,ReconcileType.CapitalCall))
+						.Union(GetAllReconciles(context, startDate,endDate,fundId,ReconcileType.CapitalDistribution))
+						.ToList();
 			}
 		}
+
+		public List<ReconcileReportModel> GetAllUnderlyingCapitalCallReconciles(DateTime startDate, DateTime endDate, int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return GetAllReconciles(context, startDate, endDate, fundId, ReconcileType.UnderlyingFundCapitalCall).ToList();
+			}
+		}
+		
+		public List<ReconcileReportModel> GetAllUnderlyingDistributionReconciles(DateTime startDate, DateTime endDate, int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return GetAllReconciles(context, startDate, endDate, fundId, ReconcileType.UnderlyingFundCashDistribution).ToList();
+			}
+		}
+		
+		public List<ReconcileReportModel> GetAllCapitalCallReconciles(DateTime startDate, DateTime endDate, int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return GetAllReconciles(context, startDate, endDate, fundId, ReconcileType.CapitalCall).ToList();
+			}
+		}
+
+		public List<ReconcileReportModel> GetAllCapitalDistributionReconciles(DateTime startDate, DateTime endDate, int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return GetAllReconciles(context, startDate, endDate, fundId, ReconcileType.CapitalDistribution).ToList();
+			}
+		}
+
 		#endregion
 
 		#region UnfundedAdjustment

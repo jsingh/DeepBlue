@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<dynamic>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-{{if Deals.length>1}}
+{{if Deals.length>0}}
 <tr id="ManualUFCD_Deal_${Index}" class="mcc">
 	<td class="ismanual"></td>
 	<td class="childrowcell ismanual" colspan=6>

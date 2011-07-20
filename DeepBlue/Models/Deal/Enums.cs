@@ -31,6 +31,7 @@ namespace DeepBlue.Models.Deal.Enums {
 	}
 
 	public enum ReconcileType {
+		All = 0,
 		UnderlyingFundCapitalCall = 1,
 		UnderlyingFundCashDistribution = 2,
 		CapitalCall = 3,

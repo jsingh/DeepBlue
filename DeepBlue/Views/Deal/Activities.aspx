@@ -771,8 +771,8 @@
 	<%=Html.jQueryDatePicker("FE_Date")%>
 	<%=Html.jQueryDatePicker("SplitDate")%>
 	<%=Html.jQueryDatePicker("ConversionDate")%>
-	<%=Html.jQueryDatePicker("ReconStartDate", new DatePickerOptions { OnSelect = "dealReconcile.submit" })%>
-	<%=Html.jQueryDatePicker("ReconEndDate", new DatePickerOptions { OnSelect = "dealReconcile.submit" })%>
+	<%=Html.jQueryDatePicker("ReconStartDate", new DatePickerOptions { OnSelect = "dealReconcile.changeDate" })%>
+	<%=Html.jQueryDatePicker("ReconEndDate", new DatePickerOptions { OnSelect = "dealReconcile.changeDate" })%>
 	<script type="text/javascript">dealActivity.init();dealActivity.newFLEData=<%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.FundExpenseModel())%>;</script>
 	<script id="CashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("UnderlyingFundCashDistribution", Model.UnderlyingFundCashDistributionModel); %>

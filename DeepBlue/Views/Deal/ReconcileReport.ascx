@@ -15,7 +15,7 @@
 			<div class="rightuarrow">
 			</div>
 		</div>
-		<div class="recon-detail" style="display: block;" issearch="true">
+		<div class="recon-detail" id="RGUFCC" style="display: block;" issearch="true">
 			{{tmpl(UFCCItems) "#ReconcileGridTemplate"}}
 		</div>
 	</div>
@@ -38,7 +38,7 @@
 			<div class="rightuarrow">
 			</div>
 		</div>
-		<div class="recon-detail" style="display: block;" issearch="true">
+		<div class="recon-detail" id="RGUFCD" style="display: block;" issearch="true">
 			{{tmpl(UFCDItems) "#ReconcileGridTemplate"}}
 		</div>
 	</div>
@@ -61,7 +61,7 @@
 			<div class="rightuarrow">
 			</div>
 		</div>
-		<div class="recon-detail" style="display: block;" issearch="true">
+		<div class="recon-detail" id="RGCC" style="display: block;" issearch="true">
 			{{tmpl(CCItems) "#ReconcileGridTemplate"}}
 		</div>
 	</div>
@@ -72,7 +72,7 @@
 	<div class="group">
 		<div class="recon-headerbox" style="display: none;">
 			<div class="title">
-				<span>Capital Call To Investor</span>
+				<span>Distribution To Investor</span>
 			</div>
 		</div>
 		<div style="display: block;" class="recon-expandheader expandsel">
@@ -84,7 +84,7 @@
 			<div class="rightuarrow">
 			</div>
 		</div>
-		<div class="recon-detail" style="display: block;" issearch="true">
+		<div class="recon-detail" id="RGCD" style="display: block;" issearch="true">
 			{{tmpl(CDItems) "#ReconcileGridTemplate"}}
 		</div>
 	</div>

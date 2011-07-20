@@ -17,6 +17,8 @@ namespace DeepBlue.Models.Deal {
 		[Required(ErrorMessage = "Fund is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
 		public int FundId { get; set; }
+
+		public int ReconcileType { get; set; }
 		
 	}
 }

@@ -21,7 +21,7 @@
 		var url="/CapitalCall/FundDetail?id="+id+"&t="+dt.getTime();
 		$("#lnkPCC").attr("href","#");
 		$.getJSON(url,function (data) {
-			$("#lnkPCC").attr("href","/CapitalCall/List/"+id);
+			$("#lnkPCC").attr("href","/CapitalCall/Detail?fundId="+id+"&typeId=1");
 			$("#SpnLoading").hide();
 			$("#CCDetail").show();
 			$("#FundId").val(data.FundId);

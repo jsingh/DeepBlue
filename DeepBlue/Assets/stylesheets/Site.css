@@ -865,7 +865,7 @@ input.ui-autocomplete-loading[type="text"] {
 	font-size: 12px;
 	height: 37px;
 	height: 36px;
-	padding: 0 15px;
+	padding: 0 10px;
 	white-space: nowrap;
 }
 .grid .arow td {
@@ -885,7 +885,7 @@ input.ui-autocomplete-loading[type="text"] {
 }
 .grid thead tr th {
 	font-weight: normal;
-	padding: 10px 15px;
+	padding: 10px;
 	text-align: center;
 }
 .grid tfoot tr td {

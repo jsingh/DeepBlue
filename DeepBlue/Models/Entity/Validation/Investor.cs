@@ -89,8 +89,6 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-
-
 			#endregion
 		}
 

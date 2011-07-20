@@ -89,11 +89,13 @@
     <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Helpers\FormCollectionHelper.cs" />
     <Compile Include="Helpers\JsonSerializer.cs" />
+    <Compile Include="Helpers\MvcTab.cs" />
     <Compile Include="Models\Admin\EditCurrencyModel.cs" />
     <Compile Include="Models\Admin\EditFundExpenseTypeModel.cs" />
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
     <Compile Include="Models\CapitalCall\CapitalCallInvestorDetail.cs" />
     <Compile Include="Models\CapitalCall\CapitalDistributionDetail.cs" />
+    <Compile Include="Models\CapitalCall\CapitalDistributionInvestorDetail.cs" />
     <Compile Include="Models\CapitalCall\DetailModel.cs" />
     <Compile Include="Models\Deal\ActivityDealModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
@@ -767,6 +769,7 @@
     <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
     <Content Include="Assets\javascripts\Currency.js" />
     <Content Include="Assets\javascripts\DealActivityStockDistribution.js" />
+    <Content Include="Assets\javascripts\jquery-1.4.1.min.js" />
     <Content Include="Assets\javascripts\jquery.fileuploader.js" />
     <Content Include="Assets\javascripts\FundExpenseType.js" />
     <Content Include="Assets\javascripts\DealActivityEquitySplit.js" />
@@ -789,6 +792,7 @@
     <Content Include="Assets\javascripts\Industry.js" />
     <Content Include="Assets\javascripts\Geography.js" />
     <Content Include="Assets\javascripts\jquery.formatCurrency.js" />
+    <Content Include="Assets\javascripts\jquery.layoutengine.js" />
     <Content Include="Assets\javascripts\jquery.tooltip.min.js" />
     <Content Include="Assets\javascripts\ReportingFrequency.js" />
     <Content Include="Assets\javascripts\ReportingType.js" />
@@ -802,7 +806,6 @@
     <Content Include="Assets\javascripts\PurchaseType.js" />
     <Content Include="Assets\javascripts\Deal.js" />
     <Content Include="Assets\javascripts\DeepBlue.js" />
-    <Content Include="Assets\javascripts\jquery.layoutengine.js" />
     <Content Include="Assets\javascripts\jquery.PrintArea.js" />
     <Content Include="Assets\javascripts\jquery.tmpl.min.js" />
     <Content Include="Assets\javascripts\CapitalCallManual.js" />
@@ -929,7 +932,6 @@
     <Content Include="Views\CapitalCall\Detail.aspx" />
     <Content Include="Views\CapitalCall\NewCapitalDistribution.aspx" />
     <Content Include="Views\CapitalCall\CapitalDistributionList.aspx" />
-    <Content Include="Views\CapitalCall\List.aspx" />
     <Content Include="Views\CapitalCall\New.aspx" />
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
@@ -949,7 +951,6 @@
     <Content Include="Views\Deal\FixedIncomeDetail.ascx" />
     <Content Include="Views\Deal\FundExpense.ascx" />
     <Content Include="Views\Deal\IssuerDetail.ascx" />
-    <Content Include="Views\Deal\Reconcile.aspx" />
     <Content Include="Views\Deal\SecurityConversion.ascx" />
     <Content Include="Views\Deal\EquitySplit.ascx" />
     <Content Include="Views\Deal\UnderlyingDirectValuation.ascx" />
@@ -1006,7 +1007,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Assets\javascripts\jquery-1.4.1.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\DeepBlue.Master" />
