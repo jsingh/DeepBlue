@@ -9,6 +9,7 @@ using System.Web.Routing;
 using Moq;
 using MbUnit.Framework;
 using DeepBlue.Controllers.Admin;
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Tests.Controllers.Fund {
 	public class FundBase : Base {
@@ -32,7 +33,7 @@ namespace DeepBlue.Tests.Controllers.Fund {
 			DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
 			MockFundRepository.Setup(x => x.GetAllMultiplierTypes()).Returns(new List<MultiplierType>());
 			MockAdminRepository.Setup(x => x.GetAllInvestorTypes()).Returns(new List<InvestorType>());
-			MockAdminRepository.Setup(x => x.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Fund)).Returns(new List<CustomField>());
+			MockAdminRepository.Setup(x => x.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Fund)).Returns(new List<CustomFieldDetail>());
 		}
 
 

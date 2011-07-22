@@ -4,7 +4,12 @@ using System.Linq;
 using System.Web;
 
 namespace DeepBlue.Models.Fund {
+
 	public class FundRateScheduleDetail {
+
+		public FundRateScheduleDetail() {
+			FundRateScheduleTiers = new List<FundRateScheduleTierDetail>();
+		}
 	
 		public int FundRateScheduleId { get; set; }
 
@@ -15,26 +20,8 @@ namespace DeepBlue.Models.Fund {
 		public int RateScheduleId { get; set; }
 
 		public int RateScheduleTypeId { get; set; }
-		
-		public List<FundRateScheduleTier> FundRateScheduleTiers { get; set; }
+
+		public List<FundRateScheduleTierDetail> FundRateScheduleTiers { get; set; }
 	}
 
-	public class FundRateScheduleTier{
-
-		public string Notes { get; set; }
-
-		public int ManagementFeeRateScheduleId { get; set; }
-
-		public int ManagementFeeRateScheduleTierId { get; set; }
-		
-		public DateTime StartDate { get; set; }
-
-		public DateTime EndDate { get; set; }
-
-		public Decimal Rate { get; set; }
-
-		public Decimal FlatFee { get; set; }
-
-		public int MultiplierTypeId { get; set; }
-	}
 }

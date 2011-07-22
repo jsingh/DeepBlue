@@ -43,7 +43,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region CustomField
 		List<CustomField> GetAllCustomFields(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
-		List<CustomField> GetAllCustomFields(int moduleId);
+		List<CustomFieldDetail> GetAllCustomFields(int moduleId);
 		List<CustomFieldValue> GetAllCustomFieldValues(int key);
 		List<MODULE> GetAllModules();
 		List<DataType> GetAllDataTypes();

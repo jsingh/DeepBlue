@@ -19,17 +19,17 @@ namespace DeepBlue.Tests.Models.Deal {
         }
 
         [Test]
-		public void create_a_new_dealUnderlying_with_fundid_passes() {
+		public void create_a_new_dealunderlyingfund_with_fundid_passes() {
 			Assert.IsTrue(IsPropertyValid("UnderlyingFundID"));
         }
 
         [Test]
-		public void create_a_new_dealUnderlying_with_dealid_passes() {
+		public void create_a_new_dealunderlyingfund_with_dealid_passes() {
 			Assert.IsTrue(IsPropertyValid("DealID"));
         }
 
 		[Test]
-		public void create_a_new_dealUnderlying_with_recorddate_passes() {
+		public void create_a_new_dealunderlyingfund_with_recorddate_passes() {
 			Assert.IsTrue(IsPropertyValid("RecordDate"));
 		}
     }

@@ -19,17 +19,17 @@ namespace DeepBlue.Tests.Models.Deal {
         }
 
 		[Test]
-		public void create_a_new_dealUnderlying_without_fundit_throws_error() {
+		public void create_a_new_dealunderlyingfund_without_fundit_throws_error() {
 			Assert.IsFalse(IsPropertyValid("UnderlyingFundID"));
 		}
 
 		[Test]
-		public void create_a_new_dealUnderlying_without_dealid_throws_error() {
+		public void create_a_new_dealunderlyingfund_without_dealid_throws_error() {
 			Assert.IsFalse(IsPropertyValid("DealID"));
 		}
 
 		[Test]
-		public void create_a_new_dealUnderlying_without_recorddate_throws_error() {
+		public void create_a_new_dealunderlyingfund_without_recorddate_throws_error() {
 			Assert.IsFalse(IsPropertyValid("RecordDate"));
 		}
     }

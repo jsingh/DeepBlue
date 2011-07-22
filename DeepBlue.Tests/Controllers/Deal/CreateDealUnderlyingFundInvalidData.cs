@@ -28,8 +28,9 @@ namespace DeepBlue.Tests.Controllers.Deal {
         }
 
         private void SetFormCollection() {
-            base.DefaultController.ValueProvider = SetupValueProvider(new FormCollection());
-			base.ActionResult = base.DefaultController.Create(GetInvalidformCollection());
+			FormCollection invalidFormCollection = GetInvalidformCollection();
+			base.DefaultController.ValueProvider = SetupValueProvider(invalidFormCollection);
+			base.ActionResult = base.DefaultController.CreateDealUnderlyingFund(invalidFormCollection);
         }
         #region Tests where form collection doesnt have the required values. Tests for DataAnnotations
         private bool test_posted_value(string parameterName) {
@@ -73,6 +74,56 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 
 		[Test]
+		public void invalid_DealUnderlying_FundId_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("FundId"));
+		}
+
+		[Test]
+		public void invalid_DealUnderlying_FundId_sets_1_error() {
+			Assert.IsTrue(test_error_count("FundId", 1));
+		}
+
+		[Test]
+		public void invalid_DealUnderlying_FundNAV_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("FundNAV"));
+		}
+
+		[Test]
+		public void invalid_DealUnderlying_FundNAV_sets_1_error() {
+			Assert.IsTrue(test_error_count("FundNAV", 1));
+		}
+ 
+		[Test]
+		public void invalid_DealUnderlying_CommittedAmount_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("CommittedAmount"));
+		}
+
+		[Test]
+		public void invalid_DealUnderlying_CommittedAmount_sets_1_error() {
+			Assert.IsTrue(test_error_count("CommittedAmount", 1));
+		}
+
+		[Test]
+		public void invalid_DealUnderlying_GrossPurchasePrice_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("GrossPurchasePrice"));
+		}
+
+		[Test]
+		public void invalid_DealUnderlying_GrossPurchasePrice_sets_1_error() {
+			Assert.IsTrue(test_error_count("GrossPurchasePrice", 1));
+		}
+
+		[Test]
+		public void invalid_DealUnderlying_ReassignedGPP_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("ReassignedGPP"));
+		}
+
+		[Test]
+		public void invalid_DealUnderlying_ReassignedGPP_sets_1_error() {
+			Assert.IsTrue(test_error_count("ReassignedGPP", 1));
+		}
+
+		[Test]
 		public void invalid_DealUnderlying_recorddate_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("RecordDate"));
 		}
@@ -81,13 +132,6 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		public void invalid_DealUnderlying_recorddate_sets_1_error() {
 			Assert.IsTrue(test_error_count("RecordDate", 1));
 		}
-
-
-        [Test]
-        public void invalid_Fund_results_in_invalid_modelstate() {
-            SetFormCollection();
-            Assert.IsFalse(base.DefaultController.ModelState.IsValid);
-        }
       
         #endregion
 
@@ -108,9 +152,15 @@ namespace DeepBlue.Tests.Controllers.Deal {
    
         private FormCollection GetInvalidformCollection() {
             FormCollection formCollection = new FormCollection();
-			formCollection.Add("UnderlyingFundID", string.Empty);
-			formCollection.Add("DealID", string.Empty);
+			formCollection.Add("DealId", string.Empty);
+			formCollection.Add("FundId", string.Empty);
+			formCollection.Add("UnderlyingFundId", string.Empty);
 			formCollection.Add("RecordDate", string.Empty);
+			formCollection.Add("FundNAV", "0");
+			formCollection.Add("Percent", "0");
+			formCollection.Add("CommittedAmount", "0");
+			formCollection.Add("GrossPurchasePrice", "0");
+			formCollection.Add("ReassignedGPP", "-1");
             return formCollection;
         }
     }

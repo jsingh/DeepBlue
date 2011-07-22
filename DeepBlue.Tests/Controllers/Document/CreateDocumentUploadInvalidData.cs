@@ -66,37 +66,6 @@ namespace DeepBlue.Tests.Controllers.Document {
 			Assert.IsTrue(test_error_count("DocumentDate", 1));
 		}
 
-		[Test]
-		public void invalid_Entity_id_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("EntityID"));
-		}
-
-		[Test]
-		public void invalid_Entity_id_sets_1_error() {
-			Assert.IsTrue(test_error_count("EntityID", 1));
-		}
-
-		[Test]
-		public void invalid_Createdby_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("CreatedBy"));
-		}
-
-		[Test]
-		public void invalid_Createdby_sets_1_error() {
-			Assert.IsTrue(test_error_count("CreatedBy", 1));
-		}
-
-		[Test]
-		public void invalid_Createddate_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("CreatedDate"));
-		}
-
-		[Test]
-		public void invalid_Createddate_sets_1_error() {
-			Assert.IsTrue(test_error_count("CreatedDate", 1));
-		}
-
-
         [Test]
         public void invalid_Document_results_in_invalid_modelstate() {
             SetFormCollection();

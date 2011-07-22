@@ -175,25 +175,7 @@ namespace DeepBlue.Tests.Controllers.Investor {
         }
 
         #endregion
-
-        //private void RequiredFieldDataMissing(CreateModel model) {
-        //    model.MemberName = model.Alias = model.Phone = model.Email = model.Address1 = model.City = model.Zip = string.Empty;
-        //}
-
-        //private void RequiredFieldDataMissingFromForm(CreateModel model) {
-        //    model.MemberName = model.Alias = model.Phone = model.Email = model.Address1 = model.City = model.Zip = string.Empty;
-        //}
-
-        //private void RequiredFieldDataMissingFromForm() {
-        //    base.DefaultController.ControllerContext.HttpContext.Request.Form.Add("MemberName", string.Empty);
-        //    base.DefaultController.ControllerContext.HttpContext.Request.Form.Add("Alias", string.Empty);
-        //    base.DefaultController.ControllerContext.HttpContext.Request.Form.Add("Phone", string.Empty);
-        //    base.DefaultController.ControllerContext.HttpContext.Request.Form.Add("Email", string.Empty);
-        //    base.DefaultController.ControllerContext.HttpContext.Request.Form.Add("Address1", string.Empty);
-        //    base.DefaultController.ControllerContext.HttpContext.Request.Form.Add("City", string.Empty);
-        //    base.DefaultController.ControllerContext.HttpContext.Request.Form.Add("Zip", string.Empty);
-        //}
-
+ 
         private FormCollection GetInvalidformCollection() {
             FormCollection formCollection = new FormCollection();
             formCollection.Add("InvestorName", string.Empty);

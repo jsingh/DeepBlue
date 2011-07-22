@@ -31,26 +31,26 @@ namespace DeepBlue.Tests.Models.Deal {
             return IsModelValid(out errorMsg, out errorCount, propertyName);
         }
 
-        protected void Create_Data(DeepBlue.Models.Entity.DealUnderlyingFund dealUnderlying, bool ifValid) {
-			RequiredFieldDataMissing(dealUnderlying, ifValid);
-			StringLengthInvalidData(dealUnderlying, ifValid);
+        protected void Create_Data(DeepBlue.Models.Entity.DealUnderlyingFund dealUnderlyingFund, bool ifValid) {
+			RequiredFieldDataMissing(dealUnderlyingFund, ifValid);
+			StringLengthInvalidData(dealUnderlyingFund, ifValid);
 
         }
 
         #region DealSeller
-		private void RequiredFieldDataMissing(DeepBlue.Models.Entity.DealUnderlyingFund dealUnderlying, bool ifValidData) {
+		private void RequiredFieldDataMissing(DeepBlue.Models.Entity.DealUnderlyingFund dealUnderlyingFund, bool ifValidData) {
             if (ifValidData) {
-				dealUnderlying.UnderlyingFundID  = 1;
-				dealUnderlying.DealID = 1;
-				dealUnderlying.RecordDate = DateTime.Now;
+				dealUnderlyingFund.UnderlyingFundID  = 1;
+				dealUnderlyingFund.DealID = 1;
+				dealUnderlyingFund.RecordDate = DateTime.Now;
             } else {
-				dealUnderlying.UnderlyingFundID = 0;
-				dealUnderlying.DealID = 0;
-				dealUnderlying.RecordDate = DateTime.MinValue;
+				dealUnderlyingFund.UnderlyingFundID = 0;
+				dealUnderlyingFund.DealID = 0;
+				dealUnderlyingFund.RecordDate = DateTime.MinValue;
             }
         }
 
-		private void StringLengthInvalidData(DeepBlue.Models.Entity.DealUnderlyingFund dealUnderlying, bool ifValidData) {
+		private void StringLengthInvalidData(DeepBlue.Models.Entity.DealUnderlyingFund dealUnderlyingFund, bool ifValidData) {
             int delta = 0;
             if (!ifValidData) {
                 delta = 1;

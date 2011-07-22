@@ -17,6 +17,8 @@ namespace DeepBlue.Models.CapitalCall {
 
 		public decimal? CapitalCommitted { get; set; }
 
+		public decimal? CapitalCalled { get; set; }
+
 		public decimal? UnfundedAmount { get; set; }
 
 		public decimal? ManagementFees { get; set; }

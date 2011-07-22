@@ -14,6 +14,9 @@ namespace DeepBlue.Controllers.Fund {
 		List<FundListModel> GetAllFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		Helpers.FundLists GetAllFunds(int pageIndex, int pageSize);
 		Models.Entity.Fund FindFund(int fundId);
+
+		FundDetail FindFundDetail(int fundId);
+
 		List<AutoCompleteList> FindFunds(string fundName);
 		List<AutoCompleteList> FindDealFunds(int underlyingFundId, string fundName);
 		bool TaxIdAvailable(string taxId, int fundId);

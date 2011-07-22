@@ -28,8 +28,8 @@ namespace DeepBlue.Tests.Controllers.Deal {
         }
 
         private void SetFormCollection() {
-            base.DefaultController.ValueProvider = SetupValueProvider(new FormCollection());
-			base.ActionResult = base.DefaultController.Create(GetInvalidformCollection());
+			base.DefaultController.ValueProvider = SetupValueProvider(GetInvalidformCollection());
+			base.ActionResult = base.DefaultController.CreateSellerInfo(GetInvalidformCollection());
         }
         #region Tests where form collection doesnt have the required values. Tests for DataAnnotations
         private bool test_posted_value(string parameterName) {
@@ -81,8 +81,7 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		public void invalid_Dealseller_fax_sets_1_error() {
 			Assert.IsTrue(test_error_count("Fax", 1));
 		}
-
-
+		
 		[Test]
 		public void invalid_Dealseller_name_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("SellerName"));
@@ -113,6 +112,16 @@ namespace DeepBlue.Tests.Controllers.Deal {
 			Assert.IsTrue(test_error_count("Email", 1));
 		}
 
+		[Test]
+		public void invalid_Dealseller_Deal_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("DealId"));
+		}
+
+		[Test]
+		public void invalid_Dealseller_Deal_sets_1_error() {
+			Assert.IsTrue(test_error_count("DealId", 1));
+		}
+
 
         [Test]
         public void invalid_Fund_results_in_invalid_modelstate() {
@@ -138,13 +147,15 @@ namespace DeepBlue.Tests.Controllers.Deal {
    
         private FormCollection GetInvalidformCollection() {
             FormCollection formCollection = new FormCollection();
-			formCollection.Add("ContactName", string.Empty);
-			formCollection.Add("Phone", string.Empty);
-			formCollection.Add("Fax", string.Empty);
-			formCollection.Add("SellerName", string.Empty);
-			formCollection.Add("CompanyName", string.Empty);
-			formCollection.Add("Email", string.Empty);
+			formCollection.Add("ContactName", GetString(101));
+			formCollection.Add("Phone", GetString(201));
+			formCollection.Add("Fax", GetString(201));
+			formCollection.Add("SellerName",  GetString(31));
+			formCollection.Add("CompanyName", GetString(201));
+			formCollection.Add("Email", GetString(201));
+			formCollection.Add("DealId", string.Empty);
             return formCollection;
         }
+		 
     }
 }

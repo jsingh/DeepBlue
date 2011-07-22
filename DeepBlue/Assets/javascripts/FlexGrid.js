@@ -382,7 +382,7 @@
 		try {
 			//$(g.gDiv).jqTransform();
 		} catch(e) { alert(e); }
-		$(window).resize(function () { $(g.gDiv).css("width","");g.resize(); });
+		//$(window).resize(function () { $(g.gDiv).css("width","");g.resize(); });
 		return t;
 	};
 

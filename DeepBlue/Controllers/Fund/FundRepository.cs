@@ -119,8 +119,52 @@ namespace DeepBlue.Controllers.Fund {
 			}
 		}
 
+		public FundDetail FindFundDetail(int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fund in context.Funds
+						where fund.FundID == fundId
+						select new FundDetail {
+							FundName = fund.FundName,
+							TaxId = fund.TaxID,
+							InceptionDate = fund.InceptionDate,
+							ScheduleTerminationDate = fund.ScheduleTerminationDate,
+							FinalTerminationDate = fund.FinalTerminationDate,
+							NumofAutoExtensions = fund.NumofAutoExtensions,
+							DateClawbackTriggered = fund.DateClawbackTriggered,
+							RecycleProvision = fund.RecycleProvision,
+							MgmtFeesCatchUpDate = fund.MgmtFeesCatchUpDate,
+							Carry = fund.Carry,
+							FundId = fund.FundID,
+							FundRateSchedules = (from rateSchedule in fund.FundRateSchedules
+												 select new FundRateScheduleDetail {
+													 FundId = fund.FundID,
+													 FundRateScheduleId = rateSchedule.FundRateScheduleID,
+													 InvestorTypeId = rateSchedule.InvestorTypeID,
+													 RateScheduleId = rateSchedule.RateScheduleID,
+													 RateScheduleTypeId = rateSchedule.RateScheduleTypeID,
+												 }),
+							BankDetail = (from fundAccount in fund.FundAccounts
+										  select new FundBankDetail {
+											  ABANumber = fundAccount.Routing,
+											  AccountNo = fundAccount.Account,
+											  AccountNumberCash = fundAccount.AccountNumberCash,
+											  AccountOf = fundAccount.AccountOf,
+											  Attention = fundAccount.Attention,
+											  BankName = fundAccount.BankName,
+											  FFCNumber = fundAccount.FFCNumber,
+											  IBAN = fundAccount.IBAN,
+											  Swift = fundAccount.SWIFT,
+											  Fax = fundAccount.Fax,
+											  Reference = fundAccount.Reference,
+											  AccountId = fundAccount.FundAccountID,
+											  Telephone = fundAccount.Phone
+										  })
+						}).SingleOrDefault();
+			}
+		}
+
 		#endregion
-		
+
 		#region Fund Rate Schedules
 
 		public List<FundRateSchedule> GetAllFundRateSchdules(int fundId) {
@@ -189,6 +233,9 @@ namespace DeepBlue.Controllers.Fund {
 		}
 
 		#endregion
+
+
+
 
 	}
 }

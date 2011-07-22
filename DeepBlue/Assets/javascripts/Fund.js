@@ -1,34 +1,30 @@
 ﻿var fund={
-	rowIndex: 0,
-	rateDetailHTML: '',
-	rateTierFirstRow: null,
-	pageInit: false,
-	init: function () {
-		$(".ddlist").each(function () {
-			this.value=$(this).attr("val");
-			if(this.id=="MultiplierTypeId")
-				$(this).change();
-		});
-		$(".rate-detail .tblrateschedule").each(function () {
-			$(this).flexigrid();
-			$("tbody tr:first",this).each(function () {
+	rowIndex: 0
+	,index: -1
+	,formIndex: 0
+	,rateDetailHTML: ''
+	,rateTierFirstRow: null
+	,pageInit: false
+	,newFundData: null
+	,init: function () {
+		fund.loadTemplate(fund.newFundData,$("#AddNewFund"));
+	}
+	,setup: function (target) {
+		setTimeout(function () {
+			jHelper.checkValAttr(target);
+			$(".ddlist",target).each(function () {
+				if($(this).hasClass("investortype")==false) {
+					$(this).change();
+				}
+			});
+			$(".datefield",target).each(function () {
 				fund.applyDatePicker(this);
 			});
-		});
-		$(".rate-detail").each(function () {
-			var tbl=$(".tblrateschedule",this);
-			$("tr:first",tbl).each(function () {
-				$("td",this).each(function () {
-					var txt=$(":input[inputname='StartDate']",this).get(0);
-					if(txt) {
-						fund.dateChecking(txt);
-					}
-				});
+			$(".rate-grid",target).each(function () {
+				var txt=$("#RateScheduleList .datefield",this).get(0);
+				if(txt) { fund.dateChecking(txt); }
 			});
 		});
-		fund.rateDetailHTML=$(".rate-schedules .rate-detail:first").html();
-		jHelper.resizeIframe();
-		this.pageInit=true;
 	}
 	,resetValues: function (div) {
 		var tempTable=$(".tblrateschedule:first",div);
@@ -45,40 +41,93 @@
 				this.value="0";
 		});
 	}
-	,add: function () {
-		var dt=new Date();
-		var url="/Fund/New/?t="+dt.getTime();
-		this.open(url);
+	,selectTab: function (that,detailid) {
+		$(".section-tab").removeClass("section-tab-sel");
+		$(".section-det").hide();
+		$(that).addClass("section-tab-sel");
+		$("#"+detailid).show();
 	}
-	,edit: function (id) {
-		var dt=new Date();
-		var url="/Fund/Edit/"+id+"?t="+dt.getTime();
-		this.open(url);
-	}
-	,open: function (url) {
-		jHelper.createDialog(url,{
-			title: "Fund",
-			autoOpen: true,
-			width: 850,
-			modal: true,
-			position: 'top',
-			autoResize: true
+	,expand: function () {
+		$(".headerbox").click(function () {
+			$(".headerbox").show();
+			$(".expandheader").hide();
+			$(".detail").hide();
+			$(this).hide();
+			var parent=$(this).parent();
+			$(".expandheader",parent).show();
+			var detail=$(".detail",parent);
+			var display=detail.attr("issearch");
+			detail.show();
+		});
+		$(".expandtitle",".expandheader").click(function () {
+			var expandheader=$(this).parents(".expandheader:first");
+			var parent=$(expandheader).parent();
+			expandheader.hide();
+			var detail=$(".detail",parent);
+			detail.hide();
+			$(".headerbox",parent).show();
 		});
 	}
-	,onSubmit: function (formId) {
-		if(jHelper.formSubmit(formId,false)) {
-			var message="";
-			var UnfundedAmount=parseFloat($("#UnfundedAmount",frm).val());
-			var CommitmentAmount=parseFloat($("#CommitmentAmount",frm).val());
-			if(isNaN(UnfundedAmount)) { UnfundedAmount=0; }
-			if(isNaN(CommitmentAmount)) { CommitmentAmount=0; }
-			if(CommitmentAmount>UnfundedAmount) { message+="Transaction Amount should be less than Unfunded Commitment Amount\n"; }
-			if(message!="") {
-				alert(message);
-				return false;
-			}
-			return fund.onFundRateValidation();
+	,loadTemplate: function (data,target) {
+		target.empty();
+		$("#FundAddTemplate").tmpl(data).appendTo(target);
+		fund.expand();
+		fund.setup(target);
+	}
+	,deleteTab: function (id,isConfirm) {
+		var isRemove=true;
+		if(isConfirm) {
+			isRemove=confirm("Are you sure you want to remove this fund?");
 		}
+		if(isRemove) {
+			$("#Tab"+id).remove();
+			$("#Edit"+id).remove();
+			$("#tabdel"+id).remove();
+			$("#TabFundGrid").click();
+		}
+	}
+	,edit: function (id,fundName) {
+		var addNewFund=$("#AddNewFund");
+		var addNewFundTab=$("#TabAddNewFund");
+		var data={ id: id,FundName: fundName };
+		var tab=$("#Tab"+id);
+		var editbox=$("#Edit"+id);
+		if(tab.get(0)) {
+			addNewFundTab.after(tab);
+			addNewFund.after(editbox);
+		} else {
+			$("#SectionTemplate").tmpl(data).insertAfter(addNewFund);
+			$("#TabTemplate").tmpl(data).insertAfter(addNewFundTab);
+			this.open(id,$("#Edit"+id));
+		}
+		$("#Tab"+id).click();
+	}
+	,open: function (id,target) {
+		var dt=new Date();
+		var url="/Fund/FindFund/"+id+"?t="+dt.getTime();
+		target.html("<center><br/><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</center>");
+		$.getJSON(url,function (data) {
+			fund.loadTemplate(data,target);
+		});
+	}
+	,save: function (imgbtn) {
+		var frm=$(imgbtn).parents("form:first");
+		var loading=$("#UpdateLoading",frm);
+		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		var fundId=parseInt($("#FundId",frm).val());
+		$.post("/Fund/Create",$(frm).serializeArray(),function (data) {
+			if($.trim(data)!="") {
+				alert(data);
+			} else {
+				alert("Fund Saved.");
+				$("#FundList").flexReload();
+				if(fundId==0) {
+					fund.init();
+				} else {
+					fund.deleteTab(fundId,false);
+				}
+			}
+		});
 	}
 	,changeRS: function (ddl) {
 		this.checkChange(ddl);
@@ -162,49 +211,43 @@
 		else
 			parent.fund.closeDialog(true);
 	}
-	,applyDatePicker: function (tr) {
-		$(":input",tr).each(function () {
-			if($(this).attr("type")=="text") {
-				var name=$(this).attr("name");
-				if(name.indexOf("StartDate")> -1||name.indexOf("EndDate")> -1) {
-					this.className="";
-					this.id=fund.rowIndex;
-					fund.rowIndex++;
-					$(this).datepicker({ changeMonth: true,changeYear: true });
-				}
-			}
-		});
+	,applyDatePicker: function (txt) {
+		fund.index=fund.index+1;
+		txt.id="dp_"+fund.index;
+		$(txt).datepicker({ changeMonth: true,changeYear: true });
 	}
-	,addRateSchedule: function () {
-		var FundRateSchedulesCount=document.getElementById("FundRateSchedulesCount");
-		FundRateSchedulesCount.value=parseInt(FundRateSchedulesCount.value)+1;
-		var newRateDetail=document.createElement("div");
-		newRateDetail.className="rate-detail";
-		$(".rate-schedules").append(newRateDetail);
-		newRateDetail.innerHTML=fund.rateDetailHTML.replace(/1_/g,(FundRateSchedulesCount.value)+"_");
-		this.resetValues(newRateDetail);
-		$("#FundRateScheduleId",newRateDetail).val("0");
-		$("#InvestorTypeId",newRateDetail).val("0");
-		$("#IsDelete",newRateDetail).val("");
-		$(newRateDetail).show();
-		var tbl=$(".tblrateschedule",newRateDetail);
-		$("#TiersCount",newRateDetail).val($("tr",tbl).length-1);
-		$("tbody tr:first",tbl).each(function () {
-			fund.applyDatePicker(this);
-		});
-		jHelper.resizeIframe();
+	,addRateSchedule: function (that) {
+		var frm=$(that).parents("form:first");
+		var rateSchdules=$("#RateSchdules",frm);
+		var cnt=parseInt($("#FundRateSchedulesCount").val());
+		var data={ index: cnt,FRS: fund.newFundData.FundRateSchedules[0] };
+		$("#FundRateSchduleTemplate").tmpl(data).appendTo(rateSchdules);
+		var newRateDetail=$(".rate-detail:last",frm);
+		cnt=cnt+1;
+		$("#FundRateSchedulesCount").val(cnt);
+		$("#AddNewIVType",frm).hide();
+		fund.setup(newRateDetail);
 	}
 	,addNewRow: function (addlink) {
 		var tbl=$(addlink).parents("table:first");
-		this.addRow(tbl);
-		var tr=$("tr:first",tbl);
-		var txt=$(":input[inputname='StartDate']",tr).get(0);
-		this.dateChecking(txt);
-		jHelper.resizeIframe();
+		var grid=$(tbl).parent();
+		var index=$("#ScheduleIndex",grid).val();
+		var lastrow=$("tbody tr:last",tbl);
+		var cnt=$("tbody tr",tbl).length;
+		var data={ index: index,rowIndex: (cnt+1),tier: fund.newFundData.FundRateSchedules[0].FundRateScheduleTiers[0] };
+		$("#FundRateSchduleTierTemplate").tmpl(data).insertAfter(lastrow);
+		$("#TiersCount",grid).val(cnt);
+		var newRow=$("tbody tr:last",tbl);
+		var txt=$(".datefield",tbl).get(0);
+		if(txt) {
+			fund.dateChecking(txt);
+			fund.applyDatePicker(txt);
+		}
 	}
 	,changeInvestorType: function (invType) {
+		var frm=$(invType).parents("form:first");
 		if(invType.value!="0") {
-			$(".investortype").each(function () {
+			$(".investortype",frm).each(function () {
 				if($(this).attr("name")!=$(invType).attr("name")) {
 					if(this.value==invType.value) {
 						alert("Investor type already chosen");
@@ -217,16 +260,23 @@
 	,deleteInvestorType: function (img) {
 		if(confirm("Are you sure you want to delete this rate schedule?")) {
 			var rateDetail=$(img).parents(".rate-detail:first");
+			var frm=$(rateDetail).parents("form:first");
 			var FundRateScheduleId=$("#FundRateScheduleId",rateDetail).val();
 			if(parseInt(FundRateScheduleId)>0) {
 				$.get("/Fund/DeleteFundRateSchedule/?id="+FundRateScheduleId,function (data) {
 					$(rateDetail).remove();
-					jHelper.resizeIframe();
+					fund.checkIVType(frm);
 				});
 			} else {
 				$(rateDetail).remove();
-				jHelper.resizeIframe();
+				fund.checkIVType(frm);
 			}
+		}
+	}
+	,checkIVType: function (frm) {
+		var cnt=$(".rate-detail",frm).length;
+		if(cnt<=0) {
+			$("#AddNewIVType",frm).show();
 		}
 	}
     ,dateChecking: function (txt) {
@@ -236,11 +286,12 @@
     			var tbl=$(tr).parents("table:first");
     			var eDate=Date.DateAdd("yyyy",1,txt.value);
     			var endDate=Date.DateAdd("d",-1,this.formatDate(eDate));
+
     			$("#EndDate",tr).val(this.formatDate(endDate));
     			$("#SpnEndDate",tr).html(this.formatDate(endDate));
     			this.addAdditionalRow(tbl,9-$("tr",tbl).length);
     			var index=0;
-    			$("tr",tbl).each(function () {
+    			$("tbody tr",tbl).each(function () {
     				if(index!=0) {
     					var trPrev=$(this).prev();
     					var ewDate=$("#EndDate",trPrev).val();
@@ -248,7 +299,6 @@
     				}
     				index++;
     			});
-    			jHelper.resizeIframe();
     		}
     		return true;
     	} catch(e) {
@@ -262,43 +312,7 @@
 		}
 	}
 	,addRow: function (tbl) {
-		var rateDetail=tbl.parents(".rate-detail:first");
-		var InvestorTypeId=$("#InvestorTypeId",rateDetail);
-		var index=InvestorTypeId.attr("name").replace("_InvestorTypeId","");
-		var TiersHidden=$("#TiersCount",rateDetail).get(0);
-		var TiersCount=parseInt($("tr",tbl).length);
-		var tr=document.createElement("tr");
-		var trLast=$("tbody tr:eq(7)",tbl).get(0);
-		if(trLast) {
-			$("td",trLast).each(function () {
-				var td=document.createElement("td");
-				td.innerHTML=this.innerHTML.replace(/\$8\$/g,"$"+(TiersCount)+"$");
-				var year="Year "+TiersCount;
-				$("#SpnName",td).html(year);
-				$("#Name",td).val(year);
-				$("input",td).each(function () {
-					if($(this).attr("name").indexOf("StartDate")>0) {
-						var hdn=document.createElement("input");
-						hdn.type="hidden";hdn.value="";hdn.name=this.name;hdn.id="StartDate";
-						var spn=document.createElement("span");
-						spn.id="SpnStartDate";spn.innerHTML="";
-						$(this).remove();
-						$("span",td).remove();
-						$("div",td).append(hdn).append(spn);
-					}
-				});
-				$("input",td).val("");
-				$("#ManagementFeeRateScheduleTierId",td).val("0");
-				$("#ManagementFeeRateScheduleId",td).val("0");
-				$("select",td).val("0");
-				$("textarea",td).val("");
-				$(tr).append(td);
-			});
-			$(tbl).append(tr);
-		}
-		if(TiersHidden) {
-			TiersHidden.value=TiersCount;
-		}
+
 	}
 	,assignDates: function (tr,startDate) {
 		var sDate="";var eDate="";var endDate="";
@@ -322,7 +336,29 @@
 	,onRowBound: function (tr,data) {
 		var lastcell=$("td:last div",tr);
 		lastcell.html("<img id='Edit' class='gbutton' src='/Assets/images/Edit.png'/>");
-		$("#Edit",lastcell).click(function () { fund.edit(data.cell[0]); });
-		$("td:not(:last)",tr).click(function () { fund.edit(data.cell[0]); });
+		$("#Edit",lastcell).click(function () { fund.edit(data.cell[0],data.cell[1]); });
+		$("td:not(:last)",tr).click(function () { fund.edit(data.cell[0],data.cell[1]); });
 	}
 }
+$.extend(window,{
+	getTier: function (index,rowindex,item) { var data={ index: index,rowIndex: rowindex,tier: item };return data; }
+	,getFundRate: function (index,frs) { var data={ index: index,FRS: frs };return data; }
+	,getFormIndex: function () { fund.formIndex++;return fund.formIndex; }
+	,getCustomFieldValue: function (values,customFieldId,dataTypeId) {
+		var i=0;var value="";
+		if(values!=null) {
+			for(i=0;i<values.length;i++) {
+				if(values[i].CustomFieldId==customFieldId&&values[i].DataTypeId==dataTypeId) {
+					switch(dataTypeId.toString()) {
+						case "1": value=checkNullOrZero(values[i].IntegerValue);break;
+						case "2": value=values[i].TextValue;break;
+						case "3": value=values[i].BooleanValue;break;
+						case "4": value=values[i].DateValue;break;
+						case "5": value=checkNullOrZero(values[i].CurrencyValue);break;
+					}
+				}
+			}
+		}
+		return value;
+	}
+});

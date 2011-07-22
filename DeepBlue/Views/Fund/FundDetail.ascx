@@ -1,271 +1,220 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Fund.FundDetail>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.FundName) %>
+<%using (Html.Form(new { @id = "${getFormIndex()}", @onsubmit = "return false;" })) {%>
+<div class="fund-box">
+	<div class="fund-box-titie">
+		Fund Details</div>
 </div>
-<div class="editor-field">
-	<%: Html.TextBoxFor(model => model.FundName) %>
-	<%: Html.ValidationMessageFor(model => model.FundName) %>
+<div class="line">
 </div>
-<div class="editor-label" style="clear: right">
-	<%: Html.LabelFor(model => model.TaxId) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBoxFor(model => model.TaxId) %>
-	<%: Html.ValidationMessageFor(model => model.TaxId) %>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.InceptionDate) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBox("InceptionDate",(Model.InceptionDate.Year > 1900 ? Model.InceptionDate.ToString("MM/dd/yyyy") : ""),new { @id = "InceptionDate" }) %>
-	<%: Html.ValidationMessageFor(model => model.InceptionDate) %>
-</div>
-<div class="editor-label" style="clear: right">
-	<%: Html.LabelFor(model => model.ScheduleTerminationDate) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBox("ScheduleTerminationDate", ((Model.ScheduleTerminationDate ?? Convert.ToDateTime("01/01/1900")).Year > 1900 ? (Model.ScheduleTerminationDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy") : ""), new { @id = "ScheduleTerminationDate" })%>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.FinalTerminationDate) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBox("FinalTerminationDate", ((Model.FinalTerminationDate ?? Convert.ToDateTime("01/01/1900")).Year > 1900 ? (Model.FinalTerminationDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy") : ""), new { @id = "FinalTerminationDate" })%>
-</div>
-<div class="editor-label" style="clear: right">
-	<%: Html.LabelFor(model => model.NumofAutoExtensions) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBox("NumofAutoExtensions", ((Model.NumofAutoExtensions ?? 0) > 0 ? (Model.NumofAutoExtensions ?? 0).ToString() : ""), new { @id = "NumofAutoExtensions", @onkeypress = "return jHelper.isNumeric(event);" })%>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.DateClawbackTriggered) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBox("DateClawbackTriggered", ((Model.DateClawbackTriggered ?? Convert.ToDateTime("01/01/1900")).Year > 1900 ? (Model.DateClawbackTriggered ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy") : ""), new { @id = "DateClawbackTriggered" })%>
-</div>
-<div class="editor-label" style="clear: right">
-	<%: Html.LabelFor(model => model.RecycleProvision) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBox("RecycleProvision", ((Model.RecycleProvision ?? 0) > 0 ? (Model.RecycleProvision ?? 0).ToString() : ""), new { @id = "RecycleProvision", @onkeypress = "return jHelper.isNumeric(event);" })%>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.MgmtFeesCatchUpDate) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBox("MgmtFeesCatchUpDate", ((Model.MgmtFeesCatchUpDate ?? Convert.ToDateTime("01/01/1900")).Year > 1900 ? (Model.MgmtFeesCatchUpDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy") : ""), new { @id = "MgmtFeesCatchUpDate" })%>
-</div>
-<div class="editor-label" style="clear: right">
-	<%: Html.LabelFor(model => model.Carry) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBox("Carry", ((Model.Carry ?? 0) > 0 ? (Model.Carry ?? 0).ToString() : ""), new { @id = "Carry", @onkeypress = "return jHelper.isNumeric(event);" })%>
-</div>
-<% Html.RenderPartial("CustomFieldList", Model.CustomField);%>
-<%: Html.Hidden("FundRateSchedulesCount", Model.FundRateSchedules.Count, new { @id = "FundRateSchedulesCount" })%>
-<div class="rate-sch-main">
-	<div class="rate-header">
-		<div class="left">
-			<b>Rate Schedules</b></div>
-		<div class="right">
-			<%:Html.Anchor(Html.Image("add_icon.png").ToHtmlString()+"&nbsp;Add Investor Type","javascript:fund.addRateSchedule(this);",new { @style = "font-size:11px" })%></div>
+<div class="fund-box-det">
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.FundName) %>
 	</div>
-	<div class="rate-schedules">
-		<% int index = 1;
-	 foreach (DeepBlue.Models.Fund.FundRateScheduleDetail rateSchedule in Model.FundRateSchedules) {%>
-		<div class="rate-detail">
-			<%: Html.Hidden(index.ToString() + "_Tiers",rateSchedule.FundRateScheduleTiers.Count, new { @id = "TiersCount" })%>
-			<%: Html.Hidden(index.ToString() + "_IsDelete",Model.FundRateSchedules.Count,new { @id = "IsDelete" })%>
-			<%: Html.Hidden(index.ToString() + "_FundRateScheduleId", rateSchedule.FundRateScheduleId, new { @id = "FundRateScheduleId" })%>
-			<div class="editor-label" style="width: 97%">
-				<div style="float: left">
-					<%: Html.Label("Investor:") %>&nbsp;<%: Html.DropDownList(index.ToString() + "_" + "InvestorTypeId", Model.InvestorTypes,new { @id = "InvestorTypeId", @onchange="javascript:fund.changeInvestorType(this);", @class="investortype ddlist" , @val = rateSchedule.InvestorTypeId.ToString() } )%>
-				</div>
-				<div id="DeleteRateSchedule" style="float: right;">
-					<%:Html.Anchor(Html.Image("largedel.png").ToHtmlString() + "&nbsp;Delete Rate Schedule", "#", new { @onclick = "javascript:fund.deleteInvestorType(this);" })%>
-				</div>
-			</div>
-			<div class="rate-grid" style="width: 100%">
-				<%: Html.Hidden(index.ToString() + "_IsScheduleChange", "", new { @id = "IsScheduleChange" })%>
-				<table cellpadding="0" cellspacing="0" border="0" class="tblrateschedule" id="RateScheduleList">
-					<thead>
-						<tr>
-							<th style="width: 8%" align="center">
-								Name
-							</th>
-							<th style="width: 12%">
-								From Date
-							</th>
-							<th style="width: 12%">
-								To Date
-							</th>
-							<th style="width: 17%">
-								Fee Calculation Type
-							</th>
-							<th style="width: 15%">
-								Rate %
-							</th>
-							<th style="width: 18%">
-								Flat Fee
-							</th>
-							<th style="width: 18%">
-								Comments
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% int rowIndex = 1;
-		 foreach (DeepBlue.Models.Fund.FundRateScheduleTier tier in rateSchedule.FundRateScheduleTiers) {%>
-						<tr>
-							<td style="width: 8%">
-								<div>
-									<%: Html.Span("Year " + rowIndex.ToString(), new { @id = "SpnName" })%></div>
-							</td>
-							<td style="width: 12%">
-								<div>
-									<%if (rowIndex == 1) {%>
-									<%: Html.TextBox(index.ToString() + "_$" + rowIndex.ToString() +"$StartDate", (tier.StartDate.Year > 1900 ? tier.StartDate.ToString("MM/dd/yyyy") : string.Empty),new { @id="StartDate", @inputname="StartDate",  @onchange = "javascript:fund.dateChecking(this);fund.checkChange(this);" })%>
-									<%}
-		   else {%>
-									<%: Html.Hidden(index.ToString() + "_$" + rowIndex.ToString() + "$StartDate", (tier.StartDate.Year > 1900 ? tier.StartDate.ToString("MM/dd/yyyy") : string.Empty), new { @id = "StartDate" })%>
-									<%: Html.Span( (tier.EndDate.Year > 1900 ? tier.EndDate.ToString("MM/dd/yyyy") : string.Empty),new { @id="SpnStartDate" })%>
-									<%}%>
-								</div>
-							</td>
-							<td style="width: 12%">
-								<div>
-									<%: Html.Hidden(index.ToString() + "_$" + rowIndex.ToString() + "$EndDate", (tier.EndDate.Year > 1900 ? tier.EndDate.ToString("MM/dd/yyyy") : string.Empty), new { @id = "EndDate" })%><%: Html.Span( (tier.EndDate.Year > 1900 ? tier.EndDate.ToString("MM/dd/yyyy") : string.Empty),new { @id="SpnEndDate" })%></div>
-							</td>
-							<td style="width: 17%">
-								<div>
-									<%: Html.DropDownList(index.ToString() + "_$" + rowIndex.ToString() + "$MultiplierTypeId", Model.MultiplierTypes, new { @id = "MultiplierTypeId", @class = "ddlist", @val = tier.MultiplierTypeId.ToString(), @onchange = "return fund.changeRS(this);" })%></div>
-							</td>
-							<td style="width: 15%">
-								<div>
-									<%: Html.TextBox(index.ToString() + "_$" + rowIndex.ToString() + "$Rate", (tier.Rate > 0 ? tier.Rate.ToString("0.00") : string.Empty), new { @id = "Rate", @onkeypress = "return jHelper.isCurrency(event);", @onchange = "javascript:fund.changeRate(this);fund.checkChange(this);" })%></div>
-							</td>
-							<td style="width: 18%">
-								<div>
-									<%: Html.TextBox(index.ToString() + "_$" + rowIndex.ToString() + "$FlatFee", (tier.FlatFee > 0 ? tier.FlatFee.ToString("0.00") : string.Empty), new { @id = "FlatFee", @onkeypress = "return jHelper.isCurrency(event);",@onchange="javascript:fund.checkChange(this);" })%></div>
-							</td>
-							<td style="width: 18%">
-								<div>
-									<%: Html.TextBox(index.ToString() + "_$" + rowIndex.ToString() + "$Notes", tier.Notes, new { @id="Notes",@onchange="javascript:fund.checkChange(this);" })%>
-									<%: Html.Hidden(index.ToString() + "_$" + rowIndex.ToString() + "$ManagementFeeRateScheduleId", tier.ManagementFeeRateScheduleId.ToString(), new { @id = "ManagementFeeRateScheduleId" })%>
-									<%: Html.Hidden(index.ToString() + "_$" + rowIndex.ToString() + "$ManagementFeeRateScheduleTierId", tier.ManagementFeeRateScheduleTierId.ToString(), new { @id = "ManagementFeeRateScheduleTierId" })%>
-								</div>
-							</td>
-						</tr>
-						<% rowIndex++;
-		 }%>
-					</tbody>
-					<tfoot>
-						<tr>
-							<td colspan="7" style="text-align: right; padding-right: 10px;">
-								<%:Html.Anchor(Html.Image("add_icon.png").ToHtmlString()+"&nbsp;Add Year", "#",new { @onclick="javascript:fund.addNewRow(this);" } )%>
-							</td>
-						</tr>
-					</tfoot>
-				</table>
+	<div class="editor-field">
+		<%: Html.jQueryTemplateTextBoxFor(model => model.FundName, new { @style = "width:220px;" }) %>
+	</div>
+	<div class="editor-label" style="clear: right">
+		<%: Html.LabelFor(model => model.TaxId) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.jQueryTemplateTextBoxFor(model => model.TaxId) %>
+	</div>
+</div>
+<div class="line">
+</div>
+<div class="fund-box-det">
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.InceptionDate) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.jQueryTemplateTextBox("InceptionDate", "${formatDate(InceptionDate)}", new { @class = "datefield", @id = "InceptionDate" })%>
+	</div>
+	<div class="editor-label" style="clear: right">
+		<%: Html.LabelFor(model => model.ScheduleTerminationDate) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.jQueryTemplateTextBox("ScheduleTerminationDate", "${formatDate(ScheduleTerminationDate)}", new { @class = "datefield", @id = "ScheduleTerminationDate" })%>
+	</div>
+	<div class="editor-label" style="clear: right">
+		<%: Html.LabelFor(model => model.FinalTerminationDate) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.jQueryTemplateTextBox("FinalTerminationDate", "${formatDate(FinalTerminationDate)}", new { @class = "datefield", @id = "FinalTerminationDate" })%>
+	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.NumofAutoExtensions) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.jQueryTemplateTextBox("NumofAutoExtensions", "${checkNullOrZero(NumofAutoExtensions)}", new { @id = "NumofAutoExtensions", @onkeypress = "return jHelper.isNumeric(event);" })%>
+	</div>
+	<div class="editor-label" style="clear: right">
+		<%: Html.LabelFor(model => model.DateClawbackTriggered) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.jQueryTemplateTextBox("DateClawbackTriggered", "${formatDate(DateClawbackTriggered)}", new { @class = "datefield", @id = "DateClawbackTriggered" })%>
+	</div>
+	<div class="editor-label" style="clear: right">
+		<%: Html.LabelFor(model => model.RecycleProvision) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.jQueryTemplateTextBox("RecycleProvision", "${checkNullOrZero(RecycleProvision)}", new { @id = "RecycleProvision", @onkeypress = "return jHelper.isNumeric(event);" })%>
+	</div>
+	<div class="editor-label">
+		<%: Html.LabelFor(model => model.MgmtFeesCatchUpDate) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.jQueryTemplateTextBox("MgmtFeesCatchUpDate", "${formatDate(MgmtFeesCatchUpDate)}", new { @class = "datefield", @id = "MgmtFeesCatchUpDate" })%>
+	</div>
+	<div class="editor-label" style="clear: right">
+		<%: Html.LabelFor(model => model.Carry) %>
+	</div>
+	<div class="editor-field">
+		<%: Html.jQueryTemplateTextBox("Carry", "${checkNullOrZero(Carry)}", new { @id = "Carry", @onkeypress = "return jHelper.isNumeric(event);" })%>
+	</div>
+	<% Html.RenderPartial("JQueryTemplateCustomFieldList", Model.CustomField);%>
+</div>
+<div class="line">
+</div>
+<div>
+	<div class="headerbox">
+		<div class="title">
+			<%: Html.Span("RATE SCHEDULES")%>
+		</div>
+		<div class="rightdarrow">
+			<%: Html.ImageButton("downarrow.png")%>
+		</div>
+	</div>
+	<div class="expandheader expandsel" style="display: none">
+		<div class="expandbtn">
+			<div class="expandtitle">
+				Rate Schedules
 			</div>
 		</div>
-		<% index++;
-	 }%>
+		<div class="rightuarrow">
+		</div>
+	</div>
+	<div class="detail" style="display: none" id="RateSchdules">
+		<%: Html.jQueryTemplateHidden("FundRateSchedulesCount", "${FundRateSchedules.length}", new { })%>
+		<div style="float: left; width: 100%; margin: 10px 0; display: none;" id="AddNewIVType">
+			<div style="float: left">
+			</div>
+			<div style="float: right; margin-right: 30px;">
+				<%using (Html.GreenButton(new { @onclick = "javascript:fund.addRateSchedule(this);" })) {%>Add
+				Investor Type<%}%>
+			</div>
+		</div>
+		{{each(index,FRS) FundRateSchedules}} {{tmpl(getFundRate(index,FRS)) "#FundRateSchduleTemplate"}}
+		{{/each}}
 	</div>
 </div>
-<div class="editor-label">
-	<b>Bank Details</b>
+<div class="line">
 </div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.BankName) %>
+<div>
+	<div class="headerbox">
+		<div class="title">
+			<%: Html.Span("BANK INFORMATION")%>
+		</div>
+		<div class="rightdarrow">
+			<%: Html.ImageButton("downarrow.png")%>
+		</div>
+	</div>
+	<div class="expandheader expandsel" style="display: none">
+		<div class="expandbtn">
+			<div class="expandtitle">
+				Bank Information
+			</div>
+		</div>
+		<div class="rightuarrow">
+		</div>
+	</div>
+	<div class="detail" style="display: none" id="BankInformation">
+		<div>
+			<div class="editor-label">
+				<%: Html.Label("Bank Name-") %>
+			</div>
+			<div class="editor-field">
+				<%: Html.jQueryTemplateTextBox("BankName", "${BankDetail[0].BankName}")%>
+			</div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("Account Number-") %>
+			</div>
+			<div class="editor-field">
+				<%: Html.jQueryTemplateTextBox("AccountNo", "${BankDetail[0].AccountNo}")%>
+			</div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("ABA Number-") %>
+			</div>
+			<div class="editor-field">
+				<%: Html.jQueryTemplateTextBox("ABANumber", "${BankDetail[0].ABANumber}", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
+			</div>
+			<div class="editor-label">
+				<%: Html.Label("Swift Code-")%>
+			</div>
+			<div class="editor-field">
+				<%: Html.jQueryTemplateTextBox("Swift", "${BankDetail[0].Swift}") %>
+			</div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("Account Number Cash-") %>
+			</div>
+			<div class="editor-field">
+				<%: Html.jQueryTemplateTextBox("AccountNumberCash", "${BankDetail[0].AccountNumberCash}")%>
+			</div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("FFC Number-") %>
+			</div>
+			<div class="editor-field">
+				<%: Html.jQueryTemplateTextBox("FFCNumber", "${BankDetail[0].FFCNumber}")%>
+			</div>
+			<div class="editor-label">
+				<%: Html.Label("IBAN-") %>
+			</div>
+			<div class="editor-field">
+				<%: Html.jQueryTemplateTextBox("IBAN", "${BankDetail[0].IBAN}")%>
+			</div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("Reference-") %>
+			</div>
+			<div class="editor-field">
+				<%: Html.jQueryTemplateTextBox("Reference", "${BankDetail[0].Reference}")%>
+			</div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("Account Of-") %>
+			</div>
+			<div class="editor-field">
+				<%: Html.jQueryTemplateTextBox("AccountOf", "${BankDetail[0].AccountOf}")%>
+			</div>
+			<div class="editor-label">
+				<%: Html.Label("Attention-") %>
+			</div>
+			<div class="editor-field">
+				<%: Html.jQueryTemplateTextBox("Attention", "${BankDetail[0].Attention}")%>
+			</div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("Telephone-") %>
+			</div>
+			<div class="editor-field">
+				<%: Html.jQueryTemplateTextBox("Telephone", "${BankDetail[0].Telephone}")%>
+			</div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("Fax-") %>
+			</div>
+			<div class="editor-field">
+				<%: Html.jQueryTemplateTextBox("Fax", "${BankDetail[0].Fax}")%>
+				<%: Html.jQueryTemplateHidden("AccountId", "${BankDetail[0].AccountId}")%>
+			</div>
+		</div>
+	</div>
 </div>
-<div class="editor-field">
-	<%: Html.TextBoxFor(model => model.BankName)%>
-	<%: Html.ValidationMessageFor(model => model.BankName) %>
+<div class="line">
 </div>
-<div class="editor-label" style="clear: right">
-	<%: Html.LabelFor(model => model.Account) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBoxFor(model => model.Account) %>
-	<%: Html.ValidationMessageFor(model => model.Account) %>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.ABANumber) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBox("ABANumber",((Model.ABANumber ?? 0) > 0 ? (Model.ABANumber ?? 0).ToString() :  string.Empty), new { @onkeypress = "return jHelper.isNumeric(event);" })%>
-</div>
-<div class="editor-label" style="clear: right">
-	<%: Html.LabelFor(model => model.Swift) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBoxFor(model => model.Swift) %>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.AccountNumberCash) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBoxFor(model => model.AccountNumberCash) %>
-</div>
-<div class="editor-label" style="clear: right">
-	<%: Html.LabelFor(model => model.FFCNumber) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBoxFor(model => model.FFCNumber) %>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model
-=> model.IBAN) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBoxFor(model => model.IBAN) %>
-</div>
-<div class="editor-label" style="clear: right">
-	<%: Html.LabelFor(model => model.Reference) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBoxFor(model => model.Reference) %>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.AccountOf) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBoxFor(model => model.AccountOf) %>
-</div>
-<div class="editor-label" style="clear: right">
-	<%: Html.LabelFor(model => model.Attention) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBoxFor(model => model.Attention)%>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.Telephone) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBoxFor(model => model.Telephone) %>
-</div>
-<div class="editor-label" style="clear: right">
-	<%: Html.LabelFor(model => model.Fax) %>
-</div>
-<div class="editor-field">
-	<%: Html.TextBoxFor(model => model.Fax) %>
-</div>
-<div class="editor-label" style="height: 10px;">
-</div>
-<div class="editor-button" style="width: 300px">
+<div class="editor-button" style="width: 300px; padding: 20px 0 0 0">
+	<div style="float: left; padding: 0 0 10px 5px;">
+		<%: Html.ImageButton("{{if FundId>0}}modifyfund.png{{else}}addfund.png{{/if}}", new { @class = "default-button", onclick = "return fund.save(this);" })%>
+	</div>
 	<div style="float: left; padding: 0 0 10px 5px;">
 		<%: Html.Span("",new { id = "UpdateLoading" })%>
 	</div>
-	<div style="float: left; padding: 0 0 10px 5px;">
-		<%: Html.ImageButton("Save.png", new { @class="default-button", onclick = "return fund.onSubmit('AddNewFund');" })%>
-	</div>
-	<div style="float: left; padding: 0 0 10px 5px;">
-		<%: Html.Image("Close.png", new { @class="default-button", onclick = "javascript:parent.fund.closeDialog(false);" })%>
-	</div>
 </div>
-<%: Html.HiddenFor(model => model.FundId)%>
-<%: Html.HiddenFor(model => model.AccountId)%>
-<script type="text/javascript">	$(document).ready(function () { fund.init(); }); </script>
+<%: Html.jQueryTemplateHiddenFor(model => model.FundId)%>
+<%}%>

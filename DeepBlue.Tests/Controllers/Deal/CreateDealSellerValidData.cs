@@ -32,7 +32,7 @@ namespace DeepBlue.Tests.Controllers.Deal {
 
         private void SetFormCollection() {
             base.DefaultController.ValueProvider = SetupValueProvider(GetValidformCollection());
-            base.ActionResult = base.DefaultController.Create(GetValidformCollection());
+			base.ActionResult = base.DefaultController.CreateSellerInfo(GetValidformCollection());
         }
 
 		#region Tests where form collection doesnt have the required values. Tests for DataAnnotations
@@ -62,7 +62,7 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 
 		[Test]
-		public void valid_Dealseller_contactname_sets_1_error() {
+		public void valid_Dealseller_contactname_sets_0_error() {
 			Assert.IsTrue(test_error_count("ContactName", 0));
 		}
 
@@ -73,7 +73,7 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 
 		[Test]
-		public void valid_Dealseller_phone_sets_1_error() {
+		public void valid_Dealseller_phone_sets_0_error() {
 			Assert.IsTrue(test_error_count("Phone", 0));
 		}
 
@@ -83,7 +83,7 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 
 		[Test]
-		public void valid_Deal_fax_sets_1_error() {
+		public void valid_Deal_fax_sets_0_error() {
 			Assert.IsTrue(test_error_count("Fax", 0));
 		}
 
@@ -93,7 +93,7 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 
 		[Test]
-		public void valid_Dealseller_name_sets_1_error() {
+		public void valid_Dealseller_name_sets_0_error() {
 			Assert.IsTrue(test_error_count("SellerName", 0));
 		}
 
@@ -103,10 +103,29 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 
 		[Test]
-		public void valid_Dealseller_companyname_sets_1_error() {
+		public void valid_Dealseller_companyname_sets_0_error() {
 			Assert.IsTrue(test_error_count("CompanyName", 0));
 		}
 
+		[Test]
+		public void valid_Dealseller_email_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("Email"));
+		}
+
+		[Test]
+		public void valid_Dealseller_email_sets_0_error() {
+			Assert.IsTrue(test_error_count("Email", 0));
+		}
+
+		[Test]
+		public void valid_Dealseller_Deal_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("DealId"));
+		}
+
+		[Test]
+		public void valid_Dealseller_Deal_sets_0_error() {
+			Assert.IsTrue(test_error_count("DealId", 0));
+		}
 
 		[Test]
 		public void returns_back_to_new_view_if_saving_fund_failed() {
@@ -123,6 +142,8 @@ namespace DeepBlue.Tests.Controllers.Deal {
 			formCollection.Add("Fax", "1111111");
 			formCollection.Add("SellerName", "Test");
 			formCollection.Add("CompanyName", "Test");
+			formCollection.Add("Email", "test@test.com");
+			formCollection.Add("DealId", "1");
             return formCollection;
         }
     }

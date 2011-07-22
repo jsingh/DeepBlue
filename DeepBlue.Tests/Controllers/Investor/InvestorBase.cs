@@ -9,6 +9,7 @@ using System.Web.Routing;
 using Moq;
 using MbUnit.Framework;
 using DeepBlue.Controllers.Admin;
+using DeepBlue.Helpers;
 
 namespace DeepBlue.Tests.Controllers.Investor {
     public class InvestorBase : Base {
@@ -34,7 +35,7 @@ namespace DeepBlue.Tests.Controllers.Investor {
 			MockAdminRepository.Setup(x => x.GetAllStates()).Returns(GetMockStates());
 			MockAdminRepository.Setup(x => x.GetAllAddressTypes()).Returns(GetAddressTypes());
 			MockAdminRepository.Setup(x => x.GetAllInvestorEntityTypes()).Returns(new List<InvestorEntityType>());
-			MockAdminRepository.Setup(x => x.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor)).Returns(new List<CustomField>());
+			MockAdminRepository.Setup(x => x.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor)).Returns(new List<CustomFieldDetail>());
         }
 
         private List<DeepBlue.Models.Entity.STATE> GetMockStates() {

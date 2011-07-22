@@ -19,8 +19,8 @@ namespace DeepBlue.Tests.Models.Deal {
         }
 
 		[Test]
-		public void create_a_new_dealclosingcost_without_dealid_throws_error() {
-			Assert.IsFalse(IsPropertyValid("DealID"));
+		public void create_a_new_dealclosingcost_without_dealclosingcosttypeid_throws_error() {
+			Assert.IsFalse(IsPropertyValid("DealClosingCostTypeID"));
 		}
 
 		[Test]
@@ -29,14 +29,14 @@ namespace DeepBlue.Tests.Models.Deal {
 		}
 
 		[Test]
+		public void create_a_new_dealclosingcost_without_dealid_throws_error() {
+			Assert.IsFalse(IsPropertyValid("DealID"));
+		}
+
+		[Test]
 		public void create_a_new_dealclosingcost_without_date_throws_error() {
 			Assert.IsFalse(IsPropertyValid("Date"));
 		}
-
-        [Test]
-        public void create_a_new_dealclosingcost_without_typeid_throws_error() {
-			Assert.IsFalse(IsPropertyValid("DealClosingCostTypeID"));
-        }
-
+ 
     }
 }

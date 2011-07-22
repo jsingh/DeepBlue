@@ -57,7 +57,7 @@ namespace DeepBlue.Helpers {
 		public static MvcHtmlString Literal(this HtmlHelper helper, string value) {
 			return MvcHtmlString.Create(value);
 		}
- 		#endregion
+		#endregion
 
 		#region Anchor
 		public static MvcHtmlString Anchor(this HtmlHelper helper, string innerHTML, string href) {
@@ -223,7 +223,6 @@ namespace DeepBlue.Helpers {
 		}
 		#endregion
 
-
 		#region Form
 		public static MvcForm Form(this HtmlHelper helper, object htmlAttributes) {
 			TagBuilder tagBuilder = new TagBuilder("form");
@@ -244,7 +243,7 @@ namespace DeepBlue.Helpers {
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 
-		public static MvcHtmlString InputCheckBox(this HtmlHelper helper, string name,  bool isChecked, object htmlAttributes) {
+		public static MvcHtmlString InputCheckBox(this HtmlHelper helper, string name, bool isChecked, object htmlAttributes) {
 			TagBuilder tag = new TagBuilder("input");
 			tag.Attributes.Add("type", "checkbox");
 			tag.Attributes.Add("name", name);
@@ -259,6 +258,106 @@ namespace DeepBlue.Helpers {
 			tag.Attributes.Add("name", name);
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
+		#endregion
+
+		#region GreenButton
+		public static MvcButton GreenButton(this HtmlHelper helper, object htmlAttributes) {
+			TagBuilder tagBuilder = new TagBuilder("div");
+			tagBuilder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			tagBuilder.AddCssClass("green-btn");
+			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
+			httpResponse.Write(tagBuilder.ToString(TagRenderMode.StartTag) + "<div class=left></div><div class=center>");
+			return new MvcButton(helper.ViewContext.HttpContext.Response);
+		}
+		public static MvcButton GreenButton(this HtmlHelper helper) {
+			return GreenButton(helper, new { });
+		}
+		#endregion
+
+		#region JQueryTemplate Controls
+
+		public static MvcHtmlString jQueryTemplateTextBox(this HtmlHelper htmlHelper, string name) {
+			return jQueryTemplateTextBox(htmlHelper, name, "${" + name + "}", new { });
+		}
+
+		public static MvcHtmlString jQueryTemplateTextBox(this HtmlHelper htmlHelper, string name, string value) {
+			return jQueryTemplateTextBox(htmlHelper, name, value, new { });
+		}
+
+		public static MvcHtmlString jQueryTemplateTextBox(this HtmlHelper htmlHelper, string name, string value, object htmlAttributes) {
+			TagBuilder tag = new TagBuilder("input");
+			tag.Attributes.Add("type", "text");
+			tag.Attributes.Add("value", value);
+			tag.Attributes.Add("name", name);
+			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			if (tag.Attributes.Keys.Contains("id") == false) {
+				tag.Attributes.Add("id", name);
+			}
+			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+		}
+
+		public static MvcHtmlString jQueryTemplateHidden(this HtmlHelper htmlHelper, string name) {
+			return jQueryTemplateHidden(htmlHelper, name, "${" + name + "}", new { });
+		}
+
+		public static MvcHtmlString jQueryTemplateHidden(this HtmlHelper htmlHelper, string name, string value) {
+			return jQueryTemplateHidden(htmlHelper, name, value, new { });
+		}
+
+		public static MvcHtmlString jQueryTemplateHidden(this HtmlHelper htmlHelper, string name, string value, object htmlAttributes) {
+			TagBuilder tag = new TagBuilder("input");
+			tag.Attributes.Add("type", "hidden");
+			tag.Attributes.Add("value", value);
+			tag.Attributes.Add("name", name);
+			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			if (tag.Attributes.Keys.Contains("id") == false) {
+				tag.Attributes.Add("id", name);
+			}
+			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+		}
+
+		public static MvcHtmlString jQueryTemplateHiddenFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression) {
+			return jQueryTemplateHiddenFor(htmlHelper, expression, new { });
+		}
+
+		public static MvcHtmlString jQueryTemplateHiddenFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression, object htmlAttributes) {
+			ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
+			string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
+			if (String.IsNullOrEmpty(htmlFieldName)) {
+				return MvcHtmlString.Empty;
+			}
+			TagBuilder tag = new TagBuilder("input");
+			tag.Attributes.Add("type", "hidden");
+			tag.Attributes.Add("value", "${" + htmlFieldName + "}");
+			tag.Attributes.Add("name", htmlFieldName);
+			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			if (tag.Attributes.Keys.Contains("id") == false) {
+				tag.Attributes.Add("id", htmlFieldName);
+			}
+			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+		}
+
+		public static MvcHtmlString jQueryTemplateTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression) {
+			return jQueryTemplateTextBoxFor(htmlHelper, expression, new { });
+		}
+
+		public static MvcHtmlString jQueryTemplateTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression, object htmlAttributes) {
+			ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
+			string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
+			if (String.IsNullOrEmpty(htmlFieldName)) {
+				return MvcHtmlString.Empty;
+			}
+			TagBuilder tag = new TagBuilder("input");
+			tag.Attributes.Add("type", "text");
+			tag.Attributes.Add("value", "${" + htmlFieldName + "}");
+			tag.Attributes.Add("name", htmlFieldName);
+			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			if (tag.Attributes.Keys.Contains("id") == false) {
+				tag.Attributes.Add("id", htmlFieldName);
+			}
+			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+		}
+
 		#endregion
 	}
 }

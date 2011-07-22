@@ -131,7 +131,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 							DistributionNumber = fund.CapitalDistributions.Count() + 1,
 							FundId = fund.FundID,
 							FundName = fund.FundName,
-							TotalCommitment = fund.CapitalCalls.Sum(capitalCall => capitalCall.CapitalAmountCalled),
+							TotalCommitment = fund.InvestorFunds.Sum(investorFund => investorFund.TotalCommitment),
 							UnfundedAmount = fund.InvestorFunds.Sum(investorFund => investorFund.UnfundedAmount),
 							TotalDistribution = fund.CapitalDistributions.Sum(capitalDistribution => capitalDistribution.DistributionAmount),
 							TotalProfit = fund.CapitalDistributions.Sum(capitalDistribution => capitalDistribution.Profits)
@@ -146,8 +146,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 						select new DetailModel {
 							FundId = fund.FundID,
 							FundName = fund.FundName,
-							CapitalCommitted = fund.CapitalCalls.Sum(capitalCall => capitalCall.CapitalAmountCalled),
+							CapitalCommitted =  fund.InvestorFunds.Sum(investorFund => investorFund.TotalCommitment),
 							UnfundedAmount = fund.InvestorFunds.Sum(investorFund => investorFund.UnfundedAmount),
+							CapitalCalled = fund.CapitalCalls.Sum(capitalCall => capitalCall.CapitalAmountCalled),
 							FundExpenses = fund.CapitalCalls.Sum(capitalCall => capitalCall.FundExpenses),
 							ManagementFees = fund.CapitalCalls.Sum(capitalCall => capitalCall.ManagementFees),
 							CapitalDistributed = fund.CapitalDistributions.Sum(capitalDistribution => capitalDistribution.DistributionAmount),

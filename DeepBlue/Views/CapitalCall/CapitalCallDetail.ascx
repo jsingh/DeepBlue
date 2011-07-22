@@ -13,6 +13,13 @@
 		</div>
 		<div class="editor-label" style="clear: right;">
 			<label>
+				Capital Called-</label>
+		</div>
+		<div class="editor-field" style="padding-top: 10px;">
+			<b>${formatCurrency(CapitalCalled)}</b>
+		</div>
+		<div class="editor-label" style="clear: right;">
+			<label>
 				Unfunded Amount-</label>
 		</div>
 		<div class="editor-field" style="padding-top: 10px;">

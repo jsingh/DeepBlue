@@ -14,13 +14,28 @@ namespace DeepBlue.Helpers {
 		}
 		public int Key { get; set; }
 
-		public List<CustomField> Fields { get; set; }
+		public List<CustomFieldDetail> Fields { get; set; }
 
 		public List<CustomFieldValueDetail> Values { get; set; }
 
 		public bool InitializeDatePicker { get; set; }
 
 		public bool DisplayTwoColumn { get; set; }
+	}
+
+	public class CustomFieldDetail {
+
+		public int CustomFieldId { get; set; }
+
+		public int ModuleId { get; set; }
+
+		public int DataTypeId { get; set; }
+
+		public bool Search { get; set; }
+
+		public string CustomFieldText { get; set; }
+
+		public string OptionalText { get; set; }
 	}
 
 	public class CustomFieldValueDetail {

@@ -47,7 +47,6 @@ namespace DeepBlue.Tests.Models.Deal {
 			    deal.DealName = "Test";
 				deal.CreatedDate = DateTime.Now;
 				deal.CreatedBy = 1;  
-
             } else {
 				deal.EntityID = 0;
 				deal.FundID = 0;

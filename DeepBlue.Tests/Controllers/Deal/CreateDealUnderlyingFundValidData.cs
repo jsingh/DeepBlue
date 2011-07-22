@@ -5,36 +5,33 @@ using System.Linq;
 using System.Web.Mvc;
 using MbUnit.Framework;
 using Moq;
-using DeepBlue.Models.Deal ;
+using DeepBlue.Models.Deal;
 
 namespace DeepBlue.Tests.Controllers.Deal {
-    public class CreateDealUnderlyingFundValidData : CreateDealUnderlyingFund {
-
+	public class CreateDealUnderlyingFundValidData : CreateDealUnderlyingFund {
 		private ResultModel ResultModel {
 			get {
 				return base.ViewResult.ViewData.Model as ResultModel;
 			}
 		}
 
-        private ModelStateDictionary ModelState {
-            get {
-                return base.ViewResult.ViewData.ModelState;
-            }
-        }
+		private ModelStateDictionary ModelState {
+			get {
+				return base.ViewResult.ViewData.ModelState;
+			}
+		}
 
-        [SetUp]
-        public override void Setup() {
-            // Arrange
-            base.Setup();
-			// Test if the SaveFund call fails
-			MockDealRepository.Setup(x => x.SaveDealUnderlyingFund(It.IsAny<DeepBlue.Models.Entity.DealUnderlyingFund>())).Returns(new List<Helpers.ErrorInfo>());
-        }
+		[SetUp]
+		public override void Setup() {
+			// Arrange
+			base.Setup();
+		}
 
-        private void SetFormCollection() {
-            base.DefaultController.ValueProvider = SetupValueProvider(GetValidformCollection());
-            base.ActionResult = base.DefaultController.Create(GetValidformCollection());
-        }
-
+		private void SetFormCollection() {
+			FormCollection validFormCollection = GetValidformCollection();
+			base.DefaultController.ValueProvider = SetupValueProvider(validFormCollection);
+			base.ActionResult = base.DefaultController.CreateDealUnderlyingFund(validFormCollection);
+		}
 		#region Tests where form collection doesnt have the required values. Tests for DataAnnotations
 		private bool test_posted_value(string parameterName) {
 			SetFormCollection();
@@ -62,10 +59,9 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 
 		[Test]
-		public void valid_DealUnderlying_fundid_sets_1_error() {
+		public void valid_DealUnderlying_fundid_sets_0_error() {
 			Assert.IsTrue(test_error_count("UnderlyingFundId", 0));
 		}
-
 
 		[Test]
 		public void valid_DealUnderlying_dealid_sets_model_error_on_model_state() {
@@ -73,8 +69,68 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 
 		[Test]
-		public void valid_DealUnderlying_dealid_sets_1_error() {
+		public void valid_DealUnderlying_dealid_sets_0_error() {
 			Assert.IsTrue(test_error_count("DealId", 0));
+		}
+
+		[Test]
+		public void valid_DealUnderlying_FundId_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("FundId"));
+		}
+
+		[Test]
+		public void valid_DealUnderlying_FundId_sets_0_error() {
+			Assert.IsTrue(test_error_count("FundId", 0));
+		}
+
+		[Test]
+		public void valid_DealUnderlying_FundNAV_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("FundNAV"));
+		}
+
+		[Test]
+		public void valid_DealUnderlying_FundNAV_sets_0_error() {
+			Assert.IsTrue(test_error_count("FundNAV", 0));
+		}
+
+		[Test]
+		public void valid_DealUnderlying_Percent_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("Percent"));
+		}
+
+		[Test]
+		public void valid_DealUnderlying_Percent_sets_0_error() {
+			Assert.IsTrue(test_error_count("Percent", 0));
+		}
+
+		[Test]
+		public void valid_DealUnderlying_CommittedAmount_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("CommittedAmount"));
+		}
+
+		[Test]
+		public void valid_DealUnderlying_CommittedAmount_sets_0_error() {
+			Assert.IsTrue(test_error_count("CommittedAmount", 0));
+		}
+
+		[Test]
+		public void valid_DealUnderlying_GrossPurchasePrice_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("GrossPurchasePrice"));
+		}
+
+		[Test]
+		public void valid_DealUnderlying_GrossPurchasePrice_sets_0_error() {
+			Assert.IsTrue(test_error_count("GrossPurchasePrice", 0));
+		}
+
+		[Test]
+		public void valid_DealUnderlying_ReassignedGPP_sets_model_error_on_model_state() {
+			Assert.IsTrue(test_posted_value("ReassignedGPP"));
+		}
+
+		[Test]
+		public void valid_DealUnderlying_ReassignedGPP_sets_0_error() {
+			Assert.IsTrue(test_error_count("ReassignedGPP", 0));
 		}
 
 		[Test]
@@ -83,24 +139,39 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 
 		[Test]
-		public void valid_DealUnderlying_recorddate_sets_1_error() {
+		public void valid_DealUnderlying_recorddate_sets_0_error() {
 			Assert.IsTrue(test_error_count("RecordDate", 0));
 		}
 
-		[Test]
-		public void returns_back_to_new_view_if_saving_fund_failed() {
+		#endregion
+
+		#region Tests after model state is valid
+		private void SetModelValid() {
+			base.DefaultController.ModelState.AddModelError(string.Empty, string.Empty);
 			SetFormCollection();
+		}
+
+		[Test]
+		public void model_state_valid_redirects_to_result_view() {
+			SetModelValid();
 			Assert.IsNotNull(ResultModel);
 		}
 
-        #endregion
-       
-        private FormCollection GetValidformCollection() {
-            FormCollection formCollection = new FormCollection();
-			formCollection.Add("UnderlyingFundID", "1");
-			formCollection.Add("DealID", "1");
-			formCollection.Add("RecordDate", "1/1/1999");
-            return formCollection;
-        }
-    }
+		#endregion
+
+
+		private FormCollection GetValidformCollection() {
+			FormCollection formCollection = new FormCollection();
+			formCollection.Add("DealId", "1");
+			formCollection.Add("FundId", "1");
+			formCollection.Add("UnderlyingFundId", "1");
+			formCollection.Add("RecordDate", DateTime.MaxValue.ToString());
+			formCollection.Add("FundNAV", "1");
+			formCollection.Add("Percent", "1");
+			formCollection.Add("CommittedAmount", "1");
+			formCollection.Add("GrossPurchasePrice", "1");
+			formCollection.Add("ReassignedGPP", "1");
+			return formCollection;
+		}
+	}
 }

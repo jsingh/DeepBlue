@@ -256,22 +256,22 @@ namespace DeepBlue.Controllers.Investor {
 			System.Text.StringBuilder result = new StringBuilder();
 			IEnumerable<ErrorInfo> errorInfo;
 			// Get all investor custom fields.
-			List<CustomField> customFields = AdminRepository.GetAllCustomFields((int)Models.Admin.Enums.Module.Investor);
+			List<CustomFieldDetail> customFields = AdminRepository.GetAllCustomFields((int)Models.Admin.Enums.Module.Investor);
 			foreach (var field in customFields) {
-				var customFieldValue = collection["CustomField_" + field.CustomFieldID.ToString()];
+				var customFieldValue = collection["CustomField_" + field.CustomFieldId.ToString()];
 				if (customFieldValue != null) {
 					// Attempt to create new custom field value.
-					CustomFieldValue value = AdminRepository.FindCustomFieldValue(field.CustomFieldID, key);
+					CustomFieldValue value = AdminRepository.FindCustomFieldValue(field.CustomFieldId, key);
 					if (value == null) {
 						value = new CustomFieldValue();
 					}
 					value.CreatedBy = AppSettings.CreatedByUserId;
 					value.CreatedDate = DateTime.Now;
-					value.CustomFieldID = field.CustomFieldID;
+					value.CustomFieldID = field.CustomFieldId;
 					value.Key = key;
 					value.LastUpdatedBy = AppSettings.CreatedByUserId;
 					value.LastUpdatedDate = DateTime.Now;
-					switch ((CustomFieldDataType)field.DataTypeID) {
+					switch ((CustomFieldDataType)field.DataTypeId) {
 						case CustomFieldDataType.Integer:
 							value.IntegerValue = (string.IsNullOrEmpty(customFieldValue) ? 0 : Convert.ToInt32(customFieldValue));
 							break;
@@ -719,7 +719,7 @@ namespace DeepBlue.Controllers.Investor {
 				var customFields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor);
 				model.CustomField.Values = new List<CustomFieldValueDetail>();
 				foreach (var field in customFields) {
-					var value = customFieldValues.SingleOrDefault(fieldValue => fieldValue.CustomFieldID == field.CustomFieldID);
+					var value = customFieldValues.SingleOrDefault(fieldValue => fieldValue.CustomFieldID == field.CustomFieldId);
 					if (value != null) {
 						model.CustomField.Values.Add(new CustomFieldValueDetail {
 							CustomFieldId = value.CustomFieldID,
@@ -735,9 +735,9 @@ namespace DeepBlue.Controllers.Investor {
 					}
 					else {
 						model.CustomField.Values.Add(new CustomFieldValueDetail {
-							CustomFieldId = field.CustomFieldID,
+							CustomFieldId = field.CustomFieldId,
 							CustomFieldValueId = 0,
-							DataTypeId = field.DataTypeID,
+							DataTypeId = field.DataTypeId,
 							BooleanValue = false,
 							CurrencyValue = 0,
 							DateValue = string.Empty,

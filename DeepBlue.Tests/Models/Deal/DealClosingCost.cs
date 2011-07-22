@@ -10,7 +10,7 @@ using DeepBlue.Helpers;
 
 namespace DeepBlue.Tests.Models.Deal {
     public class DealClosingCostTest : Base {
-        public DeepBlue.Models.Entity.DealClosingCost  DefaultDealClosingCost { get; set; }
+        public DeepBlue.Models.Entity.DealClosingCost DefaultDealClosingCost { get; set; }
 
         public Mock<IDealClosingCostService> MockService { get; set; }
 
@@ -19,10 +19,10 @@ namespace DeepBlue.Tests.Models.Deal {
             base.Setup();
 
             // Spin up mock repository and attach to controller
-			MockService = new Mock<IDealClosingCostService>();
+            MockService = new Mock<IDealClosingCostService>();
 
 			DefaultDealClosingCost = new DeepBlue.Models.Entity.DealClosingCost(MockService.Object);
-            MockService.Setup(x => x.SaveDealClosingCost(It.IsAny<DeepBlue.Models.Entity.DealClosingCost >()));
+            MockService.Setup(x => x.SaveDealClosingCost(It.IsAny<DeepBlue.Models.Entity.DealClosingCost>()));
         }
 
         protected bool IsPropertyValid(string propertyName) {
@@ -31,32 +31,23 @@ namespace DeepBlue.Tests.Models.Deal {
             return IsModelValid(out errorMsg, out errorCount, propertyName);
         }
 
-        protected void Create_Data(DeepBlue.Models.Entity.DealClosingCost dealclosingcost, bool ifValid) {
-			RequiredFieldDataMissing(dealclosingcost, ifValid);
-			StringLengthInvalidData(dealclosingcost, ifValid);
-
+        protected void Create_Data(DeepBlue.Models.Entity.DealClosingCost dealClosingCost, bool ifValid) {
+			RequiredFieldDataMissing(dealClosingCost, ifValid);
         }
 
         #region DealClosingCost
-		private void RequiredFieldDataMissing(DeepBlue.Models.Entity.DealClosingCost dealclosingcost, bool ifValidData) {
+        private void RequiredFieldDataMissing(DeepBlue.Models.Entity.DealClosingCost dealClosingCost, bool ifValidData) {
             if (ifValidData) {
-				dealclosingcost.Amount = 1000;
-				dealclosingcost.Date = DateTime.Now ;
-				dealclosingcost.DealID = 1;
-				dealclosingcost.DealClosingCostTypeID =1;  
+				dealClosingCost.DealID = 1;
+				dealClosingCost.Amount = 1;
+				dealClosingCost.Date = DateTime.MaxValue;
+				dealClosingCost.DealClosingCostTypeID = 1;
             } else {
-				dealclosingcost.Amount = 0;
-				dealclosingcost.Date = DateTime.MinValue;
-				dealclosingcost.DealID = 0;
-				dealclosingcost.DealClosingCostTypeID = 0;  
+				dealClosingCost.DealID = 0;
+				dealClosingCost.Amount = 0;
+				dealClosingCost.Date = DateTime.MinValue;
+				dealClosingCost.DealClosingCostTypeID = 0;
             }
-        }
-
-		private void StringLengthInvalidData(DeepBlue.Models.Entity.DealClosingCost dealclosingcost, bool ifValidData) {
-            int delta = 0;
-            if (!ifValidData) {
-                delta = 1;
-            }			
         }
         #endregion
 

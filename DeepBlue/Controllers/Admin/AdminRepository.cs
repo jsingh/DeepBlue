@@ -189,12 +189,19 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
-		public List<CustomField> GetAllCustomFields(int moduleId) {
+		public List<CustomFieldDetail> GetAllCustomFields(int moduleId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from field in context.CustomFields
 						where field.ModuleID == moduleId
 						orderby field.CustomFieldText
-						select field).ToList();
+						select new CustomFieldDetail {
+							CustomFieldId = field.CustomFieldID,
+							CustomFieldText = field.CustomFieldText,
+							DataTypeId = field.DataTypeID,
+							ModuleId = field.ModuleID,
+							OptionalText = field.OptionalText,
+							Search = field.Search
+						}).ToList();
 			}
 		}
 
@@ -231,7 +238,7 @@ namespace DeepBlue.Controllers.Admin {
 				return context.CustomFieldValues.SingleOrDefault(fieldValue => fieldValue.CustomFieldID == customFieldId && fieldValue.Key == key);
 			}
 		}
-		
+
 		public bool CustomFieldTextAvailable(string customFieldText, int customFieldId, int moduleId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return ((from field in context.CustomFields
@@ -1020,13 +1027,13 @@ namespace DeepBlue.Controllers.Admin {
 		public List<AutoCompleteList> FindIndustrys(string industryName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> industryListQuery = (from industry in context.Industries
-																 where industry.Industry1.StartsWith(industryName)
+																  where industry.Industry1.StartsWith(industryName)
 																  orderby industry.Industry1
-																 select new AutoCompleteList {
-																	 id = industry.IndustryID,
-																	 label = industry.Industry1,
-																	 value = industry.Industry1
-																 });
+																  select new AutoCompleteList {
+																	  id = industry.IndustryID,
+																	  label = industry.Industry1,
+																	  value = industry.Industry1
+																  });
 				return new PaginatedList<AutoCompleteList>(industryListQuery, 1, 20);
 			}
 		}
@@ -1084,7 +1091,7 @@ namespace DeepBlue.Controllers.Admin {
 						select fileType).ToList();
 			}
 		}
-		 
+
 		#endregion
 
 		#region File
@@ -1291,7 +1298,7 @@ namespace DeepBlue.Controllers.Admin {
 		#endregion
 
 		#region  CashDistributionType
-		
+
 		public List<Models.Entity.CashDistributionType> GetAllCashDistributionTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<Models.Entity.CashDistributionType> query = (from cashDistributionType in context.CashDistributionTypes
@@ -1346,7 +1353,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region  ActivityType 
+		#region  ActivityType
 
 		public List<Models.Entity.ActivityType> GetAllActivityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {

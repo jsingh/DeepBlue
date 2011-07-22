@@ -12,9 +12,9 @@ using DeepBlue.Controllers.CapitalCall;
 namespace DeepBlue.Tests.Controllers.CapitalCall {
 	public class NewCapitalCallManual : CapitalCallManualBase {
 
-        private CreateManualModel  Model {
+		private CreateCapitalCallModel Model {
             get {
-				return base.ViewResult.ViewData.Model as CreateManualModel;
+				return base.ViewResult.ViewData.Model as CreateCapitalCallModel;
             }
         }
         [SetUp]

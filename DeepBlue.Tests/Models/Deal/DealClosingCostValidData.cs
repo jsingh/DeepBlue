@@ -9,7 +9,7 @@ using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
 
 namespace DeepBlue.Tests.Models.Deal {
-    public class DealClosingCostValidDataTest : DealClosingCostTest {
+    public class DealClosingCostValidDataTest : DealClosingCostTest  {
 
         [SetUp]
         public override void Setup() {
@@ -18,25 +18,25 @@ namespace DeepBlue.Tests.Models.Deal {
 			this.ServiceErrors = DefaultDealClosingCost.Save();
         }
 
-        [Test]
-        public void create_a_new_dealclosingcost_with_dealid_passes() {
-			Assert.IsTrue(IsPropertyValid("DealID"));
-        }
-
-        [Test]
-        public void create_a_new_dealclosingcost_with_amount_passes() {
-			Assert.IsTrue(IsPropertyValid("Amount"));
-        }
-
 		[Test]
-		public void create_a_new_dealclosingcost_with_date_passes() {
-			Assert.IsTrue(IsPropertyValid("Date"));
-		}
-
-		[Test]
-		public void create_a_new_dealclosingcost_with_typeid_passes() {
+		public void create_a_new_dealclosingcost_with_dealclosingcosttypeid_throws_error() {
 			Assert.IsTrue(IsPropertyValid("DealClosingCostTypeID"));
 		}
 
+		[Test]
+		public void create_a_new_dealclosingcost_with_amount_throws_error() {
+			Assert.IsTrue(IsPropertyValid("Amount"));
+		}
+
+		[Test]
+		public void create_a_new_dealclosingcost_with_dealid_throws_error() {
+			Assert.IsTrue(IsPropertyValid("DealID"));
+		}
+
+		[Test]
+		public void create_a_new_dealclosingcost_with_date_throws_error() {
+			Assert.IsTrue(IsPropertyValid("Date"));
+		}
+ 
     }
 }

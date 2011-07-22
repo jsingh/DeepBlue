@@ -1,47 +1,30 @@
-﻿.cc-box {
+﻿.fund-box {
 	clear: both;
 	float: left;
 	width: 100%;
 }
-.cc-box .header {
+.fund-box .header {
 	margin: 10px 0;
 }
-.tabbg {
-	background-image: url("../images/tabbg.png");
-	background-position: left bottom;
-	background-repeat: repeat-x;
-	float: left;
-	padding-bottom: 3px;
-	width: 100%;
-}
-#NewCCTab.select {
-	background-image: url("../images/newcctabsel.png");
-}
-#NewCCTab, #NewCDTab, #NewCCDetailTab {
-	background-image: url("../images/newcctab.png");
-	background-repeat: no-repeat;
-	cursor: pointer;
-	float: left;
-	height: 40px;
-	margin-left: 65px;
-	width: 213px;
-}
-#ManCCTab, #ManCDTab, #ManCDetailTab {
-    background-image: url("../images/mancctab.png");
-    background-repeat: no-repeat;
-    cursor: pointer;
-    float: left;
-    height: 40px;
-    margin-left: 5px;
-    width: 213px;
-}
-#SerCCTab, #SerCDTab {
-    float: right;
-    padding: 9px 25px 0 10px;
-}
 .fund-main {
-	width: 95%;
-	margin: 10px auto;
+	width: 100%;
+	margin-left: 20px;
+	position: absolute;
+	top: 100px;
+	bottom: 0px;
+	padding: 0;
+	margin: 0;
+	overflow: auto;
+	overflow-x: hidden;
+}
+.section-det {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+.fund-box-titie {
+	font-weight: bold;
+	padding: 15px 0 15px 65px;
 }
 .fund-header {
 	width: 100%;
@@ -51,48 +34,227 @@
 .fund-content {
 	width: 100%;
 }
-.editor-label {
-	width: 189px;
+.fund-box-det {
+	clear: both;
+	float: left;
+	padding: 10px 20px;
+	width: 100%;
+}
+.fund-box-det .editor-field input[type="text"] {
+	width: 150px;
+}
+.fund-box-det .editor-field input[type="checkbox"] {
+	margin-top:5px;
+}
+.fund-box-det .editor-label {
+	text-align: right;
+	font-weight: bold;
+	padding: 10px 5px;
+	white-space: nowrap;
+	width: 188px;
+}
+.headerbox {
+	padding-left: 30px;
+	width: 100%;
 }
 .editor-field {
-	width: 180px;
+    width: 185px;
 }
-.editor-field input {
-	width: 175px;
-}
-.rate-sch-main {
-	color: #a6a6a6;
-	width: 800px;
-}
-.rate-header {
+.section-det .title {
+	background: url("../images/plus.png") no-repeat scroll left top transparent;
+	color: #02766F;
+	cursor: pointer;
 	float: left;
-	clear: both;
-	width: 97%;
+	font-size: 14px;
+	font-weight: bold;
+	height: 30px;
+	line-height: 15px;
+	margin: 10px 0 0 90px;
+	padding-left: 20px;
+	width: 200px;
 }
-.rate-header .left {
-	float: left;
-	padding: 5px 0px 0px 5px;
-}
-.rate-header .right {
+.rightdarrow {
 	float: right;
-	margin-right: 5px;
-}
-.rate-header, .rate-schedules, .rate-schedules .rate-grid {
-	clear: both;
-}
-.rate-grid input, .rate-grid select, .rate-grid textarea {
-	width: 94%;
+	padding-right: 93px;
+	padding-top: 10px;
+	vertical-align: middle;
 }
 .rate-detail {
-	padding-top: 5px;
-	width: 99%;
+	clear: both;
+	margin: 0 auto;
+	width: 95%;
+}
+.rate-grid {
+	width: 100%;
+	clear: both;
+}
+.tab-delete{
+    background-image: url("../images/tabdelete.png");
+    background-position: left top;
+    background-repeat: no-repeat;
+    float: left;
+    height: 16px;
+    margin: 7px 0 0 -18px;
+    width: 16px;
+    cursor:pointer;
+}
+#FundDetail{
+  margin: 0 auto;
+    padding: 20px 0 0;
+    width: 90%;
+}
+/* expand header */
+.expandheader, .recon-expandheader {
+	background-image: url("../images/downarrow.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	float: left;
+	padding: 0 0 0 65px;
+	width: 90%;
+}
+.expandheader .expandimg, .recon-expandheader .expandimg {
+	padding: 15px 0 8px;
+}
+.expandsel {
+	background-image: url("../images/expandbg.png");
+	background-position: left top;
+	background-repeat: repeat-x;
+	color: #FFFFFF;
+	font-size: 14px;
+	height: 50px;
+	line-height: 50px;
+	padding: 0 0 0 70px;
+	width: 100%;
+}
+.expandheader #title, .recon-expandheader #title {
+	display: none;
+}
+.expandimg {
+	float: left;
+}
+.expandtitle, .recon-expandtitle {
+	float: left;
+	white-space: nowrap;
+	width: 200px;
+}
+.expandaddbtn {
+	display: none;
+	float: left;
+	height: 31px;
+	line-height: 33px;
+	margin: 10px 0 0 70px;
+	padding-left: 30px;
+	width: 151px;
+}
+.expandaddbtn a {
+	color: #000000;
 	font-size: 11px;
+	font-weight: bold;
 }
-.rate-detail input, .rate-detail select {
-	font-size: 11px;
+.expandsel .rightuarrow {
+	background-image: url("../images/rightuarrow.png");
+	background-repeat: no-repeat;
+	float: right;
+	height: 9px;
+	margin-right: 132px;
+	margin-top: 21px;
+	width: 16px;
 }
-.rate-detail td, .rate-detail th {
-	font-size: 11px;
+.expandtitle {
+	padding-left: 51px;
 }
-.rate-schedules {
+.detail {
+	background-color: #E9EAEC;
+	clear: both;
+	float: left;
+	margin: 0;
+	padding: 20px 0;
+	width: 100%;
 }
+.detail .editor-label {
+	line-height: 20px;
+	text-align: right;
+}
+/* end expand header */
+/* section tab */
+.section-tab-main {
+	background-image: url("../images/tabbg.png");
+	background-position: left bottom;
+	background-repeat: repeat-x;
+	float: left;
+	height: 40px;
+	overflow: hidden;
+	padding-bottom: 3px;
+	padding-left: 60px;
+	width: 100%;
+}
+.section-tab {
+	cursor: pointer;
+	float: left;
+	height: 45px;
+	margin: 0 3px;
+}
+.section-tab .left, .section-tab .right, .section-tab .center {
+	float: left;
+	width: 8px;
+	height: 40px;
+	color: #417a77;
+	font-size: 18px;
+	line-height: 38px;
+}
+.section-tab .left {
+	background: url(../images/tab_us_l.png) no-repeat left top;
+}
+.section-tab .right {
+	background: url(../images/tab_us_r.png) no-repeat left top;
+}
+.section-tab .center {
+	width: auto;
+	background: url(../images/tab_us_c.png) repeat-x left top;
+	padding: 0 20px;
+}
+.section-tab-sel .left {
+	background: url(../images/tab_s_l.png) no-repeat left top;
+}
+.section-tab-sel .right {
+	background: url(../images/tab_s_r.png) no-repeat left top;
+}
+.section-tab-sel .center {
+	width: auto;
+	background: url(../images/tab_s_c.png) repeat-x left top;
+	padding: 0 20px;
+	color: #1a4e77;
+}
+/* end section tab */
+/* green button */
+.green-btn {
+	float: left;
+	margin: 0 3px;
+	cursor: pointer;
+}
+.green-btn .left, .green-btn .right, .green-btn .center {
+	color: #000000;
+	float: left;
+	font-size: 12px;
+	height: 31px;
+	line-height: 32px;
+	font-weight: bold;
+}
+.green-btn .left {
+	background: url(../images/btn_l.png) no-repeat left top;
+	width: 25px;
+}
+.green-btn .right {
+	background: url(../images/btn_r.png) no-repeat left top;
+	width: 8px;
+}
+.green-del-btn .left {
+	background: url(../images/btn_x_l.png) no-repeat left top;
+}
+.green-btn .center {
+	background: url("../images/btn_c.png") repeat-x scroll left top transparent;
+	padding: 0 5px;
+	width: auto;
+}
+/* end green button */

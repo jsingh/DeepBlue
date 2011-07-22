@@ -129,8 +129,7 @@ namespace DeepBlue.Tests {
             string errorMsg = string.Empty;
             return IsValid(out errorMsg, out errorCount, controlName);
         }
-
-
+		 
         /// <summary>
         /// Used for unit testing Models. Targets the DataAnnotations attributes
         /// </summary>
@@ -144,8 +143,6 @@ namespace DeepBlue.Tests {
             if (this.ServiceErrors == null) {
                 return true;
             }
-
-
             foreach (ErrorInfo error in this.ServiceErrors) {
                 // If we are not looking for a spacific validation control, or if we are looking for a specific control, and this this that control(key)
                 if (string.IsNullOrEmpty(propertyName) || (propertyName.Equals(error.PropertyName))) {
@@ -153,7 +150,6 @@ namespace DeepBlue.Tests {
                     errorMsg += error.ErrorMessage + " ";
                 }
             }
-
             return errorCount == 0;
         }
 

@@ -89,6 +89,7 @@
     <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Helpers\FormCollectionHelper.cs" />
     <Compile Include="Helpers\JsonSerializer.cs" />
+    <Compile Include="Helpers\MvcButton.cs" />
     <Compile Include="Helpers\MvcTab.cs" />
     <Compile Include="Models\Admin\EditCurrencyModel.cs" />
     <Compile Include="Models\Admin\EditFundExpenseTypeModel.cs" />
@@ -264,6 +265,8 @@
     <Compile Include="Models\Entity\Validation\FixedIncome.cs" />
     <Compile Include="Models\Entity\Validation\FixedIncomeType.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundCashDistribution.cs" />
+    <Compile Include="Models\Fund\FundBankDetail.cs" />
+    <Compile Include="Models\Fund\FundRateScheduleTierDetail.cs" />
     <Compile Include="Models\Investor\ListModel.cs" />
     <Compile Include="Controllers\Report\ReportRepository.cs" />
     <Compile Include="Controllers\Report\IReportRepository.cs" />
@@ -976,8 +979,11 @@
     <Content Include="Views\Document\New.aspx" />
     <Content Include="Views\Document\Result.ascx" />
     <Content Include="Views\Document\Search.aspx" />
+    <Content Include="Views\Fund\FundRateSchduleTierDetail.ascx" />
+    <Content Include="Views\Fund\FundRateSchduleDetail.ascx" />
     <Content Include="Views\Report\CapitalCallSummary.aspx" />
     <Content Include="Views\Report\CashDistributionSummary.aspx" />
+    <Content Include="Views\Shared\JQueryTemplateCustomFieldList.ascx" />
     <Content Include="Views\Shared\CustomFieldList.ascx" />
     <Content Include="Views\Fund\Edit.aspx" />
     <Content Include="Views\Fund\FundDetail.ascx" />

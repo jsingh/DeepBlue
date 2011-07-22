@@ -19,28 +19,28 @@ namespace DeepBlue.Tests.Models.Deal {
         }
 
 		[Test]
-		public void create_a_new_deal_without_fundit_throws_error() {
+		public void create_a_new_dealseller_without_fundit_throws_error() {
 			Assert.IsFalse(IsPropertyValid("FundID"));
 		}
 
 		[Test]
-		public void create_a_new_deal_without_dealnumber_throws_error() {
+		public void create_a_new_dealseller_without_dealnumber_throws_error() {
 			Assert.IsFalse(IsPropertyValid("DealNumber"));
 		}
 
 		[Test]
-		public void create_a_new_deal_without_purchasetypeid_throws_error() {
+		public void create_a_new_dealseller_without_purchasetypeid_throws_error() {
 			Assert.IsFalse(IsPropertyValid("PurchaseTypeID"));
 		}
 
 
         [Test]
-        public void create_a_new_deal_without_dealname_throws_error() {
+        public void create_a_new_dealseller_without_dealname_throws_error() {
             Assert.IsFalse(IsPropertyValid("DealName"));
         }
 
         [Test]
-        public void create_a_new_deal_with_too_long_dealname_throws_error() {
+        public void create_a_new_dealseller_with_too_long_dealname_throws_error() {
 			Assert.IsFalse(IsPropertyValid("DealName"));
         }
     }
