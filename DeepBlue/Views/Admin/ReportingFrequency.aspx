@@ -2,35 +2,37 @@
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Reporting
+	Reporting Frequency Type
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
+	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("ReportingFrequency.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css") %>
 	<%=Html.StylesheetLinkTag("adminbackend.css") %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-	<div class="admin-main">
-		<div class="admin-header">
-			<a href="javascript:reportingFrequency.add(0);">
-				<%: Html.Image("add_icon.png") %>
-				&nbsp;Add Reporting</a>
+	<div class="navigation">
+		<div class="heading">
+			<div class="leftcol">
+				<span class="title">ADMIN</span><span class="arrow"></span><span class="pname">INVESTOR
+					MANAGEMENT</span></div>
+			<div class="rightcol">
+			</div>
 		</div>
+	</div>
+	<div class="admin-main">
 		<div class="admin-content">
 			<table cellpadding="0" cellspacing="0" border="0" id="ReportingFrequencyList">
 				<thead>
 					<tr>
-						<th sortname="ReportingFrequencyID" style="width: 5%;" align="center">
-							ID
-						</th>
-						<th sortname="ReportingFrequency1" style="width: 80%">
-							Reporting
+						<th sortname="ReportingFrequency1" style="width: 40%">
+							Reporting Frequency Type
 						</th>
 						<th datatype="Boolean" sortname="Enabled" align="center" style="width: 10%;">
 							Enable
 						</th>
-						<th align="center" style="width: 5%;">
+						<th>
 						</th>
 					</tr>
 				</thead>
@@ -39,10 +41,39 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("ReportingFrequencyList", new FlexigridOptions { ActionName = "ReportingFrequencyList", ControllerName = "Admin"
-	,HttpMethod = "GET"
-	,SortName = "ReportingFrequency1"
-	,Paging = true
-	,OnRowBound = "reportingFrequency.onRowBound"
+	<%=Html.jQueryFlexiGrid("ReportingFrequencyList", new FlexigridOptions { 
+    ActionName = "ReportingFrequencyList", ControllerName = "Admin", 
+    HttpMethod = "GET", SortName = "ReportingFrequency1", Paging = true 
+	, OnSuccess= "reportingFrequency.onGridSuccess"
+	, OnRowClick = "reportingFrequency.onRowClick"
+	, OnInit = "reportingFrequency.onInit"
+	, OnTemplate = "reportingFrequency.onTemplate"
 })%>
+	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
+<%using (Html.GreenButton(new { @onclick = "javascript:reportingFrequency.add(this);" })) {%>${name}<%}%>
+	</script>
+	<script id="GridTemplate" type="text/x-jquery-tmpl">
+{{each(i,row) rows}}
+<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
+	<td style="width: 40%">
+		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
+		<%: Html.TextBox("ReportingFrequency", "${row.cell[1]}", new { @class = "hide" })%>
+	</td>
+	<td style="width: 10%;text-align:center;">
+		<%: Html.Span("{{if row.cell[2]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		
+		<%: Html.CheckBox("Enabled",false, new { @class = "hide", @val="${row.cell[2]}" })%>
+	</td>
+	<td style="text-align:right;">
+		{{if row.cell[0]==0}}
+		<%: Html.Image("Add.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:reportingFrequency.save(this,${row.cell[0]});" })%>
+		{{else}}
+		<%: Html.Image("Save.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:reportingFrequency.save(this,${row.cell[0]});" })%>
+		<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:reportingFrequency.edit(this);" })%>
+		<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:reportingFrequency.deleteRow(this,${row.cell[0]});" })%>
+		{{/if}}
+		<%: Html.Hidden("ReportingFrequencyId", "${row.cell[0]}") %>
+	</td>
+</tr>
+{{/each}}
+	</script>
 </asp:Content>

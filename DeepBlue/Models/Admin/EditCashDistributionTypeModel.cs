@@ -19,9 +19,8 @@ namespace DeepBlue.Models.Admin {
 
 		public int CashDistributionTypeId { get; set; }
 
-		[Required(ErrorMessage = "Name is required")]
-		[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
-		[RemoteUID_(Action = "CashDistributionTypeNameAvailable", Controller = "Admin", ValidateParameterName = "CashDistributionTypeName", Params = new string[] { "CashDistributionTypeId" })]
+		[Required(ErrorMessage = "Cash Distribution Type is required")]
+		[StringLength(50, ErrorMessage = "Cash Distribution Type must be under 50 characters.")]
 		[DisplayName("Name:")]
 		public string Name { get; set; }
 

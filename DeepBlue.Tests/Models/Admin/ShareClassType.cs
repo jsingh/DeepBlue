@@ -40,6 +40,11 @@ namespace DeepBlue.Tests.Models.Admin {
 		private void RequiredFieldDataMissing(DeepBlue.Models.Entity.ShareClassType shareclasstype, bool ifValidData) {
 			if (ifValidData) {
 				shareclasstype.ShareClass = "ShareClassType";
+				shareclasstype.CreatedBy = 1;
+				shareclasstype.CreatedDate = DateTime.MaxValue;
+				shareclasstype.LastUpdatedBy = 1;
+				shareclasstype.LastUpdatedDate = DateTime.MaxValue;
+				shareclasstype.EntityID = 2;
 			}
 			else{
 				shareclasstype.ShareClass = string.Empty;

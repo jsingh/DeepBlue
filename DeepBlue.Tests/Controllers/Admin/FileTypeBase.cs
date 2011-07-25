@@ -45,7 +45,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindFileType
 		[Test]
-		public void valid_Find_FileType_sets_json_result_error() {
+		public void valid_find_filetype_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.FileTypeList(1, 1, "FileTypeID", "asc") != null));
 		}
 		#endregion

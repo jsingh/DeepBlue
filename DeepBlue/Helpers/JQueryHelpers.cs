@@ -71,16 +71,22 @@ namespace DeepBlue.Helpers {
 			if (string.IsNullOrEmpty(options.OnSubmit) == false) {
 				scriptSrc.Append(",onSubmit:" + options.OnSubmit + "");
 			}
-			if(string.IsNullOrEmpty(options.OnRowClick)==false){
+			if (string.IsNullOrEmpty(options.OnRowClick) == false) {
 				scriptSrc.Append(",onRowClick:" + options.OnRowClick + "");
 			}
 			if (string.IsNullOrEmpty(options.OnRowBound) == false) {
 				scriptSrc.Append(",onRowBound:" + options.OnRowBound + "");
 			}
+			if (string.IsNullOrEmpty(options.OnInit) == false) {
+				scriptSrc.Append(",onInit:" + options.OnInit + "");
+			}
+			if (string.IsNullOrEmpty(options.OnTemplate) == false) {
+				scriptSrc.Append(",onTemplate:" + options.OnTemplate + "");
+			}
 			scriptSrc.Append(",rpOptions:[");
 			string rows = string.Empty;
 			foreach (var value in options.RowOptions) {
-				rows +=  value + ",";
+				rows += value + ",";
 			}
 			if (rows.Length > 0) {
 				rows = rows.Substring(0, rows.Length - 1);
@@ -143,7 +149,7 @@ namespace DeepBlue.Helpers {
 			 .Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
-		
-		
+
+
 	}
 }

@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateCashDistributionTypeValidData : EditCashDistributionType {
+    public class CreateCashDistributionTypeValidData : CashDistributionTypeBase {
 
 		protected ResultModel ResultModel {
 			get {
@@ -56,17 +56,17 @@ namespace DeepBlue.Tests.Controllers.Admin {
 		}
 
 		[Test]
-		public void valid_CashDistributionType_name_sets_model_error_on_model_state() {
+		public void valid_cashdistributiontype_name_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("Name"));
 		}
 
 		[Test]
-		public void valid_CashDistributionType_name_sets_1_error() {
+		public void valid_cashdistributiontype_name_sets_1_error() {
 			Assert.IsTrue(test_error_count("Name", 0));
 		}
 
 		[Test]
-		public void valid_CashDistributionType_name_results_in_valid_modelstate() {
+		public void valid_cashdistributiontype_name_results_in_valid_modelstate() {
 			SetFormCollection();
 			Assert.IsTrue(base.DefaultController.ModelState.IsValid);
 		}

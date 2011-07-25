@@ -1,59 +1,83 @@
 ﻿var shareClassType={
-	init: function () {
-		jHelper.resizeIframe();
+	add: function (that) {
+		var flexigrid=$(that).parents(".flexigrid:first");
+		var tbody=$(".bDiv table tbody",flexigrid);
+		var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,"",false]}] };
+		$("#GridTemplate").tmpl(data).prependTo(tbody);
+		var tr=$("tr:first",tbody);
+		this.editRow(tr);
+		$("#Add",tr).show();
 	}
-	,add: function (id) {
-		var dt=new Date();
-		var url="/Admin/EditShareClassType/"+id+"?t="+dt.getTime();
-		jHelper.createDialog(url,{
-			title: "Share Class Type",
-			autoOpen: true,
-			width: 380,
-			modal: true,
-			position: 'middle',
-			autoResize: true
-		});
+	,edit: function (img) {
+		var tr=$(img).parents("tr:first");
+		this.editRow(tr);
+		$("#Save",tr).show();
 	}
-	,deleteShareClassType: function (id,img) {
-		if(confirm("Are you sure you want to delete this Share Class Type?")) {
+	,editRow: function (tr) {
+		$(".show",tr).hide();
+		$(".hide",tr).show();
+		$(":input:first",tr).focus();
+	}
+	,deleteRow: function (img,id) {
+		if(confirm("Are you sure you want to delete this share class type?")) {
+			var tr=$(img).parents("tr:first");
+			var imgsrc=img.src;
+			$(img).attr("src","/Assets/images/ajax.jpg");
+			img.src=imgsrc;
 			var dt=new Date();
 			var url="/Admin/DeleteShareClassType/"+id+"?t="+dt.getTime();
 			$.get(url,function (data) {
 				if(data!="") {
 					alert(data);
 				} else {
-					$("#ShareClassTypeList").flexReload();
+					tr.remove();
 				}
 			});
 		}
 	}
-	,onSubmit: function (formId) {
-		return jHelper.formSubmit(formId);
-	}
-	,onGridSuccess: function (t) {
-		$("tr",t).each(function () {
-			$("td:last div",this).html("<img id='Edit' class='gbutton' src='/Assets/images/Edit.png'/>");
+	,save: function (img,id) {
+		var tr=$("#Row"+id);
+		var param=jHelper.serialize(tr);
+		var url="/Admin/UpdateShareClassType";
+		var imgsrc=img.src;
+		$(img).attr("src","/Assets/images/ajax.jpg");
+		$.post(url,param,function (data) {
+			img.src=imgsrc;
+			var arr=data.split("||");
+			if(arr[0]!="True") {
+				alert(data);
+			} else {
+				$.getJSON("/Admin/EditShareClassType?_"+(new Date).getTime()+"&id="+arr[1],function (loadData) {
+					$("#GridTemplate").tmpl(loadData).insertAfter(tr);
+					$(tr).remove();
+					var newTR=$("#Row"+arr[1]);
+					jHelper.checkValAttr(newTR);
+				});
+			}
 		});
 	}
-	,onRowClick: function (row) {
-		shareClassType.add(row.cell[0]);
+	,onGridSuccess: function (t,g) {
+		jHelper.checkValAttr(t);
+		$(window).resize();
 	}
-	,closeDialog: function (reload) {
-		$("#addDialog").dialog('close');
-		if(reload==true) {
-			$("#ShareClassTypeList").flexReload();
-		}
+	,onInit: function (g) {
+		var data={ name: "Add Share Class Type" };
+		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
+		$(window).resize(function () {
+			shareClassType.resizeGV(g);
+		});
 	}
-	,onShareClassTypeBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+	,onTemplate: function (tbody,data) {
+		$("#GridTemplate").tmpl(data).appendTo(tbody);
 	}
-	,onShareClassTypeSuccess: function () {
-		$("#UpdateLoading").html("");
-		var UpdateTargetId=$("#UpdateTargetId");
-		if(jQuery.trim(UpdateTargetId.html())!="True") {
-			alert(UpdateTargetId.html())
-		} else {
-			parent.shareClassType.closeDialog(true);
+	,resizeGV: function (g) {
+		var admain=$(".admin-main");
+		var bDivBox=$(g.bDivBox);
+		bDivBox.css("height","auto");
+		var ah=admain.height()-220;
+		var h=bDivBox.height();
+		if(h>ah) {
+			bDivBox.height(ah);
 		}
 	}
 }

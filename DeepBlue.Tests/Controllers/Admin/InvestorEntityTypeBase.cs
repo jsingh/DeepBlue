@@ -9,9 +9,16 @@ using System.Web.Routing;
 using Moq;
 using MbUnit.Framework;
 using DeepBlue.Controllers.Admin;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
     public class InvestorEntityTypeBase : Base {
+
+		public ResultModel Model {
+			get {
+				return base.ViewResult.ViewData.Model as ResultModel;
+			}
+		}
       
 	    public AdminController DefaultController { get; set; }
 
@@ -45,7 +52,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindInvestorEntityType
 		[Test]
-		public void valid_Find_InvestorEntityType_sets_json_result_error() {
+		public void valid_find_investorentitytype_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.EntityTypeList(1,1,"InvestorEntityTypeName","asc") != null));
 		}
 		#endregion

@@ -19,16 +19,16 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public UnderlyingFundType(IUnderlyingFundTypeService underlyingfundtypeservice)
+		public UnderlyingFundType(IUnderlyingFundTypeService underlyingFundTypeService)
 			: this() {
-				this.underlyingfundtypeService = underlyingfundtypeService;
+				this.UnderlyingFundTypeService = underlyingFundTypeService;
 		}
 
 		public UnderlyingFundType() {
 		}
 
 		private IUnderlyingFundTypeService _UnderlyingFundTypeService;
-		public IUnderlyingFundTypeService underlyingfundtypeService {
+		public IUnderlyingFundTypeService UnderlyingFundTypeService {
 			get {
 				if (_UnderlyingFundTypeService == null) {
 					_UnderlyingFundTypeService = new UnderlyingFundTypeService();
@@ -46,7 +46,7 @@ namespace DeepBlue.Models.Entity {
 			if (errors.Any()) {
 				return errors;
 			}
-			underlyingfundtypeService.SaveUnderlyingFundType(this);
+			UnderlyingFundTypeService.SaveUnderlyingFundType(this);
 			return null;
 		}
 

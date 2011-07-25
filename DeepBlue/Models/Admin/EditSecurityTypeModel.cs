@@ -17,7 +17,6 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Name is required")]
 		[StringLength(100, ErrorMessage = "Name must be under 100 characters.")]
-		[RemoteUID_(Action = "SecurityTypeNameAvailable", Controller = "Admin", ValidateParameterName = "Name", Params = new string[] { "SecurityTypeId" })]
 		[DisplayName("Name:")]
 		public string Name { get; set; }
 

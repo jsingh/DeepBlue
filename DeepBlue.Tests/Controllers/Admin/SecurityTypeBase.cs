@@ -46,7 +46,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindSecurityType
 		[Test]
-		public void valid_Find_SecurityType_sets_json_result_error() {
+		public void valid_find_securitytype_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.SecurityTypeList(1, 1, "SecurityTypeID", "asc") != null));
 		}
 		#endregion

@@ -1,5 +1,25 @@
-﻿.doc-upload {
-	margin-left: 30%;
+﻿.doc-main {
+  bottom: 0;
+    display: block;
+    position: absolute;
+    top: 50px;
+    width: 100%;
+}
+.doc-header {
+	margin-left: 78px;
+}
+.doc-content {
+    bottom: 20px;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    padding: 0 20px 0 25px;
+    position: absolute;
+    top: 138px;
+    width: 96%;
+}
+.doc-upload {
+	margin-left: 78px;
 	margin-top: 10px;
 	float: left;
 }
@@ -15,8 +35,10 @@
 	margin: 0 auto;
 	clear: both;
 }
-.doc-upload .editor-label, .doc-search .editor-label {
+.doc-header .editor-label,.doc-upload .editor-label, .doc-search .editor-label {
 	width: 100px;
+	text-align:right;
+	padding:8px;
 }
 .editor-label select {
 	width: 100px;
@@ -24,8 +46,8 @@
 .editor-field {
 	width: auto;
 }
-.editor-field input {
-	width: 200px;
+.editor-field select{
+	padding:2px;
 }
 .doc-search .editor-field input {
 	width: 100px;
@@ -35,10 +57,4 @@
 }
 #SearchDocumentList img {
 	cursor: pointer;
-}
-.admin-header {
-	margin-left: 25%;
-}
-.admin-content {
-	top: 155px;
 }

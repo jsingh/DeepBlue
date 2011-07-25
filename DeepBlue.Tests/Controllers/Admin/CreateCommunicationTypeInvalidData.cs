@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateCommunicationTypeInvalidData : EditCommunicationType {
+    public class CreateCommunicationTypeInvalidData : CommunicationTypeBase {
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;
@@ -47,29 +47,29 @@ namespace DeepBlue.Tests.Controllers.Admin {
         }
 
         [Test]
-        public void invalid_Communicationtype_name_sets_model_error_on_model_state() {
+        public void invalid_communicationtype_name_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("CommunicationTypeName"));
         }
 
         [Test]
-        public void invalid_Communicationtype_name_sets_1_error() {
+        public void invalid_communicationtype_name_sets_1_error() {
 			Assert.IsTrue(test_error_count("CommunicationTypeName", 1));
         }
 
 		[Test]
-		public void invalid_Communicationtype_groupid_sets_model_error_on_model_state() {
+		public void invalid_communicationtype_groupid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("CommunicationGroupId"));
 		}
 
 		[Test]
-		public void invalid_Communicationtype_groupid_sets_1_error() {
+		public void invalid_communicationtype_groupid_sets_1_error() {
 			Assert.IsTrue(test_error_count("CommunicationGroupId", 1));
 		}
 
 
 
         [Test]
-        public void invalid_Communicationtype_name_results_in_invalid_modelstate() {
+        public void invalid_communicationtype_name_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }

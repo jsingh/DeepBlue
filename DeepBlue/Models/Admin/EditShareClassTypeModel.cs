@@ -13,9 +13,8 @@ namespace DeepBlue.Models.Admin {
 
 		public int ShareClassTypeId { get; set; }
 		
-		[Required(ErrorMessage = "ShareClass is required.")]
-		[StringLength(100, ErrorMessage = "ShareClass must be under 100 characters.")]
-		[RemoteUID_(Action = "ShareClassAvailable", Controller = "Admin", ValidateParameterName = "ShareClass", Params = new string[] { "ShareClassTypeId" })]
+		[Required(ErrorMessage = "Share Class is required.")]
+		[StringLength(100, ErrorMessage = "Share Class must be under 100 characters.")]
 		[DisplayName("ShareClass:")]
 		public string ShareClass { get; set; }
 

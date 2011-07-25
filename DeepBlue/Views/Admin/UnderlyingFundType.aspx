@@ -5,28 +5,31 @@
 	Underlying Fund Type
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
+	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("UnderlyingFundType.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
-	<%=Html.StylesheetLinkTag("flexigrid.css") %>	<%=Html.StylesheetLinkTag("adminbackend.css") %>
+	<%=Html.StylesheetLinkTag("flexigrid.css") %>
+	<%=Html.StylesheetLinkTag("adminbackend.css") %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-	<div class="admin-main">
-		<div class="admin-header">
-			<a href="javascript:underlyingFundType.add(0);" style="font-weight:bold;">
-				<%: Html.Image("add_icon.png") %>
-				&nbsp;Add UnderlyingFund</a>
+	<div class="navigation">
+		<div class="heading">
+			<div class="leftcol">
+				<span class="title">ADMIN</span><span class="arrow"></span><span class="pname">DEAL
+					MANAGEMENT</span></div>
+			<div class="rightcol">
+			</div>
 		</div>
+	</div>
+	<div class="admin-main">
 		<div class="admin-content">
 			<table cellpadding="0" cellspacing="0" border="0" id="UnderlyingFundTypeList">
 				<thead>
 					<tr>
-						<th sortname="UnderlyingFundTypeID" style="width: 5%;" align="center">
-							ID
+						<th sortname="Name" style="width: 40%">
+							Underlying Fund Type
 						</th>
-						<th sortname="Name" style="width: 90%">
-							Name
-						</th>
-						<th align="center" style="width: 5%;">
+						<th>
 						</th>
 					</tr>
 				</thead>
@@ -35,12 +38,35 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("UnderlyingFundTypeList", new FlexigridOptions { ActionName = "UnderlyingFundTypeList", ControllerName = "Admin"
-	, HttpMethod = "GET"
-	, SortName = "UnderlyingFundTypeID"
-	, Paging = true
-	, OnSuccess = "underlyingFundType.onGridSuccess"
+	<%=Html.jQueryFlexiGrid("UnderlyingFundTypeList", new FlexigridOptions { 
+    ActionName = "UnderlyingFundTypeList", ControllerName = "Admin", 
+    HttpMethod = "GET", SortName = "Name", Paging = true 
+	, OnSuccess= "underlyingFundType.onGridSuccess"
 	, OnRowClick = "underlyingFundType.onRowClick"
-	, OnRowBound = "underlyingFundType.onRowBound"
+	, OnInit = "underlyingFundType.onInit"
+	, OnTemplate = "underlyingFundType.onTemplate"
 })%>
+	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
+<%using (Html.GreenButton(new { @onclick = "javascript:underlyingFundType.add(this);" })) {%>${name}<%}%>
+	</script>
+	<script id="GridTemplate" type="text/x-jquery-tmpl">
+{{each(i,row) rows}}
+<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
+	<td style="width: 40%">
+		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
+		<%: Html.TextBox("Name", "${row.cell[1]}", new { @class = "hide" })%>
+	</td>
+	<td style="text-align:right;">
+		{{if row.cell[0]==0}}
+		<%: Html.Image("Add.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:underlyingFundType.save(this,${row.cell[0]});" })%>
+		{{else}}
+		<%: Html.Image("Save.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:underlyingFundType.save(this,${row.cell[0]});" })%>
+		<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:underlyingFundType.edit(this);" })%>
+		<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:underlyingFundType.deleteRow(this,${row.cell[0]});" })%>
+		{{/if}}
+		<%: Html.Hidden("UnderlyingFundTypeId", "${row.cell[0]}") %>
+	</td>
+</tr>
+{{/each}}
+	</script>
 </asp:Content>

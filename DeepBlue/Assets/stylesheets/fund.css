@@ -227,34 +227,3 @@
 	color: #1a4e77;
 }
 /* end section tab */
-/* green button */
-.green-btn {
-	float: left;
-	margin: 0 3px;
-	cursor: pointer;
-}
-.green-btn .left, .green-btn .right, .green-btn .center {
-	color: #000000;
-	float: left;
-	font-size: 12px;
-	height: 31px;
-	line-height: 32px;
-	font-weight: bold;
-}
-.green-btn .left {
-	background: url(../images/btn_l.png) no-repeat left top;
-	width: 25px;
-}
-.green-btn .right {
-	background: url(../images/btn_r.png) no-repeat left top;
-	width: 8px;
-}
-.green-del-btn .left {
-	background: url(../images/btn_x_l.png) no-repeat left top;
-}
-.green-btn .center {
-	background: url("../images/btn_c.png") repeat-x scroll left top transparent;
-	padding: 0 5px;
-	width: auto;
-}
-/* end green button */

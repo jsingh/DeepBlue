@@ -45,7 +45,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindActivityType
 		[Test]
-		public void valid_ActivityType_sets_json_result_error() {
+		public void valid_activitytype_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.ActivityTypeList(1, 1, "ActivityTypeID", "asc") != null));
 		}
 		#endregion

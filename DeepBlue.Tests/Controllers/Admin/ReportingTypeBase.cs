@@ -45,7 +45,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindShareClassType
 		[Test]
-		public void valid_Find_ReportingType_sets_json_result_error() {
+		public void valid_find_reportingtype_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.ReportingTypeList(1, 1, "ReportingTypeID", "asc") != null));
 		}
 		#endregion

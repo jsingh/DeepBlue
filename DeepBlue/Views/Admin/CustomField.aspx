@@ -1,41 +1,47 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<DeepBlue.Models.Admin.EditCustomFieldModel>" %>
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Custom Field
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
+	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("CustomField.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
-	<%=Html.StylesheetLinkTag("flexigrid.css") %>	<%=Html.StylesheetLinkTag("adminbackend.css") %>
+	<%=Html.StylesheetLinkTag("flexigrid.css") %>
+	<%=Html.StylesheetLinkTag("adminbackend.css") %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-	<div class="admin-main">
-		<div class="admin-header">
-			<a href="javascript:customField.add(0);" style="font-weight:bold;">
-				<%: Html.Image("add_icon.png") %>
-				&nbsp;Add Custom Field</a>
+	<div class="navigation">
+		<div class="heading">
+			<div class="leftcol">
+				<span class="title">ADMIN</span><span class="arrow"></span><span class="pname">CUSTOM
+					FIELD MANAGEMENT</span></div>
+			<div class="rightcol">
+			</div>
 		</div>
+	</div>
+	<div class="admin-main">
 		<div class="admin-content">
 			<table cellpadding="0" cellspacing="0" border="0" id="CustomFieldList">
 				<thead>
 					<tr>
-						<th sortname="CustomFieldID" style="width: 5%;" align="center">
-							ID
-						</th>
-						<th sortname="CustomFieldText" style="width: 50%">
+						<th sortname="CustomFieldText" style="width: 20%">
 							Custom Field
 						</th>
-						<th sortname="ModuleName" style="width: 20%;">
-							Module Name
+						<th sortname="ModuleName" style="width: 20%">
+							Module
 						</th>
-						<th sortname="DataTypeName" style="width: 15%;">
-							Data Type
+						<th sortname="DataTypeName" style="width: 20%">
+							DataType
 						</th>
-						<th datatype="Boolean" sortname="Search" style="width: 5%;" align="center">
+						<th sortname="OptionalText" style="width: 20%">
+							Optional Text
+						</th>
+						<th datatype="Boolean" sortname="Search" align="center" style="width: 10%;">
 							Search
 						</th>
-						<th align="center" style="width: 5%;">
+						<th>
 						</th>
 					</tr>
 				</thead>
@@ -44,5 +50,51 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("CustomFieldList", new FlexigridOptions { ActionName = "CustomFieldList", ControllerName = "Admin", HttpMethod = "GET", SortName = "CustomFieldID", Paging = true , OnRowBound="customField.onRowBound" })%>
+	<%=Html.jQueryFlexiGrid("CustomFieldList", new FlexigridOptions { 
+    ActionName = "CustomFieldList", ControllerName = "Admin", 
+    HttpMethod = "GET", SortName = "CustomFieldText", Paging = true 
+	, OnSuccess= "customField.onGridSuccess"
+	, OnRowClick = "customField.onRowClick"
+	, OnInit = "customField.onInit"
+	, OnTemplate = "customField.onTemplate"
+})%>
+	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
+<%using (Html.GreenButton(new { @onclick = "javascript:customField.add(this);" })) {%>${name}<%}%>
+	</script>
+	<script id="GridTemplate" type="text/x-jquery-tmpl">
+{{each(i,row) rows}}
+<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
+	<td style="width: 20%">
+		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
+		<%: Html.TextBox("CustomFieldText", "${row.cell[1]}", new { @class = "hide" })%>
+	</td>
+	<td style="width: 20%">
+		<%: Html.Span("${row.cell[3]}", new { @class = "show" })%>
+		<%: Html.DropDownList("ModuleId", Model.Modules, new { @val="${row.cell[2]}", @class="hide" })%>
+	</td>
+	<td style="width: 20%">
+		<%: Html.Span("${row.cell[5]}", new { @class = "show" })%>
+		<%: Html.DropDownList("DataTypeId",Model.DataTypes, new { @val="${row.cell[4]}", @class="hide" }) %>
+	</td>
+	<td style="width: 20%">
+		<%: Html.Span("${row.cell[6]}", new { @class = "show" })%>
+		<%: Html.TextBox("OptionalText", "${row.cell[6]}", new { @class = "hide" }) %>
+	</td>
+	<td style="width: 10%;text-align:center;">
+		<%: Html.Span("{{if row.cell[7]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		
+		<%: Html.CheckBox("Search", new {  @class = "hide", @val="${row.cell[7]}" }) %>
+	</td>
+	<td style="text-align:right;">
+		{{if row.cell[0]==0}}
+		<%: Html.Image("Add.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:customField.save(this,${row.cell[0]});" })%>
+		{{else}}
+		<%: Html.Image("Save.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:customField.save(this,${row.cell[0]});" })%>
+		<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:customField.edit(this);" })%>
+		<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:customField.deleteRow(this,${row.cell[0]});" })%>
+		{{/if}}
+		<%: Html.Hidden("CustomFieldId", "${row.cell[0]}") %>
+	</td>
+</tr>
+{{/each}}
+	</script>
 </asp:Content>

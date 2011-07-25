@@ -5,6 +5,11 @@
 	Deal
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
+	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftAjax.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tooltip.min.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
@@ -16,6 +21,10 @@
 	<%=Html.StylesheetLinkTag("deal.css")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+	<%using (Html.Div(new { @id = "DealFundList", @class = "navigation", @style = (ViewData["PageName"] == "Create New Deal" ? "display:block" : "display:none") })) {%>
+	<%}%>
+	<%using (Html.Div(new { @id = "ModifyDealBox", @class = "navigation", @style=(ViewData["PageName"]=="Modify Deal" ? "display:block" : "display:none") })) {%>
+	<%}%>
 	<div id="DealMain">
 		<% Html.EnableClientValidation(); %>
 		<%using (Ajax.BeginForm("Create", null, new AjaxOptions {

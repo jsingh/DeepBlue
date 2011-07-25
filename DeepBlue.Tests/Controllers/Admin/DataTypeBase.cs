@@ -9,9 +9,17 @@ using System.Web.Routing;
 using Moq;
 using MbUnit.Framework;
 using DeepBlue.Controllers.Admin;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
     public class DataTypeBase : Base {
+
+		public ResultModel Model {
+			get {
+				return base.ViewResult.ViewData.Model as ResultModel;
+			}
+		}
+
         public AdminController  DefaultController { get; set; }
 
         public Mock<ITransactionRepository> MockRepository { get; set; }
@@ -44,7 +52,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindDatatype
 		[Test]
-		public void valid_Find_DataType_sets_json_result_error() {
+		public void valid_find_datatype_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.DataTypeList(1, 1, "DataTypeID", "asc") != null));
 		}
 		#endregion

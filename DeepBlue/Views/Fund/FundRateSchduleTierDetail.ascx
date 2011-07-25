@@ -20,10 +20,10 @@
 		<%: Html.DropDownList("${index}_${rowIndex}_MultiplierTypeId", Model.MultiplierTypes, new { @id = "MultiplierTypeId", @class = "ddlist", @val = "${tier.MultiplierTypeId}", @onchange = "return fund.changeRS(this);" })%>
 </td>
 <td>
-		<%: Html.jQueryTemplateTextBox("${index}_${rowIndex}_Rate", "${tier.Rate}", new { @id = "Rate", @disabled="disabled", @onkeypress = "return jHelper.isCurrency(event);", @onchange = "javascript:fund.changeRate(this);fund.checkChange(this);" })%>
+		<%: Html.jQueryTemplateTextBox("${index}_${rowIndex}_Rate", "${checkNullOrZero(tier.Rate)}", new { @id = "Rate", @disabled = "disabled", @onkeypress = "return jHelper.isCurrency(event);", @onchange = "javascript:fund.changeRate(this);fund.checkChange(this);" })%>
 </td>
 <td>
-		<%: Html.jQueryTemplateTextBox("${index}_${rowIndex}_FlatFee", "${tier.FlatFee}", new { @id = "FlatFee", @disabled = "disabled", @onkeypress = "return jHelper.isCurrency(event);", @onchange = "javascript:fund.checkChange(this);" })%>
+		<%: Html.jQueryTemplateTextBox("${index}_${rowIndex}_FlatFee", "${checkNullOrZero(tier.FlatFee)}", new { @id = "FlatFee", @disabled = "disabled", @onkeypress = "return jHelper.isCurrency(event);", @onchange = "javascript:fund.checkChange(this);" })%>
 </td>
 <td>
 	<%: Html.jQueryTemplateTextBox("${index}_${rowIndex}_Notes", "${tier.Notes}", new { @id = "Notes", @onchange = "javascript:fund.checkChange(this);" })%>

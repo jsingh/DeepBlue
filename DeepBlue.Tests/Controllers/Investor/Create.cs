@@ -10,9 +10,9 @@ using DeepBlue.Models.Investor;
 namespace DeepBlue.Tests.Controllers.Investor {
 	public class Create : InvestorBase {
 
-		protected CreateModel Model {
+		protected ResultModel Model {
 			get {
-				return base.ViewResult.ViewData.Model as CreateModel;
+				return base.ViewResult.ViewData.Model as ResultModel;
 			}
 		}
 

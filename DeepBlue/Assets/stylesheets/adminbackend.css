@@ -1,30 +1,75 @@
-﻿.admin-main, .admin-header, .admin-content {
+﻿#content {
+	background-image: url(../images/line.png);
+	background-repeat: repeat-x;
+	top: 152px;
+	 overflow: hidden;
+}
+.navigation {
 	position: absolute;
+	top: 0px;
+}
+#leftmenu, .admin-main {
+	bottom: 0;
+	display: block;
+	position: absolute;
+	top: 47px;
+	width: 282px;
+}
+#leftmenu li {
+    height: 28px;
+    list-style: none outside none;
+    padding: 15px 0 0 68px;
+    text-align: left;
+}
+#leftmenu li.sel {
+	background-image: url("../images/left_menu_sel.gif");
+	background-repeat: repeat-x;
+}
+#leftmenu li a {
+	color: #58B6B5;
+}
+#leftmenu li.sel a {
+	color: #fff;
+}
+#leftmenu .menubox {
+	background-image: url("../images/left_bg.gif");
+	background-repeat: repeat-x;
+	min-height: 419px;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+}
+#leftmenu .menubottom {
+   background-image: url("../images/menu_bg_bot.gif");
+    background-repeat: repeat;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 419px;
 }
 .admin-main {
-	top: 0px;
-	bottom: 1px;
-}
-.admin-header {
-	top: 0px; width:98%;
+	left: 282px;
+	width: 75%;
 }
 .admin-content {
-	top: 35px;
-	bottom: 0px;  width: 99%;
-}
-/*.flexigrid, .flexigrid .pDiv, .flexigrid .hDiv, .flexigrid .bDivBox {
+	bottom: 30px;
+	left: 20px;
+	margin: 0;
+	overflow: auto;
+	padding: 0 20px;
 	position: absolute;
+	top: 30px;
+	width: 96%;
+	overflow:hidden;
 }
-.flexigrid {
-	top: 0px;
-	bottom: 5px;
-	width: 100%;
+.green-btn {
+	margin:0;
 }
-.flexigrid .hDiv {
-	top: 27px;
+.hide {
+	display: none;
 }
-.flexigrid .bDivBox {
-	top: 56px;
-	bottom: 0px;
+.show {
+	display: inline-block;
 }
-*/

@@ -9,9 +9,17 @@ using System.Web.Routing;
 using Moq;
 using MbUnit.Framework;
 using DeepBlue.Controllers.Admin;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
     public class InvestorTypeBase : Base {
+
+		public ResultModel Model {
+			get {
+				return base.ViewResult.ViewData.Model as ResultModel;
+			}
+		}
+
         public AdminController  DefaultController { get; set; }
 
         public Mock<ITransactionRepository> MockRepository { get; set; }
@@ -46,7 +54,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindInvestorType
 		[Test]
-		public void valid_Find_InvestorType_sets_json_result_error() {
+		public void valid_find_investortype_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.InvestorTypeList(1, 1, "InvestorTypeName", "asc") != null));
 		}
 		#endregion

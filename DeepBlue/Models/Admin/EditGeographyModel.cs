@@ -15,7 +15,6 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Geography is required.")]
 		[StringLength(100, ErrorMessage = "Geography must be under 100 characters.")]
-		[RemoteUID_(Action = "GeographyAvailable", Controller = "Admin", ValidateParameterName = "Geography", Params = new string[] { "GeographyId" })]
 		[DisplayName("Geography:")]
 		public string Geography { get; set; }
 

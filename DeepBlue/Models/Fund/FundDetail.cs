@@ -17,13 +17,11 @@ namespace DeepBlue.Models.Fund {
 
 		[Required(ErrorMessage = "Fund Name is required")]
 		[StringLength(50, ErrorMessage = "Fund Name must be under 50 characters.")]
-		[RemoteUID_(Action = "FundNameAvailable", Controller = "Fund", ValidateParameterName = "FundName", Params = new string[] { "FundId" })]
 		[DisplayName("Fund Name-")]
 		public string FundName { get; set; }
 
 		[Required(ErrorMessage = "Tax Id is required")]
 		[StringLength(50, ErrorMessage = "Tax Id must be under 50 characters.")]
-		[RemoteUID_(Action = "TaxIdAvailable", Controller = "Fund", ValidateParameterName = "TaxId", Params = new string[] {"FundId"})]
 		[DisplayName("Tax Id-")]
 		public string TaxId { get; set; }
 

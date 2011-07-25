@@ -17,7 +17,6 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Fixed Income Type is required")]
 		[StringLength(100, ErrorMessage = "Fixed Income Type must be under 100 characters.")]
-		[RemoteUID_(Action = "FixedIncomeTypeNameAvailable", Controller = "Admin", ValidateParameterName = "FixedIncomeType", Params = new string[] { "FixedIncomeTypeId" })]
 		[DisplayName("FixedIncomeType:")]
 		public string FixedIncomeType1 { get; set; }
 

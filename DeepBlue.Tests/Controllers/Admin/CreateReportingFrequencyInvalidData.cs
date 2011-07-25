@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateReportingFrequencyInvalidData : EditReportingFrequency {
+    public class CreateReportingFrequencyInvalidData : ReportingFrequencyBase {
 
 		protected ResultModel ResultModel {
 			get {
@@ -55,17 +55,17 @@ namespace DeepBlue.Tests.Controllers.Admin {
         }
 		 
         [Test]
-        public void invalid_Reportingfrequency_reportingfrequency_sets_model_error_on_model_state() {
+        public void invalid_reportingfrequency_reportingfrequency_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("ReportingFrequency"));
         }
 
         [Test]
-		public void invalid_Reportingfrequency_reportingfrequency_sets_1_error() {
+		public void invalid_reportingfrequency_reportingfrequency_sets_1_error() {
 			Assert.IsTrue(test_error_count("ReportingFrequency", 1));
         }
 
         [Test]
-		public void invalid_Reportingfrequency_reportingfrequency_results_in_invalid_modelstate() {
+		public void invalid_reportingfrequency_reportingfrequency_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }

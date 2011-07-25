@@ -9,11 +9,6 @@
 	</title>
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
-	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftAjax.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
 	<%= Html.JavascriptInclueTag("jquery.formatCurrency.js")%>
 	<%= Html.JavascriptInclueTag("jHelper.js")%>
 	<%= Html.JavascriptInclueTag("DeepBlue.js")%>
@@ -88,10 +83,10 @@
 		<%using (Html.SubMenu("Deal_Management", (ViewData["MenuName"] == "DealManagement"))) {%>
 		<ul>
 			<li>
-				<%: Html.ActionLink("Create New Deal", "New", "Deal", null, new { @onmouseover = "menu.msubopen(this,'DealFundList')",	@class = (ViewData["SubmenuName"]=="Create New Deal" ? "sel" : "") })%>
+				<%: Html.ActionLink("Create New Deal", "New", "Deal", null, new { @onmouseover = "$('#ModifyDealBox').hide();menu.msubopen(this,'DealFundList')", @class = (ViewData["SubmenuName"] == "Create New Deal" ? "sel" : "") })%>
 			</li>
 			<li>
-				<%: Html.ActionLink("Modify Deal", "Edit", "Deal", null , new { @onmouseover = "menu.msubopen(this,'ModifyDealBox')", @class = (ViewData["SubmenuName"] == "Modify Deal" ? "sel" : "") })%>
+				<%: Html.ActionLink("Modify Deal", "Edit", "Deal", null, new { @onmouseover = "$('#DealFundList').hide();menu.msubopen(this,'ModifyDealBox')", @class = (ViewData["SubmenuName"] == "Modify Deal" ? "sel" : "") })%>
 			</li>
 			<li>
 				<%: Html.ActionLink("Close Deal", "Close", "Deal", null, new { @class = (ViewData["PageName"] == "CloseDeal" ? "sel" : "") })%>
@@ -129,13 +124,13 @@
 		<%using (Html.SubMenu("Adm_Management", true, (ViewData["MenuName"] == "Admin"))) {%>
 		<ul>
 			<li>
-				<%: Html.SubMenuLink("Investor Management", "Inv_SubMenu", (ViewData["SubmenuName"] == "AdminInvestor"))%>
+				<%: Html.ActionLink("Investor Management", "EntityType", "Admin", null, new { @class = (ViewData["SubmenuName"] == "InvestorManagement" ? "sel" : "") })%>
 			</li>
 			<li>
-				<%: Html.SubMenuLink("Custom Field Management", "CusField_SubMenu", (ViewData["SubmenuName"] == "AdminCustomField"))%>
+				<%: Html.ActionLink("Custom Field Management", "CustomField", "Admin", null, new { @class = (ViewData["SubmenuName"] == "CustomFieldManagement" ? "sel" : "") })%>
 			</li>
 			<li>
-				<%: Html.SubMenuLink("Deal Management", "Deal_SubMenu", (ViewData["SubmenuName"] == "AdminDeal"))%>
+				<%: Html.ActionLink("Deal Management", "PurchaseType", "Admin", null, new { @class = (ViewData["SubmenuName"] == "DealManagement" ? "sel" : "") })%>
 			</li>
 		</ul>
 		<%} %>
@@ -156,57 +151,14 @@
 		</ul>
 		<%} %>
 	</div>
-	<div id="innersubmenu">
+	<%--<div id="innersubmenu">
 		<%using (Html.InnerSubMenu("DealFundList", (ViewData["SubmenuName"] == "Create New Deal"))) {%>
 		<%}%>
 		<%using (Html.InnerSubMenu("ModifyDealBox", (ViewData["SubmenuName"] == "Modify Deal"))) {%>
 		<%}%>
-		<%using (Html.InnerSubMenu("Inv_SubMenu", (ViewData["SubmenuName"] == "AdminInvestor"))) {%>
-		<ul>
-			<li>
-				<%: Html.ActionLink("Investor Entity Type", "EntityType", "Admin",null, new { @class = (ViewData["PageName"] == "EntityType" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Investor Type", "InvestorType", "Admin",null, new { @class = (ViewData["PageName"] == "InvestorType" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Communication Type", "CommunicationType", "Admin",null, new { @class = (ViewData["PageName"] == "CommunicationType" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Communication Grouping", "CommunicationGrouping", "Admin",null, new { @class = (ViewData["PageName"] == "CommunicationGrouping" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.Anchor("Source")%></li>
-			<li>
-				<%: Html.Anchor("Investor Accounting Categories")%></li>
-		</ul>
-		<%} %>
-		<%using (Html.InnerSubMenu("Deal_SubMenu", (ViewData["SubmenuName"] == "AdminDeal"))) {%>
-		<ul>
-			<li>
-				<%: Html.ActionLink("Purchase Type", "PurchaseType", "Admin", null, new { @class = (ViewData["PageName"] == "PurchaseType" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Deal Closing Cost Type", "DealClosingCostType", "Admin", null, new { @class = (ViewData["PageName"] == "DealClosingCostType" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Underlying Fund Type", "UnderlyingFundType", "Admin", null, new { @class = (ViewData["PageName"] == "UnderlyingFundType" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Share Class Type", "ShareClassType", "Admin", null, new { @class = (ViewData["PageName"] == "ShareClassType" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Cash Distribution Type", "CashDistributionType", "Admin", null, new { @class = (ViewData["PageName"] == "CashDistributionType" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Fund Expense Type", "FundExpenseType", "Admin", null, new { @class = (ViewData["PageName"] == "FundExpenseType" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Reporting", "ReportingFrequency", "Admin", null, new { @class = (ViewData["PageName"] == "ReportingFrequency" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Reporting Type", "ReportingType", "Admin", null, new { @class = (ViewData["PageName"] == "ReportingType" ? "sel" : "") })%></li>
-		</ul>
-		<%} %>
-		<%using (Html.InnerSubMenu("CusField_SubMenu", (ViewData["SubmenuName"] == "AdminCustomField"))) {%>
-		<ul>
-			<li>
-				<%: Html.ActionLink("Custom Field", "CustomField", "Admin",null, new { @class = (ViewData["PageName"] == "CustomField" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Data Type", "DataType", "Admin",null, new { @class = (ViewData["PageName"] == "DataType" ? "sel" : "") })%></li>
-		</ul>
-		<%} %>
-	</div>
+	</div>--%>
 	<div id="content">
+		<%Html.RenderPartial("LeftMenu");%>
 		<asp:ContentPlaceHolder ID="MainContent" runat="server" />
 	</div>
 	<div id="footer">

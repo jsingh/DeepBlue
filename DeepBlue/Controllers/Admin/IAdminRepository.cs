@@ -15,6 +15,8 @@ namespace DeepBlue.Controllers.Admin {
 		List<Geography> GetAllGeographies();
 		#endregion
 
+		#region InvestorManagement
+		
 		#region EntityType
 		List<InvestorEntityType> GetAllInvestorEntityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		InvestorEntityType FindInvestorEntityType(int id);
@@ -31,6 +33,26 @@ namespace DeepBlue.Controllers.Admin {
 		bool InvestorTypeNameAvailable(string investorTypeName, int investorTypeID);
 		bool DeleteInvestorType(int id);
 		IEnumerable<ErrorInfo> SaveInvestorType(InvestorType investorType);
+		#endregion
+
+		#region CommunicationType
+		List<CommunicationType> GetAllCommunicationTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<CommunicationType> GetAllCommunicationTypes();
+		CommunicationType FindCommunicationType(int id);
+		bool CommunicationTypeNameAvailable(string communicationTypeName, int communicationTypeID);
+		bool DeleteCommunicationType(int id);
+		IEnumerable<ErrorInfo> SaveCommunicationType(CommunicationType communicationType);
+		#endregion
+
+		#region CommunicationGrouping
+		List<CommunicationGrouping> GetAllCommunicationGroupings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<CommunicationGrouping> GetAllCommunicationGroupings();
+		CommunicationGrouping FindCommunicationGrouping(int id);
+		bool CommunicationGroupingNameAvailable(string communicationGroupingName, int communicationGroupingID);
+		bool DeleteCommunicationGrouping(int id);
+		IEnumerable<ErrorInfo> SaveCommunicationGrouping(CommunicationGrouping communicationGrouping);
+		#endregion
+
 		#endregion
 
 		#region FundClosing
@@ -69,24 +91,6 @@ namespace DeepBlue.Controllers.Admin {
 		bool ModuleTextAvailable(string module, int moduleId);
 		bool DeleteModule(int id);
 		IEnumerable<ErrorInfo> SaveModule(MODULE module);
-		#endregion
-
-		#region CommunicationType
-		List<CommunicationType> GetAllCommunicationTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
-		List<CommunicationType> GetAllCommunicationTypes();
-		CommunicationType FindCommunicationType(int id);
-		bool CommunicationTypeNameAvailable(string communicationTypeName, int communicationTypeID);
-		bool DeleteCommunicationType(int id);
-		IEnumerable<ErrorInfo> SaveCommunicationType(CommunicationType communicationType);
-		#endregion
-
-		#region CommunicationGrouping
-		List<CommunicationGrouping> GetAllCommunicationGroupings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
-		List<CommunicationGrouping> GetAllCommunicationGroupings();
-		CommunicationGrouping FindCommunicationGrouping(int id);
-		bool CommunicationGroupingNameAvailable(string communicationGroupingName, int communicationGroupingID);
-		bool DeleteCommunicationGrouping(int id);
-		IEnumerable<ErrorInfo> SaveCommunicationGrouping(CommunicationGrouping communicationGrouping);
 		#endregion
 
 		#region PurchaseType

@@ -19,9 +19,8 @@ namespace DeepBlue.Models.Admin {
 
 		public int CommunicationTypeId { get; set; }
 
-		[Required(ErrorMessage = "Name is required")]
-		[StringLength(20, ErrorMessage = "Name must be under 20 characters.")]
-		[RemoteUID_(Action = "CommunicationTypeNameAvailable", Controller = "Admin", ValidateParameterName = "CommunicationTypeName", Params = new string[] { "CommunicationTypeId" })]
+		[Required(ErrorMessage = "Communication Type Name is required")]
+		[StringLength(20, ErrorMessage = "Communication Type Name must be under 20 characters.")]
 		[DisplayName("Name:")]
 		public string CommunicationTypeName { get; set; }
 

@@ -12,7 +12,7 @@ using DeepBlue.Controllers.Fund;
 namespace DeepBlue.Tests.Controllers.Fund {
 	public class New :FundBase {
 
-        private FundDetail  Model {
+        private FundDetail Model {
             get {
 				return base.ViewResult.ViewData.Model as FundDetail;
             }
@@ -21,7 +21,7 @@ namespace DeepBlue.Tests.Controllers.Fund {
         public override void Setup() {
             // Arrange
             base.Setup();
-			//base.ActionResult = base.DefaultController.New();
+			base.ActionResult = base.DefaultController.Index();
         }
  
 		[Test]

@@ -9,9 +9,16 @@ using System.Web.Routing;
 using Moq;
 using MbUnit.Framework;
 using DeepBlue.Controllers.Admin;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
     public class CommunicationGroupingBase : Base {
+
+		public ResultModel Model {
+			get {
+				return base.ViewResult.ViewData.Model as ResultModel;
+			}
+		}
       
 	    public AdminController DefaultController { get; set; }
 
@@ -47,7 +54,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindCommunicationGrouping
 		[Test]
-		public void valid_Find_CommunicationGrouping_sets_json_result_error() {
+		public void valid_find_communicationgrouping_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.CommunicationGroupingList(1, 1, "CommunicationGroupingName", "asc") != null));
 		}
 		#endregion

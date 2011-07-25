@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateReportingTypeInvalidData : EditReportingType {
+    public class CreateReportingTypeInvalidData : ReportingTypeBase {
 
 		protected ResultModel ResultModel {
 			get {
@@ -55,17 +55,17 @@ namespace DeepBlue.Tests.Controllers.Admin {
         }
 		 
         [Test]
-        public void invalid_Reportingtype_reporting_sets_model_error_on_model_state() {
+        public void invalid_reportingtype_reporting_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("Reporting"));
         }
 
         [Test]
-		public void invalid_Reportingtype_reporting_sets_1_error() {
+		public void invalid_reportingtype_reporting_sets_1_error() {
 			Assert.IsTrue(test_error_count("Reporting", 1));
         }
 
         [Test]
-		public void invalid_Reportingtype_reporting_results_in_invalid_modelstate() {
+		public void invalid_reportingtype_reporting_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }

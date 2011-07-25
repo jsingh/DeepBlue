@@ -68,848 +68,241 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Admin\ActivityTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CashDistributionTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CommunicationGroupingBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CommunicationTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateActivityTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateActivityTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateCashDistributionTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateCashDistributionTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateCommunicationGropingValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateCommunicationGroupingInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateCommunicationTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateCommunicationTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateCustomFieldInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateCustomFieldValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateDataTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateDataTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateDealClosingCostTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateDealClosingCostTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateEquityTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateEquityTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateFileTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateFileTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateFixedIncomeTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateFixedIncomeTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateFundClosingInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateFundClosingValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateGeographyInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateGeographyValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateIndustryInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateIndustryValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateInvestorEntityTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateInvestorEntityTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateInvestorTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateInvestorTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreatePurchaseTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreatePurchaseTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateReportingFrequencyInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateReportingFrequencyValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateReportingTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateReportingTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateSecurityTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateSecurityTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateShareClassTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateShareClassTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateUnderlyingFundTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CreateUnderlyingFundTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\CustomFieldBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\DataTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\DealClosingCostTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditActivityType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditCashDistributionType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditCommunicationGroping.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditCommunicationType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditCustomField.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditDataType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditDealClosingCostType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditEquityType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditFileType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditFixedIncomeType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditFundClosing.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditGeography.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditIndustry.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditInvestorEntityType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditInvestorType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditPurchaseType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditReportingFrequency.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditReportingType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditSecurityType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditShareClassType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EditUnderlyingFundType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\EquityTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\FileTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\FixedIncomeTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\FundClosingBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\GeographyBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\IndustryBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\InvestorEntityTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\InvestorTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewActivityType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewCashDistributionType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewCommunicationGrouping.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewCommunicationType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewCustomField.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewDataType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewDealClosingCostType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewEquityType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewFileType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewFixedIncomeType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewFundClosing.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewGeography.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewIndustry.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewInvestorEntityType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewInvestorType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewPurchaseType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewReportingFrequency.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewReportingType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewSecurityType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewShareClassType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\NewUnderlyingFundType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\PurchaseTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\ReportingFrequencyBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\ReportingTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\SecurityTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\ShareClassTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Admin\UnderlyingFundTypeBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Controllers\Admin\ActivityTypeBase.cs" />
+    <Compile Include="Controllers\Admin\CashDistributionTypeBase.cs" />
+    <Compile Include="Controllers\Admin\CommunicationGroupingBase.cs" />
+    <Compile Include="Controllers\Admin\CommunicationTypeBase.cs" />
+    <Compile Include="Controllers\Admin\CreateActivityTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateActivityTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateCashDistributionTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateCashDistributionTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateCommunicationGropingValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateCommunicationGroupingInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateCommunicationTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateCommunicationTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateCustomFieldInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateCustomFieldValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateDataTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateDataTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateDealClosingCostTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateDealClosingCostTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateEquityTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateEquityTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateFileTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateFileTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateFixedIncomeTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateFixedIncomeTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateGeographyInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateGeographyValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateIndustryInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateIndustryValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateInvestorEntityTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateInvestorEntityTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateInvestorTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateInvestorTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreatePurchaseTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreatePurchaseTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateReportingFrequencyInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateReportingFrequencyValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateReportingTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateReportingTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateSecurityTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateSecurityTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateShareClassTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateShareClassTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateUnderlyingFundTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CreateUnderlyingFundTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CustomFieldBase.cs" />
+    <Compile Include="Controllers\Admin\DataTypeBase.cs" />
+    <Compile Include="Controllers\Admin\DealClosingCostTypeBase.cs" />
+    <Compile Include="Controllers\Admin\EquityTypeBase.cs" />
+    <Compile Include="Controllers\Admin\FileTypeBase.cs" />
+    <Compile Include="Controllers\Admin\FixedIncomeTypeBase.cs" />
+    <Compile Include="Controllers\Admin\GeographyBase.cs" />
+    <Compile Include="Controllers\Admin\IndustryBase.cs" />
+    <Compile Include="Controllers\Admin\InvestorEntityTypeBase.cs" />
+    <Compile Include="Controllers\Admin\InvestorTypeBase.cs" />
+    <Compile Include="Controllers\Admin\PurchaseTypeBase.cs" />
+    <Compile Include="Controllers\Admin\ReportingFrequencyBase.cs" />
+    <Compile Include="Controllers\Admin\ReportingTypeBase.cs" />
+    <Compile Include="Controllers\Admin\SecurityTypeBase.cs" />
+    <Compile Include="Controllers\Admin\ShareClassTypeBase.cs" />
+    <Compile Include="Controllers\Admin\UnderlyingFundTypeBase.cs" />
     <Compile Include="Controllers\Base.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\CapitalCall\CapitalCallDistributionBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CapitalCallManualBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CapitalCallReceiveBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CapitalCallReqularBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallDistribution.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallDistributionInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallDistributionValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallManual.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallManualInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallManualValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallReceive.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallReceiveInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallReceiveValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallReqular.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallReqularInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\CreateCapitalCallReqularValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\EditCapitalCallManual.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\EditCapitalCallReqular.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\NewCapitalCallDistribution.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\NewCapitalCallManual.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\NewCapitalCallReceive.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CapitalCall\NewCapitalCallReqular.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateIssuerValidData.cs" />
-    <Compile Include="Controllers\Deal\CreateIssuerInvalidData.cs" />
+    <Compile Include="Controllers\CapitalCall\CapitalCallDistributionBase.cs" />
+    <Compile Include="Controllers\CapitalCall\CapitalCallManualBase.cs" />
+    <Compile Include="Controllers\CapitalCall\CapitalCallReceiveBase.cs" />
+    <Compile Include="Controllers\CapitalCall\CapitalCallReqularBase.cs" />
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallDistribution.cs" />
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallDistributionInvalidData.cs" />
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallDistributionValidData.cs" />
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallManual.cs" />
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallManualInvalidData.cs" />
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallManualValidData.cs" />
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallReceive.cs" />
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallReceiveInvalidData.cs" />
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallReceiveValidData.cs" />
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallReqular.cs" />
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallReqularInvalidData.cs" />
+    <Compile Include="Controllers\CapitalCall\CreateCapitalCallReqularValidData.cs" />
+    <Compile Include="Controllers\CapitalCall\EditCapitalCallManual.cs" />
+    <Compile Include="Controllers\CapitalCall\EditCapitalCallReqular.cs" />
+    <Compile Include="Controllers\CapitalCall\NewCapitalCallDistribution.cs" />
+    <Compile Include="Controllers\CapitalCall\NewCapitalCallManual.cs" />
+    <Compile Include="Controllers\CapitalCall\NewCapitalCallReceive.cs" />
+    <Compile Include="Controllers\CapitalCall\NewCapitalCallReqular.cs" />
+    <Compile Include="Controllers\Deal\CreateDeal.cs" />
+    <Compile Include="Controllers\Deal\CreateDealClosing.cs" />
+    <Compile Include="Controllers\Deal\CreateDealClosingInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateDealClosingValidData.cs" />
+    <Compile Include="Controllers\Deal\CreateDealExpense.cs" />
+    <Compile Include="Controllers\Deal\CreateDealExpenseInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateDealExpenseValidData.cs" />
+    <Compile Include="Controllers\Deal\CreateDealInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateDealSeller.cs" />
+    <Compile Include="Controllers\Deal\CreateDealSellerInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateDealSellerValidData.cs" />
+    <Compile Include="Controllers\Deal\CreateDealUnderlyingDirect.cs" />
+    <Compile Include="Controllers\Deal\CreateDealUnderlyingDirectInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateDealUnderlyingDirectValidData.cs" />
+    <Compile Include="Controllers\Deal\CreateDealUnderlyingFund.cs" />
+    <Compile Include="Controllers\Deal\CreateDealUnderlyingFundInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateDealUnderlyingFundValidData.cs" />
+    <Compile Include="Controllers\Deal\CreateDealValidData.cs" />
+    <Compile Include="Controllers\Deal\CreateEquitySplit.cs" />
+    <Compile Include="Controllers\Deal\CreateEquitySplitInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateEquitySplitValidData.cs" />
     <Compile Include="Controllers\Deal\CreateIssuer.cs" />
+    <Compile Include="Controllers\Deal\CreateIssuerInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateIssuerValidData.cs" />
+    <Compile Include="Controllers\Deal\CreateSecurityConversion.cs" />
+    <Compile Include="Controllers\Deal\CreateSecurityConversionInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateSecurityConversionValidData.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingDirectValuation.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingDirectValuationInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingDirectValuationValidData.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundCapitalCall.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundCapitalCallInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundCapitalCallValidData.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundCashDistribution.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundCashDistributionInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundCashDistributionValidData.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundPostRecordCapitalCall.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundPostRecordCapitalCallInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundPostRecordCapitalCallValidData.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundPostRecordCashDistribution.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundPostRecordCashDistributionInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundPostRecordCashDistributionValidData.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundValuation.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundValuationInvalidData.cs" />
+    <Compile Include="Controllers\Deal\CreateUnderlyingFundValuationValidData.cs" />
+    <Compile Include="Controllers\Deal\DealBase.cs" />
+    <Compile Include="Controllers\Deal\DealClosingBase.cs" />
+    <Compile Include="Controllers\Deal\DealClosingCostBase.cs" />
+    <Compile Include="Controllers\Deal\DealSellerBase.cs" />
+    <Compile Include="Controllers\Deal\DealUnderlyingDirectBase.cs" />
+    <Compile Include="Controllers\Deal\DealUnderlyingFundBase.cs" />
+    <Compile Include="Controllers\Deal\EquitySplitBase.cs" />
     <Compile Include="Controllers\Deal\IssuerBase.cs" />
-    <Compile Include="Controllers\Deal\CreateDeal.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealClosing.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealClosingInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealClosingValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealExpense.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealExpenseInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealExpenseValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealSeller.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealSellerInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealSellerValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealUnderlyingDirect.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealUnderlyingDirectInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealUnderlyingDirectValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealUnderlyingFund.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealUnderlyingFundInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealUnderlyingFundValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateDealValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateEquitySplit.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateEquitySplitInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateEquitySplitValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateSecurityConversion.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateSecurityConversionInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateSecurityConversionValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingDirectValuation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingDirectValuationInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingDirectValuationValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundCapitalCall.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundCapitalCallInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundCapitalCallValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundCashDistribution.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundCashDistributionInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundCashDistributionValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundPostRecordCapitalCall.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundPostRecordCapitalCallInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundPostRecordCapitalCallValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundPostRecordCashDistribution.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundPostRecordCashDistributionInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundPostRecordCashDistributionValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundValuation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundValuationInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\CreateUnderlyingFundValuationValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\DealBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\DealClosingBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\DealClosingCostBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\DealSellerBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\DealUnderlyingDirectBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\DealUnderlyingFundBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\EquitySplitBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\SecurityConversionBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\UnderlyingDirectValuationBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\UnderlyingFundCapitalCallBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\UnderlyingFundCashDistributionBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\UnderlyingFundPostRecordCapitalCallBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\UnderlyingFundPostRecordCashDistributionBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Deal\UnderlyingFundValuationBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Document\CreateDocumentUpload.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Document\CreateDocumentUploadInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Document\CreateDocumentUploadValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Document\DocumentSearchBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Document\DocumentUploadBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Document\NewDocumentSearch.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Document\NewDocumentUpload.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Fund\Create.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Fund\CreateInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Fund\CreateValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Fund\Edit.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Fund\FundBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Fund\New.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Investor\Create.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Investor\CreateInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Investor\CreateValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Investor\FindInvestorData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Investor\InvestorBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Investor\New.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Report\CapitalCallSummaryBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Report\CashDistributionSummaryBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Report\CreateCapitalCallSummary.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Report\CreateCapitalCallSummaryInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Report\CreateCapitalCallSummaryValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Report\CreateCashDistributionSummary.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Report\CreateCashDistributionSummaryInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Report\CreateCashDistributionSummaryValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Report\EditCapitalCallSummary.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Report\EditCashDistributionSummary.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Report\NewCapitalCallSummary.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Report\NewCashDistributionSummary.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Transaction\CreateInvestorFund.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Transaction\CreateInvestorFundInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Transaction\InvestorFundBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\Transaction\NewInvestorFund.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Controllers\Deal\SecurityConversionBase.cs" />
+    <Compile Include="Controllers\Deal\UnderlyingDirectValuationBase.cs" />
+    <Compile Include="Controllers\Deal\UnderlyingFundCapitalCallBase.cs" />
+    <Compile Include="Controllers\Deal\UnderlyingFundCashDistributionBase.cs" />
+    <Compile Include="Controllers\Deal\UnderlyingFundPostRecordCapitalCallBase.cs" />
+    <Compile Include="Controllers\Deal\UnderlyingFundPostRecordCashDistributionBase.cs" />
+    <Compile Include="Controllers\Deal\UnderlyingFundValuationBase.cs" />
+    <Compile Include="Controllers\Document\CreateDocumentUpload.cs" />
+    <Compile Include="Controllers\Document\CreateDocumentUploadInvalidData.cs" />
+    <Compile Include="Controllers\Document\CreateDocumentUploadValidData.cs" />
+    <Compile Include="Controllers\Document\DocumentSearchBase.cs" />
+    <Compile Include="Controllers\Document\DocumentUploadBase.cs" />
+    <Compile Include="Controllers\Document\NewDocumentSearch.cs" />
+    <Compile Include="Controllers\Document\NewDocumentUpload.cs" />
+    <Compile Include="Controllers\Fund\Create.cs" />
+    <Compile Include="Controllers\Fund\CreateInvalidData.cs" />
+    <Compile Include="Controllers\Fund\CreateValidData.cs" />
+    <Compile Include="Controllers\Fund\FundBase.cs" />
+    <Compile Include="Controllers\Fund\New.cs" />
+    <Compile Include="Controllers\Investor\Create.cs" />
+    <Compile Include="Controllers\Investor\CreateInvalidData.cs" />
+    <Compile Include="Controllers\Investor\CreateValidData.cs" />
+    <Compile Include="Controllers\Investor\InvestorBase.cs" />
+    <Compile Include="Controllers\Investor\New.cs" />
+    <Compile Include="Controllers\Report\CapitalCallSummaryBase.cs" />
+    <Compile Include="Controllers\Report\CashDistributionSummaryBase.cs" />
+    <Compile Include="Controllers\Report\CreateCapitalCallSummary.cs" />
+    <Compile Include="Controllers\Report\CreateCapitalCallSummaryInvalidData.cs" />
+    <Compile Include="Controllers\Report\CreateCapitalCallSummaryValidData.cs" />
+    <Compile Include="Controllers\Report\CreateCashDistributionSummary.cs" />
+    <Compile Include="Controllers\Report\CreateCashDistributionSummaryInvalidData.cs" />
+    <Compile Include="Controllers\Report\CreateCashDistributionSummaryValidData.cs" />
+    <Compile Include="Controllers\Transaction\CreateInvestorFund.cs" />
+    <Compile Include="Controllers\Transaction\CreateInvestorFundInvalidData.cs" />
+    <Compile Include="Controllers\Transaction\InvestorFundBase.cs" />
+    <Compile Include="Controllers\Transaction\NewInvestorFund.cs" />
     <Compile Include="MockSessionState.cs" />
-    <Compile Include="Models\Admin\ActivityType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\ActivityTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\ActivityTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\CashDistributionType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\CashDistributionTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\CashDistributionTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\CommunicationGrouping.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\CommunicationGroupingInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\CommunicationGroupingValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\CommunicationType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\CommunicationTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\CommunicationTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\CustomField.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\CustomFieldInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\CustomFieldValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\DataType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\DataTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\DataTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\DealClosingCostType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\DealClosingCostTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\DealClosingCostTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\EquityType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\EquityTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\EquityTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\FileType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\FileTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\FileTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\FixedIncomeType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\FixedIncomeTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\FixedIncomeTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\FundClosing.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\FundClosingInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\FundClosingValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\Geography.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\GeographyInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\GeographyValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\Industry.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\IndustryInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\IndustryValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\InvestorEntityType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\InvestorEntityTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\InvestorEntityTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\InvestorType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\InvestorTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\InvestorTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\PurchaseType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\PurchaseTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\PurchaseTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\ReportingFrequency.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\ReportingFrequencyInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\ReportingFrequencyValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\ReportingType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\ReportingTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\ReportingTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\SecurityType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\SecurityTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\SecurityTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\ShareClassType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\ShareClassTypeInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Admin\ShareClassTypeValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Models\Admin\ActivityType.cs" />
+    <Compile Include="Models\Admin\ActivityTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\ActivityTypeValidData.cs" />
+    <Compile Include="Models\Admin\CashDistributionType.cs" />
+    <Compile Include="Models\Admin\CashDistributionTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\CashDistributionTypeValidData.cs" />
+    <Compile Include="Models\Admin\CommunicationGrouping.cs" />
+    <Compile Include="Models\Admin\CommunicationGroupingInvalidData.cs" />
+    <Compile Include="Models\Admin\CommunicationGroupingValidData.cs" />
+    <Compile Include="Models\Admin\CommunicationType.cs" />
+    <Compile Include="Models\Admin\CommunicationTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\CommunicationTypeValidData.cs" />
+    <Compile Include="Models\Admin\CustomField.cs" />
+    <Compile Include="Models\Admin\CustomFieldInvalidData.cs" />
+    <Compile Include="Models\Admin\CustomFieldValidData.cs" />
+    <Compile Include="Models\Admin\DataType.cs" />
+    <Compile Include="Models\Admin\DataTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\DataTypeValidData.cs" />
+    <Compile Include="Models\Admin\DealClosingCostType.cs" />
+    <Compile Include="Models\Admin\DealClosingCostTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\DealClosingCostTypeValidData.cs" />
+    <Compile Include="Models\Admin\EquityType.cs" />
+    <Compile Include="Models\Admin\EquityTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\EquityTypeValidData.cs" />
+    <Compile Include="Models\Admin\FileType.cs" />
+    <Compile Include="Models\Admin\FileTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\FileTypeValidData.cs" />
+    <Compile Include="Models\Admin\FixedIncomeType.cs" />
+    <Compile Include="Models\Admin\FixedIncomeTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\FixedIncomeTypeValidData.cs" />
+    <Compile Include="Models\Admin\FundClosing.cs" />
+    <Compile Include="Models\Admin\FundClosingInvalidData.cs" />
+    <Compile Include="Models\Admin\FundClosingValidData.cs" />
+    <Compile Include="Models\Admin\Geography.cs" />
+    <Compile Include="Models\Admin\GeographyInvalidData.cs" />
+    <Compile Include="Models\Admin\GeographyValidData.cs" />
+    <Compile Include="Models\Admin\Industry.cs" />
+    <Compile Include="Models\Admin\IndustryInvalidData.cs" />
+    <Compile Include="Models\Admin\IndustryValidData.cs" />
+    <Compile Include="Models\Admin\InvestorEntityType.cs" />
+    <Compile Include="Models\Admin\InvestorEntityTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\InvestorEntityTypeValidData.cs" />
+    <Compile Include="Models\Admin\InvestorType.cs" />
+    <Compile Include="Models\Admin\InvestorTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\InvestorTypeValidData.cs" />
+    <Compile Include="Models\Admin\PurchaseType.cs" />
+    <Compile Include="Models\Admin\PurchaseTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\PurchaseTypeValidData.cs" />
+    <Compile Include="Models\Admin\ReportingFrequency.cs" />
+    <Compile Include="Models\Admin\ReportingFrequencyInvalidData.cs" />
+    <Compile Include="Models\Admin\ReportingFrequencyValidData.cs" />
+    <Compile Include="Models\Admin\ReportingType.cs" />
+    <Compile Include="Models\Admin\ReportingTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\ReportingTypeValidData.cs" />
+    <Compile Include="Models\Admin\SecurityType.cs" />
+    <Compile Include="Models\Admin\SecurityTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\SecurityTypeValidData.cs" />
+    <Compile Include="Models\Admin\ShareClassType.cs" />
+    <Compile Include="Models\Admin\ShareClassTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\ShareClassTypeValidData.cs" />
     <Compile Include="Models\Admin\UnderlyingFundType.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -919,234 +312,78 @@
     <Compile Include="Models\Admin\UnderlyingFundTypeValidData.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallDistribution.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallDistributionInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallDistributionValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallManual.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallManualInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallManualValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallReceive.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallReceiveInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallReceiveValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallReqular.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallReqularInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallReqularValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\CashDistribution.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\CashDistributionInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\CashDistributionValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\IssuerValidData.cs" />
-    <Compile Include="Models\Deal\IssuerInvalidData.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallDistribution.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallDistributionInvalidData.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallDistributionValidData.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallManual.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallManualInvalidData.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallManualValidData.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallReceive.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallReceiveInvalidData.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallReceiveValidData.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallReqular.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallReqularInvalidData.cs" />
+    <Compile Include="Models\CapitalCall\CapitalCallReqularValidData.cs" />
+    <Compile Include="Models\Deal\CashDistribution.cs" />
+    <Compile Include="Models\Deal\CashDistributionInvalidData.cs" />
+    <Compile Include="Models\Deal\CashDistributionValidData.cs" />
+    <Compile Include="Models\Deal\Deal.cs" />
+    <Compile Include="Models\Deal\DealClosing.cs" />
+    <Compile Include="Models\Deal\DealClosingCost.cs" />
+    <Compile Include="Models\Deal\DealClosingCostInvalidData.cs" />
+    <Compile Include="Models\Deal\DealClosingCostValidData.cs" />
+    <Compile Include="Models\Deal\DealClosingInvalidData.cs" />
+    <Compile Include="Models\Deal\DealClosingValidData.cs" />
+    <Compile Include="Models\Deal\DealInvalidData.cs" />
+    <Compile Include="Models\Deal\DealSeller.cs" />
+    <Compile Include="Models\Deal\DealSellerInvalidData.cs" />
+    <Compile Include="Models\Deal\DealSellerValidData.cs" />
+    <Compile Include="Models\Deal\DealUnderlyingDirect.cs" />
+    <Compile Include="Models\Deal\DealUnderlyingDirectInvalidData.cs" />
+    <Compile Include="Models\Deal\DealUnderlyingDirectValidData.cs" />
+    <Compile Include="Models\Deal\DealUnderlyingFund.cs" />
+    <Compile Include="Models\Deal\DealUnderlyingFundInvalidData.cs" />
+    <Compile Include="Models\Deal\DealUnderlyingFundValidData.cs" />
+    <Compile Include="Models\Deal\DealValidData.cs" />
+    <Compile Include="Models\Deal\EquitySplit.cs" />
+    <Compile Include="Models\Deal\EquitySplitInvalidData.cs" />
+    <Compile Include="Models\Deal\EquitySplitValidData.cs" />
     <Compile Include="Models\Deal\Issuer.cs" />
-    <Compile Include="Models\Deal\Deal.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealClosing.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealClosingCost.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealClosingCostInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealClosingCostValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealClosingInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealClosingValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealSeller.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealSellerInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealSellerValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealUnderlyingDirect.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealUnderlyingDirectInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealUnderlyingDirectValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealUnderlyingFund.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealUnderlyingFundInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealUnderlyingFundValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\DealValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\EquitySplit.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\EquitySplitInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\EquitySplitValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\SecurityConversion.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\SecurityConversionInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\SecurityConversionValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingDirectLastPrice.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingDirectLastPriceInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingDirectLastPriceValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingFundCapitalCall.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingFundCapitalCallInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingFundCapitalCallLineItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingFundCapitalCallLineItemInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingFundCapitalCallLineItemValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingFundCapitalCallValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingFundCashDistribution.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingFundCashDistributionInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingFundCashDistributionValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingFundNav.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingFundNavInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Deal\UnderlyingFundNavValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Document\Document.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Document\DocumentInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Document\DocumentValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Fund\Fund.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Fund\FundInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Fund\FundValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Investor\Investor.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Investor\InvestorInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Investor\InvestorValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Report\CapitalCallSummary.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Report\CapitalCallSummaryInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Report\CapitalCallSummaryValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Report\CashDistribution.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Report\CashDistributionInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Report\CashDistributionValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Transaction\InvestorFund.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Transaction\InvestorFundInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Transaction\InvestorFundTransaction.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Transaction\InvestorFundTransactionInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Transaction\InvestorFundTransactionValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Transaction\InvestorValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Models\Deal\IssuerInvalidData.cs" />
+    <Compile Include="Models\Deal\IssuerValidData.cs" />
+    <Compile Include="Models\Deal\SecurityConversion.cs" />
+    <Compile Include="Models\Deal\SecurityConversionInvalidData.cs" />
+    <Compile Include="Models\Deal\SecurityConversionValidData.cs" />
+    <Compile Include="Models\Deal\UnderlyingDirectLastPrice.cs" />
+    <Compile Include="Models\Deal\UnderlyingDirectLastPriceInvalidData.cs" />
+    <Compile Include="Models\Deal\UnderlyingDirectLastPriceValidData.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundCapitalCall.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundCapitalCallInvalidData.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundCapitalCallLineItem.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundCapitalCallLineItemInvalidData.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundCapitalCallLineItemValidData.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundCapitalCallValidData.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundCashDistribution.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundCashDistributionInvalidData.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundCashDistributionValidData.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundNav.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundNavInvalidData.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundNavValidData.cs" />
+    <Compile Include="Models\Document\Document.cs" />
+    <Compile Include="Models\Document\DocumentInvalidData.cs" />
+    <Compile Include="Models\Document\DocumentValidData.cs" />
+    <Compile Include="Models\Fund\Fund.cs" />
+    <Compile Include="Models\Fund\FundInvalidData.cs" />
+    <Compile Include="Models\Fund\FundValidData.cs" />
+    <Compile Include="Models\Investor\Investor.cs" />
+    <Compile Include="Models\Investor\InvestorInvalidData.cs" />
+    <Compile Include="Models\Investor\InvestorValidData.cs" />
+    <Compile Include="Models\Transaction\InvestorFund.cs" />
+    <Compile Include="Models\Transaction\InvestorFundInvalidData.cs" />
+    <Compile Include="Models\Transaction\InvestorFundTransaction.cs" />
+    <Compile Include="Models\Transaction\InvestorFundTransactionInvalidData.cs" />
+    <Compile Include="Models\Transaction\InvestorFundTransactionValidData.cs" />
+    <Compile Include="Models\Transaction\InvestorValidData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1189,6 +426,7 @@
     <Folder Include="Controllers\CapitalCall\.svn\tmp\prop-base\" />
     <Folder Include="Controllers\CapitalCall\.svn\tmp\props\" />
     <Folder Include="Controllers\CapitalCall\.svn\tmp\text-base\" />
+    <Folder Include="Models\Report\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

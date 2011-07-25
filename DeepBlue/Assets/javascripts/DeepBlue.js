@@ -35,6 +35,6 @@
 		var submenu=document.getElementById("submenu");
 		var innersubmenu=document.getElementById("innersubmenu");
 		var content=document.getElementById("content");
-		content.style.top=$(header).height()+$(submenu).height()+$(innersubmenu).height()+"px";
+		//content.style.top=$(header).height()+$(submenu).height()+$(innersubmenu).height()+"px";
 	}
 }

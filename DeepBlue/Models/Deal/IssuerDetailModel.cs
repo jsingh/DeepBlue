@@ -19,7 +19,6 @@ namespace DeepBlue.Models.Deal {
 
 		[Required(ErrorMessage = "Name is required.")]
 		[StringLength(100, ErrorMessage = "Name must be under 100 characters.")]
-		[RemoteUID_(Action = "IssuerNameAvailable", Controller = "Issuer", ValidateParameterName = "IssuerName", Params = new string[] { "IssuerId" })]
 		[DisplayName("Issuer Name")]
 		public string Name { get; set; }
 

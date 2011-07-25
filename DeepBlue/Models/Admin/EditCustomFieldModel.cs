@@ -12,9 +12,8 @@ namespace DeepBlue.Models.Admin {
 
 		public int CustomFieldId { get; set; }
 
-		[Required(ErrorMessage = "Name is required.")]
-		[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
-		[RemoteUID_(Action = "CustomFieldTextAvailable", Controller = "Admin", ValidateParameterName = "CustomFieldText", Params = new string[] { "CustomFieldId", "ModuleId" })]
+		[Required(ErrorMessage = "Custom Field Name is required.")]
+		[StringLength(50, ErrorMessage = "Custom Field Name must be under 50 characters.")]
 		[DisplayName("Name:")]
 		public string CustomFieldText { get; set; }
 

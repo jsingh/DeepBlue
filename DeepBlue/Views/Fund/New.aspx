@@ -6,6 +6,11 @@
 	Fund
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
+	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftAjax.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
 	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
 	<%= Html.JavascriptInclueTag("Fund.js")%>

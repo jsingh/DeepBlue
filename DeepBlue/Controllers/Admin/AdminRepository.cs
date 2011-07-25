@@ -8,6 +8,8 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Controllers.Admin {
 	public class AdminRepository : IAdminRepository {
 
+		#region InvestorManagement
+
 		#region  InvestorEntityType
 
 		public List<Models.Entity.InvestorEntityType> GetAllInvestorEntityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
@@ -111,45 +113,55 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region  FundClosing
+		#region  CommunicationType
 
-		public List<Models.Entity.FundClosing> GetAllFundClosings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+		public List<Models.Entity.CommunicationType> GetAllCommunicationTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.FundClosing> query = (from fund in context.FundClosings
-																		 .Include("Fund")
-															   select fund);
-				if (sortName == "FundName") {
-					query = (sortOrder == "asc" ? query.OrderBy(fund => fund.Fund.FundName) : query.OrderByDescending(fund => fund.Fund.FundName));
+				IQueryable<Models.Entity.CommunicationType> query = (from communicationType in context.CommunicationTypes.Include("CommunicationGrouping")
+																	 select communicationType);
+				switch (sortName) {
+					case "CommunicationGroupingName":
+						query = (sortOrder == "asc" ? query.OrderBy(field => field.CommunicationGrouping.CommunicationGroupingName) : query.OrderByDescending(field => field.CommunicationGrouping.CommunicationGroupingName));
+						break;
+					default:
+						query = query.OrderBy(sortName, (sortOrder == "asc"));
+						break;
 				}
-				else {
-					query = query.OrderBy(sortName, (sortOrder == "asc"));
-				}
-				PaginatedList<Models.Entity.FundClosing> paginatedList = new PaginatedList<Models.Entity.FundClosing>(query, pageIndex, pageSize);
+				PaginatedList<CommunicationType> paginatedList = new PaginatedList<CommunicationType>(query, pageIndex, pageSize);
 				totalRows = paginatedList.TotalCount;
 				return paginatedList;
 			}
 		}
 
-		public FundClosing FindFundClosing(int id) {
+		public List<CommunicationType> GetAllCommunicationTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.FundClosings.SingleOrDefault(fundClose => fundClose.FundClosingID == id);
+				return (from communicationType in context.CommunicationTypes
+						where communicationType.Enabled == true
+						orderby communicationType.CommunicationTypeName
+						select communicationType).ToList();
 			}
 		}
 
-		public bool FundClosingNameAvailable(string name, int fundclosingId, int fundId) {
+		public CommunicationType FindCommunicationType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from fundClose in context.FundClosings
-						 where fundClose.Name == name && fundClose.FundClosingID != fundclosingId && fundClose.FundID == fundId
-						 select fundClose.FundClosingID).Count()) > 0 ? true : false;
+				return context.CommunicationTypes.Include("CommunicationGrouping").SingleOrDefault(type => type.CommunicationTypeID == id);
 			}
 		}
 
-		public bool DeleteFundClosing(int id) {
+		public bool CommunicationTypeNameAvailable(string communicationTypeName, int communicationTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				FundClosing fundclose = context.FundClosings.SingleOrDefault(close => close.FundClosingID == id);
-				if (fundclose != null) {
-					if (fundclose.InvestorFundTransactions.Count() == 0) {
-						context.FundClosings.DeleteObject(fundclose);
+				return ((from type in context.CommunicationTypes
+						 where type.CommunicationTypeName == communicationTypeName && type.CommunicationTypeID != communicationTypeID
+						 select type.CommunicationTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteCommunicationType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				CommunicationType communicationType = context.CommunicationTypes.SingleOrDefault(type => type.CommunicationTypeID == id);
+				if (communicationType != null) {
+					if (communicationType.Communications.Count == 0 && communicationType.CommunicationGrouping != null) {
+						context.CommunicationTypes.DeleteObject(communicationType);
 						context.SaveChanges();
 						return true;
 					}
@@ -158,11 +170,70 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
-		public IEnumerable<ErrorInfo> SaveFundClosing(FundClosing fundClosing) {
-			return fundClosing.Save();
+		public IEnumerable<ErrorInfo> SaveCommunicationType(CommunicationType communicationType) {
+			return communicationType.Save();
 		}
 
 		#endregion
+
+		#region  CommunicationGrouping
+
+		public List<Models.Entity.CommunicationGrouping> GetAllCommunicationGroupings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.CommunicationGrouping> query = (from communicationGrouping in context.CommunicationGroupings
+																		 select communicationGrouping);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<CommunicationGrouping> paginatedList = new PaginatedList<CommunicationGrouping>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<CommunicationGrouping> GetAllCommunicationGroupings() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from communicationGrouping in context.CommunicationGroupings
+						orderby communicationGrouping.CommunicationGroupingName
+						select communicationGrouping).ToList();
+			}
+		}
+
+		public CommunicationGrouping FindCommunicationGrouping(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.CommunicationGroupings.SingleOrDefault(type => type.CommunicationGroupingID == id);
+			}
+		}
+
+		public bool CommunicationGroupingNameAvailable(string communicationGroupingName, int communicationGroupingID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.CommunicationGroupings
+						 where type.CommunicationGroupingName == communicationGroupingName && type.CommunicationGroupingID != communicationGroupingID
+						 select type.CommunicationGroupingID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteCommunicationGrouping(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				CommunicationGrouping communicationGrouping = context.CommunicationGroupings.SingleOrDefault(type => type.CommunicationGroupingID == id);
+				if (communicationGrouping != null) {
+					if (communicationGrouping.CommunicationTypes.Count == 0) {
+						context.CommunicationGroupings.DeleteObject(communicationGrouping);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveCommunicationGrouping(CommunicationGrouping communicationGrouping) {
+			return communicationGrouping.Save();
+		}
+
+		#endregion
+
+		#endregion
+
+		#region CustomFieldManagement
 
 		#region  CustomField
 
@@ -229,6 +300,8 @@ namespace DeepBlue.Controllers.Admin {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.CustomFields
 							  .Include("OptionFields")
+							  .Include("MODULE")
+							  .Include("DataType")
 							  .SingleOrDefault(field => field.CustomFieldID == id);
 			}
 		}
@@ -317,206 +390,9 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region  Module
-
-		public List<Models.Entity.MODULE> GetAllModules(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.MODULE> query = (from module in context.MODULEs
-														  select module);
-				query = query.OrderBy(sortName, (sortOrder == "asc"));
-				PaginatedList<Models.Entity.MODULE> paginatedList = new PaginatedList<Models.Entity.MODULE>(query, pageIndex, pageSize);
-				totalRows = paginatedList.TotalCount;
-				return paginatedList;
-			}
-		}
-
-		public MODULE FindModule(int id) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.MODULEs.SingleOrDefault(field => field.ModuleID == id);
-			}
-		}
-
-		public bool ModuleTextAvailable(string moduleFieldText, int moduleFieldId) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from field in context.MODULEs
-						 where field.ModuleName == moduleFieldText && field.ModuleID != moduleFieldId
-						 select field.ModuleID).Count()) > 0 ? true : false;
-			}
-		}
-
-		public bool DeleteModule(int id) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				MODULE module = context.MODULEs.SingleOrDefault(field => field.ModuleID == id);
-				if (module != null) {
-					if (module.CustomFields.Count == 0) {
-						context.MODULEs.DeleteObject(module);
-						context.SaveChanges();
-						return true;
-					}
-				}
-				return false;
-			}
-		}
-
-		public IEnumerable<ErrorInfo> SaveModule(MODULE module) {
-			return module.Save();
-		}
 		#endregion
 
-		#region  Get
-
-		public List<COUNTRY> GetAllCountries() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from country in context.COUNTRies
-						orderby country.CountryName ascending
-						select country).ToList();
-			}
-		}
-
-		public List<STATE> GetAllStates() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from state in context.STATEs
-						orderby state.Name ascending
-						select state).ToList();
-			}
-		}
-
-		public List<InvestorEntityType> GetAllInvestorEntityTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investorEntityType in context.InvestorEntityTypes
-						where investorEntityType.Enabled == true
-						orderby investorEntityType.InvestorEntityTypeName
-						select investorEntityType).ToList();
-			}
-		}
-
-		public List<AddressType> GetAllAddressTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from addressType in context.AddressTypes
-						orderby addressType.AddressTypeName
-						select addressType).ToList();
-			}
-		}
-
-		#endregion
-
-		#region  CommunicationType
-
-		public List<Models.Entity.CommunicationType> GetAllCommunicationTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.CommunicationType> query = (from communicationType in context.CommunicationTypes.Include("CommunicationGrouping")
-																	 select communicationType);
-				switch (sortName) {
-					case "CommunicationGroupingName":
-						query = (sortOrder == "asc" ? query.OrderBy(field => field.CommunicationGrouping.CommunicationGroupingName) : query.OrderByDescending(field => field.CommunicationGrouping.CommunicationGroupingName));
-						break;
-					default:
-						query = query.OrderBy(sortName, (sortOrder == "asc"));
-						break;
-				}
-				PaginatedList<CommunicationType> paginatedList = new PaginatedList<CommunicationType>(query, pageIndex, pageSize);
-				totalRows = paginatedList.TotalCount;
-				return paginatedList;
-			}
-		}
-
-		public List<CommunicationType> GetAllCommunicationTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from communicationType in context.CommunicationTypes
-						where communicationType.Enabled == true
-						orderby communicationType.CommunicationTypeName
-						select communicationType).ToList();
-			}
-		}
-
-		public CommunicationType FindCommunicationType(int id) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.CommunicationTypes.SingleOrDefault(type => type.CommunicationTypeID == id);
-			}
-		}
-
-		public bool CommunicationTypeNameAvailable(string communicationTypeName, int communicationTypeID) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.CommunicationTypes
-						 where type.CommunicationTypeName == communicationTypeName && type.CommunicationTypeID != communicationTypeID
-						 select type.CommunicationTypeID).Count()) > 0 ? true : false;
-			}
-		}
-
-		public bool DeleteCommunicationType(int id) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				CommunicationType communicationType = context.CommunicationTypes.SingleOrDefault(type => type.CommunicationTypeID == id);
-				if (communicationType != null) {
-					if (communicationType.Communications.Count == 0 && communicationType.CommunicationGrouping != null) {
-						context.CommunicationTypes.DeleteObject(communicationType);
-						context.SaveChanges();
-						return true;
-					}
-				}
-				return false;
-			}
-		}
-
-		public IEnumerable<ErrorInfo> SaveCommunicationType(CommunicationType communicationType) {
-			return communicationType.Save();
-		}
-
-		#endregion
-
-		#region  CommunicationGrouping
-
-		public List<Models.Entity.CommunicationGrouping> GetAllCommunicationGroupings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.CommunicationGrouping> query = (from communicationGrouping in context.CommunicationGroupings
-																		 select communicationGrouping);
-				query = query.OrderBy(sortName, (sortOrder == "asc"));
-				PaginatedList<CommunicationGrouping> paginatedList = new PaginatedList<CommunicationGrouping>(query, pageIndex, pageSize);
-				totalRows = paginatedList.TotalCount;
-				return paginatedList;
-			}
-		}
-
-		public List<CommunicationGrouping> GetAllCommunicationGroupings() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from communicationGrouping in context.CommunicationGroupings
-						orderby communicationGrouping.CommunicationGroupingName
-						select communicationGrouping).ToList();
-			}
-		}
-
-		public CommunicationGrouping FindCommunicationGrouping(int id) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.CommunicationGroupings.SingleOrDefault(type => type.CommunicationGroupingID == id);
-			}
-		}
-
-		public bool CommunicationGroupingNameAvailable(string communicationGroupingName, int communicationGroupingID) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.CommunicationGroupings
-						 where type.CommunicationGroupingName == communicationGroupingName && type.CommunicationGroupingID != communicationGroupingID
-						 select type.CommunicationGroupingID).Count()) > 0 ? true : false;
-			}
-		}
-
-		public bool DeleteCommunicationGrouping(int id) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				CommunicationGrouping communicationGrouping = context.CommunicationGroupings.SingleOrDefault(type => type.CommunicationGroupingID == id);
-				if (communicationGrouping != null) {
-					if (communicationGrouping.CommunicationTypes.Count == 0) {
-						context.CommunicationGroupings.DeleteObject(communicationGrouping);
-						context.SaveChanges();
-						return true;
-					}
-				}
-				return false;
-			}
-		}
-
-		public IEnumerable<ErrorInfo> SaveCommunicationGrouping(CommunicationGrouping communicationGrouping) {
-			return communicationGrouping.Save();
-		}
-
-		#endregion
+		#region DealManagement
 
 		#region  PurchaseType
 
@@ -624,81 +500,6 @@ namespace DeepBlue.Controllers.Admin {
 
 		public IEnumerable<ErrorInfo> SaveDealClosingCostType(DealClosingCostType dealClosingCostType) {
 			return dealClosingCostType.Save();
-		}
-
-		#endregion
-
-		#region  DocumentTypes
-		public List<DocumentType> GetAllDocumentTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from document in context.DocumentTypes
-						orderby document.DocumentTypeName
-						select document).ToList();
-			}
-		}
-		#endregion
-
-		#region  Communication
-		public string GetContactCommunicationValue(int contactId, Models.Admin.Enums.CommunicationType communicationType) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from contactCommunication in context.ContactCommunications
-						where contactCommunication.ContactID == contactId && contactCommunication.Communication.CommunicationTypeID == (int)communicationType
-						select contactCommunication.Communication.CommunicationValue).FirstOrDefault();
-			}
-		}
-		#endregion
-
-		#region  SecurityType
-
-		public List<Models.Entity.SecurityType> GetAllSecurityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.SecurityType> query = (from securityType in context.SecurityTypes
-																select securityType);
-				query = query.OrderBy(sortName, (sortOrder == "asc"));
-				PaginatedList<SecurityType> paginatedList = new PaginatedList<SecurityType>(query, pageIndex, pageSize);
-				totalRows = paginatedList.TotalCount;
-				return paginatedList;
-			}
-		}
-
-		public List<SecurityType> GetAllSecurityTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from securityType in context.SecurityTypes
-						orderby securityType.Name
-						select securityType).ToList();
-			}
-		}
-
-		public SecurityType FindSecurityType(int id) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.SecurityTypes.SingleOrDefault(type => type.SecurityTypeID == id);
-			}
-		}
-
-		public bool SecurityTypeNameAvailable(string securityTypeName, int securityTypeID) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.SecurityTypes
-						 where type.Name == securityTypeName && type.SecurityTypeID != securityTypeID
-						 select type.SecurityTypeID).Count()) > 0 ? true : false;
-			}
-		}
-
-		public bool DeleteSecurityType(int id) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				SecurityType securityType = context.SecurityTypes.SingleOrDefault(type => type.SecurityTypeID == id);
-				if (securityType != null) {
-					if (securityType.DealUnderlyingDirects.Count == 0) {
-						context.SecurityTypes.DeleteObject(securityType);
-						context.SaveChanges();
-						return true;
-					}
-				}
-				return false;
-			}
-		}
-
-		public IEnumerable<ErrorInfo> SaveSecurityType(SecurityType securityType) {
-			return securityType.Save();
 		}
 
 		#endregion
@@ -915,6 +716,331 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
+		#region  CashDistributionType
+
+		public List<Models.Entity.CashDistributionType> GetAllCashDistributionTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.CashDistributionType> query = (from cashDistributionType in context.CashDistributionTypes
+																		select cashDistributionType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<CashDistributionType> paginatedList = new PaginatedList<CashDistributionType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<CashDistributionType> GetAllCashDistributionTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from cashDistributionType in context.CashDistributionTypes
+						where cashDistributionType.Enabled == true
+						orderby cashDistributionType.Name
+						select cashDistributionType).ToList();
+			}
+		}
+
+		public CashDistributionType FindCashDistributionType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.CashDistributionTypes.SingleOrDefault(type => type.CashDistributionTypeID == id);
+			}
+		}
+
+		public bool CashDistributionTypeNameAvailable(string cashDistributionTypeName, int cashDistributionTypeID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.CashDistributionTypes
+						 where type.Name == cashDistributionTypeName && type.CashDistributionTypeID != cashDistributionTypeID
+						 select type.CashDistributionTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteCashDistributionType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				CashDistributionType cashDistributionType = context.CashDistributionTypes.SingleOrDefault(type => type.CashDistributionTypeID == id);
+				if (cashDistributionType != null) {
+					if (cashDistributionType.UnderlyingFundCashDistributions.Count == 0) {
+						context.CashDistributionTypes.DeleteObject(cashDistributionType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveCashDistributionType(CashDistributionType cashDistributionType) {
+			return cashDistributionType.Save();
+		}
+
+		#endregion
+
+		#region  FundExpenseType
+
+		public List<Models.Entity.FundExpenseType> GetAllFundExpenseTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.FundExpenseType> query = (from fundExpenseType in context.FundExpenseTypes
+																   select fundExpenseType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<FundExpenseType> paginatedList = new PaginatedList<FundExpenseType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<FundExpenseType> GetAllFundExpenseTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fundExpense in context.FundExpenseTypes
+						orderby fundExpense.Name
+						select fundExpense).ToList();
+			}
+		}
+
+
+		public FundExpenseType FindFundExpenseType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.FundExpenseTypes.SingleOrDefault(type => type.FundExpenseTypeID == id);
+			}
+		}
+
+		public bool FundExpenseTypeNameAvailable(string fundExpenseTypeName, int fundExpenseTypeID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.FundExpenseTypes
+						 where type.Name == fundExpenseTypeName && type.FundExpenseTypeID != fundExpenseTypeID
+						 select type.FundExpenseTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteFundExpenseType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				FundExpenseType fundExpenseType = context.FundExpenseTypes.SingleOrDefault(type => type.FundExpenseTypeID == id);
+				if (fundExpenseType != null) {
+					if (fundExpenseType.FundExpenses.Count == 0) {
+						context.FundExpenseTypes.DeleteObject(fundExpenseType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveFundExpenseType(FundExpenseType fundExpenseType) {
+			return fundExpenseType.Save();
+		}
+
+		#endregion
+
+		#endregion
+
+		#region  FundClosing
+
+		public List<Models.Entity.FundClosing> GetAllFundClosings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.FundClosing> query = (from fund in context.FundClosings
+																		 .Include("Fund")
+															   select fund);
+				if (sortName == "FundName") {
+					query = (sortOrder == "asc" ? query.OrderBy(fund => fund.Fund.FundName) : query.OrderByDescending(fund => fund.Fund.FundName));
+				}
+				else {
+					query = query.OrderBy(sortName, (sortOrder == "asc"));
+				}
+				PaginatedList<Models.Entity.FundClosing> paginatedList = new PaginatedList<Models.Entity.FundClosing>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public FundClosing FindFundClosing(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.FundClosings.SingleOrDefault(fundClose => fundClose.FundClosingID == id);
+			}
+		}
+
+		public bool FundClosingNameAvailable(string name, int fundclosingId, int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from fundClose in context.FundClosings
+						 where fundClose.Name == name && fundClose.FundClosingID != fundclosingId && fundClose.FundID == fundId
+						 select fundClose.FundClosingID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteFundClosing(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				FundClosing fundclose = context.FundClosings.SingleOrDefault(close => close.FundClosingID == id);
+				if (fundclose != null) {
+					if (fundclose.InvestorFundTransactions.Count() == 0) {
+						context.FundClosings.DeleteObject(fundclose);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveFundClosing(FundClosing fundClosing) {
+			return fundClosing.Save();
+		}
+
+		#endregion
+
+		#region  Module
+
+		public List<Models.Entity.MODULE> GetAllModules(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.MODULE> query = (from module in context.MODULEs
+														  select module);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<Models.Entity.MODULE> paginatedList = new PaginatedList<Models.Entity.MODULE>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public MODULE FindModule(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.MODULEs.SingleOrDefault(field => field.ModuleID == id);
+			}
+		}
+
+		public bool ModuleTextAvailable(string moduleFieldText, int moduleFieldId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from field in context.MODULEs
+						 where field.ModuleName == moduleFieldText && field.ModuleID != moduleFieldId
+						 select field.ModuleID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteModule(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				MODULE module = context.MODULEs.SingleOrDefault(field => field.ModuleID == id);
+				if (module != null) {
+					if (module.CustomFields.Count == 0) {
+						context.MODULEs.DeleteObject(module);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveModule(MODULE module) {
+			return module.Save();
+		}
+		#endregion
+
+		#region  Get
+
+		public List<COUNTRY> GetAllCountries() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from country in context.COUNTRies
+						orderby country.CountryName ascending
+						select country).ToList();
+			}
+		}
+
+		public List<STATE> GetAllStates() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from state in context.STATEs
+						orderby state.Name ascending
+						select state).ToList();
+			}
+		}
+
+		public List<InvestorEntityType> GetAllInvestorEntityTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investorEntityType in context.InvestorEntityTypes
+						where investorEntityType.Enabled == true
+						orderby investorEntityType.InvestorEntityTypeName
+						select investorEntityType).ToList();
+			}
+		}
+
+		public List<AddressType> GetAllAddressTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from addressType in context.AddressTypes
+						orderby addressType.AddressTypeName
+						select addressType).ToList();
+			}
+		}
+
+		#endregion
+	
+		#region  DocumentTypes
+		public List<DocumentType> GetAllDocumentTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from document in context.DocumentTypes
+						orderby document.DocumentTypeName
+						select document).ToList();
+			}
+		}
+		#endregion
+
+		#region  Communication
+		public string GetContactCommunicationValue(int contactId, Models.Admin.Enums.CommunicationType communicationType) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from contactCommunication in context.ContactCommunications
+						where contactCommunication.ContactID == contactId && contactCommunication.Communication.CommunicationTypeID == (int)communicationType
+						select contactCommunication.Communication.CommunicationValue).FirstOrDefault();
+			}
+		}
+		#endregion
+
+		#region  SecurityType
+
+		public List<Models.Entity.SecurityType> GetAllSecurityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.SecurityType> query = (from securityType in context.SecurityTypes
+																select securityType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<SecurityType> paginatedList = new PaginatedList<SecurityType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<SecurityType> GetAllSecurityTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from securityType in context.SecurityTypes
+						orderby securityType.Name
+						select securityType).ToList();
+			}
+		}
+
+		public SecurityType FindSecurityType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.SecurityTypes.SingleOrDefault(type => type.SecurityTypeID == id);
+			}
+		}
+
+		public bool SecurityTypeNameAvailable(string securityTypeName, int securityTypeID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.SecurityTypes
+						 where type.Name == securityTypeName && type.SecurityTypeID != securityTypeID
+						 select type.SecurityTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteSecurityType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				SecurityType securityType = context.SecurityTypes.SingleOrDefault(type => type.SecurityTypeID == id);
+				if (securityType != null) {
+					if (securityType.DealUnderlyingDirects.Count == 0) {
+						context.SecurityTypes.DeleteObject(securityType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveSecurityType(SecurityType securityType) {
+			return securityType.Save();
+		}
+
+		#endregion
+		
 		#region  Geography
 
 		public List<Models.Entity.Geography> GetAllGeographys(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
@@ -1297,62 +1423,6 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region  CashDistributionType
-
-		public List<Models.Entity.CashDistributionType> GetAllCashDistributionTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.CashDistributionType> query = (from cashDistributionType in context.CashDistributionTypes
-																		select cashDistributionType);
-				query = query.OrderBy(sortName, (sortOrder == "asc"));
-				PaginatedList<CashDistributionType> paginatedList = new PaginatedList<CashDistributionType>(query, pageIndex, pageSize);
-				totalRows = paginatedList.TotalCount;
-				return paginatedList;
-			}
-		}
-
-		public List<CashDistributionType> GetAllCashDistributionTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from cashDistributionType in context.CashDistributionTypes
-						where cashDistributionType.Enabled == true
-						orderby cashDistributionType.Name
-						select cashDistributionType).ToList();
-			}
-		}
-
-		public CashDistributionType FindCashDistributionType(int id) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.CashDistributionTypes.SingleOrDefault(type => type.CashDistributionTypeID == id);
-			}
-		}
-
-		public bool CashDistributionTypeNameAvailable(string cashDistributionTypeName, int cashDistributionTypeID) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.CashDistributionTypes
-						 where type.Name == cashDistributionTypeName && type.CashDistributionTypeID != cashDistributionTypeID
-						 select type.CashDistributionTypeID).Count()) > 0 ? true : false;
-			}
-		}
-
-		public bool DeleteCashDistributionType(int id) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				CashDistributionType cashDistributionType = context.CashDistributionTypes.SingleOrDefault(type => type.CashDistributionTypeID == id);
-				if (cashDistributionType != null) {
-					if (cashDistributionType.UnderlyingFundCashDistributions.Count == 0) {
-						context.CashDistributionTypes.DeleteObject(cashDistributionType);
-						context.SaveChanges();
-						return true;
-					}
-				}
-				return false;
-			}
-		}
-
-		public IEnumerable<ErrorInfo> SaveCashDistributionType(CashDistributionType cashDistributionType) {
-			return cashDistributionType.Save();
-		}
-
-		#endregion
-
 		#region  ActivityType
 
 		public List<Models.Entity.ActivityType> GetAllActivityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
@@ -1405,62 +1475,6 @@ namespace DeepBlue.Controllers.Admin {
 
 		public IEnumerable<ErrorInfo> SaveActivityType(ActivityType activityType) {
 			return activityType.Save();
-		}
-
-		#endregion
-
-		#region  FundExpenseType
-
-		public List<Models.Entity.FundExpenseType> GetAllFundExpenseTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.FundExpenseType> query = (from fundExpenseType in context.FundExpenseTypes
-																   select fundExpenseType);
-				query = query.OrderBy(sortName, (sortOrder == "asc"));
-				PaginatedList<FundExpenseType> paginatedList = new PaginatedList<FundExpenseType>(query, pageIndex, pageSize);
-				totalRows = paginatedList.TotalCount;
-				return paginatedList;
-			}
-		}
-
-		public List<FundExpenseType> GetAllFundExpenseTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from fundExpense in context.FundExpenseTypes
-						orderby fundExpense.Name
-						select fundExpense).ToList();
-			}
-		}
-
-
-		public FundExpenseType FindFundExpenseType(int id) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.FundExpenseTypes.SingleOrDefault(type => type.FundExpenseTypeID == id);
-			}
-		}
-
-		public bool FundExpenseTypeNameAvailable(string fundExpenseTypeName, int fundExpenseTypeID) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.FundExpenseTypes
-						 where type.Name == fundExpenseTypeName && type.FundExpenseTypeID != fundExpenseTypeID
-						 select type.FundExpenseTypeID).Count()) > 0 ? true : false;
-			}
-		}
-
-		public bool DeleteFundExpenseType(int id) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				FundExpenseType fundExpenseType = context.FundExpenseTypes.SingleOrDefault(type => type.FundExpenseTypeID == id);
-				if (fundExpenseType != null) {
-					if (fundExpenseType.FundExpenses.Count == 0) {
-						context.FundExpenseTypes.DeleteObject(fundExpenseType);
-						context.SaveChanges();
-						return true;
-					}
-				}
-				return false;
-			}
-		}
-
-		public IEnumerable<ErrorInfo> SaveFundExpenseType(FundExpenseType fundExpenseType) {
-			return fundExpenseType.Save();
 		}
 
 		#endregion

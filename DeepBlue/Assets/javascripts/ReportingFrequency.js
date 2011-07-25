@@ -1,57 +1,83 @@
 ﻿var reportingFrequency={
-	init: function () {
-		jHelper.resizeIframe();
+	add: function (that) {
+		var flexigrid=$(that).parents(".flexigrid:first");
+		var tbody=$(".bDiv table tbody",flexigrid);
+		var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,"",false]}] };
+		$("#GridTemplate").tmpl(data).prependTo(tbody);
+		var tr=$("tr:first",tbody);
+		this.editRow(tr);
+		$("#Add",tr).show();
 	}
-	,add: function (id) {
-		var dt=new Date();
-		var url="/Admin/EditReportingFrequency/"+id+"?t="+dt.getTime();
-		jHelper.createDialog(url,{
-			title: "Reporting Frequency",
-			autoOpen: true,
-			width: 380,
-			modal: true,
-			position: 'middle',
-			autoResize: true
-		});
+	,edit: function (img) {
+		var tr=$(img).parents("tr:first");
+		this.editRow(tr);
+		$("#Save",tr).show();
 	}
-	,deleteReportingFrequency: function (id,img) {
-		if(confirm("Are you sure you want to delete this Reporting Frequency?")) {
+	,editRow: function (tr) {
+		$(".show",tr).hide();
+		$(".hide",tr).show();
+		$(":input:first",tr).focus();
+	}
+	,deleteRow: function (img,id) {
+		if(confirm("Are you sure you want to delete this reporiting?")) {
+			var tr=$(img).parents("tr:first");
+			var imgsrc=img.src;
+			$(img).attr("src","/Assets/images/ajax.jpg");
+			img.src=imgsrc;
 			var dt=new Date();
 			var url="/Admin/DeleteReportingFrequency/"+id+"?t="+dt.getTime();
 			$.get(url,function (data) {
 				if(data!="") {
 					alert(data);
 				} else {
-					$("#ReportingFrequencyList").flexReload();
+					tr.remove();
 				}
 			});
 		}
 	}
-	,onSubmit: function (formId) {
-		return jHelper.formSubmit(formId);
+	,save: function (img,id) {
+		var tr=$("#Row"+id);
+		var param=jHelper.serialize(tr);
+		var url="/Admin/UpdateReportingFrequency";
+		var imgsrc=img.src;
+		$(img).attr("src","/Assets/images/ajax.jpg");
+		$.post(url,param,function (data) {
+			img.src=imgsrc;
+			var arr=data.split("||");
+			if(arr[0]!="True") {
+				alert(data);
+			} else {
+				$.getJSON("/Admin/EditReportingFrequency?_"+(new Date).getTime()+"&id="+arr[1],function (loadData) {
+					$("#GridTemplate").tmpl(loadData).insertAfter(tr);
+					$(tr).remove();
+					var newTR=$("#Row"+arr[1]);
+					jHelper.checkValAttr(newTR);
+				});
+			}
+		});
 	}
-	,onRowBound: function (tr,row) {
-		$("td:last div",tr).html("<img id='Edit' class='gbutton' src='/Assets/images/Edit.png'/>&nbsp;&nbsp;&nbsp;<img id='Delete' class='gbutton' src='/Assets/images/largedel.png'/>");
-		$("td:not(:last)",tr).click(function () { reportingFrequency.add(row.cell[0]); });
-		$("#Edit",tr).click(function () { reportingFrequency.add(row.cell[0]); });
-		$("#Delete",tr).click(function () { reportingFrequency.deleteReportingFrequency(row.cell[0]); });
+	,onGridSuccess: function (t,g) {
+		jHelper.checkValAttr(t);
+		$(window).resize();
 	}
-	,closeDialog: function (reload) {
-		$("#addDialog").dialog('close');
-		if(reload==true) {
-			$("#ReportingFrequencyList").flexReload();
-		}
+	,onInit: function (g) {
+		var data={ name: "Add Reporting" };
+		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
+		$(window).resize(function () {
+			reportingFrequency.resizeGV(g);
+		});
 	}
-	,onReportingFrequencyBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+	,onTemplate: function (tbody,data) {
+		$("#GridTemplate").tmpl(data).appendTo(tbody);
 	}
-	,onReportingFrequencySuccess: function () {
-		$("#UpdateLoading").html("");
-		var UpdateTargetId=$("#UpdateTargetId");
-		if(jQuery.trim(UpdateTargetId.html())!="True") {
-			alert(UpdateTargetId.html())
-		} else {
-			parent.reportingFrequency.closeDialog(true);
+	,resizeGV: function (g) {
+		var admain=$(".admin-main");
+		var bDivBox=$(g.bDivBox);
+		bDivBox.css("height","auto");
+		var ah=admain.height()-220;
+		var h=bDivBox.height();
+		if(h>ah) {
+			bDivBox.height(ah);
 		}
 	}
 }

@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateGeographyInvalidData : EditGeography {
+    public class CreateGeographyInvalidData : GeographyBase {
 
 		protected ResultModel ResultModel {
 			get {
@@ -55,17 +55,17 @@ namespace DeepBlue.Tests.Controllers.Admin {
         }
 		 
         [Test]
-        public void invalid_Geography_geography_sets_model_error_on_model_state() {
+        public void invalid_geography_geography_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("Geography"));
         }
 
         [Test]
-		public void invalid_Geography_geography_sets_1_error() {
+		public void invalid_geography_geography_sets_1_error() {
 			Assert.IsTrue(test_error_count("Geography", 1));
         }
 
         [Test]
-		public void invalid_Geography_geography_results_in_invalid_modelstate() {
+		public void invalid_geography_geography_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }

@@ -178,6 +178,7 @@ namespace DeepBlue.Helpers {
 		public static MvcHtmlString SubMenuLink(this HtmlHelper helper, string menuName, string subMenuId, bool select) {
 			return Anchor(helper, menuName, "#", new { @class = "submenubg" + (select == true ? " sel" : ""), @onmouseover = "menu.msubopen(this,'" + subMenuId + "')" });
 		}
+
 		public static MvcDiv InnerSubMenu(this HtmlHelper helper, string id, bool visible) {
 			TagBuilder tagBuilder = new TagBuilder("div");
 			tagBuilder.AddCssClass("subul");
@@ -190,7 +191,17 @@ namespace DeepBlue.Helpers {
 			}
 			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
 			httpResponse.Write(tagBuilder.ToString(TagRenderMode.StartTag));
-			System.Text.StringBuilder sb = new StringBuilder();
+			return new MvcDiv(helper.ViewContext.HttpContext.Response);
+		}
+
+		#endregion
+
+		#region LeftMenu
+		public static MvcDiv LeftMenu(this HtmlHelper helper) {
+			TagBuilder tagBuilder = new TagBuilder("div");
+			tagBuilder.Attributes.Add("id", "leftmenu");
+			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
+			httpResponse.Write(tagBuilder.ToString(TagRenderMode.StartTag));
 			return new MvcDiv(helper.ViewContext.HttpContext.Response);
 		}
 		#endregion

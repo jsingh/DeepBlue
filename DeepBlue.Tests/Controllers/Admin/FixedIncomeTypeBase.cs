@@ -45,7 +45,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindFixedIncomeType
 		[Test]
-		public void valid_FixedIncomeType_sets_json_result_error() {
+		public void valid_fixedincometype_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.FixedIncomeTypeList(1, 1, "FixedIncomeTypeID", "asc") != null));
 		}
 		#endregion

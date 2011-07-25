@@ -52,54 +52,54 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
             return errorCount == errors;
         }
 		[Test]
-		public void invalid_CapitalCallDistribution_fundId_sets_model_error_on_model_state() {
+		public void invalid_capitalcalldistribution_fundid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("FundId"));
 		}
 
 		[Test]
-		public void invalid_CapitalCallDistribution_fundId_sets_1_error() {
+		public void invalid_capitalcalldistribution_fundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundId", 1));
 		}
 
 		[Test]
-		public void invalid_CapitalCallDistribution_amount_sets_model_error_on_model_state() {
+		public void invalid_capitalcalldistribution_amount_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("DistributionAmount"));
 		}
 
 		[Test]
-		public void invalid_CapitalCallManual_amount_sets_1_error() {
+		public void invalid_capitalcallmanual_amount_sets_1_error() {
 			Assert.IsTrue(test_error_count("DistributionAmount", 1));
 		}
 
 
 		[Test]
-		public void invalid_CapitalCallDistribution_date_sets_model_error_on_model_state() {
+		public void invalid_capitalcalldistribution_date_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("CapitalDistributionDate"));
 		}
 
 		[Test]
-		public void invalid_CapitalCallDistribution_date_sets_1_error() {
+		public void invalid_capitalcalldistribution_date_sets_1_error() {
 			Assert.IsTrue(test_error_count("CapitalDistributionDate", 1));
 		}
 
 
 		[Test]
-		public void invalid_CapitalCallDistribution_duedate_sets_model_error_on_model_state() {
+		public void invalid_capitalcalldistribution_duedate_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("CapitalDistributionDueDate"));
 		}
 
 		[Test]
-		public void invalid_CapitalCallDistribution_duedate_sets_1_error() {
+		public void invalid_capitalcalldistribution_duedate_sets_1_error() {
 			Assert.IsTrue(test_error_count("CapitalDistributionDueDate", 1));
 		}
 
 		[Test]
-		public void invalid_CapitalCallDistribution_number_sets_model_error_on_model_state() {
+		public void invalid_capitalcalldistribution_number_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("DistributionNumber"));
 		}
 
 		[Test]
-		public void invalid_CapitalCallDistribution_number_sets_1_error() {
+		public void invalid_capitalcalldistribution_number_sets_1_error() {
 			Assert.IsTrue(test_error_count("DistributionNumber", 1));
 		}
       

@@ -15,7 +15,6 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Industry is required.")]
 		[StringLength(100, ErrorMessage = "Industry must be under 100 characters.")]
-		[RemoteUID_(Action = "IndustryAvailable", Controller = "Admin", ValidateParameterName = "Industry", Params = new string[] { "IndustryId" })]
 		[DisplayName("Industry:")]
 		public string Industry { get; set; }
 

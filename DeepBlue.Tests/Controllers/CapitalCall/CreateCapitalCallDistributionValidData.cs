@@ -58,52 +58,52 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_fundId_sets_model_error_on_model_state() {
+		public void valid_capitalcalldistribution_fundid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("FundId"));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_fundId_sets_1_error() {
+		public void valid_capitalcalldistribution_fundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundId", 0));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_distributionamount_sets_model_error_on_model_state() {
+		public void valid_capitalcalldistribution_distributionamount_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("DistributionAmount"));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_distributionamount_sets_1_error() {
+		public void valid_capitalcalldistribution_distributionamount_sets_1_error() {
 			Assert.IsTrue(test_error_count("DistributionAmount", 0));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_capitaldistributiondate_sets_model_error_on_model_state() {
+		public void valid_capitalcalldistribution_capitaldistributiondate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CapitalDistributionDate"));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_capitaldistributiondate_sets_1_error() {
+		public void valid_capitalcalldistribution_capitaldistributiondate_sets_1_error() {
 			Assert.IsTrue(test_error_count("CapitalDistributionDate", 0));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_capitaldistributionduedate_sets_model_error_on_model_state() {
+		public void valid_capitalcalldistribution_capitaldistributionduedate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CapitalDistributionDueDate"));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_capitaldistributionduedate_sets_1_error() {
+		public void valid_capitalcalldistribution_capitaldistributionduedate_sets_1_error() {
 			Assert.IsTrue(test_error_count("CapitalDistributionDueDate", 0));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_capitalcallnumber_sets_model_error_on_model_state() {
+		public void valid_capitalcalldistribution_capitalcallnumber_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("DistributionNumber"));
 		}
 
 		[Test]
-		public void valid_CapitalCallDistribution_capitalcallnumber_sets_1_error() {
+		public void valid_capitalcalldistribution_capitalcallnumber_sets_1_error() {
 			Assert.IsTrue(test_error_count("DistributionNumber", 0));
 		}
 

@@ -33,8 +33,6 @@ namespace DeepBlue.Tests.Models.Deal {
 
         protected void Create_Data(DeepBlue.Models.Entity.DealUnderlyingFund dealUnderlyingFund, bool ifValid) {
 			RequiredFieldDataMissing(dealUnderlyingFund, ifValid);
-			StringLengthInvalidData(dealUnderlyingFund, ifValid);
-
         }
 
         #region DealSeller
@@ -47,13 +45,6 @@ namespace DeepBlue.Tests.Models.Deal {
 				dealUnderlyingFund.UnderlyingFundID = 0;
 				dealUnderlyingFund.DealID = 0;
 				dealUnderlyingFund.RecordDate = DateTime.MinValue;
-            }
-        }
-
-		private void StringLengthInvalidData(DeepBlue.Models.Entity.DealUnderlyingFund dealUnderlyingFund, bool ifValidData) {
-            int delta = 0;
-            if (!ifValidData) {
-                delta = 1;
             }
         }
         #endregion

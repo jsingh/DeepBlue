@@ -15,9 +15,8 @@ namespace DeepBlue.Models.Admin {
 
 		public int ModuleID { get; set; }
 
-		[Required(ErrorMessage = "Name is required.")]
-		[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
-		[RemoteUID_(Action = "ModuleFieldTextAvailable", Controller = "Admin", ValidateParameterName = "ModuleName", Params = new string[] { "ModuleID" })]
+		[Required(ErrorMessage = "Module Name is required.")]
+		[StringLength(50, ErrorMessage = "Module Name must be under 50 characters.")]
 		[DisplayName("Name:")]
 		public string ModuleName { get; set; }
 	}

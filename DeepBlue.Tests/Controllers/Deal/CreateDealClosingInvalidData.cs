@@ -53,38 +53,38 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 
 		[Test]
-		public void invalid_DealClosing_DealId_sets_model_error_on_model_state() {
+		public void invalid_dealclosing_dealid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("DealId"));
 		}
 
 		[Test]
-		public void invalid_DealClosing_DealId_sets_1_error() {
+		public void invalid_dealclosing_dealid_sets_1_error() {
 			Assert.IsTrue(test_error_count("DealId", 1));
 		}
 
 
 		[Test]
-		public void invalid_DealClosing_DealNumber_sets_model_error_on_model_state() {
+		public void invalid_dealclosing_dealnumber_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("DealNumber"));
 		}
 
 		[Test]
-		public void invalid_DealClosing_DealNumber_sets_1_error() {
+		public void invalid_dealclosing_dealnumber_sets_1_error() {
 			Assert.IsTrue(test_error_count("DealNumber", 1));
 		}
 
 		[Test]
-		public void invalid_DealClosing_CloseDate_sets_model_error_on_model_state() {
+		public void invalid_dealclosing_closedate_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("CloseDate"));
 		}
 
 		[Test]
-		public void invalid_DealClosing_CloseDate_sets_1_error() {
+		public void invalid_dealclosing_closedate_sets_1_error() {
 			Assert.IsTrue(test_error_count("CloseDate", 1));
 		}
 
 		[Test]
-		public void invalid_Fund_results_in_invalid_modelstate() {
+		public void invalid_fund_results_in_invalid_modelstate() {
 			SetFormCollection();
 			Assert.IsFalse(base.DefaultController.ModelState.IsValid);
 		}

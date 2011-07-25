@@ -28,6 +28,8 @@
 			,onRowClick: false
 			,onRowBound: false
 			,onSubmit: false
+			,onInit: false
+			,onTemplate: false
 		},p);
 		$(t).show();
 		var g={
@@ -54,56 +56,60 @@
 				}
 				this.buildpager();
 				var tbody=document.createElement('tbody');
-				if(p.dataType=='json') {
-					$.each
-					(
-					 data.rows,
-					 function (i,row) {
-					 	var tr=document.createElement('tr');
-					 	if(i%2) { tr.className='erow'; }
-					 	tr.id='row'+i;
-					 	var i=0;
-					 	$("thead tr:first th",g.hDiv).each(function () {
-					 		var td=document.createElement('td');
-					 		var div=document.createElement('div');
-					 		if(row.cell.length>i) {
-					 			switch($(this).attr("datatype")) {
-					 				case "Boolean":
-					 					if(row.cell[i]==true) { div.innerHTML="<img src='/Assets/images/tick.png' />"; }
-					 					break;
-					 				case "money":
-					 					div.innerHTML=jHelper.dollarAmount(row.cell[i].toString());
-					 					break;
-					 				default:
-					 					div.innerHTML=row.cell[i];
-					 			}
-					 		}
-					 		$(td).css({ "display": this.style.display });
-					 		$(td).css({ "width": this.style.width,"display": this.style.display });
-					 		$(div).css("text-align",$(this).attr("align"));
-					 		$(td).append(div);
-					 		$(tr).append(td);
-					 		td=null;
-					 		i++;
-					 	});
-					 	$(tbody).append(tr);
-					 	if(p.onRowBound) {
-					 		p.onRowBound(tr,row,t);
-					 	}
-					 	if(p.onRowClick) {
-					 		$(tr).click(function () {
-					 			p.onRowClick(row);
-					 		});
-					 	}
-					 	tr=null;
-					 }
-					);
+				if(p.onTemplate) {
+					p.onTemplate(tbody,data);
+				} else {
+					if(p.dataType=='json') {
+						$.each
+						(
+						 data.rows,
+						 function (i,row) {
+						 	var tr=document.createElement('tr');
+						 	if(i%2) { tr.className='erow'; }
+						 	tr.id='row'+i;
+						 	var i=0;
+						 	$("thead tr:first th",g.hDiv).each(function () {
+						 		var td=document.createElement('td');
+						 		var div=document.createElement('div');
+						 		if(row.cell.length>i) {
+						 			switch($(this).attr("datatype")) {
+						 				case "Boolean":
+						 					if(row.cell[i]==true) { div.innerHTML="<img src='/Assets/images/tick.png' />"; }
+						 					break;
+						 				case "money":
+						 					div.innerHTML=jHelper.dollarAmount(row.cell[i].toString());
+						 					break;
+						 				default:
+						 					div.innerHTML=row.cell[i];
+						 			}
+						 		}
+						 		$(td).css({ "display": this.style.display });
+						 		$(td).css({ "width": this.style.width,"display": this.style.display });
+						 		$(div).css("text-align",$(this).attr("align"));
+						 		$(td).append(div);
+						 		$(tr).append(td);
+						 		td=null;
+						 		i++;
+						 	});
+						 	$(tbody).append(tr);
+						 	if(p.onRowBound) {
+						 		p.onRowBound(tr,row,t);
+						 	}
+						 	if(p.onRowClick) {
+						 		$(tr).click(function () {
+						 			p.onRowClick(row);
+						 		});
+						 	}
+						 	tr=null;
+						 }
+						);
+					}
 				}
 				$('tr',t).unbind();
 				$(t).empty();
 				$(t).append(tbody);
 				tbody=null;data=null;i=null;
-				if(p.onSuccess) { p.onSuccess(t); }
+				if(p.onSuccess) { p.onSuccess(t,g); }
 				this.hDiv.scrollLeft=this.bDiv.scrollLeft;
 				if($.browser.opera) { $(t).css('visibility','visible'); }
 			},
@@ -151,12 +157,13 @@
 				$(g.gTCDiv).width(w-20);
 				$(g.gBLDiv).width(w);
 				$(g.gBCDiv).width(w-20);
+				var adw=w-40;
+				if(g.pDiv) { $(g.pDiv).width(adw); }
+				if(g.hDiv) { $(g.hDiv).width(adw); }
+				if(g.bDiv) { $(g.bDiv).width(adw); }
+				if(g.bDivBox) { $(g.bDivBox).width(adw+18); }
 				/*if(p.resizeWidth) {
-					var adw=w-20;
-					if(g.pDiv) { $(g.pDiv).width(adw); }
-					if(g.hDiv) { $(g.hDiv).width(adw); }
-					if(g.bDiv) { $(g.bDiv).width(adw); }
-					if(g.bDivBox) { $(g.bDivBox).width(w); }
+				
 				}*/
 			}
 			,populate: function () {
@@ -348,7 +355,7 @@
 			$('div',g.pDiv).html(html);
 
 			$(g.hDiv).before(g.pDiv);
-			$(g.bDiv).after($(g.pDiv).clone());
+			$(g.bDiv).after($(g.pDiv).clone().addClass("bpDiv"));
 
 			$(".pDiv",g.gDiv).each(function () {
 				g.setPagingEvent(this);
@@ -382,7 +389,12 @@
 		try {
 			//$(g.gDiv).jqTransform();
 		} catch(e) { alert(e); }
-		//$(window).resize(function () { $(g.gDiv).css("width","");g.resize(); });
+		if(p.resizeWidth) {
+			$(window).resize(function () { $(g.gDiv).css("width","");g.resize(); });
+		}
+		if(p.onInit) {
+			p.onInit(g);
+		}
 		return t;
 	};
 

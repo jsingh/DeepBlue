@@ -26,21 +26,6 @@
 			});
 		});
 	}
-	,resetValues: function (div) {
-		var tempTable=$(".tblrateschedule:first",div);
-		$("tr",tempTable).each(function () {
-			$("td",this).each(function () {
-				$("#SpnStartDate",this).html("");
-				$("#SpnEndDate",this).html("");
-			});
-		});
-		$(":input",div).each(function () {
-			if(this.type=="text")
-				this.value="";
-			if(this.type=="hidden")
-				this.value="0";
-		});
-	}
 	,selectTab: function (that,detailid) {
 		$(".section-tab").removeClass("section-tab-sel");
 		$(".section-det").hide();
@@ -122,6 +107,7 @@
 				alert("Fund Saved.");
 				$("#FundList").flexReload();
 				if(fundId==0) {
+					$("#TabFundGrid").click();
 					fund.init();
 				} else {
 					fund.deleteTab(fundId,false);
@@ -176,40 +162,6 @@
 			txt.value="";
 			return false;
 		}
-	}
-	,onFundRateValidation: function () {
-		var result=true;
-		$(".ddlist").each(function () {
-			if(result) {
-				if(this.id=="MultiplierTypeId") {
-					result=fund.changeRS(this);
-					if(result==false)
-						return;
-				}
-			}
-		});
-		return result;
-	}
-	,onTaxIdAvailable: function (message) {
-		if(message!='')
-			alert(message);
-	}
-	,closeDialog: function (reload) {
-		$("#addDialog").dialog('close');
-		if(reload==true) {
-			$("#FundList").flexReload();
-		}
-	}
-	,onCreateFundBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-	}
-	,onCreateFundSuccess: function () {
-		$("#UpdateLoading").html("");
-		var UpdateTargetId=$("#UpdateTargetId");
-		if(UpdateTargetId.html()!="")
-			alert(UpdateTargetId.html());
-		else
-			parent.fund.closeDialog(true);
 	}
 	,applyDatePicker: function (txt) {
 		fund.index=fund.index+1;
@@ -289,7 +241,6 @@
 
     			$("#EndDate",tr).val(this.formatDate(endDate));
     			$("#SpnEndDate",tr).html(this.formatDate(endDate));
-    			this.addAdditionalRow(tbl,9-$("tr",tbl).length);
     			var index=0;
     			$("tbody tr",tbl).each(function () {
     				if(index!=0) {
@@ -305,15 +256,6 @@
     		//alert(e);
     	}
     }
-	,addAdditionalRow: function (tbl,count) {
-		var i=0;
-		for(i=0;i<count;i++) {
-			fund.addRow(tbl);
-		}
-	}
-	,addRow: function (tbl) {
-
-	}
 	,assignDates: function (tr,startDate) {
 		var sDate="";var eDate="";var endDate="";
 		if(startDate!="") {

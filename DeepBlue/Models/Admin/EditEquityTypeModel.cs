@@ -17,7 +17,6 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Equity is required")]
 		[StringLength(100, ErrorMessage = "Equity must be under 100 characters.")]
-		[RemoteUID_(Action = "EquityTypeNameAvailable", Controller = "Admin", ValidateParameterName = "Equity", Params = new string[] { "EquityTypeId" })]
 		[DisplayName("Equity:")]
 		public string Equity { get; set; }
 

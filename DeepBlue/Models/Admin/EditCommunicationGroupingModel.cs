@@ -18,9 +18,8 @@ namespace DeepBlue.Models.Admin {
 
 		public int CommunicationGroupingId { get; set; }
 
-		[Required(ErrorMessage = "Name is required")]
-		[StringLength(20, ErrorMessage = "Name must be under 20 characters.")]
-		[RemoteUID_(Action = "CommunicationGroupingNameAvailable", Controller = "Admin", ValidateParameterName = "CommunicationGroupingName", Params = new string[] { "CommunicationGroupingId" })]
+		[Required(ErrorMessage = "Communication Grouping Name is required")]
+		[StringLength(20, ErrorMessage = "Communication Grouping Name must be under 20 characters.")]
 		[DisplayName("Name:")]
 		public string CommunicationGroupingName { get; set; }
 

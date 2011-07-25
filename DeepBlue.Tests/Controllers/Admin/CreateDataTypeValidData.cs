@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateDataTypeValidData :EditDataType {
+    public class CreateDataTypeValidData : DataTypeBase {
         
 
         private ModelStateDictionary ModelState {
@@ -51,17 +51,17 @@ namespace DeepBlue.Tests.Controllers.Admin {
 		}
 
 		[Test]
-		public void valid_Datatype_name_sets_model_error_on_model_state() {
+		public void valid_datatype_name_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("DataTypeName"));
 		}
 
 		[Test]
-		public void valid_Datatype_name_sets_1_error() {
+		public void valid_datatype_name_sets_1_error() {
 			Assert.IsTrue(test_error_count("DataTypeName", 0));
 		}
 
 		[Test]
-		public void valid_Datatype_name_results_in_valid_modelstate() {
+		public void valid_datatype_name_results_in_valid_modelstate() {
 			SetFormCollection();
 			Assert.IsTrue(base.DefaultController.ModelState.IsValid);
 		}
@@ -72,7 +72,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
         [Test]
         public void returns_back_to_new_view_if_saving_datatype_failed() {
             SetFormCollection();
-            Assert.IsNull(Model);
+			Assert.IsNotNull(Model);
         }
         #endregion
        

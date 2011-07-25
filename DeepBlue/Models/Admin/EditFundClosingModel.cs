@@ -22,7 +22,6 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Name is required.")]
 		[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
-		[RemoteUID_(Action = "FundClosingNameAvailable", Controller = "Admin", ValidateParameterName = "Name", Params = new string[] { "FundClosingID", "FundID" })]
 		[DisplayName("Name:")]
 		public string Name { get; set; }
 

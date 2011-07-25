@@ -18,9 +18,8 @@ namespace DeepBlue.Models.Admin {
 
 		public int FundExpenseTypeId { get; set; }
 
-		[Required(ErrorMessage = "Name is required")]
-		[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
-		[RemoteUID_(Action = "FundExpenseTypeAvailable", Controller = "Admin", ValidateParameterName = "FundExpenseTypeName", Params = new string[] { "FundExpenseTypeId" })]
+		[Required(ErrorMessage = "Fund Expense Type is required")]
+		[StringLength(50, ErrorMessage = "Fund Expense Type must be under 50 characters.")]
 		[DisplayName("Name:")]
 		public string Name { get; set; }
 	}

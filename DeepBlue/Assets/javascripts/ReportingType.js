@@ -1,57 +1,83 @@
 ﻿var reportingType={
-	init: function () {
-		jHelper.resizeIframe();
+	add: function (that) {
+		var flexigrid=$(that).parents(".flexigrid:first");
+		var tbody=$(".bDiv table tbody",flexigrid);
+		var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,"",false]}] };
+		$("#GridTemplate").tmpl(data).prependTo(tbody);
+		var tr=$("tr:first",tbody);
+		this.editRow(tr);
+		$("#Add",tr).show();
 	}
-	,add: function (id) {
-		var dt=new Date();
-		var url="/Admin/EditReportingType/"+id+"?t="+dt.getTime();
-		jHelper.createDialog(url,{
-			title: "Reporting Type",
-			autoOpen: true,
-			width: 380,
-			modal: true,
-			position: 'middle',
-			autoResize: true
-		});
+	,edit: function (img) {
+		var tr=$(img).parents("tr:first");
+		this.editRow(tr);
+		$("#Save",tr).show();
 	}
-	,deleteReportingType: function (id,img) {
-		if(confirm("Are you sure you want to delete this Reporting Type?")) {
+	,editRow: function (tr) {
+		$(".show",tr).hide();
+		$(".hide",tr).show();
+		$(":input:first",tr).focus();
+	}
+	,deleteRow: function (img,id) {
+		if(confirm("Are you sure you want to delete this reporting type?")) {
+			var tr=$(img).parents("tr:first");
+			var imgsrc=img.src;
+			$(img).attr("src","/Assets/images/ajax.jpg");
+			img.src=imgsrc;
 			var dt=new Date();
 			var url="/Admin/DeleteReportingType/"+id+"?t="+dt.getTime();
 			$.get(url,function (data) {
 				if(data!="") {
 					alert(data);
 				} else {
-					$("#ReportingTypeList").flexReload();
+					tr.remove();
 				}
 			});
 		}
 	}
-	,onSubmit: function (formId) {
-		return jHelper.formSubmit(formId);
+	,save: function (img,id) {
+		var tr=$("#Row"+id);
+		var param=jHelper.serialize(tr);
+		var url="/Admin/UpdateReportingType";
+		var imgsrc=img.src;
+		$(img).attr("src","/Assets/images/ajax.jpg");
+		$.post(url,param,function (data) {
+			img.src=imgsrc;
+			var arr=data.split("||");
+			if(arr[0]!="True") {
+				alert(data);
+			} else {
+				$.getJSON("/Admin/EditReportingType?_"+(new Date).getTime()+"&id="+arr[1],function (loadData) {
+					$("#GridTemplate").tmpl(loadData).insertAfter(tr);
+					$(tr).remove();
+					var newTR=$("#Row"+arr[1]);
+					jHelper.checkValAttr(newTR);
+				});
+			}
+		});
 	}
-	,onRowBound: function (tr,row) {
-		$("td:last div",tr).html("<img id='Edit' class='gbutton' src='/Assets/images/Edit.png'/>&nbsp;&nbsp;&nbsp;<img id='Delete' class='gbutton' src='/Assets/images/largedel.png'/>");
-		$("td:not(:last)",tr).click(function () { reportingType.add(row.cell[0]); });
-		$("#Edit",tr).click(function () { reportingType.add(row.cell[0]); });
-		$("#Delete",tr).click(function () { reportingType.deleteReportingType(row.cell[0]); });
+	,onGridSuccess: function (t,g) {
+		jHelper.checkValAttr(t);
+		$(window).resize();
 	}
-	,closeDialog: function (reload) {
-		$("#addDialog").dialog('close');
-		if(reload==true) {
-			$("#ReportingTypeList").flexReload();
-		}
+	,onInit: function (g) {
+		var data={ name: "Add Reporting Type" };
+		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
+		$(window).resize(function () {
+			reportingType.resizeGV(g);
+		});
 	}
-	,onReportingTypeBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+	,onTemplate: function (tbody,data) {
+		$("#GridTemplate").tmpl(data).appendTo(tbody);
 	}
-	,onReportingTypeSuccess: function () {
-		$("#UpdateLoading").html("");
-		var UpdateTargetId=$("#UpdateTargetId");
-		if(jQuery.trim(UpdateTargetId.html())!="True") {
-			alert(UpdateTargetId.html())
-		} else {
-			parent.reportingType.closeDialog(true);
+	,resizeGV: function (g) {
+		var admain=$(".admin-main");
+		var bDivBox=$(g.bDivBox);
+		bDivBox.css("height","auto");
+		var ah=admain.height()-220;
+		var h=bDivBox.height();
+		if(h>ah) {
+			bDivBox.height(ah);
 		}
 	}
 }

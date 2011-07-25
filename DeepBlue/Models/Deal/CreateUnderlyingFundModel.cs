@@ -14,13 +14,14 @@ namespace DeepBlue.Models.Deal {
 
 		[Required(ErrorMessage = "Fund Name is required")]
 		[StringLength(100, ErrorMessage = "Fund Name must be under 100 characters.")]
-		[RemoteUID_(Action = "UnderlyingFundNameAvailable", Controller = "Deal", ValidateParameterName = "FundName", Params = new string[] { "UnderlyingFundId" })]
 		[DisplayName("Fund Name:")]
 		public string FundName { get; set; }
 
+		[StringLength(100, ErrorMessage = "Legal Fund Name must be under 100 characters.")]
 		[DisplayName("Fund Legal Name:")]
 		public string LegalFundName { get; set; }
 
+		[StringLength(100, ErrorMessage = "Description must be under 100 characters.")]
 		[DisplayName("Description:")]
 		public string Description { get; set; }
 

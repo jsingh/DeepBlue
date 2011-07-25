@@ -45,7 +45,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindEquityType
 		[Test]
-		public void valid_Find_EquityType_sets_json_result_error() {
+		public void valid_find_equitytype_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.EquityTypeList(1, 1, "EquityTypeID", "asc") != null));
 		}
 		#endregion

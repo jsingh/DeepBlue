@@ -38,10 +38,6 @@ namespace DeepBlue.Tests.Models.Transaction {
 			Assert.IsTrue(IsPropertyValid("CommittedDate"));
 		}
 
-		[Test]
-		public void create_a_new_investor_fund_with_tota_commitment_throws_error() {
-			Assert.IsTrue(IsPropertyValid("TotalCommitment"));
-		}
-      
+	 
     }
 }

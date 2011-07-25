@@ -11,9 +11,8 @@ namespace DeepBlue.Models.Admin {
 		
 		public int DataTypeId { get; set; }
 
-		[Required(ErrorMessage = "Name is required.")]
-		[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
-		[RemoteUID_(Action = "DataTypeNameAvailable", Controller = "Admin", ValidateParameterName = "DataTypeName", Params = new string[] { "DataTypeId" })]
+		[Required(ErrorMessage = "Data Type Name is required.")]
+		[StringLength(50, ErrorMessage = "Data Type Name must be under 50 characters.")]
 		[DisplayName("Name:")]
 		public string DataTypeName { get; set; }
 	}

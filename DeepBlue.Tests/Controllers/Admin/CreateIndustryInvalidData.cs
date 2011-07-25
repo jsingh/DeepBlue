@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateIndustryInvalidData : EditIndustry {
+    public class CreateIndustryInvalidData : IndustryBase {
 
 		protected ResultModel ResultModel {
 			get {
@@ -55,17 +55,17 @@ namespace DeepBlue.Tests.Controllers.Admin {
         }
 		 
         [Test]
-        public void invalid_Industry_industry_sets_model_error_on_model_state() {
+        public void invalid_industry_industry_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("Industry"));
         }
 
         [Test]
-		public void invalid_Industry_industry_sets_1_error() {
+		public void invalid_industry_industry_sets_1_error() {
 			Assert.IsTrue(test_error_count("Industry", 1));
         }
 
         [Test]
-		public void invalid_Industry_industry_results_in_invalid_modelstate() {
+		public void invalid_industry_industry_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }

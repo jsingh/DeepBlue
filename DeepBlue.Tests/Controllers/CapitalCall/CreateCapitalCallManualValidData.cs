@@ -58,42 +58,42 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
 		}
 
 		[Test]
-		public void valid_CapitalCallManual_fundId_sets_model_error_on_model_state() {
+		public void valid_capitalcallmanual_fundid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("FundId"));
 		}
 
 		[Test]
-		public void valid_CapitalCallManual_fundId_sets_1_error() {
+		public void valid_capitalcallmanual_fundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundId", 0));
 		}
 
 		[Test]
-		public void valid_CapitalCallManual_capitalcallamount_sets_model_error_on_model_state() {
+		public void valid_capitalcallmanual_capitalcallamount_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CapitalAmountCalled"));
 		}
 
 		[Test]
-		public void valid_CapitalCallManual_capitalcallamount_sets_1_error() {
+		public void valid_capitalcallmanual_capitalcallamount_sets_1_error() {
 			Assert.IsTrue(test_error_count("CapitalAmountCalled", 0));
 		}
 
 		[Test]
-		public void valid_CapitalCallManual_capitalcalldate_sets_model_error_on_model_state() {
+		public void valid_capitalcallmanual_capitalcalldate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CapitalCallDate"));
 		}
 
 		[Test]
-		public void valid_CapitalCallManual_capitalcalldate_sets_1_error() {
+		public void valid_capitalcallmanual_capitalcalldate_sets_1_error() {
 			Assert.IsTrue(test_error_count("CapitalCallDate", 0));
 		}
 
 		[Test]
-		public void valid_CapitalCallManual_capitalcallduedate_sets_model_error_on_model_state() {
+		public void valid_capitalcallmanual_capitalcallduedate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CapitalCallDueDate"));
 		}
 
 		[Test]
-		public void valid_CapitalCallManual_capitalcallduedate_sets_1_error() {
+		public void valid_capitalcallmanual_capitalcallduedate_sets_1_error() {
 			Assert.IsTrue(test_error_count("CapitalCallDueDate", 0));
 		}
 		#endregion

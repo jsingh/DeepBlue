@@ -19,24 +19,25 @@ namespace DeepBlue.Models.Document {
 		
 		public int FundId { get; set; }
 		
-		[DisplayName("Investor:")]
+		[DisplayName("Investor-")]
 		public string InvestorName { get; set; }
 
-		[DisplayName("Fund:")]
+		[DisplayName("Fund-")]
 		public string FundName { get; set; }
 	 
-		[DisplayName("File:")]
+		[DisplayName("File-")]
 		public HttpPostedFileBase File { get; set; }
 
+		[DisplayName("For-")]
 		public int DocumentStatus { get; set; }
 
 		[Required(ErrorMessage = "Document Type is required.")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Document Type is required.")]
-		[DisplayName("Document Type:")]
+		[DisplayName("Document Type-")]
 		public int DocumentTypeId { get; set; }
 
 		[Required(ErrorMessage = "Document Date is required.")]
-		[DisplayName("Document Date:")]
+		[DisplayName("Document Date-")]
         [DateRange()]
 		public DateTime DocumentDate { get; set; }
 
@@ -44,7 +45,7 @@ namespace DeepBlue.Models.Document {
 
 		public int UploadType { get; set; }
 		
-		[DisplayName("Link:")]
+		[DisplayName("File/Link-")]
 		public string FilePath { get; set; }
 
 		/* Document Type */ 

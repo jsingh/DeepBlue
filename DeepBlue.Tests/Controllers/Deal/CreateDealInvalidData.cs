@@ -9,6 +9,7 @@ using DeepBlue.Models.Deal ;
 
 namespace DeepBlue.Tests.Controllers.Deal {
     public class CreateDealInvalidData : CreateDeal {
+
 		private ResultModel ResultModel {
 			get {
 				return base.ViewResult.ViewData.Model as ResultModel;

@@ -81,28 +81,6 @@ namespace DeepBlue.Tests.Controllers.Fund {
 			Assert.IsTrue(test_error_count("InceptionDate", 1));
 		}
 
-		[Test]
-		public void invalid_Fund_bankname_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("BankName"));
-		}
-
-		[Test]
-		public void invalid_Fund_bankname_sets_1_error() {
-			Assert.IsTrue(test_error_count("BankName", 1));
-		}
-
-
-		[Test]
-		public void invalid_Fund_account_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("Account"));
-		}
-
-		[Test]
-		public void invalid_Fund_account_sets_1_error() {
-			Assert.IsTrue(test_error_count("Account", 1));
-		}
-
-
         [Test]
         public void invalid_Fund_results_in_invalid_modelstate() {
             SetFormCollection();

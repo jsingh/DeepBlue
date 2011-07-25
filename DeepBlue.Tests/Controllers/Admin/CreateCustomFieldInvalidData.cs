@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateCustomFieldInvalidData :EditCustomField {
+    public class CreateCustomFieldInvalidData : CustomFieldBase {
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;

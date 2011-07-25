@@ -56,47 +56,47 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
 		}
 
 		[Test]
-		public void valid_CapitalCallReceive_fundId_sets_model_error_on_model_state() {
+		public void valid_capitalcallreceive_fundid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("FundId"));
 		}
 
 		[Test]
-		public void valid_CapitalCallReceive_fundId_sets_1_error() {
+		public void valid_capitalcallreceive_fundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundId", 0));
 		}
 
 		[Test]
-		public void valid_CapitalCallReceive_capitalcallamount_sets_model_error_on_model_state() {
+		public void valid_capitalcallreceive_capitalcallamount_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CapitalAmountCalled"));
 		}
 
 		[Test]
-		public void valid_CapitalCallReceive_capitalcallamount_sets_1_error() {
+		public void valid_capitalcallreceive_capitalcallamount_sets_1_error() {
 			Assert.IsTrue(test_error_count("CapitalAmountCalled", 0));
 		}
 
 		[Test]
-		public void valid_CapitalCallReceive_capitalcalldate_sets_model_error_on_model_state() {
+		public void valid_capitalcallreceive_capitalcalldate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CapitalCallDate"));
 		}
 
 		[Test]
-		public void valid_CapitalCallReceive_capitalcalldate_sets_1_error() {
+		public void valid_capitalcallreceive_capitalcalldate_sets_1_error() {
 			Assert.IsTrue(test_error_count("CapitalCallDate", 0));
 		}
 
 		[Test]
-		public void valid_CapitalCallReceive_capitalcallduedate_sets_model_error_on_model_state() {
+		public void valid_capitalcallreceive_capitalcallduedate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CapitalCallDueDate"));
 		}
 
 		[Test]
-		public void valid_CapitalCallReceive_capitalcallduedate_sets_1_error() {
+		public void valid_capitalcallreceive_capitalcallduedate_sets_1_error() {
 			Assert.IsTrue(test_error_count("CapitalCallDueDate", 0));
 		}
 
 		[Test]
-		public void valid_CapitalCallReceive_newinvestmentamount_sets_1_error() {
+		public void valid_capitalcallreceive_newinvestmentamount_sets_1_error() {
 			Assert.IsTrue(test_error_count("NewInvestmentAmount", 0));
 		}
 

@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateFixedIncomeTypeInvalidData : EditFixedIncomeType {
+    public class CreateFixedIncomeTypeInvalidData : FixedIncomeTypeBase {
 
 		protected ResultModel ResultModel {
 			get {
@@ -55,17 +55,17 @@ namespace DeepBlue.Tests.Controllers.Admin {
         }
 		 
         [Test]
-        public void invalid_FixedIncomeType_fixedincometype_sets_model_error_on_model_state() {
+        public void invalid_fixedincometype_fixedincometype_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("FixedIncomeType1"));
         }
 
         [Test]
-		public void invalid_FixedIncomeType_fixedincometype_sets_1_error() {
+		public void invalid_fixedincometype_fixedincometype_sets_1_error() {
 			Assert.IsTrue(test_error_count("FixedIncomeType1", 1));
         }
 
         [Test]
-		public void invalid_FixedIncomeType_fixedincometype_results_in_invalid_modelstate() {
+		public void invalid_fixedincometype_fixedincometype_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }

@@ -45,7 +45,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindReportingFrequency
 		[Test]
-		public void valid_Find_ReportingFrequency_sets_json_result_error() {
+		public void valid_find_reportingfrequency_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.ShareClassTypeList(1, 1, "ReportingFrequencyID", "asc") != null));
 		}
 		#endregion

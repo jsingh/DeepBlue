@@ -16,7 +16,7 @@ namespace DeepBlue.Tests.Models.Deal {
 		[SetUp]
 		public override void Setup() {
 			base.Setup();
-			Create_Data(DefaultEquitySplit, false);
+			Create_Data(DefaultEquitySplit, true);
 			this.ServiceErrors = DefaultEquitySplit.Save();
 		}
 

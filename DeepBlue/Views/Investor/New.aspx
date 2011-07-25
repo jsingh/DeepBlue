@@ -5,7 +5,13 @@
 	Investor
 </asp:Content>
 <asp:Content ID="HeaderCnt" ContentPlaceHolderID="HeaderContent" runat="server">
-	<%= Html.JavascriptInclueTag("Investor.js")%><%=Html.StylesheetLinkTag("newInvestor.css")%>
+	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftAjax.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
+	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
+	<%=Html.JavascriptInclueTag("Investor.js")%>
+	<%=Html.StylesheetLinkTag("newInvestor.css")%>
 </asp:Content>
 <asp:Content ID="MainCnt" ContentPlaceHolderID="MainContent" runat="server">
 	<% Html.EnableClientValidation(); %>
@@ -450,7 +456,7 @@
 							</div>
 							<div class="contactinfo-right">
 								<div class="editor-row">
-									<div class="editor-label" style="width:255px;">
+									<div class="editor-label" style="width: 255px;">
 										<%: Html.LabelFor(model => model.DistributionNotices) %>
 									</div>
 									<div class="editor-field checkbox">
@@ -458,7 +464,7 @@
 									</div>
 								</div>
 								<div class="editor-row">
-									<div class="editor-label" style="width:255px;">
+									<div class="editor-label" style="width: 255px;">
 										<%: Html.LabelFor(model => model.Financials)%>
 									</div>
 									<div class="editor-field checkbox">
@@ -466,7 +472,7 @@
 									</div>
 								</div>
 								<div class="editor-row">
-									<div class="editor-label" style="width:255px;">
+									<div class="editor-label" style="width: 255px;">
 										<%: Html.LabelFor(model => model.K1)%>
 									</div>
 									<div class="editor-field checkbox">
@@ -474,7 +480,7 @@
 									</div>
 								</div>
 								<div class="editor-row">
-									<div class="editor-label" style="width:255px;">
+									<div class="editor-label" style="width: 255px;">
 										<%: Html.LabelFor(model => model.InvestorLetters)%>
 									</div>
 									<div class="editor-field checkbox">

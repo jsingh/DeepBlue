@@ -16,18 +16,16 @@ namespace DeepBlue.Models.Investor {
 		public int InvestorId { get; set; }
 
 		[Required(ErrorMessage = "Investor Name is required")]
-		[RemoteUID_(Action = "InvestorNameAvailable", Controller = "Investor", ValidateParameterName = "InvestorName", Params = new string[] { "InvestorId" })]
-		[DisplayName("Investor Name:")]
 		[StringLength(100, ErrorMessage = "Investor Name must be under 100 characters.")]
+		[DisplayName("Investor Name:")]
 		public string InvestorName { get; set; }
 
 		[DisplayName("Display Name:")]
 		public string Alias { get; set; }
 
 		[Required(ErrorMessage = "Social Security/ Tax Id is required")]
-		[RemoteUID_(Action = "SocialSecurityTaxIdAvailable", Controller = "Investor", ValidateParameterName = "SocialSecurityTaxId", Params = new string[] { "InvestorId" })]
-		[DisplayName("Social Security/ Tax Id:")]
 		[StringLength(50, ErrorMessage = "Investor Name must be under 50 characters.")]
+		[DisplayName("Social Security/ Tax Id:")]
 		public string SocialSecurityTaxId { get; set; }
 
 		[DisplayName("Domestic/ Foreign:")]

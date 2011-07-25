@@ -97,11 +97,14 @@ namespace DeepBlue.Controllers.Fund {
 					RateScheduleTypeId = 0
 				});
 			}
-			if (fundDetail.BankDetail == null) {
+			if (fundDetail.BankDetail == null)
 				fundDetail.BankDetail = new List<FundBankDetail>();
-				List<FundBankDetail> fundBankDetail = (List<FundBankDetail>)fundDetail.BankDetail;
+			
+			List<FundBankDetail> fundBankDetail;
+			fundBankDetail = (List<FundBankDetail>)fundDetail.BankDetail;
+			if (fundBankDetail.Count() == 0) 
 				fundBankDetail.Add(new FundBankDetail());
-			}
+			
 			/* Load Custom Fields */
 			fundDetail.CustomField = new CustomFieldModel();
 			fundDetail.CustomField.DisplayTwoColumn = true;
@@ -162,7 +165,6 @@ namespace DeepBlue.Controllers.Fund {
 			}
 			return fundDetail;
 		}
-
 
 		//
 		// GET: /Fund/Create
@@ -263,7 +265,7 @@ namespace DeepBlue.Controllers.Fund {
 				if (FundRateSchedulesCount > 0) {
 					int index = 0;
 					int investorTypeId = 0;
-					for (index = 0; index < FundRateSchedulesCount; index++) {
+					for (index = 0; index <= FundRateSchedulesCount; index++) {
 						investorTypeId = DataTypeHelper.ToInt32(collection[index.ToString() + "_InvestorTypeId"]);
 						if (investorTypeId > 0) {
 							managementFeeRateSchedule = new ManagementFeeRateSchedule();
@@ -276,9 +278,9 @@ namespace DeepBlue.Controllers.Fund {
 							managementFeeRateSchedule.Name = string.Empty;
 							managementFeeRateSchedule.RateScheduleTypeID = (int)Models.Fund.Enums.RateScheduleType.TieredRateSchedule;
 
-							int tiersCount = DataTypeHelper.ToInt32(collection[index.ToString() + "_Tiers"]);
+							int tiersCount = DataTypeHelper.ToInt32(collection[index.ToString() + "_Tiers"]) + 1;
 							int tierIndex = 0;
-							for (tierIndex = 1; tierIndex < tiersCount + 1; tierIndex++) {
+							for (tierIndex = 1; tierIndex <= tiersCount; tierIndex++) {
 								if (collection[index.ToString() + "_IsScheduleChange"] == "true" &&
 									DataTypeHelper.ToDateTime(collection[index.ToString() + "_" + tierIndex.ToString() + "_StartDate"]).Year > 1900 &&
 									DataTypeHelper.ToDateTime(collection[index.ToString() + "_" + tierIndex.ToString() + "_EndDate"]).Year > 1900) {

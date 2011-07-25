@@ -8,7 +8,6 @@
 	<%=Html.JavascriptInclueTag("DocumentSearch.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css") %>
-	<%=Html.StylesheetLinkTag("adminbackend.css") %>
 	<%=Html.StylesheetLinkTag("document.css")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
@@ -24,11 +23,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="admin-main" style="top:46px;">
+	<div class="doc-main">
 		<% using (Html.BeginForm("", "", FormMethod.Get, new { @id = "SearchDocument", @onsubmit = "return false;" })) {%>
 		<%: Html.HiddenFor(model => model.InvestorId)%>
 		<%: Html.HiddenFor(model => model.FundId)%>
-		<div class="admin-header">
+		<div class="doc-header">
 			<div class="editor-label">
 				<%: Html.LabelFor(model => model.FromDate) %>
 			</div>
@@ -48,16 +47,19 @@
 				<%: Html.DropDownListFor(model => model.DocumentTypeId, Model.DocumentTypes, new { @style = "width:190px" })%>
 			</div>
 			<div class="editor-label">
-				<%: Html.DropDownListFor(model => model.DocumentStatus,Model.DocumentStatusTypes, new { @onchange = "javascript:documentSearch.changeType(this);" })%>
+				<%: Html.LabelFor(model => model.DocumentStatus)%>
 			</div>
 			<div class="editor-field">
-				<div id="InvestorRow">
-					<%: Html.TextBoxFor(model => model.InvestorName, new { @style = "width:160px", @onblur = "javascript:documentSearch.InvestorBlur(this);" })%>
+				<div id="InvestorRow" style="float: left;">
+					<%: Html.TextBoxFor(model => model.InvestorName, new { @style = "width:164px", @onblur = "javascript:documentSearch.InvestorBlur(this);" })%>
 					<%: Html.ValidationMessageFor(model => model.InvestorId) %>
 				</div>
-				<div id="FundRow" style="display: none">
-					<%: Html.TextBoxFor(model => model.FundName, new { @style = "width:160px", @onblur = "javascript:documentSearch.FundBlur(this);" })%>
+				<div id="FundRow" style="display: none; float: left;">
+					<%: Html.TextBoxFor(model => model.FundName, new { @style = "width:164px", @onblur = "javascript:documentSearch.FundBlur(this);" })%>
 					<%: Html.ValidationMessageFor(model => model.FundId) %>
+				</div>
+				<div style="float: left; margin-left: 2px;">
+					<%: Html.DropDownListFor(model => model.DocumentStatus,Model.DocumentStatusTypes, new { @style="width:80px;", @onchange = "javascript:documentSearch.changeType(this);" })%>
 				</div>
 			</div>
 			<div class="editor-button">
@@ -66,11 +68,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="admin-content">
+		<div class="doc-content">
 			<table cellpadding="0" cellspacing="0" border="0" id="SearchDocumentList" style="width: 100%">
 				<thead>
 					<tr>
-						<th sortname="DocumentDate" style="width: 10%;" align="center">
+						<th sortname="DocumentDate" style="width: 10%;">
 							Date
 						</th>
 						<th sortname="FileName" style="width: 30%;">
@@ -85,7 +87,7 @@
 						<th sortname="FundName" style="display: none; width: 25%;" id="FundNameCloumn">
 							Fund Name
 						</th>
-						<th sortname="FileTypeName" align="center" style="width: 10%;">
+						<th sortname="FileTypeName" align="right" style="width: 10%;">
 						</th>
 					</tr>
 				</thead>
@@ -103,7 +105,18 @@
 	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions {
 																	  Source = "/Fund/FindFunds", MinLength = 1,
 																	  OnSelect = "function(event, ui) { documentSearch.selectFund(ui.item.id);}"})%>
-	<%=Html.jQueryFlexiGrid("SearchDocumentList", new FlexigridOptions { ActionName = "List", ControllerName = "Document", HttpMethod = "GET", SortName = "DocumentDate", SortOrder = "desc", Paging = true, Autoload = false, Height = 300, RowOptions = new int[] { 10, 20, 50, 100 }, RowsLength = 10 })%>
+	<%=Html.jQueryFlexiGrid("SearchDocumentList", new FlexigridOptions {
+	ActionName = "List",
+	ControllerName = "Document",
+	HttpMethod = "GET",
+	SortName = "DocumentDate",
+	SortOrder = "desc",
+	Paging = true,
+	Autoload = false,
+	Height = 300,
+	OnInit = "documentSearch.onInit",
+	OnSuccess = "documentSearch.onGridSuccess",
+	})%>
 	<script type="text/javascript">
 		documentSearch.init();
 	</script>

@@ -16,7 +16,7 @@ namespace DeepBlue.Tests.Models.Deal {
 		[SetUp]
 		public override void Setup() {
 			base.Setup();
-			Create_Data(DefaultSecurityConversion, false);
+			Create_Data(DefaultSecurityConversion, true);
 			this.ServiceErrors = DefaultSecurityConversion.Save();
 		}
 

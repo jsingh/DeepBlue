@@ -17,9 +17,8 @@ namespace DeepBlue.Models.Admin {
 
 		public int FileTypeId { get; set; }
 
-		[Required(ErrorMessage = "Name is required")]
-		[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
-		[RemoteUID_(Action = "FileTypeNameAvailable", Controller = "Admin", ValidateParameterName = "FileTypeName", Params = new string[] { "FileTypeId" })]
+		[Required(ErrorMessage = "File Type Name is required")]
+		[StringLength(50, ErrorMessage = "File Type Name must be under 50 characters.")]
 		[DisplayName("Name:")]
 		public string FileTypeName { get; set; }
 

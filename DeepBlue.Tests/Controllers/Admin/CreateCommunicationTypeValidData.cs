@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateCommunicationTypeValidData : EditCommunicationType  {
+    public class CreateCommunicationTypeValidData : CommunicationTypeBase  {
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;
@@ -49,30 +49,30 @@ namespace DeepBlue.Tests.Controllers.Admin {
 		}
 
 		[Test]
-		public void valid_Communicationtype_name_sets_model_error_on_model_state() {
+		public void valid_communicationtype_name_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CommunicationTypeName"));
 		}
 
 		[Test]
-		public void valid_Communicationtype_name_sets_1_error() {
+		public void valid_communicationtype_name_sets_1_error() {
 			Assert.IsTrue(test_error_count("CommunicationTypeName", 0));
 		}
 
 
 
 		[Test]
-		public void valid_Communicationtype_groupid_sets_model_error_on_model_state() {
+		public void valid_communicationtype_groupid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CommunicationGroupId"));
 		}
 
 		[Test]
-		public void valid_Communicationtype_groupid_sets_1_error() {
+		public void valid_communicationtype_groupid_sets_1_error() {
 			Assert.IsTrue(test_error_count("CommunicationGroupId", 0));
 		}
 
 
 		[Test]
-		public void valid_Communicationtype_results_valid_modelstate() {
+		public void valid_communicationtype_results_valid_modelstate() {
 			SetFormCollection();
 			Assert.IsTrue(base.DefaultController.ModelState.IsValid);
 		}
@@ -85,7 +85,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
         [Test]
         public void returns_back_to_new_view_if_saving_communicationtype_failed() {
             SetFormCollection();
-            Assert.IsNull(Model);
+			Assert.IsNotNull(Model);
         }
 
         #endregion

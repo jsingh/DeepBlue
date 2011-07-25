@@ -33,8 +33,6 @@ namespace DeepBlue.Tests.Models.Deal {
 
         protected void Create_Data(DeepBlue.Models.Entity.DealUnderlyingDirect dealUnderlyingDirect, bool ifValid) {
 			RequiredFieldDataMissing(dealUnderlyingDirect, ifValid);
-			StringLengthInvalidData(dealUnderlyingDirect, ifValid);
-
         }
 
         #region DealSeller
@@ -55,13 +53,6 @@ namespace DeepBlue.Tests.Models.Deal {
 				dealUnderlyingDirect.FMV = 0;
 				dealUnderlyingDirect.PurchasePrice = 0;
 				dealUnderlyingDirect.NumberOfShares = 0;
-            }
-        }
-
-		private void StringLengthInvalidData(DeepBlue.Models.Entity.DealUnderlyingDirect dealUnderlyingDirect, bool ifValidData) {
-            int delta = 0;
-            if (!ifValidData) {
-                delta = 1;
             }
         }
         #endregion

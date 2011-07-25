@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateDealClosingCostTypeInvalidData : EditDealClosingCostType {
+    public class CreateDealClosingCostTypeInvalidData : DealClosingCostTypeBase {
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;
@@ -47,17 +47,17 @@ namespace DeepBlue.Tests.Controllers.Admin {
         }
 
         [Test]
-        public void invalid_Dealclosingcosttype_name_sets_model_error_on_model_state() {
+        public void invalid_dealclosingcosttype_name_sets_model_error_on_model_state() {
             Assert.IsFalse(test_posted_value("Name"));
         }
 
         [Test]
-		public void invalid_Dealclosingcosttype_name_sets_1_error() {
+		public void invalid_dealclosingcosttype_name_sets_1_error() {
 			Assert.IsTrue(test_error_count("Name", 1));
         }
 
         [Test]
-		public void invalid_Dealclosingcosttype_name_results_in_invalid_modelstate() {
+		public void invalid_dealclosingcosttype_name_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }

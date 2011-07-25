@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateInvestorTypeValidData :EditInvestorType {
+    public class CreateInvestorTypeValidData : InvestorTypeBase {
         private ModelStateDictionary ModelState {
             get {
                 return base.ViewResult.ViewData.ModelState;
@@ -49,17 +49,17 @@ namespace DeepBlue.Tests.Controllers.Admin {
 		}
 
 		[Test]
-		public void valid_Investortype_name_sets_model_error_on_model_state() {
+		public void valid_investortype_name_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("InvestorTypeName"));
 		}
 
 		[Test]
-		public void valid_Investortype_name_sets_1_error() {
+		public void valid_investortype_name_sets_1_error() {
 			Assert.IsTrue(test_error_count("InvestorTypeName", 0));
 		}
 
 		[Test]
-		public void valid_Investortype_name_results_in_valid_modelstate() {
+		public void valid_investortype_name_results_in_valid_modelstate() {
 			SetFormCollection();
 			Assert.IsTrue(base.DefaultController.ModelState.IsValid);
 		}
@@ -72,7 +72,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
         [Test]
         public void returns_back_to_new_view_if_saving_investortype_failed() {
             SetFormCollection();
-            Assert.IsNull(Model);
+			Assert.IsNotNull(Model);
         }
 
         #endregion

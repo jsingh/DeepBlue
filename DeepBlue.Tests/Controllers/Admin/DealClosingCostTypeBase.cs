@@ -9,9 +9,16 @@ using System.Web.Routing;
 using Moq;
 using MbUnit.Framework;
 using DeepBlue.Controllers.Admin;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
     public class DealClosingCostTypeBase : Base {
+
+		public ResultModel Model {
+			get {
+				return base.ViewResult.ViewData.Model as ResultModel;
+			}
+		}
       
 	    public AdminController DefaultController { get; set; }
 
@@ -45,7 +52,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindDealClosingCostType
 		[Test]
-		public void valid_Find_DealClosingCostType_sets_json_result_error() {
+		public void valid_find_dealclosingcosttype_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.DealClosingCostTypeList(1, 1, "DealClosingCostTypeID", "asc") != null));
 		}
 		#endregion

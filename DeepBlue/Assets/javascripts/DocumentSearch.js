@@ -41,6 +41,24 @@
 			$("#FundId").val(0);
 		}
 	}
+	,onGridSuccess: function (t,g) {
+		$(window).resize();
+	}
+	,onInit: function (g) {
+		$(window).resize(function () {
+			documentSearch.resizeGV(g);
+		});
+	}
+	,resizeGV: function (g) {
+		var admain=$(".doc-main");
+		var bDivBox=$(g.bDivBox);
+		bDivBox.css("height","auto");
+		var ah=admain.height()-320;
+		var h=bDivBox.height();
+		if(h>ah) {
+			bDivBox.height(ah);
+		}
+	}
 	,onSubmit: function (formId) {
 		var FromDate=document.getElementById("FromDate").value;
 		var ToDate=document.getElementById("ToDate").value;

@@ -10,9 +10,9 @@ using DeepBlue.Models.Document;
 namespace DeepBlue.Tests.Controllers.Document {
 	public class CreateDocumentUpload : DocumentUploadBase {
 
-		protected CreateModel Model {
+		protected ResultModel Model {
 			get {
-				return base.ViewResult.ViewData.Model as CreateModel;
+				return base.ViewResult.ViewData.Model as ResultModel;
 			}
 		}
 

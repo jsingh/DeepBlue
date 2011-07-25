@@ -45,7 +45,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindUnderlyingFundType
 		[Test]
-		public void valid_Find_UnderlyingFundType_sets_json_result_error() {
+		public void valid_find_underlyingfundtype_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.UnderlyingFundTypeList(1, 1, "UnderlyingFundTypeID", "asc") != null));
 		}
 		#endregion

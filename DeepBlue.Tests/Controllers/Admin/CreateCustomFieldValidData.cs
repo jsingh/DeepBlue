@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateCustomValidData : EditCustomField {
+    public class CreateCustomValidData : CustomFieldBase {
 
         private ModelStateDictionary ModelState {
             get {
@@ -93,7 +93,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
         [Test]
         public void returns_back_to_new_view_if_saving_customfield_failed() {
             SetFormCollection();
-            Assert.IsNull(Model);
+			Assert.IsNotNull(Model);
         }
         #endregion
        

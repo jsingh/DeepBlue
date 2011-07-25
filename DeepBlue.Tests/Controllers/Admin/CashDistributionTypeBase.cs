@@ -45,7 +45,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindCashDistributionType
 		[Test]
-		public void valid_CashDistributionType_sets_json_result_error() {
+		public void valid_cashdistributiontype_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.CashDistributionTypeList(1, 1, "CashDistributionTypeID", "asc") != null));
 		}
 		#endregion

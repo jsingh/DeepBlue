@@ -23,8 +23,9 @@ namespace DeepBlue.Tests.Controllers.Investor {
 
         private void SetFormCollection() {
             base.DefaultController.ValueProvider = SetupValueProvider(new FormCollection());
-			base.ActionResult = base.DefaultController.Create (GetInvalidformCollection());
+			base.ActionResult = base.DefaultController.Create(GetInvalidformCollection());
         }
+
         #region Tests where form collection doesnt have the required values. Tests for DataAnnotations
         private bool test_posted_value(string parameterName) {
             SetFormCollection();
@@ -56,76 +57,35 @@ namespace DeepBlue.Tests.Controllers.Investor {
 		}
 
         [Test]
-        public void invalid_Investor_social_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("Social"));
+        public void invalid_Investor_socialsecuritytaxid_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("SocialSecurityTaxId"));
         }
+
+		[Test]
+		public void invalid_Investor_socialsecuritytaxid_sets_1_error() {
+			Assert.IsTrue(test_error_count("SocialSecurityTaxId", 1));
+		}
 
         [Test]
-        public void invalid_Investor_social_sets_1_error() {
-			Assert.IsTrue(test_error_count("Social", 1));
+		public void invalid_investor_stateofresidency_sets_1_error() {
+			Assert.IsTrue(test_error_count("StateOfResidency", 1));
         }
 
 		[Test]
-		public void invalid_Investor_alias_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("Alias"));
+		public void invalid_investor_stateofresidency_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("StateOfResidency"));
 		}
 
 		[Test]
-		public void invalid_Investor_alias_sets_1_error() {
-			Assert.IsTrue(test_error_count("Alias", 1));
+		public void invalid_investor_entitytype_sets_1_error() {
+			Assert.IsTrue(test_error_count("EntityType", 1));
 		}
 
 		[Test]
-		public void invalid_Investor_phone_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("Phone"));
+		public void invalid_investor_entitytype_sets_model_error_on_model_state() {
+			Assert.IsFalse(test_posted_value("EntityType"));
 		}
-
-		[Test]
-		public void invalid_Investor_phone_sets_1_error() {
-			Assert.IsTrue(test_error_count("Phone", 1));
-		}
-
-		[Test]
-		public void invalid_Investor_email_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("Email"));
-		}
-
-		[Test]
-		public void invalid_Investor_email_sets_1_error() {
-			Assert.IsTrue(test_error_count("Email", 1));
-		}
-
-		[Test]
-		public void invalid_Investor_address_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("Address1"));
-		}
-
-		[Test]
-		public void invalid_Investor_address_sets_1_error() {
-			Assert.IsTrue(test_error_count("Address1", 1));
-		}
-
-		[Test]
-		public void invalid_Investor_city_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("City"));
-		}
-
-		[Test]
-		public void invalid_Investor_city_sets_1_error() {
-			Assert.IsTrue(test_error_count("City", 1));
-		}
-
-		[Test]
-		public void invalid_Investor_zip_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("Zip"));
-		}
-
-		[Test]
-		public void invalid_Investor_zip_sets_1_error() {
-			Assert.IsTrue(test_error_count("Zip", 1));
-		}
-
-
+		
         [Test]
         public void invalid_Investor_name_results_in_invalid_modelstate() {
             SetFormCollection();
@@ -133,58 +93,13 @@ namespace DeepBlue.Tests.Controllers.Investor {
         }
       
         #endregion
-
-        #region Tests after model state is invalid
-        private void SetModelInvalid() {
-            base.DefaultController.ModelState.AddModelError(string.Empty, string.Empty);
-            SetFormCollection();
-        }
-
-        [Test]
-        public void model_state_invalid_redirects_to_new_view() {
-            SetModelInvalid();
-            Assert.IsNotNull(Model);
-        }
-
-        [Test]
-        public void model_state_invalid_redirects_new_view_countries_populated() {
-            SetModelInvalid();
-            // Make sure it is a redirect
-            Assert.IsTrue(Model.SelectList.Countries.Count > 0);
-        }
-
-        [Test]
-        public void model_state_invalid_redirects_new_view_states_populated() {
-            SetModelInvalid();
-            // Make sure it is a redirect
-            Assert.IsTrue(Model.SelectList.States.Count > 0);
-        }
-
-        [Test]
-        public void model_state_invalid_redirects_new_view_addresstypes_populated() {
-            SetModelInvalid();
-            // Make sure it is a redirect
-            Assert.IsTrue(Model.SelectList.AddressTypes.Count > 0);
-        }
-
-        [Test]
-        public void model_state_invalid_redirects_new_view_domesticforeigns_populated() {
-            SetModelInvalid();
-            // Make sure it is a redirect
-            Assert.IsTrue(Model.SelectList.DomesticForeigns.Count > 0);
-        }
-
-        #endregion
  
         private FormCollection GetInvalidformCollection() {
             FormCollection formCollection = new FormCollection();
             formCollection.Add("InvestorName", string.Empty);
-            formCollection.Add("Alias", string.Empty);
-            formCollection.Add("Phone", string.Empty);
-            formCollection.Add("Email", string.Empty);
-            formCollection.Add("Address1", string.Empty);
-            formCollection.Add("City", string.Empty);
-            formCollection.Add("Zip", string.Empty);
+			formCollection.Add("SocialSecurityTaxId", string.Empty);
+			formCollection.Add("StateOfResidency", string.Empty);
+			formCollection.Add("EntityType", string.Empty);
             return formCollection;
         }
     }

@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreatePurchaseTypeInvalidData : EditPurchaseType {
+    public class CreatePurchaseTypeInvalidData : PurchaseTypeBase {
 
 		protected ResultModel ResultModel {
 			get {
@@ -53,29 +53,20 @@ namespace DeepBlue.Tests.Controllers.Admin {
 			IsValid(parameterName, out errors);
             return errorCount == errors;
         }
-
-		//[Test]
-		//public void invalid_Purchasetype_entityid_sets_model_error_on_model_state() {
-		//    Assert.IsFalse(test_posted_value("EntityID"));
-		//}
-
-		//[Test]
-		//public void invalid_Purchasetype_entityid_sets_1_error() {
-		//    Assert.IsTrue(test_error_count("EntityID", 1));
-		//}
+ 
 		 
         [Test]
-        public void invalid_Purchasetype_name_sets_model_error_on_model_state() {
+        public void invalid_purchasetype_name_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("Name"));
         }
 
         [Test]
-		public void invalid_Purchasetype_name_sets_1_error() {
+		public void invalid_purchasetype_name_sets_1_error() {
 			Assert.IsTrue(test_error_count("Name", 1));
         }
 
         [Test]
-		public void invalid_Purchasetype_name_results_in_invalid_modelstate() {
+		public void invalid_purchasetype_name_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }

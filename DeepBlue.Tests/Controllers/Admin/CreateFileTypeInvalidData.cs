@@ -8,7 +8,7 @@ using Moq;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Admin {
-    public class CreateFileTypeInvalidData : EditFileType {
+    public class CreateFileTypeInvalidData : FileTypeBase {
 
 		protected ResultModel ResultModel {
 			get {
@@ -55,17 +55,17 @@ namespace DeepBlue.Tests.Controllers.Admin {
         }
 		 
         [Test]
-        public void invalid_FileType_filetypename_sets_model_error_on_model_state() {
+        public void invalid_filetype_filetypename_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("FileTypeName"));
         }
 
         [Test]
-		public void invalid_FileType_filetypename_sets_1_error() {
+		public void invalid_filetype_filetypename_sets_1_error() {
 			Assert.IsTrue(test_error_count("FileTypeName", 1));
         }
 
         [Test]
-		public void invalid_FileType_filetypename_results_in_invalid_modelstate() {
+		public void invalid_filetype_filetypename_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }

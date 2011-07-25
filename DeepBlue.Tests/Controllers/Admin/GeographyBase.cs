@@ -45,7 +45,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindGeography
 		[Test]
-		public void valid_Find_Geography_sets_json_result_error() {
+		public void valid_find_geography_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.GeographyList(1, 1, "GeographyID", "asc") != null));
 		}
 		#endregion

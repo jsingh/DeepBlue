@@ -45,7 +45,7 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
 		#region FindIndustry
 		[Test]
-		public void valid_Find_Industry_sets_json_result_error() {
+		public void valid_find_industry_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.IndustryList(1, 1, "IndustryID", "asc") != null));
 		}
 		#endregion

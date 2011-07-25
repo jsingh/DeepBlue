@@ -20,7 +20,6 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Currency is required")]
 		[StringLength(100, ErrorMessage = "Currency must be under 100 characters.")]
-		[RemoteUID_(Action = "CurrencyAvailable", Controller = "Admin", ValidateParameterName = "CurrencyCurrency", Params = new string[] { "CurrencyId" })]
 		[DisplayName("Currency:")]
 		public string Currency { get; set; }
 
