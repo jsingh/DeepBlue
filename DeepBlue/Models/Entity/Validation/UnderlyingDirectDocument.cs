@@ -19,13 +19,7 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-
-			[Required(ErrorMessage = "UnderlyingDirectID is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "UnderlyingDirectID is required")]
-			public global::System.Int32 UnderlyingDirectID {
-				get;
-				set;
-			}
+ 
 
 			[Required(ErrorMessage = "SecurityID is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "SecurityID is required")]

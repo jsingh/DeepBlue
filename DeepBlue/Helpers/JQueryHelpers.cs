@@ -83,6 +83,9 @@ namespace DeepBlue.Helpers {
 			if (string.IsNullOrEmpty(options.OnTemplate) == false) {
 				scriptSrc.Append(",onTemplate:" + options.OnTemplate + "");
 			}
+			if (string.IsNullOrEmpty(options.TableName) == false) {
+				scriptSrc.Append(",tableName:'" + options.TableName + "'");
+			}
 			scriptSrc.Append(",rpOptions:[");
 			string rows = string.Empty;
 			foreach (var value in options.RowOptions) {

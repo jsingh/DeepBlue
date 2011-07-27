@@ -12,7 +12,7 @@
 	<%=Html.JavascriptInclueTag("CapitalCall.js") %>
 	<%=Html.JavascriptInclueTag("CapitalCallManual.js")%>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
@@ -35,6 +35,8 @@
 			</div>
 		</div>
 	</div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="cc-main" id="CCDetail" style="display: none">
 		<div class="cc-box">
 			<div class="section ccdetail">
@@ -56,8 +58,6 @@
 					</label>
 				</div>
 			</div>
-		</div>
-		<div class="line">
 		</div>
 		<div id="NewCapitalCall">
 			<div class="cc-box-main">

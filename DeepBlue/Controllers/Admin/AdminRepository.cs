@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
+using System.Web.DynamicData;
+using System.Reflection;
+using System.Linq.Expressions;
 
 namespace DeepBlue.Controllers.Admin {
 	public class AdminRepository : IAdminRepository {
@@ -965,7 +968,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		#endregion
-	
+
 		#region  DocumentTypes
 		public List<DocumentType> GetAllDocumentTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -1040,7 +1043,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		#endregion
-		
+
 		#region  Geography
 
 		public List<Models.Entity.Geography> GetAllGeographys(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
@@ -1491,6 +1494,290 @@ namespace DeepBlue.Controllers.Admin {
 																	 value = country.CountryName
 																 });
 				return new PaginatedList<AutoCompleteList>(countryListQuery, 1, 20);
+			}
+		}
+		#endregion
+
+
+		#region DynamicData
+		public object FindTable(string tableName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				object results = null;
+				//int pageIndex = 0;
+				int pageSize = 10000;
+				switch (tableName.ToLower()) {
+					case "account":
+						results = context.Accounts.OrderBy(account => account.AccountID).Take(pageSize).ToList();
+						break;
+					case "activitytype":
+						results = context.ActivityTypes.OrderBy(activitytype => activitytype.ActivityTypeID).Take(pageSize).ToList();
+						break;
+					case "address":
+						results = context.Addresses.OrderBy(address => address.AddressID).Take(pageSize).ToList();
+						break;
+					case "addresstype":
+						results = context.AddressTypes.OrderBy(addresstype => addresstype.AddressTypeID).Take(pageSize).ToList();
+						break;
+					case "capitalcall":
+						results = context.CapitalCalls.OrderBy(capitalcall => capitalcall.CapitalCallID).Take(pageSize).ToList();
+						break;
+					case "capitalcalllineitem":
+						results = context.CapitalCallLineItems.OrderBy(capitalcalllineitem => capitalcalllineitem.CapitalCallLineItemID).Take(pageSize).ToList();
+						break;
+					case "capitalcalllineitemtype":
+						results = context.CapitalCallLineItemTypes.OrderBy(capitalcalllineitemtype => capitalcalllineitemtype.CapitalCallLineItemTypeID).Take(pageSize).ToList();
+						break;
+					case "capitalcalltype":
+						results = context.CapitalCallTypes.OrderBy(capitalcalltype => capitalcalltype.CapitalCallTypeID).Take(pageSize).ToList();
+						break;
+					case "capitaldistribution":
+						results = context.CapitalDistributions.OrderBy(capitaldistribution => capitaldistribution.CapitalDistributionID).Take(pageSize).ToList();
+						break;
+					case "capitaldistributionlineitem":
+						results = context.CapitalDistributionLineItems.OrderBy(capitaldistributionlineitem => capitaldistributionlineitem.CapitalDistributionLineItemID).Take(pageSize).ToList();
+						break;
+					case "capitaldistributionprofit":
+						results = context.CapitalDistributionProfits.OrderBy(capitaldistributionprofit => capitaldistributionprofit.CapitalDistributionProfitID).Take(pageSize).ToList();
+						break;
+					case "cashdistribution":
+						results = context.CashDistributions.OrderBy(cashdistribution => cashdistribution.CashDistributionID).Take(pageSize).ToList();
+						break;
+					case "cashdistributiontype":
+						results = context.CashDistributionTypes.OrderBy(cashdistributiontype => cashdistributiontype.CashDistributionTypeID).Take(pageSize).ToList();
+						break;
+					case "communication":
+						results = context.Communications.OrderBy(communication => communication.CommunicationID).Take(pageSize).ToList();
+						break;
+					case "communicationgrouping":
+						results = context.CommunicationGroupings.OrderBy(communicationgrouping => communicationgrouping.CommunicationGroupingID).Take(pageSize).ToList();
+						break;
+					case "communicationtype":
+						results = context.CommunicationTypes.OrderBy(communicationtype => communicationtype.CommunicationTypeID).Take(pageSize).ToList();
+						break;
+					case "contact":
+						results = context.Contacts.OrderBy(contact => contact.ContactID).Take(pageSize).ToList();
+						break;
+					case "contactaddress":
+						results = context.ContactAddresses.OrderBy(contactaddress => contactaddress.ContactAddressID).Take(pageSize).ToList();
+						break;
+					case "contactcommunication":
+						results = context.ContactCommunications.OrderBy(contactcommunication => contactcommunication.ContactCommunicationID).Take(pageSize).ToList();
+						break;
+					case "country":
+						results = context.COUNTRies.OrderBy(country => country.CountryID).Take(pageSize).ToList();
+						break;
+					case "currency":
+						results = context.Currencies.OrderBy(currency => currency.CurrencyID).Take(pageSize).ToList();
+						break;
+					case "customfield":
+						results = context.CustomFields.OrderBy(customfield => customfield.CustomFieldID).Take(pageSize).ToList();
+						break;
+					case "customfieldvalue":
+						results = context.CustomFieldValues.OrderBy(customfieldvalue => customfieldvalue.CustomFieldValueID).Take(pageSize).ToList();
+						break;
+					case "datatype":
+						results = context.DataTypes.OrderBy(datatype => datatype.DataTypeID).Take(pageSize).ToList();
+						break;
+					case "deal":
+						results = context.Deals.OrderBy(deal => deal.DealID).Take(pageSize).ToList();
+						break;
+					case "dealclosing":
+						results = context.DealClosings.OrderBy(dealclosing => dealclosing.DealClosingID).Take(pageSize).ToList();
+						break;
+					case "dealclosingcost":
+						results = context.DealClosingCosts.OrderBy(dealclosingcost => dealclosingcost.DealClosingCostID).Take(pageSize).ToList();
+						break;
+					case "dealclosingcosttype":
+						results = context.DealClosingCostTypes.OrderBy(dealclosingcosttype => dealclosingcosttype.DealClosingCostTypeID).Take(pageSize).ToList();
+						break;
+					case "dealunderlyingdirect":
+						results = context.DealUnderlyingDirects.OrderBy(dealunderlyingdirect => dealunderlyingdirect.DealUnderlyingDirectID).Take(pageSize).ToList();
+						break;
+					case "dealunderlyingfund":
+						results = context.DealUnderlyingFunds.OrderBy(dealunderlyingfund => dealunderlyingfund.DealUnderlyingtFundID).Take(pageSize).ToList();
+						break;
+					case "dealunderlyingfundadjustment":
+						results = context.DealUnderlyingFundAdjustments.OrderBy(dealunderlyingfundadjustment => dealunderlyingfundadjustment.DealUnderlyingFundAdjustmentID).Take(pageSize).ToList();
+						break;
+					case "documenttype":
+						results = context.DocumentTypes.OrderBy(documenttype => documenttype.DocumentTypeID).Take(pageSize).ToList();
+						break;
+					case "equity":
+						results = context.Equities.OrderBy(equity => equity.EquityID).Take(pageSize).ToList();
+						break;
+					case "equitysplit":
+						results = context.EquitySplits.OrderBy(equitysplit => equitysplit.EquiteSplitID).Take(pageSize).ToList();
+						break;
+					case "equitytype":
+						results = context.EquityTypes.OrderBy(equitytype => equitytype.EquityTypeID).Take(pageSize).ToList();
+						break;
+					case "file":
+						results = context.Files.OrderBy(file => file.FileID).Take(pageSize).ToList();
+						break;
+					case "filetype":
+						results = context.FileTypes.OrderBy(filetype => filetype.FileTypeID).Take(pageSize).ToList();
+						break;
+					case "fixedincome":
+						results = context.FixedIncomes.OrderBy(fixedincome => fixedincome.FixedIncomeID).Take(pageSize).ToList();
+						break;
+					case "fixedincometype":
+						results = context.FixedIncomeTypes.OrderBy(fixedincometype => fixedincometype.FixedIncomeTypeID).Take(pageSize).ToList();
+						break;
+					case "fund":
+						results = context.Funds.OrderBy(fund => fund.FundID).Take(pageSize).ToList();
+						break;
+					case "fundaccount":
+						results = context.FundAccounts.OrderBy(fundaccount => fundaccount.FundAccountID).Take(pageSize).ToList();
+						break;
+					case "fundactivityhistory":
+						results = context.FundActivityHistories.OrderBy(fundactivityhistory => fundactivityhistory.FundActivityHistoryID).Take(pageSize).ToList();
+						break;
+					case "fundclosing":
+						results = context.FundClosings.OrderBy(fundclosing => fundclosing.FundClosingID).Take(pageSize).ToList();
+						break;
+					case "fundexpense":
+						results = context.FundExpenses.OrderBy(fundexpense => fundexpense.FundExpenseID).Take(pageSize).ToList();
+						break;
+					case "fundexpensetype":
+						results = context.FundExpenseTypes.OrderBy(fundexpensetype => fundexpensetype.FundExpenseTypeID).Take(pageSize).ToList();
+						break;
+					case "fundrateschedule":
+						results = context.FundRateSchedules.OrderBy(fundrateschedule => fundrateschedule.FundRateScheduleID).Take(pageSize).ToList();
+						break;
+					case "geography":
+						results = context.Geographies.OrderBy(geography => geography.GeographyID).Take(pageSize).ToList();
+						break;
+					case "industry":
+						results = context.Industries.OrderBy(industry => industry.IndustryID).Take(pageSize).ToList();
+						break;
+					case "investmenttype":
+						results = context.InvestmentTypes.OrderBy(investmenttype => investmenttype.InvestmentTypeID).Take(pageSize).ToList();
+						break;
+					case "investor":
+						results = context.Investors.OrderBy(investor => investor.InvestorID).Take(pageSize).ToList();
+						break;
+					case "investoraccount":
+						results = context.InvestorAccounts.OrderBy(investoraccount => investoraccount.InvestorAccountID).Take(pageSize).ToList();
+						break;
+					case "investoraddress":
+						results = context.InvestorAddresses.OrderBy(investoraddress => investoraddress.InvestorAddressID).Take(pageSize).ToList();
+						break;
+					case "investorcommunication":
+						results = context.InvestorCommunications.OrderBy(investorcommunication => investorcommunication.InvestorCommunicationID).Take(pageSize).ToList();
+						break;
+					case "investorcontact":
+						results = context.InvestorContacts.OrderBy(investorcontact => investorcontact.InvestorContactID).Take(pageSize).ToList();
+						break;
+					case "investorentitytype":
+						results = context.InvestorEntityTypes.OrderBy(investorentitytype => investorentitytype.InvestorEntityTypeID).Take(pageSize).ToList();
+						break;
+					case "investorfund":
+						results = context.InvestorFunds.OrderBy(investorfund => investorfund.InvestorFundID).Take(pageSize).ToList();
+						break;
+					case "investorfunddocument":
+						results = context.InvestorFundDocuments.OrderBy(investorfunddocument => investorfunddocument.InvestorFundDocumentID).Take(pageSize).ToList();
+						break;
+					case "investorfundtransaction":
+						results = context.InvestorFundTransactions.OrderBy(investorfundtransaction => investorfundtransaction.InvestorFundTransactionID).Take(pageSize).ToList();
+						break;
+					case "investortype":
+						results = context.InvestorTypes.OrderBy(investortype => investortype.InvestorTypeID).Take(pageSize).ToList();
+						break;
+					case "issuer":
+						results = context.Issuers.OrderBy(issuer => issuer.IssuerID).Take(pageSize).ToList();
+						break;
+					case "managementfeerateschedule":
+						results = context.ManagementFeeRateSchedules.OrderBy(managementfeerateschedule => managementfeerateschedule.ManagementFeeRateScheduleID).Take(pageSize).ToList();
+						break;
+					case "managementfeeratescheduletier":
+						results = context.ManagementFeeRateScheduleTiers.OrderBy(managementfeeratescheduletier => managementfeeratescheduletier.ManagementFeeRateScheduleTierID).Take(pageSize).ToList();
+						break;
+					case "module":
+						results = context.MODULEs.OrderBy(module => module.ModuleID).Take(pageSize).ToList();
+						break;
+					case "multipliertype":
+						results = context.MultiplierTypes.OrderBy(multipliertype => multipliertype.MultiplierTypeID).Take(pageSize).ToList();
+						break;
+					case "optionfield":
+						results = context.OptionFields.OrderBy(optionfield => optionfield.OptionFieldID).Take(pageSize).ToList();
+						break;
+					case "optionfieldvaluelist":
+						results = context.OptionFieldValueLists.OrderBy(optionfieldvaluelist => optionfieldvaluelist.OptionFieldValueListID).Take(pageSize).ToList();
+						break;
+					case "partner":
+						results = context.Partners.OrderBy(partner => partner.PartnerID).Take(pageSize).ToList();
+						break;
+					case "purchasetype":
+						results = context.PurchaseTypes.OrderBy(purchasetype => purchasetype.PurchaseTypeID).Take(pageSize).ToList();
+						break;
+					case "ratescheduletype":
+						results = context.RateScheduleTypes.OrderBy(ratescheduletype => ratescheduletype.RateScheduleTypeID).Take(pageSize).ToList();
+						break;
+					case "reportingfrequency":
+						results = context.ReportingFrequencies.OrderBy(reportingfrequency => reportingfrequency.ReportingFrequencyID).Take(pageSize).ToList();
+						break;
+					case "reportingtype":
+						results = context.ReportingTypes.OrderBy(reportingtype => reportingtype.ReportingTypeID).Take(pageSize).ToList();
+						break;
+					case "securityconversion":
+						results = context.SecurityConversions.OrderBy(securityconversion => securityconversion.SecurityConversionID).Take(pageSize).ToList();
+						break;
+					case "securityconversiondetail":
+						results = context.SecurityConversionDetails.OrderBy(securityconversiondetail => securityconversiondetail.SecurityConversionDetailID).Take(pageSize).ToList();
+						break;
+					case "securitytype":
+						results = context.SecurityTypes.OrderBy(securitytype => securitytype.SecurityTypeID).Take(pageSize).ToList();
+						break;
+					case "shareclasstype":
+						results = context.ShareClassTypes.OrderBy(shareclasstype => shareclasstype.ShareClassTypeID).Take(pageSize).ToList();
+						break;
+					case "state":
+						results = context.STATEs.OrderBy(state => state.StateID).Take(pageSize).ToList();
+						break;
+					case "transactiontype":
+						results = context.TransactionTypes.OrderBy(transactiontype => transactiontype.TransactionTypeID).Take(pageSize).ToList();
+						break;
+					case "underlyingdirectdocument":
+						results = context.UnderlyingDirectDocuments.OrderBy(underlyingdirectdocument => underlyingdirectdocument.UnderlyingDirectDocumentID).Take(pageSize).ToList();
+						break;
+					case "underlyingdirectlastprice":
+						results = context.UnderlyingDirectLastPrices.OrderBy(underlyingdirectlastprice => underlyingdirectlastprice.UnderlyingDirectLastPriceID).Take(pageSize).ToList();
+						break;
+					case "underlyingdirectlastpricehistory":
+						results = context.UnderlyingDirectLastPriceHistories.OrderBy(underlyingdirectlastpricehistory => underlyingdirectlastpricehistory.UnderlyingDirectLastPriceHistoryID).Take(pageSize).ToList();
+						break;
+					case "underlyingfund":
+						results = context.UnderlyingFunds.OrderBy(underlyingfund => underlyingfund.UnderlyingtFundID).Take(pageSize).ToList();
+						break;
+					case "underlyingfundcapitalcall":
+						results = context.UnderlyingFundCapitalCalls.OrderBy(underlyingfundcapitalcall => underlyingfundcapitalcall.UnderlyingFundCapitalCallID).Take(pageSize).ToList();
+						break;
+					case "underlyingfundcapitalcalllineitem":
+						results = context.UnderlyingFundCapitalCallLineItems.OrderBy(underlyingfundcapitalcalllineitem => underlyingfundcapitalcalllineitem.UnderlyingFundCapitalCallLineItemID).Take(pageSize).ToList();
+						break;
+					case "underlyingfundcashdistribution":
+						results = context.UnderlyingFundCashDistributions.OrderBy(underlyingfundcashdistribution => underlyingfundcashdistribution.UnderlyingFundCashDistributionID).Take(pageSize).ToList();
+						break;
+					case "underlyingfunddocument":
+						results = context.UnderlyingFundDocuments.OrderBy(underlyingfunddocument => underlyingfunddocument.UnderlyingFundDocumentID).Take(pageSize).ToList();
+						break;
+					case "underlyingfundnav":
+						results = context.UnderlyingFundNAVs.OrderBy(underlyingfundnav => underlyingfundnav.UnderlyingFundNAVID).Take(pageSize).ToList();
+						break;
+					case "underlyingfundnavhistory":
+						results = context.UnderlyingFundNAVHistories.OrderBy(underlyingfundnavhistory => underlyingfundnavhistory.UnderlyingFundNAVHistoryID).Take(pageSize).ToList();
+						break;
+					case "underlyingfundstockdistribution":
+						results = context.UnderlyingFundStockDistributions.OrderBy(underlyingfundstockdistribution => underlyingfundstockdistribution.UnderlyingFundStockDistributionID).Take(pageSize).ToList();
+						break;
+					case "underlyingfundstockdistributionlineitem":
+						results = context.UnderlyingFundStockDistributionLineItems.OrderBy(underlyingfundstockdistributionlineitem => underlyingfundstockdistributionlineitem.UnderlyingFundStockDistributionLineItemID).Take(pageSize).ToList();
+						break;
+					case "underlyingfundtype":
+						results = context.UnderlyingFundTypes.OrderBy(underlyingfundtype => underlyingfundtype.UnderlyingFundTypeID).Take(pageSize).ToList();
+						break;
+				}
+				return results;
 			}
 		}
 		#endregion

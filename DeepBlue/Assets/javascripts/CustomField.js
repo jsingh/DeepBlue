@@ -63,9 +63,9 @@
 	,onInit: function (g) {
 		var data={ name: "Add Custom Field" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		$(window).resize(function () {
-			customField.resizeGV(g);
-		});
+//		$(window).resize(function () {
+//			customField.resizeGV(g);
+//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

@@ -24,6 +24,7 @@ namespace DeepBlue.Helpers {
 			ResizeWidth = true;
 			OnInit = string.Empty;
 			OnTemplate = string.Empty;
+			TableName = string.Empty;
 		}
 		public string HttpMethod { get; set; }
 		public int Height { get; set; }
@@ -43,5 +44,6 @@ namespace DeepBlue.Helpers {
 		public string SortOrder { get; set; }
 		public bool Autoload  { get; set; }
 		public bool ResizeWidth { get; set; }
+		public string TableName { get; set; }
 	}
 }

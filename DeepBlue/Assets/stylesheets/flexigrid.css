@@ -141,8 +141,8 @@
 }
 .flexigrid div.bDiv tr td .gbutton {
 	visibility: hidden;
-	padding:0 5px;
-	cursor:pointer;
+	padding: 0 5px;
+	cursor: pointer;
 }
 .flexigrid div.bDiv tr:hover td .gbutton {
 	visibility: visible;
@@ -155,7 +155,7 @@
 	margin: 5px 0;
 }
 .flexigrid div.bpDiv {
-	margin-bottom:0;
+	margin-bottom: 0;
 }
 .flexigrid div.pDiv div.pDiv2 {
 	margin: 3px;
@@ -317,6 +317,17 @@ div.pGroup {
 	height: 10px;
 	float: left;
 }
-.flexigrid tr td input[type='text'],.flexigrid tr td select {
-	width:96%;
+.flexigrid tr td input[type='text'], .flexigrid tr td select {
+	width: 96%;
+}
+.flexigrid #ExportExcel {
+	float: right;
+	margin-right: 10px;
+}
+.flexigrid .exp-excel-loading {
+    background: url("../images/refresh.gif") no-repeat scroll left bottom transparent;
+    display: none;
+    float: right;
+    margin: 3px 0 0;
+    padding: 6px 6px 0 23px;
 }

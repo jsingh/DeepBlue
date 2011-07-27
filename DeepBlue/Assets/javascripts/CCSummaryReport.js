@@ -30,7 +30,7 @@
     				}
 			]
     };
-			$.layoutEngine(layoutSettings);
+			//$.layoutEngine(layoutSettings);
 		}); 
 	}
 	,ccsummaryReportReinit: function () {
@@ -54,7 +54,7 @@
                         }
                     ]
     };
-		$.layoutEngine(layoutSettings);
+		//$.layoutEngine(layoutSettings);
 	}
 	,selectFund: function (id) {
 		$("#FundId").val(id);

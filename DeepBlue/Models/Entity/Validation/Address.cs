@@ -84,30 +84,6 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-
-			[StringLength(50, ErrorMessage = "Phone must be under 50 characters.")]
-			public global::System.String Phone {
-				get;
-				set;
-			}
-
-			[StringLength(50, ErrorMessage = "Fax must be under 50 characters.")]
-			public global::System.String Fax {
-				get;
-				set;
-			}
-
-			[StringLength(50, ErrorMessage = "Email must be under 50 characters.")]
-			public global::System.String Email {
-				get;
-				set;
-			}
-
-			[StringLength(50, ErrorMessage = "Web Address must be under 50 characters.")]
-			public global::System.String WebAddress {
-				get;
-				set;
-			}
 			#endregion
 		}
 	}

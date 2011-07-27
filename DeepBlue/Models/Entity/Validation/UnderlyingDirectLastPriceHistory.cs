@@ -17,20 +17,6 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage = "Security Type is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Security Type is required")]
-			public global::System.Int32 SecurityTypeID {
-				get;
-				set;
-			}
-
-			[Required(ErrorMessage = "Security is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Security is required")]
-			public global::System.Int32 SecurityID {
-				get;
-				set;
-			}
-
 			[Required(ErrorMessage = "Last Price is required")]
 			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Last Price is required")]
 			public global::System.Decimal LastPrice {

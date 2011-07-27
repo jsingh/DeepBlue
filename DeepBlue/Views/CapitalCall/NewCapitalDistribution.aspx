@@ -10,7 +10,7 @@
 	<%=Html.JavascriptInclueTag("CapitalCallDistribution.js")%>
 	<%=Html.JavascriptInclueTag("CapitalCallDistributionManual.js")%>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
@@ -33,6 +33,8 @@
 			</div>
 		</div>
 	</div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="cc-main" id="CCDetail" style="display: none">
 		<div class="cc-box">
 			<div class="section ccdetail">
@@ -53,8 +55,6 @@
 					</label>
 				</div>
 			</div>
-		</div>
-		<div class="line">
 		</div>
 		<%: Html.HiddenFor(model => model.FundId) %><%: Html.HiddenFor(model => model.DistributionNumber) %>
 		<div id="NewCapitalDistribution">
@@ -147,7 +147,7 @@
 				<%}%>
 			</div>
 		</div>
-		<div id="ManualCapitalDistribution" style="display:none">
+		<div id="ManualCapitalDistribution" style="display: none">
 			<div class="cc-box-main">
 				<% using (Html.Form(new { @id = "ManualDistribution", @onsubmit = "return false" })) {%>
 				<%: Html.HiddenFor(model => model.DistributionAmount) %>
@@ -218,19 +218,19 @@
 											<th style="width: 15%">
 												Investor Name
 											</th>
-											<th style="text-align:right">
+											<th style="text-align: right">
 												Capital Distribution Amount
 											</th>
-											<th style="text-align:right">
+											<th style="text-align: right">
 												Return Management Fees
 											</th>
-											<th style="text-align:right">
+											<th style="text-align: right">
 												Return Fund Expenses
 											</th>
-											<th style="width:10%;text-align:right">
+											<th style="width: 10%; text-align: right">
 												Profits (%)
 											</th>
-											<th style="text-align:right">
+											<th style="text-align: right">
 												Profits Returned
 											</th>
 											<th style="width: 5%" align="center">

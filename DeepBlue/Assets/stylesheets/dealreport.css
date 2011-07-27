@@ -1,15 +1,10 @@
 ﻿.report-content {
 	color: #000;
 	width: 100%;
-	position: absolute;
-	font-family: Arial;
-	font-size: 12px;
-	top: 172px;
-	bottom: 10px;
-	overflow: auto;
-	overflow-x: hidden;
 	padding-left: 65px;
 	width: 90%;
+	float:left;
+	clear:both;
 }
 .report-content a {
 	color: #000;

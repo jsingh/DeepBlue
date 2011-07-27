@@ -63,9 +63,9 @@
 	,onInit: function (g) {
 		var data={ name: "Add Purchase Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		$(window).resize(function () {
-			purchaseType.resizeGV(g);
-		});
+//		$(window).resize(function () {
+//			purchaseType.resizeGV(g);
+//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

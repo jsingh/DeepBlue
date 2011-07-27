@@ -13,6 +13,17 @@
 	<%=Html.JavascriptInclueTag("Investor.js")%>
 	<%=Html.StylesheetLinkTag("newInvestor.css")%>
 </asp:Content>
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
+	<div class="navigation">
+		<div class="heading">
+			<div class="leftcol">
+				<span class="title">INVESTORS</span><span class="arrow"></span><span class="pname">New
+					Investor Setup</span></div>
+			<div class="rightcol">
+			</div>
+		</div>
+	</div>
+</asp:Content>
 <asp:Content ID="MainCnt" ContentPlaceHolderID="MainContent" runat="server">
 	<% Html.EnableClientValidation(); %>
 	<%using (Ajax.BeginForm("Create", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "investor.onBegin", OnSuccess = "investor.onSuccess" }, new { @id = "NewInvestor" })) {%>

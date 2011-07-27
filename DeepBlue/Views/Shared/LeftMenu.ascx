@@ -19,8 +19,6 @@
 			<%: Html.Anchor("Investor Accounting Categories")%></li>
 	</ul>
 </div>
-<div class="menubottom">
-</div>
 <%} %>
 <%break;%>
 <%case "CustomFieldManagement":%>
@@ -32,8 +30,6 @@
 		<li class="<%=(ViewData["PageName"] == "DataType" ? "sel" : "")%>">
 			<%: Html.ActionLink("Data Type", "DataType", "Admin",null, new { @class = (ViewData["PageName"] == "DataType" ? "sel" : "") })%></li>
 	</ul>
-</div>
-<div class="menubottom">
 </div>
 <%} %>
 <%break;%>
@@ -58,8 +54,6 @@
 		<li class="<%=(ViewData["PageName"] == "ReportingType" ? "sel" : "")%>">
 			<%: Html.ActionLink("Reporting Type", "ReportingType", "Admin", null, new { @class = (ViewData["PageName"] == "ReportingType" ? "sel" : "") })%></li>
 	</ul>
-</div>
-<div class="menubottom">
 </div>
 <%} %>
 <%break;%>

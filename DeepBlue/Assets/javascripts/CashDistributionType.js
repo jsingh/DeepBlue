@@ -63,9 +63,9 @@
 	,onInit: function (g) {
 		var data={ name: "Add Cash Distribution Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		$(window).resize(function () {
-			cashDistributionType.resizeGV(g);
-		});
+//		$(window).resize(function () {
+//			cashDistributionType.resizeGV(g);
+//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

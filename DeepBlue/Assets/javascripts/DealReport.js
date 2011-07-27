@@ -12,7 +12,7 @@
 	,onSubmit: function (p) {
 		var reportCnt=$("#ReportContent");
 		var h=reportCnt.height();
-		p.rp=parseInt((h/45));
+		p.rp=10;//parseInt((h/145));
 		p.newp=dealReport.pageIndex;
 		$("#ReportLoading").show();
 		return true;

@@ -23,6 +23,7 @@
 			,sortname: ''
 			,sortorder: ''
 			,resizeWidth: true
+			,tableName: ''
 			,onChangeSort: false
 			,onSuccess: false
 			,onRowClick: false
@@ -234,6 +235,14 @@
 					this.populate();
 				}
 			},
+			exportExcel: function () {
+				var loading=$(".exp-excel-loading",g.pDiv);
+				loading.show();
+				$.get("/Admin/ExportExcel?tableName="+p.tableName,function (data) {
+					loading.html(data);
+					$("a",loading).click();
+				});
+			},
 			setPagingEvent: function (pDiv) {
 				$('.pReload',pDiv).click(function () { g.populate() });
 				$('.pFirst',pDiv).click(function () { g.changePage('first') });
@@ -352,10 +361,18 @@
 			g.pDiv.innerHTML='<div class="pDiv2"></div>';
 			var html='<div class="pGroup"> <div class="pFirst pButton"><span></span></div><div class="pPrev pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pcontrol">Page <input type="text" size="4" value="1" /> of <span> 1 </span></span></div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pNext pButton"><span></span></div><div class="pLast pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pReload pButton"><span></span></div></div>';
 			//html+='<div class="btnseparator"></div><div class="pGroup"><span class="pPageStat"></span></div>';
+
 			$('div',g.pDiv).html(html);
 
 			$(g.hDiv).before(g.pDiv);
 			$(g.bDiv).after($(g.pDiv).clone().addClass("bpDiv"));
+
+			if(p.tableName!="") {
+				var exportExcel='<div id="ExportExcel" class="green-btn"><div class="left"></div><div class="center">Export Excel</div><div class="right"></div></div>';
+				exportExcel+='<div class="exp-excel-loading"><span class="pLoadingStat">Exporting...</span></div>';
+				$(g.pDiv).append(exportExcel);
+				$("#ExportExcel",g.pDiv).unbind("click").click(function () { g.exportExcel(); });
+			}
 
 			$(".pDiv",g.gDiv).each(function () {
 				g.setPagingEvent(this);
@@ -390,7 +407,10 @@
 			//$(g.gDiv).jqTransform();
 		} catch(e) { alert(e); }
 		if(p.resizeWidth) {
-			$(window).resize(function () { $(g.gDiv).css("width","");g.resize(); });
+			$(window).resize(function () {
+				$(g.gDiv).css("width","");
+				g.resize();
+			});
 		}
 		if(p.onInit) {
 			p.onInit(g);

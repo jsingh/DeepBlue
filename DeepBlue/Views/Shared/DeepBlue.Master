@@ -10,6 +10,7 @@
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery.formatCurrency.js")%>
+	<%= Html.JavascriptInclueTag("jquery.cookie.js")%>
 	<%= Html.JavascriptInclueTag("jHelper.js")%>
 	<%= Html.JavascriptInclueTag("DeepBlue.js")%>
 	<%= Html.JavascriptInclueTag("menu.js")%>
@@ -18,12 +19,12 @@
 	<%= Html.StylesheetLinkTag("site.css")%>
 	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
 </head>
-<body id="mainbdy">
+<body>
 	<div id="header">
 		<div id="topheader" class="topheader">
 			<div class="cname">
 				WILLOWRIDGE</div>
-			<div class="uparrow">
+			<div id="navminimize" class="uparrow downarrow" onclick="javascript:deepBlue.minimize(this);">
 			</div>
 			<div class="key">
 			</div>
@@ -32,40 +33,39 @@
 			<div class="setting">
 			</div>
 		</div>
-		<div id="menu" class="dbmenu">
-			<% using (Html.TopMenu((ViewData["MenuName"] == "DealManagement"), "Deal_Management")) {%>
-			<%: Html.TopMenuLink("","deal.png")%>
+		<div id="menu">
+			<% using (Html.TopMenu((ViewData["MenuName"] == "DealManagement"), "Deal_Management", new { @id = "investmentmnu" })) {%>
+			<%: Html.TopMenuLink("INVESTMENTS")%>
 			<%}%>
 			<div class="sep">
 			</div>
-			<% using (Html.TopMenu((ViewData["MenuName"] == "Fund Tracker"), "Fund_Management")) {%>
-			<%: Html.TopMenuLink("", "fund.png")%>
-			<%}%>
-			<% using (Html.TopMenu((ViewData["MenuName"] == "Investor"), "Investor_Management")) {%>
-			<%: Html.TopMenuLink("","invmanagement.png")%>
+			<% using (Html.TopMenu((ViewData["MenuName"] == "Fund Tracker"), "Fund_Management", new { @id = "fundmnu" })) {%>
+			<%: Html.TopMenuLink("FUNDS")%>
 			<%}%>
 			<div class="sep">
 			</div>
-			<%--<% using (Html.TopMenu((ViewData["MenuName"] == "Transaction Setup"), "", new { @nosubmenu = "true" })) {%>
-				<%: Html.TopMenuLink("Transaction Setup", "transaction.png")%>
-				<%}%>--%>
-			<% using (Html.TopMenu((ViewData["MenuName"] == "Accounting"), "", new { @nosubmenu = "true" })) {%>
-			<%: Html.TopMenuLink("","accounting.png")%>
+			<% using (Html.TopMenu((ViewData["MenuName"] == "Investor"), "Investor_Management", new { @id = "invmnu" })) {%>
+			<%: Html.TopMenuLink("INVESTORS")%>
 			<%}%>
 			<div class="sep">
 			</div>
-			<% using (Html.TopMenu((ViewData["MenuName"] == "Document"), "Doc_Management")) {%>
-			<%: Html.TopMenuLink("","document.png")%>
+			<% using (Html.TopMenu((ViewData["MenuName"] == "Accounting"), "", new { @id = "accmnu", @nosubmenu = "true" })) {%>
+			<%: Html.TopMenuLink("ACCOUNTING")%>
 			<%}%>
 			<div class="sep">
 			</div>
-			<% using (Html.TopMenu((ViewData["MenuName"] == "Admin"), "Adm_Management")) {%>
-			<%: Html.TopMenuLink("", "administration.png")%>
+			<% using (Html.TopMenu((ViewData["MenuName"] == "Document"), "Doc_Management", new { @id = "docmnu" })) {%>
+			<%: Html.TopMenuLink("DOCUMENT MANAGEMENT")%>
 			<%}%>
 			<div class="sep">
 			</div>
-			<% using (Html.TopMenu((ViewData["MenuName"] == "Reports"), "Report_Management")) {%>
-			<%: Html.TopMenuLink("","report.png")%>
+			<% using (Html.TopMenu((ViewData["MenuName"] == "Admin"), "Adm_Management", new { @id = "admmnu" })) {%>
+			<%: Html.TopMenuLink("ADMIN")%>
+			<%}%>
+			<div class="sep">
+			</div>
+			<% using (Html.TopMenu((ViewData["MenuName"] == "Reports"), "Report_Management", new { @id = "repmnu" })) {%>
+			<%: Html.TopMenuLink("REPORTS")%>
 			<%}%>
 		</div>
 	</div>
@@ -158,14 +158,19 @@
 		<%}%>
 	</div>--%>
 	<div id="content">
-		<%Html.RenderPartial("LeftMenu");%>
-		<asp:ContentPlaceHolder ID="MainContent" runat="server" />
+		<asp:ContentPlaceHolder ID="NavigationContent" runat="server" />
+		<div id="cntbox">
+			<div class="cnt-box-main">
+				<%Html.RenderPartial("LeftMenu");%>
+				<asp:ContentPlaceHolder ID="MainContent" runat="server" />
+			</div>
+		</div>
 	</div>
 	<div id="footer">
 		<div class="footercontent">
 			Copyright 2011 DeepBlue&nbsp;<%=ConfigurationManager.AppSettings["CurrentVersion"]%></div>
 	</div>
-	<script type="text/javascript">		DeepBlue.init();</script>
+	<script type="text/javascript">		deepBlue.init();</script>
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
 </body>
 </html>

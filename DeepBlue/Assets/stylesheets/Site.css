@@ -15,8 +15,6 @@ body {
 	font-size: 12px;
 	font-family: Arial;
 	color: #000;
-}
-#mainbdy {
 	background-image: url("../images/bg.jpg");
 	background-repeat: repeat;
 }
@@ -47,28 +45,20 @@ a img {
 	clear: both;
 	width: 100%;
 }
-#header, #footer, #submenu, #innersubmenu {
-	left: 0;
-	right: 0;
-	overflow: hidden;
-	position: absolute;
-}
 #footer {
-	bottom: 0;
 	height: 35px;
 	background-image: url("../images/footerbg.png");
 	background-repeat: repeat-x;
-	font-family: Arial;
-	font-size: 12px;
 	color: #A27F7F;
 	clear: both;
 	width: 100%;
+	float: left;
 }
 #footer .footercontent {
 	color: #FFFFFF;
 	height: 35px;
-	padding-top: 10px;
 	text-align: center;
+	line-height: 35px;
 }
 #arrow {
 	width: 17px;
@@ -92,20 +82,22 @@ a img {
 }
 /* Content */
 #content {
-	bottom: 35px;
-	left: 0px;
-	overflow: hidden;
-	position: absolute;
-	right: 0;
-	top: 151px;
-	overflow-x: hidden;
-	overflow-y: auto;
 	clear: both;
+	overflow: hidden;
+	float: left;
 	width: 100%;
 }
-#leftmenu{
-	width:20%;
-	display:none;
+#cntbox {
+	float: left;
+	width: 100%;
+}
+#cntbox.overflow {
+	overflow: auto;
+	overflow-x: hidden;
+}
+.cnt-box-main {
+	float: left;
+	width: 100%;
 }
 /* Editor */
 .editor-row {
@@ -592,10 +584,9 @@ h2 {
 	float: left;
 	height: 32px;
 }
-.dbmenu {
+#menu {
 	width: 100%;
 	float: left;
-	height: 78px;
 	background-image: url(../images/menucenter.png);
 	background-repeat: repeat-x;
 	padding: 0px 65px 0px 65px;
@@ -606,6 +597,25 @@ h2 {
 }
 #menu ul li {
 	float: left;
+}
+#menu.minimize {
+	height: 40px;
+}
+#menu.minimize .topmenu {
+	line-height: 40px;
+	height: 40px;
+}
+#menu.minimize .topmenu .mnu-name {
+	margin: 0;
+}
+#menu.minimize .sep {
+	height: 40px;
+}
+#menu.minimize .tab-sel {
+	background-position: center bottom;
+}
+#menu.minimize #fundmnu .mnu-name, #menu.minimize #investmentmnu .mnu-name, #menu.minimize #invmnu .mnu-name, #menu.minimize #docmnu .mnu-name, #menu.minimize #admmnu .mnu-name, #menu.minimize #repmnu .mnu-name, #menu.minimize #accmnu .mnu-name {
+	background-image: none;
 }
 .mdiv {
 	clear: both;
@@ -634,12 +644,46 @@ h2 {
 .topmenu {
 	float: left;
 	text-align: center;
-	color: #a27f7f;
 	font-size: 12px;
 	height: 86px;
 	padding: 0px 36px;
 	white-space: nowrap;
 	cursor: pointer;
+	background-position: center center;
+	background-repeat: no-repeat;
+	line-height: 90px;
+	color: #fff;
+	font-family: Myriad Pro,Arial;
+	font-size: 12px;
+}
+.topmenu a {
+}
+.mnu-name {
+	background-position: left top;
+	background-repeat: no-repeat;
+	margin-top: 20px;
+	padding-top: 3px;
+}
+#menu #fundmnu .mnu-name {
+	background-image: url(../images/fund.png);
+}
+#menu #investmentmnu .mnu-name {
+	background-image: url(../images/deal.png);
+}
+#menu #invmnu .mnu-name {
+	background-image: url(../images/invmanagement.png);
+}
+#menu #accmnu .mnu-name {
+	background-image: url(../images/accounting.png);
+}
+#menu #docmnu .mnu-name {
+	background-image: url(../images/document.png);
+}
+#menu #admmnu .mnu-name {
+	background-image: url(../images/administration.png);
+}
+#menu #repmnu .mnu-name {
+	background-image: url(../images/report.png);
 }
 .topmenu a {
 	color: #FFFFFF;
@@ -674,14 +718,14 @@ h2 {
 .heading {
 	border: 0px solid red;
 	float: left;
-	    padding: 17px 0 12px 18px;
+	padding: 17px 0 12px 18px;
 	width: 94%;
 }
 .heading .title {
 	color: #000;
 	float: left;
-	font-weight:bold;
-	text-transform:uppercase;
+	font-weight: bold;
+	text-transform: uppercase;
 }
 .heading .arrow {
 	font-size: 18px;
@@ -696,7 +740,7 @@ h2 {
 .heading .pname {
 	color: #29589E;
 	float: left;
-	    text-transform: uppercase;
+	text-transform: uppercase;
 }
 .heading .leftcol {
 	float: left;
@@ -724,7 +768,6 @@ h2 {
 	padding-left: 65px;
 	background-image: url(../images/fsmbg.png);
 	background-repeat: repeat-x;
-	top: 110px;
 }
 #innersubmenu, .navigation {
 	top: 153px;
@@ -736,9 +779,7 @@ h2 {
 	height: 47px;
 	width: 100%;
 }
-#menu a, #submenu a {
-	font-size: 12px;
-}
+
 .mdiv .sel {
 	color: #021E43;
 	font-weight: bold;
@@ -750,9 +791,7 @@ h2 {
 	font-weight: bold;
 	color: #021E43;
 }
-#submenu, .topmenu a {
-	font-family: Arial;
-}
+
 
 .topmenu a img {
 	padding-top: 10px;
@@ -825,6 +864,7 @@ input.ui-autocomplete-loading[type="text"] {
 	height: 34px;
 	float: right;
 	margin: 0px 10px 0px 10px;
+	cursor: pointer;
 }
 .setting {
 	background-image: url(../images/setting.png);
@@ -843,19 +883,22 @@ input.ui-autocomplete-loading[type="text"] {
 	width: 21px;
 	margin-right: 20%;
 }
+#navminimize.downarrow{
+	background-image: url(../images/navdarrow.png);
+}
 .cname {
 	float: left;
 }
 .tooltip {
-	    background-color: #F2F2A4;
-    border: 1px solid #AB9C9C;
-    color: Black;
-    display: none;
-    font-size: 11px;
-    min-width: 100px;
-    padding: 5px;
-    position: absolute;
-    white-space: nowrap;
+	background-color: #F2F2A4;
+	border: 1px solid #AB9C9C;
+	color: Black;
+	display: none;
+	font-size: 11px;
+	min-width: 100px;
+	padding: 5px;
+	position: absolute;
+	white-space: nowrap;
 }
 /* Grid */
 .grid {

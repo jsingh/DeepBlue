@@ -63,9 +63,9 @@
 	,onInit: function (g) {
 		var data={ name: "Add Deal Closing Cost Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		$(window).resize(function () {
-			dealClosingCostType.resizeGV(g);
-		});
+//		$(window).resize(function () {
+//			dealClosingCostType.resizeGV(g);
+//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

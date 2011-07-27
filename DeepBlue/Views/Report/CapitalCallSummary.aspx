@@ -16,30 +16,41 @@
 	<%=Html.JavascriptInclueTag("jquery.PrintArea.js")%>
 	<%=Html.StylesheetLinkTag("report.css")%>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-	<div id="ReportMain">
-		<div id="ReportHeader" class="rep-header">
-			<div class="editor-label" style="width: auto">
-				<% Html.EnableClientValidation(); %>
-				<%using (Html.BeginForm("", "", FormMethod.Get, new { @id = "CapitalCallSummary", @onsubmit = "return ccsummaryReport.onSubmit('CapitalCallSummary');" })) {%>
-				<div style="float: left">
-					<%: Html.LabelFor(model => model.FundId)%>
-					<%: Html.TextBox("FundName", "", new { @id = "FundName" })%>
-					<%: Html.LabelFor(model => model.CapitalCallId)%>
-					<%: Html.DropDownListFor(model => model.CapitalCallId, Model.CapitalCalls, new { @style = "width:150px" })%>
-				</div>
-				<div style="float: left; margin-left: 10px;">
-					<%: Html.ImageButton("submit.png", new { @class="default-button" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
-				</div>
-				<%: Html.HiddenFor(model => model.FundId)%>
-				<%: Html.ValidationMessageFor(model => model.FundId)%>
-				<%: Html.ValidationMessageFor(model => model.CapitalCallId)%>
-				<%}%>
-			</div>
-			<div class="editor-label" style="margin-left: 50px; clear: right">
-				<%: Html.Anchor(Html.Image("print.png").ToHtmlString() + "&nbsp;Print",new { @onclick = "javascript:ccsummaryReport.print()" })%>
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
+	<div class="navigation">
+		<div class="heading">
+			<div class="leftcol">
+				<span class="title">REPORTS</span><span class="arrow"></span><span class="pname">Capital
+					Call Summary</span></div>
+			<div class="rightcol">
 			</div>
 		</div>
+	</div>
+	<div id="ReportHeader" class="rep-header">
+		<div class="editor-label" style="width: auto">
+			<% Html.EnableClientValidation(); %>
+			<%using (Html.BeginForm("", "", FormMethod.Get, new { @id = "CapitalCallSummary", @onsubmit = "return ccsummaryReport.onSubmit('CapitalCallSummary');" })) {%>
+			<div style="float: left">
+				<%: Html.LabelFor(model => model.FundId)%>
+				<%: Html.TextBox("FundName", "", new { @id = "FundName" })%>
+				<%: Html.LabelFor(model => model.CapitalCallId)%>
+				<%: Html.DropDownListFor(model => model.CapitalCallId, Model.CapitalCalls, new { @style = "width:150px" })%>
+			</div>
+			<div style="float: left; margin-left: 10px;">
+				<%: Html.ImageButton("submit.png", new { @class="default-button" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
+			</div>
+			<%: Html.HiddenFor(model => model.FundId)%>
+			<%: Html.ValidationMessageFor(model => model.FundId)%>
+			<%: Html.ValidationMessageFor(model => model.CapitalCallId)%>
+			<%}%>
+		</div>
+		<div class="editor-label" style="margin-left: 50px; clear: right">
+			<%: Html.Anchor(Html.Image("print.png").ToHtmlString() + "&nbsp;Print",new { @onclick = "javascript:ccsummaryReport.print()" })%>
+		</div>
+	</div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+	<div id="ReportMain">
 		<div id="ReportDetail" class="rep-main" style="display: none">
 		</div>
 	</div>
@@ -76,7 +87,7 @@
 				</tr>
 				{{/each}}
 				<tr>
-					<td colspan=5 style='vertical-align:top'>
+					<td colspan=6 style='vertical-align:top'>
 					<div class='foot-name'>Total CapitalCall:</div><div class='foot-value'>${TotalCapitalCall}</div>
 					<div class='foot-name'>Total Mgt Fees:</div><div class='foot-value'>${TotalManagementFees}</div>
 					<div class='foot-name'>Total Expenses:</div><div class='foot-value'>${TotalExpenses}</div>

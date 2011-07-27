@@ -18,20 +18,13 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-
-			[Required(ErrorMessage = "Deal Underlying Direct is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Deal Underlying Direct is required")]
-			public global::System.Int32 DealUnderlyingDirectID {
-				get;
-				set;
-			}
-
+			
 			#endregion
 		}
 
 		public UnderlyingFundStockDistributionLineItem(IUnderlyingFundStockDistributionLineItemService underlyingFundStockDistributionLineItemservice)
 			: this() {
-			this.UnderlyingFundStockDistributionLineItemService = UnderlyingFundStockDistributionLineItemService;
+				this.UnderlyingFundStockDistributionLineItemService = underlyingFundStockDistributionLineItemservice;
 		}
 
 		public UnderlyingFundStockDistributionLineItem() {

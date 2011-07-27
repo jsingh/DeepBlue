@@ -12,7 +12,7 @@ namespace DeepBlue.Models.Entity {
 			#region Primitive Properties
 			[Required(ErrorMessage = "Module is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Module is required")]
-			public global::System.Int32 ModuleId {
+			public global::System.Int32 ModuleID {
 				get;
 				set;
 			}

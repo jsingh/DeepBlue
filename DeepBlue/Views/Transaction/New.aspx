@@ -13,6 +13,16 @@
 	<%=Html.JavascriptInclueTag("TransactionController.js") %>
 	<%=Html.JavascriptInclueTag("EditTransaction.js") %>
 </asp:Content>
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
+	<div class="navigation">
+		<div class="heading">
+			<div class="leftcol">
+				<span class="title">INVESTORS</span><span class="arrow"></span><span class="pname">Investor Commitment</span></div>
+			<div class="rightcol">
+			</div>
+		</div>
+	</div>
+</asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="edit-investor">
 		<div id="editinfo" class="transaction-info">
@@ -141,7 +151,6 @@
 })%>
 	<%= Html.jQueryDatePicker("CommittedDate")%>
 	<%= Html.jQueryAccordion("accordion", new AccordionOptions { Disabled = true, Active = 0 })%>
-
 	<script type="text/javascript">
 		transactionController.init();
 		$("#EditCommitmentAmount").dialog({
@@ -161,5 +170,4 @@
 			autoResize: true
 		});
 	</script>
-
 </asp:Content>

@@ -63,9 +63,9 @@
 	,onInit: function (g) {
 		var data={ name: "Add Communication Grouping" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		$(window).resize(function () {
-			communicationGrouping.resizeGV(g);
-		});
+//		$(window).resize(function () {
+//			communicationGrouping.resizeGV(g);
+//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

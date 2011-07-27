@@ -10,7 +10,7 @@
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("CapitalCallDetail.js")%>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
@@ -32,6 +32,8 @@
 			</div>
 		</div>
 	</div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="cc-main" id="CaptialCallDetail" style="display: none">
 		<div class="cc-box">
 			<div class="section ccdetail">
@@ -42,12 +44,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="line">
-		</div>
-		<%using(Html.Div(new { @id = "CapitalCallReport", @style=(Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalCall ? "display:block" : "display:none") })){%>
+		<%using (Html.Div(new { @id = "CapitalCallReport", @style = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalCall ? "display:block" : "display:none") })) {%>
 		<%}%>
 		<%using (Html.Div(new { @id = "CapitalDistributionReport", @style = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalDistribution ? "display:block" : "display:none") })) {%>
 		<%}%>
+		<div class="line"></div>
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">

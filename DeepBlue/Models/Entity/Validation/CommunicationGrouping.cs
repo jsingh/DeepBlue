@@ -10,13 +10,6 @@ namespace DeepBlue.Models.Entity {
 	public partial class CommunicationGrouping {
 		public class CommunicationGroupingMD {
 			#region Primitive Properties
-			[Required(ErrorMessage = "EntityID is required")]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
-			public global::System.Int32 EntityID {
-				get;
-				set;
-			}
-
 			[Required(ErrorMessage = "Communication Grouping Name is required")]
 			[StringLength(20, ErrorMessage = "Communication Grouping Name must be under 20 characters.")]
 			public global::System.String CommunicationGroupingName {

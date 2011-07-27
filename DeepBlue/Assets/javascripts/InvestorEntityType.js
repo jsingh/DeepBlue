@@ -63,9 +63,9 @@
 	,onInit: function (g) {
 		var data={ name: "Add Entity Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		$(window).resize(function () {
-			invEntityType.resizeGV(g);
-		});
+//		$(window).resize(function () {
+//			invEntityType.resizeGV(g);
+//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

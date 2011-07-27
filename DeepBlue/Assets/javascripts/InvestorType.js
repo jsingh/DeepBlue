@@ -63,9 +63,9 @@
 	,onInit: function (g) {
 		var data={ name: "Add Investor Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		$(window).resize(function () {
-			investorType.resizeGV(g);
-		});
+//		$(window).resize(function () {
+//			investorType.resizeGV(g);
+//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

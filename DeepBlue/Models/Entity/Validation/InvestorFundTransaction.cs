@@ -9,7 +9,7 @@ using DeepBlue;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(InvestorFundTransactionMD))]
 	public partial class InvestorFundTransaction {
-		public class InvestorFundTransactionMD : CreatedByFields {
+		public class InvestorFundTransactionMD {
 
 			#region Primitive Properties
 			[Required(ErrorMessage = "Fund Closing is required")]

@@ -11,7 +11,7 @@
 	<%=Html.StylesheetLinkTag("deal.css")%>
 	<%=Html.StylesheetLinkTag("dealreport.css")%>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
@@ -27,6 +27,8 @@
 			</div>
 		</div>
 	</div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="titlebox">
 		<div class="left_tile">
 			Deal Report

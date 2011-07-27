@@ -9,7 +9,7 @@
 	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
 	<%=Html.JavascriptInclueTag("DocumentUpload.js")%>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
@@ -22,6 +22,8 @@
 			</div>
 		</div>
 	</div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="doc-upload">
 		<% using (Html.Form(new { @id = "AddNewDocument", @onsubmit = "return documentUpload.save(this);", @enctype = "multipart/form-data" })) {%>
 		<%: Html.HiddenFor(model => model.InvestorId)%>
@@ -60,11 +62,11 @@
 			<%: Html.LabelFor(model => model.FilePath)%>
 		</div>
 		<div class="editor-field">
-			<div id="FileRow" style="float:left">
+			<div id="FileRow" style="float: left">
 				<%: Html.File("File", new { @id = "File"  })%>
 				<%: Html.ValidationMessageFor(model => model.File)%>
 			</div>
-			<div id="LinkRow" style="display: none;float:left;">
+			<div id="LinkRow" style="display: none; float: left;">
 				<%: Html.TextBoxFor(model => model.FilePath, new { @style = "width:213px" })%>
 				<%: Html.ValidationMessageFor(model => model.FilePath)%>
 			</div>
@@ -72,7 +74,7 @@
 				<%: Html.DropDownListFor(model => model.UploadType, Model.UploadTypes, new { @style = "width:80px", @onchange = "javascript:documentUpload.changeUploadType(this);" })%>
 			</div>
 		</div>
-		<div class="editor-button" style="width: auto;padding:10px 0 0;">
+		<div class="editor-button" style="width: auto; padding: 10px 0 0;">
 			<div style="float: left; padding: 0 0 10px 50px;">
 				<%: Html.ImageButton("Save.png", new { @class="default-button" })%>
 			</div>
@@ -93,11 +95,13 @@
 																	  OnSelect = "function(event, ui) { documentUpload.selectFund(ui.item.id);}"})%>
 	<script type="text/javascript">
 		$(document).ready(function () {
+		$("#cntbox").css("top","47px");
 			var DocumentStatus=document.getElementById("DocumentStatus");
 			documentUpload.changeType(DocumentStatus);
 			var UploadType=document.getElementById("UploadType");
 			documentUpload.changeUploadType(UploadType);
 			documentUpload.init();
+			
 		});
 	</script>
 </asp:Content>

@@ -24,12 +24,6 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[StringLength(20, ErrorMessage = "Contact Type must be under 20 characters.")]
-			public global::System.String ContactType {
-				get;
-				set;
-			}
-
 			[StringLength(30, ErrorMessage = "Last Name must be under 30 characters."), Required]
 			public global::System.String LastName {
 				get;

@@ -63,9 +63,9 @@
 	,onInit: function (g) {
 		var data={ name: "Add Data Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		$(window).resize(function () {
-			dataType.resizeGV(g);
-		});
+//		$(window).resize(function () {
+//			dataType.resizeGV(g);
+//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

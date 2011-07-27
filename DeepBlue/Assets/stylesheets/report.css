@@ -1,12 +1,11 @@
 ﻿#ReportMain {
 	overflow: hidden;
+	margin: 0 auto;
+	overflow: hidden;
+	width: 1024px;
 }
 .rep-header {
 	padding: 10px;
-}
-.rep-header, .rep-main {
-}
-.rep-main {
 }
 .rep-main .title {
 	font-size: 23px;
@@ -34,7 +33,7 @@
 	text-decoration: underline;
 }
 .grid tr th, .grid tr td {
-	padding: 3px 0px;
+	padding: 8px 0px;
 }
 .foot-name, .foot-value {
 	float: left;

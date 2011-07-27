@@ -11,7 +11,7 @@
 	<%= Html.StylesheetLinkTag("flexigrid.css")%>
 	<%= Html.StylesheetLinkTag("fund.css")%>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
@@ -33,6 +33,8 @@
 			</div>
 		</div>
 	</div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="fund-main">
 		<div class="section-det" id="FundDetail">
 			<table id="FundList" cellpadding="0" cellspacing="0" border="0">

@@ -126,9 +126,5 @@ input[type='text'] {
 	margin-top: 10px;
 }
 #DealCloseMain {
-	position: absolute;
-	top: 46px;
-	bottom: 0px;
-	overflow: auto;
-	overflow-x: hidden;
+	float:left;
 }

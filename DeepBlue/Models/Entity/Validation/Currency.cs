@@ -20,7 +20,7 @@ namespace DeepBlue.Models.Entity {
 
 			[Required(ErrorMessage = "Currency is required")]
 			[StringLength(100, ErrorMessage = "Currency Name must be under 100 characters.")]
-			public global::System.String Currency {
+			public global::System.String Currency1 {
 				get;
 				set;
 			}

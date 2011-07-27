@@ -63,9 +63,9 @@
 	,onInit: function (g) {
 		var data={ name: "Add Fund Expense Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		$(window).resize(function () {
-			fundExpenseType.resizeGV(g);
-		});
+//		$(window).resize(function () {
+//			fundExpenseType.resizeGV(g);
+//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

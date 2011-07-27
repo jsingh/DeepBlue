@@ -129,6 +129,7 @@ namespace DeepBlue.Helpers {
 		}
 		public static MvcDiv TopMenu(this HtmlHelper helper, bool isSelect, string subMenuId, object htmlAttributes) {
 			TagBuilder tagBuilder = new TagBuilder("div");
+			tagBuilder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
 			tagBuilder.AddCssClass("topmenu");
 			if (isSelect) {
 				tagBuilder.AddCssClass("tab-sel");
@@ -139,7 +140,6 @@ namespace DeepBlue.Helpers {
 				//tagBuilder.Attributes.Add("onmouseover", "menu.mopen(this,'" + subMenuId + "')");
 				//tagBuilder.Attributes.Add("onmouseout", "menu.mclosetime()");
 			}
-			tagBuilder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
 			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
 			httpResponse.Write(tagBuilder.ToString(TagRenderMode.StartTag));
 			System.Text.StringBuilder sb = new StringBuilder();
@@ -150,10 +150,7 @@ namespace DeepBlue.Helpers {
 			httpResponse.Write("</div><div class=\"topmenu-right\"></div>");
 		}
 		public static MvcHtmlString TopMenuLink(this HtmlHelper helper, string menuName) {
-			return Anchor(helper, "<br/><br/>" + menuName, "");
-		}
-		public static MvcHtmlString TopMenuLink(this HtmlHelper helper, string menuName, string iconName) {
-			return Anchor(helper, Image(helper, iconName).ToHtmlString() + "<br/>" + menuName, "");
+			return Div(helper, menuName, new { @class = "mnu-name" });
 		}
 		public static MvcDiv SubMenu(this HtmlHelper helper, string id, bool visible) {
 			return SubMenu(helper, id, false, visible);
@@ -207,6 +204,12 @@ namespace DeepBlue.Helpers {
 		#endregion
 
 		#region Div
+		public static MvcHtmlString Div(this HtmlHelper helper, string innerHTML, object htmlAttributes) {
+			TagBuilder tag = new TagBuilder("div");
+			tag.InnerHtml = innerHTML;
+			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+		}
 		public static MvcDiv Div(this HtmlHelper helper, object htmlAttributes) {
 			TagBuilder tagBuilder = new TagBuilder("div");
 			tagBuilder.MergeAttributes(new RouteValueDictionary(htmlAttributes));

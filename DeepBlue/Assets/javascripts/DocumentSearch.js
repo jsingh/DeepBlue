@@ -45,19 +45,19 @@
 		$(window).resize();
 	}
 	,onInit: function (g) {
-		$(window).resize(function () {
-			documentSearch.resizeGV(g);
-		});
+//		$(window).resize(function () {
+//			documentSearch.resizeGV(g);
+//		});
 	}
 	,resizeGV: function (g) {
-		var admain=$(".doc-main");
+		/*var admain=$(".doc-main");
 		var bDivBox=$(g.bDivBox);
 		bDivBox.css("height","auto");
-		var ah=admain.height()-320;
+		var ah=admain.height()-120;
 		var h=bDivBox.height();
 		if(h>ah) {
 			bDivBox.height(ah);
-		}
+		}*/
 	}
 	,onSubmit: function (formId) {
 		var FromDate=document.getElementById("FromDate").value;

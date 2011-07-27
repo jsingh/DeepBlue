@@ -27,9 +27,8 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage="Tax Id is required")]
-			[StringLength(50, ErrorMessage="Tax Id must be under 50 characters.")]
-			public global::System.String TaxId {
+			[StringLength(50, ErrorMessage = "TaxID must be under 50 characters.")]
+			public global::System.String TaxID {
 				get;
 				set;
 			}

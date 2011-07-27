@@ -20,23 +20,22 @@
 #ActivityMain .header {
 	margin: 10px 0px 10px 0px;
 	font-size: 16px;
-	position: absolute;
 }
 #content {
 	overflow: hidden;
 }
+#cntbox {
+	top:98px;
+}
 #ActivityMain {
 	float: left;
 	clear: both;
+	width:100%;
 }
 #ActivityMain .content {
-	bottom: 0;
+	float:left;
 	clear: both;
-	overflow: auto;
-	position: absolute;
-	top: 102px;
 	width: 100%;
-	overflow-x: hidden;
 }
 #ActivityMain .detail {
 	display: none;

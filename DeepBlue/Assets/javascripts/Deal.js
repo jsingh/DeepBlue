@@ -12,7 +12,6 @@
 			var FullFundList=$("#FullFundList");
 			FullFundList.dialog({ title: "Fund List",autoOpen: false,width: 625,modal: true,position: 'top',autoResize: false,open: function () { $("#FundList").flexReload(); } });
 			FullFundList.hide();
-			DeepBlue.layout();
 		});
 		var modifyDeal=$("#ModifyDealBox");
 		var ul=$("#modifyDealUL");

@@ -14,7 +14,6 @@
 		if(menu.ddmenuitem) {
 			menu.ddmenuitem.style.display='block';
 		}
-		DeepBlue.layout();
 	}
 	,msubopen: function (that,id) {
 		// cancel close timer
@@ -28,7 +27,6 @@
 				$(that).parents(".mdiv:first").addClass("subext");
 				menu.subddmenuitem=document.getElementById(id);
 				menu.subddmenuitem.style.display='block';
-				DeepBlue.layout();
 			} else {
 				$(".subul").hide();$(".subext").each(function () { $(this).removeClass("subext"); });
 			}
@@ -41,7 +39,6 @@
 			$("#arrow").hide();
 			$(".mdiv").hide();$(".subul").hide();
 			$(".current").css("display","block");
-			DeepBlue.layout();
 		}
 	}
 	,mclickclose: function () {
@@ -57,7 +54,7 @@
 		}
 	}
 	,msubclose: function () {
-		$(".subext").each(function () { $(this).removeClass("subext"); });DeepBlue.layout();
+		$(".subext").each(function () { $(this).removeClass("subext"); });
 	}
 	,msubclosetime: function () {
 		//menu.subclosetimer=window.setTimeout(menu.msubclose,timeout);

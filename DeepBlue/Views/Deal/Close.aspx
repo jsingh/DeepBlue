@@ -11,7 +11,7 @@
 	<%=Html.StylesheetLinkTag("deal.css") %>
 	<%=Html.StylesheetLinkTag("dealclose.css") %>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
@@ -33,7 +33,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="dc-box" id="DealCloseMain" style="display: none">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+	<div class="dc-box cnt-box-main" id="DealCloseMain" style="display: none">
 		<div class="dc-box">
 			<div class="section">
 				<div class="dealdetail">
@@ -133,7 +135,7 @@
 							Underlying Funds
 						</div>
 						<div class="dc-box tabledetail">
-							<div class="gbox" style="width:90%">
+							<div class="gbox" style="width: 90%">
 								<table id="DealUnderlyingFundList" class="grid" cellpadding="0" cellspacing="0" border="0"
 									style="width: 100%;">
 									<thead>
@@ -169,7 +171,7 @@
 							Underlying Directs
 						</div>
 						<div class="dc-box tabledetail">
-							<div class="gbox" style="width:90%">
+							<div class="gbox" style="width: 90%">
 								<table id="DealUnderlyingDirects" class="grid" cellpadding="0" cellspacing="0" border="0"
 									style="width: 100%;">
 									<thead>
@@ -228,59 +230,63 @@
 							<div class="closetitle" style="margin-top: 0">
 								All Underlying Funds
 							</div>
-							<div class="dc-box tabledetail"><div class="gbox" style="width:90%">
-								<table id="FinalDealUnderlyingFundList" class="grid" cellpadding="0" cellspacing="0"
-									border="0" style="width: 100%;">
-									<thead>
-										<tr>
-											<th class="lalign" style="width: 15%">
-												Fund Name
-											</th>
-											<th class="ralign" style="width: 15%">
-												Reallocated Gross Purchase
-											</th>
-											<th class="ralign" style="width: 15%">
-												Post Record Capital Call
-											</th>
-											<th class="ralign" style="width: 15%">
-												Post Record Distribution
-											</th>
-											<th class="ralign" style="width: 15%">
-												Adjusted Cost
-											</th>
-											<th>
-											</th>
-										</tr>
-									</thead>
-								</table></div>
+							<div class="dc-box tabledetail">
+								<div class="gbox" style="width: 90%">
+									<table id="FinalDealUnderlyingFundList" class="grid" cellpadding="0" cellspacing="0"
+										border="0" style="width: 100%;">
+										<thead>
+											<tr>
+												<th class="lalign" style="width: 15%">
+													Fund Name
+												</th>
+												<th class="ralign" style="width: 15%">
+													Reallocated Gross Purchase
+												</th>
+												<th class="ralign" style="width: 15%">
+													Post Record Capital Call
+												</th>
+												<th class="ralign" style="width: 15%">
+													Post Record Distribution
+												</th>
+												<th class="ralign" style="width: 15%">
+													Adjusted Cost
+												</th>
+												<th>
+												</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
 							</div>
 						</div>
 						<div class="dc-box">
 							<div class="closetitle">
 								All Underlying Directs
 							</div>
-							<div class="dc-box tabledetail"><div class="gbox" style="width:90%">
-								<table id="FinalDealUnderlyingDirects" class="grid" cellpadding="0" cellspacing="0"
-									border="0" style="width: 100%;">
-									<thead>
-										<tr>
-											<th class="lalign" style="width: 15%">
-												Direct Name
-											</th>
-											<th class="lalign" style="width: 15%">
-												No. Of Shares
-											</th>
-											<th class="ralign" style="width: 15%">
-												Price
-											</th>
-											<th class="ralign" style="width: 2%; white-space: nowrap;">
-												Adjusted Fair Market Value
-											</th>
-											<th>
-											</th>
-										</tr>
-									</thead>
-								</table></div>
+							<div class="dc-box tabledetail">
+								<div class="gbox" style="width: 90%">
+									<table id="FinalDealUnderlyingDirects" class="grid" cellpadding="0" cellspacing="0"
+										border="0" style="width: 100%;">
+										<thead>
+											<tr>
+												<th class="lalign" style="width: 15%">
+													Direct Name
+												</th>
+												<th class="lalign" style="width: 15%">
+													No. Of Shares
+												</th>
+												<th class="ralign" style="width: 15%">
+													Price
+												</th>
+												<th class="ralign" style="width: 2%; white-space: nowrap;">
+													Adjusted Fair Market Value
+												</th>
+												<th>
+												</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
 							</div>
 						</div>
 						<div class="savefooter">

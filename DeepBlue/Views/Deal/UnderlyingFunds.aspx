@@ -16,7 +16,7 @@
 	<%=Html.JavascriptInclueTag("flexgrid.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css")%>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
@@ -44,6 +44,8 @@
 			<%: Html.TextBox("S_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @id = "S_UnderlyingFund", @style = "width:200px", @class = "wm" })%>
 		</div>
 	</div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div id="UnderlyingFundDetail">
 		<div class="subheader" id="AddNewIssuer" style="display: none">
 			<%using (Html.Form(new { @id = "frmAddNewIssuer", @onsubmit = "return dealDirect.createNewIssuer(this);" })) {%>

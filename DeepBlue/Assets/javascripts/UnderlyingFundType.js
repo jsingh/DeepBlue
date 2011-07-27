@@ -63,9 +63,9 @@
 	,onInit: function (g) {
 		var data={ name: "Add Underlying Fund Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		$(window).resize(function () {
-			underlyingFundType.resizeGV(g);
-		});
+//		$(window).resize(function () {
+//			underlyingFundType.resizeGV(g);
+//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

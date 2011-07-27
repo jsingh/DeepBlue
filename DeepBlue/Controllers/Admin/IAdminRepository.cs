@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
+using System.Web.DynamicData;
 
 namespace DeepBlue.Controllers.Admin {
 	public interface IAdminRepository {
@@ -259,6 +260,10 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region Country
 		List<AutoCompleteList> FindCountrys(string countryName);
+		#endregion
+
+		#region DynamicData
+		object FindTable(string tableName);
 		#endregion
 	}
 }

@@ -20,11 +20,13 @@
 	<%=Html.StylesheetLinkTag("flexigrid.css")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<%using (Html.Div(new { @id = "DealFundList", @class = "navigation", @style = (ViewData["PageName"] == "Create New Deal" ? "display:block" : "display:none") })) {%>
 	<%}%>
-	<%using (Html.Div(new { @id = "ModifyDealBox", @class = "navigation", @style=(ViewData["PageName"]=="Modify Deal" ? "display:block" : "display:none") })) {%>
+	<%using (Html.Div(new { @id = "ModifyDealBox", @class = "navigation", @style = (ViewData["PageName"] == "Modify Deal" ? "display:block" : "display:none") })) {%>
 	<%}%>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div id="DealMain">
 		<% Html.EnableClientValidation(); %>
 		<%using (Ajax.BeginForm("Create", null, new AjaxOptions {

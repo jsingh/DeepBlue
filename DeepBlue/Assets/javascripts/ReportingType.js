@@ -63,9 +63,9 @@
 	,onInit: function (g) {
 		var data={ name: "Add Reporting Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		$(window).resize(function () {
-			reportingType.resizeGV(g);
-		});
+//		$(window).resize(function () {
+//			reportingType.resizeGV(g);
+//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

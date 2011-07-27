@@ -19,13 +19,6 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage = "Committed Date is required")]
-			[DateRange(ErrorMessage = "Committed Date is required")]
-			public global::System.DateTime CommittedDate {
-				get;
-				set;
-			}
-		 
 			#endregion
 		}
 

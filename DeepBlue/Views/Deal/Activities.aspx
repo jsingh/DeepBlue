@@ -23,7 +23,7 @@
 	<%=Html.StylesheetLinkTag("deal.css")%>
 	<%=Html.StylesheetLinkTag("dealactivity.css")%>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
@@ -37,17 +37,19 @@
 			</div>
 		</div>
 	</div>
-	<div id="ActivityMain">
-		<div class="header">
-			<div class="tabbg">
-				<%using (Html.Div(new { @id = "UATab", @class = "select", @onclick = "javascript:dealActivity.selectTab('U',this);" })) {%>&nbsp;
-				<%}%>
-				<%using (Html.Div(new { @id = "SATab", @onclick = "javascript:dealActivity.selectTab('S',this);" })) {%>&nbsp;
-				<%}%>
-				<%using (Html.Div(new { @id = "RETab", @onclick = "javascript:dealActivity.selectTab('R',this);" })) {%>&nbsp;
-				<%}%>
-			</div>
+	<div class="header" style="margin:5px 0 0;">
+		<div class="tabbg">
+			<%using (Html.Div(new { @id = "UATab", @class = "select", @onclick = "javascript:dealActivity.selectTab('U',this);" })) {%>&nbsp;
+			<%}%>
+			<%using (Html.Div(new { @id = "SATab", @onclick = "javascript:dealActivity.selectTab('S',this);" })) {%>&nbsp;
+			<%}%>
+			<%using (Html.Div(new { @id = "RETab", @onclick = "javascript:dealActivity.selectTab('R',this);" })) {%>&nbsp;
+			<%}%>
 		</div>
+	</div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+	<div id="ActivityMain">
 		<div class="content">
 			<div id="UnderlyingActivity" class="act-group">
 				<div class="act-box">

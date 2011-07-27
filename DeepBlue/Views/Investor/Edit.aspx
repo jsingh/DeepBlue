@@ -9,10 +9,21 @@
 	<%=Html.JavascriptInclueTag("EditInvestor.js") %>
 	<%=Html.StylesheetLinkTag("flexigrid.css") %>
 </asp:Content>
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
+	<div class="navigation">
+		<div class="heading">
+			<div class="leftcol">
+				<span class="title">INVESTORS</span><span class="arrow"></span><span class="pname">Update
+					Investor Information</span></div>
+			<div class="rightcol">
+			</div>
+		</div>
+	</div>
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="edit-investor">
 		<div class="search">
-			<div class="editor-label auto-width" style="padding:8px;">
+			<div class="editor-label auto-width" style="padding: 8px;">
 				<%: Html.Label("Investor:") %>
 			</div>
 			<div class="editor-field auto-width">

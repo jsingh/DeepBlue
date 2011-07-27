@@ -31,13 +31,6 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-            [Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "FundNav is required")]
-			public global::System.Decimal FundNav {
-				get;
-				set;
-			}
-           
-
             [Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "CommittedAmount is required")]
 			public global::System.Decimal CommittedAmount {
 				get;

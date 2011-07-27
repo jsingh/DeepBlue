@@ -81,6 +81,8 @@
     <Compile Include="Controllers\Document\DocumentRepository.cs" />
     <Compile Include="Controllers\Document\DocumentController.cs" />
     <Compile Include="Controllers\Document\IDocumentRepository.cs" />
+    <Compile Include="Helpers\AdvancedEntityTemplateFactory.cs" />
+    <Compile Include="Helpers\ExportExcel.cs" />
     <Compile Include="Helpers\ExportPdfResult.cs" />
     <Compile Include="Helpers\ExportToPdf.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
@@ -773,6 +775,8 @@
     <Content Include="Assets\javascripts\Currency.js" />
     <Content Include="Assets\javascripts\DealActivityStockDistribution.js" />
     <Content Include="Assets\javascripts\jquery-1.4.1.min.js" />
+    <Content Include="Assets\javascripts\jquery.ba-resize.min.js" />
+    <Content Include="Assets\javascripts\jquery.cookie.js" />
     <Content Include="Assets\javascripts\jquery.fileuploader.js" />
     <Content Include="Assets\javascripts\FundExpenseType.js" />
     <Content Include="Assets\javascripts\DealActivityEquitySplit.js" />
@@ -880,6 +884,7 @@
     <Content Include="Views\Admin\CommunicationType.aspx" />
     <Content Include="Views\Admin\CashDistributionType.aspx" />
     <Content Include="Views\Admin\Currency.aspx" />
+    <Content Include="Views\Admin\ExportExcel.ascx" />
     <Content Include="Views\Admin\FundExpenseType.aspx" />
     <Content Include="Views\Admin\FixedIncomeType.aspx" />
     <Content Include="Views\Admin\EquityType.aspx" />
@@ -987,6 +992,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>

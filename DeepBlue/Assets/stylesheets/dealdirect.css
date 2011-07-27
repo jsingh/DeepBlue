@@ -80,12 +80,10 @@
 }
 #DirectDetailBox {
 	float: left;
-	position: absolute;
-	top: 98px;
-	bottom: 0px;
 	width: 100%;
-	overflow: auto;
-	overflow-x: hidden;
+}
+#cntbox {
+	top:97px;
 }
 #equitysymboldiv {
 	padding-top: 100px;

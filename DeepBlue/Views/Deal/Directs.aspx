@@ -13,7 +13,7 @@
 	<%=Html.StylesheetLinkTag("flexigrid.css") %>
 	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
@@ -37,6 +37,8 @@
 			<%: Html.TextBox("S_Issuer", "SEARCH ISSUER", new { @class = "wm", @style = "width:200px", @id = "S_Issuer" })%>
 		</div>
 	</div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div id="DirectDetailBox">
 		<div class="subheader" id="AddNewIssuer" style="display: none">
 			<%using (Html.Form(new { @id = "frmAddNewIssuer", @onsubmit = "return dealDirect.createNewIssuer(this);" })) {%>
