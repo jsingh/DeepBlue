@@ -2,6 +2,9 @@
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <div class="line">
 </div>
+<div class="expandaddbtn">
+	<%: Html.Anchor(Html.Image("add_funds.png").ToHtmlString(), "javascript:deal.showMakeNewHeader('MakeNewDUFund');")%>
+</div>
 <div class="expandheader">
 	<div class="expandbtn">
 		<div class="expandimg" id="img">
@@ -11,9 +14,6 @@
 				Underlying Funds</div>
 		</div>
 	</div>
-	<div class="expandaddbtn">
-		<%: Html.Anchor(Html.Image("add_funds.png").ToHtmlString(), "javascript:deal.showMakeNewHeader('MakeNewDUFund');")%>
-	</div> 
 </div>
 <div class="fieldbox">
 	<div class="section" style="width: 90%;">
@@ -43,10 +43,10 @@
 						<th class="ralign">
 							Amount Unfunded
 						</th>
-						<th class="calign">
+						<th class="lalign">
 							Record Date
 						</th>
-						<th style="width:10%">
+						<th style="width: 10%">
 						</th>
 					</tr>
 				</thead>
@@ -64,7 +64,7 @@
 						<td class="ralign">
 							<%: Html.TextBox("GrossPurchasePrice", "", new { @id = "GrossPurchasePrice", @onkeyup = "javascript:deal.calcDUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 						</td>
-						<td class="lalign">
+						<td class="ralign">
 							<%: Html.TextBox("FundNAV", "", new { @id = "FundNAV", @onkeyup = "javascript:deal.calcDUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 						</td>
 						<td class="ralign">
@@ -73,7 +73,7 @@
 						<td class="ralign">
 							<%: Html.TextBox("UnfundedAmount", "", new { @id = "UnfundedAmount", @onkeyup = "javascript:deal.calcDUF();", @onkeypress = "return jHelper.isCurrency(event);" })%>
 						</td>
-						<td class="calign">
+						<td class="lalign">
 							<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_RecordDate" })%>
 						</td>
 						<td class="ralign">
@@ -95,7 +95,7 @@
 						<td class="ralign">
 							<%:Html.Span("", new { @id = "SpnTotalFundGPP" })%>
 						</td>
-						<td class="lalign">
+						<td class="ralign">
 							<%:Html.Span("", new { @id = "SpnTotalFundNAV" })%>
 						</td>
 						<td class="ralign">

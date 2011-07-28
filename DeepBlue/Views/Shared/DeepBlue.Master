@@ -24,7 +24,7 @@
 		<div id="topheader" class="topheader">
 			<div class="cname">
 				WILLOWRIDGE</div>
-			<div id="navminimize" class="uparrow downarrow" onclick="javascript:deepBlue.minimize(this);">
+			<div id="navminimize" class="uparrow" onclick="javascript:deepBlue.minimize(this);">
 			</div>
 			<div class="key">
 			</div>

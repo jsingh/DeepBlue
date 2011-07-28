@@ -33,14 +33,12 @@
 		</div>
 		<div class="editor-field">
 			<%: Html.DropDownListFor(model => model.DocumentTypeId,Model.DocumentTypes) %>
-			<%: Html.ValidationMessageFor(model => model.DocumentTypeId) %>
 		</div>
 		<div class="editor-label">
 			<%: Html.LabelFor(model => model.DocumentDate) %>
 		</div>
 		<div class="editor-field">
 			<%: Html.TextBox("DocumentDate","",new { @id = "DocumentDate" }) %>
-			<%: Html.ValidationMessageFor(model => model.DocumentDate) %>
 		</div>
 		<div class="editor-label">
 			<%: Html.LabelFor(model => model.DocumentStatus)%>
@@ -48,11 +46,9 @@
 		<div class="editor-field">
 			<div id="InvestorRow" style="float: left;">
 				<%: Html.TextBoxFor(model => model.InvestorName, new { @onblur = "javascript:documentUpload.InvestorBlur(this);", @style = "width:196px" })%>
-				<%: Html.ValidationMessageFor(model => model.InvestorId) %>
 			</div>
 			<div id="FundRow" style="display: none; float: left;">
 				<%: Html.TextBoxFor(model => model.FundName, new { @onblur = "javascript:documentUpload.FundBlur(this);", @style = "width:196px" })%>
-				<%: Html.ValidationMessageFor(model => model.FundId) %>
 			</div>
 			<div style="float: left; margin-left: 2px;">
 				<%: Html.DropDownListFor(model => model.DocumentStatus,Model.DocumentStatusTypes, new { @style="width:80px", @onchange = "javascript:documentUpload.changeType(this);" })%>
@@ -64,11 +60,9 @@
 		<div class="editor-field">
 			<div id="FileRow" style="float: left">
 				<%: Html.File("File", new { @id = "File"  })%>
-				<%: Html.ValidationMessageFor(model => model.File)%>
 			</div>
 			<div id="LinkRow" style="display: none; float: left;">
 				<%: Html.TextBoxFor(model => model.FilePath, new { @style = "width:213px" })%>
-				<%: Html.ValidationMessageFor(model => model.FilePath)%>
 			</div>
 			<div style="float: left; margin-left: 2px;">
 				<%: Html.DropDownListFor(model => model.UploadType, Model.UploadTypes, new { @style = "width:80px", @onchange = "javascript:documentUpload.changeUploadType(this);" })%>

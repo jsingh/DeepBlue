@@ -68,7 +68,7 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { capitalDistributionDetail.selectFund(ui.item.id);}" })%>
-	<%= Html.jQueryFlexiGrid("FundDetail", new FlexigridOptions {	ActionName = "CapitalDistributionDetailList", ControllerName = "CapitalCall", Autoload = false, SortName = "CapitalDistributionID", SortOrder = "desc",	HttpMethod = "Get", Paging = true, Height = 480 })%>
+	<%= Html.jQueryFlexiGrid("FundDetail", new FlexigridOptions {	ActionName = "CapitalDistributionDetailList", ControllerName = "CapitalCall", Autoload = false, SortName = "CapitalDistributionID", SortOrder = "desc",	HttpMethod = "Get", Paging = true, Height = 480, Width=600 })%>
 	<script type="text/javascript">
 		capitalDistributionDetail.init();
 	</script>

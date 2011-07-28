@@ -24,5 +24,9 @@ namespace DeepBlue.Models.Deal {
 		public List<SelectListItem> SecurityTypes { get; set; }
 
 		public List<SelectListItem> Securities { get; set; }
+
+		public List<SelectListItem> UploadTypes { get; set; }
+
+		public List<SelectListItem> DocumentStatusTypes { get; set; }
 	}
 }

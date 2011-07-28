@@ -215,7 +215,7 @@ namespace DeepBlue.Helpers {
 			uploadTypeList.Add(item);
 			return uploadTypeList;
 		}
-
+		 
 		public static List<SelectListItem> GetMultiplierTypeList(List<MultiplierType> multiplierTypes) {
 			List<SelectListItem> multiplierTypeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();

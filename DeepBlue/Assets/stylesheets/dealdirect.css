@@ -28,7 +28,7 @@
 	min-width: 3px;
 }
 .subheader {
-	padding-top: 30px;
+	padding-top: 30px;    margin-top: -10px;
 }
 .tabcell {
 	width: 180px;

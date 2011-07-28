@@ -1,19 +1,27 @@
 ﻿var deepBlue={
-	init: function () {
+	indexPage: false
+	,init: function () {
 		$(document).ready(function () {
+			var cnt=$("#content");
 			var menu=$("#menu");
+			var submenu=$("#submenu");
+			var topheader=$("#topheader");
 			var mnuresize=$.cookie("mnu-resize");
+			topheader.click(function () { deepBlue.hideSubMenu(); });
+			cnt.click(function () { deepBlue.hideSubMenu(); });
+			submenu.hide();
+			if(deepBlue.indexPage) {
+				submenu.show();
+			}
 			if(mnuresize=="true") {
 				menu.addClass("minimize");
-				$("#navminimize").removeClass("downarrow");
+				$("#navminimize").addClass("downarrow");
 			}
 			deepBlue.setCookie("mnu-resize",mnuresize);
 			$(".topmenu").click(function () {
-				$(".tab-sel").each(function () {
-					//if($(this).hasClass("current")==false) {
-					$(this).removeClass("tab-sel");
-					// }
-				});
+				submenu.show();
+				deepBlue.resize();
+				$(".tab-sel").removeClass("tab-sel");
 				var showmenu=$(this);
 				var arrow=$("#arrow");
 				arrow.hide();
@@ -34,14 +42,17 @@
 			deepBlue.resize();
 		});
 	}
+	,hideSubMenu: function () {
+		$("#submenu").hide();deepBlue.resize();
+	}
 	,minimize: function (that) {
 		var menu=$("#menu");
 		if(menu.hasClass("minimize")) {
 			menu.removeClass("minimize");
-			$(that).addClass("downarrow");
+			$(that).removeClass("downarrow");
 		} else {
 			menu.addClass("minimize");
-			$(that).removeClass("downarrow");
+			$(that).addClass("downarrow");
 		}
 		deepBlue.setCookie("mnu-resize",menu.hasClass("minimize"));
 		deepBlue.resize();
@@ -51,18 +62,12 @@
 	}
 	,resize: function () {
 		var menu=$("#menu");
-		var h=($(window).height()-158);
-		if(menu.hasClass("minimize")) {
-			h=h+10;
-		} else {
-			h=h-36;
-		}
 		var cnt=$("#content");
+		var leftmenu=$("#leftmenu");
+		var pos=cnt.offset();
+		var h=($(window).height()-pos.top)-35;
 		var cntheight=cnt.height();
 		cnt.css("min-height",h);
-		var admain=$(".admin-main:first");
-		var leftmenu=$("#leftmenu");
-		admain.width(($(window).width()-leftmenu.width())-55);
 		leftmenu.css("min-height",h-47);
 	}
 	,setArrow: function (showmenu) {

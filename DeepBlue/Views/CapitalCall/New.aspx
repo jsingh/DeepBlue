@@ -305,7 +305,7 @@
 	<%= Html.jQueryDatePicker("FromDate")%>
 	<%= Html.jQueryDatePicker("ToDate")%>
 	<%= Html.jQueryAutoComplete("Fund", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { capitalCall.selectFund(ui.item.id);}"})%>
-	<%= Html.jQueryFlexiGrid("TierDetail", new FlexigridOptions { Height = 0, ResizeWidth=false })%>
+	<%= Html.jQueryFlexiGrid("TierDetail", new FlexigridOptions { Height = 0, ResizeWidth=false, Width=600 })%>
 	<script id="CapitalCallInvestorTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("CapitalCallInvestorDetail"); %>
 	</script>

@@ -50,7 +50,7 @@ deal.calcDUF=function () {
 		}
 	});
 	$("#SpnTotalFundGPP",tbl).html(jHelper.dollarAmount(totalGPP.toString()));
-	$("#SpnTotalFundNAV",tbl).html(jHelper.dollarAmount(totalNAV.toString()));
+	$("#SpnTotalFundNAV",tbl).html(jHelper.numberFormat(totalNAV.toString()));
 	$("#SpnTotalCAmount",tbl).html(jHelper.dollarAmount(totalCA.toString()));
 	$("#SpnTotalUAmount",tbl).html(jHelper.dollarAmount(totalUFA.toString()));
 };

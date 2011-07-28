@@ -93,7 +93,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<UnderlyingFundStockDistributionModel> GetAllUnderlyingFundStockDistributions(int underlyingFundId);
 		List<StockDistributionLineItemModel> GetAllStockDistributionDirectList(int securityTypeId, int securityId, int fundId);
 		List<AutoCompleteList> FindStockIssuers(int underlyingFundId, int fundId, string issuerName);
-		List<StockDistributionLineItemModel> GetAllDeals(int securityTypeId, int securityId, int fundId);
+		List<StockDistributionLineItemModel> GetAllDeals(int securityTypeId, int securityId, int fundId, int underlyingFundId);
 		#endregion
 
 		#region UnderlyingFundCashDistribution

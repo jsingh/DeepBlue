@@ -855,9 +855,8 @@ namespace DeepBlue.Controllers.Deal {
 		public List<UnderlyingFundStockDistributionModel> GetAllUnderlyingFundStockDistributions(int underlyingFundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				var dealUnderlyingFundQuery = (from underlyingFund in context.DealUnderlyingFunds
-											   join deal in context.Deals on underlyingFund.DealID equals deal.DealID
-											   where underlyingFund.UnderlyingFundID == underlyingFundId && underlyingFund.DealClosingID != null
-											   group deal by deal.FundID into deals
+											   where underlyingFund.UnderlyingFundID == underlyingFundId
+											   group underlyingFund.Deal by underlyingFund.Deal.FundID into deals
 											   select new {
 												   FundID = deals.Key,
 												   UnderlyingFundID = underlyingFundId
@@ -869,7 +868,16 @@ namespace DeepBlue.Controllers.Deal {
 													 FundId = fund.FundID,
 													 FundName = fund.FundName,
 													 UnderlyingFundId = underlyingFund.UnderlyingtFundID,
-													 UnderlyingFundName = underlyingFund.FundName
+													 UnderlyingFundName = underlyingFund.FundName,
+													 Deals = (from dealuf in context.DealUnderlyingFunds
+															  where dealuf.UnderlyingFundID == underlyingFund.UnderlyingtFundID && dealuf.Deal.FundID == fund.FundID
+															  group dealuf by dealuf.DealID into deals
+															  select new StockDistributionLineItemModel {
+																  DealId = deals.FirstOrDefault().DealID,
+																  FundId = deals.FirstOrDefault().Deal.FundID,
+																  DealName = deals.FirstOrDefault().Deal.DealName,
+																  DealNumber = deals.FirstOrDefault().Deal.DealNumber
+															  })
 												 });
 				return newStockDistributionQuery.OrderBy(cd => cd.FundName).ToList();
 			}
@@ -904,11 +912,11 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public List<StockDistributionLineItemModel> GetAllDeals(int securityTypeId, int securityId, int fundId) {
+		public List<StockDistributionLineItemModel> GetAllDeals(int securityTypeId, int securityId, int fundId, int underlyingFundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from deal in context.Deals
 						where deal.FundID == fundId
-						&& deal.DealUnderlyingDirects.Where(direct => direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId).Count() > 0
+						&& deal.DealUnderlyingFunds.Where(dealUnderlyingFund => dealUnderlyingFund.UnderlyingFundID == underlyingFundId).Count() > 0
 						select new StockDistributionLineItemModel {
 							DealId = deal.DealID,
 							DealName = deal.DealName,

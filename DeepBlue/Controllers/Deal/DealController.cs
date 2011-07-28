@@ -58,13 +58,15 @@ namespace DeepBlue.Controllers.Deal {
 		private CreateModel GetNewDealModel() {
 			CreateModel model = new CreateModel();
 			model.Contacts = SelectListFactory.GetEmptySelectList();
-			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
 			model.PurchaseTypes = SelectListFactory.GetPurchaseTypeSelectList(AdminRepository.GetAllPurchaseTypes());
 			model.DealClosingCostTypes = SelectListFactory.GetDealClosingCostTypeSelectList(AdminRepository.GetAllDealClosingCostTypes());
 			model.UnderlyingFunds = SelectListFactory.GetUnderlyingFundSelectList(DealRepository.GetAllUnderlyingFunds());
 			model.Issuers = SelectListFactory.GetIssuerSelectList(DealRepository.GetAllIssuers());
 			model.SecurityTypes = SelectListFactory.GetSecurityTypeSelectList(AdminRepository.GetAllSecurityTypes());
 			model.Securities = SelectListFactory.GetEmptySelectList();
+			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
+			model.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
+			model.DocumentStatusTypes = SelectListFactory.GetDocumentStatusList();
 			return model;
 		}
 
@@ -1913,7 +1915,10 @@ namespace DeepBlue.Controllers.Deal {
 			if (errorInfo == null) {
 
 				// Attempt to create stock distribution to each deal.
-				List<StockDistributionLineItemModel> deals = DealRepository.GetAllDeals(underlyingFundStockDistribution.SecurityTypeID, underlyingFundStockDistribution.SecurityID, underlyingFundStockDistribution.FundID);
+				List<StockDistributionLineItemModel> deals = DealRepository.GetAllDeals(underlyingFundStockDistribution.SecurityTypeID,
+																						underlyingFundStockDistribution.SecurityID,
+																						underlyingFundStockDistribution.FundID,
+																						underlyingFundStockDistribution.UnderlyingFundID);
 				foreach (var deal in deals) {
 					UnderlyingFundStockDistributionLineItem stockDistributionItem = new UnderlyingFundStockDistributionLineItem();
 					stockDistributionItem.DealID = deal.DealId;
@@ -1925,7 +1930,7 @@ namespace DeepBlue.Controllers.Deal {
 						stockDistributionItem.NumberOfShares = DataTypeHelper.ToDecimal(Request[underlyingFundStockDistribution.FundID.ToString() + "_" + deal.DealId.ToString() + "_" + "NumberOfShares"]);
 					}
 					else {
-						stockDistributionItem.NumberOfShares = (((decimal)deal.NumberOfShares / (decimal)deals.Sum(d => d.NumberOfShares)) * underlyingFundStockDistribution.NumberOfShares);
+						stockDistributionItem.NumberOfShares = (((decimal)(deal.NumberOfShares ?? 0) / (decimal)deals.Sum(d => d.NumberOfShares)) * underlyingFundStockDistribution.NumberOfShares);
 						stockDistributionItem.FMV = stockDistributionItem.NumberOfShares * underlyingFundStockDistribution.PurchasePrice;
 					}
 
@@ -2415,7 +2420,7 @@ namespace DeepBlue.Controllers.Deal {
 				if (validateErrorInfo.Any() == false) {
 					if (model.IsReconciled) {
 						errorInfo = SaveReconcile(model);
-						if (errorInfo!=null)
+						if (errorInfo != null)
 							break;
 					}
 				}

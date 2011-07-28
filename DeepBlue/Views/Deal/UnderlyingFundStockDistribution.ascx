@@ -30,7 +30,7 @@
 	<td style="text-align: center">
 		<%: Html.TextBox("${Index}_TaxCostDate", "", new { @id = "${Index}_TaxCostDate", @class = "datefield" })%>
 	</td>
-	<td style="text-align: right;">
+	<td style="text-align: right;display:none;">
 		<%: Html.Hidden("${Index}_UnderlyingFundStockDistributionId", "${UnderlyingFundStockDistributionId}")%>
 		<%: Html.Hidden("${Index}_UnderlyingFundId", "${UnderlyingFundId}", new { @id = "UnderlyingFundId" })%>
 		<%: Html.Hidden("${Index}_FundId", "${FundId}", new { @id = "FundId" })%>

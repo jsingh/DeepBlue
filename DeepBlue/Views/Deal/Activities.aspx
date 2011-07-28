@@ -37,13 +37,15 @@
 			</div>
 		</div>
 	</div>
-	<div class="header" style="margin:5px 0 0;">
+	<div class="header" style="margin: 25px 0 0;">
 		<div class="tabbg">
-			<%using (Html.Div(new { @id = "UATab", @class = "select", @onclick = "javascript:dealActivity.selectTab('U',this);" })) {%>&nbsp;
+			<%using (Html.Tab(new { @id = "UATab", @class = "section-tab-sel", @onclick = "javascript:dealActivity.selectTab('U',this);" })) {%>Underlying
+			Activities
 			<%}%>
-			<%using (Html.Div(new { @id = "SATab", @onclick = "javascript:dealActivity.selectTab('S',this);" })) {%>&nbsp;
+			<%using (Html.Tab(new { @id = "SATab", @onclick = "javascript:dealActivity.selectTab('S',this);" })) {%>Security
+			Activities
 			<%}%>
-			<%using (Html.Div(new { @id = "RETab", @onclick = "javascript:dealActivity.selectTab('R',this);" })) {%>&nbsp;
+			<%using (Html.Tab(new { @id = "RETab", @onclick = "javascript:dealActivity.selectTab('R',this);" })) {%>Reconciliation
 			<%}%>
 		</div>
 	</div>
@@ -54,28 +56,28 @@
 			<div id="UnderlyingActivity" class="act-group">
 				<div class="act-box">
 					<div id="NewCapitalCall" class="group">
+						<div class="addbtn" style="display: none;">
+							<div class="tblcell">
+								<%: Html.TextBox("CC_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style="width:200px", @class = "wm" })%></div>
+							<div class="tblcell">
+								<%: Html.CheckBox("IsManualCapitalCall", false, new { @onchange = "javascript:dealActivity.showManualCCCtl('CCDetail');" })%>&nbsp;Manual
+								Capital Call
+							</div>
+							<div class="tblcell rightcell">
+								<%: Html.Anchor(Html.Image("mncc.png").ToHtmlString(), "javascript:dealActivity.makeNewCC();")%>
+							</div>
+						</div>
 						<div class="headerbox">
 							<div class="title">
 								<%: Html.Span("New Capital Call")%>
 							</div>
 						</div>
-						<div class="expandheader expandsel" style="display: none">
+						<div class="expandheader expandsel" style="display: none;">
 							<div class="expandbtn">
 								<div class="expandtitle" style="display: block;">
 									New Capital Call
 								</div>
 							</div>
-							<div class="addbtn" style="display: block;">
-								<div style="float: left">
-									<%: Html.Anchor(Html.Image("mncc.png").ToHtmlString(), "javascript:dealActivity.makeNewCC();")%>
-								</div>
-								<div class="manualact">
-									<%: Html.CheckBox("IsManualCapitalCall", false, new { @onchange = "javascript:dealActivity.showManualCCCtl('CCDetail');" })%>&nbsp;Manual
-									Capital Call
-								</div>
-							</div>
-							<div class="rightsbox">
-								<%: Html.TextBox("CC_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style="width:200px", @class = "wm" })%></div>
 						</div>
 						<div class="detail" id="CCDetail">
 							<div class="search-header">
@@ -129,8 +131,10 @@
 								<div class="subheader">
 									<div class="name">
 										Post Record Capital Call</div>
-									<div class="addbtn" style="margin-left: 82px;">
-										<%: Html.Anchor(Html.Image("addnewprcc.png").ToHtmlString(), "javascript:dealActivity.makeNewPRCC();")%></div>
+									<div class="addbtn">
+										<div class="tblcell rightcell">
+											<%: Html.Anchor(Html.Image("addnewprcc.png").ToHtmlString(), "javascript:dealActivity.makeNewPRCC();")%></div>
+									</div>
 									<div class="selectloading" id="PRCCLoading">
 									</div>
 								</div>
@@ -175,6 +179,18 @@
 				</div>
 				<div class="act-box">
 					<div id="NewCashDistribution" class="group">
+						<div class="addbtn" style="display: none;">
+							<div class="tblcell">
+								<%: Html.TextBox("CD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px", @class = "wm" })%>
+							</div>
+							<div class="tblcell">
+								<%: Html.CheckBox("IsManualCashDistribution", false, new { @onchange = "javascript:dealActivity.showManualCDCtl('CDDetail');" })%>&nbsp;Manual
+								Cash Distribution
+							</div>
+							<div class="tblcell rightcell">
+								<%: Html.Anchor(Html.Image("rdc.png").ToHtmlString(), "javascript:dealActivity.makeNewCD();")%>
+							</div>
+						</div>
 						<div class="headerbox">
 							<div class="title">
 								<%: Html.Span("New Cash Distribution")%>
@@ -187,17 +203,6 @@
 										New Cash Distribution</div>
 								</div>
 							</div>
-							<div class="addbtn" style="display: block;">
-								<div style="float: left">
-									<%: Html.Anchor(Html.Image("rdc.png").ToHtmlString(), "javascript:dealActivity.makeNewCD();")%>
-								</div>
-								<div class="manualact">
-									<%: Html.CheckBox("IsManualCashDistribution", false, new { @onchange = "javascript:dealActivity.showManualCDCtl('CDDetail');" })%>&nbsp;Manual
-									Cash Distribution
-								</div>
-							</div>
-							<div class="rightsbox">
-								<%: Html.TextBox("CD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px", @class = "wm" })%></div>
 						</div>
 						<div class="detail" id="CDDetail">
 							<div class="search-header">
@@ -249,8 +254,10 @@
 									<div class="subheader">
 										<div class="name">
 											Post Record Date Distribution</div>
-										<div class="addbtn" style="margin-left: 51px;">
-											<%: Html.Anchor(Html.Image("anprcd.png").ToHtmlString(), "javascript:dealActivity.makeNewPRCD();")%></div>
+										<div class="addbtn">
+											<div class="tblcell rightcell">
+												<%: Html.Anchor(Html.Image("anprcd.png").ToHtmlString(), "javascript:dealActivity.makeNewPRCD();")%></div>
+										</div>
 										<div class="selectloading" id="PRCDLoading">
 										</div>
 									</div>
@@ -296,6 +303,14 @@
 				</div>
 				<div class="act-box">
 					<div id="New Stock Distribution" class="group">
+						<div class="addbtn" style="display: none;">
+							<div class="tblcell">
+								<%: Html.TextBox("SD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px", @class = "wm" })%></div>
+							<div class="tblcell">
+								<%: Html.CheckBox("IsManualStockDistribution", false, new { @onchange = "javascript:dealActivity.showManualSDCtl('SDDetail');" })%>&nbsp;Manual
+								Stock Distribution
+							</div>
+						</div>
 						<div class="headerbox">
 							<div class="title">
 								<%: Html.Span("New Stock Distribution")%>
@@ -308,14 +323,6 @@
 										New Stock Distribution</div>
 								</div>
 							</div>
-							<div class="addbtn" style="display: block;">
-								<div class="manualact">
-									<%: Html.CheckBox("IsManualStockDistribution", false, new { @onchange = "javascript:dealActivity.showManualSDCtl('SDDetail');" })%>&nbsp;Manual
-									Stock Distribution
-								</div>
-							</div>
-							<div class="rightsbox">
-								<%: Html.TextBox("SD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px", @class = "wm" })%></div>
 						</div>
 						<div class="detail" id="SDDetail">
 							<div class="search-header">
@@ -345,7 +352,7 @@
 													<th style="width: 10%">
 														Purchase Price
 													</th>
-													<th style="width: 10%">
+													<th style="width: 12%">
 														Notice Date
 													</th>
 													<th style="width: 10%">
@@ -354,10 +361,10 @@
 													<th style="width: 10%">
 														Tax Cost Base
 													</th>
-													<th style="width: 10%">
+													<th style="width: 12%">
 														Tax Cost Date
 													</th>
-													<th style="width: 1%">
+													<th style="display:none">
 													</th>
 												</tr>
 											</thead>
@@ -380,6 +387,10 @@
 				</div>
 				<div class="act-box">
 					<div id="UnderlyingFundValuation" class="group">
+						<div class="addbtn" style="display: none">
+							<div class="tblcell">
+								<%: Html.TextBox("UFV_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px",  @class = "wm" })%></div>
+						</div>
 						<div class="headerbox">
 							<div class="title">
 								<%: Html.Span("Underlying Fund Valuation")%>
@@ -392,8 +403,6 @@
 										Underlying Fund Valuation</div>
 								</div>
 							</div>
-							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.TextBox("UFV_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px",  @class = "wm" })%></div>
 						</div>
 						<div class="detail" id="UFVDetail">
 							<div class="search-header">
@@ -402,7 +411,7 @@
 								<div class="loadingcell" id="UFVLoading">
 								</div>
 							</div>
-							<div class="gbox">
+							<div class="gbox" style="width:90%;clear:both;margin-left:65px;">
 								<table cellpadding="0" cellspacing="0" border="0" id="UnderlyingFundValuationList"
 									class="grid">
 									<thead>
@@ -441,6 +450,10 @@
 				</div>
 				<div class="act-box">
 					<div id="UnderlyingDirectValuation" class="group">
+						<div class="addbtn" style="display: none">
+							<div class="tblcell">
+								<%: Html.TextBox("UDV_UnderlyingDirect", "SEARCH UNDERLYING DIRECT", new { @style = "width:200px", @class = "wm" })%></div>
+						</div>
 						<div class="headerbox">
 							<div class="title">
 								<%: Html.Span("Underlying Direct Valuation")%>
@@ -451,9 +464,6 @@
 								<div class="expandtitle" style="display: block;">
 									Underlying Direct Valuation
 								</div>
-							</div>
-							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.TextBox("UDV_UnderlyingDirect", "SEARCH UNDERLYING DIRECT", new { @style = "width:200px", @class = "wm" })%>
 							</div>
 						</div>
 						<div class="detail" id="UDVDetail">
@@ -509,6 +519,11 @@
 				</div>
 				<div class="act-box">
 					<div id="UnfundedAdjustments" class="group">
+						<div class="addbtn" style="display: none">
+							<div class="tblcell">
+								<%: Html.TextBox("UFA_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px", @class = "wm" })%>
+							</div>
+						</div>
 						<div class="headerbox">
 							<div class="title">
 								<%: Html.Span("Unfunded Adjustments")%>
@@ -519,9 +534,6 @@
 								<div class="expandtitle" style="display: block;">
 									Unfunded Adjustments
 								</div>
-							</div>
-							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.TextBox("UFA_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px", @class = "wm" })%>
 							</div>
 						</div>
 						<div class="detail" id="UFADetail">
@@ -566,6 +578,14 @@
 				</div>
 				<div class="act-box">
 					<div id="FundLevelExpenses" class="group">
+						<div class="addbtn" style="display:none">
+							<div class="tblcell">
+								<%: Html.TextBox("FLE_Fund", "SEARCH FUND", new { @style = "width:200px", @class = "wm" })%>
+							</div>
+							<div class="tblcell rightcell">
+								<%: Html.Anchor(Html.Image("addexpense.png").ToHtmlString(), "javascript:dealActivity.makeNewFLE();")%>
+							</div>
+						</div>
 						<div class="headerbox">
 							<div class="title">
 								<%: Html.Span("Fund Level Expenses")%>
@@ -577,13 +597,8 @@
 									Fund Level Expenses
 								</div>
 							</div>
-							<div class="addbtn" style="margin-left: 82px;">
-								<%: Html.Anchor(Html.Image("addexpense.png").ToHtmlString(), "javascript:dealActivity.makeNewFLE();")%></div>
 							<div class="cell">
 								<%: Html.Span("", new { @id = "SpnFLEDetLoading" })%>
-							</div>
-							<div style="display: block; float: right; margin-right: 15%;">
-								<%: Html.TextBox("FLE_Fund", "SEARCH FUND", new { @style = "width:200px", @class = "wm" })%>
 							</div>
 						</div>
 						<div class="detail" id="FLEDetail">

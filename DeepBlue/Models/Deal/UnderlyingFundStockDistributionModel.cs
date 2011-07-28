@@ -63,6 +63,8 @@ namespace DeepBlue.Models.Deal {
 		 
 		public bool IsManualStockDistribution { get; set; }
 
+		public IEnumerable<StockDistributionLineItemModel> Deals { get; set; }
+
 	}
 
 

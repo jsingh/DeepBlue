@@ -81,4 +81,5 @@ deal.calcTotalExpense=function () {
 	var total=0;
 	$("tbody tr","#tblDealExpense").each(function () { var amt=parseFloat($("#Amount",this).val());if(isNaN(amt)) { amt=0; } total+=amt; });
 	$("#SpnTotalExpenses").html(jHelper.dollarAmount(total.toString()));
+	$("#SpnFooterTotalExpenses").html(jHelper.dollarAmount(total.toString()));
 };

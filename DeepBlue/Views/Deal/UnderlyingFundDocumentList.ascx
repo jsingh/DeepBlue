@@ -39,8 +39,8 @@
 			   href = "javascript:void(0);";
 		   }
 	   }
-	   row.cell.Add(Html.Anchor(Html.Image(imgname).ToHtmlString(), href, new { @target = "_blank" }).ToHtmlString());
-	   row.cell.Add(Html.Image("largedel.png", new { @style = "cursor:pointer;", @onclick = "javascript:underlyingFund.deleteDocument(" + item.UnderlyingFundDocumentId + ",this);" }).ToHtmlString());
+	   row.cell.Add(Html.Anchor(Html.Image(imgname).ToHtmlString(), href, new { @class="gbutton", @target = "_blank" }).ToHtmlString() + "&nbsp;&nbsp;" +
+		   Html.Image("largedel.png", new { @style = "cursor:pointer;", @class = "gbutton", @onclick = "javascript:underlyingFund.deleteDocument(" + item.UnderlyingFundDocumentId + ",this);" }).ToHtmlString());
 	   flexData.rows.Add(row);
    } %>
 <%= JsonSerializer.ToJsonObject(flexData)%>

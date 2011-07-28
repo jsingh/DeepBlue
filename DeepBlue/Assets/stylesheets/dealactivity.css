@@ -11,9 +11,6 @@
 	width: 100%;
 	text-align: center;
 }
-.grid tfoot tr td {
-	text-align: center;
-}
 .grid th, .grid td {
 	padding: 6px;
 }
@@ -25,15 +22,15 @@
 	overflow: hidden;
 }
 #cntbox {
-	top:98px;
+	top: 98px;
 }
 #ActivityMain {
 	float: left;
 	clear: both;
-	width:100%;
+	width: 100%;
 }
 #ActivityMain .content {
-	float:left;
+	float: left;
 	clear: both;
 	width: 100%;
 }
@@ -49,11 +46,12 @@
 	font-size: 14px;
 	font-weight: bold;
 	cursor: pointer;
-	color: #005F54;
+	color: #06605B;
 	width: 500px;
 	float: left;
 	margin: 10px 0;
 	padding: 0 0 0 24px;
+	text-transform:uppercase;
 }
 #ActivityMain .title a {
 	color: #7f7f97;
@@ -73,13 +71,14 @@
 	float: left;
 	width: 100%;
 }
-.headerbox,.recon-headerbox {
+.headerbox, .recon-headerbox {
 	width: 90%;
 	padding-left: 65px;
 	background-image: url(../images/actdownarrow.png);
 	background-position: right center;
 	background-repeat: no-repeat;
 	float: left;
+	cursor: pointer;
 }
 .cell {
 	float: left;
@@ -166,7 +165,7 @@ input, select {
 	padding: 0;
 	margin: 0 0 0 20px;
 }
-#UATab {
+/*#UATab {
 	background-image: url(../images/uatab.png);
 	background-repeat: no-repeat;
 	width: 219px;
@@ -201,14 +200,16 @@ input, select {
 }
 #RETab.select {
 	background-image: url(../images/recontabsel.png);
-}
+}*/
 .tabbg {
-	float: left;
-	width: 100%;
-	background-image: url(../images/tabbg.png);
+	background-image: url("../images/tabbg.png");
 	background-position: left bottom;
 	background-repeat: repeat-x;
-	padding-bottom: 3px;
+	float: left;
+	height: 44px;
+	padding-bottom: 0;
+	padding-left: 65px;
+	width: 100%;
 }
 .gridbox {
 	margin-left: 65px;
@@ -218,22 +219,40 @@ input, select {
 	width: 90%;
 }
 .subheader {
-	background-image: url(../images/expandbg.png);
-	background-position: left top;
-	background-repeat: repeat-x;
-	clear: both;
-	color: #FFFFFF;
-	float: left;
-	font-size: 14px;
-	height: 42px;
-	line-height: 42px;
-	padding-left: 20px;
-	width: 98.3%;
+	   background-image: url("../images/expandbg.png");
+    background-position: left top;
+    background-repeat: repeat-x;
+    clear: both;
+    color: #F7F7F7;
+    float: left;
+    font-size: 18px;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+    width: 98.3%;
 }
 .addbtn {
 	float: left;
-	margin-left: 123px;
-	margin-top: 6px;
+	left: 304px;
+	position: absolute;
+	font-size: 12px;
+	color: #f7f7f7;
+	    width: 69%;
+}
+.addbtn .tblcell {
+	float: left;
+	margin: 0px 10px;
+}
+.addbtn .tblcell input {
+	margin: 14px 0;
+}
+.addbtn .tblcell input[type='text'] {
+	margin: 10px 0px;
+}
+.addbtn .tblcell img {
+	margin: 7px  0px;
+}
+.addbtn .rightcell { float:right;
 }
 .subheader .name {
 	float: left;
@@ -281,6 +300,17 @@ input, select {
 	margin: -8px 0pt 0pt 80px;
 }
 #ReconcilReport .gridbox {
-	margin-top:20px;
-	margin-bottom:20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.expandsel {
+	margin-top: -2px;
+}
+.expandbtn {
+  background-image: url("../images/rightuarrow.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    width: 89.7%;
+}
+#NewCapitalCall .expandsel{     background-image: url("../images/expandbgnoline.png"); margin-top:0px;
 }

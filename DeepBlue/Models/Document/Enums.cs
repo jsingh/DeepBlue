@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace DeepBlue.Models.Document {
+
 	public enum DocumentStatus {
 		Investor = 1,
 		Fund = 2

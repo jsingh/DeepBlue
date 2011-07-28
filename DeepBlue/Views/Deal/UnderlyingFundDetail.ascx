@@ -295,16 +295,13 @@
 							<th style="width: 30%">
 								Document Type
 							</th>
-							<th style="width: 20%;" align="center">
+							<th style="width: 20%;">
 								Document Date
 							</th>
 							<th style="width: 30%">
 								File Name
 							</th>
-							<th style="width: 10%" align="center">
-								File/Link
-							</th>
-							<th style="width: 10%" align="center">
+							<th align="right">
 							</th>
 						</tr>
 					</thead>

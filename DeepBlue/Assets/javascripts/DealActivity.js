@@ -8,14 +8,12 @@
 		});
 	}
 	,selectTab: function (type,lnk) {
+		$(".section-tab").removeClass("section-tab-sel");
 		var UA=$("#UnderlyingActivity");
 		var SA=$("#SecurityActivity");
 		var RE=$("#Reconciliation");
 		var SUD=$("#SearchUDirect");
-		$("#UATab").removeClass("select");
-		$("#SATab").removeClass("select");
-		$("#RETab").removeClass("select");
-		$(lnk).addClass("select");
+		$(lnk).addClass("section-tab-sel");
 		UA.hide();SA.hide();SUD.hide();RE.hide();
 		$(".tablnk").removeClass("select");
 		switch(type) {
@@ -92,8 +90,10 @@
 			$(".headerbox").show();
 			$(".expandheader").hide();
 			$(".detail").hide();
+			$(".addbtn").hide();
 			$(this).hide();
 			var parent=$(this).parent();
+			$(".addbtn",parent).show();
 			$(".expandheader",parent).show();
 			var detail=$(".detail",parent);
 			var display=detail.attr("issearch");
@@ -103,9 +103,10 @@
 				detail.show();
 			}
 		});
-		$(".expandtitle",".expandheader").unbind('click').click(function () {
-			var expandheader=$(this).parents(".expandheader:first");
+		$(".expandheader").unbind('click').click(function () {
+			var expandheader=$(this);
 			var parent=$(expandheader).parent();
+			$(".addbtn",parent).hide();
 			expandheader.hide();
 			var detail=$(".detail",parent);
 			detail.hide();

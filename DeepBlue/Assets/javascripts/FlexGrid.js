@@ -31,6 +31,7 @@
 			,onSubmit: false
 			,onInit: false
 			,onTemplate: false
+			,width: 0
 		},p);
 		$(t).show();
 		var g={
@@ -152,7 +153,12 @@
 				$("#rp",pDiv).val(p.rp);
 			}
 			,resize: function () {
-				var w=g.gDiv.offsetWidth;
+				var w;
+				if(p.width>0) {
+					w=p.width;
+				} else {
+					w=g.gDiv.offsetWidth;
+				}
 				$(g.gDiv).width(w);
 				$(g.gTLDiv).width(w);
 				$(g.gTCDiv).width(w-20);
@@ -275,6 +281,8 @@
 			pager: 0
 		};
 		g.gDiv=document.createElement('div');
+
+		if(p.width>0) { $(g.gDiv).width(p.width); }
 
 		g.gTLDiv=document.createElement('div');
 		g.gTCDiv=document.createElement('div');

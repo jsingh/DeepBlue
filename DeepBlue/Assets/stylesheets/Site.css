@@ -546,19 +546,6 @@ a img {
 	width: 50%;
 	margin: 10px auto;
 }
-.admin-main {
-	width: 100%;
-	margin: 0px auto;
-}
-.admin-header {
-	width: 99%;
-	text-align: right;
-	padding: 5px 0px 5px 0px;
-}
-.admin-content {
-	width: 100%;
-	margin-left: 10px;
-}
 .status {
 	height: 25px;
 	clear: both;
@@ -632,7 +619,7 @@ h2 {
 .mdiv li {
 	list-style: none;
 	float: left;
-	padding: 13px 27px 13px 13px;
+	padding: 13px 27px 13px 0px;
 }
 .mdiv li a {
 	color: #27599E;
@@ -718,7 +705,7 @@ h2 {
 .heading {
 	border: 0px solid red;
 	float: left;
-	padding: 17px 0 12px 18px;
+	padding: 17px 0 12px 6px;
 	width: 94%;
 }
 .heading .title {
@@ -748,7 +735,7 @@ h2 {
 }
 .heading .rightcol {
 	float: right;
-	margin: -5px 20px 0 0;
+	margin: -5px 65px 0 0;
 	border: solid 0px red;
 	width: auto;
 }
@@ -879,11 +866,11 @@ input.ui-autocomplete-loading[type="text"] {
 	width: 26px;
 }
 .uparrow {
-	background-image: url(../images/up_arrow.png);
+	background-image: url(../images/up_arrow.png);    background-position: center center;
 	width: 21px;
 	margin-right: 20%;
 }
-#navminimize.downarrow{
+#navminimize.downarrow {
 	background-image: url(../images/navdarrow.png);
 }
 .cname {
@@ -915,7 +902,7 @@ input.ui-autocomplete-loading[type="text"] {
 	font-size: 12px;
 	height: 37px;
 	height: 36px;
-	padding: 0 10px;
+	padding: 0 20px;
 	white-space: nowrap;
 }
 .grid .arow td {
@@ -926,25 +913,22 @@ input.ui-autocomplete-loading[type="text"] {
 	background-repeat: repeat-x;
 	background-position: left bottom;
 }
-.grid thead tr th, .grid tfoot tr td {
+.grid thead tr th, .grid tfoot tr td , .grid thead tr td {
 	background-color: #BABFC5;
-	padding: 10px 15px;
+	padding: 10px 20px;
 	font-weight: normal;
 	color: #000000;
 	white-space: nowrap;
 }
 .grid thead tr th {
 	font-weight: normal;
-	padding: 10px;
-	text-align: center;
+	text-align:left;
 }
 .grid tfoot tr td {
-	padding: 10px 15px;
-	font-weight: bold;
+	font-weight: bold; font-size:13px;
 }
 .grid thead tr td {
 	background-color: transparent;
-	padding: 5px 15px;
 }
 .grid tbody tr td img {
 	cursor: pointer;
@@ -1001,3 +985,53 @@ input.ui-autocomplete-loading[type="text"] {
 	width: auto;
 }
 /* end green button */
+/* section tab */
+.section-tab-main {
+	background-image: url("../images/tabbg.png");
+	background-position: left bottom;
+	background-repeat: repeat-x;
+	float: left;
+	height: 40px;
+	overflow: hidden;
+	padding-bottom: 3px;
+	padding-left: 60px;
+	width: 100%;
+}
+.section-tab {
+	cursor: pointer;
+	float: left;
+	height: 45px;
+	margin: 0 3px;
+}
+.section-tab .left, .section-tab .right, .section-tab .center {
+	float: left;
+	width: 8px;
+	height: 40px;
+	color: #417a77;
+	font-size: 18px;
+	line-height: 38px;
+}
+.section-tab .left {
+	background: url(../images/tab_us_l.png) no-repeat left top;
+}
+.section-tab .right {
+	background: url(../images/tab_us_r.png) no-repeat left top;
+}
+.section-tab .center {
+	width: auto;
+	background: url(../images/tab_us_c.png) repeat-x left top;
+	padding: 0 20px;
+}
+.section-tab-sel .left {
+	background: url(../images/tab_s_l.png) no-repeat left top;
+}
+.section-tab-sel .right {
+	background: url(../images/tab_s_r.png) no-repeat left top;
+}
+.section-tab-sel .center {
+	width: auto;
+	background: url(../images/tab_s_c.png) repeat-x left top;
+	padding: 0 20px;
+	color: #1a4e77;
+}
+/* end section tab */

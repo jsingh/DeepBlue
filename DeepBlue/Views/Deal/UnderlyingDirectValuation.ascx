@@ -24,7 +24,7 @@
 		<%: Html.Hidden("SecurityTypeId", "${SecurityTypeId}")%>
 		<%: Html.Hidden("SecurityId", "${SecurityId}")%>
 		<%: Html.Span("", new { id = "UpdateLoading" })%>
-		{{if UnderlyingDirectLastPriceId>0}}<%: Html.Image("largedel.png", new { @id="deletebtn", @class = "default-button", @onclick="javascript:dealActivity.deleteUDV(${UnderlyingDirectLastPriceId},this);" })%>
+		{{if UnderlyingDirectLastPriceId>0}}<%: Html.Image("largedel.png", new { @id="deletebtn", @class = "default-button gbutton", @onclick="javascript:dealActivity.deleteUDV(${UnderlyingDirectLastPriceId},this);" })%>
 		{{/if}}
 	</td>
 </tr>

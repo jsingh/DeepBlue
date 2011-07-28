@@ -67,7 +67,7 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List", 
-	ControllerName = "Fund", SortName = "FundName", RowOptions = new int[] { 10, 15, 20, 50, 100 }, RowsLength = 10,
+	ControllerName = "Fund", SortName = "FundName", RowOptions = new int[] { 10, 15, 20, 50, 100 }, RowsLength = 10,  
 	ResizeWidth = false, Paging = true, OnRowBound = "fund.onRowBound" })%>
 	<script type="text/javascript">
 		$(document).ready(function(){

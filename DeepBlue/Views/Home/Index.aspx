@@ -6,3 +6,6 @@
 </asp:Content>
 <asp:Content ID="MainCnt" ContentPlaceHolderID="MainContent" runat="server">
 </asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
+	<script type="text/javascript">		deepBlue.indexPage=true;</script>
+</asp:Content>

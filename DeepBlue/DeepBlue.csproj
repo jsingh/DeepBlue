@@ -774,6 +774,7 @@
     <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
     <Content Include="Assets\javascripts\Currency.js" />
     <Content Include="Assets\javascripts\DealActivityStockDistribution.js" />
+    <Content Include="Assets\javascripts\DealDocument.js" />
     <Content Include="Assets\javascripts\jquery-1.4.1.min.js" />
     <Content Include="Assets\javascripts\jquery.ba-resize.min.js" />
     <Content Include="Assets\javascripts\jquery.cookie.js" />
@@ -850,7 +851,6 @@
     <Content Include="Assets\stylesheets\adminflexigrid.css" />
     <Content Include="Assets\stylesheets\capitalcall.css" />
     <Content Include="Assets\stylesheets\customfield.css" />
-    <Content Include="Assets\stylesheets\ddlmenu.css" />
     <Content Include="Assets\stylesheets\deal.css" />
     <Content Include="Assets\stylesheets\dealactivity.css" />
     <Content Include="Assets\stylesheets\dealclose.css" />

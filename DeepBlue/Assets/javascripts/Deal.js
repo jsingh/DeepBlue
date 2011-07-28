@@ -22,37 +22,62 @@
 		menu.stopMenuClose=true;
 	}
 	,initDealEvents: function () {
-		$(".expandimg").click(function () {
+		$(".expandheader").click(function () {
 			$(".expandtitle").hide();
 			$(".expandimg").show();
+			var bolexpandsel=$(this).hasClass("expandsel");
 			$(".expandsel").removeClass("expandsel");
 			$(".fieldbox").hide();
 			$(".expandaddbtn").hide();
-			var header=$(this).parent();
-			var parent=header.parent();
-			parent.addClass("expandsel");
-			$(".rightuarrow").remove();
-			var d=document.createElement("div");
-			$(d).addClass("rightuarrow");
-			parent.append(d);
-			$("#img",header).hide();
-			$("#title",header).show();
-			$("#title .expandtitle",header).show();
-			$(".expandaddbtn",parent).show();
-			$(".makenew-header",parent.parent()).show();
-			$(".fieldbox",parent.parent()).show();
+			if(!bolexpandsel) {
+				$(this).addClass("expandsel");
+				$(".rightuarrow").remove();
+				var d=document.createElement("div");
+				$(d).addClass("rightuarrow");
+				$(this).append(d);
+				$("#img",this).hide();
+				$("#title",this).show();
+				$("#title .expandtitle",this).show();
+				$(".expandaddbtn",this).show();
+				$(".makenew-header",this).show();
+				$(".fieldbox",$(this).parent()).show();
+				$(".expandaddbtn",$(this).parent()).show().addClass("addbtn-extend");
+			} else {
+				$(this).removeClass("expandsel");
+			}
+		});
+
+		/*$(".expandimg").click(function () {
+		$(".expandtitle").hide();
+		$(".expandimg").show();
+		$(".expandsel").removeClass("expandsel");
+		$(".fieldbox").hide();
+		$(".expandaddbtn").hide();
+		var header=$(this).parent();
+		var parent=header.parent();
+		parent.addClass("expandsel");
+		$(".rightuarrow").remove();
+		var d=document.createElement("div");
+		$(d).addClass("rightuarrow");
+		parent.append(d);
+		$("#img",header).hide();
+		$("#title",header).show();
+		$("#title .expandtitle",header).show();
+		$(".expandaddbtn",parent).show();
+		$(".makenew-header",parent.parent()).show();
+		$(".fieldbox",parent.parent()).show();
 
 		});
 
 		$(".expandbtn #title").click(function () {
-			var parent=$(this).parents(".expandheader:first");
-			var content=parent.parent();
-			$(".fieldbox",content).hide();
-			$(parent).removeClass("expandsel");
-			$(".expandaddbtn",parent).hide();
-			$(".expandimg",parent).show();
-			$(this).hide();
-		});
+		var parent=$(this).parents(".expandheader:first");
+		var content=parent.parent();
+		$(".fieldbox",content).hide();
+		$(parent).removeClass("expandsel");
+		$(".expandaddbtn",parent).hide();
+		$(".expandimg",parent).show();
+		$(this).hide();
+		}); */
 	}
 	,selectPartner: function (checked) {
 		var divPartnerName=document.getElementById("divPartnerName");

@@ -1,4 +1,9 @@
-﻿.cell {
+﻿#DealMain {
+	float: left;
+	width: 100%;
+	clear: both;
+}
+.cell {
 	width: 180px;
 	float: left;
 	height: 25px;
@@ -14,7 +19,7 @@
 }
 .fieldbox {
 	clear: both;
-	margin: 15px 0px 15px 5px;
+	margin: 20px 0 40px 5px;
 	float: left;
 	width: 100%;
 	clear: both;
@@ -145,9 +150,10 @@ h4 a {
 	background-position: left top;
 	height: 50px;
 	line-height: 50px;
-	color: #fff;
-	font-size: 14px;
+	color: #F7F7F7;
+	font-size: 18px;
 	padding: 0 0 0 70px;
+	margin-top: 35px;
 	width: 100%;
 }
 .expandheader #title, .recon-expandheader #title {
@@ -259,4 +265,15 @@ h4 a {
 	margin-top: 21px;
 	width: 16px;
 }
- 
+.addbtn-extend {
+    left: 300px;
+    margin: 0;
+    padding-top: 44px;
+    position: absolute;
+}
+#SaveDealBox {
+	display: none;
+	float: right;
+	width: auto;
+   margin: 40px 40px 50px 0;
+}
