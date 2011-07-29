@@ -58,7 +58,7 @@
 				<div class="cell auto">
 					<%: Html.ImageButton("save.png", new { style = "border:0;" })%></div>
 				<div class="cell auto" style="font-weight: bold;">
-					<%: Html.Anchor("Reset", "javascript:deal.Reset();")%>
+					<%: Html.Anchor("Reset", "javascript:deal.sellerInfoReset();")%>
 				</div>
 				<div class="cell auto">
 					<%: Html.Span("", new { id = "SpnSellerUpdateLoading" })%>

@@ -109,7 +109,7 @@
 			<div class="rightuarrow">
 			</div>
 		</div>
-		<div class="detail" style="display: none" id="ContactInformation">
+		<div class="detail" style="display: none;padding-left:95px;" id="ContactInformation">
 			<div class="editor-label">
 				<label>
 					Contact Name</label>
@@ -143,7 +143,7 @@
 					Registered Address</label>
 			</div>
 			<div class="editor-field">
-				<%: Html.TextArea("Address", "${Address}", new { @style = "width:582px;height:140px;" })%>
+				<%: Html.TextArea("Address", "${Address}", new { @style = "width:515px;height:140px;" })%>
 			</div>
 			<div class="savebox">
 				<div class="btn" id="CILoading">
@@ -175,7 +175,7 @@
 			<div class="rightuarrow">
 			</div>
 		</div>
-		<div class="detail" style="display: none" id="BankInformation">
+		<div class="detail" style="display: none;padding-left:95px;" id="BankInformation">
 			<div>
 				<div class="editor-label">
 					<label>
@@ -244,10 +244,10 @@
 		<div class="expandheader expandsel" style="display: none">
 			<div class="expandbtn">
 				<div class="expandtitle">
-					DOCUMENT INFORMATION
+					Document Information
 				</div>
-			</div>	<div class="rightuarrow">
-						</div>
+			</div><div class="rightuarrow">
+			</div>
 		</div>
 		<div class="detail" style="display: none; padding-left: 65px;" id="DocumentInformation">
 			<%using (Html.Form(new { @id = "frmDocumentInfo", @onsubmit = "return underlyingFund.saveDocument(this);" })) {%>

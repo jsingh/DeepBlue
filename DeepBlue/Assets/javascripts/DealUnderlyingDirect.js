@@ -126,7 +126,7 @@ deal.saveUnderlyingDirect=function (tr) {
 		spnAjax.hide();
 		deal.onDealSuccess=null;
 		deal.onDealSuccess=function () { deal.saveUnderlyingDirect(tr); }
-		$("#btnSaveDeal").click();
+		deal.saveDeal();
 	}
 };
 deal.loadUnderlyingDirect=function (id) {
@@ -202,9 +202,6 @@ deal.calcFMV=function (txt) {
 	if(isNaN(price)) { price=0; }
 	FMV.val(noofsha*price);
 	deal.calcDUD();*/
-};
-deal.Reset=function () {
-	$(":input[type='text']","#SellerInfo").val("");
 };
 deal.loadPurchasePrice=function (tr) {
 	var PurchasePrice=$("#PurchasePrice",tr);

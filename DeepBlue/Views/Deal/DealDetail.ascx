@@ -48,12 +48,6 @@
 		<div class="editor-field">
 			<%: Html.TextBox("PartnerName","${PartnerName}")%></div>
 	</div>
-	<div class="editor-label">
-	</div>
-	<div class="editor-field auto" style="display: none">
-		<div class="cell auto">
-			<%: Html.ImageButton("cnewdeal.png", new { @id = "btnSaveDeal",  onclick = "return deal.onDealSubmit('AddNewDeal');" })%></div>
-	</div>
 	<%: Html.Hidden("FundId", "${FundId}", new { @id = "FundId" })%>
 	<%: Html.Hidden("DealId", "${DealId}", new { @id = "DealId" })%>
 	<%: Html.Hidden("DealNumber", "${DealNumber}", new { @id = "DealNumber" })%>

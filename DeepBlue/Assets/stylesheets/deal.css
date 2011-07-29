@@ -266,14 +266,18 @@ h4 a {
 	width: 16px;
 }
 .addbtn-extend {
-    left: 300px;
-    margin: 0;
-    padding-top: 44px;
-    position: absolute;
+	left: 300px;
+	margin: 0;
+	padding-top: 44px;
+	position: absolute;
 }
 #SaveDealBox {
 	display: none;
 	float: right;
 	width: auto;
-   margin: 40px 40px 50px 0;
+	margin: 40px 40px 50px 0;
+}
+#AddDealDocument {
+	width: 900px;
+	margin: 0 auto 0 65px;
 }

@@ -25,6 +25,7 @@ namespace DeepBlue.Helpers {
 			OnInit = string.Empty;
 			OnTemplate = string.Empty;
 			TableName = string.Empty;
+			BoxStyle = true;
 		}
 		public string HttpMethod { get; set; }
 		public int Height { get; set; }
@@ -32,6 +33,7 @@ namespace DeepBlue.Helpers {
 		public string ActionName { get; set; }
 		public string ControllerName { get; set; }
 		public bool Paging { get; set; }
+		public bool BoxStyle { get; set; }
 		public int[] RowOptions { get; set; }
 		public int RowsLength { get; set; }
 		public string OnSuccess { get; set; }

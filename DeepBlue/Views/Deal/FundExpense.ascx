@@ -1,19 +1,19 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.FundExpenseModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <tr id="FLE_${FundExpenseId}">
-	<td style="width: 20%;">
+	<td class="lalign">
 		<%: Html.Span("${FundExpenseType}", new { @class = "show" })%>
 		<%: Html.DropDownList("FundExpenseTypeId", Model.FundExpenseTypes, new { @val = "${FundExpenseTypeId}", @class = "hide" })%>
 	</td>
-	<td style="width: 20%; text-align: right;">
+	<td class="ralign">
 		<%: Html.Span("${Amount}", new { @class = "show money" })%>
 		<%: Html.TextBox("Amount", "{{if Amount>0}}${Amount}{{/if}}", new { @class="hide", @onkeypress = "return jHelper.isCurrency(event);" })%>
 	</td>
-	<td style="width: 20%; text-align: center;">
+	<td class="lalign">
 		<%: Html.Span("${Date}", new { @class = "show dispdate" })%>
 		<%: Html.TextBox("Date", "${Date}", new { @class = "hide datefield", @id = "${FundExpenseId}_FE_Date" })%>
 	</td>
-	<td style="text-align:right">
+	<td class="ralign">
 		<%: Html.Hidden("FundId", "${FundId}")%>
 		<%: Html.Hidden("FundExpenseId", "${FundExpenseId}")%>
 		<%: Html.Span("", new { id = "UpdateLoading" })%>

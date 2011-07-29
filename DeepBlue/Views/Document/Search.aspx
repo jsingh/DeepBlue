@@ -118,6 +118,7 @@
 	Height = 300,
 	OnInit = "documentSearch.onInit",
 	OnSuccess = "documentSearch.onGridSuccess",
+	BoxStyle=false
 	})%>
 	<script type="text/javascript">
 		documentSearch.init();

@@ -46,38 +46,6 @@
 				$(this).removeClass("expandsel");
 			}
 		});
-
-		/*$(".expandimg").click(function () {
-		$(".expandtitle").hide();
-		$(".expandimg").show();
-		$(".expandsel").removeClass("expandsel");
-		$(".fieldbox").hide();
-		$(".expandaddbtn").hide();
-		var header=$(this).parent();
-		var parent=header.parent();
-		parent.addClass("expandsel");
-		$(".rightuarrow").remove();
-		var d=document.createElement("div");
-		$(d).addClass("rightuarrow");
-		parent.append(d);
-		$("#img",header).hide();
-		$("#title",header).show();
-		$("#title .expandtitle",header).show();
-		$(".expandaddbtn",parent).show();
-		$(".makenew-header",parent.parent()).show();
-		$(".fieldbox",parent.parent()).show();
-
-		});
-
-		$(".expandbtn #title").click(function () {
-		var parent=$(this).parents(".expandheader:first");
-		var content=parent.parent();
-		$(".fieldbox",content).hide();
-		$(parent).removeClass("expandsel");
-		$(".expandaddbtn",parent).hide();
-		$(".expandimg",parent).show();
-		$(this).hide();
-		}); */
 	}
 	,selectPartner: function (checked) {
 		var divPartnerName=document.getElementById("divPartnerName");
@@ -104,45 +72,47 @@
 		});
 	}
 	,loadTemplate: function (data) {
-		$(".content","#DealMain").empty();
+		try {
+			$(".content","#DealMain").empty();
 
-		$("#DealTemplate").tmpl(data).appendTo("#NewDeal");
-		$("#DealExpenseTemplate").tmpl(data).appendTo("#DealExpenses");
-		$("#DealDocumentTemplate").tmpl(data).appendTo("#DealDocuments");
-		$("#DealSellerInfoTemplate").tmpl(data.SellerInfo).appendTo("#DealSellerInfo");
-		$("#DealUnderlyingFundTemplate").tmpl(data).appendTo("#DealUnderlyingFunds");
-		$("#DealUnderlyingDirectTemplate").tmpl(data).appendTo("#DealUnderlyingDirects");
+			$("#DealTemplate").tmpl(data).appendTo("#NewDeal");
+			$("#DealExpenseTemplate").tmpl(data).appendTo("#DealExpenses");
+			$("#DealDocumentTemplate").tmpl(data).appendTo("#DealDocuments");
+			$("#DealSellerInfoTemplate").tmpl(data.SellerInfo).appendTo("#DealSellerInfo");
+			$("#DealUnderlyingFundTemplate").tmpl(data).appendTo("#DealUnderlyingFunds");
+			$("#DealUnderlyingDirectTemplate").tmpl(data).appendTo("#DealUnderlyingDirects");
 
-		var IsPartneredYes=document.getElementById("IsPartneredYes");
-		var IsPartneredNo=document.getElementById("IsPartneredNo");
-		IsPartneredYes.checked=data.IsPartnered;
-		IsPartneredNo.checked=!data.IsPartnered;
-		if(IsPartneredYes.checked) {
-			$("#divPartnerName").show();
-		} else {
-			$("#divPartnerName").hide();
-		}
-		$.each(data.DealExpenses,function (index,item) { deal.loadDealExpenseData(item); });
-		$.each(data.DealUnderlyingFunds,function (index,item) { deal.loadUnderlyingFundData(item); });
-		$.each(data.DealUnderlyingDirects,function (index,item) { deal.loadUnderlyingDirectData(item); });
+			var IsPartneredYes=document.getElementById("IsPartneredYes");
+			var IsPartneredNo=document.getElementById("IsPartneredNo");
+			IsPartneredYes.checked=data.IsPartnered;
+			IsPartneredNo.checked=!data.IsPartnered;
+			if(IsPartneredYes.checked) {
+				$("#divPartnerName").show();
+			} else {
+				$("#divPartnerName").hide();
+			}
+			$.each(data.DealExpenses,function (index,item) { deal.loadDealExpenseData(item); });
+			$.each(data.DealUnderlyingFunds,function (index,item) { deal.loadUnderlyingFundData(item); });
+			$.each(data.DealUnderlyingDirects,function (index,item) { deal.loadUnderlyingDirectData(item); });
 
-		var trUF=$("tr:first","#MakeNewDUFund");
-		deal.applyUFAutocomplete(trUF);
-		var trDirect=$("tr:first","#MakeNewDUDirect");
-		deal.applyUDAutocomplete(trDirect);
+			var trUF=$("tr:first","#MakeNewDUFund");
+			deal.applyUFAutocomplete(trUF);
+			var trDirect=$("tr:first","#MakeNewDUDirect");
+			deal.applyUDAutocomplete(trDirect);
 
-		var dealMain=$("#DealMain");
-		dealMain.show();
-		deal.selectValue(dealMain);
-		jHelper.applyDatePicker(dealMain);
-		deal.setFundAutoComplete();
-		deal.initDealEvents();
-		deal.initMVCValidation();
-		deal.setIndex($("#tblUnderlyingFund"));
-		deal.setIndex($("#tblUnderlyingDirect"));
-		deal.calcDUF();
-		deal.calcDUD();
-		$("#DocumentDate").datepicker({ changeMonth: true,changeYear: true });
+			var dealMain=$("#DealMain");
+			dealMain.show();
+			deal.selectValue(dealMain);
+			jHelper.applyDatePicker(dealMain);
+			deal.setFundAutoComplete();
+			deal.initDealEvents();
+			deal.setIndex($("#tblUnderlyingFund"));
+			deal.setIndex($("#tblUnderlyingDirect"));
+			deal.calcDUF();
+			deal.calcDUD();
+			deal.documentSetUp();
+			$("#DocumentDate").datepicker({ changeMonth: true,changeYear: true });
+		} catch(e) { alert(e); }
 	}
 	,uploadDocument: function () {
 		return false;
@@ -189,16 +159,7 @@
 		var result=jQuery.trim(UpdateTargetId.html());
 		if(result!="") {
 			if(result.indexOf("True||")> -1) {
-				deal.setDealId(result.split("||")[1]);
-				if(deal.onDealSuccess) {
-					deal.onDealSuccess();
-					deal.onDealSuccess=null;
-				} else {
-					alert("Deal Saved");
-					$("#SearchDealName").val("");
-					$("#M_Fund").val("");
-					$("#DealMain").hide();
-				}
+
 			} else {
 				alert(UpdateTargetId.html())
 			}
@@ -209,9 +170,30 @@
 	}
 	,saveDeal: function () {
 		try {
-			deal.onDealSuccess=null;
-			$("#btnSaveDeal","#AddNewDeal").click();
+			var frm=$("#AddNewDeal");
+			var loading=$("#UpdateLoading");
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			$.post("/Deal/Create",$(frm).serializeArray(),function (data) {
+				loading.empty();
+				var arr=data.split("||");
+				if(arr[0]!="True") {
+					alert(data);
+				} else {
+					deal.setDealId(arr[1]);
+					if(deal.onDealSuccess) {
+						alert(1);
+						deal.onDealSuccess();
+						deal.onDealSuccess=null;
+					} else {
+						alert("Deal Saved");
+						$("#SearchDealName").val("");
+						$("#M_Fund").val("");
+						$("#DealMain").hide();
+					}
+				}
+			});
 		} catch(e) { alert(e); }
+		return false;
 	}
 	,seeFullDeal: function () {
 		var FullDealList=$("#FullDealList");
@@ -310,22 +292,13 @@
 			});
 		} else {
 			deal.onDealSuccess=function () { deal.saveSellerInfo(frm); }
-			$("#btnSaveDeal").click();
+			deal.saveDeal();
 		}
 		return false;
 	}
 	/* End SellerInfo */
 	,selectValue: function (target) {
 		$("select",target).each(function () { var id=parseInt($(this).attr("val"));if(isNaN(id)) { id=0; } this.value=id; });
-	}
-	,initMVCValidation: function () {
-		if(deal.mvcValidation==false) {
-			if(!window.mvcClientValidationMetadata) { window.mvcClientValidationMetadata=[]; }
-			window.mvcClientValidationMetadata.push({ "Fields": [{ "FieldName": "FundId","ReplaceValidationMessageContents": true,"ValidationMessageId": "FundId_validationMessage","ValidationRules": [{ "ErrorMessage": "Fund is required","ValidationParameters": { "minimum": 1,"maximum": 2147483647 },"ValidationType": "range" },{ "ErrorMessage": "Fund is required","ValidationParameters": {},"ValidationType": "required" },{ "ErrorMessage": "The field FundId must be a number.","ValidationParameters": {},"ValidationType": "number"}] },{ "FieldName": "DealName","ReplaceValidationMessageContents": true,"ValidationMessageId": "DealName_validationMessage","ValidationRules": [{ "ErrorMessage": "Deal Name is required","ValidationParameters": {},"ValidationType": "required" },{ "ErrorMessage": "Deal Name must be under 50 characters.","ValidationParameters": { "minimumLength": 0,"maximumLength": 50 },"ValidationType": "stringLength"}] },{ "FieldName": "DealNumber","ReplaceValidationMessageContents": true,"ValidationMessageId": "DealNumber_validationMessage","ValidationRules": [{ "ErrorMessage": "Deal Number is required","ValidationParameters": { "minimum": 1,"maximum": 2147483647 },"ValidationType": "range" },{ "ErrorMessage": "Deal Number is required","ValidationParameters": {},"ValidationType": "required" },{ "ErrorMessage": "The field Deal No.- must be a number.","ValidationParameters": {},"ValidationType": "number"}] },{ "FieldName": "PurchaseTypeId","ReplaceValidationMessageContents": true,"ValidationMessageId": "PurchaseTypeId_validationMessage","ValidationRules": [{ "ErrorMessage": "Purchase Type is required","ValidationParameters": {},"ValidationType": "required" },{ "ErrorMessage": "Purchase Type is required","ValidationParameters": { "minimum": 1,"maximum": 2147483647 },"ValidationType": "range" },{ "ErrorMessage": "The field Purchase Type- must be a number.","ValidationParameters": {},"ValidationType": "number"}]}],"FormId": "AddNewDeal","ReplaceValidationSummary": false });
-			Sys.Application.remove_load(arguments.callee);
-			Sys.Mvc.FormContext._Application_Load();
-			deal.mvcValidation==true;
-		}
 	}
 	,checkForm: function (frm) {
 		try {
@@ -345,7 +318,9 @@
 			}
 		} catch(e) { alert(e); }
 	}
-
+	,sellerInfoReset: function () {
+		jHelper.resetFields($("#SellerInfo"));
+	}
 	,showElements: function (tr) {
 		$(".hide",tr).css("display","block");
 		$(".show",tr).css("display","none");

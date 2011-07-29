@@ -148,6 +148,7 @@
 			,sortorder: "desc"
 			,autoload: false
 			,height: 0
+			,useBoxStyle: false
 			});
 		});
 	}

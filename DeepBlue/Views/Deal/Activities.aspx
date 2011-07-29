@@ -60,7 +60,7 @@
 							<div class="tblcell">
 								<%: Html.TextBox("CC_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style="width:200px", @class = "wm" })%></div>
 							<div class="tblcell">
-								<%: Html.CheckBox("IsManualCapitalCall", false, new { @onchange = "javascript:dealActivity.showManualCCCtl('CCDetail');" })%>&nbsp;Manual
+								<%: Html.CheckBox("IsManualCapitalCall", false, new { @onclick = "javascript:dealActivity.showManualCCCtl('CCDetail');" })%>&nbsp;Manual
 								Capital Call
 							</div>
 							<div class="tblcell rightcell">
@@ -94,25 +94,27 @@
 										<table cellpadding="0" cellspacing="0" border="0" id="CapitalCallList" class="grid">
 											<thead>
 												<tr>
-													<th id="CCExpand" style="width: 5%; display: none;" class="ismanual">
+													<th id="CCExpand" style="width: 5%; display: none;" class="calign ismanual">
 													</th>
-													<th style="width: 20%">
+													<th class="lalign" style="width: 20%">
 														Fund Name
 													</th>
-													<th style="width: 20%">
+													<th class="ralign" style="width: 20%">
 														Call Amount
 													</th>
-													<th style="width: 15%">
+													<th class="lalign" style="width: 15%;">
 														Notice Date
 													</th>
-													<th style="width: 15%">
+													<th class="lalign" style="width: 15%">
 														Received Date
 													</th>
-													<th style="width: 15%">
+													<th class="lalign" style="width: 15%">
 														Deemed Capital Call
 													</th>
-													<th id="CCTC" style="display: none;" class="ismanual">
+													<th id="CCTC" style="display: none;" class="ralign ismanual">
 														Total Commitment Amount
+													</th>
+													<th>
 													</th>
 												</tr>
 											</thead>
@@ -144,19 +146,19 @@
 										<table cellpadding="0" cellspacing="0" border="0" id="PRCapitalCallList" class="grid">
 											<thead>
 												<tr>
-													<th style="width: 20%">
+													<th class="lalign" style="width: 20%">
 														Fund Name
 													</th>
-													<th style="width: 20%">
+													<th class="lalign" style="width: 20%">
 														Deal Name
 													</th>
-													<th style="width: 15%">
+													<th class="ralign" style="width: 15%">
 														Capital Call Amount
 													</th>
-													<th style="width: 15%">
+													<th class="lalign" style="width: 15%">
 														Capital Call Date
 													</th>
-													<th>
+													<th class="ralign">
 													</th>
 												</tr>
 											</thead>
@@ -184,7 +186,7 @@
 								<%: Html.TextBox("CD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px", @class = "wm" })%>
 							</div>
 							<div class="tblcell">
-								<%: Html.CheckBox("IsManualCashDistribution", false, new { @onchange = "javascript:dealActivity.showManualCDCtl('CDDetail');" })%>&nbsp;Manual
+								<%: Html.CheckBox("IsManualCashDistribution", false, new { @onclick = "javascript:dealActivity.showManualCDCtl('CDDetail');" })%>&nbsp;Manual
 								Cash Distribution
 							</div>
 							<div class="tblcell rightcell">
@@ -218,25 +220,27 @@
 										<table cellpadding="0" cellspacing="0" border="0" id="CashDistributionList" class="grid">
 											<thead>
 												<tr>
-													<th style="width: 5%; display: none;" class="ismanual">
+													<th style="width: 5%; display: none;" class="calign ismanual">
 													</th>
-													<th>
+													<th class="lalign" style="width: 20%">
 														Fund Name
 													</th>
-													<th>
+													<th class="ralign" style="width: 20%">
 														Amount
 													</th>
-													<th>
+													<th class="lalign" style="width: 15%">
 														Notice Date
 													</th>
-													<th>
+													<th class="lalign" style="width: 15%">
 														Record Date
 													</th>
-													<th>
+													<th class="lalign" style="width: 15%">
 														Distribution Type
 													</th>
-													<th style="display: none;" class="ismanual">
+													<th style="display: none;" class="ralign ismanual">
 														Total Commitment Amount
+													</th>
+													<th>
 													</th>
 												</tr>
 											</thead>
@@ -267,16 +271,16 @@
 											<table cellpadding="0" cellspacing="0" border="0" id="PRCashDistributionList" class="grid">
 												<thead>
 													<tr>
-														<th style="width: 20%;">
+														<th class="lalign" style="width: 20%;">
 															Fund Name
 														</th>
-														<th style="width: 20%">
+														<th class="lalign" style="width: 20%">
 															Deal Name
 														</th>
-														<th style="width: 15%">
+														<th class="ralign" style="width: 15%">
 															Distribution Amount
 														</th>
-														<th style="width: 15%">
+														<th class="lalign" style="width: 15%">
 															Distribution Date
 														</th>
 														<th>
@@ -307,7 +311,7 @@
 							<div class="tblcell">
 								<%: Html.TextBox("SD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px", @class = "wm" })%></div>
 							<div class="tblcell">
-								<%: Html.CheckBox("IsManualStockDistribution", false, new { @onchange = "javascript:dealActivity.showManualSDCtl('SDDetail');" })%>&nbsp;Manual
+								<%: Html.CheckBox("IsManualStockDistribution", false, new { @onclick = "javascript:dealActivity.showManualSDCtl('SDDetail');" })%>&nbsp;Manual
 								Stock Distribution
 							</div>
 						</div>
@@ -338,33 +342,35 @@
 										<table cellpadding="0" cellspacing="0" border="0" id="StockDistributionList" class="grid">
 											<thead>
 												<tr>
-													<th style="width: 5%; display: none;" class="ismanual">
+													<th style="width: 20px; display: none;" class="lalign ismanual">
 													</th>
-													<th style="width: 15%">
+													<th class="lalign" style="width: 10%">
 														Fund Name
 													</th>
-													<th>
+													<th class="lalign" style="width: 10%">
 														Issuer
 													</th>
-													<th style="width: 10%">
+													<th class="lalign" style="width: 10%">
 														NumberOfShares
 													</th>
-													<th style="width: 10%">
+													<th class="ralign" style="width: 10%">
 														Purchase Price
 													</th>
-													<th style="width: 12%">
+													<th class="lalign" style="width: 10%">
 														Notice Date
 													</th>
-													<th style="width: 10%">
+													<th class="lalign" style="width: 10%">
 														Distribution Date
 													</th>
-													<th style="width: 10%">
+													<th class="ralign" style="width: 10%">
 														Tax Cost Base
 													</th>
-													<th style="width: 12%">
+													<th class="lalign" style="width: 10%">
 														Tax Cost Date
 													</th>
-													<th style="display:none">
+													<th class="ralign" style="display: none">
+													</th>
+													<th>
 													</th>
 												</tr>
 											</thead>
@@ -411,30 +417,30 @@
 								<div class="loadingcell" id="UFVLoading">
 								</div>
 							</div>
-							<div class="gbox" style="width:90%;clear:both;margin-left:65px;">
+							<div class="gbox" style="width: 90%; clear: both; margin-left: 65px;">
 								<table cellpadding="0" cellspacing="0" border="0" id="UnderlyingFundValuationList"
 									class="grid">
 									<thead>
 										<tr>
-											<th style="width: 12%">
+											<th class="lalign" style="width: 20%">
 												Fund Name
 											</th>
-											<th style="width: 12%">
+											<th class="ralign" style="width: 12%">
 												Reported NAV
 											</th>
-											<th style="width: 12%">
+											<th class="lalign" style="width: 12%">
 												Reporting Date
 											</th>
-											<th style="width: 12%">
+											<th class="ralign" style="width: 12%">
 												Calculated NAV
 											</th>
-											<th style="width: 12%">
+											<th class="ralign" style="width: 12%">
 												Update NAV
 											</th>
-											<th style="width: 12%">
+											<th class="lalign" style="width: 12%">
 												Update Date
 											</th>
-											<th>
+											<th class="ralign">
 											</th>
 										</tr>
 									</thead>
@@ -479,22 +485,22 @@
 									<table cellpadding="0" cellspacing="0" border="0" id="UDValuationList" class="grid">
 										<thead>
 											<tr>
-												<th style="width: 25%">
+												<th class="lalign" style="width: 25%">
 													Direct Name
 												</th>
-												<th style="width: 20%">
+												<th class="lalign" style="width: 20%">
 													Fund Name
 												</th>
-												<th style="width: 12%">
+												<th class="ralign" style="width: 12%">
 													Last Price
 												</th>
-												<th style="width: 12%">
+												<th class="lalign" style="width: 12%">
 													Last Price Date
 												</th>
-												<th style="width: 12%">
+												<th class="ralign" style="width: 12%">
 													New Price
 												</th>
-												<th style="width: 12%">
+												<th class="lalign" style="width: 12%">
 													New Price Date
 												</th>
 												<th>
@@ -548,20 +554,20 @@
 									<table cellpadding="0" cellspacing="0" border="0" id="UnfundedAdjustmentList" class="grid">
 										<thead>
 											<tr>
-												<th style="width: 20%">
+												<th class="lalign" style="width: 20%">
 													Fund Name
 												</th>
-												<th style="width: 15%">
+												<th class="ralign" style="width: 15%">
 													Commitment Amount
 												</th>
-												<th style="width: 15%">
+												<th class="ralign" style="width: 15%">
 													Unfunded Amount
 												</th>
-												<th style="width: 15%;" id="UFA_NCA">
+												<th class="lalign" style="width: 15%;" id="UFA_NCA">
 												</th>
-												<th style="width: 15%;" id="UFA_NUA">
+												<th class="lalign" style="width: 15%;" id="UFA_NUA">
 												</th>
-												<th>
+												<th class="ralign">
 												</th>
 											</tr>
 										</thead>
@@ -578,7 +584,7 @@
 				</div>
 				<div class="act-box">
 					<div id="FundLevelExpenses" class="group">
-						<div class="addbtn" style="display:none">
+						<div class="addbtn" style="display: none">
 							<div class="tblcell">
 								<%: Html.TextBox("FLE_Fund", "SEARCH FUND", new { @style = "width:200px", @class = "wm" })%>
 							</div>
@@ -613,16 +619,16 @@
 									<table cellpadding="0" cellspacing="0" border="0" id="FundExpenseList" class="grid">
 										<thead>
 											<tr>
-												<th style="width: 20%">
+												<th class="lalign" style="width: 20%">
 													Expense Type
 												</th>
-												<th style="width: 15%">
+												<th class="ralign" style="width: 15%">
 													Amount
 												</th>
-												<th style="width: 15%">
+												<th class="lalign" style="width: 15%">
 													Date
 												</th>
-												<th style="width: 50%">
+												<th class="ralign" style="width: 50%">
 												</th>
 											</tr>
 										</thead>

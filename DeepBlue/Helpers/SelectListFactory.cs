@@ -173,6 +173,15 @@ namespace DeepBlue.Helpers {
 			return documentStatusList;
 		}
 
+		public static List<SelectListItem> GetDealDocumentStatusList() {
+			List<SelectListItem> documentStatusList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = DocumentStatus.Fund.ToString();
+			item.Value = ((int)DocumentStatus.Fund).ToString();
+			documentStatusList.Add(item);
+			return documentStatusList;
+		}
+
 		public static List<SelectListItem> GetModuleSelectList(List<MODULE> modules) {
 			List<SelectListItem> moduleList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();

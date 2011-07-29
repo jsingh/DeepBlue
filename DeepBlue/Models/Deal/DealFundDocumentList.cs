@@ -6,9 +6,9 @@ using System.IO;
 
 namespace DeepBlue.Models.Deal {
 	
-	public class UnderlyingFundDocumentList {
+	public class DealFundDocumentList {
 
-		public int UnderlyingFundDocumentId { get; set; }
+		public int DealFundDocumentId { get; set; }
 
 		public string DocumentType { get; set; }
 
@@ -19,6 +19,10 @@ namespace DeepBlue.Models.Deal {
 		public string FileName { get; set; }
 
 		public string FileTypeName { get; set; }
+
+		public string FundName { get; set; }
+
+		public string InvestorName { get; set; }
 
 		public string FullPath {
 			get {

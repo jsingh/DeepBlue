@@ -66,7 +66,7 @@ namespace DeepBlue.Controllers.Deal {
 			model.Securities = SelectListFactory.GetEmptySelectList();
 			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
 			model.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
-			model.DocumentStatusTypes = SelectListFactory.GetDocumentStatusList();
+			model.DocumentStatusTypes = SelectListFactory.GetDealDocumentStatusList();
 			return model;
 		}
 
@@ -347,15 +347,111 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region DealDocument
+
 		//
-		// POST: /Document/Create
+		// POST: /Document/CreateDealFundDocument
 		[HttpPost]
-		[AcceptVerbs(HttpVerbs.Post)]
-		public string CreateDocument(FormCollection collection) {
-			string error = string.Empty;
-			string data = string.Empty;
-			return JsonSerializer.ToJsonObject(new { error = error, data = data }).ToString();
+		public string CreateDealFundDocument(FormCollection collection) {
+			DealDocumentModel model = new DealDocumentModel();
+			this.TryUpdateModel(model, collection);
+			ResultModel resultModel = new ResultModel();
+			IEnumerable<ErrorInfo> errorInfo = null;
+			string documentUploadPath = string.Empty;
+			int key = 0;
+			switch ((DeepBlue.Models.Document.DocumentStatus)model.DocumentStatusId) {
+				case Models.Document.DocumentStatus.Fund:
+					if ((model.DocumentFundId ?? 0) <= 0) {
+						ModelState.AddModelError("DocumentFundId", "Document For is required");
+					}
+					documentUploadPath = "DealFundDocumentUploadPath";
+					key = model.DocumentFundId ?? 0;
+					break;
+				case Models.Document.DocumentStatus.Investor:
+					if ((model.DocumentInvestorId ?? 0) <= 0) {
+						ModelState.AddModelError("DocumentInvestorId", "Document For is required");
+					}
+					documentUploadPath = "DealInvestorDocumentUploadPath";
+					key = model.DocumentInvestorId ?? 0;
+					break;
+			}
+			if (ModelState.IsValid) {
+				DealFundDocument dealFundDocument = DealRepository.FindDealFundDocument(model.DealFundDocumentId ?? 0);
+				if (dealFundDocument == null) {
+					dealFundDocument = new DealFundDocument();
+					dealFundDocument.CreatedBy = AppSettings.CreatedByUserId;
+					dealFundDocument.CreatedDate = DateTime.Now;
+				}
+				dealFundDocument.LastUpdatedBy = AppSettings.CreatedByUserId;
+				dealFundDocument.LastUpdatedDate = DateTime.Now;
+				dealFundDocument.EntityID = (int)ConfigUtil.CurrentEntityID;
+				dealFundDocument.DocumentTypeID = model.DocumentTypeId;
+				dealFundDocument.DocumentDate = model.DocumentDate;
+				dealFundDocument.FundID = model.DocumentFundId;
+				dealFundDocument.DealID = model.DealId;
+				if (dealFundDocument.File == null) {
+					dealFundDocument.File = new Models.Entity.File();
+					dealFundDocument.File.CreatedBy = AppSettings.CreatedByUserId;
+					dealFundDocument.File.CreatedDate = DateTime.Now;
+				}
+				DeepBlue.Models.Document.UploadType uploadType = (DeepBlue.Models.Document.UploadType)model.DocumentUploadTypeId;
+				FileInfo fileInfo = null;
+				resultModel.Result += CreateDocumentFile(dealFundDocument.File, uploadType, model.DocumentFilePath, Request.Files[0], ref fileInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					errorInfo = AdminRepository.SaveFile(dealFundDocument.File);
+				}
+				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					if (dealFundDocument.File != null) {
+						dealFundDocument.FileID = dealFundDocument.File.FileID;
+					}
+					errorInfo = DealRepository.SaveDealFundDocument(dealFundDocument);
+					if (errorInfo == null) {
+						if (uploadType == Models.Document.UploadType.Upload) {
+							UploadFile fileUpload = new UploadFile(documentUploadPath);
+							fileUpload.Move(fileInfo.FullName, (int)ConfigUtil.CurrentEntityID, dealFundDocument.DealID, key, dealFundDocument.DocumentTypeID, fileInfo.Name);
+							dealFundDocument.File.FileName = fileUpload.FileName;
+							dealFundDocument.File.FilePath = fileUpload.FilePath;
+							dealFundDocument.File.Size = fileUpload.Size;
+						}
+						errorInfo = DealRepository.SaveDealFundDocument(dealFundDocument);
+					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return JsonSerializer.ToJsonObject(new { error = string.Empty, data = resultModel.Result }).ToString();
 		}
+
+		//
+		// GET: /Document/DealFundDocumentList
+		[HttpGet]
+		public ActionResult DealFundDocumentList(int dealId) {
+			List<DealFundDocumentList> dealFundDocuments = DealRepository.GetAllDealFundDocuments(dealId);
+			ViewData["TotalRows"] = dealFundDocuments.Count();
+			ViewData["PageNo"] = 1;
+			return View(dealFundDocuments);
+		}
+
+		//
+		// GET: /Document/DeleteDealFundDocumentFile
+		[HttpGet]
+		public string DeleteDealFundDocumentFile(int id) {
+			if (DealRepository.DeleteDealFundDocument(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
 		#endregion
 
 		#region DealUnderlyingFund
@@ -1049,7 +1145,7 @@ namespace DeepBlue.Controllers.Deal {
 					if (errorInfo == null) {
 						if (uploadType == Models.Document.UploadType.Upload) {
 							UploadFile fileUpload = new UploadFile("UnderlyingFundDocumentUploadPath");
-							fileUpload.Move(fileInfo.FullName, (int)ConfigUtil.CurrentEntityID, underlyingFundDocument.UnderlyingFundDocumentID, underlyingFundDocument.DocumentTypeID, fileInfo.Name);
+							fileUpload.Move(fileInfo.FullName, (int)ConfigUtil.CurrentEntityID, underlyingFundDocument.UnderlyingFundID, underlyingFundDocument.DocumentTypeID, fileInfo.Name);
 							underlyingFundDocument.File.FileName = fileUpload.FileName;
 							underlyingFundDocument.File.FilePath = fileUpload.FilePath;
 							underlyingFundDocument.File.Size = fileUpload.Size;
@@ -1069,79 +1165,6 @@ namespace DeepBlue.Controllers.Deal {
 				}
 			}
 			return JsonSerializer.ToJsonObject(new { error = string.Empty, data = resultModel.Result }).ToString();
-		}
-
-		private string CreateDocumentFile(Models.Entity.File file, DeepBlue.Models.Document.UploadType uploadType, string filePath, HttpPostedFileBase postFile, ref  FileInfo fileInfo) {
-			string fileName = string.Empty;
-			string ext = string.Empty;
-			long fileSize = 0;
-			string errorMessage = string.Empty;
-			Models.Entity.FileType fileType = null;
-			errorMessage = string.Empty;
-			ResultModel resultModel = new ResultModel();
-
-			switch (uploadType) {
-				case Models.Document.UploadType.Link:
-					if (string.IsNullOrEmpty(filePath)) {
-						resultModel.Result += "Link is required";
-					}
-					else {
-						if (FileHelper.CheckFilePath(filePath) == false) {
-							ModelState.AddModelError("FilePath", "Invalid Link.");
-						}
-						else {
-							fileName = Path.GetFileName(filePath);
-							ext = Path.GetExtension(filePath);
-							filePath = filePath.Replace(fileName, "");
-							if (filePath.ToLower().StartsWith("http://") == false)
-								filePath = "http://" + filePath;
-							break;
-						}
-					}
-					break;
-				case Models.Document.UploadType.Upload:
-					if (postFile == null) {
-						resultModel.Result += "File is required";
-					}
-
-					if (postFile != null) {
-						if (string.IsNullOrEmpty(postFile.FileName)) {
-							resultModel.Result += "File is required";
-						}
-						else {
-							ext = Path.GetExtension(postFile.FileName).ToLower();
-						}
-					}
-					break;
-			}
-
-			string fileTypeError = string.Empty;
-			fileType = FileHelper.CheckFileExtension(AdminRepository.GetAllFileTypes(), ext, out fileTypeError);
-			if (fileType == null) {
-				resultModel.Result += fileTypeError;
-			}
-
-			if (string.IsNullOrEmpty(resultModel.Result)) {
-				file.LastUpdatedBy = AppSettings.CreatedByUserId;
-				file.LastUpdatedDate = DateTime.Now;
-				file.FileTypeID = fileType.FileTypeID;
-				file.EntityID = (int)ConfigUtil.CurrentEntityID;
-				if (uploadType == Models.Document.UploadType.Upload) {
-					UploadFile fileUpload = new UploadFile(postFile, "TempUploadPath", postFile.FileName);
-					fileUpload.Upload();
-					fileInfo = fileUpload.FileInfo;
-					fileName = fileUpload.FileName;
-					filePath = fileUpload.FilePath;
-					fileSize = fileUpload.Size;
-				}
-				file.FileName = fileName;
-				file.FilePath = filePath;
-				file.Size = fileSize;
-				IEnumerable<ErrorInfo> errorInfo = ValidationHelper.Validate(file);
-				errorMessage += ValidationHelper.GetErrorInfo(errorInfo);
-			}
-
-			return resultModel.Result;
 		}
 
 		[HttpGet]
@@ -2859,6 +2882,80 @@ namespace DeepBlue.Controllers.Deal {
 				return string.Empty;
 		}
 
+		#endregion
+
+		#region Create Document
+		private string CreateDocumentFile(Models.Entity.File file, DeepBlue.Models.Document.UploadType uploadType, string filePath, HttpPostedFileBase postFile, ref  FileInfo fileInfo) {
+			string fileName = string.Empty;
+			string ext = string.Empty;
+			long fileSize = 0;
+			string errorMessage = string.Empty;
+			Models.Entity.FileType fileType = null;
+			errorMessage = string.Empty;
+			ResultModel resultModel = new ResultModel();
+
+			switch (uploadType) {
+				case Models.Document.UploadType.Link:
+					if (string.IsNullOrEmpty(filePath)) {
+						resultModel.Result += "Link is required";
+					}
+					else {
+						if (FileHelper.CheckFilePath(filePath) == false) {
+							ModelState.AddModelError("FilePath", "Invalid Link.");
+						}
+						else {
+							fileName = Path.GetFileName(filePath);
+							ext = Path.GetExtension(filePath);
+							filePath = filePath.Replace(fileName, "");
+							if (filePath.ToLower().StartsWith("http://") == false)
+								filePath = "http://" + filePath;
+							break;
+						}
+					}
+					break;
+				case Models.Document.UploadType.Upload:
+					if (postFile == null) {
+						resultModel.Result += "File is required\n";
+					}
+					if (postFile != null) {
+						if (string.IsNullOrEmpty(postFile.FileName)) {
+							resultModel.Result += "File is required\n";
+						}
+						else {
+							ext = Path.GetExtension(postFile.FileName).ToLower();
+						}
+					}
+					break;
+			}
+
+			string fileTypeError = string.Empty;
+			fileType = FileHelper.CheckFileExtension(AdminRepository.GetAllFileTypes(), ext, out fileTypeError);
+			if (fileType == null) {
+				resultModel.Result += fileTypeError;
+			}
+
+			if (string.IsNullOrEmpty(resultModel.Result)) {
+				file.LastUpdatedBy = AppSettings.CreatedByUserId;
+				file.LastUpdatedDate = DateTime.Now;
+				file.FileTypeID = fileType.FileTypeID;
+				file.EntityID = (int)ConfigUtil.CurrentEntityID;
+				if (uploadType == Models.Document.UploadType.Upload) {
+					UploadFile fileUpload = new UploadFile(postFile, "TempUploadPath", postFile.FileName);
+					fileUpload.Upload();
+					fileInfo = fileUpload.FileInfo;
+					fileName = fileUpload.FileName;
+					filePath = fileUpload.FilePath;
+					fileSize = fileUpload.Size;
+				}
+				file.FileName = fileName;
+				file.FilePath = filePath;
+				file.Size = fileSize;
+				IEnumerable<ErrorInfo> errorInfo = ValidationHelper.Validate(file);
+				errorMessage += ValidationHelper.GetErrorInfo(errorInfo);
+			}
+
+			return resultModel.Result;
+		}
 		#endregion
 
 		public ActionResult Result() {

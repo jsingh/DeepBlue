@@ -217,6 +217,55 @@ namespace DeepBlue.Controllers.Deal {
 
 		#endregion
 
+		#region DealFundDocument
+
+		public DealFundDocument FindDealFundDocument(int dealFundDocumentId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DealFundDocuments
+					.Include("File")
+					.Where(dealFundDocument => dealFundDocument.DealFundDocumentID == dealFundDocumentId).SingleOrDefault();
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveDealFundDocument(DealFundDocument dealFundDocument) {
+			return dealFundDocument.Save();
+		}
+
+		public List<DealFundDocumentList> GetAllDealFundDocuments(int dealId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<DealFundDocumentList> query = (from dealFundDocument in context.DealFundDocuments
+																where dealFundDocument.DealID == dealId
+																select new DealFundDocumentList {
+																	DocumentDate = dealFundDocument.DocumentDate,
+																	DocumentType = dealFundDocument.DocumentType.DocumentTypeName,
+																	FileName = dealFundDocument.File.FileName,
+																	FilePath = dealFundDocument.File.FilePath,
+																	FileTypeName = dealFundDocument.File.FileType.FileTypeName,
+																	DealFundDocumentId = dealFundDocument.DealFundDocumentID,
+																	FundName = dealFundDocument.Fund.FundName
+																});
+				return query.OrderBy("DocumentDate",false).ToList();
+			}
+		}
+
+		public bool DeleteDealFundDocument(int dealFundDocumentId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				DealFundDocument dealFundDocument = context.DealFundDocuments.Where(document => document.DealFundDocumentID == dealFundDocumentId).SingleOrDefault();
+				if (dealFundDocument != null) {
+					context.DealFundDocuments.DeleteObject(dealFundDocument);
+					Models.Entity.File documentfile = context.Files.Where(file => file.FileID == dealFundDocument.FileID).SingleOrDefault();
+					if (documentfile != null) {
+						context.Files.DeleteObject(documentfile);
+					}
+					context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
+		}
+
+		#endregion
+
 		#region DealUnderlyingFund
 
 		private IQueryable<DealUnderlyingFundModel> GetDealUnderlyingFundModel(DeepBlueEntities context, IQueryable<DealUnderlyingFund> dealUnderlyingFunds) {
@@ -271,6 +320,8 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		public IEnumerable<ErrorInfo> SaveDealUnderlyingFund(DealUnderlyingFund dealUnderlyingFund) {
+			dealUnderlyingFund.NetPurchasePrice = (dealUnderlyingFund.NetPurchasePrice ?? 0) + (dealUnderlyingFund.PostRecordDateCapitalCall ?? 0) - (dealUnderlyingFund.PostRecordDateDistribution ?? 0);
+			dealUnderlyingFund.AdjustedCost = (dealUnderlyingFund.ReassignedGPP ?? 0) + (dealUnderlyingFund.PostRecordDateCapitalCall ?? 0) - (dealUnderlyingFund.PostRecordDateDistribution ?? 0);
 			return dealUnderlyingFund.Save();
 		}
 

@@ -28,6 +28,13 @@ namespace DeepBlue.Controllers.Deal {
 		IEnumerable<ErrorInfo> SaveDealClosingCost(DealClosingCost dealClosingCost);
 		#endregion
 
+		#region DealFundDocument
+		DealFundDocument FindDealFundDocument(int dealFundDocumentId);
+		IEnumerable<ErrorInfo> SaveDealFundDocument(DealFundDocument dealFundDocument);
+		List<DealFundDocumentList> GetAllDealFundDocuments(int dealId);
+		bool DeleteDealFundDocument(int dealFundDocumentId);
+		#endregion
+
 		#region DealUnderlyingFund
 		DealUnderlyingFund FindDealUnderlyingFund(int dealUnderlyingFundId);
 		DealUnderlyingFundModel FindDealUnderlyingFundModel(int dealUnderlyingFundId);

@@ -137,7 +137,7 @@
 				,autoload: true
 				,height: 200
 				,resizeWidth: false
-				,width: 1000
+				,useBoxStyle:false
 			});
 		});
 	}

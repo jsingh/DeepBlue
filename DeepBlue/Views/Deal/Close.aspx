@@ -69,20 +69,20 @@
 			</div>
 			<div class="dc-box">
 				<div class="section">
-					<div class="gbox" style="width: 700px;">
+					<div class="gbox" style="width: 90%;">
 						<table id="DealCloseList" class="grid" cellpadding="0" cellspacing="0" border="0"
 							style="width: 100%;">
 							<thead>
 								<tr>
 									<th style="display: none;">
 									</th>
-									<th style="width: 5%" align="center">
+									<th style="width: 5%" align="left">
 										No.
 									</th>
-									<th style="width: 10%; text-align: left;" align="left">
+									<th style="width: 12%; text-align: left;" align="left">
 										Deal Close
 									</th>
-									<th style="width: 10%" align="center">
+									<th style="width: 12%" align="left">
 										Close Date
 									</th>
 									<th style="width: 20%; text-align: right;" align="right">
@@ -108,7 +108,7 @@
 							<%:Html.Span("New Deal Close", new { @id = "SpnDCTitlelbl" })%>
 						</div>
 					</div>
-					<div id="NDExpandBox" class="expandheader expandsel">
+					<div id="NDExpandBox" class="expandheader expandsel" style="display: block;">
 						<div class="expandtitle" style="display: block;">
 							<div class="expandtitle">
 								<%: Html.Span("New Deal Close", new { @id = "SpnDCTitle" })%></div>
@@ -118,7 +118,7 @@
 						<div class="rightuarrow">
 						</div>
 					</div>
-					<div id="NDDetail" class="detail" style="display: none">
+					<div id="NDDetail" class="detail" style="display: block">
 						<div class="closedetail">
 							<div class="editor-label">
 								<%: Html.Span("", new { @id = "SpnDealCloseNo" })%>
@@ -324,7 +324,7 @@
 		{{each(i, df) DealUnderlyingFunds}}
 		<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
 			<td class="calign">
-				<%: Html.InputCheckBox("DealUnderlyingFundId", false , new { @onchange="javascript:dealClose.editChkRow(this);", @id="chk", @value="${DealUnderlyingFundId}" })%>
+				<%: Html.InputCheckBox("DealUnderlyingFundId", false , new { @onclick="javascript:dealClose.editChkRow(this);", @id="chk", @value="${DealUnderlyingFundId}" })%>
 			</td>
 			<td class="lalign">
 				${FundName}
@@ -384,7 +384,7 @@
 			{{each(i, direct)  DealUnderlyingDirects}}
 			<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
 				<td class="calign">
-					<%:Html.InputCheckBox("DealUnderlyingDirectId", false, new { @onchange="javascript:dealClose.editChkRow(this);",  @id="chk", @value="${DealUnderlyingDirectId}" })%>
+					<%:Html.InputCheckBox("DealUnderlyingDirectId", false, new { @onclick="javascript:dealClose.editChkRow(this);",  @id="chk", @value="${DealUnderlyingDirectId}" })%>
 				</td>
 				<td class="lalign">
 					${IssuerName}

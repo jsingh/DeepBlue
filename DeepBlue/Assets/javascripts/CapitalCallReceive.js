@@ -65,7 +65,7 @@
 				var i;
 				if(data.Items) {
 					$("#ItemCount").val(data.Items.length);
-					var table=$("table","#CapitalCallItems").flexigrid({ height: 0 });
+					var table=$("table","#CapitalCallItems").flexigrid({ height: 0,useBoxStyle: false });
 					$("tr",table).each(function () {
 						var received=$("#Received[type='checkbox']",this).get(0);
 						var receiveDate=$("td:last input",this).get(0);

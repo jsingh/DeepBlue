@@ -61,7 +61,8 @@ namespace DeepBlue.Helpers {
 		public static string jQueryFlexiGrid(this HtmlHelper helper, string targetId, FlexigridOptions options) {
 			StringBuilder scriptSrc = new StringBuilder();
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").flexigrid({")
-					 .Append("usepager:" + options.Paging.ToString().ToLower());
+					 .Append("usepager:" + options.Paging.ToString().ToLower())
+					 .Append(",useBoxStyle:" + options.BoxStyle.ToString().ToLower());
 			if (string.IsNullOrEmpty(options.ControllerName) == false && string.IsNullOrEmpty(options.ActionName) == false) {
 				scriptSrc.Append(",url:\"/" + options.ControllerName.ToString() + "/" + options.ActionName.ToString() + "\"");
 			}

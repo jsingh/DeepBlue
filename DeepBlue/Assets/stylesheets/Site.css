@@ -866,7 +866,8 @@ input.ui-autocomplete-loading[type="text"] {
 	width: 26px;
 }
 .uparrow {
-	background-image: url(../images/up_arrow.png);    background-position: center center;
+	background-image: url(../images/up_arrow.png);
+	background-position: center center;
 	width: 21px;
 	margin-right: 20%;
 }
@@ -900,32 +901,31 @@ input.ui-autocomplete-loading[type="text"] {
 .grid .row td, .grid .arow td {
 	background-color: #F5F5F5;
 	font-size: 12px;
-	height: 37px;
-	height: 36px;
-	padding: 0 20px;
 	white-space: nowrap;
 }
 .grid .arow td {
 	background-color: #E9EAEC;
 }
 .grid tr td, .grid tr th {
-	background-image: url(../images/line.png);
-	background-repeat: repeat-x;
+	background-image: url("../images/line.png");
 	background-position: left bottom;
+	background-repeat: repeat-x;
+	height: 35px;
+	padding: 0 15px;
 }
-.grid thead tr th, .grid tfoot tr td , .grid thead tr td {
+.grid thead tr th {
+	font-weight: normal;
+	text-align: left;
+}
+.grid thead tr th, .grid tfoot tr td, .grid thead tr td {
 	background-color: #BABFC5;
-	padding: 10px 20px;
 	font-weight: normal;
 	color: #000000;
 	white-space: nowrap;
 }
-.grid thead tr th {
-	font-weight: normal;
-	text-align:left;
-}
 .grid tfoot tr td {
-	font-weight: bold; font-size:13px;
+	font-weight: bold;
+	font-size: 13px;
 }
 .grid thead tr td {
 	background-color: transparent;
@@ -935,6 +935,9 @@ input.ui-autocomplete-loading[type="text"] {
 }
 .grid td input[type='text'], .grid td select {
 	width: 95%;
+}
+.grid td input.ui-autocomplete-input[type="text"] {
+	width: 86%;
 }
 .grid .ralign, .grid .ralign input[type='text'] {
 	text-align: right;

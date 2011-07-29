@@ -12,7 +12,7 @@
 	<td class="ralign">
 		<%: Html.TextBox("${Index}_Amount", "{{if Amount>0}}${Amount}{{/if}}", new { @class = "", @onkeypress = "return jHelper.isCurrency(event);" })%>
 	</td>
-	<td class="calign">
+	<td class="lalign">
 		<%: Html.TextBox("${Index}_CapitalCallDate", "{{if UnderlyingFundCapitalCallLineItemId>0}}${CapitalCallDate}{{/if}}", new { @class = "datefield", @id = "${Index}_PRCC_CapitalCallDate" })%>
 	</td>
 	<td class="ralign">

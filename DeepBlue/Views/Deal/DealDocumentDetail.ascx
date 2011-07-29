@@ -16,13 +16,13 @@
 	</div>
 </div>
 <div class="fieldbox">
-	<div class="section" id="AddDealDocument" style="display: none">
-		<% using (Html.Form(new { @id = "AddNewDealDocument", @onsubmit = "return deal.saveDealDocument(this);", @enctype = "multipart/form-data" })) {%>
+	<div class="section" id="AddDealDocument" style="display: none;">
+		<% using (Html.Form(new { @id = "frmDealDocument", @onsubmit = "return deal.saveDealDocument(this);", @enctype = "multipart/form-data" })) {%>
 		<div class="editor-label">
 			<%: Html.Label("Document Type")%>
 		</div>
-		<div class="editor-field" style="width: auto">
-			<%: Html.DropDownList("DocumentType", Model.DocumentTypes, new { @style = "width:262px" })%>
+		<div class="editor-field" style="width: 278px">
+			<%: Html.DropDownList("DocumentTypeId", Model.DocumentTypes, new { @style = "width:197px" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.Label("Document Date ")%>
@@ -34,10 +34,10 @@
 			<%: Html.Label("For")%>
 		</div>
 		<div class="editor-field" style="width: auto;">
-			<div id="InvestorRow" style="float: left;">
+			<div id="InvestorRow" style="display: none; float: left;">
 				<%: Html.TextBox("DocumentInvestorName", "", new { @onblur = "javascript:deal.documentInvestorBlur(this);", @style = "width:172px" })%>
 			</div>
-			<div id="FundRow" style="display: none; float: left;">
+			<div id="FundRow" style="float: left;">
 				<%: Html.TextBox("DocumentFundName", "", new { @onblur = "javascript:deal.documentFundBlur(this);", @style = "width:172px" })%>
 			</div>
 			<div style="float: left; margin-left: 2px;">
@@ -60,40 +60,41 @@
 		</div>
 		<div class="editor-label" style="width: 317px">
 		</div>
-		<div class="editor-field" style="width: auto;">
-			<%: Html.ImageButton("Save.png", new { @id = "btnSaveDocument" })%>
-		</div>
-		<div class="cell" style="padding: 0; margin: 0;">
-			<%: Html.Span("", new { @id = "SpnDealDocLoading" })%>
+		<div class="editor-field" style="width: auto; float: right; margin: 20px 0 5px;">
+			<div class="cell" style="width: auto;">
+				<%: Html.Span("", new { @id = "SpnDealDocLoading" })%>
+			</div>
+			<div class="cell" style="width: auto;">
+				<%: Html.ImageButton("Upload.png", new { @id = "btnSaveDocument" })%></div>
+			<div class="cell" style="width: auto;">
+				<%: Html.Anchor("Reset", "javascript:deal.documentInfoReset();")%></div>
 		</div>
 		<%: Html.Hidden("DocumentInvestorId","")%>
 		<%: Html.Hidden("DocumentFundId","")%>
 		<%}%>
 	</div>
-	<div class="section">
-		<div class="gbox" style="width: 80%;">
-			<table cellpadding="0" cellspacing="0" border="0" class="grid">
-				<thead>
-					<tr>
-						<th>
-							Document Type
-						</th>
-						<th style="width: 20%">
-							Document Date
-						</th>
-						<th style="width: 20%">
-							For
-						</th>
-						<th style="width: 20%">
-							File/Link
-						</th>
-						<th style="width: 20%">
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		</div>
+	<div class="section" style="width:89%">
+		<table cellpadding="0" cellspacing="0" border="0" id="DealDocumentList" style="width:100%">
+			<thead>
+				<tr>
+					<th>
+						Document Type
+					</th>
+					<th style="width: 20%">
+						Document Date
+					</th>
+					<th style="width: 20%">
+						For
+					</th>
+					<th style="width: 20%">
+						File/Link
+					</th>
+					<th align="right" style="width: 20%">
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
 	</div>
 </div>

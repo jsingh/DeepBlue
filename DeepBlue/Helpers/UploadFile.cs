@@ -46,6 +46,9 @@ namespace DeepBlue.Helpers {
 			if (Directory.Exists(directoryName) == false) {
 				Directory.CreateDirectory(directoryName);
 			}
+			if (File.Exists(uploadFilePath)) {
+				File.Delete(uploadFilePath);
+			}
 			_UploadFile.SaveAs(uploadFilePath);
 			_FileInfo = new FileInfo(uploadFilePath);
 			FileName = _FileInfo.Name;
@@ -63,6 +66,9 @@ namespace DeepBlue.Helpers {
 				string directoryName = Path.GetDirectoryName(uploadFilePath);
 				if (Directory.Exists(directoryName) == false) {
 					Directory.CreateDirectory(directoryName);
+				}
+				if (File.Exists(uploadFilePath)) {
+					File.Delete(uploadFilePath);
 				}
 				if (File.Exists(tempFileName)) {
 					File.Move(tempFileName, uploadFilePath);

@@ -102,6 +102,7 @@
     <Compile Include="Models\CapitalCall\DetailModel.cs" />
     <Compile Include="Models\Deal\ActivityDealModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
+    <Compile Include="Models\Deal\DealFundDocumentList.cs" />
     <Compile Include="Models\Deal\FixedIncomeDocumentModel.cs" />
     <Compile Include="Models\Deal\EquityDocumentModel.cs" />
     <Compile Include="Models\Deal\ReconcileModel.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalCallLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalDistributionLineItemService.cs" />
+    <Compile Include="Models\Entity\Partial\DealFundDocumentService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingDirectDocumentService.cs" />
     <Compile Include="Models\Entity\Partial\FileService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundDocumentService.cs" />
@@ -224,6 +226,7 @@
     <Compile Include="Models\Entity\Validation\CashDistribution.cs" />
     <Compile Include="Models\Entity\Validation\CapitalCallLineItem.cs" />
     <Compile Include="Models\Entity\Validation\CapitalDistributionLineItem.cs" />
+    <Compile Include="Models\Entity\Validation\DealFundDocument.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingDirectDocument.cs" />
     <Compile Include="Models\Entity\Validation\File.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundDocument.cs" />
@@ -920,6 +923,7 @@
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
+    <Content Include="Views\Deal\DealFundDocumentList.ascx" />
     <Content Include="Views\Deal\ManualUnderlyingFundStockDistribution.ascx" />
     <Content Include="Views\Deal\ReconcileGrid.ascx" />
     <Content Include="Views\Deal\ReconcileReport.ascx" />

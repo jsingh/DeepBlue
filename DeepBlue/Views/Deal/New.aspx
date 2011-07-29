@@ -5,13 +5,9 @@
 	Deal
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
-	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftAjax.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tooltip.min.js")%>
+	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.JavascriptInclueTag("Deal.js")%>
 	<%=Html.JavascriptInclueTag("DealExpense.js")%>
@@ -29,19 +25,9 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div id="DealMain">
-		<% Html.EnableClientValidation(); %>
-		<%using (Ajax.BeginForm("Create", null, new AjaxOptions {
-		UpdateTargetId = "UpdateTargetId",
-		HttpMethod = "Post",
-		OnBegin = "deal.onCreateDealBegin",
-		OnSuccess = "deal.onCreateDealSuccess"
-	}, new { @id = "AddNewDeal" })) {%>
+		<%using (Html.Form(new { @id = "AddNewDeal", @onsubmit = "return deal.saveDeal();" })) {%>
 		<div id="NewDeal" class="content">
 		</div>
-		<%: Html.ValidationMessageFor(model => model.FundId) %>
-		<%: Html.ValidationMessageFor(model => model.DealName) %>
-		<%: Html.ValidationMessageFor(model => model.DealNumber) %>
-		<%: Html.ValidationMessageFor(model => model.PurchaseTypeId) %>
 		<%}%>
 		<div id="DealExpenses" class="content">
 		</div>
@@ -58,7 +44,7 @@
 		<div id="DealUnderlyingDirects" class="content">
 		</div>
 		<div class="editor-field auto" id="SaveDealBox">
-			<div class="cell">
+			<div class="cell" style="text-align:right">
 				<%: Html.Span("", new { id = "UpdateLoading" })%></div>
 			<div class="cell auto">
 				<%: Html.ImageButton("cnewdeal.png", new { @id = "btnDummySaveDeal",  onclick = "javascript:deal.saveDeal();" })%></div>
@@ -111,8 +97,8 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("DealList", new FlexigridOptions { ActionName = "DealList", ControllerName = "Deal", HttpMethod = "GET", SortName = "DealName", Paging = true, OnSuccess = "deal.onDealListSuccess", Autoload = false, ResizeWidth=false, RowsLength=20, Width=600 })%>
-	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List", ControllerName = "Fund", HttpMethod = "GET", SortName = "FundName", Paging = true, OnSuccess = "deal.onFundListSuccess", Autoload = false, ResizeWidth=false, RowsLength=20, Width=600 })%>
+	<%=Html.jQueryFlexiGrid("DealList", new FlexigridOptions { ActionName = "DealList", ControllerName = "Deal", HttpMethod = "GET", SortName = "DealName", Paging = true, OnSuccess = "deal.onDealListSuccess", Autoload = false, ResizeWidth = false, RowsLength = 20, Width = 600, BoxStyle = false })%>
+	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List", ControllerName = "Fund", HttpMethod = "GET", SortName = "FundName", Paging = true, OnSuccess = "deal.onFundListSuccess", Autoload = false, ResizeWidth = false, RowsLength = 20, Width = 600, BoxStyle = false })%>
 	<script type="text/javascript">		deal.init();</script>
 	<script id="FundListTemplate" type="text/x-jquery-tmpl">
 		<div class="heading">

@@ -58,16 +58,19 @@
 			if(data.TotalDealClosing>0) {
 				$("#ExistingDealClosing").show();
 			}
-			if(totalNotClosing>0) {
-				$("#NewDealClose").show();
-				$("#NewDealCloseBtn").show();
-				$("#NDHeaderBox").click();
-				$("#NDDetail").hide();
+			/*	if(totalNotClosing>0) {
+			
 			}
 			else if(totalNotClosing==0&&totalClosing>0) {
-				$("#FDHeaderBox").click();
-				dealClose.loadFinalDealClose();
-			}
+				
+			}*/
+			$("#NewDealClose").show();
+			$("#NewDealCloseBtn").show();
+			$("#NDHeaderBox").click();
+			$("#NDDetail").hide();
+			dealClose.add(0);
+			$("#FDHeaderBox").click();
+			dealClose.loadFinalDealClose();
 		});
 	}
 	,getDealId: function () { return $("#DealId").val(); }
@@ -84,7 +87,7 @@
 		var newDealClose=$("#NewDealClose");
 		var finalDealClose=$("#FinalDealClose");
 		newDealClose.hide();
-		finalDealClose.hide();
+		//finalDealClose.hide();
 		newDealClose.show();
 		$("#LoadingDetail").show();
 		if(dealId>0) {
@@ -313,7 +316,7 @@
 	}
 	,onGridSuccess: function (t) {
 		$("tbody tr",t).each(function () {
-			$("td:last",this).html("<img id='Edit' src='/Assets/images/Edit.png'/>");
+			$("td:last",this).html("<img class='gbutton' id='Edit' src='/Assets/images/Edit.png'/>");
 		});
 	}
 	,onRowClick: function (row) {
@@ -364,9 +367,9 @@
 	}
 	,expand: function () {
 		$(".headerbox").click(function () {
-			$(".headerbox").show();
-			$(".expandheader").hide();
-			$(".detail").hide();
+//			$(".headerbox").show();
+//			$(".expandheader").hide();
+//			$(".detail").hide();
 			$(this).hide();
 			var actbox=$(this).parents(".act-box:first");
 			actbox.show();

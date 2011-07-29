@@ -67,7 +67,7 @@ deal.saveExpense=function (tr) {
 		spnAjax.hide();
 		deal.onDealSuccess=null;
 		deal.onDealSuccess=function () { deal.saveExpense(tr); }
-		$("#btnSaveDeal").click();
+		deal.saveDeal();
 	}
 };
 deal.loadDealExpense=function (id) {

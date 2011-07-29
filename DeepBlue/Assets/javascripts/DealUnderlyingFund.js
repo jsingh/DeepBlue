@@ -116,7 +116,7 @@ deal.saveUnderlyingFund=function (tr) {
 		spnAjax.hide();
 		deal.onDealSuccess=null;
 		deal.onDealSuccess=function () { deal.saveUnderlyingFund(tr); }
-		$("#btnSaveDeal").click();
+		deal.saveDeal();
 	}
 };
 deal.loadUnderlyingFund=function (id) {
