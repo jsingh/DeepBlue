@@ -68,7 +68,7 @@
 				</div>
 			</div>
 			<div class="dc-box">
-				<div class="section">
+				<div class="section" style="margin-top:0px">
 					<div class="gbox" style="width: 90%;">
 						<table id="DealCloseList" class="grid" cellpadding="0" cellspacing="0" border="0"
 							style="width: 100%;">
@@ -99,7 +99,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="dc-box">
+		<div class="dc-box closing-det">
 			<div class="fundslist">
 				<%using (Html.Form(new { @id = "frmDealClose", @onsubmit = "return false;" })) {%>
 				<div id="NewDealClose" class="act-box" style="display: block">
@@ -181,7 +181,7 @@
 											<th class="lalign" style="width: 15%">
 												Direct Name
 											</th>
-											<th class="lalign" style="width: 15%">
+											<th class="ralign" style="width: 15%">
 												No. Of Shares
 											</th>
 											<th class="ralign" style="width: 15%">
@@ -272,7 +272,7 @@
 												<th class="lalign" style="width: 15%">
 													Direct Name
 												</th>
-												<th class="lalign" style="width: 15%">
+												<th class="ralign" style="width: 15%">
 													No. Of Shares
 												</th>
 												<th class="ralign" style="width: 15%">
@@ -389,7 +389,7 @@
 				<td class="lalign">
 					${IssuerName}
 				</td>
-				<td class="lalign"><%: Html.Span("${NumberOfShares}", new { @class="show" })%>
+				<td class="ralign"><%: Html.Span("${NumberOfShares}", new { @class="show" })%>
 					<%: Html.TextBox("${DealUnderlyingDirectId}_NumberOfShares", "${NumberOfShares}", new { @class="hide", @id="NumberOfShares", @onkeyup="javascript:dealClose.calcCloseUD();",  @onkeypress = "return jHelper.isNumeric(event);" })%>
 				</td>
 				<td class="ralign"><%: Html.Span("${PurchasePrice}", new { @class="show money" })%>
@@ -412,7 +412,7 @@
 				</td>
 				<td>
 				</td>
-				<td class="lalign">
+				<td class="ralign">
 					<%: Html.Span("${TotalNoOfShares}", new { @id="SpnTotalNoOfShares" })%>
 				</td>
 				<td class="ralign">
@@ -483,7 +483,7 @@
 				<td class="lalign">
 					${IssuerName}
 				</td>
-				<td class="lalign"><%: Html.Span("${NumberOfShares}", new { @class="show" })%>
+				<td class="ralign"><%: Html.Span("${NumberOfShares}", new { @class="show" })%>
 					<%: Html.TextBox("${DealUnderlyingDirectId}_NumberOfShares", "{{if NumberOfShares>0}}${NumberOfShares}{{/if}}", new { @class="hide", @id="NumberOfShares", @onkeyup="javascript:dealClose.calcFlinalCloseUD();",  @onkeypress = "return jHelper.isNumeric(event);" })%>
 				</td>
 				<td class="ralign"><%: Html.Span("${PurchasePrice}", new { @class="show money" })%>
@@ -505,7 +505,7 @@
 				<td class="lalign">
 					Total
 				</td>
-				<td class="lalign">
+				<td class="ralign">
 					<%: Html.Span("${TotalFinalNoOfShares}", new { @id="SpnTotalNoOfShares" })%>
 				</td>
 				<td class="ralign">

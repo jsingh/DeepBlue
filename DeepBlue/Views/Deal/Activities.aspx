@@ -5,6 +5,7 @@
 	Activities
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
+	<%=Html.JavascriptInclueTag("jquery.textshadow.js")%>
 	<%=Html.JavascriptInclueTag("DealActivity.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityCapitalCall.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityPRCapitalCall.js")%>
@@ -74,7 +75,7 @@
 						</div>
 						<div class="expandheader expandsel" style="display: none;">
 							<div class="expandbtn">
-								<div class="expandtitle" style="display: block;">
+								<div class="expandtitle shadow" style="display: block;">
 									New Capital Call
 								</div>
 							</div>

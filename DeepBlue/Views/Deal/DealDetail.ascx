@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.CreateModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <div class="section">
-	<div class="dealdetail" style="width: 90%">
+	<div class="dealdetail" style="width: 90%; padding-left: 5px;">
 		<div class="cell" style="overflow: hidden">
 			${FundName}
 		</div>

@@ -19,7 +19,7 @@
 }
 .fieldbox {
 	clear: both;
-	margin: 20px 0 40px 5px;
+	margin: 20px 0 20px 5px;
 	float: left;
 	width: 100%;
 	clear: both;
@@ -162,10 +162,18 @@ h4 a {
 .expandimg {
 	float: left;
 }
+.expandtitle{
+	text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B, 	
+			Direction=135, 
+			Strength=2);
+}
 .expandtitle, .recon-expandtitle {
 	float: left;
-	width: 200px;
+	width: auto;
 	white-space: nowrap;
+	color: white;
+		margin-right: 20px;
 }
 .expandaddbtn {
 	float: left;
@@ -278,6 +286,7 @@ h4 a {
 	margin: 40px 40px 50px 0;
 }
 #AddDealDocument {
-	width: 900px;
-	margin: 0 auto 0 65px;
+	width: 950px;    margin: 20px auto 0 15px;
+}
+#SellerInfo .editor-label,#SellerInfo .editor-field {     padding: 13px 5px;
 }

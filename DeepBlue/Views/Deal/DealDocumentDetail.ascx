@@ -41,7 +41,7 @@
 				<%: Html.TextBox("DocumentFundName", "", new { @onblur = "javascript:deal.documentFundBlur(this);", @style = "width:172px" })%>
 			</div>
 			<div style="float: left; margin-left: 2px;">
-				<%: Html.DropDownList("DocumentStatusId", Model.DocumentStatusTypes, new { @style = "width:80px", @onchange = "javascript:deal.documentChangeType(this);" })%>
+				<%: Html.DropDownList("DocumentStatusId", Model.DocumentStatusTypes, new { @style = "width:80px", @val="2", @onchange = "javascript:deal.documentChangeType(this);" })%>
 			</div>
 		</div>
 		<div class="editor-label" style="clear: right">
@@ -55,12 +55,12 @@
 				<%: Html.TextBox("DocumentFilePath", "", new { @style = "width:213px" })%>
 			</div>
 			<div style="float: left; margin-left: 2px;">
-				<%: Html.DropDownList("DocumentUploadTypeId", Model.UploadTypes, new { @style = "width:80px", @onchange = "javascript:deal.documentChangeUploadType(this);" })%>
+				<%: Html.DropDownList("DocumentUploadTypeId", Model.UploadTypes, new { @style = "width:80px", @val = "1", @onchange = "javascript:deal.documentChangeUploadType(this);" })%>
 			</div>
 		</div>
 		<div class="editor-label" style="width: 317px">
 		</div>
-		<div class="editor-field" style="width: auto; float: right; margin: 20px 0 5px;">
+		<div class="editor-field" style="width: auto; float: right;    margin: 20px 47px 5px;">
 			<div class="cell" style="width: auto;">
 				<%: Html.Span("", new { @id = "SpnDealDocLoading" })%>
 			</div>

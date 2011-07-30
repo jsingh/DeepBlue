@@ -10,10 +10,10 @@
 	width: 100%;
 	margin-left: 20px;
 	margin: 0;
-	clear:both;
+	clear: both;
 }
 #cntbox {
-	top:98px;
+	top: 98px;
 }
 .section-det {
 	width: 100%;
@@ -42,7 +42,7 @@
 	width: 150px;
 }
 .fund-box-det .editor-field input[type="checkbox"] {
-	margin-top:5px;
+	margin-top: 5px;
 }
 .fund-box-det .editor-label {
 	text-align: right;
@@ -56,7 +56,7 @@
 	width: 100%;
 }
 .editor-field {
-    width: 185px;
+	width: 185px;
 }
 .section-det .title {
 	background: url("../images/plus.png") no-repeat scroll left top transparent;
@@ -86,20 +86,20 @@
 	width: 100%;
 	clear: both;
 }
-.tab-delete{
-    background-image: url("../images/tabdelete.png");
-    background-position: left top;
-    background-repeat: no-repeat;
-    float: left;
-    height: 16px;
-    margin: 7px 0 0 -18px;
-    width: 16px;
-    cursor:pointer;
+.tab-delete {
+	background-image: url("../images/tabdelete.png");
+	background-position: left top;
+	background-repeat: no-repeat;
+	float: left;
+	height: 16px;
+	margin: 7px 0 0 -18px;
+	width: 16px;
+	cursor: pointer;
 }
-#FundDetail{
-  margin: 0 auto;
-    padding: 20px 0 0;
-    width: 90%;
+#FundDetail {
+	margin: 0 auto;
+	padding: 20px 0 0;
+	width: 90%;
 }
 /* expand header */
 .expandheader, .recon-expandheader {
@@ -135,6 +135,7 @@
 	float: left;
 	white-space: nowrap;
 	width: 200px;
+
 }
 .expandaddbtn {
 	display: none;

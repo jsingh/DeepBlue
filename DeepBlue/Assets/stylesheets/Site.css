@@ -59,6 +59,7 @@ a img {
 	height: 35px;
 	text-align: center;
 	line-height: 35px;
+	
 }
 #arrow {
 	width: 17px;
@@ -72,13 +73,18 @@ a img {
 	top: 1px;
 }
 #topheader {
-	background-image: url(../images/titlebg.png);
-	background-repeat: repeat-x;
-	font-size: 14px;
-	color: #fff;
-	text-transform: uppercase;
-	line-height: 32px;
-	padding-left: 65px;
+    background-image: url("../images/titlebg.png");
+    background-repeat: repeat-x;
+    color: #FFFFFF;
+    font-family: Georgia,Arial;
+    font-size: 17px;
+    line-height: 32px;
+    padding-left: 65px;
+    text-transform: uppercase;
+    text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B, 	
+			Direction=135, 
+			Strength=2);
 }
 /* Content */
 #content {
@@ -611,7 +617,8 @@ h2 {
 	display: none;
 	top: 24px;
 	width: 1000px;
-	font-size: 12px;
+	font-family: Myriad Pro,Arial;
+	font-size: 13px;
 }
 .mdiv ul {
 	width: 100%;
@@ -620,13 +627,11 @@ h2 {
 	list-style: none;
 	float: left;
 	padding: 13px 27px 13px 0px;
+     color: #243352;
 }
 .mdiv li a {
-	color: #27599E;
+color: #27599E;
 	padding: 5px;
-}
-.mdiv a:hover {
-	color: #27599E;
 }
 .topmenu {
 	float: left;
@@ -642,8 +647,10 @@ h2 {
 	color: #fff;
 	font-family: Myriad Pro,Arial;
 	font-size: 12px;
-}
-.topmenu a {
+	text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B, 	
+			Direction=135, 
+			Strength=2);
 }
 .mnu-name {
 	background-position: left top;
@@ -713,6 +720,13 @@ h2 {
 	float: left;
 	font-weight: bold;
 	text-transform: uppercase;
+	font-family: Myriad Pro, Arial;
+}
+.heading .pname {
+	color: #29589E;
+	float: left;
+	font-family: Myriad Pro, Arial;
+	text-transform: uppercase;
 }
 .heading .arrow {
 	font-size: 18px;
@@ -723,11 +737,6 @@ h2 {
 	background-image: url(../images/navarrow.png);
 	background-repeat: no-repeat;
 	background-position: center center;
-}
-.heading .pname {
-	color: #29589E;
-	float: left;
-	text-transform: uppercase;
 }
 .heading .leftcol {
 	float: left;
@@ -949,10 +958,10 @@ input.ui-autocomplete-loading[type="text"] {
 	text-align: center;
 }
 .grid .gbutton {
-	display: none;
+	visibility:hidden;
 }
 .grid tbody tr:hover .gbutton {
-	display: table-cell;
+	visibility:visible;
 }
 .grid tbody tr:hover td {
 }

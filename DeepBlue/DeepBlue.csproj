@@ -804,6 +804,7 @@
     <Content Include="Assets\javascripts\Geography.js" />
     <Content Include="Assets\javascripts\jquery.formatCurrency.js" />
     <Content Include="Assets\javascripts\jquery.layoutengine.js" />
+    <Content Include="Assets\javascripts\jquery.textshadow.js" />
     <Content Include="Assets\javascripts\jquery.tooltip.min.js" />
     <Content Include="Assets\javascripts\ReportingFrequency.js" />
     <Content Include="Assets\javascripts\ReportingType.js" />

@@ -36,27 +36,18 @@
 		<div class="left-col" style="margin-left: 10px; display: none" id="ReportLoading">
 			<%:Html.Image("ajax.jpg")%>&nbsp;Loading....</div>
 		<div class="export" style="float: right">
-			<div style="height: 20px;">
-				<div style="float: left; width: 24px; height: 20px;">
-					<%:Html.Image("print.gif")%>
-				</div>
-				<div style="float: left; width: 50px; height: 20px;">
-					<a href="#">
-						<%:Html.Image("pdf.gif")%></a></div>
-				<div style="float: right; height: 20px;">
-					<%:Html.Image("down_arrow.png")%></div>
+			<div class="menu print">
+				<%:Html.Image("print.gif")%>
 			</div>
-			<div style="height: 25px;">
-				<a href="javascript:dealReport.exportDeal(1);">
-					<%:Html.Image("word.gif")%>
-				</a>
+			<div class="menu">
+				<ul>
+					<li><a href="#">Pdf</a></li>
+					<li><a href="javascript:dealReport.exportDeal(1);">Word </a></li>
+					<li><a href="javascript:dealReport.exportDeal(3);">Excel </a></li>
+				</ul>
 			</div>
-			<div style="height: 25px;">
-				<%--print--%>
-				<a href="javascript:dealReport.exportDeal(3);">
-					<%:Html.Image("excel.gif")%>
-				</a>
-			</div>
+			<div class="menu darrow">
+				<%:Html.Image("down_arrow.png")%></div>
 		</div>
 	</div>
 	<div class="line">
@@ -66,10 +57,10 @@
 			<table cellpadding="0" class="grid" cellspacing="0" border="0" id="ReportList">
 				<thead>
 					<tr class="report_tr">
-						<th style="display: none">
+						<th sortname="DealId" style="display: none">
 							DealId
 						</th>
-						<th align="center" style="width: 10%">
+						<th sortname="DealId" align="center" style="width: 10%">
 							<span>Deal No.</span>
 						</th>
 						<th align="left">

@@ -72,6 +72,7 @@ input[type='text'] {
 }
 .tabledetail {
 	padding-left: 65px;
+	padding-bottom:20px;
 }
 
 .underfund {
@@ -122,12 +123,13 @@ input[type='text'] {
 	padding: 0 0 0 30px;
 	width: 200px;
 }
-.section {
-	margin-top: 10px;
-}
+ 
 #DealCloseMain {
 	float:left;
 }
 .expandsel {
 	 margin-top:0px;
+}
+.closing-det{
+	background-image:url(../images/fdcbg.png);
 }

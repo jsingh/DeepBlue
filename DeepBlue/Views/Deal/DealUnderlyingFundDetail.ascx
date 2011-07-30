@@ -34,7 +34,7 @@
 						<th class="ralign" style="width: 15%;">
 							Gross Purchase Price
 						</th>
-						<th class="lalign" style="width: 10%">
+						<th class="ralign" style="width: 10%">
 							Fund NAV
 						</th>
 						<th class="ralign">
