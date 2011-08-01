@@ -64,6 +64,7 @@
 							$("#DirectMain").hide();
 							$("#AddNewIssuer").hide();
 							$("#S_Issuer").val("");
+							dealDirect.loadSelectImages(false);
 						} else {
 							alert(data.data);
 						}
@@ -87,6 +88,19 @@
 		} catch(e) { alert(e); }
 		return false;
 	}
+	,loadSelectImages: function (isSelect) {
+		var addCompany=$("#AddCompany");
+		var addGP=$("#AddGP");
+		var src="/Assets/images/";
+		var addCSRC=src+"addcompany.png";
+		var addGPSRC=src+"addgp.png";
+		if(isSelect) {
+			addCSRC=src+"addcompanyselect.png";
+			addGPSRC=src+"addgpselect.png";
+		}
+		addCompany.attr("src",addCSRC);
+		addGP.attr("src",addGPSRC);
+	}
 	,createNewIssuer: function (frm) {
 		try {
 			var loading=$("#SpnNewLoading");
@@ -95,8 +109,13 @@
 				loading.empty();
 				var arr=data.split("||");
 				if(arr[0]=="True") {
-					alert("Issuer Saved.");
+					if(dealDirect.isUnderlyingFundModel) {
+						alert("GP saved");
+					} else {
+						alert("Company Saved.");
+					}
 					$("#AddNewIssuer").hide();
+					dealDirect.loadSelectImages(false);
 					if(dealDirect.onCreateNewIssuer) {
 						dealDirect.onCreateNewIssuer(arr[1]);
 					}
@@ -106,6 +125,7 @@
 		return false;
 	}
 	,add: function () {
+		dealDirect.loadSelectImages(true);
 		var addIssuer=$("#AddNewIssuer");
 		addIssuer.show();
 		var newIssuerDetail=$("#NewIssuerDetail");newIssuerDetail.empty();
@@ -118,6 +138,7 @@
 	}
 	,close: function () {
 		$('#AddNewIssuer').hide();
+		dealDirect.loadSelectImages(false);
 	}
 	,load: function (id) {
 		var issuerDetail=$("#IssuerDetail");

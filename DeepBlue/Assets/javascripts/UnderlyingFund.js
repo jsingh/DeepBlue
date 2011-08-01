@@ -91,8 +91,8 @@
 			var display=detail.attr("issearch");
 			detail.show();
 		});
-		$(".expandtitle",".expandheader").click(function () {
-			var expandheader=$(this).parents(".expandheader:first");
+		$(".expandheader").click(function () {
+			var expandheader=$(this);
 			var parent=$(expandheader).parent();
 			expandheader.hide();
 			var detail=$(".detail",parent);
@@ -104,6 +104,15 @@
 		return parseInt($("#UnderlyingFundId").val());
 	}
 	,load: function (id,issuerId) {
+		var lnkAddUnderlyingFund=$("#lnkAddUnderlyingFund");
+		var src=lnkAddUnderlyingFund.attr("src").replace("addnufundselect.png","addnufund.png");
+		$("#btnSave").attr("src","/Assets/images/muf.png");
+		if(id==0) {
+			src=lnkAddUnderlyingFund.attr("src").replace("addnufund.png","addnufundselect.png");
+			$("#S_UnderlyingFund").val("");
+			$("#btnSave").attr("src","/Assets/images/adduf.png");
+		}
+		lnkAddUnderlyingFund.attr("src",src);
 		var addUnderlyingfund=$("#AddUnderlyingFund");
 		addUnderlyingfund.css("text-align","center").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		addUnderlyingfund.show();
@@ -116,11 +125,6 @@
 			jHelper.formatDateTxt(addUnderlyingfund);
 			$("#Description").val($.trim($("#Description").val()));
 			$("#Address").val($.trim($("#Address").val()));
-			if(id>0) {
-				$("#btnSave").attr("src","/Assets/images/muf.png");
-			} else {
-				$("#btnSave").attr("src","/Assets/images/adduf.png");
-			}
 			$("#Doc_DocumentDate").datepicker({ changeMonth: true,changeYear: true });
 			var p=new Array();
 			p[p.length]={ "name": "UnderlyingFundId","value": underlyingFund.getUnderlyingFundId() };
@@ -137,7 +141,7 @@
 				,autoload: true
 				,height: 200
 				,resizeWidth: false
-				,useBoxStyle:false
+				,useBoxStyle: false
 			});
 		});
 	}
@@ -164,6 +168,7 @@
 					}
 					if(underlyingFund.tempSave==false) {
 						alert("Underlying Fund Added.");
+						$("#lnkAddUnderlyingFund").attr("src","/Assets/images/addnufund.png");
 						$("#AddUnderlyingFund").hide();
 						$("#S_UnderlyingFund").val("");
 					}

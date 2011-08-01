@@ -44,8 +44,8 @@
 			var display=detail.attr("issearch");
 			detail.show();
 		});
-		$(".expandtitle",".expandheader").click(function () {
-			var expandheader=$(this).parents(".expandheader:first");
+		$(".expandheader").click(function () {
+			var expandheader=$(this);
 			var parent=$(expandheader).parent();
 			expandheader.hide();
 			var detail=$(".detail",parent);

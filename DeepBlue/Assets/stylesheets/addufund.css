@@ -98,3 +98,12 @@
 	vertical-align: middle;
 	padding-top: 10px;
 }
+.editor-field select {
+	width:188px;
+}
+.expandsel {
+	margin-top:-2px; cursor:pointer;
+}
+.headerbox {
+	float:left; cursor:pointer;
+}

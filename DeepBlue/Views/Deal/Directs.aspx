@@ -30,7 +30,7 @@
 		<div class="leftcol">
 			Underlying Direct</div>
 		<div class="addbtn" style="display: block">
-			<%: Html.Anchor(Html.Image("addcompany.png").ToHtmlString(), "javascript:dealDirect.add();")%>
+			<%:Html.Image("addcompany.png", new { @id="AddCompany", @style="cursor:pointer", @onclick = "javascript:dealDirect.add();" })%>
 		</div>
 		<div style="display: block; float: right; margin-right: 15%;">
 			<%: Html.Span("", new { @id = "SpnIssuerLoading" })%>

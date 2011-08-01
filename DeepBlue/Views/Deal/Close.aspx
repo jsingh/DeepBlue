@@ -68,7 +68,7 @@
 				</div>
 			</div>
 			<div class="dc-box">
-				<div class="section" style="margin-top:0px">
+				<div class="section" style="margin-top: 0px">
 					<div class="gbox" style="width: 90%;">
 						<table id="DealCloseList" class="grid" cellpadding="0" cellspacing="0" border="0"
 							style="width: 100%;">
@@ -522,4 +522,7 @@
 	<script type="text/javascript">
 		dealClose.init();
 	</script>
+	<%if (Model.DealId > 0) {%>
+	<script type="text/javascript">	dealClose.selectDeal(<%=Model.DealId%>);</script>
+	<%}%>
 </asp:Content>

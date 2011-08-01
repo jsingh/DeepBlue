@@ -46,6 +46,7 @@
 			$("#SpnFundName").html(data.FundName);
 			$("#SpnDealNo").html(data.DealNumber);
 			$("#SpnDealName").html(data.DealName);
+			$("#Deal").val(data.DealName);
 			$("#FundId").val(data.FundId);
 			$("#ExistingDealClosing").hide();
 			$("#SpnDCTitle").html("New Deal Close");

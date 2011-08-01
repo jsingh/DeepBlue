@@ -18,9 +18,31 @@
 	<%=Html.StylesheetLinkTag("deal.css")%>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
+	<%if (ViewData["PageName"] == "Create New Deal") {%>
 	<%using (Html.Div(new { @id = "DealFundList", @class = "navigation", @style = (ViewData["PageName"] == "Create New Deal" ? "display:block" : "display:none") })) {%>
+	<div class="heading">
+		<div class="leftcol">
+			<span class="title">INVESTMENTS</span><span class="arrow"></span><span class="pname">CREATE
+				NEW DEAL</span></div>
+		<div class="rightcol">
+			<%: Html.TextBox("M_Fund","SEARCH FUND", new { @class="wm", @style="width:200px", @id="M_Fund" })%>
+		</div>
+	</div>
 	<%}%>
+	<%}%>
+	<%if (ViewData["PageName"] == "Modify Deal") {%>
 	<%using (Html.Div(new { @id = "ModifyDealBox", @class = "navigation", @style = (ViewData["PageName"] == "Modify Deal" ? "display:block" : "display:none") })) {%>
+	<div id="modifyDealUL" class="heading">
+		<div class="leftcol">
+			<span class="title">INVESTMENTS</span><span class="arrow"></span><span class="pname">
+				MODIFY DEAL</span></div>
+		<div class="rightcol">
+			<%: Html.TextBox("SearchDealName", "SEARCH DEAL", new { @class="wm", @id = "SearchDealName", @style = "width: 200px" })%>&nbsp;<a
+				href="javascript:deal.seeFullDeal();" style="text-decoration: underline">See full
+				list</a>
+		</div>
+	</div>
+	<%}%>
 	<%}%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
@@ -44,23 +66,13 @@
 		<div id="DealUnderlyingDirects" class="content">
 		</div>
 		<div class="editor-field auto" id="SaveDealBox">
-			<div class="cell" style="text-align:right">
+			<div class="cell" style="text-align: right">
 				<%: Html.Span("", new { id = "UpdateLoading" })%></div>
 			<div class="cell auto">
 				<%: Html.ImageButton("cnewdeal.png", new { @id = "btnDummySaveDeal",  onclick = "javascript:deal.saveDeal();" })%></div>
 		</div>
 	</div>
 	<div id="UpdateTargetId" style="display: none">
-	</div>
-	<div id="modifyDealUL" class="heading">
-		<div class="leftcol">
-			<span class="title">INVESTMENTS</span><span class="arrow"></span><span class="pname">
-				MODIFY DEAL</span></div>
-		<div class="rightcol">
-			<%: Html.TextBox("SearchDealName", "SEARCH DEAL", new { @class="wm", @id = "SearchDealName", @style = "width: 200px" })%>&nbsp;<a
-				href="javascript:deal.seeFullDeal();" style="text-decoration: underline">See full
-				list</a>
-		</div>
 	</div>
 	<div id="FullDealList">
 		<table cellpadding="0" cellspacing="0" border="0" id="DealList">
@@ -99,17 +111,21 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%=Html.jQueryFlexiGrid("DealList", new FlexigridOptions { ActionName = "DealList", ControllerName = "Deal", HttpMethod = "GET", SortName = "DealName", Paging = true, OnSuccess = "deal.onDealListSuccess", Autoload = false, ResizeWidth = false, RowsLength = 20, Width = 600, BoxStyle = false })%>
 	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List", ControllerName = "Fund", HttpMethod = "GET", SortName = "FundName", Paging = true, OnSuccess = "deal.onFundListSuccess", Autoload = false, ResizeWidth = false, RowsLength = 20, Width = 600, BoxStyle = false })%>
+	<%= Html.jQueryAutoComplete("M_Fund", new AutoCompleteOptions {
+																	  Source = "/Fund/FindFunds", MinLength = 1,
+																	  OnSelect = "function(event, ui) { deal.selectFund(ui.item.id,ui.item.label); }"
+	})%>
+	<%= Html.jQueryAutoComplete("SearchDealName", new AutoCompleteOptions {
+																	  Source = "/Deal/FindDeals", MinLength = 1, 
+																	  OnSelect = "function(event, ui) {  deal.loadDeal(ui.item.id); }"
+	})%>
 	<script type="text/javascript">		deal.init();</script>
-	<script id="FundListTemplate" type="text/x-jquery-tmpl">
-		<div class="heading">
-			<div class="leftcol">
-				<span class="title">INVESTMENTS</span><span class="arrow"></span><span class="pname">CREATE
-					NEW DEAL</span></div>
-			<div class="rightcol">
-				<%: Html.TextBox("M_Fund","SEARCH FUND", new { @class="wm", @style="width:200px", @id="M_Fund" })%>
-			</div>
-		</div>
-	</script>
+	<%if (ViewData["PageName"] == "Create New Deal" && Model.FundId > 0) {%>
+	<script type="text/javascript">deal.selectFund(<%=Model.FundId%>,'<%=Model.FundName%>');</script>
+	<%}%>
+	<%if (ViewData["PageName"] == "Modify Deal") {%>
+	<script type="text/javascript">deal.loadDeal(<%=Model.DealId%>);</script>
+	<%}%>
 	<script id="DealTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("DealDetail", Model); %>
 	</script>

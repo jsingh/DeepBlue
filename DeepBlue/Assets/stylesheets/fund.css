@@ -52,8 +52,10 @@
 	width: 188px;
 }
 .headerbox {
-	padding-left: 30px;
-	width: 100%;
+	 cursor: pointer;
+    float: left;
+    padding-left: 30px;
+    width: 100%;
 }
 .editor-field {
 	width: 185px;
@@ -67,7 +69,7 @@
 	font-weight: bold;
 	height: 30px;
 	line-height: 15px;
-	margin: 10px 0 0 90px;
+	margin: 10px 0 0 37px;
 	padding-left: 20px;
 	width: 200px;
 }
@@ -124,6 +126,7 @@
 	line-height: 50px;
 	padding: 0 0 0 70px;
 	width: 100%;
+	margin-top:-2px;
 }
 .expandheader #title, .recon-expandheader #title {
 	display: none;
@@ -160,9 +163,7 @@
 	margin-top: 21px;
 	width: 16px;
 }
-.expandtitle {
-	padding-left: 51px;
-}
+ 
 .detail {
 	background-color: #E9EAEC;
 	clear: both;

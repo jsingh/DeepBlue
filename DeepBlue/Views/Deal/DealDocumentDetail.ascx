@@ -12,7 +12,7 @@
 		<div class="expandtitle" id="title">
 			<div class="expandtitle">
 				Deal Documents</div>
-		</div>
+		</div>  
 	</div>
 </div>
 <div class="fieldbox">

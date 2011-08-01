@@ -1,45 +1,45 @@
 ﻿var dealReport={
 	pageIndex: 1
+	,isViewMore: false
 	,init: function () {
 		$(document).ready(function () {
 			var lnk=$("#lnkExport");
 			var pos=$(lnk).position();
 			var menu=$("#ExportMenu");
 			$("li",menu).hover(function () { $(this).addClass("sel"); },function () { $(this).removeClass("sel"); });
-			lnk.toggle(function () { menu.show(); },function () { menu.hide(); });jHelper.waterMark();
+			lnk.toggle(function () { menu.show(); },function () { menu.hide(); });
+			jHelper.waterMark();
 		});
 	}
 	,onSubmit: function (p) {
-		var reportCnt=$("#ReportContent");
-		var h=reportCnt.height();
-		p.rp=10;//parseInt((h/145));
-		p.newp=dealReport.pageIndex;
-		$("#ReportLoading").show();
+		if(dealReport.isViewMore==true) {
+			p.newp=p.newp+1;
+		}
+		dealReport.isViewMore=false;
 		return true;
 	}
 	,onSuccess: function (t,p) {
 		$("#ReportLoading").hide();
 		$("tbody tr",t).addClass("row");
-		var tfoot=$("tfoot",t).get(0);
+		var tfoot=$("tfoot","#ViewMoreDetail").get(0);
 		if(!tfoot) {
 			tfoot=document.createElement("tfoot");
 			var trviewmore=document.createElement("tr");
-			var td=document.createElement("td");td.colSpan=7;
+			tfoot.className="rep_tfoot";
+			var td=document.createElement("td");td.colSpan=10;
 			td.style.textAlign="center";
-			td.innerHTML="<a href='javascript:dealReport.viewMore();'>View More</a>";
+			td.innerHTML="<a href='javascript:dealReport.viewMore();'>View more</a>&nbsp;<img src='/Assets/images/vmarrow.png'/>";
 			$(trviewmore).append(td);
 			$(tfoot).append(trviewmore);
-			$(t).append(tfoot);
+			$("#ViewMoreDetail").append(tfoot);
 		}
 		if(p.pages<=p.newp) { $(tfoot).remove(); }
 	}
 	,onRowBound: function (tr,row) {
 		var trempty=document.createElement("tr");
 		var td=document.createElement("td");
-
 		$(trempty).append(td);
 		$("td:last",tr).html("<img id='expandimg' src='/Assets/images/arrow_down.png'/>");
-
 	}
 	,onRowClick: function (row,tr) {
 		var dealId=row.cell[0];
@@ -76,10 +76,11 @@
 			if(trExpand.style.display=="none") { trExpand.style.display=""; } else { trExpand.style.display="none"; }
 		}
 	}
-	,onChangeSort: function (t,param) {
+	,onChangeSort: function (t,p) {
+		p.newp=1;
 		$("tbody",t).empty();
-		$("#SortName").val(param.sortname);
-		$("#SortOrder").val(param.sortorder);
+		$("#SortName").val(p.sortname);
+		$("#SortOrder").val(p.sortorder);
 	}
 	,setDollarValue: function (tbl) {
 		$(".dollarcell",tbl).each(function () {
@@ -107,28 +108,40 @@
 		});
 	}
 	,viewMore: function () {
-		dealReport.pageIndex++;
+		dealReport.isViewMore=true;
 		$("#ReportList").ajaxTableReload();
 	}
-	,selectFund: function (id) {
+	,selectFund: function (id,name) {
 		var grid=$("#ReportList");
 		$("#FundId").val(id);
+		$("#FundName").val(name);
+		$("#SpnFundName").html(name);
 		var param=[{ name: "fundId",value: id}];
 		dealReport.pageIndex=1;
 		$("tbody",grid).empty();
 		grid.ajaxTableOptions({ params: param });
 		grid.ajaxTableReload();
 	}
-	,exportDeal: function (exportTypeId) {
+	,exportDeal: function () {
+		var exportTypeId=$("#ExportId").val();
 		var fundId=$("#FundId").val();
 		var url;
 		var features="width="+1+",height="+1;
-		if(exportTypeId==1||exportTypeId==2) {
+		if(exportTypeId=="1"||exportTypeId=="4") {
 			url="/Deal/Export?fundId="+fundId+"&exportTypeId="+exportTypeId+"&sortName="+$("#SortName").val()+"&sortOrder="+$("#SortOrder").val();
-		} else {
-			url="/Deal/ExportDetail?IsPrint=true&FundId="+fundId+"&SortName="+$("#SortName").val()+"&SortOrder="+$("#SortOrder").val();
+			window.open(url,"exportdeal",features);
 		}
-
-		window.open(url,"exportdeal",features);
+	}
+	,expandExpMenu: function (that) {
+		var pos=$(that).offset();
+		$(".exportlist").css({ "top": pos.top+13,"left": pos.left }).show();
+	}
+	,chooseExpMenu: function (id,name) {
+		$("#ExportId").val(id);
+		$("#lnkExportName").html(name);
+		$(".exportlist").hide();
+	}
+	,printArea: function () {
+		$("#ReportBox").printArea();
 	}
 }

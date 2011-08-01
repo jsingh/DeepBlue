@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<DeepBlue.Models.Deal.DealFundDetail>" %>
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
@@ -7,6 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("jAjaxTable.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
+	<%=Html.JavascriptInclueTag("jquery.PrintArea.js")%>
 	<%=Html.JavascriptInclueTag("DealReport.js")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
 	<%=Html.StylesheetLinkTag("dealreport.css")%>
@@ -29,53 +30,68 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+	<div class="menu exportlist" style="position: absolute; right: 85px;">
+		<ul>
+			<li><a href="javascript:dealReport.chooseExpMenu(2,'Pdf');">Pdf</a></li>
+			<li><a href="javascript:dealReport.chooseExpMenu(1,'Word');">Word</a></li>
+			<li><a href="javascript:dealReport.chooseExpMenu(4,'Excel');">Excel</a></li>
+		</ul>
+	</div>
 	<div class="titlebox">
-		<div class="left_tile">
-			Deal Report
+		<div class="left_title">
+			Deal Report -
+			<%:Html.Span("", new { @id= "SpnFundName" }) %>
 		</div>
-		<div class="left-col" style="margin-left: 10px; display: none" id="ReportLoading">
-			<%:Html.Image("ajax.jpg")%>&nbsp;Loading....</div>
 		<div class="export" style="float: right">
-			<div class="menu print">
-				<%:Html.Image("print.gif")%>
+			<div class="print">
+				<%:Html.Image("print.gif", new { @style = "cursor:pointer", @onclick = "javascript:dealReport.printArea();" })%>
 			</div>
-			<div class="menu">
+			<div class="menu" onclick="javascript:dealReport.expandExpMenu(this);">
 				<ul>
-					<li><a href="#">Pdf</a></li>
-					<li><a href="javascript:dealReport.exportDeal(1);">Word </a></li>
-					<li><a href="javascript:dealReport.exportDeal(3);">Excel </a></li>
+					<li><a id="lnkExportName" href="#">
+						Pdf</a></li>
 				</ul>
+				<%: Html.Hidden("ExportId","")%>
 			</div>
-			<div class="menu darrow">
-				<%:Html.Image("down_arrow.png")%></div>
+			<div class="darrow">
+				<%:Html.Image("down_arrow.png", new { @style="cursor:pointer", @onclick = "javascript:dealReport.exportDeal();" })%></div>
 		</div>
+		<div style="display: none; float: right; margin-right: 38%;" id="ReportLoading">
+			<%:Html.Image("ajax.jpg")%>&nbsp;Loading....</div>
 	</div>
 	<div class="line">
 	</div>
 	<div id="ReportContent" class="report-content">
-		<div class="gbox">
+		<div class="gbox" id="ReportBox">
 			<table cellpadding="0" class="grid" cellspacing="0" border="0" id="ReportList">
 				<thead>
 					<tr class="report_tr">
 						<th sortname="DealId" style="display: none">
 							DealId
 						</th>
-						<th sortname="DealId" align="center" style="width: 10%">
+						<th class="sorted sdesc" sortname="DealNumber" align="left" style="width: 5%">
 							<span>Deal No.</span>
 						</th>
-						<th align="left">
+						<th class="sorted sdesc" sortname="DealName" align="left" style="width: 18%">
 							<span>Deal Name</span>
 						</th>
-						<th align="left">
-							<span>Fund Name (S)</span>
+						<th sortname="DealDate" align="left" style="width: 12%">
+							<span>Deal Date</span>
 						</th>
-						<th align="right">
-							<span>Committed Amount</span>
+						<th sortname="NetPurchasePrice" align="right" style="text-align: right; width: 12%">
+							<span>Net Purchase Price</span>
 						</th>
-						<th align="right">
+						<th sortname="GrossPurchasePrice" align="right" style="text-align: right; width: 12%">
+							<span>Gross Purchase Price</span>
+						</th>
+						<th sortname="CommittedAmount" align="right" style="text-align: right; width: 12%">
+							<span>Commitment Amount</span>
+						</th>
+						<th sortname="UnfundedAmount" align="right" style="text-align: right; width: 12%">
 							<span>Unfunded Amount</span>
 						</th>
-						<th align="right">
+						<th class="sorted sdesc" sortname="TotalAmount" align="right" style="text-align: right;
+							width: 12%">
 							<span>Total Amount</span>
 						</th>
 						<th style="width: 2%">
@@ -86,18 +102,28 @@
 				</tbody>
 			</table>
 		</div>
+		<br />
+		<br />
+		<center>
+			<div>
+				<table cellpadding="0" cellspacing="0" border="0" id="ViewMoreDetail">
+				</table>
+			</div>
+		</center>
 	</div>
 	<%: Html.Hidden("FundId","0",new  { @id="FundId"}) %>
-	<%: Html.Hidden("SortName", "DealName", new { @id = "SortName" })%>
-	<%: Html.Hidden("SortOrder", "asc", new { @id = "SortOrder" })%>
+	<%: Html.Hidden("SortName", "", new { @id = "SortName" })%>
+	<%: Html.Hidden("SortOrder", "", new { @id = "SortOrder" })%>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<script type="text/javascript">		dealReport.init(); </script>
+	<%if (Model.FundId > 0) {%>
+	<script type="text/javascript">$(document).ready(function() { setTimeout( function() {  dealReport.selectFund(<%=Model.FundId%>,'<%=Model.FundName%>'); } ,200 ); }); </script>
+	<%}%>
 	<%=Html.jQueryAjaxTable("ReportList", new AjaxTableOptions {
 	ActionName = "DealReportList",
 	ControllerName = "Deal"
 	, HttpMethod = "GET"
-	, SortName = "DealNumber"
 	, Paging = true 
 	, OnSubmit = "dealReport.onSubmit"
 	, OnRowBound = "dealReport.onRowBound"
@@ -106,34 +132,48 @@
 	, OnChangeSort = "dealReport.onChangeSort"
 	, AppendExistRows= true
 	, Autoload = false
+	, RowOptions =  new int[] { 15, 20, 50, 100 }
+	, RowsLength  = 10
 	})%>
-	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { dealReport.selectFund(ui.item.id);}" })%>
+	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { dealReport.selectFund(ui.item.id,ui.item.label);}" })%>
 	<script id="DealDetailTemplate" type="text/x-jquery-tmpl"> 
 		<div class="treerow">
-			<div class="gbox"><table id="tblUnderlyingFund" class="grid" cellpadding="0" cellspacing="0" border="0">
+			<div class="gbox">
+            <table cellpadding="0" cellspacing="0" border="0" class="grid">
+				<thead>
+					<tr class="row subdet-title">
+						<th>Underlying Funds
+                        </th>
+                     </tr>
+					 </thead>
+               </thead>
+			</table>
+			</div>
+			<table id="tblUnderlyingFund" class="grid" cellpadding="0" cellspacing="0" border="0">
 				<thead>
 					<tr class="tblUnderlyingFund_tr">
-						<th>
+						<th style="width:23%">
 							Fund Name
 						</th>
-                        <th>
-                           Gross Purchase Price
-                        </th>
-						<th>
-							Fund NAV
-						</th>
-						<th>
-							Capital Commitment
-						</th>
-                        <th>
-                          Amount Unfunded
-                        </th>
-						<th>
+						<th style="width:15%">
 							Record Date
 						</th>
-                        <th>
-                         Fund Size (%)
+						<th style="width:12%">
+							Fund NAV
+						</th>
+                        <th style="text-align:right;width:12%">
+                           Gross Purchase Price
                         </th>
+						<th style="text-align:right;width:12%">
+							Capital Commitment
+						</th>
+                        <th style="text-align:right;width:12%">
+                          Amount Unfunded
+                        </th>
+                        <th style="text-align:right;width:12%">
+                         Fund Size (%)
+                        </th><th style="width: 2%"><div style="width:14px">&nbsp;</div>
+						</th>
 					</tr>
 				</thead>
 				{{if DealUnderlyingFunds.length>0}}
@@ -143,82 +183,88 @@
 						<td>
 							${FundName}
 						</td>
-                        <td class="dollarcell" style="text-align:right;padding-right:20px;">${GrossPurchasePrice}
-                        </td>
-						<td  style="text-align:left;padding-left:10px;">
+						<td class="datecell">
+							${RecordDate}
+						</td>
+						<td>
 							${FundNAV}
 						</td>
+                        <td class="dollarcell" style="text-align:right">
+							${GrossPurchasePrice}
+                        </td>
 						<td class="dollarcell" style="text-align:right">
 							${CommittedAmount}
 						</td>
-                        <td class="dollarcell" style="text-align:right">${UnfundedAmount}
+                        <td class="dollarcell" style="text-align:right">
+							${UnfundedAmount}
                         </td>
-						<td class="datecell" style="text-align:left;padding-left:15px;">
-							${RecordDate}
-						</td>
-                        <td>${Percent}
-                        </td>
+                        <td style="text-align:right">{{if Percent>0}}${Percent}{{/if}}
+                        </td><td></td>
 					</tr>
 					{{/each}}
 				</tbody>
 				<tfoot>
-					<tr>	<td>Total
+					<tr><td>Total
 						</td>
                         <td>
                         </td>
-						<td style="text-align:left;padding-left:10px;">${TotalFundNAV}
+						<td style="text-align:left;">${TotalFundNAV}
 						</td>
+						<td></td>
 						<td  style="text-align:right">${TotalCommitted}
 						</td>
                         <td style="text-align:right">${TotalUnfunded}
                         </td>
 						<td>
-						</td>
-                        <td>
-                        </td>
-						</tr>
+						</td><td></td>
+					</tr>
 				</tfoot>
 				{{/if}}
-			</table></div><div class="gbox">
+			</table>
+			<br/>
+			<div class="gbox">
             <table cellpadding="0" cellspacing="0" border="0" class="grid">
 				<thead>
-					<tr>
-						<th style="background-color:#D3D4D8;padding:10px;text-align:center;">Underlying Funds
+					<tr class="row subdet-title">
+						<th>Underlying Directs
                         </th>
                      </tr>
 					 </thead>
-               </thead></div>
-			</table><br/><br/><div class="gbox">
+               </thead>
+			</table>
+			</div>
+			<div class="gbox">
 			<table id="tblUnderlyingDirect" class="grid" cellpadding="0" cellspacing="0" border="0">
 				<thead>
 					<tr class="tblUnderlyingDirect_tr">
-					 
-						<th>
+						<th style="width: 15%">
 							Company
 						</th>
-						<th>
+						<th style="width: 8%">
 							Security
 						</th>
-						<th>
-							No.of Shares
-						</th>
-                        <th>
-                           Purchase Price
-                        </th>
-                        <th>
-							Tax Cost Basic
-						</th>
-                         <th>
-							Tax Cost Date
-						</th>
-						<th>
-							FMV
-						</th>
-						<th>
+						<th style="width: 7%">
 							Record Date
 						</th>
-                        <th>
+						<th style="width: 9%">
+							Tax Cost Basic
+						</th>
+						<th style="width: 9%">
+							Tax Cost Date
+						</th>
+						<th style="text-align:right;width:9%;">
+                           Purchase Price
+                        </th>
+						<th style="text-align:right;width:9%;">
+							FMV
+						</th>
+						<th style="width:12%;">
+							No.of Shares
+						</th>
+                        <th style="text-align:right;width:9%;">
 							Fund Size (%)
+						</th>
+						<th style="width: 2%"><div style="width:14px">&nbsp;</div>
 						</th>
 					</tr>
 				</thead>
@@ -232,23 +278,26 @@
 						<td>
 							${Security}
 						</td>
-						<td  style="text-align:left;padding-left:15px;">
-							${NumberOfShares}
-						</td>
-                        <td class="dollarcell" style="text-align:right">${PurchasePrice}
-                        </td>
-                        <td class="dollarcell" style="text-align:left;padding-left:15px;">${TaxCostBase}
-                        </td>
-                        <td class="datecell" style="text-align:left;padding-left:15px;">${TaxtCostDate}
-                        </td>
-						<td  style="text-align:right">
-							${FormatFMV}
-						</td>
-						<td class="datecell" style="text-align:left;padding-left:15px;">
+						<td class="datecell">
 							${RecordDate}
 						</td>
-                        <td style="text-align:left;padding-left:10px;">${Percentage}
+						<td class="dollarcell">${TaxCostBase}
                         </td>
+                        <td class="datecell">${TaxtCostDate}
+                        </td>
+						  <td class="dollarcell" style="text-align:right">
+							${PurchasePrice}
+                        </td>
+						<td style="text-align:right">
+							${FormatFMV}
+						</td>
+						<td>
+							${NumberOfShares}
+						</td>
+                        <td style="text-align:right;">{{if Percent>0}}${Percent}{{/if}}
+                        </td>
+						<td>
+						</td>
 					</tr>
 					{{/each}}
 				</tbody>
@@ -261,32 +310,25 @@
 						</td>
 						<td>
 						</td>
-                        <td style="text-align:right">${TotalPurchasePrice}
+                        <td>
                         </td>
-                        <td style="text-align:right">
+                        <td>
                         </td>
                         <td>
                         </td>
 						<td  style="text-align:right">${TotalFMV}
 						</td>
-						<td class="datecell">
+						<td>
 						</td>
                         <td>
                         </td>
+						<td>
+						</td>
                     </tr>
 				</tfoot>
 				{{/if}}
-			</table></div><div class="gbox">
-             <table cellpadding="0" cellspacing="0" border="0" class="grid">
-				<thead>
-					<tr>
-						<th style="background-color:#D3D4D8;padding:10px;text-align:center;">Underlying Directs
-                        </th>
-                     </tr>
-					 </thead>
-               </thead>
-			</table></div>
+			</table>
+			</div><br/><br/><div class="gbox"></div>
 		 </div>
-		 
 	</script>
 </asp:Content>

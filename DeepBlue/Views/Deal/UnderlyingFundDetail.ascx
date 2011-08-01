@@ -8,7 +8,7 @@
 			GP</label>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("Issuer", "${IssuerName}", new { @id = "Issuer", @style="width:157px", @onblur = "javascript:underlyingFund.checkIssuer(this);" })%>
+		<%: Html.TextBox("Issuer", "${IssuerName}", new { @id = "Issuer", @style = "width:163px", @onblur = "javascript:underlyingFund.checkIssuer(this);" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<label>
@@ -85,7 +85,7 @@
 			Description</label>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextArea("Description", "${Description}", new { @style = "width:582px;height:140px;" })%>
+		<%: Html.TextArea("Description", "${Description}", new { @style = "width:519px;height:160px;" })%>
 	</div>
 </div>
 <div id="ExpandUnderlying">
@@ -109,7 +109,7 @@
 			<div class="rightuarrow">
 			</div>
 		</div>
-		<div class="detail" style="display: none;padding-left:95px;" id="ContactInformation">
+		<div class="detail" style="display: none; padding-left: 95px;" id="ContactInformation">
 			<div class="editor-label">
 				<label>
 					Contact Name</label>
@@ -175,7 +175,7 @@
 			<div class="rightuarrow">
 			</div>
 		</div>
-		<div class="detail" style="display: none;padding-left:95px;" id="BankInformation">
+		<div class="detail" style="display: none; padding-left: 95px;" id="BankInformation">
 			<div>
 				<div class="editor-label">
 					<label>
@@ -246,7 +246,8 @@
 				<div class="expandtitle">
 					Document Information
 				</div>
-			</div><div class="rightuarrow">
+			</div>
+			<div class="rightuarrow">
 			</div>
 		</div>
 		<div class="detail" style="display: none; padding-left: 65px;" id="DocumentInformation">
@@ -284,7 +285,7 @@
 			<div class="cell" style="padding: 0; margin: 0;">
 				<%: Html.Span("", new { @id = "SpnDocLoading" })%>
 			</div>
-			<div style="clear: both; width: 70%;">
+			<div style="clear: both; width: 70%; padding-left: 52px;">
 				<br />
 				<table id="DocumentList" cellpadding="0" cellspacing="0" border="0">
 					<thead>

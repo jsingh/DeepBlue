@@ -5,7 +5,7 @@
 	width: 90%;
 	float: left;
 	clear: both;
-	margin-top: 25px;
+	margin: 25px 0;
 }
 .report-content a {
 	color: #000;
@@ -13,41 +13,37 @@
 
 .left-col {
 	float: left;
-	padding-top: 10px;
 }
 .right-col {
 	float: right;
 	padding-left: 85%;
-	position: absolute;
-	top: 80px;
 }
 .export {
 	font-size: 14px;
 }
 .export a {
-	color: #000;
+	color: #000;    margin: 0 15px 0 0;
 }
-#ReportContent .gbox {
-	background: none repeat scroll 0 0 transparent;
-	border-top: 1px solid #F1F6FC;
-	padding: 0;
+#SpnFundName {
+	font-size: 14px;
 }
+
 .grid .report_tr th {
 	background-color: #B0BCCA;
-	 background-image: none;
-	 border-bottom: 1px solid #B5B5B5;
+	background-image: none;
+	border-bottom: 1px solid #B5B5B5;
 }
 #ReportList .sorted span {
 	background-image: url(../images/sort_up.png);
 	background-repeat: no-repeat;
 	background-position: right center;
-	padding-right: 12px;
+	padding-right: 15px;
 }
 #ReportList .sdesc span {
 	background-image: url(../images/sort_down.png);
 	background-repeat: no-repeat;
 	background-position: right center;
-	padding-right: 12px;
+	padding-right: 15px;
 }
 #ExportMenu {
 	display: none;
@@ -70,19 +66,26 @@
 #ExportMenu .sel a {
 	color: #fff;
 }
-
-.expandRowBg {
-	background-color: #E4E5EA;
+.grid .expandRowBg {
+	background-color: transparent;
+	padding: 0;
 }
-.expandrow td {
-	border-bottom: solid 1px #CaCaCb;
+.grid .expandRowBg {
+	background-image: none;
 }
-
-.tblUnderlyingFund_tr th {
-	background-color: #BABFC5;
-	height: 30px;
+.grid .expandrow td {
+	border-bottom: solid 1px #cacaca;
+	background-image: none;
 }
-
+.grid .tblUnderlyingFund_tr th {
+	background-image: none;
+	border-top: solid 1px #b5b5b5;
+}
+.grid .subdet-title th {
+	background-color: #d3d4d8;
+	background-image: none;
+	font-size: 13px;
+}
 .tblUnderlyingDirect_tr th {
 	background-color: #BABFC5;
 	height: 30px;
@@ -98,8 +101,9 @@
 	padding-left: 50px;
 }
 
-.left_tile {
+.left_title {
 	float: left;
+	font-size: 16px;
 	font-weight: bold;
 }
 .fundimg {
@@ -107,7 +111,9 @@
 	float: right;
 }
 .treerow {
-	margin: 30px;
+	padding: 20px 0 0;
+	background-color: #E4E5EA;
+	margin-bottom: 20px;
 }
 
 .titlebox {
@@ -117,18 +123,37 @@
 	width: 90%;
 }
 .export .menu {
+	 background-image: url("../images/expdown.png");
+    background-position: right center;
+    background-repeat: no-repeat;
 	float: left;
 	font-size: 12px;
 	height: 17px;
 	overflow: hidden;
+	margin-right: 10px;
+	width: 43px;
 }
-.export .menu li {
+.exportlist {
+	 display:none;
+}
+.exportlist  li {
 	list-style: none;
 	margin: 0 10px 0 0;
 }
-.export .print {
-	margin: 0 20px 0 0;
+.exportlist li a {
+	color:#000;
+}
+.export .print { float:left;
+	margin: 0 15px 0 0;
 }
 .export .darrow {
-	margin: 0 0 0 5px;
+	margin: 0 0 0 5px;float:left;
+}
+.grid .rep_tfoot tr td {
+	background-image: none;
+	background-color: transparent;
+	font-weight: normal;
+}
+.rep_tfoot tr td a {
+	text-decoration: underline; font-size:11px;
 }

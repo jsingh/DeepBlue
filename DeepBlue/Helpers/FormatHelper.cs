@@ -12,11 +12,11 @@ namespace DeepBlue.Helpers {
 		//}
 
 		public static string NumberFormat(decimal? value) {
-			return String.Format("{0:0,##;(0,##);\\}", (value ?? 0));
+			return ((value ?? 0) == 0 ? string.Empty : String.Format("{0:C}", (value ?? 0)).Replace("$",""));
 		}
 		
 		public static string CurrencyFormat(decimal? value) {
-			return String.Format("{0:$0,##;$(0,##);\\}", (value ?? 0));
+			return ((value ?? 0) == 0 ? string.Empty :  String.Format("{0:C}", (value ?? 0)));
 		}
 
 		public static string PercentageFormat(decimal? value) {

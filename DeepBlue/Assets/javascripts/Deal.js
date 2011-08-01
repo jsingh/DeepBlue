@@ -3,7 +3,6 @@
 	,onDealSuccess: null
 	,init: function () {
 		$(document).ready(function () {
-			deal.loadFundList();
 			jHelper.waterMark();
 			$("#Deal_Management").removeClass("subext").addClass("subext3");
 			var FullDealList=$("#FullDealList");
@@ -13,13 +12,6 @@
 			FullFundList.dialog({ title: "Fund List",autoOpen: false,width: 625,modal: true,position: 'top',autoResize: false,open: function () { $("#FundList").flexReload(); } });
 			FullFundList.hide();
 		});
-		var modifyDeal=$("#ModifyDealBox");
-		var ul=$("#modifyDealUL");
-		modifyDeal.empty();ul.show();
-		modifyDeal.append(ul);
-		var searchDealName=$("#SearchDealName",modifyDeal);
-		searchDealName.autocomplete({ source: "/Deal/FindDeals",minLength: 1,select: function (event,ui) { deal.loadDeal(ui.item.id); },appendTo: "body",delay: 300 });
-		menu.stopMenuClose=true;
 	}
 	,initDealEvents: function () {
 		$(".expandheader").click(function () {
@@ -67,6 +59,7 @@
 		$("#NewDeal").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		$.getJSON(url,function (data) {
 			$("#SaveDealBox").show();
+			$("#SearchDealName").val(data.DealName);
 			$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/mdeal.png");
 			deal.loadTemplate(data);
 		});
@@ -200,7 +193,8 @@
 		FullDealList.dialog("open");
 	}
 	,onDealListSuccess: function () {
-		var FullDealList=$("#FullDealList");$("tbody tr","#DealList").click(function () { deal.loadDeal($.trim($("td:eq(0) div",this).html()));FullDealList.dialog("close"); });
+		var FullDealList=$("#FullDealList");
+		$("tbody tr","#DealList").click(function () { deal.loadDeal($.trim($("td:eq(0) div",this).html()));FullDealList.dialog("close"); });
 	}
 	/* End Deal Detail */
 	/* Common functions */
@@ -226,30 +220,8 @@
 		$("tbody tr","#FundList").click(function () {
 			var fundId=$.trim($("td:eq(0) div",this).html());
 			var fundName=$.trim($("td:eq(1) div",this).html());
-			deal.selectFund(null,fundId,fundName);
+			deal.selectFund(fundId,fundName);
 			FullFundList.dialog("close");
-		});
-	}
-	,loadFundList: function () {
-		var DealFundList=$("#DealFundList");
-		var data={};
-		$("#FundListTemplate").tmpl(data).appendTo(DealFundList);
-		$("#M_Fund").autocomplete({ source: "/Fund/FindFunds",minLength: 1,select: function (event,ui) {
-			deal.selectFund(this,ui.item.id,ui.item.label);
-		},appendTo: "body",delay: 300
-		});
-		return;
-		var pageIndex=1;
-		var pageSize=8;
-		var sortName="FundName";
-		var sortOrder="asc";
-		var dt=new Date();
-		var url="/Fund/GetAllFunds/?pageIndex="+pageIndex+"&pageSize="+pageSize+"&t="+dt.getTime();
-		var FundList=document.getElementById("FundList");
-		DealFundList.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
-		$.getJSON(url,function (data) {
-			DealFundList.empty();
-			$("#FundListTemplate").tmpl(data).appendTo(DealFundList);
 		});
 	}
 	,changeFund: function (fundId,fundName) {
@@ -264,9 +236,8 @@
 			$("#FundId").val(0);$("#lnkFundName").empty();
 		}
 	}
-	,selectFund: function (lnk,fundId,fundName) {
+	,selectFund: function (fundId,fundName) {
 		$(".sel","#DealFundList").removeClass("sel");
-		$(lnk).addClass("sel");
 		var dt=new Date();
 		var url="/Deal/FindFund/?fundId="+fundId+"&t="+dt.getTime();
 		$("#NewDeal").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
@@ -275,6 +246,7 @@
 		$.getJSON(url,function (data) {
 			data.FundName=fundName;
 			data.FundId=fundId;
+			$("#M_Fund").val(fundName);
 			deal.loadTemplate(data);
 		});
 	}

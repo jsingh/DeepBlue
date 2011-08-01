@@ -734,8 +734,8 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%= Html.jQueryAutoComplete("CC_UnderlyingFund", new AutoCompleteOptions {
-																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1, 
-																	  OnSelect = "function(event, ui) { dealActivity.setCCUnderlyingFund(ui.item.id,ui.item.value);}"
+																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
+																	  OnSelect = "function(event, ui) { deal.selectFund(this,ui.item.id,ui.item.label); }"
 	})%>
 	<%= Html.jQueryAutoComplete("CD_UnderlyingFund", new AutoCompleteOptions {
 																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,

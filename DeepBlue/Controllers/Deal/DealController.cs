@@ -13,6 +13,8 @@ using DeepBlue.Controllers.Fund;
 using DeepBlue.Models.Entity;
 using DeepBlue.Models.Deal.Enums;
 using DeepBlue.Controllers.CapitalCall;
+using System.Web.UI;
+using System.Net;
 
 
 
@@ -67,6 +69,12 @@ namespace DeepBlue.Controllers.Deal {
 			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
 			model.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
 			model.DocumentStatusTypes = SelectListFactory.GetDealDocumentStatusList();
+			model.DealId = DealRepository.FindLastDealId();
+			DealFundDetail dealFundDetail = DealRepository.FindLastFundDetail();
+			if (dealFundDetail != null) {
+				model.FundId = dealFundDetail.FundId;
+				model.FundName = dealFundDetail.FundName;
+			}
 			return model;
 		}
 
@@ -653,6 +661,7 @@ namespace DeepBlue.Controllers.Deal {
 			ViewData["MenuName"] = "DealManagement";
 			ViewData["PageName"] = "CloseDeal";
 			CreateDealCloseModel model = new CreateDealCloseModel();
+			model.DealId = DealRepository.FindLastDealId();
 			return View(model);
 		}
 
@@ -888,7 +897,9 @@ namespace DeepBlue.Controllers.Deal {
 		public ActionResult Report() {
 			ViewData["MenuName"] = "DealManagement";
 			ViewData["PageName"] = "DealReport";
-			return View();
+			DealFundDetail dealFundDetail = DealRepository.FindLastFundDetail();
+			if (dealFundDetail == null) dealFundDetail = new DealFundDetail();
+			return View(dealFundDetail);
 		}
 
 		//
@@ -902,7 +913,17 @@ namespace DeepBlue.Controllers.Deal {
 			flexgridData.page = pageIndex;
 			foreach (var deal in deals) {
 				flexgridData.rows.Add(new FlexigridRow {
-					cell = new List<object> { deal.DealId, deal.DealNumber.ToString() + ".", deal.DealName, deal.FundName, FormatHelper.CurrencyFormat(deal.CommittedAmount), FormatHelper.CurrencyFormat(deal.UnfundedAmount), FormatHelper.CurrencyFormat(deal.TotalAmount) }
+					cell = new List<object> { 
+						deal.DealId
+						, deal.DealNumber
+						, deal.DealName
+						, deal.DealDate.ToString("MM/dd/yyyy")
+						, FormatHelper.CurrencyFormat(deal.NetPurchasePrice)
+						, FormatHelper.CurrencyFormat(deal.GrossPurchasePrice)
+						, FormatHelper.CurrencyFormat(deal.CommittedAmount)
+						, FormatHelper.CurrencyFormat(deal.UnfundedAmount)
+						, FormatHelper.CurrencyFormat(deal.TotalAmount)
+					}
 				});
 			}
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);
@@ -922,23 +943,11 @@ namespace DeepBlue.Controllers.Deal {
 		// GET: /Deal/DealUnderlyingDetails
 		[HttpGet]
 		public ActionResult Export(int fundId, int exportTypeId, string sortName, string sortOrder) {
-			Uri requestUrl = HttpContext.Request.Url;
-			string url = string.Format("{0}://{1}{2}",
-												  requestUrl.Scheme,
-												  requestUrl.Authority,
-												  "/Deal/ExportDetail?FundId=" + fundId
-												  + "&SortName=" + sortName
-												  + "&SortOrder=" + sortOrder);
-			ActionResult result = null;
-			switch ((Models.Deal.Enums.ExportType)exportTypeId) {
-				case ExportType.Word:
-					result = new ExportWordResult(url, "DealReport.doc");
-					break;
-				/*case ExportType.Pdf:
-					result = new ExportPdfResult(url, "DealReport.pdf");
-					break; */
-			}
-			return result;
+			int totalRows = 0;
+			DealExportModel model = new DealExportModel();
+			model.Deals = DealRepository.GetAllReportDeals(1, 200, sortName, sortOrder, ref totalRows, fundId);
+			ViewData["ExportTypeId"] = exportTypeId;
+			return View("ExportDetail", model);
 		}
 
 		//

@@ -83,10 +83,10 @@
 		<%using (Html.SubMenu("Deal_Management", (ViewData["MenuName"] == "DealManagement"))) {%>
 		<ul>
 			<li>
-				<%: Html.ActionLink("Create New Deal", "New", "Deal", null, new { @onmouseover = "$('#ModifyDealBox').hide();menu.msubopen(this,'DealFundList')", @class = (ViewData["SubmenuName"] == "Create New Deal" ? "sel" : "") })%>
+				<%: Html.ActionLink("Create New Deal", "New", "Deal", null, new { @class = (ViewData["SubmenuName"] == "Create New Deal" ? "sel" : "") })%>
 			</li>
 			<li>
-				<%: Html.ActionLink("Modify Deal", "Edit", "Deal", null, new { @onmouseover = "$('#DealFundList').hide();menu.msubopen(this,'ModifyDealBox')", @class = (ViewData["SubmenuName"] == "Modify Deal" ? "sel" : "") })%>
+				<%: Html.ActionLink("Modify Deal", "Edit", "Deal", null, new { @class = (ViewData["SubmenuName"] == "Modify Deal" ? "sel" : "") })%>
 			</li>
 			<li>
 				<%: Html.ActionLink("Close Deal", "Close", "Deal", null, new { @class = (ViewData["PageName"] == "CloseDeal" ? "sel" : "") })%>

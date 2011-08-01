@@ -7,7 +7,8 @@ using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace DeepBlue.Models.Deal {
-	public class DealDetailModel {
+
+	public class DealDetailModel : DealFundDetail {
 
 		public DealDetailModel() {
 			DealId = 0;
@@ -26,13 +27,6 @@ namespace DeepBlue.Models.Deal {
 		}
 
 		public int DealId { get; set; }
-		
-		[Required(ErrorMessage="Fund is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
-		[DisplayName("Fund Name -")]
-		public int FundId { get; set; }
-		
-		public string FundName { get; set; }
 
 		[Required(ErrorMessage = "Deal Name is required")]
 		[StringLength(50, ErrorMessage = "Deal Name must be under 50 characters.")]

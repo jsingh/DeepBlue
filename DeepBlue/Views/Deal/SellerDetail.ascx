@@ -11,7 +11,7 @@
 				Seller Information</div>
 		</div>
 	</div>
-</div>
+</div> 
 <div id="SellerInfo">
 	<div class="fieldbox">
 		<div class="section">

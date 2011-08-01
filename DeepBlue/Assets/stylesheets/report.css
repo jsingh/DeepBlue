@@ -20,21 +20,7 @@
 	font-weight: bold;
 	padding-top: 3px;
 }
-.grid {
-	clear: both;
-	overflow: auto;
-	overflow-x: hidden;
-}
-.grid table {
-	width: 99%;
-}
-.grid tr th {
-	text-align: right;
-	text-decoration: underline;
-}
-.grid tr th, .grid tr td {
-	padding: 8px 0px;
-}
+
 .foot-name, .foot-value {
 	float: left;
 	font-weight: bold;

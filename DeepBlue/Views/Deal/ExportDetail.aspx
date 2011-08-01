@@ -5,213 +5,103 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 	<title>Export</title>
-	<%=Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<style type="text/css">
 		body {
-			font-family:  Arial;
-			font-size: 14px;
+			margin: 0;
+			padding: 0;
+			font-size: 12px;
+			font-family: Arial;
 		}
-		table {
-			width: 100%;
-		}
-		tbody tr {
-			background-color: #FFF;
-		}
-		th {
-			white-space: nowrap;
-		}
-		td {
-			padding: 8px 0px;
-		}
-		.erow {
-			background-color: #fff;
-		}
-		.erow td {
-			padding: 0px;
-		}
-		.arow {
-			background-color: #fff;
-		}
-		#tblUnderlyingFund, #tblUnderlyingDirect {
-			width: 95%;
-			background-color: #000;
-		}
-		#tblUnderlyingFund tr th, #ReportList #tblUnderlyingFund tr td, #tblUnderlyingDirect tr th, #ReportList #tblUnderlyingDirect tr td {
-			text-align: center;
+		th, td {
+			text-align: left;
+			padding: 5px;
+			font-weight: normal;
 		}
 	</style>
 </head>
 <body>
 	<table cellpadding="0" cellspacing="1" border="0" id="ReportList">
 		<thead>
-			<tr>
-				<th style="width: 10%">
-					Deal No.
+			<tr class="report_tr">
+				<th style="width: 5%">
+					<span>Deal No.</span>
 				</th>
-				<th>
-					Deal Name
+				<th style="width: 18%">
+					<span>Deal Name</span>
 				</th>
-				<th>
-					Fund Name
+				<th style="width: 12%">
+					<span>Deal Date</span>
 				</th>
-				<th>
-					Seller Name
+				<th style="text-align: right; width: 12%">
+					<span>Net Purchase Price</span>
+				</th>
+				<th style="text-align: right; width: 12%">
+					<span>Gross Purchase Price</span>
+				</th>
+				<th style="text-align: right; width: 12%">
+					<span>Commitment Amount</span>
+				</th>
+				<th style="text-align: right; width: 12%">
+					<span>Unfunded Amount</span>
+				</th>
+				<th style="text-align: right; width: 12%">
+					<span>Total Amount</span>
 				</th>
 			</tr>
 		</thead>
 		<tbody>
-			<% int index = 0;
-	  foreach (var item in Model.Deals) { %>
-			<tr class="erow">
-				<td colspan="4">
-					&nbsp;
+			<% foreach (var item in Model.Deals) { %>
+			<tr>
+				<td>
+					<%: item.DealNumber %>
+				</td>
+				<td>
+					<%: item.DealName %>
+				</td>
+				<td>
+					<%: item.DealDate.ToString("MM/dd/yyyy") %>
+				</td>
+				<td style="text-align: right">
+					<%: FormatHelper.CurrencyFormat(item.NetPurchasePrice)%>
+				</td>
+				<td style="text-align: right">
+					<%: FormatHelper.CurrencyFormat(item.GrossPurchasePrice)%>
+				</td>
+				<td style="text-align: right">
+					<%: FormatHelper.CurrencyFormat(item.CommittedAmount)%>
+				</td>
+				<td style="text-align: right">
+					<%: FormatHelper.CurrencyFormat(item.UnfundedAmount)%>
+				</td>
+				<td style="text-align: right">
+					<%: FormatHelper.CurrencyFormat(item.TotalAmount)%>
 				</td>
 			</tr>
-			<% index++;
-	  if ((index % 2) == 0) {%>
-			<tr class="arow">
-				<%}
-	  else {%><tr>
-		  <%}%>
-		  <td style="text-align: center">
-			  <%: item.DealNumber %>&nbsp;.
-		  </td>
-		  <td style="text-align: center">
-			  <%: item.DealName %>
-		  </td>
-		  <td style="text-align: center">
-			  <%: item.FundName %>
-		  </td>
-		  <td style="text-align: center">
-			  <%: item.SellerName %>
-		  </td>
-	  </tr>
-				<tr>
-					<td colspan="2" style="padding-left: 20px; text-align: center; vertical-align: top;">
-						<table cellspacing="1" cellpadding="0" border="0" id="tblUnderlyingFund">
-							<thead>
-								<tr>
-									<th>
-										No.
-									</th>
-									<th>
-										Fund Name
-									</th>
-									<th>
-										Fund NAV
-									</th>
-									<th>
-										Commitment
-									</th>
-									<th>
-										Record Date
-									</th>
-								</tr>
-							</thead>
-							<%if (item.DealUnderlyingFunds.Count > 0) {%>
-							<tbody>
-								<%int fundIndex = 0;
-		  foreach (var fund in item.DealUnderlyingFunds) {
-			  fundIndex++; %>
-								<tr>
-									<td>
-										<%: fundIndex%>&nbsp;.
-									</td>
-									<td>
-										<%: fund.FundName%>
-									</td>
-									<td>
-										<%: fund.FundNAV%>
-									</td>
-									<td class="dollarcell">
-										<%: FormatHelper.CurrencyFormat(fund.CommittedAmount)%>
-									</td>
-									<td class="datecell">
-										<%: (fund.RecordDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy")%>
-									</td>
-								</tr>
-								<%}%>
-							</tbody>
-							<%}%>
-						</table>
-						<br />
-						Underlying Funds
-					</td>
-					<td colspan="2" style="padding-left: 20px; text-align: center; vertical-align: top;">
-						<table cellspacing="1" cellpadding="0" border="0" id="tblUnderlyingDirect">
-							<thead>
-								<tr>
-									<th>
-										No.
-									</th>
-									<th>
-										Company
-									</th>
-									<th>
-										Security
-									</th>
-									<th>
-										No.of Shares
-									</th>
-									<th>
-										Percentage
-									</th>
-									<th>
-										FMV
-									</th>
-									<th>
-										Record Date
-									</th>
-								</tr>
-							</thead>
-							<%if (item.DealUnderlyingDirects.Count > 0) {%>
-							<tbody>
-								<%int directIndex = 0;
-		  foreach (var direct in item.DealUnderlyingDirects) {
-			  directIndex++; %>
-								<tr>
-									<td>
-										<%: directIndex%>&nbsp;.
-									</td>
-									<td>
-										<%: direct.IssuerId%>
-									</td>
-									<td>
-										<%: direct.Security%>
-									</td>
-									<td>
-										<%: direct.NumberOfShares%>
-									</td>
-									<td>
-										<%: direct.Percent%>
-									</td>
-									<td>
-										<%: direct.FMV%>
-									</td>
-									<td class="datecell">
-										<%: (direct.RecordDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy") %>
-									</td>
-								</tr>
-								<%}%>
-							</tbody>
-							<%}%>
-						</table>
-						<br />
-						Underlying Directs
-					</td>
-				</tr>
-				<% } %>
+			<% } %>
 		</tbody>
 	</table>
-	<%: Html.HiddenFor(model => model.IsPrint)%>
+	<%DeepBlue.Models.Deal.Enums.ExportType exportType = (DeepBlue.Models.Deal.Enums.ExportType)ViewData["ExportTypeId"];
+   if (exportType == DeepBlue.Models.Deal.Enums.ExportType.Excel || exportType == DeepBlue.Models.Deal.Enums.ExportType.Word) {
+	   bool exportReady = false;
+	   switch (exportType) {
+		   case DeepBlue.Models.Deal.Enums.ExportType.Word:
+			   Response.AddHeader("content-disposition", "attachment;filename=DealReport.doc");
+			   Response.ContentType = "application/ms-word";
+			   exportReady = true;
+			   break;
+		   case DeepBlue.Models.Deal.Enums.ExportType.Excel:
+			   Response.AddHeader("content-disposition", "attachment;filename=DealReport.xls");
+			   Response.ContentType = "application/excel";
+			   exportReady = true;
+			   break;
+	   }
+	   if (exportReady) {
+		   System.IO.StringWriter swr = new System.IO.StringWriter();
+		   HtmlTextWriter tw = new HtmlTextWriter(swr);
+		   Response.Write(swr.ToString());
+		   Response.End();
+	   }
+   }
+	%>
 </body>
-<script type="text/javascript">
-	$(document).ready(function () {
-		var isprint=$("#IsPrint").val();
-		if(isprint.toLowerCase()=="true") {
-			window.print();
-		}
-		window.close();
-	});
-</script>
 </html>

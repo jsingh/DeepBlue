@@ -159,6 +159,31 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public int FindLastDealId() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.Deals.OrderByDescending(deal => deal.DealID).FirstOrDefault().DealID;
+			}
+		}
+
+		public DealFundDetail FindLastFundDetail() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				DealFundDetail dealFundDetail = (from deal in context.Deals
+												 orderby deal.DealID descending
+												 select new DealFundDetail {
+													  FundId = deal.FundID,
+													 FundName = deal.Fund.FundName
+												 }).FirstOrDefault();
+				if (dealFundDetail == null) {
+					dealFundDetail = (from fund in context.Funds
+									  orderby fund.FundID descending
+									  select new DealFundDetail {
+										  FundId = fund.FundID,
+										  FundName = fund.FundName
+									  }).FirstOrDefault();
+				}
+				return dealFundDetail;
+			}
+		}
 		#endregion
 
 		#region DealExpense
@@ -234,17 +259,17 @@ namespace DeepBlue.Controllers.Deal {
 		public List<DealFundDocumentList> GetAllDealFundDocuments(int dealId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<DealFundDocumentList> query = (from dealFundDocument in context.DealFundDocuments
-																where dealFundDocument.DealID == dealId
-																select new DealFundDocumentList {
-																	DocumentDate = dealFundDocument.DocumentDate,
-																	DocumentType = dealFundDocument.DocumentType.DocumentTypeName,
-																	FileName = dealFundDocument.File.FileName,
-																	FilePath = dealFundDocument.File.FilePath,
-																	FileTypeName = dealFundDocument.File.FileType.FileTypeName,
-																	DealFundDocumentId = dealFundDocument.DealFundDocumentID,
-																	FundName = dealFundDocument.Fund.FundName
-																});
-				return query.OrderBy("DocumentDate",false).ToList();
+														  where dealFundDocument.DealID == dealId
+														  select new DealFundDocumentList {
+															  DocumentDate = dealFundDocument.DocumentDate,
+															  DocumentType = dealFundDocument.DocumentType.DocumentTypeName,
+															  FileName = dealFundDocument.File.FileName,
+															  FilePath = dealFundDocument.File.FilePath,
+															  FileTypeName = dealFundDocument.File.FileType.FileTypeName,
+															  DealFundDocumentId = dealFundDocument.DealFundDocumentID,
+															  FundName = dealFundDocument.Fund.FundName
+														  });
+				return query.OrderBy("DocumentDate", false).ToList();
 			}
 		}
 
@@ -655,19 +680,16 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region DealReport
+
 		public List<DealReportModel> GetAllReportDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<DealReportModel> query = (from deal in context.Deals
-													 where deal.FundID == fundId
-													 select new DealReportModel {
-														 DealId = deal.DealID,
-														 DealName = deal.DealName,
-														 DealNumber = deal.DealNumber,
-														 FundName = deal.Fund.FundName,
-														 UnfundedAmount = deal.DealUnderlyingFunds.Sum(df => df.UnfundedAmount),
-														 CommittedAmount = deal.DealUnderlyingFunds.Sum(df => df.CommittedAmount)
-													 });
-				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				IQueryable<DealReportModel> query =  GetAllDealReportQuery(context, fundId);
+				if (string.IsNullOrEmpty(sortName)) {
+					query = query.OrderByDescending(q => new { q.DealNumber, q.DealName, q.TotalAmount });
+				}
+				else {
+					query = query.OrderBy(sortName, (sortOrder == "asc"));
+				}
 				PaginatedList<DealReportModel> paginatedList = new PaginatedList<DealReportModel>(query, pageIndex, pageSize);
 				totalRows = paginatedList.TotalCount;
 				return paginatedList;
@@ -676,15 +698,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		public List<DealReportModel> GetAllExportDeals(string sortName, string sortOrder, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<DealReportModel> query = (from deal in context.Deals
-													 where deal.FundID == fundId
-													 select new DealReportModel {
-														 DealId = deal.DealID,
-														 DealName = deal.DealName,
-														 DealNumber = deal.DealNumber,
-														 FundName = deal.Fund.FundName,
-														 SellerName = (deal.Contact1 != null ? deal.Contact1.ContactName : "")
-													 });
+				IQueryable<DealReportModel> query = GetAllDealReportQuery(context, fundId);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				List<DealReportModel> deals = query.ToList();
 				foreach (var deal in deals) {
@@ -694,6 +708,23 @@ namespace DeepBlue.Controllers.Deal {
 				return deals;
 			}
 		}
+
+		private IQueryable<DealReportModel> GetAllDealReportQuery(DeepBlueEntities context , int fundId) {
+			return (from deal in context.Deals
+					where deal.FundID == fundId
+					select new DealReportModel {
+						DealId = deal.DealID,
+						DealName = deal.DealName,
+						DealNumber = deal.DealNumber,
+						DealDate = deal.CreatedDate,
+						NetPurchasePrice = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.NetPurchasePrice),
+						GrossPurchasePrice = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.GrossPurchasePrice),
+						CommittedAmount = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.CommittedAmount),
+						UnfundedAmount = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.UnfundedAmount),
+						TotalAmount = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.CommittedAmount) - deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.UnfundedAmount)
+					});
+		}
+
 		#endregion
 
 		#region UnderlyingFund
@@ -1659,26 +1690,26 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region Reconcile
 
-		private IQueryable<ReconcileReportModel> GetAllReconciles(DeepBlueEntities context, DateTime startDate, DateTime endDate, int fundId,ReconcileType reconcileType) {
+		private IQueryable<ReconcileReportModel> GetAllReconciles(DeepBlueEntities context, DateTime startDate, DateTime endDate, int fundId, ReconcileType reconcileType) {
 			IQueryable<ReconcileReportModel> query = null;
 			switch (reconcileType) {
 				case ReconcileType.UnderlyingFundCapitalCall:
 					query = (from capitalCall in context.UnderlyingFundCapitalCalls
-							where capitalCall.ReceivedDate >= EntityFunctions.TruncateTime(startDate)
-							&& capitalCall.ReceivedDate <= EntityFunctions.TruncateTime(endDate)
-							&& capitalCall.FundID == fundId
-							&& capitalCall.IsReconciled == false
-							select new ReconcileReportModel {
-								Amount = capitalCall.Amount,
-								IsReconciled = capitalCall.IsReconciled,
-								CounterParty = capitalCall.UnderlyingFund.FundName,
-								FundName = capitalCall.Fund.FundName,
-								PaidOn = capitalCall.PaidON,
-								PaymentDate = capitalCall.ReceivedDate,
-								Type = "Underlying Fund",
-								ReconcileTypeId = (int)ReconcileType.UnderlyingFundCapitalCall,
-								id = capitalCall.UnderlyingFundCapitalCallID
-							});
+							 where capitalCall.ReceivedDate >= EntityFunctions.TruncateTime(startDate)
+							 && capitalCall.ReceivedDate <= EntityFunctions.TruncateTime(endDate)
+							 && capitalCall.FundID == fundId
+							 && capitalCall.IsReconciled == false
+							 select new ReconcileReportModel {
+								 Amount = capitalCall.Amount,
+								 IsReconciled = capitalCall.IsReconciled,
+								 CounterParty = capitalCall.UnderlyingFund.FundName,
+								 FundName = capitalCall.Fund.FundName,
+								 PaidOn = capitalCall.PaidON,
+								 PaymentDate = capitalCall.ReceivedDate,
+								 Type = "Underlying Fund",
+								 ReconcileTypeId = (int)ReconcileType.UnderlyingFundCapitalCall,
+								 id = capitalCall.UnderlyingFundCapitalCallID
+							 });
 					break;
 				case ReconcileType.UnderlyingFundCashDistribution:
 					query = (from cashDistribution in context.UnderlyingFundCashDistributions
@@ -1740,10 +1771,10 @@ namespace DeepBlue.Controllers.Deal {
 
 		public List<ReconcileReportModel> GetAllReconciles(DateTime startDate, DateTime endDate, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return GetAllReconciles(context, startDate,endDate,fundId,ReconcileType.UnderlyingFundCapitalCall)
-						.Union(GetAllReconciles(context, startDate,endDate,fundId,ReconcileType.UnderlyingFundCashDistribution))
-						.Union(GetAllReconciles(context, startDate,endDate,fundId,ReconcileType.CapitalCall))
-						.Union(GetAllReconciles(context, startDate,endDate,fundId,ReconcileType.CapitalDistribution))
+				return GetAllReconciles(context, startDate, endDate, fundId, ReconcileType.UnderlyingFundCapitalCall)
+						.Union(GetAllReconciles(context, startDate, endDate, fundId, ReconcileType.UnderlyingFundCashDistribution))
+						.Union(GetAllReconciles(context, startDate, endDate, fundId, ReconcileType.CapitalCall))
+						.Union(GetAllReconciles(context, startDate, endDate, fundId, ReconcileType.CapitalDistribution))
 						.ToList();
 			}
 		}
@@ -1753,13 +1784,13 @@ namespace DeepBlue.Controllers.Deal {
 				return GetAllReconciles(context, startDate, endDate, fundId, ReconcileType.UnderlyingFundCapitalCall).ToList();
 			}
 		}
-		
+
 		public List<ReconcileReportModel> GetAllUnderlyingDistributionReconciles(DateTime startDate, DateTime endDate, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return GetAllReconciles(context, startDate, endDate, fundId, ReconcileType.UnderlyingFundCashDistribution).ToList();
 			}
 		}
-		
+
 		public List<ReconcileReportModel> GetAllCapitalCallReconciles(DateTime startDate, DateTime endDate, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return GetAllReconciles(context, startDate, endDate, fundId, ReconcileType.CapitalCall).ToList();
@@ -2056,6 +2087,6 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#endregion
-		 
+
 	}
 }
