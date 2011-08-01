@@ -599,7 +599,7 @@ h2 {
 	height: 40px;
 }
 #menu.minimize .topmenu .mnu-name {
-	margin: 0;
+  margin: -36px 0 0;
 }
 #menu.minimize .sep {
 	height: 40px;
@@ -653,10 +653,10 @@ color: #27599E;
 			Strength=2);
 }
 .mnu-name {
-	background-position: left top;
-	background-repeat: no-repeat;
-	margin-top: 20px;
-	padding-top: 3px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-top: -23px;
+    padding-top: 39px;
 }
 #menu #fundmnu .mnu-name {
 	background-image: url(../images/fund.png);
@@ -672,6 +672,7 @@ color: #27599E;
 }
 #menu #docmnu .mnu-name {
 	background-image: url(../images/document.png);
+	  padding-right: 8px;
 }
 #menu #admmnu .mnu-name {
 	background-image: url(../images/administration.png);

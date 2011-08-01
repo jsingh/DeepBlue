@@ -523,6 +523,6 @@
 		dealClose.init();
 	</script>
 	<%if (Model.DealId > 0) {%>
-	<script type="text/javascript">	dealClose.selectDeal(<%=Model.DealId%>);</script>
+	<script type="text/javascript"> $(document).ready(function() {  dealClose.selectDeal(<%=Model.DealId%>); } );</script>
 	<%}%>
 </asp:Content>

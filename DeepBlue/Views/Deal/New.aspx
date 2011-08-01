@@ -121,10 +121,10 @@
 	})%>
 	<script type="text/javascript">		deal.init();</script>
 	<%if (ViewData["PageName"] == "Create New Deal" && Model.FundId > 0) {%>
-	<script type="text/javascript">deal.selectFund(<%=Model.FundId%>,'<%=Model.FundName%>');</script>
+	<script type="text/javascript">$(document).ready(function() { deal.selectFund(<%=Model.FundId%>,'<%=Model.FundName%>'); });</script>
 	<%}%>
 	<%if (ViewData["PageName"] == "Modify Deal") {%>
-	<script type="text/javascript">deal.loadDeal(<%=Model.DealId%>);</script>
+	<script type="text/javascript">$(document).ready(function() {  deal.loadDeal(<%=Model.DealId%>); });</script>
 	<%}%>
 	<script id="DealTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("DealDetail", Model); %>
