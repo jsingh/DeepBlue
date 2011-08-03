@@ -174,7 +174,6 @@
 				} else {
 					deal.setDealId(arr[1]);
 					if(deal.onDealSuccess) {
-						alert(1);
 						deal.onDealSuccess();
 						deal.onDealSuccess=null;
 					} else {

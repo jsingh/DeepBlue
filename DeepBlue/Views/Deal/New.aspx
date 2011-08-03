@@ -46,7 +46,7 @@
 	<%}%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-	<div id="DealMain">
+	<div id="DealMain" style="display:none">
 		<%using (Html.Form(new { @id = "AddNewDeal", @onsubmit = "return deal.saveDeal();" })) {%>
 		<div id="NewDeal" class="content">
 		</div>

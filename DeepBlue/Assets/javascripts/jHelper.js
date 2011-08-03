@@ -41,7 +41,7 @@
 		return 1;
 	}
 	,formatDate: function (dateobj) {
-		return $.datepicker.formatDate('mm/dd/yy',dateobj);
+		try { return $.datepicker.formatDate('mm/dd/yy',dateobj); } catch(e) { return ""; }
 	}
 	,trimTextArea: function (target) {
 		$("textarea",target).each(function () { this.value=$.trim(this.value); });
@@ -50,14 +50,24 @@
 		try { return eval('new'+date.toString().replace(/\//g,' ')); } catch(e) { return date; }
 	}
 	,dollarAmount: function (Num) {
-		var t=document.createElement("input");t.type="text";
-		$(t).val(Num).formatCurrency();
-		return $(t).val();
+		try {
+			var t=document.createElement("input");t.type="text";
+			$(t).val(Num).formatCurrency();
+			return $(t).val();
+		}
+		catch(e) {
+			return "";
+		}
 	}
 	,numberFormat: function (Num) {
-		var t=document.createElement("input");t.type="text";
-		$(t).val(Num).formatCurrency({ "roundToDecimalPlace": 0 });
-		return $(t).val().replace("$","");
+		try {
+			var t=document.createElement("input");t.type="text";
+			$(t).val(Num).formatCurrency({ "roundToDecimalPlace": 0 });
+			return $(t).val().replace("$","");
+		}
+		catch(e) {
+			return "";
+		}
 	}
 	,serialize: function (target) {
 		var param=[];
@@ -217,7 +227,7 @@
 	}
 }
 $.extend(window,{
-	formatDate: function (dt) { if(dt==null) { return ""; } var d=jHelper.formatDate(jHelper.parseJSONDate(dt));if(d=="01/01/1"||d=="01/01/1900") { return ""; } else { return d; } }
+	formatDate: function (dt) { try { if(dt==null) { return ""; } var d=jHelper.formatDate(jHelper.parseJSONDate(dt));if(d=="01/01/1"||d=="01/01/1900") { return ""; } else { return d; } } catch(e) { return ""; } }
 	,formatCurrency: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } return jHelper.dollarAmount(d.toString()); }
 	,formatPercentage: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } if(d==0) { return ""; } else { return d; } }
 	,formatNumber: function (d) { return formatCurrency(d).replace("$",""); }

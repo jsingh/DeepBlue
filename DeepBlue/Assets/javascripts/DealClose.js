@@ -12,12 +12,6 @@
 	}
 	,loadDeal: function () {
 		var id=dealClose.getDealId();
-		//		$("#SpnLoading").show();
-		//		$("#DealCloseMain").hide();
-		//		$("#LoadingDetail").show();
-		//		$("#FinalDealClose").hide();
-		//		$("#NewDealClose").hide();
-		//		$("#NewDealCloseBtn").hide();
 		$("tbody","#DealUnderlyingFundList").empty();
 		$("tbody","#DealUnderlyingDirects").empty();
 		$("tbody","#FinalDealUnderlyingFundList").empty();
@@ -44,12 +38,6 @@
 			if(data.TotalDealClosing>0) {
 				$("#ExistingDealClosing").show();
 			}
-			//			$("#NewDealClose").show();
-			//			$("#NewDealCloseBtn").show();
-			//			$("#NDHeaderBox").click();
-			//			$("#NDDetail").hide();
-			//			$("#LoadingDetail").show();
-			//			$("#FinalDealClose").show();
 			dealClose.add(0);
 			dealClose.loadFinalDealClose();
 		});
@@ -372,8 +360,8 @@
 				$("#FinalDUDirectsTemplate").tmpl(data).appendTo(finaltbldirectlist);
 				jHelper.formatDollar(finaltbldirectlist);
 
-				jHelper.applyGridClass(finaltblduflist);
-				jHelper.applyGridClass(finaltbldirectlist);
+				jHelper.applyGridClass($("tbody",finaltblduflist));
+				jHelper.applyGridClass($("tbody",finaltbldirectlist));
 				dealClose.calcFinalCloseUF();
 				dealClose.calcFinalCloseUD();
 			});

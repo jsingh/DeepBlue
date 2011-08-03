@@ -249,7 +249,7 @@
 										border="0" style="width: 100%;">
 										<thead>
 											<tr>
-												<th class="lalign" style="width: 15%">
+												<th class="lalign" style="width: 20%">
 													Fund Name
 												</th>
 												<th class="ralign" style="width: 15%">
@@ -282,7 +282,7 @@
 										border="0" style="width: 100%;">
 										<thead>
 											<tr>
-												<th class="lalign" style="width: 15%">
+												<th class="lalign" style="width: 20%">
 													Direct Name
 												</th>
 												<th class="ralign" style="width: 15%">
@@ -291,7 +291,7 @@
 												<th class="ralign" style="width: 15%">
 													Price
 												</th>
-												<th class="ralign" style="width: 2%; white-space: nowrap;">
+												<th class="ralign" style="width: 15%; white-space: nowrap;">
 													Adjusted Fair Market Value
 												</th>
 												<th>
@@ -405,7 +405,7 @@
 					<%: Html.Hidden("${index}_DealId","${item.DealId}")%>
 					<%: Html.Hidden("${index}_FundId","${item.FundId}")%>
 					<%: Html.Hidden("${index}_RecordDate","${formatDate(item.RecordDate)}")%>
-					<%: Html.Hidden("${index}_Percent","${formatDate(item.Percent)}")%>
+					<%: Html.Hidden("${index}_Percent","${item.Percent}")%>
 					<%: Html.Hidden("${index}_UnderlyingFundId", "${item.UnderlyingFundId}", new { @id = "UnderlyingFundId" })%>
 					{{if IsFinalClose==true}}
 						<%: Html.Hidden("${index}_CommittedAmount", "${checkNullOrZero(item.CommittedAmount)}")%>
@@ -511,7 +511,7 @@
 				<%: Html.Hidden("${index}$TaxCostBase","${checkNullOrZero(item.TaxCostBase)}")%>
 				<%: Html.Hidden("${index}$TaxCostDate","${formatDate(item.TaxCostDate)}")%>
 				<%: Html.Hidden("${index}$RecordDate","${formatDate(item.RecordDate)}")%>
-				<%: Html.Hidden("${index}$Percent","${formatDate(item.Percent)}")%>
+				<%: Html.Hidden("${index}$Percent","${item.Percent}")%>
 				<%: Html.Hidden("${index}$IssuerId", "${item.IssuerId}", new { @id = "IssuerId" })%>
 				<%: Html.Hidden("${index}$SecurityTypeId", "${item.SecurityTypeId}", new { @id = "SecurityTypeId" })%>
 				<%: Html.Hidden("${index}$SecurityId", "${item.SecurityId}", new { @id = "SecurityId" })%>
