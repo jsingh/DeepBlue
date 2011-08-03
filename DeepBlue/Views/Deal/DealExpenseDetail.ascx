@@ -3,12 +3,13 @@
 <div class="line" id="DETopLine">
 </div>
 <div class="expandaddbtn">
-	<%: Html.Anchor(Html.Image("addexpense.png").ToHtmlString(), "javascript:deal.showMakeNewHeader('MakeNewDEHeader');")%>
+	<%using (Html.GreenButton(new { @onclick = "javascript:deal.showMakeNewHeader('MakeNewDEHeader');" })) {%>Add
+	expense<%}%>
 </div>
 <div class="expandheader">
 	<div class="expandbtn">
 		<div class="expandimg" id="img">
-			<%: Html.Image("DealExpenses.png")%></div>
+			ADD DEAL EXPENSES</div>
 		<div class="expandtitle" id="title">
 			<div class="expandtitle">
 				Deal Expenses</div>

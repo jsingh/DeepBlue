@@ -66,7 +66,7 @@ namespace DeepBlue.Controllers.Deal {
 		#region DealClosing
 		IEnumerable<ErrorInfo> SaveDealClosing(DealClosing dealClosing);
 		CreateDealCloseModel FindDealClosingModel(int dealClosingId, int dealId);
-		FinalDealCloseModel GetFinalDealClosingModel(int dealId);
+		CreateDealCloseModel GetFinalDealClosingModel(int dealId);
 		DealClosing FindDealClosing(int dealClosingId);
 		List<DealClosing> GetAllDealClosing(int dealId);
 		int GetMaxDealClosingNumber(int dealId);

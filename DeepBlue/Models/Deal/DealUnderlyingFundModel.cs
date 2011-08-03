@@ -13,8 +13,7 @@ namespace DeepBlue.Models.Deal {
 			FundName = string.Empty;
 			DealId = 0;
 			UnderlyingFundId = 0;
-			RecordDate = Convert.ToDateTime("01/01/1900");
-			Percent = 0;
+			RecordDate = DateTime.Now;
 			CommittedAmount = 0;
 		}
 
@@ -40,40 +39,33 @@ namespace DeepBlue.Models.Deal {
 
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Fund NAV is required")]
 		public decimal? FundNAV { get; set; }
-		
-		public decimal? Percent { get; set; }
 
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Committed Amount is required")]
 		public decimal? CommittedAmount { get; set; }
 
+		public decimal? Percent { get; set; }
+
 		public decimal? UnfundedAmount { get; set; }
 
-		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Gross Purchase Price is required")]
 		public decimal? GrossPurchasePrice { get; set; }
-
-		[Range(typeof(decimal), "0", "79228162514264337593543950335", ErrorMessage = "Reassigned GPP is required")]
-		public decimal? ReassignedGPP { get; set; }
 
 		public decimal? PostRecordDateCapitalCall { get; set; }
 
 		public decimal? PostRecordDateDistribution { get; set; }
 
-		public decimal NetPurchasePrice {
-			get {
-				return ((this.GrossPurchasePrice ?? 0) + (this.PostRecordDateCapitalCall ?? 0) - (this.PostRecordDateDistribution ?? 0));
-			}
-		}
-
-		public string FormatNPP { get { return FormatHelper.CurrencyFormat(this.NetPurchasePrice); } }
-
-		public decimal AdjustedCost {
-			get {
-				return (this.ReassignedGPP ?? 0) + (this.PostRecordDateCapitalCall ?? 0) - (this.PostRecordDateDistribution ?? 0);
-			}
-		}
-
-		public string FormatAJC { get { return FormatHelper.CurrencyFormat(this.AdjustedCost); } }
-
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Deal ClosingId is required")]
 		public int? DealClosingId { get; set; }
+
+		public bool IsClose { get; set; }
+
+		public decimal? NetPurchasePrice { get; set; }
+
+		#region Final Deal Close Properties
+
+		public decimal? ReassignedGPP { get; set; }
+
+		public decimal? AdjustedCost { get; set; }
+
+		#endregion
 	}
 }

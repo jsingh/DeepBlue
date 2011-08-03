@@ -9,8 +9,7 @@ using System.ComponentModel;
 
 namespace DeepBlue.Models.Deal {
 	public class DealUnderlyingDirectModel {
-
-
+		
 		public int? DealUnderlyingDirectId { get; set; }
 
 		public string IssuerName { get; set; }
@@ -75,7 +74,9 @@ namespace DeepBlue.Models.Deal {
 
 		public int? DealClosingId { get; set; }
 
-		public string FormatFMV { get { return FormatHelper.CurrencyFormat(this.FMV); } }
+		public decimal? AdjustedFMV { get; set; }
+
+		public bool IsClose { get; set; }
 		
 		public List<SelectListItem> Equities { get; set; }
 

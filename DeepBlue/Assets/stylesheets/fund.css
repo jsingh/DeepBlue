@@ -121,7 +121,7 @@
 	background-position: left top;
 	background-repeat: repeat-x;
 	color: #FFFFFF;
-	font-size: 14px;
+	font-size: 18px;
 	height: 50px;
 	line-height: 50px;
 	padding: 0 0 0 70px;
@@ -133,6 +133,10 @@
 }
 .expandimg {
 	float: left;
+}
+.expandtitle {
+	text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
 }
 .expandtitle, .recon-expandtitle {
 	float: left;

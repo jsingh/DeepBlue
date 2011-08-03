@@ -3,12 +3,13 @@
 <div class="line">
 </div>
 <div class="expandaddbtn">
-	<%: Html.Anchor(Html.Image("add_funds.png").ToHtmlString(), "javascript:deal.showMakeNewHeader('MakeNewDUFund');")%>
+	<%using (Html.GreenButton(new { @onclick = "javascript:deal.showMakeNewHeader('MakeNewDUFund');" })) {%>Add
+	underlying funds<%}%>
 </div>
 <div class="expandheader">
 	<div class="expandbtn">
 		<div class="expandimg" id="img">
-			<%: Html.Image("UnderlyingFunds.png")%></div>
+			ADD UNDERLYING FUNDS</div>
 		<div class="expandtitle" id="title">
 			<div class="expandtitle">
 				Underlying Funds</div>

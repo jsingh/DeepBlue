@@ -3,16 +3,17 @@
 <div class="line">
 </div>
 <div class="expandaddbtn">
-	<%: Html.Anchor(Html.Image("add_doc.png").ToHtmlString(), "javascript:deal.addDealDocument();")%>
+	<%using (Html.GreenButton(new { @onclick = "javascript:deal.addDealDocument();" })) {%>Add
+	documents<%}%>
 </div>
 <div class="expandheader">
 	<div class="expandbtn">
 		<div class="expandimg" id="img">
-			<%: Html.Image("DealDocuments.png")%></div>
+			ADD DEAL DOCUMENTS</div>
 		<div class="expandtitle" id="title">
 			<div class="expandtitle">
 				Deal Documents</div>
-		</div>  
+		</div>
 	</div>
 </div>
 <div class="fieldbox">
@@ -60,7 +61,7 @@
 		</div>
 		<div class="editor-label" style="width: 317px">
 		</div>
-		<div class="editor-field" style="width: auto; float: right;    margin: 20px 47px 5px;">
+		<div class="editor-field" style="width: auto; float: right; margin: 20px 47px 5px;">
 			<div class="cell" style="width: auto;">
 				<%: Html.Span("", new { @id = "SpnDealDocLoading" })%>
 			</div>
@@ -73,8 +74,8 @@
 		<%: Html.Hidden("DocumentFundId","")%>
 		<%}%>
 	</div>
-	<div class="section" style="width:89%">
-		<table cellpadding="0" cellspacing="0" border="0" id="DealDocumentList" style="width:100%">
+	<div class="section" style="width: 89%">
+		<table cellpadding="0" cellspacing="0" border="0" id="DealDocumentList" style="width: 100%">
 			<thead>
 				<tr>
 					<th>

@@ -1,20 +1,22 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.CreateModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <div class="line">
-</div>	<div class="expandaddbtn">
-		<%: Html.Anchor(Html.Image("add_new_dir.png").ToHtmlString(), "javascript:deal.showMakeNewHeader('MakeNewDUDirect');")%>
-	</div> 
+</div>
+<div class="expandaddbtn">
+	<%using (Html.GreenButton(new { @onclick = "javascript:deal.showMakeNewHeader('MakeNewDUDirect');" })) {%>Add
+	new directs<%}%>
+</div>
 <div class="expandheader">
 	<div class="expandbtn">
 		<div class="expandimg" id="img">
-			<%: Html.Image("UnderlyingDirects.png")%></div>
+			ADD UNDERLYING DIRECTS</div>
 		<div class="expandtitle" id="title">
 			<div class="expandtitle">
 				Underlying Direct</div>
 		</div>
 	</div>
-
-</div><div class="line">
+</div>
+<div class="line">
 </div>
 <div class="fieldbox">
 	<div class="section" style="width: 90%;">

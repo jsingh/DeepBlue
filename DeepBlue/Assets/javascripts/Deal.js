@@ -240,7 +240,7 @@
 		$(".sel","#DealFundList").removeClass("sel");
 		var dt=new Date();
 		var url="/Deal/FindFund/?fundId="+fundId+"&t="+dt.getTime();
-		$("#NewDeal").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		$("#NewDeal").html("<center><img src='/Assets/images/ajax.jpg'>&nbsp;Loading...</center>");
 		$("#SaveDealBox").show();
 		$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/cnewdeal.png");
 		$.getJSON(url,function (data) {

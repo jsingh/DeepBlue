@@ -289,7 +289,7 @@
 							${PurchasePrice}
                         </td>
 						<td style="text-align:right">
-							${FormatFMV}
+							${formatNumber(FMV)}
 						</td>
 						<td>
 							${NumberOfShares}

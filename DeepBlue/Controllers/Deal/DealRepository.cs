@@ -167,22 +167,13 @@ namespace DeepBlue.Controllers.Deal {
 
 		public DealFundDetail FindLastFundDetail() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				DealFundDetail dealFundDetail = (from deal in context.Deals
-												 orderby deal.DealID descending
-												 select new DealFundDetail {
-													  FundId = deal.FundID,
-													 FundName = deal.Fund.FundName
-												 }).FirstOrDefault();
-				if (dealFundDetail == null) {
-					dealFundDetail = (from fund in context.Funds
+					return (from fund in context.Funds
 									  orderby fund.FundID descending
 									  select new DealFundDetail {
 										  FundId = fund.FundID,
 										  FundName = fund.FundName
 									  }).FirstOrDefault();
 				}
-				return dealFundDetail;
-			}
 		}
 		#endregion
 
@@ -311,7 +302,11 @@ namespace DeepBlue.Controllers.Deal {
 						PostRecordDateCapitalCall = fund.PostRecordDateCapitalCall,
 						PostRecordDateDistribution = fund.PostRecordDateDistribution,
 						DealClosingId = fund.DealClosingID,
-						FundNAV = underlyingFundNAVS.FirstOrDefault().FundNAV
+						FundId = fund.Deal.FundID,
+						AdjustedCost = fund.AdjustedCost,
+						NetPurchasePrice = fund.NetPurchasePrice,
+						FundNAV = underlyingFundNAVS.FirstOrDefault().FundNAV,
+						IsClose = ((fund.DealClosingID ?? 0) > 0)
 					});
 		}
 
@@ -345,8 +340,6 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		public IEnumerable<ErrorInfo> SaveDealUnderlyingFund(DealUnderlyingFund dealUnderlyingFund) {
-			dealUnderlyingFund.NetPurchasePrice = (dealUnderlyingFund.NetPurchasePrice ?? 0) + (dealUnderlyingFund.PostRecordDateCapitalCall ?? 0) - (dealUnderlyingFund.PostRecordDateDistribution ?? 0);
-			dealUnderlyingFund.AdjustedCost = (dealUnderlyingFund.ReassignedGPP ?? 0) + (dealUnderlyingFund.PostRecordDateCapitalCall ?? 0) - (dealUnderlyingFund.PostRecordDateDistribution ?? 0);
 			return dealUnderlyingFund.Save();
 		}
 
@@ -424,13 +417,17 @@ namespace DeepBlue.Controllers.Deal {
 						TaxCostBase = dealUnderlyingDirect.TaxCostBase,
 						TaxCostDate = dealUnderlyingDirect.TaxCostDate,
 						NumberOfShares = dealUnderlyingDirect.NumberOfShares ?? 0,
-						Percent = dealUnderlyingDirect.Percent ?? 0,
+						Percent = dealUnderlyingDirect.Percent,
 						RecordDate = dealUnderlyingDirect.RecordDate,
 						SecurityType = (dealUnderlyingDirect.SecurityType != null ? dealUnderlyingDirect.SecurityType.Name : string.Empty),
 						DealClosingId = dealUnderlyingDirect.DealClosingID,
 						IssuerId = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? (equity != null ? equity.Issuer.IssuerID : 0) : (fixedIncome != null ? fixedIncome.Issuer.IssuerID : 0)),
 						IssuerName = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? (equity != null ? equity.Issuer.Name : string.Empty) : (fixedIncome != null ? fixedIncome.Issuer.Name : string.Empty)),
 						Security = (dealUnderlyingDirect.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity ? (equity != null ? equity.Symbol : string.Empty) : (fixedIncome != null ? fixedIncome.Symbol : string.Empty)),
+						AdjustedFMV = dealUnderlyingDirect.AdjustedFMV,
+						FundId = dealUnderlyingDirect.Deal.FundID,
+						FundName = dealUnderlyingDirect.Deal.Fund.FundName,
+						IsClose = ((dealUnderlyingDirect.DealClosingID ?? 0) > 0),
 					});
 		}
 
@@ -604,9 +601,9 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public FinalDealCloseModel GetFinalDealClosingModel(int dealId) {
+		public CreateDealCloseModel GetFinalDealClosingModel(int dealId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				FinalDealCloseModel model = new FinalDealCloseModel();
+				CreateDealCloseModel model = new CreateDealCloseModel();
 				IQueryable<DealUnderlyingDirect> dealUnderlyingDirects = context.DealUnderlyingDirects.Where(direct => direct.DealID == dealId && direct.DealClosingID != null);
 				model.DealUnderlyingDirects = GetDealUnderlyingDirectModel(context, dealUnderlyingDirects).ToList();
 				IQueryable<DealUnderlyingFund> dealUnderlyingFunds = context.DealUnderlyingFunds.Where(fund => fund.DealID == dealId && fund.DealClosingID != null);
@@ -683,7 +680,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		public List<DealReportModel> GetAllReportDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<DealReportModel> query =  GetAllDealReportQuery(context, fundId);
+				IQueryable<DealReportModel> query = GetAllDealReportQuery(context, fundId);
 				if (string.IsNullOrEmpty(sortName)) {
 					query = query.OrderByDescending(q => new { q.DealNumber, q.DealName, q.TotalAmount });
 				}
@@ -709,7 +706,7 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		private IQueryable<DealReportModel> GetAllDealReportQuery(DeepBlueEntities context , int fundId) {
+		private IQueryable<DealReportModel> GetAllDealReportQuery(DeepBlueEntities context, int fundId) {
 			return (from deal in context.Deals
 					where deal.FundID == fundId
 					select new DealReportModel {

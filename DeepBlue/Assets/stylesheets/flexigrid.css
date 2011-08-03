@@ -131,7 +131,7 @@
 }*/
 .flexigrid div.bDiv tr td .gbutton {
 	visibility: hidden;
-	padding: 0 5px;
+	margin: 0 2px;
 	cursor: pointer;
 }
 .flexigrid div.bDiv tr:hover td .gbutton {

@@ -288,6 +288,20 @@ namespace DeepBlue.Helpers {
 		}
 		#endregion
 
+		#region BlueButton
+		public static MvcButton BlueButton(this HtmlHelper helper, object htmlAttributes) {
+			TagBuilder tagBuilder = new TagBuilder("div");
+			tagBuilder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			tagBuilder.AddCssClass("green-btn blue-bg");
+			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
+			httpResponse.Write(tagBuilder.ToString(TagRenderMode.StartTag) + "<div class=left></div><div class=center>");
+			return new MvcButton(helper.ViewContext.HttpContext.Response);
+		}
+		public static MvcButton BlueButton(this HtmlHelper helper) {
+			return BlueButton(helper, new { });
+		}
+		#endregion
+
 		#region JQueryTemplate Controls
 
 		public static MvcHtmlString jQueryTemplateTextBox(this HtmlHelper htmlHelper, string name) {

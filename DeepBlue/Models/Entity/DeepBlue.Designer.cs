@@ -12888,6 +12888,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.DateTime> _TaxCostDate;
         partial void OnTaxCostDateChanging(Nullable<global::System.DateTime> value);
         partial void OnTaxCostDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AdjustedFMV
+        {
+            get
+            {
+                return _AdjustedFMV;
+            }
+            set
+            {
+                OnAdjustedFMVChanging(value);
+                ReportPropertyChanging("AdjustedFMV");
+                _AdjustedFMV = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AdjustedFMV");
+                OnAdjustedFMVChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AdjustedFMV;
+        partial void OnAdjustedFMVChanging(Nullable<global::System.Decimal> value);
+        partial void OnAdjustedFMVChanged();
 
         #endregion
     

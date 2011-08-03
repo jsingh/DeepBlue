@@ -23,13 +23,13 @@ namespace DeepBlue.Helpers {
 			return rowCollection;
 		}
 
-		public static FormCollection GetFormCollection(FormCollection collection, int rowIndex, Type type) {
+		public static FormCollection GetFormCollection(FormCollection collection, int rowIndex, Type type, string separator) {
 			FormCollection rowCollection = new FormCollection();
 			PropertyInfo[] propertyInfos;
 			propertyInfos = type.GetProperties();
 			string value;
 			foreach (PropertyInfo propertyInfo in propertyInfos) {
-				value = collection[rowIndex.ToString() + "_" + propertyInfo.Name];
+				value = collection[rowIndex.ToString() + separator + propertyInfo.Name];
 				if (value != null) {
 					if (value.Contains("true,"))
 						value = "true";

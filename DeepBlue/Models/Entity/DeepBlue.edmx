@@ -1052,6 +1052,7 @@
           <Property Name="PurchasePrice" Type="money" Nullable="false" />
           <Property Name="TaxCostBase" Type="money" />
           <Property Name="TaxCostDate" Type="datetime" />
+          <Property Name="AdjustedFMV" Type="money" />
         </EntityType>
         <EntityType Name="DealUnderlyingFund">
           <Key>
@@ -4591,6 +4592,7 @@
           <NavigationProperty Name="DealClosing" Relationship="DeepBlueModel.FK_DealUnderlyingDirect_DealClosing" FromRole="DealUnderlyingDirect" ToRole="DealClosing" />
           <NavigationProperty Name="SecurityType" Relationship="DeepBlueModel.FK_DealUnderlyingDirect_SecurityType" FromRole="DealUnderlyingDirect" ToRole="SecurityType" />
           <NavigationProperty Name="SecurityConversionDetails" Relationship="DeepBlueModel.FK_SecurityConversionDetail_DealUnderlyingDirect" FromRole="DealUnderlyingDirect" ToRole="SecurityConversionDetail" />
+          <Property Type="Decimal" Name="AdjustedFMV" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="DealUnderlyingFund">
           <Key>
@@ -7546,7 +7548,8 @@
             <ScalarProperty Name="EntityID" ColumnName="EntityID" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="DealUnderlyingDirects"><EntityTypeMapping TypeName="DeepBlueModel.DealUnderlyingDirect"><MappingFragment StoreEntitySet="DealUnderlyingDirect">
-            <ScalarProperty Name="DealUnderlyingDirectID" ColumnName="DealUnderlyingDirectID" />
+            <ScalarProperty Name="AdjustedFMV" ColumnName="AdjustedFMV" />
+                <ScalarProperty Name="DealUnderlyingDirectID" ColumnName="DealUnderlyingDirectID" />
             <ScalarProperty Name="DealID" ColumnName="DealID" />
             <ScalarProperty Name="SecurityTypeID" ColumnName="SecurityTypeID" />
             <ScalarProperty Name="SecurityID" ColumnName="SecurityID" />

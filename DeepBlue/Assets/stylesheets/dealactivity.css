@@ -250,7 +250,9 @@ input, select {
 	float: right;
 }
 .subheader .name {
-	float: left;
+	float: left;	
+	text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
 }
 #ConversionDetail input[type='text'] {
 	width: 200px;
@@ -310,4 +312,7 @@ input, select {
 #NewCapitalCall .expandsel {
 	background-image: url("../images/expandbgnoline.png");
 	margin-top: 0px;
+}
+.tblcell .green-btn{
+	margin-top:8px;
 }

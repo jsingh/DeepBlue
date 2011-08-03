@@ -960,7 +960,7 @@ input.ui-autocomplete-loading[type="text"] {
 	text-align: center;
 }
 .grid .gbutton {
-	visibility:hidden;
+	visibility:hidden; margin:0 2px;
 }
 .grid tbody tr:hover .gbutton {
 	visibility:visible;
@@ -975,7 +975,7 @@ input.ui-autocomplete-loading[type="text"] {
 	cursor: pointer;
 }
 .green-btn .left, .green-btn .right, .green-btn .center {
-	color: #000000;
+	color: #002827;
 	float: left;
 	font-size: 12px;
 	height: 31px;
@@ -997,6 +997,22 @@ input.ui-autocomplete-loading[type="text"] {
 	background: url("../images/btn_c.png") repeat-x scroll left top transparent;
 	padding: 0 5px;
 	width: auto;
+}
+/* blue background */
+.blue-bg .left {
+	background: url(../images/b_btn_l.png) no-repeat left top;
+	width:26px;
+	height:29px;
+}
+.blue-bg .right {
+	background: url(../images/b_btn_r.png) no-repeat left top;
+	width:8px;
+	height:29px;
+}
+.blue-bg .center {
+	background: url("../images/b_btn_c.png") repeat-x scroll left top transparent;
+	height:29px;
+	color:#fffffd;   line-height: 29px;
 }
 /* end green button */
 /* section tab */

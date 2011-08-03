@@ -151,13 +151,7 @@
 		</ul>
 		<%} %>
 	</div>
-	<%--<div id="innersubmenu">
-		<%using (Html.InnerSubMenu("DealFundList", (ViewData["SubmenuName"] == "Create New Deal"))) {%>
-		<%}%>
-		<%using (Html.InnerSubMenu("ModifyDealBox", (ViewData["SubmenuName"] == "Modify Deal"))) {%>
-		<%}%>
-	</div>--%>
-	<div id="content">
+	<div id="content" style="min-height: 800px;">
 		<asp:ContentPlaceHolder ID="NavigationContent" runat="server" />
 		<div id="cntbox">
 			<div class="cnt-box-main">

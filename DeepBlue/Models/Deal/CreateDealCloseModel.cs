@@ -7,7 +7,7 @@ using System.ComponentModel;
 using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Deal {
-	public class CreateDealCloseModel : FinalDealCloseModel {
+	public class CreateDealCloseModel   {
 
 		public CreateDealCloseModel() {
 			DealUnderlyingFunds = new List<DealUnderlyingFundModel>();
@@ -40,6 +40,9 @@ namespace DeepBlue.Models.Deal {
 
         public string DealName { get; set; }
 
+		public List<DealUnderlyingFundModel> DealUnderlyingFunds { get; set; }
+
+		public List<DealUnderlyingDirectModel> DealUnderlyingDirects { get; set; }
 	}
 
 }

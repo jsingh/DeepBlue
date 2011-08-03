@@ -74,7 +74,7 @@
 	</div>
 	<div id="UpdateTargetId" style="display: none">
 	</div>
-	<div id="FullDealList">
+	<div id="FullDealList" style="display: none">
 		<table cellpadding="0" cellspacing="0" border="0" id="DealList">
 			<thead>
 				<tr>
@@ -91,7 +91,7 @@
 			</thead>
 		</table>
 	</div>
-	<div id="FullFundList">
+	<div id="FullFundList" style="display: none">
 		<table cellpadding="0" cellspacing="0" border="0" id="FundList">
 			<thead>
 				<tr>
@@ -202,6 +202,13 @@
 			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 			<%: Html.Image("Edit.png", new { @class="gbutton", @onclick = "javascript:deal.editUnderlyingFund(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @class="gbutton", @onclick = "javascript:deal.deleteUnderlyingFund(${DealUnderlyingFundId},this);" })%>
 			<%: Html.Hidden("DealUnderlyingFundId","${DealUnderlyingFundId}")%>
+			<%: Html.Hidden("Percent","${Percent}")%>
+			<%: Html.Hidden("DealClosingId","${DealClosingId}")%>
+			<%: Html.Hidden("ReassignedGPP","${ReassignedGPP}")%>
+			<%: Html.Hidden("PostRecordDateCapitalCall","${PostRecordDateCapitalCall}")%>
+			<%: Html.Hidden("PostRecordDateDistribution","${PostRecordDateDistribution}")%>
+			<%: Html.Hidden("NetPurchasePrice","${NetPurchasePrice}")%>
+			<%: Html.Hidden("AdjustedCost","${AdjustedCost}")%>
 		</td>
 	</tr>
 	</script>
@@ -248,6 +255,9 @@
 			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
 			<%: Html.Image("Edit.png", new { @class="gbutton", @onclick = "javascript:deal.editUnderlyingDirect(this);" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @class="gbutton", @onclick = "javascript:deal.deleteUnderlyingDirect(${DealUnderlyingDirectId},this);" })%>
 			<%: Html.Hidden("DealUnderlyingDirectId","${DealUnderlyingDirectId}")%>
+			<%: Html.Hidden("Percent","${Percent}")%>
+			<%: Html.Hidden("DealClosingId","${DealClosingId}")%>
+			<%: Html.Hidden("AdjustedFMV","${AdjustedFMV}")%>
 		</td>
 	</tr>
 	</script>

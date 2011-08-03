@@ -6,20 +6,20 @@
 	clear: both;
 	margin-left: 5px;
 }
-.grid {
-	width: 99%;
-}
-.grid tr th {
-	white-space: nowrap;
-}
 .auto-width {
 	width: auto;
 }
 .checkbox {
 	padding-top: 10px;
 }
-.grid th, .grid td {
-	padding: 5px 10px 5px 5px;
+.grid tr td,
+.grid tr th 
+{
+	padding: 0 5px;
+}
+#DealCloseList.grid tr td
+,#DealCloseList.grid tr th{
+	padding: 0 15px;
 }
 input[type='text'] {
 	padding: 3px;
@@ -38,9 +38,6 @@ input[type='text'] {
 #NewDealClose, #FinalDealClose {
 	float: left;
 	width: 100%;
-}
-.grid .arow td {
-	background-color: #bfbfbf;
 }
 .savefooter {
 	float: left;
@@ -65,6 +62,11 @@ input[type='text'] {
 	padding: 12px 12px 12px 65px;
 	width: 100%;
 }
+.closetitle .title {
+	float: left;    
+	margin: 5px 99px 0 0;
+	width:150px;
+}
 .closedetail {
 	clear: both;
 	margin: 10px 0 10px 65px;
@@ -72,7 +74,7 @@ input[type='text'] {
 }
 .tabledetail {
 	padding-left: 65px;
-	padding-bottom:20px;
+	padding-bottom: 20px;
 }
 
 .underfund {
@@ -105,6 +107,7 @@ input[type='text'] {
 	background-position: right center;
 	background-repeat: no-repeat;
 	float: left;
+	cursor: pointer;
 }
 .headerbox .title {
 	background: url(../images/greenplus.png) no-repeat scroll left top transparent;
@@ -123,13 +126,19 @@ input[type='text'] {
 	padding: 0 0 0 30px;
 	width: 200px;
 }
- 
+
 #DealCloseMain {
-	float:left;
+	float: left;
 }
 .expandsel {
-	 margin-top:0px;
+	margin-top: 0px;
+	cursor: pointer;
 }
-.closing-det{
-	background-image:url(../images/fdcbg.png);
+.closing-det {
+	background-image: url(../images/fdcbg.png);
 }
+.expandaddbtn {
+	position: absolute;
+	left: 212px;
+}
+

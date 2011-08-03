@@ -5,13 +5,13 @@
 <div class="expandheader">
 	<div class="expandbtn">
 		<div class="expandimg" id="img">
-			<%: Html.Image("SellerInfo.png")%></div>
+			ADD SELLER INFORMATION</div>
 		<div class="expandtitle" id="title">
 			<div class="expandtitle">
 				Seller Information</div>
 		</div>
 	</div>
-</div> 
+</div>
 <div id="SellerInfo">
 	<div class="fieldbox">
 		<div class="section">

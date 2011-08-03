@@ -6,34 +6,18 @@
 			dealClose.expand();
 		});
 	}
-	,checkInputBox: function (table) {
-		$("tr",table).each(function () {
-			var chk=$("input:checkbox",this).get(0);
-			if(chk) {
-				if(chk.checked) {
-					$(":input:text",this).removeAttr("disabled");
-				}
-			}
-		});
-	}
-	,checkDeal: function (chk) {
-		var tr=$(chk).parents("tr:first");
-		$(":input:text",tr).each(function () {
-			this.disabled=!chk.checked;
-		});
-	}
 	,selectDeal: function (id) {
 		dealClose.setDealId(id);
 		dealClose.loadDeal();
 	}
 	,loadDeal: function () {
 		var id=dealClose.getDealId();
-		$("#SpnLoading").show();
-		$("#DealCloseMain").hide();
-		$("#LoadingDetail").show();
-		$("#FinalDealClose").hide();
-		$("#NewDealClose").hide();
-		$("#NewDealCloseBtn").hide();
+		//		$("#SpnLoading").show();
+		//		$("#DealCloseMain").hide();
+		//		$("#LoadingDetail").show();
+		//		$("#FinalDealClose").hide();
+		//		$("#NewDealClose").hide();
+		//		$("#NewDealCloseBtn").hide();
 		$("tbody","#DealUnderlyingFundList").empty();
 		$("tbody","#DealUnderlyingDirects").empty();
 		$("tbody","#FinalDealUnderlyingFundList").empty();
@@ -53,27 +37,26 @@
 			$("#SpnDCTitlelbl").html("New Deal Close");
 			$("#NDDetail").hide();
 
-			dealClose.onGridSubmit();
+			dealClose.loadDealCloseList();
+
 			var totalNotClosing=data.TotalUnderlyingFundNotClosing+data.TotalUnderlyingDirectNotClosing;
 			var totalClosing=data.TotalUnderlyingFundClosing+data.TotalUnderlyingDirectClosing;
 			if(data.TotalDealClosing>0) {
 				$("#ExistingDealClosing").show();
 			}
-			if(totalNotClosing>0) {
-				$("#NewDealClose").show();
-				$("#NewDealCloseBtn").show();
-				$("#NDHeaderBox").click();
-				$("#NDDetail").hide();
-			}
-			else if(totalNotClosing==0&&totalClosing>0) {
-				$("#FDHeaderBox").click();
-				dealClose.loadFinalDealClose();
-			}
+			//			$("#NewDealClose").show();
+			//			$("#NewDealCloseBtn").show();
+			//			$("#NDHeaderBox").click();
+			//			$("#NDDetail").hide();
+			//			$("#LoadingDetail").show();
+			//			$("#FinalDealClose").show();
+			dealClose.add(0);
+			dealClose.loadFinalDealClose();
 		});
 	}
 	,getDealId: function () { return $("#DealId").val(); }
 	,setDealId: function (id) { $("#DealId").val(id); }
-	,onGridSubmit: function () {
+	,loadDealCloseList: function () {
 		var param=[{ name: "dealId",value: dealClose.getDealId()}];
 		var grid=$("#DealCloseList");
 		grid.ajaxTableOptions({ params: param });
@@ -84,10 +67,13 @@
 		var dealId=parseInt(dealClose.getDealId());
 		var newDealClose=$("#NewDealClose");
 		var finalDealClose=$("#FinalDealClose");
-		newDealClose.hide();
-		finalDealClose.hide();
+		var tblduflist=$("#DealUnderlyingFundList");
+		var tbldirectlist=$("#DealUnderlyingDirects");
+		//finalDealClose.show();
 		newDealClose.show();
 		$("#LoadingDetail").show();
+		dealClose.clearTable(tblduflist);
+		dealClose.clearTable(tbldirectlist);
 		if(dealId>0) {
 			$.getJSON("/Deal/GetDealCloseDetails",
 			{ "_": (new Date).getTime(),"id": id,"dealId": dealId }
@@ -95,7 +81,6 @@
 				$("#LoadingDetail").hide();
 				$("#SpnGridLoading").hide();
 				if(id>0) {
-					finalDealClose.show();
 					$("#SpnDCTitle").html("Edit Deal Close");
 					$("#SpnDCTitlelbl").html("Edit Deal Close");
 				} else {
@@ -103,11 +88,11 @@
 					$("#SpnDCTitle").html("New Deal Close");
 					$("#SpnDCTitlelbl").html("New Deal Close");
 				}
-				$("#NDHeaderBox").click();
+
 				$("#DealClosingId").val(data.DealClosingId);
 				$("#DealNumber").val(data.DealNumber);
-
 				$("#SpnDealCloseNo").html("Deal Close "+data.DealNumber);
+
 				if(data.CloseDate!=null) {
 					var d=jHelper.formatDate(jHelper.parseJSONDate(data.CloseDate));
 					if(d=="01/01/1") { d=""; }
@@ -117,60 +102,58 @@
 					$("#New_CloseDate","#frmDealClose").val("");
 					$("#Final_CloseDate","#frmFinalDealClose").val("");
 				}
-				var tblduflist=$("#DealUnderlyingFundList");
+
 				dealClose.clearTable(tblduflist);
 				$("#DUFundsTemplate").tmpl(data).appendTo(tblduflist);
 				jHelper.formatDollar(tblduflist,true);
 
-				var tbldirectlist=$("#DealUnderlyingDirects");
 				dealClose.clearTable(tbldirectlist);
 				$("#DUDirectsTemplate").tmpl(data).appendTo(tbldirectlist);
 				jHelper.formatDollar(tbldirectlist,true);
 
-				dealClose.checkDealCloseId(tblduflist);
-				dealClose.checkDealCloseId(tbldirectlist);
-
+				jHelper.checkValAttr(tblduflist);
+				jHelper.checkValAttr(tbldirectlist);
+				dealClose.setAutoComplete(tblduflist);
+				dealClose.setAutoComplete(tbldirectlist);
+				dealClose.calcCloseUF();
+				dealClose.calcCloseUD();
 			});
 		} else {
 			alert("Deal is required");
 			$("#Deal").focus();
 		}
 	}
-	,addRowClass: function (tbl) {
-		$("tbody tr:odd",tbl).addClass("arow");
-		$("tbody tr:even",tbl).addClass("row");
-	}
 	,clearTable: function (tbl) {
-		$("tbody",tbl).empty();$("tfoot",tbl).empty();
-	}
-	,checkDealCloseId: function (tbl) {
-		$("tbody tr",tbl).each(function () {
-			var dcid=parseInt($("#DealClosingId",this).val());
-			if(dcid>0) {
-				var chk=$("#chk",this).get(0);if(chk) { chk.checked=true; }
-			}
-		});
+		$("tbody",tbl).empty();
+		$("tfoot",tbl).empty();
 	}
 	,calcCloseUF: function () {
 		var tbl=$("#DealUnderlyingFundList");
-		var totalGPP=0;var totalPRCC=0;var totalPRCD=0;var totalNPP=0;
+		var totalCA=0;var totalGPP=0;var totalPRCC=0;var totalPRCD=0;var totalNPP=0;var totalUFA=0;
 		$("tbody tr",tbl).each(function () {
 			var gpp=parseFloat($("#GrossPurchasePrice",this).val());
 			var prcc=parseFloat($("#PostRecordDateCapitalCall",this).val());
 			var prcd=parseFloat($("#PostRecordDateDistribution",this).val());
+			var ufa=parseFloat($("#UnfundedAmount",this).val());
+			var ca=parseFloat($("#CommittedAmount",this).val());
 			if(isNaN(gpp)) { gpp=0; } if(isNaN(prcc)) { prcc=0; } if(isNaN(prcd)) { prcd=0; }
-			var npp=gpp+(prcc-prcd);
+			if(isNaN(ufa)) { ufa=0; } if(isNaN(ca)) { ca=0; }
+			var npp=(gpp+(prcc-prcd));
+			$("#SpnNPP",this).html(jHelper.dollarAmount(npp.toString()));
 			totalGPP=totalGPP+gpp;
 			totalPRCC=totalPRCC+prcc;
 			totalPRCD=totalPRCD+prcd;
-			$("#SpnNPP",this).html(jHelper.dollarAmount(npp.toString()));
+			totalNPP=totalNPP+npp;
+			totalUFA=totalUFA+ufa;
+			totalCA=totalCA+ca;
 		});
-		totalNPP=totalGPP+(totalPRCC-totalPRCD);
 		$("tfoot tr:first",tbl).each(function () {
 			$("#SpnTotalGPP",this).html(jHelper.dollarAmount(totalGPP.toString()));
 			$("#SpnTotalPRCC",this).html(jHelper.dollarAmount(totalPRCC.toString()));
 			$("#SpnTotalPRCD",this).html(jHelper.dollarAmount(totalPRCD.toString()));
 			$("#SpnTotalNPP",this).html(jHelper.dollarAmount(totalNPP.toString()));
+			$("#SpnTotalUFA",this).html(jHelper.dollarAmount(totalUFA.toString()));
+			$("#SpnTotalCA",this).html(jHelper.dollarAmount(totalCA.toString()));
 		});
 	}
 	,calcCloseUD: function () {
@@ -191,35 +174,35 @@
 			$("#SpnTotalFMV",this).html(jHelper.dollarAmount(totalFMV.toString()));
 		});
 	}
-	,calcFlinalCloseUF: function () {
+	,calcFinalCloseUF: function () {
 		var tbl=$("#FinalDealUnderlyingFundList");
-		var totalGPP=0;var totalPRCC=0;var totalPRCD=0;var totalNPP=0;
+		var totalGPP=0;var totalPRCC=0;var totalPRCD=0;var totalAC=0;
 		$("tbody tr",tbl).each(function () {
 			var gpp=parseFloat($("#ReassignedGPP",this).val());
 			var prcc=parseFloat($("#PostRecordDateCapitalCall",this).val());
 			var prcd=parseFloat($("#PostRecordDateDistribution",this).val());
 			if(isNaN(gpp)) { gpp=0; } if(isNaN(prcc)) { prcc=0; } if(isNaN(prcd)) { prcd=0; }
-			var ajc=gpp+(prcc-prcd);
+			var ac=(gpp+(prcc-prcd));
+			$("#SpnAC",this).html(jHelper.dollarAmount(ac.toString()));
 			totalGPP=totalGPP+gpp;
 			totalPRCC=totalPRCC+prcc;
 			totalPRCD=totalPRCD+prcd;
-			$("#SpnAJC",this).html(jHelper.dollarAmount(ajc.toString()));
+			totalAC=totalAC+ac;
 		});
-		totalNPP=totalGPP+(totalPRCC-totalPRCD);
 		$("tfoot tr:first",tbl).each(function () {
 			$("#SpnTotalGPP",this).html(jHelper.dollarAmount(totalGPP.toString()));
 			$("#SpnTotalPRCC",this).html(jHelper.dollarAmount(totalPRCC.toString()));
 			$("#SpnTotalPRCD",this).html(jHelper.dollarAmount(totalPRCD.toString()));
-			$("#SpnTotalAJC",this).html(jHelper.dollarAmount(totalNPP.toString()));
+			$("#SpnTotalAJC",this).html(jHelper.dollarAmount(totalAC.toString()));
 		});
 	}
-	,calcFlinalCloseUD: function () {
+	,calcFinalCloseUD: function () {
 		var tbl=$("#FinalDealUnderlyingDirects");
 		var totalNOS=0;var totalPrice=0;var totalFMV=0;
 		$("tbody tr",tbl).each(function () {
 			var nos=parseInt($("#NumberOfShares",this).val());
 			var price=parseFloat($("#PurchasePrice",this).val());
-			var fmv=parseFloat($("#FMV",this).val());
+			var fmv=parseFloat($("#AdjustedFMV",this).val());
 			if(isNaN(nos)) { nos=0; } if(isNaN(price)) { price=0; } if(isNaN(fmv)) { fmv=0; }
 			totalNOS+=nos;
 			totalPrice+=price;
@@ -240,10 +223,10 @@
 		} else {
 			// img.src="/Assets/images/tick.png";
 		}
-		this.showElements(tr,isShow);
+		dealClose.showElements(tr,isShow);
 	}
 	,editChkRow: function (chk) {
-		this.showElements($(chk).parents("tr:first"),!chk.checked);
+		dealClose.showElements($(chk).parents("tr:first"),!chk.checked);
 	}
 	,showElements: function (tr,isShow) {
 		if(isShow==false) {
@@ -257,7 +240,10 @@
 	,saveDealClose: function (loadingId) {
 		var loading=$("#"+loadingId);
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-		var param=$("#frmDealClose").serializeArray();
+		var frm=$("#frmDealClose");
+		$("#TotalUnderlyingFunds",frm).val($("tbody tr","#DealUnderlyingFundList").length);
+		$("#TotalUnderlyingDirects",frm).val($("tbody tr","#DealUnderlyingDirects").length);
+		var param=frm.serializeArray();
 		$.post("/Deal/UpdateDealClosing",param,function (data) {
 			loading.empty();
 			var arr=data.split("||");
@@ -270,19 +256,20 @@
 					alert("New Deal Close Saved");
 				}
 				$("#ExistingDealClosing").show();
+				dealClose.clearTable($("#DealUnderlyingFundList"));
+				dealClose.clearTable($("#DealUnderlyingDirects"));
 				dealClose.loadDeal();
+				dealClose.loadFinalDealClose();
 			} else { alert(data); }
 		});
 	}
 	,saveFinalDealClose: function (loadingId) {
 		var loading=$("#"+loadingId);
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-		var param=$("#frmFinalDealClose").serializeArray();
-		param[param.length]={ name: "IsFinalClose",value: "true" };
-		param[param.length]={ name: "DealId",value: dealClose.getDealId() };
-		param[param.length]={ name: "DealNumber",value: $("#DealNumber").val() };
-		param[param.length]={ name: "DealClosingId",value: $("#DealClosingId").val() };
-		param[param.length]={ name: "FundId",value: $("#FundId").val() };
+		var frm=$("#frmFinalDealClose");
+		$("#TotalUnderlyingFunds",frm).val($("tbody tr","#FinalDealUnderlyingFundList").length);
+		$("#TotalUnderlyingDirects",frm).val($("tbody tr","#FinalDealUnderlyingDirects").length);
+		var param=frm.serializeArray();
 		$.post("/Deal/UpdateFinalDealClosing",param,function (data) {
 			loading.empty();
 			if($.trim(data)!="") {
@@ -303,15 +290,6 @@
 	,onSubmit: function (formId) {
 		return jHelper.formSubmit(formId,false);
 	}
-	,closeDialog: function (reload) {
-		$("#addDialog").dialog('close');
-		if(reload==true) {
-			$("#DealCloseList").ajaxTableReload();
-		}
-	}
-	,onCreateBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-	}
 	,onGridSuccess: function (t) {
 		$("tbody tr",t).each(function () {
 			$("td:last",this).html("<img id='Edit' src='/Assets/images/Edit.png'/>");
@@ -319,15 +297,6 @@
 	}
 	,onRowClick: function (row) {
 		dealClose.add(row.cell[0]);
-	}
-	,onCreateSuccess: function () {
-		$("#UpdateLoading").html("");
-		var UpdateTargetId=$("#UpdateTargetId");
-		if(jQuery.trim(UpdateTargetId.html())!="") {
-			alert(UpdateTargetId.html())
-		} else {
-			parent.dealClose.closeDialog(true);
-		}
 	}
 	,finalClose: function (chk) {
 		var tbl=$("#tblDealUnderlyingFund");
@@ -368,17 +337,19 @@
 			$(".headerbox").show();
 			$(".expandheader").hide();
 			$(".detail").hide();
+			$(".expandaddbtn").hide();
 			$(this).hide();
 			var actbox=$(this).parents(".act-box:first");
 			actbox.show();
+			$(".expandaddbtn",actbox).show();
 			var parent=$(this).parent();
-
 			$(".expandheader",parent).show();
 			var detail=$(".detail",parent);
 			detail.show();
 		});
-		$(".expandtitle",".expandheader").click(function () {
-			var expandheader=$(this).parents(".expandheader:first");
+		$(".expandheader").click(function () {
+			var expandheader=$(this);
+			$(".expandaddbtn").hide();
 			var parent=$(expandheader).parent();
 			expandheader.hide();
 			var detail=$(".detail",parent);
@@ -387,23 +358,154 @@
 		});
 	}
 	,loadFinalDealClose: function () {
-		$("#LoadingDetail").show();
-		$("#FinalDealClose").show();
-		$.getJSON("/Deal/GetFianlDealCloseDetails?_="+(new Date()).getTime()+"&dealClosingId=0&dealId="+dealClose.getDealId(),function (data) {
-			$("#LoadingDetail").hide();
+		try {
+			$.getJSON("/Deal/GetFianlDealCloseDetails?_="+(new Date()).getTime()+"&dealClosingId=0&dealId="+dealClose.getDealId(),function (data) {
+				$("#LoadingDetail").hide();
 
-			var finaltblduflist=$("#FinalDealUnderlyingFundList");
-			dealClose.clearTable(finaltblduflist);
-			$("#FinalDUFundsTemplate").tmpl(data).appendTo(finaltblduflist);
-			jHelper.formatDollar(finaltblduflist);
+				var finaltblduflist=$("#FinalDealUnderlyingFundList");
+				dealClose.clearTable(finaltblduflist);
+				$("#FinalDUFundsTemplate").tmpl(data).appendTo(finaltblduflist);
+				jHelper.formatDollar(finaltblduflist);
 
-			var finaltbldirectlist=$("#FinalDealUnderlyingDirects");
-			dealClose.clearTable(finaltbldirectlist);
-			$("#FinalDUDirectsTemplate").tmpl(data).appendTo(finaltbldirectlist);
-			jHelper.formatDollar(finaltbldirectlist);
+				var finaltbldirectlist=$("#FinalDealUnderlyingDirects");
+				dealClose.clearTable(finaltbldirectlist);
+				$("#FinalDUDirectsTemplate").tmpl(data).appendTo(finaltbldirectlist);
+				jHelper.formatDollar(finaltbldirectlist);
 
-			dealClose.addRowClass(finaltblduflist);
-			dealClose.addRowClass(finaltbldirectlist);
+				jHelper.applyGridClass(finaltblduflist);
+				jHelper.applyGridClass(finaltbldirectlist);
+				dealClose.calcFinalCloseUF();
+				dealClose.calcFinalCloseUD();
+			});
+		} catch(e) { alert(e); }
+	}
+	/* Deal Underlying Fund */
+	,addDUF: function (tblid) {
+		var item={ "DealUnderlyingFundId": 0,"DealClosingId": 0,"DealId": dealClose.getDealId(),"FundId": $("#FundId").val() }
+		var data={ "index": 0,"item": item,"IsFinalClose": false };
+		var target=$("#"+tblid);
+		dealClose.loadDUF(data,target,data.index);
+	}
+	,loadDUF: function (data,target,index) {
+		var row=$("#row"+index,target);
+		if(!row.get(0)) {
+			$("#DUFEditTemplate").tmpl(data).prependTo(target);
+			row=$("#row"+index,target);
+			if(index==0) {
+				dealClose.showElements(row,false);
+			}
+			dealClose.setAutoComplete(row);
+			var chk=$("#chk",row).get(0);
+			if(chk)
+				chk.checked=true;
+		}
+	}
+	,saveDUF: function (img) {
+		var oldSrc=img.src;
+		img.src="/Assets/images/ajax.jpg";
+		var tr=$(img).parents("tr:first");
+		var param=jHelper.serialize(tr);
+		$.post("/Deal/CreateClosingDealUnderlyingFund",param,function (data) {
+			var arr=data.split("||");
+			if($.trim(arr[0])!="True") {
+				alert(arr[0]);
+				img.src=oldSrc;
+			} else {
+				$.getJSON("/Deal/FindDealUnderlyingFund?_"+(new Date).getTime()+"&dealUnderlyingFundId="+arr[1],function (dufitem) {
+					var target=$("#DealUnderlyingFundList");
+					$("#row0",target).remove();
+					var data={ "index": $("tbody tr","#DealUnderlyingFundList").length,"item": dufitem,"IsFinalClose": false };
+					data.index++;
+					dealClose.loadDUF(data,target,data.index);
+				});
+			}
+		});
+	}
+	/* End Deal Underlying Fund */
+	/* Deal Underlying Direct */
+	,addDUD: function (tblid) {
+		var item={ "DealUnderlyingDirectId": 0,"DealClosingId": 0,"DealId": dealClose.getDealId(),"FundId": $("#FundId").val() }
+		var data={ "index": 0,"item": item,"IsFinalClose": false };
+		var target=$("#"+tblid);
+		dealClose.loadDUD(data,target,data.index);
+	}
+	,loadDUD: function (data,target,index) {
+		var row=$("#row"+index,target);
+		if(!row.get(0)) {
+			$("#DUDEditTemplate").tmpl(data).prependTo(target);
+			row=$("#row"+index,target);
+			if(index==0) {
+				dealClose.showElements(row,false);
+			}
+			dealClose.setAutoComplete(row);
+			var chk=$("#chk",row).get(0);
+			if(chk)
+				chk.checked=true;
+		}
+	}
+	,saveDUD: function (img) {
+		var oldSrc=img.src;
+		img.src="/Assets/images/ajax.jpg";
+		var tr=$(img).parents("tr:first");
+		var param=jHelper.serialize(tr);
+		$.post("/Deal/CreateClosingDealUnderlyingDirect",param,function (data) {
+			var arr=data.split("||");
+			if($.trim(arr[0])!="True") {
+				alert(arr[0]);
+				img.src=oldSrc;
+			} else {
+				$.getJSON("/Deal/FindDealUnderlyingDirect?_"+(new Date).getTime()+"&dealUnderlyingDirectId="+arr[1],function (duditem) {
+					var target=$("#DealUnderlyingDirects");
+					$("#row0",target).remove();
+					var data={ "index": $("tbody tr","#DealUnderlyingDirects").length,"item": duditem,"IsFinalClose": false };
+					data.index++;
+					dealClose.loadDUD(data,target,data.index);
+				});
+			}
+		});
+	}
+	/* End Deal Underlying Direct */
+	,setAutoComplete: function (target) {
+		$(".dealuf",target).each(function () {
+			var tr=$(this).parents("tr:first");
+			var txt=this;
+			$(txt)
+			.unbind("blur")
+			.blur(function () { if($.trim(txt.value)=="") { $("#UnderlyingFundId",tr).val(0); } })
+			.autocomplete({ source: "/Deal/FindUnderlyingFunds"
+									,minLength: 1
+									,select: function (event,ui) {
+										$("#UnderlyingFundId",tr).val(ui.item.id);
+									}
+									,appendTo: "body",delay: 300
+			});
+		});
+		$(".dealud",target).each(function () {
+			var tr=$(this).parents("tr:first");
+			var txt=this;
+			var issuerId=$("#IssuerId",tr);
+			var securityTypeId=$("#SecurityTypeId",tr);
+			var securityId=$("#SecurityId",tr);
+			$(txt)
+				.blur(function () {
+					if($.trim(this.value)=="") {
+						issuerId.val(0);
+						securityTypeId.val(0);
+						securityId.val(0);
+					}
+				})
+				.autocomplete({ source: "/Deal/FindEquityFixedIncomeIssuers",minLength: 1,
+					select: function (event,ui) {
+						issuerId.val(ui.item.id);
+						securityTypeId.val(ui.item.otherid);
+						securityId.val(ui.item.otherid2);
+					},
+					appendTo: "#content",delay: 300
+				});
 		});
 	}
 }
+$.extend(window,{
+	getRow: function (index,item,isFinalClose) { var data={ "index": index,"item": item,"IsFinalClose": isFinalClose };return data; }
+	,checkFinalClose: function (isCheck) { var display="none";if(isCheck) { display="block"; } var style="style:display:"+display;return style; }
+});

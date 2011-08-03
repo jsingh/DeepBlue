@@ -65,7 +65,8 @@
 								Capital Call
 							</div>
 							<div class="tblcell rightcell">
-								<%: Html.Anchor(Html.Image("mncc.png").ToHtmlString(), "javascript:dealActivity.makeNewCC();")%>
+								<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.makeNewCC();" })) {%>Make
+								new capital call<%}%>
 							</div>
 						</div>
 						<div class="headerbox">
@@ -136,7 +137,9 @@
 										Post Record Capital Call</div>
 									<div class="addbtn">
 										<div class="tblcell rightcell">
-											<%: Html.Anchor(Html.Image("addnewprcc.png").ToHtmlString(), "javascript:dealActivity.makeNewPRCC();")%></div>
+											<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.makeNewPRCC();" })) {%>Add
+											new post record date capital call<%}%>
+										</div>
 									</div>
 									<div class="selectloading" id="PRCCLoading">
 									</div>
@@ -191,7 +194,8 @@
 								Cash Distribution
 							</div>
 							<div class="tblcell rightcell">
-								<%: Html.Anchor(Html.Image("rdc.png").ToHtmlString(), "javascript:dealActivity.makeNewCD();")%>
+								<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.makeNewCD();" })) {%>Raise
+								distribution call<%}%>
 							</div>
 						</div>
 						<div class="headerbox">
@@ -261,7 +265,10 @@
 											Post Record Date Distribution</div>
 										<div class="addbtn">
 											<div class="tblcell rightcell">
-												<%: Html.Anchor(Html.Image("anprcd.png").ToHtmlString(), "javascript:dealActivity.makeNewPRCD();")%></div>
+												<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.makeNewPRCD();" })) {%>Add
+												new post record date distribution
+												<%}%>
+											</div>
 										</div>
 										<div class="selectloading" id="PRCDLoading">
 										</div>
@@ -590,7 +597,8 @@
 								<%: Html.TextBox("FLE_Fund", "SEARCH FUND", new { @style = "width:200px", @class = "wm" })%>
 							</div>
 							<div class="tblcell rightcell">
-								<%: Html.Anchor(Html.Image("addexpense.png").ToHtmlString(), "javascript:dealActivity.makeNewFLE();")%>
+								<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.makeNewFLE();" })) {%>Add
+								expense<%}%>
 							</div>
 						</div>
 						<div class="headerbox">
@@ -735,7 +743,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%= Html.jQueryAutoComplete("CC_UnderlyingFund", new AutoCompleteOptions {
 																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
-																	  OnSelect = "function(event, ui) { deal.selectFund(this,ui.item.id,ui.item.label); }"
+																	  OnSelect = "function(event, ui) {  dealActivity.setCCUnderlyingFund(ui.item.id,ui.item.value); }"
 	})%>
 	<%= Html.jQueryAutoComplete("CD_UnderlyingFund", new AutoCompleteOptions {
 																	  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,

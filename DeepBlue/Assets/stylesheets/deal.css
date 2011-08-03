@@ -142,7 +142,13 @@ h4 a {
 	background-repeat: no-repeat;
 }
 .expandheader .expandimg, .recon-expandheader .expandimg {
-	padding: 15px 0 8px 0;
+    background: url("../images/plus.png") no-repeat scroll left center transparent;
+    color: #006059;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 12px 0 8px 20px;
+    white-space: nowrap;
+     text-transform:uppercase;
 }
 .expandsel {
 	background-image: url(../images/expandbg.png);
@@ -162,24 +168,22 @@ h4 a {
 .expandimg {
 	float: left;
 }
-.expandtitle{
+.expandtitle {
 	text-shadow: #0B0B0B 1px 1px 1px;
-	filter: Shadow(Color=#0B0B0B, 	
-			Direction=135, 
-			Strength=2);
+	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
 }
 .expandtitle, .recon-expandtitle {
 	float: left;
 	width: auto;
 	white-space: nowrap;
 	color: white;
-		margin-right: 20px;
+	margin-right: 20px;
 }
 .expandaddbtn {
 	float: left;
 	padding-left: 30px;
 	display: none;
-	width: 151px;
+	width: auto;
 	height: 31px;
 	margin: 10px 0 0 70px;
 	line-height: 33px;
@@ -286,7 +290,9 @@ h4 a {
 	margin: 40px 40px 50px 0;
 }
 #AddDealDocument {
-	width: 950px;    margin: 20px auto 0 15px;
+	width: 950px;
+	margin: 20px auto 0 15px;
 }
-#SellerInfo .editor-label,#SellerInfo .editor-field {     padding: 13px 5px;
+#SellerInfo .editor-label, #SellerInfo .editor-field {
+	padding: 13px 5px;
 }
