@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,58 +63,58 @@ namespace DeepBlue.Tests.Controllers.Document {
         }
 
         [Test]
-        public void valid_DocumentType_id_sets_model_error_on_model_state()
+        public void valid_documenttype_id_sets_model_error_on_model_state()
         {
 			Assert.IsTrue(test_posted_value("DocumentTypeID"));
         }
 
         [Test]
-        public void valid_DocumentType_id_sets_1_error()
+        public void valid_documenttype_id_sets_1_error()
         {
 			Assert.IsTrue(test_error_count("DocumentTypeID", 0));
         }
 
 
         [Test]
-        public void valid_DocumentDate_sets_model_error_on_model_state()
+        public void valid_documentdate_sets_model_error_on_model_state()
         {
             Assert.IsTrue(test_posted_value("DocumentDate"));
         }
 
         [Test]
-        public void valid_DocumentDate_sets_1_error()
+        public void valid_documentdate_sets_1_error()
         {
             Assert.IsTrue(test_error_count("DocumentDate", 0));
         }
 
 
 		[Test]
-		public void valid_Entityid_sets_model_error_on_model_state() {
+		public void valid_entityid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("EntityID"));
 		}
 
 		[Test]
-		public void valid_Entityid_sets_1_error() {
+		public void valid_entityid_sets_1_error() {
 			Assert.IsTrue(test_error_count("EntityID", 0));
 		}
 
 		[Test]
-		public void valid_Createdby_sets_model_error_on_model_state() {
+		public void valid_createdby_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CreatedBy"));
 		}
 
 		[Test]
-		public void valid_Createdby_sets_1_error() {
+		public void valid_createdby_sets_1_error() {
 			Assert.IsTrue(test_error_count("CreatedBy", 0));
 		}
 
 		[Test]
-		public void valid_Createddate_sets_model_error_on_model_state() {
+		public void valid_createddate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CreatedDate"));
 		}
 
 		[Test]
-		public void valid_Createddate_sets_1_error() {
+		public void valid_createddate_sets_1_error() {
 			Assert.IsTrue(test_error_count("CreatedDate", 0));
 		}
 

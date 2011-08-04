@@ -27,22 +27,21 @@ namespace DeepBlue.Models.Entity {
 		public CashDistributionType() {
 		}
 
-		private ICashDistributionTypeService _cashDistributionTypeService;
+		private ICashDistributionTypeService _CashDistributionTypeService;
 		public ICashDistributionTypeService CashDistributionTypeService {
 			get {
-				if (_cashDistributionTypeService == null) {
-					_cashDistributionTypeService = new CashDistributionTypeService();
+				if (_CashDistributionTypeService == null) {
+					_CashDistributionTypeService = new CashDistributionTypeService();
 				}
-				return _cashDistributionTypeService;
+				return _CashDistributionTypeService;
 			}
 			set {
-				_cashDistributionTypeService = value;
+				_CashDistributionTypeService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var cashDistributionType = this;
-			IEnumerable<ErrorInfo> errors = Validate(cashDistributionType);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -51,8 +50,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		private IEnumerable<ErrorInfo> Validate(CashDistributionType cashDistributionType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(cashDistributionType);
-			return errors;
+			return ValidationHelper.Validate(cashDistributionType);
 		}
 	}
 }

@@ -49,22 +49,21 @@ namespace DeepBlue.Models.Entity {
 		public Issuer() {
 		}
 
-		private IIssuerService _issuerService;
+		private IIssuerService _IssuerService;
 		public IIssuerService IssuerService {
 			get {
-				if (_issuerService == null) {
-					_issuerService = new IssuerService();
+				if (_IssuerService == null) {
+					_IssuerService = new IssuerService();
 				}
-				return _issuerService;
+				return _IssuerService;
 			}
 			set {
-				_issuerService = value;
+				_IssuerService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var issuer = this;
-			IEnumerable<ErrorInfo> errors = Validate(issuer);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

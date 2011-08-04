@@ -22,9 +22,9 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public UnderlyingFundStockDistributionLineItem(IUnderlyingFundStockDistributionLineItemService underlyingFundStockDistributionLineItemservice)
+		public UnderlyingFundStockDistributionLineItem(IUnderlyingFundStockDistributionLineItemService underlyingFundStockDistributionLineItemService)
 			: this() {
-				this.UnderlyingFundStockDistributionLineItemService = underlyingFundStockDistributionLineItemservice;
+				this.UnderlyingFundStockDistributionLineItemService = underlyingFundStockDistributionLineItemService;
 		}
 
 		public UnderlyingFundStockDistributionLineItem() {
@@ -44,8 +44,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var underlyingFundStockDistributionLineItem = this;
-			IEnumerable<ErrorInfo> errors = Validate(underlyingFundStockDistributionLineItem);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

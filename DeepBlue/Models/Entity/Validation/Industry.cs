@@ -28,16 +28,16 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public Industry(IIndustryService industryservice)
+		public Industry(IIndustryService industryService)
 			: this() {
-				this.industryService = industryservice;
+				this.IndustryService = industryService;
 		}
 
 		public Industry() {
 		}
 
 		private IIndustryService _IndustryService;
-		public IIndustryService industryService {
+		public IIndustryService IndustryService {
 			get {
 				if (_IndustryService == null) {
 					_IndustryService = new IndustryService();
@@ -50,18 +50,16 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var createindustry= this;
-			IEnumerable<ErrorInfo> errors = Validate(createindustry);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			industryService.SaveIndustry(this);
+			IndustryService.SaveIndustry(this);
 			return null;
 		}
 
 		private IEnumerable<ErrorInfo> Validate(Industry industry) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(industry);
-			return errors;
+			return ValidationHelper.Validate(industry);
 		}
 	}
 }

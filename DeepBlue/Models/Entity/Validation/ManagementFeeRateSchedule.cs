@@ -29,22 +29,21 @@ namespace DeepBlue.Models.Entity {
 		public ManagementFeeRateSchedule() {
 		}
 
-		private IManagementFeeRateScheduleService _managementFeeRateScheduleService;
+		private IManagementFeeRateScheduleService _ManagementFeeRateScheduleService;
 		public IManagementFeeRateScheduleService ManagementFeeRateScheduleService {
 			get {
-				if (_managementFeeRateScheduleService == null) {
-					_managementFeeRateScheduleService = new ManagementFeeRateScheduleService();
+				if (_ManagementFeeRateScheduleService == null) {
+					_ManagementFeeRateScheduleService = new ManagementFeeRateScheduleService();
 				}
-				return _managementFeeRateScheduleService;
+				return _ManagementFeeRateScheduleService;
 			}
 			set {
-				_managementFeeRateScheduleService = value;
+				_ManagementFeeRateScheduleService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var managementFeeRateSchedule = this;
-			IEnumerable<ErrorInfo> errors = Validate(managementFeeRateSchedule);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

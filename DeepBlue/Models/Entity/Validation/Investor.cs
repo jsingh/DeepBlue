@@ -99,22 +99,21 @@ namespace DeepBlue.Models.Entity {
 
 		public Investor() {
 		}
-		private IInvestorService _investorService;
+		private IInvestorService _InvestorService;
 		public IInvestorService InvestorService {
 			get {
-				if (_investorService == null) {
-					_investorService = new InvestorService();
+				if (_InvestorService == null) {
+					_InvestorService = new InvestorService();
 				}
-				return _investorService;
+				return _InvestorService;
 			}
 			set {
-				_investorService = value;
+				_InvestorService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var investor = this;
-			IEnumerable<ErrorInfo> errors = Validate(investor);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

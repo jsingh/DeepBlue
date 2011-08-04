@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,27 +47,27 @@ namespace DeepBlue.Tests.Controllers.Document {
         }
 
 		[Test]
-		public void invalid_DocumentType_id_sets_model_error_on_model_state() {
+		public void invalid_documenttype_id_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("DocumentTypeId"));
 		}
 
 		[Test]
-		public void invalid_DocumentType_id_sets_1_error() {
+		public void invalid_documenttype_id_sets_1_error() {
 			Assert.IsTrue(test_error_count("DocumentTypeId", 1));
 		}
 		
 		[Test]
-		public void invalid_DocumentDate_sets_model_error_on_model_state() {
+		public void invalid_documentdate_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("DocumentDate"));
 		}
 
 		[Test]
-		public void invalid_DocumentDate_sets_1_error() {
+		public void invalid_documentdate_sets_1_error() {
 			Assert.IsTrue(test_error_count("DocumentDate", 1));
 		}
 
         [Test]
-        public void invalid_Document_results_in_invalid_modelstate() {
+        public void invalid_document_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }

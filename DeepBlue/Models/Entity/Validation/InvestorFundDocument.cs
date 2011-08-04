@@ -37,32 +37,29 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public InvestorFundDocument(IInvestorFundDocumentService investorService)
+		public InvestorFundDocument(IInvestorFundDocumentService investorFundDocumentService)
 			: this() {
-			this.InvestorFundDocumentService = investorService;
+			this.InvestorFundDocumentService = investorFundDocumentService;
 		}
 
 		public InvestorFundDocument() {
-
 		}
 
-		private IInvestorFundDocumentService _investorFundDocumentDocumentService;
+		private IInvestorFundDocumentService _InvestorFundDocumentDocumentService;
 		public IInvestorFundDocumentService InvestorFundDocumentService {
 			get {
-				if (_investorFundDocumentDocumentService == null) {
-					_investorFundDocumentDocumentService = new InvestorFundDocumentService();
+				if (_InvestorFundDocumentDocumentService == null) {
+					_InvestorFundDocumentDocumentService = new InvestorFundDocumentService();
 				}
-				return _investorFundDocumentDocumentService;
+				return _InvestorFundDocumentDocumentService;
 			}
 			set {
-				_investorFundDocumentDocumentService = value;
+				_InvestorFundDocumentDocumentService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var investorFundDocument = this;
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(investorFundDocument);
-			errors = errors.Union(ValidationHelper.Validate(investorFundDocument.File));
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -70,6 +67,13 @@ namespace DeepBlue.Models.Entity {
 			return null;
 		}
 
+		private IEnumerable<ErrorInfo> Validate(InvestorFundDocument investorFundDocument) {
+			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(investorFundDocument);
+			if (investorFundDocument.File != null) {
+				errors = errors.Union(ValidationHelper.Validate(investorFundDocument.File));
+			}
+			return errors;
+		}
 	}
 
 }

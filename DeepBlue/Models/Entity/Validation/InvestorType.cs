@@ -26,30 +26,29 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public InvestorType(IInvestorTypeService investorService)
+		public InvestorType(IInvestorTypeService investorTypeService)
 			: this() {
-			this.InvestorTypeService = investorService;
+			this.InvestorTypeService = investorTypeService;
 		}
 
 		public InvestorType() {
 		}
 
-		private IInvestorTypeService _investorService;
+		private IInvestorTypeService _InvestorTypeService;
 		public IInvestorTypeService InvestorTypeService {
 			get {
-				if (_investorService == null) {
-					_investorService = new InvestorTypeService();
+				if (_InvestorTypeService == null) {
+					_InvestorTypeService = new InvestorTypeService();
 				}
-				return _investorService;
+				return _InvestorTypeService;
 			}
 			set {
-				_investorService = value;
+				_InvestorTypeService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var investor = this;
-			IEnumerable<ErrorInfo> errors = Validate(investor);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -57,9 +56,8 @@ namespace DeepBlue.Models.Entity {
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(InvestorType investorEntityType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(investorEntityType);
-			return errors;
+		private IEnumerable<ErrorInfo> Validate(InvestorType investorType) {
+			return ValidationHelper.Validate(investorType);
 		}
 	}
 }

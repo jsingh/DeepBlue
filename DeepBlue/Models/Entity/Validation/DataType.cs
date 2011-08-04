@@ -19,40 +19,38 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public DataType(IDataTypeService dataTypeservice)
+		public DataType(IDataTypeService dataTypeService)
 			: this() {
-			this.dataTypeservice = dataTypeservice;
+				this.DataTypeservice = dataTypeService;
 		}
 
 		public DataType() {
 		}
 
-		private IDataTypeService _dataTypeService;
-		public IDataTypeService dataTypeservice {
+		private IDataTypeService _DataTypeService;
+		public IDataTypeService DataTypeservice {
 			get {
-				if (_dataTypeService == null) {
-					_dataTypeService = new DataTypeService();
+				if (_DataTypeService == null) {
+					_DataTypeService = new DataTypeService();
 				}
-				return _dataTypeService;
+				return _DataTypeService;
 			}
 			set {
-				_dataTypeService = value;
+				_DataTypeService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var dataType = this;
-			IEnumerable<ErrorInfo> errors = Validate(dataType);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			dataTypeservice.SaveDataType(this);
+			DataTypeservice.SaveDataType(this);
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(DataType dataTypeclosing) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(dataTypeclosing);
-			return errors;
+		private IEnumerable<ErrorInfo> Validate(DataType dataType) {
+			return ValidationHelper.Validate(dataType);
 		}
 	}
 }

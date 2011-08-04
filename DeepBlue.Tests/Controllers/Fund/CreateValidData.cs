@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,32 +56,32 @@ namespace DeepBlue.Tests.Controllers.Fund {
 		}
 
 		[Test]
-		public void valid_Fund_name_sets_model_error_on_model_state() {
+		public void valid_fund_name_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("FundName"));
 		}
 
 		[Test]
-		public void valid_Fund_name_sets_1_error() {
+		public void valid_fund_name_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundName", 0));
 		}
 
 		[Test]
-		public void valid_Fund_taxid_sets_model_error_on_model_state() {
+		public void valid_fund_taxid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("TaxId"));
 		}
 
 		[Test]
-		public void valid_Fund_taxid_sets_1_error() {
+		public void valid_fund_taxid_sets_1_error() {
 			Assert.IsTrue(test_error_count("TaxId", 0));
 		}
 
 		[Test]
-		public void valid_Fund_inceptiondate_sets_model_error_on_model_state() {
+		public void valid_fund_inceptiondate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("InceptionDate"));
 		}
 
 		[Test]
-		public void valid_Fund_inceptiondate_sets_1_error() {
+		public void valid_fund_inceptiondate_sets_1_error() {
 			Assert.IsTrue(test_error_count("InceptionDate", 0));
 		}
  

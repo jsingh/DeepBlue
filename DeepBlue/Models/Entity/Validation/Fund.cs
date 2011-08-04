@@ -52,22 +52,21 @@ namespace DeepBlue.Models.Entity {
 		public Fund() {
 		}
 
-		private IFundService _fundService;
+		private IFundService _FundService;
 		public IFundService FundService {
 			get {
-				if (_fundService == null) {
-					_fundService = new FundService();
+				if (_FundService == null) {
+					_FundService = new FundService();
 				}
-				return _fundService;
+				return _FundService;
 			}
 			set {
-				_fundService = value;
+				_FundService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var fund = this;
-			IEnumerable<ErrorInfo> errors = Validate(fund);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

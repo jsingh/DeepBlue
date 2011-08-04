@@ -27,22 +27,21 @@ namespace DeepBlue.Models.Entity {
 		public CommunicationGrouping() {
 		}
 
-		private ICommunicationGroupingService _communicationGroupingService;
+		private ICommunicationGroupingService _CommunicationGroupingService;
 		public ICommunicationGroupingService CommunicationGroupingService {
 			get {
-				if (_communicationGroupingService == null) {
-					_communicationGroupingService = new CommunicationGroupingService();
+				if (_CommunicationGroupingService == null) {
+					_CommunicationGroupingService = new CommunicationGroupingService();
 				}
-				return _communicationGroupingService;
+				return _CommunicationGroupingService;
 			}
 			set {
-				_communicationGroupingService = value;
+				_CommunicationGroupingService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var communication = this;
-			IEnumerable<ErrorInfo> errors = Validate(communication);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -51,8 +50,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		private IEnumerable<ErrorInfo> Validate(CommunicationGrouping communicationGrouping) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(communicationGrouping);
-			return errors;
+			return ValidationHelper.Validate(communicationGrouping);
 		}
 	}
 }

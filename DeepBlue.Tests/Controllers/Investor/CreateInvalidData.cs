@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,22 +47,22 @@ namespace DeepBlue.Tests.Controllers.Investor {
         }
 
 		[Test]
-		public void invalid_Investor_name_sets_model_error_on_model_state() {
+		public void invalid_investor_name_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("InvestorName"));
 		}
 
 		[Test]
-		public void invalid_Investor_name_sets_1_error() {
+		public void invalid_investor_name_sets_1_error() {
 			Assert.IsTrue(test_error_count("InvestorName", 1));
 		}
 
         [Test]
-        public void invalid_Investor_socialsecuritytaxid_sets_model_error_on_model_state() {
+        public void invalid_investor_socialsecuritytaxid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("SocialSecurityTaxId"));
         }
 
 		[Test]
-		public void invalid_Investor_socialsecuritytaxid_sets_1_error() {
+		public void invalid_investor_socialsecuritytaxid_sets_1_error() {
 			Assert.IsTrue(test_error_count("SocialSecurityTaxId", 1));
 		}
 
@@ -87,7 +87,7 @@ namespace DeepBlue.Tests.Controllers.Investor {
 		}
 		
         [Test]
-        public void invalid_Investor_name_results_in_invalid_modelstate() {
+        public void invalid_investor_name_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }

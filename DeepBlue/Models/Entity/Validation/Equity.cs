@@ -48,22 +48,21 @@ namespace DeepBlue.Models.Entity {
 		public Equity() {
 		}
 
-		private IEquityService _equityService;
+		private IEquityService _EquityService;
 		public IEquityService EquityService {
 			get {
-				if (_equityService == null) {
-					_equityService = new EquityService();
+				if (_EquityService == null) {
+					_EquityService = new EquityService();
 				}
-				return _equityService;
+				return _EquityService;
 			}
 			set {
-				_equityService = value;
+				_EquityService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var equity = this;
-			IEnumerable<ErrorInfo> errors = Validate(equity);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

@@ -27,16 +27,16 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public ReportingFrequency(IReportingFrequencyService reportingfrequencyservice)
+		public ReportingFrequency(IReportingFrequencyService reportingFrequencyService)
 			: this() {
-			this.reportingfrequencyService = reportingfrequencyservice;
+				this.ReportingFrequencyService = reportingFrequencyService;
 		}
 
 		public ReportingFrequency() {
 		}
 
 		private IReportingFrequencyService _ReportingFrequencyService;
-		public IReportingFrequencyService reportingfrequencyService {
+		public IReportingFrequencyService ReportingFrequencyService {
 			get {
 				if (_ReportingFrequencyService == null) {
 					_ReportingFrequencyService = new ReportingFrequencyService();
@@ -49,18 +49,16 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var createreportingfrequency = this;
-			IEnumerable<ErrorInfo> errors = Validate(createreportingfrequency);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			reportingfrequencyService.SaveReportingFrequency(this);
+			ReportingFrequencyService.SaveReportingFrequency(this);
 			return null;
 		}
 
 		private IEnumerable<ErrorInfo> Validate(ReportingFrequency reportingfrequency) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(reportingfrequency);
-			return errors;
+			return ValidationHelper.Validate(reportingfrequency);
 		}
 	}
 }

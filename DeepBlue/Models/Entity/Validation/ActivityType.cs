@@ -27,22 +27,21 @@ namespace DeepBlue.Models.Entity {
 		public ActivityType() {
 		}
 
-		private IActivityTypeService _activityTypeService;
+		private IActivityTypeService _ActivityTypeService;
 		public IActivityTypeService ActivityTypeService {
 			get {
-				if (_activityTypeService == null) {
-					_activityTypeService = new ActivityTypeService();
+				if (_ActivityTypeService == null) {
+					_ActivityTypeService = new ActivityTypeService();
 				}
-				return _activityTypeService;
+				return _ActivityTypeService;
 			}
 			set {
-				_activityTypeService = value;
+				_ActivityTypeService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var activityType = this;
-			IEnumerable<ErrorInfo> errors = Validate(activityType);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -51,8 +50,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		private IEnumerable<ErrorInfo> Validate(ActivityType activityType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(activityType);
-			return errors;
+			return ValidationHelper.Validate(activityType);
 		}
 	}
 }

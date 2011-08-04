@@ -34,22 +34,21 @@ namespace DeepBlue.Models.Entity {
 		public PurchaseType() {
 		}
 
-		private IPurchaseTypeService _purchaseTypeService;
+		private IPurchaseTypeService _PurchaseTypeService;
 		public IPurchaseTypeService PurchaseTypeService {
 			get {
-				if (_purchaseTypeService == null) {
-					_purchaseTypeService = new PurchaseTypeService();
+				if (_PurchaseTypeService == null) {
+					_PurchaseTypeService = new PurchaseTypeService();
 				}
-				return _purchaseTypeService;
+				return _PurchaseTypeService;
 			}
 			set {
-				_purchaseTypeService = value;
+				_PurchaseTypeService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var purchaseType = this;
-			IEnumerable<ErrorInfo> errors = Validate(purchaseType);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -58,8 +57,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		private IEnumerable<ErrorInfo> Validate(PurchaseType purchaseType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(purchaseType);
-			return errors;
+			return ValidationHelper.Validate(purchaseType);
 		}
 	}
 }

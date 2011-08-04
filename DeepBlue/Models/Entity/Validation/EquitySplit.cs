@@ -35,16 +35,16 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public EquitySplit(IEquitySplitService equitySplitservice)
+		public EquitySplit(IEquitySplitService equitySplitService)
 			: this() {
-			this.equitySplitService = equitySplitservice;
+			this.EquitySplitService = equitySplitService;
 		}
 
 		public EquitySplit() {
 		}
 
 		private IEquitySplitService _EquitySplitService;
-		public IEquitySplitService equitySplitService {
+		public IEquitySplitService EquitySplitService {
 			get {
 				if (_EquitySplitService == null) {
 					_EquitySplitService = new EquitySplitService();
@@ -57,12 +57,11 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var equitySplit = this;
-			IEnumerable<ErrorInfo> errors = Validate(equitySplit);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			equitySplitService.SaveEquitySplit(this);
+			EquitySplitService.SaveEquitySplit(this);
 			return null;
 		}
 

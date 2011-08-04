@@ -28,22 +28,22 @@ namespace DeepBlue.Models.Entity {
 
 		public CashDistribution(ICashDistributionService cashDistributionservice)
 			: this() {
-			this.cashDistributionservice = cashDistributionservice;
+			this.CashDistributionService = cashDistributionservice;
 		}
 
 		public CashDistribution() {
 		}
 
-		private ICashDistributionService _cashDistributionService;
-		public ICashDistributionService cashDistributionservice {
+		private ICashDistributionService _CashDistributionService;
+		public ICashDistributionService CashDistributionService {
 			get {
-				if (_cashDistributionService == null) {
-					_cashDistributionService = new CashDistributionService();
+				if (_CashDistributionService == null) {
+					_CashDistributionService = new CashDistributionService();
 				}
-				return _cashDistributionService;
+				return _CashDistributionService;
 			}
 			set {
-				_cashDistributionService = value;
+				_CashDistributionService = value;
 			}
 		}
 
@@ -53,7 +53,7 @@ namespace DeepBlue.Models.Entity {
 			if (errors.Any()) {
 				return errors;
 			}
-			cashDistributionservice.SaveCashDistribution(this);
+			CashDistributionService.SaveCashDistribution(this);
 			return null;
 		}
 

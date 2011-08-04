@@ -27,16 +27,16 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public Geography(IGeographyService geographyservice)
+		public Geography(IGeographyService geographyService)
 			: this() {
-				this.geographyService = geographyservice;
+				this.GeographyService = geographyService;
 		}
 
 		public Geography() {
 		}
 
 		private IGeographyService _GeographyService;
-		public IGeographyService geographyService {
+		public IGeographyService GeographyService {
 			get {
 				if (_GeographyService == null) {
 					_GeographyService = new GeographyService();
@@ -49,18 +49,16 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var creategeography= this;
-			IEnumerable<ErrorInfo> errors = Validate(creategeography);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			geographyService.SaveGeography(this);
+			GeographyService.SaveGeography(this);
 			return null;
 		}
 
 		private IEnumerable<ErrorInfo> Validate(Geography geography) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(geography);
-			return errors;
+			return ValidationHelper.Validate(geography);
 		}
 	}
 }

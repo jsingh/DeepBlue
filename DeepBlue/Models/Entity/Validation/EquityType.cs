@@ -34,22 +34,21 @@ namespace DeepBlue.Models.Entity {
 		public EquityType() {
 		}
 
-		private IEquityTypeService _equityTypeService;
+		private IEquityTypeService _EquityTypeService;
 		public IEquityTypeService EquityTypeService {
 			get {
-				if (_equityTypeService == null) {
-					_equityTypeService = new EquityTypeService();
+				if (_EquityTypeService == null) {
+					_EquityTypeService = new EquityTypeService();
 				}
-				return _equityTypeService;
+				return _EquityTypeService;
 			}
 			set {
-				_equityTypeService = value;
+				_EquityTypeService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var equityType = this;
-			IEnumerable<ErrorInfo> errors = Validate(equityType);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -58,8 +57,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		private IEnumerable<ErrorInfo> Validate(EquityType equityType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(equityType);
-			return errors;
+			return ValidationHelper.Validate(equityType);
 		}
 	}
 }

@@ -5,9 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using DeepBlue.Helpers;
  
-
 namespace DeepBlue.Models.Entity {
-
 	[MetadataType(typeof(DealFundDocumentMD))]
 	public partial class DealFundDocument {
 		public class DealFundDocumentMD : CreatedByFields {
@@ -51,9 +49,9 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public DealFundDocument(IDealFundDocumentService dealFundDocumentservice)
+		public DealFundDocument(IDealFundDocumentService dealFundDocumentService)
 			: this() {
-				this.DealFundDocumentservice = dealFundDocumentservice;
+				this.DealFundDocumentservice = dealFundDocumentService;
 		}
 
 		public DealFundDocument() {
@@ -73,8 +71,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var dealFundDocument = this;
-			IEnumerable<ErrorInfo> errors = Validate(dealFundDocument);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

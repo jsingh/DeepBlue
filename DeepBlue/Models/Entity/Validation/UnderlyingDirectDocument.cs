@@ -61,38 +61,36 @@ namespace DeepBlue.Models.Entity {
 
 		public UnderlyingDirectDocument(IUnderlyingDirectDocumentService underlyingDirectDocumentservice)
 			: this() {
-			this.underlyingDirectDocumentservice = underlyingDirectDocumentservice;
+			this.UnderlyingDirectDocumentService = underlyingDirectDocumentservice;
 		}
 
 		public UnderlyingDirectDocument() {
 		}
 
-		private IUnderlyingDirectDocumentService _underlyingDirectDocumentService;
-		public IUnderlyingDirectDocumentService underlyingDirectDocumentservice {
+		private IUnderlyingDirectDocumentService _UnderlyingDirectDocumentService;
+		public IUnderlyingDirectDocumentService UnderlyingDirectDocumentService {
 			get {
-				if (_underlyingDirectDocumentService == null) {
-					_underlyingDirectDocumentService = new UnderlyingDirectDocumentService();
+				if (_UnderlyingDirectDocumentService == null) {
+					_UnderlyingDirectDocumentService = new UnderlyingDirectDocumentService();
 				}
-				return _underlyingDirectDocumentService;
+				return _UnderlyingDirectDocumentService;
 			}
 			set {
-				_underlyingDirectDocumentService = value;
+				_UnderlyingDirectDocumentService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var underlyingDirectDocument = this;
-			IEnumerable<ErrorInfo> errors = Validate(underlyingDirectDocument);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			underlyingDirectDocumentservice.SaveUnderlyingDirectDocument(this);
+			UnderlyingDirectDocumentService.SaveUnderlyingDirectDocument(this);
 			return null;
 		}
 
 		private IEnumerable<ErrorInfo> Validate(UnderlyingDirectDocument underlyingDirectDocument) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(underlyingDirectDocument);
-			return errors;
+			return ValidationHelper.Validate(underlyingDirectDocument);
 		}
 	}
 }

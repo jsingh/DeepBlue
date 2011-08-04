@@ -9,7 +9,7 @@ using DeepBlue;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(InvestorFundTransactionMD))]
 	public partial class InvestorFundTransaction {
-		public class InvestorFundTransactionMD {
+		public class InvestorFundTransactionMD : CreatedByFields {
 
 			#region Primitive Properties
 			[Required(ErrorMessage = "Fund Closing is required")]
@@ -34,7 +34,7 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			[Required(ErrorMessage = "Amount is required")]
-			[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "Amount is required")]
+			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Amount is required")]
 			public global::System.Decimal Amount {
 				get;
 				set;
@@ -43,36 +43,39 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public InvestorFundTransaction(IInvestorFundTransactionService investorService)
+		public InvestorFundTransaction(IInvestorFundTransactionService investorFundTransactionService)
 			: this() {
-			this.InvestorFundTransactionService = investorService;
+			this.InvestorFundTransactionService = investorFundTransactionService;
 		}
 
 		public InvestorFundTransaction() {
-
 		}
 
-		private IInvestorFundTransactionService _investorService;
+		private IInvestorFundTransactionService _InvestorFundTransactionService;
 		public IInvestorFundTransactionService InvestorFundTransactionService {
 			get {
-				if (_investorService == null) {
-					_investorService = new InvestorFundTransactionService();
+				if (_InvestorFundTransactionService == null) {
+					_InvestorFundTransactionService = new InvestorFundTransactionService();
 				}
-				return _investorService;
+				return _InvestorFundTransactionService;
 			}
 			set {
-				_investorService = value;
+				_InvestorFundTransactionService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var investorFundTransaction = this;
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(investorFundTransaction);
+			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
 			InvestorFundTransactionService.SaveInvestorFundTransaction(this);
 			return null;
+		}
+
+
+		private IEnumerable<ErrorInfo> Validate(InvestorFundTransaction investorFundTransaction) {
+			return ValidationHelper.Validate(investorFundTransaction);
 		}
 	}
 

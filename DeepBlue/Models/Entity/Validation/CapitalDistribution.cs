@@ -52,32 +52,31 @@ namespace DeepBlue.Models.Entity {
 
 		public CapitalDistribution(ICapitalDistributionService capitalDistributionService)
 			: this() {
-			this.capitalDistributionService = capitalDistributionService;
+				this.CapitalDistributionService = capitalDistributionService;
 		}
 
 		public CapitalDistribution() {
 		}
 
-		private ICapitalDistributionService _capitalDistributionService;
-		public ICapitalDistributionService capitalDistributionService {
+		private ICapitalDistributionService _CapitalDistributionService;
+		public ICapitalDistributionService CapitalDistributionService {
 			get {
-				if (_capitalDistributionService == null) {
-					_capitalDistributionService = new CapitalDistributionService();
+				if (_CapitalDistributionService == null) {
+					_CapitalDistributionService = new CapitalDistributionService();
 				}
-				return _capitalDistributionService;
+				return _CapitalDistributionService;
 			}
 			set {
-				_capitalDistributionService = value;
+				_CapitalDistributionService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var capitalDistribution = this;
-			IEnumerable<ErrorInfo> errors = Validate(capitalDistribution);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			capitalDistributionService.SaveCapitalDistribution(this);
+			CapitalDistributionService.SaveCapitalDistribution(this);
 			return null;
 		}
 

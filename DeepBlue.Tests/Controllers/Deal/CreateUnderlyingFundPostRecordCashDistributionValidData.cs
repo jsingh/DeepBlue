@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,42 +55,42 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCashDistribution_UnderlyingFundId_sets_model_error_on_model_state() {
+		public void valid_underlyingfundpostrecordcashdistribution_underlyingfundid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("UnderlyingFundId"));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCashDistribution_UnderlyingFundId_sets_0_error() {
+		public void valid_underlyingfundpostrecordcashdistribution_underlyingfundid_sets_0_error() {
 			Assert.IsTrue(test_error_count("UnderlyingFundId", 0));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCashDistribution_DealId_sets_model_error_on_model_state() {
+		public void valid_underlyingfundpostrecordcashdistribution_dealid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("DealId"));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCashDistribution_DealId_sets_0_error() {
+		public void valid_underlyingfundpostrecordcashdistribution_dealid_sets_0_error() {
 			Assert.IsTrue(test_error_count("DealId", 0));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCashDistribution_Amount_sets_model_error_on_model_state() {
+		public void valid_underlyingfundpostrecordcashdistribution_amount_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("Amount"));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCashDistribution_Amount_sets_0_error() {
+		public void valid_underlyingfundpostrecordcashdistribution_amount_sets_0_error() {
 			Assert.IsTrue(test_error_count("Amount", 0));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCashDistribution_DistributionDate_sets_model_error_on_model_state() {
+		public void valid_underlyingfundpostrecordcashdistribution_distributiondate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("DistributionDate"));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCashDistribution_DistributionDate_sets_0_error() {
+		public void valid_underlyingfundpostrecordcashdistribution_distributiondate_sets_0_error() {
 			Assert.IsTrue(test_error_count("DistributionDate", 0));
 		}
 

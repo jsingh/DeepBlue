@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,57 +54,57 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 
 		[Test]
-		public void valid_UnderlyingDirectValuation_FundId_sets_model_error_on_model_state() {
+		public void valid_underlyingdirectvaluation_fundid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("FundId"));
 		}
 
 		[Test]
-		public void valid_UnderlyingDirectValuation_FundId_sets_0_error() {
+		public void valid_underlyingdirectvaluation_fundid_sets_0_error() {
 			Assert.IsTrue(test_error_count("FundId", 0));
 		}
 
 		[Test]
-		public void valid_UnderlyingDirectValuation_SecurityTypeId_sets_model_error_on_model_state() {
+		public void valid_underlyingdirectvaluation_securitytypeid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("SecurityTypeId"));
 		}
 
 		[Test]
-		public void valid_UnderlyingDirectValuation_SecurityTypeId_sets_0_error() {
+		public void valid_underlyingdirectvaluation_securitytypeid_sets_0_error() {
 			Assert.IsTrue(test_error_count("SecurityTypeId", 0));
 		}
 		
 		[Test]
-		public void valid_UnderlyingDirectValuation_SecurityId_sets_model_error_on_model_state() {
+		public void valid_underlyingdirectvaluation_securityid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("SecurityId"));
 		}
 
 		[Test]
-		public void valid_UnderlyingDirectValuation_SecurityId_sets_0_error() {
+		public void valid_underlyingdirectvaluation_securityid_sets_0_error() {
 			Assert.IsTrue(test_error_count("SecurityId", 0));
 		}
 
 		[Test]
-		public void valid_UnderlyingDirectValuation_NewPrice_sets_model_error_on_model_state() {
+		public void valid_underlyingdirectvaluation_newprice_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("NewPrice"));
 		}
 
 		[Test]
-		public void valid_UnderlyingDirectValuation_NewPrice_sets_0_error() {
+		public void valid_underlyingdirectvaluation_newprice_sets_0_error() {
 			Assert.IsTrue(test_error_count("NewPrice", 0));
 		}
 
 		[Test]
-		public void valid_UnderlyingDirectValuation_NewPriceDate_sets_model_error_on_model_state() {
+		public void valid_underlyingdirectvaluation_newpricedate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("NewPriceDate"));
 		}
 
 		[Test]
-		public void valid_UnderlyingDirectValuation_NewPriceDate_sets_0_error() {
+		public void valid_underlyingdirectvaluation_newpricedate_sets_0_error() {
 			Assert.IsTrue(test_error_count("NewPriceDate", 0));
 		}
 		 
 		[Test]
-		public void valid_Fund_results_in_valid_modelstate() {
+		public void valid_fund_results_in_valid_modelstate() {
 			SetFormCollection();
 			Assert.IsTrue(base.DefaultController.ModelState.IsValid);
 		}

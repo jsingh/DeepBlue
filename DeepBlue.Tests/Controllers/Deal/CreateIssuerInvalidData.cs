@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,29 +54,29 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 		
 		[Test]
-		public void invalid_Issuer_Name_sets_model_error_on_model_state() {
+		public void invalid_issuer_name_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("Name"));
 		}
 
 		[Test]
-		public void invalid_Issuer_Name_sets_1_error() {
+		public void invalid_issuer_name_sets_1_error() {
 			Assert.IsTrue(test_error_count("Name", 1));
 		}
  
 
 		[Test]
-		public void invalid_Issuer_CountryId_sets_model_error_on_model_state() {
+		public void invalid_issuer_countryid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("CountryId"));
 		}
 
 		[Test]
-		public void invalid_Issuer_CountryId_sets_1_error() {
+		public void invalid_issuer_countryid_sets_1_error() {
 			Assert.IsTrue(test_error_count("CountryId", 1));
 		}
 
 		 
 		[Test]
-		public void invalid_Fund_results_in_invalid_modelstate() {
+		public void invalid_fund_results_in_invalid_modelstate() {
 			SetFormCollection();
 			Assert.IsFalse(base.DefaultController.ModelState.IsValid);
 		}

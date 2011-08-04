@@ -27,22 +27,21 @@ namespace DeepBlue.Models.Entity {
 		public SecurityType() {
 		}
 
-		private ISecurityTypeService _securityTypeService;
+		private ISecurityTypeService _SecurityTypeService;
 		public ISecurityTypeService SecurityTypeService {
 			get {
-				if (_securityTypeService == null) {
-					_securityTypeService = new SecurityTypeService();
+				if (_SecurityTypeService == null) {
+					_SecurityTypeService = new SecurityTypeService();
 				}
-				return _securityTypeService;
+				return _SecurityTypeService;
 			}
 			set {
-				_securityTypeService = value;
+				_SecurityTypeService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var securityType = this;
-			IEnumerable<ErrorInfo> errors = Validate(securityType);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

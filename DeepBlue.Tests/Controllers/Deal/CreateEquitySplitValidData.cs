@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,47 +54,47 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 		
 		[Test]
-		public void valid_EquitySplit_EquityId_sets_model_error_on_model_state() {
+		public void valid_equitysplit_equityid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("EquityId"));
 		}
 
 		[Test]
-		public void valid_EquitySplit_EquityId_sets_0_error() {
+		public void valid_equitysplit_equityid_sets_0_error() {
 			Assert.IsTrue(test_error_count("EquityId", 0));
 		}
 
 		[Test]
-		public void valid_EquitySplit_SecurityTypeId_sets_model_error_on_model_state() {
+		public void valid_equitysplit_securitytypeid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("SecurityTypeId"));
 		}
 
 		[Test]
-		public void valid_EquitySplit_SecurityTypeId_sets_0_error() {
+		public void valid_equitysplit_securitytypeid_sets_0_error() {
 			Assert.IsTrue(test_error_count("SecurityTypeId", 0));
 		}
 		
 		[Test]
-		public void valid_EquitySplit_SplitDate_sets_model_error_on_model_state() {
+		public void valid_equitysplit_splitdate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("SplitDate"));
 		}
 
 		[Test]
-		public void valid_EquitySplit_SplitDate_sets_0_error() {
+		public void valid_equitysplit_splitdate_sets_0_error() {
 			Assert.IsTrue(test_error_count("SplitDate", 0));
 		}
 
 		[Test]
-		public void valid_EquitySplit_ActivityTypeId_sets_0_error() {
+		public void valid_equitysplit_activitytypeid_sets_0_error() {
 			Assert.IsTrue(test_error_count("ActivityTypeId", 0));
 		}
 
 		[Test]
-		public void valid_EquitySplit_SplitFactor_sets_0_error() {
+		public void valid_equitysplit_splitfactor_sets_0_error() {
 			Assert.IsTrue(test_error_count("SplitFactor", 0));
 		}
 		 
 		[Test]
-		public void valid_Fund_results_in_valid_modelstate() {
+		public void valid_fund_results_in_valid_modelstate() {
 			SetFormCollection();
 			Assert.IsTrue(base.DefaultController.ModelState.IsValid);
 		}

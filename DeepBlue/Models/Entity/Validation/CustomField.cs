@@ -40,40 +40,38 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public CustomField(ICustomFieldService customFieldservice)
+		public CustomField(ICustomFieldService customFieldService)
 			: this() {
-			this.customFieldservice = customFieldservice;
+				this.CustomFieldservice = customFieldService;
 		}
 
 		public CustomField() {
 		}
 
-		private ICustomFieldService _customFieldService;
-		public ICustomFieldService customFieldservice {
+		private ICustomFieldService _CustomFieldService;
+		public ICustomFieldService CustomFieldservice {
 			get {
-				if (_customFieldService == null) {
-					_customFieldService = new CustomFieldService();
+				if (_CustomFieldService == null) {
+					_CustomFieldService = new CustomFieldService();
 				}
-				return _customFieldService;
+				return _CustomFieldService;
 			}
 			set {
-				_customFieldService = value;
+				_CustomFieldService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var customField = this;
-			IEnumerable<ErrorInfo> errors = Validate(customField);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			customFieldservice.SaveCustomField(this);
+			CustomFieldservice.SaveCustomField(this);
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(CustomField customFieldclosing) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(customFieldclosing);
-			return errors;
+		private IEnumerable<ErrorInfo> Validate(CustomField customField) {
+			return ValidationHelper.Validate(customField);
 		}
 	}
 }

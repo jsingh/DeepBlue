@@ -34,22 +34,21 @@ namespace DeepBlue.Models.Entity {
 		public DealClosing() {
 		}
 
-		private IDealClosingService _dealClosingService;
+		private IDealClosingService _DealClosingService;
 		public IDealClosingService DealClosingService {
 			get {
-				if (_dealClosingService == null) {
-					_dealClosingService = new DealClosingService();
+				if (_DealClosingService == null) {
+					_DealClosingService = new DealClosingService();
 				}
-				return _dealClosingService;
+				return _DealClosingService;
 			}
 			set {
-				_dealClosingService = value;
+				_DealClosingService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var dealClosing = this;
-			IEnumerable<ErrorInfo> errors = Validate(dealClosing);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -58,8 +57,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		private IEnumerable<ErrorInfo> Validate(DealClosing dealClosing) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(dealClosing);
-			return errors;
+			return ValidationHelper.Validate(dealClosing);
 		}
 	}
 }

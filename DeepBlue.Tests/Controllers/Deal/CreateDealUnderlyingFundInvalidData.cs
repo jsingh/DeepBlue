@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,82 +54,62 @@ namespace DeepBlue.Tests.Controllers.Deal {
 
 
 		[Test]
-		public void invalid_DealUnderlying_fundid_sets_model_error_on_model_state() {
+		public void invalid_dealunderlying_underlyingfundid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("UnderlyingFundId"));
 		}
 
 		[Test]
-		public void invalid_DealUnderlying_fundid_sets_1_error() {
+		public void invalid_dealunderlying_underlyingfundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("UnderlyingFundId", 1));
 		}
 
 		[Test]
-		public void invalid_DealUnderlying_dealid_sets_model_error_on_model_state() {
+		public void invalid_dealunderlying_dealid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("DealId"));
 		}
 
 		[Test]
-		public void invalid_DealUnderlying_dealid_sets_1_error() {
+		public void invalid_dealunderlying_dealid_sets_1_error() {
 			Assert.IsTrue(test_error_count("DealId", 1));
 		}
 
 		[Test]
-		public void invalid_DealUnderlying_FundId_sets_model_error_on_model_state() {
+		public void invalid_dealunderlying_fundid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("FundId"));
 		}
 
 		[Test]
-		public void invalid_DealUnderlying_FundId_sets_1_error() {
+		public void invalid_dealunderlying_fundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundId", 1));
 		}
 
 		[Test]
-		public void invalid_DealUnderlying_FundNAV_sets_model_error_on_model_state() {
+		public void invalid_dealunderlying_fundnav_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("FundNAV"));
 		}
 
 		[Test]
-		public void invalid_DealUnderlying_FundNAV_sets_1_error() {
+		public void invalid_dealunderlying_fundnav_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundNAV", 1));
 		}
  
 		[Test]
-		public void invalid_DealUnderlying_CommittedAmount_sets_model_error_on_model_state() {
+		public void invalid_dealunderlying_committedamount_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("CommittedAmount"));
 		}
 
 		[Test]
-		public void invalid_DealUnderlying_CommittedAmount_sets_1_error() {
+		public void invalid_dealunderlying_committedamount_sets_1_error() {
 			Assert.IsTrue(test_error_count("CommittedAmount", 1));
 		}
-
+	 
 		[Test]
-		public void invalid_DealUnderlying_GrossPurchasePrice_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("GrossPurchasePrice"));
-		}
-
-		[Test]
-		public void invalid_DealUnderlying_GrossPurchasePrice_sets_1_error() {
-			Assert.IsTrue(test_error_count("GrossPurchasePrice", 1));
-		}
-
-		[Test]
-		public void invalid_DealUnderlying_ReassignedGPP_sets_model_error_on_model_state() {
-			Assert.IsFalse(test_posted_value("ReassignedGPP"));
-		}
-
-		[Test]
-		public void invalid_DealUnderlying_ReassignedGPP_sets_1_error() {
-			Assert.IsTrue(test_error_count("ReassignedGPP", 1));
-		}
-
-		[Test]
-		public void invalid_DealUnderlying_recorddate_sets_model_error_on_model_state() {
+		public void invalid_dealunderlying_recorddate_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("RecordDate"));
 		}
 
 		[Test]
-		public void invalid_DealUnderlying_recorddate_sets_1_error() {
+		public void invalid_dealunderlying_recorddate_sets_1_error() {
 			Assert.IsTrue(test_error_count("RecordDate", 1));
 		}
       

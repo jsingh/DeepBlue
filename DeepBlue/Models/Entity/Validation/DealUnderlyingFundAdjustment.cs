@@ -43,22 +43,21 @@ namespace DeepBlue.Models.Entity {
 		public DealUnderlyingFundAdjustment() {
 		}
 
-		private IDealUnderlyingFundAdjustmentService _dealUnderlyingFundAdjustmentService;
+		private IDealUnderlyingFundAdjustmentService _DealUnderlyingFundAdjustmentService;
 		public IDealUnderlyingFundAdjustmentService DealUnderlyingFundAdjustmentService {
 			get {
-				if (_dealUnderlyingFundAdjustmentService == null) {
-					_dealUnderlyingFundAdjustmentService = new DealUnderlyingFundAdjustmentService();
+				if (_DealUnderlyingFundAdjustmentService == null) {
+					_DealUnderlyingFundAdjustmentService = new DealUnderlyingFundAdjustmentService();
 				}
-				return _dealUnderlyingFundAdjustmentService;
+				return _DealUnderlyingFundAdjustmentService;
 			}
 			set {
-				_dealUnderlyingFundAdjustmentService = value;
+				_DealUnderlyingFundAdjustmentService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var dealUnderlyingFundAdjustment = this;
-			IEnumerable<ErrorInfo> errors = Validate(dealUnderlyingFundAdjustment);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

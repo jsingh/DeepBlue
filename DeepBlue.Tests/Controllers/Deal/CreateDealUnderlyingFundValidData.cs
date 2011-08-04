@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,92 +54,92 @@ namespace DeepBlue.Tests.Controllers.Deal {
 
 
 		[Test]
-		public void valid_DealUnderlying_fundid_sets_model_error_on_model_state() {
+		public void valid_dealunderlying_underlyingfundid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("UnderlyingFundId"));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_fundid_sets_0_error() {
+		public void valid_dealunderlying_underlyingfundid_sets_0_error() {
 			Assert.IsTrue(test_error_count("UnderlyingFundId", 0));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_dealid_sets_model_error_on_model_state() {
+		public void valid_dealunderlying_dealid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("DealId"));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_dealid_sets_0_error() {
+		public void valid_dealunderlying_dealid_sets_0_error() {
 			Assert.IsTrue(test_error_count("DealId", 0));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_FundId_sets_model_error_on_model_state() {
+		public void valid_dealunderlying_fundid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("FundId"));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_FundId_sets_0_error() {
+		public void valid_dealunderlying_fundid_sets_0_error() {
 			Assert.IsTrue(test_error_count("FundId", 0));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_FundNAV_sets_model_error_on_model_state() {
+		public void valid_dealunderlying_fundnav_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("FundNAV"));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_FundNAV_sets_0_error() {
+		public void valid_dealunderlying_fundnav_sets_0_error() {
 			Assert.IsTrue(test_error_count("FundNAV", 0));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_Percent_sets_model_error_on_model_state() {
+		public void valid_dealunderlying_percent_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("Percent"));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_Percent_sets_0_error() {
+		public void valid_dealunderlying_percent_sets_0_error() {
 			Assert.IsTrue(test_error_count("Percent", 0));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_CommittedAmount_sets_model_error_on_model_state() {
+		public void valid_dealunderlying_committedamount_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CommittedAmount"));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_CommittedAmount_sets_0_error() {
+		public void valid_dealunderlying_committedamount_sets_0_error() {
 			Assert.IsTrue(test_error_count("CommittedAmount", 0));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_GrossPurchasePrice_sets_model_error_on_model_state() {
+		public void valid_dealunderlying_grosspurchaseprice_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("GrossPurchasePrice"));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_GrossPurchasePrice_sets_0_error() {
+		public void valid_dealunderlying_grosspurchaseprice_sets_0_error() {
 			Assert.IsTrue(test_error_count("GrossPurchasePrice", 0));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_ReassignedGPP_sets_model_error_on_model_state() {
+		public void valid_dealunderlying_reassignedgpp_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("ReassignedGPP"));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_ReassignedGPP_sets_0_error() {
+		public void valid_dealunderlying_reassignedgpp_sets_0_error() {
 			Assert.IsTrue(test_error_count("ReassignedGPP", 0));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_recorddate_sets_model_error_on_model_state() {
+		public void valid_dealunderlying_recorddate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("RecordDate"));
 		}
 
 		[Test]
-		public void valid_DealUnderlying_recorddate_sets_0_error() {
+		public void valid_dealunderlying_recorddate_sets_0_error() {
 			Assert.IsTrue(test_error_count("RecordDate", 0));
 		}
 

@@ -33,40 +33,38 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public FundClosing(IFundClosingService fundservice)
+		public FundClosing(IFundClosingService fundClosingService)
 			: this() {
-			this.fundcloseservice = fundservice;
+				this.FundClosingService = fundClosingService;
 		}
 
 		public FundClosing() {
 		}
 
-		private IFundClosingService _fundService;
-		public IFundClosingService fundcloseservice {
+		private IFundClosingService _FundClosingService;
+		public IFundClosingService FundClosingService {
 			get {
-				if (_fundService == null) {
-					_fundService = new FundClosingService();
+				if (_FundClosingService == null) {
+					_FundClosingService = new FundClosingService();
 				}
-				return _fundService;
+				return _FundClosingService;
 			}
 			set {
-				_fundService = value;
+				_FundClosingService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var fundclose = this;
-			IEnumerable<ErrorInfo> errors = Validate(fundclose);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			fundcloseservice.SaveFundClose(this);
+			FundClosingService.SaveFundClose(this);
 			return null;
 		}
 
 		private IEnumerable<ErrorInfo> Validate(FundClosing fundclosing) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(fundclosing);
-			return errors;
+			return ValidationHelper.Validate(fundclosing);
 		}
 	}
 }

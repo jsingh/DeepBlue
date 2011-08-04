@@ -53,38 +53,36 @@ namespace DeepBlue.Models.Entity {
 
 		public UnderlyingFundDocument(IUnderlyingFundDocumentService underlyingFundDocumentservice)
 			: this() {
-			this.underlyingFundDocumentservice = underlyingFundDocumentservice;
+				this.UnderlyingFundDocumentservice = underlyingFundDocumentservice;
 		}
 
 		public UnderlyingFundDocument() {
 		}
 
-		private IUnderlyingFundDocumentService _underlyingFundDocumentService;
-		public IUnderlyingFundDocumentService underlyingFundDocumentservice {
+		private IUnderlyingFundDocumentService _UnderlyingFundDocumentService;
+		public IUnderlyingFundDocumentService UnderlyingFundDocumentservice {
 			get {
-				if (_underlyingFundDocumentService == null) {
-					_underlyingFundDocumentService = new UnderlyingFundDocumentService();
+				if (_UnderlyingFundDocumentService == null) {
+					_UnderlyingFundDocumentService = new UnderlyingFundDocumentService();
 				}
-				return _underlyingFundDocumentService;
+				return _UnderlyingFundDocumentService;
 			}
 			set {
-				_underlyingFundDocumentService = value;
+				_UnderlyingFundDocumentService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var underlyingFundDocument = this;
-			IEnumerable<ErrorInfo> errors = Validate(underlyingFundDocument);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			underlyingFundDocumentservice.SaveUnderlyingFundDocument(this);
+			UnderlyingFundDocumentservice.SaveUnderlyingFundDocument(this);
 			return null;
 		}
 
 		private IEnumerable<ErrorInfo> Validate(UnderlyingFundDocument underlyingFundDocument) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(underlyingFundDocument);
-			return errors;
+			return ValidationHelper.Validate(underlyingFundDocument);
 		}
 	}
 }

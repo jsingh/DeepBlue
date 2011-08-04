@@ -8,6 +8,7 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(AddressMD))]
 	public partial class Address {
+
 		public class AddressMD : CreatedByFields {
 
 			#region Primitive Properties
@@ -54,7 +55,6 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-
 			/// <summary>
 			/// DB wise it is not required. but currently all the entities will
 			/// be USA based, so we will be mandating this

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,68 +53,68 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 		
 		[Test]
-		public void invalid_UnderlyingFundCashDistribution_Amount_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundcashdistribution_amount_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("Amount"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundCashDistribution_Amount_sets_1_error() {
+		public void invalid_underlyingfundcashdistribution_amount_sets_1_error() {
 			Assert.IsTrue(test_error_count("Amount", 1));
 		}
 		
 		[Test]
-		public void invalid_UnderlyingFundCashDistribution_FundId_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundcashdistribution_fundid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("FundId"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundCashDistribution_FundId_sets_1_error() {
+		public void invalid_underlyingfundcashdistribution_fundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundId", 1));
 		}
 		
 		[Test]
-		public void invalid_UnderlyingFundCashDistribution_UnderlyingFundId_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundcashdistribution_underlyingfundid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("UnderlyingFundId"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundCashDistribution_UnderlyingFundId_sets_1_error() {
+		public void invalid_underlyingfundcashdistribution_underlyingfundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("UnderlyingFundId", 1));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundCashDistribution_NoticeDate_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundcashdistribution_noticedate_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("NoticeDate"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundCashDistribution_NoticeDate_sets_1_error() {
+		public void invalid_underlyingfundcashdistribution_noticedate_sets_1_error() {
 			Assert.IsTrue(test_error_count("NoticeDate", 1));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundCashDistribution_ReceivedDate_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundcashdistribution_receiveddate_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("ReceivedDate"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundCashDistribution_ReceivedDate_sets_1_error() {
+		public void invalid_underlyingfundcashdistribution_receiveddate_sets_1_error() {
 			Assert.IsTrue(test_error_count("ReceivedDate", 1));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundCashDistribution_CashDistributionTypeId_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundcashdistribution_cashdistributiontypeid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("CashDistributionTypeId"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundCashDistribution_CashDistributionTypeId_sets_1_error() {
+		public void invalid_underlyingfundcashdistribution_cashdistributiontypeid_sets_1_error() {
 			Assert.IsTrue(test_error_count("CashDistributionTypeId", 1));
 		}
 		
 
 		[Test]
-		public void invalid_Fund_results_in_invalid_modelstate() {
+		public void invalid_fund_results_in_invalid_modelstate() {
 			SetFormCollection();
 			Assert.IsFalse(base.DefaultController.ModelState.IsValid);
 		}

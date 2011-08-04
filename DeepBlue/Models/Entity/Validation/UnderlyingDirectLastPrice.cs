@@ -55,22 +55,21 @@ namespace DeepBlue.Models.Entity {
 		public UnderlyingDirectLastPrice() {
 		}
 
-		private IUnderlyingDirectLastPriceService _underlyingDirectLastPriceService;
+		private IUnderlyingDirectLastPriceService _UnderlyingDirectLastPriceService;
 		public IUnderlyingDirectLastPriceService UnderlyingDirectLastPriceService {
 			get {
-				if (_underlyingDirectLastPriceService == null) {
-					_underlyingDirectLastPriceService = new UnderlyingDirectLastPriceService();
+				if (_UnderlyingDirectLastPriceService == null) {
+					_UnderlyingDirectLastPriceService = new UnderlyingDirectLastPriceService();
 				}
-				return _underlyingDirectLastPriceService;
+				return _UnderlyingDirectLastPriceService;
 			}
 			set {
-				_underlyingDirectLastPriceService = value;
+				_UnderlyingDirectLastPriceService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var underlyingDirectLastPrice = this;
-			IEnumerable<ErrorInfo> errors = Validate(underlyingDirectLastPrice);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

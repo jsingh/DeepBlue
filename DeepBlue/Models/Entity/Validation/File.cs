@@ -50,22 +50,21 @@ namespace DeepBlue.Models.Entity {
 		public File() {
 		}
 
-		private IFileService _fileService;
+		private IFileService _FileService;
 		public IFileService FileService {
 			get {
-				if (_fileService == null) {
-					_fileService = new FileService();
+				if (_FileService == null) {
+					_FileService = new FileService();
 				}
-				return _fileService;
+				return _FileService;
 			}
 			set {
-				_fileService = value;
+				_FileService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var file = this;
-			IEnumerable<ErrorInfo> errors = Validate(file);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -74,8 +73,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		private IEnumerable<ErrorInfo> Validate(File file) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(file);
-			return errors;
+			return ValidationHelper.Validate(file);
 		}
 	}
 }

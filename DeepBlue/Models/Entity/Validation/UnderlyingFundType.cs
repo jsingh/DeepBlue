@@ -41,8 +41,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var createunderlyingfundtype = this;
-			IEnumerable<ErrorInfo> errors = Validate(createunderlyingfundtype);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -50,9 +49,8 @@ namespace DeepBlue.Models.Entity {
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(UnderlyingFundType createunderlyingfundtype) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(createunderlyingfundtype);
-			return errors;
+		private IEnumerable<ErrorInfo> Validate(UnderlyingFundType underlyingFundType) {
+			return ValidationHelper.Validate(underlyingFundType);
 		}
 	}
 }

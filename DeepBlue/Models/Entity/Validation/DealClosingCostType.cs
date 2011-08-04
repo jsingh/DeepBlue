@@ -26,30 +26,29 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public DealClosingCostType(IDealClosingCostTypeService purchaseTypeService)
+		public DealClosingCostType(IDealClosingCostTypeService dealClosingCostTypeService)
 			: this() {
-			this.DealClosingCostTypeService = purchaseTypeService;
+			this.DealClosingCostTypeService = dealClosingCostTypeService;
 		}
 
 		public DealClosingCostType() {
 		}
 
-		private IDealClosingCostTypeService _purchaseTypeService;
+		private IDealClosingCostTypeService _DealClosingCostTypeService;
 		public IDealClosingCostTypeService DealClosingCostTypeService {
 			get {
-				if (_purchaseTypeService == null) {
-					_purchaseTypeService = new DealClosingCostTypeService();
+				if (_DealClosingCostTypeService == null) {
+					_DealClosingCostTypeService = new DealClosingCostTypeService();
 				}
-				return _purchaseTypeService;
+				return _DealClosingCostTypeService;
 			}
 			set {
-				_purchaseTypeService = value;
+				_DealClosingCostTypeService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var purchaseType = this;
-			IEnumerable<ErrorInfo> errors = Validate(purchaseType);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -57,9 +56,8 @@ namespace DeepBlue.Models.Entity {
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(DealClosingCostType purchaseType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(purchaseType);
-			return errors;
+		private IEnumerable<ErrorInfo> Validate(DealClosingCostType dealClosingCostType) {
+			return ValidationHelper.Validate(dealClosingCostType);
 		}
 	}
 }

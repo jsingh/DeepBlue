@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,67 +54,67 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 
 		[Test]
-		public void valid_SecurityConversion_OldSecurityId_sets_model_error_on_model_state() {
+		public void valid_securityconversion_oldsecurityid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("OldSecurityId"));
 		}
 
 		[Test]
-		public void valid_SecurityConversion_OldSecurityId_sets_0_error() {
+		public void valid_securityconversion_oldsecurityid_sets_0_error() {
 			Assert.IsTrue(test_error_count("OldSecurityId", 0));
 		}
 
 		[Test]
-		public void valid_SecurityConversion_OldSecurityTypeId_sets_model_error_on_model_state() {
+		public void valid_securityconversion_oldsecuritytypeid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("OldSecurityTypeId"));
 		}
 
 		[Test]
-		public void valid_SecurityConversion_OldSecurityTypeId_sets_0_error() {
+		public void valid_securityconversion_oldsecuritytypeid_sets_0_error() {
 			Assert.IsTrue(test_error_count("OldSecurityTypeId", 0));
 		}
 
 		[Test]
-		public void valid_SecurityConversion_NewSecurityId_sets_model_error_on_model_state() {
+		public void valid_securityconversion_newsecurityid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("NewSecurityId"));
 		}
 
 		[Test]
-		public void valid_SecurityConversion_NewSecurityId_sets_0_error() {
+		public void valid_securityconversion_newsecurityid_sets_0_error() {
 			Assert.IsTrue(test_error_count("NewSecurityId", 0));
 		}
 
 		[Test]
-		public void valid_SecurityConversion_NewSecurityTypeId_sets_model_error_on_model_state() {
+		public void valid_securityconversion_newsecuritytypeid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("NewSecurityTypeId"));
 		}
 
 		[Test]
-		public void valid_SecurityConversion_NewSecurityTypeId_sets_0_error() {
+		public void valid_securityconversion_newsecuritytypeid_sets_0_error() {
 			Assert.IsTrue(test_error_count("NewSecurityTypeId", 0));
 		}
 
 		[Test]
-		public void valid_SecurityConversion_ConversionDate_sets_model_error_on_model_state() {
+		public void valid_securityconversion_conversiondate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("ConversionDate"));
 		}
 
 		[Test]
-		public void valid_SecurityConversion_ConversionDate_sets_0_error() {
+		public void valid_securityconversion_conversiondate_sets_0_error() {
 			Assert.IsTrue(test_error_count("ConversionDate", 0));
 		}
 
 		[Test]
-		public void valid_SecurityConversion_ActivityTypeId_sets_0_error() {
+		public void valid_securityconversion_activitytypeid_sets_0_error() {
 			Assert.IsTrue(test_error_count("ActivityTypeId", 0));
 		}
 
 		[Test]
-		public void valid_SecurityConversion_SplitFactor_sets_0_error() {
+		public void valid_securityconversion_splitfactor_sets_0_error() {
 			Assert.IsTrue(test_error_count("SplitFactor", 0));
 		}
 
 		[Test]
-		public void valid_Fund_results_in_valid_modelstate() {
+		public void valid_fund_results_in_valid_modelstate() {
 			SetFormCollection();
 			Assert.IsTrue(base.DefaultController.ModelState.IsValid);
 		}

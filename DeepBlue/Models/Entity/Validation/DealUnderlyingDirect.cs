@@ -38,7 +38,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "FMV is required")]
+			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "FMV is required")]
 			public global::System.Decimal FMV {
 				get;
 				set;
@@ -49,7 +49,7 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-			 
+
 			[Range((int)1, int.MaxValue, ErrorMessage = "NumberOfShares is required")]
 			public global::System.Int32 NumberOfShares {
 				get;
@@ -58,30 +58,29 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public DealUnderlyingDirect(IDealUnderlyingDirectService purchaseTypeService)
+		public DealUnderlyingDirect(IDealUnderlyingDirectService dealUnderlyingDirectService)
 			: this() {
-			this.DealUnderlyingDirectService = purchaseTypeService;
+			this.DealUnderlyingDirectService = dealUnderlyingDirectService;
 		}
 
 		public DealUnderlyingDirect() {
 		}
 
-		private IDealUnderlyingDirectService _purchaseTypeService;
+		private IDealUnderlyingDirectService _DealUnderlyingDirectService;
 		public IDealUnderlyingDirectService DealUnderlyingDirectService {
 			get {
-				if (_purchaseTypeService == null) {
-					_purchaseTypeService = new DealUnderlyingDirectService();
+				if (_DealUnderlyingDirectService == null) {
+					_DealUnderlyingDirectService = new DealUnderlyingDirectService();
 				}
-				return _purchaseTypeService;
+				return _DealUnderlyingDirectService;
 			}
 			set {
-				_purchaseTypeService = value;
+				_DealUnderlyingDirectService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var purchaseType = this;
-			IEnumerable<ErrorInfo> errors = Validate(purchaseType);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -89,9 +88,8 @@ namespace DeepBlue.Models.Entity {
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(DealUnderlyingDirect purchaseType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(purchaseType);
-			return errors;
+		private IEnumerable<ErrorInfo> Validate(DealUnderlyingDirect dealUnderlyingDirect) {
+			return ValidationHelper.Validate(dealUnderlyingDirect);
 		}
 	}
 }

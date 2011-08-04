@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,50 +54,50 @@ namespace DeepBlue.Tests.Controllers.Deal {
 
 
 		[Test]
-		public void invalid_Deal_dealclosingcosttypeid_sets_model_error_on_model_state() {
+		public void invalid_deal_dealclosingcosttypeid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("DealClosingCostTypeId"));
 		}
 
 		[Test]
-		public void invalid_Deal_dealid_sets_model_error_on_model_state() {
+		public void invalid_deal_dealid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("DealId"));
 		}
 
 		[Test]
-		public void invalid_Deal_amount_sets_model_error_on_model_state() {
+		public void invalid_deal_amount_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("Amount"));
 		}
 
 
 		[Test]
-		public void invalid_Deal_date_sets_model_error_on_model_state() {
+		public void invalid_deal_date_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("Date"));
 		}
 
 		[Test]
-		public void invalid_Deal_dealclosingcosttypeid_sets_1_error() {
+		public void invalid_deal_dealclosingcosttypeid_sets_1_error() {
 			Assert.IsTrue(test_error_count("DealClosingCostTypeId", 1));
 		}
 
 		[Test]
-		public void invalid_Deal_dealid_sets_1_error() {
+		public void invalid_deal_dealid_sets_1_error() {
 			Assert.IsTrue(test_error_count("DealId", 1));
 		}
 
 		[Test]
-		public void invalid_Deal_amount_sets_1_error() {
+		public void invalid_deal_amount_sets_1_error() {
 			Assert.IsTrue(test_error_count("Amount", 1));
 		}
 
 
 		[Test]
-		public void invalid_Deal_date_sets_1_error() {
+		public void invalid_deal_date_sets_1_error() {
 			Assert.IsTrue(test_error_count("Date", 1));
 		}
 
 
         [Test]
-        public void invalid_Fund_results_in_invalid_modelstate() {
+        public void invalid_fund_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }

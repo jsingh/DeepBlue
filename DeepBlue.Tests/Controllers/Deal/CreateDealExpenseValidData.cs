@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,48 +54,48 @@ namespace DeepBlue.Tests.Controllers.Deal {
 
 
 		[Test]
-		public void valid_Deal_dealclosingcosttypeid_sets_model_error_on_model_state() {
+		public void valid_deal_dealclosingcosttypeid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("DealClosingCostTypeId"));
 		}
 
 		[Test]
-		public void valid_Deal_dealid_sets_model_error_on_model_state() {
+		public void valid_deal_dealid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("DealId"));
 		}
 
 		[Test]
-		public void valid_Deal_amount_sets_model_error_on_model_state() {
+		public void valid_deal_amount_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("Amount"));
 		}
 
 
 		[Test]
-		public void valid_Deal_date_sets_model_error_on_model_state() {
+		public void valid_deal_date_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("Date"));
 		}
 
 		[Test]
-		public void valid_Deal_dealclosingcosttypeid_sets_0_error() {
+		public void valid_deal_dealclosingcosttypeid_sets_0_error() {
 			Assert.IsTrue(test_error_count("DealClosingCostTypeId", 0));
 		}
 
 		[Test]
-		public void valid_Deal_dealid_sets_0_error() {
+		public void valid_deal_dealid_sets_0_error() {
 			Assert.IsTrue(test_error_count("DealId", 0));
 		}
 
 		[Test]
-		public void valid_Deal_amount_sets_0_error() {
+		public void valid_deal_amount_sets_0_error() {
 			Assert.IsTrue(test_error_count("Amount", 0));
 		}
 
 		[Test]
-		public void valid_Deal_date_sets_0_error() {
+		public void valid_deal_date_sets_0_error() {
 			Assert.IsTrue(test_error_count("Date", 0));
 		}
 
 		[Test]
-		public void valid_Fund_results_in_valid_modelstate() {
+		public void valid_fund_results_in_valid_modelstate() {
 			SetFormCollection();
 			Assert.IsTrue(base.DefaultController.ModelState.IsValid);
 		}

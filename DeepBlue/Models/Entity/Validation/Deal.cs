@@ -58,22 +58,21 @@ namespace DeepBlue.Models.Entity {
 		public Deal() {
 		}
 
-		private IDealService _dealService;
+		private IDealService _DealService;
 		public IDealService DealService {
 			get {
-				if (_dealService == null) {
-					_dealService = new DealService();
+				if (_DealService == null) {
+					_DealService = new DealService();
 				}
-				return _dealService;
+				return _DealService;
 			}
 			set {
-				_dealService = value;
+				_DealService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var deal = this;
-			IEnumerable<ErrorInfo> errors = Validate(deal);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

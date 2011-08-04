@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,7 +80,7 @@ namespace DeepBlue.Tests.Controllers.Investor
 		}
 
 		[Test]
-		public void valid_Investor_socialsecuritytaxid_sets_1_error() {
+		public void valid_investor_socialsecuritytaxid_sets_1_error() {
 			Assert.IsTrue(test_error_count("SocialSecurityTaxId", 0));
 		}
 
@@ -105,7 +105,7 @@ namespace DeepBlue.Tests.Controllers.Investor
 		}
 
         [Test]
-        public void valid_Investor_name_results_in_valid_modelstate()
+        public void valid_investor_name_results_in_valid_modelstate()
         {
             SetFormCollection();
             Assert.IsTrue(base.DefaultController.ModelState.IsValid);

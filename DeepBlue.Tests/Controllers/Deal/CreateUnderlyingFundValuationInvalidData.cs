@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,48 +54,48 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 		
 		[Test]
-		public void invalid_UnderlyingFundValuation_UnderlyingFundId_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundvaluation_underlyingfundid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("UnderlyingFundId"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundValuation_UnderlyingFundId_sets_1_error() {
+		public void invalid_underlyingfundvaluation_underlyingfundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("UnderlyingFundId", 1));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundValuation_FundId_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundvaluation_fundid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("FundId"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundValuation_FundId_sets_1_error() {
+		public void invalid_underlyingfundvaluation_fundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundId", 1));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundValuation_UpdateNAV_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundvaluation_updatenav_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("UpdateNAV"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundValuation_UpdateNAV_sets_1_error() {
+		public void invalid_underlyingfundvaluation_updatenav_sets_1_error() {
 			Assert.IsTrue(test_error_count("UpdateNAV", 1));
 		}
 		
 		[Test]
-		public void invalid_UnderlyingFundValuation_UpdateDate_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundvaluation_updatedate_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("UpdateDate"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundValuation_UpdateDate_sets_1_error() {
+		public void invalid_underlyingfundvaluation_updatedate_sets_1_error() {
 			Assert.IsTrue(test_error_count("UpdateDate", 1));
 		}
 
 		 
 		[Test]
-		public void invalid_Fund_results_in_invalid_modelstate() {
+		public void invalid_fund_results_in_invalid_modelstate() {
 			SetFormCollection();
 			Assert.IsFalse(base.DefaultController.ModelState.IsValid);
 		}

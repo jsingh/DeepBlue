@@ -22,36 +22,40 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public InvestorFund(IInvestorFundService investorService)
+		public InvestorFund(IInvestorFundService investorFundService)
 			: this() {
-			this.InvestorFundService = investorService;
+			this.InvestorFundService = investorFundService;
 		}
 
 		public InvestorFund() {
 
 		}
 
-		private IInvestorFundService _investorService;
+		private IInvestorFundService _InvestorFundService;
 		public IInvestorFundService InvestorFundService {
 			get {
-				if (_investorService == null) {
-					_investorService = new InvestorFundService();
+				if (_InvestorFundService == null) {
+					_InvestorFundService = new InvestorFundService();
 				}
-				return _investorService;
+				return _InvestorFundService;
 			}
 			set {
-				_investorService = value;
+				_InvestorFundService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var investorFund = this;
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(investorFund);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
 			InvestorFundService.SaveInvestorFund(this);
 			return null;
+		}
+
+
+		private IEnumerable<ErrorInfo> Validate(InvestorFund investorFund) {
+			return ValidationHelper.Validate(investorFund);
 		}
 
 	}

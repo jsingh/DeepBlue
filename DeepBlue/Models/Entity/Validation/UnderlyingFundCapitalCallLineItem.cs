@@ -26,34 +26,33 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public UnderlyingFundCapitalCallLineItem(IUnderlyingFundCapitalCallLineItemService underlyingFundCapitalCallLineItemservice)
+		public UnderlyingFundCapitalCallLineItem(IUnderlyingFundCapitalCallLineItemService underlyingFundCapitalCallLineItemService)
 			: this() {
-			this.underlyingFundCapitalCallLineItemservice = underlyingFundCapitalCallLineItemservice;
+				this.UnderlyingFundCapitalCallLineItemService = underlyingFundCapitalCallLineItemService;
 		}
 
 		public UnderlyingFundCapitalCallLineItem() {
 		}
 
-		private IUnderlyingFundCapitalCallLineItemService _underlyingFundCapitalCallLineItemService;
-		public IUnderlyingFundCapitalCallLineItemService underlyingFundCapitalCallLineItemservice {
+		private IUnderlyingFundCapitalCallLineItemService _UnderlyingFundCapitalCallLineItemService;
+		public IUnderlyingFundCapitalCallLineItemService UnderlyingFundCapitalCallLineItemService {
 			get {
-				if (_underlyingFundCapitalCallLineItemService == null) {
-					_underlyingFundCapitalCallLineItemService = new UnderlyingFundCapitalCallLineItemService();
+				if (_UnderlyingFundCapitalCallLineItemService == null) {
+					_UnderlyingFundCapitalCallLineItemService = new UnderlyingFundCapitalCallLineItemService();
 				}
-				return _underlyingFundCapitalCallLineItemService;
+				return _UnderlyingFundCapitalCallLineItemService;
 			}
 			set {
-				_underlyingFundCapitalCallLineItemService = value;
+				_UnderlyingFundCapitalCallLineItemService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var underlyingFundCapitalCallLineItem = this;
-			IEnumerable<ErrorInfo> errors = Validate(underlyingFundCapitalCallLineItem);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			underlyingFundCapitalCallLineItemservice.SaveUnderlyingFundCapitalCallLineItem(this);
+			UnderlyingFundCapitalCallLineItemService.SaveUnderlyingFundCapitalCallLineItem(this);
 			return null;
 		}
 

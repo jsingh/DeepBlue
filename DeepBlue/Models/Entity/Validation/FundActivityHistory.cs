@@ -47,34 +47,33 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public FundActivityHistory(IFundActivityHistoryService fundservice)
+		public FundActivityHistory(IFundActivityHistoryService fundHistoryService)
 			: this() {
-			this.fundActivityHistoryservice = fundservice;
+				this.FundActivityHistoryService = fundHistoryService;
 		}
 
 		public FundActivityHistory() {
 		}
 
-		private IFundActivityHistoryService _fundActivityHistoryService;
-		public IFundActivityHistoryService fundActivityHistoryservice {
+		private IFundActivityHistoryService _FundActivityHistoryService;
+		public IFundActivityHistoryService FundActivityHistoryService {
 			get {
-				if (_fundActivityHistoryService == null) {
-					_fundActivityHistoryService = new FundActivityHistoryService();
+				if (_FundActivityHistoryService == null) {
+					_FundActivityHistoryService = new FundActivityHistoryService();
 				}
-				return _fundActivityHistoryService;
+				return _FundActivityHistoryService;
 			}
 			set {
-				_fundActivityHistoryService = value;
+				_FundActivityHistoryService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var fundActivityHistory = this;
-			IEnumerable<ErrorInfo> errors = Validate(fundActivityHistory);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			fundActivityHistoryservice.SaveFundActivityHistory(this);
+			FundActivityHistoryService.SaveFundActivityHistory(this);
 			return null;
 		}
 

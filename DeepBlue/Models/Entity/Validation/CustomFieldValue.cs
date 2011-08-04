@@ -27,40 +27,38 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public CustomFieldValue(ICustomFieldValueService customFieldValueservice)
+		public CustomFieldValue(ICustomFieldValueService customFieldValueService)
 			: this() {
-			this.customFieldValueservice = customFieldValueservice;
+				this.CustomFieldValueService = customFieldValueService;
 		}
 
 		public CustomFieldValue() {
 		}
 
-		private ICustomFieldValueService _customFieldValueService;
-		public ICustomFieldValueService customFieldValueservice {
+		private ICustomFieldValueService _CustomFieldValueService;
+		public ICustomFieldValueService CustomFieldValueService {
 			get {
-				if (_customFieldValueService == null) {
-					_customFieldValueService = new CustomFieldValueService();
+				if (_CustomFieldValueService == null) {
+					_CustomFieldValueService = new CustomFieldValueService();
 				}
-				return _customFieldValueService;
+				return _CustomFieldValueService;
 			}
 			set {
-				_customFieldValueService = value;
+				_CustomFieldValueService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var customFieldValue = this;
-			IEnumerable<ErrorInfo> errors = Validate(customFieldValue);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			customFieldValueservice.SaveCustomFieldValue(this);
+			CustomFieldValueService.SaveCustomFieldValue(this);
 			return null;
 		}
 
 		private IEnumerable<ErrorInfo> Validate(CustomFieldValue customFieldValue) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(customFieldValue);
-			return errors;
+			return ValidationHelper.Validate(customFieldValue);
 		}
 	}
 }

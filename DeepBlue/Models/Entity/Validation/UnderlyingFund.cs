@@ -49,16 +49,16 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public UnderlyingFund(IUnderlyingFundService underlyingFundservice)
+		public UnderlyingFund(IUnderlyingFundService underlyingFundService)
 			: this() {
-			this.underlyingFundService = underlyingFundService;
+			this.UnderlyingFundService = underlyingFundService;
 		}
 
 		public UnderlyingFund() {
 		}
 
 		private IUnderlyingFundService _UnderlyingFundService;
-		public IUnderlyingFundService underlyingFundService {
+		public IUnderlyingFundService UnderlyingFundService {
 			get {
 				if (_UnderlyingFundService == null) {
 					_UnderlyingFundService = new UnderlyingFundService();
@@ -71,12 +71,11 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var underlyingFund = this;
-			IEnumerable<ErrorInfo> errors = Validate(underlyingFund);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			underlyingFundService.SaveUnderlyingFund(this);
+			UnderlyingFundService.SaveUnderlyingFund(this);
 			return null;
 		}
 

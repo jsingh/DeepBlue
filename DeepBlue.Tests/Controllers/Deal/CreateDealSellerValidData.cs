@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,73 +57,73 @@ namespace DeepBlue.Tests.Controllers.Deal {
 
 
 		[Test]
-		public void valid_Dealseller_contactname_sets_model_error_on_model_state() {
+		public void valid_dealseller_contactname_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("ContactName"));
 		}
 
 		[Test]
-		public void valid_Dealseller_contactname_sets_0_error() {
+		public void valid_dealseller_contactname_sets_0_error() {
 			Assert.IsTrue(test_error_count("ContactName", 0));
 		}
 
 
 		[Test]
-		public void valid_Dealseller_phone_sets_model_error_on_model_state() {
+		public void valid_dealseller_phone_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("Phone"));
 		}
 
 		[Test]
-		public void valid_Dealseller_phone_sets_0_error() {
+		public void valid_dealseller_phone_sets_0_error() {
 			Assert.IsTrue(test_error_count("Phone", 0));
 		}
 
 		[Test]
-		public void valid_Deal_fax_sets_model_error_on_model_state() {
+		public void valid_deal_fax_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("Fax"));
 		}
 
 		[Test]
-		public void valid_Deal_fax_sets_0_error() {
+		public void valid_deal_fax_sets_0_error() {
 			Assert.IsTrue(test_error_count("Fax", 0));
 		}
 
 		[Test]
-		public void valid_Dealseller_name_sets_model_error_on_model_state() {
+		public void valid_dealseller_name_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("SellerName"));
 		}
 
 		[Test]
-		public void valid_Dealseller_name_sets_0_error() {
+		public void valid_dealseller_name_sets_0_error() {
 			Assert.IsTrue(test_error_count("SellerName", 0));
 		}
 
 		[Test]
-		public void valid_Dealseller_companyname_sets_model_error_on_model_state() {
+		public void valid_dealseller_companyname_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CompanyName"));
 		}
 
 		[Test]
-		public void valid_Dealseller_companyname_sets_0_error() {
+		public void valid_dealseller_companyname_sets_0_error() {
 			Assert.IsTrue(test_error_count("CompanyName", 0));
 		}
 
 		[Test]
-		public void valid_Dealseller_email_sets_model_error_on_model_state() {
+		public void valid_dealseller_email_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("Email"));
 		}
 
 		[Test]
-		public void valid_Dealseller_email_sets_0_error() {
+		public void valid_dealseller_email_sets_0_error() {
 			Assert.IsTrue(test_error_count("Email", 0));
 		}
 
 		[Test]
-		public void valid_Dealseller_Deal_sets_model_error_on_model_state() {
+		public void valid_dealseller_deal_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("DealId"));
 		}
 
 		[Test]
-		public void valid_Dealseller_Deal_sets_0_error() {
+		public void valid_dealseller_deal_sets_0_error() {
 			Assert.IsTrue(test_error_count("DealId", 0));
 		}
 

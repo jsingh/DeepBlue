@@ -34,22 +34,21 @@ namespace DeepBlue.Models.Entity {
 		public FixedIncomeType() {
 		}
 
-		private IFixedIncomeTypeService _fixedIncomeTypeService;
+		private IFixedIncomeTypeService _FixedIncomeTypeService;
 		public IFixedIncomeTypeService FixedIncomeTypeService {
 			get {
-				if (_fixedIncomeTypeService == null) {
-					_fixedIncomeTypeService = new FixedIncomeTypeService();
+				if (_FixedIncomeTypeService == null) {
+					_FixedIncomeTypeService = new FixedIncomeTypeService();
 				}
-				return _fixedIncomeTypeService;
+				return _FixedIncomeTypeService;
 			}
 			set {
-				_fixedIncomeTypeService = value;
+				_FixedIncomeTypeService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var fixedIncomeType = this;
-			IEnumerable<ErrorInfo> errors = Validate(fixedIncomeType);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -58,8 +57,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		private IEnumerable<ErrorInfo> Validate(FixedIncomeType fixedIncomeType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(fixedIncomeType);
-			return errors;
+			return ValidationHelper.Validate(fixedIncomeType);
 		}
 	}
 }

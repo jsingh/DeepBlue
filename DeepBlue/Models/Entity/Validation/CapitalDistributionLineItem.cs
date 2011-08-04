@@ -26,34 +26,33 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public CapitalDistributionLineItem(ICapitalDistributionLineItemService capitalDistributionLineItemservice)
+		public CapitalDistributionLineItem(ICapitalDistributionLineItemService capitalDistributionLineItemService)
 			: this() {
-			this.capitalDistributionLineItemservice = capitalDistributionLineItemservice;
+				this.CapitalDistributionLineItemService = capitalDistributionLineItemService;
 		}
 
 		public CapitalDistributionLineItem() {
 		}
 
-		private ICapitalDistributionLineItemService _capitalDistributionLineItemService;
-		public ICapitalDistributionLineItemService capitalDistributionLineItemservice {
+		private ICapitalDistributionLineItemService _CapitalDistributionLineItemService;
+		public ICapitalDistributionLineItemService CapitalDistributionLineItemService {
 			get {
-				if (_capitalDistributionLineItemService == null) {
-					_capitalDistributionLineItemService = new CapitalDistributionLineItemService();
+				if (_CapitalDistributionLineItemService == null) {
+					_CapitalDistributionLineItemService = new CapitalDistributionLineItemService();
 				}
-				return _capitalDistributionLineItemService;
+				return _CapitalDistributionLineItemService;
 			}
 			set {
-				_capitalDistributionLineItemService = value;
+				_CapitalDistributionLineItemService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var capitalDistributionLineItem = this;
-			IEnumerable<ErrorInfo> errors = Validate(capitalDistributionLineItem);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			capitalDistributionLineItemservice.SaveCapitalDistributionLineItem(this);
+			CapitalDistributionLineItemService.SaveCapitalDistributionLineItem(this);
 			return null;
 		}
 

@@ -56,9 +56,9 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public UnderlyingFundCashDistribution(IUnderlyingFundCashDistributionService underlyingFundCashDistributionservice)
+		public UnderlyingFundCashDistribution(IUnderlyingFundCashDistributionService underlyingFundCashDistributionService)
 			: this() {
-			this.UnderlyingFundCashDistributionService = UnderlyingFundCashDistributionService;
+				this.UnderlyingFundCashDistributionService = underlyingFundCashDistributionService;
 		}
 
 		public UnderlyingFundCashDistribution() {
@@ -78,8 +78,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var underlyingFundCashDistribution = this;
-			IEnumerable<ErrorInfo> errors = Validate(underlyingFundCashDistribution);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

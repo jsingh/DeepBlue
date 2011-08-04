@@ -65,22 +65,21 @@ namespace DeepBlue.Models.Entity {
 		public SecurityConversion() {
 		}
 
-		private ISecurityConversionService _securityConversionService;
+		private ISecurityConversionService _SecurityConversionService;
 		public ISecurityConversionService SecurityConversionService {
 			get {
-				if (_securityConversionService == null) {
-					_securityConversionService = new SecurityConversionService();
+				if (_SecurityConversionService == null) {
+					_SecurityConversionService = new SecurityConversionService();
 				}
-				return _securityConversionService;
+				return _SecurityConversionService;
 			}
 			set {
-				_securityConversionService = value;
+				_SecurityConversionService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var securityConversion = this;
-			IEnumerable<ErrorInfo> errors = Validate(securityConversion);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

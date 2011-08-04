@@ -27,16 +27,16 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public ReportingType(IReportingTypeService reportingtypeservice)
+		public ReportingType(IReportingTypeService reportingTypeService)
 			: this() {
-				this.reportingtypeService = reportingtypeservice;
+				this.ReportingTypeService = reportingTypeService;
 		}
 
 		public ReportingType() {
 		}
 
 		private IReportingTypeService _ReportingTypeService;
-		public IReportingTypeService reportingtypeService {
+		public IReportingTypeService ReportingTypeService {
 			get {
 				if (_ReportingTypeService == null) {
 					_ReportingTypeService = new ReportingTypeService();
@@ -49,18 +49,16 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var createreportingtype = this;
-			IEnumerable<ErrorInfo> errors = Validate(createreportingtype);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			reportingtypeService.SaveReportingType(this);
+			ReportingTypeService.SaveReportingType(this);
 			return null;
 		}
 
 		private IEnumerable<ErrorInfo> Validate(ReportingType reportingtype) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(reportingtype);
-			return errors;
+			return ValidationHelper.Validate(reportingtype);
 		}
 	}
 }

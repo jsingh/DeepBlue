@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +67,7 @@ namespace DeepBlue.Tests.Controllers.CapitalCall {
 		}
 
 		[Test]
-		public void invalid_CapitalCallManual_amount_sets_1_error() {
+		public void invalid_capitalcallmanual_amount_sets_1_error() {
 			Assert.IsTrue(test_error_count("CapitalAmountCalled", 1));
 		}
 

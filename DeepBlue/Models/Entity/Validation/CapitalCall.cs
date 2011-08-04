@@ -57,38 +57,36 @@ namespace DeepBlue.Models.Entity {
 
 		public CapitalCall(ICapitalCallService capitalCallservice)
 			: this() {
-			this.capitalCallservice = capitalCallservice;
+				this.CapitalCallservice = capitalCallservice;
 		}
 
 		public CapitalCall() {
 		}
 
-		private ICapitalCallService _capitalCallService;
-		public ICapitalCallService capitalCallservice {
+		private ICapitalCallService _CapitalCallService;
+		public ICapitalCallService CapitalCallservice {
 			get {
-				if (_capitalCallService == null) {
-					_capitalCallService = new CapitalCallService();
+				if (_CapitalCallService == null) {
+					_CapitalCallService = new CapitalCallService();
 				}
-				return _capitalCallService;
+				return _CapitalCallService;
 			}
 			set {
-				_capitalCallService = value;
+				_CapitalCallService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var capitalCall = this;
-			IEnumerable<ErrorInfo> errors = Validate(capitalCall);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			capitalCallservice.SaveCapitalCall(this);
+			CapitalCallservice.SaveCapitalCall(this);
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(CapitalCall capitalCallclosing) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(capitalCallclosing);
-			return errors;
+		private IEnumerable<ErrorInfo> Validate(CapitalCall capitalCall) {
+			return ValidationHelper.Validate(capitalCall);
 		}
 	}
 }

@@ -49,9 +49,9 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public UnderlyingFundCapitalCall(IUnderlyingFundCapitalCallService UnderlyingFundCapitalCallService)
+		public UnderlyingFundCapitalCall(IUnderlyingFundCapitalCallService underlyingFundCapitalCallService)
 			: this() {
-				this.UnderlyingFundCapitalCallService = UnderlyingFundCapitalCallService;
+				this.UnderlyingFundCapitalCallService = underlyingFundCapitalCallService;
 		}
 
 		public UnderlyingFundCapitalCall() {
@@ -71,8 +71,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var underlyingFundCapitalCall = this;
-			IEnumerable<ErrorInfo> errors = Validate(underlyingFundCapitalCall);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}

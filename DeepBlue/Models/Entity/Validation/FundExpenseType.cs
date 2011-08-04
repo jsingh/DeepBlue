@@ -34,22 +34,21 @@ namespace DeepBlue.Models.Entity {
 		public FundExpenseType() {
 		}
 
-		private IFundExpenseTypeService _fundExpenseTypeService;
+		private IFundExpenseTypeService _FundExpenseTypeService;
 		public IFundExpenseTypeService FundExpenseTypeService {
 			get {
-				if (_fundExpenseTypeService == null) {
-					_fundExpenseTypeService = new FundExpenseTypeService();
+				if (_FundExpenseTypeService == null) {
+					_FundExpenseTypeService = new FundExpenseTypeService();
 				}
-				return _fundExpenseTypeService;
+				return _FundExpenseTypeService;
 			}
 			set {
-				_fundExpenseTypeService = value;
+				_FundExpenseTypeService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var fundExpenseType = this;
-			IEnumerable<ErrorInfo> errors = Validate(fundExpenseType);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -58,8 +57,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		private IEnumerable<ErrorInfo> Validate(FundExpenseType fundExpenseType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(fundExpenseType);
-			return errors;
+			return ValidationHelper.Validate(fundExpenseType);
 		}
 	}
 }

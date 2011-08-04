@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -361,7 +361,7 @@ namespace DeepBlue.Tests.Controllers.Investor {
 
 		#region FindInvestors
 		[Test]
-		public void valid_Find_Investors_sets_json_result_error() {
+		public void valid_find_investors_sets_json_result_error() {
 			Assert.IsTrue((DefaultController.FindInvestors("test")!=null));
 		}
 		#endregion

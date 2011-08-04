@@ -28,37 +28,36 @@ namespace DeepBlue.Models.Entity {
 
 		public CapitalCallLineItem(ICapitalCallLineItemService capitalCallLineItemservice)
 			: this() {
-			this.capitalCallLineItemservice = capitalCallLineItemservice;
+				this.CapitalCallLineItemservice = capitalCallLineItemservice;
 		}
 
 		public CapitalCallLineItem() {
 		}
 
-		private ICapitalCallLineItemService _capitalCallLineItemService;
-		public ICapitalCallLineItemService capitalCallLineItemservice {
+		private ICapitalCallLineItemService _CapitalCallLineItemService;
+		public ICapitalCallLineItemService CapitalCallLineItemservice {
 			get {
-				if (_capitalCallLineItemService == null) {
-					_capitalCallLineItemService = new CapitalCallLineItemService();
+				if (_CapitalCallLineItemService == null) {
+					_CapitalCallLineItemService = new CapitalCallLineItemService();
 				}
-				return _capitalCallLineItemService;
+				return _CapitalCallLineItemService;
 			}
 			set {
-				_capitalCallLineItemService = value;
+				_CapitalCallLineItemService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var capitalCallLineItem = this;
-			IEnumerable<ErrorInfo> errors = Validate(capitalCallLineItem);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			capitalCallLineItemservice.SaveCapitalCallLineItem(this);
+			CapitalCallLineItemservice.SaveCapitalCallLineItem(this);
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(CapitalCallLineItem capitalCallLineItemclosing) {
-			return ValidationHelper.Validate(capitalCallLineItemclosing);
+		private IEnumerable<ErrorInfo> Validate(CapitalCallLineItem capitalCallLineItem) {
+			return ValidationHelper.Validate(capitalCallLineItem);
 		}
 	}
 }

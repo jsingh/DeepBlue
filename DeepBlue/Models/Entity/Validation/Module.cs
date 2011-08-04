@@ -19,16 +19,16 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public MODULE(IModuleService moduleservice)
+		public MODULE(IModuleService moduleService)
 			: this() {
-			this.moduleService = moduleservice;
+				this.ModuleService = moduleService;
 		}
 
 		public MODULE() {
 		}
 
 		private IModuleService _ModuleService;
-		public IModuleService moduleService {
+		public IModuleService ModuleService {
 			get {
 				if (_ModuleService == null) {
 					_ModuleService = new ModuleService();
@@ -41,18 +41,16 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var createmodule = this;
-			IEnumerable<ErrorInfo> errors = Validate(createmodule);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			moduleService.SaveModule(this);
+			ModuleService.SaveModule(this);
 			return null;
 		}
 
 		private IEnumerable<ErrorInfo> Validate(MODULE createmodule) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(createmodule);
-			return errors;
+			return ValidationHelper.Validate(createmodule);
 		}
 	}
 }

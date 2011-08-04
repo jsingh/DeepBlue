@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,57 +54,57 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 		
 		[Test]
-		public void invalid_UnderlyingFundPostRecordCapitalCall_UnderlyingFundId_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundpostrecordcapitalcall_underlyingfundid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("UnderlyingFundId"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundPostRecordCapitalCall_UnderlyingFundId_sets_1_error() {
+		public void invalid_underlyingfundpostrecordcapitalcall_underlyingfundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("UnderlyingFundId", 1));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundPostRecordCapitalCall_FundId_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundpostrecordcapitalcall_fundid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("FundId"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundPostRecordCapitalCall_FundId_sets_1_error() {
+		public void invalid_underlyingfundpostrecordcapitalcall_fundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundId", 1));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundPostRecordCapitalCall_DealId_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundpostrecordcapitalcall_dealid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("DealId"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundPostRecordCapitalCall_DealId_sets_1_error() {
+		public void invalid_underlyingfundpostrecordcapitalcall_dealid_sets_1_error() {
 			Assert.IsTrue(test_error_count("DealId", 1));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundPostRecordCapitalCall_Amount_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundpostrecordcapitalcall_amount_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("Amount"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundPostRecordCapitalCall_Amount_sets_1_error() {
+		public void invalid_underlyingfundpostrecordcapitalcall_amount_sets_1_error() {
 			Assert.IsTrue(test_error_count("Amount", 1));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundPostRecordCapitalCall_CapitalCallDate_sets_model_error_on_model_state() {
+		public void invalid_underlyingfundpostrecordcapitalcall_capitalcalldate_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("CapitalCallDate"));
 		}
 
 		[Test]
-		public void invalid_UnderlyingFundPostRecordCapitalCall_CapitalCallDate_sets_1_error() {
+		public void invalid_underlyingfundpostrecordcapitalcall_capitalcalldate_sets_1_error() {
 			Assert.IsTrue(test_error_count("CapitalCallDate", 1));
 		}
 		
 		[Test]
-		public void invalid_Fund_results_in_invalid_modelstate() {
+		public void invalid_fund_results_in_invalid_modelstate() {
 			SetFormCollection();
 			Assert.IsFalse(base.DefaultController.ModelState.IsValid);
 		}

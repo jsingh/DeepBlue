@@ -47,22 +47,21 @@ namespace DeepBlue.Models.Entity {
 		public DealUnderlyingFund() {
 		}
 
-		private IDealUnderlyingFundService _dealUnderlyingFundService;
+		private IDealUnderlyingFundService _DealUnderlyingFundService;
 		public IDealUnderlyingFundService DealUnderlyingFundService {
 			get {
-				if (_dealUnderlyingFundService == null) {
-					_dealUnderlyingFundService = new DealUnderlyingFundService();
+				if (_DealUnderlyingFundService == null) {
+					_DealUnderlyingFundService = new DealUnderlyingFundService();
 				}
-				return _dealUnderlyingFundService;
+				return _DealUnderlyingFundService;
 			}
 			set {
-				_dealUnderlyingFundService = value;
+				_DealUnderlyingFundService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var dealUnderlyingFund = this;
-			IEnumerable<ErrorInfo> errors = Validate(dealUnderlyingFund);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -71,8 +70,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		private IEnumerable<ErrorInfo> Validate(DealUnderlyingFund dealUnderlyingFund) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(dealUnderlyingFund);
-			return errors;
+			return ValidationHelper.Validate(dealUnderlyingFund);
 		}
 	}
 }

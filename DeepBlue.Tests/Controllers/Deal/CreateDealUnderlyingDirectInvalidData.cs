@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,97 +53,97 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 		
 		[Test]
-		public void invalid_DealUnderlyingDirect_issuerId_sets_model_error_on_model_state() {
+		public void invalid_dealunderlyingdirect_issuerid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("IssuerId"));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_issuerId_sets_1_error() {
+		public void invalid_dealunderlyingdirect_issuerid_sets_1_error() {
 			Assert.IsTrue(test_error_count("IssuerId", 1));
 		}
 		
 		[Test]
-		public void invalid_DealUnderlyingDirect_SecurityTypeId_sets_model_error_on_model_state() {
+		public void invalid_dealunderlyingdirect_securitytypeid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("SecurityTypeId"));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_SecurityTypeId_sets_1_error() {
+		public void invalid_dealunderlyingdirect_securitytypeid_sets_1_error() {
 			Assert.IsTrue(test_error_count("SecurityTypeId", 1));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_SecurityId_sets_1_error() {
+		public void invalid_dealunderlyingdirect_securityid_sets_1_error() {
 			Assert.IsTrue(test_error_count("SecurityId", 1));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_SecurityId_sets_model_error_on_model_state() {
+		public void invalid_dealunderlyingdirect_securityid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("SecurityId"));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_RecordDate_sets_1_error() {
+		public void invalid_dealunderlyingdirect_recorddate_sets_1_error() {
 			Assert.IsTrue(test_error_count("RecordDate", 1));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_RecordDate_sets_model_error_on_model_state() {
+		public void invalid_dealunderlyingdirect_recorddate_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("RecordDate"));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_FMV_sets_1_error() {
+		public void invalid_dealunderlyingdirect_fmv_sets_1_error() {
 			Assert.IsTrue(test_error_count("FMV", 1));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_FMV_sets_model_error_on_model_state() {
+		public void invalid_dealunderlyingdirect_fmv_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("FMV"));
 		}
 		 
 		[Test]
-		public void invalid_DealUnderlyingDirect_NumberOfShares_sets_1_error() {
+		public void invalid_dealunderlyingdirect_numberofshares_sets_1_error() {
 			Assert.IsTrue(test_error_count("NumberOfShares", 1));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_NumberOfShares_sets_model_error_on_model_state() {
+		public void invalid_dealunderlyingdirect_numberofshares_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("NumberOfShares"));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_PurchasePrice_sets_1_error() {
+		public void invalid_dealunderlyingdirect_purchaseprice_sets_1_error() {
 			Assert.IsTrue(test_error_count("PurchasePrice", 1));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_PurchasePrice_sets_model_error_on_model_state() {
+		public void invalid_dealunderlyingdirect_purchaseprice_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("PurchasePrice"));
 		}
 		 
 		[Test]
-		public void invalid_DealUnderlyingDirect_DealId_sets_1_error() {
+		public void invalid_dealunderlyingdirect_dealid_sets_1_error() {
 			Assert.IsTrue(test_error_count("DealId", 1));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_DealId_sets_model_error_on_model_state() {
+		public void invalid_dealunderlyingdirect_dealid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("DealId"));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_FundId_sets_1_error() {
+		public void invalid_dealunderlyingdirect_fundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundId", 1));
 		}
 
 		[Test]
-		public void invalid_DealUnderlyingDirect_FundId_sets_model_error_on_model_state() {
+		public void invalid_dealunderlyingdirect_fundid_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("FundId"));
 		}
 
 		[Test]
-		public void invalid_Fund_results_in_invalid_modelstate() {
+		public void invalid_fund_results_in_invalid_modelstate() {
 			SetFormCollection();
 			Assert.IsFalse(base.DefaultController.ModelState.IsValid);
 		}

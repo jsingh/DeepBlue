@@ -33,30 +33,29 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public CommunicationType(ICommunicationTypeService communicationService)
+		public CommunicationType(ICommunicationTypeService communicationTypeService)
 			: this() {
-			this.CommunicationTypeService = communicationService;
+			this.CommunicationTypeService = communicationTypeService;
 		}
 
 		public CommunicationType() {
 		}
 
-		private ICommunicationTypeService _communicationService;
+		private ICommunicationTypeService _CommunicationTypeService;
 		public ICommunicationTypeService CommunicationTypeService {
 			get {
-				if (_communicationService == null) {
-					_communicationService = new CommunicationTypeService();
+				if (_CommunicationTypeService == null) {
+					_CommunicationTypeService = new CommunicationTypeService();
 				}
-				return _communicationService;
+				return _CommunicationTypeService;
 			}
 			set {
-				_communicationService = value;
+				_CommunicationTypeService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var communication = this;
-			IEnumerable<ErrorInfo> errors = Validate(communication);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -64,9 +63,8 @@ namespace DeepBlue.Models.Entity {
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(CommunicationType communicationEntityType) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(communicationEntityType);
-			return errors;
+		private IEnumerable<ErrorInfo> Validate(CommunicationType communicationType) {
+			return ValidationHelper.Validate(communicationType);
 		}
 	}
 }

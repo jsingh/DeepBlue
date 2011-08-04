@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,65 +48,65 @@ namespace DeepBlue.Tests.Controllers.Transaction {
 
 
         [Test]
-        public void invalid_Fund_Id_sets_model_error_on_model_state() {
+        public void invalid_fund_id_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("FundId"));
         }
 
         [Test]
-		public void invalid_Fund_Id_sets_1_error() {
+		public void invalid_fund_id_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundId", 1));
         }
 
         [Test]
-		public void invalid_Fund_Id_results_in_invalid_modelstate() {
+		public void invalid_fund_id_results_in_invalid_modelstate() {
             SetFormCollection();
             Assert.IsFalse(base.DefaultController.ModelState.IsValid);
         }
 
 		[Test]
-		public void invalid_Fund_Closing_Id_sets_model_error_on_model_state() {
+		public void invalid_fund_closing_id_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("FundClosingId"));
 		}
 
 		[Test]
-		public void invalid_Fund_Closing_Id_sets_1_error() {
+		public void invalid_fund_closing_id_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundClosingId", 1));
 		}
 
 		[Test]
-		public void invalid_Fund_Closing_Id_results_in_invalid_modelstate() {
+		public void invalid_fund_closing_id_results_in_invalid_modelstate() {
 			SetFormCollection();
 			Assert.IsFalse(base.DefaultController.ModelState.IsValid);
 		}
 
 		[Test]
-		public void invalid_TotalCommitment_sets_model_error_on_model_state() {
+		public void invalid_totalcommitment_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("FundClosingId"));
 		}
 
 		[Test]
-		public void invalid_TotalCommitment_sets_1_error() {
+		public void invalid_totalcommitment_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundClosingId", 1));
 		}
 
 		[Test]
-		public void invalid_TotalCommitment_results_in_invalid_modelstate() {
+		public void invalid_totalcommitment_results_in_invalid_modelstate() {
 			SetFormCollection();
 			Assert.IsFalse(base.DefaultController.ModelState.IsValid);
 		}
 				
 		[Test]
-		public void invalid_Fund_CommittedDate_sets_model_error_on_model_state() {
+		public void invalid_fund_committeddate_sets_model_error_on_model_state() {
 			Assert.IsFalse(test_posted_value("CommittedDate"));
 		}
 
 		[Test]
-		public void invalid_Fund_CommittedDate_sets_1_error() {
+		public void invalid_fund_committeddate_sets_1_error() {
 			Assert.IsTrue(test_error_count("CommittedDate", 1));
 		}
 
 		[Test]
-		public void invalid_Fund_CommittedDate_results_in_invalid_modelstate() {
+		public void invalid_fund_committeddate_results_in_invalid_modelstate() {
 			SetFormCollection();
 			Assert.IsFalse(base.DefaultController.ModelState.IsValid);
 		}

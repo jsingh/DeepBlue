@@ -27,16 +27,16 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public ShareClassType(IShareClassTypeService shareclasstypeservice)
+		public ShareClassType(IShareClassTypeService shareClassTypeService)
 			: this() {
-			this.shareClasstypeService = shareclasstypeservice;
+				this.ShareClassTypeService = shareClassTypeService;
 		}
 
 		public ShareClassType() {
 		}
 
 		private IShareClassTypeService _ShareClassTypeService;
-		public IShareClassTypeService shareClasstypeService {
+		public IShareClassTypeService ShareClassTypeService {
 			get {
 				if (_ShareClassTypeService == null) {
 					_ShareClassTypeService = new ShareClassTypeService();
@@ -49,18 +49,16 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var createshareclasstype = this;
-			IEnumerable<ErrorInfo> errors = Validate(createshareclasstype);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			shareClasstypeService.SaveShareClassType(this);
+			ShareClassTypeService.SaveShareClassType(this);
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(ShareClassType createshareclasstype) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(createshareclasstype);
-			return errors;
+		private IEnumerable<ErrorInfo> Validate(ShareClassType shareClassType) {
+			return ValidationHelper.Validate(shareClassType);
 		}
 	}
 }

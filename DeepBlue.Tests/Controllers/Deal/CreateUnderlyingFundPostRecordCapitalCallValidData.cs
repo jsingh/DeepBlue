@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,57 +54,57 @@ namespace DeepBlue.Tests.Controllers.Deal {
 		}
 		
 		[Test]
-		public void valid_UnderlyingFundPostRecordCapitalCall_UnderlyingFundId_sets_model_error_on_model_state() {
+		public void valid_underlyingfundpostrecordcapitalcall_underlyingfundid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("UnderlyingFundId"));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCapitalCall_UnderlyingFundId_sets_0_error() {
+		public void valid_underlyingfundpostrecordcapitalcall_underlyingfundid_sets_0_error() {
 			Assert.IsTrue(test_error_count("UnderlyingFundId", 0));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCapitalCall_FundId_sets_model_error_on_model_state() {
+		public void valid_underlyingfundpostrecordcapitalcall_fundid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("FundId"));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCapitalCall_FundId_sets_0_error() {
+		public void valid_underlyingfundpostrecordcapitalcall_fundid_sets_0_error() {
 			Assert.IsTrue(test_error_count("FundId", 0));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCapitalCall_DealId_sets_model_error_on_model_state() {
+		public void valid_underlyingfundpostrecordcapitalcall_dealid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("DealId"));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCapitalCall_DealId_sets_0_error() {
+		public void valid_underlyingfundpostrecordcapitalcall_dealid_sets_0_error() {
 			Assert.IsTrue(test_error_count("DealId", 0));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCapitalCall_Amount_sets_model_error_on_model_state() {
+		public void valid_underlyingfundpostrecordcapitalcall_amount_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("Amount"));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCapitalCall_Amount_sets_0_error() {
+		public void valid_underlyingfundpostrecordcapitalcall_amount_sets_0_error() {
 			Assert.IsTrue(test_error_count("Amount", 0));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCapitalCall_CapitalCallDate_sets_model_error_on_model_state() {
+		public void valid_underlyingfundpostrecordcapitalcall_capitalcalldate_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("CapitalCallDate"));
 		}
 
 		[Test]
-		public void valid_UnderlyingFundPostRecordCapitalCall_CapitalCallDate_sets_0_error() {
+		public void valid_underlyingfundpostrecordcapitalcall_capitalcalldate_sets_0_error() {
 			Assert.IsTrue(test_error_count("CapitalCallDate", 0));
 		}
 		
 		[Test]
-		public void valid_Fund_results_in_valid_modelstate() {
+		public void valid_fund_results_in_valid_modelstate() {
 			SetFormCollection();
 			Assert.IsTrue(base.DefaultController.ModelState.IsValid);
 		}

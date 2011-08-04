@@ -12,8 +12,6 @@
 					Capital Calls From Investments
 				</div>
 			</div>
-			<div class="rightuarrow">
-			</div>
 		</div>
 		<div class="recon-detail" id="RGUFCC" style="display: block;" issearch="true">
 			{{tmpl(UFCCItems) "#ReconcileGridTemplate"}}
@@ -34,8 +32,6 @@
 				<div style="display: block;" class="recon-expandtitle">
 					Distributions/Sales Of Investment
 				</div>
-			</div>
-			<div class="rightuarrow">
 			</div>
 		</div>
 		<div class="recon-detail" id="RGUFCD" style="display: block;" issearch="true">
@@ -58,8 +54,6 @@
 					Capital Call To Investor
 				</div>
 			</div>
-			<div class="rightuarrow">
-			</div>
 		</div>
 		<div class="recon-detail" id="RGCC" style="display: block;" issearch="true">
 			{{tmpl(CCItems) "#ReconcileGridTemplate"}}
@@ -80,8 +74,6 @@
 				<div style="display: block;" class="recon-expandtitle">
 					Distribution To Investor
 				</div>
-			</div>
-			<div class="rightuarrow">
 			</div>
 		</div>
 		<div class="recon-detail" id="RGCD" style="display: block;" issearch="true">

@@ -28,16 +28,16 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
-		public Currency(ICurrencyService currencyservice)
+		public Currency(ICurrencyService currencyService)
 			: this() {
-			this.currencyService = currencyservice;
+				this.CurrencyService = currencyService;
 		}
 
 		public Currency() {
 		}
 
 		private ICurrencyService _CurrencyService;
-		public ICurrencyService currencyService {
+		public ICurrencyService CurrencyService {
 			get {
 				if (_CurrencyService == null) {
 					_CurrencyService = new CurrencyService();
@@ -50,18 +50,16 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var createcurrency = this;
-			IEnumerable<ErrorInfo> errors = Validate(createcurrency);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
-			currencyService.SaveCurrency(this);
+			CurrencyService.SaveCurrency(this);
 			return null;
 		}
 
 		private IEnumerable<ErrorInfo> Validate(Currency currency) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(currency);
-			return errors;
+			return ValidationHelper.Validate(currency);
 		}
 	}
 }

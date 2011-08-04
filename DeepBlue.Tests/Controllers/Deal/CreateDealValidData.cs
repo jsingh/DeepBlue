@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,43 +57,43 @@ namespace DeepBlue.Tests.Controllers.Deal {
 
 
 		[Test]
-		public void valid_Deal_fundid_sets_model_error_on_model_state() {
+		public void valid_deal_fundid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("FundId"));
 		}
 
 		[Test]
-		public void valid_Deal_fundid_sets_1_error() {
+		public void valid_deal_fundid_sets_1_error() {
 			Assert.IsTrue(test_error_count("FundId", 0));
 		}
 
 
 		[Test]
-		public void valid_Deal_dealnumber_sets_model_error_on_model_state() {
+		public void valid_deal_dealnumber_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("DealNumber"));
 		}
 
 		[Test]
-		public void valid_Deal_dealnumber_sets_1_error() {
+		public void valid_deal_dealnumber_sets_1_error() {
 			Assert.IsTrue(test_error_count("DealNumber", 0));
 		}
 
 		[Test]
-		public void valid_Deal_purchasetypeid_sets_model_error_on_model_state() {
+		public void valid_deal_purchasetypeid_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("PurchaseTypeId"));
 		}
 
 		[Test]
-		public void valid_Deal_purchasetypeid_sets_1_error() {
+		public void valid_deal_purchasetypeid_sets_1_error() {
 			Assert.IsTrue(test_error_count("PurchaseTypeId", 0));
 		}
 
 		[Test]
-		public void valid_Deal_dealname_sets_model_error_on_model_state() {
+		public void valid_deal_dealname_sets_model_error_on_model_state() {
 			Assert.IsTrue(test_posted_value("DealName"));
 		}
 
 		[Test]
-		public void valid_Deal_dealname_sets_1_error() {
+		public void valid_deal_dealname_sets_1_error() {
 			Assert.IsTrue(test_error_count("DealName", 0));
 		}
 

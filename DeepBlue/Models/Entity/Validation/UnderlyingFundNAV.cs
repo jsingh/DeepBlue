@@ -48,22 +48,21 @@ namespace DeepBlue.Models.Entity {
 		public UnderlyingFundNAV() {
 		}
 
-		private IUnderlyingFundNAVService _underlyingFundNAVService;
+		private IUnderlyingFundNAVService _UnderlyingFundNAVService;
 		public IUnderlyingFundNAVService UnderlyingFundNAVService {
 			get {
-				if (_underlyingFundNAVService == null) {
-					_underlyingFundNAVService = new UnderlyingFundNAVService();
+				if (_UnderlyingFundNAVService == null) {
+					_UnderlyingFundNAVService = new UnderlyingFundNAVService();
 				}
-				return _underlyingFundNAVService;
+				return _UnderlyingFundNAVService;
 			}
 			set {
-				_underlyingFundNAVService = value;
+				_UnderlyingFundNAVService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var underlyingFundNAV = this;
-			IEnumerable<ErrorInfo> errors = Validate(underlyingFundNAV);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
@@ -72,8 +71,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		private IEnumerable<ErrorInfo> Validate(UnderlyingFundNAV underlyingFundNAV) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(underlyingFundNAV);
-			return errors;
+			return ValidationHelper.Validate(underlyingFundNAV);
 		}
 	}
 }

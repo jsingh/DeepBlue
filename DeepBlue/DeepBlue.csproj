@@ -227,6 +227,7 @@
     <Compile Include="Models\Entity\Validation\CashDistribution.cs" />
     <Compile Include="Models\Entity\Validation\CapitalCallLineItem.cs" />
     <Compile Include="Models\Entity\Validation\CapitalDistributionLineItem.cs" />
+    <Compile Include="Models\Entity\Validation\Account.cs" />
     <Compile Include="Models\Entity\Validation\DealFundDocument.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingDirectDocument.cs" />
     <Compile Include="Models\Entity\Validation\File.cs" />

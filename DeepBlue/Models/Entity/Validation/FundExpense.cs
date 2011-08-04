@@ -43,22 +43,21 @@ namespace DeepBlue.Models.Entity {
 		public FundExpense() {
 		}
 
-		private IFundExpenseService _fundExpenseService;
+		private IFundExpenseService _FundExpenseService;
 		public IFundExpenseService FundExpenseService {
 			get {
-				if (_fundExpenseService == null) {
-					_fundExpenseService = new FundExpenseService();
+				if (_FundExpenseService == null) {
+					_FundExpenseService = new FundExpenseService();
 				}
-				return _fundExpenseService;
+				return _FundExpenseService;
 			}
 			set {
-				_fundExpenseService = value;
+				_FundExpenseService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
-			var fundExpense = this;
-			IEnumerable<ErrorInfo> errors = Validate(fundExpense);
+			IEnumerable<ErrorInfo> errors = Validate(this);
 			if (errors.Any()) {
 				return errors;
 			}
