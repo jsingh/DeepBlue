@@ -161,7 +161,12 @@ namespace DeepBlue.Controllers.Deal {
 
 		public int FindLastDealId() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.Deals.OrderByDescending(deal => deal.DealID).FirstOrDefault().DealID;
+				var lastDeal = (from deal in context.Deals
+						orderby deal.DealID descending
+						select new {
+							DealId = deal.DealID
+						}).FirstOrDefault();
+				return (lastDeal != null ? lastDeal.DealId : 0);
 			}
 		}
 

@@ -30,90 +30,91 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-	<div class="menu exportlist" style="position: absolute; right: 85px;">
-		<ul>
-			<li><a href="javascript:dealReport.chooseExpMenu(2,'Pdf');">Pdf</a></li>
-			<li><a href="javascript:dealReport.chooseExpMenu(1,'Word');">Word</a></li>
-			<li><a href="javascript:dealReport.chooseExpMenu(4,'Excel');">Excel</a></li>
-		</ul>
-	</div>
-	<div class="titlebox">
-		<div class="left_title">
-			Deal Report -
-			<%:Html.Span("", new { @id= "SpnFundName" }) %>
+	<div id="DealReportMain" style="float:left;display:none;width:100%;">
+		<div class="menu exportlist" style="position: absolute; right: 85px;">
+			<ul>
+				<li><a href="javascript:dealReport.chooseExpMenu(2,'Pdf');">Pdf</a></li>
+				<li><a href="javascript:dealReport.chooseExpMenu(1,'Word');">Word</a></li>
+				<li><a href="javascript:dealReport.chooseExpMenu(4,'Excel');">Excel</a></li>
+			</ul>
 		</div>
-		<div class="export" style="float: right">
-			<div class="print">
-				<%:Html.Image("print.gif", new { @style = "cursor:pointer", @onclick = "javascript:dealReport.printArea();" })%>
+		<div class="titlebox">
+			<div class="left_title">
+				Deal Report -
+				<%:Html.Span("", new { @id= "SpnFundName" }) %>
 			</div>
-			<div class="menu" onclick="javascript:dealReport.expandExpMenu(this);">
-				<ul>
-					<li><a id="lnkExportName" href="#">
-						Pdf</a></li>
-				</ul>
-				<%: Html.Hidden("ExportId","")%>
+			<div class="export" style="float: right">
+				<div class="print">
+					<%:Html.Image("print.gif", new { @style = "cursor:pointer", @onclick = "javascript:dealReport.printArea();" })%>
+				</div>
+				<div class="menu" onclick="javascript:dealReport.expandExpMenu(this);">
+					<ul>
+						<li><a id="lnkExportName" href="#">Pdf</a></li>
+					</ul>
+					<%: Html.Hidden("ExportId","")%>
+				</div>
+				<div class="darrow">
+					<%:Html.Image("down_arrow.png", new { @style="cursor:pointer", @onclick = "javascript:dealReport.exportDeal();" })%></div>
 			</div>
-			<div class="darrow">
-				<%:Html.Image("down_arrow.png", new { @style="cursor:pointer", @onclick = "javascript:dealReport.exportDeal();" })%></div>
+			<div style="display: none; float: right; margin-right: 38%;" id="ReportLoading">
+				<%:Html.Image("ajax.jpg")%>&nbsp;Loading....</div>
 		</div>
-		<div style="display: none; float: right; margin-right: 38%;" id="ReportLoading">
-			<%:Html.Image("ajax.jpg")%>&nbsp;Loading....</div>
-	</div>
-	<div class="line">
-	</div>
-	<div id="ReportContent" class="report-content">
-		<div class="gbox" id="ReportBox">
-			<table cellpadding="0" class="grid" cellspacing="0" border="0" id="ReportList">
-				<thead>
-					<tr class="report_tr">
-						<th sortname="DealId" style="display: none">
-							DealId
-						</th>
-						<th class="sorted sdesc" sortname="DealNumber" align="left" style="width: 5%">
-							<span>Deal No.</span>
-						</th>
-						<th class="sorted sdesc" sortname="DealName" align="left" style="width: 18%">
-							<span>Deal Name</span>
-						</th>
-						<th sortname="DealDate" align="left" style="width: 12%">
-							<span>Deal Date</span>
-						</th>
-						<th sortname="NetPurchasePrice" align="right" style="text-align: right; width: 12%">
-							<span>Net Purchase Price</span>
-						</th>
-						<th sortname="GrossPurchasePrice" align="right" style="text-align: right; width: 12%">
-							<span>Gross Purchase Price</span>
-						</th>
-						<th sortname="CommittedAmount" align="right" style="text-align: right; width: 12%">
-							<span>Commitment Amount</span>
-						</th>
-						<th sortname="UnfundedAmount" align="right" style="text-align: right; width: 12%">
-							<span>Unfunded Amount</span>
-						</th>
-						<th class="sorted sdesc" sortname="TotalAmount" align="right" style="text-align: right;
-							width: 12%">
-							<span>Total Amount</span>
-						</th>
-						<th style="width: 2%">
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
+		<div class="line">
 		</div>
-		<br />
-		<br />
-		<center>
-			<div>
-				<table cellpadding="0" cellspacing="0" border="0" id="ViewMoreDetail">
+		<div id="ReportContent" class="report-content">
+			<div class="gbox" id="ReportBox">
+				<table cellpadding="0" class="grid" cellspacing="0" border="0" id="ReportList">
+					<thead>
+						<tr class="report_tr">
+							<th sortname="DealId" style="display: none">
+								DealId
+							</th>
+							<th class="sorted sdesc" sortname="DealNumber" align="left" style="width: 5%">
+								<span>Deal No.</span>
+							</th>
+							<th class="sorted sdesc" sortname="DealName" align="left" style="width: 18%">
+								<span>Deal Name</span>
+							</th>
+							<th sortname="DealDate" align="left" style="width: 12%">
+								<span>Deal Date</span>
+							</th>
+							<th sortname="NetPurchasePrice" align="right" style="text-align: right; width: 12%">
+								<span>Net Purchase Price</span>
+							</th>
+							<th sortname="GrossPurchasePrice" align="right" style="text-align: right; width: 12%">
+								<span>Gross Purchase Price</span>
+							</th>
+							<th sortname="CommittedAmount" align="right" style="text-align: right; width: 12%">
+								<span>Commitment Amount</span>
+							</th>
+							<th sortname="UnfundedAmount" align="right" style="text-align: right; width: 12%">
+								<span>Unfunded Amount</span>
+							</th>
+							<th class="sorted sdesc" sortname="TotalAmount" align="right" style="text-align: right;
+								width: 12%">
+								<span>Total Amount</span>
+							</th>
+							<th style="width: 2%">
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
 				</table>
 			</div>
-		</center>
+			<br />
+			<br />
+			<center>
+				<div>
+					<table cellpadding="0" cellspacing="0" border="0" id="ViewMoreDetail">
+					</table>
+				</div>
+			</center>
+		</div>
+		<%: Html.Hidden("FundId","0",new  { @id="FundId"}) %>
+		<%: Html.Hidden("SortName", "", new { @id = "SortName" })%>
+		<%: Html.Hidden("SortOrder", "", new { @id = "SortOrder" })%>
 	</div>
-	<%: Html.Hidden("FundId","0",new  { @id="FundId"}) %>
-	<%: Html.Hidden("SortName", "", new { @id = "SortName" })%>
-	<%: Html.Hidden("SortOrder", "", new { @id = "SortOrder" })%>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<script type="text/javascript">		dealReport.init(); </script>

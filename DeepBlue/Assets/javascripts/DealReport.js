@@ -112,6 +112,7 @@
 		$("#ReportList").ajaxTableReload();
 	}
 	,selectFund: function (id,name) {
+		$("#DealReportMain").show();
 		var grid=$("#ReportList");
 		$("#FundId").val(id);
 		$("#FundName").val(name);
