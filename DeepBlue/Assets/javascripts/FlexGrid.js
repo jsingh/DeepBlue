@@ -43,6 +43,7 @@
 				$('.pReload',this.pDiv).removeClass('loading');this.loading=false;
 				if(!data) { $('.pPageStat',this.pDiv).html(p.errormsg);return false; }
 				if(p.dataType=='xml') { p.total= +$('rows total',data).text(); } else { p.total=data.total; }
+				var tbody=document.createElement('tbody');
 				if(p.total==0) {
 					$('tr, a, td, div',t).unbind();
 					$(t).empty();
@@ -50,6 +51,7 @@
 					p.page=1;
 					this.buildpager();
 					$('.pPageStat',this.pDiv).html(p.nomsg);
+					$(t).append(tbody);
 					return false;
 				}
 				p.pages=Math.ceil(p.total/p.rp);
@@ -59,7 +61,6 @@
 					p.page=data.page;
 				}
 				this.buildpager();
-				var tbody=document.createElement('tbody');
 				if(p.onTemplate) {
 					p.onTemplate(tbody,data);
 				} else {
@@ -231,7 +232,7 @@
 				}
 			},
 			exportExcel: function () {
-			 	var features="width="+1+",height="+1;
+				var features="width="+1+",height="+1;
 				window.open("/Admin/ExportExcel?tableName="+p.tableName,p.tableName,features);
 			},
 			setPagingEvent: function (pDiv) {
