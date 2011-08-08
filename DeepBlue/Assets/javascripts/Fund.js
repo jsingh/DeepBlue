@@ -85,7 +85,7 @@
 			$("#TabTemplate").tmpl(data).insertAfter(addNewFundTab);
 			this.open(id,$("#Edit"+id));
 		}
-		$("#Tab"+id).click();
+		$(".center",$("#Tab"+id)).click();
 	}
 	,open: function (id,target) {
 		var dt=new Date();
@@ -101,6 +101,7 @@
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		var fundId=parseInt($("#FundId",frm).val());
 		$.post("/Fund/Create",$(frm).serializeArray(),function (data) {
+			loading.empty();
 			if($.trim(data)!="") {
 				alert(data);
 			} else {

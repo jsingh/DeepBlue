@@ -5,7 +5,7 @@
 .editor-label {
 	width: auto;
 	font-weight: bold;
-	padding: 10px 5px;
+    padding: 14px 5px;
 }
 .editor-field {
 	padding: 8px 5px;
@@ -88,29 +88,11 @@ label {
 	white-space: nowrap;
 	margin: 0px 20px 0px 20px;
 }
-#NewCCTab, #NewCDTab, #NewCCDetailTab {
-	background-image: url(../images/newcctab.png);
-	background-repeat: no-repeat;
-	width: 213px;
-	height: 40px;
-	float: left;
-	margin-left: 65px;
-	cursor: pointer;
-}
-#ManCCTab, #ManCDTab, #ManCDetailTab {
-	background-image: url(../images/mancctab.png);
-	background-repeat: no-repeat;
-	width: 213px;
-	height: 40px;
-	float: left;
-	margin-left: 5px;
-	cursor: pointer;
-}
 #SerCCTab, #SerCDTab {
 	float: right;
-	padding: 9px 25px 0 10px;
+	padding: 9px 90px 0 10px;
 }
-#NewCCTab.select {
+/*#NewCCTab.select {
 	background-image: url(../images/newcctabsel.png);
 }
 #ManCCTab.select {
@@ -147,14 +129,16 @@ label {
 #ManCDetailTab.select {
 	background-image: url(../images/cdetailtabsel.png);
 	width: 225px;
-}
+}*/
 .tabbg {
-	float: left;
-	width: 100%;
-	background-image: url(../images/tabbg.png);
-	background-position: left bottom;
-	background-repeat: repeat-x;
-	padding-bottom: 3px;
+    background-image: url("../images/tabbg.png");
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    float: left;
+    height: 44px;
+    padding-bottom: 0;
+    padding-left: 65px;
+    width: 100%;
 }
 .cc-box-main {
 	float: left;
@@ -162,7 +146,7 @@ label {
 	clear:both;
 }
 .cc-box .header {
-	margin: 5px 0 0;
+	margin: 25px 0 0;
 }
 .cc-box-det {
 	background-color: #CBD2DA;

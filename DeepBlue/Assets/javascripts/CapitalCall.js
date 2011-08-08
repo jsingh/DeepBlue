@@ -25,6 +25,7 @@
 			$("#SpnLoading").hide();
 			$("#CCDetail").show();
 			$("#FundId").val(data.FundId);
+			$("#Fund").val(data.FundName);
 			$("#TitleFundName").html(data.FundName);
 			$("#CommittedAmount").html(jHelper.dollarAmount(data.TotalCommitment));
 			$("#UnfundedAmount").html(jHelper.dollarAmount(data.UnfundedAmount));
@@ -119,10 +120,10 @@
 	,selectTab: function (type,lnk) {
 		var CC=$("#NewCapitalCall");
 		var MCC=$("#NewManualCapitalCall");
-		$("#NewCCTab").removeClass("select");
-		$("#ManCCTab").removeClass("select");
+		$("#NewCCTab").removeClass("section-tab-sel");
+		$("#ManCCTab").removeClass("section-tab-sel");
 		CC.hide();MCC.hide();
-		$(lnk).addClass("select");
+		$(lnk).addClass("section-tab-sel");
 		switch(type) {
 			case "C": CC.show();break;
 			case "M": MCC.show();break;

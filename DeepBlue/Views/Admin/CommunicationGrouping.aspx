@@ -47,6 +47,8 @@
 	, OnRowClick = "communicationGrouping.onRowClick"
 	, OnInit = "communicationGrouping.onInit"
 	, OnTemplate = "communicationGrouping.onTemplate"
+	, TableName = "CommunicationGrouping"
+	, ExportExcel = true
 })%>
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:communicationGrouping.add(this);" })) {%>${name}<%}%>

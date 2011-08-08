@@ -525,7 +525,7 @@ namespace DeepBlue.Controllers.Investor {
 			IEnumerable<ErrorInfo> errorInfo = InvestorRepository.SaveInvestor(investor);
 			if (errorInfo != null) {
 				foreach (var err in errorInfo.ToList()) {
-					resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					resultModel.Result +=  err.ErrorMessage + "\n";
 				}
 			}
 			else {

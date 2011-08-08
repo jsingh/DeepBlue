@@ -24,6 +24,7 @@
 			,sortorder: ''
 			,resizeWidth: true
 			,tableName: ''
+			,exportExcel: false
 			,onChangeSort: false
 			,onSuccess: false
 			,onRowClick: false
@@ -160,18 +161,6 @@
 				} else {
 					w=g.gDiv.offsetWidth;
 				}
-				if(parseInt(w)>0) {
-					/*$(g.gDiv).width(w);
-					$(g.gTLDiv).width(w);
-					$(g.gTCDiv).width(w-20);
-					$(g.gBLDiv).width(w);
-					$(g.gBCDiv).width(w-20);
-					var adw=w-40;
-					if(g.pDiv) { $(g.pDiv).width(adw); }
-					if(g.hDiv) { $(g.hDiv).width(adw); }
-					if(g.bDiv) { $(g.bDiv).width(adw); }
-					if(g.bDivBox) { $(g.bDivBox).width(adw+18); }*/
-				}
 			}
 			,populate: function () {
 				if(this.loading) { return true; }
@@ -242,12 +231,8 @@
 				}
 			},
 			exportExcel: function () {
-				var loading=$(".exp-excel-loading",g.pDiv);
-				loading.show();
-				$.get("/Admin/ExportExcel?tableName="+p.tableName,function (data) {
-					loading.html(data);
-					$("a",loading).click();
-				});
+			 	var features="width="+1+",height="+1;
+				window.open("/Admin/ExportExcel?tableName="+p.tableName,p.tableName,features);
 			},
 			setPagingEvent: function (pDiv) {
 				$('.pReload',pDiv).click(function () { g.populate() });
@@ -379,7 +364,7 @@
 			$(g.hDiv).before(g.pDiv);
 			$(g.bDiv).after($(g.pDiv).clone().addClass("bpDiv"));
 
-			if(p.tableName!="") {
+			if(p.exportExcel!="") {
 				var exportExcel='<div id="ExportExcel" class="green-btn"><div class="left"></div><div class="center">Export Excel</div><div class="right"></div></div>';
 				exportExcel+='<div class="exp-excel-loading"><span class="pLoadingStat">Exporting...</span></div>';
 				$(g.pDiv).append(exportExcel);

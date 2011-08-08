@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<DeepBlue.Models.Fund.FundDetail>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<DeepBlue.Models.Fund.CreateModel>" %>
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
@@ -94,13 +94,13 @@
 	<script id="TabTemplate" type="text/x-jquery-tmpl">
 		<div style="float:left">
 			<div id="Tab${id}" onmousemove="javascript:$('#tabdel${id}').show();"
-			 onmouseout="javascript:$('#tabdel${id}').hide();" onclick="javascript:fund.selectTab(this,'Edit${id}');" class="section-tab section-tab-sel">
+			 onmouseout="javascript:$('#tabdel${id}').hide();"
+			   class="section-tab section-tab-sel">
 				<div class="left"></div>
-				<div class="center">${FundName}</div>
+				<div class="center" onclick="javascript:fund.selectTab($(this).parent(),'Edit${id}');">${FundName}</div>
 				<div class="right"></div>
+				<div class='tab-delete' style='display:none' id="tabdel${id}" onclick="javascript:fund.deleteTab(${id},true);"></div>
 			</div>
-			<div class='tab-delete' onmousemove="javascript:$(this).show();" 
-			 onmouseout="javascript:$(this).hide();"  style='display:none' id="tabdel${id}" onclick="javascript:fund.deleteTab(${id},true);"></div>
 		</div>
 	</script>
 	<script id="SectionTemplate" type="text/x-jquery-tmpl">

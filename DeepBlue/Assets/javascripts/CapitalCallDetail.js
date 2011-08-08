@@ -28,10 +28,10 @@
 	,selectTab: function (type,lnk) {
 		var CD=$("#CapitalCallReport");
 		var MCD=$("#CapitalDistributionReport");
-		$("#NewCCDetailTab").removeClass("select");
-		$("#ManCDetailTab").removeClass("select");
+		$("#NewCCDetailTab").removeClass("section-tab-sel");
+		$("#ManCDetailTab").removeClass("section-tab-sel");
 		CD.hide();MCD.hide();
-		$(lnk).addClass("select");
+		$(lnk).addClass("section-tab-sel");
 		switch(type) {
 			case "C": CD.show();break;
 			case "M": MCD.show();break;
@@ -60,6 +60,7 @@
 			expandTR.className="expandrow";
 			var expandTD=document.createElement("td");
 			expandTD.colSpan=7;
+			$(expandTD).css("padding","0px");
 			$(expandTR).append(expandTD);
 			var div=document.createElement("div");
 			div.className="exploading";
@@ -93,6 +94,7 @@
 			expandTR.className="expandrow";
 			var expandTD=document.createElement("td");
 			expandTD.colSpan=9;
+			$(expandTD).css("padding","0px");
 			$(expandTR).append(expandTD);
 			var div=document.createElement("div");
 			div.className="exploading";

@@ -37,3 +37,6 @@
 	width: 120px;
 	text-align: right;
 }
+.grid tfoot tr td {
+	padding:10px 15px;
+}

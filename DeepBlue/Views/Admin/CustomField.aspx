@@ -59,6 +59,8 @@
 	, OnRowClick = "customField.onRowClick"
 	, OnInit = "customField.onInit"
 	, OnTemplate = "customField.onTemplate"
+	, TableName = "CustomField"
+	, ExportExcel  = true
 })%>
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:customField.add(this);" })) {%>${name}<%}%>

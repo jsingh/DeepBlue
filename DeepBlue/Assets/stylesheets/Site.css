@@ -1023,7 +1023,7 @@ input.ui-autocomplete-loading[type="text"] {
 	float: left;
 	height: 40px;
 	overflow: hidden;
-	padding-bottom: 3px;
+	padding-bottom: 4px;
 	padding-left: 60px;
 	width: 100%;
 }

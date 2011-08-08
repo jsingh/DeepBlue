@@ -1,12 +1,13 @@
 ﻿var deepBlue={
 	indexPage: false
+	,topMenuResize: false
 	,init: function () {
 		$(document).ready(function () {
 			var cnt=$("#content");
 			var menu=$("#menu");
 			var submenu=$("#submenu");
 			var topheader=$("#topheader");
-			var mnuresize=$.cookie("mnu-resize");
+			var mnuresize=deepBlue.getCookie("mnu-resize");
 			topheader.click(function () { deepBlue.hideSubMenu(); });
 			cnt.click(function () { deepBlue.hideSubMenu(); });
 			submenu.hide();
@@ -17,7 +18,7 @@
 				menu.addClass("minimize");
 				$("#navminimize").addClass("downarrow");
 			}
-			deepBlue.setCookie("mnu-resize",mnuresize);
+			deepBlue.setCookie("mnu-resize",menu.hasClass("minimize"));
 			$(".topmenu").click(function () {
 				submenu.show();
 				deepBlue.resize();
@@ -43,7 +44,8 @@
 		});
 	}
 	,hideSubMenu: function () {
-		$("#submenu").hide();deepBlue.resize();
+		$("#submenu").hide();
+		deepBlue.resize();
 	}
 	,minimize: function (that) {
 		var menu=$("#menu");
@@ -58,7 +60,23 @@
 		deepBlue.resize();
 	}
 	,setCookie: function (name,value) {
-		$.cookie(name,value,{ expires: 7 });
+		var expiredays=365;
+		var expireDate=new Date();
+		expireDate.setTime(expireDate.getTime()+(expiredays*24*3600*1000));
+		document.cookie=name+"="+escape(value)+
+		((expiredays==null)?"":"; expires="+expireDate.toGMTString());
+	}
+	,getCookie: function (name) {
+		if(document.cookie.length>0) {
+			begin=document.cookie.indexOf(name+"=");
+			if(begin!= -1) {
+				begin+=name.length+1;
+				end=document.cookie.indexOf(";",begin);
+				if(end== -1) end=document.cookie.length;
+				return unescape(document.cookie.substring(begin,end));
+			}
+		}
+		return null;
 	}
 	,resize: function () {
 		var menu=$("#menu");

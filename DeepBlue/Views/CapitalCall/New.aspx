@@ -25,9 +25,11 @@
 	<div class="cc-box">
 		<div class="header">
 			<div class="tabbg">
-				<%using (Html.Div(new { @id = "NewCCTab", @class = "select", @onclick = "javascript:capitalCall.selectTab('C',this);" })) {%>&nbsp;
+				<%using (Html.Tab(new { @id = "NewCCTab", @class = "section-tab-sel", @onclick = "javascript:capitalCall.selectTab('C',this);" })) {%>New
+				Capital Call
 				<%}%>
-				<%using (Html.Div(new { @id = "ManCCTab", @onclick = "javascript:capitalCall.selectTab('M',this);" })) {%>&nbsp;
+				<%using (Html.Tab(new { @id = "ManCCTab", @class = "section-tab", @onclick = "javascript:capitalCall.selectTab('M',this);" })) {%>Manual
+				Capital Call
 				<%}%>
 				<%using (Html.Div(new { @id = "SerCCTab" })) {%>&nbsp;
 				<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...", new { @id = "SpnLoading", @style = "display:none" })%>&nbsp;<%: Html.TextBox("Fund", "SEARCH FUND", new { @class = "wm", @style = "width:200px" })%>
@@ -69,19 +71,19 @@
 						<%: Html.LabelFor(model => model.CapitalAmountCalled)%>
 					</div>
 					<div class="editor-field" style="width: auto">
-						<%: Html.TextBoxFor(model => model.CapitalAmountCalled, new { @onkeypress = "return jHelper.isCurrency(event);", @style = "width:110px", @onkeyup = "javascript:capitalCall.calcExistingInvestmentAmount();" })%>
+						<%: Html.TextBox("CapitalAmountCalled","", new { @onkeypress = "return jHelper.isCurrency(event);", @style = "width:110px", @onkeyup = "javascript:capitalCall.calcExistingInvestmentAmount();" })%>
 					</div>
 					<div class="editor-label" style="clear: right; margin-left: 142px;">
 						<%: Html.LabelFor(model => model.CapitalCallDate) %>
 					</div>
 					<div class="editor-field" style="width: auto">
-						<%: Html.TextBoxFor(model => model.CapitalCallDate, new { @style = "width:110px" })%>
+						<%: Html.TextBox("CapitalCallDate","", new { @style = "width:110px" })%>
 					</div>
 					<div class="editor-label" style="clear: right; width: 148px;">
 						<%: Html.LabelFor(model => model.CapitalCallDueDate) %>
 					</div>
 					<div class="editor-field">
-						<%: Html.TextBoxFor(model => model.CapitalCallDueDate, new { @style = "width:110px" })%>
+						<%: Html.TextBox("CapitalCallDueDate","", new { @style = "width:110px" })%>
 					</div>
 					<div class="editor-label" style="width: auto">
 						<%: Html.CheckBox("AddManagementFees",false,new { @style="width:auto", @onclick="javascript:capitalCall.selectMFee(this);" })%>&nbsp;Add
@@ -186,13 +188,13 @@
 								<%: Html.LabelFor(model => model.CapitalCallDate) %>
 							</td>
 							<td>
-								<%: Html.TextBoxFor(model => model.CapitalCallDate, new { @id= "ManCapitalCallDate", @style = "width:110px" })%>
+								<%: Html.TextBox("CapitalCallDate","", new { @id= "ManCapitalCallDate", @style = "width:110px" })%>
 							</td>
 							<td>
 								<%: Html.LabelFor(model => model.CapitalCallDueDate) %>
 							</td>
 							<td>
-								<%: Html.TextBoxFor(model => model.CapitalCallDueDate, new { @id = "ManCapitalCallDueDate", @style = "width:110px" })%>
+								<%: Html.TextBox("CapitalCallDueDate","", new { @id = "ManCapitalCallDueDate", @style = "width:110px" })%>
 							</td>
 						</tr>
 						<tr>
@@ -312,4 +314,10 @@
 	<script type="text/javascript">
 		capitalCall.init();
 	</script>
+	<%if (Model.FundId > 0) {%>
+	<script type="text/javascript">$(document).ready(function(){
+		capitalCall.selectFund(<%=Model.FundId%>);
+		});
+	</script>
+	<%}%>
 </asp:Content>

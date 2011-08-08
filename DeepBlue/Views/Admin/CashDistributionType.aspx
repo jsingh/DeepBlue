@@ -50,6 +50,8 @@
 	, OnRowClick = "cashDistributionType.onRowClick"
 	, OnInit = "cashDistributionType.onInit"
 	, OnTemplate = "cashDistributionType.onTemplate"
+	, TableName = "CashDistributionType"
+	, ExportExcel = true
 })%>
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:cashDistributionType.add(this);" })) {%>${name}<%}%>

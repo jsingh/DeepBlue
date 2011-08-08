@@ -22,11 +22,13 @@ namespace DeepBlue.Models.CapitalCall {
 
 		[DisplayName("Capital Call Date-")]
 		[Required(ErrorMessage = "Capital Call Date is required")]
+		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
 		[DateRange()]
 		public DateTime CapitalCallDate { get; set; }
 
 		[DisplayName("Capital Call Due Date-")]
 		[Required(ErrorMessage = "Capital Call Due Date is required")]
+		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
 		[DateRange()]
 		public DateTime CapitalCallDueDate { get; set; }
 

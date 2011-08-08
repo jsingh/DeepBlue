@@ -10,7 +10,6 @@
 	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
-	<%=Html.JavascriptInclueTag("jquery.layoutengine.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("CCSummaryReport.js")%>
 	<%=Html.JavascriptInclueTag("jquery.PrintArea.js")%>
@@ -30,11 +29,13 @@
 		<div class="editor-label" style="width: auto">
 			<% Html.EnableClientValidation(); %>
 			<%using (Html.BeginForm("", "", FormMethod.Get, new { @id = "CapitalCallSummary", @onsubmit = "return ccsummaryReport.onSubmit('CapitalCallSummary');" })) {%>
-			<div style="float: left">
+			<div style="float: left;">
 				<%: Html.LabelFor(model => model.FundId)%>
-				<%: Html.TextBox("FundName", "", new { @id = "FundName" })%>
+				<%: Html.TextBox("FundName", "", new { @id = "FundName", @style = "width:200px" })%>
+			</div>
+			<div style="float: left; margin-left: 20px;">
 				<%: Html.LabelFor(model => model.CapitalCallId)%>
-				<%: Html.DropDownListFor(model => model.CapitalCallId, Model.CapitalCalls, new { @style = "width:150px" })%>
+				<%: Html.DropDownListFor(model => model.CapitalCallId, Model.CapitalCalls, new { @style = "width:200px" })%>
 			</div>
 			<div style="float: left; margin-left: 10px;">
 				<%: Html.ImageButton("submit.png", new { @class="default-button" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
@@ -63,42 +64,40 @@
 		<div class='title'>Capital Call Summary</div><div class='fundname detail'>${FundName}</div>
 		<div class='detail'>Capital Call Due ${CapitalCallDueDate} - ${TotalCapitalCall}</div>
 		</div>
-		<div id='RepContent' class='grid'>
-			<table id='ccsummaryReport_tbl' cellspacing=0 cellpadding=0 border=0>
+		<br/>
+		<div id='RepContent'><div class="gbox">
+			<table id='ccsummaryReport_tbl' cellspacing=0 cellpadding=0 border=0 class='grid'>
 				<thead>
 				<tr>
-				<th style='text-align:left;width:30%;'>Investor</th>
-				<th>Commitment</th>
-				<th>Investments</th>
-				<th>Management Fees</th>
-				<th>Expenses</th>
-				<th>Total</th>
+				<th class="lalign" style='width:30%;'>Investor</th>
+				<th class="ralign">Commitment</th>
+				<th class="ralign">Investments</th>
+				<th class="ralign">Management Fees</th>
+				<th class="ralign">Expenses</th>
+				<th class="ralign">Total</th>
 				</tr>
 				</thead>
 				<tbody>
-				{{each Items}}
-				<tr>
+				{{each(i,item) Items}}
+				<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
 					<td>${InvestorName}</td>
-					<td style='text-align:right'>${Commitment}</td>
-					<td style='text-align:right'>${Investments}</td>
-					<td style='text-align:right' nowrap>${ManagementFees}</td>
-					<td style='text-align:right'>${Expenses}</td>
-					<td style='text-align:right'>${Total}</td>
+					<td class="ralign">${formatCurrency(Commitment)}</td>
+					<td class="ralign">${formatCurrency(Investments)}</td>
+					<td class="ralign" nowrap>${formatCurrency(ManagementFees)}</td>
+					<td class="ralign">${formatCurrency(Expenses)}</td>
+					<td class="ralign">${formatCurrency(Total)}</td>
 				</tr>
 				{{/each}}
-				<tr>
-					<td colspan=6 style='vertical-align:top'>
-					<div class='foot-name'>Total CapitalCall:</div><div class='foot-value'>${TotalCapitalCall}</div>
-					<div class='foot-name'>Total Mgt Fees:</div><div class='foot-value'>${TotalManagementFees}</div>
-					<div class='foot-name'>Total Expenses:</div><div class='foot-value'>${TotalExpenses}</div>
-					<div style='height:10px;clear:both;'>&nbsp;</div>
-					<div class='foot-name'>Amount for Investments:</div><div class='foot-value'>${AmountForInv}</div>
-					<div class='foot-name'>New Inv.:</div><div class='foot-value'>${NewInv}</div>
-					<div class='foot-name'>Existing Inv.:</div><div class='foot-value'>${ExistingInv}</div>
-					</td>
-				</tr>
 				</tbody>
-			</table>
+			</table></div>
 		</div>
+		<br/>
+		<div class='foot-name'>Total CapitalCall:</div><div class='foot-value'>${TotalCapitalCall}</div>
+		<div class='foot-name'>Total Mgt Fees:</div><div class='foot-value'>${TotalManagementFees}</div>
+		<div class='foot-name'>Total Expenses:</div><div class='foot-value'>${TotalExpenses}</div>
+		<div style='height:10px;clear:both;'>&nbsp;</div>
+		<div class='foot-name'>Amount for Investments:</div><div class='foot-value'>${AmountForInv}</div>
+		<div class='foot-name'>New Inv.:</div><div class='foot-value'>${NewInv}</div>
+		<div class='foot-name'>Existing Inv.:</div><div class='foot-value'>${ExistingInv}</div>
 	</script>
 </asp:Content>

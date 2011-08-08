@@ -47,6 +47,8 @@
 	, OnRowClick = "underlyingFundType.onRowClick"
 	, OnInit = "underlyingFundType.onInit"
 	, OnTemplate = "underlyingFundType.onTemplate"
+	, TableName = "UnderlyingFundType"
+	, ExportExcel = true
 })%>
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:underlyingFundType.add(this);" })) {%>${name}<%}%>

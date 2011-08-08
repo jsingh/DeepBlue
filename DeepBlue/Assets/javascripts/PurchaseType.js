@@ -1,12 +1,15 @@
 ﻿var purchaseType={
 	add: function (that) {
 		var flexigrid=$(that).parents(".flexigrid:first");
-		var tbody=$(".bDiv table tbody",flexigrid);
-		var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,"",false]}] };
-		$("#GridTemplate").tmpl(data).prependTo(tbody);
-		var tr=$("tr:first",tbody);
-		this.editRow(tr);
-		$("#Add",tr).show();
+		var row=$("#Row0",flexigrid).get(0);
+		if(!row) {
+			var tbody=$(".bDiv table tbody",flexigrid);
+			var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,"",false]}] };
+			$("#GridTemplate").tmpl(data).prependTo(tbody);
+			var tr=$("tr:first",tbody);
+			this.editRow(tr);
+			$("#Add",tr).show();
+		}
 	}
 	,edit: function (img) {
 		var tr=$(img).parents("tr:first");
@@ -31,6 +34,7 @@
 					alert(data);
 				} else {
 					tr.remove();
+					jHelper.applyFlexGridClass($(".bDiv:first"));
 				}
 			});
 		}
@@ -51,6 +55,7 @@
 					$("#GridTemplate").tmpl(loadData).insertAfter(tr);
 					$(tr).remove();
 					var newTR=$("#Row"+arr[1]);
+					jHelper.applyFlexGridClass($(".bDiv:first"));
 					jHelper.checkValAttr(newTR);
 				});
 			}
@@ -63,9 +68,9 @@
 	,onInit: function (g) {
 		var data={ name: "Add Purchase Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-//		$(window).resize(function () {
-//			purchaseType.resizeGV(g);
-//		});
+		//		$(window).resize(function () {
+		//			purchaseType.resizeGV(g);
+		//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

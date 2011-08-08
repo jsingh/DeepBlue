@@ -47,6 +47,8 @@
 	, OnRowClick = "shareClassType.onRowClick"
 	, OnInit = "shareClassType.onInit"
 	, OnTemplate = "shareClassType.onTemplate"
+	, TableName = "ShareClassType"
+	, ExportExcel = true
 })%>
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:shareClassType.add(this);" })) {%>${name}<%}%>

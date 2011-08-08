@@ -17,6 +17,7 @@
 			$("#FundId").val(data.FundId);
 
 			$("#TitleFundName").html(data.FundName);
+			$("#Fund").val(data.FundName);
 			$("#SpnDAmount").html(jHelper.dollarAmount(data.TotalDistribution));
 			$("#SpnProfitAmount").html(jHelper.dollarAmount(data.TotalProfit));
 			$("#SpnDistributionNumber").html(data.DistributionNumber);
@@ -46,10 +47,10 @@
 	,selectTab: function (type,lnk) {
 		var CD=$("#NewCapitalDistribution");
 		var MCD=$("#ManualCapitalDistribution");
-		$("#NewCDTab").removeClass("select");
-		$("#ManCDTab").removeClass("select");
+		$("#NewCDTab").removeClass("section-tab-sel");
+		$("#ManCDTab").removeClass("section-tab-sel");
 		CD.hide();MCD.hide();
-		$(lnk).addClass("select");
+		$(lnk).addClass("section-tab-sel");
 		switch(type) {
 			case "C": CD.show();break;
 			case "M": MCD.show();break;

@@ -8,10 +8,9 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(AddressMD))]
 	public partial class Address {
-
-		public class AddressMD : CreatedByFields {
-
+		public class AddressMD {
 			#region Primitive Properties
+
 			[Required(ErrorMessage = "EntityID is required")]
 			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
 			public global::System.Int32 EntityID {
@@ -19,13 +18,14 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage = "Address Type is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Address Type is required")]
+			[Required(ErrorMessage = "AddressTypeID is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "AddressTypeID is required")]
 			public global::System.Int32 AddressTypeID {
 				get;
 				set;
 			}
 
+			[Required(ErrorMessage = "Address1 is required")]
 			[StringLength(40, ErrorMessage = "Address1 must be under 40 characters.")]
 			public global::System.String Address1 {
 				get;
@@ -44,6 +44,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
+			[Required(ErrorMessage = "City is required")]
 			[StringLength(30, ErrorMessage = "City must be under 30 characters.")]
 			public global::System.String City {
 				get;
@@ -55,18 +56,14 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-			/// <summary>
-			/// DB wise it is not required. but currently all the entities will
-			/// be USA based, so we will be mandating this
-			/// </summary>
-			[Required(ErrorMessage = "State is required")]
+
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "State is required")]
 			public Nullable<global::System.Int32> State {
 				get;
 				set;
 			}
 
-			[StringLength(10, ErrorMessage = "Postal Code must be under 10 characters.")]
+			[StringLength(10, ErrorMessage = "Zip must be under 10 characters.")]
 			public global::System.String PostalCode {
 				get;
 				set;
@@ -84,7 +81,47 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
+
+			[Required(ErrorMessage = "Listed is required")]
+			public global::System.Boolean Listed {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "IsPreferred is required")]
+			public global::System.Boolean IsPreferred {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "CreatedDate is required")]
+			[DateRange(ErrorMessage = "CreatedDate is required")]
+			public global::System.DateTime CreatedDate {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
+			public global::System.Int32 CreatedBy {
+				get;
+				set;
+			}
+
+			[DateRange(ErrorMessage = "LastUpdatedDate is required")]
+			public Nullable<global::System.DateTime> LastUpdatedDate {
+				get;
+				set;
+			}
+
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "LastUpdatedBy is required")]
+			public Nullable<global::System.Int32> LastUpdatedBy {
+				get;
+				set;
+			}
+
 			#endregion
 		}
+
 	}
 }

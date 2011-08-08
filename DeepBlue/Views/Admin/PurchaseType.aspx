@@ -47,6 +47,8 @@
 	, OnRowClick = "purchaseType.onRowClick"
 	, OnInit = "purchaseType.onInit"
 	, OnTemplate = "purchaseType.onTemplate"
+	, ExportExcel = true
+	, TableName = "PurchaseType"
 })%>
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:purchaseType.add(this);" })) {%>${name}<%}%>

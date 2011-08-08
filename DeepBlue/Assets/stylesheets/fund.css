@@ -4,7 +4,7 @@
 	width: 100%;
 }
 .fund-box .header {
-	margin: 5px 0 0;
+	margin: 25px 0 0;
 }
 .fund-main {
 	width: 100%;
@@ -100,7 +100,7 @@
 }
 #FundDetail {
 	margin: 0 auto;
-	padding: 20px 0 0;
+	padding: 20px 0px;
 	width: 90%;
 }
 /* expand header */

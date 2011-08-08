@@ -200,7 +200,7 @@ div.pGroup {
 	background: url(../images/last.png) no-repeat center;
 }
 .flexigrid .pReload {
-	background: url(../images/refresh.gif) no-repeat center;
+	background: url(../images/refresh.png) no-repeat center;
 }
 .flexigrid .pReload.loading {
 	background: url(../images/load.gif) no-repeat center;
@@ -246,9 +246,9 @@ div.pGroup {
 	padding-bottom: 10px;
 }
 .flexigrid .pDiv .pGLoading {
-	background: url("../images/refresh.gif") no-repeat scroll left center transparent;
+	background: url("../images/refresh.png") no-repeat scroll left center transparent;
 	float: left;
-	padding: 8px 0 0 23px;
+	    padding: 5px 0 0 20px;
 	display: none;
 }
 .flexigrid .ftlDiv, .flexigrid .ftcDiv, .flexigrid .ftrDiv, .flexigrid .fblDiv, .flexigrid .fbcDiv, .flexigrid .fbrDiv {

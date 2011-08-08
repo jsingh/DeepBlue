@@ -32,9 +32,11 @@
 			<%using (Html.BeginForm("", "", FormMethod.Get, new { @id = "DistributionSummary", @onsubmit = "return report.onSubmit('DistributionSummary');" })) {%>
 			<div style="float: left">
 				<%: Html.LabelFor(model => model.FundId)%>
-				<%: Html.TextBox("FundName", "", new { @id = "FundName" })%>
+				<%: Html.TextBox("FundName", "", new { @id = "FundName", @style = "width:200px" })%>
+			</div>
+			<div style="float: left; margin-left: 20px;">
 				<%: Html.LabelFor(model => model.CapitalDistributionId)%>
-				<%: Html.DropDownListFor(model => model.CapitalDistributionId, Model.CapitalDistributions, new { @style = "width:150px" })%>
+				<%: Html.DropDownListFor(model => model.CapitalDistributionId, Model.CapitalDistributions, new { @style = "width:200px" })%>
 			</div>
 			<div style="float: left; margin-left: 10px;">
 				<%: Html.ImageButton("submit.png", new { @class="default-button" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
@@ -62,29 +64,36 @@
 		<div id='RepTop'>
 		<div class='title'>Cash Distribution Summary</div><div class='fundname detail'>${FundName}</div>
 		<div class='detail'>Distribution Of ${DistributionDate} - ${TotalDistributionAmount}</div>
-		</div>
-		<div id='RepContent' class='grid'>
-			<table id='report_tbl' cellspacing=0 cellpadding=0 border=0>
+		</div><br/>
+		<div id='RepContent'>
+			<div class="gbox">
+			<table id='report_tbl' cellspacing=0 cellpadding=0 border=0 class='grid'>
 				<thead>
-				<tr>
-				<th style='text-align:left;width:40%;'>Investor</th>
-				<th style='text-align:left;width:20%'>Designation</th>
-				<th>Commitment</th>
-				<th>Distribution Amount</th>
-				</tr></thead>
+					<tr>
+						<th class="lalign" style='width:40%;'>Investor</th>
+						<th class="lalign" style='width:20%'>Designation</th>
+						<th class="ralign">Commitment</th>
+						<th class="ralign">Distribution Amount</th>
+					</tr>
+				</thead>
 				<tbody>
-				{{each Items}}
-				<tr>
-				<td>${InvestorName}</td><td>${Designation}</td><td style='text-align:right'>${Commitment}</td><td style='text-align:right'>${DistributionAmount}</td>
-				</tr>
+				{{each(i,item) Items}}
+					<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
+						<td>${InvestorName}</td>
+						<td>${Designation}</td>
+						<td style='text-align:right'>${formatCurrency(Commitment)}</td>
+						<td style='text-align:right'>${formatCurrency(DistributionAmount)}</td>
+					</tr>
 				{{/each}}
+				</tbody>
+				<tfoot>
 				<tr>
 					<td colspan=2 style='vertical-align:top'><b>Total Distribution:${TotalDistributionAmount}</b></td>
 					<td style='text-align:right;' nowrap><b>With Carry Amount:<br/>And Repayment of Mgt Fees:</b></td>
 					<td style='text-align:right;' nowrap><b>${WithCarryAmount}<br/>${RepayManFees}</b></td>
 				</tr>
-				</tbody>
-			</table>
+				</tfoot>
+			</table></div>
 		</div>
 	</script>
 </asp:Content>

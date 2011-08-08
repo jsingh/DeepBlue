@@ -51,28 +51,28 @@
 						<th style="text-align:left;width:12%;">
 							Capital Distribution #
 						</th>
-						<th style="text-align: right">
+						<th style="text-align: right;width:15%;">
 							Capital Distribution Amount
 						</th>
-						<th style="text-align: right">
+						<th style="text-align: right;width:14%;">
 							Return Management Fees
 						</th>
-						<th style="text-align: right">
+						<th style="text-align: right;width:12.5%;">
 							Return Fund Expenses
 						</th>
-						<th style=" text-align: right">
+						<th style=" text-align: right;width:13%;">
 							Capital Distribution Date
 						</th>
-						<th style="text-align: right">
+						<th style="text-align: right;width:15%;">
 							Capital Distribution Due Date
 						</th>
-						<th style="text-align: right">
+						<th style="text-align: right;width:6.5%;">
 							Profits (%)
 						</th>
-						<th style="text-align: right">
+						<th style="text-align: right;width:9.5%;">
 							Profits Returned
 						</th>
-						<th>
+						<th style="width:1%">
 						</th>
 					</tr>
 				</thead>

@@ -495,7 +495,6 @@
     <Compile Include="Models\Entity\Validation\Partner.cs" />
     <Compile Include="Models\Entity\Validation\PurchaseType.cs" />
     <Compile Include="Models\Fund\CreateModel.cs" />
-    <Compile Include="Models\Fund\EditModel.cs" />
     <Compile Include="Models\Fund\FundDetail.cs" />
     <Compile Include="Models\Fund\FundListModel.cs" />
     <Compile Include="Models\Fund\FundRateScheduleDetail.cs" />
@@ -856,6 +855,7 @@
     <Content Include="Assets\stylesheets\adminbackend.css" />
     <Content Include="Assets\stylesheets\adminflexigrid.css" />
     <Content Include="Assets\stylesheets\capitalcall.css" />
+    <Content Include="Assets\stylesheets\capitalcalldetail.css" />
     <Content Include="Assets\stylesheets\customfield.css" />
     <Content Include="Assets\stylesheets\deal.css" />
     <Content Include="Assets\stylesheets\dealactivity.css" />
@@ -1007,6 +1007,7 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\DeepBluePopup.Master" />

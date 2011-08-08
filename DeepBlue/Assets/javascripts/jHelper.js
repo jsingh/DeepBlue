@@ -225,6 +225,10 @@
 		$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
 		$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");
 	}
+	,applyFlexGridClass: function (target) {
+		$("tr:even",target).removeClass("erow");
+		$("tr:odd",target).removeClass("erow").addClass("erow");
+	}
 }
 $.extend(window,{
 	formatDate: function (dt) { try { if(dt==null) { return ""; } var d=jHelper.formatDate(jHelper.parseJSONDate(dt));if(d=="01/01/1"||d=="01/01/1900") { return ""; } else { return d; } } catch(e) { return ""; } }

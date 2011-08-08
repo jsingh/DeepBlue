@@ -10,6 +10,7 @@ using Moq;
 using MbUnit.Framework;
 using DeepBlue.Controllers.Admin;
 using DeepBlue.Controllers.CapitalCall;
+using DeepBlue.Controllers.Fund;
 
 namespace DeepBlue.Tests.Controllers.Deal {
 	public class DealClosingBase : Base {
@@ -22,6 +23,8 @@ namespace DeepBlue.Tests.Controllers.Deal {
 
 		public Mock<ICapitalCallRepository> MockCapitalCallRepository { get; set; }
 
+		public Mock<IFundRepository> MockFundRepository { get; set; }
+
 		[SetUp]
 		public override void Setup() {
 			base.Setup();
@@ -33,8 +36,10 @@ namespace DeepBlue.Tests.Controllers.Deal {
 
 			MockCapitalCallRepository = new Mock<ICapitalCallRepository>();
 
+			MockFundRepository = new Mock<IFundRepository>();
+
 			// Spin up the controller with the mock http context, and the mock repository
-			DefaultController = new DealController(MockDealRepository.Object, MockAdminRepository.Object, MockCapitalCallRepository.Object);
+			DefaultController = new DealController(MockDealRepository.Object, MockAdminRepository.Object, MockCapitalCallRepository.Object, MockFundRepository.Object);
 			DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
 		}
 

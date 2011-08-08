@@ -27,7 +27,7 @@
 	<td class="ralign">
 		<%: Html.TextBox("${Index}_TaxCostBase", "", new { @style="width:100px", @onkeypress = "return jHelper.isCurrency(event);" })%>
 	</td>
-	<td class="ralign">
+	<td class="lalign">
 		<%: Html.TextBox("${Index}_TaxCostDate", "", new { @style="width:100px", @id = "${Index}_TaxCostDate", @class = "datefield" })%>
 	</td>
 	<td style="text-align: right;display:none;" class="ralign">

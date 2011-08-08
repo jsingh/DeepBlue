@@ -56,6 +56,17 @@ namespace DeepBlue.Controllers.Fund {
 			}
 		}
 
+		public FundDetail FindLastFundDetail() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fund in context.Funds
+						orderby fund.FundID descending
+						select new FundDetail {
+							FundId = fund.FundID,
+							FundName = fund.FundName
+						}).FirstOrDefault();
+			}
+		}
+
 		public List<AutoCompleteList> FindDealFunds(int underlyingFundId, string fundName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.Funds
@@ -119,11 +130,11 @@ namespace DeepBlue.Controllers.Fund {
 			}
 		}
 
-		public FundDetail FindFundDetail(int fundId) {
+		public CreateModel FindFundDetail(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from fund in context.Funds
 						where fund.FundID == fundId
-						select new FundDetail {
+						select new CreateModel {
 							FundName = fund.FundName,
 							TaxId = fund.TaxID,
 							InceptionDate = fund.InceptionDate,

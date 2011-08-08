@@ -8,41 +8,71 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(CapitalDistributionMD))]
 	public partial class CapitalDistribution {
-		public class CapitalDistributionMD : CreatedByFields {
+		public class CapitalDistributionMD  {
 			#region Primitive Properties
-			[Required(ErrorMessage = "Fund is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
-			public global::System.Int32 FundID {
-				get;
-				set;
-			}
 
-			[Required(ErrorMessage = "Capital Distribution Date is required")]
-			[DateRange(ErrorMessage = "Capital Distribution Date is required")]
+			[Required(ErrorMessage = "CapitalDistributionDate is required")]
+			[DateRange(ErrorMessage = "CapitalDistributionDate is required")]
 			public global::System.DateTime CapitalDistributionDate {
 				get;
 				set;
 			}
 
-			[Required(ErrorMessage = "Capital Distribution Due Date is required")]
-			[DateRange(ErrorMessage = "Capital Distribution Due Date is required")]
+			[Required(ErrorMessage = "CapitalDistributionDueDate is required")]
+			[DateRange(ErrorMessage = "CapitalDistributionDueDate is required")]
 			public global::System.DateTime CapitalDistributionDueDate {
 				get;
 				set;
 			}
 
+			[Required(ErrorMessage = "FundID is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "FundID is required")]
+			public global::System.Int32 FundID {
+				get;
+				set;
+			}
 
-			[Required(ErrorMessage = "Distribution Amount is required")]
-			[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "Distribution Amount is required")]
+			[Required(ErrorMessage = "DistributionAmount is required")]
+			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "DistributionAmount is required")]
 			public global::System.Decimal DistributionAmount {
 				get;
 				set;
 			}
 
-
-			[Required(ErrorMessage = "Distribution Number is required")]
-			[StringLength(12, ErrorMessage = "Distribution Number must be under 12 characters.")]
+			[StringLength(50, ErrorMessage = "DistributionNumber must be under 50 characters.")]
 			public global::System.String DistributionNumber {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "IsManual is required")]
+			public global::System.Boolean IsManual {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "CreatedDate is required")]
+			[DateRange(ErrorMessage = "CreatedDate is required")]
+			public global::System.DateTime CreatedDate {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
+			public global::System.Int32 CreatedBy {
+				get;
+				set;
+			}
+
+			[DateRange(ErrorMessage = "LastUpdatedDate is required")]
+			public Nullable<global::System.DateTime> LastUpdatedDate {
+				get;
+				set;
+			}
+
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "LastUpdatedBy is required")]
+			public Nullable<global::System.Int32> LastUpdatedBy {
 				get;
 				set;
 			}

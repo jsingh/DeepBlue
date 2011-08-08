@@ -50,6 +50,8 @@
 	, OnRowClick = "reportingFrequency.onRowClick"
 	, OnInit = "reportingFrequency.onInit"
 	, OnTemplate = "reportingFrequency.onTemplate"
+	, TableName = "ReportingFrequency"
+	, ExportExcel = true
 })%>
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:reportingFrequency.add(this);" })) {%>${name}<%}%>

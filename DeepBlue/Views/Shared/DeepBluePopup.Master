@@ -19,7 +19,7 @@
 	<%= Html.StylesheetLinkTag("popup.css")%>
 	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
 </head>
-<body>
+<body style="background-image:none">
 	<div>
 		<asp:ContentPlaceHolder ID="MainContent" runat="server">
 		</asp:ContentPlaceHolder>

@@ -169,17 +169,7 @@ namespace DeepBlue.Controllers.Deal {
 				return (lastDeal != null ? lastDeal.DealId : 0);
 			}
 		}
-
-		public DealFundDetail FindLastFundDetail() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-					return (from fund in context.Funds
-									  orderby fund.FundID descending
-									  select new DealFundDetail {
-										  FundId = fund.FundID,
-										  FundName = fund.FundName
-									  }).FirstOrDefault();
-				}
-		}
+		
 		#endregion
 
 		#region DealExpense

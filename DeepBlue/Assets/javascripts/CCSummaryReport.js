@@ -1,60 +1,5 @@
 ﻿var ccsummaryReport={
 	init: function () {
-		$(document).ready(function () {
-			var layoutSettings=
-    {
-    	Name: "Main",
-    	Dock: $.layoutEngine.DOCK.NONE,
-    	EleID: "content",
-    	Children: [
-    				{
-    					Name: "Main",
-    					Dock: $.layoutEngine.DOCK.FILL,
-    					EleID: "ReportMain",
-    					Children: [
-									{
-										Name: "Top",
-										Dock: $.layoutEngine.DOCK.TOP,
-										EleID: "ReportHeader",
-										Margin: 0,
-										Height: 40
-									}
-									,{
-										Name: "Fill",
-										Dock: $.layoutEngine.DOCK.FILL,
-										EleID: "ReportDetail",Margin:0,
-										MarginLeft: 200,
-										MarginRight: 200
-									}
-								]
-    				}
-			]
-    };
-			//$.layoutEngine(layoutSettings);
-		}); 
-	}
-	,ccsummaryReportReinit: function () {
-		 var layoutSettings=
-    {
-    	Name: "Main",
-    	Dock: $.layoutEngine.DOCK.NONE,
-    	EleID: "ReportDetail",
-    	Margin: 0,
-    	Children: [
-                        {
-                        	Name: "Top",
-                        	Dock: $.layoutEngine.DOCK.TOP,
-                        	EleID: "RepTop",
-                        	Height: 100
-                        }
-                        ,{
-                        	Name: "Fill",
-                        	Dock: $.layoutEngine.DOCK.FILL,
-                        	EleID: "RepContent"
-                        }
-                    ]
-    };
-		//$.layoutEngine(layoutSettings);
 	}
 	,selectFund: function (id) {
 		$("#FundId").val(id);
@@ -106,29 +51,11 @@
 		ccsummaryReportDetail.show();
 		$.getJSON(url,function (data) {
 			ccsummaryReportDetail.html("");
-			try {
-				$("#ccsummaryReportTemplate").tmpl(data).appendTo("#ReportDetail");
-				$("#SpnLoading",frm).hide();
-				var ccsummaryReport_tbl=$("#ccsummaryReport_tbl",ccsummaryReportDetail);
-				$("tbody tr:not(:last)",ccsummaryReport_tbl).each(function () {
-					var commitment=$("td:eq(1)",this);
-					var investment=$("td:eq(2)",this);
-					var managementFees=$("td:eq(3)",this);
-					var expenses=$("td:eq(4)",this);
-					var total=$("td:eq(5)",this);
-					commitment.html(jHelper.dollarAmount(commitment.html()));
-					investment.html(jHelper.dollarAmount(investment.html()));
-					managementFees.html(jHelper.dollarAmount(managementFees.html()));
-					expenses.html(jHelper.dollarAmount(expenses.html()));
-					total.html(jHelper.dollarAmount(total.html()));
-				});
-			} catch(e) {
-				alert(e);
-			}
-			ccsummaryReport.ccsummaryReportReinit();
+			$("#ccsummaryReportTemplate").tmpl(data).appendTo("#ReportDetail");
+			$("#SpnLoading",frm).hide();
 		});
 	}
-	,print : function(){	
+	,print: function () {
 		$("#ReportDetail").printArea();
 	}
 }

@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Fund.FundDetail>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Fund.CreateModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <tr {{if rowIndex%2==0}}class="row"{{else}}class="arow"{{/if}}>
 <td>

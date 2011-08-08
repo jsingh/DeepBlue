@@ -10,14 +10,23 @@ namespace DeepBlue.Models.Entity {
 	public partial class ActivityType {
 		public class ActivityTypeMD {
 			#region Primitive Properties
+
 			[Required(ErrorMessage = "Name is required")]
 			[StringLength(100, ErrorMessage = "Name must be under 100 characters.")]
 			public global::System.String Name {
 				get;
 				set;
 			}
+
+			[Required(ErrorMessage = "Enabled is required")]
+			public global::System.Boolean Enabled {
+				get;
+				set;
+			}
+
 			#endregion
 		}
+
 
 		public ActivityType(IActivityTypeService activityTypeService)
 			: this() {

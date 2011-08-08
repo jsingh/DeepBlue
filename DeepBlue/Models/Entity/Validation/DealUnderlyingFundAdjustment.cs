@@ -11,23 +11,46 @@ namespace DeepBlue.Models.Entity {
 		public class DealUnderlyingFundAdjustmentMD : CreatedByFields {
 			#region Primitive Properties
 
-			[Required(ErrorMessage = "DealUnderlyingFundID is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "DealUnderlyingFundID is required")]
-			public global::System.Int32 DealUnderlyingFundID {
+			public Nullable<global::System.Int32> DealUnderlyingFundID {
 				get;
 				set;
 			}
 
-			[Required(ErrorMessage = "CommitmentAmount is required")]
-            [Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "CommitmentAmount is required")]
-			public global::System.Decimal CommitmentAmount {
+			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "CommitmentAmount is required")]
+			public Nullable<global::System.Decimal> CommitmentAmount {
 				get;
 				set;
 			}
 
-			[Required(ErrorMessage = "UnfundedAmount is required")]
 			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "UnfundedAmount is required")]
-			public global::System.Decimal UnfundedAmount {
+			public Nullable<global::System.Decimal> UnfundedAmount {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
+			public global::System.Int32 CreatedBy {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "CreatedDate is required")]
+			[DateRange(ErrorMessage = "CreatedDate is required")]
+			public global::System.DateTime CreatedDate {
+				get;
+				set;
+			}
+
+			[DateRange(ErrorMessage = "LastUpdatedDate is required")]
+			public Nullable<global::System.DateTime> LastUpdatedDate {
+				get;
+				set;
+			}
+
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "LastUpdatedBy is required")]
+			public Nullable<global::System.Int32> LastUpdatedBy {
 				get;
 				set;
 			}

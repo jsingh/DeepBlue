@@ -50,6 +50,8 @@
 	, OnRowClick = "investorType.onRowClick"
 	, OnInit = "investorType.onInit"
 	, OnTemplate = "investorType.onTemplate"
+	, TableName = "InvestorType"
+	, ExportExcel = true
 })%>
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:investorType.add(this);" })) {%>${name}<%}%>

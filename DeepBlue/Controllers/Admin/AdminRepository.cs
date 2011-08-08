@@ -7,6 +7,7 @@ using DeepBlue.Helpers;
 using System.Web.DynamicData;
 using System.Reflection;
 using System.Linq.Expressions;
+using DeepBlue.Models.Deal;
 
 namespace DeepBlue.Controllers.Admin {
 	public class AdminRepository : IAdminRepository {
@@ -1497,8 +1498,7 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 		#endregion
-
-
+		
 		#region DynamicData
 		public object FindTable(string tableName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -1781,5 +1781,6 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 		#endregion
+ 
 	}
 }

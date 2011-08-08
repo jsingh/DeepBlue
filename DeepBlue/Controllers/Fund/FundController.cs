@@ -32,7 +32,7 @@ namespace DeepBlue.Controllers.Fund {
 		public ActionResult Index() {
 			ViewData["MenuName"] = "Fund Tracker";
 			ViewData["PageName"] = "Fund Setup";
-			FundDetail model = FindFundDetail(0);
+			CreateModel model = FindFundDetail(0);
 			model.MultiplierTypes = SelectListFactory.GetMultiplierTypeList(FundRepository.GetAllMultiplierTypes());
 			model.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(AdminRepository.GetAllInvestorTypes());
 			return View(model);
@@ -79,12 +79,12 @@ namespace DeepBlue.Controllers.Fund {
 			return Json(FindFundDetail(id), JsonRequestBehavior.AllowGet);
 		}
 
-		private FundDetail FindFundDetail(int fundId) {
-			FundDetail fundDetail = FundRepository.FindFundDetail(fundId);
+		private CreateModel FindFundDetail(int fundId) {
+			CreateModel fundDetail = FundRepository.FindFundDetail(fundId);
 			int index = 0;
 			int total = 0;
 			if (fundDetail == null) {
-				fundDetail = new FundDetail();
+				fundDetail = new CreateModel();
 				fundDetail.FundRateSchedules = new List<FundRateScheduleDetail>();
 			}
 			List<FundRateScheduleDetail> fundRateSchdules = (List<FundRateScheduleDetail>)fundDetail.FundRateSchedules;
@@ -170,7 +170,7 @@ namespace DeepBlue.Controllers.Fund {
 		// GET: /Fund/Create
 		[HttpPost]
 		public ActionResult Create(FormCollection collection) {
-			FundDetail model = new FundDetail();
+			CreateModel model = new CreateModel();
 			this.TryUpdateModel(model);
 			IEnumerable<ErrorInfo> errorInfo;
 			ManagementFeeRateSchedule managementFeeRateSchedule = null;

@@ -53,6 +53,8 @@
 	, OnRowClick = "communicationType.onRowClick"
 	, OnInit = "communicationType.onInit"
 	, OnTemplate = "communicationType.onTemplate"
+	, TableName = "CommunicationType"
+	, ExportExcel = true
 })%>
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:communicationType.add(this);" })) {%>${name}<%}%>

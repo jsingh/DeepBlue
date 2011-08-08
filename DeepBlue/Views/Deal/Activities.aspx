@@ -696,10 +696,10 @@
 										<th style="width: 20%" align="left">
 											Fund Name
 										</th>
-										<th style="width: 20%" align="right">
+										<th style="width: 20%;text-align:right;" align="right">
 											Old Number of Shares
 										</th>
-										<th style="width: 20%" align="right">
+										<th style="width: 20%;text-align:right;" align="right">
 											New Number of Shares
 										</th>
 										<th>

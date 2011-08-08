@@ -20,7 +20,6 @@ namespace DeepBlue.Controllers.Deal {
 		List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		object GetDealDetail(int dealId);
 		int FindLastDealId();
-		DealFundDetail FindLastFundDetail();
 		#endregion
 
 		#region DealExpense

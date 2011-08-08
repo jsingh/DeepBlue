@@ -1,60 +1,5 @@
 ﻿var report={
 	init: function () {
-		$(document).ready(function () {
-			var layoutSettings=
-		{
-			Name: "Main",
-			Dock: $.layoutEngine.DOCK.NONE,
-			EleID: "content",
-			Children: [
-		{
-			Name: "Main",
-			Dock: $.layoutEngine.DOCK.FILL,
-			EleID: "ReportMain",
-			Children: [
-		{
-			Name: "Top",
-			Dock: $.layoutEngine.DOCK.TOP,
-			EleID: "ReportHeader",
-			Margin: 0,
-			Height: 40
-		}
-		,{
-			Name: "Fill",
-			Dock: $.layoutEngine.DOCK.FILL,
-			EleID: "ReportDetail",Margin: 0,
-			MarginLeft: 200,
-			MarginRight: 200
-		}
-		]
-		}
-		]
-		};
-			//$.layoutEngine(layoutSettings);
-		});
-	}
-	,reportReinit: function () {
-		var layoutSettings=
-		{
-			Name: "Main",
-			Dock: $.layoutEngine.DOCK.NONE,
-			EleID: "ReportDetail",
-			Margin: 0,
-			Children: [
-		{
-			Name: "Top",
-			Dock: $.layoutEngine.DOCK.TOP,
-			EleID: "RepTop",
-			Height: 100
-		}
-		,{
-			Name: "Fill",
-			Dock: $.layoutEngine.DOCK.FILL,
-			EleID: "RepContent"
-		}
-		]
-		};
-		//$.layoutEngine(layoutSettings);
 	}
 	,selectFund: function (id) {
 		$("#FundId").val(id);
@@ -106,20 +51,8 @@
 		reportDetail.show();
 		$.getJSON(url,function (data) {
 			reportDetail.html("");
-			try {
-				$("#reportTemplate").tmpl(data).appendTo("#ReportDetail");
-				$("#SpnLoading",frm).hide();
-				var report_tbl=$("#report_tbl",reportDetail);
-				$("tbody tr:not(:last)",report_tbl).each(function () {
-					var commitment=$("td:eq(2)",this);
-					var distAmount=$("td:eq(3)",this);
-					commitment.html(jHelper.dollarAmount(commitment.html()));
-					distAmount.html(jHelper.dollarAmount(distAmount.html()));
-				});
-			} catch(e) {
-				alert(e);
-			}
-			report.reportReinit();
+			$("#reportTemplate").tmpl(data).appendTo("#ReportDetail");
+			$("#SpnLoading",frm).hide();
 		});
 	}
 	,print: function () {

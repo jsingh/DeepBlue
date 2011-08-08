@@ -22,12 +22,14 @@
 	<div class="cc-box">
 		<div class="header">
 			<div class="tabbg">
-				<%using (Html.Div(new { @id = "NewCCDetailTab", @class = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalCall ? "select" : ""), @onclick = "javascript:capitalCallDetail.selectTab('C',this);" })) {%>&nbsp;
+				<%using (Html.Tab(new { @id = "NewCCDetailTab", @class = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalCall ? "section-tab-sel" : ""), @onclick = "javascript:capitalCallDetail.selectTab('C',this);" })) {%>Capital
+				Call Detail
 				<%}%>
-				<%using (Html.Div(new { @id = "ManCDetailTab", @class = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalDistribution ? "select" : ""), @onclick = "javascript:capitalCallDetail.selectTab('M',this);" })) {%>&nbsp;
+				<%using (Html.Tab(new { @id = "ManCDetailTab", @class = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalDistribution ? "section-tab-sel" : ""), @onclick = "javascript:capitalCallDetail.selectTab('M',this);" })) {%>Capital
+				Distribution Detail
 				<%}%>
 				<%using (Html.Div(new { @id = "SerCDTab" })) {%>&nbsp;
-				<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>&nbsp;<%: Html.TextBox("Fund","SEARCH FUND", new { @class="wm", @style = "width:200px" })%>
+				<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>&nbsp;<%: Html.TextBox("Fund","SEARCH FUND", new { @class="wm", @style = "width:200px" })%>
 				<%}%>
 			</div>
 		</div>
@@ -48,7 +50,8 @@
 		<%}%>
 		<%using (Html.Div(new { @id = "CapitalDistributionReport", @style = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalDistribution ? "display:block" : "display:none") })) {%>
 		<%}%>
-		<div class="line"></div>
+		<div class="line">
+		</div>
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
@@ -124,27 +127,29 @@
 				<th style="text-align:left;width:12%;">
 					Investor Name
 				</th>
-				<th style="text-align: right">
+				<th style="text-align: right;width:15%;">
 					Capital Distribution Amount
 				</th>
-				<th style="text-align: right">
+				<th style="text-align: right;width:14%;">
 					Return Management Fees
 				</th>
-				<th style="text-align: right">
+				<th style="text-align: right;width:12.5%;">
 					Return Fund Expenses
 				</th>
-				<th style=" text-align: right">
+				<th style=" text-align: right;width:13%;">
 					Capital Distribution Date
 				</th>
-				<th style="text-align: right">
+				<th style="text-align: right;width:15%;">
 					Capital Distribution Due Date
 				</th>
-				<th style="text-align: right">
+				<th style="text-align: right;width:6.5%;">
 					Profits (%)
 				</th>
-				<th style="text-align: right">
+				<th style="text-align: right;width:9.5%;">
 					Profits Returned
-				</th><th></th>
+				</th>
+				<th style="width:1%">&nbsp;
+				</th>
 			</tr>
 		</thead>
 		<tbody>

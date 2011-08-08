@@ -204,6 +204,7 @@
 		if(jQuery.trim(UpdateTargetId.html())!="") {
 			alert(UpdateTargetId.html())
 		} else {
+			alert("Investor Saved.");
 			location.href="/Investor/New";
 		}
 	}

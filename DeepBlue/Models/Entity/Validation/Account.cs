@@ -9,8 +9,7 @@ namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(AccountMD))]
 	public partial class Account {
 
-		public class AccountMD : CreatedByFields {
-
+		public class AccountMD {
 			#region Primitive Properties
 
 			[Required(ErrorMessage = "EntityID is required")]
@@ -20,9 +19,21 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage = "Account is required")]
-			[StringLength(40, ErrorMessage = "Account must be under 40 characters.")]
-			public global::System.String Account {
+			[StringLength(50, ErrorMessage = "BankName must be under 50 characters.")]
+			public global::System.String BankName {
+				get;
+				set;
+			}
+
+			[Range((int)0, int.MaxValue, ErrorMessage = "Routing is required")]
+			public Nullable<global::System.Int32> Routing {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "Account1 is required")]
+			[StringLength(40, ErrorMessage = "Account1 must be under 40 characters.")]
+			public global::System.String Account1 {
 				get;
 				set;
 			}
@@ -30,24 +41,6 @@ namespace DeepBlue.Models.Entity {
 			[Required(ErrorMessage = "AccountNumberCash is required")]
 			[StringLength(50, ErrorMessage = "AccountNumberCash must be under 50 characters.")]
 			public global::System.String AccountNumberCash {
-				get;
-				set;
-			}
-
-			[Required(ErrorMessage = "IsPrimary is required")]
-			public global::System.Boolean IsPrimary {
-				get;
-				set;
-			}
-
-			[StringLength(105, ErrorMessage = "Comments must be under 40 characters.")]
-			public global::System.String Comments {
-				get;
-				set;
-			}
-
-			[StringLength(50, ErrorMessage = "BankName must be under 50 characters.")]
-			public global::System.String BankName {
 				get;
 				set;
 			}
@@ -112,7 +105,46 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
+			[Required(ErrorMessage = "IsPrimary is required")]
+			public global::System.Boolean IsPrimary {
+				get;
+				set;
+			}
+
+			[StringLength(105, ErrorMessage = "Comments must be under 105 characters.")]
+			public global::System.String Comments {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "CreatedDate is required")]
+			[DateRange(ErrorMessage = "CreatedDate is required")]
+			public global::System.DateTime CreatedDate {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
+			public global::System.Int32 CreatedBy {
+				get;
+				set;
+			}
+
+			[DateRange(ErrorMessage = "LastUpdatedDate is required")]
+			public Nullable<global::System.DateTime> LastUpdatedDate {
+				get;
+				set;
+			}
+
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "LastUpdatedBy is required")]
+			public Nullable<global::System.Int32> LastUpdatedBy {
+				get;
+				set;
+			}
+
 			#endregion
 		}
+
 	}
 }

@@ -47,6 +47,8 @@
 	, OnRowClick = "dataType.onRowClick"
 	, OnInit = "dataType.onInit"
 	, OnTemplate = "dataType.onTemplate"
+	, TableName = "DataType"
+	, ExportExcel = true
 })%>
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:dataType.add(this);" })) {%>${name}<%}%>

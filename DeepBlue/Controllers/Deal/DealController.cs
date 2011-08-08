@@ -16,8 +16,6 @@ using DeepBlue.Controllers.CapitalCall;
 using System.Web.UI;
 using System.Net;
 
-
-
 namespace DeepBlue.Controllers.Deal {
 	public class DealController : Controller {
 
@@ -27,14 +25,17 @@ namespace DeepBlue.Controllers.Deal {
 
 		public ICapitalCallRepository CapitalCallRepository { get; set; }
 
+		public IFundRepository FundRepository { get; set; }
+
 		public DealController()
-			: this(new DealRepository(), new AdminRepository(), new CapitalCallRepository()) {
+			: this(new DealRepository(), new AdminRepository(), new CapitalCallRepository(), new FundRepository()) {
 		}
 
-		public DealController(IDealRepository dealRepository, IAdminRepository adminRepository, ICapitalCallRepository capitalCallRepository) {
+		public DealController(IDealRepository dealRepository, IAdminRepository adminRepository, ICapitalCallRepository capitalCallRepository, IFundRepository fundRepository) {
 			DealRepository = dealRepository;
 			AdminRepository = adminRepository;
 			CapitalCallRepository = capitalCallRepository;
+			FundRepository = fundRepository;
 		}
 
 		#region Deal
@@ -70,7 +71,7 @@ namespace DeepBlue.Controllers.Deal {
 			model.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
 			model.DocumentStatusTypes = SelectListFactory.GetDealDocumentStatusList();
 			model.DealId = DealRepository.FindLastDealId();
-			DealFundDetail dealFundDetail = DealRepository.FindLastFundDetail();
+			Models.Fund.FundDetail dealFundDetail = FundRepository.FindLastFundDetail();
 			if (dealFundDetail != null) {
 				model.FundId = dealFundDetail.FundId;
 				model.FundName = dealFundDetail.FundName;
@@ -988,8 +989,8 @@ namespace DeepBlue.Controllers.Deal {
 		public ActionResult Report() {
 			ViewData["MenuName"] = "DealManagement";
 			ViewData["PageName"] = "DealReport";
-			DealFundDetail dealFundDetail = DealRepository.FindLastFundDetail();
-			if (dealFundDetail == null) dealFundDetail = new DealFundDetail();
+			Models.Fund.FundDetail dealFundDetail = FundRepository.FindLastFundDetail();
+			if (dealFundDetail == null) dealFundDetail = new Models.Fund.FundDetail();
 			return View(dealFundDetail);
 		}
 

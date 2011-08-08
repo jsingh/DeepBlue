@@ -23,9 +23,11 @@
 	<div class="cc-box">
 		<div class="header">
 			<div class="tabbg">
-				<%using (Html.Div(new { @id = "NewCDTab", @class = "select", @onclick = "javascript:distribution.selectTab('C',this);" })) {%>&nbsp;
+				<%using (Html.Tab(new { @id = "NewCDTab", @class = "section-tab-sel", @onclick = "javascript:distribution.selectTab('C',this);" })) {%>New
+				Capital Distribution
 				<%}%>
-				<%using (Html.Div(new { @id = "ManCDTab", @onclick = "javascript:distribution.selectTab('M',this);" })) {%>&nbsp;
+				<%using (Html.Tab(new { @id = "ManCDTab", @class = "section-tab", @onclick = "javascript:distribution.selectTab('M',this);" })) {%>Manual
+				Capital Distribution
 				<%}%>
 				<%using (Html.Div(new { @id = "SerCDTab" })) {%>&nbsp;
 				<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>&nbsp;<%: Html.TextBox("Fund","SEARCH FUND", new { @class="wm", @style = "width:200px" })%>
@@ -74,19 +76,19 @@
 						<%: Html.LabelFor(model => model.DistributionAmount) %>
 					</div>
 					<div class="editor-field">
-						<%: Html.TextBoxFor(model => model.DistributionAmount, new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBox("DistributionAmount","", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
 					</div>
 					<div class="editor-label">
 						<%: Html.LabelFor(model => model.CapitalDistributionDate) %>
 					</div>
 					<div class="editor-field">
-						<%: Html.TextBoxFor(model => model.CapitalDistributionDate, new { @id = "ManCapitalDistributionDate" })%>
+						<%: Html.TextBox("CapitalDistributionDate","")%>
 					</div>
 					<div class="editor-label" style="clear: right;">
 						<%: Html.LabelFor(model => model.CapitalDistributionDueDate) %>
 					</div>
 					<div class="editor-field">
-						<%: Html.TextBoxFor(model => model.CapitalDistributionDueDate, new { @id = "ManCapitalDistributionDueDate" })%>
+						<%: Html.TextBox("CapitalDistributionDueDate", "")%>
 					</div>
 				</div>
 				<div class="line">
@@ -169,13 +171,13 @@
 						<%: Html.LabelFor(model => model.CapitalDistributionDate) %>
 					</div>
 					<div class="editor-field" style="padding-top: 10px;">
-						<%: Html.TextBoxFor(model => model.CapitalDistributionDate)%>
+						<%: Html.TextBox("CapitalDistributionDate", "", new { @id = "ManCapitalDistributionDate" })%>
 					</div>
 					<div class="editor-label" style="clear: right;">
 						<%: Html.LabelFor(model => model.CapitalDistributionDueDate) %>
 					</div>
 					<div class="editor-field" style="padding-top: 10px;">
-						<%: Html.TextBoxFor(model => model.CapitalDistributionDueDate)%>
+						<%: Html.TextBox("CapitalDistributionDueDate","", new { @id = "ManCapitalDistributionDueDate" })%>
 					</div>
 					<div class="editor-label">
 						<%: Html.LabelFor(model => model.DistributionAmount) %>
@@ -275,4 +277,10 @@
 	<script type="text/javascript">
 		distribution.init();
 	</script>
+	<%if (Model.FundId > 0) {%>
+	<script type="text/javascript">$(document).ready(function(){
+		distribution.selectFund(<%=Model.FundId%>);
+		});
+	</script>
+	<%}%>
 </asp:Content>

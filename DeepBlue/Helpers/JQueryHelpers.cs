@@ -87,6 +87,9 @@ namespace DeepBlue.Helpers {
 			if (string.IsNullOrEmpty(options.TableName) == false) {
 				scriptSrc.Append(",tableName:'" + options.TableName + "'");
 			}
+			if (options.ExportExcel) {
+				scriptSrc.Append(",exportExcel:" + options.ExportExcel.ToString().ToLower() + "");
+			}
 			if (options.Width > 0) {
 				scriptSrc.Append(",width:" + options.Width);
 			}

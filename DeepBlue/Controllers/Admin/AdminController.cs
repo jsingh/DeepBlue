@@ -2517,13 +2517,9 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region DynamicData
+		#region ExportExcel
 		public ActionResult ExportExcel(string tableName) {
-			ExportExcel exportExcel = new ExportExcel { TableName = tableName, Data = AdminRepository.FindTable(tableName) };
-			if (exportExcel.Export()) {
-				ViewData["FileName"] = exportExcel.FileName;
-			}
-			return View();
+			return new ExportExcel { TableName = tableName, GridData = AdminRepository.FindTable(tableName) };
 		}
 		#endregion
 

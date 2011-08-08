@@ -540,6 +540,7 @@
 		if($.trim(UpdateTargetId.html())!="") {
 			alert(UpdateTargetId.html());$(".InvestorUpdateLoading").remove();
 		} else {
+			alert("Investor Saved.");
 			editInvestor.selectInvestor(InvestorId);
 		}
 	}

@@ -24,9 +24,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 			: this(new FundRepository(), new CapitalCallRepository(), new InvestorRepository()) {
 		}
 
-		public CapitalCallController(IFundRepository fundRepository, ICapitalCallRepository adminRepository, IInvestorRepository investorRepository) {
+		public CapitalCallController(IFundRepository fundRepository, ICapitalCallRepository capitalCallRepository, IInvestorRepository investorRepository) {
 			FundRepository = fundRepository;
-			CapitalCallRepository = adminRepository;
+			CapitalCallRepository = capitalCallRepository;
 			InvestorRepository = investorRepository;
 		}
 
@@ -38,7 +38,12 @@ namespace DeepBlue.Controllers.CapitalCall {
 			ViewData["MenuName"] = "Fund Tracker";
 			ViewData["SubmenuName"] = "CapitalCall";
 			ViewData["PageName"] = "CapitalCall";
-			return View();
+			CreateCapitalCallModel model = new CreateCapitalCallModel();
+			Models.Fund.FundDetail fundDetail = FundRepository.FindLastFundDetail();
+			if (fundDetail != null) {
+				model.FundId = fundDetail.FundId;
+			}
+			return View(model);
 		}
 
 		//
@@ -474,7 +479,12 @@ namespace DeepBlue.Controllers.CapitalCall {
 			ViewData["MenuName"] = "Fund Tracker";
 			ViewData["SubmenuName"] = "CapitalDistribution";
 			ViewData["PageName"] = "CapitalDistribution";
-			return View();
+			CreateDistributionModel model = new CreateDistributionModel();
+			Models.Fund.FundDetail fundDetail = FundRepository.FindLastFundDetail();
+			if (fundDetail != null) {
+				model.FundId = fundDetail.FundId;
+			}
+			return View(model);
 		}
 
 		//
@@ -725,6 +735,12 @@ namespace DeepBlue.Controllers.CapitalCall {
 			DetailModel model = new DetailModel();
 			model.FundId = fundId ?? 0;
 			model.DetailType = (DetailType)typeId;
+			if (model.FundId == 0) {
+				Models.Fund.FundDetail fundDetail = FundRepository.FindLastFundDetail();
+				if (fundDetail != null) {
+					model.FundId = fundDetail.FundId;
+				}
+			}
 			return View("Detail", model);
 		}
 

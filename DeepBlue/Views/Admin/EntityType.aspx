@@ -49,7 +49,9 @@
 	, OnSuccess= "invEntityType.onGridSuccess"
 	, OnRowClick = "invEntityType.onRowClick"
 	, OnInit = "invEntityType.onInit"
-	, OnTemplate = "invEntityType.onTemplate"	
+	, OnTemplate = "invEntityType.onTemplate"
+	, TableName = "InvestorEntityType"
+	, ExportExcel = true	
 })%>
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:invEntityType.add(this);" })) {%>${name}<%}%>

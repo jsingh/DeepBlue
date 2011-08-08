@@ -43,6 +43,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Assemblies\Testing\MbUnit.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Moq">
       <HintPath>..\Assemblies\Testing\Moq40\NET40\Moq.dll</HintPath>
@@ -56,16 +57,26 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Admin\ActivityTypeBase.cs">
@@ -362,6 +373,15 @@
     <Compile Include="Controllers\Deal\CreateDealUnderlyingFund.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\Deal\CreateDealUnderlyingFundAdjustment.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Deal\CreateDealUnderlyingFundAdjustmentInvalidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Deal\CreateDealUnderlyingFundAdjustmentValidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\Deal\CreateDealUnderlyingFundInvalidData.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -474,6 +494,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\Deal\DealUnderlyingDirectBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Deal\DealUnderlyingFundAdjustmentBase.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\Deal\DealUnderlyingFundBase.cs">
@@ -786,40 +809,22 @@
     <Compile Include="Models\Admin\UnderlyingFundTypeValidData.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallDistribution.cs">
+    <Compile Include="Models\CapitalCall\CapitalCall.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallDistributionInvalidData.cs">
+    <Compile Include="Models\CapitalCall\CapitalCallInvalidData.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallDistributionValidData.cs">
+    <Compile Include="Models\CapitalCall\CapitalCallValidData.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallManual.cs">
+    <Compile Include="Models\CapitalCall\CapitalDistribution.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallManualInvalidData.cs">
+    <Compile Include="Models\CapitalCall\CapitalDistributionInvalidData.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallManualValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallReceive.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallReceiveInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallReceiveValidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallReqular.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallReqularInvalidData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CapitalCall\CapitalCallReqularValidData.cs">
+    <Compile Include="Models\CapitalCall\CapitalDistributionValidData.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Deal\CashDistribution.cs">
@@ -874,6 +879,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Deal\DealUnderlyingFund.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\DealUnderlyingFundAdjustment.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\DealUnderlyingFundAdjustmentInvalidData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Deal\DealUnderlyingFundAdjustmentValidData.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Deal\DealUnderlyingFundInvalidData.cs">

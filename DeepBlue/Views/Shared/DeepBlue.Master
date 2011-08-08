@@ -10,7 +10,6 @@
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery.formatCurrency.js")%>
-	<%= Html.JavascriptInclueTag("jquery.cookie.js")%>
 	<%= Html.JavascriptInclueTag("jHelper.js")%>
 	<%= Html.JavascriptInclueTag("DeepBlue.js")%>
 	<%= Html.JavascriptInclueTag("menu.js")%>
@@ -69,7 +68,7 @@
 			<%}%>
 		</div>
 	</div>
-	<div id="submenu">
+	<div id="submenu" style="display: none">
 		<%using (Html.SubMenu("Investor_Management", (ViewData["MenuName"] == "Investor"))) {%>
 		<ul>
 			<li>
@@ -164,7 +163,9 @@
 		<div class="footercontent">
 			Copyright 2011 WILLOWRIDGE&nbsp;<%=ConfigurationManager.AppSettings["CurrentVersion"]%></div>
 	</div>
-	<script type="text/javascript">		deepBlue.init();</script>
+	<script type="text/javascript">
+		deepBlue.init();
+	</script>
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
 </body>
 </html>

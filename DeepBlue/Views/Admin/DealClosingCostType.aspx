@@ -47,6 +47,8 @@
 	, OnRowClick = "dealClosingCostType.onRowClick"
 	, OnInit = "dealClosingCostType.onInit"
 	, OnTemplate = "dealClosingCostType.onTemplate"
+	, TableName = "DealClosingCostType"
+	, ExportExcel = true
 })%>
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:dealClosingCostType.add(this);" })) {%>${name}<%}%>

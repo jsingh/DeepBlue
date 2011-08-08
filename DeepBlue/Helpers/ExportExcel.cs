@@ -7,59 +7,38 @@ using System.IO;
 using System.Web.UI;
 using System.Web.Mvc;
 using System.Configuration;
+using System.Reflection;
+using System.Text;
+using System.Web.UI.WebControls;
 
 
 namespace DeepBlue.Helpers {
-	public class ExportExcel {
+	public class ExportExcel : ActionResult {
 
 		public ExportExcel() {
-			_FileName = string.Empty;
 		}
-
-		private string _FileName;
-
-		public object Data { get; set; }
 
 		public string TableName { get; set; }
 
-		public string FileName {
-			get {
-				return _FileName.Replace("\\","/");
-			}
-		}
+		public object GridData { get; set; }
 
-		public bool Export() {
-			_FileName = Path.Combine(string.Format(ConfigurationManager.AppSettings["ExportExcelPath"], TableName + ".xls"));
-			string rootPath = HttpContext.Current.Server.MapPath("/");
-			string exportExcelFilePath = Path.Combine(rootPath,_FileName);
-			string directoryName = Path.GetDirectoryName(exportExcelFilePath);
-			string result = string.Empty;
-			
-			System.Web.UI.WebControls.GridView grd = new System.Web.UI.WebControls.GridView();
-			grd.DataSource = Data;
+		public override void ExecuteResult(ControllerContext context) {
+			DataGrid grd = new DataGrid();
+
+			grd.DataSource = GridData;
 			grd.DataBind();
-			
-			if (Directory.Exists(directoryName) == false) {
-				Directory.CreateDirectory(directoryName);
-			}
-			
+
+			context.HttpContext.Response.ClearContent();
+			context.HttpContext.Response.AddHeader("content-disposition", "attachment;filename=" + TableName + ".xls");
+			context.HttpContext.Response.ContentType = "application/excel";
+
 			StringWriter swr = new StringWriter();
 			HtmlTextWriter tw = new HtmlTextWriter(swr);
-			
 			grd.RenderControl(tw);
-			
-			if (File.Exists(exportExcelFilePath)) {
-				File.Delete(exportExcelFilePath);
-			}
-			
-			File.WriteAllText(exportExcelFilePath, swr.ToString());
-
-			if (File.Exists(exportExcelFilePath)) {
-				return true;
-			}else{
-				return false;
-			}
+			context.HttpContext.Response.Write(swr.ToString());
+			context.HttpContext.Response.End();
 		}
 
+	 
 	}
 }

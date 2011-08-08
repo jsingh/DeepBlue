@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Fund.FundDetail>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Fund.CreateModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <%using (Html.Form(new { @id = "${getFormIndex()}", @onsubmit = "return false;" })) {%>
 <div class="fund-box">
