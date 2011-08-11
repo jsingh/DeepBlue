@@ -98,24 +98,15 @@ namespace DeepBlue.Controllers.Deal {
 			return deal.Save();
 		}
 
-		public List<AutoCompleteList> FindDeals(string dealName) {
+		public List<AutoCompleteList> FindDeals(string dealName, int? fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> dealListQuery = (from deal in context.Deals
-															  where deal.DealName.StartsWith(dealName)
-															  orderby deal.DealName
-															  select new AutoCompleteList {
-																  id = deal.DealID,
-																  label = deal.DealName + " (" + deal.Fund.FundName + ")",
-																  value = deal.DealName
-															  });
-				return new PaginatedList<AutoCompleteList>(dealListQuery, 1, 20);
-			}
-		}
+				var deals = context.Deals.AsQueryable();
+				deals = deals.Where(deal => deal.DealName.StartsWith(dealName));
+				if (fundId.HasValue)
+					deals = deals.Where(deal => deal.FundID == fundId);
 
-		public List<AutoCompleteList> FindDeals(int fundId, string dealName) {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> dealListQuery = (from deal in context.Deals
-															  where deal.DealName.StartsWith(dealName) && deal.FundID == fundId
+				IQueryable<AutoCompleteList> dealListQuery = (from deal in deals
+															  where deal.DealName.StartsWith(dealName)
 															  orderby deal.DealName
 															  select new AutoCompleteList {
 																  id = deal.DealID,

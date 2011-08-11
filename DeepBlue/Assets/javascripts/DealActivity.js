@@ -30,7 +30,7 @@
 		var UnderlyingFundName=$("#UnderlyingFundName",target);
 		var FundName=$("#FundName",target);
 		var DealName=$("#DealName",target);
-		var dealSearch="/Deal/FindFundDeals";
+		var dealSearch="/Deal/FindDeals";
 		var ufid=parseInt(UnderlyingFundId.val());
 		if(isNaN(ufid)) { ufid=0; }
 		var fundSearch="/Fund/FindDealFunds";
@@ -56,12 +56,24 @@
 		},select: function (event,ui) {
 			FundId.val(ui.item.id);
 			DealId.val(0);DealName.val("");
-			DealName.autocomplete("option","source",dealSearch+"?fundId="+FundId.val());
+			DealName.autocomplete("option","source",
+			function (request,response) {
+				$.getJSON(dealSearch+"?term="+request.term+"&fundId="+FundId.val(),function (data) {
+					response(data);
+				});
+			}
+			);
 		},appendTo: "body",delay: 300
 		});
 
 		DealName.blur(function () { if($.trim(this.value)=="") { DealId.val(0); } })
-		.autocomplete({ source: dealSearch+"?fundId="+FundId.val(),minLength: 1
+		.autocomplete({ source:
+			function (request,response) {
+				$.getJSON(dealSearch+"?term="+request.term+"&fundId="+FundId.val(),function (data) {
+					response(data);
+				});
+			}
+		,minLength: 1
 		,search: function (event,ui) {
 			var fundId=parseInt(FundId.val());
 			if(isNaN(fundId)) { fundId=0; }

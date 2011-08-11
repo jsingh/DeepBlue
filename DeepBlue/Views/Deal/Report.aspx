@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<DeepBlue.Models.Deal.DealFundDetail>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<DeepBlue.Models.Fund.FundDetail>" %>
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
@@ -33,9 +33,9 @@
 	<div id="DealReportMain" style="float:left;display:none;width:100%;">
 		<div class="menu exportlist" style="position: absolute; right: 85px;">
 			<ul>
-				<li><a href="javascript:dealReport.chooseExpMenu(2,'Pdf');">Pdf</a></li>
-				<li><a href="javascript:dealReport.chooseExpMenu(1,'Word');">Word</a></li>
-				<li><a href="javascript:dealReport.chooseExpMenu(4,'Excel');">Excel</a></li>
+				<li><a href="javascript:jHelper.chooseExpMenu(2,'Pdf');">Pdf</a></li>
+				<li><a href="javascript:jHelper.chooseExpMenu(1,'Word');">Word</a></li>
+				<li><a href="javascript:jHelper.chooseExpMenu(4,'Excel');">Excel</a></li>
 			</ul>
 		</div>
 		<div class="titlebox">
@@ -47,7 +47,7 @@
 				<div class="print">
 					<%:Html.Image("print.gif", new { @style = "cursor:pointer", @onclick = "javascript:dealReport.printArea();" })%>
 				</div>
-				<div class="menu" onclick="javascript:dealReport.expandExpMenu(this);">
+				<div class="menu" onclick="javascript:jHelper.expandExpMenu(this);">
 					<ul>
 						<li><a id="lnkExportName" href="#">Pdf</a></li>
 					</ul>

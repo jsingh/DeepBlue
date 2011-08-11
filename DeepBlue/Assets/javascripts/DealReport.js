@@ -133,15 +133,6 @@
 			window.open(url,"exportdeal",features);
 		}
 	}
-	,expandExpMenu: function (that) {
-		var pos=$(that).offset();
-		$(".exportlist").css({ "top": pos.top+13,"left": pos.left }).show();
-	}
-	,chooseExpMenu: function (id,name) {
-		$("#ExportId").val(id);
-		$("#lnkExportName").html(name);
-		$(".exportlist").hide();
-	}
 	,printArea: function () {
 		$("#ReportBox").printArea();
 	}

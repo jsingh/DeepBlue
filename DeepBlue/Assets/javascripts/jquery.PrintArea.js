@@ -27,8 +27,8 @@
 (function ($) {
 	var counter=0;
 	var modes={ iframe: "iframe",popup: "popup" };
-	var defaults={ mode: modes.iframe,
-		css: ["site.css","report.css"],
+	var defaults={ mode: modes.popup,
+		css: ["report.css","printreport.css"],
 		popHt: 500,
 		popWd: 400,
 		popX: 200,
@@ -106,7 +106,7 @@
 	}
 
 	function getBody(printElement) {
-		return '<body><div class="'+$(printElement).attr("class")+'">'+$(printElement).html()+'</div></body>';
+		return '<body><div id="'+$(printElement).attr("id")+'" class="'+$(printElement).attr("class")+'">'+$(printElement).html()+'</div></body>';
 	}
 
 	function getFormData(ele) {

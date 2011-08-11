@@ -144,6 +144,10 @@
 		<%using (Html.SubMenu("Report_Management", (ViewData["MenuName"] == "Reports"))) {%>
 		<ul>
 			<li>
+				<%: Html.ActionLink("Deal Detail", "DealDetail", "Report", null, new { @class = (ViewData["PageName"] == "DealDetail" ? "sel" : "") })%></li>
+			<li>
+				<%: Html.ActionLink("Deal Origination", "DealOrigination", "Report", null, new { @class = (ViewData["PageName"] == "DealOrigination" ? "sel" : "") })%></li>
+			<li>
 				<%: Html.ActionLink("Cash Distribution Summary", "CashDistributionSummary", "Report", null, new { @class = (ViewData["PageName"] == "CashDistributionSummary" ? "sel" : "") })%></li>
 			<li>
 				<%: Html.ActionLink("Capital Call Summary", "CapitalCallSummary", "Report", null, new { @class = (ViewData["PageName"] == "CapitalCallSummary" ? "sel" : "") })%></li>

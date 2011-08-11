@@ -19,41 +19,25 @@
 			}
 		});
 	}
-	,onSubmit: function (formId) {
-		var frm=document.getElementById(formId);
-		var message='';
-		Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
-		$(".field-validation-error",frm).each(function () {
-			if(this.innerHTML!='') {
-				message+=this.innerHTML+"\n";
-			}
-		});
-		if(message!="") {
-			alert(message);
-		} else {
-			$("#SpnLoading",frm).hide();
-			try {
-				this.loadReport(formId);
-			} catch(e) {
-				alert(e);
-			}
+	,onSubmit: function (frm) {
+		try {
+			var loading=$("#SpnLoading",frm);
+			loading.show();
+			var target=$("#ReportDetail");
+			target.show();
+			$.post("/Report/CapitalCallSummaryList",$(frm).serializeArray(),function (data) {
+				loading.hide();
+				if($.trim(data.Error)!="") {
+					alert(data.Error);
+				} else {
+					target.empty();
+					$("#CCSummaryReportTemplate").tmpl(data.Data).appendTo(target);
+				}
+			});
+		} catch(e) {
+			alert(e);
 		}
 		return false;
-	}
-	,loadReport: function (formId) {
-		var frm=document.getElementById(formId);
-		var fundId=$("#FundId",frm).val();
-		var capitalCallId=$("#CapitalCallId",frm).val();
-		var dt=new Date();
-		var url="/Report/CapitalCallSummaryList/?fundId="+fundId+"&capitalCallId="+capitalCallId+"&t="+dt.getTime();
-		$("#SpnLoading",frm).show();
-		var ccsummaryReportDetail=$("#ReportDetail");
-		ccsummaryReportDetail.show();
-		$.getJSON(url,function (data) {
-			ccsummaryReportDetail.html("");
-			$("#ccsummaryReportTemplate").tmpl(data).appendTo("#ReportDetail");
-			$("#SpnLoading",frm).hide();
-		});
 	}
 	,print: function () {
 		$("#ReportDetail").printArea();

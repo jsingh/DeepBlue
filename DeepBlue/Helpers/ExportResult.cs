@@ -17,9 +17,9 @@ namespace DeepBlue.Helpers {
 
 		public object Data { get; set; }
 
-		public Models.Deal.Enums.ExportType ExportType { get; set; }
+		public Models.Admin.Enums.ExportType ExportType { get; set; }
 
-		public ExportResult(object data, Models.Deal.Enums.ExportType exportType) {
+		public ExportResult(object data, Models.Admin.Enums.ExportType exportType) {
 			Data = data;
 			ExportType = exportType;
 		}
@@ -49,12 +49,12 @@ namespace DeepBlue.Helpers {
 			HttpContext.Current.Response.ClearContent();
 			bool exportReady = false;
 			switch (ExportType) {
-				case Models.Deal.Enums.ExportType.Word:
+				case Models.Admin.Enums.ExportType.Word:
 					HttpContext.Current.Response.AddHeader("content-disposition", "attachment;filename=DealReport.doc");
 					HttpContext.Current.Response.ContentType = "application/ms-word";
 					exportReady = true;
 					break;
-				case Models.Deal.Enums.ExportType.Excel:
+				case Models.Admin.Enums.ExportType.Excel:
 					HttpContext.Current.Response.AddHeader("content-disposition", "attachment;filename=DealReport.xls");
 					HttpContext.Current.Response.ContentType = "application/excel";
 					exportReady = true;

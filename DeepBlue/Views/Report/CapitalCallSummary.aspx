@@ -5,11 +5,6 @@
 	Capital Call Summary
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
-	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftAjax.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("CCSummaryReport.js")%>
 	<%=Html.JavascriptInclueTag("jquery.PrintArea.js")%>
@@ -28,7 +23,7 @@
 	<div id="ReportHeader" class="rep-header">
 		<div class="editor-label" style="width: auto">
 			<% Html.EnableClientValidation(); %>
-			<%using (Html.BeginForm("", "", FormMethod.Get, new { @id = "CapitalCallSummary", @onsubmit = "return ccsummaryReport.onSubmit('CapitalCallSummary');" })) {%>
+			<%using (Html.BeginForm("", "", FormMethod.Get, new { @id = "CapitalCallSummary", @onsubmit = "return ccsummaryReport.onSubmit(this);" })) {%>
 			<div style="float: left;">
 				<%: Html.LabelFor(model => model.FundId)%>
 				<%: Html.TextBox("FundName", "", new { @id = "FundName", @style = "width:200px" })%>
@@ -59,7 +54,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { ccsummaryReport.selectFund(ui.item.id);}" })%>
 	<script type="text/javascript">		ccsummaryReport.init();</script>
-	<script id="ccsummaryReportTemplate" type="text/x-jquery-tmpl">
+	<script id="CCSummaryReportTemplate" type="text/x-jquery-tmpl">
 		<div id='RepTop'>
 		<div class='title'>Capital Call Summary</div><div class='fundname detail'>${FundName}</div>
 		<div class='detail'>Capital Call Due ${CapitalCallDueDate} - ${TotalCapitalCall}</div>

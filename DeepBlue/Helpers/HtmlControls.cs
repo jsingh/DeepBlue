@@ -304,6 +304,28 @@ namespace DeepBlue.Helpers {
 
 		#region JQueryTemplate Controls
 
+		public static string jQueryTemplateDisplayFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression, bool isjqueryTemplateDisplay) {
+			return jQueryTemplateDisplayFor(htmlHelper, expression, isjqueryTemplateDisplay, string.Empty);
+		}
+
+		public static string jQueryTemplateDisplayFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression, bool isjqueryTemplateDisplay, string formatName) {
+			ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
+			string displayData = string.Empty;
+			if (isjqueryTemplateDisplay) {
+				string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
+				string dataType = metadata.ModelType.FullName;
+				if (String.IsNullOrEmpty(htmlFieldName) == false) {
+					displayData = "${" + (string.IsNullOrEmpty(formatName) ? htmlFieldName : formatName + "(" + htmlFieldName + ")") + "}";
+				}
+			}
+			else {
+				if (metadata.Model != null) {
+					displayData = metadata.Model.ToString();
+				}
+			}
+			return displayData;
+		}
+
 		public static MvcHtmlString jQueryTemplateTextBox(this HtmlHelper htmlHelper, string name) {
 			return jQueryTemplateTextBox(htmlHelper, name, "${" + name + "}", new { });
 		}

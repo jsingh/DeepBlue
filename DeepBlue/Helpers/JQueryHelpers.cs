@@ -9,14 +9,19 @@ namespace DeepBlue.Helpers {
 	public static class JQueryHelpers {
 		public static string jQueryAutoComplete(this HtmlHelper helper, string targetId, AutoCompleteOptions options) {
 			StringBuilder scriptSrc = new StringBuilder();
-			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").autocomplete({")
-					 .Append("source:\"" + options.Source + "\"")
-					 .Append(",minLength:" + options.MinLength.ToString())
-					 .Append((string.IsNullOrEmpty(options.OnSelect) ? "" : ",select:" + options.OnSelect.ToString()))
-					 .Append((string.IsNullOrEmpty(options.OnChange) ? "" : ",change:" + options.OnChange.ToString()))
-					 .Append((string.IsNullOrEmpty(options.OnSearch) ? "" : ",search:" + options.OnSearch.ToString()))
-					 .Append(",appendTo:\"" + options.AppendTo + "\"")
-					 .Append(",delay:" + options.Delay.ToString());
+			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").autocomplete({");
+			if (string.IsNullOrEmpty(options.Source) == false) {
+				scriptSrc.Append("source:\"" + options.Source + "\"");
+			}
+			if (string.IsNullOrEmpty(options.SearchFunction) == false) {
+				scriptSrc.Append("source:" + options.SearchFunction);
+			}
+			scriptSrc.Append(",minLength:" + options.MinLength.ToString())
+			.Append((string.IsNullOrEmpty(options.OnSelect) ? "" : ",select:" + options.OnSelect.ToString()))
+			.Append((string.IsNullOrEmpty(options.OnChange) ? "" : ",change:" + options.OnChange.ToString()))
+			.Append((string.IsNullOrEmpty(options.OnSearch) ? "" : ",search:" + options.OnSearch.ToString()))
+			.Append(",appendTo:\"" + options.AppendTo + "\"")
+			.Append(",delay:" + options.Delay.ToString());
 			scriptSrc.Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}

@@ -13,8 +13,7 @@ namespace DeepBlue.Controllers.Deal {
 		Models.Entity.Deal FindDeal(int dealId);
 		DealDetailModel FindDealDetail(int dealId);
 		IEnumerable<ErrorInfo> SaveDeal(Models.Entity.Deal deal);
-		List<AutoCompleteList> FindDeals(string dealName);
-		List<AutoCompleteList> FindDeals(int fundId, string dealName);
+		List<AutoCompleteList> FindDeals(string dealName, int? fundId);
 		bool DealNameAvailable(string dealName, int dealId, int fundId);
 		int GetMaxDealNumber(int fundId);
 		List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);

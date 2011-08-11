@@ -137,6 +137,6 @@ dealActivity.resetStockDistribution=function () {
 dealActivity.showManualSDCtl=function (parentId) {
 	var chk=$("#IsManualStockDistribution").get(0);
 	var display="";
-	if(chk.checked) { display="block"; } else { display="none"; }
+	if(chk.checked) { display=""; } else { display="none"; }
 	$(".ismanual","#StockDistributionList").css("display",display);
 };

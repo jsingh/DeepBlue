@@ -220,8 +220,8 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/FindDeals
 		[HttpGet]
-		public JsonResult FindDeals(string term) {
-			return Json(DealRepository.FindDeals(term), JsonRequestBehavior.AllowGet);
+		public JsonResult FindDeals(string term, int? fundId) {
+			return Json(DealRepository.FindDeals(term, fundId), JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -229,13 +229,6 @@ namespace DeepBlue.Controllers.Deal {
 		[HttpGet]
 		public JsonResult GetDealDetail(int id) {
 			return Json(DealRepository.GetDealDetail(id), JsonRequestBehavior.AllowGet);
-		}
-
-		//
-		// GET: /Deal/FindFundDeals
-		[HttpGet]
-		public JsonResult FindFundDeals(int fundId, string term) {
-			return Json(DealRepository.FindDeals(fundId, term), JsonRequestBehavior.AllowGet);
 		}
 
 		#endregion

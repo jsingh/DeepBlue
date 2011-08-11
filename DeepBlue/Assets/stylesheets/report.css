@@ -38,5 +38,131 @@
 	text-align: right;
 }
 .grid tfoot tr td {
-	padding:10px 15px;
+	padding: 10px 15px;
+}
+#ReportContent {
+	width: 98%;
+	margin: 0 auto;
+	padding-bottom: 20px;
+}
+#ReportContent.dealdetail{
+	width:968px;
+}
+#ReportContent td {
+	white-space: nowrap;
+}
+#ReportContent td.title {
+	font-size: 23px;
+	font-weight: bold;
+	padding: 10px 0 0;
+}
+#ReportContent .headingrow td {
+	font-size: 16px;
+	font-weight: bold;
+	padding: 5px 0;
+}
+#ReportContent .detailrow td {
+	font-weight: bold;
+	padding: 8px 0;
+}
+#ReportContent .bordertop td, #ReportContent .bordertop {
+	border-top: solid 1px #000;
+}
+#ReportContent .borderbottom {
+	border-bottom: solid 1px #000;
+}
+#ReportContent .symbol {
+	border: 1px solid #000000;
+	font-size: 25px;
+	font-weight: bold;
+	padding: 5px 0;
+	text-align: center;
+	width: 50px; float:right;
+}
+#ReportContent .calign {
+	text-align: center;
+}
+#ReportContent .ralign {
+	text-align: right;
+}
+#ReportContent .hrow td {
+	background-color: #BABFC5;
+	color: #000000;
+	font-size: 12px;
+	white-space: nowrap;
+	height: 30px;
+	padding: 0 15px;
+}
+#ReportContent .row td, #ReportContent .arow td {
+	height: 30px;
+	padding: 0 15px;
+	background-image: url("../images/line.png");
+	background-position: left bottom;
+	background-repeat: repeat-x;
+}
+#ReportContent .row td {
+	background-color: #F5F5F5;
+}
+#ReportContent .arow td {
+	background-color: #E9EAEC;
+}
+#ReportContent .trow td {
+	   height: 0;
+    padding: 5px 15px 0;
+}
+#ReportContent .gridline td {
+	background-image: url("../images/line.png");
+	background-position: left top;
+	background-repeat: repeat-x;
+	padding-top: 2px;
+}
+#ReportHeader {
+	  float: left;
+    margin: 10px 0 5px;
+    width: 100%;
+}
+.export {
+	float:right;
+	padding-top:5px;
+}
+.export .menu {
+	background-image: url("../images/expdown.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+	float: left;
+	font-size: 12px;
+	height: 17px;
+	margin-right: 10px;
+	overflow: hidden;
+	width: 43px;
+}
+.export .menu a {
+	color: #000;
+	text-decoration: none;
+}
+.export .print {
+	float: left;
+	margin: 0 15px 0 0;
+}
+.export .darrow {
+	float: left;
+	margin: 0 0 0 5px;
+}
+.exportlist {
+    display: none;
+}
+.exportlist li {
+    list-style: none outside none;
+    margin: 0 10px 0 0;
+}
+.exportlist li a {
+    color: #000000;
+}
+.titlebox {
+	float: left;
+	margin-left: 73px;
+	width: 90%;
+}
+.underline,.underline td{
+	text-decoration:underline;
 }

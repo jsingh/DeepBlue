@@ -10,12 +10,7 @@ namespace DeepBlue.Models.Deal.Enums {
         FixedIncome = 2
     }
 
-	public enum ExportType {
-		Word = 1,
-		Pdf = 2,
-		Print = 3,
-		Excel = 4
-	}
+
 
 	public enum ActivityType {
 		Split = 1,

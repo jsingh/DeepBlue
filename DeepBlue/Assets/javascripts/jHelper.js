@@ -229,11 +229,21 @@
 		$("tr:even",target).removeClass("erow");
 		$("tr:odd",target).removeClass("erow").addClass("erow");
 	}
+	,expandExpMenu: function (that) {
+		var pos=$(that).offset();
+		$(".exportlist").css({ "top": pos.top+13,"left": pos.left }).show();
+	}
+	,chooseExpMenu: function (id,name) {
+		$("#ExportId").val(id);
+		$("#lnkExportName").html(name);
+		$(".exportlist").hide();
+	}
+	,loadingHTML:function() { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...";}
 }
 $.extend(window,{
 	formatDate: function (dt) { try { if(dt==null) { return ""; } var d=jHelper.formatDate(jHelper.parseJSONDate(dt));if(d=="01/01/1"||d=="01/01/1900") { return ""; } else { return d; } } catch(e) { return ""; } }
 	,formatCurrency: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } return jHelper.dollarAmount(d.toString()); }
-	,formatPercentage: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } if(d==0) { return ""; } else { return d; } }
+	,formatPercentage: function (d) { if(d==null) { return ""; } d=parseFloat(d).toFixed(2);if(isNaN(d)) { return ""; } if(d.toString()=="0.00") { return ""; } else { return d.toString()+"%"; } }
 	,formatNumber: function (d) { return formatCurrency(d).replace("$",""); }
 	,checkNullOrZero: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } if(d==0) { return ""; } else { return d; } }
 });

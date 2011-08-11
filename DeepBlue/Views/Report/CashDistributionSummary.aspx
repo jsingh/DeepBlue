@@ -5,12 +5,6 @@
 	Cash Distribution Summary
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
-	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftAjax.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
-	<%=Html.JavascriptInclueTag("jquery.layoutengine.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("DSummaryReport.js")%>
 	<%=Html.JavascriptInclueTag("jquery.PrintArea.js")%>
@@ -28,11 +22,10 @@
 	</div>
 	<div id="ReportHeader" class="rep-header">
 		<div class="editor-label" style="width: auto">
-			<% Html.EnableClientValidation(); %>
-			<%using (Html.BeginForm("", "", FormMethod.Get, new { @id = "DistributionSummary", @onsubmit = "return report.onSubmit('DistributionSummary');" })) {%>
+			<%using (Html.BeginForm("", "", FormMethod.Get, new { @id = "DistributionSummary", @onsubmit = "return report.onSubmit(this);" })) {%>
 			<div style="float: left">
 				<%: Html.LabelFor(model => model.FundId)%>
-				<%: Html.TextBox("FundName", "", new { @id = "FundName", @style = "width:200px" })%>
+				<%: Html.TextBox("FundName", "SEARCH FUND", new { @class = "wm", @id = "FundName", @style = "width:200px" })%>
 			</div>
 			<div style="float: left; margin-left: 20px;">
 				<%: Html.LabelFor(model => model.CapitalDistributionId)%>
@@ -42,8 +35,6 @@
 				<%: Html.ImageButton("submit.png", new { @class="default-button" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
 			</div>
 			<%: Html.HiddenFor(model => model.FundId)%>
-			<%: Html.ValidationMessageFor(model => model.FundId)%>
-			<%: Html.ValidationMessageFor(model => model.CapitalDistributionId)%>
 			<%}%>
 		</div>
 		<div class="editor-label" style="margin-left: 50px; clear: right">
@@ -60,7 +51,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { report.selectFund(ui.item.id);}" })%>
 	<script type="text/javascript">		report.init();</script>
-	<script id="reportTemplate" type="text/x-jquery-tmpl">
+	<script id="ReportTemplate" type="text/x-jquery-tmpl">
 		<div id='RepTop'>
 		<div class='title'>Cash Distribution Summary</div><div class='fundname detail'>${FundName}</div>
 		<div class='detail'>Distribution Of ${DistributionDate} - ${TotalDistributionAmount}</div>

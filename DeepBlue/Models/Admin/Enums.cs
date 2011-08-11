@@ -54,5 +54,12 @@ namespace DeepBlue.Models.Admin.Enums {
 		Company = 8,
 		MailingAddress = 9
 	}
+
+	public enum ExportType {
+		Word = 1,
+		Pdf = 2,
+		Print = 3,
+		Excel = 4
+	}
 	
 }

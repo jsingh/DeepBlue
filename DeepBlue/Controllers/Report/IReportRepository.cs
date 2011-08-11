@@ -16,6 +16,14 @@ namespace DeepBlue.Controllers.Report {
 		List<CapitalCallItem> CapitalCallLineItems(int fundId, int capitalCalllId);
 		Models.Entity.CapitalCall FindCapitalCall(int capitalCalllId);
 		#endregion
+		
+		#region DealDetail
+		DealDetailReportModel FindDealDetailReport(int dealId);
+		#endregion
+
+		#region DealOrigination
+		DealOriginationReportModel FindDealOriginationReport(int dealId);
+		#endregion
 
 	}
 }

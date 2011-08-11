@@ -25,6 +25,7 @@ namespace DeepBlue.Controllers.Report {
 		}
 
 		#region Cash Distribution Summary
+
 		public ActionResult CashDistributionSummary() {
 			ViewData["MenuName"] = "Reports";
 			ViewData["PageName"] = "CashDistributionSummary";
@@ -33,22 +34,34 @@ namespace DeepBlue.Controllers.Report {
 			return View(model);
 		}
 
-		public JsonResult DistributionSummaryList(int fundId, int capitalDistributionlId) {
-			JsonResult jsonResult = null;
-			if (fundId > 0 && capitalDistributionlId > 0) {
-				CapitalDistribution distribution = ReportRepository.FindCapitalDistribution(capitalDistributionlId);
-				CashDistributionReportDetail detail = new CashDistributionReportDetail();
+		public JsonResult DistributionSummaryList(FormCollection collection) {
+			CashDistributionSummaryModel model = new CashDistributionSummaryModel();
+			this.TryUpdateModel(model, collection);
+			string error = string.Empty;
+			ResultModel resultModel = new ResultModel();
+			CashDistributionReportDetail detail = null;
+			if (ModelState.IsValid) {
+				CapitalDistribution distribution = ReportRepository.FindCapitalDistribution(model.CapitalDistributionId);
+				detail = new CashDistributionReportDetail();
 				if (distribution != null) {
 					detail.FundName = distribution.Fund.FundName;
 					detail.TotalDistributionAmount = FormatHelper.CurrencyFormat(distribution.DistributionAmount);
 					detail.DistributionDate = distribution.CapitalDistributionDate.ToString("MM/dd/yyyy");
 					detail.RepayManFees = "$0";
 					detail.WithCarryAmount = "$0";
-					detail.Items = ReportRepository.DistributionLineItems(fundId, capitalDistributionlId);
+					detail.Items = ReportRepository.DistributionLineItems(model.FundId, model.CapitalDistributionId);
 				}
-				jsonResult = Json(detail, JsonRequestBehavior.AllowGet);
 			}
-			return jsonResult;
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							error += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new { Error = error, Data = detail }, JsonRequestBehavior.AllowGet);
 		}
 
 		public JsonResult GetCapitalDistributions(int fundId) {
@@ -59,9 +72,11 @@ namespace DeepBlue.Controllers.Report {
 			}
 			return Json(selectLists, JsonRequestBehavior.AllowGet);
 		}
+
 		#endregion
 
 		#region Capital Call Summary
+
 		public ActionResult CapitalCallSummary() {
 			ViewData["MenuName"] = "Reports";
 			ViewData["PageName"] = "CapitalCallSummary";
@@ -70,25 +85,37 @@ namespace DeepBlue.Controllers.Report {
 			return View(model);
 		}
 
-		public JsonResult CapitalCallSummaryList(int fundId, int capitalCallId) {
-			JsonResult jsonResult = null;
-			if (fundId > 0 && capitalCallId > 0) {
-				Models.Entity.CapitalCall capitalCall = ReportRepository.FindCapitalCall(capitalCallId);
-				CapitalCallReportDetail detail = new CapitalCallReportDetail();
+		public JsonResult CapitalCallSummaryList(FormCollection collection) {
+			CapitalCallSummaryModel model = new CapitalCallSummaryModel();
+			this.TryUpdateModel(model, collection);
+			string error = string.Empty;
+			ResultModel resultModel = new ResultModel();
+			CapitalCallReportDetail detail = null;
+			if (ModelState.IsValid) {
+				Models.Entity.CapitalCall capitalCall = ReportRepository.FindCapitalCall(model.CapitalCallId);
+				detail = new CapitalCallReportDetail();
 				if (capitalCall != null) {
 					detail.AmountForInv = FormatHelper.CurrencyFormat(capitalCall.InvestmentAmount);
 					detail.CapitalCallDueDate = capitalCall.CapitalCallDueDate.ToString("MM/dd/yyyy");
 					detail.ExistingInv = FormatHelper.CurrencyFormat(capitalCall.ExistingInvestmentAmount);
 					detail.FundName = capitalCall.Fund.FundName;
-					detail.Items = ReportRepository.CapitalCallLineItems(fundId, capitalCallId);
+					detail.Items = ReportRepository.CapitalCallLineItems(model.FundId, model.CapitalCallId);
 					detail.NewInv = FormatHelper.CurrencyFormat(capitalCall.NewInvestmentAmount);
 					detail.TotalCapitalCall = FormatHelper.CurrencyFormat(capitalCall.CapitalAmountCalled);
 					detail.TotalExpenses = FormatHelper.CurrencyFormat(capitalCall.FundExpenses);
 					detail.TotalManagementFees = FormatHelper.CurrencyFormat(capitalCall.ManagementFees);
 				}
-				jsonResult = Json(detail, JsonRequestBehavior.AllowGet);
 			}
-			return jsonResult;
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							error += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new { Error = error, Data = detail }, JsonRequestBehavior.AllowGet);
 		}
 
 		public JsonResult GetCapitalCalls(int fundId) {
@@ -99,6 +126,96 @@ namespace DeepBlue.Controllers.Report {
 			}
 			return Json(selectLists, JsonRequestBehavior.AllowGet);
 		}
+
+		#endregion
+
+		#region DealDetail
+
+		public ActionResult DealDetail() {
+			ViewData["MenuName"] = "Reports";
+			ViewData["PageName"] = "DealDetail";
+			DealDetailModel model = new DealDetailModel();
+			return View(model);
+		}
+
+		[HttpPost]
+		public JsonResult DealDetailReport(FormCollection collection) {
+			DealDetailModel model = new DealDetailModel();
+			this.TryUpdateModel(model, collection);
+			string error = string.Empty;
+			ResultModel resultModel = new ResultModel();
+			DealDetailReportModel dealReportDetail = null;
+			if (ModelState.IsValid) {
+				dealReportDetail = ReportRepository.FindDealDetailReport(model.DealId);
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							error += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new { Error = error, Data = dealReportDetail }, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/ExportDetail
+		[HttpGet]
+		public ActionResult ExportDealDetail(FormCollection collection) {
+			ExportDealDetailModel model = new ExportDealDetailModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				model.DealDetailReportModel = ReportRepository.FindDealDetailReport(model.DealId);
+			}
+			return View(model);
+		}
+
+		#endregion
+
+		#region DealOrigination
+
+		public ActionResult DealOrigination() {
+			ViewData["MenuName"] = "Reports";
+			ViewData["PageName"] = "DealOrigination";
+			DealOriginationModel model = new DealOriginationModel();
+			return View(model);
+		}
+
+		[HttpPost]
+		public JsonResult DealOriginationReport(FormCollection collection) {
+			DealOriginationModel model = new DealOriginationModel();
+			this.TryUpdateModel(model, collection);
+			string error = string.Empty;
+			ResultModel resultModel = new ResultModel();
+			DealOriginationReportModel dealOriginationReportDetail = null;
+			if (ModelState.IsValid) {
+				dealOriginationReportDetail = ReportRepository.FindDealOriginationReport(model.DealId);
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							error += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new { Error = error, Data = dealOriginationReportDetail }, JsonRequestBehavior.AllowGet);
+		}
+		//
+		// GET: /Deal/ExportDetail
+		[HttpGet]
+		public ActionResult ExportDealOriginationDetail(FormCollection collection) {
+			ExportDealOriginationModel model = new ExportDealOriginationModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				model.DealOriginationReportModel = ReportRepository.FindDealOriginationReport(model.DealId);
+			}
+			return View(model);
+		}
+
 		#endregion
 	}
 }

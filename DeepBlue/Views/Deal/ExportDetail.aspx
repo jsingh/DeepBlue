@@ -80,16 +80,16 @@
 			<% } %>
 		</tbody>
 	</table>
-	<%DeepBlue.Models.Deal.Enums.ExportType exportType = (DeepBlue.Models.Deal.Enums.ExportType)ViewData["ExportTypeId"];
-   if (exportType == DeepBlue.Models.Deal.Enums.ExportType.Excel || exportType == DeepBlue.Models.Deal.Enums.ExportType.Word) {
+	<%DeepBlue.Models.Admin.Enums.ExportType exportType = (DeepBlue.Models.Admin.Enums.ExportType)ViewData["ExportTypeId"];
+   if (exportType == DeepBlue.Models.Admin.Enums.ExportType.Excel || exportType == DeepBlue.Models.Admin.Enums.ExportType.Word) {
 	   bool exportReady = false;
 	   switch (exportType) {
-		   case DeepBlue.Models.Deal.Enums.ExportType.Word:
+		   case DeepBlue.Models.Admin.Enums.ExportType.Word:
 			   Response.AddHeader("content-disposition", "attachment;filename=DealReport.doc");
 			   Response.ContentType = "application/ms-word";
 			   exportReady = true;
 			   break;
-		   case DeepBlue.Models.Deal.Enums.ExportType.Excel:
+		   case DeepBlue.Models.Admin.Enums.ExportType.Excel:
 			   Response.AddHeader("content-disposition", "attachment;filename=DealReport.xls");
 			   Response.ContentType = "application/excel";
 			   exportReady = true;
