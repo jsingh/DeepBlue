@@ -84,7 +84,6 @@ namespace DeepBlue.Tests.Controllers.Admin {
 
         private FormCollection GetInvalidformCollection() {
             FormCollection formCollection = new FormCollection();
-			//formCollection.Add("EntityID", string.Empty);
 			formCollection.Add("Name", string.Empty);
             return formCollection;
         }

@@ -23,7 +23,7 @@ namespace DeepBlue.Tests.Controllers.Report {
 
 		[Test]
 		public void valid_createcashdistributionsummarylist_json_result_error() {
-			Assert.IsTrue((DefaultController.DistributionSummaryList(1, 1) != null));
+			Assert.IsTrue((DefaultController.DistributionSummaryList(new FormCollection()) != null));
 		}
     }
 }

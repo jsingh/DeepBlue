@@ -23,7 +23,7 @@ namespace DeepBlue.Tests.Controllers.Report {
 
 		[Test]
 		public void valid_capitalcallsummarylist_json_result_error() {
-			Assert.IsTrue((DefaultController.CapitalCallSummaryList(1, 1) != null));
+			Assert.IsTrue((DefaultController.CapitalCallSummaryList(new FormCollection()) != null));
 		}
     }
 }
