@@ -2523,6 +2523,122 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
+		#region Fund Closing
+		//
+		// GET: /Admin/FundClosing
+		[HttpGet]
+		public ActionResult FundClosing() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "InvestorManagement";
+			ViewData["PageName"] = "FundClosing";
+			return View();
+		}
+
+		//
+		// GET: /Admin/FundClosingList
+		[HttpGet]
+		public JsonResult FundClosingList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DeepBlue.Models.Entity.FundClosing> fundClosings = AdminRepository.GetAllFundClosings(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var fundClosing in fundClosings) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {fundClosing.FundClosingID,
+					  fundClosing.Name,
+					 fundClosing.Fund.FundName,
+					 fundClosing.FundClosingDate,
+					 fundClosing.IsFirstClosing,
+					 fundClosing.FundID
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/FundClosing
+		[HttpGet]
+		public ActionResult EditFundClosing(int id) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			DeepBlue.Models.Entity.FundClosing fundClosing = AdminRepository.FindFundClosing(id);
+			flexgridData.total = totalRows;
+			flexgridData.page = 0;
+			flexgridData.rows.Add(new FlexigridRow {
+				cell = new List<object> {fundClosing.FundClosingID,
+					  fundClosing.Name,
+					 fundClosing.Fund.FundName,
+					 fundClosing.FundClosingDate,
+					 fundClosing.IsFirstClosing,
+					 fundClosing.FundID
+					}
+			});
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/UpdateFundClosing
+		[HttpPost]
+		public ActionResult UpdateFundClosing(FormCollection collection) {
+			EditFundClosingModel model = new EditFundClosingModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = FundClosingNameAvailable(model.Name, model.FundClosingId, model.FundId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				FundClosing fundClosing = AdminRepository.FindFundClosing(model.FundClosingId);
+				if (fundClosing == null) {
+					fundClosing = new FundClosing();
+				}
+				fundClosing.Name = model.Name;
+				fundClosing.FundClosingDate = model.FundClosingDate;
+				fundClosing.FundID = model.FundId;
+				fundClosing.IsFirstClosing = model.IsFirstClosing;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFundClosing(fundClosing);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True||" + fundClosing.FundClosingID;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteFundClosing(int id) {
+			if (AdminRepository.DeleteFundClosing(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string FundClosingNameAvailable(string name, int fundClosingId, int fundId) {
+			if (AdminRepository.FundClosingNameAvailable(name, fundClosingId, fundId))
+				return "Name already exist";
+			else
+				return string.Empty;
+		}
+		#endregion
+
 		public ActionResult Result() {
 			return View();
 		}

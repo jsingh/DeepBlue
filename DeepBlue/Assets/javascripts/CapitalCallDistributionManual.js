@@ -59,7 +59,7 @@
 			var frm=$("#"+frmid);
 			var loading=$("#ManualUpdateLoading");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			var param=$(frm).serializeArray();
+			var param=$(frm).serializeForm();
 			param[param.length]={ name: "FundId",value: $("#FundId").val() };
 			param[param.length]={ name: "DistributionNumber",value: $("#DistributionNumber").val() };
 			$.post("/CapitalCall/CreateManualDistribution",param,function (data) {

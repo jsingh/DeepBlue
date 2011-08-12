@@ -244,9 +244,5 @@ namespace DeepBlue.Controllers.Fund {
 		}
 
 		#endregion
-
-
-
-
 	}
 }

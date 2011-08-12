@@ -156,7 +156,7 @@
 		try {
 			var loading=$("#SpnSaveLoading");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			$.post("/Deal/UpdateUnderlyingFund",$(frm).serializeArray(),function (data) {
+			$.post("/Deal/UpdateUnderlyingFund",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				$("#SpnDocLoading").empty();
 				$("#BILoading").empty();

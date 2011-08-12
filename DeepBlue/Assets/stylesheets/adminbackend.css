@@ -1,12 +1,15 @@
 ﻿#content {
-	background-image: url(../images/line.png);
-	background-repeat: repeat-x;
-	overflow: hidden;
+	background-image: url("../images/menu_bg_bot.gif");
+	background-repeat: repeat-y;
 }
 #leftmenu {
-	float:left;
+	float: left;
 	width: 282px;
-	display:block;
+	display: block;
+}
+.admin-main {
+	float: left;
+	width:71%;
 }
 #cntbox {
 	overflow: hidden;
@@ -32,19 +35,12 @@
 	background-repeat: repeat-x;
 	min-height: 419px;
 }
-#leftmenu  {
-	background-image: url("../images/menu_bg_bot.gif");
-	background-repeat: repeat;
-}
-.admin-main {
-	width: 74.5%;
-	float:left;
-	padding:20px;
-}
 .admin-content {
-	float:left;
-	width:100%;
-	clear:both;
+	float: left;
+	clear: both;
+	margin: 20px;
+	min-width:685px;
+	width:95%;
 }
 .green-btn {
 	margin: 0;

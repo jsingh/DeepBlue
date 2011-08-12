@@ -46,7 +46,7 @@
 		<%: Html.LabelFor(model => model.NumofAutoExtensions) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.jQueryTemplateTextBox("NumofAutoExtensions", "${checkNullOrZero(NumofAutoExtensions)}", new { @id = "NumofAutoExtensions", @onkeypress = "return jHelper.isNumeric(event);" })%>
+		<%: Html.jQueryTemplateTextBox("NumofAutoExtensions", "${checkNullOrZero(NumofAutoExtensions)}", new { @id = "NumofAutoExtensions", @onkeydown = "return jHelper.isNumeric(event);" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.LabelFor(model => model.DateClawbackTriggered) %>
@@ -58,7 +58,7 @@
 		<%: Html.LabelFor(model => model.RecycleProvision) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.jQueryTemplateTextBox("RecycleProvision", "${checkNullOrZero(RecycleProvision)}", new { @id = "RecycleProvision", @onkeypress = "return jHelper.isNumeric(event);" })%>
+		<%: Html.jQueryTemplateTextBox("RecycleProvision", "${checkNullOrZero(RecycleProvision)}", new { @id = "RecycleProvision", @onkeydown = "return jHelper.isNumeric(event);" })%>
 	</div>
 	<div class="editor-label">
 		<%: Html.LabelFor(model => model.MgmtFeesCatchUpDate) %>
@@ -70,7 +70,7 @@
 		<%: Html.LabelFor(model => model.Carry) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.jQueryTemplateTextBox("Carry", "${checkNullOrZero(Carry)}", new { @id = "Carry", @onkeypress = "return jHelper.isNumeric(event);" })%>
+		<%: Html.jQueryTemplateTextBox("Carry", "${checkNullOrZero(Carry)}", new { @id = "Carry", @onkeydown = "return jHelper.isNumeric(event);" })%>
 	</div>
 	<% Html.RenderPartial("JQueryTemplateCustomFieldList", Model.CustomField);%>
 </div>
@@ -146,7 +146,7 @@
 				<%: Html.Label("ABA Number-") %>
 			</div>
 			<div class="editor-field">
-				<%: Html.jQueryTemplateTextBox("ABANumber", "${BankDetail[0].ABANumber}", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
+				<%: Html.jQueryTemplateTextBox("ABANumber", "${BankDetail[0].ABANumber}", new { @onkeydown = "return jHelper.isNumeric(event);" })%>
 			</div>
 			<div class="editor-label">
 				<%: Html.Label("Swift Code-")%>

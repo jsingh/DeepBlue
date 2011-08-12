@@ -8,7 +8,7 @@
 			GP</label>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("Issuer", "${IssuerName}", new { @id = "Issuer", @style = "width:163px", @onblur = "javascript:underlyingFund.checkIssuer(this);" })%>
+		<%: Html.TextBox("Issuer", "${IssuerName}", new { @id = "Issuer",   @onblur = "javascript:underlyingFund.checkIssuer(this);" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<label>
@@ -29,21 +29,21 @@
 			Vintage Year</label>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("VintageYear", "${VintageYear}", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
+		<%: Html.TextBox("VintageYear", "${VintageYear}", new { @onkeydown = "return jHelper.isNumeric(event);" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<label>
 			Fund Size</label>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("TotalSize", "${TotalSize}", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
+		<%: Html.TextBox("TotalSize", "${TotalSize}", new { @onkeydown = "return jHelper.isNumeric(event);" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<label>
 			Termination Year</label>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("TerminationYear", "${TerminationYear}", new { @class = "wm", @onkeypress = "return jHelper.isNumeric(event);" })%>
+		<%: Html.TextBox("TerminationYear", "${TerminationYear}", new { @class = "wm", @onkeydown = "return jHelper.isNumeric(event);" })%>
 	</div>
 	<div class="editor-label">
 		<label>
@@ -189,7 +189,7 @@
 						ABA No.</label>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("Routing", "${Routing}", new { @class = "wm", @onkeypress = "return jHelper.isNumeric(event);" })%>
+					<%: Html.TextBox("Routing", "${Routing}", new { @class = "wm", @onkeydown = "return jHelper.isNumeric(event);" })%>
 				</div>
 				<div class="editor-label">
 					<label>

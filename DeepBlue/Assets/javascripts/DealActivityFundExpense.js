@@ -41,10 +41,13 @@ dealActivity.makeNewFLE=function () {
 		var target=$("tbody",tbl);
 		var item=dealActivity.newFLEData;
 		item["FundId"]=fundId;
-		$("#FLEAddTemplate").tmpl(item).prependTo(target);
-		var tr=$("#FLE_0",target);
-		dealActivity.setUpRow(tr);
-		dealActivity.editRow(tr);
+		var tr=$("#FLE_0",target).get(0);
+		if(!tr) {
+			$("#FLEAddTemplate").tmpl(item).prependTo(target);
+			tr=$("#FLE_0",target);
+			dealActivity.setUpRow(tr);
+			dealActivity.editRow(tr);
+		}
 	}
 };
 dealActivity.editFLE=function (img,id) {

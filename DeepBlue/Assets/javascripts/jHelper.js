@@ -1,19 +1,34 @@
 ﻿var jHelper={
-	isNumeric: function (evt) {
+	isNumeric: function (evt,txt) {
 		evt=(evt)?evt:window.event
 		var charCode=(evt.which)?evt.which:evt.keyCode;
-		if((charCode>31&&(charCode<48||charCode>57))&&(charCode!=37&&charCode!=39&&charCode!=45)) {
-			return false;
+		if((charCode>=48&&charCode<=57)||(charCode>=96&&charCode<=105)
+			||(charCode==8)
+			||(charCode==37)
+			||(charCode==39)
+			||(charCode==46)
+			||(charCode==5)
+			||(charCode==9)
+			) {
+			return true;
 		}
-		return true
+		return false;
 	}
 	,isCurrency: function (evt) {
 		evt=(evt)?evt:window.event
 		var charCode=(evt.which)?evt.which:evt.keyCode;
-		if((charCode>31&&(charCode<48||charCode>57))&&(charCode!=37&&charCode!=39&&charCode!=46&&charCode!=45)) {
-			return false;
+		if((charCode>=48&&charCode<=57)||(charCode>=96&&charCode<=105)
+			||(charCode==8)
+			||(charCode==37)
+			||(charCode==39)
+			||(charCode==46)
+			||(charCode==190)
+			||(charCode==5)
+			||(charCode==9)
+			) {
+			return true;
 		}
-		return true
+		return false;
 	}
 	,cfloat: function (value) {
 		var retValue=parseFloat(value);if(isNaN(retValue)) { return 0; } else { return retValue; }
@@ -53,7 +68,11 @@
 		try {
 			var t=document.createElement("input");t.type="text";
 			$(t).val(Num).formatCurrency();
-			return $(t).val();
+			var v=$(t).val();
+			if(v.toString()=="null")
+				return "";
+			else
+				return v;
 		}
 		catch(e) {
 			return "";
@@ -72,6 +91,9 @@
 	,serialize: function (target) {
 		var param=[];
 		$(":input",target).each(function () {
+			if($(this).attr("onkeydown")!="") {
+				this.value=this.value.replace("%","");
+			}
 			var type=$(this).attr("type");
 			switch(type) {
 				case "checkbox": if(this.checked) { param[param.length]=jHelper.getParam(this); } break;
@@ -238,7 +260,7 @@
 		$("#lnkExportName").html(name);
 		$(".exportlist").hide();
 	}
-	,loadingHTML:function() { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...";}
+	,loadingHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading..."; }
 }
 $.extend(window,{
 	formatDate: function (dt) { try { if(dt==null) { return ""; } var d=jHelper.formatDate(jHelper.parseJSONDate(dt));if(d=="01/01/1"||d=="01/01/1900") { return ""; } else { return d; } } catch(e) { return ""; } }

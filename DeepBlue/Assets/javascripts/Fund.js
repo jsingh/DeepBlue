@@ -100,7 +100,7 @@
 		var loading=$("#UpdateLoading",frm);
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		var fundId=parseInt($("#FundId",frm).val());
-		$.post("/Fund/Create",$(frm).serializeArray(),function (data) {
+		$.post("/Fund/Create",$(frm).serializeForm(),function (data) {
 			loading.empty();
 			if($.trim(data)!="") {
 				alert(data);

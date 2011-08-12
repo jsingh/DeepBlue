@@ -50,7 +50,7 @@ dealActivity.loadPRCD=function (isRefresh) {
 };
 dealActivity.submitUFPRCashDistribution=function (frm) {
 	try {
-		var param=$(frm).serializeArray();
+		var param=$(frm).serializeForm();
 		var loading=$("#SpnPRCDSaveLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#PRCashDistributionList").length)};

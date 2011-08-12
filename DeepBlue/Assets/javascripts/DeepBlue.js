@@ -40,6 +40,7 @@
 					deepBlue.resize();
 				});
 			});
+			
 			deepBlue.resize();
 		});
 	}
@@ -86,7 +87,9 @@
 		var h=($(window).height()-pos.top)-35;
 		var cntheight=cnt.height();
 		cnt.css("min-height",h);
-		leftmenu.css("min-height",h-47);
+		var w=$(window).width();
+		//$(".admin-main").width(w-282);
+		//leftmenu.css("min-height",h-35);
 	}
 	,setArrow: function (showmenu) {
 		if(showmenu.get(0)) {

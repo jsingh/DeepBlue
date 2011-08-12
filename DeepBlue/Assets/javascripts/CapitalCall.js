@@ -134,7 +134,7 @@
 			var frm=$("#"+frmid);
 			var loading=$("#UpdateLoading");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			var param=$(frm).serializeArray();
+			var param=$(frm).serializeForm();
 			param[param.length]={ name: "FundId",value: $("#FundId").val() };
 			param[param.length]={ name: "CapitalCallNumber",value: $("#CapitalCallNumber").val() };
 			$.post("/CapitalCall/Create",param,function (data) {

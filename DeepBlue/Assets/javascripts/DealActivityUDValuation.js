@@ -92,7 +92,7 @@ dealActivity.loadUDV=function () {
 };
 dealActivity.submitUDV=function (frm) {
 	try {
-		var param=$(frm).serializeArray();
+		var param=$(frm).serializeForm();
 		var loading=$("#SpnUDVSaveLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#UDValuationList").length) };

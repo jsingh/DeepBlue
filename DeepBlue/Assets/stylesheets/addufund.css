@@ -20,20 +20,17 @@
 	width: 100%;
 }
 #cntbox {
-	top:97px;
+	top: 97px;
 }
 #AddUnderlyingFund {
 	clear: both;
 	float: left;
-	width: 100%;
 	margin-top: 20px;
 }
 #AddUnderlyingFund .content {
 	clear: both;
 	float: left;
-	overflow: auto;
 	padding-bottom: 30px;
-	width: 100%;
 }
 #AddUnderlyingFund .title {
 	background: url(../images/plus.png) no-repeat scroll left top transparent;
@@ -98,12 +95,21 @@
 	vertical-align: middle;
 	padding-top: 10px;
 }
-.editor-field select {
-	width:188px;
-}
+
 .expandsel {
-	margin-top:-2px; cursor:pointer;
+	margin-top: -2px;
+	cursor: pointer;
 }
 .headerbox {
-	float:left; cursor:pointer;
+	float: left;
+	cursor: pointer;
+}
+.editor-field select {
+	width: 168px;
+}
+.editor-field input[type="text"] {
+	width: 160px;
+}
+.editor-field input.ui-autocomplete-input[type="text"] {
+    width: 144px;
 }

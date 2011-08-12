@@ -48,9 +48,7 @@
 #ReportContent.dealdetail{
 	width:968px;
 }
-#ReportContent td {
-	white-space: nowrap;
-}
+ 
 #ReportContent td.title {
 	font-size: 23px;
 	font-weight: bold;

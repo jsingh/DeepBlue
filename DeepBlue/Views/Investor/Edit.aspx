@@ -425,7 +425,7 @@
 										<%: Html.Label("ABA Number:")%>
 									</div>
 									<div class="editor-field">
-										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "ABANumber", "", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
+										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "ABANumber", "", new { @onkeydown = "return jHelper.isNumeric(event);" })%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AccountInformations.Count.ToString() + "_" + "ABANumber" })%>
 									</div>
 									<div class="editor-label">

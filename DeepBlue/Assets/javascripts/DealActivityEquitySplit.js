@@ -92,7 +92,7 @@ dealActivity.loadNHP=function (securityTypeId,securityId,activityId) {
 dealActivity.onNHPRowBound=function (tr,row,t) {
 };
 dealActivity.createSA=function (frm) {
-	var param=$(frm).serializeArray();
+	var param=$(frm).serializeForm();
 	param[param.length]={ name: "ActivityTypeId",value: dealActivity.getActivityTypeId() };
 	param[param.length]={ name: "DealUnderlyingDirectId",value: dealActivity.getUnderlyingDirectId() };
 	$("#SpnEquitySplitLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");

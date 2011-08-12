@@ -32,10 +32,10 @@
 		<%}%>
 		<%break;%>
 		<%case DeepBlue.Models.Admin.Enums.CustomFieldDataType.Currency:%>
-		<%: Html.TextBox("CustomField_" + item.CustomFieldId.ToString(),  (customFieldValue.CurrencyValue > 0 ? customFieldValue.CurrencyValue.ToString("0.00") : string.Empty), new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+		<%: Html.TextBox("CustomField_" + item.CustomFieldId.ToString(),  (customFieldValue.CurrencyValue > 0 ? customFieldValue.CurrencyValue.ToString("0.00") : string.Empty), new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 		<%break;%>
 		<%case DeepBlue.Models.Admin.Enums.CustomFieldDataType.Integer:%>
-		<%: Html.TextBox("CustomField_" + item.CustomFieldId.ToString(), (customFieldValue.IntegerValue > 0 ? customFieldValue.IntegerValue.ToString() : string.Empty), new { @onkeypress = "return jHelper.isNumeric(event);" })%>
+		<%: Html.TextBox("CustomField_" + item.CustomFieldId.ToString(), (customFieldValue.IntegerValue > 0 ? customFieldValue.IntegerValue.ToString() : string.Empty), new { @onkeydown = "return jHelper.isNumeric(event);" })%>
 		<%break;%>
 		<%}%>
 	</div>

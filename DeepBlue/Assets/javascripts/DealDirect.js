@@ -75,7 +75,7 @@
 					}
 				});
 
-			/*$.post("/Deal/UpdateIssuer",$(frm).serializeArray(),function (data) {
+			/*$.post("/Deal/UpdateIssuer",$(frm).serializeForm(),function (data) {
 			loading.empty();
 			var arr=data.split("||");
 			if(arr[0]=="True") {
@@ -105,7 +105,7 @@
 		try {
 			var loading=$("#SpnNewLoading");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			$.post("/Deal/CreateIssuer",$(frm).serializeArray(),function (data) {
+			$.post("/Deal/CreateIssuer",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				var arr=data.split("||");
 				if(arr[0]=="True") {

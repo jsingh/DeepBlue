@@ -57,7 +57,7 @@ dealActivity.getCDUnderlyingFundId=function (id) {
 };
 dealActivity.submitUFCashDistribution=function (frm) {
 	try {
-		var param=$(frm).serializeArray();
+		var param=$(frm).serializeForm();
 		var loading=$("#SpnCDSaveLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		var chk=$("#IsManualCashDistribution").get(0);

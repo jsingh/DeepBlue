@@ -51,7 +51,7 @@ jQuery.extend({
 				value: id
 			});
 			$(form).append(input);
-			var param=$(tempForm).serializeArray();
+			var param=$(tempForm).serializeForm();
 			var i;
 			for(i=0;i<param.length;i++) {
 				var input=document.createElement("input");

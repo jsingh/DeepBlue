@@ -62,7 +62,7 @@ dealActivity.getCCUnderlyingFund=function (id) {
 };
 dealActivity.submitUFCapitalCall=function (frm) {
 	try {
-		var param=$(frm).serializeArray();
+		var param=$(frm).serializeForm();
 		var loading=$("#SpnCCSaveLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		var chk=$("#IsManualCapitalCall").get(0);

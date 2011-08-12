@@ -47,9 +47,9 @@
 .fund-box-det .editor-label {
 	text-align: right;
 	font-weight: bold;
-	padding: 10px 5px;
+	padding: 10px 0;
 	white-space: nowrap;
-	width: 188px;
+	width: 160px;
 }
 .headerbox {
 	 cursor: pointer;
@@ -58,7 +58,7 @@
     width: 100%;
 }
 .editor-field {
-	width: 185px;
+	width: auto;
 }
 .section-det .title {
 	background: url("../images/plus.png") no-repeat scroll left top transparent;

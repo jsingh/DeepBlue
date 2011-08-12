@@ -25,7 +25,7 @@
 			loading.show();
 			var target=$("#ReportDetail");
 			target.show();
-			$.post("/Report/DistributionSummaryList",$(frm).serializeArray(),function (data) {
+			$.post("/Report/DistributionSummaryList",$(frm).serializeForm(),function (data) {
 				loading.hide();
 				if($.trim(data.Error)!="") {
 					alert(data.Error);

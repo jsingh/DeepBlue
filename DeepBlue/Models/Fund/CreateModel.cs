@@ -44,14 +44,14 @@ namespace DeepBlue.Models.Fund {
 		public DateTime? DateClawbackTriggered { get; set; }
 
 		[DisplayName("Recycle Provision %-")]
-		[Range(0, 100, ErrorMessage = "Recycle Provision % must be under 100%.")]
+		[Range(0, 100, ErrorMessage = "Recycle Provision must be under 100%.")]
 		public int? RecycleProvision { get; set; }
 
 		[DisplayName("Mgmt Fees Catchup Date-")]
 		public DateTime? MgmtFeesCatchUpDate { get; set; }
 
 		[DisplayName("Carry %-")]
-		[Range(0, 100, ErrorMessage = "Carry % must be under 100%.")]
+		[Range(0, 100, ErrorMessage = "Carry must be under 100%.")]
 		public int? Carry { get; set; }
 
 		/* Bank Details */

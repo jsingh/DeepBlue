@@ -27,13 +27,13 @@
 						<th style="width: 8%; text-align: left;">
 							Year
 						</th>
-						<th style="width: 10%; text-align: left;">
+						<th style="width: 12%; text-align: left;">
 							From Date
 						</th>
-						<th style="width: 10%; text-align: left;">
+						<th style="width: 12%; text-align: left;">
 							To Date
 						</th>
-						<th style="width: 15%; text-align: left;">
+						<th style="width: 20%; text-align: left;">
 							Fee Calculation Type
 						</th>
 						<th style="width: 12%; text-align: left;">

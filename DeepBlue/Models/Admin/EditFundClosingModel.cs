@@ -13,12 +13,12 @@ namespace DeepBlue.Models.Admin {
 		public EditFundClosingModel() {
 		}
 
-		public int FundClosingID { get; set; }
+		public int FundClosingId { get; set; }
 
 		[Required(ErrorMessage = "Fund is required.")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
 		[DisplayName("Fund:")]
-		public int FundID { get; set; }
+		public int FundId { get; set; }
 
 		[Required(ErrorMessage = "Name is required.")]
 		[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]

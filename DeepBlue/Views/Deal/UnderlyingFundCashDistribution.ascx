@@ -11,7 +11,7 @@
 		<%: Html.Hidden("${Index}_FundId", "${FundId}")%>
 	</td>
 	<td class="ralign">
-		<%: Html.TextBox("${Index}_Amount", "{{if Amount>0}}${Amount}{{/if}}", new { @class = "", @onkeypress = "return jHelper.isCurrency(event);" })%>
+		<%: Html.TextBox("${Index}_Amount", "{{if Amount>0}}${Amount}{{/if}}", new { @class = "", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="lalign">
 		<%: Html.TextBox("${Index}_NoticeDate", "{{if UnderlyingFundCashDistributionId>0}}${NoticeDate}{{/if}}", new { @class = "datefield", @id = "${Index}_CD_NoticeDate" })%>

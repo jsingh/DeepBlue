@@ -20,6 +20,7 @@
 	margin-left: 78px;
 	margin-top: 10px;
 	float: left;
+	width:800px;
 }
 .doc-search {
 	width: 100%;
@@ -43,6 +44,7 @@
 }
 .editor-field {
 	width: auto;
+	white-space:nowrap;
 }
 .editor-field select{
 	padding:2px;

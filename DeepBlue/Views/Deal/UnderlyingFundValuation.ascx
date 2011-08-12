@@ -16,7 +16,7 @@
 	</td>
 	<td class="ralign">
 		<%: Html.Span("${UpdateNAV}", new { @class = "{{if UnderlyingFundNAVId==0}}hide{{else}}show{{/if}} money", @val = "{{if UnderlyingFundNAVId==0}}${CalculateNAV}{{else}}${UpdateNAV}{{/if}}" })%>
-		<%: Html.TextBox("UpdateNAV", "{{if UnderlyingFundNAVId==0}}{{if CalculateNAV>0}}${CalculateNAV}{{/if}}{{else}}{{if UpdateNAV>0}}${UpdateNAV}{{/if}}{{/if}}", new { @class = "{{if UnderlyingFundNAVId==0}}show{{else}}hide{{/if}}", @onkeypress = "return jHelper.isCurrency(event);" })%>
+		<%: Html.TextBox("UpdateNAV", "{{if UnderlyingFundNAVId==0}}{{if CalculateNAV>0}}${CalculateNAV}{{/if}}{{else}}{{if UpdateNAV>0}}${UpdateNAV}{{/if}}{{/if}}", new { @class = "{{if UnderlyingFundNAVId==0}}show{{else}}hide{{/if}}", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="lalign">
 		<%: Html.Span("${UpdateDate}", new { @class = "{{if UnderlyingFundNAVId==0}}hide{{else}}show{{/if}} dispdate", @val = "${UpdateDate}" })%>

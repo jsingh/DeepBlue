@@ -8,27 +8,27 @@
 		<%: Html.Span("${FundName}", new { @class = "show" })%>
 	</td>
 	<td class="lalign">
-		<%: Html.TextBox("${Index}_Issuer", "", new { @style="width:100px", @id = "Issuer" })%>
+		<%: Html.TextBox("${Index}_Issuer", "", new { @id = "Issuer" })%>
 		<%: Html.Hidden("${Index}_SecurityId", "", new { @id = "SecurityId" })%>
 		<%: Html.Hidden("${Index}_SecurityTypeId", "", new { @id = "SecurityTypeId" })%>
 	</td>
 	<td class="ralign">
-		<%: Html.TextBox("${Index}_NumberOfShares", "", new { @style="width:100px",  @onkeypress = "return jHelper.isNumeric(event);" })%>
+		<%: Html.TextBox("${Index}_NumberOfShares", "", new {  @onkeydown = "return jHelper.isNumeric(event);" })%>
 	</td>
 	<td class="ralign">
-		<%: Html.TextBox("${Index}_PurchasePrice", "", new { @style="width:100px", @onkeypress = "return jHelper.isCurrency(event);" })%>
+		<%: Html.TextBox("${Index}_PurchasePrice", "", new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td  class="lalign">
-		<%: Html.TextBox("${Index}_NoticeDate", "", new { @style="width:100px", @id = "${Index}_NoticeDate", @class = "datefield" })%>
+		<%: Html.TextBox("${Index}_NoticeDate", "", new { @id = "${Index}_NoticeDate", @class = "datefield" })%>
 	</td>
 	<td class="lalign">
-		<%: Html.TextBox("${Index}_DistributionDate", "", new { @style="width:100px", @id = "${Index}_DistributionDate", @class = "datefield" })%>
+		<%: Html.TextBox("${Index}_DistributionDate", "", new { @id = "${Index}_DistributionDate", @class = "datefield" })%>
 	</td>
 	<td class="ralign">
-		<%: Html.TextBox("${Index}_TaxCostBase", "", new { @style="width:100px", @onkeypress = "return jHelper.isCurrency(event);" })%>
+		<%: Html.TextBox("${Index}_TaxCostBase", "", new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="lalign">
-		<%: Html.TextBox("${Index}_TaxCostDate", "", new { @style="width:100px", @id = "${Index}_TaxCostDate", @class = "datefield" })%>
+		<%: Html.TextBox("${Index}_TaxCostDate", "", new { @id = "${Index}_TaxCostDate", @class = "datefield" })%>
 	</td>
 	<td style="text-align: right;display:none;" class="ralign">
 		<%: Html.Hidden("${Index}_UnderlyingFundStockDistributionId", "${UnderlyingFundStockDistributionId}")%>

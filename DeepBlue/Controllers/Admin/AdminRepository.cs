@@ -855,7 +855,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public FundClosing FindFundClosing(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.FundClosings.SingleOrDefault(fundClose => fundClose.FundClosingID == id);
+				return context.FundClosings.Include("Fund").SingleOrDefault(fundClose => fundClose.FundClosingID == id);
 			}
 		}
 

@@ -1,91 +1,104 @@
 ﻿var fundClosing={
-	pageLoad: false
-	,init: function () {
-		$("document").ready(function () {
-			fundClosing.resizeIframe();
-			fundClosing.pageLoad=true;
-			$("body").css("overflow","hidden");
-		});
+	add: function (that) {
+		var flexigrid=$(that).parents(".flexigrid:first");
+		var row=$("#Row0",flexigrid).get(0);
+		if(!row) {
+			var tbody=$(".bDiv table tbody",flexigrid);
+			var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,"","","",false,0]}] };
+			$("#GridTemplate").tmpl(data).prependTo(tbody);
+			var tr=$("tr:first",tbody);
+			this.editRow(tr);
+			fundClosing.setup(tr);
+			$("#Add",tr).show();
+		}
 	}
-	,add: function (id) {
-		var dt=new Date();
-		var url="/Admin/EditFundClosing/"+id+"?t="+dt.getTime();
-		jHelper.createDialog(url,{
-			title: "Fund Closing",
-			autoOpen: true,
-			width: 380,
-			modal: true,
-			position: 'middle',
-			autoResize: true
-		});
+	,edit: function (img) {
+		var tr=$(img).parents("tr:first");
+		this.editRow(tr);
+		$("#Save",tr).show();
 	}
-	,deleteFundClosing: function (id,img) {
+	,editRow: function (tr) {
+		$(".show",tr).hide();
+		$(".hide",tr).show();
+		$(":input:first",tr).focus();
+	}
+	,deleteRow: function (img,id) {
 		if(confirm("Are you sure you want to delete this fund closing?")) {
+			var tr=$(img).parents("tr:first");
+			var imgsrc=img.src;
+			$(img).attr("src","/Assets/images/ajax.jpg");
+			img.src=imgsrc;
 			var dt=new Date();
 			var url="/Admin/DeleteFundClosing/"+id+"?t="+dt.getTime();
 			$.get(url,function (data) {
 				if(data!="") {
 					alert(data);
 				} else {
-					$("#FundClosingList").flexReload();
+					tr.remove();
+					jHelper.applyFlexGridClass($(".bDiv:first"));
 				}
 			});
 		}
 	}
-	,changeFund: function (fundddl) {
-		var dt=new Date();
-		var url="/Admin/FundClosingNameAvailable/?Name="+$("#Name").val()+"&FundClosingID="+$("#FundClosingID").val()+"&FundID="+$("#FundID").val()+"&t="+dt.getTime();
-		$.get(url,function (data) {
-			if(data!="") {
+	,save: function (img,id) {
+		var tr=$("#Row"+id);
+		var param=jHelper.serialize(tr);
+		var url="/Admin/UpdateFundClosing";
+		var imgsrc=img.src;
+		$(img).attr("src","/Assets/images/ajax.jpg");
+		$.post(url,param,function (data) {
+			img.src=imgsrc;
+			var arr=data.split("||");
+			if(arr[0]!="True") {
 				alert(data);
-				$("#Name_validationMessage").html(data);
 			} else {
-				$("#Name_validationMessage").html("");
+				$.getJSON("/Admin/EditFundClosing?_"+(new Date).getTime()+"&id="+arr[1],function (loadData) {
+					$("#GridTemplate").tmpl(loadData).insertAfter(tr);
+					$(tr).remove();
+					var newTR=$("#Row"+arr[1]);
+					jHelper.applyFlexGridClass($(".bDiv:first"));
+					jHelper.checkValAttr(newTR);
+					fundClosing.setup(newTR);
+				});
 			}
 		});
 	}
-	,showDate: function (dateText,inst) {
-		fundClosing.resizeIframe(130);
+	,onGridSuccess: function (t,g) {
+		jHelper.checkValAttr(t);
+		fundClosing.setup(t);
+		$(window).resize();
 	}
-	,closeDate: function () {
-		fundClosing.resizeIframe(-130);
-	}
-	,resizeIframe: function (h) {
-		var theFrame=$("#iframe_modal",parent.document.body);
-		if(theFrame) {
-			var bdyHeight=$("body").height();
-			if(parseInt(h)>0&&this.pageLoad) {
-				bdyHeight=bdyHeight+h;
+	,setup: function (target) {
+		$("#FundName",target).each(function () {
+			var tr=$(this).parents("tr:first");
+			$(this).autocomplete(
+			{ source: "/Fund/FindFunds",minLength: 1
+			,select: function (event,ui) {
+				$("#FundId",tr).val(ui.item.id);
+			},appendTo: "body",delay: 300
 			}
-			theFrame.height(bdyHeight);
-		}
+			);
+		});
+		jHelper.applyDatePicker(target);
 	}
-	,onSubmit: function (formId) {
-		return jHelper.formSubmit(formId);
+	,onInit: function (g) {
+		var data={ name: "Add Fund Closing" };
+		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
+		//		$(window).resize(function () {
+		//			fundClosing.resizeGV(g);
+		//		});
 	}
-	,onRowBound: function (tr,data) {
-		var lastcell=$("td:last div",tr);
-		lastcell.html("<img id='Edit' class='gbutton' src='/Assets/images/Edit.png'/>&nbsp;&nbsp;&nbsp;<img id='Delete' src='/Assets/images/largedel.png'/>");
-		$("#Edit",lastcell).click(function () { fundClosing.add(data.cell[0]); });
-		$("#Delete",lastcell).click(function () { fundClosing.deleteFundClosing(data.cell[0],this); });
-		$("td:not(:last)",tr).click(function () { fundClosing.add(data.cell[0]); });
+	,onTemplate: function (tbody,data) {
+		$("#GridTemplate").tmpl(data).appendTo(tbody);
 	}
-	,closeDialog: function (reload) {
-		$("#addDialog").dialog('close');
-		if(reload==true) {
-			$("#FundClosingList").flexReload();
-		}
-	}
-	,onCreateFundClosingBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-	}
-	,onCreateFundClosingSuccess: function () {
-		$("#UpdateLoading").html("");
-		var UpdateTargetId=$("#UpdateTargetId");
-		if(jQuery.trim(UpdateTargetId.html())!="True") {
-			alert(UpdateTargetId.html())
-		} else {
-			parent.fundClosing.closeDialog(true);
+	,resizeGV: function (g) {
+		var admain=$(".admin-main");
+		var bDivBox=$(g.bDivBox);
+		bDivBox.css("height","auto");
+		var ah=admain.height()-220;
+		var h=bDivBox.height();
+		if(h>ah) {
+			bDivBox.height(ah);
 		}
 	}
 }

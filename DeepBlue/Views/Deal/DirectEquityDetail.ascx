@@ -31,7 +31,7 @@
 		<%: Html.LabelFor(model => model.EquityIndustryId)%>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("EquityIndustry", "${EquityIndustry}", new { @id = "EquityIndustry", @style = "width:157px;" })%>
+		<%: Html.TextBox("EquityIndustry", "${EquityIndustry}", new { @id = "EquityIndustry"  })%>
 		<%: Html.Hidden("EquityIndustryId", "${EquityIndustryId}", new { @id = "EquityIndustryId" })%>
 	</div>
 	<div class="editor-label" style="clear: right">

@@ -818,6 +818,7 @@
     <Content Include="Assets\javascripts\jquery.layoutengine.js" />
     <Content Include="Assets\javascripts\jquery.textshadow.js" />
     <Content Include="Assets\javascripts\jquery.tooltip.min.js" />
+    <Content Include="Assets\javascripts\jqueryform.js" />
     <Content Include="Assets\javascripts\ReportingFrequency.js" />
     <Content Include="Assets\javascripts\ReportingType.js" />
     <Content Include="Assets\javascripts\jAjaxTable.js" />
@@ -989,11 +990,9 @@
     <Content Include="Views\Report\ExportDealDetail.ascx" />
     <Content Include="Views\Shared\JQueryTemplateCustomFieldList.ascx" />
     <Content Include="Views\Shared\CustomFieldList.ascx" />
-    <Content Include="Views\Fund\Edit.aspx" />
     <Content Include="Views\Fund\FundDetail.ascx" />
     <Content Include="Views\Fund\Index.aspx" />
     <Content Include="Views\Fund\List.ascx" />
-    <Content Include="Views\Fund\New.aspx" />
     <Content Include="Views\Fund\Result.ascx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Investor\Edit.aspx" />

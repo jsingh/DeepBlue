@@ -7,7 +7,7 @@
 		<%: Html.LabelFor(model => model.FaceValue) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("FaceValue", "${FaceValue}", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+		<%: Html.TextBox("FaceValue", "${FaceValue}", new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.LabelFor(model => model.FixedIncomeISINO) %>
@@ -43,7 +43,7 @@
 		<%: Html.LabelFor(model => model.Frequency) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("Frequency", "${Frequency}", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
+		<%: Html.TextBox("Frequency", "${Frequency}", new { @onkeydown = "return jHelper.isNumeric(event);" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.LabelFor(model => model.FirstCouponDate) %>

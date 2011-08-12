@@ -270,7 +270,7 @@
 									<%: Html.LabelFor(model => model.ABANumber) %>
 								</div>
 								<div class="editor-field text">
-									<%: Html.TextBox(Model.AccountLength + "_" + "ABANumber", "", new { @onkeypress = "return jHelper.isNumeric(event);" })%>
+									<%: Html.TextBox(Model.AccountLength + "_" + "ABANumber", "", new { @onkeydown = "return jHelper.isNumeric(event);" })%>
 								</div>
 							</div>
 							<div class="editor-row">

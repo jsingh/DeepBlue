@@ -19,7 +19,7 @@
 }
 .fieldbox {
 	clear: both;
-	margin: 20px 0 20px 5px;
+	margin: 20px 0 20px 0;
 	float: left;
 	width: 100%;
 	clear: both;
@@ -50,7 +50,14 @@ h5 {
 .expandbtn {
 	cursor: pointer;
 	float: left;
-	width: 10%;
+	width: auto;
+	padding-left:65px;
+	background-image: url(../images/downarrow.png);
+	background-position: center right;
+	background-repeat: no-repeat; width: 90%;
+}
+.expandsel .expandbtn {
+	background-image: url(../images/rightuarrow.png);
 }
 #DealDeail {
 	float: left;
@@ -117,15 +124,17 @@ h4 a {
 }
 .dealdetail {
 	float: left;
+	padding-left:65px;
+	width:94%;
 }
 .dealdetail .cell {
 	font-size: 14px;
 	font-weight: bold;
 }
 .section {
-	margin: 15px 65px;
+	margin: 15px 0px;
 	float: left;
-	width: 100%;
+	width:100%;
 }
 #DealMain .content {
 	clear: both;
@@ -133,13 +142,10 @@ h4 a {
 	width: 100%;
 }
 .expandheader, .recon-expandheader {
-	padding: 0px 0px 0px 65px;
 	cursor: pointer;
 	float: left;
-	width: 90%;
-	background-image: url(../images/downarrow.png);
-	background-position: center right;
-	background-repeat: no-repeat;
+	width:100%;
+	
 }
 .expandheader .expandimg, .recon-expandheader .expandimg {
     background: url("../images/plus.png") no-repeat scroll left center transparent;
@@ -158,7 +164,6 @@ h4 a {
 	line-height: 50px;
 	color: #F7F7F7;
 	font-size: 18px;
-	padding: 0 0 0 70px;
 	margin-top: 35px;
 	width: 100%;
 }

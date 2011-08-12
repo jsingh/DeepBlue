@@ -352,28 +352,28 @@
 												<tr>
 													<th style="width: 20px; display: none;" class="lalign ismanual">
 													</th>
-													<th class="lalign" style="width: 10%">
+													<th class="lalign">
 														Fund Name
 													</th>
-													<th class="lalign" style="width: 10%">
+													<th class="lalign">
 														Issuer
 													</th>
-													<th class="lalign" style="width: 10%">
+													<th class="lalign">
 														NumberOfShares
 													</th>
-													<th class="ralign" style="width: 10%">
+													<th class="ralign">
 														Purchase Price
 													</th>
-													<th class="lalign" style="width: 10%">
+													<th class="lalign">
 														Notice Date
 													</th>
-													<th class="lalign" style="width: 10%">
+													<th class="lalign">
 														Distribution Date
 													</th>
-													<th class="ralign" style="width: 10%">
+													<th class="ralign">
 														Tax Cost Base
 													</th>
-													<th class="lalign" style="width: 10%">
+													<th class="lalign">
 														Tax Cost Date
 													</th>
 													<th class="ralign" style="display: none">
@@ -565,15 +565,15 @@
 												<th class="lalign" style="width: 20%">
 													Fund Name
 												</th>
-												<th class="ralign" style="width: 15%">
+												<th class="ralign" style="width: 18%">
 													Commitment Amount
 												</th>
-												<th class="ralign" style="width: 15%">
+												<th class="ralign" style="width: 18%">
 													Unfunded Amount
 												</th>
-												<th class="lalign" style="width: 15%;" id="UFA_NCA">
+												<th class="lalign" style="width: 20%;" id="UFA_NCA">
 												</th>
-												<th class="lalign" style="width: 15%;" id="UFA_NUA">
+												<th class="lalign" style="width: 20%;" id="UFA_NUA">
 												</th>
 												<th class="ralign">
 												</th>

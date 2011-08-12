@@ -4,12 +4,12 @@
 <tr id="ManualUFCD_Deal_${Index}" class="mcc">
 	<td class="ismanual"></td>
 	<td class="childrowcell ismanual" colspan=6>
-		<div class="gbox" style="width:60%"><table cellpadding=0 cellspacing=0 border=0 class="grid">
+		<div class="gbox" style="width:70%"><table cellpadding=0 cellspacing=0 border=0 class="grid">
 			<thead>
 				<tr>
-					<th style="width:5%">Deal Number</th>
+					<th style="width:20%">Deal Number</th>
 					<th style="width:25%">Deal Name</th>
-					<th class="ralign" style="width:19.7%;">Commitment Amount</th>
+					<th class="ralign" style="width:25">Commitment Amount</th>
 					<th class="ralign">Call Amount</th>
 				</tr>
 			</thead>

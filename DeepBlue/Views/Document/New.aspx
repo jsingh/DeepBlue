@@ -58,7 +58,7 @@
 			<%: Html.LabelFor(model => model.FilePath)%>
 		</div>
 		<div class="editor-field">
-			<div id="FileRow" style="float: left">
+			<div id="FileRow" style="float: left;width:221px;">
 				<%: Html.File("File", new { @id = "File"  })%>
 			</div>
 			<div id="LinkRow" style="display: none; float: left;">

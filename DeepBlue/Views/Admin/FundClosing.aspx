@@ -5,38 +5,42 @@
 	Fund Closing
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
+	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("FundClosing.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
-	<%=Html.StylesheetLinkTag("flexigrid.css") %>	
+	<%=Html.StylesheetLinkTag("flexigrid.css") %>
 	<%=Html.StylesheetLinkTag("adminbackend.css") %>
+</asp:Content>
+<asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
+	<div class="navigation">
+		<div class="heading">
+			<div class="leftcol">
+				<span class="title">ADMIN</span><span class="arrow"></span><span class="pname">DEAL
+					MANAGEMENT</span></div>
+			<div class="rightcol">
+			</div>
+		</div>
+	</div>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="admin-main">
-		<div class="admin-header">
-			<a href="javascript:fundClosing.add(0);">
-				<%: Html.Image("add_icon.png") %>
-				&nbsp;Add Fund Closing</a>
-		</div>
 		<div class="admin-content">
 			<table cellpadding="0" cellspacing="0" border="0" id="FundClosingList">
 				<thead>
 					<tr>
-						<th sortname="FundClosingID" style="width: 5%;" align="center">
-							ID
-						</th>
-						<th sortname="FundClosingDate" style="width: 15%;">
-							Closing Date
-						</th>
-						<th sortname="Name" style="width: 25%;">
+						<th sortname="Name" style="width: 30%">
 							Name
 						</th>
-						<th sortname="FundName" style="width: 35%">
-							Fund Name
+						<th sortname="FundName" style="width: 20%">
+							Fund
 						</th>
-						<th datatype="Boolean" sortname="IsFirstClosing" align="center" style="width: 10%;">
+						<th sortname="FundClosingDate" style="width: 20%">
+							Closing Date
+						</th>
+						<th sortname="IsFirstClosing" style="width: 20%">
 							First Closing
 						</th>
-						<th align="center" style="width: 10%;">
+						<th>
 						</th>
 					</tr>
 				</thead>
@@ -45,7 +49,50 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("FundClosingList", new FlexigridOptions { ActionName = "FundClosingList", 
-	ControllerName = "Admin", HttpMethod = "GET", SortName = "FundClosingDate", SortOrder = "desc" 
-	, Paging = true , OnRowBound="fundClosing.onRowBound" })%>
+	<%=Html.jQueryFlexiGrid("FundClosingList", new FlexigridOptions { 
+    ActionName = "FundClosingList", ControllerName = "Admin", 
+    HttpMethod = "GET", SortName = "Name", Paging = true 
+	, OnSuccess= "fundClosing.onGridSuccess"
+	, OnRowClick = "fundClosing.onRowClick"
+	, OnInit = "fundClosing.onInit"
+	, OnTemplate = "fundClosing.onTemplate"
+	, ExportExcel = true
+	, TableName = "FundClosing"
+})%>
+	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
+<%using (Html.GreenButton(new { @onclick = "javascript:fundClosing.add(this);" })) {%>${name}<%}%>
+	</script>
+	<script id="GridTemplate" type="text/x-jquery-tmpl">
+{{each(i,row) rows}}
+<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
+	<td style="width:30%">
+		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
+		<%: Html.TextBox("Name", "${row.cell[1]}", new { @class = "hide" })%>
+	</td>
+	<td style="width:20%">
+		<%: Html.Span("${row.cell[2]}", new { @class = "show" })%>
+		<%: Html.TextBox("FundName", "${row.cell[2]}", new { @class = "hide" })%>
+		<%: Html.Hidden("FundId","${row.cell[5]}")%>
+	</td>
+	<td style="width:20%">
+		<%: Html.Span("${formatDate(row.cell[3])}", new { @class = "show" })%>
+		<%: Html.TextBox("FundClosingDate", "${formatDate(row.cell[3])}", new { @id="${i}_FundClosingDate", @class = "hide datefield" })%>
+	</td>
+	<td style="width: 20%;">
+		<%: Html.Span("{{if row.cell[4]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		
+		<%: Html.CheckBox("IsFirstClosing",false, new { @class = "hide", @val="${row.cell[4]}" })%>
+	</td>
+	<td style="text-align:right;">
+		{{if row.cell[0]==0}}
+		<%: Html.Image("Add.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:fundClosing.save(this,${row.cell[0]});" })%>
+		{{else}}
+		<%: Html.Image("Save.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:fundClosing.save(this,${row.cell[0]});" })%>
+		<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:fundClosing.edit(this);" })%>
+		<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:fundClosing.deleteRow(this,${row.cell[0]});" })%>
+		{{/if}}
+		<%: Html.Hidden("FundClosingId", "${row.cell[0]}") %>
+	</td>
+</tr>
+{{/each}}
+	</script>
 </asp:Content>

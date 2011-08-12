@@ -7,7 +7,7 @@ deal.saveDealDocument=function (frm) {
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Uploading...");
 		var dealId=deal.getDealId();
 		if(dealId>0) {
-			var p=$(frm).serializeArray();
+			var p=$(frm).serializeForm();
 			p[p.length]={ "name": "DealId","value": dealId };
 			$.ajaxFileUpload(
 				{

@@ -81,7 +81,7 @@ dealActivity.getSDUnderlyingFundId=function (id) {
 };
 dealActivity.submitUFStockDistribution=function (frm) {
 	try {
-		var param=$(frm).serializeArray();
+		var param=$(frm).serializeForm();
 		var loading=$("#SpnSDSaveLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		var chk=$("#IsManualStockDistribution").get(0);

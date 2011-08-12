@@ -6,8 +6,6 @@
 html, body {
 	margin: 0;
 	padding: 0;
-	overflow: auto;
-	overflow-x: hidden;
 }
 body {
 	height: 100%;
@@ -40,10 +38,13 @@ a img {
 	cursor: pointer;
 }
 /* Header & Footer */
+#header {
+		min-width:1007px;
+		width:100%;
+}
 #topheader, #menu, #header {
 	float: left;
 	clear: both;
-	width: 100%;
 }
 #footer {
 	height: 35px;
@@ -52,6 +53,7 @@ a img {
 	color: #A27F7F;
 	clear: both;
 	width: 100%;
+	min-width:1007px;
 	float: left;
 }
 #footer .footercontent {
@@ -78,8 +80,8 @@ a img {
     color: #FFFFFF;
     font-family: Georgia,Arial;
     font-size: 17px;
+    width:100%;
     line-height: 32px;
-    padding-left: 65px;
     text-transform: uppercase;
     text-shadow: #0B0B0B 1px 1px 1px;
 	filter: Shadow(Color=#0B0B0B, 	
@@ -89,9 +91,10 @@ a img {
 /* Content */
 #content {
 	clear: both;
-	overflow: hidden;
 	float: left;
 	width: 100%;
+	min-width:1007px;
+	overflow:hidden;
 }
 #cntbox {
 	float: left;
@@ -99,7 +102,7 @@ a img {
 }
 #cntbox.overflow {
 	overflow: auto;
-	overflow-x: hidden;
+	overflow-x:hidden;
 }
 .cnt-box-main {
 	float: left;
@@ -138,10 +141,13 @@ a img {
 	color: #000;
 }
 .editor-field input[type="text"] {
-	width: 180px;
+	width: 160px;
 }
 .editor-field select {
-	width: 184px;
+	width: 164px;
+}
+.editor-field input.ui-autocomplete-input[type="text"] {
+    width: 144px;
 }
 .radio input {
 	width: auto;
@@ -573,16 +579,18 @@ h2 {
 }
 /* Menu */
 .topheader {
-	width: 100%;
 	float: left;
 	height: 32px;
 }
 #menu {
-	width: 100%;
 	float: left;
 	background-image: url(../images/menucenter.png);
 	background-repeat: repeat-x;
-	padding: 0px 65px 0px 65px;
+	width:100%;
+}
+#menubox {
+	float:left;
+	padding-left:65px;
 }
 #menu .menu-content {
 	float: left;
@@ -616,7 +624,6 @@ h2 {
 	overflow: hidden;
 	display: none;
 	top: 24px;
-	width: 1000px;
 	font-family: Myriad Pro,Arial;
 	font-size: 13px;
 }
@@ -638,7 +645,7 @@ color: #27599E;
 	text-align: center;
 	font-size: 12px;
 	height: 86px;
-	padding: 0px 36px;
+	padding: 0px 30px;
 	white-space: nowrap;
 	cursor: pointer;
 	background-position: center center;
@@ -713,8 +720,8 @@ color: #27599E;
 .heading {
 	border: 0px solid red;
 	float: left;
-	padding: 17px 0 12px 6px;
-	width: 94%;
+	padding: 17px 0 12px 0;
+	width: 100%;
 }
 .heading .title {
 	color: #000;
@@ -742,6 +749,7 @@ color: #27599E;
 .heading .leftcol {
 	float: left;
 	border: solid 0px red;
+	margin-left:65px;
 }
 .heading .rightcol {
 	float: right;
@@ -762,21 +770,24 @@ color: #27599E;
 #submenu {
 	z-index: 1;
 	clear: both;
-	padding-left: 65px;
+	min-width: 1007px;
+	width:100%;
+	float:left;
 	background-image: url(../images/fsmbg.png);
 	background-repeat: repeat-x;
+}
+#submenubox{
+	float:left;
+	padding-left:65px;
 }
 #innersubmenu, .navigation {
 	top: 153px;
 	background-image: url(../images/smbg.png);
 	background-repeat: repeat-x;
-	padding-left: 65px;
 }
 .navigation {
 	height: 47px;
-	width: 100%;
 }
-
 .mdiv .sel {
 	color: #021E43;
 	font-weight: bold;
@@ -879,13 +890,13 @@ input.ui-autocomplete-loading[type="text"] {
 	background-image: url(../images/up_arrow.png);
 	background-position: center center;
 	width: 21px;
-	margin-right: 20%;
 }
 #navminimize.downarrow {
 	background-image: url(../images/navdarrow.png);
 }
-.cname {
+#topheader .cname {
 	float: left;
+	padding-left:65px;
 }
 .tooltip {
 	background-color: #F2F2A4;
@@ -911,7 +922,11 @@ input.ui-autocomplete-loading[type="text"] {
 .grid .row td, .grid .arow td {
 	background-color: #F5F5F5;
 	font-size: 12px;
-	white-space: nowrap;
+}
+.grid .row td span, .grid .arow td span{
+	   overflow: hidden;
+    white-space: nowrap;
+    width: 98%;
 }
 .grid .arow td {
 	background-color: #E9EAEC;
@@ -921,7 +936,7 @@ input.ui-autocomplete-loading[type="text"] {
 	background-position: left bottom;
 	background-repeat: repeat-x;
 	height: 35px;
-	padding: 0 15px;
+	padding: 0 10px;
 }
 .grid thead tr th {
 	font-weight: normal;
@@ -931,7 +946,6 @@ input.ui-autocomplete-loading[type="text"] {
 	background-color: #BABFC5;
 	font-weight: normal;
 	color: #000000;
-	white-space: nowrap;
 	font-size:12px;
 }
 .grid tfoot tr td {

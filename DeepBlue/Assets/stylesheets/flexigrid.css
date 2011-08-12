@@ -112,6 +112,8 @@
 }
 .flexigrid tr td {
 	background-color: #F5F5F5;
+	white-space:nowrap;
+	overflow:hidden;
 }
 .flexigrid tr td.sorted div {
 }
@@ -148,8 +150,7 @@
 	margin-bottom: 0;
 }
 .flexigrid div.pDiv div.pDiv2 {
-	margin: 3px;
-	margin-left: -2px;
+	margin: 3px 0;
 	float: right;
 	width: auto;
 }
@@ -223,7 +224,7 @@ div.pGroup {
 	border-bottom: 1px solid #B5B5B5;
 }
 .flexigrid .hDiv table th, .bDiv table td {
-	padding: 8px 15px; /*border-right: 1px solid #DDDDDD;*/
+	padding: 8px 10px; /*border-right: 1px solid #DDDDDD;*/
 	border-bottom: 1px solid #B5B5B5;
 	border-top: 1px solid #FFFFFF;
 	cursor: default; /*height:34px;*/
@@ -256,7 +257,7 @@ div.pGroup {
 }
 .flexigrid .fcDiv {
 	clear: both;
-	padding: 10px 20px 0px 20px;
+	   padding: 10px 15px 0;
 	background-color: #EFEFEF;
 }
 .flexigrid .ftcDiv {
@@ -264,7 +265,10 @@ div.pGroup {
 	float: left;
 }
 .flexigrid .fbcDiv, .flexigrid .ftcDiv {
-	width: 98.9%;
+	    left: 10px;
+    overflow: hidden;
+    position: absolute;
+    right: 10px;
 }
 .flexigrid .ftlDiv {
 	background-image: url(../images/box_tl.png);
@@ -272,6 +276,7 @@ div.pGroup {
 	background-repeat: no-repeat;
 	padding-left: 10px;
 	height: 10px;
+	position:relative;
 }
 .flexigrid .ftrDiv {
 	background-image: url(../images/box_tr.png);
@@ -279,7 +284,7 @@ div.pGroup {
 	background-repeat: no-repeat;
 	width: 10px;
 	height: 10px;
-	float: left;
+	float: right;
 }
 .flexigrid .fbcDiv {
 	background-color: #EFEFEF;
@@ -291,6 +296,7 @@ div.pGroup {
 	background-repeat: no-repeat;
 	padding-left: 10px;
 	height: 10px;
+	position:relative;
 }
 .flexigrid .fbrDiv {
 	background-image: url(../images/box_br.png);
@@ -298,14 +304,17 @@ div.pGroup {
 	background-repeat: no-repeat;
 	width: 10px;
 	height: 10px;
-	float: left;
+	float: right;
 }
 .flexigrid tr td input[type='text'], .flexigrid tr td select {
 	width: 96%;
 }
+.flexigrid tr td input.ui-autocomplete-input[type="text"] {
+	width: 90%;
+}
 .flexigrid #ExportExcel {
 	float: right;
-	margin-right: 10px;
+	margin-left: 5px;
 }
 .flexigrid .exp-excel-loading {
 	background: url("../images/refresh.gif") no-repeat scroll left bottom transparent;

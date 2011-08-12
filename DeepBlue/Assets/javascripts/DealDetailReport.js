@@ -6,7 +6,7 @@
 		try {
 			var target=$("#ReportContent");
 			target.html("<center>"+jHelper.loadingHTML()+"</center>");
-			$.post("/Report/DealDetailReport",$(frm).serializeArray(),function (data) {
+			$.post("/Report/DealDetailReport",$(frm).serializeForm(),function (data) {
 				target.empty();
 				if($.trim(data.Error)!="") {
 					alert(data.Error);

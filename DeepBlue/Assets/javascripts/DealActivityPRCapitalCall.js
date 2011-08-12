@@ -51,7 +51,7 @@ dealActivity.loadPRCC=function (isRefresh) {
 };
 dealActivity.submitUFPRCapitalCall=function (frm) {
 	try {
-		var param=$(frm).serializeArray();
+		var param=$(frm).serializeForm();
 		var loading=$("#SpnPRCCSaveLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#PRCapitalCallList").length)};

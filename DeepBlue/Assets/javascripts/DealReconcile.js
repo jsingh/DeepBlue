@@ -29,7 +29,7 @@
 				}
 				target.empty();
 				loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
-				var param=$(frm).serializeArray();
+				var param=$(frm).serializeForm();
 				param[param.length]={ name: "ReconcileType",value: type };
 				$.ajax({
 					type: "POST",
@@ -87,7 +87,7 @@
 	}
 	,save: function (frmid,spnid,typeid) {
 		var frm=document.getElementById(frmid);
-		var param=$(frm).serializeArray();
+		var param=$(frm).serializeForm();
 		var loading=$("#"+spnid);
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		var totalRows=($("#ReconcileBdy tr",frm).length);

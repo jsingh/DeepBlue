@@ -10,6 +10,7 @@
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery.formatCurrency.js")%>
+	<%= Html.JavascriptInclueTag("jqueryform.js")%>
 	<%= Html.JavascriptInclueTag("jHelper.js")%>
 	<%= Html.JavascriptInclueTag("DeepBlue.js")%>
 	<%= Html.JavascriptInclueTag("menu.js")%>
@@ -33,126 +34,130 @@
 			</div>
 		</div>
 		<div id="menu">
-			<% using (Html.TopMenu((ViewData["MenuName"] == "DealManagement"), "Deal_Management", new { @id = "investmentmnu" })) {%>
-			<%: Html.TopMenuLink("INVESTMENTS")%>
-			<%}%>
-			<div class="sep">
+			<div id="menubox">
+				<% using (Html.TopMenu((ViewData["MenuName"] == "DealManagement"), "Deal_Management", new { @id = "investmentmnu" })) {%>
+				<%: Html.TopMenuLink("INVESTMENTS")%>
+				<%}%>
+				<div class="sep">
+				</div>
+				<% using (Html.TopMenu((ViewData["MenuName"] == "Fund Tracker"), "Fund_Management", new { @id = "fundmnu" })) {%>
+				<%: Html.TopMenuLink("FUNDS")%>
+				<%}%>
+				<div class="sep">
+				</div>
+				<% using (Html.TopMenu((ViewData["MenuName"] == "Investor"), "Investor_Management", new { @id = "invmnu" })) {%>
+				<%: Html.TopMenuLink("INVESTORS")%>
+				<%}%>
+				<div class="sep">
+				</div>
+				<% using (Html.TopMenu((ViewData["MenuName"] == "Accounting"), "", new { @id = "accmnu", @nosubmenu = "true" })) {%>
+				<%: Html.TopMenuLink("ACCOUNTING")%>
+				<%}%>
+				<div class="sep">
+				</div>
+				<% using (Html.TopMenu((ViewData["MenuName"] == "Document"), "Doc_Management", new { @id = "docmnu" })) {%>
+				<%: Html.TopMenuLink("DOCUMENT MANAGEMENT")%>
+				<%}%>
+				<div class="sep">
+				</div>
+				<% using (Html.TopMenu((ViewData["MenuName"] == "Admin"), "Adm_Management", new { @id = "admmnu" })) {%>
+				<%: Html.TopMenuLink("ADMIN")%>
+				<%}%>
+				<div class="sep">
+				</div>
+				<% using (Html.TopMenu((ViewData["MenuName"] == "Reports"), "Report_Management", new { @id = "repmnu" })) {%>
+				<%: Html.TopMenuLink("REPORTS")%>
+				<%}%>
 			</div>
-			<% using (Html.TopMenu((ViewData["MenuName"] == "Fund Tracker"), "Fund_Management", new { @id = "fundmnu" })) {%>
-			<%: Html.TopMenuLink("FUNDS")%>
-			<%}%>
-			<div class="sep">
-			</div>
-			<% using (Html.TopMenu((ViewData["MenuName"] == "Investor"), "Investor_Management", new { @id = "invmnu" })) {%>
-			<%: Html.TopMenuLink("INVESTORS")%>
-			<%}%>
-			<div class="sep">
-			</div>
-			<% using (Html.TopMenu((ViewData["MenuName"] == "Accounting"), "", new { @id = "accmnu", @nosubmenu = "true" })) {%>
-			<%: Html.TopMenuLink("ACCOUNTING")%>
-			<%}%>
-			<div class="sep">
-			</div>
-			<% using (Html.TopMenu((ViewData["MenuName"] == "Document"), "Doc_Management", new { @id = "docmnu" })) {%>
-			<%: Html.TopMenuLink("DOCUMENT MANAGEMENT")%>
-			<%}%>
-			<div class="sep">
-			</div>
-			<% using (Html.TopMenu((ViewData["MenuName"] == "Admin"), "Adm_Management", new { @id = "admmnu" })) {%>
-			<%: Html.TopMenuLink("ADMIN")%>
-			<%}%>
-			<div class="sep">
-			</div>
-			<% using (Html.TopMenu((ViewData["MenuName"] == "Reports"), "Report_Management", new { @id = "repmnu" })) {%>
-			<%: Html.TopMenuLink("REPORTS")%>
-			<%}%>
 		</div>
 	</div>
 	<div id="submenu" style="display: none">
-		<%using (Html.SubMenu("Investor_Management", (ViewData["MenuName"] == "Investor"))) {%>
-		<ul>
-			<li>
-				<%: Html.ActionLink("New Investor Setup", "New", "Investor",null, new { @class = (ViewData["PageName"]=="New Investor Setup" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Update Investor Information", "Edit", "Investor", null, new { @class = (ViewData["PageName"] == "Update Investor Information" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Investor Commitment", "New", "Transaction", null, new { @class = (ViewData["PageName"] == "Investor Commitment" ? "sel" : "") })%></li>
-		</ul>
-		<%}%>
-		<%using (Html.SubMenu("Deal_Management", (ViewData["MenuName"] == "DealManagement"))) {%>
-		<ul>
-			<li>
-				<%: Html.ActionLink("Create New Deal", "New", "Deal", null, new { @class = (ViewData["SubmenuName"] == "Create New Deal" ? "sel" : "") })%>
-			</li>
-			<li>
-				<%: Html.ActionLink("Modify Deal", "Edit", "Deal", null, new { @class = (ViewData["SubmenuName"] == "Modify Deal" ? "sel" : "") })%>
-			</li>
-			<li>
-				<%: Html.ActionLink("Close Deal", "Close", "Deal", null, new { @class = (ViewData["PageName"] == "CloseDeal" ? "sel" : "") })%>
-			</li>
-			<li>
-				<%: Html.ActionLink("Deal Report", "Report", "Deal", null, new { @class = (ViewData["PageName"] == "DealReport" ? "sel" : "") })%>
-			</li>
-			<li>
-				<%: Html.ActionLink("Direct Library", "Directs", "Deal", null, new { @class = (ViewData["PageName"] == "AddDirects" ? "sel" : "") })%>
-			</li>
-			<li>
-				<%: Html.ActionLink("Underlying Funds Library", "UnderlyingFunds", "Deal", null, new { @class = (ViewData["PageName"] == "UnderlyingFunds" ? "sel" : "") })%>
-			</li>
-			<li>
-				<%: Html.ActionLink("Activities", "Activities", "Deal", null, new { @class = (ViewData["PageName"] == "Activities" ? "sel" : "") })%>
-			</li>
-		</ul>
-		<%}%>
-		<%using (Html.SubMenu("Fund_Management", true, (ViewData["MenuName"] == "Fund Tracker"))) {%>
-		<ul>
-			<li>
-				<%: Html.ActionLink("Capital Call", "New", "CapitalCall", null, new { @class = (ViewData["PageName"] == "CapitalCall" ? "sel" : "") })%>
-			</li>
-			<li>
-				<%: Html.ActionLink("Capital Distribution", "NewCapitalDistribution", "CapitalCall", null, new { @class = (ViewData["PageName"] == "CapitalDistribution" ? "sel" : "") })%>
-			</li>
-			<li>
-				<%: Html.ActionLink("Detail", "Detail", "CapitalCall", null, new { @class = (ViewData["PageName"] == "Detail" ? "sel" : "") })%>
-			</li>
-			<li>
-				<%: Html.ActionLink("Fund Setup", "Index", "Fund", null, new { @onmouseover = "menu.msubopen(this,'')", @class = (ViewData["PageName"] == "Fund Setup" ? "sel" : "") })%>
-			</li>
-		</ul>
-		<%}%>
-		<%using (Html.SubMenu("Adm_Management", true, (ViewData["MenuName"] == "Admin"))) {%>
-		<ul>
-			<li>
-				<%: Html.ActionLink("Investor Management", "EntityType", "Admin", null, new { @class = (ViewData["SubmenuName"] == "InvestorManagement" ? "sel" : "") })%>
-			</li>
-			<li>
-				<%: Html.ActionLink("Custom Field Management", "CustomField", "Admin", null, new { @class = (ViewData["SubmenuName"] == "CustomFieldManagement" ? "sel" : "") })%>
-			</li>
-			<li>
-				<%: Html.ActionLink("Deal Management", "PurchaseType", "Admin", null, new { @class = (ViewData["SubmenuName"] == "DealManagement" ? "sel" : "") })%>
-			</li>
-		</ul>
-		<%} %>
-		<%using (Html.SubMenu("Doc_Management", (ViewData["MenuName"] == "Document"))) {%>
-		<ul>
-			<li>
-				<%: Html.ActionLink("Document Search", "Search", "Document",null, new { @class = (ViewData["PageName"] == "DocumentSearch" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Document Upload", "New", "Document",null, new { @class = (ViewData["PageName"] == "NewDocument" ? "sel" : "") })%></li>
-		</ul>
-		<%} %>
-		<%using (Html.SubMenu("Report_Management", (ViewData["MenuName"] == "Reports"))) {%>
-		<ul>
-			<li>
-				<%: Html.ActionLink("Deal Detail", "DealDetail", "Report", null, new { @class = (ViewData["PageName"] == "DealDetail" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Deal Origination", "DealOrigination", "Report", null, new { @class = (ViewData["PageName"] == "DealOrigination" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Cash Distribution Summary", "CashDistributionSummary", "Report", null, new { @class = (ViewData["PageName"] == "CashDistributionSummary" ? "sel" : "") })%></li>
-			<li>
-				<%: Html.ActionLink("Capital Call Summary", "CapitalCallSummary", "Report", null, new { @class = (ViewData["PageName"] == "CapitalCallSummary" ? "sel" : "") })%></li>
-		</ul>
-		<%} %>
+		<div id="submenubox">
+			<%using (Html.SubMenu("Investor_Management", (ViewData["MenuName"] == "Investor"))) {%>
+			<ul>
+				<li>
+					<%: Html.ActionLink("New Investor Setup", "New", "Investor",null, new { @class = (ViewData["PageName"]=="New Investor Setup" ? "sel" : "") })%></li>
+				<li>
+					<%: Html.ActionLink("Update Investor Information", "Edit", "Investor", null, new { @class = (ViewData["PageName"] == "Update Investor Information" ? "sel" : "") })%></li>
+				<li>
+					<%: Html.ActionLink("Investor Commitment", "New", "Transaction", null, new { @class = (ViewData["PageName"] == "Investor Commitment" ? "sel" : "") })%></li>
+			</ul>
+			<%}%>
+			<%using (Html.SubMenu("Deal_Management", (ViewData["MenuName"] == "DealManagement"))) {%>
+			<ul>
+				<li>
+					<%: Html.ActionLink("Create New Deal", "New", "Deal", null, new { @class = (ViewData["SubmenuName"] == "Create New Deal" ? "sel" : "") })%>
+				</li>
+				<li>
+					<%: Html.ActionLink("Modify Deal", "Edit", "Deal", null, new { @class = (ViewData["SubmenuName"] == "Modify Deal" ? "sel" : "") })%>
+				</li>
+				<li>
+					<%: Html.ActionLink("Close Deal", "Close", "Deal", null, new { @class = (ViewData["PageName"] == "CloseDeal" ? "sel" : "") })%>
+				</li>
+				<li>
+					<%: Html.ActionLink("Deal Report", "Report", "Deal", null, new { @class = (ViewData["PageName"] == "DealReport" ? "sel" : "") })%>
+				</li>
+				<li>
+					<%: Html.ActionLink("Direct Library", "Directs", "Deal", null, new { @class = (ViewData["PageName"] == "AddDirects" ? "sel" : "") })%>
+				</li>
+				<li>
+					<%: Html.ActionLink("Underlying Funds Library", "UnderlyingFunds", "Deal", null, new { @class = (ViewData["PageName"] == "UnderlyingFunds" ? "sel" : "") })%>
+				</li>
+				<li>
+					<%: Html.ActionLink("Activities", "Activities", "Deal", null, new { @class = (ViewData["PageName"] == "Activities" ? "sel" : "") })%>
+				</li>
+			</ul>
+			<%}%>
+			<%using (Html.SubMenu("Fund_Management", true, (ViewData["MenuName"] == "Fund Tracker"))) {%>
+			<ul>
+				<li>
+					<%: Html.ActionLink("Capital Call", "New", "CapitalCall", null, new { @class = (ViewData["PageName"] == "CapitalCall" ? "sel" : "") })%>
+				</li>
+				<li>
+					<%: Html.ActionLink("Capital Distribution", "NewCapitalDistribution", "CapitalCall", null, new { @class = (ViewData["PageName"] == "CapitalDistribution" ? "sel" : "") })%>
+				</li>
+				<li>
+					<%: Html.ActionLink("Detail", "Detail", "CapitalCall", null, new { @class = (ViewData["PageName"] == "Detail" ? "sel" : "") })%>
+				</li>
+				<li>
+					<%: Html.ActionLink("Fund Setup", "Index", "Fund", null, new { @onmouseover = "menu.msubopen(this,'')", @class = (ViewData["PageName"] == "Fund Setup" ? "sel" : "") })%>
+				</li>
+			</ul>
+			<%}%>
+			<%using (Html.SubMenu("Adm_Management", true, (ViewData["MenuName"] == "Admin"))) {%>
+			<ul>
+				<li>
+					<%: Html.ActionLink("Investor Management", "EntityType", "Admin", null, new { @class = (ViewData["SubmenuName"] == "InvestorManagement" ? "sel" : "") })%>
+				</li>
+				<li>
+					<%: Html.ActionLink("Custom Field Management", "CustomField", "Admin", null, new { @class = (ViewData["SubmenuName"] == "CustomFieldManagement" ? "sel" : "") })%>
+				</li>
+				<li>
+					<%: Html.ActionLink("Deal Management", "PurchaseType", "Admin", null, new { @class = (ViewData["SubmenuName"] == "DealManagement" ? "sel" : "") })%>
+				</li>
+			</ul>
+			<%} %>
+			<%using (Html.SubMenu("Doc_Management", (ViewData["MenuName"] == "Document"))) {%>
+			<ul>
+				<li>
+					<%: Html.ActionLink("Document Search", "Search", "Document",null, new { @class = (ViewData["PageName"] == "DocumentSearch" ? "sel" : "") })%></li>
+				<li>
+					<%: Html.ActionLink("Document Upload", "New", "Document",null, new { @class = (ViewData["PageName"] == "NewDocument" ? "sel" : "") })%></li>
+			</ul>
+			<%} %>
+			<%using (Html.SubMenu("Report_Management", (ViewData["MenuName"] == "Reports"))) {%>
+			<ul>
+				<li>
+					<%: Html.ActionLink("Deal Detail", "DealDetail", "Report", null, new { @class = (ViewData["PageName"] == "DealDetail" ? "sel" : "") })%></li>
+				<li>
+					<%: Html.ActionLink("Deal Origination", "DealOrigination", "Report", null, new { @class = (ViewData["PageName"] == "DealOrigination" ? "sel" : "") })%></li>
+				<li>
+					<%: Html.ActionLink("Cash Distribution Summary", "CashDistributionSummary", "Report", null, new { @class = (ViewData["PageName"] == "CashDistributionSummary" ? "sel" : "") })%></li>
+				<li>
+					<%: Html.ActionLink("Capital Call Summary", "CapitalCallSummary", "Report", null, new { @class = (ViewData["PageName"] == "CapitalCallSummary" ? "sel" : "") })%></li>
+			</ul>
+			<%} %>
+		</div>
 	</div>
 	<div id="content" style="min-height: 800px;">
 		<asp:ContentPlaceHolder ID="NavigationContent" runat="server" />

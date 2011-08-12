@@ -231,7 +231,7 @@
 		var frm=$("#frmDealClose");
 		$("#TotalUnderlyingFunds",frm).val($("tbody tr","#DealUnderlyingFundList").length);
 		$("#TotalUnderlyingDirects",frm).val($("tbody tr","#DealUnderlyingDirects").length);
-		var param=frm.serializeArray();
+		var param=frm.serializeForm();
 		$.post("/Deal/UpdateDealClosing",param,function (data) {
 			loading.empty();
 			var arr=data.split("||");
@@ -257,7 +257,7 @@
 		var frm=$("#frmFinalDealClose");
 		$("#TotalUnderlyingFunds",frm).val($("tbody tr","#FinalDealUnderlyingFundList").length);
 		$("#TotalUnderlyingDirects",frm).val($("tbody tr","#FinalDealUnderlyingDirects").length);
-		var param=frm.serializeArray();
+		var param=frm.serializeForm();
 		$.post("/Deal/UpdateFinalDealClosing",param,function (data) {
 			loading.empty();
 			if($.trim(data)!="") {

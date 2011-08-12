@@ -71,7 +71,7 @@
 						<%: Html.LabelFor(model => model.CapitalAmountCalled)%>
 					</div>
 					<div class="editor-field" style="width: auto">
-						<%: Html.TextBox("CapitalAmountCalled","", new { @onkeypress = "return jHelper.isCurrency(event);", @style = "width:110px", @onkeyup = "javascript:capitalCall.calcExistingInvestmentAmount();" })%>
+						<%: Html.TextBox("CapitalAmountCalled","", new { @onkeydown = "return jHelper.isCurrency(event);", @style = "width:110px", @onkeyup = "javascript:capitalCall.calcExistingInvestmentAmount();" })%>
 					</div>
 					<div class="editor-label" style="clear: right; margin-left: 142px;">
 						<%: Html.LabelFor(model => model.CapitalCallDate) %>
@@ -109,7 +109,7 @@
 							Fund Expense Amount:
 						</div>
 						<div class="editor-field" style="width: auto">
-							<%: Html.TextBox("FundExpenseAmount", "", new { @class = "datetxt", @style="width:111px", @onkeypress = "return jHelper.isCurrency(event);", @onkeyup="javascript:capitalCall.calcExistingInvestmentAmount();" })%>
+							<%: Html.TextBox("FundExpenseAmount", "", new { @class = "datetxt", @style="width:111px", @onkeydown = "return jHelper.isCurrency(event);", @onkeyup="javascript:capitalCall.calcExistingInvestmentAmount();" })%>
 						</div>
 					</div>
 					<div class="editor-label" style="text-align: left;">
@@ -119,7 +119,7 @@
 						<%: Html.LabelFor(model => model.NewInvestmentAmount) %>
 					</div>
 					<div class="editor-field" style="width: auto">
-						<%: Html.TextBoxFor(model => model.NewInvestmentAmount, new { @class = "datetxt", @style="width:110px;", @onkeypress = "return jHelper.isCurrency(event);", @onkeyup="javascript:capitalCall.calcExistingInvestmentAmount();" })%>
+						<%: Html.TextBoxFor(model => model.NewInvestmentAmount, new { @class = "datetxt", @style="width:110px;", @onkeydown = "return jHelper.isCurrency(event);", @onkeyup="javascript:capitalCall.calcExistingInvestmentAmount();" })%>
 					</div>
 					<div class="editor-label fromcell" style="width: auto">
 						<%: Html.LabelFor(model => model.ExistingInvestmentAmount) %>

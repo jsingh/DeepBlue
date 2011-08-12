@@ -59,7 +59,7 @@ input[type='text'] {
 	font-size: 16px;
 	font-weight: bold;
 	margin: 10px 0 30px;
-	padding: 12px 12px 12px 65px;
+	padding: 12px 0px 12px 0px;
 	width: 100%;
 }
 .closetitle .title {
@@ -73,10 +73,8 @@ input[type='text'] {
 	float: left;
 }
 .tabledetail {
-	padding-left: 65px;
 	padding-bottom: 20px;
 }
-
 .underfund {
 	background-image: url("../images/add_under_funds.png");
 	background-repeat: no-repeat;
@@ -141,4 +139,8 @@ input[type='text'] {
 	position: absolute;
 	left: 212px;
 }
-
+.expandtitle span {
+	padding-left:65px;
+}
+.closetitle .title { padding-left:65px; white-space:nowrap; }
+.tabledetail .gbox, .section .gbox { margin-left: 65px; }

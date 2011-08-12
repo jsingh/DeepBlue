@@ -18,6 +18,7 @@
 </div>
 <div class="fieldbox">
 	<div class="section" id="AddDealDocument" style="display: none;">
+		<div class="dealdetail">
 		<% using (Html.Form(new { @id = "frmDealDocument", @onsubmit = "return deal.saveDealDocument(this);", @enctype = "multipart/form-data" })) {%>
 		<div class="editor-label">
 			<%: Html.Label("Document Type")%>
@@ -73,8 +74,10 @@
 		<%: Html.Hidden("DocumentInvestorId","")%>
 		<%: Html.Hidden("DocumentFundId","")%>
 		<%}%>
+		</div>
 	</div>
 	<div class="section" style="width: 89%">
+		<div class="dealdetail">
 		<table cellpadding="0" cellspacing="0" border="0" id="DealDocumentList" style="width: 100%">
 			<thead>
 				<tr>
@@ -97,5 +100,6 @@
 			<tbody>
 			</tbody>
 		</table>
+		</div>
 	</div>
 </div>

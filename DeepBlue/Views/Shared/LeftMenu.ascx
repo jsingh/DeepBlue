@@ -13,6 +13,8 @@
 			<%: Html.ActionLink("Communication Type", "CommunicationType", "Admin",null, new { @class = (ViewData["PageName"] == "CommunicationType" ? "sel" : "") })%></li>
 		<li class="<%=(ViewData["PageName"] == "CommunicationGrouping" ? "sel" : "")%>">
 			<%: Html.ActionLink("Communication Grouping", "CommunicationGrouping", "Admin",null, new { @class = (ViewData["PageName"] == "CommunicationGrouping" ? "sel" : "") })%></li>
+		<li class="<%=(ViewData["PageName"] == "FundClosing" ? "sel" : "")%>">
+			<%: Html.ActionLink("Fund Closing", "FundClosing", "Admin", null, new { @class = (ViewData["PageName"] == "FundClosing" ? "sel" : "") })%></li>
 		<li class="<%=(ViewData["PageName"] == "Source" ? "sel" : "")%>">
 			<%: Html.Anchor("Source")%></li>
 		<li class="<%=(ViewData["PageName"] == "InvestorAccountingCategories" ? "sel" : "")%>">

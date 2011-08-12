@@ -24,9 +24,6 @@
 			if(!bolexpandsel) {
 				$(this).addClass("expandsel");
 				$(".rightuarrow").remove();
-				var d=document.createElement("div");
-				$(d).addClass("rightuarrow");
-				$(this).append(d);
 				$("#img",this).hide();
 				$("#title",this).show();
 				$("#title .expandtitle",this).show();
@@ -166,7 +163,7 @@
 			var frm=$("#AddNewDeal");
 			var loading=$("#UpdateLoading");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			$.post("/Deal/Create",$(frm).serializeArray(),function (data) {
+			$.post("/Deal/Create",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				var arr=data.split("||");
 				if(arr[0]!="True") {

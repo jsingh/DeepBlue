@@ -76,7 +76,7 @@ dealActivity.setSecConvAutoComplete=function (stypeId,target) {
 	}
 };
 dealActivity.createSecConversion=function (frm) {
-	var param=$(frm).serializeArray();
+	var param=$(frm).serializeForm();
 	param[param.length]={ name: "ActivityTypeId",value: dealActivity.getActivityTypeId() };
 	param[param.length]={ name: "DealUnderlyingDirectId",value: dealActivity.getUnderlyingDirectId() };
 	$("#SpnSecCoversionLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");

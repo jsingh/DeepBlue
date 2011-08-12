@@ -76,7 +76,7 @@
 						<%: Html.LabelFor(model => model.DistributionAmount) %>
 					</div>
 					<div class="editor-field">
-						<%: Html.TextBox("DistributionAmount","", new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBox("DistributionAmount","", new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 					</div>
 					<div class="editor-label">
 						<%: Html.LabelFor(model => model.CapitalDistributionDate) %>
@@ -98,25 +98,25 @@
 						<%: Html.LabelFor(model => model.PreferredReturn)%>
 					</div>
 					<div class="editor-field amtbox" id="PreferredAmountBox">
-						<%: Html.TextBoxFor(model => model.PreferredReturn, new {  @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBoxFor(model => model.PreferredReturn, new {  @onkeydown = "return jHelper.isCurrency(event);" })%>
 					</div>
 					<div class="editor-label" style="clear: right">
 						<%: Html.LabelFor(model => model.PreferredCatchUp)%>
 					</div>
 					<div class="editor-field amtbox" id="PreferredCatchUpBox">
-						<%: Html.TextBoxFor(model => model.PreferredCatchUp, new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBoxFor(model => model.PreferredCatchUp, new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 					</div>
 					<div class="editor-label">
 						<%: Html.LabelFor(model => model.ReturnFundExpenses)%>
 					</div>
 					<div class="editor-field amtbox" id="ReturnFundExpensesBox">
-						<%: Html.TextBoxFor(model => model.ReturnFundExpenses, new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBoxFor(model => model.ReturnFundExpenses, new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 					</div>
 					<div class="editor-label" style="clear: right">
 						<%: Html.LabelFor(model => model.ReturnManagementFees)%>
 					</div>
 					<div class="editor-field amtbox" id="ReturnManagementFeesBox">
-						<%: Html.TextBoxFor(model => model.ReturnManagementFees, new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBoxFor(model => model.ReturnManagementFees, new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 					</div>
 					<div class="editor-label" style="width: 84px">
 						<label>
@@ -126,13 +126,13 @@
 						<%: Html.LabelFor(model => model.GPProfits) %>
 					</div>
 					<div class="editor-field">
-						<%: Html.TextBoxFor(model => model.GPProfits, new { @onkeypress = "return jHelper.isCurrency(event);" }) %>
+						<%: Html.TextBoxFor(model => model.GPProfits, new { @onkeydown = "return jHelper.isCurrency(event);" }) %>
 					</div>
 					<div class="editor-label" style="clear: right">
 						<%: Html.LabelFor(model => model.LPProfits) %>
 					</div>
 					<div class="editor-field">
-						<%: Html.TextBoxFor(model => model.LPProfits, new { @onkeypress = "return jHelper.isCurrency(event);" })%>
+						<%: Html.TextBoxFor(model => model.LPProfits, new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 					</div>
 					<div class="editor-button">
 						<div style="float: left; padding: 0 0 10px 5px;">
