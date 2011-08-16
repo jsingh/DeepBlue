@@ -591,8 +591,8 @@ namespace DeepBlue.Controllers.Investor {
 
 		//
 		// GET: /Investor/FindInvestors
-		public JsonResult FindInvestors(string term) {
-			return Json(InvestorRepository.FindInvestors(term), JsonRequestBehavior.AllowGet);
+		public JsonResult FindInvestors(string term, int? fundId) {
+			return Json(InvestorRepository.FindInvestors(term,fundId), JsonRequestBehavior.AllowGet);
 		}
 
 		//

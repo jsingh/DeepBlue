@@ -9,7 +9,6 @@
 	height: 25px;
 	line-height: 25px;
 	margin-right: 10px;
-	font-weight: bold;
 }
 .cell a {
 	color: Black;
@@ -32,17 +31,10 @@
 	border: 0px;
 	margin-top: 2px;
 }
-.editor-label {
-	text-align: right;
-	line-height: 20px;
-	text-align: right;
-}
 .editor-field {
 	width: 180px;
 }
-h5, .editor-label, .editor-field {
-	color: #000;
-}
+
 h5 {
 	font-size: 16px;
 	font-weight: bold;
@@ -51,10 +43,11 @@ h5 {
 	cursor: pointer;
 	float: left;
 	width: auto;
-	padding-left:65px;
+	padding-left: 65px;
 	background-image: url(../images/downarrow.png);
 	background-position: center right;
-	background-repeat: no-repeat; width: 90%;
+	background-repeat: no-repeat;
+	width: 90%;
 }
 .expandsel .expandbtn {
 	background-image: url(../images/rightuarrow.png);
@@ -124,17 +117,16 @@ h4 a {
 }
 .dealdetail {
 	float: left;
-	padding-left:65px;
-	width:94%;
+	padding-left: 65px;
+	width: 94%;
 }
 .dealdetail .cell {
 	font-size: 14px;
-	font-weight: bold;
 }
 .section {
 	margin: 15px 0px;
 	float: left;
-	width:100%;
+	width: 100%;
 }
 #DealMain .content {
 	clear: both;
@@ -144,17 +136,16 @@ h4 a {
 .expandheader, .recon-expandheader {
 	cursor: pointer;
 	float: left;
-	width:100%;
-	
+	width: 100%;
 }
 .expandheader .expandimg, .recon-expandheader .expandimg {
-    background: url("../images/plus.png") no-repeat scroll left center transparent;
-    color: #006059;
-    font-size: 15px;
-    font-weight: bold;
-    padding: 12px 0 8px 20px;
-    white-space: nowrap;
-     text-transform:uppercase;
+	background: url("../images/plus.png") no-repeat scroll left center transparent;
+	color: #006059;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 12px 0 8px 20px;
+	white-space: nowrap;
+	text-transform: uppercase;
 }
 .expandsel {
 	background-image: url(../images/expandbg.png);

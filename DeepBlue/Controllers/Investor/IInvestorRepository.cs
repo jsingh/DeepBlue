@@ -11,7 +11,7 @@ namespace DeepBlue.Controllers.Investor {
     public interface IInvestorRepository {
 		
 		#region Find
-		List<AutoCompleteList> FindInvestors(string investorName);
+		List<AutoCompleteList> FindInvestors(string investorName, int? fundId);
 		List<AutoCompleteList> FindOtherInvestors(string investorName, int excludeInvestorId);
         DeepBlue.Models.Entity.Investor FindInvestor(int investorId);
 		InvestorDetail FindInvestorDetail(int investorId);

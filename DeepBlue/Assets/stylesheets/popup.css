@@ -4,9 +4,6 @@
 .editor-field select {
 	width: 174px;
 }
-label {
-	font-weight: normal;
-}
 input[type="text"], select {
 	padding: 2px;
 }

@@ -1,6 +1,6 @@
 ﻿/* CSS Document */
 .flexigrid {
-	font-family: Arial;
+	
 	font-size: 12px;
 	border: 0px solid #eee;
 	overflow: hidden;
@@ -61,7 +61,7 @@
 	background: none;
 }
 .flexigrid div.iDiv input, .flexigrid div.iDiv select, .flexigrid div.iDiv textarea {
-	font-family: Arial;
+	
 	font-size: 12px;
 }
 .flexigrid div.iDiv input.tb {
@@ -310,7 +310,7 @@ div.pGroup {
 	width: 96%;
 }
 .flexigrid tr td input.ui-autocomplete-input[type="text"] {
-	width: 90%;
+	width: 85%;
 }
 .flexigrid #ExportExcel {
 	float: right;

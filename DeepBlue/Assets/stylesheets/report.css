@@ -56,11 +56,11 @@
 }
 #ReportContent .headingrow td {
 	font-size: 16px;
-	font-weight: bold;
+	font-weight: normal;
 	padding: 5px 0;
 }
 #ReportContent .detailrow td {
-	font-weight: bold;
+	font-weight: normal;
 	padding: 8px 0;
 }
 #ReportContent .bordertop td, #ReportContent .bordertop {

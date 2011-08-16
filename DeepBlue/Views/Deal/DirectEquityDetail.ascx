@@ -2,6 +2,7 @@
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <div class="line">
 </div>
+<div class="direct-det">
 <div id="equitysymboldiv">
 	<div class="editor-label">
 		<%: Html.LabelFor(model => model.EquitySymbol)%>
@@ -54,11 +55,13 @@
 	</div>
 	<%: Html.Hidden("EquityId", "${EquityId}") %>
 </div>
+</div>
 <div class="line">
 </div>
 <br />
 <div class="line">
 </div>
+<div class="direct-det">
 <div id="eqdocument">
 	<div class="editor-label">
 		<%: Html.Label("Document Type") %>
@@ -87,6 +90,7 @@
 	<div id="LinkRow" style="display: none; width: auto;" class="editor-field">
 		<%: Html.TextBox("EquityFilePath")%>
 	</div>
+</div>
 </div>
 <div class="line">
 </div>

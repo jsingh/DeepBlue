@@ -8,36 +8,36 @@
 			<label>
 				Capital Distributed-</label>
 		</div>
-		<div class="editor-field" style="padding-top: 10px;">
-			<b>${formatCurrency(CapitalDistributed)}</b>
+		<div class="editor-field">
+			${formatCurrency(CapitalDistributed)}
 		</div>
 		<div class="editor-label" style="clear: right;">
 			<label>
 				Return Management Fees-</label>
 		</div>
-		<div class="editor-field" style="padding-top: 10px;">
-			<b>${formatCurrency(ReturnManagementFees)}</b>
+		<div class="editor-field">
+			${formatCurrency(ReturnManagementFees)}
 		</div>
 		<div class="editor-label">
 			<label>
 				Return Fund Expense-</label>
 		</div>
-		<div class="editor-field" style="padding-top: 10px;">
-			<b>${formatCurrency(ReturnFundExpenses)}</b>
+		<div class="editor-field">
+			${formatCurrency(ReturnFundExpenses)}
 		</div>
 		<div class="editor-label" style="clear: right;">
 			<label>
 				Fund Expenses-</label>
 		</div>
-		<div class="editor-field" style="padding-top: 10px;">
-			<b>${formatCurrency(FundExpenses)}</b>
+		<div class="editor-field">
+			${formatCurrency(FundExpenses)}
 		</div>
 		<div class="editor-label" style="clear: right;">
 			<label>
 				Profits Returned-</label>
 		</div>
-		<div class="editor-field" style="padding-top: 10px;">
-			<b>${formatCurrency(ProfitsReturned)}</b>
+		<div class="editor-field">
+			${formatCurrency(ProfitsReturned)}
 		</div>
 	</div>
 	<div class="line">

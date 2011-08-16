@@ -75,15 +75,15 @@ namespace DeepBlue.Controllers.CapitalCall {
 				capitalCall.ExistingInvestmentAmount = model.ExistingInvestmentAmount ?? 0;
 				capitalCall.NewInvestmentAmount = model.NewInvestmentAmount;
 				capitalCall.FundID = model.FundId;
-				capitalCall.FundExpenses = 0;
-				capitalCall.ManagementFees = 0;
 				capitalCall.CapitalCallNumber = Convert.ToString(CapitalCallRepository.FindCapitalCallNumber(model.FundId));
 				capitalCall.InvestmentAmount = (capitalCall.NewInvestmentAmount ?? 0) + (capitalCall.ExistingInvestmentAmount ?? 0);
 				capitalCall.InvestedAmountInterest = 0;
-				if ((model.AddFundExpenses ?? false)) {
-					capitalCall.FundExpenses = model.FundExpenseAmount ?? 0;
-				}
+
+				List<ManagementFeeRateScheduleTierDetail> tiers = null;
+				List<ManagementFeeDetail> managementFeeDetails = GetManagementFeeDetails(model.FundId, (model.FromDate ?? Convert.ToDateTime("01/01/1900")), (model.ToDate ?? Convert.ToDateTime("01/01/1900")), ref tiers);
+				ManagementFeeDetail managementFeeDetail = null;
 				List<InvestorFund> investorFunds = CapitalCallRepository.GetAllInvestorFunds(capitalCall.FundID);
+
 				if (investorFunds != null) {
 
 					// Find non managing total commitment.
@@ -93,15 +93,31 @@ namespace DeepBlue.Controllers.CapitalCall {
 					// Calculate managing total commitment.
 					decimal totalCommitment = nonManagingMemberTotalCommitment + managingMemberTotalCommitment;
 
+					if ((model.AddFundExpenses ?? false)) {
+						capitalCall.FundExpenses = model.FundExpenseAmount ?? 0;
+					}
+					else {
+						capitalCall.FundExpenses = 0;
+					}
+
 					if ((model.AddManagementFees ?? false)) {
 						capitalCall.ManagementFeeStartDate = model.FromDate;
 						capitalCall.ManagementFeeEndDate = model.ToDate;
-						capitalCall.ManagementFees = model.ManagementFees ?? 0;
 						capitalCall.ManagementFeeInterest = 0;
+						if (managementFeeDetails != null) {
+							capitalCall.ManagementFees = managementFeeDetails.Sum(fee => fee.ManagementFee);
+						}
+						else {
+							capitalCall.ManagementFees = 0;
+						}
 					}
 
 					// Check new investment amount and existing investment amount.
-					if (!((capitalCall.NewInvestmentAmount + capitalCall.ExistingInvestmentAmount) == (capitalCall.CapitalAmountCalled - capitalCall.ManagementFees - capitalCall.FundExpenses))) {
+
+					decimal investmentAmount = (capitalCall.NewInvestmentAmount ?? 0) + (capitalCall.ExistingInvestmentAmount ?? 0);
+					decimal capitalAmount = (capitalCall.CapitalAmountCalled) - (capitalCall.ManagementFees ?? 0) - (capitalCall.FundExpenses ?? 0);
+
+					if (((decimal.Round(investmentAmount) == decimal.Round(capitalAmount))==false)){
 						ModelState.AddModelError("NewInvestmentAmount", "(New Investment Amount + Existing Investment Amount) should be equal to (Capital Amount - Management Fees - Fund Expenses).");
 					}
 					else {
@@ -120,7 +136,14 @@ namespace DeepBlue.Controllers.CapitalCall {
 							item.InvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.InvestmentAmount;
 							item.InvestorID = investorFund.InvestorID;
 							item.ManagementFeeInterest = (investorFund.TotalCommitment / nonManagingMemberTotalCommitment) * capitalCall.ManagementFeeInterest;
-							item.ManagementFees = (investorFund.TotalCommitment / nonManagingMemberTotalCommitment) * capitalCall.ManagementFees;
+
+							if (managementFeeDetails != null) {
+								managementFeeDetail = managementFeeDetails.Where(fee => fee.InvestorId == investorFund.InvestorID).SingleOrDefault();
+								if (managementFeeDetail != null) {
+									item.ManagementFees = managementFeeDetail.ManagementFee;
+								}
+							}
+							
 							item.NewInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.NewInvestmentAmount;
 
 							// Calculate capital call amount for each investor.
@@ -352,112 +375,80 @@ namespace DeepBlue.Controllers.CapitalCall {
 		//GET : /CapitalCall/CalculateManagementFee
 		[HttpGet]
 		public JsonResult CalculateManagementFee(int fundId, DateTime startDate, DateTime endDate) {
-			ManagementFeeDetail detail = new ManagementFeeDetail();
-			detail.Tiers = new FlexigridData();
+			List<ManagementFeeRateScheduleTierDetail> tiers = null;
+			List<ManagementFeeDetail> managementFeeDetails = GetManagementFeeDetails(fundId, startDate, endDate, ref tiers);
+			return Json(new { ManagementFee = managementFeeDetails.Sum(m => m.ManagementFee), Tiers = tiers }, JsonRequestBehavior.AllowGet);
+		}
 
-			// Default add three months in start date.
-			endDate = startDate.AddMonths(3);
+		private List<ManagementFeeDetail> GetManagementFeeDetails(int fundId, DateTime startDate, DateTime endDate, ref List<ManagementFeeRateScheduleTierDetail> tiers) {
+			List<NonManagingInvestorFundDetail> investorFunds = CapitalCallRepository.GetAllNonManagingInvestorFunds(fundId);
+			List<ManagementFeeDetail> managementFeeDetails = new List<ManagementFeeDetail>();
+			tiers = CapitalCallRepository.GetAllManagementFeeRateScheduleTiers(fundId, startDate, endDate);
+			if (tiers != null && investorFunds != null) {
+				ManagementFeeDetail managementFeeDetail = null;
+				decimal fee;
+				decimal multiplier;
+				decimal totalCommitment = investorFunds.Sum(investorFund => investorFund.TotalCommitment);
+				int tier1Days = 0;
+				foreach (var investorFund in investorFunds) {
 
-			Models.Entity.Fund fund = CapitalCallRepository.FindFund(fundId);
-			if (fund != null) {
+					managementFeeDetail = new ManagementFeeDetail();
+					managementFeeDetail.InvestorId = investorFund.InvestorId;
+					managementFeeDetails.Add(managementFeeDetail);
+					fee = 0;
+					multiplier = 0;
+					tier1Days = tiers[0].EndDate.Subtract(startDate).Days;
 
-				// Find total commitment amount for investor funds by non managing member investor type.
-				decimal totalCommittedAmount = fund.InvestorFunds.Where(investorFund => investorFund.InvestorTypeId == (int)Models.Investor.Enums.InvestorType.NonManagingMember).Sum(invfund => invfund.TotalCommitment);
+					switch (tiers.Count) {
+						case 1:
+							if (tiers[0].MultiplierTypeId == (int)Models.Fund.Enums.MutiplierType.CapitalCommitted) {
+								multiplier = decimal.Divide(tiers[0].Multiplier, (decimal)100);
+								managementFeeDetail.ManagementFee += decimal.Multiply(multiplier,
+									decimal.Multiply(
+									investorFund.TotalCommitment,
+									 decimal.Divide((decimal)tier1Days, (decimal)360)
+									 ));
+							}
+							else {
+								multiplier = (tiers[0].Multiplier);
+								fee = decimal.Multiply(multiplier, decimal.Divide((decimal)tier1Days, (decimal)360));
+								managementFeeDetail.ManagementFee += decimal.Multiply(fee, decimal.Divide(investorFund.TotalCommitment, totalCommitment));
+							}
+							break;
+						case 2:
+							if (tiers[0].MultiplierTypeId == (int)Models.Fund.Enums.MutiplierType.CapitalCommitted) {
+								multiplier = decimal.Divide(tiers[0].Multiplier, (decimal)100);
+								managementFeeDetail.ManagementFee += decimal.Multiply(multiplier,
+									decimal.Multiply(
+									investorFund.TotalCommitment,
+									decimal.Divide((decimal)tier1Days, (decimal)360)
+									));
+							}
+							else {
+								multiplier = (tiers[0].Multiplier);
+								fee = multiplier * decimal.Divide((decimal)tier1Days, (decimal)360);
+								managementFeeDetail.ManagementFee += decimal.Multiply(fee, decimal.Divide(investorFund.TotalCommitment, totalCommitment));
+							}
 
-				// Get all fund rate schedule by non managing member investor type.
-				FundRateSchedule fundRateSchedule = fund.FundRateSchedules.FirstOrDefault(schedule => schedule.InvestorTypeID == (int)Models.Investor.Enums.InvestorType.NonManagingMember);
-
-				if (totalCommittedAmount > 0 && fundRateSchedule != null) {
-
-					// Find management fee rate schedule.
-
-					ManagementFeeRateSchedule manFeeRateSchedule = FundRepository.FindManagementFeeRateSchedule(fundRateSchedule.RateScheduleID);
-
-					if (manFeeRateSchedule != null) {
-
-						// Get all management fee rate schedule tiers.
-
-						List<ManagementFeeRateScheduleTier> tiers = manFeeRateSchedule.ManagementFeeRateScheduleTiers.Where(feeTier => feeTier.StartDate <= startDate && feeTier.EndDate >= startDate || feeTier.StartDate <= endDate && feeTier.EndDate >= endDate).ToList();
-						FlexigridRow tierDetail;
-
-						/* Two types of multiplier type.
-						 * 1. Capital Committed (Based on rate %).
-						 * 2. Flat Fee (Based on flat fee).
-						 */
-
-						switch (tiers.Count) {
-							case 1:
-								// Calculate base on first quarter.
-								tierDetail = new FlexigridRow();
-
-								// Attempt to calculate first quarter (90 days).
-
-								tierDetail.cell.Add(tiers[0].StartDate.ToString("MM/dd/yyyy"));
-								tierDetail.cell.Add(tiers[0].EndDate.ToString("MM/dd/yyyy"));
-								if (tiers[0].MultiplierTypeID == (int)Models.Fund.Enums.MutiplierType.CapitalCommitted) {
-									detail.ManagementFee = CalculateCapitalFee(totalCommittedAmount, tiers[0].Multiplier, 90);
-									tierDetail.cell.Add("CapitalCommitted");
-									tierDetail.cell.Add(tiers[0].Multiplier.ToString("0.00"));
-									tierDetail.cell.Add(string.Empty);
-								}
-								else {
-									detail.ManagementFee = CalculateFlatFee(totalCommittedAmount, tiers[0].Multiplier, 90);
-									tierDetail.cell.Add("FlatFee");
-									tierDetail.cell.Add(string.Empty);
-									tierDetail.cell.Add(tiers[0].Multiplier.ToString("0.00"));
-								}
-								detail.Tiers.rows.Add(tierDetail);
-								break;
-							case 2:
-								// Calculate base on second quarter.
-								tierDetail = new FlexigridRow();
-
-								// Attempt to calculate first start, end date.
-
-								tierDetail.cell.Add(tiers[0].StartDate.ToString("MM/dd/yyyy"));
-								tierDetail.cell.Add(tiers[0].EndDate.ToString("MM/dd/yyyy"));
-								if (tiers[0].MultiplierTypeID == (int)Models.Fund.Enums.MutiplierType.CapitalCommitted) {
-									detail.ManagementFee += CalculateCapitalFee(totalCommittedAmount, tiers[0].Multiplier, (tiers[0].EndDate - startDate).TotalDays);
-									tierDetail.cell.Add("CapitalCommitted");
-									tierDetail.cell.Add(tiers[0].Multiplier.ToString("0.00"));
-									tierDetail.cell.Add(string.Empty);
-								}
-								else {
-									detail.ManagementFee += CalculateFlatFee(totalCommittedAmount, tiers[0].Multiplier, (tiers[0].EndDate - startDate).TotalDays);
-									tierDetail.cell.Add("FlatFee");
-									tierDetail.cell.Add(string.Empty);
-									tierDetail.cell.Add(tiers[0].Multiplier.ToString("0.00"));
-								}
-								detail.Tiers.rows.Add(tierDetail);
-
-								// Attempt to calculate second start, end date.
-
-								tierDetail = new FlexigridRow();
-								tierDetail.cell.Add(tiers[1].StartDate.ToString("MM/dd/yyyy"));
-								tierDetail.cell.Add(tiers[1].EndDate.ToString("MM/dd/yyyy"));
-								if (tiers[1].MultiplierTypeID == (int)Models.Fund.Enums.MutiplierType.CapitalCommitted) {
-									// Reduce 90 days of first quarter.
-									detail.ManagementFee += CalculateCapitalFee(totalCommittedAmount, tiers[1].Multiplier, (90 - (tiers[0].EndDate - startDate).TotalDays));
-									tierDetail.cell.Add("CapitalCommitted");
-									tierDetail.cell.Add(tiers[1].Multiplier.ToString("0.00"));
-									tierDetail.cell.Add(string.Empty);
-								}
-								else {
-									// Reduce 90 days of first quarter.
-									detail.ManagementFee += CalculateFlatFee(totalCommittedAmount, tiers[1].Multiplier, (90 - (tiers[0].EndDate - startDate).TotalDays));
-									tierDetail.cell.Add("FlatFee");
-									tierDetail.cell.Add(string.Empty);
-									tierDetail.cell.Add(tiers[1].Multiplier.ToString("0.00"));
-								}
-								detail.Tiers.rows.Add(tierDetail);
-								break;
-						}
+							if (tiers[1].MultiplierTypeId == (int)Models.Fund.Enums.MutiplierType.CapitalCommitted) {
+								multiplier = decimal.Divide(tiers[1].Multiplier, (decimal)100);
+								managementFeeDetail.ManagementFee +=
+								decimal.Multiply(multiplier,
+								decimal.Multiply(
+								investorFund.TotalCommitment,
+								decimal.Divide((decimal)(90 - tier1Days), (decimal)360))
+								);
+							}
+							else {
+								multiplier = (tiers[1].Multiplier);
+								fee = decimal.Multiply(multiplier, decimal.Divide((decimal)(90 - tier1Days), (decimal)360));
+								managementFeeDetail.ManagementFee += decimal.Multiply(fee, decimal.Divide(investorFund.TotalCommitment, totalCommitment));
+							}
+							break;
 					}
 				}
 			}
-			detail.Tiers.page = 1;
-			detail.Tiers.total = detail.Tiers.rows.Count;
-			return Json(detail, JsonRequestBehavior.AllowGet);
+			return managementFeeDetails;
 		}
 
 		private decimal CalculateCapitalFee(decimal totalCommittedAmount, decimal multiplier, double days) {
@@ -829,7 +820,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 			}
 			return Json(model, JsonRequestBehavior.AllowGet);
 		}
- 
+
 		#endregion
 
 		//

@@ -22,8 +22,8 @@
 					<%: Html.LabelFor(model => model.InvestorName) %>
 				</div>
 				<div class="editor-label" style="clear: right">
-					<b>
-						<%: Html.Span(Model.InvestorName) %></b>
+					
+						<%: Html.Span(Model.InvestorName) %>
 				</div>
 			</div>
 			<div style="float: right">
@@ -31,8 +31,8 @@
 					<%: Html.LabelFor(model => model.OriginalCommitmentAmount) %>
 				</div>
 				<div class="editor-label" style="clear: right; width: 75px; text-align: right;">
-					<b>
-						<%: Html.Span(FormatHelper.CurrencyFormat(Model.OriginalCommitmentAmount))%></b>
+					
+						<%: Html.Span(FormatHelper.CurrencyFormat(Model.OriginalCommitmentAmount))%>
 				</div>
 			</div>
 		</div>
@@ -42,7 +42,7 @@
 					TransactionType:
 				</div>
 				<div class="editor-label" style="clear: right">
-					<b>Sell</b>
+					Sell
 				</div>
 			</div>
 			<div style="float: right">
@@ -50,8 +50,8 @@
 					Unfunded Amount:
 				</div>
 				<div class="editor-label" style="clear: right; width: 75px; text-align: right;">
-					<b>
-						<%: Html.Span(FormatHelper.CurrencyFormat(Model.UnfundedAmount))%></b>
+					
+						<%: Html.Span(FormatHelper.CurrencyFormat(Model.UnfundedAmount))%>
 				</div>
 			</div>
 		</div>

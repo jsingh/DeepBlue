@@ -10,12 +10,12 @@
 			margin: 0;
 			padding: 0;
 			font-size: 12px;
-			font-family: Arial;
+			
 		}
 		th, td {
 			text-align: left;
 			padding: 5px;
-			font-weight: normal;
+			
 		}
 	</style>
 </head>

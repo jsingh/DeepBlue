@@ -771,35 +771,49 @@ namespace DeepBlue.Controllers.Deal {
 			int totalUnderlyingDirects;
 			int.TryParse(collection["TotalUnderlyingFunds"], out totalUnderlyingFunds);
 			int.TryParse(collection["TotalUnderlyingDirects"], out totalUnderlyingDirects);
+			bool isNoErrors = false;
 			ResultModel resultModel = new ResultModel();
 			if (model.DealNumber == 0) {
 				ModelState.AddModelError("DealNumber", "Deal Close Number is required");
 			}
 			if (ModelState.IsValid) {
+
+				// Check error on deal underlying directs and underlying funds.
 				IEnumerable<ErrorInfo> errorInfo = UpdateDealClosingFundsAndDirects(collection, totalUnderlyingFunds, totalUnderlyingDirects, 0, false, model.CloseDate, true);
-				if (errorInfo != null) {
-					if (errorInfo.Any() == false) {
-						// Attempt to create deal closing.
-						DealClosing dealClosing = DealRepository.FindDealClosing(model.DealClosingId);
+				if (errorInfo != null)
+					isNoErrors = !errorInfo.Any();
+				else
+					isNoErrors = true;
 
-						if (dealClosing == null) {
-							dealClosing = new DealClosing();
-							dealClosing.DealNumber = DealRepository.GetMaxDealClosingNumber(model.DealId);
-						}
+				if (isNoErrors) {
 
-						dealClosing.CloseDate = model.CloseDate;
-						dealClosing.DealID = model.DealId;
-						dealClosing.IsFinalClose = model.IsFinalClose;
+					// Attempt to create deal closing.
 
-						errorInfo = DealRepository.SaveDealClosing(dealClosing);
-						if (errorInfo == null) {
-							errorInfo = UpdateDealClosingFundsAndDirects(collection, totalUnderlyingFunds, totalUnderlyingDirects, dealClosing.DealClosingID, false, model.CloseDate, false);
-						}
-						if (errorInfo == null) {
-							resultModel.Result = "True||" + dealClosing.DealClosingID;
-						}
+					DealClosing dealClosing = DealRepository.FindDealClosing(model.DealClosingId);
+
+					if (dealClosing == null) {
+						dealClosing = new DealClosing();
+						dealClosing.DealNumber = DealRepository.GetMaxDealClosingNumber(model.DealId);
+					}
+
+					dealClosing.CloseDate = model.CloseDate;
+					dealClosing.DealID = model.DealId;
+					dealClosing.IsFinalClose = model.IsFinalClose;
+
+					errorInfo = DealRepository.SaveDealClosing(dealClosing);
+					
+					if (errorInfo == null) {
+						errorInfo = UpdateDealClosingFundsAndDirects(collection
+																		, totalUnderlyingFunds
+																		, totalUnderlyingDirects
+																		, dealClosing.DealClosingID, false, model.CloseDate, false);
+					}
+					
+					if (errorInfo == null) {
+						resultModel.Result = "True||" + dealClosing.DealClosingID;
 					}
 				}
+
 				if (string.IsNullOrEmpty(resultModel.Result)) {
 					resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 				}
@@ -826,14 +840,18 @@ namespace DeepBlue.Controllers.Deal {
 			int totalUnderlyingDirects;
 			int.TryParse(collection["TotalUnderlyingFunds"], out totalUnderlyingFunds);
 			int.TryParse(collection["TotalUnderlyingDirects"], out totalUnderlyingDirects);
+			bool isNoErrors = false;
 			ResultModel resultModel = new ResultModel();
 			IEnumerable<ErrorInfo> errorInfo = UpdateDealClosingFundsAndDirects(collection,
 				totalUnderlyingFunds,
 				totalUnderlyingDirects, 0, true, model.CloseDate, true);
-			if (errorInfo != null) {
-				if (errorInfo.Any() == false) {
-					UpdateDealClosingFundsAndDirects(collection, totalUnderlyingFunds, totalUnderlyingDirects, 0, true, model.CloseDate, false);
-				}
+			if (errorInfo != null)
+				isNoErrors = !errorInfo.Any();
+			else
+				isNoErrors = true;
+
+			if (isNoErrors) {
+				UpdateDealClosingFundsAndDirects(collection, totalUnderlyingFunds, totalUnderlyingDirects, 0, true, model.CloseDate, false);
 			}
 			resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 			return View("Result", resultModel);
@@ -846,16 +864,19 @@ namespace DeepBlue.Controllers.Deal {
 			bool isFinalClose,
 			DateTime finalCloseDate,
 			bool isValidateOnly) {
+
 			IEnumerable<ErrorInfo> errorInfo = null;
+
 			int rowIndex = 0;
 			FormCollection rowCollection;
 			DealUnderlyingFundModel dealUnderlyingFundModel = null;
+
+
 			// Save each deal underlying fund rows.
 			for (rowIndex = 1; rowIndex < totalUnderlyingFunds + 1; rowIndex++) {
 				if (errorInfo != null) {
-					if (errorInfo.Any()) {
+					if (errorInfo.Any()) 
 						break;
-					}
 				}
 				rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(DealUnderlyingFundModel), "_");
 				dealUnderlyingFundModel = new DealUnderlyingFundModel();
@@ -868,9 +889,9 @@ namespace DeepBlue.Controllers.Deal {
 					if (errorInfo.Any() == false) {
 						if (isFinalClose == false) {
 							dealUnderlyingFundModel.DealClosingId = null;
-							if (dealUnderlyingFundModel.IsClose) {
+							if (dealUnderlyingFundModel.IsClose) 
 								dealUnderlyingFundModel.DealClosingId = dealClosingId;
-							}
+							
 							errorInfo = null;
 						}
 						else {
@@ -887,9 +908,7 @@ namespace DeepBlue.Controllers.Deal {
 			}
 
 			if (errorInfo != null) {
-				if (errorInfo.Any() == false) {
-					errorInfo = null;
-				}
+				if (errorInfo.Any() == false) errorInfo = null;
 			}
 
 			if (errorInfo == null) {
@@ -915,9 +934,9 @@ namespace DeepBlue.Controllers.Deal {
 						if (errorInfo.Any() == false) {
 							if (isFinalClose == false) {
 								dealUnderlyingDirectModel.DealClosingId = null;
-								if (dealUnderlyingDirectModel.IsClose) {
+								if (dealUnderlyingDirectModel.IsClose)
 									dealUnderlyingDirectModel.DealClosingId = dealClosingId;
-								}
+								
 								errorInfo = null;
 							}
 							else {
@@ -1507,18 +1526,18 @@ namespace DeepBlue.Controllers.Deal {
 					model = new UnderlyingFundCashDistributionModel();
 					this.TryUpdateModel(model, rowCollection);
 					bool isManualCashDistribution = false;
-					Boolean.TryParse(Request["IsManualCashDistribution"], out isManualCashDistribution);
+					Boolean.TryParse(collection["IsManualCashDistribution"], out isManualCashDistribution);
 					model.IsManualCashDistribution = isManualCashDistribution;
 					errorInfo = ValidationHelper.Validate(model);
 					if (errorInfo.Any() == false) {
-						errorInfo = SaveUnderlyingFundCashDistribution(model);
+						errorInfo = SaveUnderlyingFundCashDistribution(model, collection);
 					}
 				}
 			}
 			return View("Result", resultModel);
 		}
 
-		private IEnumerable<ErrorInfo> SaveUnderlyingFundCashDistribution(UnderlyingFundCashDistributionModel model) {
+		private IEnumerable<ErrorInfo> SaveUnderlyingFundCashDistribution(UnderlyingFundCashDistributionModel model, FormCollection collection) {
 			IEnumerable<ErrorInfo> errorInfo = null;
 			// Attempt to create underlying fund cash distribution.
 
@@ -1564,7 +1583,7 @@ namespace DeepBlue.Controllers.Deal {
 
 					// Calculate distribution amount = (Deal Underlying Fund Committed Amount) / (Total Deal Underlying Fund Committed Amount) * Total Cash Distribution Amount.
 					if (model.IsManualCashDistribution == true && dealUnderlyingFunds.Count > 1) {
-						cashDistribution.Amount = DataTypeHelper.ToDecimal(Request[underlyingFundCashDistribution.FundID.ToString() + "_" + dealUnderlyingFund.DealID.ToString() + "_" + "CallAmount"]);
+						cashDistribution.Amount = DataTypeHelper.ToDecimal(collection[underlyingFundCashDistribution.FundID.ToString() + "_" + dealUnderlyingFund.DealID.ToString() + "_" + "CallAmount"]);
 					}
 					else {
 						cashDistribution.Amount = ((dealUnderlyingFund.CommittedAmount ?? 0) / (dealUnderlyingFunds.Sum(fund => fund.CommittedAmount ?? 0))) * underlyingFundCashDistribution.Amount;
@@ -1743,11 +1762,11 @@ namespace DeepBlue.Controllers.Deal {
 					model = new UnderlyingFundCapitalCallModel();
 					this.TryUpdateModel(model, rowCollection);
 					bool isManualCapitalCall = false;
-					Boolean.TryParse(Request["IsManualCapitalCall"], out isManualCapitalCall);
+					Boolean.TryParse(collection["IsManualCapitalCall"], out isManualCapitalCall);
 					model.IsManualCapitalCall = isManualCapitalCall;
 					errorInfo = ValidationHelper.Validate(model);
 					if (errorInfo.Any() == false) {
-						errorInfo = SaveUnderlyingFundCapitalCall(model);
+						errorInfo = SaveUnderlyingFundCapitalCall(model, collection);
 						if (errorInfo != null)
 							resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 					}
@@ -1756,7 +1775,7 @@ namespace DeepBlue.Controllers.Deal {
 			return View("Result", resultModel);
 		}
 
-		private IEnumerable<ErrorInfo> SaveUnderlyingFundCapitalCall(UnderlyingFundCapitalCallModel model) {
+		private IEnumerable<ErrorInfo> SaveUnderlyingFundCapitalCall(UnderlyingFundCapitalCallModel model, FormCollection collection) {
 			IEnumerable<ErrorInfo> errorInfo = null;
 			// Attempt to create underlying fund capital call.
 			UnderlyingFundCapitalCall underlyingFundCapitalCall = null;
@@ -1802,7 +1821,7 @@ namespace DeepBlue.Controllers.Deal {
 
 					// Calculate capital call amount = (Deal Underlying Fund Committed Amount) / (Total Deal Underlying Fund Committed Amount) * Total Capital Call Amount.
 					if (model.IsManualCapitalCall && dealUnderlyingFunds.Count > 1) {
-						underlyingFundCapitalCallLineItem.Amount = DataTypeHelper.ToDecimal(Request[underlyingFundCapitalCall.FundID.ToString() + "_" + dealUnderlyingFund.DealID.ToString() + "_" + "CallAmount"]);
+						underlyingFundCapitalCallLineItem.Amount = DataTypeHelper.ToDecimal(collection[underlyingFundCapitalCall.FundID.ToString() + "_" + dealUnderlyingFund.DealID.ToString() + "_" + "CallAmount"]);
 					}
 					else {
 						underlyingFundCapitalCallLineItem.Amount = ((dealUnderlyingFund.CommittedAmount ?? 0) / (dealUnderlyingFunds.Sum(fund => fund.CommittedAmount ?? 0))) * underlyingFundCapitalCall.Amount;
@@ -1995,11 +2014,11 @@ namespace DeepBlue.Controllers.Deal {
 					model = new UnderlyingFundStockDistributionModel();
 					this.TryUpdateModel(model, rowCollection);
 					bool isManualStockDistribution = false;
-					Boolean.TryParse(Request["IsManualStockDistribution"], out isManualStockDistribution);
+					Boolean.TryParse(collection["IsManualStockDistribution"], out isManualStockDistribution);
 					model.IsManualStockDistribution = isManualStockDistribution;
 					errorInfo = ValidationHelper.Validate(model);
 					if (errorInfo.Any() == false) {
-						errorInfo = SaveUnderlyingFundStockDistribution(model);
+						errorInfo = SaveUnderlyingFundStockDistribution(model, collection);
 						if (errorInfo != null)
 							resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 					}
@@ -2008,7 +2027,7 @@ namespace DeepBlue.Controllers.Deal {
 			return View("Result", resultModel);
 		}
 
-		private IEnumerable<ErrorInfo> SaveUnderlyingFundStockDistribution(UnderlyingFundStockDistributionModel model) {
+		private IEnumerable<ErrorInfo> SaveUnderlyingFundStockDistribution(UnderlyingFundStockDistributionModel model, FormCollection collection) {
 			IEnumerable<ErrorInfo> errorInfo = null;
 			// Attempt to create underlying fund cash distribution.
 
@@ -2043,8 +2062,8 @@ namespace DeepBlue.Controllers.Deal {
 
 					// Calculate capital call amount = (Deal Underlying Fund Committed Amount) / (Total Deal Underlying Fund Committed Amount) * Total Capital Call Amount.
 					if (model.IsManualStockDistribution) {
-						stockDistributionItem.FMV = DataTypeHelper.ToDecimal(Request[underlyingFundStockDistribution.FundID.ToString() + "_" + deal.DealId.ToString() + "_" + "FMV"]);
-						stockDistributionItem.NumberOfShares = DataTypeHelper.ToDecimal(Request[underlyingFundStockDistribution.FundID.ToString() + "_" + deal.DealId.ToString() + "_" + "NumberOfShares"]);
+						stockDistributionItem.FMV = DataTypeHelper.ToDecimal(collection[underlyingFundStockDistribution.FundID.ToString() + "_" + deal.DealId.ToString() + "_" + "FMV"]);
+						stockDistributionItem.NumberOfShares = DataTypeHelper.ToDecimal(collection[underlyingFundStockDistribution.FundID.ToString() + "_" + deal.DealId.ToString() + "_" + "NumberOfShares"]);
 					}
 					else {
 						stockDistributionItem.NumberOfShares = (((decimal)(deal.NumberOfShares ?? 0) / (decimal)deals.Sum(d => d.NumberOfShares)) * underlyingFundStockDistribution.NumberOfShares);

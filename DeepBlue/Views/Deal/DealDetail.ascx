@@ -30,12 +30,10 @@
 			<%: Html.LabelFor(model => model.IsPartnered) %>
 		</div>
 		<div class="editor-field rdo" style="width: auto; clear: right;">
-			<div class="cell" style="width: 240px">
 				<%: Html.RadioButton("IsPartnered","true", false, new { @id = "IsPartneredYes", @style = "border:0px;", @onclick = "javascript:deal.selectPartner(!this.checked);" })%>
 				&nbsp;Yes&nbsp;
 				<%: Html.RadioButton("IsPartnered", "false", true, new { @id = "IsPartneredNo", @style = "border:0px;", @onclick = "javascript:deal.selectPartner(this.checked);" })%>
 				&nbsp;No
-			</div>
 		</div>
 		<div class="editor-label">
 			<%: Html.LabelFor(model => model.PurchaseTypeId) %>

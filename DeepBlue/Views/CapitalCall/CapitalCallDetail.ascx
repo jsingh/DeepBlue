@@ -8,36 +8,36 @@
 			<label>
 				Capital Committed-</label>
 		</div>
-		<div class="editor-field" style="padding-top: 10px;">
-			<b>${formatCurrency(CapitalCommitted)}</b>
+		<div class="editor-field" >
+			${formatCurrency(CapitalCommitted)}
 		</div>
 		<div class="editor-label" style="clear: right;">
 			<label>
 				Capital Called-</label>
 		</div>
-		<div class="editor-field" style="padding-top: 10px;">
-			<b>${formatCurrency(CapitalCalled)}</b>
+		<div class="editor-field" >
+			${formatCurrency(CapitalCalled)}
 		</div>
 		<div class="editor-label" style="clear: right;">
 			<label>
 				Unfunded Amount-</label>
 		</div>
-		<div class="editor-field" style="padding-top: 10px;">
-			<b>${formatCurrency(UnfundedAmount)}</b>
+		<div class="editor-field" >
+			${formatCurrency(UnfundedAmount)}
 		</div>
 		<div class="editor-label">
 			<label>
 				Management Fees-</label>
 		</div>
-		<div class="editor-field" style="padding-top: 10px;">
-			<b>${formatCurrency(ManagementFees)}</b>
+		<div class="editor-field" >
+			${formatCurrency(ManagementFees)}
 		</div>
 		<div class="editor-label" style="clear: right;">
 			<label>
 				Fund Expenses-</label>
 		</div>
-		<div class="editor-field" style="padding-top: 10px;">
-			<b>${formatCurrency(FundExpenses)}</b>
+		<div class="editor-field" >
+			${formatCurrency(FundExpenses)}
 		</div>
 	</div>
 	<div class="line">

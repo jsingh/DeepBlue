@@ -2,6 +2,7 @@
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <div class="line">
 </div>
+<div class="direct-det">
 <div id="fixincomediv">
 	<div class="editor-label">
 		<%: Html.LabelFor(model => model.FaceValue) %>
@@ -67,7 +68,7 @@
 		<%: Html.LabelFor(model => model.FixedIncomeIndustryId) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("FixedIncomeIndustry", "${FixedIncomeIndustry}", new { @id = "FixedIncomeIndustry", @style = "width:157px;" })%>
+		<%: Html.TextBox("FixedIncomeIndustry", "${FixedIncomeIndustry}", new { @id = "FixedIncomeIndustry" })%>
 		<%: Html.Hidden("FixedIncomeIndustryId", "${FixedIncomeIndustryId}")%>
 	</div>
 	<div class="editor-label" style="clear: right">
@@ -87,11 +88,13 @@
 	</div>
 	<%: Html.Hidden("FixedIncomeId","${FixedIncomeId}")%>
 </div>
+</div>
 <div class="line">
 </div>
 <br />
 <div class="line">
 </div>
+<div class="direct-det">
 <div id="fidocument">
 	<div class="editor-label">
 		<%: Html.Label("Document Type") %>
@@ -117,6 +120,7 @@
 			<%: Html.Span("", new { @id = "SpnFixedIncomeDocLoading" })%>
 		</div>
 	</div>
+</div>
 </div>
 <div class="line">
 </div>

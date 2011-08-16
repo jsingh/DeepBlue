@@ -24,7 +24,7 @@
 				<%:Html.Span("",new { @id = "SpnTotalExpenses" })%>
 			</h5>
 			<br />
-			<div class="gbox" style="width: 90%;">
+			<div class="gbox" style="width: 95%;">
 				<table id="tblDealExpense" cellpadding="0" cellspacing="0" border="0" class="grid">
 					<thead>
 						<tr>
@@ -64,7 +64,7 @@
 					<tfoot>
 						<tr>
 							<td>
-								Total
+								<b>Total</b>
 							</td>
 							<td class="ralign">
 								<%:Html.Span("",new { @id = "SpnFooterTotalExpenses" })%>

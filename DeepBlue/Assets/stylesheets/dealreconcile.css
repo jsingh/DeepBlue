@@ -5,7 +5,7 @@
 	color: #000;
 	margin: 2px;
 	width: 100%;
-	font-family: Arial;
+	
 	font-size: 14px;
 }
 .search-content {
@@ -60,7 +60,6 @@ input, select {
 }
 .grid tr td, .grid tr th {
 	padding: 8px;
-	font-weight: bold;
 }
 .grid .red {
 	color: red;

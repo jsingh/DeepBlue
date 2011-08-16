@@ -63,7 +63,7 @@
 		<label>
 			Fees Included</label>
 	</div>
-	<div class="editor-field" style="width: auto; padding: 3px 0 0;">
+	<div class="editor-field" style="width: auto;">
 		<%: Html.CheckBox("IsFeesIncluded", false, new { @val = "${IsFeesIncluded}" })%>
 	</div>
 	<div class="editor-label">

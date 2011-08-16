@@ -1,4 +1,4 @@
-/* CSS Document */
+﻿/* CSS Document */
 * {
 	margin: 0px;
 	padding: 0px;
@@ -16,10 +16,18 @@ body {
 	background-image: url("../images/bg.jpg");
 	background-repeat: repeat;
 }
+th {
+	text-align: left;
+	font-weight: normal;
+}
 input[type="text"], select {
 	font-size: 12px;
 	padding: 3px;
 	border: solid 1px #9C9C9C;
+}
+input[type="file"]{
+	width:220px;
+	padding:3px;
 }
 h1 {
 	font-size: 15px;
@@ -39,8 +47,8 @@ a img {
 }
 /* Header & Footer */
 #header {
-		min-width:1007px;
-		width:100%;
+	min-width: 1007px;
+	width: 100%;
 }
 #topheader, #menu, #header {
 	float: left;
@@ -53,7 +61,7 @@ a img {
 	color: #A27F7F;
 	clear: both;
 	width: 100%;
-	min-width:1007px;
+	min-width: 1007px;
 	float: left;
 }
 #footer .footercontent {
@@ -61,7 +69,6 @@ a img {
 	height: 35px;
 	text-align: center;
 	line-height: 35px;
-	
 }
 #arrow {
 	width: 17px;
@@ -75,26 +82,22 @@ a img {
 	top: 1px;
 }
 #topheader {
-    background-image: url("../images/titlebg.png");
-    background-repeat: repeat-x;
-    color: #FFFFFF;
-    font-family: Georgia,Arial;
-    font-size: 17px;
-    width:100%;
-    line-height: 32px;
-    text-transform: uppercase;
-    text-shadow: #0B0B0B 1px 1px 1px;
-	filter: Shadow(Color=#0B0B0B, 	
-			Direction=135, 
-			Strength=2);
+	background-image: url("../images/titlebg.png");
+	background-repeat: repeat-x;
+	color: #FFFFFF;
+	font-size: 17px;
+	width: 100%;
+	line-height: 32px;
+	text-transform: uppercase;
+	text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B, 	 			Direction=135,  			Strength=2);
 }
 /* Content */
 #content {
 	clear: both;
 	float: left;
 	width: 100%;
-	min-width:1007px;
-	overflow:hidden;
+	min-width: 1007px;
 }
 #cntbox {
 	float: left;
@@ -102,7 +105,7 @@ a img {
 }
 #cntbox.overflow {
 	overflow: auto;
-	overflow-x:hidden;
+	overflow-x: hidden;
 }
 .cnt-box-main {
 	float: left;
@@ -115,12 +118,18 @@ a img {
 	clear: both;
 }
 .editor-label {
-	width: 120px;
 	float: left;
-	text-align: left;
-	padding: 5px 5px 5px 10px;
+	text-align: right;
+	font-weight: bold;
 	clear: left;
 	color: #000;
+	width: 135px;
+	padding:12px 5px;
+}
+.cell {
+	font-weight: bold;
+}
+label {
 	font-weight: bold;
 }
 .editor-editbtn {
@@ -135,7 +144,7 @@ a img {
 }
 .editor-field {
 	text-align: left;
-	padding: 5px;
+    padding: 8px 5px;
 	float: left;
 	clear: right;
 	color: #000;
@@ -147,7 +156,7 @@ a img {
 	width: 164px;
 }
 .editor-field input.ui-autocomplete-input[type="text"] {
-    width: 144px;
+	width: 144px;
 }
 .radio input {
 	width: auto;
@@ -316,10 +325,7 @@ a img {
 	width: 96.7%;
 }
 
-.editor-label {
-	width: 135px;
-	padding: 5px;
-}
+
 .editor-field {
 	width: 155px;
 }
@@ -382,7 +388,7 @@ a img {
 }
 .grid-header th {
 	background-color: #d4dee5;
-	font-weight: bold;
+	font-weight: normal;
 	font-size: 12px;
 	color: #000;
 	height: 24px;
@@ -586,11 +592,11 @@ h2 {
 	float: left;
 	background-image: url(../images/menucenter.png);
 	background-repeat: repeat-x;
-	width:100%;
+	width: 100%;
 }
 #menubox {
-	float:left;
-	padding-left:65px;
+	float: left;
+	padding-left: 65px;
 }
 #menu .menu-content {
 	float: left;
@@ -607,7 +613,7 @@ h2 {
 	height: 40px;
 }
 #menu.minimize .topmenu .mnu-name {
-  margin: -36px 0 0;
+	margin: -36px 0 0;
 }
 #menu.minimize .sep {
 	height: 40px;
@@ -624,7 +630,6 @@ h2 {
 	overflow: hidden;
 	display: none;
 	top: 24px;
-	font-family: Myriad Pro,Arial;
 	font-size: 13px;
 }
 .mdiv ul {
@@ -634,10 +639,10 @@ h2 {
 	list-style: none;
 	float: left;
 	padding: 13px 27px 13px 0px;
-     color: #243352;
+	color: #243352;
 }
 .mdiv li a {
-color: #27599E;
+	color: #27599E;
 	padding: 5px;
 }
 .topmenu {
@@ -652,18 +657,15 @@ color: #27599E;
 	background-repeat: no-repeat;
 	line-height: 90px;
 	color: #fff;
-	font-family: Myriad Pro,Arial;
 	font-size: 12px;
 	text-shadow: #0B0B0B 1px 1px 1px;
-	filter: Shadow(Color=#0B0B0B, 	
-			Direction=135, 
-			Strength=2);
+	filter: Shadow(Color=#0B0B0B, 	 			Direction=135,  			Strength=2);
 }
 .mnu-name {
-    background-position: center center;
-    background-repeat: no-repeat;
-    margin-top: -23px;
-    padding-top: 39px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin-top: -23px;
+	padding-top: 39px;
 }
 #menu #fundmnu .mnu-name {
 	background-image: url(../images/fund.png);
@@ -679,7 +681,7 @@ color: #27599E;
 }
 #menu #docmnu .mnu-name {
 	background-image: url(../images/document.png);
-	  padding-right: 8px;
+	padding-right: 8px;
 }
 #menu #admmnu .mnu-name {
 	background-image: url(../images/administration.png);
@@ -728,12 +730,10 @@ color: #27599E;
 	float: left;
 	font-weight: bold;
 	text-transform: uppercase;
-	font-family: Myriad Pro, Arial;
 }
 .heading .pname {
 	color: #29589E;
 	float: left;
-	font-family: Myriad Pro, Arial;
 	text-transform: uppercase;
 }
 .heading .arrow {
@@ -749,7 +749,7 @@ color: #27599E;
 .heading .leftcol {
 	float: left;
 	border: solid 0px red;
-	margin-left:65px;
+	margin-left: 65px;
 }
 .heading .rightcol {
 	float: right;
@@ -771,14 +771,14 @@ color: #27599E;
 	z-index: 1;
 	clear: both;
 	min-width: 1007px;
-	width:100%;
-	float:left;
+	width: 100%;
+	float: left;
 	background-image: url(../images/fsmbg.png);
 	background-repeat: repeat-x;
 }
-#submenubox{
-	float:left;
-	padding-left:65px;
+#submenubox {
+	float: left;
+	padding-left: 65px;
 }
 #innersubmenu, .navigation {
 	top: 153px;
@@ -853,10 +853,6 @@ input[type="text"].ui-autocomplete-input {
 	background-repeat: repeat-x;
 	height: 2px;
 }
-label {
-	font-weight: bold;
-}
-
 .hasDatepicker {
 	background-image: url(../images/datepicker.png);
 	background-position: right center;
@@ -896,7 +892,7 @@ input.ui-autocomplete-loading[type="text"] {
 }
 #topheader .cname {
 	float: left;
-	padding-left:65px;
+	padding-left: 65px;
 }
 .tooltip {
 	background-color: #F2F2A4;
@@ -923,10 +919,10 @@ input.ui-autocomplete-loading[type="text"] {
 	background-color: #F5F5F5;
 	font-size: 12px;
 }
-.grid .row td span, .grid .arow td span{
-	   overflow: hidden;
-    white-space: nowrap;
-    width: 98%;
+.grid .row td span, .grid .arow td span {
+	overflow: hidden;
+	white-space: nowrap;
+	width: 98%;
 }
 .grid .arow td {
 	background-color: #E9EAEC;
@@ -944,12 +940,10 @@ input.ui-autocomplete-loading[type="text"] {
 }
 .grid thead tr th, .grid tfoot tr td, .grid thead tr td {
 	background-color: #BABFC5;
-	font-weight: normal;
 	color: #000000;
-	font-size:12px;
+	font-size: 12px;
 }
 .grid tfoot tr td {
-	font-weight: bold;
 	font-size: 13px;
 }
 .grid thead tr td {
@@ -974,10 +968,11 @@ input.ui-autocomplete-loading[type="text"] {
 	text-align: center;
 }
 .grid .gbutton {
-	visibility:hidden; margin:0 2px;
+	visibility: hidden;
+	margin: 0 2px;
 }
 .grid tbody tr:hover .gbutton {
-	visibility:visible;
+	visibility: visible;
 }
 .grid tbody tr:hover td {
 }
@@ -1015,18 +1010,19 @@ input.ui-autocomplete-loading[type="text"] {
 /* blue background */
 .blue-bg .left {
 	background: url(../images/b_btn_l.png) no-repeat left top;
-	width:26px;
-	height:29px;
+	width: 26px;
+	height: 29px;
 }
 .blue-bg .right {
 	background: url(../images/b_btn_r.png) no-repeat left top;
-	width:8px;
-	height:29px;
+	width: 8px;
+	height: 29px;
 }
 .blue-bg .center {
 	background: url("../images/b_btn_c.png") repeat-x scroll left top transparent;
-	height:29px;
-	color:#fffffd;   line-height: 29px;
+	height: 29px;
+	color: #fffffd;
+	line-height: 29px;
 }
 /* end green button */
 /* section tab */

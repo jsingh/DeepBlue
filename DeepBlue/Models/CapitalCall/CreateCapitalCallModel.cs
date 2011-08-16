@@ -38,8 +38,10 @@ namespace DeepBlue.Models.CapitalCall {
 		[DisplayName("Existing Investment Amount-")]
 		public decimal? ExistingInvestmentAmount { get; set; }
 
+		[DisplayName("Management Fees-")]
 		public decimal? ManagementFees { get; set; }
 
+		[DisplayName("Fund Expense Amount-")]
 		public decimal? FundExpenseAmount { get; set; }
 
 		[DisplayName("FromDate-")]

@@ -5,8 +5,6 @@
 	New Capital Call
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
-	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
-	<%=Html.StylesheetLinkTag("flexigrid.css")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.StylesheetLinkTag("capitalcall.css")%>
 	<%=Html.JavascriptInclueTag("CapitalCall.js") %>
@@ -124,9 +122,8 @@
 					<div class="editor-label fromcell" style="width: auto">
 						<%: Html.LabelFor(model => model.ExistingInvestmentAmount) %>
 					</div>
-					<div class="editor-field" style="width: auto; padding-top: 10px;">
-						<b>
-							<%: Html.Span("", new { @id = "SpnExistingInvestmentAmount" })%></b>
+					<div class="editor-field" style="width: auto; padding-top: 15px;">
+						<%: Html.Span("", new { @id = "SpnExistingInvestmentAmount" })%>
 						<%: Html.HiddenFor(model => model.ExistingInvestmentAmount)%>
 					</div>
 					<div class="editor-button" style="margin: 0 0 0 25%; padding-top: 10px; width: auto;">
@@ -146,26 +143,28 @@
 			<div id="UpdateTargetId" style="display: none">
 			</div>
 			<div id="TierDetailMain" class="TierDetail-Main">
-				<table cellpadding="0" cellspacing="0" border="0" id="TierDetail">
+				<table cellpadding="0" cellspacing="0" border="0" id="TierDetail" class="grid">
 					<thead>
 						<tr>
-							<th style="width: 20%" align="center">
+							<th style="width: 10%">
 								From Date
 							</th>
-							<th style="width: 20%" align="center">
+							<th style="width: 10%">
 								To Date
 							</th>
 							<th style="width: 20%">
 								Calculation Type
 							</th>
-							<th style="width: 20%" align="right">
+							<th style="width: 20%" class="ralign">
 								Rate %
 							</th>
-							<th style="width: 20%" align="right">
+							<th style="width: 20%" class="ralign">
 								Flat Fee
 							</th>
 						</tr>
 					</thead>
+					<tbody>
+					</tbody>
 				</table>
 			</div>
 		</div>
@@ -174,15 +173,14 @@
 				<% using (Html.Form(new { @id = "ManualCapitalCall", @onsubmit = "return false" })) {%>
 				<div class="line">
 				</div>
-				<div class="cc-box-det">
+				<div class="cc-box-det manual">
 					<table cellpadding="0" cellspacing="0" border="0" class="mancctbl">
 						<tr>
 							<td>
 								<%: Html.LabelFor(model => model.CapitalCallNumber)%>
 							</td>
 							<td>
-								<b>
-									<%: Html.Span("", new {  @id="SpnCapitalCallNumber"})%></b>
+								<%: Html.Span("", new {  @id="SpnCapitalCallNumber"})%>
 							</td>
 							<td>
 								<%: Html.LabelFor(model => model.CapitalCallDate) %>
@@ -202,22 +200,19 @@
 								<%: Html.LabelFor(model => model.CapitalAmountCalled) %><%: Html.HiddenFor(model => model.CapitalAmountCalled) %>
 							</td>
 							<td>
-								<b>
-									<%: Html.Span("$0",new { @id = "SpnCapitalAmountCalled" }) %></b>
+								<%: Html.Span("$0",new { @id = "SpnCapitalAmountCalled" }) %>
 							</td>
 							<td>
 								<%: Html.LabelFor(model => model.ManagementFeeInterest) %><%: Html.HiddenFor(model => model.ManagementFeeInterest)%>
 							</td>
 							<td>
-								<b>
-									<%: Html.Span("$0", new { @id = "SpnManagementFeeInterest" })%></b>
+								<%: Html.Span("$0", new { @id = "SpnManagementFeeInterest" })%>
 							</td>
 							<td>
 								<%: Html.LabelFor(model => model.InvestedAmountInterest) %><%: Html.HiddenFor(model => model.InvestedAmountInterest)%>
 							</td>
 							<td>
-								<b>
-									<%: Html.Span("$0", new { @id = "SpnInvestedAmountInterest" })%></b>
+								<%: Html.Span("$0", new { @id = "SpnInvestedAmountInterest" })%>
 							</td>
 						</tr>
 						<tr>
@@ -225,15 +220,13 @@
 								<%: Html.LabelFor(model => model.FundExpenses) %><%: Html.HiddenFor(model => model.FundExpenses)%>
 							</td>
 							<td>
-								<b>
-									<%: Html.Span("$0", new { @id = "SpnFundExpenses" })%></b>
+								<%: Html.Span("$0", new { @id = "SpnFundExpenses" })%>
 							</td>
 							<td>
 								<%: Html.LabelFor(model => model.ManagementFees) %><%: Html.HiddenFor(model => model.ManagementFees)%>
 							</td>
 							<td>
-								<b>
-									<%: Html.Span("$0", new { @id = "SpnManagementFees" })%></b>
+								<%: Html.Span("$0", new { @id = "SpnManagementFees" })%>
 							</td>
 							<td>
 							</td>
@@ -242,7 +235,7 @@
 				</div>
 				<div class="line">
 				</div>
-				<div class="cc-box-det" style="padding-top: 10px">
+				<div class="cc-box-det manual">
 					<div class="cc-manual">
 						<div class="editor-label">
 							<%: Html.Anchor(Html.Image("addinvestor.png").ToHtmlString(),"javascript:manualCapitalCall.addInvestor();") %>
@@ -307,12 +300,28 @@
 	<%= Html.jQueryDatePicker("FromDate")%>
 	<%= Html.jQueryDatePicker("ToDate")%>
 	<%= Html.jQueryAutoComplete("Fund", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { capitalCall.selectFund(ui.item.id);}"})%>
-	<%= Html.jQueryFlexiGrid("TierDetail", new FlexigridOptions { Height = 0, ResizeWidth = false, Width = 600, BoxStyle = false })%>
 	<script id="CapitalCallInvestorTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("CapitalCallInvestorDetail"); %>
 	</script>
 	<script type="text/javascript">
 		capitalCall.init();
+	</script>
+	<script id="TierDetailTemplate" type="text/x-jquery-tmpl"> 
+		{{each(i,tier) Tiers}}
+		<tr {{if i%2>0}}class="arow"{{else}}class="row"{{/if}}>
+			<td>${formatDate(tier.StartDate)}</td>
+			<td>${formatDate(tier.EndDate)}</td>
+			{{if tier.MultiplierTypeId==1}}
+			<td>Capital Committed</td>
+			<td class="ralign">${tier.Multiplier}</td>
+			<td></td>
+			{{else}}
+			<td>Flat Fee</td>
+			<td></td>
+			<td class="ralign">${tier.Multiplier}</td>
+			{{/if}}
+		</tr>
+		{{/each}}
 	</script>
 	<%if (Model.FundId > 0) {%>
 	<script type="text/javascript">$(document).ready(function(){

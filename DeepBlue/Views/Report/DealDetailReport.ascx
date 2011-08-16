@@ -7,12 +7,8 @@
 		</td>
 	</tr>
 	<tr class="headingrow">
-		<td>
-			<div class="borderbottom">
-				<%: Html.jQueryTemplateDisplayFor(model => model.FundName, Model.IsTemplateDisplay)%></div>
-		</td>
-		<td colspan="10">
-			&nbsp;
+		<td colspan=11>
+			<span style="border-bottom:solid 1px #000"><%: Html.jQueryTemplateDisplayFor(model => model.FundName, Model.IsTemplateDisplay)%></span>
 		</td>
 		<td>
 			<div class="symbol">
@@ -23,25 +19,25 @@
 		<td style="width: 5%;">
 			Deal
 		</td>
-		<td style="width: 5%;">
+		<td>
 			<%: Html.jQueryTemplateDisplayFor(model => model.DealNumber, Model.IsTemplateDisplay)%>
 		</td>
-		<td style="width: 1%;">
+		<td>
 			Deal Name:
 		</td>
-		<td style="width: 15%;">
+		<td colspan=5>
 			<%: Html.jQueryTemplateDisplayFor(model => model.DealName, Model.IsTemplateDisplay)%>
 		</td>
-		<td colspan="5">
+		<td>
 			&nbsp;
 		</td>
-		<td style="width: 1%;">
+		<td>
 			Contact
 		</td>
-		<td style="width: 10%;">
+		<td>
 			<%: Html.jQueryTemplateDisplayFor(model => model.Contact, Model.IsTemplateDisplay)%>
 		</td>
-		<td style="width: 10%">
+		<td>
 			&nbsp;
 		</td>
 	</tr>
@@ -272,38 +268,38 @@
 	<%}else{%>
 	<tr class="hrow underline">
 	<%}%>
-		<td colspan="2">
+		<td>
 			Trans.Date
 		</td>
-		<td colspan="6">
+		<td colspan="4">
 			Fund
 		</td>
-		<td>
+		<td colspan="2">
 			Amount
 		</td>
 		<td colspan="2">
 			Unused Capital
 		</td>
-		<td>
+		<td colspan="3">
 			Type
 		</td>
 	</tr>
 	<%if (Model.IsTemplateDisplay) {%>
 	{{each(i,item) Details}}
 	<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
-		<td colspan="2">
+		<td>
 			${formatDate(item.Date)}
 		</td>
-		<td colspan="6">
+		<td colspan="4">
 			${item.FundName}
 		</td>
-		<td>
+		<td colspan="2">
 			${formatCurrency(item.Amount)}
 		</td>
 		<td colspan="2">
 			${formatCurrency(item.UnUsedCapital)}
 		</td>
-		<td>
+		<td colspan="3">
 			${item.Type}
 		</td>
 	</tr>
@@ -313,21 +309,21 @@
 	<%if (Model.Details != null) { %>
 	<%foreach (var detail in Model.Details) {%>
 	<tr>
-		<td colspan="2">
+		<td>
 			<%if (detail.Date.HasValue) {%>
 			<%=detail.Date.Value.ToString("MM/dd/yyyy")%>
 			<%}%>
 		</td>
-		<td colspan="6">
+		<td colspan="4">
 			<%=detail.FundName%>
 		</td>
-		<td>
+		<td colspan="2">
 			<%=detail.Amount.ToString()%>
 		</td>
 		<td colspan="2">
 			<%=detail.UnUsedCapital.ToString()%>
 		</td>
-		<td>
+		<td colspan="3">
 			<%=detail.Type%>
 		</td>
 	</tr>

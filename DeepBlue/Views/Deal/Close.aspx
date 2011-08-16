@@ -143,7 +143,7 @@
 										<tr>
 											<th style="width: 3%">
 											</th>
-											<th class="lalign" style="width: 20%">
+											<th class="lalign" style="width: 15%">
 												Fund Name
 											</th>
 											<th class="ralign">
@@ -241,7 +241,8 @@
 					<div class="detail" style="display: block">
 						<div class="dc-box">
 							<div class="closetitle" style="margin-top: 0">
-								<div class="title">All Underlying Funds</div>
+								<div class="title">
+									All Underlying Funds</div>
 							</div>
 							<div class="dc-box tabledetail">
 								<div class="gbox" style="width: 90%">
@@ -274,7 +275,8 @@
 						</div>
 						<div class="dc-box">
 							<div class="closetitle">
-								<div class="title">All Underlying Directs</div>
+								<div class="title">
+									All Underlying Directs</div>
 							</div>
 							<div class="dc-box tabledetail">
 								<div class="gbox" style="width: 90%">
@@ -339,7 +341,11 @@
 			{{if IsFinalClose!=true}}
 				<td class="calign">
 					{{if item.DealUnderlyingFundId>0}}
-						<%: Html.CheckBox("${index}_IsClose",false, new { @onclick="javascript:dealClose.editChkRow(this);", @id="chk", @val = "${item.IsClose}"  })%>			
+						<%: Html.CheckBox("${index}_IsClose",false, new { @onclick="javascript:dealClose.editChkRow(this);", @id="chk", @val = "${item.IsClose}"
+						,@style="{{if item.DealClosingId>0}}display:none{{/if}}"  })%>			
+					{{/if}}
+					{{if item.DealClosingId>0}}
+						<%: Html.Image("close.gif")%>
 					{{/if}}
 				</td>
 			{{/if}}
@@ -419,9 +425,11 @@
 						<%: Html.Hidden("${index}_AdjustedCost","${checkNullOrZero(item.AdjustedCost)}")%>	
 					{{/if}}
 					{{if item.DealUnderlyingFundId>0}}
+						{{if item.DealClosingId==0 || IsFinalClose==true }}
 						<%: Html.Image("Edit.png", new { @id="Edit", @class="gbutton", @onclick = "javascript:dealClose.editRow(this);" })%>
+						{{/if}}
 					{{else}}
-						{{if IsFinalClose!=true}}
+						{{if IsFinalClose!=true && item.DealUnderlyingFundId==0}}
 							<%: Html.Image("Add.png", new { @id="Add", @onclick = "javascript:dealClose.saveDUF(this);" })%>
 						{{/if}}
 					{{/if}}
@@ -437,7 +445,7 @@
 			<td>
 			</td>
 			<td class="lalign">
-				Total
+				<b>Total</b>
 			</td>
 			<td class="ralign">
 				<%: Html.Span("", new { @id="SpnTotalCA" })%>
@@ -467,7 +475,11 @@
 			{{if IsFinalClose!=true}}
 				<td class="calign">
 					{{if item.DealUnderlyingDirectId>0}}
-						<%: Html.CheckBox("${index}$IsClose",false, new { @onclick="javascript:dealClose.editChkRow(this);", @id="chk", @val = "${item.IsClose}" })%>	
+						<%: Html.CheckBox("${index}$IsClose",false, new { @onclick="javascript:dealClose.editChkRow(this);", @id="chk", @val = "${item.IsClose}"
+						,@style="{{if item.DealClosingId>0}}display:none{{/if}}" })%>	
+					{{/if}}
+					{{if item.DealClosingId>0}}
+						<%: Html.Image("close.gif")%>
 					{{/if}}
 				</td>
 			{{/if}}
@@ -521,9 +533,13 @@
 					<%: Html.Hidden("${index}$AdjustedFMV","${checkNullOrZero(item.AdjustedFMV)}")%>
 				{{/if}}
 				{{if item.DealUnderlyingDirectId>0}}
+					{{if item.DealClosingId==0 || IsFinalClose==true }}
 				<%: Html.Image("Edit.png", new { @id="Edit", @class="gbutton", @onclick = "javascript:dealClose.editRow(this);" })%>
+					{{/if}}
 				{{else}}
+					{{if IsFinalClose!=true && item.DealUnderlyingDirectId==0}}
 				<%: Html.Image("Add.png", new { @id="Add", @onclick = "javascript:dealClose.saveDUD(this);" })%>
+				{{/if}}
 				{{/if}}
 			</td>
 		</tr>
@@ -538,7 +554,7 @@
 			<tr>
 				<td>
 				</td>
-				<td class="lalign">Total
+				<td class="lalign"><b>Total</b>
 				</td>
 				<td class="ralign">
 					<%: Html.Span("", new { @id="SpnTotalNoOfShares" })%>
@@ -565,7 +581,7 @@
 		<tfoot>
 			<tr>
 				<td class="lalign">
-					Total
+					<b>Total</b>
 				</td>
 				<td class="ralign">
 					<%: Html.Span("", new { @id = "SpnTotalGPP" })%>
@@ -595,7 +611,7 @@
 		<tfoot>
 			<tr>
 				<td class="lalign">
-					Total
+					<b>Total</b>
 				</td>
 				<td class="ralign">
 					<%: Html.Span("", new { @id="SpnTotalNoOfShares" })%>

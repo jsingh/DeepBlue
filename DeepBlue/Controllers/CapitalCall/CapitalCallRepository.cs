@@ -5,6 +5,7 @@ using System.Web;
 using DeepBlue.Models.Entity;
 using DeepBlue.Models.CapitalCall;
 using DeepBlue.Helpers;
+using System.Data.Objects;
 
 namespace DeepBlue.Controllers.CapitalCall {
 	public class CapitalCallRepository : ICapitalCallRepository {
@@ -146,7 +147,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 						select new DetailModel {
 							FundId = fund.FundID,
 							FundName = fund.FundName,
-							CapitalCommitted =  fund.InvestorFunds.Sum(investorFund => investorFund.TotalCommitment),
+							CapitalCommitted = fund.InvestorFunds.Sum(investorFund => investorFund.TotalCommitment),
 							UnfundedAmount = fund.InvestorFunds.Sum(investorFund => investorFund.UnfundedAmount),
 							CapitalCalled = fund.CapitalCalls.Sum(capitalCall => capitalCall.CapitalAmountCalled),
 							FundExpenses = fund.CapitalCalls.Sum(capitalCall => capitalCall.FundExpenses),
@@ -211,6 +212,41 @@ namespace DeepBlue.Controllers.CapitalCall {
 							ProfitReturn = capitalDistributionLineItem.PreferredReturn,
 							ReturnFundExpenses = capitalDistributionLineItem.ReturnFundExpenses,
 							ReturnManagementFees = capitalDistributionLineItem.ReturnManagementFees
+						}).ToList();
+			}
+		}
+
+
+
+		public List<ManagementFeeRateScheduleTierDetail> GetAllManagementFeeRateScheduleTiers(int fundId, DateTime startDate, DateTime endDate) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from rateSchedule in context.FundRateSchedules
+						join managementFeeRateSchedule in context.ManagementFeeRateSchedules on rateSchedule.RateScheduleID equals managementFeeRateSchedule.ManagementFeeRateScheduleID
+						join managementFeeRateScheduleTier in context.ManagementFeeRateScheduleTiers on managementFeeRateSchedule.ManagementFeeRateScheduleID equals managementFeeRateScheduleTier.ManagementFeeRateScheduleID
+						where rateSchedule.FundID == fundId
+						&& rateSchedule.InvestorTypeID == (int)Models.Investor.Enums.InvestorType.NonManagingMember
+						&&
+						(
+						(EntityFunctions.TruncateTime(managementFeeRateScheduleTier.StartDate) <= EntityFunctions.TruncateTime(startDate) && EntityFunctions.TruncateTime(managementFeeRateScheduleTier.EndDate) >= EntityFunctions.TruncateTime(startDate)) ||
+						(EntityFunctions.TruncateTime(managementFeeRateScheduleTier.StartDate) <= EntityFunctions.TruncateTime(endDate) && EntityFunctions.TruncateTime(managementFeeRateScheduleTier.EndDate) >= EntityFunctions.TruncateTime(endDate))
+						)
+						select new ManagementFeeRateScheduleTierDetail {
+							StartDate = managementFeeRateScheduleTier.StartDate,
+							EndDate = managementFeeRateScheduleTier.EndDate,
+							Multiplier = managementFeeRateScheduleTier.Multiplier,
+							MultiplierTypeId = managementFeeRateScheduleTier.MultiplierTypeID
+						}).ToList();
+
+			}
+		}
+
+		public List<NonManagingInvestorFundDetail> GetAllNonManagingInvestorFunds(int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investorFund in context.InvestorFunds
+						where investorFund.FundID == fundId && investorFund.InvestorTypeId == (int)Models.Investor.Enums.InvestorType.NonManagingMember
+						select new NonManagingInvestorFundDetail {
+							InvestorId = investorFund.InvestorID,
+							TotalCommitment = investorFund.TotalCommitment
 						}).ToList();
 			}
 		}

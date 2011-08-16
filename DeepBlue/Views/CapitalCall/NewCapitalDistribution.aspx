@@ -68,9 +68,9 @@
 					<div class="editor-label">
 						<%: Html.LabelFor(model => model.DistributionNumber) %>
 					</div>
-					<div class="editor-field" style="padding-top: 10px;">
-						<b>
-							<%: Html.Span("",new { @id= "SpnDistributionNumber"})%></b>
+					<div class="editor-field">
+						
+							<%: Html.Span("",new { @id= "SpnDistributionNumber"})%>
 					</div>
 					<div class="editor-label" style="clear: right;">
 						<%: Html.LabelFor(model => model.DistributionAmount) %>
@@ -93,7 +93,7 @@
 				</div>
 				<div class="line">
 				</div>
-				<div class="cc-box-det dist-detail" style="padding-top: 10px;">
+				<div class="cc-box-det dist-detail">
 					<div class="editor-label">
 						<%: Html.LabelFor(model => model.PreferredReturn)%>
 					</div>
@@ -163,38 +163,38 @@
 					<div class="editor-label">
 						<%: Html.LabelFor(model => model.DistributionNumber) %>
 					</div>
-					<div class="editor-field" style="padding-top: 10px;">
-						<b>
-							<%: Html.Span("",new { @id= "SpnManualDistributionNumber"})%></b>
+					<div class="editor-field">
+						
+							<%: Html.Span("",new { @id= "SpnManualDistributionNumber"})%>
 					</div>
 					<div class="editor-label" style="clear: right">
 						<%: Html.LabelFor(model => model.CapitalDistributionDate) %>
 					</div>
-					<div class="editor-field" style="padding-top: 10px;">
+					<div class="editor-field">
 						<%: Html.TextBox("CapitalDistributionDate", "", new { @id = "ManCapitalDistributionDate" })%>
 					</div>
 					<div class="editor-label" style="clear: right;">
 						<%: Html.LabelFor(model => model.CapitalDistributionDueDate) %>
 					</div>
-					<div class="editor-field" style="padding-top: 10px;">
+					<div class="editor-field">
 						<%: Html.TextBox("CapitalDistributionDueDate","", new { @id = "ManCapitalDistributionDueDate" })%>
 					</div>
 					<div class="editor-label">
 						<%: Html.LabelFor(model => model.DistributionAmount) %>
 					</div>
-					<div class="editor-field" style="padding-top: 10px;">
+					<div class="editor-field">
 						<%: Html.Span("", new { @id = "SpnDistributionAmount" })%>
 					</div>
 					<div class="editor-label" style="clear: right;">
 						<%: Html.LabelFor(model => model.ReturnManagementFees) %>
 					</div>
-					<div class="editor-field" style="padding-top: 10px;">
+					<div class="editor-field">
 						<%: Html.Span("", new { @id = "SpnReturnManagementFees" })%>
 					</div>
 					<div class="editor-label" style="clear: right;">
 						<%: Html.LabelFor(model => model.ReturnFundExpenses) %>
 					</div>
-					<div class="editor-field" style="padding-top: 10px;">
+					<div class="editor-field">
 						<%: Html.Span("", new { @id = "SpnReturnFundExpenses" })%>
 					</div>
 					<div class="editor-label" style="clear: right;">
@@ -207,7 +207,7 @@
 				</div>
 				<div class="line">
 				</div>
-				<div class="cc-box-det" style="padding-top: 10px">
+				<div class="cc-box-det manual">
 					<div class="cc-manual">
 						<div class="editor-label">
 							<%: Html.Anchor(Html.Image("addinvestor.png").ToHtmlString(),"javascript:manualDistribution.addInvestor();") %>
@@ -246,7 +246,7 @@
 						</div>
 					</div>
 					<%: Html.HiddenFor(model => model.InvestorCount)%>
-					<div class="editor-button">
+					<div class="editor-button" style="padding-top:10px;">
 						<div style="float: left; padding: 0 0 10px 5px;">
 							<%: Html.Span("", new { @id = "ManualUpdateLoading" })%>
 						</div>

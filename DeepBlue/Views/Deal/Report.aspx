@@ -205,7 +205,8 @@
 					{{/each}}
 				</tbody>
 				<tfoot>
-					<tr><td>Total
+					<tr>
+						<td><b>Total</b>
 						</td>
                         <td>
                         </td>
@@ -305,7 +306,7 @@
 				<tfoot>
 					  <tr class="total">
                        <td>
-							Total
+							<b>Total</b>
 						</td>
 						<td>
 						</td>

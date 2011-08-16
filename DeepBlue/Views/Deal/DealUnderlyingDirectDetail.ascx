@@ -19,7 +19,7 @@
 <div class="line">
 </div>
 <div class="fieldbox">
-	<div class="section" style="width: 90%;">
+	<div class="section" style="width: 95%;">
 		<div class="dealdetail">
 			<div class="gbox">
 				<table id="tblUnderlyingDirect" cellpadding="0" cellspacing="0" border="0" class="grid"
@@ -41,7 +41,7 @@
 							<th class="ralign" style="width: 12%">
 								Purchase Price
 							</th>
-							<th class="ralign" style="width: 10%">
+							<th class="ralign" style="width: 12%">
 								Fair Market Value
 							</th>
 							<th class="ralign" style="width: 12%">
@@ -100,7 +100,7 @@
 					<tfoot>
 						<tr>
 							<td class="lalign">
-								Total
+								<b>Total</b>
 							</td>
 							<td class="lalign">
 							</td>

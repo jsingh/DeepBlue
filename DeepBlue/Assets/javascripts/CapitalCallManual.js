@@ -91,17 +91,22 @@
 		var data={ "Index": investorCount };
 		$("#CapitalCallInvestorTemplate").tmpl(data).prependTo(target);
 		var tr=$("tr:first",target);
-		$("#Investor",tr).autocomplete({ source: "/Investor/FindInvestors",minLength: 1,select: function (event,ui) {
-			var index=$("tr",target).index(tr);
-			if(manualCapitalCall.checkInvestor(ui.item.id,ui.item.value,index)) {
-				$("#InvestorId",tr).val(ui.item.id);
-			} else {
-				$("#InvestorId",tr).val(0);
-				setTimeout(function () {
-					$("#Investor",tr).val("");
-				},100);
-			}
-		},appendTo: "body",delay: 300
+		$("#Investor",tr).autocomplete({ source: function (request,response) {
+			$.getJSON("/Investor/FindInvestors"+"?term="+request.term+"&fundId="+$("#FundId").val(),function (data) {
+				response(data);
+			});
+		}
+		 ,minLength: 1,select: function (event,ui) {
+		 	var index=$("tr",target).index(tr);
+		 	if(manualCapitalCall.checkInvestor(ui.item.id,ui.item.value,index)) {
+		 		$("#InvestorId",tr).val(ui.item.id);
+		 	} else {
+		 		$("#InvestorId",tr).val(0);
+		 		setTimeout(function () {
+		 			$("#Investor",tr).val("");
+		 		},100);
+		 	}
+		 },appendTo: "body",delay: 300
 		});
 		jHelper.applyGridClass(target);
 	}

@@ -5,9 +5,9 @@
 			$("#TierDetailMain").dialog({
 				title: "Rate Schedule Detail",
 				autoOpen: false,
-				width: 625,
+				width: 700,
 				modal: true,
-				position: 'middle',
+				position: 'top',
 				autoResize: false
 			});
 			/*setTimeout(function () {
@@ -94,7 +94,9 @@
 			$("#SpnMFA","#CapitalCall").html(jHelper.dollarAmount(data.ManagementFee));
 			$("#SpnDetail","#CapitalCall").show();
 			$("#ManagementFees","#CapitalCall").val(data.ManagementFee.toFixed(2));
-			$("#TierDetail").flexAddData(data.Tiers);
+			var target=$("tbody","#TierDetail");
+			target.empty();
+			$("#TierDetailTemplate").tmpl(data).appendTo(target);
 			capitalCall.calcExistingInvestmentAmount();
 		});
 	}

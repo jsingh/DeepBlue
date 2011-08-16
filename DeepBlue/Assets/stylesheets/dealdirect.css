@@ -106,7 +106,7 @@
 	float: left;
 	background-color: #CBD2DA;
 	padding: 20px;
-	width: 100%;
+	min-width:960px;
 }
 #existingEquity {
 	clear: both;
@@ -158,6 +158,9 @@
 #existingEquity .flexigrid {
 	margin: 10px 0 20px;
 }
-.editor-label{
-	padding:5px 0;
+ 
+.direct-det{
+	width:100%;
+	float:left;
+	background-color:#CBD2DA;
 }

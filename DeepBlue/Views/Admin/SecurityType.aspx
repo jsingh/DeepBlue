@@ -12,7 +12,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="admin-main">
 		<div class="admin-header">
-			<a href="javascript:securityType.add(0);" style="font-weight:bold;">
+			<a href="javascript:securityType.add(0);">
 				<%: Html.Image("add_icon.png") %>
 				&nbsp;Add Security Type</a>
 		</div>

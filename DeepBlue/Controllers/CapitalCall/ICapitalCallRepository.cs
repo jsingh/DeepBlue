@@ -21,6 +21,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 		int FindCapitalCallNumber(int fundId);
 		int FindCapitalCallDistributionNumber(int fundId);
 		DetailModel FindDetail(int fundId);
+		List<ManagementFeeRateScheduleTierDetail> GetAllManagementFeeRateScheduleTiers(int fundId, DateTime startDate, DateTime endDate);
 		List<CapitalCallInvestorDetail> GetCapitalCallInvestors(int capitalCallId);
 		List<CapitalDistributionInvestorDetail> GetCapitalDistributionInvestors(int capitalDistributionId);
 		IEnumerable<ErrorInfo> SaveCapitalCall(Models.Entity.CapitalCall capitalCall);
@@ -28,5 +29,6 @@ namespace DeepBlue.Controllers.CapitalCall {
 		IEnumerable<ErrorInfo> SaveCapitalDistribution(CapitalDistribution capitalDistribution);
 		IEnumerable<ErrorInfo> SaveCapitalDistributionLineItem(CapitalDistributionLineItem capitalDistributionLineItem);
 		List<InvestorFund> GetAllInvestorFunds(int fundId);
+		List<NonManagingInvestorFundDetail> GetAllNonManagingInvestorFunds(int fundId);
 	}
 }

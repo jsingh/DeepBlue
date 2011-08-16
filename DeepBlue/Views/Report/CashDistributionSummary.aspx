@@ -79,9 +79,9 @@
 				</tbody>
 				<tfoot>
 				<tr>
-					<td colspan=2 style='vertical-align:top'><b>Total Distribution:${TotalDistributionAmount}</b></td>
-					<td style='text-align:right;' nowrap><b>With Carry Amount:<br/>And Repayment of Mgt Fees:</b></td>
-					<td style='text-align:right;' nowrap><b>${WithCarryAmount}<br/>${RepayManFees}</b></td>
+					<td colspan=2 style='vertical-align:top'>Total Distribution:${TotalDistributionAmount}</td>
+					<td style='text-align:right;' nowrap>With Carry Amount:<br/>And Repayment of Mgt Fees:</td>
+					<td style='text-align:right;' nowrap>${WithCarryAmount}<br/>${RepayManFees}</td>
 				</tr>
 				</tfoot>
 			</table></div>

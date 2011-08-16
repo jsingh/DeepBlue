@@ -22,7 +22,8 @@
 	font-size: 14px;
 }
 .export a {
-	color: #000;    margin: 0 15px 0 0;
+	color: #000;
+	margin: 0 15px 0 0;
 }
 #SpnFundName {
 	font-size: 14px;
@@ -123,9 +124,9 @@
 	width: 90%;
 }
 .export .menu {
-	 background-image: url("../images/expdown.png");
-    background-position: right center;
-    background-repeat: no-repeat;
+	background-image: url("../images/expdown.png");
+	background-position: right center;
+	background-repeat: no-repeat;
 	float: left;
 	font-size: 12px;
 	height: 17px;
@@ -134,26 +135,28 @@
 	width: 43px;
 }
 .exportlist {
-	 display:none;
+	display: none;
 }
-.exportlist  li {
+.exportlist li {
 	list-style: none;
 	margin: 0 10px 0 0;
 }
 .exportlist li a {
-	color:#000;
+	color: #000;
 }
-.export .print { float:left;
+.export .print {
+	float: left;
 	margin: 0 15px 0 0;
 }
 .export .darrow {
-	margin: 0 0 0 5px;float:left;
+	margin: 0 0 0 5px;
+	float: left;
 }
 .grid .rep_tfoot tr td {
 	background-image: none;
 	background-color: transparent;
-	font-weight: normal;
 }
 .rep_tfoot tr td a {
-	text-decoration: underline; font-size:11px;
+	text-decoration: underline;
+	font-size: 11px;
 }

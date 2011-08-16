@@ -4,14 +4,15 @@
 }
 .editor-label {
 	width: auto;
-	font-weight: bold;
-    padding: 14px 5px;
-}
-.editor-field {
-	padding: 8px 5px;
 }
 .editor-field input {
 	width: 150px;
+}
+.editor-field input, .editor-field select {
+	margin-top: -3px;
+}
+.editor-field span {
+	padding-top: 2px;
 }
 .edit-left {
 	width: 75%;
@@ -39,6 +40,12 @@
 }
 .cc-manual {
 	clear: both;
+	margin-left: 65px;
+}
+#ManualCapitalCall .manual, #ManualDistribution .manual {
+	padding: 0;
+	margin: 0;
+	width: 100%;
 }
 .bDiv td div input {
 	width: 96%;
@@ -66,18 +73,14 @@ label {
 	float: left;
 	clear: both;
 	width: 100%;
-}
-.section {
-	margin-top: 10px;
+	position: relative;
 }
 .section {
 	float: left;
 	margin: 10px 48px;
-	width: 100%;
 }
 .cell {
 	float: left;
-	font-weight: bold;
 	height: 25px;
 	line-height: 25px;
 	margin-right: 10px;
@@ -131,32 +134,39 @@ label {
 	width: 225px;
 }*/
 .tabbg {
-    background-image: url("../images/tabbg.png");
-    background-position: left bottom;
-    background-repeat: repeat-x;
-    float: left;
-    height: 44px;
-    padding-bottom: 0;
-    padding-left: 65px;
-    width: 100%;
+	background-image: url("../images/tabbg.png");
+	background-position: left bottom;
+	background-repeat: repeat-x;
+	float: left;
+	height: 44px;
+	padding-bottom: 0;
+	padding-left: 65px;
+	position: absolute;
+	left: 0;
+	right: 0;
 }
 .cc-box-main {
 	float: left;
 	width: 100%;
-	clear:both;
+	clear: both;
+	background-color: #CBD2DA;
 }
 .cc-box .header {
 	margin: 25px 0 0;
+	position: relative;
+	height: 40px;
 }
 .cc-box-det {
 	background-color: #CBD2DA;
 	clear: both;
 	float: left;
 	padding: 20px 20px 0;
-	width: 100%;
 }
 .cc-box-det .editor-label {
 	text-align: right;
+}
+.mancctbl {
+	width: 95%;
 }
 .mancctbl td {
 	padding: 10px 10px 10px 5px;
@@ -182,17 +192,17 @@ label {
 	font-weight: bold;
 }
 .cc-det-report {
-     clear: both;
-    float: left;
-    margin: 0 0 0 2%;
-    padding: 10px;
-    width: 95%;
+	clear: both;
+	float: left;
+	margin: 0 0 0 2%;
+	padding: 10px;
+	width: 95%;
 }
-.cc-report-main{
-	 background-color: #CBD2DA;
+.cc-report-main {
+	background-color: #CBD2DA;
 }
-.cc-report-main .grid tr th{
-	 white-space:normal;
+.cc-report-main .grid tr th {
+	white-space: normal;
 }
 .exploading {
 	background-image: url("../images/ajax.jpg");
@@ -203,5 +213,6 @@ label {
 	padding-left: 20px;
 }
 #cntbox {
-	top:98px;
+	position: relative;
+	clear: both;
 }

@@ -229,7 +229,7 @@ input, select {
     color: #F7F7F7;
     float: left;
     font-size: 12px;
-    left: 312px;
+    left: 330px;
     min-width: 640px;
     position: absolute;
     width: 64%;
@@ -308,7 +308,6 @@ input, select {
 	background-image: url("../images/rightuarrow.png");
 	background-position: right center;
 	background-repeat: no-repeat;
-	width: 89.7%;
 }
 #NewCapitalCall .expandsel {
 	background-image: url("../images/expandbgnoline.png");

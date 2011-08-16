@@ -76,7 +76,7 @@
 		<%}%>
 		</div>
 	</div>
-	<div class="section" style="width: 89%">
+	<div class="section" style="width: 95%">
 		<div class="dealdetail">
 		<table cellpadding="0" cellspacing="0" border="0" id="DealDocumentList" style="width: 100%">
 			<thead>

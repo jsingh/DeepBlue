@@ -17,7 +17,7 @@
 	</div>
 </div>
 <div class="fieldbox">
-	<div class="section" style="width: 90%;">
+	<div class="section" style="width: 95%;">
 		<div class="dealdetail">
 			<div class="gbox">
 				<table id="tblUnderlyingFund" cellpadding="0" cellspacing="0" border="0" class="grid"
@@ -90,7 +90,7 @@
 					<tfoot>
 						<tr>
 							<td class="lalign">
-								Total
+								<b>Total</b>
 							</td>
 							<td>
 							</td>

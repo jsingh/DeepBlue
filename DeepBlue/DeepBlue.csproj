@@ -101,6 +101,8 @@
     <Compile Include="Models\CapitalCall\CapitalDistributionDetail.cs" />
     <Compile Include="Models\CapitalCall\CapitalDistributionInvestorDetail.cs" />
     <Compile Include="Models\CapitalCall\DetailModel.cs" />
+    <Compile Include="Models\CapitalCall\NonManagingInvestorFundDetail.cs" />
+    <Compile Include="Models\CapitalCall\ManagementFeeRateScheduleTierDetail.cs" />
     <Compile Include="Models\Deal\ActivityDealModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
     <Compile Include="Models\Deal\DealFundDetail.cs" />

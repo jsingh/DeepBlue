@@ -96,7 +96,11 @@
 		var data={ "Index": investorCount };
 		$("#CapitalDistributionInvestorTemplate").tmpl(data).prependTo(target);
 		var tr=$("tr:first",target);
-		$("#Investor",tr).autocomplete({ source: "/Investor/FindInvestors",minLength: 1,select: function (event,ui) {
+		$("#Investor",tr).autocomplete({ source: function (request,response) {
+			$.getJSON("/Investor/FindInvestors"+"?term="+request.term+"&fundId="+$("#FundId").val(),function (data) {
+				response(data);
+			});
+		},minLength: 1,select: function (event,ui) {
 			var index=$("tr",target).index(tr);
 			if(manualDistribution.checkInvestor(ui.item.id,ui.item.value,index)) {
 				$("#InvestorId",tr).val(ui.item.id);
