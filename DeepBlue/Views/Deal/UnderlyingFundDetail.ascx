@@ -268,10 +268,10 @@
 				<%: Html.DropDownList("UploadTypeId", Model.UploadTypes, new { @style = "width:80px", @onchange = "javascript:underlyingFund.changeUploadType(this);" })%>
 			</div>
 			<div id="FileRow" class="editor-field">
-				<div class="cell" style="padding: 0; margin: 0; width: auto;">
+				<div class="cell" style="padding: 0; margin: 5px 0 0; width: auto;">
 					<%: Html.File("File", new { @id = "fileToUpload" })%></div>
 			</div>
-			<div id="LinkRow" style="display: none" class="editor-field">
+			<div id="LinkRow" style="display: none;margin:5px 0 0;" class="editor-field">
 				<%: Html.TextBox("FilePath")%>
 				<%: Html.Hidden("FileId", "0")%>
 			</div>

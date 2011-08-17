@@ -167,12 +167,13 @@
 					$("#UnderlyingFundId").val(arr[1]);
 					if(underlyingFund.onAfterUnderlyingFundSave) {
 						underlyingFund.onAfterUnderlyingFundSave();
-					}
-					if(underlyingFund.tempSave==false) {
-						alert("Underlying Fund Added.");
-						$("#lnkAddUnderlyingFund").attr("src","/Assets/images/addnufund.png");
-						$("#AddUnderlyingFund").hide();
-						$("#S_UnderlyingFund").val("");
+					} else {
+						if(underlyingFund.tempSave==false) {
+							alert("Underlying Fund Added.");
+							$("#lnkAddUnderlyingFund").attr("src","/Assets/images/addnufund.png");
+							$("#AddUnderlyingFund").hide();
+							$("#S_UnderlyingFund").val("");
+						}
 					}
 				} else { alert(data); }
 				underlyingFund.tempSave=false;
