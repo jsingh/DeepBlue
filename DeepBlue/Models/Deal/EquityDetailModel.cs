@@ -15,8 +15,8 @@ namespace DeepBlue.Models.Deal {
 
 		public int EquityId { get; set; }
 
-		[Required(ErrorMessage = "Issuer is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Issuer is required")]
+		[Required(ErrorMessage = "Company is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Company is required")]
 		public int IssuerId { get; set; }
 
 		[Required(ErrorMessage = "Equity Type is required")]
@@ -28,10 +28,10 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Stock Symbol")]
 		public string EquitySymbol { get; set; }
 
-		[DisplayName("Is Public")]
-		public bool Public { get; set; }
+		[DisplayName("Security Type")]
+		public int EquitySecurityTypeId { get; set; }
 
-		[DisplayName("ISIN No./Cousip")]
+		[DisplayName("CUSIP NO")]
 		[StringLength(50, ErrorMessage = "SIN No./Cousip must be under 50 characters.")]
 		public string EquityISINO { get; set; }
 
@@ -65,6 +65,8 @@ namespace DeepBlue.Models.Deal {
 		public List<SelectListItem> EquityTypes { get; set; }
 
 		public List<SelectListItem> ShareClassTypes { get; set; }
+
+		public List<SelectListItem> EquitySecurityTypes { get; set; }
 
 	}
 }

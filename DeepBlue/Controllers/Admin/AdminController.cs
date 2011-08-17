@@ -127,9 +127,9 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string InvestorTypeNameAvailable(string InvestorTypeName, int InvestorTypeID) {
-			if (AdminRepository.InvestorTypeNameAvailable(InvestorTypeName, InvestorTypeID))
-				return "Investor Type Name already exist";
+		public string InvestorTypeNameAvailable(string investorType, int investorTypeId) {
+			if (AdminRepository.InvestorTypeNameAvailable(investorType, investorTypeId))
+				return "Investor Type already exist";
 			else
 				return string.Empty;
 		}
@@ -236,9 +236,9 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string InvestorEntityTypeNameAvailable(string InvestorEntityTypeName, int InvestorEntityTypeID) {
-			if (AdminRepository.InvestorEntityTypeNameAvailable(InvestorEntityTypeName, InvestorEntityTypeID))
-				return "Investor Entity Type Name already exists.";
+		public string InvestorEntityTypeNameAvailable(string investorEntityType, int investorEntityTypeId) {
+			if (AdminRepository.InvestorEntityTypeNameAvailable(investorEntityType, investorEntityTypeId))
+				return "Investor Entity Type already exists.";
 			else
 				return string.Empty;
 		}
@@ -352,12 +352,13 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string CommunicationTypeNameAvailable(string CommunicationTypeName, int CommunicationTypeID) {
-			if (AdminRepository.CommunicationTypeNameAvailable(CommunicationTypeName, CommunicationTypeID))
-				return "Communication Type Name already exist";
+		public string CommunicationTypeNameAvailable(string communicationTypeName, int communicationTypeId) {
+			if (AdminRepository.CommunicationTypeNameAvailable(communicationTypeName, communicationTypeId))
+				return "Communication Type already exist";
 			else
 				return string.Empty;
 		}
+
 		#endregion
 
 		#region Communication Grouping
@@ -454,12 +455,13 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string CommunicationGroupingNameAvailable(string CommunicationGroupingName, int CommunicationGroupingID) {
-			if (AdminRepository.CommunicationGroupingNameAvailable(CommunicationGroupingName, CommunicationGroupingID))
-				return "Communication Grouping Name already exist";
+		public string CommunicationGroupingNameAvailable(string communicationGrouping, int communicationGroupingId) {
+			if (AdminRepository.CommunicationGroupingNameAvailable(communicationGrouping, communicationGroupingId))
+				return "Communication Group already exist";
 			else
 				return string.Empty;
 		}
+
 		#endregion
 
 		#endregion
@@ -583,9 +585,9 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string CustomFieldTextAvailable(string CustomFieldText, int CustomFieldId, int ModuleId) {
-			if (AdminRepository.CustomFieldTextAvailable(CustomFieldText, CustomFieldId, ModuleId))
-				return "Custom Field Name already exists.";
+		public string CustomFieldTextAvailable(string customFieldText, int customFieldId, int moduleId) {
+			if (AdminRepository.CustomFieldTextAvailable(customFieldText, customFieldId, moduleId))
+				return "Custom Field already exists.";
 			else
 				return string.Empty;
 		}
@@ -686,9 +688,9 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string DataTypeNameAvailable(string DataTypeName, int DataTypeId) {
-			if (AdminRepository.DataTypeNameAvailable(DataTypeName, DataTypeId))
-				return "Data Type Name already exists.";
+		public string DataTypeNameAvailable(string dataTypeName, int dataTypeId) {
+			if (AdminRepository.DataTypeNameAvailable(dataTypeName, dataTypeId))
+				return "Data Type already exists.";
 			else
 				return string.Empty;
 		}
@@ -795,12 +797,13 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string PurchaseTypeNameAvailable(string Name, int PurchaseTypeID) {
-			if (AdminRepository.PurchaseTypeNameAvailable(Name, PurchaseTypeID))
-				return "Name already exist";
+		public string PurchaseTypeNameAvailable(string name, int purchaseTypeId) {
+			if (AdminRepository.PurchaseTypeNameAvailable(name, purchaseTypeId))
+				return "Purchase Type already exist";
 			else
 				return string.Empty;
 		}
+
 		#endregion
 
 		#region Deal Closing Cost Type
@@ -899,12 +902,13 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string DealClosingCostTypeNameAvailable(string Name, int DealClosingCostTypeID) {
-			if (AdminRepository.DealClosingCostTypeNameAvailable(Name, DealClosingCostTypeID))
-				return "Name already exist";
+		public string DealClosingCostTypeNameAvailable(string name, int dealClosingCostTypeId) {
+			if (AdminRepository.DealClosingCostTypeNameAvailable(name, dealClosingCostTypeId))
+				return "Deal Closing Cost Type already exist";
 			else
 				return string.Empty;
 		}
+	
 		#endregion
 
 		#region UnderlyingFundType
@@ -1000,15 +1004,13 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string UnderlyingFundTypeNameAvailable(string Name, int UnderlyingFundTypeId) {
-			if (AdminRepository.UnderlyingFundTypeNameAvailable(Name, UnderlyingFundTypeId))
-				return "Name already exists.";
+		public string UnderlyingFundTypeNameAvailable(string name, int underlyingFundTypeId) {
+			if (AdminRepository.UnderlyingFundTypeNameAvailable(name, underlyingFundTypeId))
+				return "Underlying Fund Type already exists.";
 			else
 				return string.Empty;
 		}
-
-
-
+		
 		#endregion
 
 		#region ShareClassType
@@ -1112,13 +1114,12 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string ShareClassAvailable(string ShareClass, int ShareClassTypeId) {
-			if (AdminRepository.ShareClassTypeNameAvailable(ShareClass, ShareClassTypeId))
+		public string ShareClassAvailable(string shareClass, int shareClassTypeId) {
+			if (AdminRepository.ShareClassTypeNameAvailable(shareClass, shareClassTypeId))
 				return "Share Class already exists.";
 			else
 				return string.Empty;
 		}
-
 
 		#endregion
 
@@ -1218,8 +1219,8 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string CashDistributionTypeAvailable(string CashDistributionType, int CashDistributionTypeId) {
-			if (AdminRepository.CashDistributionTypeNameAvailable(CashDistributionType, CashDistributionTypeId))
+		public string CashDistributionTypeAvailable(string cashDistributionType, int cashDistributionTypeId) {
+			if (AdminRepository.CashDistributionTypeNameAvailable(cashDistributionType, cashDistributionTypeId))
 				return "Cash Distribution Type already exists.";
 			else
 				return string.Empty;
@@ -1321,14 +1322,13 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string FundExpenseTypeAvailable(string FundExpenseType, int FundExpenseTypeId) {
-			if (AdminRepository.FundExpenseTypeNameAvailable(FundExpenseType, FundExpenseTypeId))
+		public string FundExpenseTypeAvailable(string fundExpenseType, int fundExpenseTypeId) {
+			if (AdminRepository.FundExpenseTypeNameAvailable(fundExpenseType, fundExpenseTypeId))
 				return "Fund Expense Type already exists.";
 			else
 				return string.Empty;
 		}
-
-
+		
 		#endregion
 
 		#region ReportingFrequency
@@ -1432,8 +1432,8 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string ReportingFrequencyAvailable(string ReportingFrequency, int ReportingFrequencyId) {
-			if (AdminRepository.ReportingFrequencyNameAvailable(ReportingFrequency, ReportingFrequencyId))
+		public string ReportingFrequencyAvailable(string reportingFrequency, int reportingFrequencyId) {
+			if (AdminRepository.ReportingFrequencyNameAvailable(reportingFrequency, reportingFrequencyId))
 				return "Reporting already exists.";
 			else
 				return string.Empty;
@@ -1542,14 +1542,13 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string ReportingTypeAvailable(string Reporting, int ReportingTypeId) {
-			if (AdminRepository.ReportingTypeNameAvailable(Reporting, ReportingTypeId))
+		public string ReportingTypeAvailable(string reporting, int reportingTypeId) {
+			if (AdminRepository.ReportingTypeNameAvailable(reporting, reportingTypeId))
 				return "Reporting Type already exists.";
 			else
 				return string.Empty;
 		}
-
-
+		
 		#endregion
 
 		#endregion
@@ -1865,7 +1864,9 @@ namespace DeepBlue.Controllers.Admin {
 		#endregion
 
 		#region Industry
-
+		//
+		// GET: /Admin/Industry
+		[HttpGet]
 		public ActionResult Industry() {
 			ViewData["MenuName"] = "Admin";
 			ViewData["SubmenuName"] = "DealManagement";
@@ -1879,31 +1880,38 @@ namespace DeepBlue.Controllers.Admin {
 		public JsonResult IndustryList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			List<DeepBlue.Models.Entity.Industry> industrys = AdminRepository.GetAllIndustrys(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			List<DeepBlue.Models.Entity.Industry> industries = AdminRepository.GetAllIndustrys(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
-			foreach (var industry in industrys) {
+			foreach (var industry in industries) {
 				flexgridData.rows.Add(new FlexigridRow {
-					cell = new List<object> {industry.IndustryID,
-					  industry.Industry1,
-					  industry.Enabled}
+					cell = new List<object> {
+						industry.IndustryID,
+					    industry.Industry1,
+					    industry.Enabled
+					 }
 				});
 			}
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
-		// GET: /Admin/EditIndustry
+		// GET: /Admin/Industry
 		[HttpGet]
 		public ActionResult EditIndustry(int id) {
-			EditIndustryModel model = new EditIndustryModel();
-			Industry industry = AdminRepository.FindIndustry(id);
-			if (industry != null) {
-				model.IndustryId = industry.IndustryID;
-				model.Industry = industry.Industry1;
-				model.Enabled = industry.Enabled;
-			}
-			return View(model);
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			DeepBlue.Models.Entity.Industry industry = AdminRepository.FindIndustry(id);
+			flexgridData.total = totalRows;
+			flexgridData.page = 0;
+			flexgridData.rows.Add(new FlexigridRow {
+				cell = new List<object> {
+						industry.IndustryID,
+					    industry.Industry1,
+					    industry.Enabled
+				}
+			});
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -1913,7 +1921,7 @@ namespace DeepBlue.Controllers.Admin {
 			EditIndustryModel model = new EditIndustryModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
-			string ErrorMessage = IndustryAvailable(model.Industry, model.IndustryId);
+			string ErrorMessage = IndustryNameAvailable(model.Industry, model.IndustryId);
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				ModelState.AddModelError("Name", ErrorMessage);
 			}
@@ -1925,8 +1933,8 @@ namespace DeepBlue.Controllers.Admin {
 					industry.CreatedDate = DateTime.Now;
 				}
 				industry.Industry1 = model.Industry;
-				industry.Enabled = model.Enabled;
 				industry.EntityID = (int)ConfigUtil.CurrentEntityID;
+				industry.Enabled = model.Enabled;
 				industry.LastUpdatedBy = AppSettings.CreatedByUserId;
 				industry.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveIndustry(industry);
@@ -1936,7 +1944,7 @@ namespace DeepBlue.Controllers.Admin {
 					}
 				}
 				else {
-					resultModel.Result = "True";
+					resultModel.Result = "True||" + industry.IndustryID;
 				}
 			}
 			else {
@@ -1962,9 +1970,9 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string IndustryAvailable(string Industry, int IndustryId) {
-			if (AdminRepository.IndustryNameAvailable(Industry, IndustryId))
-				return "Industry already exists.";
+		public string IndustryNameAvailable(string industryName, int industryId) {
+			if (AdminRepository.IndustryNameAvailable(industryName, industryId))
+				return "Industry already exist";
 			else
 				return string.Empty;
 		}
@@ -1975,6 +1983,7 @@ namespace DeepBlue.Controllers.Admin {
 		public JsonResult FindIndustrys(string term) {
 			return Json(AdminRepository.FindIndustrys(term), JsonRequestBehavior.AllowGet);
 		}
+
 		#endregion
 
 		#region File Type
@@ -2410,45 +2419,54 @@ namespace DeepBlue.Controllers.Admin {
 		#endregion
 
 		#region Currency
-
+		//
+		// GET: /Admin/Currency
+		[HttpGet]
 		public ActionResult Currency() {
-			ViewData["MenuCurrency"] = "Admin";
-			ViewData["SubmenuCurrency"] = "AdminCustomField";
-			ViewData["PageCurrency"] = "Currency";
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "DealManagement";
+			ViewData["PageName"] = "Currency";
 			return View();
 		}
 
 		//
 		// GET: /Admin/CurrencyList
 		[HttpGet]
-		public JsonResult CurrencyList(int pageIndex, int pageSize, string sortCurrency, string sortOrder) {
+		public JsonResult CurrencyList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			List<DeepBlue.Models.Entity.Currency> currencys = AdminRepository.GetAllCurrencies(pageIndex, pageSize, sortCurrency, sortOrder, ref totalRows);
+			List<DeepBlue.Models.Entity.Currency> currencies = AdminRepository.GetAllCurrencies(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
-			foreach (var currency in currencys) {
+			foreach (var currency in currencies) {
 				flexgridData.rows.Add(new FlexigridRow {
-					cell = new List<object> {currency.CurrencyID,
-					  currency.Currency1,
-					  currency.Enabled}
+					cell = new List<object> {
+						currency.CurrencyID,
+					    currency.Currency1,
+					    currency.Enabled
+					 }
 				});
 			}
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
-		// GET: /Admin/EditCurrency
+		// GET: /Admin/Currency
 		[HttpGet]
 		public ActionResult EditCurrency(int id) {
-			EditCurrencyModel model = new EditCurrencyModel();
-			Currency currency = AdminRepository.FindCurrency(id);
-			if (currency != null) {
-				model.CurrencyId = currency.CurrencyID;
-				model.Currency = currency.Currency1;
-				model.Enabled = currency.Enabled;
-			}
-			return View(model);
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			DeepBlue.Models.Entity.Currency currency = AdminRepository.FindCurrency(id);
+			flexgridData.total = totalRows;
+			flexgridData.page = 0;
+			flexgridData.rows.Add(new FlexigridRow {
+				cell = new List<object> {
+						currency.CurrencyID,
+					    currency.Currency1,
+					    currency.Enabled
+				}
+			});
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -2458,9 +2476,9 @@ namespace DeepBlue.Controllers.Admin {
 			EditCurrencyModel model = new EditCurrencyModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
-			string ErrorMessage = CurrencyAvailable(model.Currency, model.CurrencyId);
+			string ErrorMessage = CurrencyNameAvailable(model.Currency, model.CurrencyId);
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
-				ModelState.AddModelError("Currency", ErrorMessage);
+				ModelState.AddModelError("Name", ErrorMessage);
 			}
 			if (ModelState.IsValid) {
 				Currency currency = AdminRepository.FindCurrency(model.CurrencyId);
@@ -2470,10 +2488,10 @@ namespace DeepBlue.Controllers.Admin {
 					currency.CreatedDate = DateTime.Now;
 				}
 				currency.Currency1 = model.Currency;
+				currency.EntityID = (int)ConfigUtil.CurrentEntityID;
 				currency.Enabled = model.Enabled;
 				currency.LastUpdatedBy = AppSettings.CreatedByUserId;
 				currency.LastUpdatedDate = DateTime.Now;
-				currency.EntityID = (int)ConfigUtil.CurrentEntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCurrency(currency);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
@@ -2481,7 +2499,7 @@ namespace DeepBlue.Controllers.Admin {
 					}
 				}
 				else {
-					resultModel.Result = "True";
+					resultModel.Result = "True||" + currency.CurrencyID;
 				}
 			}
 			else {
@@ -2507,13 +2525,12 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
-		public string CurrencyAvailable(string Currency, int CurrencyId) {
-			if (AdminRepository.CurrencyNameAvailable(Currency, CurrencyId))
-				return "Currency already exists.";
+		public string CurrencyNameAvailable(string currencyName, int currencyId) {
+			if (AdminRepository.CurrencyNameAvailable(currencyName, currencyId))
+				return "Name already exist";
 			else
 				return string.Empty;
 		}
-
 
 		#endregion
 
@@ -2638,6 +2655,7 @@ namespace DeepBlue.Controllers.Admin {
 				return string.Empty;
 		}
 		#endregion
+	 
 
 		public ActionResult Result() {
 			return View();

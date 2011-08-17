@@ -34,7 +34,7 @@
 						<th sortname="CommunicationGroupingName" style="width: 20%">
 							Communication Group
 						</th>
-						<th datatype="Boolean" sortname="Enabled" align="center" style="width: 10%;">
+						<th sortname="Enabled" style="width: 10%;">
 							Enable
 						</th>
 						<th>
@@ -70,7 +70,7 @@
 		<%: Html.Span("${row.cell[2]}", new { @class = "show" })%>
 		<%: Html.DropDownListFor(model => model.CommunicationGroupId,Model.CommunicationGroupings, new { @class="hide", @val = "${row.cell[4]}" })%>
 	</td>
-	<td style="width: 10%;text-align:center;">
+	<td style="width: 10%;text-align:left;">
 		<%: Html.Span("{{if row.cell[3]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		
 		<%: Html.CheckBox("Enabled",false, new { @class = "hide", @val="${row.cell[3]}" })%>
 	</td>

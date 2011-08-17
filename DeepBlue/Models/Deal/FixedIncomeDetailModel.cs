@@ -15,8 +15,8 @@ namespace DeepBlue.Models.Deal {
 
 		public int FixedIncomeId { get; set; }
 
-		[Required(ErrorMessage = "Issuer is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Issuer is required")]
+		[Required(ErrorMessage = "Company is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Company is required")]
 		public int IssuerId { get; set; }
 
 		[Required(ErrorMessage = "Fixed Income Type is required")]
@@ -61,7 +61,7 @@ namespace DeepBlue.Models.Deal {
 				
 		public string FixedIncomeType { get; set; }
 
-		[DisplayName("ISIN No./Cousip")]
+		[DisplayName("CUSIP NO")]
 		[StringLength(50, ErrorMessage = "SIN No./Cousip must be under 50 characters.")]
 		public string FixedIncomeISINO { get; set; }
 

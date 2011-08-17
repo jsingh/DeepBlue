@@ -109,3 +109,11 @@
 .editor-field input.ui-autocomplete-input[type="text"] {
     width: 144px;
 }
+.expandbtn {
+	  width: 91.5%;
+}
+.headerbar .leftcol {
+	font-size:18px;
+	text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
+}

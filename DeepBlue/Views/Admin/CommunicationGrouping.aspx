@@ -29,7 +29,7 @@
 				<thead>
 					<tr>
 						<th sortname="CommunicationGroupingName" style="width: 40%">
-							Communication Grouping
+							Communication Group
 						</th>
 						<th>
 						</th>

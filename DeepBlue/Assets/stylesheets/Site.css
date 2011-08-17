@@ -3,31 +3,29 @@
 	margin: 0px;
 	padding: 0px;
 }
-html, body {
-	margin: 0;
-	padding: 0;
-}
 body {
 	height: 100%;
-	margin: 0;
-	font-size: 12px;
-	font-family: Arial;
 	color: #000;
+	font-family: Calibri, Arial;
+	font-size: 12px;
 	background-image: url("../images/bg.jpg");
 	background-repeat: repeat;
+}
+input, select {
+	font-family: Calibri, Arial;
+	font-size: 12px;
+}
+input[type="text"], select {
+	padding: 3px;
+	border: solid 1px #9C9C9C;
 }
 th {
 	text-align: left;
 	font-weight: normal;
 }
-input[type="text"], select {
-	font-size: 12px;
+input[type="file"] {
+	width: 220px;
 	padding: 3px;
-	border: solid 1px #9C9C9C;
-}
-input[type="file"]{
-	width:220px;
-	padding:3px;
 }
 h1 {
 	font-size: 15px;
@@ -124,7 +122,7 @@ a img {
 	clear: left;
 	color: #000;
 	width: 135px;
-	padding:12px 5px;
+	padding: 12px 5px;
 }
 .cell {
 	font-weight: bold;
@@ -144,10 +142,14 @@ label {
 }
 .editor-field {
 	text-align: left;
-    padding: 8px 5px;
+	padding: 8px 5px;
 	float: left;
 	clear: right;
 	color: #000;
+}
+.editor-field span{
+	margin-top:4px;
+	float:left;
 }
 .editor-field input[type="text"] {
 	width: 160px;

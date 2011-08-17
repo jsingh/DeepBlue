@@ -69,8 +69,7 @@
 						<%: Html.LabelFor(model => model.DistributionNumber) %>
 					</div>
 					<div class="editor-field">
-						
-							<%: Html.Span("",new { @id= "SpnDistributionNumber"})%>
+						<%: Html.Span("",new { @id= "SpnDistributionNumber"})%>
 					</div>
 					<div class="editor-label" style="clear: right;">
 						<%: Html.LabelFor(model => model.DistributionAmount) %>
@@ -118,11 +117,7 @@
 					<div class="editor-field amtbox" id="ReturnManagementFeesBox">
 						<%: Html.TextBoxFor(model => model.ReturnManagementFees, new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 					</div>
-					<div class="editor-label" style="width: 84px">
-						<label>
-							Profits:</label>
-					</div>
-					<div class="editor-label" style="clear: right; width: auto;">
+					<div class="editor-label">
 						<%: Html.LabelFor(model => model.GPProfits) %>
 					</div>
 					<div class="editor-field">
@@ -164,7 +159,6 @@
 						<%: Html.LabelFor(model => model.DistributionNumber) %>
 					</div>
 					<div class="editor-field">
-						
 							<%: Html.Span("",new { @id= "SpnManualDistributionNumber"})%>
 					</div>
 					<div class="editor-label" style="clear: right">

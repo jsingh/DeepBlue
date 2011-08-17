@@ -40,7 +40,7 @@
 						<th sortname="OptionalText" style="width: 20%">
 							Optional Text
 						</th>
-						<th datatype="Boolean" sortname="Search" align="center" style="width: 10%;">
+						<th sortname="Search" style="width: 10%;">
 							Search
 						</th>
 						<th>
@@ -84,7 +84,7 @@
 		<%: Html.Span("${row.cell[6]}", new { @class = "show" })%>
 		<%: Html.TextBox("OptionalText", "${row.cell[6]}", new { @class = "hide" }) %>
 	</td>
-	<td style="width: 10%;text-align:center;">
+	<td style="width: 10%;text-align:left;">
 		<%: Html.Span("{{if row.cell[7]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		
 		<%: Html.CheckBox("Search", new {  @class = "hide", @val="${row.cell[7]}" }) %>
 	</td>

@@ -11,9 +11,6 @@
 .editor-field input, .editor-field select {
 	margin-top: -3px;
 }
-.editor-field span {
-	padding-top: 2px;
-}
 .edit-left {
 	width: 75%;
 	float: left;

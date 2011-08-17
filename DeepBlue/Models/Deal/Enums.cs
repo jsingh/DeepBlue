@@ -10,8 +10,6 @@ namespace DeepBlue.Models.Deal.Enums {
         FixedIncome = 2
     }
 
-
-
 	public enum ActivityType {
 		Split = 1,
 		Conversion = 2,
@@ -32,5 +30,10 @@ namespace DeepBlue.Models.Deal.Enums {
 		UnderlyingFundCashDistribution = 2,
 		CapitalCall = 3,
 		CapitalDistribution = 4
+	}
+
+	public enum EquitySecurityType {
+		Private = 0,
+		Public = 1
 	}
 }

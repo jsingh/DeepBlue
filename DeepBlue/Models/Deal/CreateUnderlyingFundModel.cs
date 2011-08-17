@@ -34,8 +34,8 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Fund Type:")]
 		public int FundTypeId { get; set; }
 
-		[Required(ErrorMessage = "Issuer is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Issuer is required")]
+		[Required(ErrorMessage = "GP is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "GP is required")]
 		[DisplayName("Issuer:")]
 		public int IssuerId { get; set; }
 

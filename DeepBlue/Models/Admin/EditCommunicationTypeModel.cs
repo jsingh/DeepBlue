@@ -19,8 +19,8 @@ namespace DeepBlue.Models.Admin {
 
 		public int CommunicationTypeId { get; set; }
 
-		[Required(ErrorMessage = "Communication Type Name is required")]
-		[StringLength(20, ErrorMessage = "Communication Type Name must be under 20 characters.")]
+		[Required(ErrorMessage = "Communication Type is required")]
+		[StringLength(20, ErrorMessage = "Communication Type must be under 20 characters.")]
 		[DisplayName("Name:")]
 		public string CommunicationTypeName { get; set; }
 

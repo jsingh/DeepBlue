@@ -55,6 +55,10 @@
 			<%: Html.ActionLink("Reporting", "ReportingFrequency", "Admin", null, new { @class = (ViewData["PageName"] == "ReportingFrequency" ? "sel" : "") })%></li>
 		<li class="<%=(ViewData["PageName"] == "ReportingType" ? "sel" : "")%>">
 			<%: Html.ActionLink("Reporting Type", "ReportingType", "Admin", null, new { @class = (ViewData["PageName"] == "ReportingType" ? "sel" : "") })%></li>
+		<li class="<%=(ViewData["PageName"] == "Currency" ? "sel" : "")%>">
+			<%: Html.ActionLink("Currency", "Currency", "Admin", null, new { @class = (ViewData["PageName"] == "Currency" ? "sel" : "") })%></li>
+		<li class="<%=(ViewData["PageName"] == "Industry" ? "sel" : "")%>">
+			<%: Html.ActionLink("Industry", "Industry", "Admin", null, new { @class = (ViewData["PageName"] == "Industry" ? "sel" : "") })%></li>
 	</ul>
 </div>
 <%} %>

@@ -46,7 +46,7 @@ namespace DeepBlue.Models.CapitalCall {
 		[DisplayName("Preferred Catch Up-")]
 		public decimal? PreferredCatchUp { get; set; }
 
-		[DisplayName("GP Profits-")]
+		[DisplayName("Profits:  GP Profits-")]
 		public decimal? GPProfits { get; set; }
 
 		[DisplayName("LP Profits-")]

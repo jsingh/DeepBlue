@@ -51,15 +51,20 @@
 		$("#DealId","#NewDeal").val(dealId);
 	}
 	,loadDeal: function (dealId) {
-		var dt=new Date();
-		var url="/Deal/FindDeal/?dealId="+dealId+"&t="+dt.getTime();
-		$("#NewDeal").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
-		$.getJSON(url,function (data) {
-			$("#SaveDealBox").show();
-			$("#SearchDealName").val(data.DealName);
-			$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/mdeal.png");
-			deal.loadTemplate(data);
-		});
+		var dealMain=$("#DealMain");
+		dealMain.hide();
+		if(dealId>0) {
+			dealMain.show();
+			var dt=new Date();
+			var url="/Deal/FindDeal/?dealId="+dealId+"&t="+dt.getTime();
+			$("#NewDeal").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+			$.getJSON(url,function (data) {
+				$("#SaveDealBox").show();
+				$("#SearchDealName").val(data.DealName);
+				$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/mdeal.png");
+				deal.loadTemplate(data);
+			});
+		}
 	}
 	,loadTemplate: function (data) {
 		try {
@@ -234,17 +239,22 @@
 	}
 	,selectFund: function (fundId,fundName) {
 		$(".sel","#DealFundList").removeClass("sel");
-		var dt=new Date();
-		var url="/Deal/FindFund/?fundId="+fundId+"&t="+dt.getTime();
-		$("#NewDeal").html("<center><img src='/Assets/images/ajax.jpg'>&nbsp;Loading...</center>");
-		$("#SaveDealBox").show();
-		$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/cnewdeal.png");
-		$.getJSON(url,function (data) {
-			data.FundName=fundName;
-			data.FundId=fundId;
-			$("#M_Fund").val(fundName);
-			deal.loadTemplate(data);
-		});
+		var dealMain=$("#DealMain");
+		dealMain.hide();
+		if(fundId>0) {
+			dealMain.show();
+			var dt=new Date();
+			var url="/Deal/FindFund/?fundId="+fundId+"&t="+dt.getTime();
+			$("#NewDeal").html("<center><img src='/Assets/images/ajax.jpg'>&nbsp;Loading...</center>");
+			$("#SaveDealBox").show();
+			$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/cnewdeal.png");
+			$.getJSON(url,function (data) {
+				data.FundName=fundName;
+				data.FundId=fundId;
+				$("#M_Fund").val(fundName);
+				deal.loadTemplate(data);
+			});
+		}
 	}
 	/* End Fund */
 	/* SellerInfo */

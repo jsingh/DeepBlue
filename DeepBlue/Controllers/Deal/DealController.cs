@@ -801,14 +801,14 @@ namespace DeepBlue.Controllers.Deal {
 					dealClosing.IsFinalClose = model.IsFinalClose;
 
 					errorInfo = DealRepository.SaveDealClosing(dealClosing);
-					
+
 					if (errorInfo == null) {
 						errorInfo = UpdateDealClosingFundsAndDirects(collection
 																		, totalUnderlyingFunds
 																		, totalUnderlyingDirects
 																		, dealClosing.DealClosingID, false, model.CloseDate, false);
 					}
-					
+
 					if (errorInfo == null) {
 						resultModel.Result = "True||" + dealClosing.DealClosingID;
 					}
@@ -875,7 +875,7 @@ namespace DeepBlue.Controllers.Deal {
 			// Save each deal underlying fund rows.
 			for (rowIndex = 1; rowIndex < totalUnderlyingFunds + 1; rowIndex++) {
 				if (errorInfo != null) {
-					if (errorInfo.Any()) 
+					if (errorInfo.Any())
 						break;
 				}
 				rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(DealUnderlyingFundModel), "_");
@@ -889,9 +889,9 @@ namespace DeepBlue.Controllers.Deal {
 					if (errorInfo.Any() == false) {
 						if (isFinalClose == false) {
 							dealUnderlyingFundModel.DealClosingId = null;
-							if (dealUnderlyingFundModel.IsClose) 
+							if (dealUnderlyingFundModel.IsClose)
 								dealUnderlyingFundModel.DealClosingId = dealClosingId;
-							
+
 							errorInfo = null;
 						}
 						else {
@@ -936,7 +936,7 @@ namespace DeepBlue.Controllers.Deal {
 								dealUnderlyingDirectModel.DealClosingId = null;
 								if (dealUnderlyingDirectModel.IsClose)
 									dealUnderlyingDirectModel.DealClosingId = dealClosingId;
-								
+
 								errorInfo = null;
 							}
 							else {
@@ -1099,9 +1099,6 @@ namespace DeepBlue.Controllers.Deal {
 
 		[HttpPost]
 		public ActionResult UpdateUnderlyingFund(FormCollection collection) {
-			collection["TaxRate"] = (collection["TaxRate"] != null ? collection["TaxRate"].Replace("%", "") : string.Empty);
-			collection["ManagementFee"] = (collection["ManagementFee"] != null ? collection["ManagementFee"].Replace("%", "") : string.Empty);
-			collection["IncentiveFee"] = (collection["IncentiveFee"] != null ? collection["IncentiveFee"].Replace("%", "") : string.Empty);
 			CreateUnderlyingFundModel model = new CreateUnderlyingFundModel();
 			this.TryUpdateModel(model, collection);
 			ResultModel resultModel = new ResultModel();
@@ -2627,18 +2624,24 @@ namespace DeepBlue.Controllers.Deal {
 			ViewData["SubmenuName"] = "AddDirects";
 			ViewData["PageName"] = "AddDirects";
 			CreateIssuerModel model = new CreateIssuerModel();
+
+			model.IssuerDetailModel.IssuerRatings = SelectListFactory.GetEmptySelectList();
+
 			model.EquityDetailModel.Currencies = SelectListFactory.GetCurrencySelectList(AdminRepository.GetAllCurrencies());
 			model.EquityDetailModel.ShareClassTypes = SelectListFactory.GetShareClassTypeSelectList(AdminRepository.GetAllShareClassTypes());
 			model.EquityDetailModel.EquityTypes = SelectListFactory.GetEquityTypeSelectList(AdminRepository.GetAllEquityTypes());
 			model.EquityDetailModel.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
 			model.EquityDetailModel.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
-			model.FixedIncomeDetailModel.Currencies = model.EquityDetailModel.Currencies;
-			model.IssuerDetailModel.IssuerRatings = SelectListFactory.GetEmptySelectList();
+			model.EquityDetailModel.EquitySecurityTypes = SelectListFactory.GetEquitySecurityTypeList();
+
 			model.FixedIncomeDetailModel.FixedIncomeTypes = SelectListFactory.GetFixedIncomeTypesSelectList(AdminRepository.GetAllFixedIncomeTypes());
+			model.FixedIncomeDetailModel.Currencies = model.EquityDetailModel.Currencies;
 			model.FixedIncomeDetailModel.DocumentTypes = model.EquityDetailModel.DocumentTypes;
 			model.FixedIncomeDetailModel.UploadTypes = model.EquityDetailModel.UploadTypes;
+
 			model.EquityDetailModel.EquityCurrencyId = (int)DeepBlue.Models.Deal.Enums.Currency.USD;
 			model.FixedIncomeDetailModel.FixedIncomeCurrencyId = (int)DeepBlue.Models.Deal.Enums.Currency.USD;
+
 			return View(model);
 		}
 
@@ -2646,7 +2649,10 @@ namespace DeepBlue.Controllers.Deal {
 		// GET: /Deal/FindIssuer
 		[HttpGet]
 		public JsonResult FindIssuer(int id) {
-			return Json(DealRepository.FindIssuerModel(id), JsonRequestBehavior.AllowGet);
+			CreateIssuerModel model = DealRepository.FindIssuerModel(id);
+			if(model == null) model = new CreateIssuerModel();
+			if (model.IssuerDetailModel == null) model.IssuerDetailModel = new IssuerDetailModel();
+			return Json(model, JsonRequestBehavior.AllowGet);
 		}
 
 		public JsonResult EquityList(int issuerId, int pageIndex, int pageSize, string sortName, string sortOrder) {
@@ -2678,6 +2684,7 @@ namespace DeepBlue.Controllers.Deal {
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
 			string ErrorMessage = IssuerNameAvailable(model.Name, model.IssuerId);
+
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				ModelState.AddModelError("Name", ErrorMessage);
 			}
@@ -2702,6 +2709,10 @@ namespace DeepBlue.Controllers.Deal {
 					}
 				}
 			}
+			if (model.IsUnderlyingFundModel) 
+				resultModel.Result = resultModel.Result.Replace("Issuer Name", "GP").Replace("Parent Name","GP Parent");
+			else
+				resultModel.Result = resultModel.Result.Replace("Issuer Name", "Company").Replace("Parent Name", "Company Parent");
 			return View("Result", resultModel);
 		}
 
@@ -2713,21 +2724,29 @@ namespace DeepBlue.Controllers.Deal {
 			IEnumerable<ErrorInfo> errorInfo = null;
 
 			IssuerDetailModel model = new IssuerDetailModel();
-			this.TryUpdateModel(model, collection);
+			this.TryUpdateModel(model);
+
 			errorInfo = ValidationHelper.Validate(model);
 			resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+			resultModel.Result = resultModel.Result.Replace("Issuer Name", "Company").Replace("Parent Name", "Company Parent"); 
+
 			string ErrorMessage = IssuerNameAvailable(model.Name, model.IssuerId);
+
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				resultModel.Result += ErrorMessage + "\n";
 			}
+
 			if (string.IsNullOrEmpty(resultModel.Result)) {
 				Models.Entity.Issuer issuer = null;
 				errorInfo = SaveIssuer(model, out issuer);
 				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				if (errorInfo == null) {
+
 					EquityDetailModel equityDetailModel = new EquityDetailModel();
-					this.TryUpdateModel(equityDetailModel, collection);
-					equityDetailModel.EquityFile = Request.Files["EquityFile"];
+					bool isValidDocument = false;
+					string documentError = string.Empty;
+					this.TryUpdateModel(equityDetailModel);
+
 					UnderlyingDirectDocumentModel equityUnderlyingDirectDocumentModel = new UnderlyingDirectDocumentModel {
 						DocumentDate = equityDetailModel.EquityDocumentDate,
 						DocumentTypeId = equityDetailModel.EquityDocumentTypeId,
@@ -2737,23 +2756,30 @@ namespace DeepBlue.Controllers.Deal {
 						FilePath = equityDetailModel.EquityFilePath,
 						UploadTypeId = equityDetailModel.EquityUploadTypeId
 					};
+
+
+
 					if (string.IsNullOrEmpty(equityDetailModel.EquitySymbol) == false ||
 						equityDetailModel.EquityIndustryId > 0 ||
 						equityDetailModel.ShareClassTypeId > 0 ||
 						string.IsNullOrEmpty(equityDetailModel.EquityISINO) == false ||
 						string.IsNullOrEmpty(equityDetailModel.EquityComments) == false ||
 						equityDetailModel.EquityDocumentTypeId > 0 ||
-						string.IsNullOrEmpty(equityDetailModel.EquityFilePath) == false ||
-						string.IsNullOrEmpty(equityDetailModel.EquityFile.FileName) == false ||
+						((equityDetailModel.EquityUploadTypeId == (int)Models.Document.UploadType.Upload) && equityDetailModel.EquityFile != null) ||
+						((equityDetailModel.EquityUploadTypeId == (int)Models.Document.UploadType.Link) && string.IsNullOrEmpty(equityDetailModel.EquityFilePath) == false) ||
 						equityDetailModel.EquityTypeId > 0) {
 						errorInfo = ValidationHelper.Validate(equityDetailModel);
 						resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
-						resultModel.Result += ValidateUnderlyingDirectDocument(equityUnderlyingDirectDocumentModel);
+					}
+
+					documentError = ValidateUnderlyingDirectDocument(equityUnderlyingDirectDocumentModel, ref isValidDocument);
+					if (isValidDocument) {
+						resultModel.Result += documentError;
 					}
 
 					FixedIncomeDetailModel fixedIncomeDetailModel = new FixedIncomeDetailModel();
-					this.TryUpdateModel(fixedIncomeDetailModel, collection);
-					fixedIncomeDetailModel.FixedIncomeFile = Request.Files["FixedIncomeFile"];
+					this.TryUpdateModel(fixedIncomeDetailModel);
+
 					UnderlyingDirectDocumentModel fixedIncomeUnderlyingDirectDocumentModel = new UnderlyingDirectDocumentModel {
 						DocumentDate = fixedIncomeDetailModel.FixedIncomeDocumentDate,
 						DocumentTypeId = fixedIncomeDetailModel.FixedIncomeDocumentTypeId,
@@ -2763,6 +2789,7 @@ namespace DeepBlue.Controllers.Deal {
 						FilePath = fixedIncomeDetailModel.FixedIncomeFilePath,
 						UploadTypeId = fixedIncomeDetailModel.FixedIncomeUploadTypeId
 					};
+
 					if (fixedIncomeDetailModel.FaceValue > 0 ||
 						fixedIncomeDetailModel.Maturity.HasValue ||
 						fixedIncomeDetailModel.IssuedDate.HasValue ||
@@ -2773,14 +2800,18 @@ namespace DeepBlue.Controllers.Deal {
 						fixedIncomeDetailModel.FixedIncomeTypeId > 0 ||
 						fixedIncomeDetailModel.FixedIncomeIndustryId > 0 ||
 						fixedIncomeDetailModel.FixedIncomeDocumentTypeId > 0 ||
-						string.IsNullOrEmpty(fixedIncomeDetailModel.FixedIncomeFilePath) == false ||
-						string.IsNullOrEmpty(fixedIncomeDetailModel.FixedIncomeFile.FileName) == false ||
+						((fixedIncomeDetailModel.FixedIncomeUploadTypeId == (int)Models.Document.UploadType.Upload) && fixedIncomeDetailModel.FixedIncomeFile != null) ||
+						((fixedIncomeDetailModel.FixedIncomeUploadTypeId == (int)Models.Document.UploadType.Link) && string.IsNullOrEmpty(fixedIncomeDetailModel.FixedIncomeFilePath) == false) ||
 						string.IsNullOrEmpty(fixedIncomeDetailModel.FixedIncomeISINO) == false ||
 						string.IsNullOrEmpty(fixedIncomeDetailModel.FixedIncomeComments) == false ||
 						string.IsNullOrEmpty(fixedIncomeDetailModel.FixedIncomeSymbol) == false) {
 						errorInfo = ValidationHelper.Validate(fixedIncomeDetailModel);
 						resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
-						resultModel.Result += ValidateUnderlyingDirectDocument(fixedIncomeUnderlyingDirectDocumentModel);
+					}
+
+					documentError = ValidateUnderlyingDirectDocument(fixedIncomeUnderlyingDirectDocumentModel, ref isValidDocument);
+					if (isValidDocument) {
+						resultModel.Result += documentError;
 					}
 
 					if (string.IsNullOrEmpty(resultModel.Result)) {
@@ -2809,16 +2840,23 @@ namespace DeepBlue.Controllers.Deal {
 			return JsonSerializer.ToJsonObject(new { error = string.Empty, data = resultModel.Result }).ToString();
 		}
 
-		private string ValidateUnderlyingDirectDocument(UnderlyingDirectDocumentModel model) {
+		private string ValidateUnderlyingDirectDocument(UnderlyingDirectDocumentModel model, ref bool isValidDocument) {
 			ResultModel resultModel = new ResultModel();
 			Models.Document.UploadType uploadType = (Models.Document.UploadType)model.UploadTypeId;
 			Models.Deal.Enums.SecurityType securityType = (Models.Deal.Enums.SecurityType)model.SecurityTypeId;
-			string securityTypeName = (securityType == Models.Deal.Enums.SecurityType.Equity ? "Equity" : "FixedIncome");
+			string securityTypeName = (securityType == Models.Deal.Enums.SecurityType.Equity ? "Equity" : "Fixed Income");
 			string fileName = string.Empty;
 			string ext = string.Empty;
+			if (model.File != null) {
+				fileName = model.File.FileName;
+			}
 			if (model.DocumentTypeId > 0 ||
-				model.File != null ||
-				string.IsNullOrEmpty(model.FilePath) == false) {
+				(uploadType == Models.Document.UploadType.Upload && string.IsNullOrEmpty(fileName) == false) ||
+				(uploadType == Models.Document.UploadType.Link && string.IsNullOrEmpty(model.FilePath) == false)
+				) {
+
+				isValidDocument = true;
+
 				if (model.DocumentTypeId == 0)
 					resultModel.Result += securityTypeName + " Document Type required\n";
 
@@ -2848,7 +2886,6 @@ namespace DeepBlue.Controllers.Deal {
 						if (model.File == null) {
 							resultModel.Result += "File is required";
 						}
-
 						if (model.File != null) {
 							if (string.IsNullOrEmpty(model.File.FileName)) {
 								resultModel.Result += "File is required";
@@ -2878,46 +2915,49 @@ namespace DeepBlue.Controllers.Deal {
 			Models.Document.UploadType uploadType = (Models.Document.UploadType)model.UploadTypeId;
 			Models.Deal.Enums.SecurityType securityType = (Models.Deal.Enums.SecurityType)model.SecurityTypeId;
 			FileInfo fileInfo = null;
-			resultModel.Result = ValidateUnderlyingDirectDocument(model);
-			if (string.IsNullOrEmpty(resultModel.Result)) {
-				UnderlyingDirectDocument underlyingDirectDocument = new UnderlyingDirectDocument();
-				underlyingDirectDocument.CreatedBy = AppSettings.CreatedByUserId;
-				underlyingDirectDocument.CreatedDate = DateTime.Now;
-				underlyingDirectDocument.LastUpdatedBy = AppSettings.CreatedByUserId;
-				underlyingDirectDocument.LastUpdatedDate = DateTime.Now;
-				underlyingDirectDocument.EntityID = (int)ConfigUtil.CurrentEntityID;
-				underlyingDirectDocument.DocumentDate = model.DocumentDate;
-				underlyingDirectDocument.DocumentTypeID = model.DocumentTypeId;
-				underlyingDirectDocument.SecurityTypeID = model.SecurityTypeId;
-				underlyingDirectDocument.SecurityID = model.SecurityId;
-				underlyingDirectDocument.File = new Models.Entity.File();
-				underlyingDirectDocument.File.CreatedBy = AppSettings.CreatedByUserId;
-				underlyingDirectDocument.File.CreatedDate = DateTime.Now;
-				underlyingDirectDocument.File.LastUpdatedBy = AppSettings.CreatedByUserId;
-				underlyingDirectDocument.File.LastUpdatedDate = DateTime.Now;
-				underlyingDirectDocument.File.EntityID = (int)ConfigUtil.CurrentEntityID;
+			bool isValidDocument = false;
+			resultModel.Result = ValidateUnderlyingDirectDocument(model, ref isValidDocument);
+			if (isValidDocument) {
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					UnderlyingDirectDocument underlyingDirectDocument = new UnderlyingDirectDocument();
+					underlyingDirectDocument.CreatedBy = AppSettings.CreatedByUserId;
+					underlyingDirectDocument.CreatedDate = DateTime.Now;
+					underlyingDirectDocument.LastUpdatedBy = AppSettings.CreatedByUserId;
+					underlyingDirectDocument.LastUpdatedDate = DateTime.Now;
+					underlyingDirectDocument.EntityID = (int)ConfigUtil.CurrentEntityID;
+					underlyingDirectDocument.DocumentDate = model.DocumentDate;
+					underlyingDirectDocument.DocumentTypeID = model.DocumentTypeId;
+					underlyingDirectDocument.SecurityTypeID = model.SecurityTypeId;
+					underlyingDirectDocument.SecurityID = model.SecurityId;
+					underlyingDirectDocument.File = new Models.Entity.File();
+					underlyingDirectDocument.File.CreatedBy = AppSettings.CreatedByUserId;
+					underlyingDirectDocument.File.CreatedDate = DateTime.Now;
+					underlyingDirectDocument.File.LastUpdatedBy = AppSettings.CreatedByUserId;
+					underlyingDirectDocument.File.LastUpdatedDate = DateTime.Now;
+					underlyingDirectDocument.File.EntityID = (int)ConfigUtil.CurrentEntityID;
 
-				resultModel.Result += CreateDocumentFile(underlyingDirectDocument.File, uploadType, model.FilePath, model.File, ref fileInfo);
-				if (string.IsNullOrEmpty(resultModel.Result)) {
-					errorInfo = AdminRepository.SaveFile(underlyingDirectDocument.File);
-				}
-				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
-				if (string.IsNullOrEmpty(resultModel.Result)) {
-					if (underlyingDirectDocument.File != null) {
-						underlyingDirectDocument.FileID = underlyingDirectDocument.File.FileID;
-					}
-					errorInfo = DealRepository.SaveUnderlyingDirectDocument(underlyingDirectDocument);
-					if (errorInfo == null) {
-						if (uploadType == Models.Document.UploadType.Upload) {
-							UploadFile fileUpload = new UploadFile(uploadPath);
-							fileUpload.Move(fileInfo.FullName, (int)ConfigUtil.CurrentEntityID, underlyingDirectDocument.UnderlyingDirectDocumentID, underlyingDirectDocument.DocumentTypeID, fileInfo.Name);
-							underlyingDirectDocument.File.FileName = fileUpload.FileName;
-							underlyingDirectDocument.File.FilePath = fileUpload.FilePath;
-							underlyingDirectDocument.File.Size = fileUpload.Size;
-						}
-						errorInfo = DealRepository.SaveUnderlyingDirectDocument(underlyingDirectDocument);
+					resultModel.Result += CreateDocumentFile(underlyingDirectDocument.File, uploadType, model.FilePath, model.File, ref fileInfo);
+					if (string.IsNullOrEmpty(resultModel.Result)) {
+						errorInfo = AdminRepository.SaveFile(underlyingDirectDocument.File);
 					}
 					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+					if (string.IsNullOrEmpty(resultModel.Result)) {
+						if (underlyingDirectDocument.File != null) {
+							underlyingDirectDocument.FileID = underlyingDirectDocument.File.FileID;
+						}
+						errorInfo = DealRepository.SaveUnderlyingDirectDocument(underlyingDirectDocument);
+						if (errorInfo == null) {
+							if (uploadType == Models.Document.UploadType.Upload) {
+								UploadFile fileUpload = new UploadFile(uploadPath);
+								fileUpload.Move(fileInfo.FullName, (int)ConfigUtil.CurrentEntityID, underlyingDirectDocument.UnderlyingDirectDocumentID, underlyingDirectDocument.DocumentTypeID, fileInfo.Name);
+								underlyingDirectDocument.File.FileName = fileUpload.FileName;
+								underlyingDirectDocument.File.FilePath = fileUpload.FilePath;
+								underlyingDirectDocument.File.Size = fileUpload.Size;
+							}
+							errorInfo = DealRepository.SaveUnderlyingDirectDocument(underlyingDirectDocument);
+						}
+						resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+					}
 				}
 			}
 			return resultModel.Result;
@@ -2925,6 +2965,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		private IEnumerable<ErrorInfo> SaveEquity(ref EquityDetailModel model) {
 			Models.Entity.Equity equity = DealRepository.FindEquity(model.EquityId);
+			EquitySecurityType equitySecurityType = (EquitySecurityType)model.EquitySecurityTypeId;
 			if (equity == null) {
 				equity = new Models.Entity.Equity();
 			}
@@ -2932,7 +2973,7 @@ namespace DeepBlue.Controllers.Deal {
 			equity.EquityTypeID = model.EquityTypeId;
 			equity.IndustryID = ((model.EquityIndustryId ?? 0) > 0 ? model.EquityIndustryId : null);
 			equity.IssuerID = model.IssuerId;
-			equity.Public = model.Public;
+			equity.Public = (equitySecurityType == EquitySecurityType.Public ? true : false);
 			equity.ShareClassTypeID = ((model.ShareClassTypeId ?? 0) > 0 ? model.ShareClassTypeId : null);
 			equity.Symbol = model.EquitySymbol;
 			equity.EntityID = (int)ConfigUtil.CurrentEntityID;

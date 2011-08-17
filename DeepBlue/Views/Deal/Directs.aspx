@@ -28,7 +28,7 @@
 	</div>
 	<div class="headerbar">
 		<div class="leftcol">
-			Underlying Direct</div>
+			Direct</div>
 		<div class="addbtn" style="display: block">
 			<%:Html.Image("addcompany.png", new { @id="AddCompany", @style="cursor:pointer", @onclick = "javascript:dealDirect.add();" })%>
 		</div>

@@ -69,7 +69,7 @@
 							<th sortname="DealId" style="display: none">
 								DealId
 							</th>
-							<th class="sorted sdesc" sortname="DealNumber" align="left" style="width: 5%">
+							<th class="sorted sdesc" sortname="DealNumber" align="left" style="width: 8%">
 								<span>Deal No.</span>
 							</th>
 							<th class="sorted sdesc" sortname="DealName" align="left" style="width: 18%">
@@ -78,13 +78,13 @@
 							<th sortname="DealDate" align="left" style="width: 12%">
 								<span>Deal Date</span>
 							</th>
-							<th sortname="NetPurchasePrice" align="right" style="text-align: right; width: 12%">
+							<th sortname="NetPurchasePrice" align="right" style="text-align: right; width: 13%">
 								<span>Net Purchase Price</span>
 							</th>
-							<th sortname="GrossPurchasePrice" align="right" style="text-align: right; width: 12%">
+							<th sortname="GrossPurchasePrice" align="right" style="text-align: right; width: 13%">
 								<span>Gross Purchase Price</span>
 							</th>
-							<th sortname="CommittedAmount" align="right" style="text-align: right; width: 12%">
+							<th sortname="CommittedAmount" align="right" style="text-align: right; width: 13%">
 								<span>Commitment Amount</span>
 							</th>
 							<th sortname="UnfundedAmount" align="right" style="text-align: right; width: 12%">

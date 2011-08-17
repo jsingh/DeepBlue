@@ -12,9 +12,9 @@ namespace DeepBlue.Models.Admin {
 	public class EditReportingFrequencyModel{
 
 		public int ReportingFrequencyId { get; set; }
-		
-		[Required(ErrorMessage = "Reporting is required.")]
-		[StringLength(100, ErrorMessage = "Reporting must be under 100 characters.")]
+
+		[Required(ErrorMessage = "Reporting Frequency is required.")]
+		[StringLength(100, ErrorMessage = "Reporting Frequency must be under 100 characters.")]
 		[DisplayName("Reporting Frequency:")]
 		public string ReportingFrequency { get; set; }
 

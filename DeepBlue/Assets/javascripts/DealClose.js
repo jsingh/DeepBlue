@@ -12,35 +12,40 @@
 	}
 	,loadDeal: function () {
 		var id=dealClose.getDealId();
-		$("tbody","#DealUnderlyingFundList").empty();
-		$("tbody","#DealUnderlyingDirects").empty();
-		$("tbody","#FinalDealUnderlyingFundList").empty();
-		$("tbody","#FinalDealUnderlyingDirects").empty();
-		$.getJSON("/Deal/GetDealDetail/"+id+"?_"+(new Date()).getTime(),function (data) {
-			$("#LoadingDetail").hide();
-			$("#DealCloseMain").show();
-			$("#SpnLoading").hide();
+		var dealCloseMain=$("#DealCloseMain");
+		dealCloseMain.hide();
+		if(id>0) {
+			dealCloseMain.show();
+			$("tbody","#DealUnderlyingFundList").empty();
+			$("tbody","#DealUnderlyingDirects").empty();
+			$("tbody","#FinalDealUnderlyingFundList").empty();
+			$("tbody","#FinalDealUnderlyingDirects").empty();
+			$.getJSON("/Deal/GetDealDetail/"+id+"?_"+(new Date()).getTime(),function (data) {
+				$("#LoadingDetail").hide();
+				$("#DealCloseMain").show();
+				$("#SpnLoading").hide();
 
-			$("#SpnFundName").html(data.FundName);
-			$("#SpnDealNo").html(data.DealNumber);
-			$("#SpnDealName").html(data.DealName);
-			$("#Deal").val(data.DealName);
-			$("#FundId").val(data.FundId);
-			$("#ExistingDealClosing").hide();
-			$("#SpnDCTitle").html("New Deal Close");
-			$("#SpnDCTitlelbl").html("New Deal Close");
-			$("#NDDetail").hide();
+				$("#SpnFundName").html(data.FundName);
+				$("#SpnDealNo").html(data.DealNumber);
+				$("#SpnDealName").html(data.DealName);
+				$("#Deal").val(data.DealName);
+				$("#FundId").val(data.FundId);
+				$("#ExistingDealClosing").hide();
+				$("#SpnDCTitle").html("New Deal Close");
+				$("#SpnDCTitlelbl").html("New Deal Close");
+				$("#NDDetail").hide();
 
-			dealClose.loadDealCloseList();
+				dealClose.loadDealCloseList();
 
-			var totalNotClosing=data.TotalUnderlyingFundNotClosing+data.TotalUnderlyingDirectNotClosing;
-			var totalClosing=data.TotalUnderlyingFundClosing+data.TotalUnderlyingDirectClosing;
-			if(data.TotalDealClosing>0) {
-				$("#ExistingDealClosing").show();
-			}
-			dealClose.add(0);
-			dealClose.loadFinalDealClose();
-		});
+				var totalNotClosing=data.TotalUnderlyingFundNotClosing+data.TotalUnderlyingDirectNotClosing;
+				var totalClosing=data.TotalUnderlyingFundClosing+data.TotalUnderlyingDirectClosing;
+				if(data.TotalDealClosing>0) {
+					$("#ExistingDealClosing").show();
+				}
+				dealClose.add(0);
+				dealClose.loadFinalDealClose();
+			});
+		}
 	}
 	,getDealId: function () { return $("#DealId").val(); }
 	,setDealId: function (id) { $("#DealId").val(id); }

@@ -8,8 +8,8 @@
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("Industry.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
-	<%=Html.StylesheetLinkTag("flexigrid.css") %>
-	<%=Html.StylesheetLinkTag("adminbackend.css") %>
+	<%=Html.StylesheetLinkTag("flexigrid.css")%>
+	<%=Html.StylesheetLinkTag("adminbackend.css")%>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
@@ -28,8 +28,11 @@
 			<table cellpadding="0" cellspacing="0" border="0" id="IndustryList">
 				<thead>
 					<tr>
-						<th sortname="Name" style="width: 40%">
+						<th sortname="Industry1" style="width: 40%">
 							Industry
+						</th>
+						<th sortname="Enabled" style="width: 10%">
+							Enabled
 						</th>
 						<th>
 						</th>
@@ -41,12 +44,16 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%=Html.jQueryFlexiGrid("IndustryList", new FlexigridOptions { 
-    ActionName = "IndustryList", ControllerName = "Admin", 
-    HttpMethod = "GET", SortName = "Name", Paging = true 
+    ActionName = "IndustryList", ControllerName = "Admin",
+	HttpMethod = "GET",
+	SortName = "Industry1",
+	Paging = true 
 	, OnSuccess= "industry.onGridSuccess"
 	, OnRowClick = "industry.onRowClick"
 	, OnInit = "industry.onInit"
 	, OnTemplate = "industry.onTemplate"
+	, ExportExcel = true
+	, TableName = "Industry"
 })%>
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:industry.add(this);" })) {%>${name}<%}%>
@@ -56,7 +63,11 @@
 <tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
 	<td style="width: 40%">
 		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
-		<%: Html.TextBox("Name", "${row.cell[1]}", new { @class = "hide" })%>
+		<%: Html.TextBox("Industry", "${row.cell[1]}", new { @class = "hide" })%>
+	</td>
+	<td style="width: 10%;text-align:left;">
+		<%: Html.Span("{{if row.cell[2]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		
+		<%: Html.CheckBox("Enabled",false, new { @class = "hide", @val="${row.cell[2]}" })%>
 	</td>
 	<td style="text-align:right;">
 		{{if row.cell[0]==0}}

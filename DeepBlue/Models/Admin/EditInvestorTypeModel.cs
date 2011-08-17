@@ -17,8 +17,8 @@ namespace DeepBlue.Models.Admin {
 
 		public int InvestorTypeId { get; set; }
 
-		[Required(ErrorMessage = "Investor Type Name is required")]
-		[StringLength(20, ErrorMessage = "Investor Type Name must be under 20 characters.")]
+		[Required(ErrorMessage = "Investor Type is required")]
+		[StringLength(20, ErrorMessage = "Investor Type must be under 20 characters.")]
 		[DisplayName("Investor Type Name:")]
 		public string InvestorTypeName { get; set; }
 

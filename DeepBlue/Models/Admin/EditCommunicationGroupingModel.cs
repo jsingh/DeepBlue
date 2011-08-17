@@ -18,8 +18,8 @@ namespace DeepBlue.Models.Admin {
 
 		public int CommunicationGroupingId { get; set; }
 
-		[Required(ErrorMessage = "Communication Grouping Name is required")]
-		[StringLength(20, ErrorMessage = "Communication Grouping Name must be under 20 characters.")]
+		[Required(ErrorMessage = "Communication Group is required")]
+		[StringLength(20, ErrorMessage = "Communication Group must be under 20 characters.")]
 		[DisplayName("Name:")]
 		public string CommunicationGroupingName { get; set; }
 

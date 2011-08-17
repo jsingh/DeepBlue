@@ -564,5 +564,12 @@ namespace DeepBlue.Helpers {
 			return lists;
 		}
 
+		public static List<SelectListItem> GetEquitySecurityTypeList() {
+			List<SelectListItem> lists = new List<SelectListItem>();
+			lists.Add(new SelectListItem { Text = Models.Deal.Enums.EquitySecurityType.Private.ToString(), Value = ((int)Models.Deal.Enums.EquitySecurityType.Private).ToString() });
+			lists.Add(new SelectListItem { Text = Models.Deal.Enums.EquitySecurityType.Public.ToString(), Value = ((int)Models.Deal.Enums.EquitySecurityType.Public).ToString() });
+			return lists;
+		}
+
 	}
 }

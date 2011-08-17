@@ -12,8 +12,8 @@ namespace DeepBlue.Models.Admin {
 
 		public int CustomFieldId { get; set; }
 
-		[Required(ErrorMessage = "Custom Field Name is required.")]
-		[StringLength(50, ErrorMessage = "Custom Field Name must be under 50 characters.")]
+		[Required(ErrorMessage = "Custom Field is required.")]
+		[StringLength(50, ErrorMessage = "Custom Field must be under 50 characters.")]
 		[DisplayName("Name:")]
 		public string CustomFieldText { get; set; }
 
@@ -27,7 +27,7 @@ namespace DeepBlue.Models.Admin {
 		[DisplayName("DataType:")]
 		public int DataTypeId { get; set; }
 
-		[StringLength(2000, ErrorMessage = "Name must be under 2000 characters.")]
+		[StringLength(2000, ErrorMessage = "Optional Text must be under 2000 characters.")]
 		[DisplayName("Optional:")]
 		public string OptionalText { get; set; }
 

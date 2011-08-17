@@ -13,21 +13,21 @@
 		try {
 			var frm=document.getElementById("frmReconcile");
 			var fundId=$("#ReconcileFundId").val();
+			var sdate=$("#ReconStartDate",frm);
+			var edate=$("#ReconEndDate",frm);
+			sdate.val(sdate.val().replace("START DATE",""));
+			edate.val(edate.val().replace("END DATE",""));
+			var target;
+			var loading;
+			switch(type.toString()) {
+				case "1": target=$("#RGUFCC");loading=$("#RGUFCC");break;
+				case "2": target=$("#RGUFCD");loading=$("#RGUFCD");break;
+				case "3": target=$("#RGCC");loading=$("#RGCC");break;
+				case "4": target=$("#RGCD");loading=$("#RGCD");break;
+				default: target=$("#ReconcilReport");loading=$("#SpnReconLoading");break;
+			}
+			target.empty();
 			if(parseInt(fundId)>0) {
-				var sdate=$("#ReconStartDate",frm);
-				var edate=$("#ReconEndDate",frm);
-				sdate.val(sdate.val().replace("START DATE",""));
-				edate.val(edate.val().replace("END DATE",""));
-				var target;
-				var loading;
-				switch(type.toString()) {
-					case "1": target=$("#RGUFCC");loading=$("#RGUFCC");break;
-					case "2": target=$("#RGUFCD");loading=$("#RGUFCD");break;
-					case "3": target=$("#RGCC");loading=$("#RGCC");break;
-					case "4": target=$("#RGCD");loading=$("#RGCD");break;
-					default: target=$("#ReconcilReport");loading=$("#SpnReconLoading");break;
-				}
-				target.empty();
 				loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 				var param=$(frm).serializeForm();
 				param[param.length]={ name: "ReconcileType",value: type };

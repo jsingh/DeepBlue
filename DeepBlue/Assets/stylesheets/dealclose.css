@@ -12,13 +12,10 @@
 .checkbox {
 	padding-top: 10px;
 }
-.grid tr td,
-.grid tr th 
-{
+.grid tr td, .grid tr th {
 	padding: 0 5px;
 }
-#DealCloseList.grid tr td
-,#DealCloseList.grid tr th{
+#DealCloseList.grid tr td, #DealCloseList.grid tr th {
 	padding: 0 15px;
 }
 input[type='text'] {
@@ -63,9 +60,9 @@ input[type='text'] {
 	width: 100%;
 }
 .closetitle .title {
-	float: left;    
+	float: left;
 	margin: 5px 99px 0 0;
-	width:150px;
+	width: 150px;
 }
 .closedetail {
 	clear: both;
@@ -140,7 +137,15 @@ input[type='text'] {
 	left: 212px;
 }
 .expandtitle span {
-	padding-left:65px;
+	padding-left: 65px;
 }
-.closetitle .title { padding-left:65px; white-space:nowrap; }
-.tabledetail .gbox, .section .gbox { margin-left: 65px; }
+.closetitle .title {
+	padding-left: 65px;
+	white-space: nowrap;
+}
+.tabledetail .gbox, .section .gbox {
+	margin-left: 65px;
+}
+.expandsel .rightuarrow {
+	margin-right: 61px;
+}

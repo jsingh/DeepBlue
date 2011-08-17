@@ -11,8 +11,8 @@ namespace DeepBlue.Models.Admin {
 		
 		public int DataTypeId { get; set; }
 
-		[Required(ErrorMessage = "Data Type Name is required.")]
-		[StringLength(50, ErrorMessage = "Data Type Name must be under 50 characters.")]
+		[Required(ErrorMessage = "Data Type is required.")]
+		[StringLength(50, ErrorMessage = "Data Type must be under 50 characters.")]
 		[DisplayName("Name:")]
 		public string DataTypeName { get; set; }
 	}

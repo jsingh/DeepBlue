@@ -17,8 +17,8 @@ namespace DeepBlue.Models.Deal {
 		
 		public int IssuerId { get; set; }
 
-		[Required(ErrorMessage = "Name is required.")]
-		[StringLength(100, ErrorMessage = "Name must be under 100 characters.")]
+		[Required(ErrorMessage = "Issuer Name is required.")]
+		[StringLength(100, ErrorMessage = "Issuer Name must be under 100 characters.")]
 		[DisplayName("Issuer Name")]
 		public string Name { get; set; }
 

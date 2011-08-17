@@ -114,6 +114,7 @@
 		}
 		lnkAddUnderlyingFund.attr("src",src);
 		var addUnderlyingfund=$("#AddUnderlyingFund");
+		addUnderlyingfund.empty();
 		addUnderlyingfund.css("text-align","center").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		addUnderlyingfund.show();
 		$.getJSON("/Deal/FindUnderlyingFund",{ "_": (new Date).getTime(),"underlyingFundId": id,"issuerId": issuerId },function (data) {
@@ -163,6 +164,7 @@
 				$("#CILoading").empty();
 				var arr=data.split("||");
 				if(arr[0]=="True") {
+					$("#UnderlyingFundId").val(arr[1]);
 					if(underlyingFund.onAfterUnderlyingFundSave) {
 						underlyingFund.onAfterUnderlyingFundSave();
 					}
@@ -172,7 +174,6 @@
 						$("#AddUnderlyingFund").hide();
 						$("#S_UnderlyingFund").val("");
 					}
-					$("#UnderlyingFundId").val(arr[1]);
 				} else { alert(data); }
 				underlyingFund.tempSave=false;
 			});

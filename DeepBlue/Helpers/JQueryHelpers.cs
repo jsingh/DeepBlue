@@ -17,6 +17,7 @@ namespace DeepBlue.Helpers {
 				scriptSrc.Append("source:" + options.SearchFunction);
 			}
 			scriptSrc.Append(",minLength:" + options.MinLength.ToString())
+			.Append(",autoFocus: true")
 			.Append((string.IsNullOrEmpty(options.OnSelect) ? "" : ",select:" + options.OnSelect.ToString()))
 			.Append((string.IsNullOrEmpty(options.OnChange) ? "" : ",change:" + options.OnChange.ToString()))
 			.Append((string.IsNullOrEmpty(options.OnSearch) ? "" : ",search:" + options.OnSearch.ToString()))

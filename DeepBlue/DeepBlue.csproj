@@ -787,6 +787,7 @@
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
     <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
+    <Content Include="Assets\javascripts\jquery-ui-1.8.10.extension.js" />
     <Content Include="Assets\javascripts\DealOriginationReport.js" />
     <Content Include="Assets\javascripts\Currency.js" />
     <Content Include="Assets\javascripts\DealActivityStockDistribution.js" />

@@ -151,8 +151,8 @@ h4 a {
 	background-image: url(../images/expandbg.png);
 	background-repeat: repeat-x;
 	background-position: left top;
-	height: 50px;
-	line-height: 50px;
+	height: 42px;
+	line-height: 42px;
 	color: #F7F7F7;
 	font-size: 18px;
 	margin-top: 35px;
@@ -181,7 +181,7 @@ h4 a {
 	display: none;
 	width: auto;
 	height: 31px;
-	margin: 10px 0 0 70px;
+	margin: 5px 0 0 70px;
 	line-height: 33px;
 }
 .expandaddbtn a {
@@ -196,8 +196,8 @@ h4 a {
 }
 .headerbar {
 	background-image: url(../images/expandbg.png);
-	height: 50px;
-	line-height: 50px;
+	height: 42px;
+	line-height: 42px;
 	color: #fff;
 	font-size: 14px;
 	padding: 0px 0 0 65px;
@@ -276,7 +276,7 @@ h4 a {
 .addbtn-extend {
 	left: 300px;
 	margin: 0;
-	padding-top: 44px;
+	padding-top: 40px;
 	position: absolute;
 }
 #SaveDealBox {
