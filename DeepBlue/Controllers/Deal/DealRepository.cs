@@ -165,28 +165,54 @@ namespace DeepBlue.Controllers.Deal {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				Models.Entity.Deal deal = context.Deals.Where(deleteDeal => deleteDeal.DealID == dealId).SingleOrDefault();
 				if (deal != null) {
-					//var cashDistributions = deal.CashDistributions.ToList();
-					//foreach (var cashDistribution in cashDistributions) {
-					//    context.UnderlyingFundCashDistributions.DeleteObject(cashDistribution.UnderlyingFundCashDistribution);
-					//    context.CashDistributions.DeleteObject(cashDistribution);
-					//}
-					//DeleteContactObject(context, deal.Contact);
-					//DeleteContactObject(context, deal.Contact1);
-					//var dealClosingCosts = deal.DealClosingCosts.ToList();
-					//foreach (var dealClosingCost in dealClosingCosts) {
-					//    context.DealClosingCosts.DeleteObject(dealClosingCost);
-					//}
-					//var dealUnderlyingFunds = deal.DealUnderlyingFunds.ToList();
-					//foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
-						 
-						 
-					//}
-					//var dealClosings  =  deal.DealClosings.ToList();
-					//foreach (var dealClosing in dealClosings) {
-					//    context.DealClosings.DeleteObject(dealClosing);
-					//}
+					var cashDistributions = deal.CashDistributions.ToList();
+					foreach (var cashDistribution in cashDistributions) {
+						context.UnderlyingFundCashDistributions.DeleteObject(cashDistribution.UnderlyingFundCashDistribution);
+						context.CashDistributions.DeleteObject(cashDistribution);
+					}
+					DeleteContactObject(context, deal.Contact);
+					DeleteContactObject(context, deal.Contact1);
+					var dealClosingCosts = deal.DealClosingCosts.ToList();
+					foreach (var dealClosingCost in dealClosingCosts) {
+						context.DealClosingCosts.DeleteObject(dealClosingCost);
+					}
+					var dealUnderlyingFunds = deal.DealUnderlyingFunds.ToList();
+					foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
+						var adjustments = dealUnderlyingFund.DealUnderlyingFundAdjustments.ToList();
+						foreach (var adjustment in adjustments) {
+							context.DealUnderlyingFundAdjustments.DeleteObject(adjustment);
+						}
+					}
+					var dealUnderlyingDirects = deal.DealUnderlyingDirects.ToList();
+					foreach (var dealUnderlyingDirect in dealUnderlyingDirects) {
+						 var securityConversionDetails = dealUnderlyingDirect.SecurityConversionDetails.ToList();
+						 foreach (var securityConversionDetail in securityConversionDetails) {
+							 context.SecurityConversionDetails.DeleteObject(securityConversionDetail);
+						 }
+						context.DealUnderlyingDirects.DeleteObject(dealUnderlyingDirect);
+					}
+					var underlyingFundCapitalCallLineItems = deal.UnderlyingFundCapitalCallLineItems.ToList();
+					foreach (var item in underlyingFundCapitalCallLineItems) {
+						context.UnderlyingFundCapitalCallLineItems.DeleteObject(item);
+					}
+					var underlyingFundStockDistributionLineItems = deal.UnderlyingFundStockDistributionLineItems.ToList();
+					foreach (var item in underlyingFundStockDistributionLineItems) {
+						context.UnderlyingFundStockDistributionLineItems.DeleteObject(item);
+					}
+					if (deal.Partner != null) {
+						context.Partners.DeleteObject(deal.Partner);
+					}
+					var dealFundDocuments = deal.DealFundDocuments.ToList();
+					foreach (var document in dealFundDocuments) {
+						context.Files.DeleteObject(document.File);
+						context.DealFundDocuments.DeleteObject(document);
+					}
+					var dealClosings = deal.DealClosings.ToList();
+					foreach (var dealClosing in dealClosings) {
+						context.DealClosings.DeleteObject(dealClosing);
+					}
 					context.Deals.DeleteObject(deal);
-					//context.SaveChanges();
+					context.SaveChanges();
 					return true;
 				}
 				return false;
