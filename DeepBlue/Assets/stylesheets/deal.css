@@ -34,7 +34,6 @@
 .editor-field {
 	width: 180px;
 }
-
 h5 {
 	font-size: 16px;
 	font-weight: bold;
@@ -118,7 +117,7 @@ h4 a {
 .dealdetail {
 	float: left;
 	padding-left: 65px;
-	width: 94%;
+	width: 93%;
 }
 .dealdetail .cell {
 	font-size: 14px;
@@ -288,7 +287,4 @@ h4 a {
 #AddDealDocument {
 	width: 950px;
 	margin: 20px auto 0 15px;
-}
-#SellerInfo .editor-label, #SellerInfo .editor-field {
-	padding: 13px 5px;
 }

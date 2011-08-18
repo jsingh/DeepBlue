@@ -11,8 +11,8 @@
 			,page: 1
 			,total: 1
 			,useRp: true
-			,rp: 20
-			,rpOptions: [20,50,100]
+			,rp: 25
+			,rpOptions: [25,50,100,200]
 			,title: false
 			,pagestat: 'Displaying {from} to {to} of {total} items'
 			,procmsg: 'Loading...'
@@ -44,6 +44,8 @@
 				if(!data) { $('.pPageStat',this.pDiv).html(p.errormsg);return false; }
 				if(p.dataType=='xml') { p.total= +$('rows total',data).text(); } else { p.total=data.total; }
 				var tbody=document.createElement('tbody');
+				$(".pDiv .pDiv2",g.gDiv).hide();
+				$(".bpDiv",g.gDiv).hide();
 				if(p.total==0) {
 					$('tr, a, td, div',t).unbind();
 					$(t).empty();
@@ -53,6 +55,10 @@
 					$('.pPageStat',this.pDiv).html(p.nomsg);
 					$(t).append(tbody);
 					return false;
+				}
+				if(p.total>25) {
+					$(".pDiv .pDiv2",g.gDiv).show();
+					$(".bpDiv",g.gDiv).show();
 				}
 				p.pages=Math.ceil(p.total/p.rp);
 				if(p.dataType=='xml') {
@@ -250,7 +256,7 @@
 						if(p.rp==p.rpOptions[nx]) { sel='selected="selected"'; } else { sel=''; }
 						opt+="<option value='"+p.rpOptions[nx]+"' "+sel+" >"+p.rpOptions[nx]+"&nbsp;&nbsp;</option>";
 					};
-					$('.pDiv2',pDiv).prepend("<div class='pGroup'><table cellpadding=0 cellspacing=0><tr><td>Rows:&nbsp;</td><td><select id='rp' name='rp'>"+opt+"</select></td></tr></table></div> <div class='btnseparator'></div>");
+					$('.pDiv2',pDiv).css("display","none").prepend("<div class='pGroup'><table cellpadding=0 cellspacing=0><tr><td>Rows:&nbsp;</td><td><select id='rp' name='rp'>"+opt+"</select></td></tr></table></div> <div class='btnseparator'></div>");
 					$('select',pDiv).change(
 					function () {
 						if(p.onRpChange) {
@@ -363,7 +369,7 @@
 			$('div',g.pDiv).html(html);
 
 			$(g.hDiv).before(g.pDiv);
-			$(g.bDiv).after($(g.pDiv).clone().addClass("bpDiv"));
+			$(g.bDiv).after($(g.pDiv).clone().css("display","none").addClass("bpDiv"));
 
 			if(p.exportExcel!="") {
 				var exportExcel='<div id="ExportExcel" class="green-btn"><div class="left"></div><div class="center">Export Excel</div><div class="right"></div></div>';

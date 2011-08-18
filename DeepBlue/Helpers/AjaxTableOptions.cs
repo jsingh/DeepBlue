@@ -8,8 +8,8 @@ namespace DeepBlue.Helpers {
 		public AjaxTableOptions() {
 			ActionName = string.Empty;
 			ControllerName = string.Empty;
-			RowOptions = new int[] { 15, 20, 50, 100 };
-			RowsLength = 15;
+			RowOptions = new int[] { 25, 50, 100, 200 };
+			RowsLength = 25;
 			OnSuccess = string.Empty;
 			OnSubmit = string.Empty;
 			OnRowClick = string.Empty;

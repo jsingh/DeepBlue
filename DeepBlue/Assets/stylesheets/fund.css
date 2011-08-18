@@ -5,7 +5,7 @@
 }
 .fund-box .header {
 	margin: 25px 0 0;
-	height:40px;
+	height: 40px;
 }
 .fund-main {
 	width: 100%;
@@ -39,18 +39,14 @@
 .fund-box-det .editor-field input[type="text"] {
 	width: 150px;
 }
-.fund-box-det .editor-field input[type="checkbox"] {
-	margin-top: 5px;
-}
 .fund-box-det .editor-label {
 	text-align: right;
 	white-space: nowrap;
-	width: 160px;
 }
 .headerbox {
-	 cursor: pointer;
-    float: left;
-    width:100%;
+	cursor: pointer;
+	float: left;
+	width: 100%;
 }
 .editor-field {
 	width: auto;
@@ -76,7 +72,7 @@
 }
 .rate-detail {
 	clear: both;
-	    margin: 0 auto 10px;
+	margin: 0 auto 10px;
 	width: 95%;
 }
 .rate-grid {
@@ -105,7 +101,7 @@
 	background-repeat: no-repeat;
 	cursor: pointer;
 	float: left;
-	padding:0;
+	padding: 0;
 	width: 90%;
 }
 .expandheader .expandimg, .recon-expandheader .expandimg {
@@ -119,9 +115,9 @@
 	font-size: 18px;
 	height: 42px;
 	line-height: 42px;
-	padding:0;
+	padding: 0;
 	width: 100%;
-	margin-top:-2px;
+	margin-top: -2px;
 }
 .expandheader #title, .recon-expandheader #title {
 	display: none;
@@ -137,7 +133,7 @@
 	float: left;
 	white-space: nowrap;
 	width: 200px;
-	margin-left:65px;
+	margin-left: 65px;
 }
 .expandaddbtn {
 	display: none;
@@ -162,24 +158,24 @@
 	margin-top: 21px;
 	width: 16px;
 }
- 
+
 .detail {
 	background-color: #E9EAEC;
 	clear: both;
 	float: left;
 	margin: 0;
 	width: 100%;
-	padding:10px 0;
+	padding: 10px 0;
 }
 .detail .editor-label {
 	line-height: 20px;
 	text-align: right;
 }
 /* end expand header */
-.section-tab-main{
-	position:absolute;
-	left:0;
-	right:0;
-	height:40px;
-	width:auto;
+.section-tab-main {
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 40px;
+	width: auto;
 }

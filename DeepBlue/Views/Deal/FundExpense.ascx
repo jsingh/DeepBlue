@@ -21,7 +21,7 @@
 		<%: Html.Image("save.png", new { @id = "save", @class = "default-button {{if FundExpenseId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addFLE(this,${FundExpenseId});" })%>
 		<%: Html.Image("Edit.png", new { @class = "default-button show  gbutton", @onclick = "javascript:dealActivity.editFLE(this,${FundExpenseId});" })%>
 		{{else}}
-		<%: Html.Image("add.png", new { @id = "add", @class = "default-button gbutton", @onclick = "javascript:dealActivity.addFLE(this,0);" })%>
+		<%: Html.Image("add.png", new { @id = "add", @class = "default-button", @onclick = "javascript:dealActivity.addFLE(this,0);" })%>
 		{{/if}}
 	</td>
 </tr>

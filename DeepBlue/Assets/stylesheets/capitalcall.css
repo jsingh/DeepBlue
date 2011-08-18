@@ -8,9 +8,6 @@
 .editor-field input {
 	width: 150px;
 }
-.editor-field input, .editor-field select {
-	margin-top: -3px;
-}
 .edit-left {
 	width: 75%;
 	float: left;
@@ -59,9 +56,6 @@
 .investor-detail {
 	clear: both;
 	width: 95%;
-}
-#FundDetails .editor-label {
-	padding: 5px;
 }
 label {
 	color: #000;
@@ -183,8 +177,6 @@ label {
 .dist-detail .editor-field {
 	width: 125px;
 }
-.dist-detail .editor-field {
-}
 .dist-detail .editor-field span {
 	font-weight: bold;
 }
@@ -197,9 +189,6 @@ label {
 }
 .cc-report-main {
 	background-color: #CBD2DA;
-}
-.cc-report-main .grid tr th {
-	white-space: normal;
 }
 .exploading {
 	background-image: url("../images/ajax.jpg");

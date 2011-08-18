@@ -22,6 +22,7 @@ input[type="text"], select {
 th {
 	text-align: left;
 	font-weight: normal;
+	white-space: nowrap;
 }
 input[type="file"] {
 	width: 220px;
@@ -122,7 +123,31 @@ a img {
 	clear: left;
 	color: #000;
 	width: 135px;
-	padding: 12px 5px;
+}
+.editor-field {
+	text-align: left;
+	float: left;
+	clear: right;
+	color: #000;
+}
+.editor-label, .editor-field {
+	padding: 8px 5px;
+}
+ 
+.editor-field input[type="text"] {
+	width: 160px;
+}
+.editor-field select {
+	width: 164px;
+}
+.editor-field input.ui-autocomplete-input[type="text"] {
+	width: 144px;
+}
+.editor-field input, .editor-label input, .editor-field select, .editor-label select {
+	margin-top: -5px;
+}
+.editor-field input[type="checkbox"], .editor-label input[type="checkbox"]{
+	margin-top: 0px;
 }
 .cell {
 	font-weight: bold;
@@ -139,26 +164,6 @@ label {
 }
 .editor-editbtn img {
 	cursor: pointer;
-}
-.editor-field {
-	text-align: left;
-	padding: 8px 5px;
-	float: left;
-	clear: right;
-	color: #000;
-}
-.editor-field span{
-	margin-top:4px;
-	float:left;
-}
-.editor-field input[type="text"] {
-	width: 160px;
-}
-.editor-field select {
-	width: 164px;
-}
-.editor-field input.ui-autocomplete-input[type="text"] {
-	width: 144px;
 }
 .radio input {
 	width: auto;
@@ -326,8 +331,6 @@ label {
 	padding: 9px;
 	width: 96.7%;
 }
-
-
 .editor-field {
 	width: 155px;
 }
@@ -410,11 +413,9 @@ label {
 }
 .transaction-info .editor-label {
 	width: 120px;
-	padding-top: 7px;
 }
 .transaction-info .editor-field {
 	width: auto;
-	padding-top: 7px;
 }
 .transaction-info .editor-field input[type="text"] {
 	width: 145px;
@@ -920,6 +921,7 @@ input.ui-autocomplete-loading[type="text"] {
 .grid .row td, .grid .arow td {
 	background-color: #F5F5F5;
 	font-size: 12px;
+	white-space: nowrap;
 }
 .grid .row td span, .grid .arow td span {
 	overflow: hidden;
@@ -944,6 +946,7 @@ input.ui-autocomplete-loading[type="text"] {
 	background-color: #BABFC5;
 	color: #000000;
 	font-size: 12px;
+	white-space: nowrap;
 }
 .grid tfoot tr td {
 	font-size: 13px;

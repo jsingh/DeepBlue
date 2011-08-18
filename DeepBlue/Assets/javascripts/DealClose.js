@@ -480,13 +480,6 @@
 			var securityTypeId=$("#SecurityTypeId",tr);
 			var securityId=$("#SecurityId",tr);
 			$(txt)
-				.blur(function () {
-					if($.trim(this.value)=="") {
-						issuerId.val(0);
-						securityTypeId.val(0);
-						securityId.val(0);
-					}
-				})
 				.autocomplete({ source: "/Deal/FindEquityFixedIncomeIssuers",minLength: 1,
 					select: function (event,ui) {
 						issuerId.val(ui.item.id);

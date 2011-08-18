@@ -160,7 +160,55 @@ namespace DeepBlue.Controllers.Deal {
 				return (lastDeal != null ? lastDeal.DealId : 0);
 			}
 		}
-		
+
+		public bool DeleteDeal(int dealId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				Models.Entity.Deal deal = context.Deals.Where(deleteDeal => deleteDeal.DealID == dealId).SingleOrDefault();
+				if (deal != null) {
+					//var cashDistributions = deal.CashDistributions.ToList();
+					//foreach (var cashDistribution in cashDistributions) {
+					//    context.UnderlyingFundCashDistributions.DeleteObject(cashDistribution.UnderlyingFundCashDistribution);
+					//    context.CashDistributions.DeleteObject(cashDistribution);
+					//}
+					//DeleteContactObject(context, deal.Contact);
+					//DeleteContactObject(context, deal.Contact1);
+					//var dealClosingCosts = deal.DealClosingCosts.ToList();
+					//foreach (var dealClosingCost in dealClosingCosts) {
+					//    context.DealClosingCosts.DeleteObject(dealClosingCost);
+					//}
+					//var dealUnderlyingFunds = deal.DealUnderlyingFunds.ToList();
+					//foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
+						 
+						 
+					//}
+					//var dealClosings  =  deal.DealClosings.ToList();
+					//foreach (var dealClosing in dealClosings) {
+					//    context.DealClosings.DeleteObject(dealClosing);
+					//}
+					context.Deals.DeleteObject(deal);
+					//context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
+		}
+
+
+		private void DeleteContactObject(DeepBlueEntities context, Contact contact) {
+			if (contact != null) {
+				var contactAddresses = contact.ContactAddresses.ToList();
+				foreach (var contactAddress in contactAddresses) {
+					context.Addresses.DeleteObject(contactAddress.Address);
+					context.ContactAddresses.DeleteObject(contactAddress);
+				}
+				var contactCommunications = contact.ContactCommunications.ToList();
+				foreach (var contactCommunication in contactCommunications) {
+					context.Communications.DeleteObject(contactCommunication.Communication);
+					context.ContactCommunications.DeleteObject(contactCommunication);
+				}
+			}
+		}
+
 		#endregion
 
 		#region DealExpense

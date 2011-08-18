@@ -11,8 +11,8 @@ namespace DeepBlue.Helpers {
 			ActionName = string.Empty;
 			ControllerName = string.Empty;
 			Paging = false;
-			RowOptions = new int[] { 10, 15, 20, 50, 100 };
-			RowsLength = 10;
+			RowOptions = new int[] { 25, 50, 100, 200 };
+			RowsLength = 25;
 			OnSuccess = string.Empty;
 			OnSubmit = string.Empty;
 			OnRowClick = string.Empty;
@@ -43,9 +43,9 @@ namespace DeepBlue.Helpers {
 		public string OnRowBound { get; set; }
 		public string OnInit { get; set; }
 		public string OnTemplate { get; set; }
-		public string SortName  { get; set; }
+		public string SortName { get; set; }
 		public string SortOrder { get; set; }
-		public bool Autoload  { get; set; }
+		public bool Autoload { get; set; }
 		public bool ResizeWidth { get; set; }
 		public string TableName { get; set; }
 		public bool ExportExcel { get; set; }

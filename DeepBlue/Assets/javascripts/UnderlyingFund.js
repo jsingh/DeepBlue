@@ -133,8 +133,6 @@
 				usepager: true
 				,url: "/Deal/UnderlyingFundDocumentList"
 				,params: p
-				,rpOptions: [10,15,20,50,100]
-				,rp: 10
 				,resizeWidth: true
 				,method: "GET"
 				,sortname: "DocumentDate"

@@ -133,8 +133,6 @@
 	, OnChangeSort = "dealReport.onChangeSort"
 	, AppendExistRows= true
 	, Autoload = false
-	, RowOptions =  new int[] { 15, 20, 50, 100 }
-	, RowsLength  = 10
 	})%>
 	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { dealReport.selectFund(ui.item.id,ui.item.label);}" })%>
 	<script id="DealDetailTemplate" type="text/x-jquery-tmpl"> 

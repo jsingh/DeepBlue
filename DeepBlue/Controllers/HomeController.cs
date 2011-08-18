@@ -13,5 +13,10 @@ namespace DeepBlue.Controllers {
 			return View();
 		}
 
+		//
+		// GET: /Demo/
+		public ActionResult Demo() {
+			return View();
+		}
 	}
 }

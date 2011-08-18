@@ -12,7 +12,7 @@
     margin: 0 0 10px 0;
     overflow: hidden;
     padding: 0 20px 0 25px;
-    width: 96%;
+    width: 95%;
     float:left;
     clear:both;
 }
@@ -37,7 +37,6 @@
 .doc-header .editor-label,.doc-upload .editor-label, .doc-search .editor-label {
 	width: 100px;
 	text-align:right;
-	padding:8px;
 }
 .editor-label select {
 	width: 100px;
@@ -45,9 +44,6 @@
 .editor-field {
 	width: auto;
 	white-space:nowrap;
-}
-.editor-field select{
-	padding:2px;
 }
 .doc-search .editor-field input {
 	width: 100px;

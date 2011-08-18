@@ -64,11 +64,6 @@ dealActivity.loadSD=function (isRefresh) {
 						$("#SecurityId",row).val(ui.item.id);
 					}
 					,appendTo: "body",delay: 300
-					}).blur(function () {
-						if($.trim(this.value)=="") {
-							$("#SecurityTypeId",row).val(0);
-							$("#SecurityId",row).val(0);
-						}
 					});
 				}
 			});
@@ -88,29 +83,6 @@ dealActivity.submitUFStockDistribution=function (frm) {
 		var totalRows=($("tbody tr","#StockDistributionList").length);
 		var isManual=chk.checked;
 		var isError=false;
-		/*if(totalRows>0&&isManual) {
-		var msg="";var isFocus=false;
-		$(".manualcamount").each(function () {
-		var amount=parseFloat(this.value);if(isNaN(amount)) { amount=0; }
-		if(amount>0) {
-		var parentRow=$(this).parents("tr:first");
-		var dealname=$(".dealname",parentRow).html();
-		var date=$(".manualdate",parentRow).val();
-		if($.trim(date)=="") {
-		msg+=dealname+" Distribution Date is required\n";
-		if(isFocus==false) {
-		$(".manualdate",parentRow).focus();
-		isFocus=true;
-		}
-		}
-		}
-		});
-		if(msg!="") {
-		alert(msg);
-		isError=true;
-		loading.empty();
-		}
-		}*/
 		if(isError==false) {
 			param[param.length]={ name: "TotalRows",value: ($("tbody tr","#StockDistributionList").length) };
 			param[param.length]={ name: "IsManualStockDistribution",value: isManual };

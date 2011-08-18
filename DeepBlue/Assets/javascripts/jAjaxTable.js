@@ -10,8 +10,8 @@
 			errormsg: 'Connection Error',
 			page: 1, //current page
 			total: 1, //total pages
-			rp: 20, // results per page
-			rpOptions: [20,50,100],
+			rp: 25, // results per page
+			rpOptions: [25,50,100,200],
 			title: false,
 			procmsg: 'Loading...',
 			nomsg: 'No items',

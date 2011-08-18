@@ -121,7 +121,6 @@
 			resizable: false,
 			autoload: false,
 			useRp: true,
-			rp: 15,
 			showTableToggleBtn: false,useBoxStyle: false
 		});
 		$(table).flexAddData(data);

@@ -79,15 +79,15 @@
 			<%: Html.DropDownList("EquityUploadTypeId", Model.UploadTypes, new { @val = "1", @style = "width:80px", @onchange = "javascript:dealDirect.changeUploadType(this,'eqdocument');" })%>
 		</div>
 		<div id="FileRow" class="editor-field" style="width: auto;">
-			<div class="cell" style="padding: 0; margin: 5px 0 0; width: auto;">
+			<div style="padding: 0; margin: 0; width: auto; float: left;">
 				<%: Html.File("EquityFile", new { @id = "equityFileToUpload" })%>
 				<%: Html.Hidden("EquityFileId")%>
 			</div>
-			<div class="cell" style="padding: 0; margin: 0;">
+			<div style="padding: 0; margin: 0; float: left;">
 				<%: Html.Span("", new { @id = "SpnEquityDocLoading" })%>
 			</div>
 		</div>
-		<div id="LinkRow" style="display: none; width: auto;margin: 5px 0 0" class="editor-field">
+		<div id="LinkRow" style="display: none; width: auto;" class="editor-field">
 			<%: Html.TextBox("EquityFilePath", "", new { @style = "width:250px" })%>
 		</div>
 	</div>

@@ -4,9 +4,6 @@
 .editor-field select {
 	width: 174px;
 }
-input[type="text"], select {
-	padding: 2px;
-}
 .status {
 	height: 20px;
 }

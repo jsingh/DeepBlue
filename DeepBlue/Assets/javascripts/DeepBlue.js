@@ -40,7 +40,7 @@
 					deepBlue.resize();
 				});
 			});
-			
+
 			deepBlue.resize();
 		});
 	}
@@ -65,7 +65,7 @@
 		var expireDate=new Date();
 		expireDate.setTime(expireDate.getTime()+(expiredays*24*3600*1000));
 		document.cookie=name+"="+escape(value)+
-		((expiredays==null)?"":"; expires="+expireDate.toGMTString());
+		((expiredays==null)?"":"; expires="+expireDate.toGMTString()+"; domain="+escape(document.domain) + "; path=/");
 	}
 	,getCookie: function (name) {
 		if(document.cookie.length>0) {

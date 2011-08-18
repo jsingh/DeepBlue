@@ -262,17 +262,17 @@
 				<%: Html.Label("Document Date ") %>
 			</div>
 			<div class="editor-field">
-				<%: Html.TextBox("DocumentDate", "", new { @id = "Doc_DocumentDate" })%>
+				<%: Html.TextBox("DocumentDate", DateTime.Now.ToString("MM/dd/yyyy"), new { @id = "Doc_DocumentDate" })%>
 			</div>
 			<div class="editor-label">
 				<%: Html.DropDownList("UploadTypeId", Model.UploadTypes, new { @style = "width:80px", @onchange = "javascript:underlyingFund.changeUploadType(this);" })%>
 			</div>
 			<div id="FileRow" class="editor-field">
-				<div class="cell" style="padding: 0; margin: 5px 0 0; width: auto;">
+				<div  style="padding: 0; margin: 0 0; width: auto;float:left;">
 					<%: Html.File("File", new { @id = "fileToUpload" })%></div>
 			</div>
-			<div id="LinkRow" style="display: none;margin:5px 0 0;" class="editor-field">
-				<%: Html.TextBox("FilePath")%>
+			<div id="LinkRow" style="display: none;margin:0 0;" class="editor-field">
+				<%: Html.TextBox("FilePath", "", new { @style = "width:250px" })%>
 				<%: Html.Hidden("FileId", "0")%>
 			</div>
 			<div class="editor-field" style="width: auto;">

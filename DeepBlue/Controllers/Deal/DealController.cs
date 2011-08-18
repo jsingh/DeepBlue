@@ -231,6 +231,16 @@ namespace DeepBlue.Controllers.Deal {
 			return Json(DealRepository.GetDealDetail(id), JsonRequestBehavior.AllowGet);
 		}
 
+			//
+		// GET: /Deal/GetDealDetail
+		[HttpGet]
+		public string Delete(int id) {
+			if (DealRepository.DeleteDeal(id)) {
+				return "true";
+			}
+			return "false";
+		}
+
 		#endregion
 
 		#region DealExpense

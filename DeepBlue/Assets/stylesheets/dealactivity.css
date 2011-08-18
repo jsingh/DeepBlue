@@ -227,7 +227,7 @@ input, select {
     color: #F7F7F7;
     float: left;
     font-size: 12px;
-    left: 330px;
+    left: 315px;
     min-width: 640px;
     position: absolute;
     width: 64%;
@@ -237,10 +237,10 @@ input, select {
 	margin: 0px 10px;
 }
 .addbtn .tblcell input {
-	margin: 14px 0;
+	margin: 10px 0;
 }
 .addbtn .tblcell input[type='text'] {
-	margin: 10px 0px;
+	margin: 7px 0px;
 }
 .addbtn .tblcell img {
 	margin: 7px 0px;
@@ -312,5 +312,5 @@ input, select {
 	margin-top: 0px;
 }
 .tblcell .green-btn{
-	margin-top:5px;
+	margin-top:4px;
 }

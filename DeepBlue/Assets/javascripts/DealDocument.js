@@ -108,8 +108,6 @@ deal.documentSetUp=function () {
 					p.params[p.params.length]={ "name": "dealId","value": deal.getDealId() };
 					return true;
 				}
-				,rpOptions: [10,15,20,50,100]
-				,rp: 10
 				,resizeWidth: true
 				,method: "GET"
 				,sortname: "DocumentDate"

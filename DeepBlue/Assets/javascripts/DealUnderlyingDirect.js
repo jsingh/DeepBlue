@@ -59,15 +59,9 @@ deal.applyUDAutocomplete=function (tr) {
 	var issuerId=$("#IssuerId",tr);
 	var securityTypeId=$("#SecurityTypeId",tr);
 	var securityId=$("#SecurityId",tr);
-	issuer
-	.blur(function () {
-		if($.trim(this.value)=="") {
-			issuerId.val(0);
-			securityTypeId.val(0);
-			securityId.val(0);
-		}
-	})
+	issuer.unbind('blur')
 	.autocomplete({ source: "/Deal/FindEquityFixedIncomeIssuers",minLength: 1,
+		autoFocus: true,
 		select: function (event,ui) {
 			issuerId.val(ui.item.id);
 			securityTypeId.val(ui.item.otherid);

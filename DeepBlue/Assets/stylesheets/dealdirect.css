@@ -71,9 +71,6 @@
 	margin-top: 10px;
 	cursor: pointer;
 }
-.editor-field input[type='checkbox'] {
-	margin-top: 5px;
-}
 .addbtn {
 	float: left;
 	margin-left: 123px;
@@ -169,4 +166,7 @@
 	font-size: 18px;
 	text-shadow: #0B0B0B 1px 1px 1px;
 	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
+}
+.editor-label {
+	    width: 120px;
 }

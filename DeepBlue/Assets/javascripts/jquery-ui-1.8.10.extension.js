@@ -2,9 +2,7 @@
 	$.ui.autocomplete.prototype.options.autoSelect=true;
 	$(".ui-autocomplete-input").live("blur",function (event) {
 		var autocomplete=$(this).data("autocomplete");
-
 		if(!autocomplete.options.autoSelect||autocomplete.selectedItem) { return; }
-
 		var matcher=new RegExp("^"+$.ui.autocomplete.escapeRegex($(this).val().toLowerCase())+"$","i");
 		autocomplete.widget().children(".ui-menu-item").each(function () {
 			var item=$(this).data("item.autocomplete");
@@ -15,9 +13,13 @@
 		});
 		if(autocomplete.selectedItem) {
 			autocomplete._trigger("select",event,{ item: autocomplete.selectedItem });
-		} else {
+		}
+	});
+	$(".ui-autocomplete-input").live("autocompletechange",function (event,ui) {
+		if(!ui.item) {
+			var autocomplete=$(this).data("autocomplete");
 			autocomplete._trigger("select",event,{ item: { id: "0",value: "",label: "",otherid: "0",otherid2: "0",othervalues: []} });
 		}
 	});
-
 } (jQuery));
+ 

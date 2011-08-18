@@ -1,0 +1,28 @@
+﻿* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font-family: Calibri, Arial;
+}
+.main {
+	width: 100%;
+}
+.ribbon {
+	background-image: url("../images/expandbg.png");
+	background-position: left top;
+	background-repeat: repeat-x;
+	color: #F7F7F7;
+	font-size: 18px;
+	margin-top: 35px;
+	width: 100%;
+}
+.height32 {
+	height: 32px;
+	line-height: 32px;
+}
+.title {
+	 padding-left: 65px;
+	text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
+}
