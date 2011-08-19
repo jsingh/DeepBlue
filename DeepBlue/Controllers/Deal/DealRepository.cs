@@ -1032,7 +1032,7 @@ namespace DeepBlue.Controllers.Deal {
 																select new AutoCompleteList {
 																	id = equity.EquityID,
 																	label = (equity.EquityType != null ? equity.EquityType.Equity : string.Empty) + ">" + (equity.ShareClassType != null ? equity.ShareClassType.ShareClass : string.Empty),
-																	value = equity.Issuer.Name,
+																	value = (equity.EquityType != null ? equity.EquityType.Equity : string.Empty) + ">" + (equity.ShareClassType != null ? equity.ShareClassType.ShareClass : string.Empty),
 																	otherid = (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity
 																})
 																/*.Union
