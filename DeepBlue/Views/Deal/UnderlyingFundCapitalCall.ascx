@@ -10,7 +10,7 @@
 		<%: Html.Span("${FundName}", new { @class = "show" })%>
 		<%: Html.Hidden("${Index}_FundId", "${FundId}")%>
 	</td>
-	<td class="ralign">
+	<td class="lalign">
 		<%: Html.TextBox("${Index}_Amount", "{{if Amount>0}}${Amount}{{/if}}", new { @class = "", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="lalign">

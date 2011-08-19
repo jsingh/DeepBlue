@@ -29,12 +29,12 @@ namespace DeepBlue.Models.Deal {
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
 		public int FundId { get; set; }
 
-		[Required(ErrorMessage = "Issuer is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Issuer is required")]
+		[Required(ErrorMessage = "Equity is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Equity is required")]
 		public int SecurityId { get; set; }
 
-		[Required(ErrorMessage = "Issuer is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Issuer is required")]
+		[Required(ErrorMessage = "Security Type is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Security Type is required")]
 		public int SecurityTypeId { get; set; }
 
 		[Required(ErrorMessage = "NumberOfShares is required")]
@@ -78,11 +78,7 @@ namespace DeepBlue.Models.Deal {
 
 		public int DealNumber { get; set; }
 
-		public int? NumberOfShares { get; set; }
-
-		public decimal? PurchasePrice { get; set; }
-
-		public decimal? FMV { get; set; }
+		public decimal? CommitmentAmount { get; set; }
 
 	}
  

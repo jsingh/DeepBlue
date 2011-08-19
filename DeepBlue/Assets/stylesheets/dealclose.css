@@ -39,7 +39,7 @@ input[type='text'] {
 .savefooter {
 	float: left;
 	width: 97%;
-	margin: 20px 0px 20px 0px;
+	margin: 5px 0;
 }
 .savefooter .cell {
 	float: right;
@@ -55,8 +55,8 @@ input[type='text'] {
 	float: left;
 	font-size: 16px;
 	font-weight: bold;
-	margin: 10px 0 30px;
-	padding: 12px 0px 12px 0px;
+	margin: 10px 0 15px;
+	padding: 4px 0px;
 	width: 100%;
 }
 .closetitle .title {
@@ -66,11 +66,11 @@ input[type='text'] {
 }
 .closedetail {
 	clear: both;
-	margin: 10px 0 10px 65px;
+	margin: 10px 0 0px 65px;
 	float: left;
 }
 .tabledetail {
-	padding-bottom: 20px;
+	padding-bottom: 5px;
 }
 .underfund {
 	background-image: url("../images/add_under_funds.png");
@@ -135,6 +135,7 @@ input[type='text'] {
 .expandaddbtn {
 	position: absolute;
 	left: 212px;
+	margin-top:2px;
 }
 .expandtitle span {
 	padding-left: 65px;
@@ -148,4 +149,5 @@ input[type='text'] {
 }
 .expandsel .rightuarrow {
 	margin-right: 61px;
+	    margin-top: 12px;
 }

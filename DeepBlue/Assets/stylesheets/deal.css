@@ -123,7 +123,7 @@ h4 a {
 	font-size: 14px;
 }
 .section {
-	margin: 15px 0px;
+	margin: 5px 0px;
 	float: left;
 	width: 100%;
 }
@@ -142,16 +142,11 @@ h4 a {
 	color: #006059;
 	font-size: 15px;
 	font-weight: bold;
-	padding: 12px 0 8px 20px;
+	padding: 8px 0 8px 20px;
 	white-space: nowrap;
 	text-transform: uppercase;
 }
 .expandsel {
-	background-image: url(../images/expandbg.png);
-	background-repeat: repeat-x;
-	background-position: left top;
-	height: 42px;
-	line-height: 42px;
 	color: #F7F7F7;
 	font-size: 18px;
 	margin-top: 35px;
@@ -194,9 +189,6 @@ h4 a {
 	width: 100%;
 }
 .headerbar {
-	background-image: url(../images/expandbg.png);
-	height: 42px;
-	line-height: 42px;
 	color: #fff;
 	font-size: 14px;
 	padding: 0px 0 0 65px;
@@ -223,12 +215,6 @@ h4 a {
 	height: 27px;
 	width: 28px;
 }
-.subheader {
-	background-image: url(../images/dir_subheadbg.png);
-	background-repeat: repeat-x;
-	height: 130px;
-}
-
 .close {
 	clear: right;
 	float: right;
@@ -275,7 +261,7 @@ h4 a {
 .addbtn-extend {
 	left: 300px;
 	margin: 0;
-	padding-top: 40px;
+	padding-top: 37px;
 	position: absolute;
 }
 #SaveDealBox {
@@ -287,4 +273,8 @@ h4 a {
 #AddDealDocument {
 	width: 950px;
 	margin: 20px auto 0 15px;
+}
+#AddNewIssuer{
+	  background-image: url("../images/dir_subheadbg.png");
+	    height: 110px;  padding: 20px 0 0;
 }

@@ -38,7 +38,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="header" style="margin: 25px 0 0;">
+	<div class="header">
 		<div class="tabbg">
 			<%using (Html.Tab(new { @id = "UATab", @class = "section-tab-sel", @onclick = "javascript:dealActivity.selectTab('U',this);" })) {%>Underlying
 			Activities
@@ -101,7 +101,7 @@
 													<th class="lalign" style="width: 20%">
 														Fund Name
 													</th>
-													<th class="ralign" style="width: 20%">
+													<th class="lalign" style="width: 20%">
 														Call Amount
 													</th>
 													<th class="lalign" style="width: 15%;">
@@ -124,10 +124,9 @@
 											</tbody>
 										</table>
 									</div>
-									<br />
 									<center>
 										<span>
-											<%: Html.ImageButton("Save.png")%></span><span id="SpnCCSaveLoading"></span></center>
+											<%: Html.ImageButton("Save90.png")%></span><span id="SpnCCSaveLoading"></span></center>
 								</div>
 								<%}%>
 							</div>
@@ -156,7 +155,7 @@
 													<th class="lalign" style="width: 20%">
 														Deal Name
 													</th>
-													<th class="ralign" style="width: 15%">
+													<th class="lalign" style="width: 15%">
 														Capital Call Amount
 													</th>
 													<th class="lalign" style="width: 15%">
@@ -170,10 +169,9 @@
 											</tbody>
 										</table>
 									</div>
-									<br />
 									<center>
 										<span>
-											<%: Html.ImageButton("Save.png")%></span><span id="SpnPRCCSaveLoading"></span></center>
+											<%: Html.ImageButton("Save90.png")%></span><span id="SpnPRCCSaveLoading"></span></center>
 									<%}%>
 								</div>
 							</div>
@@ -230,7 +228,7 @@
 													<th class="lalign" style="width: 20%">
 														Fund Name
 													</th>
-													<th class="ralign" style="width: 20%">
+													<th class="lalign" style="width: 20%">
 														Amount
 													</th>
 													<th class="lalign" style="width: 15%">
@@ -253,10 +251,9 @@
 											</tbody>
 										</table>
 									</div>
-									<br />
 									<center>
 										<span>
-											<%: Html.ImageButton("Save.png")%></span><span id="SpnCDSaveLoading"></span></center>
+											<%: Html.ImageButton("Save90.png")%></span><span id="SpnCDSaveLoading"></span></center>
 									<%}%>
 								</div>
 								<div id="PRCashDistribution" class="gridbox" style="display: none">
@@ -285,7 +282,7 @@
 														<th class="lalign" style="width: 20%">
 															Deal Name
 														</th>
-														<th class="ralign" style="width: 15%">
+														<th class="lalign" style="width: 15%">
 															Distribution Amount
 														</th>
 														<th class="lalign" style="width: 15%">
@@ -299,10 +296,9 @@
 												</tbody>
 											</table>
 										</div>
-										<br />
 										<center>
 											<span>
-												<%: Html.ImageButton("Save.png")%></span><span id="SpnPRCDSaveLoading"></span></center>
+												<%: Html.ImageButton("Save90.png")%></span><span id="SpnPRCDSaveLoading"></span></center>
 										<%}%>
 									</div>
 								</div>
@@ -340,6 +336,10 @@
 							<div class="search-header">
 								<div class="cell">
 									<%: Html.Span("", new { @id="SpnSDUFName" })%></div>
+								<div class="cell" style="margin-left: 20px">
+									Issuer:&nbsp;<%: Html.TextBox("UFSDIssuerName","SEARCH ISSUER", new { @class = "wm" })%>
+									<%: Html.Hidden("UFSDIssuerId","")%>
+								</div>
 								<div class="loadingcell" id="SDLoading">
 								</div>
 							</div>
@@ -356,12 +356,12 @@
 														Fund Name
 													</th>
 													<th class="lalign">
-														Issuer
+														Equity
 													</th>
 													<th class="lalign">
 														NumberOfShares
 													</th>
-													<th class="ralign">
+													<th class="lalign">
 														Purchase Price
 													</th>
 													<th class="lalign">
@@ -370,7 +370,7 @@
 													<th class="lalign">
 														Distribution Date
 													</th>
-													<th class="ralign">
+													<th class="lalign">
 														Tax Cost Base
 													</th>
 													<th class="lalign">
@@ -386,10 +386,9 @@
 											</tbody>
 										</table>
 									</div>
-									<br />
 									<center>
 										<span>
-											<%: Html.ImageButton("Save.png")%></span><span id="SpnSDSaveLoading"></span></center>
+											<%: Html.ImageButton("Save90.png")%></span><span id="SpnSDSaveLoading"></span></center>
 									<%}%>
 								</div>
 							</div>
@@ -433,16 +432,16 @@
 											<th class="lalign" style="width: 20%">
 												Fund Name
 											</th>
-											<th class="ralign" style="width: 12%">
+											<th class="lalign" style="width: 12%">
 												Reported NAV
 											</th>
 											<th class="lalign" style="width: 12%">
 												Reporting Date
 											</th>
-											<th class="ralign" style="width: 12%">
+											<th class="lalign" style="width: 12%">
 												Calculated NAV
 											</th>
-											<th class="ralign" style="width: 12%">
+											<th class="lalign" style="width: 12%">
 												Update NAV
 											</th>
 											<th class="lalign" style="width: 12%">
@@ -499,7 +498,7 @@
 												<th class="lalign" style="width: 20%">
 													Fund Name
 												</th>
-												<th class="ralign" style="width: 12%">
+												<th class="lalign" style="width: 12%">
 													Last Price
 												</th>
 												<th class="lalign" style="width: 12%">
@@ -519,10 +518,9 @@
 										</tbody>
 									</table>
 								</div>
-								<br />
 								<center>
 									<span>
-										<%: Html.ImageButton("Save.png")%></span><span id="SpnUDVSaveLoading"></span></center>
+										<%: Html.ImageButton("Save90.png")%></span><span id="SpnUDVSaveLoading"></span></center>
 								<%}%>
 								<%:Html.Hidden("UDVIssuerId","0", new { @id = "UDVIssuerId" })%>
 							</div>
@@ -565,10 +563,10 @@
 												<th class="lalign" style="width: 20%">
 													Fund Name
 												</th>
-												<th class="ralign" style="width: 18%">
+												<th class="lalign" style="width: 18%">
 													Commitment Amount
 												</th>
-												<th class="ralign" style="width: 18%">
+												<th class="lalign" style="width: 18%">
 													Unfunded Amount
 												</th>
 												<th class="lalign" style="width: 20%;" id="UFA_NCA">
@@ -631,7 +629,7 @@
 												<th class="lalign" style="width: 20%">
 													Expense Type
 												</th>
-												<th class="ralign" style="width: 15%">
+												<th class="lalign" style="width: 15%">
 													Amount
 												</th>
 												<th class="lalign" style="width: 15%">
@@ -696,10 +694,10 @@
 										<th style="width: 20%" align="left">
 											Fund Name
 										</th>
-										<th style="width: 20%;text-align:right;" align="right">
+										<th style="width: 20%; text-align: right;" align="right">
 											Old Number of Shares
 										</th>
-										<th style="width: 20%;text-align:right;" align="right">
+										<th style="width: 20%; text-align: right;" align="right">
 											New Number of Shares
 										</th>
 										<th>
@@ -709,8 +707,6 @@
 							</table>
 						</div>
 					</div>
-				</div>
-				<div class="line">
 				</div>
 			</div>
 			<div id="Reconciliation" class="act-group" style="display: none">
@@ -768,9 +764,13 @@
 																	  OnSelect = "function(event, ui) { dealActivity.setNewSecurity(ui.item.id,ui.item.value);}"
 	})%>
 	<%= Html.jQueryAutoComplete("OldSecurity", new AutoCompleteOptions {
-																	  Source = "/Deal/FindEquityDirects",	MinLength = 1,
+																	   Source = "/Deal/FindEquityDirects",	MinLength = 1,
 																	  OnSearch = "dealActivity.onOldSecuritySearch",
 																	  OnSelect = "function(event, ui) { dealActivity.setOldSecurity(ui.item.id,ui.item.value);}"
+	})%>
+	<%= Html.jQueryAutoComplete("UFSDIssuerName", new AutoCompleteOptions {
+																	  SearchFunction = "dealActivity.searchUFSDIssuer",	MinLength = 1,
+																	  OnSelect = "function(event, ui) { dealActivity.setUFSDIssuer(ui.item.id);}"
 	})%>
 	<%= Html.jQueryAutoComplete("FLE_Fund", new AutoCompleteOptions {
 																	  Source = "/Fund/FindFunds",	MinLength = 1,

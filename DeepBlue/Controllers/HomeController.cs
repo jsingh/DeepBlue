@@ -12,11 +12,5 @@ namespace DeepBlue.Controllers {
 			ViewData["MenuName"] = "DealManagement";
 			return View();
 		}
-
-		//
-		// GET: /Demo/
-		public ActionResult Demo() {
-			return View();
-		}
 	}
 }

@@ -61,7 +61,7 @@
 		<td>
 		</td>
 		<td>
-			<%: Html.ImageButton("Save.png", new { @class="default-button" })%>
+			<%: Html.ImageButton("Save90.png", new { @class="default-button" })%>
 		</td>
 		<td>
 			<%: Html.Span("", new { id = "SpnSecCoversionLoading" })%>

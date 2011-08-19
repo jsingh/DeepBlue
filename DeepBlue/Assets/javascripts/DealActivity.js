@@ -105,6 +105,14 @@
 			$(".addbtn").hide();
 			$(this).hide();
 			var parent=$(this).parent();
+			var actbox=$(parent).parents(".act-box:first");
+			var line=$(actbox).next();
+			var index=$(".act-box").index(actbox);
+			if(index>0) {
+				var firstActBox=$(".act-box:first");
+				$(firstActBox).before(actbox);
+				$(actbox).after(line);
+			}
 			$(".addbtn",parent).show();
 			$(".expandheader",parent).show();
 			var detail=$(".detail",parent);
@@ -114,6 +122,7 @@
 			} else {
 				detail.show();
 			}
+
 		});
 		$(".expandheader").unbind('click').click(function () {
 			var expandheader=$(this);

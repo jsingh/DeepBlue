@@ -4,22 +4,22 @@
 	<td class="lalign">
 		<%: Html.Span("${FundName}")%>
 	</td>
-	<td class="ralign">
+	<td class="lalign">
 		<%: Html.Span("${CommitmentAmount}", new { @class = "money" })%>
 	</td>
-	 <td class="ralign">
+	 <td class="lalign">
 		<%: Html.Span("${UnfundedAmount}", new { @class = "money" })%>
 	</td>
-	<td class="ralign">
+	<td class="lalign">
 		<%: Html.TextBox("CommitmentAmount", "{{if CommitmentAmount>0}}${CommitmentAmount}{{/if}}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
-	<td class="ralign">
+	<td class="lalign">
 		<%: Html.TextBox("UnfundedAmount", "{{if UnfundedAmount>0}}${UnfundedAmount}{{/if}}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="ralign">
 		<%: Html.Hidden("DealUnderlyingFundId", "${DealUnderlyingFundId}")%>
 		<%: Html.Span("", new { id = "UpdateLoading" })%>
-		<%: Html.Image("save.png", new { @id = "add", @class = "default-button {{if DealUnderlyingFundId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addUFA(this,${DealUnderlyingFundId});" })%>
+		<%: Html.Image("Save.png", new { @id = "add", @class = "default-button {{if DealUnderlyingFundId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addUFA(this,${DealUnderlyingFundId});" })%>
 		<%: Html.Image("Edit.png", new { @class = "default-button show gbutton", @onclick = "javascript:dealActivity.editUFA(this,${DealUnderlyingFundId});" })%>
 	</td>
 </tr>

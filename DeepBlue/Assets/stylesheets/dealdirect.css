@@ -29,7 +29,6 @@
 }
 .subheader {
 	padding-top: 30px;
-	margin-top: -12px;
 }
 .tabcell {
 	width: 180px;
@@ -40,14 +39,14 @@
 .subdetail {
 	width: 100%;
 	float: left;
-	margin-top: 20px;
+	margin-top: 10px;
 }
 #EQdetail, #FixedIncome, #DirectMain, #IssuerDetail {
 	width: 100%;
 	float: left;
 }
 #IssuerDetail {
-	margin-top: 20px;
+	margin-top: 10px;
 }
 .direct {
 	float: right;
@@ -71,17 +70,9 @@
 	margin-top: 10px;
 	cursor: pointer;
 }
-.addbtn {
-	float: left;
-	margin-left: 123px;
-	margin-top: 6px;
-}
 #DirectDetailBox {
 	float: left;
 	width: 100%;
-}
-#cntbox {
-	top: 97px;
 }
 #equitysymboldiv {
 	padding-top: 100px;
@@ -168,5 +159,17 @@
 	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
 }
 .editor-label {
-	    width: 120px;
+	width: 120px;
+}
+.headerbar .addbtn {
+	margin: 0 0 0 123px;
+	padding: 0;
+	float: left;
+}
+.headerbar .rightcol {
+	float: right;
+	margin: 0 50px 0 0;
+}
+.expandsel, .headerbar, .subheader {
+	line-height:30px;
 }

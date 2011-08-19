@@ -55,9 +55,9 @@
 				<div class="editor-label">
 				</div>
 				<%: Html.Hidden("DealId", "${DealId}")%>
-				<div class="editor-field auto" style="padding-left: 33%; width: auto;">
+				<div class="editor-field auto" style="padding-left: 32%; width: auto;">
 					<div class="cell auto">
-						<%: Html.ImageButton("save.png", new { style = "border:0;" })%></div>
+						<%: Html.ImageButton("Save90.png", new { style = "border:0;" })%></div>
 					<div class="cell auto">
 						<b><%: Html.Anchor("Reset", "javascript:deal.sellerInfoReset();")%></b>
 					</div>

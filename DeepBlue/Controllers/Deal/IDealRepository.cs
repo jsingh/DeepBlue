@@ -99,9 +99,9 @@ namespace DeepBlue.Controllers.Deal {
 		IEnumerable<ErrorInfo> SaveUnderlyingFundStockDistribution(UnderlyingFundStockDistribution underlyingFundStockDistribution);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundStockDistributionLineItem(UnderlyingFundStockDistributionLineItem underlyingFundStockDistributionLineItem);
 		List<UnderlyingFundStockDistributionModel> GetAllUnderlyingFundStockDistributions(int underlyingFundId);
-		List<StockDistributionLineItemModel> GetAllStockDistributionDirectList(int securityTypeId, int securityId, int fundId);
-		List<AutoCompleteList> FindStockIssuers(int underlyingFundId, int fundId, string issuerName);
-		List<StockDistributionLineItemModel> GetAllDeals(int securityTypeId, int securityId, int fundId, int underlyingFundId);
+		List<AutoCompleteList> FindStockIssuers(string issuerName, int underlyingFundId);
+		List<AutoCompleteList> FindStockIssuers(int underlyingFundId, int fundId, int issuerId, string equitySymbol);
+		List<StockDistributionLineItemModel> GetAllStockDistributionDeals(int fundId, int underlyingFundId);
 		#endregion
 
 		#region UnderlyingFundCashDistribution

@@ -30,9 +30,10 @@
 		<div class="leftcol">
 			Direct</div>
 		<div class="addbtn" style="display: block">
-			<%:Html.Image("addcompany.png", new { @id="AddCompany", @style="cursor:pointer", @onclick = "javascript:dealDirect.add();" })%>
+			<%using (Html.GreenButton(new { @id = "AddCompany", @onclick = "javascript:dealDirect.add();" })) {%>Add
+			Company<%}%>
 		</div>
-		<div style="display: block; float: right; margin-right: 15%;">
+		<div class="rightcol" style="display: block;">
 			<%: Html.Span("", new { @id = "SpnIssuerLoading" })%>
 			<%: Html.TextBox("S_Issuer", "SEARCH ISSUER", new { @class = "wm", @style = "width:200px", @id = "S_Issuer" })%>
 		</div>

@@ -9,7 +9,7 @@
 		<%: Html.Span("${DealName}", new { @class = "show" })%>
 		<%: Html.Hidden("${Index}_DealId", "${DealId}")%>
 	</td>
-	<td class="ralign">
+	<td class="lalign">
 		<%: Html.TextBox("${Index}_Amount", "{{if Amount>0}}${Amount}{{/if}}", new { @class = "", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="lalign">

@@ -143,7 +143,6 @@ label {
 	background-color: #CBD2DA;
 }
 .cc-box .header {
-	margin: 25px 0 0;
 	position: relative;
 	height: 40px;
 }
@@ -151,7 +150,7 @@ label {
 	background-color: #CBD2DA;
 	clear: both;
 	float: left;
-	padding: 20px 20px 0;
+	padding: 4px 20px 0;
 }
 .cc-box-det .editor-label {
 	text-align: right;
@@ -169,11 +168,7 @@ label {
 .dist-detail .editor-field input[type='text'] {
 	width: 120px;
 }
-.dist-detail .editor-button {
-	margin: 0 0 0 25%;
-	padding-top: 10px;
-	width: auto;
-}
+ 
 .dist-detail .editor-field {
 	width: 125px;
 }

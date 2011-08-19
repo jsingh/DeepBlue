@@ -35,12 +35,14 @@
 			Underlying Fund
 		</div>
 		<div class="addbtn" style="display: block">
-			<%: Html.Image("addgp.png", new { @id="AddGP", @style="cursor:pointer", @onclick = "javascript:dealDirect.add();" })%>
+			<%using (Html.GreenButton(new { @id = "AddGP", @onclick = "javascript:dealDirect.add();" })) {%>Add
+			GP<%}%>
 		</div>
 		<div class="addbtn" style="display: block">
-			<%: Html.Image("addnufund.png", new { @id = "lnkAddUnderlyingFund", @style = "cursor:pointer", @onclick = "javascript:underlyingFund.load(0,0);" })%>
+			<%using (Html.GreenButton(new { @id = "lnkAddUnderlyingFund", @onclick = "javascript:underlyingFund.load(0,0);" })) {%>Add
+			new underlying fund<%}%>
 		</div>
-		<div style="float: right; padding-right: 50px;">
+		<div class="rightcol">
 			<%: Html.TextBox("S_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @id = "S_UnderlyingFund", @style = "width:200px", @class = "wm" })%>
 		</div>
 	</div>

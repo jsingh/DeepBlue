@@ -57,12 +57,21 @@ dealActivity.loadSD=function (isRefresh) {
 				if(issuer) {
 					$(issuer).autocomplete(
 					{
-						source: "/Deal/FindStockIssuers?underlyingFundId="+underlyingFundId+"&fundId="+fundId
-					,minLength: 1
-					,select: function (event,ui) {
-						$("#SecurityTypeId",row).val(ui.item.otherid);
-						$("#SecurityId",row).val(ui.item.id);
-					}
+						source: function (request,response) {
+							var issuerId=$("#UFSDIssuerId").val();
+							if(parseInt(issuerId)>0) {
+								$.getJSON("/Deal/FindStockIssuers?underlyingFundId="+underlyingFundId+"&fundId="+fundId+"&issuerId="+issuerId+"&term="+request.term,function (equityData) {
+									response(equityData);
+								});
+							} else {
+								alert("Issuer is required");
+							}
+						}
+						,minLength: 1
+						,select: function (event,ui) {
+							$("#SecurityTypeId",row).val(ui.item.otherid);
+							$("#SecurityId",row).val(ui.item.id);
+						}
 					,appendTo: "body",delay: 300
 					});
 				}
@@ -98,6 +107,7 @@ dealActivity.submitUFStockDistribution=function (frm) {
 	return false;
 };
 dealActivity.resetStockDistribution=function () {
+	$("#SDDetail").hide();
 	$("#StockDistribution").hide();
 	$("#PRStockDistribution").hide();
 	$("tbody","#StockDistributionList").empty();
@@ -111,4 +121,17 @@ dealActivity.showManualSDCtl=function (parentId) {
 	var display="";
 	if(chk.checked) { display=""; } else { display="none"; }
 	$(".ismanual","#StockDistributionList").css("display",display);
+};
+dealActivity.searchUFSDIssuer=function (request,response) {
+	var underlyingFundId=dealActivity.getSDUnderlyingFundId();
+	if(parseInt(underlyingFundId)>0) {
+		$.getJSON("/Deal/FindStockDistributionIssuers?term="+request.term+"&underlyingFundId="+underlyingFundId,function (data) {
+			response(data);
+		});
+	} else {
+		alert("Underlying Fund is required");
+	}
+};
+dealActivity.setUFSDIssuer=function (id) {
+	$("#UFSDIssuerId").val(id);
 };

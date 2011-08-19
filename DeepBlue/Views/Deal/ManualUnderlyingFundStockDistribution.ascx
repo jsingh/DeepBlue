@@ -10,8 +10,8 @@
 					<tr>
 						<th style="width:20%">Deal Number</th>
 						<th style="width:25%">Deal Name</th>
-						<th class="ralign" style="width:25%">NumberOfShares</th>
-						<th class="ralign" style="width:25%">FMV</th>
+						<th class="lalign" style="width:25%">NumberOfShares</th>
+						<th class="lalign" style="width:25%">FMV</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -19,8 +19,8 @@
 					<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
 						<td>Deal ${direct.DealNumber}</td>
 						<td class="dealname">${direct.DealName}</td>
-						<td class="ralign"><%: Html.TextBox("${direct.FundId}_${direct.DealId}_NumberOfShares", "")%></td>
-						<td class="ralign"><%: Html.TextBox("${direct.FundId}_${direct.DealId}_FMV", "")%></td>
+						<td class="lalign"><%: Html.TextBox("${direct.FundId}_${direct.DealId}_NumberOfShares", "")%></td>
+						<td class="lalign"><%: Html.TextBox("${direct.FundId}_${direct.DealId}_FMV", "")%></td>
 					</tr>
 				{{/each}}
 				</tbody>

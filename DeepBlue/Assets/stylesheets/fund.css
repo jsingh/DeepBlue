@@ -3,10 +3,6 @@
 	float: left;
 	width: 100%;
 }
-.fund-box .header {
-	margin: 25px 0 0;
-	height: 40px;
-}
 .fund-main {
 	width: 100%;
 	margin: 0;
@@ -22,7 +18,8 @@
 }
 .fund-box-titie {
 	font-weight: bold;
-	padding: 15px 0 15px 65px;
+	padding: 10px 0 10px 65px;
+	font-size: 14px;
 }
 .fund-header {
 	text-align: right;
@@ -34,7 +31,7 @@
 .fund-box-det {
 	clear: both;
 	float: left;
-	padding: 10px 20px;
+	padding: 5px 20px;
 }
 .fund-box-det .editor-field input[type="text"] {
 	width: 150px;
@@ -58,7 +55,7 @@
 	float: left;
 	font-size: 14px;
 	font-weight: bold;
-	height: 30px;
+	height: 23px;
 	line-height: 15px;
 	margin: 10px 0 0 65px;
 	padding-left: 20px;
@@ -91,7 +88,7 @@
 }
 #FundDetail {
 	margin: 0 auto;
-	padding: 20px 0px;
+	padding: 0 0 10px;
 	width: 90%;
 }
 /* expand header */
@@ -108,16 +105,16 @@
 	padding: 15px 0 8px;
 }
 .expandsel {
-	background-image: url("../images/expandbg.png");
-	background-position: left top;
-	background-repeat: repeat-x;
 	color: #FFFFFF;
 	font-size: 18px;
-	height: 42px;
-	line-height: 42px;
 	padding: 0;
 	width: 100%;
 	margin-top: -2px;
+	background-image: url(../images/expandbg.png);
+	background-repeat: repeat-x;
+	background-position: left top;
+	height: 35px;
+	line-height: 35px;
 }
 .expandheader #title, .recon-expandheader #title {
 	display: none;
@@ -155,7 +152,7 @@
 	float: right;
 	height: 9px;
 	margin-right: 93px;
-	margin-top: 21px;
+	margin-top: 12px;
 	width: 16px;
 }
 
@@ -173,9 +170,9 @@
 }
 /* end expand header */
 .section-tab-main {
-	position: absolute;
-	left: 0;
-	right: 0;
-	height: 40px;
-	width: auto;
+	width: 100%;
+	padding-left:0;
+}
+.section-tab-box{
+	 float: left; padding-left: 65px;
 }

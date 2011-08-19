@@ -109,6 +109,7 @@ dealActivity.submitUFCapitalCall=function (frm) {
 	return false;
 };
 dealActivity.resetCapitalCall=function () {
+	$("#CCDetail").hide();
 	$("#CapitalCall").hide();
 	$("#PRCapitalCall").hide();
 	$("tbody","#CapitalCallList").empty();

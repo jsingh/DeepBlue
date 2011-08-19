@@ -2047,7 +2047,8 @@ namespace DeepBlue.Controllers.Deal {
 			underlyingFundStockDistribution.NumberOfShares = model.NumberOfShares;
 			underlyingFundStockDistribution.PurchasePrice = model.PurchasePrice;
 
-			underlyingFundStockDistribution.FMV = underlyingFundStockDistribution.NumberOfShares * underlyingFundStockDistribution.PurchasePrice;
+			underlyingFundStockDistribution.FMV = decimal.Multiply((decimal)(underlyingFundStockDistribution.NumberOfShares ?? 0)
+																   ,underlyingFundStockDistribution.PurchasePrice);
 
 			underlyingFundStockDistribution.SecurityID = model.SecurityId;
 			underlyingFundStockDistribution.SecurityTypeID = model.SecurityTypeId;
@@ -2058,23 +2059,24 @@ namespace DeepBlue.Controllers.Deal {
 			if (errorInfo == null) {
 
 				// Attempt to create stock distribution to each deal.
-				List<StockDistributionLineItemModel> deals = DealRepository.GetAllDeals(underlyingFundStockDistribution.SecurityTypeID,
-																						underlyingFundStockDistribution.SecurityID,
-																						underlyingFundStockDistribution.FundID,
+				List<StockDistributionLineItemModel> deals = DealRepository.GetAllStockDistributionDeals(underlyingFundStockDistribution.FundID,
 																						underlyingFundStockDistribution.UnderlyingFundID);
+
+				decimal? totalDealCommitment = deals.Sum(d => d.CommitmentAmount);
 				foreach (var deal in deals) {
 					UnderlyingFundStockDistributionLineItem stockDistributionItem = new UnderlyingFundStockDistributionLineItem();
 					stockDistributionItem.DealID = deal.DealId;
 					stockDistributionItem.UnderlyingFundID = underlyingFundStockDistribution.UnderlyingFundID;
 
-					// Calculate capital call amount = (Deal Underlying Fund Committed Amount) / (Total Deal Underlying Fund Committed Amount) * Total Capital Call Amount.
 					if (model.IsManualStockDistribution) {
-						stockDistributionItem.FMV = DataTypeHelper.ToDecimal(collection[underlyingFundStockDistribution.FundID.ToString() + "_" + deal.DealId.ToString() + "_" + "FMV"]);
 						stockDistributionItem.NumberOfShares = DataTypeHelper.ToDecimal(collection[underlyingFundStockDistribution.FundID.ToString() + "_" + deal.DealId.ToString() + "_" + "NumberOfShares"]);
+						stockDistributionItem.FMV = DataTypeHelper.ToDecimal(collection[underlyingFundStockDistribution.FundID.ToString() + "_" + deal.DealId.ToString() + "_" + "FMV"]);
 					}
 					else {
-						stockDistributionItem.NumberOfShares = (((decimal)(deal.NumberOfShares ?? 0) / (decimal)deals.Sum(d => d.NumberOfShares)) * underlyingFundStockDistribution.NumberOfShares);
-						stockDistributionItem.FMV = stockDistributionItem.NumberOfShares * underlyingFundStockDistribution.PurchasePrice;
+						stockDistributionItem.NumberOfShares = decimal.Multiply(
+															   decimal.Divide((decimal)(underlyingFundStockDistribution.NumberOfShares ?? 0), (totalDealCommitment ?? 0))
+															   , (deal.CommitmentAmount ?? 0));
+						stockDistributionItem.FMV = decimal.Multiply((stockDistributionItem.NumberOfShares ?? 0), underlyingFundStockDistribution.PurchasePrice);
 					}
 
 					stockDistributionItem.UnderlyingFundStockDistributionID = underlyingFundStockDistribution.UnderlyingFundStockDistributionID;
@@ -2095,17 +2097,17 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		//
-		// GET: /Deal/StockDistributionDirectList
+		// GET: /Fund/FindStockDistributionIssuers
 		[HttpGet]
-		public JsonResult StockDistributionDirectList(int securityTypeId, int securityId, int fundId) {
-			return Json(DealRepository.GetAllStockDistributionDirectList(securityTypeId, securityId, fundId), JsonRequestBehavior.AllowGet);
+		public JsonResult FindStockDistributionIssuers(string term, int underlyingFundId) {
+			return Json(DealRepository.FindStockIssuers(term, underlyingFundId), JsonRequestBehavior.AllowGet);
 		}
 
 		//
 		// GET: /Deal/FindStockIssuers
 		[HttpGet]
-		public JsonResult FindStockIssuers(int underlyingFundId, int fundId, string term) {
-			return Json(DealRepository.FindStockIssuers(underlyingFundId, fundId, term), JsonRequestBehavior.AllowGet);
+		public JsonResult FindStockIssuers(int underlyingFundId, int fundId, int issuerId, string term) {
+			return Json(DealRepository.FindStockIssuers(underlyingFundId, fundId, issuerId, term), JsonRequestBehavior.AllowGet);
 		}
 
 		#endregion

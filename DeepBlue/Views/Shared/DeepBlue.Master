@@ -176,6 +176,7 @@
 	<script type="text/javascript">
 		deepBlue.init();
 	</script>
+	<%: Html.Hidden("mnuresize", (Response.Cookies["mnuresize"] != null ?  Request.Cookies["mnuresize"].Value : "false"))%>
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
 </body>
 </html>

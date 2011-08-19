@@ -105,14 +105,14 @@
 	}
 	,load: function (id,issuerId) {
 		var lnkAddUnderlyingFund=$("#lnkAddUnderlyingFund");
-		var src=lnkAddUnderlyingFund.attr("src").replace("addnufundselect.png","addnufund.png");
+		//var src=lnkAddUnderlyingFund.attr("src").replace("addnufundselect.png","addnufund.png");
 		$("#btnSave").attr("src","/Assets/images/muf.png");
 		if(id==0) {
-			src=lnkAddUnderlyingFund.attr("src").replace("addnufund.png","addnufundselect.png");
+			//src=lnkAddUnderlyingFund.attr("src").replace("addnufund.png","addnufundselect.png");
 			$("#S_UnderlyingFund").val("");
-			$("#btnSave").attr("src","/Assets/images/adduf.png");
+			//$("#btnSave").attr("src","/Assets/images/adduf.png");
 		}
-		lnkAddUnderlyingFund.attr("src",src);
+		//lnkAddUnderlyingFund.attr("src",src);
 		var addUnderlyingfund=$("#AddUnderlyingFund");
 		addUnderlyingfund.empty();
 		addUnderlyingfund.css("text-align","center").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");

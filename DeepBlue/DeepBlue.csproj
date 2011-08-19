@@ -876,9 +876,7 @@
     <Content Include="Assets\stylesheets\dealactivity.css" />
     <Content Include="Assets\stylesheets\dealclose.css" />
     <Content Include="Assets\stylesheets\dealdirect.css" />
-    <Content Include="Assets\stylesheets\dealreconcile.css" />
     <Content Include="Assets\stylesheets\dealreport.css" />
-    <Content Include="Assets\stylesheets\demo.css" />
     <Content Include="Assets\stylesheets\document.css" />
     <Content Include="Assets\stylesheets\exportdeal.css" />
     <Content Include="Assets\stylesheets\fileuploader.css" />
@@ -984,7 +982,6 @@
     <Content Include="Views\Document\Search.aspx" />
     <Content Include="Views\Fund\FundRateSchduleTierDetail.ascx" />
     <Content Include="Views\Fund\FundRateSchduleDetail.ascx" />
-    <Content Include="Views\Home\Demo.aspx" />
     <Content Include="Views\Report\CapitalCallSummary.aspx" />
     <Content Include="Views\Report\CashDistributionSummary.aspx" />
     <Content Include="Views\Report\ExportDealOriginationDetail.ascx" />

@@ -87,10 +87,10 @@ deal.deleteUnderlyingDirect=function (id,img) {
 };
 deal.editUnderlyingDirect=function (img) {
 	var tr=$(img).parents("tr:first");
-	if(img.src.indexOf('save.png')> -1) {
+	if(img.src.indexOf('Save.png')> -1) {
 		deal.saveUnderlyingDirect(tr);
 	} else {
-		img.src="/Assets/images/save.png";
+		img.src="/Assets/images/Save.png";
 		deal.showElements(tr);
 	}
 };

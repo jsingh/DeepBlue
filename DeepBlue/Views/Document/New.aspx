@@ -70,7 +70,7 @@
 		</div>
 		<div class="editor-button" style="width: auto; padding: 10px 0 0;">
 			<div style="float: left; padding: 0 0 10px 50px;">
-				<%: Html.ImageButton("Save.png", new { @class="default-button" })%>
+				<%: Html.ImageButton("Save90.png", new { @class = "default-button" })%>
 			</div>
 			<div style="float: left; padding: 0;">
 				<%: Html.Span("", new { @id = "SpnDocLoading" })%>

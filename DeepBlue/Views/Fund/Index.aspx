@@ -24,12 +24,14 @@
 	<div class="fund-box">
 		<div class="header">
 			<div id="TabMain" class="section-tab-main">
-				<%using (Html.Tab(new { @id = "TabFundGrid", @class = "section-tab-sel", @onclick = "javascript:fund.selectTab(this,'FundDetail');" })) {%>Fund
-				Setup
-				<%}%>
-				<%using (Html.Tab(new { @id = "TabAddNewFund", @onclick = "javascript:fund.selectTab(this,'AddNewFund');" })) {%>Add
-				New Fund
-				<%}%>
+				<div class="section-tab-box">
+					<%using (Html.Tab(new { @id = "TabFundGrid", @class = "section-tab-sel", @onclick = "javascript:fund.selectTab(this,'FundDetail');" })) {%>Fund
+					Setup
+					<%}%>
+					<%using (Html.Tab(new { @id = "TabAddNewFund", @onclick = "javascript:fund.selectTab(this,'AddNewFund');" })) {%>Add
+					New Fund
+					<%}%>
+				</div>
 			</div>
 		</div>
 	</div>

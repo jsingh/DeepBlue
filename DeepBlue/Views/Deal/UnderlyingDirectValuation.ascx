@@ -8,13 +8,13 @@
 		<%: Html.Span("${FundName}")%>
 		<%: Html.Hidden("FundId", "${FundId}")%>
 	</td>
-	<td class="ralign">
+	<td class="lalign">
 		<%: Html.Span("${LastPrice}", new { @id="LastPrice", @class = "money", @val = "${LastPrice}" })%>
 	</td>
 	<td class="lalign">
 		<%: Html.Span("${LastPriceDate}", new { @id = "LastPriceDate", @class = "dispdate", @val = "${LastPriceDate}" })%>
 	</td>
-	<td class="ralign">
+	<td class="lalign">
 		<%: Html.TextBox("NewPrice", "{{if NewPrice > 0}}${NewPrice}{{/if}}", new {  @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="lalign">

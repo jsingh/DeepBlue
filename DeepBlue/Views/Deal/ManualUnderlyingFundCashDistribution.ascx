@@ -9,16 +9,16 @@
 				<tr>
 					<th style="width:20%">Deal Number</th>
 					<th style="width:25%">Deal Name</th>
-					<th class="ralign" style="width:25">Commitment Amount</th>
-					<th class="ralign">Call Amount</th>
+					<th class="lalign" style="width:25">Commitment Amount</th>
+					<th class="lalign">Call Amount</th>
 				</tr>
 			</thead>
 			{{each(i,deal) Deals}}
 				<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
 					<td>Deal ${deal.DealNumber}</td>
 					<td class="dealname">${deal.DealName}</td>
-					<td class="ralign"><%: Html.Span("${deal.CommitmentAmount}", new { @class = "money" })%></td>
-					<td class="ralign"><%: Html.TextBox("${deal.FundId}_${deal.DealId}_CallAmount", "", new { @class = "manualcamount" })%></td>
+					<td class="lalign"><%: Html.Span("${deal.CommitmentAmount}", new { @class = "money" })%></td>
+					<td class="lalign"><%: Html.TextBox("${deal.FundId}_${deal.DealId}_CallAmount", "", new { @class = "manualcamount" })%></td>
 				</tr>
 			{{/each}}
 		</table></div>

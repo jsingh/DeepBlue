@@ -552,6 +552,7 @@ label {
 	clear: both;
 	width: 100%;
 	text-align: left;
+	margin:5px 0 0 0;
 }
 .field-validation-valid {
 	color: red;
@@ -725,7 +726,7 @@ h2 {
 .heading {
 	border: 0px solid red;
 	float: left;
-	padding: 17px 0 12px 0;
+	padding: 12px 0 12px 0;
 	width: 100%;
 }
 .heading .title {
@@ -783,13 +784,11 @@ h2 {
 	float: left;
 	padding-left: 65px;
 }
-#innersubmenu, .navigation {
+.navigation {
 	top: 153px;
 	background-image: url(../images/smbg.png);
 	background-repeat: repeat-x;
-}
-.navigation {
-	height: 47px;
+	height: 36px;
 }
 .mdiv .sel {
 	color: #021E43;
@@ -991,7 +990,7 @@ input.ui-autocomplete-loading[type="text"] {
 .green-btn .left, .green-btn .right, .green-btn .center {
 	color: #002827;
 	float: left;
-	font-size: 12px;
+	font-size: 14px;
 	height: 31px;
 	line-height: 32px;
 	font-weight: bold;
@@ -1080,3 +1079,13 @@ input.ui-autocomplete-loading[type="text"] {
 	color: #1a4e77;
 }
 /* end section tab */
+.expandsel 
+,.headerbar
+,.subheader
+{
+	background-image: url(../images/expandbg.png);
+	background-repeat: repeat-x;
+	background-position: left top;
+	height: 35px;
+	line-height: 35px;
+}
