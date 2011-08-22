@@ -85,12 +85,6 @@ namespace DeepBlue.Models.Entity {
 			if (deal.Partner != null) {
 				errors = errors.Union(ValidationHelper.Validate(deal.Partner));
 			}
-			if (deal.Contact != null) {
-				errors = errors.Union(ValidationHelper.Validate(deal.Contact));
-				foreach (ContactCommunication comm in deal.Contact.ContactCommunications) {
-					errors = errors.Union(ValidationHelper.Validate(comm.Communication));
-				}
-			}
 			if (deal.Contact1 != null) {
 				errors = errors.Union(ValidationHelper.Validate(deal.Contact1));
 				foreach (ContactCommunication comm in deal.Contact1.ContactCommunications) {

@@ -329,15 +329,13 @@
 	</tr>
 	<%}%>
 	<%}%>
-	<%}%>
-	<%if (Model.IsTemplateDisplay==false) {%>
-		<tr>
-			<td colspan=6 style="font-style:italic">
+	<%}%> 
+	<tr class="frow">
+			<td colspan="6" style="font-style: italic">
 				Willowridge Incorporated
 			</td>
-			<td colspan=6 style="text-align:right">
+			<td colspan="6" style="text-align: right">
 				<%=DateTime.Now.ToLongDateString()%>
 			</td>
-		</tr>	
-	<%}%>
+		</tr>
 </table>

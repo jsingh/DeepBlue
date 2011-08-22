@@ -9,7 +9,7 @@ using DeepBlue.Models.Report;
 namespace DeepBlue.Controllers.Report {
 	public class ReportRepository : IReportRepository {
 
-		#region IReportRepository Members
+		#region CashDistribution
 		public List<DistributionLineItem> DistributionLineItems(int fundId, int capitalDistributionlId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from distributionDetail in context.CapitalDistributionLineItems
@@ -23,13 +23,28 @@ namespace DeepBlue.Controllers.Report {
 			}
 		}
 
-		public CapitalDistribution FindCapitalDistribution(int capitalDistributionlId) {
+		public CashDistributionReportDetail FindCapitalDistribution(int capitalDistributionlId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.CapitalDistributions
-					.Include("Fund")
-					.SingleOrDefault(distribution => distribution.CapitalDistributionID == capitalDistributionlId);
+				return (from cashDistribution in context.CapitalDistributions
+						where cashDistribution.CapitalDistributionID == capitalDistributionlId
+						select new CashDistributionReportDetail {
+							DistributionDate = cashDistribution.CapitalDistributionDate,
+							FundName = cashDistribution.Fund.FundName,
+							TotalDistributionAmount = cashDistribution.DistributionAmount,
+							Items = (from distributionDetail in cashDistribution.CapitalDistributionLineItems
+									 select new DistributionLineItem {
+										 InvestorName = distributionDetail.Investor.InvestorName,
+										 Commitment = distributionDetail.Investor.InvestorFunds.Where(investorFund => investorFund.FundID == cashDistribution.FundID).Sum(investor => investor.TotalCommitment),
+										 DistributionAmount = distributionDetail.DistributionAmount,
+										 Designation = distributionDetail.Investor.InvestorContacts.FirstOrDefault().Contact.Designation
+									 })
+						}).SingleOrDefault();
 			}
 		}
+
+		#endregion
+
+		#region CapitalCall
 
 		public List<CapitalCallItem> CapitalCallLineItems(int fundId, int capitalCalllId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -45,13 +60,31 @@ namespace DeepBlue.Controllers.Report {
 			}
 		}
 
-		public Models.Entity.CapitalCall FindCapitalCall(int capitalCalllId) {
+		public CapitalCallReportDetail FindCapitalCall(int capitalCalllId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.CapitalCalls
-					.Include("Fund")
-					.SingleOrDefault(capitalCall => capitalCall.CapitalCallID == capitalCalllId);
+				return (from capitalCall in context.CapitalCalls
+						where capitalCall.CapitalCallID == capitalCalllId
+						select new CapitalCallReportDetail {
+							AmountForInv = capitalCall.InvestmentAmount,
+							CapitalCallDueDate = capitalCall.CapitalCallDueDate,
+							ExistingInv = capitalCall.ExistingInvestmentAmount,
+							FundName = capitalCall.Fund.FundName,
+							Items = (from capitalCallDetail in capitalCall.CapitalCallLineItems
+									 select new CapitalCallItem {
+										 InvestorName = capitalCallDetail.Investor.InvestorName,
+										 Commitment = capitalCallDetail.Investor.InvestorFunds.Where(investorFund => investorFund.FundID == capitalCall.FundID).Sum(investor => investor.TotalCommitment),
+										 Expenses = capitalCallDetail.FundExpenses,
+										 Investments = capitalCallDetail.InvestmentAmount,
+										 ManagementFees = capitalCallDetail.ManagementFees
+									 }),
+							NewInv = capitalCall.NewInvestmentAmount,
+							TotalCapitalCall = capitalCall.CapitalAmountCalled,
+							TotalExpenses = capitalCall.FundExpenses,
+							TotalManagementFees = capitalCall.ManagementFees,
+						}).SingleOrDefault();
 			}
 		}
+
 		#endregion
 
 		#region DealDetail
@@ -124,18 +157,32 @@ namespace DeepBlue.Controllers.Report {
 							FundId = deal.Fund.FundID,
 							DealNumber = deal.DealNumber,
 							NetPurchasePrice = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.NetPurchasePrice),
-							GrossPurchasePrice  = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.GrossPurchasePrice),
+							GrossPurchasePrice = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.GrossPurchasePrice),
 							Details = (from dealUnderlyingFund in deal.DealUnderlyingFunds
-										select new DealOrganizationFundDetailModel {
-											CommitmentAmount = dealUnderlyingFund.CommittedAmount,
-											FundName = dealUnderlyingFund.UnderlyingFund.FundName,
-											GrossPurchasePrice = dealUnderlyingFund.GrossPurchasePrice,
-											NAV = dealUnderlyingFund.Deal.Fund.UnderlyingFundNAVs.Sum(underlyingFUndNAV => underlyingFUndNAV.FundNAV),
-											NetPurchasePrice = dealUnderlyingFund.NetPurchasePrice,
-											PostRecordAdjustMent = dealUnderlyingFund.PostRecordDateCapitalCall - dealUnderlyingFund.PostRecordDateDistribution,
-											RecordDate = dealUnderlyingFund.RecordDate,
-											UnfundedAmount = dealUnderlyingFund.UnfundedAmount
-										})
+									   select new DealOrganizationFundDetailModel {
+										   CommitmentAmount = dealUnderlyingFund.CommittedAmount,
+										   FundName = dealUnderlyingFund.UnderlyingFund.FundName,
+										   GrossPurchasePrice = dealUnderlyingFund.GrossPurchasePrice,
+										   NAV = dealUnderlyingFund.Deal.Fund.UnderlyingFundNAVs.Sum(underlyingFUndNAV => underlyingFUndNAV.FundNAV),
+										   NetPurchasePrice = dealUnderlyingFund.NetPurchasePrice,
+										   PostRecordAdjustMent = dealUnderlyingFund.PostRecordDateCapitalCall - dealUnderlyingFund.PostRecordDateDistribution,
+										   RecordDate = dealUnderlyingFund.RecordDate,
+										   UnfundedAmount = dealUnderlyingFund.UnfundedAmount
+									   })
+						}).SingleOrDefault();
+			}
+		}
+		#endregion
+
+		#region FundBreakDown
+		public FundBreakDownReportDetail FindFundBreakDownReport(int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fund in context.Funds
+						where fund.FundID == fundId
+						select new FundBreakDownReportDetail {
+							 FundName = fund.FundName,
+							 TotalUnderlyingFunds = fund.Deals.Sum(deal => deal.DealUnderlyingFunds.Count),
+							  TotalDirects = fund.Deals.Sum(deal => deal.DealUnderlyingDirects.Count),
 						}).SingleOrDefault();
 			}
 		}

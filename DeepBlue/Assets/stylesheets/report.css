@@ -1,4 +1,7 @@
-﻿#ReportMain {
+﻿td, th {
+	white-space: nowrap;
+}
+#ReportMain {
 	overflow: hidden;
 	margin: 0 auto;
 	overflow: hidden;
@@ -45,10 +48,10 @@
 	margin: 0 auto;
 	padding-bottom: 20px;
 }
-#ReportContent.dealdetail{
-	width:968px;
+#ReportContent.dealdetail {
+	width: 968px;
 }
- 
+
 #ReportContent td.title {
 	font-size: 23px;
 	font-weight: bold;
@@ -75,7 +78,8 @@
 	font-weight: bold;
 	padding: 5px 0;
 	text-align: center;
-	width: 50px; float:right;
+	width: 50px;
+	float: right;
 }
 #ReportContent .calign {
 	text-align: center;
@@ -105,8 +109,8 @@
 	background-color: #E9EAEC;
 }
 #ReportContent .trow td {
-	   height: 0;
-    padding: 5px 15px 0;
+	height: 0;
+	padding: 5px 15px 0;
 }
 #ReportContent .gridline td {
 	background-image: url("../images/line.png");
@@ -115,13 +119,13 @@
 	padding-top: 2px;
 }
 #ReportHeader {
-	  float: left;
-    margin: 10px 0 5px;
-    width: 100%;
+	float: left;
+	margin: 10px 0 5px;
+	width: 100%;
 }
 .export {
-	float:right;
-	padding-top:5px;
+	float: right;
+	padding-top: 5px;
 }
 .export .menu {
 	background-image: url("../images/expdown.png");
@@ -147,20 +151,30 @@
 	margin: 0 0 0 5px;
 }
 .exportlist {
-    display: none;
+	display: none;
 }
 .exportlist li {
-    list-style: none outside none;
-    margin: 0 10px 0 0;
+	list-style: none outside none;
+	margin: 0 10px 0 0;
 }
 .exportlist li a {
-    color: #000000;
+	color: #000000;
 }
 .titlebox {
 	float: left;
 	margin-left: 73px;
 	width: 90%;
 }
-.underline,.underline td{
-	text-decoration:underline;
+.underline, .underline td {
+	text-decoration: underline;
+}
+.frow td {
+	font-size: 14px;
+	padding: 5px 0px;
+}
+.drow td {
+	padding: 5px;
+}
+#ReportContent {
+	font-size: 13px;
 }

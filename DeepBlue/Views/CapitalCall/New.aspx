@@ -83,9 +83,8 @@
 					<div class="editor-field">
 						<%: Html.TextBox("CapitalCallDueDate","", new { @style = "width:110px" })%>
 					</div>
-					<div class="editor-label" style="width: auto">
-						<%: Html.CheckBox("AddManagementFees",false,new { @style="width:auto", @onclick="javascript:capitalCall.selectMFee(this);" })%>&nbsp;Add
-						Management Fees
+					<div class="editor-label" style="width: auto;">
+						<%: Html.CheckBox("AddManagementFees", false, new { @style = "width:auto", @display = "Add Management Fees", @onclick = "javascript:capitalCall.selectMFee(this);" })%>
 					</div>
 					<div id="ManFeeMain" style="display: none; float: left; margin-left: 115px;">
 						<div class="editor-label fromcell">
@@ -99,10 +98,9 @@
 						</div>
 					</div>
 					<div class="editor-label">
-						<%: Html.CheckBox("AddFundExpenses", false, new { @style = "width:auto", @onclick = "javascript:capitalCall.selectFundExp(this);" })%>&nbsp;Add
-						Fund Expenses
+						<%: Html.CheckBox("AddFundExpenses", false, new { @style = "width:auto", @displaywidth = "113px", @display = "Add Fund Expenses", @onclick = "javascript:capitalCall.selectFundExp(this);" })%>
 					</div>
-					<div id="FunExpAmount" style="display: none; float: left; margin-left: 206px;">
+					<div id="FunExpAmount" style="display: none; float: left; margin-left: 197px;">
 						<div class="editor-label fromcell">
 							Fund Expense Amount:
 						</div>
@@ -323,10 +321,14 @@
 		</tr>
 		{{/each}}
 	</script>
-	<%if (Model.FundId > 0) {%>
-	<script type="text/javascript">$(document).ready(function(){
-		capitalCall.selectFund(<%=Model.FundId%>);
+	<script type="text/javascript">
+		$(document).ready(function () {
+			var bdy=$("body");
+			jHelper.jqCheckBox(bdy);
+			jHelper.jqComboBox(bdy);
 		});
 	</script>
+	<%if (Model.FundId > 0) {%>
+	<script type="text/javascript">$(document).ready(function(){capitalCall.selectFund(<%=Model.FundId%>);});</script>
 	<%}%>
 </asp:Content>

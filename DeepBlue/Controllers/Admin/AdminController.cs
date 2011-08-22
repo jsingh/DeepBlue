@@ -2655,7 +2655,15 @@ namespace DeepBlue.Controllers.Admin {
 				return string.Empty;
 		}
 		#endregion
-	 
+
+		#region DealContacts
+		//
+		// GET: /Fund/FindDealContacts
+		[HttpGet]
+		public JsonResult FindDealContacts(string term) {
+			return Json(AdminRepository.FindDealContacts(term), JsonRequestBehavior.AllowGet);
+		}
+		#endregion
 
 		public ActionResult Result() {
 			return View();

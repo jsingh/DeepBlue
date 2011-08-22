@@ -24,16 +24,14 @@
 			<%: Html.LabelFor(model => model.ContactId) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownListFor(model => model.ContactId, Model.Contacts, new { @val = "${ContactId}" })%>
+			<%: Html.TextBox("Contact","${ContactName}") %>
+			<%: Html.HiddenFor(model => model.ContactId, new { @val = "${ContactId}" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.LabelFor(model => model.IsPartnered) %>
 		</div>
 		<div class="editor-field rdo" style="width: auto; clear: right;">
-				<%: Html.RadioButton("IsPartnered","true", false, new { @id = "IsPartneredYes", @style = "border:0px;", @onclick = "javascript:deal.selectPartner(!this.checked);" })%>
-				&nbsp;Yes&nbsp;
-				<%: Html.RadioButton("IsPartnered", "false", true, new { @id = "IsPartneredNo", @style = "border:0px;", @onclick = "javascript:deal.selectPartner(this.checked);" })%>
-				&nbsp;No
+			<%: Html.CheckBoxFor(model => model.IsPartnered, new { @val = "${IsPartnered}", @onclick = "javascript:deal.selectPartner(!this.checked);" })%>
 		</div>
 		<div class="editor-label">
 			<%: Html.LabelFor(model => model.PurchaseTypeId) %>

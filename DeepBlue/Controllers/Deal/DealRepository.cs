@@ -55,6 +55,7 @@ namespace DeepBlue.Controllers.Deal {
 											  where deal.DealID == dealId
 											  select new DealDetailModel {
 												  ContactId = deal.ContactID,
+												  ContactName = (deal.Contact != null ? deal.Contact.ContactName : string.Empty),
 												  DealId = deal.DealID,
 												  DealName = deal.DealName,
 												  DealNumber = deal.DealNumber,

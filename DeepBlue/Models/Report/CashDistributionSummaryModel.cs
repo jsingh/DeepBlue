@@ -15,12 +15,13 @@ namespace DeepBlue.Models.Report {
 		[DisplayName("Fund:")]
 		public int FundId { get; set; }
 
-		[Required(ErrorMessage = "Capital Distribution Date is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Capital Distribution Date is required")]
-		[DisplayName("Capital Distribution Date:")]
+		[Required(ErrorMessage = "Cash Distribution Date is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Cash Distribution Date is required")]
+		[DisplayName("Cash Distribution Date:")]
 		public int CapitalDistributionId { get; set; }
 
 		public List<SelectListItem> CapitalDistributions { get; set; }
 
+		
 	}
 }

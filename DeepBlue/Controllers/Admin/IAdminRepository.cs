@@ -266,6 +266,11 @@ namespace DeepBlue.Controllers.Admin {
 		#region DynamicData
 		object FindTable(string tableName);
 		#endregion
- 
+
+		#region DealContacts
+		List<AutoCompleteList> FindDealContacts(string contactName);
+		Contact FindContact(int contactId);
+		#endregion
+
 	}
 }

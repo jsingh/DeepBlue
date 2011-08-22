@@ -41,16 +41,7 @@ namespace DeepBlue.Controllers.Report {
 			ResultModel resultModel = new ResultModel();
 			CashDistributionReportDetail detail = null;
 			if (ModelState.IsValid) {
-				CapitalDistribution distribution = ReportRepository.FindCapitalDistribution(model.CapitalDistributionId);
-				detail = new CashDistributionReportDetail();
-				if (distribution != null) {
-					detail.FundName = distribution.Fund.FundName;
-					detail.TotalDistributionAmount = FormatHelper.CurrencyFormat(distribution.DistributionAmount);
-					detail.DistributionDate = distribution.CapitalDistributionDate.ToString("MM/dd/yyyy");
-					detail.RepayManFees = "$0";
-					detail.WithCarryAmount = "$0";
-					detail.Items = ReportRepository.DistributionLineItems(model.FundId, model.CapitalDistributionId);
-				}
+				detail = ReportRepository.FindCapitalDistribution(model.CapitalDistributionId);
 			}
 			else {
 				foreach (var values in ModelState.Values.ToList()) {
@@ -73,6 +64,18 @@ namespace DeepBlue.Controllers.Report {
 			return Json(selectLists, JsonRequestBehavior.AllowGet);
 		}
 
+		//
+		// GET: /Deal/ExportCapitalCallSummaryDetail
+		[HttpGet]
+		public ActionResult ExportCashDistributionDetail(FormCollection collection) {
+			ExportCashDistributionDetailModel model = new ExportCashDistributionDetailModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				model.CashDistributionReportDetail = ReportRepository.FindCapitalDistribution(model.CapitalDistributionId);
+			}
+			return View(model);
+		}
+
 		#endregion
 
 		#region Capital Call Summary
@@ -92,19 +95,7 @@ namespace DeepBlue.Controllers.Report {
 			ResultModel resultModel = new ResultModel();
 			CapitalCallReportDetail detail = null;
 			if (ModelState.IsValid) {
-				Models.Entity.CapitalCall capitalCall = ReportRepository.FindCapitalCall(model.CapitalCallId);
-				detail = new CapitalCallReportDetail();
-				if (capitalCall != null) {
-					detail.AmountForInv = FormatHelper.CurrencyFormat(capitalCall.InvestmentAmount);
-					detail.CapitalCallDueDate = capitalCall.CapitalCallDueDate.ToString("MM/dd/yyyy");
-					detail.ExistingInv = FormatHelper.CurrencyFormat(capitalCall.ExistingInvestmentAmount);
-					detail.FundName = capitalCall.Fund.FundName;
-					detail.Items = ReportRepository.CapitalCallLineItems(model.FundId, model.CapitalCallId);
-					detail.NewInv = FormatHelper.CurrencyFormat(capitalCall.NewInvestmentAmount);
-					detail.TotalCapitalCall = FormatHelper.CurrencyFormat(capitalCall.CapitalAmountCalled);
-					detail.TotalExpenses = FormatHelper.CurrencyFormat(capitalCall.FundExpenses);
-					detail.TotalManagementFees = FormatHelper.CurrencyFormat(capitalCall.ManagementFees);
-				}
+				detail = ReportRepository.FindCapitalCall(model.CapitalCallId);
 			}
 			else {
 				foreach (var values in ModelState.Values.ToList()) {
@@ -125,6 +116,18 @@ namespace DeepBlue.Controllers.Report {
 				selectLists.Add(new SelectListItem { Selected = false, Text = capitalCall.CapitalCallNumber + "# (" + capitalCall.CapitalCallDueDate.ToString("MM/dd/yyyy") + ")", Value = capitalCall.CapitalCallID.ToString() });
 			}
 			return Json(selectLists, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/ExportCapitalCallDetail
+		[HttpGet]
+		public ActionResult ExportCapitalCallDetail(FormCollection collection) {
+			ExportCapitalCallDetailModel model = new ExportCapitalCallDetailModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				model.CapitalCallReportDetail = ReportRepository.FindCapitalCall(model.CapitalCallId);
+			}
+			return View(model);
 		}
 
 		#endregion
@@ -183,6 +186,8 @@ namespace DeepBlue.Controllers.Report {
 			return View(model);
 		}
 
+		//
+		// POST: /Deal/DealOriginationReport
 		[HttpPost]
 		public JsonResult DealOriginationReport(FormCollection collection) {
 			DealOriginationModel model = new DealOriginationModel();
@@ -204,14 +209,62 @@ namespace DeepBlue.Controllers.Report {
 			}
 			return Json(new { Error = error, Data = dealOriginationReportDetail }, JsonRequestBehavior.AllowGet);
 		}
+
 		//
-		// GET: /Deal/ExportDetail
+		// GET: /Deal/ExportDealOriginationDetail
 		[HttpGet]
 		public ActionResult ExportDealOriginationDetail(FormCollection collection) {
 			ExportDealOriginationModel model = new ExportDealOriginationModel();
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
 				model.DealOriginationReportModel = ReportRepository.FindDealOriginationReport(model.DealId);
+			}
+			return View(model);
+		}
+
+		#endregion
+
+		#region FundBreakDown
+
+		public ActionResult FundBreakDown() {
+			ViewData["MenuName"] = "Reports";
+			ViewData["PageName"] = "FundBreakDown";
+			FundBreakDownModel model = new FundBreakDownModel();
+			return View(model);
+		}
+
+		//
+		// POST: /Deal/FundBreakDownReport
+		[HttpPost]
+		public JsonResult FundBreakDownReport(FormCollection collection) {
+			FundBreakDownModel model = new FundBreakDownModel();
+			this.TryUpdateModel(model, collection);
+			string error = string.Empty;
+			ResultModel resultModel = new ResultModel();
+			FundBreakDownReportDetail fundBreakDownReportDetail = null;
+			if (ModelState.IsValid) {
+				fundBreakDownReportDetail = ReportRepository.FindFundBreakDownReport(model.FundId);
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							error += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new { Error = error, Data = fundBreakDownReportDetail }, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/ExportFundBreakDownDetail
+		[HttpGet]
+		public ActionResult ExportFundBreakDownDetail(FormCollection collection) {
+			ExportFundBreakDownDetailModel model = new ExportFundBreakDownDetailModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				model.FundBreakDownReportDetail = ReportRepository.FindFundBreakDownReport(model.FundId);
 			}
 			return View(model);
 		}

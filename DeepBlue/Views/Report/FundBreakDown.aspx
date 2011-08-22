@@ -1,12 +1,12 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<DeepBlue.Models.Report.CapitalCallSummaryModel>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<DeepBlue.Models.Report.FundBreakDownModel>" %>
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Capital Call Summary
+	Fund Break Down
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
-	<%=Html.JavascriptInclueTag("CCSummaryReport.js")%>
+	<%=Html.JavascriptInclueTag("FundBreakDown.js")%>
 	<%=Html.JavascriptInclueTag("jquery.PrintArea.js")%>
 	<%=Html.StylesheetLinkTag("report.css")%>
 </asp:Content>
@@ -14,8 +14,7 @@
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title">REPORTS</span><span class="arrow"></span><span class="pname">Capital
-					Call Summary</span></div>
+				<span class="title">REPORTS</span><span class="arrow"></span><span class="pname">Fund Break Down</span></div>
 			<div class="rightcol">
 			</div>
 		</div>
@@ -23,16 +22,10 @@
 	<div id="ReportHeader">
 		<div class="titlebox">
 			<% Html.EnableClientValidation(); %>
-			<%using (Html.BeginForm("", "", FormMethod.Get, new { @onsubmit = "return ccsummaryReport.onSubmit(this);" })) {%>
+			<%using (Html.BeginForm("", "", FormMethod.Get, new { @onsubmit = "return fundBreakDownReport.onSubmit(this);" })) {%>
 			<div class="editor-label" style="width: auto;">
 				<%: Html.LabelFor(model => model.FundId)%>
 				<%: Html.TextBox("FundName", "SEARCH FUND", new { @class = "wm", @id = "FundName", @style = "width:200px" })%>
-			</div>
-			<div class="editor-label" style="width: auto; clear: right;">
-				<%: Html.LabelFor(model => model.CapitalCallId)%>
-			</div>
-			<div class="editor-field" style="width: auto;">
-				<%: Html.DropDownListFor(model => model.CapitalCallId, Model.CapitalCalls, new { @style = "width:200px;" })%>
 			</div>
 			<div class="editor-label" style="width: auto; clear: right;">
 				<%: Html.ImageButton("submit.png", new { @class="default-button" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
@@ -48,7 +41,7 @@
 			</div>
 			<div class="export">
 				<div class="print">
-					<%:Html.Image("print.gif", new { @style = "cursor:pointer", @onclick = "javascript:ccsummaryReport.print()" })%>
+					<%:Html.Image("print.gif", new { @style = "cursor:pointer", @onclick = "javascript:fundBreakDownReport.print()" })%>
 				</div>
 				<div class="menu" onclick="javascript:jHelper.expandExpMenu(this);">
 					<ul>
@@ -57,7 +50,7 @@
 					<%: Html.Hidden("ExportId","")%>
 				</div>
 				<div class="darrow">
-					<%:Html.Image("down_arrow.png", new { @style = "cursor:pointer", @onclick = "javascript:ccsummaryReport.exportDeal();" })%></div>
+					<%:Html.Image("down_arrow.png", new { @style = "cursor:pointer", @onclick = "javascript:fundBreakDownReport.exportDeal();" })%></div>
 			</div>
 		</div>
 	</div>
@@ -71,10 +64,10 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { ccsummaryReport.selectFund(ui.item.id);}" })%>
-	<script type="text/javascript">		ccsummaryReport.init();</script>
-	<script id="CCSummaryReportTemplate" type="text/x-jquery-tmpl">
-		<% Html.RenderPartial("CapitalCallSummaryReport", new DeepBlue.Models.Report.CapitalCallReportDetail { IsTemplateDisplay = true }); %>
+	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { fundBreakDownReport.selectFund(ui.item.id);}" })%>
+	<script type="text/javascript">		fundBreakDownReport.init();</script>
+	<script id="FundBreakDownReportTemplate" type="text/x-jquery-tmpl">
+		<% Html.RenderPartial("FundBreakDownReport", new DeepBlue.Models.Report.FundBreakDownReportDetail { IsTemplateDisplay = true }); %>
 	</script>
 	<script type="text/javascript">
 		$(document).ready(function () {

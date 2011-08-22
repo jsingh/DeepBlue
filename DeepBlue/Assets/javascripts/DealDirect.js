@@ -104,6 +104,7 @@
 						alert("Company Saved.");
 					}
 					$("#AddNewIssuer").hide();
+					$("#AddGP").removeClass("green-btn-sel");
 					dealDirect.loadSelectImages(false);
 					if(dealDirect.onCreateNewIssuer) {
 						dealDirect.onCreateNewIssuer(arr[1]);
@@ -122,11 +123,13 @@
 		data.IsUnderlyingFundModel=dealDirect.isUnderlyingFundModel;
 		$("#IssuerDetailTemplate").tmpl(data).appendTo(newIssuerDetail);
 		dealDirect.setUpNewIssuer();
+		$("#AddGP").addClass("green-btn-sel");
 		if(dealDirect.onAddIssuer)
 			dealDirect.onAddIssuer();
 	}
 	,close: function () {
 		$('#AddNewIssuer').hide();
+		$("#AddGP").removeClass("green-btn-sel");
 		dealDirect.loadSelectImages(false);
 	}
 	,load: function (id) {
@@ -150,6 +153,8 @@
 				jHelper.formatDateTxt(eqDetail);
 				jHelper.trimTextArea(fixedIncome);
 				jHelper.trimTextArea(eqDetail);
+				jHelper.jqComboBox(eqDetail);
+				jHelper.jqComboBox(fixedIncome);
 				dealDirect.setUpIssuer();
 				$("#tblExistingEquity").flexigrid({ usepager: true
 			,url: "/Deal/DirectEquityList"

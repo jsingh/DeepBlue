@@ -345,7 +345,7 @@ namespace DeepBlue.Controllers.Admin {
 		public IEnumerable<ErrorInfo> SaveCustomFieldValue(CustomFieldValue customFieldValue) {
 			return customFieldValue.Save();
 		}
-		#endregion 
+		#endregion
 
 		#region  DataType
 
@@ -1498,7 +1498,7 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 		#endregion
-		
+
 		#region DynamicData
 		public object FindTable(string tableName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -1781,6 +1781,29 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 		#endregion
- 
+
+		#region Deal Contact
+		public List<AutoCompleteList> FindDealContacts(string contactName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from contact in context.Contacts
+						where contact.InvestorContacts.Count <= 0
+						&& contact.UnderlyingFunds.Count <= 0
+						&& contact.Deals1.Count <= 0
+						&& contact.ContactName.StartsWith(contactName)
+						select new AutoCompleteList {
+							id = contact.ContactID,
+							label = contact.ContactName,
+							value = contact.ContactName
+						}).ToList();
+			}
+		}
+		public Contact FindContact(int contactId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.Contacts.Where(contact => contact.ContactID == contactId).SingleOrDefault();
+			}
+		}
+
+		#endregion
+
 	}
 }

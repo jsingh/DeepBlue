@@ -14,35 +14,57 @@
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title">REPORTS</span><span class="arrow"></span><span class="pname">Capital
+				<span class="title">REPORTS</span><span class="arrow"></span><span class="pname">Cash
 					Distribution Summary</span></div>
 			<div class="rightcol">
 			</div>
 		</div>
 	</div>
-	<div id="ReportHeader" class="rep-header">
-		<div class="editor-label" style="width: auto">
-			<%using (Html.BeginForm("", "", FormMethod.Get, new { @id = "DistributionSummary", @onsubmit = "return report.onSubmit(this);" })) {%>
-			<div style="float: left">
+	<div id="ReportHeader">
+		<div class="titlebox">
+			<% Html.EnableClientValidation(); %>
+			<%using (Html.BeginForm("", "", FormMethod.Get, new { @onsubmit = "return report.onSubmit(this);" })) {%>
+			<div class="editor-label" style="width: auto;">
 				<%: Html.LabelFor(model => model.FundId)%>
 				<%: Html.TextBox("FundName", "SEARCH FUND", new { @class = "wm", @id = "FundName", @style = "width:200px" })%>
 			</div>
-			<div style="float: left; margin-left: 20px;">
+			<div class="editor-label" style="width: auto; clear: right;">
 				<%: Html.LabelFor(model => model.CapitalDistributionId)%>
-				<%: Html.DropDownListFor(model => model.CapitalDistributionId, Model.CapitalDistributions, new { @style = "width:200px" })%>
 			</div>
-			<div style="float: left; margin-left: 10px;">
+			<div class="editor-field" style="width: auto;">
+				<%: Html.DropDownListFor(model => model.CapitalDistributionId, Model.CapitalDistributions, new { @style = "width:200px;" })%>
+			</div>
+			<div class="editor-label" style="width: auto; clear: right;">
 				<%: Html.ImageButton("submit.png", new { @class="default-button" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
 			</div>
 			<%: Html.HiddenFor(model => model.FundId)%>
 			<%}%>
-		</div>
-		<div class="editor-label" style="margin-left: 50px; clear: right">
-			<%: Html.Anchor(Html.Image("print.png").ToHtmlString() + "&nbsp;Print",new { @onclick = "javascript:report.print()" })%>
+			<div class="menu exportlist" style="position: absolute; right: 85px;">
+				<ul>
+					<li><a href="javascript:jHelper.chooseExpMenu(2,'Pdf');">Pdf</a></li>
+					<li><a href="javascript:jHelper.chooseExpMenu(1,'Word');">Word</a></li>
+					<li><a href="javascript:jHelper.chooseExpMenu(4,'Excel');">Excel</a></li>
+				</ul>
+			</div>
+			<div class="export">
+				<div class="print">
+					<%:Html.Image("print.gif", new { @style = "cursor:pointer", @onclick = "javascript:report.print()" })%>
+				</div>
+				<div class="menu" onclick="javascript:jHelper.expandExpMenu(this);">
+					<ul>
+						<li><a id="lnkExportName" href="#">Pdf</a></li>
+					</ul>
+					<%: Html.Hidden("ExportId","")%>
+				</div>
+				<div class="darrow">
+					<%:Html.Image("down_arrow.png", new { @style = "cursor:pointer", @onclick = "javascript:report.exportDeal();" })%></div>
+			</div>
 		</div>
 	</div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+	<div class="line">
+	</div>
 	<div id="ReportMain">
 		<div id="ReportDetail" class="rep-main" style="display: none">
 		</div>
@@ -52,39 +74,11 @@
 	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { report.selectFund(ui.item.id);}" })%>
 	<script type="text/javascript">		report.init();</script>
 	<script id="ReportTemplate" type="text/x-jquery-tmpl">
-		<div id='RepTop'>
-		<div class='title'>Cash Distribution Summary</div><div class='fundname detail'>${FundName}</div>
-		<div class='detail'>Distribution Of ${DistributionDate} - ${TotalDistributionAmount}</div>
-		</div><br/>
-		<div id='RepContent'>
-			<div class="gbox">
-			<table id='report_tbl' cellspacing=0 cellpadding=0 border=0 class='grid'>
-				<thead>
-					<tr>
-						<th class="lalign" style='width:40%;'>Investor</th>
-						<th class="lalign" style='width:20%'>Designation</th>
-						<th class="ralign">Commitment</th>
-						<th class="ralign">Distribution Amount</th>
-					</tr>
-				</thead>
-				<tbody>
-				{{each(i,item) Items}}
-					<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
-						<td>${InvestorName}</td>
-						<td>${Designation}</td>
-						<td style='text-align:right'>${formatCurrency(Commitment)}</td>
-						<td style='text-align:right'>${formatCurrency(DistributionAmount)}</td>
-					</tr>
-				{{/each}}
-				</tbody>
-				<tfoot>
-				<tr>
-					<td colspan=2 style='vertical-align:top'>Total Distribution:${TotalDistributionAmount}</td>
-					<td style='text-align:right;' nowrap>With Carry Amount:<br/>And Repayment of Mgt Fees:</td>
-					<td style='text-align:right;' nowrap>${WithCarryAmount}<br/>${RepayManFees}</td>
-				</tr>
-				</tfoot>
-			</table></div>
-		</div>
+		 <% Html.RenderPartial("CashDistributionSummaryReport", new DeepBlue.Models.Report.CashDistributionReportDetail { IsTemplateDisplay = true }); %>
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			jHelper.jqComboBox($("body"));
+		});
 	</script>
 </asp:Content>

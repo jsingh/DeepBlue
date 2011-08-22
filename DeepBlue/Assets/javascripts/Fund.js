@@ -12,6 +12,7 @@
 	,setup: function (target) {
 		setTimeout(function () {
 			jHelper.checkValAttr(target);
+			jHelper.jqComboBox(target);
 			$(".ddlist",target).each(function () {
 				if($(this).hasClass("investortype")==false) {
 					$(this).change();
@@ -58,6 +59,7 @@
 		$("#FundAddTemplate").tmpl(data).appendTo(target);
 		fund.expand();
 		fund.setup(target);
+		jHelper.jqCheckBox(target);
 	}
 	,deleteTab: function (id,isConfirm) {
 		var isRemove=true;

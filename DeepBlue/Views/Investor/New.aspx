@@ -538,4 +538,11 @@
 	<% } %>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BottomContent" runat="server">
+	<script type="text/javascript">
+		$(document).ready(function () {
+			var bdy=$("body");
+			jHelper.jqCheckBox(bdy);
+			jHelper.jqComboBox(bdy);
+		});
+	</script>
 </asp:Content>

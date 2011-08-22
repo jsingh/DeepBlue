@@ -105,14 +105,6 @@
 	}
 	,load: function (id,issuerId) {
 		var lnkAddUnderlyingFund=$("#lnkAddUnderlyingFund");
-		//var src=lnkAddUnderlyingFund.attr("src").replace("addnufundselect.png","addnufund.png");
-		$("#btnSave").attr("src","/Assets/images/muf.png");
-		if(id==0) {
-			//src=lnkAddUnderlyingFund.attr("src").replace("addnufund.png","addnufundselect.png");
-			$("#S_UnderlyingFund").val("");
-			//$("#btnSave").attr("src","/Assets/images/adduf.png");
-		}
-		//lnkAddUnderlyingFund.attr("src",src);
 		var addUnderlyingfund=$("#AddUnderlyingFund");
 		addUnderlyingfund.empty();
 		addUnderlyingfund.css("text-align","center").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
@@ -121,9 +113,19 @@
 			addUnderlyingfund.empty();
 			addUnderlyingfund.css("text-align","left");
 			$("#UnderlyingFundTemplate").tmpl(data).appendTo(addUnderlyingfund);
+			$("#btnSave").attr("src","/Assets/images/muf.png");
+			$("#lnkAddUnderlyingFund").removeClass("green-btn-sel");
+			if(id==0) {
+				//src=lnkAddUnderlyingFund.attr("src").replace("addnufund.png","addnufundselect.png");
+				$("#S_UnderlyingFund").val("");
+				$("#btnSave").attr("src","/Assets/images/adduf.png");
+				$("#lnkAddUnderlyingFund").addClass("green-btn-sel");
+			}
 			underlyingFund.setUp();
 			jHelper.checkValAttr(addUnderlyingfund);
 			jHelper.formatDateTxt(addUnderlyingfund);
+			jHelper.jqComboBox(addUnderlyingfund);
+			jHelper.jqCheckBox(addUnderlyingfund);
 			$("#Description").val($.trim($("#Description").val()));
 			$("#Address").val($.trim($("#Address").val()));
 			$("#Doc_DocumentDate").datepicker({ changeMonth: true,changeYear: true });
@@ -168,7 +170,7 @@
 					} else {
 						if(underlyingFund.tempSave==false) {
 							alert("Underlying Fund Added.");
-							$("#lnkAddUnderlyingFund").attr("src","/Assets/images/addnufund.png");
+							$("#lnkAddUnderlyingFund").removeClass("green-btn-sel");
 							$("#AddUnderlyingFund").hide();
 							$("#S_UnderlyingFund").val("");
 						}

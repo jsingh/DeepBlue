@@ -77,10 +77,8 @@
 			$("#DealUnderlyingFundTemplate").tmpl(data).appendTo("#DealUnderlyingFunds");
 			$("#DealUnderlyingDirectTemplate").tmpl(data).appendTo("#DealUnderlyingDirects");
 
-			var IsPartneredYes=document.getElementById("IsPartneredYes");
-			var IsPartneredNo=document.getElementById("IsPartneredNo");
+			var IsPartneredYes=document.getElementById("IsPartnered");
 			IsPartneredYes.checked=data.IsPartnered;
-			IsPartneredNo.checked=!data.IsPartnered;
 			if(IsPartneredYes.checked) {
 				$("#divPartnerName").show();
 			} else {
@@ -95,6 +93,12 @@
 			var trDirect=$("tr:first","#MakeNewDUDirect");
 			deal.applyUDAutocomplete(trDirect);
 
+			$("#Contact").autocomplete({ source: "/Admin/FindDealContacts"
+			,minLength: 1
+			,select: function (event,ui) { $("#ContactId").val(ui.item.id); }
+			,appendTo: "body",delay: 300
+			});
+
 			var dealMain=$("#DealMain");
 			dealMain.show();
 			deal.selectValue(dealMain);
@@ -106,6 +110,9 @@
 			deal.calcDUF();
 			deal.calcDUD();
 			deal.documentSetUp();
+			jHelper.jqCheckBox(dealMain);
+
+
 			$("#DocumentDate").datepicker({ changeMonth: true,changeYear: true });
 		} catch(e) { alert(e); }
 	}
@@ -277,6 +284,7 @@
 	/* End SellerInfo */
 	,selectValue: function (target) {
 		$("select",target).each(function () { var id=parseInt($(this).attr("val"));if(isNaN(id)) { id=0; } this.value=id; });
+		jHelper.jqComboBox(target);
 	}
 	,checkForm: function (frm) {
 		try {

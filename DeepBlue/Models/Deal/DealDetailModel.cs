@@ -41,6 +41,8 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Contact")]
 		public int? ContactId { get; set; }
 
+		public string ContactName { get; set; }
+
 		[Required(ErrorMessage = "Purchase Type is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Purchase Type is required")]
 		[DisplayName("Purchase Type")]

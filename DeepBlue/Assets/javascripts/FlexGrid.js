@@ -407,6 +407,7 @@
 		$(g.bDiv).before(g.bDivBox);
 		$(g.bDivBox).append(g.bDiv);
 		g.resize();
+		jHelper.jqComboBox(g.gDiv);
 		try {
 			//$(g.gDiv).jqTransform();
 		} catch(e) { alert(e); }

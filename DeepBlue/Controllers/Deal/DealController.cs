@@ -126,6 +126,9 @@ namespace DeepBlue.Controllers.Deal {
 				deal.FundID = model.FundId;
 				deal.IsPartnered = model.IsPartnered;
 				deal.PurchaseTypeID = model.PurchaseTypeId;
+				deal.ContactID = null;
+				if ((model.ContactId ?? 0) > 0)
+					deal.ContactID = model.ContactId;
 
 				if (deal.IsPartnered) {
 
@@ -231,7 +234,7 @@ namespace DeepBlue.Controllers.Deal {
 			return Json(DealRepository.GetDealDetail(id), JsonRequestBehavior.AllowGet);
 		}
 
-			//
+		//
 		// GET: /Deal/GetDealDetail
 		[HttpGet]
 		public string Delete(int id) {
@@ -2048,7 +2051,7 @@ namespace DeepBlue.Controllers.Deal {
 			underlyingFundStockDistribution.PurchasePrice = model.PurchasePrice;
 
 			underlyingFundStockDistribution.FMV = decimal.Multiply((decimal)(underlyingFundStockDistribution.NumberOfShares ?? 0)
-																   ,underlyingFundStockDistribution.PurchasePrice);
+																   , underlyingFundStockDistribution.PurchasePrice);
 
 			underlyingFundStockDistribution.SecurityID = model.SecurityId;
 			underlyingFundStockDistribution.SecurityTypeID = model.SecurityTypeId;
@@ -2662,7 +2665,7 @@ namespace DeepBlue.Controllers.Deal {
 		[HttpGet]
 		public JsonResult FindIssuer(int id) {
 			CreateIssuerModel model = DealRepository.FindIssuerModel(id);
-			if(model == null) model = new CreateIssuerModel();
+			if (model == null) model = new CreateIssuerModel();
 			if (model.IssuerDetailModel == null) model.IssuerDetailModel = new IssuerDetailModel();
 			return Json(model, JsonRequestBehavior.AllowGet);
 		}
@@ -2721,8 +2724,8 @@ namespace DeepBlue.Controllers.Deal {
 					}
 				}
 			}
-			if (model.IsUnderlyingFundModel) 
-				resultModel.Result = resultModel.Result.Replace("Issuer Name", "GP").Replace("Parent Name","GP Parent");
+			if (model.IsUnderlyingFundModel)
+				resultModel.Result = resultModel.Result.Replace("Issuer Name", "GP").Replace("Parent Name", "GP Parent");
 			else
 				resultModel.Result = resultModel.Result.Replace("Issuer Name", "Company").Replace("Parent Name", "Company Parent");
 			return View("Result", resultModel);
@@ -2740,7 +2743,7 @@ namespace DeepBlue.Controllers.Deal {
 
 			errorInfo = ValidationHelper.Validate(model);
 			resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
-			resultModel.Result = resultModel.Result.Replace("Issuer Name", "Company").Replace("Parent Name", "Company Parent"); 
+			resultModel.Result = resultModel.Result.Replace("Issuer Name", "Company").Replace("Parent Name", "Company Parent");
 
 			string ErrorMessage = IssuerNameAvailable(model.Name, model.IssuerId);
 

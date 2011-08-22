@@ -25,7 +25,7 @@ th {
 	white-space: nowrap;
 }
 input[type="file"] {
-	width: 220px;
+	width: 195px;
 	padding: 3px;
 }
 h1 {
@@ -133,7 +133,7 @@ a img {
 .editor-label, .editor-field {
 	padding: 8px 5px;
 }
- 
+
 .editor-field input[type="text"] {
 	width: 160px;
 }
@@ -146,7 +146,7 @@ a img {
 .editor-field input, .editor-label input, .editor-field select, .editor-label select {
 	margin-top: -5px;
 }
-.editor-field input[type="checkbox"], .editor-label input[type="checkbox"]{
+.editor-field input[type="checkbox"], .editor-label input[type="checkbox"] {
 	margin-top: 0px;
 }
 .cell {
@@ -552,7 +552,7 @@ label {
 	clear: both;
 	width: 100%;
 	text-align: left;
-	margin:5px 0 0 0;
+	margin: 5px 0 0 0;
 }
 .field-validation-valid {
 	color: red;
@@ -1011,6 +1011,15 @@ input.ui-autocomplete-loading[type="text"] {
 	padding: 0 5px;
 	width: auto;
 }
+.green-btn-sel .center {
+	background: url(../images/sel_btn_c.png) repeat-x scroll left top transparent;
+}
+.green-btn-sel .left {
+	background: url(../images/sel_btn_l.png) no-repeat left top;
+}
+.green-btn-sel .right {
+	background: url(../images/sel_btn_r.png) no-repeat left top;
+}
 /* blue background */
 .blue-bg .left {
 	background: url(../images/b_btn_l.png) no-repeat left top;
@@ -1079,13 +1088,78 @@ input.ui-autocomplete-loading[type="text"] {
 	color: #1a4e77;
 }
 /* end section tab */
-.expandsel 
-,.headerbar
-,.subheader
-{
+.expandsel, .headerbar, .subheader {
 	background-image: url(../images/expandbg.png);
 	background-repeat: repeat-x;
 	background-position: left top;
 	height: 35px;
 	line-height: 35px;
 }
+/* jQuery Transform */
+.jqHidden {
+	display: none;
+}
+.jqCheckBox {
+	background-image: url(../images/checktab.gif);
+	background-repeat: no-repeat;
+	width: 51px;
+	height: 27px;
+	float: left;
+	text-align: center;
+	color: #54504d;
+	line-height: 27px;
+	cursor: pointer;
+}
+.jqCR {
+	background-image: url(../images/checktabr.gif);
+}
+.jqCDisplay {
+	float: left;
+	padding: 8px 10px 0 0px;
+}
+.jqCheckBox-Select {
+	background-image: url(../images/checktabsel.gif);
+	background-repeat: no-repeat;
+	width: 68px;
+	color: #03122f;
+}
+.jqComboBox {
+	float: left;
+	height: 25px;
+	cursor: pointer;
+}
+.jqComboBox .left, .jqComboBox .right {
+	float: left;
+	height: 25px;
+	background-image: url(../images/select_left.gif);
+	background-repeat: repeat-x;
+}
+.jqComboBox .right {
+	width: 28px;
+	background-image: url(../images/select_right.gif);
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+.jqComboBox input.ui-autocomplete-input {
+	background-image: none;
+	padding: 0 0 0 8px;
+	margin: 0px;
+	height: 25px;
+	line-height: 25px;
+	border: 0;
+	background-color: transparent;
+}
+.editor-label .jqComboBox {
+	 float: right;
+}
+.editor-field .jqComboBox, .editor-label .jqComboBox {
+	margin-top: -5px;
+}
+.editor-field .jqCheckBox, .editor-label .jqCheckBox, .editor-field .jqCDisplay, .editor-label .jqCDisplay {
+	margin-top: -5px;
+}
+.grid td .jqComboBox .left
+,.bDiv table .jqComboBox .left {
+	    width: 80%;
+}
+/* End jQuery Transform */

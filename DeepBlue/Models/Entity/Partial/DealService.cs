@@ -44,7 +44,7 @@ namespace DeepBlue.Models.Entity {
 						}
 					}
 
-					if (deal.Contact != null) {
+					/* if (deal.Contact != null) {
 						// Update contact entity
 						originalItem = null;
 						key = default(EntityKey);
@@ -74,6 +74,7 @@ namespace DeepBlue.Models.Entity {
 						// Update contact communication
 						UpdateContactCommunication(context, deal.Contact, updateDeal.Contact);
 					}
+					 * */
 
 					if (deal.Contact1 != null) {
 						// Update seller contact entity

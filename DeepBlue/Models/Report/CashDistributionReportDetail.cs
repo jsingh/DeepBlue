@@ -8,14 +8,16 @@ namespace DeepBlue.Models.Report {
 
 		public string FundName { get; set; }
 
-		public string DistributionDate { get; set; }
+		public DateTime DistributionDate { get; set; }
 
-		public string TotalDistributionAmount { get; set; }
+		public decimal TotalDistributionAmount { get; set; }
 
-		public string WithCarryAmount { get; set; }
+		public decimal WithCarryAmount { get; set; }
 
-		public string RepayManFees { get; set; }
+		public decimal RepayManFees { get; set; }
 
-		public List<DistributionLineItem> Items { get; set; }
+		public bool IsTemplateDisplay { get; set; }
+
+		public IEnumerable<DistributionLineItem> Items { get; set; }
 	}
 }

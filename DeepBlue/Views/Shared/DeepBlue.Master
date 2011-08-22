@@ -9,9 +9,11 @@
 	</title>
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
+	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.combobox.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.extension.js")%>
 	<%= Html.JavascriptInclueTag("jquery.formatCurrency.js")%>
 	<%= Html.JavascriptInclueTag("jqueryform.js")%>
+	<%= Html.JavascriptInclueTag("jqTransform.js")%>
 	<%= Html.JavascriptInclueTag("jHelper.js")%>
 	<%= Html.JavascriptInclueTag("DeepBlue.js")%>
 	<%= Html.JavascriptInclueTag("menu.js")%>
@@ -152,6 +154,8 @@
 					<%: Html.ActionLink("Deal Detail", "DealDetail", "Report", null, new { @class = (ViewData["PageName"] == "DealDetail" ? "sel" : "") })%></li>
 				<li>
 					<%: Html.ActionLink("Deal Origination", "DealOrigination", "Report", null, new { @class = (ViewData["PageName"] == "DealOrigination" ? "sel" : "") })%></li>
+				<li>
+					<%: Html.ActionLink("Fund Break Down", "FundBreakDown", "Report", null, new { @class = (ViewData["PageName"] == "FundBreakDown" ? "sel" : "") })%></li>
 				<li>
 					<%: Html.ActionLink("Cash Distribution Summary", "CashDistributionSummary", "Report", null, new { @class = (ViewData["PageName"] == "CashDistributionSummary" ? "sel" : "") })%></li>
 				<li>

@@ -179,7 +179,14 @@
 		$(":input:[type='file']",target).val("");
 		$(":input[type='hidden']",target).val("");
 		$(":input:checkbox",target).each(function () { this.checked==false; });
-		$("select",target).val(0);
+		$("select option:selected",target).each(function () {
+			this.selected=false;
+		});
+		$(".jqComboBox .ui-autocomplete-input",target).each(function () {
+			var sel=$("#"+$(this).attr("selectid"),target);
+			var opt=$("option:eq(0)",sel);
+			this.value=opt.text();
+		});
 	}
 	,formatDollar: function (target) {
 		$(".money",target).each(function () {
@@ -261,11 +268,13 @@
 		$(".exportlist").hide();
 	}
 	,loadingHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading..."; }
+	,jqCheckBox: function (target) { $(":input:checkbox",target).jqCheckBox(); }
+	,jqComboBox: function (target) { $("select",target).combobox(); }
 }
 $.extend(window,{
 	formatDate: function (dt) { try { if(dt==null) { return ""; } var d=jHelper.formatDate(jHelper.parseJSONDate(dt));if(d=="01/01/1"||d=="01/01/1900") { return ""; } else { return d; } } catch(e) { return ""; } }
 	,formatCurrency: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } return jHelper.dollarAmount(d.toString()); }
-	,formatPercentage: function (d) { if(d==null) { return ""; } d=parseFloat(d).toFixed(2);if(isNaN(d)) { return ""; } if(d.toString()=="0.00") { return ""; } else { return d.toString()+"%"; } }
+	,formatPercentage: function (d) { if(d==null) { return ""; } d=parseFloat(d).toFixed(1);if(isNaN(d)) { return ""; } if(d.toString()=="0.00") { return ""; } else { return d.toString()+"%"; } }
 	,formatNumber: function (d) { return formatCurrency(d).replace("$",""); }
 	,checkNullOrZero: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } if(d==0) { return ""; } else { return d; } }
 });

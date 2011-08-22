@@ -9,20 +9,26 @@ using DeepBlue.Models.Report;
 namespace DeepBlue.Controllers.Report {
 	public interface IReportRepository {
 
-		#region Report
+		#region CashDistribution
 		List<DistributionLineItem> DistributionLineItems(int fundId, int capitalDistributionlId);
-		CapitalDistribution FindCapitalDistribution(int capitalDistributionlId);
-
-		List<CapitalCallItem> CapitalCallLineItems(int fundId, int capitalCalllId);
-		Models.Entity.CapitalCall FindCapitalCall(int capitalCalllId);
+		CashDistributionReportDetail FindCapitalDistribution(int capitalDistributionlId);
 		#endregion
-		
+
+		#region CapitalCall
+		List<CapitalCallItem> CapitalCallLineItems(int fundId, int capitalCalllId);
+		CapitalCallReportDetail FindCapitalCall(int capitalCalllId);
+		#endregion
+
 		#region DealDetail
 		DealDetailReportModel FindDealDetailReport(int dealId);
 		#endregion
 
 		#region DealOrigination
 		DealOriginationReportModel FindDealOriginationReport(int dealId);
+		#endregion
+
+		#region FundBreakDown
+		FundBreakDownReportDetail FindFundBreakDownReport(int fundId);
 		#endregion
 
 	}

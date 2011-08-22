@@ -1,9 +1,14 @@
-﻿*{
-	font-size:12px;
+﻿* {
+	font-size: 13px;
 	font-weight: bold;
+	font-family: Calibri;
 }
 body {
 }
-.hrow td{
-	text-decoration:underline;
+th {
+	text-align: left;
+	text-decoration: underline;
+}
+.hrow td {
+	text-decoration: underline;
 }

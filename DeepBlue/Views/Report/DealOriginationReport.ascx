@@ -13,54 +13,56 @@
 			</td>
 		</tr>
 		<tr class="headingrow">
-			<td>
-				<div class="borderbottom">
-					<%: Html.jQueryTemplateDisplayFor(model => model.FundName, Model.IsTemplateDisplay)%></div>
-			</td>
-			<td colspan="9">
-				&nbsp;
+			<td colspan=10>
+			<span <%=(Model.IsTemplateDisplay==false ? string.Empty : " style='text-decoration:underline'")%>>
+				<%: Html.jQueryTemplateDisplayFor(model => model.FundName, Model.IsTemplateDisplay)%></span>
 			</td>
 		</tr>
 		<tr class="headingrow">
-			<td colspan="2">
-				AMB Contact Name:
-			</td>
-			<td>
-				<%: Html.jQueryTemplateDisplayFor(model => model.Contact, Model.IsTemplateDisplay)%>
-			</td>
-			<td colspan="7">
-				&nbsp;
-			</td>
+			<%if (Model.IsTemplateDisplay) {%>
+				<td colspan=10>
+					AMB Contact Name:<%: Html.jQueryTemplateDisplayFor(model => model.Contact, Model.IsTemplateDisplay)%>
+				</td>
+			<%}else{%>
+				<td>
+					AMB Contact Name:
+				</td>
+				<td colspan="9">
+					<%: Html.jQueryTemplateDisplayFor(model => model.Contact, Model.IsTemplateDisplay)%>
+				</td>
+			<%}%>
 		</tr>
 		<tr class="headingrow">
-			<td style="width: 5%;" <%=(Model.IsTemplateDisplay==false ? "class=underline" : string.Empty)%>>
-				Deal No.
+			<td <%=(Model.IsTemplateDisplay==false ? "class=underline" : string.Empty)%>>
+					Deal No.
 			</td>
-			<td style="width: 5%;">
+			<%if (Model.IsTemplateDisplay) {%>
+				<td>
 				<%: Html.jQueryTemplateDisplayFor(model => model.DealNumber, Model.IsTemplateDisplay)%>
-			</td>
-			<td style="width: 1%;" <%=(Model.IsTemplateDisplay==false ? "class=underline" : string.Empty)%>>
-				Deal Name:
-			</td>
-			<td style="width: 15%;">
+				&nbsp;Deal Name:
 				<%: Html.jQueryTemplateDisplayFor(model => model.DealName, Model.IsTemplateDisplay)%>
-			</td>
-			<td>
-				&nbsp;
-			</td>
-			<td style="width: 1%;" <%=(Model.IsTemplateDisplay==false ? "class=underline" : string.Empty)%>>
+				</td><td></td><td></td>
+			<%}else{%>
+				<td>
+					<%: Html.jQueryTemplateDisplayFor(model => model.DealNumber, Model.IsTemplateDisplay)%>
+				</td>
+				<td <%=(Model.IsTemplateDisplay==false ? "class=underline" : string.Empty)%>>
+					Deal Name:
+				</td>
+				<td>
+					<%: Html.jQueryTemplateDisplayFor(model => model.DealName, Model.IsTemplateDisplay)%>
+				</td>
+			<%}%>
+			<td colspan=2 class="ralign" <%=(Model.IsTemplateDisplay==false ? "class=underline" : string.Empty)%>>
 				Gross Purchase Price:
 			</td>
-			<td style="width: 10%;" class="ralign">
+			<td class="ralign">
 				<%: Html.jQueryTemplateDisplayFor(model => model.GrossPurchasePrice, Model.IsTemplateDisplay, "formatCurrency")%>
 			</td>
-			<td>
-				&nbsp;
-			</td>
-			<td style="width: 1%;" <%=(Model.IsTemplateDisplay==false ? "class=underline" : string.Empty)%>>
+			<td colspan=2 class="ralign" <%=(Model.IsTemplateDisplay==false ? "class=underline" : string.Empty)%>>
 				Net Purchase Price:
 			</td>
-			<td style="width: 10%" class="ralign">
+			<td class="ralign">
 				<%: Html.jQueryTemplateDisplayFor(model => model.NetPurchasePrice, Model.IsTemplateDisplay, "formatCurrency")%>
 			</td>
 		</tr>
@@ -163,48 +165,47 @@
 	{{/each}}
 	<%}
    else {%>
-	<%if (Model.Details != null) { %>
-	<% int index = 0;
-	 foreach (var detail in Model.Details) {
-		 index++;
-		 %>
-		<tr>
-			<td>
-				<%=index.ToString()%>
-			</td>
-			<td>
-				<%=detail.FundName%>
-			</td>
-			<td>
-				<%=(detail.RecordDate.HasValue ? detail.RecordDate.Value.ToString("MM/dd/yyyy") : string.Empty)%>
-			</td>
-			<td>
-				<%=(detail.PurchaseDate.HasValue ? detail.PurchaseDate.Value.ToString("MM/dd/yyyy") : string.Empty)%>
-			</td>
-			<td class="ralign">
-				<%=detail.NAV%>
-			</td>
-			<td class="ralign">
-				<%=detail.GrossPurchasePrice%>
-			</td>
-			<td class="ralign">
-				<%=detail.PostRecordAdjustMent%>
-			</td>
-			<td class="ralign">
-				<%=detail.NetPurchasePrice%>
-			</td>
-			<td class="ralign">
-				<%=detail.CommitmentAmount%>
-			</td>
-			<td class="ralign">
-				<%=detail.UnfundedAmount%>
-			</td>
-		</tr>
-	<%}%>
-	<%}%>
-	<%}%>
-		<%if (Model.IsTemplateDisplay == false) {%>
-		<tr>
+		<%if (Model.Details != null) { %>
+			<% int index = 0;
+			 foreach (var detail in Model.Details) {
+				 index++;
+				 %>
+				<tr>
+					<td>
+						<%=index.ToString()%>
+					</td>
+					<td>
+						<%=detail.FundName%>
+					</td>
+					<td>
+						<%=(detail.RecordDate.HasValue ? detail.RecordDate.Value.ToString("MM/dd/yyyy") : string.Empty)%>
+					</td>
+					<td>
+						<%=(detail.PurchaseDate.HasValue ? detail.PurchaseDate.Value.ToString("MM/dd/yyyy") : string.Empty)%>
+					</td>
+					<td class="ralign">
+						<%=detail.NAV%>
+					</td>
+					<td class="ralign">
+						<%=detail.GrossPurchasePrice%>
+					</td>
+					<td class="ralign">
+						<%=detail.PostRecordAdjustMent%>
+					</td>
+					<td class="ralign">
+						<%=detail.NetPurchasePrice%>
+					</td>
+					<td class="ralign">
+						<%=detail.CommitmentAmount%>
+					</td>
+					<td class="ralign">
+						<%=detail.UnfundedAmount%>
+					</td>
+				</tr>
+			<%}%>
+		<%}%>
+	<%}%> 
+			<tr class="frow">
 			<td colspan="5" style="font-style: italic">
 				Willowridge Incorporated
 			</td>
@@ -212,6 +213,5 @@
 				<%=DateTime.Now.ToLongDateString()%>
 			</td>
 		</tr>
-		<%}%>
 	</table>
 </div>

@@ -1,6 +1,5 @@
 ﻿/* CSS Document */
 .flexigrid {
-	
 	font-size: 12px;
 	border: 0px solid #eee;
 	overflow: hidden;
@@ -61,7 +60,6 @@
 	background: none;
 }
 .flexigrid div.iDiv input, .flexigrid div.iDiv select, .flexigrid div.iDiv textarea {
-	
 	font-size: 12px;
 }
 .flexigrid div.iDiv input.tb {
@@ -112,8 +110,8 @@
 }
 .flexigrid tr td {
 	background-color: #F5F5F5;
-	white-space:nowrap;
-	overflow:hidden;
+	white-space: nowrap;
+	overflow: hidden;
 }
 .flexigrid tr td.sorted div {
 }
@@ -249,7 +247,7 @@ div.pGroup {
 .flexigrid .pDiv .pGLoading {
 	background: url("../images/refresh.png") no-repeat scroll left center transparent;
 	float: left;
-	    padding: 5px 0 0 20px;
+	padding: 5px 0 0 20px;
 	display: none;
 }
 .flexigrid .ftlDiv, .flexigrid .ftcDiv, .flexigrid .ftrDiv, .flexigrid .fblDiv, .flexigrid .fbcDiv, .flexigrid .fbrDiv {
@@ -257,7 +255,7 @@ div.pGroup {
 }
 .flexigrid .fcDiv {
 	clear: both;
-	   padding: 10px 15px 0;
+	padding: 10px 15px 0;
 	background-color: #EFEFEF;
 }
 .flexigrid .ftcDiv {
@@ -265,10 +263,10 @@ div.pGroup {
 	float: left;
 }
 .flexigrid .fbcDiv, .flexigrid .ftcDiv {
-	    left: 10px;
-    overflow: hidden;
-    position: absolute;
-    right: 10px;
+	left: 10px;
+	overflow: hidden;
+	position: absolute;
+	right: 10px;
 }
 .flexigrid .ftlDiv {
 	background-image: url(../images/box_tl.png);
@@ -276,7 +274,7 @@ div.pGroup {
 	background-repeat: no-repeat;
 	padding-left: 10px;
 	height: 10px;
-	position:relative;
+	position: relative;
 }
 .flexigrid .ftrDiv {
 	background-image: url(../images/box_tr.png);
@@ -296,7 +294,7 @@ div.pGroup {
 	background-repeat: no-repeat;
 	padding-left: 10px;
 	height: 10px;
-	position:relative;
+	position: relative;
 }
 .flexigrid .fbrDiv {
 	background-image: url(../images/box_br.png);
@@ -311,6 +309,10 @@ div.pGroup {
 }
 .flexigrid tr td input.ui-autocomplete-input[type="text"] {
 	width: 85%;
+}
+.flexigrid tr td .jqComboBox input.ui-autocomplete-input[type="text"], .pGroup .jqComboBox input.ui-autocomplete-input {
+	width: 35px;
+	top:0;
 }
 .flexigrid #ExportExcel {
 	float: right;
