@@ -1,0 +1,44 @@
+﻿#footer {
+	position: absolute;
+	bottom: 0;
+}
+#content {
+	position: absolute;
+	top: 35px;
+	bottom: 35px;
+}
+#logon {
+	position: absolute;
+	top: 35%;
+	left: 35%;
+	float: left;
+	width: 250px;
+}
+#logonheader {
+	background-image: url("../images/expandbg.png");
+	background-position: left top;
+	background-repeat: repeat-x;
+	height: 35px;
+	line-height: 35px;
+	color: white;
+	float: left;
+	white-space: nowrap;
+	width: 100%;
+	font-size: 18px;
+	border: solid 1px #b5b5b5;
+	border-top: 0;
+	border-bottom: 0;
+	text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
+}
+#logonmain {
+	padding: 10px 0;
+	float: left;
+	clear: both;
+	border: solid 1px #b5b5b5;
+	width: 100%;
+}
+.editor-label {
+	width: 56px;
+	text-align: left;
+}

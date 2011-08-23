@@ -54,7 +54,7 @@ namespace DeepBlue.Controllers.Deal {
 		DealUnderlyingDirectModel FindDealUnderlyingDirectModel(int dealUnderlyingDirectId);
 		bool DeleteDealUnderlyingDirect(int dealUnderlyingDirectId);
 		List<DealUnderlyingDirectModel> GetAllDealUnderlyingDirects(int dealId);
-		List<DealUnderlyingDirect> GetAllDealUnderlyingDirects(int oldSecurityTypeId, int oldSecurityId);
+		List<DealUnderlyingDirect> GetAllDealUnderlyingDirects(int securityTypeId, int securityId);
 		List<DealUnderlyingDirectListModel> GetAllDealUnderlyingDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		List<DealUnderlyingDirect> GetAllDealClosingUnderlyingDirects(int dealId);
 		IEnumerable<ErrorInfo> SaveDealUnderlyingDirect(DealUnderlyingDirect dealUnderlyingDirect);

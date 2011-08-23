@@ -61,7 +61,7 @@ namespace DeepBlue.Controllers.Transaction {
 				if (investorFund == null) {
 					//Create new fund
 					investorFund = new InvestorFund();
-					investorFund.CreatedBy = AppSettings.CreatedByUserId;
+					investorFund.CreatedBy = Authentication.CurrentUser.UserID;
 					investorFund.CreatedDate = DateTime.Now;
 					investorFund.FundID = model.FundId;
 					investorFund.InvestorTypeId = model.InvestorTypeId;
@@ -72,12 +72,12 @@ namespace DeepBlue.Controllers.Transaction {
 					investorFund.TotalCommitment += model.TotalCommitment;
 					investorFund.UnfundedAmount += model.TotalCommitment;
 				}
-				investorFund.LastUpdatedBy = AppSettings.CreatedByUserId;
+				investorFund.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				investorFund.LastUpdatedDate = DateTime.Now;
 				// Create new investor fund transaction
 				InvestorFundTransaction investorFundTransaction = new InvestorFundTransaction();
 				investorFundTransaction.Amount = model.TotalCommitment;
-				investorFundTransaction.CreatedBy = AppSettings.CreatedByUserId;
+				investorFundTransaction.CreatedBy = Authentication.CurrentUser.UserID;
 				investorFundTransaction.CreatedDate = DateTime.Now;
 				investorFundTransaction.FundClosingID = model.FundClosingId;
 				investorFundTransaction.IsAgreementSigned = false;
@@ -181,7 +181,7 @@ namespace DeepBlue.Controllers.Transaction {
 				//Seller investor fund transaction
 				InvestorFundTransaction sellerInvestorFundTransaction = new InvestorFundTransaction();
 				sellerInvestorFundTransaction.Amount = model.CommitmentAmount;
-				sellerInvestorFundTransaction.CreatedBy = AppSettings.CreatedByUserId;
+				sellerInvestorFundTransaction.CreatedBy = Authentication.CurrentUser.UserID;
 				sellerInvestorFundTransaction.CreatedDate = DateTime.Now;
 				sellerInvestorFundTransaction.FundClosingID = null;
 				sellerInvestorFundTransaction.IsAgreementSigned = false;
@@ -194,11 +194,11 @@ namespace DeepBlue.Controllers.Transaction {
 				InvestorFund counterPartyInvestorFund = InvestorRepository.FindInvestorFund(model.CounterPartyInvestorId, investorFund.FundID);
 				if (counterPartyInvestorFund == null) {
 					counterPartyInvestorFund = new InvestorFund(); //Create new investor fund
-					counterPartyInvestorFund.CreatedBy = AppSettings.CreatedByUserId;
+					counterPartyInvestorFund.CreatedBy = Authentication.CurrentUser.UserID;
 					counterPartyInvestorFund.CreatedDate = DateTime.Now;
 					counterPartyInvestorFund.FundID = investorFund.FundID;
 					counterPartyInvestorFund.InvestorID = model.CounterPartyInvestorId;
-					counterPartyInvestorFund.LastUpdatedBy = AppSettings.CreatedByUserId;
+					counterPartyInvestorFund.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					counterPartyInvestorFund.LastUpdatedDate = DateTime.Now;
 					counterPartyInvestorFund.TotalCommitment = model.CommitmentAmount;
 					counterPartyInvestorFund.UnfundedAmount = model.CommitmentAmount;
@@ -206,13 +206,13 @@ namespace DeepBlue.Controllers.Transaction {
 				} else {
 					counterPartyInvestorFund.TotalCommitment += model.CommitmentAmount;
 					counterPartyInvestorFund.UnfundedAmount += model.CommitmentAmount;
-					counterPartyInvestorFund.LastUpdatedBy = AppSettings.CreatedByUserId;
+					counterPartyInvestorFund.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					counterPartyInvestorFund.LastUpdatedDate = DateTime.Now;
 				}
 
 				InvestorFundTransaction counterPartyFundTransaction = new InvestorFundTransaction();
 				counterPartyFundTransaction.Amount = model.CommitmentAmount;
-				counterPartyFundTransaction.CreatedBy = AppSettings.CreatedByUserId;
+				counterPartyFundTransaction.CreatedBy = Authentication.CurrentUser.UserID;
 				counterPartyFundTransaction.CreatedDate = DateTime.Now;
 				counterPartyFundTransaction.FundClosingID = null;
 				counterPartyFundTransaction.IsAgreementSigned = false;

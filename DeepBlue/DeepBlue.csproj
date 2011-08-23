@@ -69,6 +69,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Account\AccountController.cs" />
+    <Compile Include="Controllers\Account\AccountRepository.cs" />
+    <Compile Include="Controllers\Account\IAccountRepository.cs" />
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\AdminRepository.cs" />
     <Compile Include="Controllers\Admin\IAdminRepository.cs" />
@@ -82,6 +85,8 @@
     <Compile Include="Controllers\Document\DocumentController.cs" />
     <Compile Include="Controllers\Document\IDocumentRepository.cs" />
     <Compile Include="Helpers\AdvancedEntityTemplateFactory.cs" />
+    <Compile Include="Helpers\AppSettingsHelper.cs" />
+    <Compile Include="Helpers\Authentication.cs" />
     <Compile Include="Helpers\ExportExcel.cs" />
     <Compile Include="Helpers\ExportPdfResult.cs" />
     <Compile Include="Helpers\ExportToPdf.cs" />
@@ -94,6 +99,9 @@
     <Compile Include="Helpers\JsonSerializer.cs" />
     <Compile Include="Helpers\MvcButton.cs" />
     <Compile Include="Helpers\MvcTab.cs" />
+    <Compile Include="Helpers\SecurityContainer.cs" />
+    <Compile Include="Helpers\SecurityExtensions.cs" />
+    <Compile Include="Models\Account\LogOnModel.cs" />
     <Compile Include="Models\Admin\EditCurrencyModel.cs" />
     <Compile Include="Models\Admin\EditFundExpenseTypeModel.cs" />
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
@@ -250,6 +258,7 @@
     <Compile Include="Models\Entity\Validation\UnderlyingFundCapitalCallLineItem.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundNAV.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundNAVHistory.cs" />
+    <Compile Include="Models\Entity\Validation\USER.cs" />
     <Compile Include="Models\Fund\Enums.cs" />
     <Compile Include="Controllers\Fund\FundRepository.cs" />
     <Compile Include="Controllers\Fund\FundController.cs" />
@@ -960,6 +969,7 @@
     <Content Include="Assets\stylesheets\fund.css" />
     <Content Include="Assets\stylesheets\issuer.css" />
     <Content Include="Assets\stylesheets\jquery-ui-1.8.10.custom.css" />
+    <Content Include="Assets\stylesheets\logon.css" />
     <Content Include="Assets\stylesheets\newInvestor.css" />
     <Content Include="Assets\stylesheets\popup.css" />
     <Content Include="Assets\stylesheets\printreport.css" />
@@ -976,6 +986,7 @@
     <Content Include="obj\Release\DeepBlue.dll" />
     <Content Include="obj\Release\DeepBlue.pdb" />
     <Content Include="obj\Release\TempPE\Models.Entity.DeepBlue.Designer.cs.dll" />
+    <Content Include="Views\Account\LogOn.aspx" />
     <Content Include="Views\Admin\ActivityType.aspx" />
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
     <Content Include="Views\Admin\CommunicationType.aspx" />
@@ -1072,6 +1083,7 @@
     <Content Include="Views\Report\DealDetailReport.ascx" />
     <Content Include="Views\Report\ExportDealDetail.ascx" />
     <Content Include="Views\Report\FundBreakDown.aspx" />
+    <Content Include="Views\Shared\Footer.ascx" />
     <Content Include="Views\Shared\JQueryTemplateCustomFieldList.ascx" />
     <Content Include="Views\Shared\CustomFieldList.ascx" />
     <Content Include="Views\Fund\FundDetail.ascx" />

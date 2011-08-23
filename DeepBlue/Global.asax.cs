@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using DeepBlue.Helpers;
 using DeepBlue.Models.Entity;
+using System.Web.Security;
 
 namespace DeepBlue {
 	// Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -46,5 +47,17 @@ namespace DeepBlue {
 															   typeof(RemoteUID_Attribute),
 															   typeof(RemoteAttributeAdapter));
 		}
+
+		protected void Application_Error(object sender, EventArgs e) {
+
+			//get reference to the source of the exception chain
+			Exception ex = Server.GetLastError().GetBaseException();
+
+			if (ex.GetType().Name == "AuthenticationException") {
+		 
+			}
+			//Insert optional email notification here...
+		}
+
 	}
 }

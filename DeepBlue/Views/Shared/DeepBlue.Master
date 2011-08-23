@@ -30,6 +30,9 @@
 			<div id="navminimize" class="uparrow" onclick="javascript:deepBlue.minimize(this);">
 			</div>
 			<div class="key">
+				<%if (Request.IsAuthenticated) {%>
+				<%: Html.Anchor(Html.Image("key.png").ToHtmlString(), "/Account/LogOff", new { @title = "Log Off" })%>
+				<%}%>
 			</div>
 			<div class="ques">
 			</div>
@@ -173,10 +176,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="footer">
-		<div class="footercontent">
-			Copyright 2011 WILLOWRIDGE&nbsp;<%=ConfigurationManager.AppSettings["CurrentVersion"]%></div>
-	</div>
+	<%Html.RenderPartial("Footer");%>
 	<script type="text/javascript">
 		deepBlue.init();
 	</script>

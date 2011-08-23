@@ -513,9 +513,9 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public List<DealUnderlyingDirect> GetAllDealUnderlyingDirects(int oldSecurityTypeId, int oldSecurityId) {
+		public List<DealUnderlyingDirect> GetAllDealUnderlyingDirects(int securityTypeId, int securityId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.DealUnderlyingDirects.Where(direct => direct.SecurityTypeID == oldSecurityTypeId && direct.SecurityID == oldSecurityId).ToList();
+				return context.DealUnderlyingDirects.Where(direct => direct.SecurityTypeID == securityTypeId && direct.SecurityID == securityId).ToList();
 			}
 		}
 
@@ -1558,8 +1558,8 @@ namespace DeepBlue.Controllers.Deal {
 												  select new NewHoldingPatternModel {
 													  FundId = fund.FundID,
 													  FundName = fund.FundName,
-													  OldNoOfShares = directs.Sum(d => d.NumberOfShares),
-													  NewNoOfShares = directs.Sum(d => d.NumberOfShares) * equitySplit.SplitFactor,
+													  OldNoOfShares = (directs.Sum(d => d.NumberOfShares) ?? 0) / equitySplit.SplitFactor,
+													  NewNoOfShares = directs.Sum(d => d.NumberOfShares),
 												  });
 						break;
 					case Models.Deal.Enums.ActivityType.Conversion:

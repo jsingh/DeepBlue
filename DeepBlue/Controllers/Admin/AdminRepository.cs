@@ -1783,6 +1783,7 @@ namespace DeepBlue.Controllers.Admin {
 		#endregion
 
 		#region Deal Contact
+
 		public List<AutoCompleteList> FindDealContacts(string contactName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from contact in context.Contacts
@@ -1797,6 +1798,7 @@ namespace DeepBlue.Controllers.Admin {
 						}).ToList();
 			}
 		}
+
 		public Contact FindContact(int contactId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.Contacts.Where(contact => contact.ContactID == contactId).SingleOrDefault();

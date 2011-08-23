@@ -41,6 +41,29 @@
 				});
 			});
 
+			$.ajaxSetup({
+				error: function (x,jqxhr,settings,exception) {
+					if(x.responseText.indexOf('AuthenticationException')>0) {
+						$.get("/Account/LogOff");
+						location.href="/Account/LogOn";
+					} else {
+						if(x.status==0) {
+							alert('You are offline!!\n Please Check Your Network.');
+						} else if(x.status==404) {
+							alert('Requested URL not found.');
+						} else if(x.status==500) {
+							alert('Internel Server Error.'+","+e);
+						} else if(e=='parsererror') {
+							alert('Error.\nParsing JSON Request failed.');
+						} else if(e=='timeout') {
+							alert('Request Time out.');
+						} else {
+							alert('Unknow Error.\n'+x.responseText);
+						}
+					}
+				}
+			});
+
 			deepBlue.resize();
 		});
 	}
@@ -65,7 +88,7 @@
 		var expireDate=new Date();
 		expireDate.setTime(expireDate.getTime()+(expiredays*24*3600*1000));
 		document.cookie=name+"="+escape(value)+
-		((expiredays==null)?"":"; expires="+expireDate.toGMTString()+"; domain="+escape(document.domain) + "; path=/");
+		((expiredays==null)?"":"; expires="+expireDate.toGMTString()+"; domain="+escape(document.domain)+"; path=/");
 	}
 	,getCookie: function (name) {
 		if(document.cookie.length>0) {

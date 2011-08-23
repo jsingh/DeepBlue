@@ -92,7 +92,7 @@ namespace DeepBlue.Controllers.Admin {
 				}
 				investorType.InvestorTypeName = model.InvestorTypeName;
 				investorType.Enabled = model.Enabled;
-				investorType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				investorType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveInvestorType(investorType);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
@@ -202,7 +202,7 @@ namespace DeepBlue.Controllers.Admin {
 				}
 				investorEntityType.InvestorEntityTypeName = model.InvestorEntityTypeName;
 				investorEntityType.Enabled = model.Enabled;
-				investorEntityType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				investorEntityType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveInvestorEntityType(investorEntityType);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
@@ -316,7 +316,7 @@ namespace DeepBlue.Controllers.Admin {
 				}
 				communicationType.CommunicationTypeName = model.CommunicationTypeName;
 				communicationType.Enabled = model.Enabled;
-				communicationType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				communicationType.EntityID = Authentication.CurrentEntity.EntityID;
 				communicationType.CommunicationGroupingID = model.CommunicationGroupId;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCommunicationType(communicationType);
 				if (errorInfo != null) {
@@ -551,7 +551,7 @@ namespace DeepBlue.Controllers.Admin {
 				customField.ModuleID = model.ModuleId;
 				customField.OptionalText = model.OptionalText;
 				customField.Search = model.Search;
-				customField.EntityID = (int)ConfigUtil.CurrentEntityID;
+				customField.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCustomField(customField);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
@@ -763,7 +763,7 @@ namespace DeepBlue.Controllers.Admin {
 					purchaseType = new PurchaseType();
 				}
 				purchaseType.Name = model.Name;
-				purchaseType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				purchaseType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SavePurchaseType(purchaseType);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
@@ -868,7 +868,7 @@ namespace DeepBlue.Controllers.Admin {
 					dealClosingCostType = new DealClosingCostType();
 				}
 				dealClosingCostType.Name = model.Name;
-				dealClosingCostType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				dealClosingCostType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveDealClosingCostType(dealClosingCostType);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
@@ -1073,13 +1073,13 @@ namespace DeepBlue.Controllers.Admin {
 				ShareClassType shareClassType = AdminRepository.FindShareClassType(model.ShareClassTypeId);
 				if (shareClassType == null) {
 					shareClassType = new ShareClassType();
-					shareClassType.CreatedBy = AppSettings.CreatedByUserId;
+					shareClassType.CreatedBy = Authentication.CurrentUser.UserID;
 					shareClassType.CreatedDate = DateTime.Now;
 				}
 				shareClassType.ShareClass = model.ShareClass;
 				shareClassType.Enabled = model.Enabled;
-				shareClassType.EntityID = (int)ConfigUtil.CurrentEntityID;
-				shareClassType.LastUpdatedBy = AppSettings.CreatedByUserId;
+				shareClassType.EntityID = Authentication.CurrentEntity.EntityID;
+				shareClassType.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				shareClassType.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveShareClassType(shareClassType);
 				if (errorInfo != null) {
@@ -1288,7 +1288,7 @@ namespace DeepBlue.Controllers.Admin {
 					fundExpenseType = new FundExpenseType();
 				}
 				fundExpenseType.Name = model.Name;
-				fundExpenseType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				fundExpenseType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFundExpenseType(fundExpenseType);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
@@ -1391,13 +1391,13 @@ namespace DeepBlue.Controllers.Admin {
 				ReportingFrequency reportingFrequency = AdminRepository.FindReportingFrequency(model.ReportingFrequencyId);
 				if (reportingFrequency == null) {
 					reportingFrequency = new ReportingFrequency();
-					reportingFrequency.CreatedBy = AppSettings.CreatedByUserId;
+					reportingFrequency.CreatedBy = Authentication.CurrentUser.UserID;
 					reportingFrequency.CreatedDate = DateTime.Now;
 				}
 				reportingFrequency.ReportingFrequency1 = model.ReportingFrequency;
 				reportingFrequency.Enabled = model.Enabled;
-				reportingFrequency.EntityID = (int)ConfigUtil.CurrentEntityID;
-				reportingFrequency.LastUpdatedBy = AppSettings.CreatedByUserId;
+				reportingFrequency.EntityID = Authentication.CurrentEntity.EntityID;
+				reportingFrequency.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				reportingFrequency.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveReportingFrequency(reportingFrequency);
 				if (errorInfo != null) {
@@ -1501,13 +1501,13 @@ namespace DeepBlue.Controllers.Admin {
 				ReportingType reportingType = AdminRepository.FindReportingType(model.ReportingTypeId);
 				if (reportingType == null) {
 					reportingType = new ReportingType();
-					reportingType.CreatedBy = AppSettings.CreatedByUserId;
+					reportingType.CreatedBy = Authentication.CurrentUser.UserID;
 					reportingType.CreatedDate = DateTime.Now;
 				}
 				reportingType.Reporting = model.Reporting;
 				reportingType.Enabled = model.Enabled;
-				reportingType.EntityID = (int)ConfigUtil.CurrentEntityID;
-				reportingType.LastUpdatedBy = AppSettings.CreatedByUserId;
+				reportingType.EntityID = Authentication.CurrentEntity.EntityID;
+				reportingType.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				reportingType.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveReportingType(reportingType);
 				if (errorInfo != null) {
@@ -1812,13 +1812,13 @@ namespace DeepBlue.Controllers.Admin {
 				Geography geography = AdminRepository.FindGeography(model.GeographyId);
 				if (geography == null) {
 					geography = new Geography();
-					geography.CreatedBy = AppSettings.CreatedByUserId;
+					geography.CreatedBy = Authentication.CurrentUser.UserID;
 					geography.CreatedDate = DateTime.Now;
 				}
 				geography.Geography1 = model.Geography;
 				geography.Enabled = model.Enabled;
-				geography.EntityID = (int)ConfigUtil.CurrentEntityID;
-				geography.LastUpdatedBy = AppSettings.CreatedByUserId;
+				geography.EntityID = Authentication.CurrentEntity.EntityID;
+				geography.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				geography.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveGeography(geography);
 				if (errorInfo != null) {
@@ -1929,13 +1929,13 @@ namespace DeepBlue.Controllers.Admin {
 				Industry industry = AdminRepository.FindIndustry(model.IndustryId);
 				if (industry == null) {
 					industry = new Industry();
-					industry.CreatedBy = AppSettings.CreatedByUserId;
+					industry.CreatedBy = Authentication.CurrentUser.UserID;
 					industry.CreatedDate = DateTime.Now;
 				}
 				industry.Industry1 = model.Industry;
-				industry.EntityID = (int)ConfigUtil.CurrentEntityID;
+				industry.EntityID = Authentication.CurrentEntity.EntityID;
 				industry.Enabled = model.Enabled;
-				industry.LastUpdatedBy = AppSettings.CreatedByUserId;
+				industry.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				industry.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveIndustry(industry);
 				if (errorInfo != null) {
@@ -2049,7 +2049,7 @@ namespace DeepBlue.Controllers.Admin {
 				fileType.FileTypeName = model.FileTypeName;
 				fileType.FileExtension = model.FileExtension;
 				fileType.Description = model.Description;
-				fileType.EntityID = (int)ConfigUtil.CurrentEntityID;
+				fileType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFileType(fileType);
 				if (errorInfo != null) {
 					foreach (var err in errorInfo.ToList()) {
@@ -2150,13 +2150,13 @@ namespace DeepBlue.Controllers.Admin {
 				EquityType equityType = AdminRepository.FindEquityType(model.EquityTypeId);
 				if (equityType == null) {
 					equityType = new EquityType();
-					equityType.CreatedBy = AppSettings.CreatedByUserId;
+					equityType.CreatedBy = Authentication.CurrentUser.UserID;
 					equityType.CreatedDate = DateTime.Now;
 				}
 				equityType.Equity = model.Equity;
 				equityType.Enabled = model.Enabled;
-				equityType.EntityID = (int)ConfigUtil.CurrentEntityID;
-				equityType.LastUpdatedBy = AppSettings.CreatedByUserId;
+				equityType.EntityID = Authentication.CurrentEntity.EntityID;
+				equityType.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				equityType.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveEquityType(equityType);
 				if (errorInfo != null) {
@@ -2257,13 +2257,13 @@ namespace DeepBlue.Controllers.Admin {
 				FixedIncomeType fixedIncomeType = AdminRepository.FindFixedIncomeType(model.FixedIncomeTypeId);
 				if (fixedIncomeType == null) {
 					fixedIncomeType = new FixedIncomeType();
-					fixedIncomeType.CreatedBy = AppSettings.CreatedByUserId;
+					fixedIncomeType.CreatedBy = Authentication.CurrentUser.UserID;
 					fixedIncomeType.CreatedDate = DateTime.Now;
 				}
 				fixedIncomeType.FixedIncomeType1 = model.FixedIncomeType1;
 				fixedIncomeType.Enabled = model.Enabled;
-				fixedIncomeType.EntityID = (int)ConfigUtil.CurrentEntityID;
-				fixedIncomeType.LastUpdatedBy = AppSettings.CreatedByUserId;
+				fixedIncomeType.EntityID = Authentication.CurrentEntity.EntityID;
+				fixedIncomeType.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				fixedIncomeType.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFixedIncomeType(fixedIncomeType);
 				if (errorInfo != null) {
@@ -2484,13 +2484,13 @@ namespace DeepBlue.Controllers.Admin {
 				Currency currency = AdminRepository.FindCurrency(model.CurrencyId);
 				if (currency == null) {
 					currency = new Currency();
-					currency.CreatedBy = AppSettings.CreatedByUserId;
+					currency.CreatedBy = Authentication.CurrentUser.UserID;
 					currency.CreatedDate = DateTime.Now;
 				}
 				currency.Currency1 = model.Currency;
-				currency.EntityID = (int)ConfigUtil.CurrentEntityID;
+				currency.EntityID = Authentication.CurrentEntity.EntityID;
 				currency.Enabled = model.Enabled;
-				currency.LastUpdatedBy = AppSettings.CreatedByUserId;
+				currency.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				currency.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCurrency(currency);
 				if (errorInfo != null) {

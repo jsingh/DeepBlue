@@ -220,7 +220,7 @@ namespace DeepBlue.Controllers.Fund {
 				}
 				fund.Carry = model.Carry;
 				fund.DateClawbackTriggered = model.DateClawbackTriggered;
-				fund.EntityID = (int)ConfigUtil.CurrentEntityID;
+				fund.EntityID = Authentication.CurrentEntity.EntityID;
 				fund.FinalTerminationDate = model.FinalTerminationDate;
 				fund.FundName = model.FundName;
 				fund.InceptionDate = model.InceptionDate;
@@ -245,14 +245,14 @@ namespace DeepBlue.Controllers.Fund {
 					fundAccount.AccountOf = bankDetailModel.AccountOf ?? string.Empty;
 					fundAccount.Attention = bankDetailModel.Attention ?? string.Empty;
 					fundAccount.BankName = bankDetailModel.BankName ?? string.Empty;
-					fundAccount.CreatedBy = AppSettings.CreatedByUserId;
+					fundAccount.CreatedBy = Authentication.CurrentUser.UserID;
 					fundAccount.CreatedDate = DateTime.Now;
-					fundAccount.EntityID = (int)ConfigUtil.CurrentEntityID;
+					fundAccount.EntityID = Authentication.CurrentEntity.EntityID;
 					fundAccount.Fax = bankDetailModel.Fax ?? string.Empty;
 					fundAccount.FFCNumber = bankDetailModel.FFCNumber ?? string.Empty;
 					fundAccount.IBAN = bankDetailModel.IBAN ?? string.Empty;
 					fundAccount.IsPrimary = false;
-					fundAccount.LastUpdatedBy = AppSettings.CreatedByUserId;
+					fundAccount.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					fundAccount.LastUpdatedDate = DateTime.Now;
 					fundAccount.Phone = bankDetailModel.Telephone ?? string.Empty;
 					fundAccount.Reference = bankDetailModel.Reference ?? string.Empty;
@@ -269,11 +269,11 @@ namespace DeepBlue.Controllers.Fund {
 						investorTypeId = DataTypeHelper.ToInt32(collection[index.ToString() + "_InvestorTypeId"]);
 						if (investorTypeId > 0) {
 							managementFeeRateSchedule = new ManagementFeeRateSchedule();
-							managementFeeRateSchedule.CreatedBy = AppSettings.CreatedByUserId;
+							managementFeeRateSchedule.CreatedBy = Authentication.CurrentUser.UserID;
 							managementFeeRateSchedule.CreatedDate = DateTime.Now;
 							managementFeeRateSchedule.Description = string.Empty;
-							managementFeeRateSchedule.EntityID = (int)ConfigUtil.CurrentEntityID;
-							managementFeeRateSchedule.LastUpdatedBy = AppSettings.CreatedByUserId;
+							managementFeeRateSchedule.EntityID = Authentication.CurrentEntity.EntityID;
+							managementFeeRateSchedule.LastUpdatedBy = Authentication.CurrentUser.UserID;
 							managementFeeRateSchedule.LastUpdatedDate = DateTime.Now;
 							managementFeeRateSchedule.Name = string.Empty;
 							managementFeeRateSchedule.RateScheduleTypeID = (int)Models.Fund.Enums.RateScheduleType.TieredRateSchedule;
@@ -286,11 +286,11 @@ namespace DeepBlue.Controllers.Fund {
 									DataTypeHelper.ToDateTime(collection[index.ToString() + "_" + tierIndex.ToString() + "_EndDate"]).Year > 1900) {
 
 									rateTier = new ManagementFeeRateScheduleTier();
-									rateTier.CreatedBy = AppSettings.CreatedByUserId;
+									rateTier.CreatedBy = Authentication.CurrentUser.UserID;
 									rateTier.CreatedDate = DateTime.Now;
 
 									rateTier.EndDate = DataTypeHelper.ToDateTime(collection[index.ToString() + "_" + tierIndex.ToString() + "_EndDate"]);
-									rateTier.LastUpdatedBy = AppSettings.CreatedByUserId;
+									rateTier.LastUpdatedBy = Authentication.CurrentUser.UserID;
 									rateTier.LastUpdatedDate = DateTime.Now;
 									rateTier.MultiplierTypeID = DataTypeHelper.ToInt32(collection[index.ToString() + "_" + tierIndex.ToString() + "_MultiplierTypeId"]);
 									if (rateTier.MultiplierTypeID > 0) {
@@ -323,12 +323,12 @@ namespace DeepBlue.Controllers.Fund {
 									}
 									if (fundRateSchedule == null) {
 										fundRateSchedule = new FundRateSchedule();
-										fundRateSchedule.CreatedBy = AppSettings.CreatedByUserId;
+										fundRateSchedule.CreatedBy = Authentication.CurrentUser.UserID;
 										fundRateSchedule.CreatedDate = DateTime.Now;
 										fund.FundRateSchedules.Add(fundRateSchedule);
 									}
 									fundRateSchedule.InvestorTypeID = investorTypeId;
-									fundRateSchedule.LastUpdatedBy = AppSettings.CreatedByUserId;
+									fundRateSchedule.LastUpdatedBy = Authentication.CurrentUser.UserID;
 									fundRateSchedule.LastUpdatedDate = DateTime.Now;
 									fundRateSchedule.RateScheduleTypeID = (int)Models.Fund.Enums.RateScheduleType.TieredRateSchedule;
 									fundRateSchedule.RateScheduleID = managementFeeRateSchedule.ManagementFeeRateScheduleID;
@@ -373,12 +373,12 @@ namespace DeepBlue.Controllers.Fund {
 					CustomFieldValue value = AdminRepository.FindCustomFieldValue(field.CustomFieldId, key);
 					if (value == null) {
 						value = new CustomFieldValue();
-						value.CreatedBy = AppSettings.CreatedByUserId;
+						value.CreatedBy = Authentication.CurrentUser.UserID;
 						value.CreatedDate = DateTime.Now;
 					}
 					value.CustomFieldID = field.CustomFieldId;
 					value.Key = key;
-					value.LastUpdatedBy = AppSettings.CreatedByUserId;
+					value.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					value.LastUpdatedDate = DateTime.Now;
 					switch ((CustomFieldDataType)field.DataTypeId) {
 						case CustomFieldDataType.Integer:

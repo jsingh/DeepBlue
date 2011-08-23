@@ -29,7 +29,7 @@ namespace DeepBlue {
         /// Data point used to make sure all the IDs start from this range. 
         /// Used for validation
         /// </summary>
-        IDStartRange = 1,
-        CurrentEntityID = 2
+        IDStartRange = 1
+        //CurrentEntityID = 2
     }
 }

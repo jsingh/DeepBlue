@@ -114,13 +114,13 @@ namespace DeepBlue.Controllers.Deal {
 				Models.Entity.Deal deal = DealRepository.FindDeal(model.DealId);
 				if (deal == null) {
 					deal = new Models.Entity.Deal();
-					deal.CreatedBy = AppSettings.CreatedByUserId;
+					deal.CreatedBy = Authentication.CurrentUser.UserID;
 					deal.CreatedDate = DateTime.Now;
 					deal.DealNumber = DealRepository.GetMaxDealNumber(model.FundId);
 				}
 
-				deal.EntityID = (int)ConfigUtil.CurrentEntityID;
-				deal.LastUpdatedBy = AppSettings.CreatedByUserId;
+				deal.EntityID = Authentication.CurrentEntity.EntityID;
+				deal.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				deal.LastUpdatedDate = DateTime.Now;
 				deal.DealName = model.DealName;
 				deal.FundID = model.FundId;
@@ -136,11 +136,11 @@ namespace DeepBlue.Controllers.Deal {
 
 					if (deal.Partner == null) {
 						deal.Partner = new Partner();
-						deal.Partner.CreatedBy = AppSettings.CreatedByUserId;
+						deal.Partner.CreatedBy = Authentication.CurrentUser.UserID;
 						deal.Partner.CreatedDate = DateTime.Now;
 					}
-					deal.Partner.EntityID = (int)ConfigUtil.CurrentEntityID;
-					deal.Partner.LastUpdatedBy = AppSettings.CreatedByUserId;
+					deal.Partner.EntityID = Authentication.CurrentEntity.EntityID;
+					deal.Partner.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					deal.Partner.LastUpdatedDate = DateTime.Now;
 					deal.Partner.PartnerName = model.PartnerName;
 				}
@@ -184,21 +184,21 @@ namespace DeepBlue.Controllers.Deal {
 			ContactCommunication contactCommunication = contact.ContactCommunications.SingleOrDefault(communication => communication.Communication.CommunicationTypeID == (int)communicationType);
 			if (contactCommunication == null) {
 				contactCommunication = new ContactCommunication();
-				contactCommunication.CreatedBy = AppSettings.CreatedByUserId;
+				contactCommunication.CreatedBy = Authentication.CurrentUser.UserID;
 				contactCommunication.CreatedDate = DateTime.Now;
 				contactCommunication.Communication = new Communication();
-				contactCommunication.Communication.CreatedBy = AppSettings.CreatedByUserId;
+				contactCommunication.Communication.CreatedBy = Authentication.CurrentUser.UserID;
 				contactCommunication.Communication.CreatedDate = DateTime.Now;
 				contact.ContactCommunications.Add(contactCommunication);
 			}
-			contactCommunication.EntityID = (int)ConfigUtil.CurrentEntityID;
-			contactCommunication.LastUpdatedBy = AppSettings.CreatedByUserId;
+			contactCommunication.EntityID = Authentication.CurrentEntity.EntityID;
+			contactCommunication.LastUpdatedBy = Authentication.CurrentUser.UserID;
 			contactCommunication.LastUpdatedDate = DateTime.Now;
 			contactCommunication.Communication.CommunicationTypeID = (int)communicationType;
 			contactCommunication.Communication.CommunicationValue = (string.IsNullOrEmpty(value) == false ? value : string.Empty);
-			contactCommunication.Communication.LastUpdatedBy = AppSettings.CreatedByUserId;
+			contactCommunication.Communication.LastUpdatedBy = Authentication.CurrentUser.UserID;
 			contactCommunication.Communication.LastUpdatedDate = DateTime.Now;
-			contactCommunication.Communication.EntityID = (int)ConfigUtil.CurrentEntityID;
+			contactCommunication.Communication.EntityID = Authentication.CurrentEntity.EntityID;
 		}
 
 		//
@@ -322,14 +322,14 @@ namespace DeepBlue.Controllers.Deal {
 				if (deal != null) {
 					if (deal.Contact1 == null) {
 						deal.Contact1 = new Contact();
-						deal.Contact1.CreatedBy = AppSettings.CreatedByUserId;
+						deal.Contact1.CreatedBy = Authentication.CurrentUser.UserID;
 						deal.Contact1.CreatedDate = DateTime.Now;
 					}
-					deal.Contact1.EntityID = (int)ConfigUtil.CurrentEntityID;
+					deal.Contact1.EntityID = Authentication.CurrentEntity.EntityID;
 					deal.Contact1.ContactName = model.ContactName;
 					deal.Contact1.FirstName = model.SellerName;
 					deal.Contact1.LastName = "n/a";
-					deal.Contact1.LastUpdatedBy = AppSettings.CreatedByUserId;
+					deal.Contact1.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					deal.Contact1.LastUpdatedDate = DateTime.Now;
 
 					// Attempt to create communication values.
@@ -393,19 +393,19 @@ namespace DeepBlue.Controllers.Deal {
 				DealFundDocument dealFundDocument = DealRepository.FindDealFundDocument(model.DealFundDocumentId ?? 0);
 				if (dealFundDocument == null) {
 					dealFundDocument = new DealFundDocument();
-					dealFundDocument.CreatedBy = AppSettings.CreatedByUserId;
+					dealFundDocument.CreatedBy = Authentication.CurrentUser.UserID;
 					dealFundDocument.CreatedDate = DateTime.Now;
 				}
-				dealFundDocument.LastUpdatedBy = AppSettings.CreatedByUserId;
+				dealFundDocument.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				dealFundDocument.LastUpdatedDate = DateTime.Now;
-				dealFundDocument.EntityID = (int)ConfigUtil.CurrentEntityID;
+				dealFundDocument.EntityID = Authentication.CurrentEntity.EntityID;
 				dealFundDocument.DocumentTypeID = model.DocumentTypeId;
 				dealFundDocument.DocumentDate = model.DocumentDate;
 				dealFundDocument.FundID = model.DocumentFundId;
 				dealFundDocument.DealID = model.DealId;
 				if (dealFundDocument.File == null) {
 					dealFundDocument.File = new Models.Entity.File();
-					dealFundDocument.File.CreatedBy = AppSettings.CreatedByUserId;
+					dealFundDocument.File.CreatedBy = Authentication.CurrentUser.UserID;
 					dealFundDocument.File.CreatedDate = DateTime.Now;
 				}
 				DeepBlue.Models.Document.UploadType uploadType = (DeepBlue.Models.Document.UploadType)model.DocumentUploadTypeId;
@@ -423,7 +423,7 @@ namespace DeepBlue.Controllers.Deal {
 					if (errorInfo == null) {
 						if (uploadType == Models.Document.UploadType.Upload) {
 							UploadFile fileUpload = new UploadFile(documentUploadPath);
-							fileUpload.Move(fileInfo.FullName, (int)ConfigUtil.CurrentEntityID, dealFundDocument.DealID, key, dealFundDocument.DocumentTypeID, fileInfo.Name);
+							fileUpload.Move(fileInfo.FullName, Authentication.CurrentEntity.EntityID, dealFundDocument.DealID, key, dealFundDocument.DocumentTypeID, fileInfo.Name);
 							dealFundDocument.File.FileName = fileUpload.FileName;
 							dealFundDocument.File.FilePath = fileUpload.FilePath;
 							dealFundDocument.File.Size = fileUpload.Size;
@@ -1124,7 +1124,7 @@ namespace DeepBlue.Controllers.Deal {
 				if (underlyingFund == null) {
 					underlyingFund = new UnderlyingFund();
 				}
-				underlyingFund.EntityID = (int)ConfigUtil.CurrentEntityID;
+				underlyingFund.EntityID = Authentication.CurrentEntity.EntityID;
 				underlyingFund.IsFeesIncluded = model.IsFeesIncluded;
 				underlyingFund.FundName = model.FundName;
 				underlyingFund.FundTypeID = model.FundTypeId;
@@ -1153,32 +1153,32 @@ namespace DeepBlue.Controllers.Deal {
 
 				if (string.IsNullOrEmpty(model.BankName) == false && string.IsNullOrEmpty(model.Account) == false) {
 					if (underlyingFund.Account == null) {
-						underlyingFund.Account = new Account();
-						underlyingFund.Account.CreatedBy = AppSettings.CreatedByUserId;
+						underlyingFund.Account = new Models.Entity.Account();
+						underlyingFund.Account.CreatedBy = Authentication.CurrentUser.UserID;
 						underlyingFund.Account.CreatedDate = DateTime.Now;
 					}
-					underlyingFund.Account.LastUpdatedBy = AppSettings.CreatedByUserId;
+					underlyingFund.Account.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					underlyingFund.Account.LastUpdatedDate = DateTime.Now;
 					underlyingFund.Account.BankName = model.BankName;
 					underlyingFund.Account.AccountNumberCash = model.Account;
 					underlyingFund.Account.Account1 = model.Account;
 					underlyingFund.Account.AccountOf = model.AccountOf;
 					underlyingFund.Account.Attention = model.Attention;
-					underlyingFund.Account.EntityID = (int)ConfigUtil.CurrentEntityID;
+					underlyingFund.Account.EntityID = Authentication.CurrentEntity.EntityID;
 					underlyingFund.Account.Reference = model.Reference;
 					underlyingFund.Account.Routing = model.Routing;
-					underlyingFund.Account.LastUpdatedBy = AppSettings.CreatedByUserId;
+					underlyingFund.Account.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					underlyingFund.Account.LastUpdatedDate = DateTime.Now;
 				}
 
 				if (underlyingFund.Contact == null) {
 					underlyingFund.Contact = new Contact();
-					underlyingFund.Contact.CreatedBy = AppSettings.CreatedByUserId;
+					underlyingFund.Contact.CreatedBy = Authentication.CurrentUser.UserID;
 					underlyingFund.Contact.CreatedDate = DateTime.Now;
 				}
-				underlyingFund.Contact.LastUpdatedBy = AppSettings.CreatedByUserId;
+				underlyingFund.Contact.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				underlyingFund.Contact.LastUpdatedDate = DateTime.Now;
-				underlyingFund.Contact.EntityID = (int)ConfigUtil.CurrentEntityID;
+				underlyingFund.Contact.EntityID = Authentication.CurrentEntity.EntityID;
 				underlyingFund.Contact.ContactName = model.ContactName;
 				underlyingFund.Contact.LastName = "n/a";
 				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.Email, model.Email);
@@ -1239,18 +1239,18 @@ namespace DeepBlue.Controllers.Deal {
 				UnderlyingFundDocument underlyingFundDocument = DealRepository.FindUnderlyingFundDocument(model.UnderlyingFundDocumetId);
 				if (underlyingFundDocument == null) {
 					underlyingFundDocument = new UnderlyingFundDocument();
-					underlyingFundDocument.CreatedBy = AppSettings.CreatedByUserId;
+					underlyingFundDocument.CreatedBy = Authentication.CurrentUser.UserID;
 					underlyingFundDocument.CreatedDate = DateTime.Now;
 				}
-				underlyingFundDocument.LastUpdatedBy = AppSettings.CreatedByUserId;
+				underlyingFundDocument.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				underlyingFundDocument.LastUpdatedDate = DateTime.Now;
-				underlyingFundDocument.EntityID = (int)ConfigUtil.CurrentEntityID;
+				underlyingFundDocument.EntityID = Authentication.CurrentEntity.EntityID;
 				underlyingFundDocument.DocumentTypeID = model.DocumentTypeId;
 				underlyingFundDocument.DocumentDate = model.DocumentDate;
 				underlyingFundDocument.UnderlyingFundID = model.UnderlyingFundId;
 				if (underlyingFundDocument.File == null) {
 					underlyingFundDocument.File = new Models.Entity.File();
-					underlyingFundDocument.File.CreatedBy = AppSettings.CreatedByUserId;
+					underlyingFundDocument.File.CreatedBy = Authentication.CurrentUser.UserID;
 					underlyingFundDocument.File.CreatedDate = DateTime.Now;
 				}
 				DeepBlue.Models.Document.UploadType uploadType = (DeepBlue.Models.Document.UploadType)model.UploadTypeId;
@@ -1268,7 +1268,7 @@ namespace DeepBlue.Controllers.Deal {
 					if (errorInfo == null) {
 						if (uploadType == Models.Document.UploadType.Upload) {
 							UploadFile fileUpload = new UploadFile("UnderlyingFundDocumentUploadPath");
-							fileUpload.Move(fileInfo.FullName, (int)ConfigUtil.CurrentEntityID, underlyingFundDocument.UnderlyingFundID, underlyingFundDocument.DocumentTypeID, fileInfo.Name);
+							fileUpload.Move(fileInfo.FullName, Authentication.CurrentEntity.EntityID, underlyingFundDocument.UnderlyingFundID, underlyingFundDocument.DocumentTypeID, fileInfo.Name);
 							underlyingFundDocument.File.FileName = fileUpload.FileName;
 							underlyingFundDocument.File.FilePath = fileUpload.FilePath;
 							underlyingFundDocument.File.Size = fileUpload.Size;
@@ -1369,23 +1369,49 @@ namespace DeepBlue.Controllers.Deal {
 			EquitySplitModel model = new EquitySplitModel();
 			this.TryUpdateModel(model, collection);
 			ResultModel resultModel = new ResultModel();
+			int securityTypeId = (int)Models.Deal.Enums.SecurityType.Equity;
 			if (ModelState.IsValid) {
 				EquitySplit equitySplit = DealRepository.FindEquitySplit(model.EquityId);
 				if (equitySplit == null) {
 					equitySplit = new EquitySplit();
-					equitySplit.CreatedBy = AppSettings.CreatedByUserId;
+					equitySplit.CreatedBy = Authentication.CurrentUser.UserID;
 					equitySplit.CreatedDate = DateTime.Now;
 				}
-				equitySplit.LastUpdatedBy = AppSettings.CreatedByUserId;
+				equitySplit.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				equitySplit.LastUpdatedDate = DateTime.Now;
 				equitySplit.EquityID = model.EquityId;
 				equitySplit.SplitFactor = model.SplitFactor ?? 0;
 				equitySplit.SplitDate = model.SplitDate;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveEquitySplit(equitySplit);
+
 				if (errorInfo == null) {
-					List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.ActivityTypeId, equitySplit.EquiteSplitID, model.SecurityTypeId, equitySplit.EquityID);
+
+					// Get All Deal Underlying Directs
+					List<DealUnderlyingDirect> dealUnderlyingDirects = DealRepository.GetAllDealUnderlyingDirects(securityTypeId, equitySplit.EquityID);
+
+					foreach (var dealUnderlyingDirect in dealUnderlyingDirects) {
+						
+						// Update Deal Underlying Direct number of shares and fmv.
+
+						dealUnderlyingDirect.NumberOfShares = dealUnderlyingDirect.NumberOfShares * equitySplit.SplitFactor;
+						dealUnderlyingDirect.FMV = dealUnderlyingDirect.NumberOfShares * dealUnderlyingDirect.PurchasePrice;
+						
+						errorInfo = DealRepository.SaveDealUnderlyingDirect(dealUnderlyingDirect);
+						if (errorInfo != null)
+							break;
+					}
+
+					List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.ActivityTypeId,
+						equitySplit.EquiteSplitID,
+						securityTypeId,
+						equitySplit.EquityID);
+
 					foreach (var pattern in newHoldingPatterns) {
-						errorInfo = CreateFundActivityHistory(pattern.FundId, pattern.OldNoOfShares, pattern.NewNoOfShares, equitySplit.EquiteSplitID, model.ActivityTypeId);
+						errorInfo = CreateFundActivityHistory(pattern.FundId,
+							pattern.OldNoOfShares,
+							pattern.NewNoOfShares,
+							equitySplit.EquiteSplitID,
+							model.ActivityTypeId);
 						if (errorInfo != null)
 							break;
 					}
@@ -1404,6 +1430,17 @@ namespace DeepBlue.Controllers.Deal {
 			return View("Result", resultModel);
 		}
 
+
+		private IEnumerable<ErrorInfo> CreateFundActivityHistory(int fundId, int? oldNoOfShares, int? newNoOfShares, int activityId, int activityTypeId) {
+			FundActivityHistory fundActivityHistory = new FundActivityHistory();
+			fundActivityHistory.ActivityID = activityId;
+			fundActivityHistory.ActivityTypeID = activityTypeId;
+			fundActivityHistory.FundID = fundId;
+			fundActivityHistory.OldNumberOfShares = oldNoOfShares ?? 0;
+			fundActivityHistory.NewNumberOfShares = newNoOfShares ?? 0;
+			return DealRepository.SaveFundActivityHistory(fundActivityHistory);
+		}
+
 		//
 		// POST: /Deal/CreateConversionActivity
 		[HttpPost]
@@ -1415,14 +1452,14 @@ namespace DeepBlue.Controllers.Deal {
 				SecurityConversion securityConversion = DealRepository.FindSecurityConversion(model.NewSecurityId, model.NewSecurityTypeId);
 				if (securityConversion == null) {
 					securityConversion = new SecurityConversion();
-					securityConversion.CreatedBy = AppSettings.CreatedByUserId;
+					securityConversion.CreatedBy = Authentication.CurrentUser.UserID;
 					securityConversion.CreatedDate = DateTime.Now;
 				}
 				securityConversion.OldSecurityID = model.OldSecurityId;
 				securityConversion.OldSecurityTypeID = model.OldSecurityTypeId;
 				securityConversion.NewSecurityID = model.NewSecurityId;
 				securityConversion.NewSecurityTypeID = model.NewSecurityTypeId;
-				securityConversion.LastUpdatedBy = AppSettings.CreatedByUserId;
+				securityConversion.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				securityConversion.LastUpdatedDate = DateTime.Now;
 				securityConversion.SplitFactor = model.SplitFactor ?? 0;
 				securityConversion.ConversionDate = model.ConversionDate;
@@ -1485,15 +1522,6 @@ namespace DeepBlue.Controllers.Deal {
 			return View("Result", resultModel);
 		}
 
-		private IEnumerable<ErrorInfo> CreateFundActivityHistory(int fundId, int? oldNoOfShares, int? newNoOfShares, int activityId, int activityTypeId) {
-			FundActivityHistory fundActivityHistory = new FundActivityHistory();
-			fundActivityHistory.ActivityID = activityId;
-			fundActivityHistory.ActivityTypeID = activityTypeId;
-			fundActivityHistory.FundID = fundId;
-			fundActivityHistory.OldNumberOfShares = oldNoOfShares ?? 0;
-			fundActivityHistory.NewNumberOfShares = newNoOfShares ?? 0;
-			return DealRepository.SaveFundActivityHistory(fundActivityHistory);
-		}
 
 		#endregion
 
@@ -1556,7 +1584,7 @@ namespace DeepBlue.Controllers.Deal {
 				underlyingFundCashDistribution = DealRepository.FindUnderlyingFundCashDistribution(model.UnderlyingFundCashDistributionId);
 			if (underlyingFundCashDistribution == null) {
 				underlyingFundCashDistribution = new UnderlyingFundCashDistribution();
-				underlyingFundCashDistribution.CreatedBy = AppSettings.CreatedByUserId;
+				underlyingFundCashDistribution.CreatedBy = Authentication.CurrentUser.UserID;
 				underlyingFundCashDistribution.CreatedDate = DateTime.Now;
 			}
 			underlyingFundCashDistribution.UnderlyingFundID = model.UnderlyingFundId;
@@ -1567,7 +1595,7 @@ namespace DeepBlue.Controllers.Deal {
 			underlyingFundCashDistribution.NoticeDate = model.NoticeDate;
 			underlyingFundCashDistribution.PaidDate = model.PaidDate;
 			underlyingFundCashDistribution.ReceivedDate = model.ReceivedDate;
-			underlyingFundCashDistribution.LastUpdatedBy = AppSettings.CreatedByUserId;
+			underlyingFundCashDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
 			underlyingFundCashDistribution.LastUpdatedDate = DateTime.Now;
 			errorInfo = DealRepository.SaveUnderlyingFundCashDistribution(underlyingFundCashDistribution);
 			if (errorInfo == null) {
@@ -1582,10 +1610,10 @@ namespace DeepBlue.Controllers.Deal {
 																			dealUnderlyingFund.DealID);
 					if (cashDistribution == null) {
 						cashDistribution = new CashDistribution();
-						cashDistribution.CreatedBy = AppSettings.CreatedByUserId;
+						cashDistribution.CreatedBy = Authentication.CurrentUser.UserID;
 						cashDistribution.CreatedDate = DateTime.Now;
 					}
-					cashDistribution.LastUpdatedBy = AppSettings.CreatedByUserId;
+					cashDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					cashDistribution.LastUpdatedDate = DateTime.Now;
 
 					// Assign Underlying Fund Cash Distribution.
@@ -1692,14 +1720,14 @@ namespace DeepBlue.Controllers.Deal {
 				cashDistribution = DealRepository.FindUnderlyingFundPostRecordCashDistribution(model.CashDistributionId);
 			if (cashDistribution == null) {
 				cashDistribution = new CashDistribution();
-				cashDistribution.CreatedBy = AppSettings.CreatedByUserId;
+				cashDistribution.CreatedBy = Authentication.CurrentUser.UserID;
 				cashDistribution.CreatedDate = DateTime.Now;
 			}
 			cashDistribution.UnderlyingFundID = model.UnderlyingFundId;
 			cashDistribution.Amount = model.Amount ?? 0;
 			cashDistribution.DealID = model.DealId;
 			cashDistribution.DistributionDate = model.DistributionDate;
-			cashDistribution.LastUpdatedBy = AppSettings.CreatedByUserId;
+			cashDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
 			cashDistribution.LastUpdatedDate = DateTime.Now;
 
 			//Assign null value in Underlying Fund Cash Distribution.
@@ -1793,7 +1821,7 @@ namespace DeepBlue.Controllers.Deal {
 				underlyingFundCapitalCall = DealRepository.FindUnderlyingFundCapitalCall(model.UnderlyingFundCapitalCallId);
 			if (underlyingFundCapitalCall == null) {
 				underlyingFundCapitalCall = new UnderlyingFundCapitalCall();
-				underlyingFundCapitalCall.CreatedBy = AppSettings.CreatedByUserId;
+				underlyingFundCapitalCall.CreatedBy = Authentication.CurrentUser.UserID;
 				underlyingFundCapitalCall.CreatedDate = DateTime.Now;
 			}
 			underlyingFundCapitalCall.UnderlyingFundID = model.UnderlyingFundId;
@@ -1803,7 +1831,7 @@ namespace DeepBlue.Controllers.Deal {
 			underlyingFundCapitalCall.FundID = model.FundId;
 			underlyingFundCapitalCall.NoticeDate = model.NoticeDate;
 			underlyingFundCapitalCall.ReceivedDate = model.ReceivedDate;
-			underlyingFundCapitalCall.LastUpdatedBy = AppSettings.CreatedByUserId;
+			underlyingFundCapitalCall.LastUpdatedBy = Authentication.CurrentUser.UserID;
 			underlyingFundCapitalCall.LastUpdatedDate = DateTime.Now;
 
 			errorInfo = DealRepository.SaveUnderlyingFundCapitalCall(underlyingFundCapitalCall);
@@ -1820,10 +1848,10 @@ namespace DeepBlue.Controllers.Deal {
 																			dealUnderlyingFund.DealID);
 					if (underlyingFundCapitalCallLineItem == null) {
 						underlyingFundCapitalCallLineItem = new UnderlyingFundCapitalCallLineItem();
-						underlyingFundCapitalCallLineItem.CreatedBy = AppSettings.CreatedByUserId;
+						underlyingFundCapitalCallLineItem.CreatedBy = Authentication.CurrentUser.UserID;
 						underlyingFundCapitalCallLineItem.CreatedDate = DateTime.Now;
 					}
-					underlyingFundCapitalCallLineItem.LastUpdatedBy = AppSettings.CreatedByUserId;
+					underlyingFundCapitalCallLineItem.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					underlyingFundCapitalCallLineItem.LastUpdatedDate = DateTime.Now;
 
 					// Assign underlying fund capital call.
@@ -1942,14 +1970,14 @@ namespace DeepBlue.Controllers.Deal {
 			}
 			if (capitalCallLineItem == null) {
 				capitalCallLineItem = new UnderlyingFundCapitalCallLineItem();
-				capitalCallLineItem.CreatedBy = AppSettings.CreatedByUserId;
+				capitalCallLineItem.CreatedBy = Authentication.CurrentUser.UserID;
 				capitalCallLineItem.CreatedDate = DateTime.Now;
 			}
 			capitalCallLineItem.UnderlyingFundID = model.UnderlyingFundId;
 			capitalCallLineItem.Amount = model.Amount ?? 0;
 			capitalCallLineItem.CapitalCallDate = model.CapitalCallDate;
 			capitalCallLineItem.DealID = model.DealId;
-			capitalCallLineItem.LastUpdatedBy = AppSettings.CreatedByUserId;
+			capitalCallLineItem.LastUpdatedBy = Authentication.CurrentUser.UserID;
 			capitalCallLineItem.LastUpdatedDate = DateTime.Now;
 			errorInfo = DealRepository.SaveUnderlyingFundPostRecordCapitalCall(capitalCallLineItem);
 			if (errorInfo == null) {
@@ -2171,7 +2199,7 @@ namespace DeepBlue.Controllers.Deal {
 			DateTime existingFundNAVDate = Convert.ToDateTime("01/01/1900");
 			if (underlyingFundNAV == null) {
 				underlyingFundNAV = new UnderlyingFundNAV();
-				underlyingFundNAV.CreatedBy = AppSettings.CreatedByUserId;
+				underlyingFundNAV.CreatedBy = Authentication.CurrentUser.UserID;
 				underlyingFundNAV.CreatedDate = DateTime.Now;
 			}
 			else {
@@ -2182,7 +2210,7 @@ namespace DeepBlue.Controllers.Deal {
 			underlyingFundNAV.FundID = fundId;
 			underlyingFundNAV.FundNAV = fundNAV;
 			underlyingFundNAV.FundNAVDate = fundNAVDate;
-			underlyingFundNAV.LastUpdatedBy = AppSettings.CreatedByUserId;
+			underlyingFundNAV.LastUpdatedBy = Authentication.CurrentUser.UserID;
 			underlyingFundNAV.LastUpdatedDate = DateTime.Now;
 			errorInfo = DealRepository.SaveUnderlyingFundNAV(underlyingFundNAV);
 			if (errorInfo == null) {
@@ -2195,9 +2223,9 @@ namespace DeepBlue.Controllers.Deal {
 				underlyingFundNAVHistory.FundNAVDate = underlyingFundNAV.FundNAVDate;
 				underlyingFundNAVHistory.Calculation = null;
 				underlyingFundNAVHistory.IsAudited = false;
-				underlyingFundNAVHistory.CreatedBy = AppSettings.CreatedByUserId;
+				underlyingFundNAVHistory.CreatedBy = Authentication.CurrentUser.UserID;
 				underlyingFundNAVHistory.CreatedDate = DateTime.Now;
-				underlyingFundNAVHistory.LastUpdatedBy = AppSettings.CreatedByUserId;
+				underlyingFundNAVHistory.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				underlyingFundNAVHistory.LastUpdatedDate = DateTime.Now;
 
 				if (existingFundNAV == underlyingFundNAV.FundNAV
@@ -2253,14 +2281,14 @@ namespace DeepBlue.Controllers.Deal {
 				FundExpense fundExpense = DealRepository.FindFundExpense(model.FundExpenseId);
 				if (fundExpense == null) {
 					fundExpense = new FundExpense();
-					fundExpense.CreatedBy = AppSettings.CreatedByUserId;
+					fundExpense.CreatedBy = Authentication.CurrentUser.UserID;
 					fundExpense.CreatedDate = DateTime.Now;
 				}
 				fundExpense.FundID = model.FundId;
 				fundExpense.FundExpenseTypeID = model.FundExpenseTypeId;
 				fundExpense.Amount = model.Amount;
 				fundExpense.Date = model.Date;
-				fundExpense.LastUpdatedBy = AppSettings.CreatedByUserId;
+				fundExpense.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				fundExpense.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveFundExpense(fundExpense);
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
@@ -2378,7 +2406,7 @@ namespace DeepBlue.Controllers.Deal {
 			IEnumerable<ErrorInfo> errorInfo;
 			if (underlyingDirectLastPrice == null) {
 				underlyingDirectLastPrice = new UnderlyingDirectLastPrice();
-				underlyingDirectLastPrice.CreatedBy = AppSettings.CreatedByUserId;
+				underlyingDirectLastPrice.CreatedBy = Authentication.CurrentUser.UserID;
 				underlyingDirectLastPrice.CreatedDate = DateTime.Now;
 			}
 			underlyingDirectLastPrice.FundID = fundId;
@@ -2386,7 +2414,7 @@ namespace DeepBlue.Controllers.Deal {
 			underlyingDirectLastPrice.SecurityTypeID = securityTypeId;
 			underlyingDirectLastPrice.LastPrice = newPrice;
 			underlyingDirectLastPrice.LastPriceDate = newPriceDate;
-			underlyingDirectLastPrice.LastUpdatedBy = AppSettings.CreatedByUserId;
+			underlyingDirectLastPrice.LastUpdatedBy = Authentication.CurrentUser.UserID;
 			underlyingDirectLastPrice.LastUpdatedDate = DateTime.Now;
 			errorInfo = DealRepository.SaveUnderlyingDirectValuation(underlyingDirectLastPrice);
 			if (errorInfo == null) {
@@ -2395,9 +2423,9 @@ namespace DeepBlue.Controllers.Deal {
 				lastPricehistory.UnderlyingDirectLastPriceID = underlyingDirectLastPrice.UnderlyingDirectLastPriceID;
 				lastPricehistory.LastPrice = underlyingDirectLastPrice.LastPrice;
 				lastPricehistory.LastPriceDate = underlyingDirectLastPrice.LastPriceDate;
-				lastPricehistory.LastUpdatedBy = AppSettings.CreatedByUserId;
+				lastPricehistory.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				lastPricehistory.LastUpdatedDate = DateTime.Now;
-				lastPricehistory.CreatedBy = AppSettings.CreatedByUserId;
+				lastPricehistory.CreatedBy = Authentication.CurrentUser.UserID;
 				lastPricehistory.CreatedDate = DateTime.Now;
 				errorInfo = DealRepository.SaveUnderlyingDirectValuationHistory(lastPricehistory);
 			}
@@ -2466,9 +2494,9 @@ namespace DeepBlue.Controllers.Deal {
 					errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
 					if (errorInfo == null) {
 						DealUnderlyingFundAdjustment dealUnderlyingFundAdjustment = new DealUnderlyingFundAdjustment();
-						dealUnderlyingFundAdjustment.CreatedBy = AppSettings.CreatedByUserId;
+						dealUnderlyingFundAdjustment.CreatedBy = Authentication.CurrentUser.UserID;
 						dealUnderlyingFundAdjustment.CreatedDate = DateTime.Now;
-						dealUnderlyingFundAdjustment.LastUpdatedBy = AppSettings.CreatedByUserId;
+						dealUnderlyingFundAdjustment.LastUpdatedBy = Authentication.CurrentUser.UserID;
 						dealUnderlyingFundAdjustment.LastUpdatedDate = DateTime.Now;
 						dealUnderlyingFundAdjustment.CommitmentAmount = model.CommitmentAmount;
 						dealUnderlyingFundAdjustment.UnfundedAmount = model.UnfundedAmount;
@@ -2587,7 +2615,7 @@ namespace DeepBlue.Controllers.Deal {
 						if (capitalCallLineItem != null) {
 							capitalCallLineItem.IsReconciled = model.IsReconciled;
 							capitalCallLineItem.PaidON = model.PaidOn;
-							capitalCallLineItem.LastUpdatedBy = AppSettings.CreatedByUserId;
+							capitalCallLineItem.LastUpdatedBy = Authentication.CurrentUser.UserID;
 							capitalCallLineItem.LastUpdatedDate = DateTime.Now;
 							errorInfo = CapitalCallRepository.SaveCapitalCallLineItem(capitalCallLineItem);
 						}
@@ -2597,7 +2625,7 @@ namespace DeepBlue.Controllers.Deal {
 						if (capitalDistributionLineItem != null) {
 							capitalDistributionLineItem.IsReconciled = model.IsReconciled;
 							capitalDistributionLineItem.PaidON = model.PaidOn;
-							capitalDistributionLineItem.LastUpdatedBy = AppSettings.CreatedByUserId;
+							capitalDistributionLineItem.LastUpdatedBy = Authentication.CurrentUser.UserID;
 							capitalDistributionLineItem.LastUpdatedDate = DateTime.Now;
 							errorInfo = CapitalCallRepository.SaveCapitalDistributionLineItem(capitalDistributionLineItem);
 						}
@@ -2607,7 +2635,7 @@ namespace DeepBlue.Controllers.Deal {
 						if (underlyingFundCapitalCall != null) {
 							underlyingFundCapitalCall.IsReconciled = model.IsReconciled;
 							underlyingFundCapitalCall.PaidON = model.PaidOn;
-							underlyingFundCapitalCall.LastUpdatedBy = AppSettings.CreatedByUserId;
+							underlyingFundCapitalCall.LastUpdatedBy = Authentication.CurrentUser.UserID;
 							underlyingFundCapitalCall.LastUpdatedDate = DateTime.Now;
 							errorInfo = DealRepository.SaveUnderlyingFundCapitalCall(underlyingFundCapitalCall);
 						}
@@ -2617,7 +2645,7 @@ namespace DeepBlue.Controllers.Deal {
 						if (underlyingFundCashDistribution != null) {
 							underlyingFundCashDistribution.IsReconciled = model.IsReconciled;
 							underlyingFundCashDistribution.PaidON = model.PaidOn;
-							underlyingFundCashDistribution.LastUpdatedBy = AppSettings.CreatedByUserId;
+							underlyingFundCashDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
 							underlyingFundCashDistribution.LastUpdatedDate = DateTime.Now;
 							errorInfo = DealRepository.SaveUnderlyingFundCashDistribution(underlyingFundCashDistribution);
 						}
@@ -2935,21 +2963,21 @@ namespace DeepBlue.Controllers.Deal {
 			if (isValidDocument) {
 				if (string.IsNullOrEmpty(resultModel.Result)) {
 					UnderlyingDirectDocument underlyingDirectDocument = new UnderlyingDirectDocument();
-					underlyingDirectDocument.CreatedBy = AppSettings.CreatedByUserId;
+					underlyingDirectDocument.CreatedBy = Authentication.CurrentUser.UserID;
 					underlyingDirectDocument.CreatedDate = DateTime.Now;
-					underlyingDirectDocument.LastUpdatedBy = AppSettings.CreatedByUserId;
+					underlyingDirectDocument.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					underlyingDirectDocument.LastUpdatedDate = DateTime.Now;
-					underlyingDirectDocument.EntityID = (int)ConfigUtil.CurrentEntityID;
+					underlyingDirectDocument.EntityID = Authentication.CurrentEntity.EntityID;
 					underlyingDirectDocument.DocumentDate = model.DocumentDate;
 					underlyingDirectDocument.DocumentTypeID = model.DocumentTypeId;
 					underlyingDirectDocument.SecurityTypeID = model.SecurityTypeId;
 					underlyingDirectDocument.SecurityID = model.SecurityId;
 					underlyingDirectDocument.File = new Models.Entity.File();
-					underlyingDirectDocument.File.CreatedBy = AppSettings.CreatedByUserId;
+					underlyingDirectDocument.File.CreatedBy = Authentication.CurrentUser.UserID;
 					underlyingDirectDocument.File.CreatedDate = DateTime.Now;
-					underlyingDirectDocument.File.LastUpdatedBy = AppSettings.CreatedByUserId;
+					underlyingDirectDocument.File.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					underlyingDirectDocument.File.LastUpdatedDate = DateTime.Now;
-					underlyingDirectDocument.File.EntityID = (int)ConfigUtil.CurrentEntityID;
+					underlyingDirectDocument.File.EntityID = Authentication.CurrentEntity.EntityID;
 
 					resultModel.Result += CreateDocumentFile(underlyingDirectDocument.File, uploadType, model.FilePath, model.File, ref fileInfo);
 					if (string.IsNullOrEmpty(resultModel.Result)) {
@@ -2964,7 +2992,7 @@ namespace DeepBlue.Controllers.Deal {
 						if (errorInfo == null) {
 							if (uploadType == Models.Document.UploadType.Upload) {
 								UploadFile fileUpload = new UploadFile(uploadPath);
-								fileUpload.Move(fileInfo.FullName, (int)ConfigUtil.CurrentEntityID, underlyingDirectDocument.UnderlyingDirectDocumentID, underlyingDirectDocument.DocumentTypeID, fileInfo.Name);
+								fileUpload.Move(fileInfo.FullName, Authentication.CurrentEntity.EntityID, underlyingDirectDocument.UnderlyingDirectDocumentID, underlyingDirectDocument.DocumentTypeID, fileInfo.Name);
 								underlyingDirectDocument.File.FileName = fileUpload.FileName;
 								underlyingDirectDocument.File.FilePath = fileUpload.FilePath;
 								underlyingDirectDocument.File.Size = fileUpload.Size;
@@ -2991,7 +3019,7 @@ namespace DeepBlue.Controllers.Deal {
 			equity.Public = (equitySecurityType == EquitySecurityType.Public ? true : false);
 			equity.ShareClassTypeID = ((model.ShareClassTypeId ?? 0) > 0 ? model.ShareClassTypeId : null);
 			equity.Symbol = model.EquitySymbol;
-			equity.EntityID = (int)ConfigUtil.CurrentEntityID;
+			equity.EntityID = Authentication.CurrentEntity.EntityID;
 			equity.Comments = model.EquityComments;
 			equity.ISIN = model.EquityISINO;
 			IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveEquity(equity);
@@ -3010,7 +3038,7 @@ namespace DeepBlue.Controllers.Deal {
 			fixedIncome.IssuerID = model.IssuerId;
 			fixedIncome.ISIN = model.FixedIncomeISINO;
 			fixedIncome.Symbol = model.FixedIncomeSymbol;
-			fixedIncome.EntityID = (int)ConfigUtil.CurrentEntityID;
+			fixedIncome.EntityID = Authentication.CurrentEntity.EntityID;
 			fixedIncome.Maturity = model.Maturity;
 			fixedIncome.IssuedDate = model.IssuedDate;
 			fixedIncome.Frequency = model.Frequency;
@@ -3032,7 +3060,7 @@ namespace DeepBlue.Controllers.Deal {
 			issuer.Name = model.Name;
 			issuer.ParentName = model.ParentName;
 			issuer.CountryID = model.CountryId;
-			issuer.EntityID = (int)ConfigUtil.CurrentEntityID;
+			issuer.EntityID = Authentication.CurrentEntity.EntityID;
 			return DealRepository.SaveIssuer(issuer);
 		}
 
@@ -3104,10 +3132,10 @@ namespace DeepBlue.Controllers.Deal {
 			}
 
 			if (string.IsNullOrEmpty(resultModel.Result)) {
-				file.LastUpdatedBy = AppSettings.CreatedByUserId;
+				file.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				file.LastUpdatedDate = DateTime.Now;
 				file.FileTypeID = fileType.FileTypeID;
-				file.EntityID = (int)ConfigUtil.CurrentEntityID;
+				file.EntityID = Authentication.CurrentEntity.EntityID;
 				if (uploadType == Models.Document.UploadType.Upload) {
 					UploadFile fileUpload = new UploadFile(postFile, "TempUploadPath", postFile.FileName);
 					fileUpload.Upload();

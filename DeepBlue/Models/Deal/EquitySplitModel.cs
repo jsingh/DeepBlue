@@ -18,9 +18,7 @@ namespace DeepBlue.Models.Deal {
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Direct is required")]
 		[DisplayName("Direct-")]
 		public int EquityId { get; set; }
-
-		[Required(ErrorMessage = "Security Type is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Security Type is required")]
+	 
 		[DisplayName("Direct Type-")]
 		public int SecurityTypeId { get; set; }
 

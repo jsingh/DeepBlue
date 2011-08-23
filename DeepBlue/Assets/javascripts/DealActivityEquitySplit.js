@@ -105,6 +105,7 @@ dealActivity.createSA=function (frm) {
 			$("#SpnSymbol").empty();
 			//dealActivity.loadNHP(1,dealActivity.getEquityId());
 			jHelper.resetFields(frm);
+			$("#SecurityTypeId").val(1);
 		}
 	});
 	return false;

@@ -68,9 +68,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 				capitalCall.CapitalCallDueDate = model.CapitalCallDueDate;
 				capitalCall.CapitalCallNumber = string.Empty;
 				capitalCall.CapitalCallTypeID = (int)Models.CapitalCall.Enums.CapitalCallType.Reqular;
-				capitalCall.CreatedBy = AppSettings.CreatedByUserId;
+				capitalCall.CreatedBy = Authentication.CurrentUser.UserID;
 				capitalCall.CreatedDate = DateTime.Now;
-				capitalCall.LastUpdatedBy = AppSettings.CreatedByUserId;
+				capitalCall.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				capitalCall.LastUpdatedDate = DateTime.Now;
 				capitalCall.ExistingInvestmentAmount = model.ExistingInvestmentAmount ?? 0;
 				capitalCall.NewInvestmentAmount = model.NewInvestmentAmount;
@@ -126,9 +126,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 							// Attempt to create capital call line item for each investor fund.
 
 							item = new CapitalCallLineItem();
-							item.CreatedBy = AppSettings.CreatedByUserId;
+							item.CreatedBy = Authentication.CurrentUser.UserID;
 							item.CreatedDate = DateTime.Now;
-							item.LastUpdatedBy = AppSettings.CreatedByUserId;
+							item.LastUpdatedBy = Authentication.CurrentUser.UserID;
 							item.LastUpdatedDate = DateTime.Now;
 							item.ExistingInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.ExistingInvestmentAmount;
 							item.FundExpenses = (investorFund.TotalCommitment / totalCommitment) * capitalCall.FundExpenses;
@@ -205,9 +205,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 				capitalCall.CapitalCallDate = model.CapitalCallDate;
 				capitalCall.CapitalCallDueDate = model.CapitalCallDueDate;
 				capitalCall.CapitalCallTypeID = (int)Models.CapitalCall.Enums.CapitalCallType.Manual;
-				capitalCall.CreatedBy = AppSettings.CreatedByUserId;
+				capitalCall.CreatedBy = Authentication.CurrentUser.UserID;
 				capitalCall.CreatedDate = DateTime.Now;
-				capitalCall.LastUpdatedBy = AppSettings.CreatedByUserId;
+				capitalCall.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				capitalCall.LastUpdatedDate = DateTime.Now;
 				capitalCall.ExistingInvestmentAmount = model.ExistingInvestmentAmount ?? 0;
 				capitalCall.NewInvestmentAmount = model.NewInvestmentAmount;
@@ -221,9 +221,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 				int index;
 				for (index = 1; index < model.InvestorCount + 1; index++) {
 					item = new CapitalCallLineItem();
-					item.CreatedBy = AppSettings.CreatedByUserId;
+					item.CreatedBy = Authentication.CurrentUser.UserID;
 					item.CreatedDate = DateTime.Now;
-					item.LastUpdatedBy = AppSettings.CreatedByUserId;
+					item.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					item.LastUpdatedDate = DateTime.Now;
 					item.CapitalAmountCalled = DataTypeHelper.ToDecimal(collection[index.ToString() + "_" + "CapitalAmountCalled"]);
 					item.ManagementFeeInterest = DataTypeHelper.ToDecimal(collection[index.ToString() + "_" + "ManagementFeeInterest"]);
@@ -314,13 +314,13 @@ namespace DeepBlue.Controllers.CapitalCall {
 					capitalCall.CapitalAmountCalled = model.CapitalAmountCalled;
 					capitalCall.CapitalCallDate = model.CapitalCallDate;
 					capitalCall.CapitalCallDueDate = model.CapitalCallDueDate;
-					capitalCall.LastUpdatedBy = AppSettings.CreatedByUserId;
+					capitalCall.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					capitalCall.LastUpdatedDate = DateTime.Now;
 					int index;
 					for (index = 1; index < model.ItemCount + 1; index++) {
 						item = capitalCall.CapitalCallLineItems.SingleOrDefault(capitalCallItem => capitalCallItem.CapitalCallLineItemID == Convert.ToInt32(collection[index.ToString() + "_" + "CapitalCallLineItemId"]));
 						if (item != null) {
-							item.LastUpdatedBy = AppSettings.CreatedByUserId;
+							item.LastUpdatedBy = Authentication.CurrentUser.UserID;
 							item.LastUpdatedDate = DateTime.Now;
 							if (string.IsNullOrEmpty(collection[index.ToString() + "_" + "CapitalAmountCalled"]) == false) {
 								item.CapitalAmountCalled = Convert.ToDecimal(collection[index.ToString() + "_" + "CapitalAmountCalled"]);
@@ -501,9 +501,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 				distribution.Profits = model.GPProfits;
 				distribution.LPProfits = model.LPProfits;
 
-				distribution.CreatedBy = AppSettings.CreatedByUserId;
+				distribution.CreatedBy = Authentication.CurrentUser.UserID;
 				distribution.CreatedDate = DateTime.Now;
-				distribution.LastUpdatedBy = AppSettings.CreatedByUserId;
+				distribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				distribution.LastUpdatedDate = DateTime.Now;
 				distribution.DistributionAmount = model.DistributionAmount;
 				distribution.DistributionNumber = Convert.ToString(CapitalCallRepository.FindCapitalCallDistributionNumber(model.FundId));
@@ -528,9 +528,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 						item = new CapitalDistributionLineItem();
 						item.CapitalReturn = 0;
-						item.CreatedBy = AppSettings.CreatedByUserId;
+						item.CreatedBy = Authentication.CurrentUser.UserID;
 						item.CreatedDate = DateTime.Now;
-						item.LastUpdatedBy = AppSettings.CreatedByUserId;
+						item.LastUpdatedBy = Authentication.CurrentUser.UserID;
 						item.LastUpdatedDate = DateTime.Now;
 						item.InvestorID = investorFund.InvestorID;
 
@@ -657,9 +657,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 				distribution.Profits = model.GPProfits;
 				distribution.LPProfits = model.LPProfits;
 
-				distribution.CreatedBy = AppSettings.CreatedByUserId;
+				distribution.CreatedBy = Authentication.CurrentUser.UserID;
 				distribution.CreatedDate = DateTime.Now;
-				distribution.LastUpdatedBy = AppSettings.CreatedByUserId;
+				distribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				distribution.LastUpdatedDate = DateTime.Now;
 				distribution.DistributionAmount = model.DistributionAmount;
 				distribution.DistributionNumber = Convert.ToString(CapitalCallRepository.FindCapitalCallDistributionNumber(model.FundId));
@@ -673,9 +673,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 					item = new CapitalDistributionLineItem();
 					item.CapitalReturn = 0;
-					item.CreatedBy = AppSettings.CreatedByUserId;
+					item.CreatedBy = Authentication.CurrentUser.UserID;
 					item.CreatedDate = DateTime.Now;
-					item.LastUpdatedBy = AppSettings.CreatedByUserId;
+					item.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					item.LastUpdatedDate = DateTime.Now;
 					item.InvestorID = DataTypeHelper.ToInt32(collection[index.ToString() + "_" + "InvestorId"]);
 					item.DistributionAmount = DataTypeHelper.ToDecimal(collection[index.ToString() + "_" + "DistributionAmount"]);

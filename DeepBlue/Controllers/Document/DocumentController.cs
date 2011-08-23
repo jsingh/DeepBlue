@@ -112,12 +112,12 @@ namespace DeepBlue.Controllers.Document {
 
 				fileTypeId = fileType.FileTypeID;
 				InvestorFundDocument investorFundDocument = new InvestorFundDocument();
-				investorFundDocument.CreatedBy = AppSettings.CreatedByUserId;
+				investorFundDocument.CreatedBy = Authentication.CurrentUser.UserID;
 				investorFundDocument.CreatedDate = DateTime.Now;
 				investorFundDocument.DocumentDate = model.DocumentDate;
 				investorFundDocument.DocumentTypeID = model.DocumentTypeId;
-				investorFundDocument.EntityID = (int)ConfigUtil.CurrentEntityID;
-				investorFundDocument.LastUpdatedBy = AppSettings.CreatedByUserId;
+				investorFundDocument.EntityID = Authentication.CurrentEntity.EntityID;
+				investorFundDocument.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				investorFundDocument.LastUpdatedDate = DateTime.Now;
 				investorFundDocument.InvestorID = investorId;
 				investorFundDocument.FundID = fundId;
@@ -134,7 +134,7 @@ namespace DeepBlue.Controllers.Document {
 						key = fundId;
 						appSettingName = "FundDocumentUploadPath";
 					}
-					fileUpload = new UploadFile(model.File, appSettingName, (int)ConfigUtil.CurrentEntityID, key, model.DocumentTypeId, Path.GetFileName(model.File.FileName));
+					fileUpload = new UploadFile(model.File, appSettingName, Authentication.CurrentEntity.EntityID, key, model.DocumentTypeId, Path.GetFileName(model.File.FileName));
 					fileUpload.Upload();
 					investorFundDocument.File.FileName = fileUpload.FileName;
 					investorFundDocument.File.FilePath = fileUpload.FilePath;
@@ -145,10 +145,10 @@ namespace DeepBlue.Controllers.Document {
 					investorFundDocument.File.FileName = fileName;
 				}
 				investorFundDocument.File.FileTypeID = fileTypeId;
-				investorFundDocument.File.CreatedBy = AppSettings.CreatedByUserId;
+				investorFundDocument.File.CreatedBy = Authentication.CurrentUser.UserID;
 				investorFundDocument.File.CreatedDate = DateTime.Now;
-				investorFundDocument.File.EntityID = (int)ConfigUtil.CurrentEntityID;
-				investorFundDocument.File.LastUpdatedBy = AppSettings.CreatedByUserId;
+				investorFundDocument.File.EntityID = Authentication.CurrentEntity.EntityID;
+				investorFundDocument.File.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				investorFundDocument.File.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = investorFundDocument.Save();
 				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
