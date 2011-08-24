@@ -43,8 +43,8 @@ namespace DeepBlue.Controllers.Account {
 					}
 				}
 				if (isAuthenticated) {
-					//Authentication.CurrentUser = userLogin;
-					//Authentication.CurrentEntity = entity;
+					Authentication.CurrentUser = userLogin;
+					Authentication.CurrentEntity = entity;
 					FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
 					if (IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
 						&& !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\")) {
