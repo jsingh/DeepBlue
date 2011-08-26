@@ -1159,8 +1159,9 @@ namespace DeepBlue.Controllers.Deal {
 					}
 					underlyingFund.Account.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					underlyingFund.Account.LastUpdatedDate = DateTime.Now;
+
 					underlyingFund.Account.BankName = model.BankName;
-					underlyingFund.Account.AccountNumberCash = model.Account;
+					underlyingFund.Account.AccountNumberCash = "n/a";
 					underlyingFund.Account.Account1 = model.Account;
 					underlyingFund.Account.AccountOf = model.AccountOf;
 					underlyingFund.Account.Attention = model.Attention;
@@ -1169,6 +1170,10 @@ namespace DeepBlue.Controllers.Deal {
 					underlyingFund.Account.Routing = model.Routing;
 					underlyingFund.Account.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					underlyingFund.Account.LastUpdatedDate = DateTime.Now;
+					underlyingFund.Account.FFCNumber = model.FFCNumber;
+					underlyingFund.Account.SWIFT = model.Swift;
+					underlyingFund.Account.Phone = model.AccountPhone;
+					underlyingFund.Account.IBAN = model.IBAN;
 				}
 
 				if (underlyingFund.Contact == null) {

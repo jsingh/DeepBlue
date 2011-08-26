@@ -12,12 +12,12 @@ namespace DeepBlue.Models.Report {
 
 		[Required(ErrorMessage = "Fund is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
-		[DisplayName("Fund:")]
+		[DisplayName("Fund")]
 		public int FundId { get; set; }
 
 		[Required(ErrorMessage = "Capital Call Due Date is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Capital Call Due Date is required")]
-		[DisplayName("Capital Call Due Date:")]
+		[DisplayName("Capital Call Due Date")]
 		public int CapitalCallId { get; set; }
 
 		public List<SelectListItem> CapitalCalls { get; set; }

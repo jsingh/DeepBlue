@@ -1164,9 +1164,10 @@ namespace DeepBlue.Controllers.Admin {
 																	  label = industry.Industry1,
 																	  value = industry.Industry1
 																  });
-				return new PaginatedList<AutoCompleteList>(industryListQuery, 1, 20);
+				return new PaginatedList<AutoCompleteList>(industryListQuery, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
+
 		#endregion
 
 		#region  FileType
@@ -1494,7 +1495,23 @@ namespace DeepBlue.Controllers.Admin {
 																	 label = country.CountryName,
 																	 value = country.CountryName
 																 });
-				return new PaginatedList<AutoCompleteList>(countryListQuery, 1, 20);
+				return new PaginatedList<AutoCompleteList>(countryListQuery, 1, AutoCompleteOptions.RowsLength);
+			}
+		}
+		#endregion
+
+		#region State
+		public List<AutoCompleteList> FindStates(string stateName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> stateListQuery = (from state in context.STATEs
+																 where state.Name.StartsWith(stateName)
+																 orderby state.Name
+																 select new AutoCompleteList {
+																	 id = state.StateID,
+																	 label = state.Name,
+																	 value = state.Name
+																 }).OrderBy(list => list.label);
+				return new PaginatedList<AutoCompleteList>(stateListQuery, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
 		#endregion
@@ -1503,7 +1520,6 @@ namespace DeepBlue.Controllers.Admin {
 		public object FindTable(string tableName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				object results = null;
-				//int pageIndex = 0;
 				int pageSize = 10000;
 				switch (tableName.ToLower()) {
 					case "account":
@@ -1786,16 +1802,18 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<AutoCompleteList> FindDealContacts(string contactName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from contact in context.Contacts
-						where contact.InvestorContacts.Count <= 0
-						&& contact.UnderlyingFunds.Count <= 0
-						&& contact.Deals1.Count <= 0
-						&& contact.ContactName.StartsWith(contactName)
-						select new AutoCompleteList {
-							id = contact.ContactID,
-							label = contact.ContactName,
-							value = contact.ContactName
-						}).ToList();
+				IQueryable<AutoCompleteList> query = (from contact in context.Contacts
+													  where contact.InvestorContacts.Count <= 0
+													  && contact.UnderlyingFunds.Count <= 0
+													  && contact.Deals1.Count <= 0
+													  && contact.ContactName.StartsWith(contactName)
+													  orderby contact.ContactName
+													  select new AutoCompleteList {
+														  id = contact.ContactID,
+														  label = contact.ContactName,
+														  value = contact.ContactName
+													  });
+				return new PaginatedList<AutoCompleteList>(query, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
 
@@ -1803,6 +1821,59 @@ namespace DeepBlue.Controllers.Admin {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.Contacts.Where(contact => contact.ContactID == contactId).SingleOrDefault();
 			}
+		}
+
+		#endregion
+
+		#region User
+
+		public List<USER> GetAllUsers(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.USER> query = (from user in context.USERs
+														select user);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<Models.Entity.USER> paginatedList = new PaginatedList<Models.Entity.USER>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public USER FindUser(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.USERs.SingleOrDefault(user => user.UserID == id);
+			}
+		}
+
+		public bool UserNameAvailable(string userName, int userId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from user in context.USERs
+						 where user.Login == userName && user.UserID != userId
+						 select user.UserID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool EmailAvailable(string email, int userId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from user in context.USERs
+						 where user.Email == email && user.UserID != userId
+						 select user.UserID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteUser(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				USER user = context.USERs.SingleOrDefault(deleteUser => deleteUser.UserID == id);
+				if (user != null) {
+						context.USERs.DeleteObject(user);
+						context.SaveChanges();
+						return true;
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveUser(USER user) {
+			return user.Save();
 		}
 
 		#endregion

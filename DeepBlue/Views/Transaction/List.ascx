@@ -6,13 +6,13 @@
 		<div class="tab-left">
 		</div>
 		<div class="tab-center">
-			<%: Html.Label("Investor In:") %>&nbsp;<%: Html.Span(item.Fund.FundName)%></div>
+			<%: Html.Label("Investor In") %>&nbsp;<%: Html.Span(item.Fund.FundName)%></div>
 		<div class="tab-right">
 		</div>
 		<div class="tab-cnt">
 			<div class="editor-row">
 				<div class="editor-label">
-					<%: Html.Label("Committed Amount:") %>
+					<%: Html.Label("Committed Amount") %>
 				</div>
 				<div class="display-field">
 					<%: Html.Span(FormatHelper.CurrencyFormat(item.TotalCommitment))%>
@@ -20,7 +20,7 @@
 			</div>
 			<div class="editor-row">
 				<div class="editor-label">
-					<%: Html.Label("Unfunded Amount:")%>
+					<%: Html.Label("Unfunded Amount")%>
 				</div>
 				<div class="display-field">
 					<%: Html.Span(FormatHelper.CurrencyFormat(item.UnfundedAmount))%>

@@ -11,7 +11,7 @@
 	<div class="edit-investor">
 		<div class="search">
 			<div class="editor-label auto-width">
-				<%: Html.Label("Investor:") %>
+				<%: Html.Label("Investor") %>
 			</div>
 			<div class="editor-field auto-width">
 				<%: Html.TextBox("Investor")%>&nbsp;<%=Html.Span("",new { id = "Loading" })%>
@@ -45,25 +45,25 @@
 								<%: Html.Span("", new { id = "DisplayName" })%>
 							</div>
 							<div class="editor-label auto-width">
-								<%: Html.Label("Fund Name:") %>
+								<%: Html.Label("Fund Name") %>
 							</div>
 							<div class="display-field" style="width: 30px">
 								<%: Html.Span("", new { id = "FundName" })%>
 							</div>
 							<div class="editor-label auto-width" style="clear: right">
-								<%: Html.Label("Committed Amount:") %>
+								<%: Html.Label("Committed Amount") %>
 							</div>
 							<div class="display-field" style="width: 30px">
 								<%: Html.Span("", new { id = "CommittedAmount" })%>
 							</div>
 							<div class="editor-label auto-width">
-								<%: Html.Label("Fund Close:") %>
+								<%: Html.Label("Fund Close") %>
 							</div>
 							<div class="display-field" style="width: 30px">
 								<%: Html.Span("", new { id = "UnfundedAmount" })%>
 							</div>
 							<div class="editor-label auto-width" style="clear: right">
-								<%: Html.Label("Investor Type:") %>
+								<%: Html.Label("Investor Type") %>
 							</div>
 							<div class="display-field" style="width: 40px">
 								<%: Html.Span("", new { id = "InvestorType" })%>

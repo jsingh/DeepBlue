@@ -17,10 +17,10 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Fixed Income Type is required")]
 		[StringLength(100, ErrorMessage = "Fixed Income Type must be under 100 characters.")]
-		[DisplayName("FixedIncomeType:")]
+		[DisplayName("FixedIncomeType")]
 		public string FixedIncomeType1 { get; set; }
 
-		[DisplayName("Enabled:")]
+		[DisplayName("Enabled")]
 		public bool Enabled { get; set; }
 	}
 }

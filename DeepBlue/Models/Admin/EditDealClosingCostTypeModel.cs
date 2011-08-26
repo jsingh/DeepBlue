@@ -17,7 +17,7 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Deal Closing Cost Type is required")]
 		[StringLength(50, ErrorMessage = "Deal Closing Cost Type must be under 50 characters.")]
-		[DisplayName("Name:")]
+		[DisplayName("Name")]
 		public string Name { get; set; }
 	}
 }

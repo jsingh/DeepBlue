@@ -1,9 +1,31 @@
 ﻿var transactionController={
 	init: function () {
 		//	transactionController.loadFundDetails();
-		$(document).ready(function(){
+		$(document).ready(function () {
 			$("#NewTransaction").css("height","auto");
+			jHelper.jqComboBox($("body"));
 		});
+	}
+	,save: function (frm) {
+		try {
+			var loading=$("#UpdateLoading");
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			$.post("/Transaction/CreateInvestorFund",$(frm).serializeArray(),function (data) {
+				loading.empty();
+				if($.trim(data)!="") {
+					alert(data);
+				} else {
+					alert("Transaction Saved");
+					var investorId=$("#InvestorId").val();
+					jHelper.resetFields(frm);
+					$("#InvestorId").val(investorId);
+					transactionController.loadFundDetails();
+				}
+			});
+		} catch(e) {
+			alert(e);
+		}
+		return false;
 	}
 	,selectInvestor: function (id) {
 		//location.href="/Transaction/New/"+id;
@@ -80,6 +102,7 @@
 	}
 	,closeEditTransactionDialog: function (reload) {
 		$("#editTransactionDialog").dialog('close');
+		$("#EditCommitmentAmount").dialog('close');
 		if(reload)
 			transactionController.loadFundDetails();
 	}
@@ -129,13 +152,13 @@
 		var InvestorTypeId=document.getElementById("InvestorTypeId");
 		var disp_InvestorTypeId=document.getElementById("disp_InvestorTypeId");
 		disp_InvestorTypeId.style.display="none";
-		InvestorTypeId.style.display="";
+		$(InvestorTypeId).combobox('show');
 		InvestorTypeId.value=0;
 		disp_InvestorTypeId.innerHTML="";
 		$.getJSON(url,function (data) {
 			if(data.InvestorTypeId>0) {
 				InvestorTypeId.value=data.InvestorTypeId;
-				InvestorTypeId.style.display="none";
+				$(InvestorTypeId).combobox('hide');
 				disp_InvestorTypeId.innerHTML=InvestorTypeId.options[InvestorTypeId.selectedIndex].text;
 				disp_InvestorTypeId.style.display="";
 			}
@@ -148,18 +171,5 @@
 				ddl.options[ddl.options.length]=listItem;
 			}
 		});
-	}
-	,showErrorMessage: function (formId) {
-		var frm=document.getElementById(formId);
-		Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
-		var message='';
-		$(".field-validation-error",frm).each(function () {
-			if(this.innerHTML!='') {
-				message+=this.innerHTML+"\n";
-			}
-		});
-		if(message!="") {
-			alert(message);
-		}
 	}
 }

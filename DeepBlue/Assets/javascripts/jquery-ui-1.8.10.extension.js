@@ -11,13 +11,15 @@
 				return false;
 			}
 		});
+		autocomplete.options.autoSelect=false;
 		if(autocomplete.selectedItem) {
 			autocomplete._trigger("select",event,{ item: autocomplete.selectedItem });
 		}
 	});
 	$(".ui-autocomplete-input").live("autocompletechange",function (event,ui) {
+		var autocomplete=$(this).data("autocomplete");
+		autocomplete.options.autoSelect=true;
 		if(!ui.item) {
-			var autocomplete=$(this).data("autocomplete");
 			autocomplete._trigger("select",event,{ item: { id: "0",value: "",label: "",otherid: "0",otherid2: "0",othervalues: [],option: null} });
 		}
 	});

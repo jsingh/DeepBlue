@@ -1,15 +1,14 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Transaction.EditCommitmentAmountModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <%Html.EnableClientValidation(); %>
-<% using (Ajax.BeginForm("UpdateCommitmentAmount", "Transaction", null, new AjaxOptions {
+<% using(Html.Form(new { @onsubmit = "return editTransaction.editCA(this);" })){ %>
+<%--<% using (Ajax.BeginForm("UpdateCommitmentAmount", "Transaction", null, new AjaxOptions {
 	   UpdateTargetId = "UpdateTargetId", Confirm = "Are you sure you want to update this commitment amount?", OnBegin = "editTransaction.onBegin", OnSuccess = "editTransaction.closeEditCommitAmtDialog"
-   },new { @id = "UpdateCommitmentAmount" })) {%>
-
+   },new { @id = "UpdateCommitmentAmount" })) {%>--%>
 <%: Html.HiddenFor(model => model.InvestorFundId) %>
 <%: Html.HiddenFor(model => model.UnfundedAmount) %>
 <br />
 <div id="EditCommitAmtLoading">
-	
 </div>
 <div class="editor-row">
 	<div class="editor-label" style="width: auto;">
@@ -26,12 +25,10 @@
 		<%: Html.Span("",new { id = "UpdateEditCmtLoading" })%>
 	</div>
 	<div style="float: left; padding: 0 0 10px 5px;">
-		<%: Html.ImageButton("Update.png", new { @class="default-button", onclick = "return editTransaction.onEditCommitAmgSubmit('UpdateCommitmentAmount');" })%>
+		<%: Html.ImageButton("Update.png", new { @class="default-button" })%>
 	</div>
 	<div style="float: left; padding: 0 0 10px 5px;">
 		<%: Html.Image("Close.png", new { @class="default-button", onclick = "editTransaction.closeEditCommitAmtDialog();" })%>
 	</div>
-</div>
-<div id="UpdateTargetId" style="display:none">
 </div>
 <% } %>

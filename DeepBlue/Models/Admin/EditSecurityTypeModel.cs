@@ -17,10 +17,10 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Name is required")]
 		[StringLength(100, ErrorMessage = "Name must be under 100 characters.")]
-		[DisplayName("Name:")]
+		[DisplayName("Name")]
 		public string Name { get; set; }
 
-		[DisplayName("Enabled:")]
+		[DisplayName("Enabled")]
 		public bool Enabled { get; set; }
 	}
 }

@@ -15,3 +15,6 @@
 .field-validation-error {
 	display: none;
 }
+.box-content .delete {
+	padding-left: 10px;
+}

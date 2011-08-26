@@ -178,46 +178,64 @@
 		<div class="detail" style="display: none; padding-left: 95px;" id="BankInformation">
 			<div>
 				<div class="editor-label">
-					<label>
-						Bank Name</label>
+					<%: Html.Label("Bank Name")%>
 				</div>
 				<div class="editor-field">
 					<%: Html.TextBox("BankName", "${BankName}", new { @class = "wm" })%>
 				</div>
 				<div class="editor-label" style="clear: right">
-					<label>
-						ABA No.</label>
-				</div>
-				<div class="editor-field">
-					<%: Html.TextBox("Routing", "${Routing}", new { @class = "wm", @onkeydown = "return jHelper.isNumeric(event);" })%>
-				</div>
-				<div class="editor-label">
-					<label>
-						Account Of</label>
-				</div>
-				<div class="editor-field">
-					<%: Html.TextBox("AccountOf", "${AccountOf}", new { @class = "wm" })%>
-				</div>
-				<div class="editor-label" style="clear: right">
-					<label>
-						Account No.</label>
+					<%: Html.Label("Account Number")%>
 				</div>
 				<div class="editor-field">
 					<%: Html.TextBox("Account", "${Account}", new { @class = "wm" })%>
 				</div>
 				<div class="editor-label">
-					<label>
-						Attention</label>
+					<%: Html.Label("ABA Number")%>
+				</div>
+				<div class="editor-field">
+					<%: Html.TextBox("Routing", "${Routing}", new { @class = "wm", @onkeydown = "return jHelper.isNumeric(event);" })%>
+				</div>
+				<div class="editor-label" style="clear: right">
+					<%: Html.Label("Swift Code")%>
+				</div>
+				<div class="editor-field">
+					<%: Html.TextBox("Swift", "${Swift}", new { @class = "wm" })%>
+				</div>
+				<div class="editor-label">
+					<%: Html.Label("FFC Number")%>
+				</div>
+				<div class="editor-field">
+					<%: Html.TextBox("FFCNumber", "${FFCNumber}", new { @class = "wm" })%>
+				</div>
+				<div class="editor-label" style="clear: right">
+					<%: Html.Label("IBAN")%>
+				</div>
+				<div class="editor-field">
+					<%: Html.TextBox("IBAN", "${IBAN}", new { @class = "wm" })%>
+				</div>
+				<div class="editor-label">
+					<%: Html.Label("Reference")%>
+				</div>
+				<div class="editor-field">
+					<%: Html.TextBox("Reference", "${Reference}", new { @class = "wm" })%>
+				</div>
+				<div class="editor-label" style="clear: right">
+					<%: Html.Label("Account Of")%>
+				</div>
+				<div class="editor-field">
+					<%: Html.TextBox("AccountOf", "${AccountOf}", new { @class = "wm" })%>
+				</div>
+				<div class="editor-label">
+					<%: Html.Label("Attention")%>
 				</div>
 				<div class="editor-field">
 					<%: Html.TextBox("Attention", "${Attention}", new { @class = "wm" })%>
 				</div>
 				<div class="editor-label" style="clear: right">
-					<label>
-						Reference</label>
+					<%: Html.Label("Telephone")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("Reference", "${Reference}", new { @class = "wm" })%>
+					<%: Html.TextBox("AccountPhone", "${AccountPhone}", new { @class = "wm" })%>
 				</div>
 			</div>
 			<div class="savebox">

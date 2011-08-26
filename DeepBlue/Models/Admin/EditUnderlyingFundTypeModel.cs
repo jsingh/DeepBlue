@@ -14,7 +14,7 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Underlying Fund Type is required.")]
 		[StringLength(50, ErrorMessage = "Underlying Fund Type must be under 50 characters.")]
-		[DisplayName("Name:")]
+		[DisplayName("Name")]
 		public string Name { get; set; }
 	}
 }

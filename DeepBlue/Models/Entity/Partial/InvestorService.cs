@@ -7,6 +7,7 @@ using System.Data.Objects.DataClasses;
 using System.Data;
 
 namespace DeepBlue.Models.Entity {
+	
 	public interface IInvestorService {
 		void SaveInvestor(Investor investor);
 	}
@@ -294,9 +295,5 @@ namespace DeepBlue.Models.Entity {
 
 		}
 	}
-
-	public partial class Investor {
-
-		public List<InvestorAccount> InvestorAccountList { get; set; }
-	}
+	 
 }

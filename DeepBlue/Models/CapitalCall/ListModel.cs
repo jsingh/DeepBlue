@@ -9,7 +9,7 @@ namespace DeepBlue.Models.CapitalCall {
 		
 		public int FundId { get; set; }
 
-		[DisplayName("Fund:")]
+		[DisplayName("Fund")]
 		public string FundName { get; set; }
 	}
 }

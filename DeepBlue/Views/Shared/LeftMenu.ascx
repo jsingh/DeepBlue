@@ -63,4 +63,12 @@
 </div>
 <%} %>
 <%break;%>
+<%case "UserManagement":%>
+<%using (Html.LeftMenu()) {%>
+<ul>
+	<li class="<%=(ViewData["PageName"] == "User" ? "sel" : "")%>">
+		<%: Html.ActionLink("User", "User", "Admin", null, new { @class = (ViewData["PageName"] == "User" ? "sel" : "") })%></li>
+</ul>
+<%} %>
+<%break;%>
 <%}%>

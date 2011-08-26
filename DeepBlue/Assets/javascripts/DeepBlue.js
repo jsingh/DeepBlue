@@ -41,31 +41,41 @@
 				});
 			});
 
-			$.ajaxSetup({
-				error: function (x,jqxhr,settings,exception) {
-					if(x.responseText.indexOf('AuthenticationException')>0) {
-						$.get("/Account/LogOff");
-						location.href="/Account/LogOn";
-					} else {
-						if(x.status==0) {
-							alert('You are offline!!\n Please Check Your Network.');
-						} else if(x.status==404) {
-							alert('Requested URL not found.');
-						} else if(x.status==500) {
-							alert('Internel Server Error.'+","+e);
-						} else if(e=='parsererror') {
-							alert('Error.\nParsing JSON Request failed.');
-						} else if(e=='timeout') {
-							alert('Request Time out.');
-						} else {
-							alert('Unknow Error.\n'+x.responseText);
-						}
-					}
-				}
-			});
-
+			deepBlue.ajaxSetup();
 			deepBlue.resize();
 		});
+	}
+	,ajaxSetup: function () {
+		$.ajaxSetup({
+			error: function (x,jqxhr,settings,exception) {
+				if(x.responseText.indexOf('AuthenticationException')>0) {
+					$.get("/Account/LogOff");
+					deepBlue.redirectLogOn();
+				} else {
+					alert(x.status);
+					if(x.status==0) {
+						alert('You are offline!!\n Please Check Your Network.');
+					} else if(x.status==404) {
+						alert('Requested URL not found.');
+					} else if(x.status==500) {
+						alert('Internel Server Error.');
+					} else if(e=='parsererror') {
+						alert('Error.\nParsing JSON Request failed.');
+					} else if(e=='timeout') {
+						alert('Request Time out.');
+					} else {
+						alert('Unknow Error.\n'+x.responseText);
+					}
+				}
+			}
+		});
+	}
+	,redirectLogOn: function () {
+		if(parent) {
+			parent.window.location.href="/Account/LogOn";
+		} else {
+			location.href="/Account/LogOn";
+		}
 	}
 	,hideSubMenu: function () {
 		$("#submenu").hide();

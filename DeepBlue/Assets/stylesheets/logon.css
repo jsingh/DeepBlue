@@ -12,7 +12,7 @@
 	top: 35%;
 	left: 35%;
 	float: left;
-	width: 250px;
+	width: 350px;
 }
 #logonheader {
 	background-image: url("../images/expandbg.png");
@@ -37,6 +37,10 @@
 	clear: both;
 	border: solid 1px #b5b5b5;
 	width: 100%;
+}
+#logonmain .content {
+	width:232px;
+	margin:0 auto;
 }
 .editor-label {
 	width: 56px;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using DeepBlue.Models.Entity;
 using System.Web.Security;
+using DeepBlue.Controllers.Account;
 
 
 namespace DeepBlue.Helpers {
@@ -13,12 +14,10 @@ namespace DeepBlue.Helpers {
 
 		public static USER CurrentUser {
 			get {
-				if (SecurityContainer.GetHttpContext().Session[user] != null) {
+				if (SecurityContainer.GetHttpContext().Session[user] != null)
 					return (USER)SecurityContainer.GetHttpContext().Session[user];
-				}
-				else {
+				else
 					throw new AuthenticationException("CurrentUser does not exist");
-				}
 			}
 			set {
 				SecurityContainer.GetHttpContext().Session[user] = value;
@@ -27,12 +26,8 @@ namespace DeepBlue.Helpers {
 
 		public static ENTITY CurrentEntity {
 			get {
-				ENTITY entity = null;
-				if (SecurityContainer.GetHttpContext().Session[entityKey] != null) {
-					entity = (ENTITY)SecurityContainer.GetHttpContext().Session[entityKey];
-				}
-				if (entity != null)
-					return entity;
+				if (SecurityContainer.GetHttpContext().Session[entityKey] != null)
+					return (ENTITY)SecurityContainer.GetHttpContext().Session[entityKey];
 				else
 					throw new AuthenticationException("CurrentEntity does not exist");
 			}
@@ -45,7 +40,6 @@ namespace DeepBlue.Helpers {
 			Authentication.CurrentUser = null;
 			Authentication.CurrentEntity = null;
 		}
-
 
 	}
 

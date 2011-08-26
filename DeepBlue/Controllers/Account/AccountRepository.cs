@@ -8,6 +8,7 @@ using System.Web.DynamicData;
 using System.Reflection;
 using System.Linq.Expressions;
 using DeepBlue.Models.Deal;
+ 
 
 namespace DeepBlue.Controllers.Account {
 	public class AccountRepository : IAccountRepository {

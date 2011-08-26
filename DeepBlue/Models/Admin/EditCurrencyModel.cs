@@ -20,7 +20,7 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Currency is required")]
 		[StringLength(100, ErrorMessage = "Currency must be under 100 characters.")]
-		[DisplayName("Currency:")]
+		[DisplayName("Currency")]
 		public string Currency { get; set; }
 
 

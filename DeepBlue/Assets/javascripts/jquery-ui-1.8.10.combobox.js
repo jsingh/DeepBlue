@@ -6,7 +6,7 @@
 					selected=select.children(":selected"),
 					value=selected.val()?selected.text():"";
 
-			var cbox=$("<div class='jqComboBox'>")
+			var cbox=this.cbox=$("<div class='jqComboBox'>")
 					.insertAfter(select);
 			var cleft=$("<div class='left'>");
 			var input=this.input=$("<input selectid='"+select.attr("id")+"' id='jqCBSTextBox_"+select.attr("name")+"' name='jqCBSTextBox_"+select.attr("name")+"'>");
@@ -90,10 +90,26 @@
 		},
 
 		destroy: function () {
-			this.input.remove();
-			this.button.remove();
-			this.element.show();
-			$.Widget.prototype.destroy.call(this);
+			try {
+				this.input.remove();
+				this.button.remove();
+				this.cbox.remove();
+				this.element.show();
+				$.Widget.prototype.destroy.call(this);
+			} catch(e) {
+				alert(e);
+			}
+		}
+
+		,remove: function () {
+			this.cbox.remove();
+		}
+
+		,hide: function () {
+			this.cbox.hide();
+		}
+		,show: function () {
+			this.cbox.show();
 		}
 	});
 })(jQuery);

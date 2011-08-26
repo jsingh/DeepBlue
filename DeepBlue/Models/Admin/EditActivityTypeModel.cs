@@ -20,7 +20,7 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Fund Expense Type is required")]
 		[StringLength(50, ErrorMessage = "Fund Expense Type must be under 50 characters.")]
-		[DisplayName("Name:")]
+		[DisplayName("Name")]
 		public string Name { get; set; }
 	}
 }

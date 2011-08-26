@@ -17,7 +17,7 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Module Name is required.")]
 		[StringLength(50, ErrorMessage = "Module Name must be under 50 characters.")]
-		[DisplayName("Name:")]
+		[DisplayName("Name")]
 		public string ModuleName { get; set; }
 	}
 }

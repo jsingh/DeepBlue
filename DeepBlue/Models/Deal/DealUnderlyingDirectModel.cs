@@ -16,21 +16,21 @@ namespace DeepBlue.Models.Deal {
 
 		[Required(ErrorMessage = "Company is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Company is required")]
-		[DisplayName("Company:")]
+		[DisplayName("Company")]
 		public int IssuerId { get; set; }
 
 		public string SecurityType { get; set; }
 
 		[Required(ErrorMessage = "Security Type is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Security Type is required")]
-		[DisplayName("SecurityType:")]
+		[DisplayName("SecurityType")]
 		public int SecurityTypeId { get; set; }
 
 		public string Security { get; set; }
 
 		[Required(ErrorMessage = "Security is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Security is required")]
-		[DisplayName("Security:")]
+		[DisplayName("Security")]
 		public int SecurityId { get; set; }
 
 		[Required(ErrorMessage = "Deal is required")]
@@ -43,32 +43,32 @@ namespace DeepBlue.Models.Deal {
 
 		[Required(ErrorMessage = "Record Date is required")]
 		[DateRange()]
-		[DisplayName("RecordDate:")]
+		[DisplayName("RecordDate")]
 		public DateTime? RecordDate { get; set; }
 
 		[Required(ErrorMessage = "FMV is required")]
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "FMV is required")]
-		[DisplayName("FMV:")]
+		[DisplayName("FMV")]
 		public decimal? FMV { get; set; }
 
-		[DisplayName("Percent:")]
+		[DisplayName("Percent")]
 		public decimal? Percent { get; set; }
 
 		[Required(ErrorMessage = "Number Of Shares is required")]
 		[Range((int)1, int.MaxValue, ErrorMessage = "Number Of Shares is required")]
-		[DisplayName("NoOfShares:")]
+		[DisplayName("NoOfShares")]
 		public int? NumberOfShares { get; set; }
 
 		[Required(ErrorMessage = "Purchase Price is required")]
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Purchase Price is required")]
-		[DisplayName("Purchase Price:")]
+		[DisplayName("Purchase Price")]
 		public decimal PurchasePrice { get; set; }
 
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Purchase Price is required")]
-		[DisplayName("Tax Cost Basis:")]
+		[DisplayName("Tax Cost Basis")]
 		public decimal? TaxCostBase { get; set; }
 
-		[DisplayName("Tax Cost Date:")]
+		[DisplayName("Tax Cost Date")]
 		[DateRange()]
 		public DateTime? TaxCostDate { get; set; }
 

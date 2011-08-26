@@ -263,6 +263,10 @@ namespace DeepBlue.Controllers.Admin {
 		List<AutoCompleteList> FindCountrys(string countryName);
 		#endregion
 
+		#region State
+		List<AutoCompleteList> FindStates(string countryName);
+		#endregion
+
 		#region DynamicData
 		object FindTable(string tableName);
 		#endregion
@@ -272,5 +276,14 @@ namespace DeepBlue.Controllers.Admin {
 		Contact FindContact(int contactId);
 		#endregion
 
+
+		#region User
+		List<USER> GetAllUsers(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		USER FindUser(int id);
+		bool UserNameAvailable(string userName, int userId);
+		bool EmailAvailable(string email, int userId);
+		bool DeleteUser(int id);
+		IEnumerable<ErrorInfo> SaveUser(USER user);
+		#endregion
 	}
 }

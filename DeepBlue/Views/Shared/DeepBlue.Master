@@ -11,6 +11,7 @@
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.combobox.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.extension.js")%>
+	<%= Html.JavascriptInclueTag("jquery.alerts.js")%>
 	<%= Html.JavascriptInclueTag("jquery.formatCurrency.js")%>
 	<%= Html.JavascriptInclueTag("jqueryform.js")%>
 	<%= Html.JavascriptInclueTag("jqTransform.js")%>
@@ -19,6 +20,7 @@
 	<%= Html.JavascriptInclueTag("menu.js")%>
 	<%= Html.JavascriptInclueTag("jsDate.js")%>
 	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
+	<%= Html.StylesheetLinkTag("jquery.alerts.css")%>
 	<%= Html.StylesheetLinkTag("site.css")%>
 	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
 </head>
@@ -141,6 +143,11 @@
 				<li>
 					<%: Html.ActionLink("Deal Management", "PurchaseType", "Admin", null, new { @class = (ViewData["SubmenuName"] == "DealManagement" ? "sel" : "") })%>
 				</li>
+				<%if (AdminAuthorizeHelper.IsAdmin) {%>
+				<li>
+					<%: Html.ActionLink("User Management", "User", "Admin", null, new { @class = (ViewData["SubmenuName"] == "UserManagement" ? "sel" : "") })%>
+				</li>
+				<%}%>
 			</ul>
 			<%} %>
 			<%using (Html.SubMenu("Doc_Management", (ViewData["MenuName"] == "Document"))) {%>

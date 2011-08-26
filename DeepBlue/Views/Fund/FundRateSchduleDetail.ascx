@@ -5,7 +5,7 @@
 	<%: Html.jQueryTemplateHidden("${index}_FundRateScheduleId", "${FRS.FundRateScheduleId}", new { @id = "FundRateScheduleId" })%>
 	<div style="float: left; width: 100%; margin: 10px 0;">
 		<div class="editor-label" style="float: left; width: auto;">
-			<%: Html.Label("Investor:") %></div>
+			<%: Html.Label("Investor") %></div>
 		<div class="editor-field" style="float: left; width: auto;">
 			&nbsp;<%: Html.DropDownList("${index}_InvestorTypeId", Model.InvestorTypes, new { @id = "InvestorTypeId", @style="width:180px", @onchange="javascript:fund.changeInvestorType(this);", @class="investortype ddlist" , @val = "${FRS.InvestorTypeId}" } )%>
 		</div>

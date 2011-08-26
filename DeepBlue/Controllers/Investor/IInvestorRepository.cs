@@ -34,7 +34,17 @@ namespace DeepBlue.Controllers.Investor {
 		#region Save
         IEnumerable<ErrorInfo> SaveInvestor(DeepBlue.Models.Entity.Investor investor);
 		IEnumerable<ErrorInfo> SaveInvestorFund(DeepBlue.Models.Entity.InvestorFund investorFund);
+		IEnumerable<ErrorInfo> SaveInvestorFundTransaction(InvestorFundTransaction investorFundTransaction);
 		#endregion
- 
-    }
+
+		#region Investor Address
+		InvestorAddress FindInvestorAddress(int investorAddressId);
+		IEnumerable<ErrorInfo> SaveInvestorAddress(InvestorAddress investorAddress);
+		#endregion
+
+		#region Investor Communication
+		InvestorCommunication FindInvestorCommunication(int investorCommunicationId);
+		IEnumerable<ErrorInfo> SaveInvestorCommunication(InvestorCommunication investorCommunication);
+		#endregion
+	}
 }

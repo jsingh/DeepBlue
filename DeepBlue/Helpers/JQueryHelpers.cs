@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace DeepBlue.Helpers {
 	public static class JQueryHelpers {
+		
 		public static string jQueryAutoComplete(this HtmlHelper helper, string targetId, AutoCompleteOptions options) {
 			StringBuilder scriptSrc = new StringBuilder();
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").autocomplete({");
@@ -165,7 +166,6 @@ namespace DeepBlue.Helpers {
 			 .Append("});});");
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
-
 
 	}
 }

@@ -9,38 +9,76 @@ using DeepBlue;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(InvestorFundTransactionMD))]
 	public partial class InvestorFundTransaction {
-		public class InvestorFundTransactionMD : CreatedByFields {
+		public class InvestorFundTransactionMD  {
 
 			#region Primitive Properties
-			[Required(ErrorMessage = "Fund Closing is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund Closing is required")]
-			public global::System.Int32 FundClosingID {
+
+			[Required(ErrorMessage = "InvestorFundID is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Investor Fund is required")]
+			public global::System.Int32 InvestorFundID {
 				get;
 				set;
 			}
 
-			[Required(ErrorMessage = "Other Investor is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Other Investor is required")]
-			public global::System.Int32 OtherInvestorID {
+			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Amount is required")]
+			public Nullable<global::System.Decimal> Amount {
 				get;
 				set;
 			}
 
-			[Required(ErrorMessage = "Transaction Type is required")]
+			[Required(ErrorMessage = "TransactionTypeID is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Transaction Type is required")]
 			public global::System.Int32 TransactionTypeID {
 				get;
 				set;
 			}
 
-			[Required(ErrorMessage = "Amount is required")]
-			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Amount is required")]
-			public global::System.Decimal Amount {
+			[Required(ErrorMessage = "IsAgreementSigned is required")]
+			public global::System.Boolean IsAgreementSigned {
+				get;
+				set;
+			}
+
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund Closing is required")]
+			public Nullable<global::System.Int32> FundClosingID {
+				get;
+				set;
+			}
+
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "OtherInvestorID is required")]
+			public Nullable<global::System.Int32> OtherInvestorID {
+				get;
+				set;
+			}
+			 
+			[Required(ErrorMessage = "CreatedDate is required")]
+			[DateRange(ErrorMessage = "CreatedDate is required")]
+			public global::System.DateTime CreatedDate {
+				get;
+				set;
+			}
+
+			[Required(ErrorMessage = "CreatedBy is required")]
+			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
+			public global::System.Int32 CreatedBy {
+				get;
+				set;
+			}
+
+			[DateRange(ErrorMessage = "CommittedDate is required")]
+			public Nullable<global::System.DateTime> CommittedDate {
+				get;
+				set;
+			}
+
+			[StringLength(500, ErrorMessage = "Notes must be under 500 characters.")]
+			public global::System.String Notes {
 				get;
 				set;
 			}
 
 			#endregion
+
 		}
 
 		public InvestorFundTransaction(IInvestorFundTransactionService investorFundTransactionService)

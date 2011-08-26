@@ -15,10 +15,10 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Reporting Frequency is required.")]
 		[StringLength(100, ErrorMessage = "Reporting Frequency must be under 100 characters.")]
-		[DisplayName("Reporting Frequency:")]
+		[DisplayName("Reporting Frequency")]
 		public string ReportingFrequency { get; set; }
 
-		[DisplayName("Enable:")]
+		[DisplayName("Enable")]
 		public bool Enabled { get; set; }
  
 	}

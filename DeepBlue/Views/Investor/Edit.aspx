@@ -29,7 +29,7 @@
 	<div class="edit-investor">
 		<div class="search">
 			<div class="editor-label auto-width" style="padding: 8px;">
-				<%: Html.Label("Investor:") %>
+				<%: Html.Label("Investor") %>
 			</div>
 			<div class="editor-field auto-width">
 				<%: Html.TextBox("Investor")%>&nbsp;<%=Html.Span("",new { id = "Loading" })%>
@@ -48,23 +48,25 @@
 						<div class="box-right">
 						</div>
 					</div>
-					<%using (Ajax.BeginForm("Update", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "editInvestor.onBegin", OnSuccess = "editInvestor.onSuccess" }, new { @id = "frmInvestorInfo" })) {%>
+					<%using(Html.Form(new {  @id = "frmInvestorInfo", @onsubmit = "return editInvestor.save(this);" })){ %>
+					<%--<%using (Ajax.BeginForm("Update", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", 
+		   OnBegin = "editInvestor.onBegin", OnSuccess = "editInvestor.onSuccess" }, new { @id = "frmInvestorInfo" })) {%>--%>
 					<div class="box-content">
 						<div class="edit-left">
 							<div class="editor-label auto-width">
-								<%: Html.Label("Investor Name:") %>
+								<%: Html.Label("Investor Name") %>
 							</div>
 							<div class="display-field">
 								<%: Html.Span("",new {id = "InvestorName"})%>
 							</div>
 							<div class="editor-label auto-width">
-								<%: Html.Label("Display Name:") %>
+								<%: Html.Label("Display Name") %>
 							</div>
 							<div class="display-field">
 								<%: Html.Span("", new { id = "Spn_DisplayName" })%>
 							</div>
 							<div class="editor-label" style="width: 82px;">
-								<%: Html.Label("Notes:") %>
+								<%: Html.Label("Notes") %>
 							</div>
 							<div class="display-field">
 								<%: Html.Span("", new { id = "Spn_Notes" })%>
@@ -105,7 +107,7 @@
 									<%: Html.Span("", new { id = "SocialSecurityTaxId"})%>
 								</div>
 								<div class="editor-label">
-									<%: Html.Label("State of Residency:")%>
+									<%: Html.Label("State of Residency")%>
 								</div>
 								<div class="editor-field dropdown">
 									<%: Html.Span("",new { @id = "Disp_StateOfResidency" })%>
@@ -137,7 +139,7 @@
 								</div>
 								<div class="display-field">
 									<%: Html.Span("", new { @id = "Disp_Notes" })%>
-									<%: Html.TextAreaFor(model => model.Notes,4,50,new {})%>
+									<%: Html.TextAreaFor(model => model.Notes,4,35,new {})%>
 								</div>
 								<% Html.RenderPartial("CustomFieldList", Model.CustomField);%>
 							</div>
@@ -161,49 +163,49 @@
 										Address&nbsp;<span id="addressIndex"></span></h4>--%>
 									<%: Html.Hidden(Model.AddressInformations.Count.ToString() + "_" + "AddressId")%>
 									<div class="editor-label">
-										<%: Html.Label("Phone:") %>
+										<%: Html.Label("Phone") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "Phone")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AddressInformations.Count.ToString() + "_" + "Phone" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Fax:") %>
+										<%: Html.Label("Fax") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "Fax")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AddressInformations.Count.ToString() + "_" + "Fax" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Email:") %>
+										<%: Html.Label("Email") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "Email", "", new { @onblur = "javascript:jHelper.checkEmail(this);" })%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AddressInformations.Count.ToString() + "_" + "Email" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Web Address:") %>
+										<%: Html.Label("Web Address") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "WebAddress", "", new { @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AddressInformations.Count.ToString() + "_" + "WebAddress" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Address1:") %>
+										<%: Html.Label("Address1") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "Address1")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AddressInformations.Count.ToString() + "_" + "Address1" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Address2:") %>
+										<%: Html.Label("Address2") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "Address2", new {  maxlength = 40 })%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AddressInformations.Count.ToString() + "_" + "Address2" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("City:") %>
+										<%: Html.Label("City") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "City", new {  maxlength = 30 })%>
@@ -211,7 +213,7 @@
 									</div>
 									<div class="editor-row" id="<%=Model.AddressInformations.Count.ToString()%>_AddressStateRow">
 										<div class="editor-label">
-											<%: Html.Label("State:") %>
+											<%: Html.Label("State") %>
 										</div>
 										<div class="editor-field dropdown">
 											<%: Html.DropDownList(Model.AddressInformations.Count.ToString() + "_" + "State", Model.SelectList.States)%>
@@ -219,14 +221,14 @@
 										</div>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Zip:") %>
+										<%: Html.Label("Zip") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AddressInformations.Count.ToString() + "_" + "PostalCode")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AddressInformations.Count.ToString() + "_" + "PostalCode" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Country:")%>
+										<%: Html.Label("Country")%>
 									</div>
 									<div class="editor-field dropdown">
 										<%: Html.DropDownList(Model.AddressInformations.Count.ToString() + "_" + "Country", Model.SelectList.Countries, new { @onchange = "javascript:editInvestor.changeCountry('" + Model.AddressInformations.Count.ToString() + "_Country','" + Model.AddressInformations.Count.ToString() + "_State','" + Model.AddressInformations.Count.ToString() + "_AddressStateRow');" })%>
@@ -264,63 +266,63 @@
 									<%: Html.Hidden(Model.ContactInformations.Count.ToString() + "_" + "ContactId")%>
 									<%: Html.Hidden(Model.ContactInformations.Count.ToString() + "_" + "ContactAddressId")%>
 									<div class="editor-label">
-										<%: Html.Label("Contact Person:") %>
+										<%: Html.Label("Contact Person") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactPerson")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "ContactPerson" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Designation:") %>
+										<%: Html.Label("Designation") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "Designation")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "Designation" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Phone Number:") %>
+										<%: Html.Label("Phone Number") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactPhoneNumber")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "ContactPhoneNumber" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Fax Number:") %>
+										<%: Html.Label("Fax Number") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactFaxNumber")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "ContactFaxNumber" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Email:") %>
+										<%: Html.Label("Email") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactEmail", "", new { @onblur = "javascript:jHelper.checkEmail(this);" })%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "ContactEmail" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Web Address:") %>
+										<%: Html.Label("Web Address") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactWebAddress", "", new { @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "ContactWebAddress" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Address1:") %>
+										<%: Html.Label("Address1") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactAddress1", new { maxlength = 40})%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "ContactAddress1" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Address2:") %>
+										<%: Html.Label("Address2") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactAddress2", new { maxlength = 40})%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "ContactAddress2" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("City:") %>
+										<%: Html.Label("City") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactCity", new { maxlength = 30 } )%>
@@ -328,7 +330,7 @@
 									</div>
 									<div class="editor-row" id="<%=Model.ContactInformations.Count.ToString()%>_ContactStateRow">
 										<div class="editor-label">
-											<%: Html.Label("State:") %>
+											<%: Html.Label("State") %>
 										</div>
 										<div class="editor-field dropdown">
 											<%: Html.DropDownList(Model.ContactInformations.Count.ToString() + "_" + "ContactState", Model.SelectList.States)%>
@@ -336,42 +338,42 @@
 										</div>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Zip:") %>
+										<%: Html.Label("Zip") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.ContactInformations.Count.ToString() + "_" + "ContactPostalCode")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "ContactPostalCode" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Country:") %>
+										<%: Html.Label("Country") %>
 									</div>
 									<div class="editor-field dropdown">
 										<%: Html.DropDownList(Model.ContactInformations.Count.ToString() + "_" + "ContactCountry", Model.SelectList.Countries, new { @onchange = "javascript:editInvestor.changeCountry('" + Model.ContactInformations.Count.ToString() + "_ContactCountry','" + Model.ContactInformations.Count.ToString() + "_ContactState','" + Model.ContactInformations.Count.ToString() + "_ContactStateRow');" })%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "ContactCountry" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Distribution Notices:") %>
+										<%: Html.Label("Distribution Notices") %>
 									</div>
 									<div class="editor-field checkbox">
 										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "DistributionNotices",false)%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "DistributionNotices" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Financials:")%>
+										<%: Html.Label("Financials")%>
 									</div>
 									<div class="editor-field checkbox">
 										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "Financials",false)%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "Financials" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("K1:")%>
+										<%: Html.Label("K1")%>
 									</div>
 									<div class="editor-field checkbox">
 										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "K1",false)%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.ContactInformations.Count.ToString() + "_" + "K1" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Investor Letters:")%>
+										<%: Html.Label("Investor Letters")%>
 									</div>
 									<div class="editor-field checkbox">
 										<%: Html.CheckBox(Model.ContactInformations.Count.ToString() + "_" + "InvestorLetters",false)%>
@@ -408,77 +410,77 @@
 										Account&nbsp;<span id="accountIndex"></span></h4>--%>
 									<%: Html.Hidden(Model.AccountInformations.Count.ToString() + "_" + "AccountId")%>
 									<div class="editor-label">
-										<%: Html.Label("Bank Name:") %>
+										<%: Html.Label("Bank Name") %>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "BankName","") %>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AccountInformations.Count.ToString() + "_" + "BankName" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Account Number:")%>
+										<%: Html.Label("Account Number")%>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "AccountNumber","")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AccountInformations.Count.ToString() + "_" + "AccountNumber" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("ABA Number:")%>
+										<%: Html.Label("ABA Number")%>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "ABANumber", "", new { @onkeydown = "return jHelper.isNumeric(event);" })%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AccountInformations.Count.ToString() + "_" + "ABANumber" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Account Of:")%>
+										<%: Html.Label("Account Of")%>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "AccountOf","")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AccountInformations.Count.ToString() + "_" + "AccountOf" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("FFC:")%>
+										<%: Html.Label("FFC")%>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "FFC","")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AccountInformations.Count.ToString() + "_" + "FFC" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("FFCNO:")%>
+										<%: Html.Label("FFCNO")%>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "FFCNO","")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AccountInformations.Count.ToString() + "_" + "FFCNO" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Attention:")%>
+										<%: Html.Label("Attention")%>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "Attention","")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AccountInformations.Count.ToString() + "_" + "Attention" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Swift:")%>
+										<%: Html.Label("Swift")%>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "Swift","")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AccountInformations.Count.ToString() + "_" + "Swift" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("IBAN:")%>
+										<%: Html.Label("IBAN")%>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "IBAN","")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AccountInformations.Count.ToString() + "_" + "IBAN" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("Reference:")%>
+										<%: Html.Label("Reference")%>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "Reference","")%>
 										<%: Html.Span("", new { @id = "Disp_" + Model.AccountInformations.Count.ToString() + "_" + "Reference" })%>
 									</div>
 									<div class="editor-label">
-										<%: Html.Label("ByOrderOf:")%>
+										<%: Html.Label("ByOrderOf")%>
 									</div>
 									<div class="editor-field">
 										<%: Html.TextBox(Model.AccountInformations.Count + "_" + "ByOrderOf","")%>

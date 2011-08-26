@@ -7,6 +7,35 @@
 			editInvestor.selectInvestor(id);
 		}
 	}
+	,save: function (frm) {
+		try {
+			var loading=$("#UpdateLoading");
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			$.post("/Investor/Update",$(frm).serializeArray(),function (data) {
+				loading.empty();
+				if($.trim(data)!="") {
+					jAlert(data);
+				} else {
+					//location.href="/Investor/New";
+					var UpdateTargetId=$("#UpdateTargetId");
+					var InvestorId=$("#InvestorId",editInvestor.currentForm).val();
+					/*$(".InvestorUpdateLoading").remove();*/
+					setTimeout(function () {
+						$("#UpdateLoading",editInvestor.currentForm).html("");
+					},2000)
+					if($.trim(UpdateTargetId.html())!="") {
+						alert(UpdateTargetId.html());$(".InvestorUpdateLoading").remove();
+					} else {
+						alert("Investor Saved.");
+						editInvestor.selectInvestor(InvestorId);
+					}
+				}
+			});
+		} catch(e) {
+			alert(e);
+		}
+		return false;
+	}
 	,selectInvestor: function (id) {
 		$("#Loading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		var dt=new Date();

@@ -17,10 +17,10 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Equity is required")]
 		[StringLength(100, ErrorMessage = "Equity must be under 100 characters.")]
-		[DisplayName("Equity:")]
+		[DisplayName("Equity")]
 		public string Equity { get; set; }
 
-		[DisplayName("Enabled:")]
+		[DisplayName("Enabled")]
 		public bool Enabled { get; set; }
 	}
 }

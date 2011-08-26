@@ -25,7 +25,7 @@ namespace DeepBlue.Models.Deal {
 			}
 		}
 
-		[DisplayName("Deemed Capital Call:")]
+		[DisplayName("Deemed Capital Call")]
 		public bool? IsDeemedCapitalCall { get; set; }
 
 		public bool IsManualCapitalCall { get; set; }

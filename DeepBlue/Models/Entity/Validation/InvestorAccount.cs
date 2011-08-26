@@ -35,7 +35,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[StringLength(50, ErrorMessage = "AccountOf must be under 50 characters.")]
+			[StringLength(50, ErrorMessage = "Account Of must be under 50 characters.")]
 			public global::System.String AccountOf {
 				get;
 				set;
@@ -47,7 +47,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[StringLength(50, ErrorMessage = "FFCNumber must be under 50 characters.")]
+			[StringLength(50, ErrorMessage = "FFC Number must be under 50 characters.")]
 			public global::System.String FFCNumber {
 				get;
 				set;
@@ -82,9 +82,8 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-
 		 
-			[StringLength(50, ErrorMessage = "BankName must be under 50 characters.")]
+			[StringLength(50, ErrorMessage = "Bank Name must be under 50 characters.")]
 			public global::System.String BankName {
 				get;
 				set;

@@ -14,24 +14,24 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Custom Field is required.")]
 		[StringLength(50, ErrorMessage = "Custom Field must be under 50 characters.")]
-		[DisplayName("Name:")]
+		[DisplayName("Name")]
 		public string CustomFieldText { get; set; }
 
 		[Required(ErrorMessage = "Module is required.")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Module is required")]
-		[DisplayName("Module:")]
+		[DisplayName("Module")]
 		public int ModuleId { get; set; }
 
 		[Required(ErrorMessage = "Data Type is required.")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Data Type is required")]
-		[DisplayName("DataType:")]
+		[DisplayName("DataType")]
 		public int DataTypeId { get; set; }
 
 		[StringLength(2000, ErrorMessage = "Optional Text must be under 2000 characters.")]
-		[DisplayName("Optional:")]
+		[DisplayName("Optional")]
 		public string OptionalText { get; set; }
 
-		[DisplayName("Search:")]
+		[DisplayName("Search")]
 		public bool Search { get; set; }
 
 		public List<SelectListItem> Modules { get; set; }
@@ -53,10 +53,10 @@ namespace DeepBlue.Models.Admin {
 
 		public int CustomFieldId { get; set; }
 
-		[DisplayName("Text:")]
+		[DisplayName("Text")]
 		public string OptionText { get; set; }
 
-		[DisplayName("Default:")]
+		[DisplayName("Default")]
 		public bool IsDefault { get; set; }
 
 		public int SortOrder { get; set; }

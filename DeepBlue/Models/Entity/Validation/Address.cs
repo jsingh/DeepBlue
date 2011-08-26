@@ -57,6 +57,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
+			[Required(ErrorMessage = "State is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "State is required")]
 			public Nullable<global::System.Int32> State {
 				get;

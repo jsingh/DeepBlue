@@ -16,19 +16,19 @@ namespace DeepBlue.Models.Deal {
 	 
 		[Required(ErrorMessage = "Direct is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Direct is required")]
-		[DisplayName("Direct-")]
+		[DisplayName("Direct")]
 		public int EquityId { get; set; }
 	 
-		[DisplayName("Direct Type-")]
+		[DisplayName("Direct Type")]
 		public int SecurityTypeId { get; set; }
 
-		[DisplayName("Direct Symbol-")]
+		[DisplayName("Direct Symbol")]
 		public string Symbol { get; set; }
 
 		[Required(ErrorMessage = "Split Date is required")]
 		[DateRange(ErrorMessage = "Split Date is required")]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-		[DisplayName("Split Date-")]
+		[DisplayName("Split Date")]
 		public DateTime SplitDate { get; set; }
 
 	}

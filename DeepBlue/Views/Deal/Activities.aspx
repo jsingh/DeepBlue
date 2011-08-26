@@ -661,7 +661,7 @@
 				</div>
 				<div class="clear sec-box" id="SADetailBox" style="display: block; margin-top: 30px;">
 					<div class="editor-label">
-						<%: Html.Label("Corporate Action-") %>
+						<%: Html.Label("Corporate Action") %>
 					</div>
 					<div class="editor-field" style="margin-left: 10px">
 						<%: Html.DropDownList("ActivityTypeId", Model.ActivityTypes, new { @onchange = "javascript:dealActivity.changeAType(this);" })%>

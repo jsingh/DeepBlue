@@ -15,10 +15,10 @@ namespace DeepBlue.Models.Admin {
 		
 		[Required(ErrorMessage = "Reporting Type is required.")]
 		[StringLength(100, ErrorMessage = "Reporting Type must be under 100 characters.")]
-		[DisplayName("Reporting Type:")]
+		[DisplayName("Reporting Type")]
 		public string Reporting { get; set; }
 
-		[DisplayName("Enable:")]
+		[DisplayName("Enable")]
 		public bool Enabled { get; set; }
  
 	}

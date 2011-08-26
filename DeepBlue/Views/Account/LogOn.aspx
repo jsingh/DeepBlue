@@ -6,6 +6,7 @@
 <head runat="server">
 	<title>LogOn</title>
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
+	<%= Html.JavascriptInclueTag("LogOn.js")%>
 	<%= Html.StylesheetLinkTag("site.css")%>
 	<%= Html.StylesheetLinkTag("logon.css")%>
 </head>
@@ -23,42 +24,38 @@
 					Login</div>
 			</div>
 			<div id="logonmain">
-				<% using (Html.BeginForm()) { %>
-				<div class="editor-label">
-					<%: Html.LabelFor(m => m.UserName) %>
+				<div class="content">
+					<% using (Html.BeginForm("LogOn", "Account", FormMethod.Post, new { @onsubmit = "return logon.submit(this); " })) { %>
+					<div class="editor-label">
+						<%: Html.LabelFor(m => m.UserName)%>
+					</div>
+					<div class="editor-field">
+						<%: Html.TextBoxFor(m => m.UserName)%>
+						<%: Html.ValidationMessageFor(m => m.UserName)%>
+					</div>
+					<div class="editor-label">
+						<%: Html.LabelFor(m => m.Password)%>
+					</div>
+					<div class="editor-field">
+						<%: Html.PasswordFor(m => m.Password)%>
+						<%: Html.ValidationMessageFor(m => m.Password)%>
+					</div>
+					<div class="editor-field clear" style="float: right">
+						<%: Html.CheckBoxFor(m => m.RememberMe)%>
+						<%: Html.LabelFor(m => m.RememberMe)%>
+					</div>
+					<div class="editor-field clear" style="float: right">
+						<%: Html.ImageButton("Login.png")%>
+					</div>
+					<%: Html.ValidationMessageFor(m => m.Errors)%>
+					<% } %>
 				</div>
-				<div class="editor-field">
-					<%: Html.TextBoxFor(m => m.UserName) %>
-					<%: Html.ValidationMessageFor(m => m.UserName) %>
-				</div>
-				<div class="editor-label">
-					<%: Html.LabelFor(m => m.Password) %>
-				</div>
-				<div class="editor-field">
-					<%: Html.PasswordFor(m => m.Password) %>
-					<%: Html.ValidationMessageFor(m => m.Password) %>
-				</div>
-				<div class="editor-field clear" style="float: right">
-					<%: Html.CheckBoxFor(m => m.RememberMe) %>
-					<%: Html.LabelFor(m => m.RememberMe) %>
-				</div>
-				<div class="editor-field clear" style="float: right">
-					<%: Html.ImageButton("Login.png")%>
-				</div>
-				<%: Html.ValidationMessageFor(m => m.Errors)%>
-				<% } %>
 			</div>
 		</div>
 	</div>
 	<%Html.RenderPartial("Footer");%>
 	<script type="text/javascript">
-		$(document).ready(function () {
-			var err="";
-			$(".field-validation-error").each(function () { err+=this.innerHTML+"\n"; });
-			if($.trim(err)!="") {
-				alert(err);
-			}
-		});
+		$(document).ready(function () { logon.init(); });	
 	</script>
 </body>
 </html>

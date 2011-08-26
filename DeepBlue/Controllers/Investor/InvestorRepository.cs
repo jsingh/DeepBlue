@@ -179,7 +179,7 @@ namespace DeepBlue.Controllers.Investor {
 														  label = investor.InvestorName + " (" + investor.Social + ")",
 														  value = investor.InvestorName
 													  });
-				return new PaginatedList<AutoCompleteList>(query, 1, 20);
+				return new PaginatedList<AutoCompleteList>(query, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
 
@@ -193,7 +193,7 @@ namespace DeepBlue.Controllers.Investor {
 														  label = investor.InvestorName + " (" + investor.Social + ")",
 														  value = investor.InvestorName
 													  });
-				return new PaginatedList<AutoCompleteList>(query, 1, 20);
+				return new PaginatedList<AutoCompleteList>(query, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
 
@@ -235,6 +235,37 @@ namespace DeepBlue.Controllers.Investor {
 						 select investor.InvestorID).Count()) > 0 ? true : false;
 			}
 		}
+
+		public IEnumerable<ErrorInfo> SaveInvestorFundTransaction(InvestorFundTransaction investorFundTransaction) {
+			return investorFundTransaction.Save();
+		}
+
 		#endregion
+
+		#region Investor Address
+		public InvestorAddress FindInvestorAddress(int investorAddressId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.InvestorAddresses.Where(investorAddress => investorAddress.InvestorAddressID == investorAddressId).SingleOrDefault();
+			}
+		}
+		public IEnumerable<ErrorInfo> SaveInvestorAddress(InvestorAddress investorAddress) {
+			return investorAddress.Save();
+		}
+
+		#endregion
+
+		#region Investor Communication
+		public InvestorCommunication FindInvestorCommunication(int investorCommunicationId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.InvestorCommunications.Where(investorCommunication => investorCommunication.InvestorCommunicationID == investorCommunicationId).SingleOrDefault();
+			}
+		}
+		public IEnumerable<ErrorInfo> SaveInvestorCommunication(InvestorCommunication investorCommunication) {
+			return investorCommunication.Save();
+		}
+		#endregion
+
+
+	
 	}
 }

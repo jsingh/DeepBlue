@@ -336,9 +336,6 @@ label {
 .editor-field {
 	width: 155px;
 }
-.display-field {
-	padding: 5px;
-}
 .edit-info {
 	clear: both;
 	float: left;
@@ -908,6 +905,9 @@ input.ui-autocomplete-loading[type="text"] {
 	position: absolute;
 	white-space: nowrap;
 }
+.submitbtn{
+	cursor: pointer;
+}
 /* Grid */
 .grid {
 	width: 100%;
@@ -1163,4 +1163,5 @@ input.ui-autocomplete-loading[type="text"] {
 ,.bDiv table .jqComboBox .left {
 	    width: 80%;
 }
+
 /* End jQuery Transform */

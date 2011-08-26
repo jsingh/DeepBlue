@@ -11,29 +11,29 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.CapitalCall {
 	public class CreateReceiveModel {
 
-		[DisplayName("Fund:")]
+		[DisplayName("Fund")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
 		public int FundId { get; set; }
 
-		[DisplayName("Fund Name:")]
+		[DisplayName("Fund Name")]
 		public string FundName { get; set; }
 
-		[DisplayName("Capital Call#:")]
+		[DisplayName("Capital Call#")]
 		public string CapitalCallNumber { get; set; }
 
 		public int CapitalCallId { get; set; }
 
-		[DisplayName("Capital Call Amount:")]
+		[DisplayName("Capital Call Amount")]
 		[Required(ErrorMessage = "Capital Call Amount is required")]
 		[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "Capital Call Amount is required")]
 		public decimal CapitalAmountCalled { get; set; }
 
-		[DisplayName("Capital Call Date:")]
+		[DisplayName("Capital Call Date")]
 		[Required(ErrorMessage = "Capital Call Date is required")]
         [DateRange()]
 		public DateTime CapitalCallDate { get; set; }
 
-		[DisplayName("Capital Call Due Date:")]
+		[DisplayName("Capital Call Due Date")]
 		[Required(ErrorMessage = "Capital Call Due Date is required")]
         [DateRange()]
 		public DateTime CapitalCallDueDate { get; set; }

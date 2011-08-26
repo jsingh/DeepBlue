@@ -15,10 +15,10 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Geography is required.")]
 		[StringLength(100, ErrorMessage = "Geography must be under 100 characters.")]
-		[DisplayName("Geography:")]
+		[DisplayName("Geography")]
 		public string Geography { get; set; }
 
-		[DisplayName("Enable:")]
+		[DisplayName("Enable")]
 		public bool Enabled { get; set; }
  
 	}

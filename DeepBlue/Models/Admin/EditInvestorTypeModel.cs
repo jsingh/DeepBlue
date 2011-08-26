@@ -19,10 +19,10 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Investor Type is required")]
 		[StringLength(20, ErrorMessage = "Investor Type must be under 20 characters.")]
-		[DisplayName("Investor Type Name:")]
+		[DisplayName("Investor Type Name")]
 		public string InvestorTypeName { get; set; }
 
-		[DisplayName("Enable:")]
+		[DisplayName("Enable")]
 		public bool Enabled { get; set; }
 
 	}

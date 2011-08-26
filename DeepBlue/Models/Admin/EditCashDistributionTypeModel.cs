@@ -21,10 +21,10 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Cash Distribution Type is required")]
 		[StringLength(50, ErrorMessage = "Cash Distribution Type must be under 50 characters.")]
-		[DisplayName("Name:")]
+		[DisplayName("Name")]
 		public string Name { get; set; }
 
-		[DisplayName("Enable:")]
+		[DisplayName("Enable")]
 		public bool Enabled { get; set; }
 
 	}

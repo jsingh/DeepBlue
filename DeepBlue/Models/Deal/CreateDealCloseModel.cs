@@ -26,16 +26,16 @@ namespace DeepBlue.Models.Deal {
 		public int FundId { get; set; }
 				
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Deal Close Number is required")]
-		[DisplayName("Deal Close #:")]
+		[DisplayName("Deal Close #")]
 		public int? DealNumber { get; set; }
 
 		[Required(ErrorMessage = "Close Date is required")]
 		[DateRange()]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-		[DisplayName("Close Date:")]
+		[DisplayName("Close Date")]
 		public DateTime CloseDate { get; set; }
 
-		[DisplayName("Final Close:")]
+		[DisplayName("Final Close")]
 		public bool IsFinalClose { get; set; }
 
         public string DealName { get; set; }

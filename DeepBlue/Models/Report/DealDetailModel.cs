@@ -10,12 +10,12 @@ namespace DeepBlue.Models.Report {
 
 		[Required(ErrorMessage = "Fund is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
-		[DisplayName("Fund-")]
+		[DisplayName("Fund")]
 		public int FundId { get; set; }
 
 		[Required(ErrorMessage = "Deal is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Deal is required")]
-		[DisplayName("Deal-")]
+		[DisplayName("Deal")]
 		public int DealId { get; set; }
 
 	}

@@ -15,10 +15,10 @@ namespace DeepBlue.Models.Admin {
 		
 		[Required(ErrorMessage = "Share Class is required.")]
 		[StringLength(100, ErrorMessage = "Share Class must be under 100 characters.")]
-		[DisplayName("ShareClass:")]
+		[DisplayName("ShareClass")]
 		public string ShareClass { get; set; }
 
-		[DisplayName("Enable:")]
+		[DisplayName("Enable")]
 		public bool Enabled { get; set; }
  
 	}

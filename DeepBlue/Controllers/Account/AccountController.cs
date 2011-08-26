@@ -32,7 +32,9 @@ namespace DeepBlue.Controllers.Account {
 		//
 		// POST: /Account/LogOn
 		[HttpPost]
-		public ActionResult LogOn(LogOnModel model, string returnUrl) {
+		public ActionResult LogOn(FormCollection collection, string returnUrl) {
+			LogOnModel model = new LogOnModel();
+			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
 				bool isAuthenticated = false;
 				ENTITY entity = AccountRepository.FetchUserEntity(AppSettingsHelper.CurrentEntityID);

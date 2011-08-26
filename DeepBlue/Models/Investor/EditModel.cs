@@ -25,25 +25,34 @@ namespace DeepBlue.Models.Investor {
 
 		public SelectListModel SelectList = new SelectListModel();
 
-		[DisplayName("InvestorName:")]
+		[DisplayName("InvestorName")]
 		public string InvestorName { get; set; }
 
-		[DisplayName("DisplayName:")]
+		[DisplayName("DisplayName")]
 		public string DisplayName { get; set; }
 
-		[DisplayName("Notes:")]
+		[DisplayName("FOIA")]
+		public bool FOIA { get; set; }
+
+		[DisplayName("Source")]
+		public int Source { get; set; }
+
+		[DisplayName("ERISA")]
+		public bool ERISA { get; set; }
+
+		[DisplayName("Notes")]
 		public string Notes { get; set; }
 		
-		[DisplayName("Social Security/Tax Id:")]
+		[DisplayName("Social Security/Tax Id")]
 		public string SocialSecurityTaxId { get; set; }
 
-		[DisplayName("State of Residency:")]
+		[DisplayName("State of Residency")]
 		public int StateOfResidency { get; set; }
 
-		[DisplayName("EntityType:")]
+		[DisplayName("EntityType")]
 		public int EntityType { get; set; }
 
-		[DisplayName("Domestic/Foreign:")]
+		[DisplayName("Domestic/Foreign")]
 		public bool DomesticForeign { get; set; }
 
 		public List<AddressInformation> AddressInformations { get; set; }
@@ -57,6 +66,7 @@ namespace DeepBlue.Models.Investor {
 		public int id { get; set; }
 
 		public CustomFieldModel CustomField { get; set; }
+ 
 	}
 
 	public class AddressInformation {
@@ -76,35 +86,41 @@ namespace DeepBlue.Models.Investor {
 
 		public int AddressId { get; set; }
 
-		[DisplayName("Telephone No:")]
+		[DisplayName("Telephone No")]
 		public string Phone { get; set; }
 
-		[DisplayName("Fax No:")]
+		[DisplayName("Fax No")]
 		public string Fax { get; set; }
 
-		[DisplayName("Email:")]
+		[DisplayName("Email")]
 		public string Email { get; set; }
 
-		[DisplayName("Web Address:")]
+		[DisplayName("Web Address")]
 		public string WebAddress { get; set; }
 
-		[DisplayName("Address1:")]
+		[DisplayName("Address1")]
 		public string Address1 { get; set; }
 
-		[DisplayName("Address2:")]
+		[DisplayName("Address2")]
 		public string Address2 { get; set; }
 
-		[DisplayName("City:")]
+		[DisplayName("City")]
 		public string City { get; set; }
 
-		[DisplayName("State:")]
+		[DisplayName("State")]
 		public int State { get; set; }
 
-		[DisplayName("Zip:")]
+		public string StateName { get; set; }
+
+		[DisplayName("Zip")]
 		public string Zip { get; set; }
 
-		[DisplayName("Country:")]
+		[DisplayName("Country")]
 		public int Country { get; set; }
+
+		public string CountryName { get; set; }
+
+		public int InvestorCommunicationId { get; set; }
 	}
 
 	public class ContactInformation {
@@ -133,52 +149,52 @@ namespace DeepBlue.Models.Investor {
 
 		public int ContactAddressId { get; set; }
 
-		[DisplayName("Contact Person:")]
+		[DisplayName("Contact Person")]
 		public string ContactPerson { get; set; }
 
-		[DisplayName("Designation:")]
+		[DisplayName("Designation")]
 		public string Designation { get; set; }
 
-		[DisplayName("Telephone No:")]
+		[DisplayName("Telephone No")]
 		public string ContactPhoneNumber { get; set; }
 
-		[DisplayName("Fax No:")]
+		[DisplayName("Fax No")]
 		public string ContactFaxNumber { get; set; }
 
-		[DisplayName("Email:")]
+		[DisplayName("Email")]
 		public string ContactEmail { get; set; }
 
-		[DisplayName("Web Address:")]
+		[DisplayName("Web Address")]
 		public string ContactWebAddress { get; set; }
 
-		[DisplayName("Address1:")]
+		[DisplayName("Address1")]
 		public string ContactAddress1 { get; set; }
 
-		[DisplayName("Address2:")]
+		[DisplayName("Address2")]
 		public string ContactAddress2 { get; set; }
 
-		[DisplayName("City:")]
+		[DisplayName("City")]
 		public string ContactCity { get; set; }
 
-		[DisplayName("State:")]
+		[DisplayName("State")]
 		public int ContactState { get; set; }
 
-		[DisplayName("Zip:")]
+		[DisplayName("Zip")]
 		public string ContactZip { get; set; }
 
-		[DisplayName("Country:")]
+		[DisplayName("Country")]
 		public int ContactCountry { get; set; }
 
-		[DisplayName("Receives Distribution/Capital Call Notices:")]
+		[DisplayName("Receives Distribution/Capital Call Notices")]
 		public bool DistributionNotices { get; set; }
 
-		[DisplayName("Financials:")]
+		[DisplayName("Financials")]
 		public bool Financials { get; set; }
 
-		[DisplayName("K1:")]
+		[DisplayName("K1")]
 		public bool K1 { get; set; }
 
-		[DisplayName("Investor Letters:")]
+		[DisplayName("Investor Letters")]
 		public bool InvestorLetters { get; set; }
 	}
 
@@ -200,37 +216,37 @@ namespace DeepBlue.Models.Investor {
 
 		public int AccountId { get; set; }
 
-		[DisplayName("Bank Name:")]
+		[DisplayName("Bank Name")]
 		public string BankName { get; set; }
 
-		[DisplayName("Account #:")]
+		[DisplayName("Account #")]
 		public string AccountNumber { get; set; }
 
-		[DisplayName("ABA #:")]
+		[DisplayName("ABA #")]
 		public string ABANumber { get; set; }
 
-		[DisplayName("Account Of:")]
+		[DisplayName("Account Of")]
 		public string AccountOf { get; set; }
 
-		[DisplayName("FFC:")]
+		[DisplayName("FFC")]
 		public string FFC { get; set; }
 
-		[DisplayName("FFC#:")]
+		[DisplayName("FFC#")]
 		public string FFCNO { get; set; }
 
-		[DisplayName("Swift:")]
+		[DisplayName("Swift")]
 		public string Swift { get; set; }
 
-		[DisplayName("IBAN:")]
+		[DisplayName("IBAN")]
 		public string IBAN { get; set; }
 
-		[DisplayName("By Order Of:")]
+		[DisplayName("By Order Of")]
 		public string ByOrderOf { get; set; }
 
-		[DisplayName("Reference:")]
+		[DisplayName("Reference")]
 		public string Reference { get; set; }
 
-		[DisplayName("Attention:")]
+		[DisplayName("Attention")]
 		public string Attention { get; set; }
 	}
 

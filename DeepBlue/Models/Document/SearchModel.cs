@@ -8,13 +8,13 @@ using System.ComponentModel;
 namespace DeepBlue.Models.Document {
 	public class SearchModel {
 
-		[DisplayName("Date-")]
+		[DisplayName("Date")]
 		public DateTime FromDate { get; set; }
 
 		[DisplayName("To")]
 		public DateTime ToDate { get; set; }
 
-		[DisplayName("For-")]
+		[DisplayName("For")]
 		public int DocumentStatus { get; set; }
 
 		public string Search { get; set; }
@@ -23,13 +23,13 @@ namespace DeepBlue.Models.Document {
 
 		public int FundId { get; set; }
 
-		[DisplayName("Investor-")]
+		[DisplayName("Investor")]
 		public string InvestorName { get; set; }
 
-		[DisplayName("Fund-")]
+		[DisplayName("Fund")]
 		public string FundName { get; set; }
 		
-		[DisplayName("Document Type-")]
+		[DisplayName("Document Type")]
 		public int DocumentTypeId { get; set; }
 		
 		/* Document Type */

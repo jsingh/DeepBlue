@@ -42,8 +42,8 @@
 	,checkWebAddress: function (txt) {
 		if($.trim(txt.value)!="") {
 			if(txt.value.toLowerCase().indexOf("http://")<0&&txt.value.toLowerCase().indexOf("https://")<0) { txt.value="http://"+txt.value; }
-			var rExp=new RegExp("^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$");
-			if(rExp.test(txt.value)==false) { alert("Invalid Web Address");txt.value=""; }
+			//var rExp=new RegExp("^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$");
+			//if(rExp.test(txt.value)==false) { alert("Invalid Web Address");txt.value=""; }
 		}
 	}
 	,checkNum: function (data) {
@@ -268,6 +268,7 @@
 		$(".exportlist").hide();
 	}
 	,loadingHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading..."; }
+	,savingHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving..."; }
 	,jqCheckBox: function (target) { $(":input:checkbox",target).jqCheckBox(); }
 	,jqComboBox: function (target) { $("select",target).combobox(); }
 }

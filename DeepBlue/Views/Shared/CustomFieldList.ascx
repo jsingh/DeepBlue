@@ -11,7 +11,7 @@
 	<%} else {%>
 	<div class="editor-label">
 		<%}%>
-		<%: Html.Label(item.CustomFieldText + ":") %>
+		<%: Html.Label(item.CustomFieldText + "") %>
 	</div>
 	<div class="editor-field">
 		<% switch ((DeepBlue.Models.Admin.Enums.CustomFieldDataType)item.DataTypeId) {%>

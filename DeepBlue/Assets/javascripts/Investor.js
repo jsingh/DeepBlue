@@ -1,61 +1,92 @@
 ﻿var investor={
-	createAccount: function () {
-		var AccountLength=parseInt($("#AccountLength").val());
-		var AccountInfo=document.createElement("div");
-		AccountInfo.id="AccountInfo_"+(AccountLength+1);
-		AccountInfo.className="accountinfo";
-		AccountInfo.innerHTML=$("#AccountInfo").html().replace(/1_/g,(AccountLength+1)+"_");
-		$("input[type!='hidden'][type!='checkbox']",AccountInfo).val("");
-		$("select",AccountInfo).val("");
-		$("#AccountLength").val(AccountLength+1);
-		//$("#index",AccountInfo).html(AccountLength+1);
-		$(".custom-validation",AccountInfo).remove();
-		$(".add",AccountInfo).remove();
-		$(".delete",AccountInfo).css("display","block");
-		$("#AccountInfoBox").append(AccountInfo);
+	newContactDetail: null
+	,createAccount: function () {
+		var accountLength=$("#AccountLength");
+		var total=parseInt(accountLength.val());
+		accountLength.val(total+1);
+		var data={ i: accountLength.val() };
+		$("#BankInformationTemplate").tmpl(data).appendTo($("#AccountInfoBox"));
+	}
+	,save: function (frm) {
+		try {
+			var loading=$("#UpdateLoading");
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			$.post("/Investor/Create",$(frm).serializeArray(),function (data) {
+				loading.empty();
+				if($.trim(data)!="") {
+					jAlert(data);
+				} else {
+					alert("Investor Saved.");
+					//location.href="/Investor/New";
+				}
+			});
+		} catch(e) {
+			alert(e);
+		}
+		return false;
 	}
 	,deleteAccount: function (that) {
 		if(confirm("Are you sure you want to delete this Account?")) {
 			var AccountInfo=$(that).parents(".accountinfo").get(0);
-			var AccountLength=parseInt($("#AccountLength").val());
-			$("#AccountLength").val(AccountLength-1);
 			$(AccountInfo).remove();
 		}
 	}
-	,changeCountry: function (CountryId,StateId,StateRow) {
-		var country=document.getElementById(CountryId);
-		var state=document.getElementById(StateId);
-		var staterow=document.getElementById(StateRow);
-		state.value=52;
-		if(country.options[country.selectedIndex].text!="United States") {
-			staterow.style.display="none";
+	,changeCountry: function (item) {
+		var country=$("#Country");
+		country.val(item.id);
+		var state=$("#State");
+		var staterow=$("#StateRow");
+		var stateName=$("#StateName");
+		state.val(52);
+		if(item.label!="United States") {
+			staterow.hide();
 		} else {
-			staterow.style.display="";
-			state.value=0;
+			staterow.show();
+			stateName.val("");
+			state.val(0);
 		}
 	}
 	,createContact: function () {
-		var ContactLength=parseInt($("#ContactLength").val());
-		var ContactInfo=document.createElement("div");
-		ContactInfo.id="ContactInfo_"+(ContactLength+1);
-		ContactInfo.className="contactinfo";
-		ContactInfo.innerHTML=$("#ContactInfo").html().replace(/1_/g,(ContactLength+1)+"_");
-		$("input[type!='hidden'][type!='checkbox']",ContactInfo).val("");
-		$("select",ContactInfo).val(0);
-		$("#ContactLength").val(ContactLength+1);
-		//$("#index",ContactInfo).html(ContactLength+1);
-		$(".custom-validation",ContactInfo).remove();
-		$(".delete",ContactInfo).css("display","block");
-		$(".add",ContactInfo).remove();
-		$("#ContactInfoBox").append(ContactInfo);
-		$("select[name='"+(ContactLength+1)+"_ContactCountry']",ContactInfo).val(225);
-		$("'#"+(ContactLength+1)+"_StateRow'",ContactInfo).show();
+		var contactLength=$("#ContactLength");
+		var total=parseInt(contactLength.val());
+		contactLength.val(total+1);
+		var data=investor.newContactDetail;
+		data.i=contactLength.val();
+		$("#ContactInformationTemplate").tmpl(data).appendTo($("#ContactInfoBox"));
+		var newContact=$("#ContactInfo"+data.i,"#ContactInfoBox");
+		jHelper.jqComboBox(newContact);
+		jHelper.jqCheckBox(newContact);
+
+		$("#"+data.i+"_ContactCountryName",newContact)
+			.autocomplete({ source: "/Admin/FindCountrys",minLength: 1
+			,select: function (event,ui) {
+				$("#"+data.i+"_ContactCountry",newContact).val(ui.item.id);
+				var stateRow=$("#"+data.i+"_StateRow");
+				var state=$("#"+data.i+"_ContactState");
+				var stateName=$("#"+data.i+"_ContactStateName");
+				state.val(52);
+				if(ui.item.label!="United States") {
+					stateRow.hide();
+				} else {
+					stateRow.show();
+					stateName.val("");
+					state.val(0);
+				}
+			}
+			,appendTo: "body",delay: 300
+			});
+
+		$("#"+data.i+"_ContactStateName",newContact)
+			.autocomplete({ source: "/Admin/FindStates",minLength: 1
+			,select: function (event,ui) {
+				$("#"+data.i+"_ContactState",newContact).val(ui.item.id);
+			}
+			,appendTo: "body",delay: 300
+			});
 	}
 	,deleteContact: function (that) {
 		if(confirm("Are you sure you want to delete this Contact?")) {
 			var ContactInfo=$(that).parents(".contactinfo").get(0);
-			var ContactLength=parseInt($("#ContactLength").val());
-			$("#ContactLength").val(ContactLength-1);
 			$(ContactInfo).remove();
 		}
 	}
@@ -87,24 +118,6 @@
 				return true;
 			}
 		}
-		/*var validForm=true;
-		var AccountLength=parseInt($("#AccountLength").val());
-		var index;
-		for(index=1;index<AccountLength+1;index++) {
-		validForm=this.checkInputValid(index+"_BankName");
-		validForm=this.checkInputValid(index+"_AccountNumber");
-		}
-		var ContactLength=parseInt($("#ContactLength").val());
-		var index;
-		for(index=1;index<ContactLength+1;index++) {
-		//validForm=this.checkInputValid(index+"_ContactPerson");
-		//validForm=this.checkSelectValid(index+"_ContactState");
-		//validForm=this.checkSelectValid(index+"_ContactCountry");
-		//validForm=this.checkEmail(index+"_ContactEmail");
-		//validForm=this.checkZip(index+"_ContactZip");
-		//validForm=this.checkPhone(index+"_ContactPhoneNumber");
-		}
-		return validForm;*/
 	}
 	,checkEmail: function (name) {
 		if(this.checkInputValid(name)) {

@@ -17,19 +17,19 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Fund is required.")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
-		[DisplayName("Fund:")]
+		[DisplayName("Fund")]
 		public int FundId { get; set; }
 
 		[Required(ErrorMessage = "Name is required.")]
 		[StringLength(50, ErrorMessage = "Name must be under 50 characters.")]
-		[DisplayName("Name:")]
+		[DisplayName("Name")]
 		public string Name { get; set; }
 
 		[Required(ErrorMessage = "Closing Date is required.")]
-		[DisplayName("Closing Date:")]
+		[DisplayName("Closing Date")]
 		public DateTime? FundClosingDate { get; set; }
 
-		[DisplayName("First Closing:")]
+		[DisplayName("First Closing")]
 		public bool IsFirstClosing { get; set; }
 
 		public List<SelectListItem> FundNames { get; set; }

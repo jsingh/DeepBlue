@@ -13,17 +13,21 @@
 	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
 	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
+	<%= Html.JavascriptInclueTag("DeepBlue.js")%>
 	<%= Html.JavascriptInclueTag("jsDate.js")%>
 	<%= Html.JavascriptInclueTag("jHelper.js")%>
 	<%= Html.StylesheetLinkTag("site.css")%>
 	<%= Html.StylesheetLinkTag("popup.css")%>
 	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
 </head>
-<body style="background-image:none">
+<body style="background-image: none">
 	<div>
 		<asp:ContentPlaceHolder ID="MainContent" runat="server">
 		</asp:ContentPlaceHolder>
 	</div>
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
+	<script type="text/javascript">
+		deepBlue.ajaxSetup();
+	</script>
 </body>
 </html>

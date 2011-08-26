@@ -21,15 +21,15 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Communication Type is required")]
 		[StringLength(20, ErrorMessage = "Communication Type must be under 20 characters.")]
-		[DisplayName("Name:")]
+		[DisplayName("Name")]
 		public string CommunicationTypeName { get; set; }
 
-		[DisplayName("Enable:")]
+		[DisplayName("Enable")]
 		public bool Enabled { get; set; }
 
 		[Required(ErrorMessage = "Communication Group is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Communication Group is required")]
-		[DisplayName("Communication Group:")]
+		[DisplayName("Communication Group")]
 		public int CommunicationGroupId { get; set; }
 
 		public List<SelectListItem> CommunicationGroupings { get; set; }

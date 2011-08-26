@@ -2417,7 +2417,16 @@ namespace DeepBlue.Controllers.Admin {
 			return Json(AdminRepository.FindCountrys(term), JsonRequestBehavior.AllowGet);
 		}
 		#endregion
-
+		
+		#region State
+		//
+		// GET: /Admin/FindStates
+		[HttpGet]
+		public JsonResult FindStates(string term) {
+			return Json(AdminRepository.FindStates(term), JsonRequestBehavior.AllowGet);
+		}
+		#endregion
+		
 		#region Currency
 		//
 		// GET: /Admin/Currency
@@ -2663,6 +2672,162 @@ namespace DeepBlue.Controllers.Admin {
 		public JsonResult FindDealContacts(string term) {
 			return Json(AdminRepository.FindDealContacts(term), JsonRequestBehavior.AllowGet);
 		}
+		#endregion
+
+		#region User
+
+		[AdminAuthorize()]
+		public ActionResult User() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "UserManagement";
+			ViewData["PageName"] = "User";
+			return View();
+		}
+
+		//
+		// GET: /Admin/UserList
+		[HttpGet]
+		public JsonResult UserList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<USER> Users = AdminRepository.GetAllUsers(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var user in Users) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {
+					  user.UserID,
+					  user.FirstName,
+					  user.LastName,
+					  user.Login,
+					  user.Email,
+					  user.Enabled,
+					  user.MiddleName,
+					  user.IsAdmin,
+					  user.PhoneNumber
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditUser
+		[HttpGet]
+		public ActionResult EditUser(int id) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			USER user = AdminRepository.FindUser(id);
+			flexgridData.total = totalRows;
+			flexgridData.page = 0;
+			flexgridData.rows.Add(new FlexigridRow {
+				cell = new List<object> {
+					  user.UserID,
+					  user.FirstName,
+					  user.LastName,
+					  user.Login,
+					  user.Email,
+					  user.Enabled,
+					  user.MiddleName,
+					  user.IsAdmin,
+					  user.PhoneNumber
+				}
+			});
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/UpdateUser
+		[HttpPost]
+		public ActionResult UpdateUser(FormCollection collection) {
+			EditUserModel model = new EditUserModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = UserNameAvailable(model.Login, model.UserId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Login", ErrorMessage);
+			}
+			ErrorMessage = EmailAvailable(model.Email, model.UserId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Email", ErrorMessage);
+			}
+			if (model.ChangePassword) {
+				if(string.IsNullOrEmpty(model.Password))
+					ModelState.AddModelError("Password", "Password is required");
+			}
+			if (ModelState.IsValid) {
+				USER user = AdminRepository.FindUser(model.UserId);
+				if (user == null) {
+					user = new USER();
+					user.CreatedDate = DateTime.Now;
+				}
+				
+				user.EntityID = Authentication.CurrentEntity.EntityID;
+				user.LastUpdatedDate = DateTime.Now;
+				
+				user.FirstName = model.FirstName;
+				user.LastName = model.LastName;
+				user.MiddleName = model.MiddleName;
+				user.PhoneNumber = model.PhoneNumber;
+				if (model.ChangePassword) {
+					user.PasswordSalt = SecurityExtensions.CreateSalt();
+					user.PasswordHash = model.Password.CreateHash(user.PasswordSalt);
+				}
+				user.Login = model.Login;
+				user.Email = model.Email;
+				user.Enabled = model.Enabled;
+				user.IsAdmin = model.IsAdmin;
+
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveUser(user);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True||" + user.UserID;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteUser(int id) {
+			if (AdminRepository.DeleteUser(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string UserNameAvailable(string userName, int UserId) {
+			if (AdminRepository.UserNameAvailable(userName, UserId))
+				return "Username already exists.";
+			else
+				return string.Empty;
+		}
+
+
+		[HttpGet]
+		public string EmailAvailable(string email, int UserId) {
+			if (AdminRepository.EmailAvailable(email, UserId))
+				return "Email already exists.";
+			else
+				return string.Empty;
+		}
+
+
 		#endregion
 
 		public ActionResult Result() {

@@ -19,7 +19,9 @@ namespace DeepBlue.Controllers.Fund {
 																		   FundName = fund.FundName,
 																		   TaxId = fund.TaxID,
 																		   InceptionDate = fund.InceptionDate,
-																		   ScheduleTerminationDate = fund.ScheduleTerminationDate
+																		   ScheduleTerminationDate = fund.ScheduleTerminationDate,
+																		   CommitmentAmount = fund.InvestorFunds.Sum(investorfund => investorfund.TotalCommitment),
+																		   UnfundedAmount = fund.InvestorFunds.Sum(investorfund => investorfund.UnfundedAmount)
 																	   });
 				fundListQuery = fundListQuery.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<Models.Fund.FundListModel> paginatedList = new PaginatedList<Models.Fund.FundListModel>(fundListQuery, pageIndex, pageSize);
@@ -80,7 +82,7 @@ namespace DeepBlue.Controllers.Fund {
 																  label = funds.FirstOrDefault().FundName,
 																  value = funds.FirstOrDefault().FundName
 															  });
-				return new PaginatedList<AutoCompleteList>(fundListQuery, 1, 20);
+				return new PaginatedList<AutoCompleteList>(fundListQuery, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
 
@@ -94,7 +96,7 @@ namespace DeepBlue.Controllers.Fund {
 																  label = fund.FundName,
 																  value = fund.FundName
 															  });
-				return new PaginatedList<AutoCompleteList>(fundListQuery, 1, 20);
+				return new PaginatedList<AutoCompleteList>(fundListQuery, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
 

@@ -15,6 +15,7 @@ namespace DeepBlue {
 	
 	public class MvcApplication : System.Web.HttpApplication {
 
+ 
 		public static void RegisterRoutes(RouteCollection routes) {
 			
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -48,16 +49,7 @@ namespace DeepBlue {
 															   typeof(RemoteAttributeAdapter));
 		}
 
-		protected void Application_Error(object sender, EventArgs e) {
-
-			//get reference to the source of the exception chain
-			Exception ex = Server.GetLastError().GetBaseException();
-
-			if (ex.GetType().Name == "AuthenticationException") {
 		 
-			}
-			//Insert optional email notification here...
-		}
 
 	}
 }

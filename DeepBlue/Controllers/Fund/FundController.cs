@@ -42,11 +42,25 @@ namespace DeepBlue.Controllers.Fund {
 		// GET: /Fund/List
 		[HttpGet]
 		public ActionResult List(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			List<FundListModel> fundLists = FundRepository.GetAllFunds(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
-			ViewData["TotalRows"] = totalRows;
-			ViewData["PageNo"] = pageIndex;
-			return View(fundLists);
+			List<FundListModel> funds = FundRepository.GetAllFunds(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var fund in funds) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {
+							fund.FundId,
+							fund.FundName,
+							fund.TaxId,
+							fund.CommitmentAmount,
+							fund.UnfundedAmount,
+							(fund.InceptionDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"),
+							(fund.InceptionDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"),
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -99,12 +113,12 @@ namespace DeepBlue.Controllers.Fund {
 			}
 			if (fundDetail.BankDetail == null)
 				fundDetail.BankDetail = new List<FundBankDetail>();
-			
+
 			List<FundBankDetail> fundBankDetail;
 			fundBankDetail = (List<FundBankDetail>)fundDetail.BankDetail;
-			if (fundBankDetail.Count() == 0) 
+			if (fundBankDetail.Count() == 0)
 				fundBankDetail.Add(new FundBankDetail());
-			
+
 			/* Load Custom Fields */
 			fundDetail.CustomField = new CustomFieldModel();
 			fundDetail.CustomField.DisplayTwoColumn = true;

@@ -131,73 +131,73 @@
 	<div class="detail" style="display: none" id="BankInformation">
 		<div>
 			<div class="editor-label">
-				<%: Html.Label("Bank Name-") %>
+				<%: Html.Label("Bank Name") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("BankName", "${BankDetail[0].BankName}")%>
 			</div>
 			<div class="editor-label" style="clear: right">
-				<%: Html.Label("Account Number-") %>
+				<%: Html.Label("Account Number") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("AccountNo", "${BankDetail[0].AccountNo}")%>
 			</div>
 			<div class="editor-label" style="clear: right">
-				<%: Html.Label("ABA Number-") %>
+				<%: Html.Label("ABA Number") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("ABANumber", "${BankDetail[0].ABANumber}", new { @onkeydown = "return jHelper.isNumeric(event);" })%>
 			</div>
 			<div class="editor-label">
-				<%: Html.Label("Swift Code-")%>
+				<%: Html.Label("Swift Code")%>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("Swift", "${BankDetail[0].Swift}") %>
 			</div>
 			<div class="editor-label" style="clear: right">
-				<%: Html.Label("Account Number Cash-") %>
+				<%: Html.Label("Account Number Cash") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("AccountNumberCash", "${BankDetail[0].AccountNumberCash}")%>
 			</div>
 			<div class="editor-label" style="clear: right">
-				<%: Html.Label("FFC Number-") %>
+				<%: Html.Label("FFC Number") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("FFCNumber", "${BankDetail[0].FFCNumber}")%>
 			</div>
 			<div class="editor-label">
-				<%: Html.Label("IBAN-") %>
+				<%: Html.Label("IBAN") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("IBAN", "${BankDetail[0].IBAN}")%>
 			</div>
 			<div class="editor-label" style="clear: right">
-				<%: Html.Label("Reference-") %>
+				<%: Html.Label("Reference") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("Reference", "${BankDetail[0].Reference}")%>
 			</div>
 			<div class="editor-label" style="clear: right">
-				<%: Html.Label("Account Of-") %>
+				<%: Html.Label("Account Of") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("AccountOf", "${BankDetail[0].AccountOf}")%>
 			</div>
 			<div class="editor-label">
-				<%: Html.Label("Attention-") %>
+				<%: Html.Label("Attention") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("Attention", "${BankDetail[0].Attention}")%>
 			</div>
 			<div class="editor-label" style="clear: right">
-				<%: Html.Label("Telephone-") %>
+				<%: Html.Label("Telephone") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("Telephone", "${BankDetail[0].Telephone}")%>
 			</div>
 			<div class="editor-label" style="clear: right">
-				<%: Html.Label("Fax-") %>
+				<%: Html.Label("Fax") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("Fax", "${BankDetail[0].Fax}")%>

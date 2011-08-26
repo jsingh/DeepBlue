@@ -45,19 +45,25 @@
 						<th sortname="FundID" style="width: 1%; display: none;">
 							Fund Id
 						</th>
-						<th sortname="FundName" style="width: 40%">
+						<th sortname="FundName" style="width: 26%">
 							Fund Name
 						</th>
-						<th sortname="TaxId" style="width: 20%">
+						<th sortname="TaxId" style="width: 12%">
 							Tax ID
 						</th>
-						<th sortname="InceptionDate" style="width: 15%">
+						<th sortname="CommitmentAmount" style="width: 14%">
+							Committed Amount
+						</th>
+						<th sortname="UnfundedAmount" style="width: 14%">
+							Unfunded amount
+						</th>
+						<th sortname="InceptionDate" style="width: 14%">
 							Fund Start Date
 						</th>
-						<th sortname="ScheduleTerminationDate" style="width: 20%">
-							Schedule termination Date
+						<th sortname="ScheduleTerminationDate" style="width: 14%">
+							Schedule Termination Date
 						</th>
-						<th align="center" style="width: 5%">
+						<th align="right" style="width: 5%">
 						</th>
 					</tr>
 				</thead>

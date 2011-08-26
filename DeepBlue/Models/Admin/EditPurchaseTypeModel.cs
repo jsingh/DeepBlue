@@ -17,7 +17,7 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Purchase Type is required")]
 		[StringLength(50, ErrorMessage = "Purchase Type must be under 50 characters.")]
-		[DisplayName("Name:")]
+		[DisplayName("Name")]
 		public string Name { get; set; }
 	}
 }

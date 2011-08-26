@@ -7,6 +7,43 @@
 		}*/
 		editTransaction.resizeIframe();
 	}
+	,editCA: function (frm) {
+		try {
+			var loading=$("#UpdateEditCmtLoading","#EditCommitmentAmount");
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			$.post("/Transaction/UpdateCommitmentAmount",$(frm).serializeArray(),function (data) {
+				loading.empty();
+				if($.trim(data)!="True") {
+					alert(data);
+				} else {
+					alert("Committed Amount Saved");
+					jHelper.resetFields(frm);
+					parent.transactionController.closeEditTransactionDialog(true);
+				}
+			});
+		} catch(e) {
+			alert(e);
+		}
+		return false;
+	}
+	,save: function (frm) {
+		try {
+			var loading=$("#UpdateLoading","#EditTransaction");
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			$.post("/Transaction/CreateFundTransaction",$(frm).serializeArray(),function (data) {
+				loading.empty();
+				if($.trim(data)!="") {
+					alert(data);
+				} else {
+					alert("Transaction Saved");
+					parent.transactionController.closeEditTransactionDialog(true);
+				}
+			});
+		} catch(e) {
+			alert(e);
+		}
+		return false;
+	}
 	,resizeIframe: function () {
 		$("document").ready(function () {
 			var theFrame=$("#iframe_modal",parent.document.body);
@@ -19,12 +56,12 @@
 		var splitdetail=document.getElementById("splitdetail");
 		var CommitmentAmount=document.getElementById("CommitmentAmount");
 		splitdetail.style.display="none";
-		CommitmentAmount.innerHTML="Commitment Amount:";
+		CommitmentAmount.innerHTML="Commitment Amount";
 		if(rdo.checked) {
 			switch(rdo.value) {
 				case "5": // Split transction type
 					splitdetail.style.display="block";
-					CommitmentAmount.innerHTML="New Commitment Amount:";
+					CommitmentAmount.innerHTML="New Commitment Amount";
 					break;
 			}
 		}
@@ -48,7 +85,7 @@
 		var InvestorTypeRow=document.getElementById("InvestorTypeRow");
 		InvestorTypeRow.style.display="";
 		InvestorTypeId.value=0;
-		InvestorTypeId.style.display="";
+		InvestorTypeId.style.display="none";
 		disp_InvestorTypeId.style.display="none";
 		disp_InvestorTypeId.innerHTML="";
 		if(investorId>0) {

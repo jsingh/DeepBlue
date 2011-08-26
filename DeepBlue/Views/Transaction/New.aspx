@@ -5,11 +5,6 @@
 	New Transaction
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
-	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftAjax.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
 	<%=Html.JavascriptInclueTag("TransactionController.js") %>
 	<%=Html.JavascriptInclueTag("EditTransaction.js") %>
 </asp:Content>
@@ -17,7 +12,8 @@
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title">INVESTORS</span><span class="arrow"></span><span class="pname">Investor Commitment</span></div>
+				<span class="title">INVESTORS</span><span class="arrow"></span><span class="pname">Investor
+					Commitment</span></div>
 			<div class="rightcol">
 			</div>
 		</div>
@@ -30,7 +26,7 @@
 			</div>
 			<div class="editor-row">
 				<div class="editor-label auto-width" style="width: auto">
-					<%: Html.Label("Investor:") %>
+					<%: Html.Label("Investor") %>
 				</div>
 				<div class="editor-field auto-width">
 					<%: Html.TextBox("Investor", "", new { style = "width:200px" })%>&nbsp;<%=Html.Span("",new { id = "Loading" })%>
@@ -50,7 +46,7 @@
 					</div>
 					<div class="box-content">
 						<% Html.EnableClientValidation(); %>
-						<% using (Ajax.BeginForm("CreateInvestorFund", null, new AjaxOptions { HttpMethod = "Post", OnBegin = "transactionController.onCreateFundBegin", OnSuccess = "transactionController.onCreateFundSuccess" }, new { @id = "NewTransaction" })) {%>
+						<% using (Html.Form(new { @onsubmit = "return transactionController.save(this);" })) {%>
 						<%: Html.HiddenFor(model => model.InvestorId)%>
 						<div class="edit-left">
 							<div class="editor-row">
@@ -114,7 +110,7 @@
 								</div>
 								<div class="editor-button">
 									<div style="float: left; padding: 0 0 10px 5px;">
-										<%: Html.ImageButton("submit.png", new { @class="default-button", @onclick = "javascript:transactionController.showErrorMessage('NewTransaction');" })%>
+										<%: Html.ImageButton("submit.png", new { @class="default-button" })%>
 									</div>
 									<div style="float: left; padding: 0 0 10px 5px;">
 										<%: Html.Span("", new { @id = "UpdateLoading" })%>

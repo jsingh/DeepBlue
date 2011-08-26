@@ -19,15 +19,15 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "File Type Name is required")]
 		[StringLength(50, ErrorMessage = "File Type Name must be under 50 characters.")]
-		[DisplayName("Name:")]
+		[DisplayName("Name")]
 		public string FileTypeName { get; set; }
 
 		[StringLength(20, ErrorMessage = "File Extension must be under 20 characters.")]
-		[DisplayName("File Extension:")]
+		[DisplayName("File Extension")]
 		public string FileExtension { get; set; }
 
 		[StringLength(100, ErrorMessage = "Description must be under 100 characters.")]
-		[DisplayName("Description:")]
+		[DisplayName("Description")]
 		public string Description { get; set; }
 
 	}

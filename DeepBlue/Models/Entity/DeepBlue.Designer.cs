@@ -61,6 +61,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Deal_PurchaseType", "PurchaseType", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.PurchaseType), "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Deal), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealClosing_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "DealClosing", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealClosing), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealClosingCost_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "DealClosingCost", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealClosingCost), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealFundDocument_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Deal), "DealFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealFundDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingDirect_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "DealUnderlyingDirect", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingDirect), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingFund_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "DealUnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "UnderlyingFundCapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCallLineItem), true)]
@@ -68,6 +69,9 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingDirect_DealClosing", "DealClosing", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.DealClosing), "DealUnderlyingDirect", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingDirect), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingFund_DealClosing", "DealClosing", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.DealClosing), "DealUnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealClosingCost_DealClosingCostType", "DealClosingCostType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DealClosingCostType), "DealClosingCost", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealClosingCost), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealFundDocument_DocumentType", "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DocumentType), "DealFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealFundDocument), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealFundDocument_File", "File", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.File), "DealFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealFundDocument), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealFundDocument_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Fund), "DealFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealFundDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingDirect_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "DealUnderlyingDirect", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingDirect), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_SecurityConversionDetail_DealUnderlyingDirect", "DealUnderlyingDirect", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DealUnderlyingDirect), "SecurityConversionDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.SecurityConversionDetail), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingFund_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "DealUnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingFund), true)]
@@ -75,6 +79,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_DocumentType", "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DocumentType), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectDocument_DocumentType", "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DocumentType), "UnderlyingDirectDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundDocument_DocumentType", "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DocumentType), "UnderlyingFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundDocument), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_USER_ENTITY", "ENTITY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.ENTITY), "USER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.USER), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Equity_EquityType", "EquityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.EquityType), "Equity", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Equity), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Equity_Industry", "Industry", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Industry), "Equity", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Equity), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Equity_Issuer", "Issuer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Issuer), "Equity", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Equity), true)]
@@ -143,11 +148,6 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_UnderlyingFundCapitalCallID", "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), "UnderlyingFundCapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCallLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), "UnderlyingFundNAVHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAVHistory), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_UnderlyingFundStockDistribution", "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), "UnderlyingFundStockDistributionLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistributionLineItem), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealFundDocument_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Deal), "DealFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealFundDocument), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealFundDocument_DocumentType", "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DocumentType), "DealFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealFundDocument), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealFundDocument_File", "File", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.File), "DealFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealFundDocument), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealFundDocument_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Fund), "DealFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealFundDocument), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_USER_ENTITY", "ENTITY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.ENTITY), "USER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.USER), true)]
 
 #endregion
 
@@ -650,6 +650,22 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<DealFundDocument> DealFundDocuments
+        {
+            get
+            {
+                if ((_DealFundDocuments == null))
+                {
+                    _DealFundDocuments = base.CreateObjectSet<DealFundDocument>("DealFundDocuments");
+                }
+                return _DealFundDocuments;
+            }
+        }
+        private ObjectSet<DealFundDocument> _DealFundDocuments;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<DealUnderlyingDirect> DealUnderlyingDirects
         {
             get
@@ -710,6 +726,22 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<DocumentType> _DocumentTypes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<ENTITY> ENTITies
+        {
+            get
+            {
+                if ((_ENTITies == null))
+                {
+                    _ENTITies = base.CreateObjectSet<ENTITY>("ENTITies");
+                }
+                return _ENTITies;
+            }
+        }
+        private ObjectSet<ENTITY> _ENTITies;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1642,38 +1674,6 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<DealFundDocument> DealFundDocuments
-        {
-            get
-            {
-                if ((_DealFundDocuments == null))
-                {
-                    _DealFundDocuments = base.CreateObjectSet<DealFundDocument>("DealFundDocuments");
-                }
-                return _DealFundDocuments;
-            }
-        }
-        private ObjectSet<DealFundDocument> _DealFundDocuments;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<ENTITY> ENTITies
-        {
-            get
-            {
-                if ((_ENTITies == null))
-                {
-                    _ENTITies = base.CreateObjectSet<ENTITY>("ENTITies");
-                }
-                return _ENTITies;
-            }
-        }
-        private ObjectSet<ENTITY> _ENTITies;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<USER> USERs
         {
             get
@@ -1915,6 +1915,14 @@ namespace DeepBlue.Models.Entity
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the DealFundDocuments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDealFundDocuments(DealFundDocument dealFundDocument)
+        {
+            base.AddObject("DealFundDocuments", dealFundDocument);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the DealUnderlyingDirects EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToDealUnderlyingDirects(DealUnderlyingDirect dealUnderlyingDirect)
@@ -1944,6 +1952,14 @@ namespace DeepBlue.Models.Entity
         public void AddToDocumentTypes(DocumentType documentType)
         {
             base.AddObject("DocumentTypes", documentType);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ENTITies EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToENTITies(ENTITY eNTITY)
+        {
+            base.AddObject("ENTITies", eNTITY);
         }
     
         /// <summary>
@@ -2408,22 +2424,6 @@ namespace DeepBlue.Models.Entity
         public void AddToUnderlyingFundTypes(UnderlyingFundType underlyingFundType)
         {
             base.AddObject("UnderlyingFundTypes", underlyingFundType);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DealFundDocuments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDealFundDocuments(DealFundDocument dealFundDocument)
-        {
-            base.AddObject("DealFundDocuments", dealFundDocument);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the ENTITies EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToENTITies(ENTITY eNTITY)
-        {
-            base.AddObject("ENTITies", eNTITY);
         }
     
         /// <summary>
@@ -11438,6 +11438,28 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DealFundDocument_Deal", "DealFundDocument")]
+        public EntityCollection<DealFundDocument> DealFundDocuments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_Deal", "DealFundDocument");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_Deal", "DealFundDocument", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DealUnderlyingDirect_Deal", "DealUnderlyingDirect")]
         public EntityCollection<DealUnderlyingDirect> DealUnderlyingDirects
         {
@@ -11516,28 +11538,6 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundStockDistributionLineItem>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_Deal", "UnderlyingFundStockDistributionLineItem", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DealFundDocument_Deal", "DealFundDocument")]
-        public EntityCollection<DealFundDocument> DealFundDocuments
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_Deal", "DealFundDocument");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_Deal", "DealFundDocument", value);
                 }
             }
         }
@@ -14020,6 +14020,28 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DealFundDocument_DocumentType", "DealFundDocument")]
+        public EntityCollection<DealFundDocument> DealFundDocuments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_DocumentType", "DealFundDocument");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_DocumentType", "DealFundDocument", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_InvestorFundDocument_DocumentType", "InvestorFundDocument")]
         public EntityCollection<InvestorFundDocument> InvestorFundDocuments
         {
@@ -14076,28 +14098,6 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundDocument>("DeepBlueModel.FK_UnderlyingFundDocument_DocumentType", "UnderlyingFundDocument", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DealFundDocument_DocumentType", "DealFundDocument")]
-        public EntityCollection<DealFundDocument> DealFundDocuments
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_DocumentType", "DealFundDocument");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_DocumentType", "DealFundDocument", value);
                 }
             }
         }
@@ -15596,6 +15596,28 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DealFundDocument_File", "DealFundDocument")]
+        public EntityCollection<DealFundDocument> DealFundDocuments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_File", "DealFundDocument");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_File", "DealFundDocument", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_File_FileType", "FileType")]
         public FileType FileType
         {
@@ -15690,28 +15712,6 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundDocument>("DeepBlueModel.FK_UnderlyingFundDocument_File", "UnderlyingFundDocument", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DealFundDocument_File", "DealFundDocument")]
-        public EntityCollection<DealFundDocument> DealFundDocuments
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_File", "DealFundDocument");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_File", "DealFundDocument", value);
                 }
             }
         }
@@ -17124,6 +17124,28 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DealFundDocument_Fund", "DealFundDocument")]
+        public EntityCollection<DealFundDocument> DealFundDocuments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_Fund", "DealFundDocument");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_Fund", "DealFundDocument", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_FundAccount_Fund", "FundAccount")]
         public EntityCollection<FundAccount> FundAccounts
         {
@@ -17378,28 +17400,6 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundStockDistribution>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Fund", "UnderlyingFundStockDistribution", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DealFundDocument_Fund", "DealFundDocument")]
-        public EntityCollection<DealFundDocument> DealFundDocuments
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_Fund", "DealFundDocument");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DealFundDocument>("DeepBlueModel.FK_DealFundDocument_Fund", "DealFundDocument", value);
                 }
             }
         }

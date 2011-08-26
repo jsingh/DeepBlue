@@ -5,13 +5,9 @@
 	Investor
 </asp:Content>
 <asp:Content ID="HeaderCnt" ContentPlaceHolderID="HeaderContent" runat="server">
-	<%= Html.JavascriptInclueTag("jquery.validate.min.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftAjax.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcAjax.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcValidation.js")%>
-	<%= Html.JavascriptInclueTag("MicrosoftMvcCustomValidation.js")%>
+	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("Investor.js")%>
-	<%=Html.StylesheetLinkTag("newInvestor.css")%>
+	<%=Html.StylesheetLinkTag("newinvestor.css")%>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
@@ -25,9 +21,7 @@
 	</div>
 </asp:Content>
 <asp:Content ID="MainCnt" ContentPlaceHolderID="MainContent" runat="server">
-	<% Html.EnableClientValidation(); %>
-	<%using (Ajax.BeginForm("Create", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "investor.onBegin", OnSuccess = "investor.onSuccess" }, new { @id = "NewInvestor" })) {%>
-	<br />
+	<%using (Html.Form(new { @id = "NewInvestor", @onsubmit = "return false;" })) { %>
 	<div class="new-investor">
 		<div class="box">
 			<div class="box-top">
@@ -46,7 +40,6 @@
 					</div>
 					<div class="editor-field text">
 						<%: Html.TextBoxFor(model => model.InvestorName, new { maxlength = 100 })%>
-						<%: Html.ValidationMessageFor(model => model.InvestorName)%>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -55,7 +48,6 @@
 					</div>
 					<div class="editor-field text">
 						<%: Html.TextBoxFor(model => model.Alias, new { maxlength = 50 })%>
-						<%: Html.ValidationMessageFor(model => model.Alias) %>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -64,7 +56,6 @@
 					</div>
 					<div class="editor-field text">
 						<%: Html.TextBoxFor(model => model.SocialSecurityTaxId)%>
-						<%: Html.ValidationMessageFor(model => model.SocialSecurityTaxId)%>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -73,7 +64,6 @@
 					</div>
 					<div class="editor-field dropdown">
 						<%: Html.DropDownListFor(model => model.DomesticForeign,Model.SelectList.DomesticForeigns)%>
-						<%: Html.ValidationMessageFor(model => model.DomesticForeign) %>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -81,8 +71,8 @@
 						<%: Html.LabelFor(model => model.StateOfResidency) %>
 					</div>
 					<div class="editor-field dropdown">
-						<%: Html.DropDownListFor(model => model.StateOfResidency,Model.SelectList.States) %>
-						<%: Html.ValidationMessageFor(model => model.StateOfResidency) %>
+						<%: Html.TextBox("StateOfResidencyName","")%>
+						<%: Html.HiddenFor(model => model.StateOfResidency) %>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -91,7 +81,6 @@
 					</div>
 					<div class="editor-field dropdown">
 						<%: Html.DropDownListFor(model => model.EntityType, Model.SelectList.InvestorEntityTypes)%>
-						<%: Html.ValidationMessageFor(model => model.EntityType) %>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -139,7 +128,6 @@
 					</div>
 					<div class="editor-field text">
 						<%: Html.TextBoxFor(model => model.Phone)%>
-						<%: Html.ValidationMessageFor(model => model.Phone) %>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -148,7 +136,6 @@
 					</div>
 					<div class="editor-field text">
 						<%: Html.TextBoxFor(model => model.Fax)%>
-						<%: Html.ValidationMessageFor(model => model.Fax) %>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -156,8 +143,7 @@
 						<%: Html.LabelFor(model => model.Email) %>
 					</div>
 					<div class="editor-field text">
-						<%: Html.TextBoxFor(model => model.Email, new { @onblur = "javascript:jHelper.checkEmail(this);" })%>
-						<%: Html.ValidationMessageFor(model => model.Email) %>
+						<%: Html.TextBoxFor(model => model.Email)%>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -166,7 +152,6 @@
 					</div>
 					<div class="editor-field text">
 						<%: Html.TextBoxFor(model => model.WebAddress, new { @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
-						<%: Html.ValidationMessageFor(model => model.WebAddress) %>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -175,7 +160,6 @@
 					</div>
 					<div class="editor-field text">
 						<%: Html.TextBoxFor(model => model.Address1, new { maxlength = 40 })%>
-						<%: Html.ValidationMessageFor(model => model.Address1) %>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -184,7 +168,6 @@
 					</div>
 					<div class="editor-field text">
 						<%: Html.TextBoxFor(model => model.Address2, new { maxlength = 40 })%>
-						<%: Html.ValidationMessageFor(model => model.Address2) %>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -193,7 +176,6 @@
 					</div>
 					<div class="editor-field text">
 						<%: Html.TextBoxFor(model => model.City, new { maxlength = 30 })%>
-						<%: Html.ValidationMessageFor(model => model.City) %>
 					</div>
 				</div>
 				<div class="editor-row" id="StateRow">
@@ -201,8 +183,8 @@
 						<%: Html.LabelFor(model => model.State) %>
 					</div>
 					<div class="editor-field dropdown">
-						<%: Html.DropDownListFor(model => model.State,Model.SelectList.States)%>
-						<%: Html.ValidationMessageFor(model => model.State)%>
+						<%: Html.TextBox("StateName","")%>
+						<%: Html.HiddenFor(model => model.State)%>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -211,7 +193,6 @@
 					</div>
 					<div class="editor-field text">
 						<%: Html.TextBoxFor(model => model.Zip, new { @maxlength = "10" })%>
-						<%: Html.ValidationMessageFor(model => model.Zip) %>
 					</div>
 				</div>
 				<div class="editor-row">
@@ -219,8 +200,8 @@
 						<%: Html.LabelFor(model => model.Country) %>
 					</div>
 					<div class="editor-field dropdown">
-						<%: Html.DropDownListFor(model => model.Country, Model.SelectList.Countries, new { @onchange = "javascript:investor.changeCountry('Country','State','StateRow');" })%>
-						<%: Html.ValidationMessageFor(model => model.Country)%>
+						<%: Html.TextBoxFor(model => model.CountryName)%>
+						<%: Html.HiddenFor(model => model.Country)%>
 					</div>
 				</div>
 			</div>
@@ -239,106 +220,6 @@
 			<%: Html.HiddenFor(model => Model.AccountLength)%>
 			<div class="box-content">
 				<div id="AccountInfoBox" class="box-main">
-					<div id="AccountInfo" class="accountinfo">
-						<div style="width: 100%;">
-							<div class="add">
-								<%=Html.Image("add.png", new { @title = "Add New Bank Information", @onclick = "javascript:investor.createAccount(this);" })%>
-							</div>
-							<div class="delete">
-								<%=Html.Image("Delete.png", new { @title = "Delete Accout", @onclick = "javascript:investor.deleteAccount(this);" })%>
-							</div>
-						</div>
-						<div class="accountinfo-box">
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.BankName) %>
-								</div>
-								<div class="editor-field text">
-									<%: Html.TextBox(Model.AccountLength + "_" + "BankName") %>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.AccountNumber) %>
-								</div>
-								<div class="editor-field text">
-									<%: Html.TextBox(Model.AccountLength + "_" + "AccountNumber")%>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.ABANumber) %>
-								</div>
-								<div class="editor-field text">
-									<%: Html.TextBox(Model.AccountLength + "_" + "ABANumber", "", new { @onkeydown = "return jHelper.isNumeric(event);" })%>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.AccountOf) %>
-								</div>
-								<div class="editor-field text">
-									<%: Html.TextBox(Model.AccountLength + "_" + "AccountOf")%>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.FFC) %>
-								</div>
-								<div class="editor-field text">
-									<%: Html.TextBox(Model.AccountLength + "_" + "FFC")%>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.FFCNO) %>
-								</div>
-								<div class="editor-field text">
-									<%: Html.TextBox(Model.AccountLength + "_" + "FFCNO")%>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.Attention) %>
-								</div>
-								<div class="editor-field text">
-									<%: Html.TextBox(Model.AccountLength + "_" + "Attention")%>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.Swift) %>
-								</div>
-								<div class="editor-field text">
-									<%: Html.TextBox(Model.AccountLength + "_" + "Swift")%>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.IBAN) %>
-								</div>
-								<div class="editor-field text">
-									<%: Html.TextBox(Model.AccountLength + "_" + "IBAN")%>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.Reference) %>
-								</div>
-								<div class="editor-field text">
-									<%: Html.TextBox(Model.AccountLength + "_" + "Reference")%>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.ByOrderOf)%>
-								</div>
-								<div class="editor-field text">
-									<%: Html.TextBox(Model.AccountLength + "_" + "ByOrderOf")%>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -356,151 +237,6 @@
 			<%: Html.HiddenFor(model => Model.ContactLength)%>
 			<div class="box-content">
 				<div id="ContactInfoBox" class="box-main">
-					<div id="ContactInfo" class="contactinfo">
-						<div>
-							<div class="delete">
-								<%=Html.Image("Delete.png", new { @title = "Delete Contact", @onclick = "javascript:investor.deleteContact(this);" })%>
-							</div>
-							<div class="add">
-								<%=Html.Image("add.png", new { @title = "Add New Contact", @onclick = "javascript:investor.createContact(this);" })%>
-							</div>
-						</div>
-						<div class="contactinfo-box">
-							<div class="contactinfo-left">
-								<div class="editor-row">
-									<div class="editor-label">
-										<%: Html.LabelFor(model => model.ContactPerson) %>
-									</div>
-									<div class="editor-field text">
-										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactPerson")%>
-									</div>
-								</div>
-								<div class="editor-row">
-									<div class="editor-label">
-										<%: Html.LabelFor(model => model.Designation) %>
-									</div>
-									<div class="editor-field text">
-										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "Designation") %>
-									</div>
-								</div>
-								<div class="editor-row">
-									<div class="editor-label">
-										<%: Html.LabelFor(model => model.ContactPhoneNumber) %>
-									</div>
-									<div class="editor-field text">
-										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactPhoneNumber") %>
-									</div>
-								</div>
-								<div class="editor-row">
-									<div class="editor-label">
-										<%: Html.LabelFor(model => model.ContactFaxNumber) %>
-									</div>
-									<div class="editor-field text">
-										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactFaxNumber") %>
-									</div>
-								</div>
-								<div class="editor-row">
-									<div class="editor-label">
-										<%: Html.LabelFor(model => model.ContactEmail) %>
-									</div>
-									<div class="editor-field text">
-										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactEmail","", new { @onblur = "javascript:jHelper.checkEmail(this);" })%>
-									</div>
-								</div>
-								<div class="editor-row">
-									<div class="editor-label">
-										<%: Html.LabelFor(model => model.ContactWebAddress) %>
-									</div>
-									<div class="editor-field text">
-										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactWebAddress","", new { @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
-									</div>
-								</div>
-								<div class="editor-row">
-									<div class="editor-label">
-										<%: Html.LabelFor(model => model.ContactAddress1) %>
-									</div>
-									<div class="editor-field text">
-										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactAddress1", "", new { maxlength = 40 })%>
-									</div>
-								</div>
-								<div class="editor-row">
-									<div class="editor-label">
-										<%: Html.LabelFor(model => model.ContactAddress2) %>
-									</div>
-									<div class="editor-field text">
-										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactAddress2","", new { maxlength = 40 })%>
-									</div>
-								</div>
-								<div class="editor-row">
-									<div class="editor-label">
-										<%: Html.LabelFor(model => model.ContactCity) %>
-									</div>
-									<div class="editor-field text">
-										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactCity", "", new { maxlength = 30 })%>
-									</div>
-								</div>
-								<div class="editor-row" id="<%=Model.ContactLength.ToString()%>_StateRow">
-									<div class="editor-label">
-										<%: Html.LabelFor(model => model.ContactState) %>
-									</div>
-									<div class="editor-field dropdown">
-										<%: Html.DropDownList(Model.ContactLength.ToString() + "_" + "ContactState",Model.SelectList.States,new { @id = Model.ContactLength.ToString() + "_ContactState" })%>
-									</div>
-								</div>
-								<div class="editor-row">
-									<div class="editor-label">
-										<%: Html.LabelFor(model => model.ContactZip) %>
-									</div>
-									<div class="editor-field text">
-										<%: Html.TextBox(Model.ContactLength.ToString() + "_" + "ContactZip", "", new { @maxlength = "10" })%>
-									</div>
-								</div>
-								<div class="editor-row">
-									<div class="editor-label">
-										<%: Html.LabelFor(model => model.ContactCountry) %>
-									</div>
-									<div class="editor-field dropdown">
-										<%: Html.DropDownList(Model.ContactLength.ToString() + "_" + "ContactCountry", Model.SelectList.Countries
-																																			, new { @id = Model.ContactLength.ToString() + "_ContactCountry", @onchange = "javascript:investor.changeCountry('" + Model.ContactLength.ToString() + "_ContactCountry','" + Model.ContactLength.ToString() + "_ContactState','" + Model.ContactLength.ToString() + "_StateRow');" })%>
-									</div>
-								</div>
-							</div>
-							<div class="contactinfo-right">
-								<div class="editor-row">
-									<div class="editor-label" style="width: 255px;">
-										<%: Html.LabelFor(model => model.DistributionNotices) %>
-									</div>
-									<div class="editor-field checkbox">
-										<%: Html.CheckBox(Model.ContactLength.ToString() + "_" + "DistributionNotices",new {style = "width:auto"})%>
-									</div>
-								</div>
-								<div class="editor-row">
-									<div class="editor-label" style="width: 255px;">
-										<%: Html.LabelFor(model => model.Financials)%>
-									</div>
-									<div class="editor-field checkbox">
-										<%: Html.CheckBox(Model.ContactLength.ToString() + "_" + "Financials", new { style = "width:auto" })%>
-									</div>
-								</div>
-								<div class="editor-row">
-									<div class="editor-label" style="width: 255px;">
-										<%: Html.LabelFor(model => model.K1)%>
-									</div>
-									<div class="editor-field checkbox">
-										<%: Html.CheckBox(Model.ContactLength.ToString() + "_" + "K1", new { style = "width:auto" })%>
-									</div>
-								</div>
-								<div class="editor-row">
-									<div class="editor-label" style="width: 255px;">
-										<%: Html.LabelFor(model => model.InvestorLetters)%>
-									</div>
-									<div class="editor-field checkbox">
-										<%: Html.CheckBox(Model.ContactLength.ToString() + "_" + "InvestorLetters", new { style = "width:auto" })%>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -529,7 +265,7 @@
 		<div class="status">
 			<%: Html.Span("", new { id = "UpdateLoading" })%></div>
 		<div class="editor-button">
-			<%: Html.ImageButton("submit.png", new { @class="default-button", @onclick = "return investor.validation('NewInvestor');" })%>
+			<%: Html.Image("submit.png", new { @class = "default-button", @onclick = "javascript:investor.save($('#NewInvestor')); " })%>
 		</div>
 		<%: Html.HiddenFor(model => model.InvestorId)%>
 		<div id="UpdateTargetId" style="display: none">
@@ -538,11 +274,60 @@
 	<% } %>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BottomContent" runat="server">
+	<%= Html.jQueryAutoComplete("StateOfResidencyName", new AutoCompleteOptions {
+																	  Source = "/Admin/FindStates", MinLength = 1,
+																	  OnSelect = "function(event, ui) { $('#StateOfResidency').val(ui.item.id); }"
+	})%>
+	<%= Html.jQueryAutoComplete("StateName", new AutoCompleteOptions {
+																	  Source = "/Admin/FindStates", MinLength = 1,
+																	  OnSelect = "function(event, ui) { $('#State').val(ui.item.id); }"
+	})%>
+	<%= Html.jQueryAutoComplete("CountryName", new AutoCompleteOptions {
+																	  Source = "/Admin/FindCountrys", MinLength = 1,
+																	  OnSelect = "function(event, ui) { investor.changeCountry(ui.item); }"
+	})%>
 	<script type="text/javascript">
 		$(document).ready(function () {
 			var bdy=$("body");
 			jHelper.jqCheckBox(bdy);
 			jHelper.jqComboBox(bdy);
+			investor.createAccount();
+			investor.createContact();
 		});
+	</script>
+	<script id="BankInformationTemplate" type="text/x-jquery-tmpl"> 
+		<div id="AccountInfo${i}" class="accountinfo">
+			<div style="width: 100%;">	
+				{{if i>1}}
+				<div class="delete" style="display:block;clear:none;">
+					<%=Html.Image("Delete.png", new { @title = "Delete Accout",  @onclick = "javascript:investor.deleteAccount(this);" })%>
+				</div>
+				{{/if}}
+				<div class="add">
+					<%=Html.Image("add.png", new { @title = "Add New Bank Information", @onclick = "javascript:investor.createAccount(this);" })%>
+				</div>
+			</div> 
+			<%Html.RenderPartial("BankInformation", new DeepBlue.Models.Investor.BankDetail());%>
+		</div>
+	</script>
+	<script id="ContactInformationTemplate" type="text/x-jquery-tmpl"> 
+		<div id="ContactInfo${i}" class="contactinfo">
+			<div>
+				{{if i>1}}
+				<div class="delete" style="display:block;clear:none;">
+					<%=Html.Image("Delete.png", new { @title = "Delete Contact", @onclick = "javascript:investor.deleteContact(this);" })%>
+				</div>
+				{{/if}}
+				<div class="add">
+					<%=Html.Image("add.png", new { @title = "Add New Contact", @onclick = "javascript:investor.createContact(this);" })%>
+				</div>
+			</div>
+			<%DeepBlue.Models.Investor.ContactDetail contactDetail = new DeepBlue.Models.Investor.ContactDetail();
+			Html.RenderPartial("ContactInformation", contactDetail);
+			%>
+		</div>
+	</script>
+	<script type="text/javascript">
+		investor.newContactDetail  = <%= JsonSerializer.ToJsonObject(contactDetail)%>;
 	</script>
 </asp:Content>

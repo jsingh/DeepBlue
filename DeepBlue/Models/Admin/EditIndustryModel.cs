@@ -15,10 +15,10 @@ namespace DeepBlue.Models.Admin {
 
 		[Required(ErrorMessage = "Industry is required.")]
 		[StringLength(100, ErrorMessage = "Industry must be under 100 characters.")]
-		[DisplayName("Industry:")]
+		[DisplayName("Industry")]
 		public string Industry { get; set; }
 
-		[DisplayName("Enable:")]
+		[DisplayName("Enable")]
 		public bool Enabled { get; set; }
  
 	}
