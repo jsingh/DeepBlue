@@ -326,12 +326,28 @@ namespace DeepBlue.Helpers {
 			return displayData;
 		}
 
+		public static MvcHtmlString jQueryTemplateSpan(this HtmlHelper htmlHelper, string name, string className) {
+			return MvcHtmlString.Create(string.Format("<span id=\"{0}\" name=\"{0}\" class=\"{1}\">{2}</span>", name , className, (name.Contains("$") ? name :  "${" + name + "}")));
+		}
+
 		public static MvcHtmlString jQueryTemplateTextBox(this HtmlHelper htmlHelper, string name) {
 			return jQueryTemplateTextBox(htmlHelper, name, "${" + name + "}", new { });
 		}
 
+		public static MvcHtmlString jQueryTemplateTextBox(this HtmlHelper htmlHelper, string name, object htmlAttributes) {
+			return jQueryTemplateTextBox(htmlHelper, name, "${" + name + "}", htmlAttributes);
+		}
+
 		public static MvcHtmlString jQueryTemplateTextBox(this HtmlHelper htmlHelper, string name, string value) {
 			return jQueryTemplateTextBox(htmlHelper, name, value, new { });
+		}
+
+		public static string jQueryTemplateTextBoxExpression(this HtmlHelper htmlHelper, string name, string value, string className) {
+			return string.Format("<input type=\"text\" id=\"{0}\" name=\"{0}\" value=\"{1}\" class=\"{2}\" />", name, value, className);
+		}
+
+		public static string jQueryTemplateHiddenExpression(this HtmlHelper htmlHelper, string name, string value) {
+			return string.Format("<input type=\"hidden\" id=\"{0}\" name=\"{0}\" value=\"{1}\" />", name, value);
 		}
 
 		public static MvcHtmlString jQueryTemplateTextBox(this HtmlHelper htmlHelper, string name, string value, object htmlAttributes) {

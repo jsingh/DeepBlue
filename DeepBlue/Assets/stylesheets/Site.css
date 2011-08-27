@@ -414,7 +414,7 @@ label {
 	width: 120px;
 }
 .transaction-info .editor-field {
-	width: auto;
+	width: 200px;
 }
 .transaction-info .editor-field input[type="text"] {
 	width: 145px;

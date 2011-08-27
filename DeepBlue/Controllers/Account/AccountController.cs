@@ -24,7 +24,8 @@ namespace DeepBlue.Controllers.Account {
 		//
 		// GET: /Account/
 
-		public ActionResult LogOn() {
+		public ActionResult LogOn(string returnUrl) {
+			ViewData["ReturnUrl"] = returnUrl;
 			return View();
 		}
 
@@ -32,7 +33,7 @@ namespace DeepBlue.Controllers.Account {
 		//
 		// POST: /Account/LogOn
 		[HttpPost]
-		public ActionResult LogOn(FormCollection collection, string returnUrl) {
+		public ActionResult LogOn(FormCollection collection) {
 			LogOnModel model = new LogOnModel();
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
@@ -48,9 +49,9 @@ namespace DeepBlue.Controllers.Account {
 					Authentication.CurrentUser = userLogin;
 					Authentication.CurrentEntity = entity;
 					FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-					if (IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-						&& !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\")) {
-						return Redirect(returnUrl);
+					if (IsLocalUrl(model.ReturnUrl) && model.ReturnUrl.Length > 1 && model.ReturnUrl.StartsWith("/")
+						&& !model.ReturnUrl.StartsWith("//") && !model.ReturnUrl.StartsWith("/\\")) {
+							return Redirect(model.ReturnUrl);
 					}
 					else {
 						return RedirectToAction("Index", "Home");

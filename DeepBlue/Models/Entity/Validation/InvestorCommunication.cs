@@ -30,14 +30,6 @@ namespace DeepBlue.Models.Entity {
 			}
 
 
-			[Required(ErrorMessage = "CommunicationID is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CommunicationID is required")]
-			public global::System.Int32 CommunicationID {
-				get;
-				set;
-			}
-
-
 			[DateRange(ErrorMessage = "CreatedDate is required")]
 			public Nullable<global::System.DateTime> CreatedDate {
 				get;

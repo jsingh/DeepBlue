@@ -83,6 +83,7 @@ namespace DeepBlue.Controllers.Investor {
 			EmailAttribute emailValidation = new EmailAttribute();
 			ZipAttribute zipAttribute = new ZipAttribute();
 			WebAddressAttribute webAttribute = new WebAddressAttribute();
+			int count = 0;
 			string errorTitle = string.Empty;
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				ModelState.AddModelError("InvestorName", ErrorMessage);
@@ -177,10 +178,13 @@ namespace DeepBlue.Controllers.Investor {
 				}
 
 				/* Bank Account */
+				count = 0;
 				InvestorAccount investorAccount;
 				for (int index = 0; index < model.AccountLength; index++) {
 
 					if (DataTypeHelper.ToInt32(collection[(index + 1).ToString() + "_" + "BankIndex"]) <= 0) continue;
+
+					count++;
 
 					// Attempt to create new investor account.
 					investorAccount = new InvestorAccount();
@@ -217,7 +221,7 @@ namespace DeepBlue.Controllers.Investor {
 					  || investorAccount.Routing > 0) {
 						errorInfo = ValidationHelper.Validate(investorAccount);
 						if (errorInfo.Any()) {
-							resultModel.Result += string.Format("<b>Bank Information {0}:</b>\n{1}\n", (index + 1).ToString(), ValidationHelper.GetErrorInfo(errorInfo));
+							resultModel.Result += string.Format("<b>Bank Information {0}:</b>\n{1}\n", count.ToString(), ValidationHelper.GetErrorInfo(errorInfo));
 						}
 						if (string.IsNullOrEmpty(resultModel.Result)) {
 							investor.InvestorAccounts.Add(investorAccount);
@@ -225,12 +229,15 @@ namespace DeepBlue.Controllers.Investor {
 					}
 				}
 
+				count = 0;
 				/* Contact Address */
 				InvestorContact investorContact;
 				ContactAddress contactAddress;
 				for (int index = 0; index < model.ContactLength; index++) {
 
 					if (DataTypeHelper.ToInt32(collection[(index + 1).ToString() + "_" + "ContactIndex"]) <= 0) continue;
+
+					count++;
 
 					// Attempt to create new investor contact.
 					investorContact = new InvestorContact();
@@ -310,7 +317,7 @@ namespace DeepBlue.Controllers.Investor {
 							errors.Append("Invalid Zip\n");
 
 						if (string.IsNullOrEmpty(errors.ToString()) == false) {
-							resultModel.Result += string.Format(errorTitle, (index + 1).ToString(), errors.ToString());
+							resultModel.Result += string.Format(errorTitle, count.ToString(), errors.ToString());
 						}
 
 						if (string.IsNullOrEmpty(resultModel.Result)) {
@@ -416,27 +423,6 @@ namespace DeepBlue.Controllers.Investor {
 			investorCommunication.Communication.EntityID = Authentication.CurrentEntity.EntityID;
 		}
 
-		private void AddCommunication(InvestorCommunication investorCommunication, DeepBlue.Models.Admin.Enums.CommunicationType communicationType, string value) {
-			if (investorCommunication == null) {
-				investorCommunication = new InvestorCommunication();
-				investorCommunication.CreatedBy = Authentication.CurrentUser.UserID;
-				investorCommunication.CreatedDate = DateTime.Now;
-				investorCommunication.Communication = new Communication();
-				investorCommunication.Communication.CreatedBy = Authentication.CurrentUser.UserID;
-				investorCommunication.Communication.CreatedDate = DateTime.Now;
-			}
-			if (investorCommunication == null) {
-				investorCommunication.EntityID = Authentication.CurrentEntity.EntityID;
-				investorCommunication.LastUpdatedBy = Authentication.CurrentUser.UserID;
-				investorCommunication.LastUpdatedDate = DateTime.Now;
-				investorCommunication.Communication.CommunicationTypeID = (int)communicationType;
-				investorCommunication.Communication.CommunicationValue = (string.IsNullOrEmpty(value) == false ? value : string.Empty);
-				investorCommunication.Communication.LastUpdatedBy = Authentication.CurrentUser.UserID;
-				investorCommunication.Communication.LastUpdatedDate = DateTime.Now;
-				investorCommunication.Communication.EntityID = Authentication.CurrentEntity.EntityID;
-			}
-		}
-
 		private void AddCommunication(DeepBlue.Models.Entity.Contact contact, DeepBlue.Models.Admin.Enums.CommunicationType communicationType, string value) {
 			// Attempt to create contact communication.
 			ContactCommunication contactCommunication = contact.ContactCommunications.SingleOrDefault(communication => communication.Communication.CommunicationTypeID == (int)communicationType);
@@ -484,8 +470,8 @@ namespace DeepBlue.Controllers.Investor {
 			model.CustomField.InitializeDatePicker = false;
 			return View(model);
 		}
+ 
 
-		 
 		//
 		// POST: /Investor/Update
 		[HttpPost]
@@ -740,138 +726,145 @@ namespace DeepBlue.Controllers.Investor {
 					select contactCommunication.Communication.CommunicationValue).SingleOrDefault();
 		}
 
+		public JsonResult FindInvestorDetail(int id) {
+			return Json(InvestorRepository.FindInvestorDet(id), JsonRequestBehavior.AllowGet);
+		}
+
 		//
 		// GET: /Investor/Edit
-		public JsonResult FindInvestor(int id) {
-			DeepBlue.Models.Entity.Investor investor = InvestorRepository.FindInvestor(id);
-			EditModel model = new EditModel();
-			if (investor != null) {
-				AddressInformation addressInfo;
-				ContactInformation contactInfo;
-				AccountInformation accountInfo;
-				model.InvestorName = investor.InvestorName;
-				model.DisplayName = investor.Alias;
-				model.DomesticForeign = investor.IsDomestic;
-				model.EntityType = investor.InvestorEntityTypeID;
-				model.SocialSecurityTaxId = investor.Social;
-				model.StateOfResidency = (int)(investor.ResidencyState != null ? investor.ResidencyState : 0);
-				model.Notes = investor.Notes;
-				foreach (var address in investor.InvestorAddresses) {
-					if (address.Address != null) {
-						addressInfo = new AddressInformation();
-						addressInfo.Address1 = address.Address.Address1;
-						addressInfo.Address2 = address.Address.Address2;
-						addressInfo.City = address.Address.City;
-						addressInfo.Country = address.Address.Country;
-						addressInfo.Zip = address.Address.PostalCode;
-						addressInfo.State = address.Address.State ?? 0;
-						addressInfo.AddressId = address.Address.AddressID;
-						addressInfo.Email = GetInvestorCommunicationValue(investor, Models.Admin.Enums.CommunicationType.Email);
-						addressInfo.Fax = GetInvestorCommunicationValue(investor, Models.Admin.Enums.CommunicationType.Fax);
-						addressInfo.Phone = GetInvestorCommunicationValue(investor, Models.Admin.Enums.CommunicationType.HomePhone);
-						addressInfo.WebAddress = GetInvestorCommunicationValue(investor, Models.Admin.Enums.CommunicationType.WebAddress);
-						model.AddressInformations.Add(addressInfo);
+		/*	public JsonResult FindInvestor(int id) {
+		 	
+			  * DeepBlue.Models.Entity.Investor investor = InvestorRepository.FindInvestor(id);
+				EditModel model = new EditModel();
+				if (investor != null) {
+					AddressInformation addressInfo;
+					ContactInformation contactInfo;
+					AccountInformation accountInfo;
+					model.InvestorName = investor.InvestorName;
+					model.DisplayName = investor.Alias;
+					model.DomesticForeign = investor.IsDomestic;
+					model.EntityType = investor.InvestorEntityTypeID;
+					model.SocialSecurityTaxId = investor.Social;
+					model.StateOfResidency = (int)(investor.ResidencyState != null ? investor.ResidencyState : 0);
+					model.Notes = investor.Notes;
+					foreach (var address in investor.InvestorAddresses) {
+						if (address.Address != null) {
+							addressInfo = new AddressInformation();
+							addressInfo.Address1 = address.Address.Address1;
+							addressInfo.Address2 = address.Address.Address2;
+							addressInfo.City = address.Address.City;
+							addressInfo.Country = address.Address.Country;
+							addressInfo.Zip = address.Address.PostalCode;
+							addressInfo.State = address.Address.State ?? 0;
+							addressInfo.AddressId = address.Address.AddressID;
+							addressInfo.Email = GetInvestorCommunicationValue(investor, Models.Admin.Enums.CommunicationType.Email);
+							addressInfo.Fax = GetInvestorCommunicationValue(investor, Models.Admin.Enums.CommunicationType.Fax);
+							addressInfo.Phone = GetInvestorCommunicationValue(investor, Models.Admin.Enums.CommunicationType.HomePhone);
+							addressInfo.WebAddress = GetInvestorCommunicationValue(investor, Models.Admin.Enums.CommunicationType.WebAddress);
+							model.AddressInformations.Add(addressInfo);
+						}
 					}
-				}
-				foreach (var investorContact in investor.InvestorContacts) {
-					contactInfo = new ContactInformation();
-					contactInfo.ContactPerson = investorContact.Contact.ContactName;
-					contactInfo.DistributionNotices = investorContact.Contact.ReceivesDistributionNotices;
-					contactInfo.Financials = investorContact.Contact.ReceivesFinancials;
-					contactInfo.InvestorLetters = investorContact.Contact.ReceivesInvestorLetters;
-					contactInfo.K1 = investorContact.Contact.ReceivesK1;
-					contactInfo.Designation = investorContact.Contact.Designation;
-					contactInfo.ContactId = investorContact.ContactID;
-					foreach (var contact in investorContact.Contact.ContactAddresses) {
-						contactInfo.ContactAddressId = contact.Address.AddressID;
-						contactInfo.ContactZip = contact.Address.PostalCode;
-						contactInfo.ContactState = contact.Address.State ?? 0;
-						contactInfo.ContactAddress1 = contact.Address.Address1;
-						contactInfo.ContactAddress2 = contact.Address.Address2;
-						contactInfo.ContactCity = contact.Address.City;
-						contactInfo.ContactCountry = contact.Address.Country;
+					foreach (var investorContact in investor.InvestorContacts) {
+						contactInfo = new ContactInformation();
+						contactInfo.ContactPerson = investorContact.Contact.ContactName;
+						contactInfo.DistributionNotices = investorContact.Contact.ReceivesDistributionNotices;
+						contactInfo.Financials = investorContact.Contact.ReceivesFinancials;
+						contactInfo.InvestorLetters = investorContact.Contact.ReceivesInvestorLetters;
+						contactInfo.K1 = investorContact.Contact.ReceivesK1;
+						contactInfo.Designation = investorContact.Contact.Designation;
+						contactInfo.ContactId = investorContact.ContactID;
+						foreach (var contact in investorContact.Contact.ContactAddresses) {
+							contactInfo.ContactAddressId = contact.Address.AddressID;
+							contactInfo.ContactZip = contact.Address.PostalCode;
+							contactInfo.ContactState = contact.Address.State ?? 0;
+							contactInfo.ContactAddress1 = contact.Address.Address1;
+							contactInfo.ContactAddress2 = contact.Address.Address2;
+							contactInfo.ContactCity = contact.Address.City;
+							contactInfo.ContactCountry = contact.Address.Country;
+						}
+						contactInfo.ContactEmail = GetContactCommunicationValue(investorContact, Models.Admin.Enums.CommunicationType.Email);
+						contactInfo.ContactWebAddress = GetContactCommunicationValue(investorContact, Models.Admin.Enums.CommunicationType.WebAddress);
+						contactInfo.ContactPhoneNumber = GetContactCommunicationValue(investorContact, Models.Admin.Enums.CommunicationType.HomePhone);
+						contactInfo.ContactFaxNumber = GetContactCommunicationValue(investorContact, Models.Admin.Enums.CommunicationType.Fax);
+						model.ContactInformations.Add(contactInfo);
 					}
-					contactInfo.ContactEmail = GetContactCommunicationValue(investorContact, Models.Admin.Enums.CommunicationType.Email);
-					contactInfo.ContactWebAddress = GetContactCommunicationValue(investorContact, Models.Admin.Enums.CommunicationType.WebAddress);
-					contactInfo.ContactPhoneNumber = GetContactCommunicationValue(investorContact, Models.Admin.Enums.CommunicationType.HomePhone);
-					contactInfo.ContactFaxNumber = GetContactCommunicationValue(investorContact, Models.Admin.Enums.CommunicationType.Fax);
-					model.ContactInformations.Add(contactInfo);
-				}
-				foreach (var investorAccount in investor.InvestorAccounts) {
-					accountInfo = new AccountInformation();
-					accountInfo.AccountId = investorAccount.InvestorAccountID;
-					accountInfo.AccountNumber = investorAccount.Account;
-					accountInfo.Attention = investorAccount.Attention;
-					accountInfo.Reference = investorAccount.Reference;
-					accountInfo.AccountOf = investorAccount.AccountOf;
-					accountInfo.ByOrderOf = investorAccount.ByOrderOf;
-					accountInfo.FFC = investorAccount.FFC;
-					accountInfo.FFCNO = investorAccount.FFCNumber;
-					accountInfo.IBAN = investorAccount.IBAN;
-					accountInfo.Swift = investorAccount.SWIFT;
-					accountInfo.ABANumber = (investorAccount.Routing > 0 ? investorAccount.Routing.ToString() : string.Empty);
-					accountInfo.BankName = investorAccount.BankName;
-					model.AccountInformations.Add(accountInfo);
-				}
-				if (model.AddressInformations.Count == 0)
-					model.AddressInformations.Add(new AddressInformation());
-				if (model.ContactInformations.Count == 0)
-					model.ContactInformations.Add(new ContactInformation());
-				if (model.AccountInformations.Count == 0)
-					model.AccountInformations.Add(new AccountInformation());
-				model.FundInformations = new FlexigridData();
-				model.FundInformations.page = 1;
-				model.FundInformations.total = investor.InvestorFunds.Count();
-				foreach (var fund in investor.InvestorFunds) {
-					FlexigridRow row = new FlexigridRow();
-					row.cell.Add(fund.Fund.FundName.ToString());
-					row.cell.Add(FormatHelper.CurrencyFormat(fund.TotalCommitment));
-					row.cell.Add(FormatHelper.CurrencyFormat(Convert.ToDecimal(fund.UnfundedAmount)));
-					Models.Entity.InvestorType investorType = InvestorRepository.FindInvestorType((int)fund.InvestorTypeId);
-					if (investorType != null)
-						row.cell.Add(investorType.InvestorTypeName);
-					else
-						row.cell.Add(string.Empty);
-					model.FundInformations.rows.Add(row);
-				}
-				/* Load Custom Fields */
-				model.CustomField = new CustomFieldModel();
-				List<CustomFieldValue> customFieldValues = AdminRepository.GetAllCustomFieldValues(id);
-				var customFields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor);
-				model.CustomField.Values = new List<CustomFieldValueDetail>();
-				foreach (var field in customFields) {
-					var value = customFieldValues.SingleOrDefault(fieldValue => fieldValue.CustomFieldID == field.CustomFieldId);
-					if (value != null) {
-						model.CustomField.Values.Add(new CustomFieldValueDetail {
-							CustomFieldId = value.CustomFieldID,
-							CustomFieldValueId = value.CustomFieldID,
-							DataTypeId = value.CustomField.DataTypeID,
-							BooleanValue = value.BooleanValue ?? false,
-							CurrencyValue = (value.CurrencyValue ?? 0),
-							DateValue = ((value.DateValue ?? Convert.ToDateTime("01/01/1900")).Year == 1900 ? string.Empty : (value.DateValue ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy")),
-							IntegerValue = value.IntegerValue ?? 0,
-							TextValue = value.TextValue,
-							Key = id
-						});
+					foreach (var investorAccount in investor.InvestorAccounts) {
+						accountInfo = new AccountInformation();
+						accountInfo.AccountId = investorAccount.InvestorAccountID;
+						accountInfo.AccountNumber = investorAccount.Account;
+						accountInfo.Attention = investorAccount.Attention;
+						accountInfo.Reference = investorAccount.Reference;
+						accountInfo.AccountOf = investorAccount.AccountOf;
+						accountInfo.ByOrderOf = investorAccount.ByOrderOf;
+						accountInfo.FFC = investorAccount.FFC;
+						accountInfo.FFCNO = investorAccount.FFCNumber;
+						accountInfo.IBAN = investorAccount.IBAN;
+						accountInfo.Swift = investorAccount.SWIFT;
+						accountInfo.ABANumber = (investorAccount.Routing > 0 ? investorAccount.Routing.ToString() : string.Empty);
+						accountInfo.BankName = investorAccount.BankName;
+						model.AccountInformations.Add(accountInfo);
 					}
-					else {
-						model.CustomField.Values.Add(new CustomFieldValueDetail {
-							CustomFieldId = field.CustomFieldId,
-							CustomFieldValueId = 0,
-							DataTypeId = field.DataTypeId,
-							BooleanValue = false,
-							CurrencyValue = 0,
-							DateValue = string.Empty,
-							IntegerValue = 0,
-							TextValue = string.Empty,
-							Key = id
-						});
+					if (model.AddressInformations.Count == 0)
+						model.AddressInformations.Add(new AddressInformation());
+					if (model.ContactInformations.Count == 0)
+						model.ContactInformations.Add(new ContactInformation());
+					if (model.AccountInformations.Count == 0)
+						model.AccountInformations.Add(new AccountInformation());
+					model.FundInformations = new FlexigridData();
+					model.FundInformations.page = 1;
+					model.FundInformations.total = investor.InvestorFunds.Count();
+					foreach (var fund in investor.InvestorFunds) {
+						FlexigridRow row = new FlexigridRow();
+						row.cell.Add(fund.Fund.FundName.ToString());
+						row.cell.Add(FormatHelper.CurrencyFormat(fund.TotalCommitment));
+						row.cell.Add(FormatHelper.CurrencyFormat(Convert.ToDecimal(fund.UnfundedAmount)));
+						Models.Entity.InvestorType investorType = InvestorRepository.FindInvestorType((int)fund.InvestorTypeId);
+						if (investorType != null)
+							row.cell.Add(investorType.InvestorTypeName);
+						else
+							row.cell.Add(string.Empty);
+						model.FundInformations.rows.Add(row);
 					}
-				}
+				 
+					model.CustomField = new CustomFieldModel();
+					List<CustomFieldValue> customFieldValues = AdminRepository.GetAllCustomFieldValues(id);
+					var customFields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor);
+					model.CustomField.Values = new List<CustomFieldValueDetail>();
+					foreach (var field in customFields) {
+						var value = customFieldValues.SingleOrDefault(fieldValue => fieldValue.CustomFieldID == field.CustomFieldId);
+						if (value != null) {
+							model.CustomField.Values.Add(new CustomFieldValueDetail {
+								CustomFieldId = value.CustomFieldID,
+								CustomFieldValueId = value.CustomFieldID,
+								DataTypeId = value.CustomField.DataTypeID,
+								BooleanValue = value.BooleanValue ?? false,
+								CurrencyValue = (value.CurrencyValue ?? 0),
+								DateValue = ((value.DateValue ?? Convert.ToDateTime("01/01/1900")).Year == 1900 ? string.Empty : (value.DateValue ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy")),
+								IntegerValue = value.IntegerValue ?? 0,
+								TextValue = value.TextValue,
+								Key = id
+							});
+						}
+						else {
+							model.CustomField.Values.Add(new CustomFieldValueDetail {
+								CustomFieldId = field.CustomFieldId,
+								CustomFieldValueId = 0,
+								DataTypeId = field.DataTypeId,
+								BooleanValue = false,
+								CurrencyValue = 0,
+								DateValue = string.Empty,
+								IntegerValue = 0,
+								TextValue = string.Empty,
+								Key = id
+							});
+						}
+					}
 
-			}
-			return Json(model, JsonRequestBehavior.AllowGet);
-		}
+				}
+				return Json(model, JsonRequestBehavior.AllowGet); 
+		
+		
+			}*/
 
 		#region Investor Address
 		public ActionResult UpdateInvestorAddress(FormCollection collection) {
@@ -879,7 +872,9 @@ namespace DeepBlue.Controllers.Investor {
 			this.TryUpdateModel(model, collection);
 			ResultModel resultModel = new ResultModel();
 			if (ModelState.IsValid) {
-				InvestorAddress investorAddress = InvestorRepository.FindInvestorAddress(model.AddressId);
+				InvestorAddress investorAddress = null;
+				if ((model.AddressId ?? 0) > 0)
+					investorAddress = InvestorRepository.FindInvestorAddress(model.AddressId ?? 0);
 				if (investorAddress == null) {
 					investorAddress = new InvestorAddress();
 					investorAddress.CreatedBy = Authentication.CurrentUser.UserID;
@@ -891,6 +886,14 @@ namespace DeepBlue.Controllers.Investor {
 				investorAddress.EntityID = Authentication.CurrentEntity.EntityID;
 				investorAddress.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				investorAddress.LastUpdatedDate = DateTime.Now;
+
+				if (investorAddress.Address == null) {
+					investorAddress.Address = new Address {
+						CreatedBy = Authentication.CurrentUser.UserID,
+						CreatedDate = DateTime.Now,
+					};
+				}
+
 				investorAddress.Address.EntityID = Authentication.CurrentEntity.EntityID;
 				investorAddress.Address.AddressTypeID = (int)DeepBlue.Models.Admin.Enums.AddressType.Work;
 				investorAddress.Address.Address1 = model.Address1;
@@ -899,18 +902,41 @@ namespace DeepBlue.Controllers.Investor {
 				investorAddress.Address.PostalCode = model.Zip;
 				investorAddress.Address.Country = model.Country;
 				investorAddress.Address.State = model.State;
-
-				InvestorCommunication investorCommunication = InvestorRepository.FindInvestorCommunication(model.InvestorCommunicationId);
-				
-				// Assign communication values
-				AddCommunication(investorCommunication, Models.Admin.Enums.CommunicationType.HomePhone, model.Phone);
-				AddCommunication(investorCommunication, Models.Admin.Enums.CommunicationType.Email, model.Email);
-				AddCommunication(investorCommunication, Models.Admin.Enums.CommunicationType.WebAddress, model.WebAddress);
-				AddCommunication(investorCommunication, Models.Admin.Enums.CommunicationType.Fax, model.Fax);
+				investorAddress.Address.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				investorAddress.Address.LastUpdatedDate = DateTime.Now;
+				investorAddress.InvestorID = model.InvestorId;
 
 				IEnumerable<ErrorInfo> errorInfo = InvestorRepository.SaveInvestorAddress(investorAddress);
-				if (errorInfo == null)
+
+				if (errorInfo == null) {
+					List<InvestorCommunication> investorCommunications = InvestorRepository.FindInvestorCommunications(model.InvestorId);
+
+					// Assign communication values
+
+					InvestorCommunication investorCommunication = investorCommunications.Where(communication => communication.Communication.CommunicationTypeID == (int)Models.Admin.Enums.CommunicationType.HomePhone).FirstOrDefault();
+					AddCommunication(ref investorCommunication, Models.Admin.Enums.CommunicationType.HomePhone, model.Phone, model.InvestorId);
 					errorInfo = InvestorRepository.SaveInvestorCommunication(investorCommunication);
+
+					if (errorInfo == null) {
+						investorCommunication = investorCommunications.Where(communication => communication.Communication.CommunicationTypeID == (int)Models.Admin.Enums.CommunicationType.Email).FirstOrDefault();
+						AddCommunication(ref investorCommunication, Models.Admin.Enums.CommunicationType.Email, model.Email, model.InvestorId);
+						errorInfo = InvestorRepository.SaveInvestorCommunication(investorCommunication);
+					}
+					if (errorInfo == null) {
+						investorCommunication = investorCommunications.Where(communication => communication.Communication.CommunicationTypeID == (int)Models.Admin.Enums.CommunicationType.WebAddress).FirstOrDefault();
+						AddCommunication(ref investorCommunication, Models.Admin.Enums.CommunicationType.WebAddress, model.WebAddress, model.InvestorId);
+						errorInfo = InvestorRepository.SaveInvestorCommunication(investorCommunication);
+					}
+					if (errorInfo == null) {
+						investorCommunication = investorCommunications.Where(communication => communication.Communication.CommunicationTypeID == (int)Models.Admin.Enums.CommunicationType.Fax).FirstOrDefault();
+						AddCommunication(ref investorCommunication, Models.Admin.Enums.CommunicationType.Fax, model.Fax, model.InvestorId);
+						errorInfo = InvestorRepository.SaveInvestorCommunication(investorCommunication);
+					}
+				}
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					resultModel.Result += "True||" + investorAddress.InvestorAddressID;
+				}
 			}
 			else {
 				foreach (var values in ModelState.Values.ToList()) {
@@ -923,6 +949,175 @@ namespace DeepBlue.Controllers.Investor {
 			}
 			return View("Result", resultModel);
 		}
+
+		public JsonResult FindInvestorAddress(int id) {
+			return Json(InvestorRepository.FindInvestorAddressModel(id), JsonRequestBehavior.AllowGet);
+		}
+
+		private void AddCommunication(ref InvestorCommunication investorCommunication, DeepBlue.Models.Admin.Enums.CommunicationType communicationType, string value, int investorId) {
+			if (investorCommunication == null) {
+				investorCommunication = new InvestorCommunication();
+				investorCommunication.CreatedBy = Authentication.CurrentUser.UserID;
+				investorCommunication.CreatedDate = DateTime.Now;
+				investorCommunication.Communication = new Communication();
+				investorCommunication.Communication.CreatedBy = Authentication.CurrentUser.UserID;
+				investorCommunication.Communication.CreatedDate = DateTime.Now;
+			}
+			investorCommunication.InvestorID = investorId;
+			investorCommunication.EntityID = Authentication.CurrentEntity.EntityID;
+			investorCommunication.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			investorCommunication.LastUpdatedDate = DateTime.Now;
+			investorCommunication.Communication.CommunicationTypeID = (int)communicationType;
+			investorCommunication.Communication.CommunicationValue = (string.IsNullOrEmpty(value) == false ? value : string.Empty);
+			investorCommunication.Communication.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			investorCommunication.Communication.LastUpdatedDate = DateTime.Now;
+			investorCommunication.Communication.EntityID = Authentication.CurrentEntity.EntityID;
+		}
+
+
+		#endregion
+
+		#region Investor Contact
+
+		public ActionResult UpdateInvestorContact(FormCollection collection) {
+			ContactInformation model = new ContactInformation();
+			this.TryUpdateModel(model, collection);
+			ResultModel resultModel = new ResultModel();
+			if (ModelState.IsValid) {
+				InvestorContact investorContact = null;
+				if ((model.InvestorContactId ?? 0) > 0)
+					investorContact = InvestorRepository.FindInvestorContact(model.InvestorContactId ?? 0);
+				if (investorContact == null) {
+					investorContact = new InvestorContact();
+					investorContact.CreatedBy = Authentication.CurrentUser.UserID;
+					investorContact.CreatedDate = DateTime.Now;
+					investorContact.Contact = new Contact();
+					investorContact.Contact.CreatedBy = Authentication.CurrentUser.UserID;
+					investorContact.Contact.CreatedDate = DateTime.Now;
+				}
+				investorContact.InvestorID = model.InvestorId;
+				investorContact.EntityID = Authentication.CurrentEntity.EntityID;
+				investorContact.LastUpdatedDate = DateTime.Now;
+				investorContact.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				// Assign contact details
+				investorContact.Contact.EntityID = Authentication.CurrentEntity.EntityID;
+				investorContact.Contact.ContactName = model.Person;
+				if (string.IsNullOrEmpty(investorContact.Contact.FirstName)) investorContact.Contact.FirstName = "n/a";
+				if (string.IsNullOrEmpty(investorContact.Contact.LastName)) investorContact.Contact.LastName = "n/a";
+				investorContact.Contact.ReceivesDistributionNotices = model.DistributionNotices;
+				investorContact.Contact.ReceivesFinancials = model.Financials;
+				investorContact.Contact.ReceivesInvestorLetters = model.InvestorLetters;
+				investorContact.Contact.ReceivesK1 = model.K1;
+				investorContact.Contact.Designation = model.Designation;
+				investorContact.Contact.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				investorContact.Contact.LastUpdatedDate = DateTime.Now;
+
+				ContactAddress investorContactAddress = investorContact.Contact.ContactAddresses.SingleOrDefault(address => address.ContactAddressID == model.ContactAddressId);
+				// Assign address details
+				if (investorContactAddress == null) {
+					investorContactAddress = new ContactAddress();
+					investorContactAddress.CreatedBy = Authentication.CurrentUser.UserID;
+					investorContactAddress.CreatedDate = DateTime.Now;
+					investorContactAddress.Address = new Address();
+					investorContactAddress.Address.CreatedBy = Authentication.CurrentUser.UserID;
+					investorContactAddress.Address.CreatedDate = DateTime.Now;
+					investorContact.Contact.ContactAddresses.Add(investorContactAddress);
+				}
+				investorContactAddress.EntityID = Authentication.CurrentEntity.EntityID;
+				investorContactAddress.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				investorContactAddress.LastUpdatedDate = DateTime.Now;
+				investorContactAddress.Address.AddressTypeID = (int)DeepBlue.Models.Admin.Enums.AddressType.Work;
+				investorContactAddress.Address.EntityID = Authentication.CurrentEntity.EntityID;
+				investorContactAddress.Address.Address1 = model.Address1;
+				investorContactAddress.Address.Address2 = model.Address2;
+				investorContactAddress.Address.City = model.City;
+				investorContactAddress.Address.PostalCode = model.Zip;
+				investorContactAddress.Address.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				investorContactAddress.Address.LastUpdatedDate = DateTime.Now;
+				investorContactAddress.Address.Country = model.Country;
+				investorContactAddress.Address.State = model.State;
+
+				/* Add Communication Values */
+				AddCommunication(investorContact.Contact, Models.Admin.Enums.CommunicationType.HomePhone, model.Phone);
+				AddCommunication(investorContact.Contact, Models.Admin.Enums.CommunicationType.Fax, model.Fax);
+				AddCommunication(investorContact.Contact, Models.Admin.Enums.CommunicationType.Email, model.Email);
+				AddCommunication(investorContact.Contact, Models.Admin.Enums.CommunicationType.WebAddress, model.WebAddress);
+
+				IEnumerable<ErrorInfo> errorInfo = InvestorRepository.SaveInvestorContact(investorContact);
+				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result))
+					resultModel.Result += "True||" + investorContact.InvestorContactID;
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		public JsonResult FindInvestorContact(int id) {
+			return Json(InvestorRepository.FindInvestorContactModel(id), JsonRequestBehavior.AllowGet);
+		}
+
+		#endregion
+
+		#region Investor Bank Account
+
+		public ActionResult UpdateInvestorBankDetail(FormCollection collection) {
+			AccountInformation model = new AccountInformation();
+			this.TryUpdateModel(model, collection);
+			ResultModel resultModel = new ResultModel();
+			if (ModelState.IsValid) {
+				InvestorAccount investorAccount = null;
+				if((model.AccountId ?? 0)>0)
+				 investorAccount = InvestorRepository.FindInvestorAccount(model.AccountId ?? 0);
+				if (investorAccount == null) {
+					investorAccount = new InvestorAccount();
+					investorAccount.CreatedBy = Authentication.CurrentUser.UserID;
+					investorAccount.CreatedDate = DateTime.Now;
+				}
+				investorAccount.InvestorID = model.InvestorId;
+				investorAccount.EntityID = Authentication.CurrentEntity.EntityID;
+				investorAccount.Account = model.AccountNumber;
+				investorAccount.Attention = model.Attention;
+				investorAccount.Reference = model.Reference;
+				investorAccount.AccountOf = model.AccountOf;
+				investorAccount.Routing = model.ABANumber;
+				investorAccount.SWIFT = model.Swift;
+				investorAccount.IBAN = model.IBAN;
+				investorAccount.FFC = model.FFC;
+				investorAccount.FFCNumber = model.FFCNO;
+				investorAccount.ByOrderOf = model.ByOrderOf;
+				investorAccount.BankName = model.BankName;
+				investorAccount.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				investorAccount.LastUpdatedDate = DateTime.Now;
+
+				IEnumerable<ErrorInfo> errorInfo = InvestorRepository.SaveInvestorAccount(investorAccount);
+				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result))
+					resultModel.Result += "True||" + investorAccount.InvestorAccountID;
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		public JsonResult FindInvestorAccount(int id) {
+			return Json(InvestorRepository.FindInvestorAccountModel(id), JsonRequestBehavior.AllowGet);
+		}
+
 		#endregion
 
 		public ActionResult Result() {

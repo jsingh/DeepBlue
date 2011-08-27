@@ -219,6 +219,8 @@
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalCallLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalDistributionLineItemService.cs" />
+    <Compile Include="Models\Entity\Partial\InvestorAccountService.cs" />
+    <Compile Include="Models\Entity\Partial\InvestorContactService.cs" />
     <Compile Include="Models\Entity\Partial\UserService.cs" />
     <Compile Include="Models\Entity\Partial\DealFundDocumentService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorAddressService.cs" />
@@ -241,6 +243,7 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVHistoryService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
+    <Compile Include="Models\Entity\Validation\InvestorContact.cs" />
     <Compile Include="Models\Entity\Validation\User.cs" />
     <Compile Include="Models\Entity\Validation\ActivityType.cs" />
     <Compile Include="Models\Entity\Validation\CashDistribution.cs" />
@@ -1092,9 +1095,10 @@
     <Content Include="Views\Investor\AddressInformation.ascx" />
     <Content Include="Views\Investor\BankInformation.ascx" />
     <Content Include="Views\Investor\ContactInformation.ascx" />
-    <Content Include="Views\Investor\Edit2.aspx" />
+    <Content Include="Views\Investor\Edit22.aspx" />
     <Content Include="Views\Investor\Edit.aspx" />
     <Content Include="Views\Investor\EditInvestorDetail.ascx" />
+    <Content Include="Views\Investor\InvestorInformation.ascx" />
     <Content Include="Views\Report\CapitalCallSummary.aspx" />
     <Content Include="Views\Report\CashDistributionSummaryReport.ascx" />
     <Content Include="Views\Report\CashDistributionSummary.aspx" />

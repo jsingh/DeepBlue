@@ -17,7 +17,7 @@
 					jAlert(data);
 				} else {
 					alert("Investor Saved.");
-					//location.href="/Investor/New";
+					location.href="/Investor/New";
 				}
 			});
 		} catch(e) {

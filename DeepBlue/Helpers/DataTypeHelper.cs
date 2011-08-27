@@ -7,19 +7,25 @@ namespace DeepBlue.Helpers {
 	public class DataTypeHelper {
 
 		public static decimal ToDecimal(string value) {
-			return (string.IsNullOrEmpty(value) ? 0 : Convert.ToDecimal(value));
+			decimal returnValue;
+			decimal.TryParse(value, out returnValue);
+			return returnValue;
 		}
 
 		public static Int32 ToInt32(string value) {
-			return (string.IsNullOrEmpty(value) ? 0 : Convert.ToInt32(value));
+			int returnValue;
+			Int32.TryParse(value, out returnValue);
+			return returnValue;
 		}
 
 		public static DateTime ToDateTime(string value) {
-			return (string.IsNullOrEmpty(value) ? Convert.ToDateTime("01/01/1900") : Convert.ToDateTime(value));
+			DateTime returnValue;
+			DateTime.TryParse(value, out returnValue);
+			return returnValue.Year <= 1900 ? new DateTime(1900,1,1) : returnValue;
 		}
 
 		public static bool CheckBoolean(string value) {
-			return (string.IsNullOrEmpty(value) ? false : value.Contains("true"));
+		  	return (string.IsNullOrEmpty(value) ? false : value.Contains("true"));
 		}
 	 
 	}

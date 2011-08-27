@@ -23,6 +23,7 @@ namespace DeepBlue.Controllers.Investor {
 		decimal FindSumOfSellAmount(int investorFundId);
 		bool InvestorNameAvailable(string invesorName, int investorId);
 		bool SocialSecurityTaxIdAvailable(string socialSecurityId, int investorId);
+		EditModel FindInvestorDet(int investorId);
 		#endregion
 		 
 		#region Delete
@@ -39,12 +40,25 @@ namespace DeepBlue.Controllers.Investor {
 
 		#region Investor Address
 		InvestorAddress FindInvestorAddress(int investorAddressId);
+		object FindInvestorAddressModel(int investorAddressId);
 		IEnumerable<ErrorInfo> SaveInvestorAddress(InvestorAddress investorAddress);
 		#endregion
 
+		#region Investor Contact
+		InvestorContact FindInvestorContact(int investorContactId);
+		object FindInvestorContactModel(int investorContactId);
+		IEnumerable<ErrorInfo> SaveInvestorContact(InvestorContact investorContact);
+		#endregion
+		
 		#region Investor Communication
-		InvestorCommunication FindInvestorCommunication(int investorCommunicationId);
+		List<InvestorCommunication> FindInvestorCommunications(int investorId);
 		IEnumerable<ErrorInfo> SaveInvestorCommunication(InvestorCommunication investorCommunication);
+		#endregion
+
+		#region Investor Bank Account
+		InvestorAccount FindInvestorAccount(int investorAccountId);
+		object FindInvestorAccountModel(int investorAccountId);
+		IEnumerable<ErrorInfo> SaveInvestorAccount(InvestorAccount investorAccount);
 		#endregion
 	}
 }

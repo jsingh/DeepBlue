@@ -11,7 +11,6 @@ namespace DeepBlue.Models.Transaction {
 
 	public class CreateModel {
 		public CreateModel() {
-			FundNames = new List<SelectListItem>();
 			InvestorTypes = new List<SelectListItem>();
 			EditCommitmentAmountModel = new EditCommitmentAmountModel();
 			FundClosings = new List<SelectListItem>();
@@ -51,8 +50,6 @@ namespace DeepBlue.Models.Transaction {
 		[DisplayName("Committed Date")]
         [DateRange()]
 		public DateTime? CommittedDate { get; set; }
-
-		public List<SelectListItem> FundNames { get; set; }
 
 		public List<SelectListItem> FundClosings { get; set; }
 

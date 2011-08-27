@@ -9,7 +9,9 @@ using DeepBlue.Helpers;
 using System.ComponentModel.DataAnnotations;
 
 namespace DeepBlue.Models.Investor {
+
 	public class EditModel {
+
 		public EditModel() {
 			AddressInformations = new List<AddressInformation>();
 			ContactInformations = new List<ContactInformation>();
@@ -47,7 +49,7 @@ namespace DeepBlue.Models.Investor {
 		public string SocialSecurityTaxId { get; set; }
 
 		[DisplayName("State of Residency")]
-		public int StateOfResidency { get; set; }
+		public int? StateOfResidency { get; set; }
 
 		[DisplayName("EntityType")]
 		public int EntityType { get; set; }
@@ -55,11 +57,17 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("Domestic/Foreign")]
 		public bool DomesticForeign { get; set; }
 
-		public List<AddressInformation> AddressInformations { get; set; }
+		public string DomesticForeignName { get; set; }
 
-		public List<ContactInformation> ContactInformations { get; set; }
+		public string EntityTypeName { get; set; }
 
-		public List<AccountInformation> AccountInformations { get; set; }
+		public string StateOfResidencyName { get; set; }
+
+		public object AddressInformations { get; set; }
+
+		public object ContactInformations { get; set; }
+
+		public object AccountInformations { get; set; }
 
 		public FlexigridData FundInformations { get; set; }
 
@@ -84,7 +92,7 @@ namespace DeepBlue.Models.Investor {
 			Country = 0;
 		}
 
-		public int AddressId { get; set; }
+		public int? AddressId { get; set; }
 
 		[DisplayName("Telephone No")]
 		public string Phone { get; set; }
@@ -93,97 +101,65 @@ namespace DeepBlue.Models.Investor {
 		public string Fax { get; set; }
 
 		[DisplayName("Email")]
+		[Email(ErrorMessage = "Invalid Email")]
 		public string Email { get; set; }
 
 		[DisplayName("Web Address")]
+		[WebAddress(ErrorMessage = "Invalid Web Address")]
 		public string WebAddress { get; set; }
 
+		[Required(ErrorMessage = "Address1 is required")]
+		[StringLength(40, ErrorMessage = "Address1 must be under 40 characters.")]
 		[DisplayName("Address1")]
 		public string Address1 { get; set; }
 
 		[DisplayName("Address2")]
 		public string Address2 { get; set; }
 
-		[DisplayName("City")]
+		[Required(ErrorMessage = "City is required")]
+		[StringLength(30, ErrorMessage = "City must be under 30 characters.")]
 		public string City { get; set; }
 
+		[Required(ErrorMessage = "State is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "State is required")]
 		[DisplayName("State")]
-		public int State { get; set; }
+		public int? State { get; set; }
+
+		[Required(ErrorMessage = "Investor is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Investor is required")]
+		public int InvestorId { get; set; }
 
 		public string StateName { get; set; }
 
 		[DisplayName("Zip")]
+		[Zip(ErrorMessage = "Invalid Postal Code")]
 		public string Zip { get; set; }
 
 		[DisplayName("Country")]
+		[Required(ErrorMessage = "Country is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Country is required")]
 		public int Country { get; set; }
 
 		public string CountryName { get; set; }
 
-		public int InvestorCommunicationId { get; set; }
+		public object InvestorCommunications { get; set; }
 	}
 
-	public class ContactInformation {
+	public class ContactInformation : AddressInformation {
 		public ContactInformation(){
 			ContactId = 0;
-			ContactAddressId = 0;
-			ContactPerson = string.Empty;
-			Designation = string.Empty;
-			ContactPhoneNumber = string.Empty;
-			ContactFaxNumber = string.Empty;
-			ContactEmail = string.Empty;
-			ContactWebAddress = string.Empty;
-			ContactAddress1 = string.Empty;
-			ContactAddress2 = string.Empty;
-			ContactCity = string.Empty;
-			ContactState = 0;
-			ContactZip = string.Empty;
-			ContactCountry = 0;
-			DistributionNotices = false;
-			Financials = false;
-			K1 = false;
-			InvestorLetters = false;
+			InvestorContactId = 0;
 		}
 
-		public int ContactId { get; set; }
+		public int? ContactId { get; set; }
 
-		public int ContactAddressId { get; set; }
+		public int? InvestorContactId { get; set; }
 
 		[DisplayName("Contact Person")]
-		public string ContactPerson { get; set; }
+		public string Person { get; set; }
 
 		[DisplayName("Designation")]
 		public string Designation { get; set; }
-
-		[DisplayName("Telephone No")]
-		public string ContactPhoneNumber { get; set; }
-
-		[DisplayName("Fax No")]
-		public string ContactFaxNumber { get; set; }
-
-		[DisplayName("Email")]
-		public string ContactEmail { get; set; }
-
-		[DisplayName("Web Address")]
-		public string ContactWebAddress { get; set; }
-
-		[DisplayName("Address1")]
-		public string ContactAddress1 { get; set; }
-
-		[DisplayName("Address2")]
-		public string ContactAddress2 { get; set; }
-
-		[DisplayName("City")]
-		public string ContactCity { get; set; }
-
-		[DisplayName("State")]
-		public int ContactState { get; set; }
-
-		[DisplayName("Zip")]
-		public string ContactZip { get; set; }
-
-		[DisplayName("Country")]
-		public int ContactCountry { get; set; }
 
 		[DisplayName("Receives Distribution/Capital Call Notices")]
 		public bool DistributionNotices { get; set; }
@@ -194,16 +170,21 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("K1")]
 		public bool K1 { get; set; }
 
+		public int? ContactAddressId { get; set; }
+
+		public object AddressInformations { get; set; }
+
 		[DisplayName("Investor Letters")]
 		public bool InvestorLetters { get; set; }
 	}
+
+	
 
 	public class AccountInformation {
 		public AccountInformation(){
 			AccountId = 0;
 			BankName = string.Empty;
 			AccountNumber = string.Empty;
-			ABANumber = string.Empty;
 			AccountOf = string.Empty;
 			FFC = string.Empty;
 			FFCNO = string.Empty;
@@ -214,16 +195,24 @@ namespace DeepBlue.Models.Investor {
 			Attention = string.Empty;
 		}
 
-		public int AccountId { get; set; }
+		public int? AccountId { get; set; }
 
+		[Required(ErrorMessage = "Investor is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Investor is required")]
+		public int InvestorId { get; set; }
+
+		[Required(ErrorMessage = "Bank Name is required")]
+		[StringLength(50, ErrorMessage = "Bank Name must be under 50 characters.")]
 		[DisplayName("Bank Name")]
 		public string BankName { get; set; }
 
+		[Required(ErrorMessage = "Account Number is required")]
+		[StringLength(40, ErrorMessage = "Account must be under 40 characters.")]
 		[DisplayName("Account #")]
 		public string AccountNumber { get; set; }
 
 		[DisplayName("ABA #")]
-		public string ABANumber { get; set; }
+		public int? ABANumber { get; set; }
 
 		[DisplayName("Account Of")]
 		public string AccountOf { get; set; }

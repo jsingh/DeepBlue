@@ -46,7 +46,7 @@
 					</div>
 					<div class="box-content">
 						<% Html.EnableClientValidation(); %>
-						<% using (Html.Form(new { @onsubmit = "return transactionController.save(this);" })) {%>
+						<% using (Html.Form(new { @id = "frmTransaction", @onsubmit = "return transactionController.save(this);" })) {%>
 						<%: Html.HiddenFor(model => model.InvestorId)%>
 						<div class="edit-left">
 							<div class="editor-row">
@@ -72,15 +72,14 @@
 									<%: Html.LabelFor(model => model.FundId) %>
 								</div>
 								<div class="editor-field">
-									<%: Html.DropDownListFor(model => model.FundId,Model.FundNames,new { @onchange = "javascript:transactionController.loadFundClosing(this.value);" } ) %>
-									<%: Html.ValidationMessageFor(model => model.FundId) %>
+									<%: Html.TextBox("FundName", "")%>
+									<%: Html.Hidden("FundId", "0")%>
 								</div>
 								<div class="editor-label auto-width" style="clear: right; white-space: nowrap">
 									<%: Html.LabelFor(model => model.TotalCommitment) %>
 								</div>
 								<div class="editor-field">
 									<%: Html.TextBox("TotalCommitment","") %>
-									<%: Html.ValidationMessageFor(model => model.TotalCommitment) %>
 								</div>
 							</div>
 							<div class="editor-row">
@@ -88,15 +87,13 @@
 									<%: Html.LabelFor(model => model.FundClosingId) %>
 								</div>
 								<div class="editor-field">
-									<%: Html.DropDownListFor(model => model.FundClosingId,Model.FundClosings)%>
-									<%: Html.ValidationMessageFor(model => model.FundClosingId) %>
+									<%: Html.DropDownListFor(model => model.FundClosingId, Model.FundClosings, new { @onchange = "javascript:transactionController.checkFundClose(this.value);" })%>
 								</div>
 								<div class="editor-label" style="clear: right">
 									<%: Html.LabelFor(model => model.CommittedDate) %>
 								</div>
 								<div class="editor-field">
 									<%: Html.TextBox("CommittedDate","", new { @id = "CommittedDate" }) %>
-									<%: Html.ValidationMessageFor(model => model.CommittedDate) %>
 								</div>
 							</div>
 							<div class="editor-row">
@@ -106,7 +103,6 @@
 								<div class="editor-field">
 									<%: Html.Span("",new { @id = "disp_InvestorTypeId", @style = "display:none"  }) %>
 									<%: Html.DropDownListFor(model => model.InvestorTypeId,Model.InvestorTypes) %>
-									<%: Html.ValidationMessageFor(model => model.InvestorTypeId)%>
 								</div>
 								<div class="editor-button">
 									<div style="float: left; padding: 0 0 10px 5px;">
@@ -140,12 +136,56 @@
 	</div>
 	<div id="EditTransaction">
 	</div>
+	<div id="AddFundClose">
+		<%using (Html.Form(new { @id = "frmAddFundClose", @onsubmit = "return false" })) {%>
+		<div class="editor-label">
+			<%: Html.Label("Name")%>
+		</div>
+		<div class="editor-field">
+			<%: Html.TextBox("Name", "")%>
+		</div>
+		<div class="editor-label">
+			<%: Html.Label("Fund")%>
+		</div>
+		<div class="editor-field">
+			<%: Html.TextBox("CloseFundName", "")%>
+			<%: Html.Hidden("FundId", "0")%>
+		</div>
+		<div class="editor-label">
+			<%: Html.Label("Closing Date")%>
+		</div>
+		<div class="editor-field">
+			<%: Html.TextBox("FundClosingDate", "")%>
+		</div>
+		<div class="editor-label">
+			<%: Html.Label("First Closing")%>
+		</div>
+		<div class="editor-field">
+			<%: Html.CheckBox("IsFirstClosing", false)%>
+		</div>
+		<div class="editor-label">
+		</div>
+		<div class="editor-field">
+			<%: Html.Image("Save.png", new { @style = "cursor:pointer", @onclick = "javascript:transactionController.addFundClose();" })%>
+			&nbsp;&nbsp;<%: Html.Image("Cancel.png", new { @style = "cursor:pointer", @onclick = "javascript:transactionController.cancelFundClose();" })%>
+			&nbsp;&nbsp;<%: Html.Span("", new { @id = "Loading" })%>
+		</div>
+		<%}%>
+	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%= Html.jQueryAutoComplete("Investor", new AutoCompleteOptions { Source = "/Investor/FindInvestors", MinLength=1,
 																			OnSelect = "function(event, ui){ transactionController.selectInvestor(ui.item.id);}"
 })%>
+	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength=1,
+																	  OnSelect = "function(event, ui){ transactionController.loadFundClosing(ui.item.id);}"
+})%>
+	<%= Html.jQueryAutoComplete("CloseFundName", new AutoCompleteOptions {	Source = "/Fund/FindFunds",
+																			MinLength = 1,
+																			OnSelect = "function(event, ui){ $('#FundId','#frmAddFundClose').val(ui.item.id);}"
+})%>
 	<%= Html.jQueryDatePicker("CommittedDate")%>
+	<%= Html.jQueryDatePicker("FundClosingDate")%>
 	<%= Html.jQueryAccordion("accordion", new AccordionOptions { Disabled = true, Active = 0 })%>
 	<script type="text/javascript">
 		transactionController.init();
@@ -163,6 +203,14 @@
 			width: 600,
 			modal: true,
 			position: 'top',
+			autoResize: true
+		});
+		$("#AddFundClose").dialog({
+			title: "Fund Close",
+			autoOpen: false,
+			width: 430,
+			modal: true,
+			position: 'middle',
 			autoResize: true
 		});
 	</script>

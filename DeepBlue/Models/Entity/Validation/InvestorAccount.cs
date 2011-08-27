@@ -5,10 +5,11 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using DeepBlue.Helpers;
 
+
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(InvestorAccountMD))]
 	public partial class InvestorAccount {
-		public class InvestorAccountMD: CreatedByFields {
+		public class InvestorAccountMD : CreatedByFields {
 			#region Primitive Properties
 			[Required(ErrorMessage = "EntityID is required")]
 			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
@@ -82,13 +83,47 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-		 
+
 			[StringLength(50, ErrorMessage = "Bank Name must be under 50 characters.")]
 			public global::System.String BankName {
 				get;
 				set;
 			}
 			#endregion
+		}
+
+		public InvestorAccount(IInvestorAccountService investorAccountService)
+			: this() {
+			this.InvestorAccountService = InvestorAccountService;
+		}
+
+		public InvestorAccount() {
+		}
+
+		private IInvestorAccountService _InvestorAccountService;
+		public IInvestorAccountService InvestorAccountService {
+			get {
+				if (_InvestorAccountService == null) {
+					_InvestorAccountService = new InvestorAccountService();
+				}
+				return _InvestorAccountService;
+			}
+			set {
+				_InvestorAccountService = value;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> Save() {
+			IEnumerable<ErrorInfo> errors = Validate(this);
+			if (errors.Any()) {
+				return errors;
+			}
+			InvestorAccountService.SaveInvestorAccount(this);
+			return null;
+		}
+
+		private IEnumerable<ErrorInfo> Validate(InvestorAccount investorAccount) {
+			return ValidationHelper.Validate(investorAccount);
 		}
 	}
 }

@@ -12,11 +12,20 @@
 		var dt=new Date();
 		var target=$("#editinfo");
 		target.empty();
-		$.getJSON("/Investor/FindInvestor/"+id+"?t="+dt.getTime(),function (data) {
+		$.getJSON("/Investor/FindInvestorDetail/"+id+"?t="+dt.getTime(),function (data) {
 			$("#Loading").html("");
 			$("#EditInvestorTemplate").tmpl(data).appendTo(target);
 			editInvestor.applyAccordion(target);
-			jHelper.jqComboBox(target);
+
+			$("#addressInfoMain",target).each(function () {
+				var addInfo=$(this);
+				editInvestor.setupAddressInfo(addInfo);
+			});
+
+			$("#contactInfoMain .contactInfo",target).each(function () {
+				var addInfo=$(this);
+				editInvestor.setupAddressInfo(addInfo);
+			});
 
 			$(".stateac",target).each(function () {
 				var statetxt=$(this);
@@ -28,6 +37,7 @@
 				,appendTo: "body",delay: 300
 				});
 			});
+
 			$(".countryac",target).each(function () {
 				var countrytxt=$(this);
 				countrytxt
@@ -49,6 +59,8 @@
 				,appendTo: "body",delay: 300
 				});
 			});
+
+			jHelper.checkValAttr(target);
 
 
 		});
@@ -134,66 +146,50 @@
 		var $accordion=$("#accordion",$invInfo);
 		$accordion.accordion({ animated: false,active: -1,collapsible: true,autoHeight: false,navigation: true });
 	}
-	,addContactInfo: function (that) {
-		var editinfo=$(that).parents(".edit-info:first").get(0); // get edit-info box
-		var contactInfo=$("#contactInfo").clone();
-		var contactInfoMain=$(that).parents("#contactInfoMain").get(0);
-		//$("#ContactInfoAddNew",contactInfoMain).hide();
-		var contactInfoCount=parseInt($("#ContactInfoCount",editinfo).val());
-		contactInfo.html(contactInfo.html().replace(/0_/g,(contactInfoCount+1)+"_"));
-		$("#ContactInfoCount",editinfo).val(contactInfoCount+1);
-		editInvestor.assignId(contactInfo);
-		editInvestor.showControls(contactInfo,true);
-		$(":input",contactInfo).each(function () {
-			if($(this).attr("type")=="hidden") {
-				this.value="0";
-			} else if($(this).attr("type")=="checkbox") {
-				this.checked=false;
-			} else {
-				this.value="";
-			}
-		});
-		$("select",contactInfo).each(function () {
-			if(this.id.indexOf("Country")>0) {
-				this.value="225";
-			} else {
-				this.value="0";
-			}
-		});
-		$(contactInfoMain).append(contactInfo);
-		$(".UpdateInvestorInfo",contactInfo).show();
-		$(".EditInvestorInfo",contactInfo).hide();
+	,scroll: function () {
+		$('html, body').animate({
+			scrollTop: $(document).height()-$(window).height()-10
+		},
+   500
+);
+	}
+	,addContactInfo: function (that,investorId) {
+		var contactInfoMain=$(that).parents("#contactInfoMain:first");
+		$("#ContactInfoTemplate").tmpl(getNewContact(investorId)).appendTo(contactInfoMain);
+		var addInfo=$(".contactInfo:last",contactInfoMain);
+		editInvestor.setupAddressInfo(addInfo);
+		editInvestor.scroll();
 	}
 	,deleteContact: function (that,contactId) {
 		if(confirm("Are you sure you want to delete this investor contact?")) {
-			var editinfo=$(that).parents(".editinfo:first").get(0);
-			var contactInfoMain=$(editinfo).parent();
-			var contact=document.getElementById(contactId);
-			if(parseInt(contact.value)>0) {
+			var editinfo=$(that).parents("form:first").get(0);
+			var contactInfoMain=$(editinfo).parents(".contactInfoMain:first");
+			if(parseInt(contactId)>0) {
 				var dt=new Date();
-				var url="/Investor/DeleteContactAddress/"+contact.value+"?t="+dt.getTime();
+				var url="/Investor/DeleteContactAddress/"+contactId+"?t="+dt.getTime();
 				$.get(url,function (data) {
 					if(data!="True") {
 						alert(data);
 					} else {
 						$(editinfo).remove();
 						editInvestor.showContactAddNew(contactInfoMain);
+						editInvestor.scroll();
 					}
 				});
 			} else {
 				$(editinfo).remove();
 				editInvestor.showContactAddNew(contactInfoMain);
+				editInvestor.scroll();
 			}
 		}
 	}
 	,deleteAccount: function (that,accountId) {
 		if(confirm("Are you sure you want to delete this investor account?")) {
-			var editinfo=$(that).parents(".editinfo:first").get(0);
-			var accountInfoMain=$(editinfo).parent();
-			var account=document.getElementById(accountId);
-			if(parseInt(account.value)>0) {
+			var editinfo=$(that).parents("form:first").get(0);
+			var accountInfoMain=$(editinfo).parents(".accountInfoMain:first");
+			if(parseInt(accountId)>0) {
 				var dt=new Date();
-				var url="/Investor/DeleteInvestorAccount/"+account.value+"?t="+dt.getTime();
+				var url="/Investor/DeleteInvestorAccount/"+accountId+"?t="+dt.getTime();
 				$.get(url,function (data) {
 					if(data!="True") {
 						alert(data);
@@ -216,35 +212,12 @@
 			$("#AccountInfoAddNew",accountInfoMain).hide();
 		}
 	}
-	,addAccountInfo: function (that) {
-		var editinfo=$(that).parents(".edit-info:first").get(0); // get edit-info box
-		var accountInfo=$("#accountInfo").clone();
-		var accountInfoMain=$(that).parents("#accountInfoMain").get(0);
-		$("#AccountInfoAddNew",accountInfoMain).hide();
-		var accountInfoCount=parseInt($("#AccountInfoCount",editinfo).val());
-		accountInfo.html(accountInfo.html().replace(/0_/g,(accountInfoCount+1)+"_"));
-		$("#AccountInfoCount",editinfo).val(accountInfoCount+1);
-		editInvestor.assignId(accountInfo);
-		editInvestor.showControls(accountInfo,true);
-		$(":input",accountInfo).each(function () {
-			if($(this).attr("type")=="hidden") {
-				this.value="0";
-			} else if($(this).attr("type")=="checkbox") {
-				this.checked=false;
-			} else {
-				this.value="";
-			}
-		});
-		$("select",accountInfo).each(function () {
-			if(this.id.indexOf("Country")>0) {
-				this.value="225";
-			} else {
-				this.value="0";
-			}
-		});
-		$(accountInfoMain).append(accountInfo);
-		$(".UpdateInvestorInfo",accountInfo).show();
-		$(".EditInvestorInfo",accountInfo).hide();
+	,addAccountInfo: function (that,investorId) {
+		var accountInfoMain=$(that).parents("#accountInfoMain:first");
+		$("#BankInfoTemplate").tmpl(getNewBank(investorId)).appendTo(accountInfoMain);
+		var addInfo=$(".accountInfo:last",accountInfoMain);
+		editInvestor.setupAddressInfo(addInfo);
+		editInvestor.scroll();
 	}
 	,showContactAddNew: function (contactInfoMain) {
 		var editinfo=$(".editinfo",contactInfoMain).length;
@@ -258,29 +231,141 @@
 		var cntdiv=$(that).parents(".editinfo:first").get(0);
 		$(".show",cntdiv).hide()
 		$(".hide",cntdiv).show();
+		editInvestor.scroll();
 	}
 	,cancelInvestorInfo: function (that) {
 		var cntdiv=$(that).parents(".editinfo:first").get(0);
 		$(".show",cntdiv).show()
 		$(".hide",cntdiv).hide();
+		editInvestor.scroll();
 	}
 	,saveInvestorAddressDetail: function (img) {
 		try {
 			var frm=$(img).parents("form:first");
-			var loading=$("#UpdateLoading");
+			var loading=$("#Loading",frm);
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 			$.post("/Investor/UpdateInvestorAddress",$(frm).serializeArray(),function (data) {
-				loading.empty();
-				if($.trim(data)!="") {
+				var arr=data.split("||");
+				if($.trim(arr[0])!="True") {
 					jAlert(data);
+					loading.empty();
 				} else {
-					alert("Investor Saved.");
-					//location.href="/Investor/New";
+					alert("Investor Address Saved.");
+					var target=$("#addressInfoMain");
+					$.get("/Investor/FindInvestorAddress/"+arr[1]+"?_"+(new Date).getTime(),function (newdata) {
+						newdata.i=0;
+						$("#AddressInfoTemplate").tmpl(newdata).appendTo(target);
+						var addressInfoMain=frm.parents("#addressInfoMain:first");
+						$(addressInfoMain).each(function () {
+							var addInfo=$(this);
+							editInvestor.setupAddressInfo(addInfo);
+							jHelper.checkValAttr(addInfo);
+						});
+						frm.remove();
+						editInvestor.scroll();
+					});
 				}
 			});
 		} catch(e) {
 		}
 		return false;
+	}
+	,saveContactAddressDetail: function (img) {
+		try {
+			var frm=$(img).parents("form:first");
+			var loading=$("#Loading",frm);
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			$.post("/Investor/UpdateInvestorContact",$(frm).serializeArray(),function (data) {
+				var arr=data.split("||");
+				if($.trim(arr[0])!="True") {
+					jAlert(data);
+					loading.empty();
+				} else {
+					alert("Investor Contact Saved.");
+					var target=$(".contactInfo:first",frm);
+					var contactInfoMain=$(target).parents("#contactInfoMain:first");
+					$.get("/Investor/FindInvestorContact/"+arr[1]+"?_"+(new Date).getTime(),function (newdata) {
+						newdata.i=0;
+						$("#ContactInfoTemplate").tmpl(newdata).insertAfter(target);
+						target.remove();
+						var addInfo=$("#contactInfo"+arr[1],contactInfoMain);
+						editInvestor.setupAddressInfo(addInfo);
+						jHelper.checkValAttr(addInfo);
+						editInvestor.scroll();
+					});
+				}
+			});
+		} catch(e) {
+		}
+		return false;
+	}
+	,saveBankDetail: function (img) {
+		try {
+			var frm=$(img).parents("form:first");
+			var loading=$("#Loading",frm);
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			$.post("/Investor/UpdateInvestorBankDetail",$(frm).serializeArray(),function (data) {
+				var arr=data.split("||");
+				if($.trim(arr[0])!="True") {
+					jAlert(data);
+					loading.empty();
+				} else {
+					alert("Investor Account Saved.");
+					var target=$(".accountInfo:first",frm);
+					var accountInfoMain=$(target).parents("#accountInfoMain:first");
+					$.get("/Investor/FindInvestorAccount/"+arr[1]+"?_"+(new Date).getTime(),function (newdata) {
+						newdata.i=0;
+						$("#BankInfoTemplate").tmpl(newdata).insertAfter(target);
+						target.remove();
+						var addInfo=$("#accountInfo"+arr[1],accountInfoMain);
+						editInvestor.setupAddressInfo(addInfo);
+						jHelper.checkValAttr(addInfo);
+						editInvestor.scroll();
+					});
+				}
+			});
+		} catch(e) {
+		}
+		return false;
+	}
+	,setupCommunication: function (addInfo) {
+		$(".comvalue",addInfo).each(function () {
+			$("#"+$(this).attr("id"),addInfo).html(this.value);
+		});
+	}
+	,setupAddressInfo: function (addInfo) {
+
+		editInvestor.setupCountryState(addInfo);
+		editInvestor.setupCommunication(addInfo);
+
+	}
+	,setupCountryState: function (addInfo) {
+		$("#StateName",addInfo)
+				.autocomplete({ source: "/Admin/FindStates",minLength: 1
+				,select: function (event,ui) {
+					$("#State",addInfo).val(ui.item.id);
+				}
+				,appendTo: "body",delay: 300
+				});
+
+		$("#CountryName",addInfo)
+				.autocomplete({ source: "/Admin/FindCountrys",minLength: 1
+				,select: function (event,ui) {
+					$("#Country",addInfo).val(ui.item.id);
+					var stateRow=$("#AddressStateRow",addInfo);
+					var stateName=$("#StateName",stateRow);
+					var state=$("#State",stateRow);
+					state.val(52);
+					if(ui.item.label!="United States") {
+						stateRow.hide();
+					} else {
+						stateRow.show();
+						stateName.val("");
+						state.val(0);
+					}
+				}
+				,appendTo: "body",delay: 300
+				});
 	}
 	,updateInvestorInfo: function (that,type) {
 		editInvestor.currentForm=$(that).parents("form:first");
@@ -518,4 +603,37 @@
 };
 $.extend(window,{
 	getItem: function (i,item) { item.i=i;return item; }
+	,getNewAddress: function (investorId) {
+		return { i: 0,InvestorCommunications: {},InvestorId: investorId,Country: 225,CountryName: "United States",State: 0,StateName: "" };
+	}
+	,getNewContact: function (investorId) {
+		return { i: 0,InvestorContactId: 0,InvestorId: investorId,ContactCommunications: {},AddressInformations: getNewAddress(investorId) };
+	}
+	,getNewBank: function (investorId) {
+		return { i: 0,AccountId: 0,InvestorId: investorId };
+	}
+	,getCommunicationValue: function (communications,typeId) {
+		var i;
+		var value="";
+		if(communications!=null) {
+			for(i=0;i<communications.length;i++) {
+				if(communications[i].CommunicationTypeId==typeId) {
+					value=communications[i].CommunicationValue;
+					break;
+				}
+			}
+		}
+		return value;
+	}
+	,getAddress: function (addressInfo,name) {
+		var info=null;
+		if(addressInfo!=null) {
+			$(addressInfo).each(function () {
+				info=this;
+				return false;
+			});
+		}
+		if(info==null) info={};
+		return info;
+	}
 });

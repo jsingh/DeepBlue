@@ -48,6 +48,7 @@
 						<%: Html.ImageButton("Login.png")%>
 					</div>
 					<%: Html.ValidationMessageFor(m => m.Errors)%>
+					<%: Html.Hidden("ReturnUrl", ViewData["ReturnUrl"])%>
 					<% } %>
 				</div>
 			</div>

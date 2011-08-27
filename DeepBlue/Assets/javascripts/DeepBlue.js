@@ -52,7 +52,6 @@
 					$.get("/Account/LogOff");
 					deepBlue.redirectLogOn();
 				} else {
-					alert(x.status);
 					if(x.status==0) {
 						alert('You are offline!!\n Please Check Your Network.');
 					} else if(x.status==404) {

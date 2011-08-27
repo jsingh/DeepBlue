@@ -25,6 +25,8 @@ namespace DeepBlue.Models.Admin {
 		[DisplayName("Name")]
 		public string Name { get; set; }
 
+		public string FundName { get; set; }
+
 		[Required(ErrorMessage = "Closing Date is required.")]
 		[DisplayName("Closing Date")]
 		public DateTime? FundClosingDate { get; set; }

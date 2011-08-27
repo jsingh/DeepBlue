@@ -290,34 +290,7 @@
 		}
 	}
 	,addAccountInfo: function (that) {
-		var editinfo=$(that).parents(".edit-info:first").get(0); // get edit-info box
-		var accountInfo=$("#accountInfo").clone();
-		var accountInfoMain=$(that).parents("#accountInfoMain").get(0);
-		$("#AccountInfoAddNew",accountInfoMain).hide();
-		var accountInfoCount=parseInt($("#AccountInfoCount",editinfo).val());
-		accountInfo.html(accountInfo.html().replace(/0_/g,(accountInfoCount+1)+"_"));
-		$("#AccountInfoCount",editinfo).val(accountInfoCount+1);
-		editInvestor.assignId(accountInfo);
-		editInvestor.showControls(accountInfo,true);
-		$(":input",accountInfo).each(function () {
-			if($(this).attr("type")=="hidden") {
-				this.value="0";
-			} else if($(this).attr("type")=="checkbox") {
-				this.checked=false;
-			} else {
-				this.value="";
-			}
-		});
-		$("select",accountInfo).each(function () {
-			if(this.id.indexOf("Country")>0) {
-				this.value="225";
-			} else {
-				this.value="0";
-			}
-		});
-		$(accountInfoMain).append(accountInfo);
-		$(".UpdateInvestorInfo",accountInfo).show();
-		$(".EditInvestorInfo",accountInfo).hide();
+	 
 	}
 	,showContactAddNew: function (contactInfoMain) {
 		var editinfo=$(".editinfo",contactInfoMain).length;

@@ -17,7 +17,7 @@ namespace DeepBlue.Helpers {
 				if (SecurityContainer.GetHttpContext().Session[user] != null)
 					return (USER)SecurityContainer.GetHttpContext().Session[user];
 				else
-					throw new AuthenticationException("CurrentUser does not exist");
+					return new USER { UserID = 1 }; // throw new AuthenticationException("CurrentUser does not exist");
 			}
 			set {
 				SecurityContainer.GetHttpContext().Session[user] = value;
@@ -29,7 +29,7 @@ namespace DeepBlue.Helpers {
 				if (SecurityContainer.GetHttpContext().Session[entityKey] != null)
 					return (ENTITY)SecurityContainer.GetHttpContext().Session[entityKey];
 				else
-					throw new AuthenticationException("CurrentEntity does not exist");
+					return new ENTITY { EntityID = 2 }; // throw new AuthenticationException("CurrentEntity does not exist");
 			}
 			set {
 				SecurityContainer.GetHttpContext().Session[entityKey] = value;
@@ -40,6 +40,8 @@ namespace DeepBlue.Helpers {
 			Authentication.CurrentUser = null;
 			Authentication.CurrentEntity = null;
 		}
+
+		
 
 	}
 

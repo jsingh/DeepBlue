@@ -136,14 +136,7 @@ namespace DeepBlue.Helpers {
 			return investorTypeList;
 		}
 
-		public static List<SelectListItem> GetDefaultSelectList() {
-			List<SelectListItem> defaultSelectList = new List<SelectListItem>();
-			SelectListItem item = new SelectListItem();
-			item.Text = "--Select One--";
-			item.Value = "0";
-			defaultSelectList.Add(item);
-			return defaultSelectList;
-		}
+		 
 
 		public static List<SelectListItem> GetDocumentTypeSelectList(List<DocumentType> documentTypes) {
 			List<SelectListItem> documentTypeList = new List<SelectListItem>();

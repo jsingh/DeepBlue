@@ -8,9 +8,9 @@ using DeepBlue.Models.Entity.Partial;
 
 namespace DeepBlue.Models.Entity {
 
-	[MetadataType(typeof(InvestorAddressMD))]
-	public partial class InvestorAddress {
-		public class InvestorAddressMD {
+	[MetadataType(typeof(InvestorContactMD))]
+	public partial class InvestorContact {
+		public class InvestorContactMD {
 
 			#region Primitive Properties
 
@@ -29,7 +29,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
- 
+
 			[DateRange(ErrorMessage = "CreatedDate is required")]
 			public Nullable<global::System.DateTime> CreatedDate {
 				get;
@@ -58,40 +58,47 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			#endregion
+
 		}
 
-		public InvestorAddress(IInvestorAddressService investoraddressService)
+		public InvestorContact(IInvestorContactService investoraddressService)
 			: this() {
-			this.InvestorAddressService = InvestorAddressService;
+			this.InvestorContactService = InvestorContactService;
 		}
 
-		public InvestorAddress() {
+		public InvestorContact() {
 		}
 
-		private IInvestorAddressService _InvestorAddressService;
-		public IInvestorAddressService InvestorAddressService {
+		private IInvestorContactService _InvestorContactService;
+		public IInvestorContactService InvestorContactService {
 			get {
-				if (_InvestorAddressService == null) {
-					_InvestorAddressService = new InvestorAddressService();
+				if (_InvestorContactService == null) {
+					_InvestorContactService = new InvestorContactService();
 				}
-				return _InvestorAddressService;
+				return _InvestorContactService;
 			}
 			set {
-				_InvestorAddressService = value;
+				_InvestorContactService = value;
 			}
 		}
 
 		public IEnumerable<ErrorInfo> Save() {
 			IEnumerable<ErrorInfo> errors = Validate(this);
-			errors = errors.Union(ValidationHelper.Validate(this.Address));
+			errors = errors.Union(ValidationHelper.Validate(this.Contact));
+			foreach (ContactAddress contactAddr in this.Contact.ContactAddresses) {
+				errors = errors.Union(ValidationHelper.Validate(contactAddr.Address));
+			}
+			foreach (ContactCommunication comm in this.Contact.ContactCommunications) {
+				errors = errors.Union(ValidationHelper.Validate(comm.Communication));
+			}
 			if (errors.Any()) {
 				return errors;
 			}
-			InvestorAddressService.SaveInvestorAddress(this);
+			InvestorContactService.SaveInvestorContact(this);
 			return null;
 		}
 
-		private IEnumerable<ErrorInfo> Validate(InvestorAddress investoraddress) {
+		private IEnumerable<ErrorInfo> Validate(InvestorContact investoraddress) {
 			return ValidationHelper.Validate(investoraddress);
 		}
 	}

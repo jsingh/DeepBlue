@@ -20,11 +20,11 @@ namespace DeepBlue.Models.Entity.Partial {
 					object originalItem;
 					key = default(EntityKey);
 					originalItem = null;
-					key = context.CreateEntityKey("InvestorCommunicationes", investorCommunication);
+					key = context.CreateEntityKey("InvestorCommunications", investorCommunication);
 					if (context.TryGetObjectByKey(key, out originalItem)) {
 						context.ApplyCurrentValues(key.EntitySetName, investorCommunication);
 					}
-					key = context.CreateEntityKey("Communication", investorCommunication.Communication);
+					key = context.CreateEntityKey("Communications", investorCommunication.Communication);
 					if (context.TryGetObjectByKey(key, out originalItem)) {
 						context.ApplyCurrentValues(key.EntitySetName, investorCommunication.Communication);
 					}

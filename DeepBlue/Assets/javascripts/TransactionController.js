@@ -1,5 +1,6 @@
 ﻿var transactionController={
-	init: function () {
+	selectFundCloseId: 0
+	,init: function () {
 		//	transactionController.loadFundDetails();
 		$(document).ready(function () {
 			$("#NewTransaction").css("height","auto");
@@ -142,6 +143,7 @@
 		});
 	}
 	,loadFundClosing: function (fundId) {
+		$("#FundId","#frmTransaction").val(fundId);
 		var dt=new Date();
 		var investorId=$("#InvestorId").val();
 		var url="/Transaction/FundClosingList/?fundId="+fundId+"&investorId="+investorId+"&t="+dt.getTime();
@@ -165,11 +167,63 @@
 			var i;
 			ddl.options.length=null;
 			listItem=new Option("--Select One--","0",false,false);
-			ddl.options[0]=listItem;
+			ddl.options[ddl.options.length]=listItem;
 			for(i=0;i<data.FundClosingDetails.length;i++) {
 				listItem=new Option(data.FundClosingDetails[i].Name,data.FundClosingDetails[i].FundClosingId,false,false);
 				ddl.options[ddl.options.length]=listItem;
 			}
+			listItem=new Option("Add Fund Close","-1",false,false);
+			ddl.options[ddl.options.length]=listItem;
+			ddl.value=transactionController.selectFundCloseId;
+			transactionController.selectFundCloseId=0;
+			$(ddl).combobox('destroy');
+			$(ddl).combobox('remove');
+			jHelper.jqComboBox($("#frmTransaction"));
 		});
+	}
+	,checkFundClose: function (id) {
+		if(id== -1) {
+			var frm=$("#frmAddFundClose");
+			var frmTransaction=$("#frmTransaction");
+
+			$("#FundId",frm).val($("#FundId",frmTransaction).val());
+			$("#CloseFundName",frm).val($("#FundName",frmTransaction).val());
+			$("#IsFirstClosing",frm).get(0).checked=false;
+			var loading=$("#Loading",frm);
+			loading.empty();
+			$("#AddFundClose").dialog("open");
+		}
+	}
+	,addFundClose: function () {
+		try {
+			var frm=$("#frmAddFundClose");
+			var frmTransaction=$("#frmTransaction");
+			var loading=$("#Loading",frm);
+			var param=$(frm).serializeArray();
+			var url="/Admin/UpdateFundClosing";
+			loading.html(jHelper.savingHTML());
+			$.post(url,param,function (data) {
+				var arr=data.split("||");
+				if(arr[0]!="True") {
+					alert(data);
+				} else {
+					alert("Fund Close Added");
+					$("#AddFundClose").dialog("close");
+					transactionController.selectFundCloseId=arr[1];
+
+					$("#FundId",frmTransaction).val($("#FundId",frm).val());
+					$("#FundName",frmTransaction).val($("#CloseFundName",frm).val());
+
+					transactionController.loadFundClosing($("#FundId",frm).val());
+					jHelper.resetFields(frm);
+				}
+			});
+		} catch(e) {
+			alert(e);
+		}
+		return false;
+	}
+	,cancelFundClose: function () {
+		$("#AddFundClose").dialog("close");
 	}
 }
