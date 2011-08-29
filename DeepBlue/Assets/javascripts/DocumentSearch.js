@@ -3,6 +3,7 @@
 		$(document).ready(function () {
 			//$("#FundNameCloumn").width($("#InvestorNameColumn").width());
 			//$("#FundNameCloumn div").width($("#InvestorNameColumn").width());
+			jHelper.jqComboBox($("body"));
 		});
 	}
 	,changeType: function (select) {

@@ -32,11 +32,11 @@
 		}
 	}
 	,changeCountry: function (item) {
-		var country=$("#Country");
+		var country=$("#Country","#AddressInfoMain");
 		country.val(item.id);
-		var state=$("#State");
-		var staterow=$("#StateRow");
-		var stateName=$("#StateName");
+		var state=$("#State","#AddressInfoMain");
+		var staterow=$("#StateRow","#AddressInfoMain");
+		var stateName=$("#StateName","#AddressInfoMain");
 		state.val(52);
 		if(item.label!="United States") {
 			staterow.hide();
@@ -57,13 +57,13 @@
 		jHelper.jqComboBox(newContact);
 		jHelper.jqCheckBox(newContact);
 
-		$("#"+data.i+"_ContactCountryName",newContact)
+		$("#ContactCountryName",newContact)
 			.autocomplete({ source: "/Admin/FindCountrys",minLength: 1
 			,select: function (event,ui) {
-				$("#"+data.i+"_ContactCountry",newContact).val(ui.item.id);
-				var stateRow=$("#"+data.i+"_StateRow");
-				var state=$("#"+data.i+"_ContactState");
-				var stateName=$("#"+data.i+"_ContactStateName");
+				$("#ContactCountry",newContact).val(ui.item.id);
+				var stateRow=$("#StateRow",newContact);
+				var state=$("#ContactState",newContact);
+				var stateName=$("#ContactStateName",newContact);
 				state.val(52);
 				if(ui.item.label!="United States") {
 					stateRow.hide();
@@ -76,10 +76,10 @@
 			,appendTo: "body",delay: 300
 			});
 
-		$("#"+data.i+"_ContactStateName",newContact)
+		$("#ContactStateName",newContact)
 			.autocomplete({ source: "/Admin/FindStates",minLength: 1
 			,select: function (event,ui) {
-				$("#"+data.i+"_ContactState",newContact).val(ui.item.id);
+				$("#ContactState",newContact).val(ui.item.id);
 			}
 			,appendTo: "body",delay: 300
 			});

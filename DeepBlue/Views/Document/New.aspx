@@ -95,7 +95,7 @@
 			var UploadType=document.getElementById("UploadType");
 			documentUpload.changeUploadType(UploadType);
 			documentUpload.init();
-			
+			jHelper.jqComboBox($("body"));
 		});
 	</script>
 </asp:Content>
