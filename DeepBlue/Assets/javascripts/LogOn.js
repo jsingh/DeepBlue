@@ -6,7 +6,7 @@
 		var err="";
 		$(".field-validation-error").each(function () { err+=this.innerHTML+"\n"; });
 		if($.trim(err)!="") {
-			alert(err);
+			jAlert(err);
 		}
 	}
 	,submit: function (frm) {
@@ -25,7 +25,7 @@
 			err+="Password is required\n";
 		}
 		if(err!="") {
-			alert(err);
+			jAlert(err);
 			txt.focus();
 			return false;
 		}

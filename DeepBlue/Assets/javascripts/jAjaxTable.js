@@ -108,7 +108,7 @@
 					} else {
 						this.populate();
 					}
-				} catch(e) { alert(e); }
+				} catch(e) { jAlert(e); }
 			}
 			,populate: function () { //get latest data 
 				if(p.onSubmit) {

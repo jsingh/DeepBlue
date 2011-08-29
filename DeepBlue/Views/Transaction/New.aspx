@@ -104,13 +104,9 @@
 									<%: Html.Span("",new { @id = "disp_InvestorTypeId", @style = "display:none"  }) %>
 									<%: Html.DropDownListFor(model => model.InvestorTypeId,Model.InvestorTypes) %>
 								</div>
-								<div class="editor-button">
-									<div style="float: left; padding: 0 0 10px 5px;">
-										<%: Html.ImageButton("submit.png", new { @class="default-button" })%>
-									</div>
-									<div style="float: left; padding: 0 0 10px 5px;">
-										<%: Html.Span("", new { @id = "UpdateLoading" })%>
-									</div>
+								<div class="editor-field" style="clear:both;margin-left:45%;">
+									<%: Html.ImageButton("submit.png", new { @class="default-button" })%>
+									<%: Html.Span("", new { @id = "UpdateLoading" })%>
 								</div>
 							</div>
 						</div>

@@ -73,7 +73,7 @@ deal.deleteUnderlyingFund=function (id,img) {
 		var url="/Deal/DeleteDealUnderlyingFund/"+id;
 		$.get(url,function (data) {
 			if($.trim(data)!="") {
-				alert(data);
+				jAlert(data);
 			} else {
 				tr.remove();
 				deal.setIndex($("#tblUnderlyingFund"));
@@ -109,7 +109,7 @@ deal.saveUnderlyingFund=function (tr) {
 				var id=data.split("||")[1];
 				deal.loadUnderlyingFund(id);
 			} else {
-				alert(data);
+				jAlert(data);
 			}
 		});
 	} else {

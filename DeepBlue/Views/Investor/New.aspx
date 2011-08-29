@@ -307,7 +307,7 @@
 					<%=Html.Image("add.png", new { @title = "Add New Bank Information", @onclick = "javascript:investor.createAccount(this);" })%>
 				</div>
 			</div> 
-			<%Html.RenderPartial("BankInformation", new DeepBlue.Models.Investor.BankDetail());%>
+			<%Html.RenderPartial("NewBankInformation", new DeepBlue.Models.Investor.BankDetail());%>
 		</div>
 	</script>
 	<script id="ContactInformationTemplate" type="text/x-jquery-tmpl"> 
@@ -323,7 +323,7 @@
 				</div>
 			</div>
 			<%DeepBlue.Models.Investor.ContactDetail contactDetail = new DeepBlue.Models.Investor.ContactDetail();
-			Html.RenderPartial("ContactInformation", contactDetail);
+			Html.RenderPartial("NewContactInformation", contactDetail);
 			%>
 		</div>
 	</script>

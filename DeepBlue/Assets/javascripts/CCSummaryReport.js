@@ -31,14 +31,14 @@
 			$.post("/Report/CapitalCallSummaryList",$(frm).serializeForm(),function (data) {
 				loading.hide();
 				if($.trim(data.Error)!="") {
-					alert(data.Error);
+					jAlert(data.Error);
 				} else {
 					target.empty();
 					$("#CCSummaryReportTemplate").tmpl(data.Data).appendTo(target);
 				}
 			});
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 		return false;
 	}

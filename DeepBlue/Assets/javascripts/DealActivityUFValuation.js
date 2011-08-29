@@ -42,7 +42,7 @@ dealActivity.addUFV=function (img,id) {
 		var arr=data.split("||");
 		if(arr[0]=="True") {
 			dealActivity.findUFV(arr[2],arr[1]);
-		} else { alert(data); }
+		} else { jAlert(data); }
 	});
 };
 dealActivity.deleteUFV=function (fundId,id,img) {
@@ -55,7 +55,7 @@ dealActivity.deleteUFV=function (fundId,id,img) {
 		spnloading.html("<img src='/Assets/images/ajax.jpg'/>");
 		$.get(url,function (data) {
 			if(data!="") {
-				alert(data);
+				jAlert(data);
 			} else {
 				spnloading.empty();
 				dealActivity.findUFV(fundId,id);

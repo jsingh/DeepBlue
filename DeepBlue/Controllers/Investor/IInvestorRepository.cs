@@ -14,7 +14,7 @@ namespace DeepBlue.Controllers.Investor {
 		List<AutoCompleteList> FindInvestors(string investorName, int? fundId);
 		List<AutoCompleteList> FindOtherInvestors(string investorName, int excludeInvestorId);
         DeepBlue.Models.Entity.Investor FindInvestor(int investorId);
-		InvestorDetail FindInvestorDetail(int investorId);
+		InvestorDetail GetInvestorDetail(int investorId);
 		InvestorType FindInvestorType(int investorTypeId);
         List<InvestorFund> FindInvestorFunds(int investorId);
 		InvestorFund FindInvestorFund(int investorId,int fundId);
@@ -23,13 +23,12 @@ namespace DeepBlue.Controllers.Investor {
 		decimal FindSumOfSellAmount(int investorFundId);
 		bool InvestorNameAvailable(string invesorName, int investorId);
 		bool SocialSecurityTaxIdAvailable(string socialSecurityId, int investorId);
-		EditModel FindInvestorDet(int investorId);
 		#endregion
 		 
 		#region Delete
 		bool Delete(int investorId);
-		void DeleteInvestorContact(int investorContactId);
-		void DeleteInvestorAccount(int investorAccountId);
+		bool DeleteInvestorContact(int investorContactId);
+		bool DeleteInvestorAccount(int investorAccountId);
 		#endregion
 
 		#region Save
@@ -59,6 +58,11 @@ namespace DeepBlue.Controllers.Investor {
 		InvestorAccount FindInvestorAccount(int investorAccountId);
 		object FindInvestorAccountModel(int investorAccountId);
 		IEnumerable<ErrorInfo> SaveInvestorAccount(InvestorAccount investorAccount);
+		#endregion
+
+		#region Investor Information
+		EditModel FindInvestorDetail(int investorId);
+		InvestorInformation FindInvestorInformation(int investorId);
 		#endregion
 	}
 }

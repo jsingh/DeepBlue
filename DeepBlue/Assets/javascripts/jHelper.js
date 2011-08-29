@@ -36,14 +36,14 @@
 	,checkEmail: function (txt) {
 		if($.trim(txt.value)!="") {
 			var rExp=new RegExp("^[\\w-_\.]*[\\w-_\.]\@[\\w]\.+[\\w]+[\\w]$");
-			if(rExp.test(txt.value)==false) { alert("Invalid Email");txt.value=""; }
+			if(rExp.test(txt.value)==false) { jAlert("Invalid Email");txt.value=""; }
 		}
 	}
 	,checkWebAddress: function (txt) {
 		if($.trim(txt.value)!="") {
 			if(txt.value.toLowerCase().indexOf("http://")<0&&txt.value.toLowerCase().indexOf("https://")<0) { txt.value="http://"+txt.value; }
 			//var rExp=new RegExp("^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$");
-			//if(rExp.test(txt.value)==false) { alert("Invalid Web Address");txt.value=""; }
+			//if(rExp.test(txt.value)==false) { jAlert("Invalid Web Address");txt.value=""; }
 		}
 	}
 	,checkNum: function (data) {
@@ -123,11 +123,11 @@
 			var message='';
 			if(isNaN(checkAutoComplete)) { checkAutoComplete=true; }
 			if(checkAutoComplete) { $(".field-validation-error",frm).each(function () { if(this.innerHTML!='') { message+=this.innerHTML+"\n"; } }); }
-			if(message!="") { alert(message);return false; }
+			if(message!="") { jAlert(message);return false; }
 			Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
 			$(".field-validation-error",frm).each(function () { if(this.innerHTML!='') { message+=this.innerHTML+"\n"; } });
-			if(message!="") { alert(message);return false; } else { return true; }
-		} catch(e) { alert(e); }
+			if(message!="") { jAlert(message);return false; } else { return true; }
+		} catch(e) { jAlert(e); }
 		return true;
 	}
 	,resizeIframe: function (h) {
@@ -209,7 +209,7 @@
 					} else {
 						this.innerHTML=dt;
 					}
-				} catch(e) { alert(e); }
+				} catch(e) { jAlert(e); }
 			}
 		});
 	}
@@ -269,8 +269,10 @@
 	}
 	,loadingHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading..."; }
 	,savingHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving..."; }
+	,deleteHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Delete..."; }
 	,jqCheckBox: function (target) { $(":input:checkbox",target).jqCheckBox(); }
 	,jqComboBox: function (target) { $("select",target).combobox(); }
+	,removejqCheckBox: function (target) { $(".jqCheckBox",target).remove();$(".jqCDisplay",target).remove();$(".jqHidden",target).removeClass(); }
 }
 $.extend(window,{
 	formatDate: function (dt) { try { if(dt==null) { return ""; } var d=jHelper.formatDate(jHelper.parseJSONDate(dt));if(d=="01/01/1"||d=="01/01/1900") { return ""; } else { return d; } } catch(e) { return ""; } }
@@ -278,4 +280,22 @@ $.extend(window,{
 	,formatPercentage: function (d) { if(d==null) { return ""; } d=parseFloat(d).toFixed(1);if(isNaN(d)) { return ""; } if(d.toString()=="0.00") { return ""; } else { return d.toString()+"%"; } }
 	,formatNumber: function (d) { return formatCurrency(d).replace("$",""); }
 	,checkNullOrZero: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } if(d==0) { return ""; } else { return d; } }
+	,formatEditor: function (v) { if(!v) v="";if($.trim(v)!="") return v.replace(/\n/g,"<br/>");else return ""; }
+	,getCustomFieldValue: function (values,customFieldId,dataTypeId) {
+		var i=0;var value="";
+		if(values!=null) {
+			for(i=0;i<values.length;i++) {
+				if(values[i].CustomFieldId==customFieldId&&values[i].DataTypeId==dataTypeId) {
+					switch(dataTypeId.toString()) {
+						case "1": value=checkNullOrZero(values[i].IntegerValue);break;
+						case "2": value=values[i].TextValue;break;
+						case "3": value=values[i].BooleanValue;break;
+						case "4": value=values[i].DateValue;break;
+						case "5": value=checkNullOrZero(values[i].CurrencyValue);break;
+					}
+				}
+			}
+		}
+		return value;
+	}
 });

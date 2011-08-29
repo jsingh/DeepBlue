@@ -6,8 +6,9 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
+	<%=Html.JavascriptInclueTag("jquery.scrollTo-1.4.2-min.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
-	<%=Html.JavascriptInclueTag("EditInvestor2.js") %>
+	<%=Html.JavascriptInclueTag("EditInvestor.js") %>
 	<%=Html.StylesheetLinkTag("editinvestor.css") %>
 	<%=Html.StylesheetLinkTag("flexigrid.css") %>
 </asp:Content>
@@ -24,13 +25,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="edit-investor">
-		<div class="search">
-			<div class="editor-label auto-width" style="padding: 8px;">
-				<%: Html.Label("Investor") %>
-			</div>
-			<div class="editor-field auto-width">
-				<%: Html.TextBox("Investor")%>&nbsp;<%=Html.Span("",new { id = "Loading" })%>
-			</div>
+		<div class="editor-label" style="width: auto">
+			<%: Html.Label("Investor") %>
+		</div>
+		<div class="editor-field" style="width: auto">
+			<%: Html.TextBox("Investor", "SEARCH INVESTOR", new { @class = "wm", @style = "width:200px" })%>
+		</div>
+		<div class="editor-field">
+			<%=Html.Span("",new { id = "Loading" })%>
 		</div>
 		<div id="editinfo">
 		</div>
@@ -47,6 +49,12 @@
 	<script id="EditInvestorTemplate" type="text/x-jquery-tmpl"> 
 		<%Html.RenderPartial("EditInvestorDetail", Model);%>
 	</script>
+	<script id="DisplayInvestorInfoTemplate" type="text/x-jquery-tmpl"> 
+		<%Html.RenderPartial("DisplayInvestorInformation");%>
+	</script>
+	<script id="InvestorInfoEditTemplate" type="text/x-jquery-tmpl"> 
+		<%Html.RenderPartial("InvestorInformation", Model);%>
+	</script>
 	<script id="AddressInfoTemplate" type="text/x-jquery-tmpl"> 
 		<%Html.RenderPartial("AddressInformation", Model);%>
 	</script>
@@ -55,5 +63,7 @@
 	</script>
 	<script id="BankInfoTemplate" type="text/x-jquery-tmpl"> 
 		<%Html.RenderPartial("BankInformation", new DeepBlue.Models.Investor.BankDetail());%>
+	</script>
+	<script id="CFValueTemplate" type="text/x-jquery-tmpl"> 
 	</script>
 </asp:Content>

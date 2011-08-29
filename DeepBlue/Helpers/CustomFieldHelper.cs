@@ -10,7 +10,8 @@ namespace DeepBlue.Helpers {
 	public class CustomFieldModel {
 		public CustomFieldModel() {
 			InitializeDatePicker = true;
-			DisplayTwoColumn = false;
+			IsDisplayTwoColumn = false;
+			IsDisplayMode = false;
 		}
 		public int Key { get; set; }
 
@@ -20,7 +21,9 @@ namespace DeepBlue.Helpers {
 
 		public bool InitializeDatePicker { get; set; }
 
-		public bool DisplayTwoColumn { get; set; }
+		public bool IsDisplayTwoColumn { get; set; }
+
+		public bool IsDisplayMode { get; set; }
 	}
 
 	public class CustomFieldDetail {

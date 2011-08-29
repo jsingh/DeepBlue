@@ -35,7 +35,7 @@ dealActivity.makeNewFLE=function () {
 	$("#FLE").show();
 	if(isNaN(fundId)) { fundId=0; }
 	if(fundId==0) {
-		alert("Fund is required");
+		jAlert("Fund is required");
 		$("#FLE_Fund").focus();
 	} else {
 		var target=$("tbody",tbl);
@@ -65,7 +65,7 @@ dealActivity.addFLE=function (img,id) {
 		var arr=data.split("||");
 		if(arr[0]=="True") {
 			dealActivity.findFLE(arr[1]);
-		} else { alert(data); }
+		} else { jAlert(data); }
 	});
 };
 dealActivity.findFLE=function (feid) {

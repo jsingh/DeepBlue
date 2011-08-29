@@ -60,21 +60,21 @@
 						loading.empty();
 						var arr=data.data.split("||");
 						if(arr[0]=="True") {
-							alert("Underlying Direct Added.");
+							jAlert("Underlying Direct Added.");
 							$("#DirectMain").hide();
 							$("#AddNewIssuer").hide();
 							$("#S_Issuer").val("");
 							dealDirect.loadSelectImages(false);
 						} else {
-							alert(data.data);
+							jAlert(data.data);
 						}
 					}
 					,error: function (data,status,e) {
 						loading.empty();
-						alert(data.msg+","+status+","+e);
+						jAlert(data.msg+","+status+","+e);
 					}
 				});
-		} catch(e) { alert(e); }
+		} catch(e) { jAlert(e); }
 		return false;
 	}
 	,loadSelectImages: function (isSelect) {
@@ -99,9 +99,9 @@
 				var arr=data.split("||");
 				if(arr[0]=="True") {
 					if(dealDirect.isUnderlyingFundModel) {
-						alert("GP saved");
+						jAlert("GP saved");
 					} else {
-						alert("Company Saved.");
+						jAlert("Company Saved.");
 					}
 					$("#AddNewIssuer").hide();
 					$("#AddGP").removeClass("green-btn-sel");
@@ -109,9 +109,9 @@
 					if(dealDirect.onCreateNewIssuer) {
 						dealDirect.onCreateNewIssuer(arr[1]);
 					}
-				} else { alert(data); }
+				} else { jAlert(data); }
 			});
-		} catch(e) { alert(e); }
+		} catch(e) { jAlert(e); }
 		return false;
 	}
 	,add: function () {

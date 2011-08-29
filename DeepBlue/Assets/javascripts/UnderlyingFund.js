@@ -37,7 +37,7 @@
 			var url="/Admin/DeleteUnderlyingFund/"+id+"?t="+dt.getTime();
 			$.get(url,function (data) {
 				if(data!="") {
-					alert(data);
+					jAlert(data);
 				} else {
 					$("#UnderlyingFundList").flexReload();
 				}
@@ -66,7 +66,7 @@
 		$("#UpdateLoading").html("");
 		var UpdateTargetId=$("#UpdateTargetId");
 		if(jQuery.trim(UpdateTargetId.html())!="") {
-			alert(UpdateTargetId.html())
+			jAlert(UpdateTargetId.html())
 		} else {
 			parent.underlyingFund.closeDialog(true);
 		}
@@ -169,16 +169,16 @@
 						underlyingFund.onAfterUnderlyingFundSave();
 					} else {
 						if(underlyingFund.tempSave==false) {
-							alert("Underlying Fund Added.");
+							jAlert("Underlying Fund Added.");
 							$("#lnkAddUnderlyingFund").removeClass("green-btn-sel");
 							$("#AddUnderlyingFund").hide();
 							$("#S_UnderlyingFund").val("");
 						}
 					}
-				} else { alert(data); }
+				} else { jAlert(data); }
 				underlyingFund.tempSave=false;
 			});
-		} catch(e) { alert(e); }
+		} catch(e) { jAlert(e); }
 		return false;
 	}
 	,saveTemp: function (loadingId) {
@@ -212,16 +212,16 @@
 					success: function (data,status) {
 						loading.empty();
 						if($.trim(data.data)!="") {
-							alert(data.data);
+							jAlert(data.data);
 						} else {
-							alert("Document Saved");
+							jAlert("Document Saved");
 							underlyingFund.documentRefresh();
 							jHelper.resetFields($("#frmDocumentInfo"));
 						}
 					}
 					,error: function (data,status,e) {
 						loading.empty();
-						alert(data.msg+","+status+","+e);
+						jAlert(data.msg+","+status+","+e);
 					}
 				});
 			} else {
@@ -229,7 +229,7 @@
 				underlyingFund.onAfterUnderlyingFundSave=function () { underlyingFund.saveDocument(frm); }
 				$("#btnSave").click();
 			}
-		} catch(e) { alert(e); }
+		} catch(e) { jAlert(e); }
 		return false;
 	}
 	,uploadDocument: function () {
@@ -244,19 +244,19 @@
 				success: function (data,status) {
 					if(typeof (data.error)!='undefined') {
 						if(data.error!='') {
-							alert(data.error);
+							jAlert(data.error);
 						} else {
-							alert(data.msg);
+							jAlert(data.msg);
 						}
 					}
 				},
 				error: function (data,status,e) {
-					alert(data.msg+","+status+","+e);
+					jAlert(data.msg+","+status+","+e);
 				}
 			}
 		);
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 	}
 	,changeUploadType: function (uploadType) {
@@ -274,7 +274,7 @@
 			img.src="/Assets/images/ajax.jpg";
 			$.get("/Deal/DeleteUnderlyingFundDocumentFile/"+id,function (data) {
 				if($.trim(data)!="") {
-					alert(data);
+					jAlert(data);
 				} else {
 					underlyingFund.documentRefresh();
 				}

@@ -9,12 +9,12 @@
 			$.post("/Report/DealOriginationReport",$(frm).serializeForm(),function (data) {
 				target.empty();
 				if($.trim(data.Error)!="") {
-					alert(data.Error);
+					jAlert(data.Error);
 				} else {
 					$("#ReportTemplate").tmpl(data.Data).appendTo(target);
 				}
 			});
-		} catch(e) { alert(e); }
+		} catch(e) { jAlert(e); }
 		return false;
 	}
 	,selectFund: function (id) {

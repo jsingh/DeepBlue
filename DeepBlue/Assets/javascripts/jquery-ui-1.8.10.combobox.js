@@ -97,7 +97,7 @@
 				this.element.show();
 				$.Widget.prototype.destroy.call(this);
 			} catch(e) {
-				alert(e);
+				jAlert(e);
 			}
 		}
 

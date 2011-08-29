@@ -31,7 +31,7 @@
 			var url="/Admin/DeleteReportingFrequency/"+id+"?t="+dt.getTime();
 			$.get(url,function (data) {
 				if(data!="") {
-					alert(data);
+					jAlert(data);
 				} else {
 					tr.remove();
 					jHelper.applyFlexGridClass($(".bDiv:first"));
@@ -49,7 +49,7 @@
 			img.src=imgsrc;
 			var arr=data.split("||");
 			if(arr[0]!="True") {
-				alert(data);
+				jAlert(data);
 			} else {
 				$.getJSON("/Admin/EditReportingFrequency?_"+(new Date).getTime()+"&id="+arr[1],function (loadData) {
 					$("#GridTemplate").tmpl(loadData).insertAfter(tr);

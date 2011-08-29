@@ -60,7 +60,7 @@ deal.saveExpense=function (tr) {
 				var id=data.split("||")[1];
 				deal.loadDealExpense(id);
 			} else {
-				alert(data);
+				jAlert(data);
 			}
 		});
 	} else {

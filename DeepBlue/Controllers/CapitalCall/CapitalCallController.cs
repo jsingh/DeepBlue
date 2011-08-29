@@ -56,6 +56,22 @@ namespace DeepBlue.Controllers.CapitalCall {
 			if ((model.NewInvestmentAmount ?? 0) <= 0) {
 				ModelState.AddModelError("NewInvestmentAmount", "New Investment Amount is required");
 			}
+			if ((model.AddManagementFees ?? false) == true) {
+				DateTime fromDate = (model.FromDate ?? Convert.ToDateTime("01/01/1900"));
+				DateTime toDate = (model.ToDate ?? Convert.ToDateTime("01/01/1900"));
+				if (fromDate.Year <= 1900)
+					ModelState.AddModelError("FromDate", "From Date is required");
+				if (toDate.Year <= 1900)
+					ModelState.AddModelError("ToDate", "To Date is required");
+				if (fromDate.Year > 1900 && toDate.Year > 1900) {
+					if (fromDate.Subtract(toDate).Days >= 0) {
+						ModelState.AddModelError("ToDate", "To Date must be greater than From Date");
+					}
+				}
+				if ((model.ManagementFees ?? 0) <= 1) {
+					ModelState.AddModelError("ManagementFees", "Fee Amount is required");
+				}
+			}
 			if (ModelState.IsValid) {
 
 				// Attempt to create capital call.
@@ -93,23 +109,27 @@ namespace DeepBlue.Controllers.CapitalCall {
 					// Calculate managing total commitment.
 					decimal totalCommitment = nonManagingMemberTotalCommitment + managingMemberTotalCommitment;
 
-					if ((model.AddFundExpenses ?? false)) {
+					if ((model.AddFundExpenses ?? false) == true) {
 						capitalCall.FundExpenses = model.FundExpenseAmount ?? 0;
 					}
 					else {
 						capitalCall.FundExpenses = 0;
 					}
 
-					if ((model.AddManagementFees ?? false)) {
+					if ((model.AddManagementFees ?? false) == true) {
 						capitalCall.ManagementFeeStartDate = model.FromDate;
 						capitalCall.ManagementFeeEndDate = model.ToDate;
 						capitalCall.ManagementFeeInterest = 0;
-						if (managementFeeDetails != null) {
-							capitalCall.ManagementFees = managementFeeDetails.Sum(fee => fee.ManagementFee);
-						}
-						else {
-							capitalCall.ManagementFees = 0;
-						}
+						capitalCall.ManagementFees = model.ManagementFees;
+						//if (managementFeeDetails != null) {
+						//    capitalCall.ManagementFees =  managementFeeDetails.Sum(fee => fee.ManagementFee);
+						//}
+						//else {
+						//    capitalCall.ManagementFees = 0;
+						//}
+					}
+					else {
+						capitalCall.ManagementFees = 0;
 					}
 
 					// Check new investment amount and existing investment amount.
@@ -117,7 +137,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 					decimal investmentAmount = (capitalCall.NewInvestmentAmount ?? 0) + (capitalCall.ExistingInvestmentAmount ?? 0);
 					decimal capitalAmount = (capitalCall.CapitalAmountCalled) - (capitalCall.ManagementFees ?? 0) - (capitalCall.FundExpenses ?? 0);
 
-					if (((decimal.Round(investmentAmount) == decimal.Round(capitalAmount))==false)){
+					if (((decimal.Round(investmentAmount) == decimal.Round(capitalAmount)) == false)) {
 						ModelState.AddModelError("NewInvestmentAmount", "(New Investment Amount + Existing Investment Amount) should be equal to (Capital Amount - Management Fees - Fund Expenses).");
 					}
 					else {
@@ -143,7 +163,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 									item.ManagementFees = managementFeeDetail.ManagementFee;
 								}
 							}
-							
+
 							item.NewInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.NewInvestmentAmount;
 
 							// Calculate capital call amount for each investor.

@@ -47,23 +47,24 @@
 	}
 	,ajaxSetup: function () {
 		$.ajaxSetup({
-			error: function (x,jqxhr,settings,exception) {
+			cache: false
+			,error: function (x,jqxhr,settings,exception) {
 				if(x.responseText.indexOf('AuthenticationException')>0) {
 					$.get("/Account/LogOff");
 					deepBlue.redirectLogOn();
 				} else {
 					if(x.status==0) {
-						alert('You are offline!!\n Please Check Your Network.');
+						jAlert('You are offline!!\n Please Check Your Network.');
 					} else if(x.status==404) {
-						alert('Requested URL not found.');
+						jAlert('Requested URL not found.');
 					} else if(x.status==500) {
-						alert('Internel Server Error.');
+						jAlert('Internel Server Error.');
 					} else if(e=='parsererror') {
-						alert('Error.\nParsing JSON Request failed.');
+						jAlert('Error.\nParsing JSON Request failed.');
 					} else if(e=='timeout') {
-						alert('Request Time out.');
+						jAlert('Request Time out.');
 					} else {
-						alert('Unknow Error.\n'+x.responseText);
+						jAlert('Unknow Error.\n'+x.responseText);
 					}
 				}
 			}

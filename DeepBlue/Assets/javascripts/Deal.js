@@ -114,7 +114,7 @@
 
 
 			$("#DocumentDate").datepicker({ changeMonth: true,changeYear: true });
-		} catch(e) { alert(e); }
+		} catch(e) { jAlert(e); }
 	}
 	,uploadDocument: function () {
 		return false;
@@ -129,19 +129,19 @@
 				success: function (data,status) {
 					if(typeof (data.error)!='undefined') {
 						if(data.error!='') {
-							alert(data.error);
+							jAlert(data.error);
 						} else {
-							alert(data.msg);
+							jAlert(data.msg);
 						}
 					}
 				},
 				error: function (data,status,e) {
-					alert(data.msg+","+status+","+e);
+					jAlert(data.msg+","+status+","+e);
 				}
 			}
 		);
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 	}
 	,setIndex: function (target) {
@@ -163,7 +163,7 @@
 			if(result.indexOf("True||")> -1) {
 
 			} else {
-				alert(UpdateTargetId.html())
+				jAlert(UpdateTargetId.html())
 			}
 		}
 	}
@@ -179,21 +179,21 @@
 				loading.empty();
 				var arr=data.split("||");
 				if(arr[0]!="True") {
-					alert(data);
+					jAlert(data);
 				} else {
 					deal.setDealId(arr[1]);
 					if(deal.onDealSuccess) {
 						deal.onDealSuccess();
 						deal.onDealSuccess=null;
 					} else {
-						alert("Deal Saved");
+						jAlert("Deal Saved");
 						$("#SearchDealName").val("");
 						$("#M_Fund").val("");
 						$("#DealMain").hide();
 					}
 				}
 			});
-		} catch(e) { alert(e); }
+		} catch(e) { jAlert(e); }
 		return false;
 	}
 	,seeFullDeal: function () {
@@ -273,7 +273,7 @@
 			var url="/Deal/CreateSellerInfo";
 			var param=$(frm).serialize();
 			$.post(url,param,function (data) {
-				$("#SpnSellerUpdateLoading").html("");if(data!="") { alert(data); }
+				$("#SpnSellerUpdateLoading").html("");if(data!="") { jAlert(data); }
 			});
 		} else {
 			deal.onDealSuccess=function () { deal.saveSellerInfo(frm); }
@@ -297,12 +297,12 @@
 				}
 			});
 			if($.trim(message)!="") {
-				alert(message);
+				jAlert(message);
 				return false;
 			} else {
 				return true;
 			}
-		} catch(e) { alert(e); }
+		} catch(e) { jAlert(e); }
 	}
 	,sellerInfoReset: function () {
 		jHelper.resetFields($("#SellerInfo"));

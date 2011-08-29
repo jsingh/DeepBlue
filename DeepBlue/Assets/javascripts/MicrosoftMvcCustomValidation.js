@@ -28,7 +28,7 @@
 					var newMessage=(responseData=='FAIL'?
                     rule.ErrorMessage:responseData);
 					/*if(newMessage!='') {
-						alert(newMessage);
+						jAlert(newMessage);
 					}*/
 					context.fieldContext.addError(newMessage);
 				}

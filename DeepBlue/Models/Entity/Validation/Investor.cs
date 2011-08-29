@@ -122,27 +122,7 @@ namespace DeepBlue.Models.Entity {
 		}
 
 		private IEnumerable<ErrorInfo> Validate(Investor investor) {
-			IEnumerable<ErrorInfo> errors = ValidationHelper.Validate(investor);
-			foreach (InvestorAddress address in investor.InvestorAddresses) {
-				errors = errors.Union(ValidationHelper.Validate(address.Address));
-			}
-			foreach (InvestorCommunication comm in investor.InvestorCommunications) {
-				errors = errors.Union(ValidationHelper.Validate(comm.Communication));
-			}
-			foreach (InvestorAccount account in investor.InvestorAccounts) {
-				errors = errors.Union(ValidationHelper.Validate(account));
-			}
-			foreach (InvestorContact investorContact in investor.InvestorContacts) {
-				Contact contact = investorContact.Contact;
-				errors = errors.Union(ValidationHelper.Validate(contact));
-				foreach (ContactAddress contactAddr in contact.ContactAddresses) {
-					errors = errors.Union(ValidationHelper.Validate(contactAddr.Address));
-				}
-				foreach (ContactCommunication comm in contact.ContactCommunications) {
-					errors = errors.Union(ValidationHelper.Validate(comm.Communication));
-				}
-			}
-			return errors;
+			return ValidationHelper.Validate(investor);
 		}
 	}
 }

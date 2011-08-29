@@ -68,9 +68,9 @@
 				loading.empty();
 				var arr=data.split("||");
 				if($.trim(arr[0])!="True") {
-					alert(data);
+					jAlert(data);
 				} else {
-					alert("Capital Distribution Saved.");
+					jAlert("Capital Distribution Saved.");
 					$("#SpnDistributionNumber").html(arr[1]);
 					$("#DistributionNumber").val(arr[1]);
 					$("#SpnManualDistributionNumber").html(arr[1]);
@@ -78,7 +78,7 @@
 				}
 			});
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 		return false;
 	}

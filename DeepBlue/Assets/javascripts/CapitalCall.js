@@ -65,7 +65,7 @@
 		if(fromDate!=""&&toDate!="") {
 			var diff=Date.DateDiff("d",fromDate,toDate);
 			if(diff<=0) {
-				alert("To Date must be greater than From Date.");
+				jAlert("To Date must be greater than From Date.");
 				$("#ToDate").val("");
 			} else {
 				this.calcManFee();
@@ -143,9 +143,9 @@
 				loading.empty();
 				var arr=data.split("||");
 				if($.trim(arr[0])!="True") {
-					alert(data);
+					jAlert(data);
 				} else {
-					alert("Capital Call Saved.");
+					jAlert("Capital Call Saved.");
 					$("#SpnCapitalCallNumber").html(arr[1]);
 					$("#CapitalCallNumber").val(arr[1]);
 					$("#SpnMFA").html("");
@@ -161,10 +161,12 @@
 						capitalCall.selectFundExp(chkae);
 					}
 					jHelper.resetFields(frm);
+					jHelper.removejqCheckBox(frm);
+					jHelper.jqCheckBox(frm);
 				}
 			});
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 		return false;
 	}

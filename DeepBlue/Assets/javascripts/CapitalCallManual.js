@@ -36,7 +36,7 @@
 			var i=$("tr",tbody).index(this);
 			if($("#InvestorId",this).val()==id&&i!=index) {
 				result=false;
-				alert(name+" is already chosen");
+				jAlert(name+" is already chosen");
 				return;
 			}
 		});
@@ -60,9 +60,9 @@
 				loading.empty();
 				var arr=data.split("||");
 				if($.trim(arr[0])!="True") {
-					alert(data);
+					jAlert(data);
 				} else {
-					alert("Manual Capital Call Saved.");
+					jAlert("Manual Capital Call Saved.");
 					$("#SpnCapitalCallNumber").html(arr[1]);
 					$("#CapitalCallNumber").val(arr[1]);
 					$("#SpnCapitalAmountCalled").html("");
@@ -75,7 +75,7 @@
 				}
 			});
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 		return false;
 	}

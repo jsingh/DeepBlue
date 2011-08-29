@@ -16,12 +16,12 @@
 				if($.trim(data)!="") {
 					jAlert(data);
 				} else {
-					alert("Investor Saved.");
+					jAlert("Investor Saved.");
 					location.href="/Investor/New";
 				}
 			});
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 		return false;
 	}
@@ -102,7 +102,7 @@
 			message+=sstaxidValid.html()+"\n";
 		}
 		if(jQuery.trim(message)!="") {
-			alert(message);
+			jAlert(message);
 			return false;
 		} else {
 			Sys.Mvc.FormContext.getValidationForForm(frm).validate('submit');
@@ -112,7 +112,7 @@
 				}
 			});
 			if(jQuery.trim(message)!="") {
-				alert(message);
+				jAlert(message);
 				return false;
 			} else {
 				return true;
@@ -215,9 +215,9 @@
 		$("#UpdateLoading").html("");
 		var UpdateTargetId=$("#UpdateTargetId");
 		if(jQuery.trim(UpdateTargetId.html())!="") {
-			alert(UpdateTargetId.html())
+			jAlert(UpdateTargetId.html())
 		} else {
-			alert("Investor Saved.");
+			jAlert("Investor Saved.");
 			location.href="/Investor/New";
 		}
 	}

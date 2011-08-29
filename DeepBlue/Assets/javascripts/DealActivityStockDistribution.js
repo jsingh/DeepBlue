@@ -2,7 +2,7 @@
 	var ufid=dealActivity.getSDUnderlyingFundId();
 	if(isNaN(ufid)) { ufid=0; }
 	if(ufid==0) {
-		alert("Underlying Fund is required");
+		jAlert("Underlying Fund is required");
 	} else {
 		dealActivity.loadSD(false);
 	}
@@ -64,7 +64,7 @@ dealActivity.loadSD=function (isRefresh) {
 									response(equityData);
 								});
 							} else {
-								alert("Issuer is required");
+								jAlert("Issuer is required");
 							}
 						}
 						,minLength: 1
@@ -98,12 +98,12 @@ dealActivity.submitUFStockDistribution=function (frm) {
 			$.post("/Deal/CreateUnderlyingFundStockDistribution",param,function (data) {
 				loading.empty();
 				if($.trim(data)!="") { dealActivity.processErrMsg(data,frm); } else {
-					alert("Stock Distributions Saved");
+					jAlert("Stock Distributions Saved");
 					dealActivity.resetStockDistribution();
 				}
 			});
 		}
-	} catch(e) { alert(e); }
+	} catch(e) { jAlert(e); }
 	return false;
 };
 dealActivity.resetStockDistribution=function () {
@@ -129,7 +129,7 @@ dealActivity.searchUFSDIssuer=function (request,response) {
 			response(data);
 		});
 	} else {
-		alert("Underlying Fund is required");
+		jAlert("Underlying Fund is required");
 	}
 };
 dealActivity.setUFSDIssuer=function (id) {

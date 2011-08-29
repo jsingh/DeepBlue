@@ -1,11 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Investor.ContactDetail>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <%using (Html.Form(new { @onsubmit = "return false" })) {%>
-<div id="ContactInfoAddNew" style="display: none" class="editor-row">
-	<div style="float: right">
-		<%: Html.Anchor(Html.Image("add.png", new { @title = "Add Contact" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.addContactInfo(this);" })%>
-	</div>
-</div>
 <div id="contactInfo${InvestorContactId}" class="editinfo contactInfo">
 	<div class="editor-row">
 		<div class="editor-editbtn">
@@ -60,7 +55,7 @@
 		<%: Html.Label("Email") %>
 	</div>
 	<div class="editor-field">
-		<%: Html.jQueryTemplateTextBox("Email", "${getCommunicationValue(ContactCommunications," + ((int)DeepBlue.Models.Admin.Enums.CommunicationType.Email).ToString() + ")}", new { @class = "comvalue hide", @onblur = "javascript:jHelper.checkEmail(this);" })%>
+		<%: Html.jQueryTemplateTextBox("Email", "${getCommunicationValue(ContactCommunications," + ((int)DeepBlue.Models.Admin.Enums.CommunicationType.Email).ToString() + ")}", new { @class = "comvalue hide"  })%>
 		<%: Html.jQueryTemplateSpan("Email", "show")%>
 	</div>
 	<div class="editor-label">

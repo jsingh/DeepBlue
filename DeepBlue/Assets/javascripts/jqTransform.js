@@ -27,6 +27,12 @@
 				$yes.addClass(cls).addClass("jqCR");
 				$no.addClass(cls);
 
+				if($input.hasClass("hide")){
+					$yes.addClass("hide");
+					$no.addClass("hide");
+					$input.removeClass("hide").hide();
+				}
+
 				$input.before(yes);
 				$yes.after(no);
 

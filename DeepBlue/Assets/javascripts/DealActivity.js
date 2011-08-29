@@ -50,7 +50,7 @@
 			var ufid=parseInt(UnderlyingFundId.val());
 			if(isNaN(ufid)) { ufid=0; }
 			if(ufid==0) {
-				alert("Underlying Fund is required");
+				jAlert("Underlying Fund is required");
 				return false;
 			}
 		},select: function (event,ui) {
@@ -78,7 +78,7 @@
 			var fundId=parseInt(FundId.val());
 			if(isNaN(fundId)) { fundId=0; }
 			if(fundId==0) {
-				alert("Fund is required");
+				jAlert("Fund is required");
 				return false;
 			}
 		},select: function (event,ui) { DealId.val(ui.item.id); },appendTo: "body",delay: 300
@@ -148,7 +148,7 @@
 				msg+=varr[1]+"\n";
 			}
 		}
-		alert(msg);
+		jAlert(msg);
 	}
 	/* End Common Functions */
 }

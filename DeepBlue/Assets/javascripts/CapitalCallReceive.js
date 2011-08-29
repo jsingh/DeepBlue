@@ -104,7 +104,7 @@
 		$("#UpdateLoading").html("");
 		var UpdateTargetId=$("#UpdateTargetId");
 		if(jQuery.trim(UpdateTargetId.html())!="") {
-			alert(UpdateTargetId.html())
+			jAlert(UpdateTargetId.html())
 		} else {
 			location.href="/CapitalCall/List";
 		}
@@ -119,7 +119,7 @@
 			}
 		});
 		if(message!="") {
-			alert(message);
+			jAlert(message);
 			return false;
 		} else {
 			return true;

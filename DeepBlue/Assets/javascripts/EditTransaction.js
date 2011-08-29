@@ -14,15 +14,15 @@
 			$.post("/Transaction/UpdateCommitmentAmount",$(frm).serializeArray(),function (data) {
 				loading.empty();
 				if($.trim(data)!="True") {
-					alert(data);
+					jAlert(data);
 				} else {
-					alert("Committed Amount Saved");
+					jAlert("Committed Amount Saved");
 					jHelper.resetFields(frm);
 					parent.transactionController.closeEditTransactionDialog(true);
 				}
 			});
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 		return false;
 	}
@@ -33,14 +33,14 @@
 			$.post("/Transaction/CreateFundTransaction",$(frm).serializeArray(),function (data) {
 				loading.empty();
 				if($.trim(data)!="") {
-					alert(data);
+					jAlert(data);
 				} else {
-					alert("Transaction Saved");
+					jAlert("Transaction Saved");
 					parent.transactionController.closeEditTransactionDialog(true);
 				}
 			});
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 		return false;
 	}
@@ -122,7 +122,7 @@
 			}
 		});
 		if(message!="") {
-			alert(message);
+			jAlert(message);
 			return false;
 		} else {
 			return true;
@@ -137,7 +137,7 @@
 		if($("#UpdateTargetId").html()=="True") {
 			editTransaction.closeDialog(true);
 		} else {
-			alert($("#UpdateTargetId").html());
+			jAlert($("#UpdateTargetId").html());
 		}
 		$("#UpdateTargetId").html("");
 	}
@@ -162,7 +162,7 @@
 			message+="Transaction Amount should be less than Unfunded Commitment Amount\n";
 		}
 		if(message!="") {
-			alert(message);
+			jAlert(message);
 			return false;
 		} else {
 			return true;

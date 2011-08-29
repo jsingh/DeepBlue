@@ -20,7 +20,7 @@
 			var url="/Admin/DeleteModule/"+id+"?t="+dt.getTime();
 			$.get(url,function (data) {
 				if(data!="") {
-					alert(data);
+					jAlert(data);
 				} else {
 					$("#ModuleList").flexReload();
 				}
@@ -43,7 +43,7 @@
 		$("#UpdateLoading").html("");
 		var UpdateTargetId=$("#UpdateTargetId");
 		if(jQuery.trim(UpdateTargetId.html())!="True") {
-			alert(UpdateTargetId.html())
+			jAlert(UpdateTargetId.html())
 		} else {
 			parent.module.closeDialog(true);
 		}

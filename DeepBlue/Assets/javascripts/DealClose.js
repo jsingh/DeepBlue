@@ -112,7 +112,7 @@
 				dealClose.calcCloseUD();
 			});
 		} else {
-			alert("Deal is required");
+			jAlert("Deal is required");
 			$("#Deal").focus();
 		}
 	}
@@ -244,16 +244,16 @@
 				var dcid=parseInt($("#DealClosingId").val());
 				if(isNaN(dcid)) { dcid=0; }
 				if(dcid>0) {
-					alert("Deal Close Saved");
+					jAlert("Deal Close Saved");
 				} else {
-					alert("New Deal Close Saved");
+					jAlert("New Deal Close Saved");
 				}
 				$("#ExistingDealClosing").show();
 				dealClose.clearTable($("#DealUnderlyingFundList"));
 				dealClose.clearTable($("#DealUnderlyingDirects"));
 				dealClose.loadDeal();
 				dealClose.loadFinalDealClose();
-			} else { alert(data); }
+			} else { jAlert(data); }
 		});
 	}
 	,saveFinalDealClose: function (loadingId) {
@@ -266,9 +266,9 @@
 		$.post("/Deal/UpdateFinalDealClosing",param,function (data) {
 			loading.empty();
 			if($.trim(data)!="") {
-				alert(data);
+				jAlert(data);
 			} else {
-				alert("Final Deal Close Saved");
+				jAlert("Final Deal Close Saved");
 				$("#ExistingDealClosing").show();
 				dealClose.loadDeal();
 			}
@@ -370,7 +370,7 @@
 				dealClose.calcFinalCloseUF();
 				dealClose.calcFinalCloseUD();
 			});
-		} catch(e) { alert(e); }
+		} catch(e) { jAlert(e); }
 	}
 	/* Deal Underlying Fund */
 	,addDUF: function (tblid) {
@@ -401,7 +401,7 @@
 		$.post("/Deal/CreateClosingDealUnderlyingFund",param,function (data) {
 			var arr=data.split("||");
 			if($.trim(arr[0])!="True") {
-				alert(arr[0]);
+				jAlert(arr[0]);
 				img.src=oldSrc;
 			} else {
 				$.getJSON("/Deal/FindDealUnderlyingFund?_"+(new Date).getTime()+"&dealUnderlyingFundId="+arr[1],function (dufitem) {
@@ -444,7 +444,7 @@
 		$.post("/Deal/CreateClosingDealUnderlyingDirect",param,function (data) {
 			var arr=data.split("||");
 			if($.trim(arr[0])!="True") {
-				alert(arr[0]);
+				jAlert(arr[0]);
 				img.src=oldSrc;
 			} else {
 				$.getJSON("/Deal/FindDealUnderlyingDirect?_"+(new Date).getTime()+"&dealUnderlyingDirectId="+arr[1],function (duditem) {

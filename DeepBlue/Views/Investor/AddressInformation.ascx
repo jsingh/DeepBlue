@@ -34,7 +34,7 @@
 		<%: Html.Label("Email") %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("Email", "${getCommunicationValue(InvestorCommunications," + ((int)DeepBlue.Models.Admin.Enums.CommunicationType.Email).ToString() + ")}", new { @class = "comvalue hide", @onblur = "javascript:jHelper.checkEmail(this);" })%>
+		<%: Html.TextBox("Email", "${getCommunicationValue(InvestorCommunications," + ((int)DeepBlue.Models.Admin.Enums.CommunicationType.Email).ToString() + ")}", new { @class = "comvalue hide" })%>
 		<%: Html.Span("${Email}", new { @class = "show", @id = "Email" })%>
 	</div>
 	<div class="editor-label">

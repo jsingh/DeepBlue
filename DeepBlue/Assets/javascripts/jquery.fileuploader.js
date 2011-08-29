@@ -229,7 +229,7 @@ jQuery.extend({
 		// evaluate scripts within html
 		if(type=="html")
 			jQuery("<div>").html(data).evalScripts();
-		//alert($('param', data).each(function(){alert($(this).attr('value'));}));
+		//jAlert($('param', data).each(function(){jAlert($(this).attr('value'));}));
 		return data;
 	}
 })

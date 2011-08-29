@@ -121,7 +121,7 @@ namespace DeepBlue.Controllers.Fund {
 
 			/* Load Custom Fields */
 			fundDetail.CustomField = new CustomFieldModel();
-			fundDetail.CustomField.DisplayTwoColumn = true;
+			fundDetail.CustomField.IsDisplayTwoColumn = true;
 			IList<CustomFieldValue> customFieldValues = AdminRepository.GetAllCustomFieldValues(fundId);
 			fundDetail.CustomField.Fields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Fund);
 			fundDetail.CustomField.Values = new List<CustomFieldValueDetail>();

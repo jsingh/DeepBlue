@@ -45,13 +45,13 @@
 				});
 			}
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 		return false;
 	}
 	,generateReport: function (data,target,type) {
 		if($.trim(data.Error)!="") {
-			alert(data.Error);
+			jAlert(data.Error);
 		}
 		var expand=false;
 		var item;
@@ -95,9 +95,9 @@
 		$.post("/Deal/CreateReconcile",param,function (data) {
 			loading.empty();
 			if($.trim(data)!="") {
-				alert(data);
+				jAlert(data);
 			} else {
-				alert("Reconcile Saved.");
+				jAlert("Reconcile Saved.");
 				dealReconcile.submit(typeid);
 			}
 		});

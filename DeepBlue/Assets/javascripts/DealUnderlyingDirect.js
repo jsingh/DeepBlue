@@ -77,7 +77,7 @@ deal.deleteUnderlyingDirect=function (id,img) {
 		var url="/Deal/DeleteDealUnderlyingDirect/"+id;
 		$.get(url,function (data) {
 			if($.trim(data)!="") {
-				alert(data);
+				jAlert(data);
 			} else {
 				tr.remove();
 				deal.setIndex($("#tblUnderlyingDirect"));
@@ -113,7 +113,7 @@ deal.saveUnderlyingDirect=function (tr) {
 				var id=data.split("||")[1];
 				deal.loadUnderlyingDirect(id);
 			} else {
-				alert(data);
+				jAlert(data);
 			}
 		});
 	} else {

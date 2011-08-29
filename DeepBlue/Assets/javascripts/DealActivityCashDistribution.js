@@ -2,7 +2,7 @@
 	var ufid=dealActivity.getCDUnderlyingFundId();
 	if(isNaN(ufid)) { ufid=0; }
 	if(ufid==0) {
-		alert("Underlying Fund is required");
+		jAlert("Underlying Fund is required");
 	} else {
 		dealActivity.loadCD(false);
 	}
@@ -82,7 +82,7 @@ dealActivity.submitUFCashDistribution=function (frm) {
 		}
 		});
 		if(msg!="") {
-		alert(msg);
+		jAlert(msg);
 		isError=true;
 		loading.empty();
 		}
@@ -93,12 +93,12 @@ dealActivity.submitUFCashDistribution=function (frm) {
 			$.post("/Deal/CreateUnderlyingFundCashDistribution",param,function (data) {
 				loading.empty();
 				if($.trim(data)!="") { dealActivity.processErrMsg(data,frm); } else {
-					alert("Cash Distributions Saved");
+					jAlert("Cash Distributions Saved");
 					dealActivity.resetCashDistribution();
 				}
 			});
 		}
-	} catch(e) { alert(e); }
+	} catch(e) { jAlert(e); }
 	return false;
 };
 dealActivity.resetCashDistribution=function () {

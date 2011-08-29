@@ -91,10 +91,13 @@
 							<%: Html.LabelFor(model => model.FromDate) %>
 						</div>
 						<div class="editor-field" style="width: auto;">
-							<%: Html.TextBox("FromDate", "", new { @class = "datetxt", @id = "FromDate", @style="width:111px", @onchange = "javascript:capitalCall.changeFromDate();" })%>&nbsp;<%: Html.LabelFor(model => model.ToDate) %>&nbsp;<%: Html.TextBox("ToDate", "", new { @class = "datetxt", @id = "ToDate", @style = "width:111px", @onchange = "javascript:capitalCall.changeToDate();" })%>
+							<%: Html.TextBox("FromDate", "", new { @class = "datetxt", @id = "FromDate", @style="width:111px" })%>&nbsp;<%: Html.LabelFor(model => model.ToDate) %>&nbsp;<%: Html.TextBox("ToDate", "", new { @class = "datetxt", @id = "ToDate", @style = "width:111px" })%>
 						</div>
 						<div class="editor-label" style="width: auto; clear: right; margin-left: 84px;">
-							Fee Amount-&nbsp;<%: Html.Span("",new { @id = "SpnMFA" })%>&nbsp;<%: Html.Span(Html.Image("detail.png", new { @onclick = "javascript:capitalCall.showDetail(this);" , @style="cursor:pointer", @align="absmiddle" , @title = "View Rate Schedule" }).ToHtmlString(), new { @id = "SpnDetail" , @style="display:none" })%>
+							Fee Amount
+						</div>
+						<div class="editor-field">
+							<%: Html.TextBox("ManagementFees", "", new { @onkeydown = "return jHelper.isCurrency(event);", @onkeyup = "javascript:capitalCall.calcExistingInvestmentAmount();" })%>
 						</div>
 					</div>
 					<div class="editor-label">
@@ -120,7 +123,7 @@
 					<div class="editor-label fromcell" style="width: auto">
 						<%: Html.LabelFor(model => model.ExistingInvestmentAmount) %>
 					</div>
-					<div class="editor-field" style="width: auto; padding-top: 15px;">
+					<div class="editor-field" style="width: auto;">
 						<%: Html.Span("", new { @id = "SpnExistingInvestmentAmount" })%>
 						<%: Html.HiddenFor(model => model.ExistingInvestmentAmount)%>
 					</div>
@@ -135,7 +138,6 @@
 				</div>
 				<div class="line">
 				</div>
-				<%: Html.HiddenFor(model => model.ManagementFees)%>
 				<% } %>
 			</div>
 			<div id="UpdateTargetId" style="display: none">

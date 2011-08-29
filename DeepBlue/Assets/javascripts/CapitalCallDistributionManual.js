@@ -12,7 +12,7 @@
 		var p=parseFloat(txt.value);
 		if(isNaN(p)) { p=0; }
 		if(p>100) {
-			alert("Profit must be under 100%.");
+			jAlert("Profit must be under 100%.");
 			txt.value="";
 		}
 		this.calc("txtGPProfits","GPProfits","SpnGPProfits");
@@ -42,7 +42,7 @@
 			var i=$("tr",tbody).index(this);
 			if($("#InvestorId",this).val()==id&&i!=index) {
 				result=false;
-				alert(name+" is already chosen");
+				jAlert(name+" is already chosen");
 				return;
 			}
 		});
@@ -66,9 +66,9 @@
 				loading.empty();
 				var arr=data.split("||");
 				if($.trim(arr[0])!="True") {
-					alert(data);
+					jAlert(data);
 				} else {
-					alert("Manal Capital Distribution Saved.");
+					jAlert("Manal Capital Distribution Saved.");
 					$("#SpnDistributionNumber").html(arr[1]);
 					$("#DistributionNumber").val(arr[1]);
 					$("#SpnManualDistributionNumber").html(arr[1]);
@@ -80,7 +80,7 @@
 				}
 			});
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 		return false;
 	}

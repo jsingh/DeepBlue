@@ -6,12 +6,12 @@
 	   if (customFieldValue == null)
 		   customFieldValue = new DeepBlue.Helpers.CustomFieldValueDetail();
 %>
-<%if ((index % 2) > 0 && Model.DisplayTwoColumn) {%>
+<%if ((index % 2) > 0 && Model.IsDisplayTwoColumn) {%>
 <div class="editor-label" style="clear: right">
 	<%} else {%>
 	<div class="editor-label">
 		<%}%>
-		<%: Html.Label(item.CustomFieldText + "") %>
+		<%: Html.Label(item.CustomFieldText) %>
 	</div>
 	<div class="editor-field">
 		<% switch ((DeepBlue.Models.Admin.Enums.CustomFieldDataType)item.DataTypeId) {%>

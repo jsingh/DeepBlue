@@ -2,7 +2,7 @@
 	var ufid=dealActivity.getCCUnderlyingFund();
 	if(isNaN(ufid)) { ufid=0; }
 	if(ufid==0) {
-		alert("Underlying Fund is required");
+		jAlert("Underlying Fund is required");
 	} else {
 		dealActivity.loadCC(false);
 	}
@@ -77,12 +77,12 @@ dealActivity.submitUFCapitalCall=function (frm) {
 				if($.trim(data)!="") {
 					dealActivity.processErrMsg(data,frm);
 				} else {
-					alert("Capital Calls Saved");
+					jAlert("Capital Calls Saved");
 					dealActivity.resetCapitalCall();
 				}
 			});
 		}
-	} catch(e) { alert(e); }
+	} catch(e) { jAlert(e); }
 	return false;
 };
 dealActivity.resetCapitalCall=function () {

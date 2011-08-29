@@ -5,7 +5,7 @@
 };
 dealActivity.onESDirectSearch=function (event,ui) {
 	var msg=dealActivity.directSearchValid();
-	if(msg!="") { alert(msg);return false; }
+	if(msg!="") { jAlert(msg);return false; }
 	return dealActivity.checkUD();
 };
 dealActivity.directSearchValid=function () {
@@ -22,7 +22,7 @@ dealActivity.getActivityTypeId=function () {
 dealActivity.checkUD=function () {
 	/*var udid=dealActivity.getUnderlyingDirectId();
 	if(udid==0) {
-	alert("Underlying Direct is required");
+	jAlert("Underlying Direct is required");
 	return false;
 	}*/
 	return true;
@@ -99,9 +99,9 @@ dealActivity.createSA=function (frm) {
 	$.post("/Deal/CreateSplitActivity?_"+(new Date()).getTime(),param,function (data) {
 		$("#SpnEquitySplitLoading").empty();
 		if($.trim(data)!="") {
-			alert(data);
+			jAlert(data);
 		} else {
-			alert("Spilt Saved");
+			jAlert("Spilt Saved");
 			$("#SpnSymbol").empty();
 			//dealActivity.loadNHP(1,dealActivity.getEquityId());
 			jHelper.resetFields(frm);

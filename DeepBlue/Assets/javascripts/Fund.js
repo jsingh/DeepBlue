@@ -105,9 +105,9 @@
 		$.post("/Fund/Create",$(frm).serializeForm(),function (data) {
 			loading.empty();
 			if($.trim(data)!="") {
-				alert(data);
+				jAlert(data);
 			} else {
-				alert("Fund Saved.");
+				jAlert("Fund Saved.");
 				$("#FundList").flexReload();
 				if(fundId==0) {
 					$("#TabFundGrid").click();
@@ -147,7 +147,7 @@
 					var index=$("tr",tbl).index(trPrev);
 					var prevMultiplierTypeId=$("#MultiplierTypeId",trPrev).get(0);
 					if(prevMultiplierTypeId.value=="0") {
-						alert("Year "+(index+1)+" Fee Calculation Type is required");
+						jAlert("Year "+(index+1)+" Fee Calculation Type is required");
 						//ddl.value=0;
 						prevMultiplierTypeId.focus();
 						return false;
@@ -161,7 +161,7 @@
 		var rate=parseInt(txt.value);
 		if(rate>100) {
 			txt.focus();
-			alert("Rate must be under 100%");
+			jAlert("Rate must be under 100%");
 			txt.value="";
 			return false;
 		}
@@ -205,7 +205,7 @@
 			$(".investortype",frm).each(function () {
 				if($(this).attr("name")!=$(invType).attr("name")) {
 					if(this.value==invType.value) {
-						alert("Investor type already chosen");
+						jAlert("Investor type already chosen");
 						invType.value="0";
 					}
 				}
@@ -256,7 +256,7 @@
     		}
     		return true;
     	} catch(e) {
-    		//alert(e);
+    		//jAlert(e);
     	}
     }
 	,assignDates: function (tr,startDate) {
@@ -289,21 +289,4 @@ $.extend(window,{
 	getTier: function (index,rowindex,item) { var data={ index: index,rowIndex: rowindex,tier: item };return data; }
 	,getFundRate: function (index,frs) { var data={ index: index,FRS: frs };return data; }
 	,getFormIndex: function () { fund.formIndex++;return fund.formIndex; }
-	,getCustomFieldValue: function (values,customFieldId,dataTypeId) {
-		var i=0;var value="";
-		if(values!=null) {
-			for(i=0;i<values.length;i++) {
-				if(values[i].CustomFieldId==customFieldId&&values[i].DataTypeId==dataTypeId) {
-					switch(dataTypeId.toString()) {
-						case "1": value=checkNullOrZero(values[i].IntegerValue);break;
-						case "2": value=values[i].TextValue;break;
-						case "3": value=values[i].BooleanValue;break;
-						case "4": value=values[i].DateValue;break;
-						case "5": value=checkNullOrZero(values[i].CurrencyValue);break;
-					}
-				}
-			}
-		}
-		return value;
-	}
 });

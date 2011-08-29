@@ -4,7 +4,7 @@
 	if(stypeId==0) {
 		msg+="New Direct Type is required";
 	}
-	if(msg!="") { alert(msg);return false; }
+	if(msg!="") { jAlert(msg);return false; }
 };
 dealActivity.onOldSecuritySearch=function (event,ui) {
 	var msg=dealActivity.directSearchValid();
@@ -12,7 +12,7 @@ dealActivity.onOldSecuritySearch=function (event,ui) {
 	if(stypeId==0) {
 		msg+="Old Direct Type is required";
 	}
-	if(msg!="") { alert(msg);return false; }
+	if(msg!="") { jAlert(msg);return false; }
 };
 dealActivity.changeNewSecurityType=function (ddl) {
 	$("#NewSecurityId").val(0);
@@ -84,14 +84,14 @@ dealActivity.createSecConversion=function (frm) {
 		$("#SpnSecCoversionLoading").empty();
 		var arr=data.split("||");
 		if(arr[0]=="True") {
-			alert("Conversion Saved.");
+			jAlert("Conversion Saved.");
 			var frm=$("#frmSecurityConversion");
 			$("#NHPList").show();
 			dealActivity.loadNHP($("#OldSecurityTypeId").val(),$("#OldSecurityId").val(),arr[1]);
 			jHelper.resetFields(frm);
 			$("#SpnNewSymbollbl").hide();
 			$("#SpnNewSymbol").hide();
-		} else { alert(data); }
+		} else { jAlert(data); }
 	});
 	return false;
 };

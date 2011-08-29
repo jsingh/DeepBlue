@@ -45,7 +45,7 @@ dealActivity.addUFA=function (img,id) {
 		var arr=data.split("||");
 		if(arr[0]=="True") {
 			dealActivity.findUFA(arr[1]);
-		} else { alert(data); }
+		} else { jAlert(data); }
 	});
 };
 dealActivity.findUFA=function (dufid) {

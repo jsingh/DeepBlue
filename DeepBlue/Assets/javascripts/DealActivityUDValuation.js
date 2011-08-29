@@ -38,7 +38,7 @@ dealActivity.addUDV=function (img,id) {
 		var arr=data.split("||");
 		if(arr[0]=="True") {
 			dealActivity.findUDV(arr[1]);
-		} else { alert(data); }
+		} else { jAlert(data); }
 	});
 };
 dealActivity.deleteUDV=function (id,img) {
@@ -52,7 +52,7 @@ dealActivity.deleteUDV=function (id,img) {
 		spnloading.html("<img src='/Assets/images/ajax.jpg'/>");
 		$.get(url,function (data) {
 			if(data!="") {
-				alert(data);
+				jAlert(data);
 			} else {
 				spnloading.empty();
 				tr.addClass("newrow");
@@ -98,8 +98,8 @@ dealActivity.submitUDV=function (frm) {
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#UDValuationList").length) };
 		$.post("/Deal/CreateUnderlyingDirectValuation",param,function (data) {
 			loading.empty();
-			if($.trim(data)!="") { alert(data); } else {
-				alert("Underlying Direct Valuations Saved");
+			if($.trim(data)!="") { jAlert(data); } else {
+				jAlert("Underlying Direct Valuations Saved");
 				var tbl=$("#UDValuationList");var target=$("tbody",tbl);
 				target.empty();$("#UDValuation").hide();
 				$("#UDVIssuerId").val(0);
@@ -109,6 +109,6 @@ dealActivity.submitUDV=function (frm) {
 
 			}
 		});
-	} catch(e) { alert(e); }
+	} catch(e) { jAlert(e); }
 	return false;
 };

@@ -886,8 +886,9 @@
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
     <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
+    <Content Include="Assets\javascripts\EditInvestor.js" />
+    <Content Include="Assets\javascripts\jquery.scrollTo-1.4.2-min.js" />
     <Content Include="Assets\javascripts\User.js" />
-    <Content Include="Assets\javascripts\EditInvestor2.js" />
     <Content Include="Assets\javascripts\FundBreakDown.js" />
     <Content Include="Assets\javascripts\jqTransform.js" />
     <Content Include="Assets\javascripts\jquery-ui-1.8.10.extension.js" />
@@ -949,7 +950,6 @@
     <Content Include="Assets\javascripts\FundClosing.js" />
     <Content Include="Assets\javascripts\InvestorType.js" />
     <Content Include="Assets\javascripts\FlexGrid.js" />
-    <Content Include="Assets\javascripts\EditInvestor.js" />
     <Content Include="Assets\javascripts\EditTransaction.js" />
     <Content Include="Assets\javascripts\Fund.js" />
     <Content Include="Assets\javascripts\InvestorEntityType.js" />
@@ -1095,10 +1095,12 @@
     <Content Include="Views\Investor\AddressInformation.ascx" />
     <Content Include="Views\Investor\BankInformation.ascx" />
     <Content Include="Views\Investor\ContactInformation.ascx" />
-    <Content Include="Views\Investor\Edit22.aspx" />
+    <Content Include="Views\Investor\DisplayInvestorInformation.ascx" />
     <Content Include="Views\Investor\Edit.aspx" />
     <Content Include="Views\Investor\EditInvestorDetail.ascx" />
     <Content Include="Views\Investor\InvestorInformation.ascx" />
+    <Content Include="Views\Investor\NewBankInformation.ascx" />
+    <Content Include="Views\Investor\NewContactInformation.ascx" />
     <Content Include="Views\Report\CapitalCallSummary.aspx" />
     <Content Include="Views\Report\CashDistributionSummaryReport.ascx" />
     <Content Include="Views\Report\CashDistributionSummary.aspx" />

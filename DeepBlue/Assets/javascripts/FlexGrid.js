@@ -410,7 +410,7 @@
 		jHelper.jqComboBox(g.gDiv);
 		try {
 			//$(g.gDiv).jqTransform();
-		} catch(e) { alert(e); }
+		} catch(e) { jAlert(e); }
 		if(p.resizeWidth) {
 			$(window).resize(function () {
 				$(g.gDiv).css("width","");

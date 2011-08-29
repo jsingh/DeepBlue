@@ -304,6 +304,15 @@ namespace DeepBlue.Helpers {
 
 		#region JQueryTemplate Controls
 
+		public static string jQueryTemplateTextArea(this HtmlHelper htmlHelper, string name, string value, int rows, int cols, object htmlAttributes) {
+			RouteValueDictionary dictionary = new RouteValueDictionary(htmlAttributes);
+			StringBuilder attributes  = new StringBuilder();
+			foreach (var attribute in dictionary) {
+				attributes.AppendFormat(" {0}=\"{1}\"", attribute.Key, attribute.Value);
+			}
+			return string.Format("<textarea id=\"{0}\" name=\"{0}\" rows=\"{1}\" cols=\"{2}\" {3}>{4}</textarea>", name, rows, cols, attributes.ToString(), value);
+		}
+
 		public static string jQueryTemplateDisplayFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression, bool isjqueryTemplateDisplay) {
 			return jQueryTemplateDisplayFor(htmlHelper, expression, isjqueryTemplateDisplay, string.Empty);
 		}
@@ -340,6 +349,15 @@ namespace DeepBlue.Helpers {
 
 		public static MvcHtmlString jQueryTemplateTextBox(this HtmlHelper htmlHelper, string name, string value) {
 			return jQueryTemplateTextBox(htmlHelper, name, value, new { });
+		}
+
+		public static string jQueryTemplateTextBoxExpression(this HtmlHelper htmlHelper, string name, string value, object htmlAttributes) {
+			RouteValueDictionary dictionary = new RouteValueDictionary(htmlAttributes);
+			StringBuilder attributes = new StringBuilder();
+			foreach (var attribute in dictionary) {
+				attributes.AppendFormat(" {0}=\"{1}\"", attribute.Key, attribute.Value);
+			}
+			return string.Format("<input type=\"text\" id=\"{0}\" name=\"{0}\" value=\"{1}\" {2} />", name, value, attributes.ToString());
 		}
 
 		public static string jQueryTemplateTextBoxExpression(this HtmlHelper htmlHelper, string name, string value, string className) {

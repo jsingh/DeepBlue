@@ -19,16 +19,16 @@ deal.saveDealDocument=function (frm) {
 					success: function (data,status) {
 						loading.empty();
 						if($.trim(data.data)!="") {
-							alert(data.data);
+							jAlert(data.data);
 						} else {
-							alert("Document Saved");
+							jAlert("Document Saved");
 							deal.documentRefresh();
 							jHelper.resetFields(frm);
 						}
 					}
 					,error: function (data,status,e) {
 						loading.empty();
-						alert(data.msg+","+status+","+e);
+						jAlert(data.msg+","+status+","+e);
 					}
 				});
 		}
@@ -38,7 +38,7 @@ deal.saveDealDocument=function (frm) {
 			deal.onDealSuccess=function () { deal.saveDealDocument(frm); }
 			deal.saveDeal();
 		}
-	} catch(e) { alert(e); }
+	} catch(e) { jAlert(e); }
 	return false;
 };
 deal.deleteDealDocument=function (id,img) {
@@ -46,7 +46,7 @@ deal.deleteDealDocument=function (id,img) {
 		img.src="/Assets/images/ajax.jpg";
 		$.get("/Deal/DeleteDealFundDocumentFile/"+id,function (data) {
 			if($.trim(data)!="") {
-				alert(data);
+				jAlert(data);
 			} else {
 				deal.documentRefresh();
 			}
@@ -118,5 +118,5 @@ deal.documentSetUp=function () {
 				,useBoxStyle: false
 		});
 		$("#DocumentFundName").autocomplete({ source: "/Fund/FindFunds",minLength: 1,select: function (event,ui) { $("#DocumentFundId").val(ui.item.id); },appendTo: "body",delay: 300 });
-	} catch(e) { alert(e); }
+	} catch(e) { jAlert(e); }
 };

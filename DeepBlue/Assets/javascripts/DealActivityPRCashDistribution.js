@@ -2,7 +2,7 @@
 	var ufid=dealActivity.getCDUnderlyingFundId();
 	if(isNaN(ufid)) { ufid=0; }
 	if(ufid==0) {
-		alert("Underlying Fund is required");
+		jAlert("Underlying Fund is required");
 	} else {
 		dealActivity.loadPRCD(false);
 	}
@@ -17,7 +17,7 @@ dealActivity.deletePRCD=function (index,id,img) {
 		spnloading.html("<img src='/Assets/images/ajax.jpg'/>");
 		$.get(url,function (data) {
 			if(data!="") {
-				alert(data);
+				jAlert(data);
 			} else {
 				spnloading.empty();
 				$("#EmptyUFPRCD_"+index).remove();
@@ -57,10 +57,10 @@ dealActivity.submitUFPRCashDistribution=function (frm) {
 		$.post("/Deal/CreateUnderlyingFundPostRecordCashDistribution",param,function (data) {
 			loading.empty();
 			if($.trim(data)!="") { dealActivity.processErrMsg(data,frm); } else {
-				alert("Post Record Date Cash Distributions Saved");
+				jAlert("Post Record Date Cash Distributions Saved");
 				dealActivity.resetCashDistribution();
 			}
 		});
-	} catch(e) { alert(e); }
+	} catch(e) { jAlert(e); }
 	return false;
 };

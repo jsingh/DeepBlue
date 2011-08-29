@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DeepBlue.Models.Investor {
 
-	public class EditModel {
+	public class EditModel : InvestorInformation {
 
 		public EditModel() {
 			AddressInformations = new List<AddressInformation>();
@@ -26,6 +26,24 @@ namespace DeepBlue.Models.Investor {
 		}
 
 		public SelectListModel SelectList = new SelectListModel();
+
+		public object AddressInformations { get; set; }
+
+		public object ContactInformations { get; set; }
+
+		public object AccountInformations { get; set; }
+
+		public FlexigridData FundInformations { get; set; }
+
+		public int id { get; set; }
+ 
+	}
+
+	public class InvestorInformation {
+		
+		[Required(ErrorMessage = "Investor is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Investor is required")]
+		public int InvestorId { get; set; }
 
 		[DisplayName("InvestorName")]
 		public string InvestorName { get; set; }
@@ -44,13 +62,17 @@ namespace DeepBlue.Models.Investor {
 
 		[DisplayName("Notes")]
 		public string Notes { get; set; }
-		
+
 		[DisplayName("Social Security/Tax Id")]
 		public string SocialSecurityTaxId { get; set; }
 
+		[Required(ErrorMessage = "State Of Residency is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "State Of Residency is required")]
 		[DisplayName("State of Residency")]
 		public int? StateOfResidency { get; set; }
 
+		[Required(ErrorMessage = "Entity Type is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Entity Type is required")]
 		[DisplayName("EntityType")]
 		public int EntityType { get; set; }
 
@@ -63,18 +85,7 @@ namespace DeepBlue.Models.Investor {
 
 		public string StateOfResidencyName { get; set; }
 
-		public object AddressInformations { get; set; }
-
-		public object ContactInformations { get; set; }
-
-		public object AccountInformations { get; set; }
-
-		public FlexigridData FundInformations { get; set; }
-
-		public int id { get; set; }
-
 		public CustomFieldModel CustomField { get; set; }
- 
 	}
 
 	public class AddressInformation {

@@ -28,7 +28,7 @@
 			var url="/Admin/DeleteUser/"+id+"?t="+dt.getTime();
 			$.get(url,function (data) {
 				if(data!="") {
-					alert(data);
+					jAlert(data);
 				} else {
 					tr.remove();
 					$("#EditRow"+id).remove();
@@ -48,7 +48,7 @@
 				loading.empty();
 				var arr=data.split("||");
 				if(arr[0]!="True") {
-					alert(data);
+					jAlert(data);
 				} else {
 					var id=$("#UserId",frm).val();
 					$.getJSON("/Admin/EditUser?_"+(new Date).getTime()+"&id="+arr[1],function (loadData) {
@@ -62,7 +62,7 @@
 					});
 				}
 			});
-		} catch(e) { alert(e); }
+		} catch(e) { jAlert(e); }
 		return false;
 	}
 	,editPassword: function (id) {

@@ -1,2 +1,10 @@
-﻿.show { display: block; }
-.hide { display: none; }
+﻿.show {
+	display: block;
+}
+.hide {
+	display: none;
+}
+.editor-field {
+	width: 195px;
+}
+ 

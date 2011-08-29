@@ -72,7 +72,7 @@
 			}
 		}
 		if(message!="") {
-			alert(message);
+			jAlert(message);
 			return false;
 		} else {
 			return true;
@@ -107,9 +107,9 @@
 					success: function (data,status) {
 						loading.empty();
 						if($.trim(data.data)!="") {
-							alert(data.data);
+							jAlert(data.data);
 						} else {
-							alert("Document Saved");
+							jAlert("Document Saved");
 							jHelper.resetFields($("#AddNewDocument"));
 							$("#FundId").val(0);
 							$("#InvestorId").val(0);
@@ -117,11 +117,11 @@
 					}
 					,error: function (data,status,e) {
 						loading.empty();
-						alert(data.msg+","+status+","+e);
+						jAlert(data.msg+","+status+","+e);
 					}
 				});
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 		return false;
 	}

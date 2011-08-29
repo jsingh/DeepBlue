@@ -14,9 +14,9 @@
 			$.post("/Transaction/CreateInvestorFund",$(frm).serializeArray(),function (data) {
 				loading.empty();
 				if($.trim(data)!="") {
-					alert(data);
+					jAlert(data);
 				} else {
-					alert("Transaction Saved");
+					jAlert("Transaction Saved");
 					var investorId=$("#InvestorId").val();
 					jHelper.resetFields(frm);
 					$("#InvestorId").val(investorId);
@@ -24,7 +24,7 @@
 				}
 			});
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 		return false;
 	}
@@ -205,9 +205,9 @@
 			$.post(url,param,function (data) {
 				var arr=data.split("||");
 				if(arr[0]!="True") {
-					alert(data);
+					jAlert(data);
 				} else {
-					alert("Fund Close Added");
+					jAlert("Fund Close Added");
 					$("#AddFundClose").dialog("close");
 					transactionController.selectFundCloseId=arr[1];
 
@@ -219,7 +219,7 @@
 				}
 			});
 		} catch(e) {
-			alert(e);
+			jAlert(e);
 		}
 		return false;
 	}
