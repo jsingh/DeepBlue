@@ -121,7 +121,7 @@
 				<div class="box-right">
 				</div>
 			</div>
-			<div class="box-content">
+			<div class="box-content" id="AddressInfoMain">
 				<div class="editor-row">
 					<div class="editor-label">
 						<%: Html.LabelFor(model => model.Phone) %>
@@ -280,7 +280,7 @@
 	})%>
 	<%= Html.jQueryAutoComplete("StateName", new AutoCompleteOptions {
 																	  Source = "/Admin/FindStates", MinLength = 1,
-																	  OnSelect = "function(event, ui) { $('#State').val(ui.item.id); }"
+																	  OnSelect = "function(event, ui) { $('#State','#AddressInfoMain').val(ui.item.id); }"
 	})%>
 	<%= Html.jQueryAutoComplete("CountryName", new AutoCompleteOptions {
 																	  Source = "/Admin/FindCountrys", MinLength = 1,

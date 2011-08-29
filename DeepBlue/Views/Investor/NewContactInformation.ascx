@@ -74,13 +74,13 @@
 				<%: Html.TextBox("${i}_" + "ContactCity", "${ContactCity}")%>
 			</div>
 		</div>
-		<div class="editor-row" id="${i}_StateRow" {{if ContactCountry!=225}}style="display:none"{{/if}}>
+		<div class="editor-row" id="StateRow" {{if ContactCountry!=225}}style="display:none"{{/if}}>
 			<div class="editor-label">
 				<%: Html.LabelFor(model => model.ContactState) %>
 			</div>
 			<div class="editor-field dropdown">
-				<%: Html.TextBox("${i}_" + "ContactStateName", "${ContactStateName}", new { @id = "${i}_" + "ContactStateName" })%>
-				<%: Html.Hidden("${i}_" + "ContactState", "${ContactState}", new { @id = "${i}_" + "ContactState" })%>
+				<%: Html.TextBox("${i}_" + "ContactStateName", "${ContactStateName}", new { @id = "ContactStateName" })%>
+				<%: Html.Hidden("${i}_" + "ContactState", "${ContactState}", new { @id = "ContactState" })%>
 			</div>
 		</div>
 		<div class="editor-row">
@@ -96,8 +96,8 @@
 				<%: Html.LabelFor(model => model.ContactCountry) %>
 			</div>
 			<div class="editor-field dropdown">
-				<%: Html.TextBox("${i}_" + "ContactCountryName", "${ContactCountryName}", new { @id = "${i}_" + "ContactCountryName" })%>
-				<%: Html.Hidden("${i}_" + "ContactCountry", "${ContactCountry}", new { @id = "${i}_" + "ContactCountry" })%>
+				<%: Html.TextBox("${i}_" + "ContactCountryName", "${ContactCountryName}", new { @id = "ContactCountryName" })%>
+				<%: Html.Hidden("${i}_" + "ContactCountry", "${ContactCountry}", new { @id = "ContactCountry" })%>
 			</div>
 		</div>
 	</div>
