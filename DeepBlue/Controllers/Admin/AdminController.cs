@@ -10,7 +10,7 @@ using DeepBlue.Helpers;
 using DeepBlue.Controllers.Transaction;
 
 namespace DeepBlue.Controllers.Admin {
-	public class AdminController : Controller {
+	public class AdminController : BaseController {
 
 		public IAdminRepository AdminRepository { get; set; }
 
@@ -2584,7 +2584,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		//
-		// GET: /Admin/FundClosing
+		// GET: /Admin/EditFundClosing
 		[HttpGet]
 		public ActionResult EditFundClosing(int id) {
 			FlexigridData flexgridData = new FlexigridData();

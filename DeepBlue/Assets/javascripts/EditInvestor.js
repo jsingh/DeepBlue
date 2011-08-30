@@ -32,6 +32,14 @@
 					editInvestor.setupAddressInfo(addInfo);
 				});
 
+				$("#StateOfResidencyName",target)
+				.autocomplete({ source: "/Admin/FindStates",minLength: 1
+				,select: function (event,ui) {
+					$("#StateOfResidency",target).val(ui.item.id);
+				}
+				,appendTo: "body",delay: 300
+				});
+
 				jHelper.checkValAttr(target);
 				jHelper.jqComboBox(target);
 				jHelper.jqCheckBox(target);
@@ -190,6 +198,13 @@
 						jHelper.checkValAttr(investorInfo);
 						jHelper.jqComboBox(investorInfo);
 						jHelper.jqCheckBox(investorInfo);
+						$("#StateOfResidencyName",investorInfo)
+						.autocomplete({ source: "/Admin/FindStates",minLength: 1
+						,select: function (event,ui) {
+							$("#StateOfResidency",investorInfo).val(ui.item.id);
+						}
+						,appendTo: "body",delay: 300
+						});
 						//editInvestor.scroll(investorInfo);
 						editInvestor.formatEditor(displayInvestorInfoMain);
 					});

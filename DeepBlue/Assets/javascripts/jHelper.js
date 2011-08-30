@@ -178,7 +178,7 @@
 		$(":input:text",target).val("");
 		$(":input:[type='file']",target).val("");
 		$(":input[type='hidden']",target).val("");
-		$(":input:checkbox",target).each(function () { this.checked==false; });
+		$(":input:checkbox",target).each(function () { this.checked=false; });
 		$("select option:selected",target).each(function () {
 			this.selected=false;
 		});

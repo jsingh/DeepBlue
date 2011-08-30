@@ -136,8 +136,6 @@ namespace DeepBlue.Helpers {
 			return investorTypeList;
 		}
 
-		 
-
 		public static List<SelectListItem> GetDocumentTypeSelectList(List<DocumentType> documentTypes) {
 			List<SelectListItem> documentTypeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();

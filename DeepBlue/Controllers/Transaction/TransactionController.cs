@@ -11,7 +11,7 @@ using DeepBlue.Controllers.Admin;
 
 
 namespace DeepBlue.Controllers.Transaction {
-	public class TransactionController : Controller {
+	public class TransactionController : BaseController {
 
 		public ITransactionRepository TransactionRepository { get; set; }
 		public IInvestorRepository InvestorRepository { get; set; }
@@ -44,10 +44,12 @@ namespace DeepBlue.Controllers.Transaction {
 			ViewData["PageName"] = "Investor Commitment";
 			CreateModel model = new CreateModel();
 			List<SelectListItem> emptyList = SelectListFactory.GetEmptySelectList();
-			emptyList.Add(new SelectListItem { Text = "--Add Fund Close", Value = "-1" });
+			emptyList.Add(new SelectListItem { Text = "Add Fund Close", Value = "-1" });
 			model.FundClosings = emptyList;
 			model.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(AdminRepository.GetAllInvestorTypes());
 			model.InvestorId = 0;
+			model.EditModel = new EditModel();
+			model.EditModel.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(AdminRepository.GetAllInvestorTypes());
 			return View(model);
 		}
 
@@ -89,7 +91,6 @@ namespace DeepBlue.Controllers.Transaction {
 					investorFundTransaction.OtherInvestorID = null;
 					investorFundTransaction.TransactionTypeID = (int)DeepBlue.Models.Transaction.Enums.TransactionType.OriginalCommitment;
 					investorFundTransaction.Notes = string.Empty;
-					investorFundTransaction.CommittedDate = model.CommittedDate;
 					investorFundTransaction.InvestorFundID = investorFund.InvestorFundID;
 					errorInfo = InvestorRepository.SaveInvestorFundTransaction(investorFundTransaction);
 				}
@@ -182,6 +183,11 @@ namespace DeepBlue.Controllers.Transaction {
 			return View(model);
 		}
 
+		[HttpGet]
+		public JsonResult FindInvestorFundDetail(int id) {
+			return Json(TransactionRepository.FindInvestorFundDetail(id), JsonRequestBehavior.AllowGet);
+		}
+
 		//POST: /Transaction/CreateFundTransaction
 		[HttpPost]
 		public ActionResult CreateFundTransaction(FormCollection collection) {
@@ -239,12 +245,13 @@ namespace DeepBlue.Controllers.Transaction {
 					counterPartyFundTransaction.TransactionTypeID = (int)DeepBlue.Models.Transaction.Enums.TransactionType.Buy;
 					counterPartyFundTransaction.CommittedDate = model.Date;
 					counterPartyFundTransaction.Notes = model.Notes;
-					counterPartyFundTransaction.InvestorFundID = counterPartyInvestorFund.InvestorFundID;
 
 					// Save counter party investor fund
 					errorInfo = InvestorRepository.SaveInvestorFund(counterPartyInvestorFund);
-					if (errorInfo == null)
+					if (errorInfo == null) {
+						counterPartyFundTransaction.InvestorFundID = counterPartyInvestorFund.InvestorFundID;
 						errorInfo = InvestorRepository.SaveInvestorFundTransaction(counterPartyFundTransaction);
+					}
 				}
 				if (errorInfo == null) {
 					// Update unfunded amount
@@ -282,19 +289,26 @@ namespace DeepBlue.Controllers.Transaction {
 		}
 
 		[HttpPost]
-		public bool UpdateCommitmentAmount(FormCollection collection) {
+		public ActionResult UpdateCommitmentAmount(FormCollection collection) {
 			EditCommitmentAmountModel editModel = new EditCommitmentAmountModel();
 			this.TryUpdateModel(editModel);
+			ResultModel resultModel = new ResultModel();
 			if (ModelState.IsValid) {
 				InvestorFund investorFund = InvestorRepository.FindInvestorFund(editModel.InvestorFundId);
 				investorFund.UnfundedAmount = editModel.CommitmentAmount;
 				investorFund.TotalCommitment = editModel.CommitmentAmount;
 				InvestorRepository.SaveInvestorFund(investorFund);
-				return true;
 			}
 			else {
-				return false;
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
 			}
+			return View("Result", resultModel);
 		}
 	}
 }

@@ -17,7 +17,7 @@ using System.Web.UI;
 using System.Net;
 
 namespace DeepBlue.Controllers.Deal {
-	public class DealController : Controller {
+	public class DealController : BaseController {
 
 		public IDealRepository DealRepository { get; set; }
 

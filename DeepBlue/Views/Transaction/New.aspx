@@ -5,8 +5,10 @@
 	New Transaction
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
+	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("TransactionController.js") %>
 	<%=Html.JavascriptInclueTag("EditTransaction.js") %>
+	<%=Html.StylesheetLinkTag("transaction.css")%>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
@@ -21,15 +23,17 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="edit-investor">
-		<div id="editinfo" class="transaction-info">
+		<div id="editinfo">
 			<div class="search">
 			</div>
 			<div class="editor-row">
-				<div class="editor-label auto-width" style="width: auto">
+				<div class="editor-label" style="width: auto">
 					<%: Html.Label("Investor") %>
 				</div>
-				<div class="editor-field auto-width">
-					<%: Html.TextBox("Investor", "", new { style = "width:200px" })%>&nbsp;<%=Html.Span("",new { id = "Loading" })%>
+				<div class="editor-field" style="width: auto">
+					<%: Html.TextBox("Investor", "SEARCH INVESTOR", new { @class="wm", style = "width:200px" })%></div>
+				<div class="editor-field">
+					&nbsp;<%=Html.Span("",new { id = "Loading" })%>
 				</div>
 			</div>
 			<div class="edit-info" id="investorInfo" style="display: none">
@@ -53,7 +57,7 @@
 								<div class="editor-label">
 									<%: Html.Label("Investor Name") %>
 								</div>
-								<div class="display-field">
+								<div class="editor-field">
 									<div id="InvestorName">
 										<%: Html.DisplayFor(model => model.InvestorName)%></div>
 								</div>
@@ -62,7 +66,7 @@
 								<div class="editor-label">
 									<%: Html.Label("Display Name") %>
 								</div>
-								<div class="display-field">
+								<div class="editor-field">
 									<div id="DisplayName">
 										<%: Html.DisplayFor(model => model.DisplayName)%></div>
 								</div>
@@ -75,7 +79,7 @@
 									<%: Html.TextBox("FundName", "")%>
 									<%: Html.Hidden("FundId", "0")%>
 								</div>
-								<div class="editor-label auto-width" style="clear: right; white-space: nowrap">
+								<div class="editor-label" style="clear: right; white-space: nowrap">
 									<%: Html.LabelFor(model => model.TotalCommitment) %>
 								</div>
 								<div class="editor-field">
@@ -89,12 +93,6 @@
 								<div class="editor-field">
 									<%: Html.DropDownListFor(model => model.FundClosingId, Model.FundClosings, new { @onchange = "javascript:transactionController.checkFundClose(this.value);" })%>
 								</div>
-								<div class="editor-label" style="clear: right">
-									<%: Html.LabelFor(model => model.CommittedDate) %>
-								</div>
-								<div class="editor-field">
-									<%: Html.TextBox("CommittedDate","", new { @id = "CommittedDate" }) %>
-								</div>
 							</div>
 							<div class="editor-row">
 								<div class="editor-label">
@@ -104,7 +102,7 @@
 									<%: Html.Span("",new { @id = "disp_InvestorTypeId", @style = "display:none"  }) %>
 									<%: Html.DropDownListFor(model => model.InvestorTypeId,Model.InvestorTypes) %>
 								</div>
-								<div class="editor-field" style="clear:both;margin-left:45%;">
+								<div class="editor-field" style="clear: both; margin-left: 45%;">
 									<%: Html.ImageButton("submit.png", new { @class="default-button" })%>
 									<%: Html.Span("", new { @id = "UpdateLoading" })%>
 								</div>
@@ -161,7 +159,7 @@
 		</div>
 		<div class="editor-label">
 		</div>
-		<div class="editor-field">
+		<div class="editor-field" style="width: 220px">
 			<%: Html.Image("Save.png", new { @style = "cursor:pointer", @onclick = "javascript:transactionController.addFundClose();" })%>
 			&nbsp;&nbsp;<%: Html.Image("Cancel.png", new { @style = "cursor:pointer", @onclick = "javascript:transactionController.cancelFundClose();" })%>
 			&nbsp;&nbsp;<%: Html.Span("", new { @id = "Loading" })%>
@@ -209,5 +207,8 @@
 			position: 'middle',
 			autoResize: true
 		});
+	</script>
+	<script id="TransactionTemplate" type="text/x-jquery-tmpl">
+			<% Html.RenderPartial("EditTransaction", Model.EditModel); %>
 	</script>
 </asp:Content>

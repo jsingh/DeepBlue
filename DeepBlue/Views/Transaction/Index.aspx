@@ -35,37 +35,37 @@
 							<div class="editor-label auto-width">
 								<%: Html.Label("Investor Name") %>
 							</div>
-							<div class="display-field">
+							<div class="editor-field">
 								<%: Html.Span("",new {id = "InvestorName"})%>
 							</div>
 							<div class="editor-label auto-width">
 								<%: Html.Label("Display Name") %>
 							</div>
-							<div class="display-field">
+							<div class="editor-field">
 								<%: Html.Span("", new { id = "DisplayName" })%>
 							</div>
 							<div class="editor-label auto-width">
 								<%: Html.Label("Fund Name") %>
 							</div>
-							<div class="display-field" style="width: 30px">
+							<div class="editor-field" style="width: 30px">
 								<%: Html.Span("", new { id = "FundName" })%>
 							</div>
 							<div class="editor-label auto-width" style="clear: right">
 								<%: Html.Label("Committed Amount") %>
 							</div>
-							<div class="display-field" style="width: 30px">
+							<div class="editor-field" style="width: 30px">
 								<%: Html.Span("", new { id = "CommittedAmount" })%>
 							</div>
 							<div class="editor-label auto-width">
 								<%: Html.Label("Fund Close") %>
 							</div>
-							<div class="display-field" style="width: 30px">
+							<div class="editor-field" style="width: 30px">
 								<%: Html.Span("", new { id = "UnfundedAmount" })%>
 							</div>
 							<div class="editor-label auto-width" style="clear: right">
 								<%: Html.Label("Investor Type") %>
 							</div>
-							<div class="display-field" style="width: 40px">
+							<div class="editor-field" style="width: 40px">
 								<%: Html.Span("", new { id = "InvestorType" })%>
 							</div>
 						</div>

@@ -148,6 +148,8 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_UnderlyingFundCapitalCallID", "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), "UnderlyingFundCapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCallLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), "UnderlyingFundNAVHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAVHistory), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_UnderlyingFundStockDistribution", "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), "UnderlyingFundStockDistributionLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistributionLineItem), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Log_LogType", "LogType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.LogType), "Log", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Log), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_LogDetail_Log", "Log", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Log), "LogDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.LogDetail), true)]
 
 #endregion
 
@@ -1686,6 +1688,54 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<USER> _USERs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Log> Logs
+        {
+            get
+            {
+                if ((_Logs == null))
+                {
+                    _Logs = base.CreateObjectSet<Log>("Logs");
+                }
+                return _Logs;
+            }
+        }
+        private ObjectSet<Log> _Logs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<LogDetail> LogDetails
+        {
+            get
+            {
+                if ((_LogDetails == null))
+                {
+                    _LogDetails = base.CreateObjectSet<LogDetail>("LogDetails");
+                }
+                return _LogDetails;
+            }
+        }
+        private ObjectSet<LogDetail> _LogDetails;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<LogType> LogTypes
+        {
+            get
+            {
+                if ((_LogTypes == null))
+                {
+                    _LogTypes = base.CreateObjectSet<LogType>("LogTypes");
+                }
+                return _LogTypes;
+            }
+        }
+        private ObjectSet<LogType> _LogTypes;
 
         #endregion
         #region AddTo Methods
@@ -2432,6 +2482,30 @@ namespace DeepBlue.Models.Entity
         public void AddToUSERs(USER uSER)
         {
             base.AddObject("USERs", uSER);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Logs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToLogs(Log log)
+        {
+            base.AddObject("Logs", log);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the LogDetails EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToLogDetails(LogDetail logDetail)
+        {
+            base.AddObject("LogDetails", logDetail);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the LogTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToLogTypes(LogType logType)
+        {
+            base.AddObject("LogTypes", logType);
         }
 
         #endregion
@@ -24222,6 +24296,720 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFund_Issuer", "UnderlyingFund", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="Log")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Log : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Log object.
+        /// </summary>
+        /// <param name="logID">Initial value of the LogID property.</param>
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        /// <param name="userID">Initial value of the UserID property.</param>
+        /// <param name="logTypeID">Initial value of the LogTypeID property.</param>
+        public static Log CreateLog(global::System.Int32 logID, global::System.Int32 entityID, global::System.Int32 userID, global::System.Int32 logTypeID)
+        {
+            Log log = new Log();
+            log.LogID = logID;
+            log.EntityID = entityID;
+            log.UserID = userID;
+            log.LogTypeID = logTypeID;
+            return log;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 LogID
+        {
+            get
+            {
+                return _LogID;
+            }
+            set
+            {
+                if (_LogID != value)
+                {
+                    OnLogIDChanging(value);
+                    ReportPropertyChanging("LogID");
+                    _LogID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("LogID");
+                    OnLogIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _LogID;
+        partial void OnLogIDChanging(global::System.Int32 value);
+        partial void OnLogIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserID
+        {
+            get
+            {
+                return _UserID;
+            }
+            set
+            {
+                OnUserIDChanging(value);
+                ReportPropertyChanging("UserID");
+                _UserID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UserID");
+                OnUserIDChanged();
+            }
+        }
+        private global::System.Int32 _UserID;
+        partial void OnUserIDChanging(global::System.Int32 value);
+        partial void OnUserIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 LogTypeID
+        {
+            get
+            {
+                return _LogTypeID;
+            }
+            set
+            {
+                OnLogTypeIDChanging(value);
+                ReportPropertyChanging("LogTypeID");
+                _LogTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LogTypeID");
+                OnLogTypeIDChanged();
+            }
+        }
+        private global::System.Int32 _LogTypeID;
+        partial void OnLogTypeIDChanging(global::System.Int32 value);
+        partial void OnLogTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> ApplicationID
+        {
+            get
+            {
+                return _ApplicationID;
+            }
+            set
+            {
+                OnApplicationIDChanging(value);
+                ReportPropertyChanging("ApplicationID");
+                _ApplicationID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ApplicationID");
+                OnApplicationIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _ApplicationID;
+        partial void OnApplicationIDChanging(Nullable<global::System.Int32> value);
+        partial void OnApplicationIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Controller
+        {
+            get
+            {
+                return _Controller;
+            }
+            set
+            {
+                OnControllerChanging(value);
+                ReportPropertyChanging("Controller");
+                _Controller = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Controller");
+                OnControllerChanged();
+            }
+        }
+        private global::System.String _Controller;
+        partial void OnControllerChanging(global::System.String value);
+        partial void OnControllerChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Action
+        {
+            get
+            {
+                return _Action;
+            }
+            set
+            {
+                OnActionChanging(value);
+                ReportPropertyChanging("Action");
+                _Action = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Action");
+                OnActionChanged();
+            }
+        }
+        private global::System.String _Action;
+        partial void OnActionChanging(global::System.String value);
+        partial void OnActionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String View
+        {
+            get
+            {
+                return _View;
+            }
+            set
+            {
+                OnViewChanging(value);
+                ReportPropertyChanging("View");
+                _View = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("View");
+                OnViewChanged();
+            }
+        }
+        private global::System.String _View;
+        partial void OnViewChanging(global::System.String value);
+        partial void OnViewChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String QueryString
+        {
+            get
+            {
+                return _QueryString;
+            }
+            set
+            {
+                OnQueryStringChanging(value);
+                ReportPropertyChanging("QueryString");
+                _QueryString = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("QueryString");
+                OnQueryStringChanged();
+            }
+        }
+        private global::System.String _QueryString;
+        partial void OnQueryStringChanging(global::System.String value);
+        partial void OnQueryStringChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LogText
+        {
+            get
+            {
+                return _LogText;
+            }
+            set
+            {
+                OnLogTextChanging(value);
+                ReportPropertyChanging("LogText");
+                _LogText = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LogText");
+                OnLogTextChanged();
+            }
+        }
+        private global::System.String _LogText;
+        partial void OnLogTextChanging(global::System.String value);
+        partial void OnLogTextChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String UserAgent
+        {
+            get
+            {
+                return _UserAgent;
+            }
+            set
+            {
+                OnUserAgentChanging(value);
+                ReportPropertyChanging("UserAgent");
+                _UserAgent = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("UserAgent");
+                OnUserAgentChanged();
+            }
+        }
+        private global::System.String _UserAgent;
+        partial void OnUserAgentChanging(global::System.String value);
+        partial void OnUserAgentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MachineName
+        {
+            get
+            {
+                return _MachineName;
+            }
+            set
+            {
+                OnMachineNameChanging(value);
+                ReportPropertyChanging("MachineName");
+                _MachineName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("MachineName");
+                OnMachineNameChanged();
+            }
+        }
+        private global::System.String _MachineName;
+        partial void OnMachineNameChanging(global::System.String value);
+        partial void OnMachineNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ProcessID
+        {
+            get
+            {
+                return _ProcessID;
+            }
+            set
+            {
+                OnProcessIDChanging(value);
+                ReportPropertyChanging("ProcessID");
+                _ProcessID = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ProcessID");
+                OnProcessIDChanged();
+            }
+        }
+        private global::System.String _ProcessID;
+        partial void OnProcessIDChanging(global::System.String value);
+        partial void OnProcessIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ProcessName
+        {
+            get
+            {
+                return _ProcessName;
+            }
+            set
+            {
+                OnProcessNameChanging(value);
+                ReportPropertyChanging("ProcessName");
+                _ProcessName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ProcessName");
+                OnProcessNameChanged();
+            }
+        }
+        private global::System.String _ProcessName;
+        partial void OnProcessNameChanging(global::System.String value);
+        partial void OnProcessNameChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_Log_LogType", "LogType")]
+        public LogType LogType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<LogType>("DeepBlueModel.FK_Log_LogType", "LogType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<LogType>("DeepBlueModel.FK_Log_LogType", "LogType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<LogType> LogTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<LogType>("DeepBlueModel.FK_Log_LogType", "LogType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<LogType>("DeepBlueModel.FK_Log_LogType", "LogType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_LogDetail_Log", "LogDetail")]
+        public EntityCollection<LogDetail> LogDetails
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<LogDetail>("DeepBlueModel.FK_LogDetail_Log", "LogDetail");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<LogDetail>("DeepBlueModel.FK_LogDetail_Log", "LogDetail", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="LogDetail")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class LogDetail : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new LogDetail object.
+        /// </summary>
+        /// <param name="logDetailID">Initial value of the LogDetailID property.</param>
+        /// <param name="logID">Initial value of the LogID property.</param>
+        /// <param name="detail">Initial value of the Detail property.</param>
+        public static LogDetail CreateLogDetail(global::System.Int32 logDetailID, global::System.Int32 logID, global::System.String detail)
+        {
+            LogDetail logDetail = new LogDetail();
+            logDetail.LogDetailID = logDetailID;
+            logDetail.LogID = logID;
+            logDetail.Detail = detail;
+            return logDetail;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 LogDetailID
+        {
+            get
+            {
+                return _LogDetailID;
+            }
+            set
+            {
+                if (_LogDetailID != value)
+                {
+                    OnLogDetailIDChanging(value);
+                    ReportPropertyChanging("LogDetailID");
+                    _LogDetailID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("LogDetailID");
+                    OnLogDetailIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _LogDetailID;
+        partial void OnLogDetailIDChanging(global::System.Int32 value);
+        partial void OnLogDetailIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 LogID
+        {
+            get
+            {
+                return _LogID;
+            }
+            set
+            {
+                OnLogIDChanging(value);
+                ReportPropertyChanging("LogID");
+                _LogID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LogID");
+                OnLogIDChanged();
+            }
+        }
+        private global::System.Int32 _LogID;
+        partial void OnLogIDChanging(global::System.Int32 value);
+        partial void OnLogIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Detail
+        {
+            get
+            {
+                return _Detail;
+            }
+            set
+            {
+                OnDetailChanging(value);
+                ReportPropertyChanging("Detail");
+                _Detail = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Detail");
+                OnDetailChanged();
+            }
+        }
+        private global::System.String _Detail;
+        partial void OnDetailChanging(global::System.String value);
+        partial void OnDetailChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_LogDetail_Log", "Log")]
+        public Log Log
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Log>("DeepBlueModel.FK_LogDetail_Log", "Log").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Log>("DeepBlueModel.FK_LogDetail_Log", "Log").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Log> LogReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Log>("DeepBlueModel.FK_LogDetail_Log", "Log");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Log>("DeepBlueModel.FK_LogDetail_Log", "Log", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="LogType")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class LogType : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new LogType object.
+        /// </summary>
+        /// <param name="logTypeID">Initial value of the LogTypeID property.</param>
+        /// <param name="logTypeName">Initial value of the LogTypeName property.</param>
+        public static LogType CreateLogType(global::System.Int32 logTypeID, global::System.String logTypeName)
+        {
+            LogType logType = new LogType();
+            logType.LogTypeID = logTypeID;
+            logType.LogTypeName = logTypeName;
+            return logType;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 LogTypeID
+        {
+            get
+            {
+                return _LogTypeID;
+            }
+            set
+            {
+                if (_LogTypeID != value)
+                {
+                    OnLogTypeIDChanging(value);
+                    ReportPropertyChanging("LogTypeID");
+                    _LogTypeID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("LogTypeID");
+                    OnLogTypeIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _LogTypeID;
+        partial void OnLogTypeIDChanging(global::System.Int32 value);
+        partial void OnLogTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String LogTypeName
+        {
+            get
+            {
+                return _LogTypeName;
+            }
+            set
+            {
+                OnLogTypeNameChanging(value);
+                ReportPropertyChanging("LogTypeName");
+                _LogTypeName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("LogTypeName");
+                OnLogTypeNameChanged();
+            }
+        }
+        private global::System.String _LogTypeName;
+        partial void OnLogTypeNameChanging(global::System.String value);
+        partial void OnLogTypeNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_Log_LogType", "Log")]
+        public EntityCollection<Log> Logs
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Log>("DeepBlueModel.FK_Log_LogType", "Log");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Log>("DeepBlueModel.FK_Log_LogType", "Log", value);
                 }
             }
         }

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>
-		<asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+		WILLOWRIDGE :: <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
 	</title>
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>

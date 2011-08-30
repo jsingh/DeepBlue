@@ -12,7 +12,7 @@ using System.Text;
 using DeepBlue.Models.CapitalCall.Enums;
 
 namespace DeepBlue.Controllers.CapitalCall {
-	public class CapitalCallController : Controller {
+	public class CapitalCallController : BaseController {
 
 		public IFundRepository FundRepository { get; set; }
 

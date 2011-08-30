@@ -12,7 +12,7 @@ using DeepBlue.Models.Admin.Enums;
 using DeepBlue.Models.Fund.Enums;
 
 namespace DeepBlue.Controllers.Fund {
-	public class FundController : Controller {
+	public class FundController : BaseController {
 
 		public IFundRepository FundRepository { get; set; }
 

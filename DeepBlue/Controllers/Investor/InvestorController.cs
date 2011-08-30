@@ -15,7 +15,7 @@ using System.Text;
 
 namespace DeepBlue.Controllers.Investor {
 
-	public class InvestorController : Controller {
+	public class InvestorController : BaseController {
 
 		public IInvestorRepository InvestorRepository { get; set; }
 
@@ -459,7 +459,6 @@ namespace DeepBlue.Controllers.Investor {
 			model.id = id ?? 0;
 			model.SelectList.States = SelectListFactory.GetStateSelectList(AdminRepository.GetAllStates());
 			model.SelectList.DomesticForeigns = SelectListFactory.GetDomesticForeignList();
-			model.SelectList.Countries = SelectListFactory.GetCountrySelectList(AdminRepository.GetAllCountries());
 			model.SelectList.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(AdminRepository.GetAllInvestorEntityTypes());
 			model.SelectList.Source = SelectListFactory.GetSourceList();
 			model.ContactInformations = new List<ContactInformation>();

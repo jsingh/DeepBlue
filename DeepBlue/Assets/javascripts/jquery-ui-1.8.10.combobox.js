@@ -25,43 +25,51 @@
 				$(cbox).addClass("hide");
 			}
 			input
-					.val(value)
-					.autocomplete({
-						delay: 0,
-						minLength: 0,
-						source: function (request,response) {
-							var matcher=new RegExp($.ui.autocomplete.escapeRegex(request.term),"i");
-							response(select.children("option").map(function () {
-								var text=$(this).text();
-								if(this.value&&(!request.term||matcher.test(text)))
-									return {
-										label: text.replace(
-											new RegExp(
-												"(?![^&;]+;)(?!<[^<>]*)("+
-												$.ui.autocomplete.escapeRegex(request.term)+
-												")(?![^<>]*>)(?![^&;]+;)","gi"
-											),"<strong>$1</strong>"),
-										value: text,
-										option: this
-									};
-							}));
-						},
-						select: function (event,ui) {
-							if(ui.item.option) {
-								ui.item.option.selected=true;
-								self._trigger("selected",event,{
-									item: ui.item.option
-								});
-								$(select).change();
-							} else {
-								$("option:selected",select).each(function () {
-									this.selected=false;
-								});
-								input.val("");
-								$(select).change();
-							}
+				.val(value)
+				.autocomplete({
+					delay: 0,
+					minLength: 0,
+					source: function (request,response) {
+						var matcher=new RegExp($.ui.autocomplete.escapeRegex(request.term),"i");
+						response(select.children("option").map(function () {
+							var text=$(this).text();
+							if(this.value&&(!request.term||matcher.test(text)))
+								return {
+									label: text.replace(
+										new RegExp(
+											"(?![^&;]+;)(?!<[^<>]*)("+
+											$.ui.autocomplete.escapeRegex(request.term)+
+											")(?![^<>]*>)(?![^&;]+;)","gi"
+										),"<strong>$1</strong>"),
+									value: text,
+									option: this
+								};
+						}));
+					},
+					select: function (event,ui) {
+						if(ui.item.option) {
+							ui.item.option.selected=true;
+							self._trigger("selected",event,{
+								item: ui.item.option
+							});
+							$(select).change();
+						} else {
+							$("option:selected",select).each(function () {
+								this.selected=false;
+							});
+							input.val("");
+							$(select).change();
 						}
-					});
+					}
+				});
+
+			input.data("autocomplete")._resizeMenu=function (ul,items) {
+				var ul=this.menu.element;
+				ul.outerWidth(Math.max(
+					ul.width("").outerWidth(),
+					this.element.outerWidth()+28
+				));
+			};
 
 			input.data("autocomplete")._renderItem=function (ul,item) {
 				return $("<li></li>")

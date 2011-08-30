@@ -1,0 +1,71 @@
+﻿.editor-label {
+	width: 90px;
+	white-space:nowrap;
+}
+.editor-field {
+	width: 170px;
+}
+.editor-link {
+	padding:5px;
+}
+#EditTransaction .editor-label{
+	width: 120px;
+	text-align:left;
+}
+.tab {
+	width: 100%;
+	float: left;
+	margin-right: 4px;
+}
+.tab-center {
+	background-image: url(../images/tab_unsel_c.png);
+	background-repeat: repeat-x;
+	height: 24px;
+	float: left;
+	    width: 342px;
+	line-height: 24px;
+	color: #4B4747;
+}
+.tab-left {
+	background-image: url(../images/tab_unsel_l.png);
+	background-repeat: no-repeat;
+	height: 24px;
+	width: 8px;
+	float: left;
+}
+.tab-right {
+	background-image: url(../images/tab_unsel_r.png);
+	background-repeat: no-repeat;
+	height: 24px;
+	width: 8px;
+	float: left;
+}
+.tab-center a {
+	color: white;
+	font-weight: bold;
+}
+.tab-cnt {
+	clear: both;
+	width: 99%;
+	border: 1px solid #E3E3E3;
+	float: left;
+	margin-bottom: 10px;
+}
+#FundDetails {
+	float: left;
+	width: 359px;
+	margin-left: 2px;
+}
+.edit-info .edit-right {
+	   width: 381px;
+}
+#frmEditTransaction{
+	float:left;
+	width:576px;
+}
+.editor-footer {
+	width:200px;
+	margin:0 auto;
+	clear:both;
+}
+ 

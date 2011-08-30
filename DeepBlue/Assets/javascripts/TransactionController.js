@@ -5,6 +5,9 @@
 		$(document).ready(function () {
 			$("#NewTransaction").css("height","auto");
 			jHelper.jqComboBox($("body"));
+			jHelper.waterMark();
+
+
 		});
 	}
 	,save: function (frm) {
@@ -29,24 +32,27 @@
 		return false;
 	}
 	,selectInvestor: function (id) {
-		//location.href="/Transaction/New/"+id;
-		$("#Loading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		var $investorInfo=$("#investorInfo");
-		$investorInfo.show();
-		var dt=new Date();
+		$investorInfo.hide();
 		$("#FundId").val(0);
 		$("#FundClosingId").val(0);
 		$("#InvestorTypeId").val(0);
 		$("#TotalCommitment").val("");
 		$("#CommittedDate").val("");
-		$.getJSON("/Investor/InvestorDetail/"+id+"?t="+dt.getTime(),function (data) {
-			$("#Loading").html("");
-			$("#InvestorName",$investorInfo).html(data.InvestorName);
-			$("#DisplayName",$investorInfo).html(data.DisplayName);
-			$("#TitleInvestorName",$investorInfo).html(data.InvestorName);
-			$("#InvestorId",$investorInfo).val(data.InvestorId);
-			transactionController.loadFundDetails();
-		});
+		if(id>0) {
+			var dt=new Date();
+			var loading=$("#Loading");
+			loading.html(jHelper.loadingHTML());
+			$.getJSON("/Investor/InvestorDetail/"+id+"?t="+dt.getTime(),function (data) {
+				$investorInfo.show();
+				loading.empty();
+				$("#InvestorName",$investorInfo).html(data.InvestorName);
+				$("#DisplayName",$investorInfo).html(data.DisplayName);
+				$("#TitleInvestorName",$investorInfo).html(data.InvestorName);
+				$("#InvestorId",$investorInfo).val(data.InvestorId);
+				transactionController.loadFundDetails();
+			});
+		}
 	}
 	,loadFundDetails: function () {
 		$("#LoadingFundDetail").show();
@@ -107,26 +113,78 @@
 		if(reload)
 			transactionController.loadFundDetails();
 	}
-	,editTransaction: function (transactionId) {
-		$("#editTransactionDialog").remove();
-		var dt=new Date();
-		var url="/Transaction/Edit/"+transactionId+"?t="+dt.getTime();
-		var iframe=document.createElement("div");
-		iframe.id="editTransactionDialog";
-		iframe.innerHTML+="<div id='loading'><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</div>";
-		iframe.innerHTML+='<iframe id="iframe_modal" allowtransparency="true" marginheight="0" marginwidth="0"  width="100%" frameborder="0" class="externalSite"  />';
-		var ifrm=$("#iframe_modal",iframe).get(0);
-		$(ifrm).css("height","100px").unbind('load');
-		$(ifrm).load(function () { $("#loading",iframe).remove(); });
-		ifrm.src=url;
-		$(iframe).dialog({
-			title: "Transaction",
-			autoOpen: true,
-			width: 600,
-			modal: true,
-			position: 'top',
-			autoResize: true
-		});
+	,editTS: function (transactionId) {
+		if(transactionId>0) {
+			var editTransaction=$("#EditTransaction");
+			editTransaction.empty();
+			editTransaction.html(jHelper.loadingHTML());
+			$.getJSON("/Transaction/FindInvestorFundDetail/"+transactionId,function (data) {
+				editTransaction.empty();
+				$("#TransactionTemplate").tmpl(data).appendTo(editTransaction);
+				jHelper.jqComboBox(editTransaction);
+
+				$("#CounterPartyInvestor",editTransaction).autocomplete(
+				{ source: "/Investor/FindOtherInvestors?investorId="+$("#InvestorId",editTransaction).val()
+				,minLength: 1
+				,autoFocus: true
+				,select: function (event,ui) {
+					$("#CounterPartyInvestorId",editTransaction).val(ui.item.id);
+					transactionController.loadInvestorType(ui.item.id);
+				}
+				 ,appendTo: "body"
+				 ,delay: 300
+				});
+
+			});
+			$("#EditTransaction").dialog("open");
+		}
+	}
+	,loadInvestorType: function (investorId) {
+		var editTransaction=$("#EditTransaction");
+		var FundId=$("#FundId",editTransaction).val();
+		var url="/Transaction/InvestorType/?investorId="+investorId+"&fundId="+FundId;
+		var disp_InvestorTypeId=$("#disp_InvestorTypeId",editTransaction).get(0);
+		var InvestorTypeId=$("#InvestorTypeId",editTransaction).get(0);
+		var InvestorTypeRow=$("#InvestorTypeRow",editTransaction).get(0);
+		jHelper.jqComboBox(editTransaction);
+		InvestorTypeRow.style.display="";
+		InvestorTypeId.value=0;
+		InvestorTypeId.style.display="none";
+		disp_InvestorTypeId.style.display="none";
+		disp_InvestorTypeId.innerHTML="";
+		$(InvestorTypeId).combobox('destroy');
+		$(InvestorTypeId).combobox('remove');
+		if(investorId>0) {
+			$.getJSON(url,function (data) {
+				if(data.InvestorTypeId>0) {
+					InvestorTypeId.value=data.InvestorTypeId;
+					InvestorTypeId.style.display="none";
+					disp_InvestorTypeId.innerHTML=InvestorTypeId.options[InvestorTypeId.selectedIndex].text;
+					disp_InvestorTypeId.style.display="";
+				}else{
+					$(InvestorTypeId).combobox();
+				}
+			});
+		}
+	}
+	,saveTransaction: function (img) {
+		try {
+			var frm=$(img).parents("form:first");
+			var loading=$("#UpdateLoading","#EditTransaction");
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			$.post("/Transaction/CreateFundTransaction",$(frm).serializeArray(),function (data) {
+				loading.empty();
+				if($.trim(data)!="") {
+					jAlert(data);
+				} else {
+					jAlert("Transaction Saved");
+					$("#EditTransaction").dialog("close");
+				}
+			});
+		} catch(e) {
+			jAlert(e);
+		}
+		return false;
 	}
 	,editCommitmentAmount: function (investorFundId) {
 		$("#Investor").focus();
@@ -186,9 +244,14 @@
 			var frm=$("#frmAddFundClose");
 			var frmTransaction=$("#frmTransaction");
 
+			jHelper.resetFields(frm);
+			jHelper.removejqCheckBox(frm);
+			jHelper.jqCheckBox(frm);
+
 			$("#FundId",frm).val($("#FundId",frmTransaction).val());
 			$("#CloseFundName",frm).val($("#FundName",frmTransaction).val());
-			$("#IsFirstClosing",frm).get(0).checked=false;
+			$("input[type='hidden'][name='IsFirstClosing']",frm).val(false);
+
 			var loading=$("#Loading",frm);
 			loading.empty();
 			$("#AddFundClose").dialog("open");
@@ -203,11 +266,13 @@
 			var url="/Admin/UpdateFundClosing";
 			loading.html(jHelper.savingHTML());
 			$.post(url,param,function (data) {
+				loading.empty();
 				var arr=data.split("||");
 				if(arr[0]!="True") {
 					jAlert(data);
 				} else {
 					jAlert("Fund Close Added");
+
 					$("#AddFundClose").dialog("close");
 					transactionController.selectFundCloseId=arr[1];
 

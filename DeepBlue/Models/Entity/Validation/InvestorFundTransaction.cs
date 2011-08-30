@@ -13,7 +13,7 @@ namespace DeepBlue.Models.Entity {
 
 			#region Primitive Properties
 
-			[Required(ErrorMessage = "InvestorFundID is required")]
+			[Required(ErrorMessage = "Investor Fund is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Investor Fund is required")]
 			public global::System.Int32 InvestorFundID {
 				get;

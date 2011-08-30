@@ -6,14 +6,12 @@ using System.Web;
 namespace DeepBlue.Helpers {
 
 	public static class AdminAuthorizeHelper {
-		public static bool IsAdmin {
-			get {
-				try {
+		public static bool IsAdmin {  
+			get {          
+				if(Authentication.CurrentUser != null)
 					return Authentication.CurrentUser.IsAdmin;
-				}
-				catch (AuthenticationException) {
+				else
 					return false;
-				}
 			}
 		}
 	}

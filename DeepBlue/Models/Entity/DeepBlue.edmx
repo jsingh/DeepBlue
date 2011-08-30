@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DeepBlueModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="DeepBlueModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="DeepBlueModelStoreContainer">
           <EntitySet Name="Account" EntityType="DeepBlueModel.Store.Account" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ActivityType" EntityType="DeepBlueModel.Store.ActivityType" store:Type="Tables" Schema="dbo" />
@@ -68,6 +68,9 @@
           <EntitySet Name="InvestorFundTransaction" EntityType="DeepBlueModel.Store.InvestorFundTransaction" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="InvestorType" EntityType="DeepBlueModel.Store.InvestorType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Issuer" EntityType="DeepBlueModel.Store.Issuer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Log" EntityType="DeepBlueModel.Store.Log" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LogDetail" EntityType="DeepBlueModel.Store.LogDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LogType" EntityType="DeepBlueModel.Store.LogType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ManagementFeeRateSchedule" EntityType="DeepBlueModel.Store.ManagementFeeRateSchedule" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ManagementFeeRateScheduleTier" EntityType="DeepBlueModel.Store.ManagementFeeRateScheduleTier" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MODULE" EntityType="DeepBlueModel.Store.MODULE" store:Type="Tables" Schema="dbo" />
@@ -426,6 +429,14 @@
           <AssociationSet Name="FK_InvestorFundTransaction_TransactionType" Association="DeepBlueModel.Store.FK_InvestorFundTransaction_TransactionType">
             <End Role="TransactionType" EntitySet="TransactionType" />
             <End Role="InvestorFundTransaction" EntitySet="InvestorFundTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Log_LogType" Association="DeepBlueModel.Store.FK_Log_LogType">
+            <End Role="LogType" EntitySet="LogType" />
+            <End Role="Log" EntitySet="Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogDetail_Log" Association="DeepBlueModel.Store.FK_LogDetail_Log">
+            <End Role="Log" EntitySet="Log" />
+            <End Role="LogDetail" EntitySet="LogDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_ManagementFeeRateSchedule_RateScheduleType" Association="DeepBlueModel.Store.FK_ManagementFeeRateSchedule_RateScheduleType">
             <End Role="RateScheduleType" EntitySet="RateScheduleType" />
@@ -1512,6 +1523,41 @@
           <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="ParentName" Type="varchar" MaxLength="100" />
           <Property Name="CountryID" Type="int" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="LogTypeID" Type="int" Nullable="false" />
+          <Property Name="ApplicationID" Type="int" />
+          <Property Name="Controller" Type="varchar" MaxLength="50" />
+          <Property Name="Action" Type="varchar" MaxLength="50" />
+          <Property Name="View" Type="varchar" MaxLength="50" />
+          <Property Name="QueryString" Type="varchar" MaxLength="255" />
+          <Property Name="LogText" Type="varchar" MaxLength="500" />
+          <Property Name="UserAgent" Type="varchar" MaxLength="250" />
+          <Property Name="MachineName" Type="varchar" MaxLength="100" />
+          <Property Name="ProcessID" Type="varchar" MaxLength="100" />
+          <Property Name="ProcessName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="LogDetail">
+          <Key>
+            <PropertyRef Name="LogDetailID" />
+          </Key>
+          <Property Name="LogDetailID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LogID" Type="int" Nullable="false" />
+          <Property Name="Detail" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LogType">
+          <Key>
+            <PropertyRef Name="LogTypeID" />
+          </Key>
+          <Property Name="LogTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LogTypeName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="ManagementFeeRateSchedule">
           <Key>
@@ -2951,6 +2997,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Log_LogType">
+          <End Role="LogType" Type="DeepBlueModel.Store.LogType" Multiplicity="1" />
+          <End Role="Log" Type="DeepBlueModel.Store.Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogType">
+              <PropertyRef Name="LogTypeID" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="LogTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogDetail_Log">
+          <End Role="Log" Type="DeepBlueModel.Store.Log" Multiplicity="1" />
+          <End Role="LogDetail" Type="DeepBlueModel.Store.LogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Log">
+              <PropertyRef Name="LogID" />
+            </Principal>
+            <Dependent Role="LogDetail">
+              <PropertyRef Name="LogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ManagementFeeRateSchedule_RateScheduleType">
           <End Role="RateScheduleType" Type="DeepBlueModel.Store.RateScheduleType" Multiplicity="1" />
           <End Role="ManagementFeeRateSchedule" Type="DeepBlueModel.Store.ManagementFeeRateSchedule" Multiplicity="*" />
@@ -3527,8 +3597,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DeepBlueModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -4145,6 +4214,17 @@
           <AssociationSet Name="FK_UnderlyingFundStockDistributionLineItem_UnderlyingFundStockDistribution" Association="DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_UnderlyingFundStockDistribution">
             <End Role="UnderlyingFundStockDistribution" EntitySet="UnderlyingFundStockDistributions" />
             <End Role="UnderlyingFundStockDistributionLineItem" EntitySet="UnderlyingFundStockDistributionLineItems" />
+          </AssociationSet>
+          <EntitySet Name="Logs" EntityType="DeepBlueModel.Log" />
+          <EntitySet Name="LogDetails" EntityType="DeepBlueModel.LogDetail" />
+          <EntitySet Name="LogTypes" EntityType="DeepBlueModel.LogType" />
+          <AssociationSet Name="FK_Log_LogType" Association="DeepBlueModel.FK_Log_LogType">
+            <End Role="LogType" EntitySet="LogTypes" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogDetail_Log" Association="DeepBlueModel.FK_LogDetail_Log">
+            <End Role="Log" EntitySet="Logs" />
+            <End Role="LogDetail" EntitySet="LogDetails" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Account">
@@ -7314,6 +7394,69 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Type="Int32" Name="LogID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="EntityID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Int32" Name="LogTypeID" Nullable="false" />
+          <Property Type="Int32" Name="ApplicationID" />
+          <Property Type="String" Name="Controller" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Action" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="View" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="QueryString" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="LogText" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="UserAgent" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MachineName" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ProcessID" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ProcessName" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LogType" Relationship="DeepBlueModel.FK_Log_LogType" FromRole="Log" ToRole="LogType" />
+          <NavigationProperty Name="LogDetails" Relationship="DeepBlueModel.FK_LogDetail_Log" FromRole="Log" ToRole="LogDetail" />
+        </EntityType>
+        <EntityType Name="LogDetail">
+          <Key>
+            <PropertyRef Name="LogDetailID" />
+          </Key>
+          <Property Type="Int32" Name="LogDetailID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="LogID" Nullable="false" />
+          <Property Type="String" Name="Detail" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Log" Relationship="DeepBlueModel.FK_LogDetail_Log" FromRole="LogDetail" ToRole="Log" />
+        </EntityType>
+        <EntityType Name="LogType">
+          <Key>
+            <PropertyRef Name="LogTypeID" />
+          </Key>
+          <Property Type="Int32" Name="LogTypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="LogTypeName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Logs" Relationship="DeepBlueModel.FK_Log_LogType" FromRole="LogType" ToRole="Log" />
+        </EntityType>
+        <Association Name="FK_Log_LogType">
+          <End Type="DeepBlueModel.LogType" Role="LogType" Multiplicity="1" />
+          <End Type="DeepBlueModel.Log" Role="Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogType">
+              <PropertyRef Name="LogTypeID" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="LogTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogDetail_Log">
+          <End Type="DeepBlueModel.Log" Role="Log" Multiplicity="1" />
+          <End Type="DeepBlueModel.LogDetail" Role="LogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Log">
+              <PropertyRef Name="LogID" />
+            </Principal>
+            <Dependent Role="LogDetail">
+              <PropertyRef Name="LogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8360,6 +8503,44 @@
             <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
             <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="DeepBlueModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+                <ScalarProperty Name="UserAgent" ColumnName="UserAgent" />
+                <ScalarProperty Name="LogText" ColumnName="LogText" />
+                <ScalarProperty Name="QueryString" ColumnName="QueryString" />
+                <ScalarProperty Name="View" ColumnName="View" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
+                <ScalarProperty Name="LogTypeID" ColumnName="LogTypeID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogDetails">
+            <EntityTypeMapping TypeName="DeepBlueModel.LogDetail">
+              <MappingFragment StoreEntitySet="LogDetail">
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="LogDetailID" ColumnName="LogDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogTypes">
+            <EntityTypeMapping TypeName="DeepBlueModel.LogType">
+              <MappingFragment StoreEntitySet="LogType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LogTypeName" ColumnName="LogTypeName" />
+                <ScalarProperty Name="LogTypeID" ColumnName="LogTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -10188,6 +10369,17 @@
           <ConnectorPoint PointX="13.145833333333334" PointY="40.29132161458331" />
           <ConnectorPoint PointX="13.6875" PointY="40.29132161458331" />
           <ConnectorPoint PointX="13.6875" PointY="28.289042968749982" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="DeepBlueModel.Log" Width="1.5" PointX="19.625" PointY="11" Height="3.5644742838541674" />
+        <EntityTypeShape EntityType="DeepBlueModel.LogDetail" Width="1.5" PointX="21.875" PointY="12" Height="1.5923063151041106" />
+        <EntityTypeShape EntityType="DeepBlueModel.LogType" Width="1.5" PointX="17.375" PointY="12" Height="1.5923063151041106" />
+        <AssociationConnector Association="DeepBlueModel.FK_Log_LogType" >
+          <ConnectorPoint PointX="18.875" PointY="12.796153157552055" />
+          <ConnectorPoint PointX="19.625" PointY="12.796153157552055" />
+        </AssociationConnector>
+        <AssociationConnector Association="DeepBlueModel.FK_LogDetail_Log" >
+          <ConnectorPoint PointX="21.125" PointY="12.796153157552055" />
+          <ConnectorPoint PointX="21.875" PointY="12.796153157552055" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

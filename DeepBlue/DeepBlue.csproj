@@ -39,6 +39,7 @@
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -75,6 +76,7 @@
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\AdminRepository.cs" />
     <Compile Include="Controllers\Admin\IAdminRepository.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CapitalCall\CapitalCallController.cs" />
     <Compile Include="Controllers\CapitalCall\CapitalCallRepository.cs" />
     <Compile Include="Controllers\CapitalCall\ICapitalCallRepository.cs" />
@@ -99,6 +101,7 @@
     <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Helpers\FormCollectionHelper.cs" />
     <Compile Include="Helpers\JsonSerializer.cs" />
+    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\MvcButton.cs" />
     <Compile Include="Helpers\MvcTab.cs" />
     <Compile Include="Helpers\SecurityContainer.cs" />
@@ -219,6 +222,7 @@
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalCallLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalDistributionLineItemService.cs" />
+    <Compile Include="Models\Entity\Partial\LogService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorAccountService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorContactService.cs" />
     <Compile Include="Models\Entity\Partial\UserService.cs" />
@@ -244,6 +248,7 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVHistoryService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
     <Compile Include="Models\Entity\Validation\InvestorContact.cs" />
+    <Compile Include="Models\Entity\Validation\Log.cs" />
     <Compile Include="Models\Entity\Validation\User.cs" />
     <Compile Include="Models\Entity\Validation\ActivityType.cs" />
     <Compile Include="Models\Entity\Validation\CashDistribution.cs" />
@@ -996,6 +1001,7 @@
     <Content Include="Assets\stylesheets\popup.css" />
     <Content Include="Assets\stylesheets\printreport.css" />
     <Content Include="Assets\stylesheets\report.css" />
+    <Content Include="Assets\stylesheets\transaction.css" />
     <Content Include="bin\DeepBlue.dll" />
     <Content Include="bin\DeepBlue.pdb" />
     <Content Include="Global.asax" />
@@ -1127,6 +1133,7 @@
     <Content Include="Views\Investor\Result.ascx" />
     <Content Include="Views\Investor\ThankYou.aspx" />
     <Content Include="Views\Shared\LeftMenu.ascx" />
+    <Content Include="Views\Transaction\EditTransaction.ascx" />
     <Content Include="Views\Transaction\Error.ascx" />
     <Content Include="Views\Transaction\Result.ascx" />
     <Content Include="Views\Transaction\Success.ascx" />

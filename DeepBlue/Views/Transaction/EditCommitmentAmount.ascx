@@ -2,9 +2,6 @@
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <%Html.EnableClientValidation(); %>
 <% using(Html.Form(new { @onsubmit = "return editTransaction.editCA(this);" })){ %>
-<%--<% using (Ajax.BeginForm("UpdateCommitmentAmount", "Transaction", null, new AjaxOptions {
-	   UpdateTargetId = "UpdateTargetId", Confirm = "Are you sure you want to update this commitment amount?", OnBegin = "editTransaction.onBegin", OnSuccess = "editTransaction.closeEditCommitAmtDialog"
-   },new { @id = "UpdateCommitmentAmount" })) {%>--%>
 <%: Html.HiddenFor(model => model.InvestorFundId) %>
 <%: Html.HiddenFor(model => model.UnfundedAmount) %>
 <br />

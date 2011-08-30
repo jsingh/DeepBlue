@@ -25,7 +25,8 @@
 </div>
 <div class="editor-field dropdown">
 	<%: Html.Span("${StateOfResidencyName}", new { @id = "Disp_StateOfResidency", @class = "show" })%>
-	<%: Html.DropDownList("StateOfResidency", Model.SelectList.States, new { @class="hide", @val = "${StateOfResidency}" })%>
+	<%: Html.TextBox("StateOfResidencyName", "${StateOfResidencyName}", new { @class = "hide" })%>
+	<%: Html.Hidden("StateOfResidency", "${StateOfResidency}")%>
 </div>
 <div class="editor-label">
 	<%: Html.LabelFor(model => model.DomesticForeign) %>

@@ -48,8 +48,22 @@
 	,ajaxSetup: function () {
 		$.ajaxSetup({
 			cache: false
+			,complete: function (jqXHR,textStatus) {
+				if(textStatus=="timeout") {
+					jAlert("Ajax request is timeout");
+				}
+			}
+			,beforeSend: function (jqXHR,settings) {
+				if(settings.url.indexOf("/Assets/javascripts")>0) {
+					if(settings.url.indexOf("LogOn.js")>0) {
+						$.get("/Account/LogOff");
+						deepBlue.redirectLogOn();
+					}
+					return false;
+				}
+			}
 			,error: function (x,jqxhr,settings,exception) {
-				if(x.responseText.indexOf('AuthenticationException')>0) {
+				if(x.responseText.indexOf('WILLOWRIDGE :: LogOn')>0) {
 					$.get("/Account/LogOff");
 					deepBlue.redirectLogOn();
 				} else {

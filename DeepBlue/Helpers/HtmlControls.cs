@@ -339,6 +339,9 @@ namespace DeepBlue.Helpers {
 			return MvcHtmlString.Create(string.Format("<span id=\"{0}\" name=\"{0}\" class=\"{1}\">{2}</span>", name , className, (name.Contains("$") ? name :  "${" + name + "}")));
 		}
 
+
+
+
 		public static MvcHtmlString jQueryTemplateTextBox(this HtmlHelper htmlHelper, string name) {
 			return jQueryTemplateTextBox(htmlHelper, name, "${" + name + "}", new { });
 		}

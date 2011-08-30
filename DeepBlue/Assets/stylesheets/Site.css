@@ -174,14 +174,6 @@ label {
 .dropdown {
 	width: 120px;
 }
-.display-field {
-	text-align: left;
-	padding: 8px 0px 12px 0px;
-	float: left;
-	clear: right;
-	width: auto;
-	color: #000;
-}
 .editor-button {
 	width: 73px;
 	margin: 0 auto;
@@ -398,51 +390,6 @@ label {
 	height: 24px;
 	text-align: center;
 }
-.small-text input[type="text"] {
-	width: 130px;
-}
-.small-text-180 input[type="text"] {
-	width: 160px;
-}
-.small-text-120 input[type="text"] {
-	width: 120px;
-}
-.small-dropdown-120 select {
-	width: 120px;
-}
-.transaction-info .editor-label {
-	width: 120px;
-}
-.transaction-info .editor-field {
-	width: 200px;
-}
-.transaction-info .editor-field input[type="text"] {
-	width: 145px;
-}
-.transaction-info .editor-field select {
-	width: 160px;
-}
-.transaction-info .edit-info .edit-left {
-	width: 60%;
-}
-.transaction-info .edit-info .edit-right {
-	width: 40%;
-}
-.transaction-info .fund-detail .editor-label {
-	width: 120px;
-}
-.transaction-info .editor-link {
-	float: left;
-	clear: left;
-	width: auto;
-	padding: 5px;
-}
-.transaction-info .editor-link a {
-	color: Blue;
-}
-.transaction-info .checkbox input {
-	width: auto;
-}
 .grid_item {
 	background-color: #c5c5c5;
 }
@@ -451,40 +398,6 @@ label {
 }
 .row {
 	background-color: #E9f8ff;
-}
-
-/* Transaction Edit */
-.transaction-edit {
-	float: left;
-}
-.transaction-edit .edit-detail {
-	clear: both;
-	float: left;
-}
-.transaction-edit .editor-label {
-	width: auto;
-}
-.transaction-edit .edit-detail .editor-label {
-	width: 120px;
-}
-.transaction-edit .edit-detail .editor-field {
-	width: auto;
-}
-.transaction-edit .edit-detail .editor-field input[type="text"] {
-	width: 150px;
-}
-.transaction-edit .split-detail {
-	display: none;
-}
-.fund-details {
-	clear: both;
-	margin-right: 10px;
-}
-#tabs .ui-widget-header {
-	background: none;
-	border-top: 0px;
-	border-left: 0px;
-	border-right: 0px;
 }
 /* Details Box */
 .det-box {
@@ -502,50 +415,7 @@ label {
 #loading {
 	text-align: left;
 }
-#FundDetails {
-	float: left;
-	width: 100%;
-	margin-left: 2px;
-}
-.tab {
-	width: 100%;
-	float: left;
-	margin-right: 4px;
-}
-.tab-center {
-	background-image: url(../images/tab_unsel_c.png);
-	background-repeat: repeat-x;
-	height: 24px;
-	float: left;
-	width: 96%;
-	line-height: 24px;
-	color: #4B4747;
-}
-.tab-left {
-	background-image: url(../images/tab_unsel_l.png);
-	background-repeat: no-repeat;
-	height: 24px;
-	width: 8px;
-	float: left;
-}
-.tab-right {
-	background-image: url(../images/tab_unsel_r.png);
-	background-repeat: no-repeat;
-	height: 24px;
-	width: 8px;
-	float: left;
-}
-.tab-center a {
-	color: white;
-	font-weight: bold;
-}
-.tab-cnt {
-	clear: both;
-	width: 99%;
-	border: 1px solid #E3E3E3;
-	float: left;
-	margin-bottom: 10px;
-}
+
 .header {
 	float: left;
 	clear: both;
@@ -559,9 +429,6 @@ label {
 }
 #contactInfoMain .editor-field {
 	width: auto;
-}
-.transaction-edit .field-validation-error, .transaction-info .field-validation-error {
-	display: none;
 }
 #admin_accordion {
 	width: 50%;

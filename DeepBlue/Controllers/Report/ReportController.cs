@@ -9,7 +9,7 @@ using DeepBlue.Controllers.CapitalCall;
 using DeepBlue.Models.Entity;
 
 namespace DeepBlue.Controllers.Report {
-	public class ReportController : Controller {
+	public class ReportController : BaseController {
 
 		public IReportRepository ReportRepository { get; set; }
 

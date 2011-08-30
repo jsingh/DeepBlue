@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 using DeepBlue.Controllers.Admin;
 
 namespace DeepBlue.Controllers.Document {
-	public class DocumentController : Controller {
+	public class DocumentController : BaseController {
 
 		public IDocumentRepository DocumentRepository { get; set; }
 

@@ -14,7 +14,7 @@
 				<div class="editor-label">
 					<%: Html.Label("Committed Amount") %>
 				</div>
-				<div class="display-field">
+				<div class="editor-field">
 					<%: Html.Span(FormatHelper.CurrencyFormat(item.TotalCommitment))%>
 				</div>
 			</div>
@@ -22,12 +22,12 @@
 				<div class="editor-label">
 					<%: Html.Label("Unfunded Amount")%>
 				</div>
-				<div class="display-field">
+				<div class="editor-field">
 					<%: Html.Span(FormatHelper.CurrencyFormat(item.UnfundedAmount))%>
 				</div>
 			</div>
 			<div class="editor-link">
-				<%: Html.Anchor("Transaction", "#", new { onclick = "javascript:transactionController.editTransaction("+ item.InvestorFundID.ToString() +");" })%>&nbsp;-&nbsp;
+				<%: Html.Anchor("Transaction", "#", new { onclick = "javascript:transactionController.editTS("+ item.InvestorFundID.ToString() +");" })%>&nbsp;-&nbsp;
 				<%: Html.Anchor("Edit Committed Amount", "#", new { onclick = "javascript:transactionController.editCommitmentAmount(" + item.InvestorFundID.ToString() + ");" })%>
 			</div>
 		</div>

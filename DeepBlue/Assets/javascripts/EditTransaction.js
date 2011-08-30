@@ -13,7 +13,7 @@
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 			$.post("/Transaction/UpdateCommitmentAmount",$(frm).serializeArray(),function (data) {
 				loading.empty();
-				if($.trim(data)!="True") {
+				if($.trim(data)!="") {
 					jAlert(data);
 				} else {
 					jAlert("Committed Amount Saved");
@@ -26,8 +26,9 @@
 		}
 		return false;
 	}
-	,save: function (frm) {
+	,save: function (img) {
 		try {
+			var frm=$(img).parents("form:first");
 			var loading=$("#UpdateLoading","#EditTransaction");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 			$.post("/Transaction/CreateFundTransaction",$(frm).serializeArray(),function (data) {
@@ -36,7 +37,8 @@
 					jAlert(data);
 				} else {
 					jAlert("Transaction Saved");
-					parent.transactionController.closeEditTransactionDialog(true);
+					transactionController.loadFundDetails();
+					$("#EditTransaction").dialog("close");
 				}
 			});
 		} catch(e) {
@@ -48,7 +50,7 @@
 		$("document").ready(function () {
 			var theFrame=$("#iframe_modal",parent.document.body);
 			if(theFrame) {
-				theFrame.height($(".transaction-edit").height()+10);
+				theFrame.height($("body").height()+100);
 			}
 		});
 	}
@@ -75,28 +77,6 @@
 		if(txt.value=="") {
 			$("#CounterPartyInvestorId").val(0);
 			editTransaction.loadInvestorType(0);
-		}
-	}
-	,loadInvestorType: function (investorId) {
-		var FundId=$("#FundId").val();
-		var url="/Transaction/InvestorType/?investorId="+investorId+"&fundId="+FundId;
-		var disp_InvestorTypeId=document.getElementById("disp_InvestorTypeId");
-		var InvestorTypeId=document.getElementById("InvestorTypeId");
-		var InvestorTypeRow=document.getElementById("InvestorTypeRow");
-		InvestorTypeRow.style.display="";
-		InvestorTypeId.value=0;
-		InvestorTypeId.style.display="none";
-		disp_InvestorTypeId.style.display="none";
-		disp_InvestorTypeId.innerHTML="";
-		if(investorId>0) {
-			$.getJSON(url,function (data) {
-				if(data.InvestorTypeId>0) {
-					InvestorTypeId.value=data.InvestorTypeId;
-					InvestorTypeId.style.display="none";
-					disp_InvestorTypeId.innerHTML=InvestorTypeId.options[InvestorTypeId.selectedIndex].text;
-					disp_InvestorTypeId.style.display="";
-				}
-			});
 		}
 	}
 	,onBegin: function () {

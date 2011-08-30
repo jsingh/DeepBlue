@@ -6,12 +6,12 @@
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
 	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
 	<%= Html.JavascriptInclueTag("EditTransaction.js")%>
+	<%= Html.StylesheetLinkTag("transaction.css")%>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-	<div class="transaction-edit" style="width: 99%;">
+	<div class="transaction-edit">
 		<%Html.EnableClientValidation(); %>
 		<%using (Html.Form(new { @id = "EditTransaction", @onsubmit = "return editTransaction.save(this);" })) { %>
-		<%--<% using (Ajax.BeginForm("CreateFundTransaction", "Transaction", null, new AjaxOptions { UpdateTargetId = "UpdateTargetId", HttpMethod = "Post", OnBegin = "editTransaction.onTransactionBegin", OnSuccess = "editTransaction.onTransactionSuccess" }, new { @id = "EditTransaction" })) {%>--%>
 		<div class="header">
 			<div style="float: left">
 				<div class="editor-label" style="width: 100px">
@@ -99,7 +99,7 @@
 			<%: Html.HiddenFor(model => model.OriginalCommitmentAmount)%>
 			<%: Html.HiddenFor(model => model.UnfundedAmount)%>
 		</div>
-		<div class="editor-button" style="width: 225px">
+		<div class="editor-button" style="width: 350px">
 			<div style="float: left; padding: 0 0 10px 5px;">
 				<%: Html.Span("",new { @id = "UpdateLoading" })%>
 			</div>
@@ -124,4 +124,5 @@
 	<script type="text/javascript">
 		editTransaction.init();
 	</script>
+	
 </asp:Content>

@@ -47,15 +47,13 @@ namespace DeepBlue.Models.Transaction {
 
 		public int Amount { get; set; }
 
-		[DisplayName("Committed Date")]
-        [DateRange()]
-		public DateTime? CommittedDate { get; set; }
-
 		public List<SelectListItem> FundClosings { get; set; }
 
 		public List<SelectListItem> InvestorTypes { get; set; }
 
 		public EditCommitmentAmountModel EditCommitmentAmountModel { get; set; }
+
+		public EditModel EditModel { get; set; }
 	}
 
 }

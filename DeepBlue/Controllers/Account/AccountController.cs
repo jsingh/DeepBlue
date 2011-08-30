@@ -9,7 +9,7 @@ using DeepBlue.Helpers;
 using System.Web.Security;
 
 namespace DeepBlue.Controllers.Account {
-	public class AccountController : Controller {
+	public class AccountController : BaseController {
 
 		public IAccountRepository AccountRepository { get; set; }
 

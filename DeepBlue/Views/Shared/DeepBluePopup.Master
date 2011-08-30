@@ -16,6 +16,8 @@
 	<%= Html.JavascriptInclueTag("DeepBlue.js")%>
 	<%= Html.JavascriptInclueTag("jsDate.js")%>
 	<%= Html.JavascriptInclueTag("jHelper.js")%>
+	<%= Html.JavascriptInclueTag("jquery.alerts.js")%>
+	<%= Html.StylesheetLinkTag("jquery.alerts.css")%>
 	<%= Html.StylesheetLinkTag("site.css")%>
 	<%= Html.StylesheetLinkTag("popup.css")%>
 	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />

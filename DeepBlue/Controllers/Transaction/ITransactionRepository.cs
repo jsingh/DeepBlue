@@ -8,8 +8,11 @@ using DeepBlue.Models.Transaction;
 
 namespace DeepBlue.Controllers.Transaction {
 	public interface ITransactionRepository {
+
 		List<DeepBlue.Models.Entity.Fund> GetAllFundNames();
 		List<FundClosing> GetAllFundClosings(int fundId);
+
+		object FindInvestorFundDetail(int investorFundId);
     }
 }
 
