@@ -31,7 +31,7 @@
 						<th sortname="InvestorEntityTypeName" style="width: 40%">
 							Investor Entity Type
 						</th>
-						<th sortname="Enabled" style="width: 10%;">
+						<th sortname="Enabled" style="width: 30%;">
 							Enable
 						</th>
 						<th>
@@ -63,7 +63,7 @@
 		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
 		<%: Html.TextBox("InvestorEntityTypeName", "${row.cell[1]}", new { @class = "hide" })%>
 	</td>
-	<td style="width: 10%;text-align:left;">
+	<td style="width: 30%;text-align:left;">
 		<%: Html.Span("{{if row.cell[2]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		
 		<%: Html.CheckBox("Enabled",false, new { @class = "hide", @val = "${row.cell[2]}" })%>
 	</td>

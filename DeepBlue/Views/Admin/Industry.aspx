@@ -31,7 +31,7 @@
 						<th sortname="Industry1" style="width: 40%">
 							Industry
 						</th>
-						<th sortname="Enabled" style="width: 10%">
+						<th sortname="Enabled" style="width: 30%">
 							Enabled
 						</th>
 						<th>
@@ -65,7 +65,7 @@
 		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
 		<%: Html.TextBox("Industry", "${row.cell[1]}", new { @class = "hide" })%>
 	</td>
-	<td style="width: 10%;text-align:left;">
+	<td style="width: 30%;text-align:left;">
 		<%: Html.Span("{{if row.cell[2]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		
 		<%: Html.CheckBox("Enabled",false, new { @class = "hide", @val="${row.cell[2]}" })%>
 	</td>

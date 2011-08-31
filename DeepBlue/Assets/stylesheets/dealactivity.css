@@ -191,8 +191,7 @@
 	float: left;
     margin:0 10px;
 }
-.addbtn .tblcell input
-,.addbtn .tblcell select
+.addbtn .tblcell .jqComboBox
 {
 	margin:4px 0 0;
 }
@@ -257,8 +256,8 @@
 	margin: -8px 0pt 0pt 80px;
 }
 #ReconcilReport .gridbox {
-	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-bottom: 0px;
 }
 .expandsel {
 	margin-top: -2px;
@@ -277,4 +276,7 @@
 }
 #StockDistributionList .newrow td input{
 	width: 110px;
+}
+.heading {
+	padding:12px 0 0;
 }

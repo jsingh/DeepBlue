@@ -7,6 +7,8 @@
 			var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,"",false]}] };
 			$("#GridTemplate").tmpl(data).prependTo(tbody);
 			var tr=$("tr:first",tbody);
+			jHelper.jqComboBox(tr);
+			jHelper.jqCheckBox(tr);
 			this.editRow(tr);
 			$("#Add",tr).show();
 		}
@@ -57,12 +59,16 @@
 					var newTR=$("#Row"+arr[1]);
 					jHelper.applyFlexGridClass($(".bDiv:first"));
 					jHelper.checkValAttr(newTR);
+					jHelper.jqComboBox(newTR);
+					jHelper.jqCheckBox(newTR);
 				});
 			}
 		});
 	}
 	,onGridSuccess: function (t,g) {
 		jHelper.checkValAttr(t);
+		jHelper.jqComboBox(t);
+		jHelper.jqCheckBox(t);
 		$(window).resize();
 	}
 	,onInit: function (g) {

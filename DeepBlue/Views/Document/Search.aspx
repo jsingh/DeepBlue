@@ -50,15 +50,15 @@
 				</div>
 				<div class="editor-field">
 					<div id="InvestorRow" style="float: left;">
-						<%: Html.TextBoxFor(model => model.InvestorName, new { @style = "width:164px", @onblur = "javascript:documentSearch.InvestorBlur(this);" })%>
+						<%: Html.TextBoxFor(model => model.InvestorName, new { @style = "width:156px", @onblur = "javascript:documentSearch.InvestorBlur(this);" })%>
 						<%: Html.ValidationMessageFor(model => model.InvestorId) %>
 					</div>
 					<div id="FundRow" style="display: none; float: left;">
-						<%: Html.TextBoxFor(model => model.FundName, new { @style = "width:164px", @onblur = "javascript:documentSearch.FundBlur(this);" })%>
+						<%: Html.TextBoxFor(model => model.FundName, new { @style = "width:156px", @onblur = "javascript:documentSearch.FundBlur(this);" })%>
 						<%: Html.ValidationMessageFor(model => model.FundId) %>
 					</div>
 					<div style="float: left; margin-left: 2px;">
-						<%: Html.DropDownListFor(model => model.DocumentStatus,Model.DocumentStatusTypes, new { @style="width:80px;", @onchange = "javascript:documentSearch.changeType(this);" })%>
+						<%: Html.DropDownListFor(model => model.DocumentStatus, Model.DocumentStatusTypes, new { @style = "width:85px;", @onchange = "javascript:documentSearch.changeType(this);" })%>
 					</div>
 				</div>
 				<div class="editor-button">

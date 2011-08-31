@@ -28,13 +28,13 @@
 			<table cellpadding="0" cellspacing="0" border="0" id="InvCommunicationTypeList">
 				<thead>
 					<tr>
-						<th sortname="CommunicationTypeName" style="width: 40%">
+						<th sortname="CommunicationTypeName" style="width: 30%">
 							Communication Type
 						</th>
-						<th sortname="CommunicationGroupingName" style="width: 20%">
+						<th sortname="CommunicationGroupingName" style="width: 30%">
 							Communication Group
 						</th>
-						<th sortname="Enabled" style="width: 10%;">
+						<th sortname="Enabled" style="width: 30%;">
 							Enable
 						</th>
 						<th>
@@ -62,15 +62,15 @@
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 {{each(i,row) rows}}
 <tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
-	<td style="width: 40%">
+	<td style="width: 30%">
 		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
 		<%: Html.TextBox("CommunicationTypeName", "${row.cell[1]}", new { @class = "hide" })%>
 	</td>
-	<td style="width: 20%">
+	<td style="width: 30%">
 		<%: Html.Span("${row.cell[2]}", new { @class = "show" })%>
 		<%: Html.DropDownListFor(model => model.CommunicationGroupId,Model.CommunicationGroupings, new { @class="hide", @val = "${row.cell[4]}" })%>
 	</td>
-	<td style="width: 10%;text-align:left;">
+	<td style="width: 30%;text-align:left;">
 		<%: Html.Span("{{if row.cell[3]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		
 		<%: Html.CheckBox("Enabled",false, new { @class = "hide", @val="${row.cell[3]}" })%>
 	</td>

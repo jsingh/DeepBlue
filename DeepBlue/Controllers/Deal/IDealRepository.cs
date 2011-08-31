@@ -59,7 +59,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<DealUnderlyingDirect> GetAllDealClosingUnderlyingDirects(int dealId);
 		IEnumerable<ErrorInfo> SaveDealUnderlyingDirect(DealUnderlyingDirect dealUnderlyingDirect);
 		List<AutoCompleteList> FindDealUnderlyingDirects(string fundName);
-		List<AutoCompleteList> FindEquityFixedIncomeIssuers(string issuerName);
+		List<AutoCompleteListExtend> FindEquityFixedIncomeIssuers(string issuerName);
 		#endregion
 
 		#region DealClosing
@@ -100,7 +100,7 @@ namespace DeepBlue.Controllers.Deal {
 		IEnumerable<ErrorInfo> SaveUnderlyingFundStockDistributionLineItem(UnderlyingFundStockDistributionLineItem underlyingFundStockDistributionLineItem);
 		List<UnderlyingFundStockDistributionModel> GetAllUnderlyingFundStockDistributions(int underlyingFundId);
 		List<AutoCompleteList> FindStockIssuers(string issuerName, int underlyingFundId);
-		List<AutoCompleteList> FindStockIssuers(int underlyingFundId, int fundId, int issuerId, string equitySymbol);
+		List<AutoCompleteListExtend> FindStockIssuers(int underlyingFundId, int fundId, int issuerId, string equitySymbol);
 		List<StockDistributionLineItemModel> GetAllStockDistributionDeals(int fundId, int underlyingFundId);
 		#endregion
 

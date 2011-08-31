@@ -6,12 +6,15 @@
 					selected=select.children(":selected"),
 					value=selected.val()?selected.text():"";
 
+
 			var cbox=this.cbox=$("<div class='jqComboBox'>")
-					.insertAfter(select);
+			.insertAfter(select);
 			var cleft=$("<div class='left'>");
+
 			var input=this.input=$("<input selectid='"+select.attr("id")+"' id='jqCBSTextBox_"+select.attr("name")+"' name='jqCBSTextBox_"+select.attr("name")+"'>");
 			cbox.append(cleft);
 			cleft.append(input);
+
 			var w=$(select).css("width");
 			if(w.indexOf("px")>0) {
 				w=parseInt($.trim(w.replace("px","")))-34;
@@ -62,14 +65,6 @@
 						}
 					}
 				});
-
-			input.data("autocomplete")._resizeMenu=function (ul,items) {
-				var ul=this.menu.element;
-				ul.outerWidth(Math.max(
-					ul.width("").outerWidth(),
-					this.element.outerWidth()+28
-				));
-			};
 
 			input.data("autocomplete")._renderItem=function (ul,item) {
 				return $("<li></li>")

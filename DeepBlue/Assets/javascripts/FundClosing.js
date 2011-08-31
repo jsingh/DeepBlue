@@ -7,8 +7,8 @@
 			var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,"","","",false,0]}] };
 			$("#GridTemplate").tmpl(data).prependTo(tbody);
 			var tr=$("tr:first",tbody);
-			this.editRow(tr);
 			fundClosing.setup(tr);
+			this.editRow(tr);
 			$("#Add",tr).show();
 		}
 	}
@@ -80,6 +80,7 @@
 			);
 		});
 		jHelper.applyDatePicker(target);
+		jHelper.jqCheckBox(target);
 	}
 	,onInit: function (g) {
 		var data={ name: "Add Fund Closing" };

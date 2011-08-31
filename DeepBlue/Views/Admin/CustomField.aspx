@@ -28,19 +28,19 @@
 			<table cellpadding="0" cellspacing="0" border="0" id="CustomFieldList">
 				<thead>
 					<tr>
-						<th sortname="CustomFieldText" style="width: 20%">
+						<th sortname="CustomFieldText" style="width: 18%">
 							Custom Field
 						</th>
-						<th sortname="ModuleName" style="width: 20%">
+						<th sortname="ModuleName" style="width: 18%">
 							Module
 						</th>
-						<th sortname="DataTypeName" style="width: 20%">
+						<th sortname="DataTypeName" style="width: 18%">
 							DataType
 						</th>
-						<th sortname="OptionalText" style="width: 20%">
+						<th sortname="OptionalText" style="width: 18%">
 							Optional Text
 						</th>
-						<th sortname="Search" style="width: 10%;">
+						<th sortname="Search" style="width: 25%;">
 							Search
 						</th>
 						<th>
@@ -68,23 +68,23 @@
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 {{each(i,row) rows}}
 <tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
-	<td style="width: 20%">
+	<td style="width: 18%">
 		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
 		<%: Html.TextBox("CustomFieldText", "${row.cell[1]}", new { @class = "hide" })%>
 	</td>
-	<td style="width: 20%">
+	<td style="width: 18%">
 		<%: Html.Span("${row.cell[3]}", new { @class = "show" })%>
 		<%: Html.DropDownList("ModuleId", Model.Modules, new { @val="${row.cell[2]}", @class="hide" })%>
 	</td>
-	<td style="width: 20%">
+	<td style="width: 18%">
 		<%: Html.Span("${row.cell[5]}", new { @class = "show" })%>
 		<%: Html.DropDownList("DataTypeId",Model.DataTypes, new { @val="${row.cell[4]}", @class="hide" }) %>
 	</td>
-	<td style="width: 20%">
+	<td style="width: 18%">
 		<%: Html.Span("${row.cell[6]}", new { @class = "show" })%>
 		<%: Html.TextBox("OptionalText", "${row.cell[6]}", new { @class = "hide" }) %>
 	</td>
-	<td style="width: 10%;text-align:left;">
+	<td style="width: 25%;text-align:left;">
 		<%: Html.Span("{{if row.cell[7]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		
 		<%: Html.CheckBox("Search", new {  @class = "hide", @val="${row.cell[7]}" }) %>
 	</td>

@@ -9,6 +9,7 @@
 	</title>
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
+	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.autocomplete.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.combobox.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.extension.js")%>
 	<%= Html.JavascriptInclueTag("jquery.alerts.js")%>

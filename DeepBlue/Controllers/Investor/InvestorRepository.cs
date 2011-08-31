@@ -261,6 +261,13 @@ namespace DeepBlue.Controllers.Investor {
 							StateOfResidencyName = investor.STATE.Name,
 							Notes = investor.Notes,
 							InvestorId = investor.InvestorID,
+							FundInformations = (from investorFund in investor.InvestorFunds
+												select new FundInformation {
+													FundName = investorFund.Fund.FundName,
+													TotalCommitment = investorFund.TotalCommitment,
+													UnfundedAmount = investorFund.UnfundedAmount,
+													InvestorType = investorFund.InvestorType.InvestorTypeName
+												}),
 							AccountInformations = (from account in investor.InvestorAccounts
 												   select new {
 													   ABANumber = account.Routing,

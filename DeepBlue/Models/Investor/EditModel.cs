@@ -33,7 +33,7 @@ namespace DeepBlue.Models.Investor {
 
 		public object AccountInformations { get; set; }
 
-		public FlexigridData FundInformations { get; set; }
+		public object FundInformations { get; set; }
 
 		public int id { get; set; }
  
@@ -259,9 +259,9 @@ namespace DeepBlue.Models.Investor {
 		}
 		public string FundName { get; set; }
 
-		public decimal TotalCommitment { get; set; }
+		public decimal? TotalCommitment { get; set; }
 
-		public decimal UnfundedAmount { get; set; }
+		public decimal? UnfundedAmount { get; set; }
 
 		public string InvestorType { get; set; }
 	}

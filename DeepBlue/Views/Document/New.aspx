@@ -51,21 +51,21 @@
 				<%: Html.TextBoxFor(model => model.FundName, new { @onblur = "javascript:documentUpload.FundBlur(this);", @style = "width:196px" })%>
 			</div>
 			<div style="float: left; margin-left: 2px;">
-				<%: Html.DropDownListFor(model => model.DocumentStatus,Model.DocumentStatusTypes, new { @style="width:80px", @onchange = "javascript:documentUpload.changeType(this);" })%>
+				<%: Html.DropDownListFor(model => model.DocumentStatus, Model.DocumentStatusTypes, new { @style = "width:85px", @onchange = "javascript:documentUpload.changeType(this);" })%>
 			</div>
 		</div>
 		<div class="editor-label">
 			<%: Html.LabelFor(model => model.FilePath)%>
 		</div>
 		<div class="editor-field">
-			<div id="FileRow" style="float: left;width:221px;">
+			<div id="FileRow" style="float: left;width:232px;">
 				<%: Html.File("File", new { @id = "File"  })%>
 			</div>
-			<div id="LinkRow" style="display: none; float: left;">
-				<%: Html.TextBoxFor(model => model.FilePath, new { @style = "width:213px" })%>
+			<div id="LinkRow" style="display: none; float: left;width:232px;">
+				<%: Html.TextBoxFor(model => model.FilePath, new { @style = "width:224px" })%>
 			</div>
 			<div style="float: left; margin-left: 2px;">
-				<%: Html.DropDownListFor(model => model.UploadType, Model.UploadTypes, new { @style = "width:80px", @onchange = "javascript:documentUpload.changeUploadType(this);" })%>
+				<%: Html.DropDownListFor(model => model.UploadType, Model.UploadTypes, new { @style = "width:85px", @onchange = "javascript:documentUpload.changeUploadType(this);" })%>
 			</div>
 		</div>
 		<div class="editor-button" style="width: auto; padding: 10px 0 0;">

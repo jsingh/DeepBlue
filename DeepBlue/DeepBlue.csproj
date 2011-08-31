@@ -892,6 +892,7 @@
     <Content Include="Assets\javascripts\CashDistributionType.js" />
     <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
     <Content Include="Assets\javascripts\EditInvestor.js" />
+    <Content Include="Assets\javascripts\jquery-ui-1.8.10.autocomplete.js" />
     <Content Include="Assets\javascripts\jquery.scrollTo-1.4.2-min.js" />
     <Content Include="Assets\javascripts\User.js" />
     <Content Include="Assets\javascripts\FundBreakDown.js" />

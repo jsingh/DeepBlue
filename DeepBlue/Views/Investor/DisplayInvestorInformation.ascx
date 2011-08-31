@@ -19,6 +19,30 @@
 	<%: Html.Span("${formatEditor(Notes)}", new { @class="notes", id = "Spn_Notes" })%>
 </div>
 <div id="funddetails" class="fund-details">
+	{{if FundInformations.length>0}}
+	<div class="gbox">
+	<table cellpadding=0 cellspacing=0 border=0 class=grid>
+		<thead>
+			<tr>
+				<th>Fund Name</th>
+				<th>Total Commitment</th>
+				<th>Unfunded Amount</th>
+				<th>Investor Type</th>
+			</tr>
+		</thead>
+		<tbody>
+		{{each(i,fund) FundInformations}}
+			<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
+				<td>${fund.FundName}</td>
+				<td>${formatCurrency(fund.TotalCommitment)}</td>
+				<td>${formatCurrency(fund.UnfundedAmount)}</td>
+				<td>${fund.InvestorType}</td>
+			</tr>
+		{{/each}}
+		</tbody>
+	</table>
+	</div>
+	{{/if}}
 </div>
 <div style="clear: both; height: 10px">
 	&nbsp;</div>

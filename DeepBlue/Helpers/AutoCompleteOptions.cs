@@ -25,7 +25,7 @@ namespace DeepBlue.Helpers {
 		public string OnSearch { get; set; }
 		public string OnSelect { get; set; }
 		public string OnChange { get; set; }
-		public static int RowsLength { get { return 200; } }
+		public static int RowsLength { get { return 500; } }
 	}
 
 	public class AutoCompleteList {
@@ -33,15 +33,21 @@ namespace DeepBlue.Helpers {
 			id = 0;
 			label = string.Empty;
 			value = string.Empty;
-			otherid = 0;
-			otherid2 = 0;
+			
 		}
 		public int id { get; set; }
 		public string label { get; set; }
 		public string value { get; set; }
+		
+	}
+
+	public class AutoCompleteListExtend : AutoCompleteList {
+		public AutoCompleteListExtend() {
+			otherid = 0;
+			otherid2 = 0;
+		}
 		public int otherid { get; set; }
 		public int otherid2 { get; set; }
 	}
-
 
 }

@@ -283,7 +283,7 @@
 				<%: Html.TextBox("DocumentDate", DateTime.Now.ToString("MM/dd/yyyy"), new { @id = "Doc_DocumentDate" })%>
 			</div>
 			<div class="editor-label">
-				<%: Html.DropDownList("UploadTypeId", Model.UploadTypes, new { @style = "width:80px", @onchange = "javascript:underlyingFund.changeUploadType(this);" })%>
+				<%: Html.DropDownList("UploadTypeId", Model.UploadTypes, new { @style = "width:85px", @onchange = "javascript:underlyingFund.changeUploadType(this);" })%>
 			</div>
 			<div id="FileRow" class="editor-field">
 				<div  style="padding: 0; margin: 0 0; width: auto;float:left;">

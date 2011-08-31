@@ -8,6 +8,7 @@
 			$("#GridTemplate").tmpl(data).prependTo(tbody);
 			var tr=$("tr:first",tbody);
 			jHelper.jqComboBox(tr);
+			jHelper.jqCheckBox(tr);
 			this.editRow(tr);
 			$("#Add",tr).show();
 		}
@@ -59,6 +60,7 @@
 					jHelper.applyFlexGridClass($(".bDiv:first"));
 					jHelper.checkValAttr(newTR);
 					jHelper.jqComboBox(newTR);
+					jHelper.jqCheckBox(newTR);
 				});
 			}
 		});
@@ -66,6 +68,7 @@
 	,onGridSuccess: function (t,g) {
 		jHelper.checkValAttr(t);
 		jHelper.jqComboBox(t);
+		jHelper.jqCheckBox(t);
 		$(window).resize();
 	}
 	,onInit: function (g) {

@@ -15,9 +15,7 @@ input, select {
 	font-family: Calibri, Arial;
 	font-size: 12px;
 }
-input[type="text"]
-,input[type="password"]
-, select {
+input[type="text"], input[type="password"], select {
 	padding: 3px;
 	border: solid 1px #9C9C9C;
 }
@@ -136,15 +134,14 @@ a img {
 	padding: 8px 5px;
 }
 
-.editor-field input[type="text"] 
-,.editor-field input[type="password"] {
+.editor-field input[type="text"], .editor-field input[type="password"] {
 	width: 160px;
 }
 .editor-field select {
 	width: 164px;
 }
 .editor-field input.ui-autocomplete-input[type="text"] {
-	width: 144px;
+	width: 130px;
 }
 .editor-field input, .editor-label input, .editor-field select, .editor-label select {
 	margin-top: -5px;
@@ -707,12 +704,6 @@ h2 {
 	width: 24px;
 	height: 24px;
 }
-input[type="text"].ui-autocomplete-input {
-	background-image: url(../images/autocbg.png);
-	background-position: left center;
-	background-repeat: no-repeat;
-	padding-left: 20px;
-}
 .line {
 	background-color: #E3E3E3;
 	clear: both;
@@ -728,7 +719,7 @@ input[type="text"].ui-autocomplete-input {
 }
 input.ui-autocomplete-loading[type="text"] {
 	background-image: url(../images/ajax.jpg);
-	background-position: left center;
+	background-position: right center;
 	background-repeat: no-repeat;
 }
 .setting, .ques, .key, .uparrow {
@@ -772,7 +763,7 @@ input.ui-autocomplete-loading[type="text"] {
 	position: absolute;
 	white-space: nowrap;
 }
-.submitbtn{
+.submitbtn {
 	cursor: pointer;
 }
 /* Grid */
@@ -999,17 +990,16 @@ input.ui-autocomplete-loading[type="text"] {
 .jqComboBox .left, .jqComboBox .right {
 	float: left;
 	height: 25px;
-	background-image: url(../images/select_left.gif);
+	background-image: url(../images/select_left.png);
 	background-repeat: repeat-x;
 }
 .jqComboBox .right {
 	width: 28px;
-	background-image: url(../images/select_right.gif);
+	background-image: url(../images/select_right.png);
 	background-repeat: no-repeat;
 	cursor: pointer;
 }
 .jqComboBox input.ui-autocomplete-input {
-	background-image: none;
 	padding: 0 0 0 8px;
 	margin: 0px;
 	height: 25px;
@@ -1018,7 +1008,7 @@ input.ui-autocomplete-loading[type="text"] {
 	background-color: transparent;
 }
 .editor-label .jqComboBox {
-	 float: right;
+	float: right;
 }
 .editor-field .jqComboBox, .editor-label .jqComboBox {
 	margin-top: -5px;
@@ -1026,9 +1016,10 @@ input.ui-autocomplete-loading[type="text"] {
 .editor-field .jqCheckBox, .editor-label .jqCheckBox, .editor-field .jqCDisplay, .editor-label .jqCDisplay {
 	margin-top: -5px;
 }
-.grid td .jqComboBox .left
-,.bDiv table .jqComboBox .left {
-	    width: 80%;
+.grid td .jqComboBox .left {
+	width: 64%;
 }
-
+.bDiv table .jqComboBox .left {
+	width: 70%;
+}
 /* End jQuery Transform */

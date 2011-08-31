@@ -597,14 +597,14 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public List<AutoCompleteList> FindEquityFixedIncomeIssuers(string issuerName) {
+		public List<AutoCompleteListExtend> FindEquityFixedIncomeIssuers(string issuerName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				int equitySecurityTypeId = ((int)DeepBlue.Models.Deal.Enums.SecurityType.Equity);
 				int fixedIncomeSecurityTypeId = ((int)DeepBlue.Models.Deal.Enums.SecurityType.FixedIncome);
-				IQueryable<AutoCompleteList> issuerListQuery = (from equity in context.Equities
+				IQueryable<AutoCompleteListExtend> issuerListQuery = (from equity in context.Equities
 																where equity.Issuer.Name.StartsWith(issuerName)
 																orderby equity.Issuer.Name
-																select new AutoCompleteList {
+																	  select new AutoCompleteListExtend {
 																	id = equity.IssuerID,
 																	label = equity.Issuer.Name + ">>Equity>>" + equity.Symbol,
 																	value = equity.Issuer.Name,
@@ -614,7 +614,7 @@ namespace DeepBlue.Controllers.Deal {
 																(from fixedIncome in context.FixedIncomes
 																 where fixedIncome.Issuer.Name.StartsWith(issuerName)
 																 orderby fixedIncome.Issuer.Name
-																 select new AutoCompleteList {
+																 select new AutoCompleteListExtend {
 																	 id = fixedIncome.IssuerID,
 																	 label = fixedIncome.Issuer.Name + ">>FixedIncome>>" + fixedIncome.Symbol,
 																	 value = fixedIncome.Issuer.Name,
@@ -622,7 +622,7 @@ namespace DeepBlue.Controllers.Deal {
 																	 otherid2 = fixedIncome.FixedIncomeID
 																 }))
 																.OrderBy(list => list.label);
-				return new PaginatedList<AutoCompleteList>(issuerListQuery, 1, AutoCompleteOptions.RowsLength);
+				return new PaginatedList<AutoCompleteListExtend>(issuerListQuery, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
 
@@ -1028,19 +1028,19 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public List<AutoCompleteList> FindStockIssuers(int underlyingFundId, int fundId, int issuerId, string equitySymbol) {
+		public List<AutoCompleteListExtend> FindStockIssuers(int underlyingFundId, int fundId, int issuerId, string equitySymbol) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> issuerListQuery = (from equity in context.Equities
+				IQueryable<AutoCompleteListExtend> issuerListQuery = (from equity in context.Equities
 																where equity.IssuerID == issuerId
 																&& equity.Symbol.StartsWith(equitySymbol)
 																orderby equity.Symbol
-																select new AutoCompleteList {
+																	  select new AutoCompleteListExtend {
 																	id = equity.EquityID,
 																	label = (equity.EquityType != null ? equity.EquityType.Equity : string.Empty) + ">" + (equity.ShareClassType != null ? equity.ShareClassType.ShareClass : string.Empty),
 																	value = (equity.EquityType != null ? equity.EquityType.Equity : string.Empty) + ">" + (equity.ShareClassType != null ? equity.ShareClassType.ShareClass : string.Empty),
 																	otherid = (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity
 																});
-				return new PaginatedList<AutoCompleteList>(issuerListQuery, 1, AutoCompleteOptions.RowsLength);
+				return new PaginatedList<AutoCompleteListExtend>(issuerListQuery, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
 

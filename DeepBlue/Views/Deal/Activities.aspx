@@ -337,8 +337,13 @@
 								<div class="cell">
 									<%: Html.Span("", new { @id="SpnSDUFName" })%></div>
 								<div class="cell" style="margin-left: 20px">
-									Issuer:&nbsp;<%: Html.TextBox("UFSDIssuerName","SEARCH ISSUER", new { @class = "wm" })%>
-									<%: Html.Hidden("UFSDIssuerId","")%>
+									<div style="float: left">
+										Issuer:&nbsp;
+									</div>
+									<div style="float: left">
+										<%: Html.TextBox("UFSDIssuerName","SEARCH ISSUER", new { @class = "wm" })%>
+										<%: Html.Hidden("UFSDIssuerId","")%>
+									</div>
 								</div>
 								<div class="loadingcell" id="SDLoading">
 								</div>
@@ -721,9 +726,15 @@
 							</div>
 							<div style="float: left">
 								<%using (Html.Form(new { @id = "frmReconcile", @onsubmit = "return dealReconcile.submit();" })) { %>
+								<div class="cell">
 								<%: Html.TextBox("StartDate", "START DATE", new { @id = "ReconStartDate",  @style = "width:100px" })%>&nbsp;&nbsp;
+								</div>
+								<div class="cell">
 								<%: Html.TextBox("EndDate", "END DATE", new { @id = "ReconEndDate",   @style = "width:100px" })%>&nbsp;&nbsp;
+								</div>
+								<div class="cell">
 								<%: Html.TextBox("ReconcileFundName", "SEARCH FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:200px" })%>
+								</div>
 								<%: Html.Hidden("FundId","", new { @id = "ReconcileFundId" })%>
 								<%}%>
 							</div>

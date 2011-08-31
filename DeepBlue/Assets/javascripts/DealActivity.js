@@ -4,7 +4,9 @@
 		jHelper.resizeIframe();
 		$(document).ready(function () {
 			dealActivity.expand();
-			jHelper.waterMark($("body"));
+			var bdy=$("body");
+			jHelper.waterMark(bdy);
+			jHelper.jqComboBox(bdy);
 		});
 	}
 	,selectTab: function (type,lnk) {

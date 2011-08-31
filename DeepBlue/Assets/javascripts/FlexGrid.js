@@ -79,7 +79,7 @@
 						 	if(i%2) { tr.className='erow'; }
 						 	tr.id='row'+i;
 						 	var i=0;
-						 	$("thead tr:first th",g.hDiv).each(function () {
+						 	$("thead tr:first th",g.bDiv).each(function () {
 						 		var td=document.createElement('td');
 						 		var div=document.createElement('div');
 						 		if(row.cell.length>i) {
@@ -117,11 +117,11 @@
 					}
 				}
 				$('tr',t).unbind();
-				$(t).empty();
+				$("tbody",t).remove();
 				$(t).append(tbody);
 				tbody=null;data=null;i=null;
 				if(p.onSuccess) { p.onSuccess(t,g); }
-				this.hDiv.scrollLeft=this.bDiv.scrollLeft;
+				this.bDiv.scrollLeft=this.bDiv.scrollLeft;
 				if($.browser.opera) { $(t).css('visibility','visible'); }
 			},
 			changeSort: function (th) {
@@ -132,8 +132,8 @@
 					else { p.sortorder='asc'; }
 				}
 				$(th).addClass('sorted').siblings().removeClass('sorted');
-				$('.sdesc',this.hDiv).removeClass('sdesc');
-				$('.sasc',this.hDiv).removeClass('sasc');
+				$('.sdesc',this.bDiv).removeClass('sdesc');
+				$('.sasc',this.bDiv).removeClass('sasc');
 				$('div span',th).addClass('s'+p.sortorder);
 				p.sortname=$(th).attr('sortname');
 				if(p.onChangeSort) {
@@ -286,7 +286,7 @@
 		g.gBCDiv=document.createElement('div');
 		g.gBRDiv=document.createElement('div');
 
-		g.hDiv=document.createElement('div');
+		g.bDiv=document.createElement('div');
 		g.bDivBox=document.createElement('div');
 		g.bDiv=document.createElement('div');
 		g.block=document.createElement('div');
@@ -321,16 +321,16 @@
 			$(g.gDiv).append(t);
 		}
 
-		g.hDiv.className='hDiv';
-		$(t).before(g.hDiv);
+		g.bDiv.className='bDiv';
+		$(t).before(g.bDiv);
 		g.hTable.cellPadding=0;
 		g.hTable.cellSpacing=0;
 		g.hTable.style.width="100%";
 		t.style.width="100%";
-		$(g.hTable).append($("thead",t));
-		$(g.hDiv).append(g.hTable);
+		//$(g.hTable).append($("thead",t));
+		//$(g.bDiv).append(g.hTable);
 		if(!p.colmodel) { var ci=0; }
-		$('thead tr:first th',g.hDiv).each
+		$('thead tr:first th',t).each
 			(
 			 	function () {
 			 		var thdiv=document.createElement('div');
@@ -357,8 +357,8 @@
 			);
 		g.bDiv.className='bDiv';
 		g.bDivBox.className='bDivBox';
-		$(t).before(g.bDiv);
-		$("thead",t).remove();
+
+		//$("thead",t).remove();
 		$(g.bDiv).append(t);
 		if(p.usepager) {
 			g.pDiv.className='pDiv';
@@ -368,7 +368,7 @@
 
 			$('div',g.pDiv).html(html);
 
-			$(g.hDiv).before(g.pDiv);
+			$(g.bDiv).before(g.pDiv);
 			$(g.bDiv).after($(g.pDiv).clone().css("display","none").addClass("bpDiv"));
 
 			if(p.exportExcel!="") {
@@ -397,7 +397,7 @@
 			$("tr",t).each(function () {
 				var tr=this;
 				i=0;
-				$("thead tr th",g.hDiv).each(function () {
+				$("thead tr th",g.bDiv).each(function () {
 					$("td:eq("+i+") div",tr).css({ "width": "100%","display": this.style.display,"text-align": $(this).attr("align") });
 					i++;
 				});

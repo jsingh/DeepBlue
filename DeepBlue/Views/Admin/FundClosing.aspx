@@ -28,10 +28,10 @@
 			<table cellpadding="0" cellspacing="0" border="0" id="FundClosingList">
 				<thead>
 					<tr>
-						<th sortname="Name" style="width: 30%">
+						<th sortname="Name" style="width: 20%">
 							Name
 						</th>
-						<th sortname="FundName" style="width: 20%">
+						<th sortname="FundName" style="width: 30%">
 							Fund
 						</th>
 						<th sortname="FundClosingDate" style="width: 20%">
@@ -65,11 +65,11 @@
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 {{each(i,row) rows}}
 <tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
-	<td style="width:30%">
+	<td style="width:20%">
 		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
 		<%: Html.TextBox("Name", "${row.cell[1]}", new { @class = "hide" })%>
 	</td>
-	<td style="width:20%">
+	<td style="width:30%">
 		<%: Html.Span("${row.cell[2]}", new { @class = "show" })%>
 		<%: Html.TextBox("FundName", "${row.cell[2]}", new { @class = "hide" })%>
 		<%: Html.Hidden("FundId","${row.cell[5]}")%>

@@ -106,7 +106,7 @@
 			<%: Html.TextBox("FixedIncomeDocumentDate", "${FixedIncomeDocumentDate}", new { @class = "datefield", @id = "FixedIncomeDocumentDate" })%>
 		</div>
 		<div class="editor-label">
-			<%: Html.DropDownList("FixedIncomeUploadTypeId", Model.UploadTypes, new { @val="1", @style = "width:80px", @onchange = "javascript:dealDirect.changeUploadType(this,'fidocument');" })%>
+			<%: Html.DropDownList("FixedIncomeUploadTypeId", Model.UploadTypes, new { @val="1", @style = "width:85px", @onchange = "javascript:dealDirect.changeUploadType(this,'fidocument');" })%>
 		</div>
 		<div id="FileRow" class="editor-field" style="width: auto;">
 			<div style="padding: 0; margin: 0; width: auto;float:left;">

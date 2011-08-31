@@ -40,10 +40,10 @@
 				<%: Html.TextBox("DocumentInvestorName", "", new { @onblur = "javascript:deal.documentInvestorBlur(this);", @style = "width:172px" })%>
 			</div>
 			<div id="FundRow" style="float: left;">
-				<%: Html.TextBox("DocumentFundName", "", new { @onblur = "javascript:deal.documentFundBlur(this);", @style = "width:172px" })%>
+				<%: Html.TextBox("DocumentFundName", "", new { @onblur = "javascript:deal.documentFundBlur(this);", @style = "width:163px" })%>
 			</div>
 			<div style="float: left; margin-left: 2px;">
-				<%: Html.DropDownList("DocumentStatusId", Model.DocumentStatusTypes, new { @style = "width:80px", @val="2", @onchange = "javascript:deal.documentChangeType(this);" })%>
+				<%: Html.DropDownList("DocumentStatusId", Model.DocumentStatusTypes, new { @style = "width:85px", @val="2", @onchange = "javascript:deal.documentChangeType(this);" })%>
 			</div>
 		</div>
 		<div class="editor-label" style="clear: right">
@@ -57,7 +57,7 @@
 				<%: Html.TextBox("DocumentFilePath", "", new { @style = "width:213px" })%>
 			</div>
 			<div style="float: left; margin-left: 2px;">
-				<%: Html.DropDownList("DocumentUploadTypeId", Model.UploadTypes, new { @style = "width:80px", @val = "1", @onchange = "javascript:deal.documentChangeUploadType(this);" })%>
+				<%: Html.DropDownList("DocumentUploadTypeId", Model.UploadTypes, new { @style = "width:85px", @val = "1", @onchange = "javascript:deal.documentChangeUploadType(this);" })%>
 			</div>
 		</div>
 		<div class="editor-label" style="width: 317px">

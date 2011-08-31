@@ -76,7 +76,7 @@
 			<%: Html.TextBox("EquityDocumentDate", "${EquityDocumentDate}", new { @class = "datefield", @id = "EquityDocumentDate" })%>
 		</div>
 		<div class="editor-label">
-			<%: Html.DropDownList("EquityUploadTypeId", Model.UploadTypes, new { @val = "1", @style = "width:80px", @onchange = "javascript:dealDirect.changeUploadType(this,'eqdocument');" })%>
+			<%: Html.DropDownList("EquityUploadTypeId", Model.UploadTypes, new { @val = "1", @style = "width:85px", @onchange = "javascript:dealDirect.changeUploadType(this,'eqdocument');" })%>
 		</div>
 		<div id="FileRow" class="editor-field" style="width: auto;">
 			<div style="padding: 0; margin: 0; width: auto; float: left;">
