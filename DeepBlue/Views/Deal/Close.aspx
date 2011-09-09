@@ -401,7 +401,7 @@
 					<%:Html.Span("${item.NetPurchasePrice}", new { @id="SpnNPP", @class="money" })%> 
 				</td>
 				<td class="ralign">
-					<%:Html.Span("${item.UnfundedAmount}", new { @id="SpnNPP", @class="show money" })%> 
+					<%:Html.Span("${item.UnfundedAmount}", new { @id="SpnDCUFA", @class="show money" })%> 
 					<%: Html.TextBox("${index}_UnfundedAmount", "${checkNullOrZero(item.UnfundedAmount)}", new { @class="hide", @id="UnfundedAmount",@onkeyup="javascript:dealClose.calcCloseUF();", @onkeydown = "return jHelper.isCurrency(event);" })%>
 				</td>
 			{{/if}}

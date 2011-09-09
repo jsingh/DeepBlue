@@ -133,6 +133,7 @@
 			if(isNaN(ufa)) { ufa=0; } if(isNaN(ca)) { ca=0; }
 			var npp=(gpp+(prcc-prcd));
 			$("#SpnNPP",this).html(jHelper.dollarAmount(npp.toString()));
+			$("#SpnDCUFA",this).html(jHelper.dollarAmount(ufa.toString()));
 			totalGPP=totalGPP+gpp;
 			totalPRCC=totalPRCC+prcc;
 			totalPRCD=totalPRCD+prcd;
@@ -384,10 +385,10 @@
 		if(!row.get(0)) {
 			$("#DUFEditTemplate").tmpl(data).prependTo(target);
 			row=$("#row"+index,target);
+			dealClose.setAutoComplete(row);
 			if(index==0) {
 				dealClose.showElements(row,false);
 			}
-			dealClose.setAutoComplete(row);
 			var chk=$("#chk",row).get(0);
 			if(chk)
 				chk.checked=true;
@@ -427,10 +428,10 @@
 		if(!row.get(0)) {
 			$("#DUDEditTemplate").tmpl(data).prependTo(target);
 			row=$("#row"+index,target);
+			dealClose.setAutoComplete(row);
 			if(index==0) {
 				dealClose.showElements(row,false);
 			}
-			dealClose.setAutoComplete(row);
 			var chk=$("#chk",row).get(0);
 			if(chk)
 				chk.checked=true;
