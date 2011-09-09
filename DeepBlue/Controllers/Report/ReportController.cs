@@ -270,5 +270,233 @@ namespace DeepBlue.Controllers.Report {
 		}
 
 		#endregion
+
+		#region FeesExpense
+
+		public ActionResult FeesExpense() {
+			ViewData["MenuName"] = "Reports";
+			ViewData["PageName"] = "FeesExpense";
+			FeesExpenseModel model = new FeesExpenseModel();
+			return View(model);
+		}
+
+		//
+		// POST: /Deal/FeesExpenseReport
+		[HttpPost]
+		public JsonResult FeesExpenseReport(FormCollection collection) {
+			FeesExpenseModel model = new FeesExpenseModel();
+			this.TryUpdateModel(model, collection);
+			string error = string.Empty;
+			ResultModel resultModel = new ResultModel();
+			FlexigridData flexgridData = new FlexigridData();
+			int pageIndex = DataTypeHelper.ToInt32(collection["pageIndex"]);
+			int pageSize = DataTypeHelper.ToInt32(collection["pageSize"]);
+			string sortName = collection["sortName"];
+			string sortOrder = collection["sortOrder"];
+			if (ModelState.IsValid) {
+				int totalRows = 0;
+				List<FeesExpenseReportDetail> feesExpenses = ReportRepository.FindFeesExpenseReport(pageIndex, pageSize, sortName, sortOrder, ref totalRows, model.FundId, (model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.Now));
+				flexgridData.total = totalRows;
+				flexgridData.page = 1;
+				foreach (var feeExpense in feesExpenses) {
+					flexgridData.rows.Add(new FlexigridRow {
+						cell = new List<object> {
+							feeExpense.Date,
+							feeExpense.Type,
+							feeExpense.Amount,
+							feeExpense.Note
+						}
+					});
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							error += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new { Error = error, Data = flexgridData }, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/ExportFeesExpenseDetail
+		[HttpGet]
+		public ActionResult ExportFeesExpenseDetail(FormCollection collection) {
+			ExportFeeExpenseDetailModel model = new ExportFeeExpenseDetailModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				string error = string.Empty;
+				ResultModel resultModel = new ResultModel();
+				FlexigridData flexgridData = new FlexigridData();
+				int pageIndex = DataTypeHelper.ToInt32(collection["pageIndex"]);
+				int pageSize = DataTypeHelper.ToInt32(collection["pageSize"]);
+				string sortName = collection["sortName"];
+				string sortOrder = collection["sortOrder"];
+				int totalRows = 0;
+				model.FeesExpenseReportDetails = ReportRepository.FindFeesExpenseReport(pageIndex, pageSize, sortName, sortOrder, ref totalRows, model.FundId, (model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.Now));
+			}
+			if (model.FeesExpenseReportDetails == null)
+				model.FeesExpenseReportDetails = new List<FeesExpenseReportDetail>();
+			return View(model);
+		}
+
+		#endregion
+
+		#region Distribution
+
+		public ActionResult Distribution() {
+			ViewData["MenuName"] = "Reports";
+			ViewData["PageName"] = "Distribution";
+			DistributionModel model = new DistributionModel();
+			return View(model);
+		}
+
+		//
+		// POST: /Deal/DistributionReport
+		[HttpPost]
+		public JsonResult DistributionReport(FormCollection collection) {
+			DistributionModel model = new DistributionModel();
+			this.TryUpdateModel(model, collection);
+			string error = string.Empty;
+			ResultModel resultModel = new ResultModel();
+			FlexigridData flexgridData = new FlexigridData();
+			int pageIndex = DataTypeHelper.ToInt32(collection["pageIndex"]);
+			int pageSize = DataTypeHelper.ToInt32(collection["pageSize"]);
+			string sortName = collection["sortName"];
+			string sortOrder = collection["sortOrder"];
+			if (ModelState.IsValid) {
+				int totalRows = 0;
+				List<DistributionReportDetail> feesExpenses = ReportRepository.FindDistributionReport(pageIndex, pageSize, sortName, sortOrder, ref totalRows, model.FundId, (model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.Now));
+				flexgridData.total = totalRows;
+				flexgridData.page = 1;
+				foreach (var distribution in feesExpenses) {
+					flexgridData.rows.Add(new FlexigridRow {
+						cell = new List<object> {
+							distribution.DealNo,
+							distribution.FundName,
+							distribution.Date,
+							distribution.Amount,
+							distribution.Type,
+							distribution.Stock,
+							distribution.NoOfShares
+						}
+					});
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							error += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new { Error = error, Data = flexgridData }, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/ExportDistributionDetail
+		[HttpGet]
+		public ActionResult ExportDistributionDetail(FormCollection collection) {
+		 	ExportDistributionDetailModel model = new ExportDistributionDetailModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				string error = string.Empty;
+				ResultModel resultModel = new ResultModel();
+				FlexigridData flexgridData = new FlexigridData();
+				int pageIndex = DataTypeHelper.ToInt32(collection["pageIndex"]);
+				int pageSize = DataTypeHelper.ToInt32(collection["pageSize"]);
+				string sortName = collection["sortName"];
+				string sortOrder = collection["sortOrder"];
+				int totalRows = 0;
+				model.DistributionReportDetails = ReportRepository.FindDistributionReport(pageIndex, pageSize, sortName, sortOrder, ref totalRows, model.FundId, (model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.Now));
+			}
+			if (model.DistributionReportDetails == null)
+				model.DistributionReportDetails = new List<DistributionReportDetail>();
+			return View(model);
+		}
+
+		#endregion
+
+		#region SecurityValue
+
+		public ActionResult SecurityValue() {
+			ViewData["MenuName"] = "Reports";
+			ViewData["PageName"] = "SecurityValue";
+			SecurityValueModel model = new SecurityValueModel();
+			return View(model);
+		}
+
+		//
+		// POST: /Deal/SecurityValueReport
+		[HttpPost]
+		public JsonResult SecurityValueReport(FormCollection collection) {
+			SecurityValueModel model = new SecurityValueModel();
+			this.TryUpdateModel(model, collection);
+			string error = string.Empty;
+			ResultModel resultModel = new ResultModel();
+			FlexigridData flexgridData = new FlexigridData();
+			int pageIndex = DataTypeHelper.ToInt32(collection["pageIndex"]);
+			int pageSize = DataTypeHelper.ToInt32(collection["pageSize"]);
+			string sortName = collection["sortName"];
+			string sortOrder = collection["sortOrder"];
+			if (ModelState.IsValid) {
+				int totalRows = 0;
+				List<SecurityValueReportDetail> feesExpenses = ReportRepository.FindSecurityValueReport(pageIndex, pageSize, sortName, sortOrder, ref totalRows, model.FundId, (model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.Now));
+				flexgridData.total = totalRows;
+				flexgridData.page = 1;
+				foreach (var securityValue in feesExpenses) {
+					flexgridData.rows.Add(new FlexigridRow {
+						cell = new List<object> {
+							securityValue.DealNo,
+							securityValue.Security,
+							securityValue.SecurityType,
+							securityValue.NoOfShares,
+							securityValue.Price,
+							securityValue.Value,
+							securityValue.Date
+						}
+					});
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							error += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new { Error = error, Data = flexgridData }, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/ExportSecurityValueDetail
+		[HttpGet]
+		public ActionResult ExportSecurityValueDetail(FormCollection collection) {
+			ExportSecurityValueDetailModel model = new ExportSecurityValueDetailModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				string error = string.Empty;
+				ResultModel resultModel = new ResultModel();
+				FlexigridData flexgridData = new FlexigridData();
+				int pageIndex = DataTypeHelper.ToInt32(collection["pageIndex"]);
+				int pageSize = DataTypeHelper.ToInt32(collection["pageSize"]);
+				string sortName = collection["sortName"];
+				string sortOrder = collection["sortOrder"];
+				int totalRows = 0;
+				model.SecurityValueReportDetails = ReportRepository.FindSecurityValueReport(pageIndex, pageSize, sortName, sortOrder, ref totalRows, model.FundId, (model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.Now));
+			}
+			if (model.SecurityValueReportDetails == null)
+				model.SecurityValueReportDetails = new List<SecurityValueReportDetail>();
+			return View(model);
+		}
+
+		#endregion
 	}
 }

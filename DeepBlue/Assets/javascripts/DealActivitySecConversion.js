@@ -87,7 +87,7 @@ dealActivity.createSecConversion=function (frm) {
 			jAlert("Conversion Saved.");
 			var frm=$("#frmSecurityConversion");
 			$("#NHPList").show();
-			dealActivity.loadNHP($("#OldSecurityTypeId").val(),$("#OldSecurityId").val(),arr[1]);
+			dealActivity.loadNHP($("#NewSecurityTypeId").val(),$("#NewSecurityId").val(),arr[1]);
 			jHelper.resetFields(frm);
 			$("#SpnNewSymbollbl").hide();
 			$("#SpnNewSymbol").hide();

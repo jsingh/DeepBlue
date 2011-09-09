@@ -505,7 +505,7 @@ h2 {
 .mdiv li {
 	list-style: none;
 	float: left;
-	padding: 13px 27px 13px 0px;
+	padding: 13px 16px 13px 0px;
 	color: #243352;
 }
 .mdiv li a {
@@ -1006,6 +1006,7 @@ input.ui-autocomplete-loading[type="text"] {
 	line-height: 25px;
 	border: 0;
 	background-color: transparent;
+	float:left;
 }
 .editor-label .jqComboBox {
 	float: right;
@@ -1021,5 +1022,8 @@ input.ui-autocomplete-loading[type="text"] {
 }
 .bDiv table .jqComboBox .left {
 	width: 70%;
+}
+.headerbar .rightcol .jqComboBox{
+	margin-top: 2px;
 }
 /* End jQuery Transform */

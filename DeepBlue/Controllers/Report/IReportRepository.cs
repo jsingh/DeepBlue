@@ -31,5 +31,19 @@ namespace DeepBlue.Controllers.Report {
 		FundBreakDownReportDetail FindFundBreakDownReport(int fundId);
 		#endregion
 
+		#region FeesExpense
+		List<FeesExpenseReportDetail> FindFeesExpenseReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
+															int fundId, DateTime startDate, DateTime endDate);
+		#endregion
+
+		#region Distribution
+		List<DistributionReportDetail> FindDistributionReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
+															   int fundId, DateTime startDate, DateTime endDate);
+		#endregion
+
+		#region SecurityValue
+		List<SecurityValueReportDetail> FindSecurityValueReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
+															   int fundId, DateTime startDate, DateTime endDate);
+		#endregion
 	}
 }

@@ -6,7 +6,6 @@
 					selected=select.children(":selected"),
 					value=selected.val()?selected.text():"";
 
-
 			var cbox=this.cbox=$("<div class='jqComboBox'>")
 			.insertAfter(select);
 			var cleft=$("<div class='left'>");

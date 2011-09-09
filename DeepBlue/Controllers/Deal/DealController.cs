@@ -1486,6 +1486,8 @@ namespace DeepBlue.Controllers.Deal {
 						// Update Deal Underlying Direct number of shares and fmv.
 						dealUnderlyingDirect.NumberOfShares = securityConversionDetail.OldNumberOfShares * securityConversion.SplitFactor;
 						dealUnderlyingDirect.FMV = dealUnderlyingDirect.NumberOfShares * dealUnderlyingDirect.PurchasePrice;
+						dealUnderlyingDirect.SecurityTypeID = securityConversion.NewSecurityTypeID;
+						dealUnderlyingDirect.SecurityID = securityConversion.NewSecurityID;
 
 						// Set new number of shares and fmv.
 						securityConversionDetail.NewNumberOfShares = dealUnderlyingDirect.NumberOfShares;
@@ -1501,7 +1503,7 @@ namespace DeepBlue.Controllers.Deal {
 					}
 
 					if (errorInfo == null) {
-						List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.ActivityTypeId, securityConversion.SecurityConversionID, model.OldSecurityTypeId, model.OldSecurityId);
+						List<NewHoldingPatternModel> newHoldingPatterns = DealRepository.NewHoldingPatternList(model.ActivityTypeId, securityConversion.SecurityConversionID, model.NewSecurityTypeId, model.NewSecurityId);
 						foreach (var pattern in newHoldingPatterns) {
 							errorInfo = CreateFundActivityHistory(pattern.FundId, pattern.OldNoOfShares, pattern.NewNoOfShares, securityConversion.SecurityConversionID, model.ActivityTypeId);
 							if (errorInfo != null)

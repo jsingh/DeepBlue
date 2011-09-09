@@ -242,7 +242,6 @@ div.pGroup {
 .flexigrid .bDivBox {
 	overflow: auto;
 	overflow-x: hidden;
-	padding-bottom: 10px;
 }
 .flexigrid .pDiv .pGLoading {
 	background: url("../images/refresh.png") no-repeat scroll left center transparent;

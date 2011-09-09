@@ -48,12 +48,13 @@
 				$(".bpDiv",g.gDiv).hide();
 				if(p.total==0) {
 					$('tr, a, td, div',t).unbind();
-					$(t).empty();
+					$("tbody",t).remove();
 					p.pages=1;
 					p.page=1;
 					this.buildpager();
 					$('.pPageStat',this.pDiv).html(p.nomsg);
 					$(t).append(tbody);
+					if(p.onSuccess) { p.onSuccess(t,g); }
 					return false;
 				}
 				if(p.total>25) {
@@ -444,6 +445,15 @@
 	$.fn.flexReload=function (p) {
 		return this.each(function () {
 			if(this.grid&&this.p.url) { this.grid.populate(); }
+		});
+	};
+	$.fn.flexRemoveSortClass=function (p) {
+		return this.each(function () {
+			if(this.grid) {
+				$(".sorted",this.t).removeClass("sorted");
+				$(".sasc",this.t).removeClass("sasc");
+				$(".sdesc",this.t).removeClass("sdesc");
+			}
 		});
 	};
 	$.fn.flexOptions=function (p) {

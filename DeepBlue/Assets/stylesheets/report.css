@@ -5,7 +5,7 @@
 	overflow: hidden;
 	margin: 0 auto;
 	overflow: hidden;
-	width: 1024px;
+	width: 90%;
 }
 .rep-header {
 	padding: 10px;
@@ -162,7 +162,7 @@
 }
 .titlebox {
 	float: left;
-	margin-left: 73px;
+	margin-left: 60px;
 	width: 90%;
 }
 .underline, .underline td {
@@ -177,4 +177,19 @@
 }
 #ReportContent {
 	font-size: 13px;
+}
+.editor-label label {
+	padding: 0 5px 0 0;
+}
+#ReportDetail .flexigrid div.pDiv {
+	    line-height: 25px;
+    min-height: 25px;
+    margin:0; padding: 0;
+} 
+#ReportDetail .flexigrid .pDiv .pGLoading {
+	margin:0;
+	padding:0 0 0 18px;
+}
+.editor-label input[type="text"] {
+	width: 115px;
 }

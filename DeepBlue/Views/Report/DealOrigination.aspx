@@ -24,16 +24,16 @@
 		<div class="titlebox">
 			<% Html.EnableClientValidation(); %>
 			<%using (Html.BeginForm("", "", FormMethod.Get, new { @onsubmit = "return dealOrgReport.onSubmit(this);" })) {%>
-			<div style="float: left">
+			<div class="editor-label" style="width: auto;">
 				<%: Html.LabelFor(model => model.FundId)%>
 				<%: Html.TextBox("FundName", "SEARCH FUND", new { @class = "wm", @id = "FundName", @style = "width:200px" })%>
 			</div>
-			<div style="float: left; margin-left: 20px;">
+			<div class="editor-label" style="width: auto; clear: right;">
 				<%: Html.LabelFor(model => model.DealId)%>
 				<%: Html.TextBox("DealName", "SEARCH DEAL", new { @class = "wm", @id = "DealName", @style = "width:200px" })%>
 				<%: Html.HiddenFor(model => model.DealId)%>
 			</div>
-			<div style="float: left; margin-left: 10px;">
+			<div class="editor-label" style="width: auto; clear: right;">
 				<%: Html.ImageButton("submit.png", new { @class="default-button" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
 			</div>
 			<%: Html.HiddenFor(model => model.FundId)%>

@@ -39,6 +39,7 @@ dealActivity.changeAType=function (ddl) {
 			securityType.value=1;
 			$("#SpnSecurityType",SplitDetail).html(securityType.options[securityType.selectedIndex].text);
 			SplitDetail.show();
+			$(securityType).combobox("hide");
 			break;
 		case "2":
 			ConversionDetail.show();

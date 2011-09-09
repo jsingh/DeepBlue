@@ -6,9 +6,11 @@
 <head runat="server">
 	<title>LogOn</title>
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
+	<%= Html.JavascriptInclueTag("jquery.alerts.js")%>
 	<%= Html.JavascriptInclueTag("LogOn.js")%>
 	<%= Html.StylesheetLinkTag("site.css")%>
 	<%= Html.StylesheetLinkTag("logon.css")%>
+	<%= Html.StylesheetLinkTag("jquery.alerts.css")%>
 </head>
 <body>
 	<div id="header">

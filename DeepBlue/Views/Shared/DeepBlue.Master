@@ -171,6 +171,12 @@
 					<%: Html.ActionLink("Cash Distribution Summary", "CashDistributionSummary", "Report", null, new { @class = (ViewData["PageName"] == "CashDistributionSummary" ? "sel" : "") })%></li>
 				<li>
 					<%: Html.ActionLink("Capital Call Summary", "CapitalCallSummary", "Report", null, new { @class = (ViewData["PageName"] == "CapitalCallSummary" ? "sel" : "") })%></li>
+				<li>
+					<%: Html.ActionLink("Fees Expense", "FeesExpense", "Report", null, new { @class = (ViewData["PageName"] == "FeesExpense" ? "sel" : "") })%></li>
+				<li>
+					<%: Html.ActionLink("Distribution", "Distribution", "Report", null, new { @class = (ViewData["PageName"] == "Distribution" ? "sel" : "") })%></li>
+				<li>
+					<%: Html.ActionLink("Security Value", "SecurityValue", "Report", null, new { @class = (ViewData["PageName"] == "SecurityValue" ? "sel" : "") })%></li>
 			</ul>
 			<%} %>
 		</div>

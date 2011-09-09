@@ -8,7 +8,7 @@ using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Report {
 
-	public class FundBreakDownModel {
+	public class DistributionModel {
 
 		[Required(ErrorMessage = "Fund is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]

@@ -37,9 +37,10 @@
 			<span class="title">INVESTMENTS</span><span class="arrow"></span><span class="pname">
 				MODIFY DEAL</span></div>
 		<div class="rightcol">
-			<%: Html.TextBox("SearchDealName", "SEARCH DEAL", new { @class="wm", @id = "SearchDealName", @style = "width: 200px" })%>&nbsp;<a
-				href="javascript:deal.seeFullDeal();" style="text-decoration: underline">See full
-				list</a>
+			<%: Html.TextBox("SearchDealName", "SEARCH DEAL", new { @class="wm", @id = "SearchDealName", @style = "width: 200px" })%>
+			<div class="editor-field" style="width: auto">
+				<a href="javascript:deal.seeFullDeal();" style="text-decoration: underline">See full
+					list</a></div>
 		</div>
 	</div>
 	<%}%>

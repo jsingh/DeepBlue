@@ -671,12 +671,12 @@
 					<div class="editor-field" style="margin-left: 10px">
 						<%: Html.DropDownList("ActivityTypeId", Model.ActivityTypes, new { @onchange = "javascript:dealActivity.changeAType(this);" })%>
 					</div>
-					<div id="SplitDetail" style="display: none; clear: both; margin-left: 88px;">
+					<div id="SplitDetail" style="display: none; clear: both; margin-left: 95px;">
 						<%using (Html.Form(new { @id = "frmEquitySplit", @onsubmit = "return dealActivity.createSA(this);", @style = "float:left;" })) {%>
 						<% Html.RenderPartial("EquitySplit", Model.EquitySplitModel);%>
 						<%}%>
 					</div>
-					<div id="ConversionDetail" style="display: none; margin-left: 75px; clear: both;">
+					<div id="ConversionDetail" style="display: none; margin-left: 83px; clear: both;">
 						<%using (Html.Form(new { @id = "frmSecurityConversion", @onsubmit = "return dealActivity.createSecConversion(this);", @style = "float:left;" })) {%>
 						<% Html.RenderPartial("SecurityConversion", Model.SecurityConversionModel);%>
 						<%}%>

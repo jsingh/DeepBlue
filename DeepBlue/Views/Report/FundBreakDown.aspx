@@ -69,9 +69,4 @@
 	<script id="FundBreakDownReportTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("FundBreakDownReport", new DeepBlue.Models.Report.FundBreakDownReportDetail { IsTemplateDisplay = true }); %>
 	</script>
-	<script type="text/javascript">
-		$(document).ready(function () {
-			jHelper.jqComboBox($("body"));
-		});
-	</script>
 </asp:Content>

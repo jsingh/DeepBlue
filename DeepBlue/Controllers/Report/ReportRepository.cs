@@ -5,6 +5,7 @@ using System.Web;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
 using DeepBlue.Models.Report;
+using System.Data.Objects;
 
 namespace DeepBlue.Controllers.Report {
 	public class ReportRepository : IReportRepository {
@@ -180,10 +181,143 @@ namespace DeepBlue.Controllers.Report {
 				return (from fund in context.Funds
 						where fund.FundID == fundId
 						select new FundBreakDownReportDetail {
-							 FundName = fund.FundName,
-							 TotalUnderlyingFunds = fund.Deals.Sum(deal => deal.DealUnderlyingFunds.Count),
-							  TotalDirects = fund.Deals.Sum(deal => deal.DealUnderlyingDirects.Count),
+							FundName = fund.FundName,
+							TotalUnderlyingFunds = fund.Deals.Sum(deal => deal.DealUnderlyingFunds.Count),
+							TotalDirects = fund.Deals.Sum(deal => deal.DealUnderlyingDirects.Count),
 						}).SingleOrDefault();
+			}
+		}
+		#endregion
+
+		#region FundBreakDown
+		public List<FeesExpenseReportDetail> FindFeesExpenseReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
+																   int fundId, DateTime startDate, DateTime endDate) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<FeesExpenseReportDetail> query = (from fundExpense in context.FundExpenses
+															 where
+															 fundExpense.FundID == fundId
+															 && EntityFunctions.TruncateTime(fundExpense.Date) >= EntityFunctions.TruncateTime(startDate)
+															 && EntityFunctions.TruncateTime(fundExpense.Date) <= EntityFunctions.TruncateTime(endDate)
+															 orderby fundExpense.Date descending, fundExpense.Amount descending
+															 select new FeesExpenseReportDetail {
+																 Amount = fundExpense.Amount,
+																 Date = fundExpense.Date,
+																 Type = fundExpense.FundExpenseType.Name
+															 });
+				if (string.IsNullOrEmpty(sortName) == false) {
+					query = query.OrderBy(sortName, (sortOrder == "asc"));
+				}
+				if (pageSize > 0) {
+					PaginatedList<FeesExpenseReportDetail> paginatedList = new PaginatedList<FeesExpenseReportDetail>(query, pageIndex, pageSize);
+					totalRows = paginatedList.TotalCount;
+					return paginatedList;
+				}
+				else {
+					return query.ToList();
+				}
+			}
+		}
+		#endregion
+
+		#region Distribution
+		public List<DistributionReportDetail> FindDistributionReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
+															   int fundId, DateTime startDate, DateTime endDate) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<DistributionReportDetail> query = (from distribution in context.CashDistributions
+															  where
+															  distribution.UnderlyingFundCashDistribution.FundID == fundId
+															  && EntityFunctions.TruncateTime(distribution.UnderlyingFundCashDistribution.NoticeDate) >= EntityFunctions.TruncateTime(startDate)
+															  && EntityFunctions.TruncateTime(distribution.UnderlyingFundCashDistribution.NoticeDate) <= EntityFunctions.TruncateTime(endDate)
+															  select new DistributionReportDetail {
+																  Amount = distribution.Amount,
+																  Date = distribution.UnderlyingFundCashDistribution.NoticeDate,
+																  DealNo = distribution.Deal.DealNumber,
+																  FundName = distribution.UnderlyingFund.FundName,
+																  NoOfShares = null,
+																  Stock = string.Empty,
+																  Type = "Cash"
+															  })
+															 .Union(
+																from stockDistribution in context.UnderlyingFundStockDistributionLineItems
+																join equity in context.Equities on stockDistribution.UnderlyingFundStockDistribution.SecurityID equals equity.EquityID into equties from equity in equties.DefaultIfEmpty()
+																join fixedIncome in context.FixedIncomes on stockDistribution.UnderlyingFundStockDistribution.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes from fixedIncome in fixedIncomes.DefaultIfEmpty()
+																where
+																stockDistribution.UnderlyingFundStockDistribution.FundID == fundId
+																&& EntityFunctions.TruncateTime(stockDistribution.UnderlyingFundStockDistribution.DistributionDate) >= EntityFunctions.TruncateTime(startDate)
+																&& EntityFunctions.TruncateTime(stockDistribution.UnderlyingFundStockDistribution.DistributionDate) <= EntityFunctions.TruncateTime(endDate)
+																select new DistributionReportDetail {
+																	Amount = stockDistribution.FMV,
+																	Date = stockDistribution.UnderlyingFundStockDistribution.DistributionDate,
+																	DealNo = stockDistribution.Deal.DealNumber,
+																	FundName = stockDistribution.UnderlyingFund.FundName,
+																	NoOfShares = stockDistribution.NumberOfShares,
+																	Stock = (stockDistribution.UnderlyingFundStockDistribution.SecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity ?
+																			 (equity != null ? equity.Symbol : string.Empty) 
+																			 : 
+																			 (fixedIncome != null ? fixedIncome.Symbol : string.Empty)
+																			 ),
+																	Type = "Stock"
+																}
+															 )
+															 ;
+				if (string.IsNullOrEmpty(sortName) == false) {
+					query = query.OrderBy(sortName, (sortOrder == "asc"));
+				}
+				else {
+					query = query.OrderByDescending(distribution => new { distribution.Date, distribution.Amount });
+				}
+				if (pageSize > 0) {
+					PaginatedList<DistributionReportDetail> paginatedList = new PaginatedList<DistributionReportDetail>(query, pageIndex, pageSize);
+					totalRows = paginatedList.TotalCount;
+					return paginatedList;
+				}
+				else {
+					return query.ToList();
+				}
+			}
+		}
+		#endregion
+
+		#region SecurityValue
+		public List<SecurityValueReportDetail> FindSecurityValueReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
+															   int fundId, DateTime startDate, DateTime endDate) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<SecurityValueReportDetail> query = (from direct in context.DealUnderlyingDirects
+															   	join equity in context.Equities on direct.SecurityID equals equity.EquityID into equties from equity in equties.DefaultIfEmpty()
+																join fixedIncome in context.FixedIncomes on direct.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes from fixedIncome in fixedIncomes.DefaultIfEmpty()
+															  where
+															  direct.Deal.FundID == fundId
+															  && EntityFunctions.TruncateTime(direct.RecordDate) >= EntityFunctions.TruncateTime(startDate)
+															  && EntityFunctions.TruncateTime(direct.RecordDate) <= EntityFunctions.TruncateTime(endDate)
+															  select new SecurityValueReportDetail {
+																	Date = direct.RecordDate,
+																	DealNo = direct.Deal.DealNumber,
+																	NoOfShares = direct.NumberOfShares,
+																	Price = direct.PurchasePrice,
+																	Value = direct.FMV,
+																	Security = (direct.SecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity ?
+																				(equity != null ? equity.Symbol : string.Empty) 
+																				: 
+																				(fixedIncome != null ? fixedIncome.Symbol : string.Empty)
+																				),
+																	SecurityType = (direct.SecurityTypeID == (int)DeepBlue.Models.Deal.Enums.SecurityType.Equity ?
+																				"Equity" : "Fixed Income")
+															  })
+															 ;
+				if (string.IsNullOrEmpty(sortName) == false) {
+					query = query.OrderBy(sortName, (sortOrder == "asc"));
+				}
+				else {
+					query = query.OrderByDescending(distribution => new { distribution.Date });
+				}
+				if (pageSize > 0) {
+					PaginatedList<SecurityValueReportDetail> paginatedList = new PaginatedList<SecurityValueReportDetail>(query, pageIndex, pageSize);
+					totalRows = paginatedList.TotalCount;
+					return paginatedList;
+				}
+				else {
+					return query.ToList();
+				}
 			}
 		}
 		#endregion

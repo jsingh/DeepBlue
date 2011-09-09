@@ -4,7 +4,7 @@
 		var userName=$("#UserName",frm);
 		userName.focus();
 		var err="";
-		$(".field-validation-error").each(function () { err+=this.innerHTML+"\n"; });
+		$(".field-validation-error").each(function () {  err+=this.innerHTML+"\n"; });
 		if($.trim(err)!="") {
 			jAlert(err);
 		}

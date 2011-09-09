@@ -56,7 +56,7 @@
 	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
 <%using (Html.GreenButton(new { @onclick = "javascript:invEntityType.add(this);" })) {%>${name}<%}%>
 	</script>
-	<script id="GridTemplate" type="text/x-jquery-tmpl">
+<script id="GridTemplate" type="text/x-jquery-tmpl">
 {{each(i,row) rows}}
 <tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
 	<td style="width: 40%">

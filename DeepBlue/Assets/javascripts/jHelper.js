@@ -278,7 +278,11 @@ $.extend(window,{
 	formatDate: function (dt) { try { if(dt==null) { return ""; } var d=jHelper.formatDate(jHelper.parseJSONDate(dt));if(d=="01/01/1"||d=="01/01/1900") { return ""; } else { return d; } } catch(e) { return ""; } }
 	,formatCurrency: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } return jHelper.dollarAmount(d.toString()); }
 	,formatPercentage: function (d) { if(d==null) { return ""; } d=parseFloat(d).toFixed(1);if(isNaN(d)) { return ""; } if(d.toString()=="0.00") { return ""; } else { return d.toString()+"%"; } }
-	,formatNumber: function (d) { return formatCurrency(d).replace("$",""); }
+	,formatNumber: function (d,f) {
+		var n=formatCurrency(d).replace("$","");
+		if(f==0) { n=n.replace(".00",""); }
+		return n;
+	}
 	,checkNullOrZero: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } if(d==0) { return ""; } else { return d; } }
 	,formatEditor: function (v) { if(!v) v="";if($.trim(v)!="") return v.replace(/\n/g,"<br/>");else return ""; }
 	,getCustomFieldValue: function (values,customFieldId,dataTypeId) {

@@ -22,7 +22,9 @@ dealActivity.loadFLE=function () {
 		$.each(data,function (i,item) {
 			$("#FLEAddTemplate").tmpl(item).appendTo(target);
 		});
-		dealActivity.setUpRow($("tr",target));
+		var tr = $("tr",target);
+		dealActivity.setUpRow(tr);
+		jHelper.jqComboBox(tr);
 		var rowsLength=$("tr",target).length;
 		if(rowsLength>0) { $("#FLE").show(); }
 		$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");
@@ -46,6 +48,7 @@ dealActivity.makeNewFLE=function () {
 			$("#FLEAddTemplate").tmpl(item).prependTo(target);
 			tr=$("#FLE_0",target);
 			dealActivity.setUpRow(tr);
+			jHelper.jqComboBox(tr);
 			dealActivity.editRow(tr);
 		}
 	}

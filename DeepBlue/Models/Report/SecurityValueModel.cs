@@ -7,8 +7,7 @@ using System.ComponentModel;
 using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Report {
-
-	public class FundBreakDownModel {
+	public class SecurityValueModel {
 
 		[Required(ErrorMessage = "Fund is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
@@ -22,6 +21,5 @@ namespace DeepBlue.Models.Report {
 		[DisplayName("End Date")]
 		[DateRange(ErrorMessage = "Invalid End Date")]
 		public DateTime? EndDate { get; set; }
-
 	}
 }
