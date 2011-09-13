@@ -417,54 +417,55 @@ namespace DeepBlue.Controllers.CapitalCall {
 					managementFeeDetails.Add(managementFeeDetail);
 					fee = 0;
 					multiplier = 0;
-					tier1Days = tiers[0].EndDate.Subtract(startDate).Days;
+					if (tiers.Count > 0) {
+						tier1Days = tiers[0].EndDate.Subtract(startDate).Days;
+						switch (tiers.Count) {
+							case 1:
+								if (tiers[0].MultiplierTypeId == (int)Models.Fund.Enums.MutiplierType.CapitalCommitted) {
+									multiplier = decimal.Divide(tiers[0].Multiplier, (decimal)100);
+									managementFeeDetail.ManagementFee += decimal.Multiply(multiplier,
+										decimal.Multiply(
+										investorFund.TotalCommitment,
+										 decimal.Divide((decimal)tier1Days, (decimal)360)
+										 ));
+								}
+								else {
+									multiplier = (tiers[0].Multiplier);
+									fee = decimal.Multiply(multiplier, decimal.Divide((decimal)tier1Days, (decimal)360));
+									managementFeeDetail.ManagementFee += decimal.Multiply(fee, decimal.Divide(investorFund.TotalCommitment, totalCommitment));
+								}
+								break;
+							case 2:
+								if (tiers[0].MultiplierTypeId == (int)Models.Fund.Enums.MutiplierType.CapitalCommitted) {
+									multiplier = decimal.Divide(tiers[0].Multiplier, (decimal)100);
+									managementFeeDetail.ManagementFee += decimal.Multiply(multiplier,
+										decimal.Multiply(
+										investorFund.TotalCommitment,
+										decimal.Divide((decimal)tier1Days, (decimal)360)
+										));
+								}
+								else {
+									multiplier = (tiers[0].Multiplier);
+									fee = multiplier * decimal.Divide((decimal)tier1Days, (decimal)360);
+									managementFeeDetail.ManagementFee += decimal.Multiply(fee, decimal.Divide(investorFund.TotalCommitment, totalCommitment));
+								}
 
-					switch (tiers.Count) {
-						case 1:
-							if (tiers[0].MultiplierTypeId == (int)Models.Fund.Enums.MutiplierType.CapitalCommitted) {
-								multiplier = decimal.Divide(tiers[0].Multiplier, (decimal)100);
-								managementFeeDetail.ManagementFee += decimal.Multiply(multiplier,
+								if (tiers[1].MultiplierTypeId == (int)Models.Fund.Enums.MutiplierType.CapitalCommitted) {
+									multiplier = decimal.Divide(tiers[1].Multiplier, (decimal)100);
+									managementFeeDetail.ManagementFee +=
+									decimal.Multiply(multiplier,
 									decimal.Multiply(
 									investorFund.TotalCommitment,
-									 decimal.Divide((decimal)tier1Days, (decimal)360)
-									 ));
-							}
-							else {
-								multiplier = (tiers[0].Multiplier);
-								fee = decimal.Multiply(multiplier, decimal.Divide((decimal)tier1Days, (decimal)360));
-								managementFeeDetail.ManagementFee += decimal.Multiply(fee, decimal.Divide(investorFund.TotalCommitment, totalCommitment));
-							}
-							break;
-						case 2:
-							if (tiers[0].MultiplierTypeId == (int)Models.Fund.Enums.MutiplierType.CapitalCommitted) {
-								multiplier = decimal.Divide(tiers[0].Multiplier, (decimal)100);
-								managementFeeDetail.ManagementFee += decimal.Multiply(multiplier,
-									decimal.Multiply(
-									investorFund.TotalCommitment,
-									decimal.Divide((decimal)tier1Days, (decimal)360)
-									));
-							}
-							else {
-								multiplier = (tiers[0].Multiplier);
-								fee = multiplier * decimal.Divide((decimal)tier1Days, (decimal)360);
-								managementFeeDetail.ManagementFee += decimal.Multiply(fee, decimal.Divide(investorFund.TotalCommitment, totalCommitment));
-							}
-
-							if (tiers[1].MultiplierTypeId == (int)Models.Fund.Enums.MutiplierType.CapitalCommitted) {
-								multiplier = decimal.Divide(tiers[1].Multiplier, (decimal)100);
-								managementFeeDetail.ManagementFee +=
-								decimal.Multiply(multiplier,
-								decimal.Multiply(
-								investorFund.TotalCommitment,
-								decimal.Divide((decimal)(90 - tier1Days), (decimal)360))
-								);
-							}
-							else {
-								multiplier = (tiers[1].Multiplier);
-								fee = decimal.Multiply(multiplier, decimal.Divide((decimal)(90 - tier1Days), (decimal)360));
-								managementFeeDetail.ManagementFee += decimal.Multiply(fee, decimal.Divide(investorFund.TotalCommitment, totalCommitment));
-							}
-							break;
+									decimal.Divide((decimal)(90 - tier1Days), (decimal)360))
+									);
+								}
+								else {
+									multiplier = (tiers[1].Multiplier);
+									fee = decimal.Multiply(multiplier, decimal.Divide((decimal)(90 - tier1Days), (decimal)360));
+									managementFeeDetail.ManagementFee += decimal.Multiply(fee, decimal.Divide(investorFund.TotalCommitment, totalCommitment));
+								}
+								break;
+						}
 					}
 				}
 			}
