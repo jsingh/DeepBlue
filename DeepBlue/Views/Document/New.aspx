@@ -50,7 +50,7 @@
 			<div id="FundRow" style="display: none; float: left;">
 				<%: Html.TextBoxFor(model => model.FundName, new { @onblur = "javascript:documentUpload.FundBlur(this);", @style = "width:196px" })%>
 			</div>
-			<div style="float: left; margin-left: 2px;">
+			<div style="float: left; margin-left: 3px;">
 				<%: Html.DropDownListFor(model => model.DocumentStatus, Model.DocumentStatusTypes, new { @style = "width:85px", @onchange = "javascript:documentUpload.changeType(this);" })%>
 			</div>
 		</div>

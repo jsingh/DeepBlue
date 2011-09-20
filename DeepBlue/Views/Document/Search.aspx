@@ -57,7 +57,7 @@
 						<%: Html.TextBoxFor(model => model.FundName, new { @style = "width:156px", @onblur = "javascript:documentSearch.FundBlur(this);" })%>
 						<%: Html.ValidationMessageFor(model => model.FundId) %>
 					</div>
-					<div style="float: left; margin-left: 2px;">
+					<div style="float: left; margin-left: 6px;">
 						<%: Html.DropDownListFor(model => model.DocumentStatus, Model.DocumentStatusTypes, new { @style = "width:85px;", @onchange = "javascript:documentSearch.changeType(this);" })%>
 					</div>
 				</div>

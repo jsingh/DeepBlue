@@ -79,8 +79,8 @@
 	background-image: none;
 }
 .grid .tblUnderlyingFund_tr th {
-	background-image: none;
-	/*border-top: solid 1px #b5b5b5;*/
+	/*background-image: none;
+	border-top: solid 1px #b5b5b5;*/
 }
 .grid .subdet-title th {
 	background-color: #d3d4d8;
