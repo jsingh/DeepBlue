@@ -5,10 +5,10 @@
 		<div class="cell" style="overflow: hidden">
 			${FundName}
 		</div>
-		<div class="cell" style="text-align: left">
+		<div class="cell" style="width:159px;">
 			<%: Html.LabelFor(model => model.DealNumber) %>&nbsp;${DealNumber}</div>
-		<div class="cell auto" style="margin-left: 25px">
-			<%: Html.LabelFor(model => model.DealName) %>&nbsp;<%: Html.TextBox("DealName", "${DealName}", new { @style = "width:184px" })%></div>
+		<div class="cell auto">
+			<%: Html.LabelFor(model => model.DealName)%><%: Html.TextBox("DealName", "${DealName}", new { @style = "width:184px;margin-left:10px;" })%></div>
 		{{if IsDealClose==true}}
 		<div class="cell auto" style="float: right;">
 			<%: Html.Image("greenclosedeal.png")%>
@@ -20,8 +20,8 @@
 </div>
 <div class="section">
 	<div class="dealdetail">
-		<div class="editor-label">
-			<%: Html.LabelFor(model => model.ContactId) %>
+		<div class="editor-label-first">
+			<%: Html.LabelFor(model => model.ContactId)%>
 		</div>
 		<div class="editor-field">
 			<%: Html.TextBox("Contact","${ContactName}") %>
@@ -33,7 +33,7 @@
 		<div class="editor-field rdo" style="width: auto; clear: right;">
 			<%: Html.CheckBoxFor(model => model.IsPartnered, new { @val = "${IsPartnered}", @onclick = "javascript:deal.selectPartner(!this.checked);" })%>
 		</div>
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.PurchaseTypeId) %>
 		</div>
 		<div class="editor-field">

@@ -5,7 +5,7 @@
 	overflow: hidden;
 	margin: 0 auto;
 	overflow: hidden;
-	width: 90%;
+	width: 100%;
 }
 .rep-header {
 	padding: 10px;
@@ -44,8 +44,8 @@
 	padding: 10px 15px;
 }
 #ReportContent {
-	width: 98%;
-	margin: 0 auto;
+	width: 90%;
+	padding-left:65px;
 	padding-bottom: 20px;
 }
 #ReportContent.dealdetail {
@@ -88,7 +88,7 @@
 	text-align: right;
 }
 #ReportContent .hrow td {
-	background-color: #BABFC5;
+	background-color: #A5BFDE;
 	color: #000000;
 	font-size: 12px;
 	white-space: nowrap;
@@ -102,12 +102,12 @@
 	background-position: left bottom;
 	background-repeat: repeat-x;
 }
-#ReportContent .row td {
+/*#ReportContent .row td {
 	background-color: #F5F5F5;
 }
 #ReportContent .arow td {
 	background-color: #E9EAEC;
-}
+}*/
 #ReportContent .trow td {
 	height: 0;
 	padding: 5px 15px 0;
@@ -180,6 +180,7 @@
 }
 .editor-label label {
 	padding: 0 5px 0 0;
+	float:left;
 }
 #ReportDetail .flexigrid div.pDiv {
 	    line-height: 25px;

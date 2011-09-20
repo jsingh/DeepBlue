@@ -265,7 +265,7 @@
 		<div class="status">
 			<%: Html.Span("", new { id = "UpdateLoading" })%></div>
 		<div class="editor-button">
-			<%: Html.Image("submit.png", new { @class = "default-button", @onclick = "javascript:investor.save($('#NewInvestor')); " })%>
+			<%: Html.Image("submit_active.png", new { @class = "default-button", @onclick = "javascript:investor.save($('#NewInvestor')); " })%>
 		</div>
 		<%: Html.HiddenFor(model => model.InvestorId)%>
 		<div id="UpdateTargetId" style="display: none">
@@ -300,11 +300,11 @@
 			<div style="width: 100%;">	
 				{{if i>1}}
 				<div class="delete" style="display:block;clear:none;">
-					<%=Html.Image("Delete.png", new { @title = "Delete Accout",  @onclick = "javascript:investor.deleteAccount(this);" })%>
+					<%=Html.Image("delete_active.png", new { @title = "Delete Accout",  @onclick = "javascript:investor.deleteAccount(this);" })%>
 				</div>
 				{{/if}}
 				<div class="add">
-					<%=Html.Image("add.png", new { @title = "Add New Bank Information", @onclick = "javascript:investor.createAccount(this);" })%>
+					<%=Html.Image("add_active.png", new { @title = "Add New Bank Information", @onclick = "javascript:investor.createAccount(this);" })%>
 				</div>
 			</div> 
 			<%Html.RenderPartial("NewBankInformation", new DeepBlue.Models.Investor.BankDetail());%>
@@ -315,11 +315,11 @@
 			<div>
 				{{if i>1}}
 				<div class="delete" style="display:block;clear:none;">
-					<%=Html.Image("Delete.png", new { @title = "Delete Contact", @onclick = "javascript:investor.deleteContact(this);" })%>
+					<%=Html.Image("delete_active.png", new { @title = "Delete Contact", @onclick = "javascript:investor.deleteContact(this);" })%>
 				</div>
 				{{/if}}
 				<div class="add">
-					<%=Html.Image("add.png", new { @title = "Add New Contact", @onclick = "javascript:investor.createContact(this);" })%>
+					<%=Html.Image("add_active.png", new { @title = "Add New Contact", @onclick = "javascript:investor.createContact(this);" })%>
 				</div>
 			</div>
 			<%DeepBlue.Models.Investor.ContactDetail contactDetail = new DeepBlue.Models.Investor.ContactDetail();

@@ -3,7 +3,8 @@
 {{if Items.length>0}}
 <div class="gridbox">
 <%using (Html.Form(new { @id="frm${ReconcileTypeId}", @onsubmit = "return false" })) {%>
-<div class="gbox">
+<div>
+<% Html.RenderPartial("TBoxTop"); %>
 <table cellpadding="0" cellspacing="0" border="0" class="grid">
 <thead>
 <tr>
@@ -66,10 +67,11 @@
 {{/each}}
 </tbody>
 </table>
+<% Html.RenderPartial("TBoxBottom"); %>
 </div>
 <center>
 <div style="margin:10px 0;">
-<%: Html.Image("Save.png", new { @style = "cursor:pointer", @onclick = "javascript:dealReconcile.save('frm${ReconcileTypeId}','Spn${ReconcileTypeId}Loading',${ReconcileTypeId});" })%></span><span id="Spn${ReconcileTypeId}Loading"></span>
+<%: Html.Image("Save_active.png", new { @style = "cursor:pointer", @onclick = "javascript:dealReconcile.save('frm${ReconcileTypeId}','Spn${ReconcileTypeId}Loading',${ReconcileTypeId});" })%></span><span id="Spn${ReconcileTypeId}Loading"></span>
 </div>
 </center>
 <%}%>

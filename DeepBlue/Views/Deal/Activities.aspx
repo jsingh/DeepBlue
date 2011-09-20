@@ -92,7 +92,8 @@
 							<div id="CapitalCall" class="gridbox" style="display: none;">
 								<%using (Html.Form(new { @id = "frmUFCapitalCall", @onsubmit = "return dealActivity.submitUFCapitalCall(this);" })) {%>
 								<div style="clear: both; width: 100%">
-									<div class="gbox">
+									<div>
+										<% Html.RenderPartial("TBoxTop"); %>
 										<table cellpadding="0" cellspacing="0" border="0" id="CapitalCallList" class="grid">
 											<thead>
 												<tr>
@@ -123,10 +124,11 @@
 											<tbody>
 											</tbody>
 										</table>
+										<% Html.RenderPartial("TBoxBottom"); %>
 									</div>
 									<center>
 										<span>
-											<%: Html.ImageButton("Save90.png")%></span><span id="SpnCCSaveLoading"></span></center>
+											<%: Html.ImageButton("Save_active.png")%></span><span id="SpnCCSaveLoading"></span></center>
 								</div>
 								<%}%>
 							</div>
@@ -145,7 +147,8 @@
 								</div>
 								<div id="PRCCListBox" class="clear" style="display: none">
 									<%using (Html.Form(new { @id = "frmUFPRCapitalCall", @onsubmit = "return dealActivity.submitUFPRCapitalCall(this);" })) {%>
-									<div class="gbox">
+									<div>
+										<% Html.RenderPartial("TBoxTop"); %>
 										<table cellpadding="0" cellspacing="0" border="0" id="PRCapitalCallList" class="grid">
 											<thead>
 												<tr>
@@ -168,10 +171,11 @@
 											<tbody>
 											</tbody>
 										</table>
+										<% Html.RenderPartial("TBoxBottom"); %>
 									</div>
 									<center>
 										<span>
-											<%: Html.ImageButton("Save90.png")%></span><span id="SpnPRCCSaveLoading"></span></center>
+											<%: Html.ImageButton("Save_active.png")%></span><span id="SpnPRCCSaveLoading"></span></center>
 									<%}%>
 								</div>
 							</div>
@@ -219,7 +223,8 @@
 							<div class="clear">
 								<div id="CashDistribution" class="gridbox" style="display: none">
 									<%using (Html.Form(new { @id = "frmUFCashDistribution", @onsubmit = "return dealActivity.submitUFCashDistribution(this);" })) {%>
-									<div class="gbox">
+									<div>
+										<% Html.RenderPartial("TBoxTop"); %>
 										<table cellpadding="0" cellspacing="0" border="0" id="CashDistributionList" class="grid">
 											<thead>
 												<tr>
@@ -250,10 +255,11 @@
 											<tbody>
 											</tbody>
 										</table>
+										<% Html.RenderPartial("TBoxBottom"); %>
 									</div>
 									<center>
 										<span>
-											<%: Html.ImageButton("Save90.png")%></span><span id="SpnCDSaveLoading"></span></center>
+											<%: Html.ImageButton("Save_active.png")%></span><span id="SpnCDSaveLoading"></span></center>
 									<%}%>
 								</div>
 								<div id="PRCashDistribution" class="gridbox" style="display: none">
@@ -272,7 +278,8 @@
 									</div>
 									<div id="PRCDListBox" class="clear" style="display: none">
 										<%using (Html.Form(new { @id = "frmUFPRCashDistribution", @onsubmit = "return dealActivity.submitUFPRCashDistribution(this);" })) {%>
-										<div class="gbox">
+										<div>
+											<% Html.RenderPartial("TBoxTop"); %>
 											<table cellpadding="0" cellspacing="0" border="0" id="PRCashDistributionList" class="grid">
 												<thead>
 													<tr>
@@ -295,10 +302,11 @@
 												<tbody>
 												</tbody>
 											</table>
+											<% Html.RenderPartial("TBoxBottom"); %>
 										</div>
 										<center>
 											<span>
-												<%: Html.ImageButton("Save90.png")%></span><span id="SpnPRCDSaveLoading"></span></center>
+												<%: Html.ImageButton("Save_active.png")%></span><span id="SpnPRCDSaveLoading"></span></center>
 										<%}%>
 									</div>
 								</div>
@@ -351,7 +359,8 @@
 							<div class="clear">
 								<div id="StockDistribution" class="gridbox" style="display: none">
 									<%using (Html.Form(new { @id = "frmUFStockDistribution", @onsubmit = "return dealActivity.submitUFStockDistribution(this);" })) {%>
-									<div class="gbox">
+									<div >
+										<% Html.RenderPartial("TBoxTop"); %>
 										<table cellpadding="0" cellspacing="0" border="0" id="StockDistributionList" class="grid">
 											<thead>
 												<tr>
@@ -390,10 +399,11 @@
 											<tbody>
 											</tbody>
 										</table>
+										<% Html.RenderPartial("TBoxBottom"); %>
 									</div>
 									<center>
 										<span>
-											<%: Html.ImageButton("Save90.png")%></span><span id="SpnSDSaveLoading"></span></center>
+											<%: Html.ImageButton("Save_active.png")%></span><span id="SpnSDSaveLoading"></span></center>
 									<%}%>
 								</div>
 							</div>
@@ -429,7 +439,8 @@
 								<div class="loadingcell" id="UFVLoading">
 								</div>
 							</div>
-							<div class="gbox" style="width: 90%; clear: both; margin-left: 65px;">
+							<div style="width: 90%; clear: both; margin-left: 65px;">
+								<% Html.RenderPartial("TBoxTop"); %>
 								<table cellpadding="0" cellspacing="0" border="0" id="UnderlyingFundValuationList"
 									class="grid">
 									<thead>
@@ -459,6 +470,7 @@
 									<tbody>
 									</tbody>
 								</table>
+								<% Html.RenderPartial("TBoxBottom"); %><br />
 							</div>
 							<%:Html.Hidden("UFVUnderlyingFundId", "0", new { @id = "UFVUnderlyingFundId" })%>
 						</div>
@@ -493,7 +505,8 @@
 							</div>
 							<div class="gridbox" id="UDValuation" style="display: none">
 								<%using (Html.Form(new { @id = "frmUDValuation", @onsubmit = "return dealActivity.submitUDV(this);" })) {%>
-								<div class="gbox">
+								<div>
+									<% Html.RenderPartial("TBoxTop"); %>
 									<table cellpadding="0" cellspacing="0" border="0" id="UDValuationList" class="grid">
 										<thead>
 											<tr>
@@ -522,10 +535,11 @@
 										<tbody>
 										</tbody>
 									</table>
+									<% Html.RenderPartial("TBoxBottom"); %>
 								</div>
 								<center>
 									<span>
-										<%: Html.ImageButton("Save90.png")%></span><span id="SpnUDVSaveLoading"></span></center>
+										<%: Html.ImageButton("Save_active.png")%></span><span id="SpnUDVSaveLoading"></span></center>
 								<%}%>
 								<%:Html.Hidden("UDVIssuerId","0", new { @id = "UDVIssuerId" })%>
 							</div>
@@ -561,7 +575,8 @@
 								</div>
 							</div>
 							<div id="UFAdjustment" style="display: none" class="gridbox">
-								<div class="gbox">
+								<div>
+									<% Html.RenderPartial("TBoxTop"); %>
 									<table cellpadding="0" cellspacing="0" border="0" id="UnfundedAdjustmentList" class="grid">
 										<thead>
 											<tr>
@@ -585,6 +600,7 @@
 										<tbody>
 										</tbody>
 									</table>
+									<% Html.RenderPartial("TBoxBottom"); %>
 								</div>
 							</div>
 							<%:Html.Hidden("UFAUnderlyingFundId","0", new { @id = "UFAUnderlyingFundId" })%>
@@ -627,7 +643,8 @@
 								</div>
 							</div>
 							<div class="gridbox" id="FLE">
-								<div class="gbox">
+								<div>
+									<% Html.RenderPartial("TBoxTop"); %>
 									<table cellpadding="0" cellspacing="0" border="0" id="FundExpenseList" class="grid">
 										<thead>
 											<tr>
@@ -647,6 +664,7 @@
 										<tbody>
 										</tbody>
 									</table>
+									<% Html.RenderPartial("TBoxBottom"); %>
 								</div>
 								<%:Html.Hidden("FLE_FundId", "0", new { @id = "FLE_FundId" })%>
 							</div>
@@ -664,7 +682,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="clear sec-box" id="SADetailBox" style="display: block; margin-top: 30px;">
+				<div class="clear sec-box" id="SADetailBox">
 					<div class="editor-label">
 						<%: Html.Label("Corporate Action") %>
 					</div>
@@ -676,7 +694,7 @@
 						<% Html.RenderPartial("EquitySplit", Model.EquitySplitModel);%>
 						<%}%>
 					</div>
-					<div id="ConversionDetail" style="display: none; margin-left: 83px; clear: both;">
+					<div id="ConversionDetail">
 						<%using (Html.Form(new { @id = "frmSecurityConversion", @onsubmit = "return dealActivity.createSecConversion(this);", @style = "float:left;" })) {%>
 						<% Html.RenderPartial("SecurityConversion", Model.SecurityConversionModel);%>
 						<%}%>
@@ -692,7 +710,8 @@
 					<div class="cell" id="NHPLoading">
 					</div>
 					<div class="clear sec-box">
-						<div class="gbox">
+						<div>
+							<% Html.RenderPartial("TBoxTop"); %>
 							<table cellpadding="0" cellspacing="0" border="0" id="NewHoldingPatternList" class="grid">
 								<thead>
 									<tr>
@@ -710,6 +729,7 @@
 									</tr>
 								</thead>
 							</table>
+							<% Html.RenderPartial("TBoxBottom"); %>
 						</div>
 					</div>
 				</div>

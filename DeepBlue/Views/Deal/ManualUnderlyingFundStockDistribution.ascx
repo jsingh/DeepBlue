@@ -2,9 +2,9 @@
 <%@ Import Namespace="DeepBlue.Helpers" %>
 {{if Deals.length>0}}
 <tr id="ManualUFSD_Deal_${Index}" class="mcc">
-	<td class="ismanual" style="display:none"></td>
-	<td class="childrowcell ismanual"  style="display:none" colspan=9>
-		<div class="gbox"  style="width:70%">
+	<td class="ismanual" style="display:none;background-image:none"></td>
+	<td class="childrowcell ismanual"  style="display:none;background-image:none" colspan=9 >
+		<div style="width:70%">
 			<table cellpadding=0 cellspacing=0 border=0 class="grid">
 				<thead>
 					<tr>

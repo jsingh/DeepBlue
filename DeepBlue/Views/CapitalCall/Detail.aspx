@@ -22,15 +22,17 @@
 	<div class="cc-box">
 		<div class="header">
 			<div class="tabbg">
-				<%using (Html.Tab(new { @id = "NewCCDetailTab", @class = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalCall ? "section-tab-sel" : ""), @onclick = "javascript:capitalCallDetail.selectTab('C',this);" })) {%>Capital
-				Call Detail
-				<%}%>
-				<%using (Html.Tab(new { @id = "ManCDetailTab", @class = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalDistribution ? "section-tab-sel" : ""), @onclick = "javascript:capitalCallDetail.selectTab('M',this);" })) {%>Capital
-				Distribution Detail
-				<%}%>
-				<%using (Html.Div(new { @id = "SerCDTab" })) {%>&nbsp;
-				<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>&nbsp;<%: Html.TextBox("Fund","SEARCH FUND", new { @class="wm", @style = "width:200px" })%>
-				<%}%>
+				<div class="tabinnerbox">
+					<%using (Html.Tab(new { @id = "NewCCDetailTab", @class = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalCall ? "section-tab-sel" : ""), @onclick = "javascript:capitalCallDetail.selectTab('C',this);" })) {%>Capital
+					Call Detail
+					<%}%>
+					<%using (Html.Tab(new { @id = "ManCDetailTab", @class = (Model.DetailType == DeepBlue.Models.CapitalCall.Enums.DetailType.CapitalDistribution ? "section-tab-sel" : ""), @onclick = "javascript:capitalCallDetail.selectTab('M',this);" })) {%>Capital
+					Distribution Detail
+					<%}%>
+					<%using (Html.Div(new { @id = "SerCDTab" })) {%>
+					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...&nbsp;", new { @id = "SpnLoading", @style = "display:none;float:left;" })%><%: Html.TextBox("Fund","SEARCH FUND", new { @class="wm", @style = "width:200px" })%>
+					<%}%>
+				</div>
 			</div>
 		</div>
 	</div>

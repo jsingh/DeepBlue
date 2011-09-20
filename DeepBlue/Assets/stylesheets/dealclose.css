@@ -26,7 +26,6 @@ input[type='text'] {
 	clear: both;
 	width: 100%;
 }
-
 .fundslist {
 	float: left;
 	clear: both;
@@ -38,15 +37,17 @@ input[type='text'] {
 }
 .savefooter {
 	float: left;
-	width: 97%;
+	width: 90%;
 	margin: 5px 0;
+	padding-left:65px;
 }
 .savefooter .cell {
 	float: right;
 	width: auto;
-	padding-right: 10px;
+	padding-right: 0px;
 	font-size: 12px;
 	height: auto;
+	margin-right:0px;
 }
 .closetitle {
 	background-color: #FFFFFF;
@@ -55,9 +56,12 @@ input[type='text'] {
 	float: left;
 	font-size: 16px;
 	font-weight: bold;
-	margin: 10px 0 15px;
-	padding: 4px 0px;
-	width: 100%;
+	margin: 10px 0 0px 65px;
+	padding: 20px 0px 4px 0px;
+	width: 90%;
+	height:41px;
+	background-image: url("../images/header_bg.gif");
+	background-repeat: repeat-x;
 }
 .closetitle .title {
 	float: left;
@@ -91,9 +95,9 @@ input[type='text'] {
 .act-box {
 	float: left;
 	width: 100%;
-	background-image: url(../images/acboxbg.png);
+	/*background-image: url(../images/acboxbg.png);
 	background-position: left top;
-	background-repeat: repeat-x;
+	background-repeat: repeat-x;*/
 }
 .headerbox {
 	width: 90%;
@@ -130,26 +134,26 @@ input[type='text'] {
 	cursor: pointer;
 }
 .closing-det {
-	background-image: url(../images/fdcbg.png);
+	/*background-image: url(../images/fdcbg.png);*/
 }
 .expandaddbtn {
 	position: absolute;
-	left: 212px;
-	margin-top:2px;
+	left: 233px;
+	margin-top: 2px;
 }
 .expandtitle span {
-	padding-left: 65px;
+	/*padding-left: 65px;*/
 }
 .closetitle .title {
-	padding-left: 65px;
+	padding-left: 20px;
 	white-space: nowrap;
 }
 .tabledetail .gbox, .section .gbox {
 	margin-left: 65px;
 }
 .expandsel .rightuarrow {
-	margin-right: 61px;
-	    margin-top: 12px;
+	/*margin-right: 61px;*/
+	margin-top: 12px;
 }
 .grid td .jqComboBox .left {
 	width: 80%;

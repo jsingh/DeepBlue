@@ -27,6 +27,7 @@
 		</div>
 	</div>
 	<div class="headerbar">
+		<div class="breadcrumb">
 		<div class="leftcol">
 			Direct</div>
 		<div class="addbtn" style="display: block">
@@ -37,22 +38,23 @@
 			<%: Html.Span("", new { @id = "SpnIssuerLoading" })%>
 			<%: Html.TextBox("S_Issuer", "SEARCH ISSUER", new { @class = "wm", @style = "width:200px", @id = "S_Issuer" })%>
 		</div>
+		</div>
 	</div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div id="DirectDetailBox">
-		<div class="subheader" id="AddNewIssuer" style="display: none">
+		<div id="AddNewIssuer" style="display: none">
 			<%using (Html.Form(new { @id = "frmAddNewIssuer", @onsubmit = "return dealDirect.createNewIssuer(this);" })) {%>
 			<div id="NewIssuerDetail">
 			</div>
 			<div class="addissuer">
-				<div class="btn">
-					<%: Html.Span("", new { @id = "SpnNewLoading" })%></div>
-				<div class="btn">
-					<%: Html.ImageButton("addcompany.png")%></div>
 				<div class="btnclose">
 					<%: Html.Image("issuerclose.png", new { @onclick = "javascript:dealDirect.close();" })%>
 				</div>
+				<div class="btn">
+					<%: Html.ImageButton("addcompany.png")%></div>
+				<div class="btn">
+					<%: Html.Span("", new { @id = "SpnNewLoading" })%></div>
 			</div>
 			<%}%>
 		</div>
@@ -60,7 +62,7 @@
 			<%using (Html.Form(new { @id = "frmIssuer", @onsubmit = "return dealDirect.save(this);" })) {%>
 			<div id="IssuerDetail">
 			</div>
-			<div class="editor-label">
+			<div class="editor-label" style="width:128px;padding-right:26px;">
 				<%: Html.Label("Security Type")%>
 			</div>
 			<div class="editor-field" style="width: auto;">
@@ -77,9 +79,11 @@
 				<div id="FixedIncome" style="display: none">
 				</div>
 			</div>
-			<div class="direct">
-				<%: Html.Span("", new { @id = "SpnSaveIssuerLoading" } )%>&nbsp;&nbsp;&nbsp;
-				<%: Html.ImageButton("add_direct.png")%>
+			<div class="btnbox">
+				<div class="direct">
+					<%: Html.Span("", new { @id = "SpnSaveIssuerLoading" } )%>&nbsp;&nbsp;&nbsp;
+					<%: Html.ImageButton("add_direct_active.png")%>
+				</div>
 			</div>
 			<%}%>
 		</div>

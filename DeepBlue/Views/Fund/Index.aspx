@@ -39,7 +39,8 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="fund-main">
 		<div class="section-det" id="FundDetail">
-			<table id="FundList" cellpadding="0" cellspacing="0" border="0">
+			<% Html.RenderPartial("TBoxTop"); %>
+			<table id="FundList" cellpadding="0" cellspacing="0" border="0" class="grid">
 				<thead>
 					<tr>
 						<th sortname="FundID" style="width: 1%; display: none;">
@@ -68,6 +69,7 @@
 					</tr>
 				</thead>
 			</table>
+			<% Html.RenderPartial("TBoxBottom"); %>
 		</div>
 		<div class="section-det" id="AddNewFund" style="display: none">
 		</div>

@@ -307,8 +307,12 @@
 
 		g.gCDiv.className="fcDiv";
 
-		$(t).before(g.gDiv);
+		var pt = t;
+		if ($(t).parents(".tblbox").get(0)){
+			pt = $(t).parents(".tblbox").get(0); //new grid style
+		}
 
+		$(pt).before(g.gDiv);
 		if(p.useBoxStyle) {
 			$(g.gDiv).append(g.gTLDiv);
 			$(g.gTLDiv).append(g.gTCDiv);
@@ -317,13 +321,12 @@
 			$(g.gDiv).append(g.gBLDiv);
 			$(g.gBLDiv).append(g.gBCDiv);
 			$(g.gBLDiv).append(g.gBRDiv);
-			$(g.gCDiv).append(t);
+			$(g.gCDiv).append(pt);
 		} else {
-			$(g.gDiv).append(t);
+			$(g.gDiv).append(pt);
 		}
-
-		g.bDiv.className='bDiv';
-		$(t).before(g.bDiv);
+		//g.bDiv.className='bDiv';
+		$(pt).before(g.bDiv);
 		g.hTable.cellPadding=0;
 		g.hTable.cellSpacing=0;
 		g.hTable.style.width="100%";
@@ -356,11 +359,11 @@
 			 		$(this).empty().append(thdiv).removeAttr('width');
 			 	}
 			);
-		g.bDiv.className='bDiv';
+		//g.bDiv.className='bDiv';
 		g.bDivBox.className='bDivBox';
 
 		//$("thead",t).remove();
-		$(g.bDiv).append(t);
+		$(g.bDiv).append(pt);
 		if(p.usepager) {
 			g.pDiv.className='pDiv';
 			g.pDiv.innerHTML='<div class="pDiv2"></div>';

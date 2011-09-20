@@ -1,5 +1,6 @@
 ﻿var logon={
 	init: function () {
+		logon.logonpos();			
 		var frm=document.forms[0];
 		var userName=$("#UserName",frm);
 		userName.focus();
@@ -30,5 +31,13 @@
 			return false;
 		}
 		return true;
+	},
+	logonpos: function(){
+		var winwidth = $(window).width();
+		if(winwidth < 1007) winwidth= 1007;
+		$("#logon").css("top",(($(window).height()/ 2) - ($("#logon").height()/2)) -38);
+		$("#logon").css("left",((winwidth/ 2) - ($("#logon").width()/2)));
 	}
 }
+
+window.onresize = logon.logonpos;

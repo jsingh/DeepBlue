@@ -1,6 +1,5 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Report.DealOriginationReportModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<div id="ReportContent">
 	<table cellpadding="0" cellspacing="0" <%=(Model.IsTemplateDisplay==false ? "border='1'" : string.Empty)%>
 		style="width: 100%">
 		<tr>
@@ -214,4 +213,3 @@
 			</td>
 		</tr>
 	</table>
-</div>

@@ -20,7 +20,8 @@
 </div>
 <div id="funddetails" class="fund-details">
 	{{if FundInformations.length>0}}
-	<div class="gbox">
+	<div>
+	<% Html.RenderPartial("TBoxTop"); %>
 	<table cellpadding=0 cellspacing=0 border=0 class=grid>
 		<thead>
 			<tr>
@@ -41,6 +42,7 @@
 		{{/each}}
 		</tbody>
 	</table>
+	<% Html.RenderPartial("TBoxBottom"); %>
 	</div>
 	{{/if}}
 </div>
@@ -48,7 +50,7 @@
 	&nbsp;</div>
 <div class="editor-button" style="width: 210px;">
 	<div style="float: left; padding: 0 0 10px 5px;">
-		<%: Html.Image("Delete.png", new { @id = "Delete", @style = "cursor:pointer", @onclick = "javascript:editInvestor.deleteInvestor(this,${InvestorId});" })%>
+		<%: Html.Image("delete_active.png", new { @id = "Delete", @style = "cursor:pointer", @onclick = "javascript:editInvestor.deleteInvestor(this,${InvestorId});" })%>
 		<%: Html.Span("", new { @id = "DeleteLoading" })%>
 	</div>
 </div>

@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Helpers.CustomFieldModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 {{each(index,field) CustomField.Fields}} {{if index%3 && CustomField.IsDisplayTwoColumn}}
-<div class="editor-label" style="clear: right">
+<div class="editor-label" style="clear: right;{{if field.CustomFieldText == "Balance"}}width:173px{{/if}}">
 	{{else}}
 	<div class="editor-label">
 		{{/if}}

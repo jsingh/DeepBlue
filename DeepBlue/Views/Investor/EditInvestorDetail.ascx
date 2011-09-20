@@ -35,7 +35,7 @@
 					<div id="contactInfoMain">
 						<div id="ContactInfoAddNew" style="display: none" class="editor-row">
 							<div style="float: right">
-								<%: Html.Anchor(Html.Image("add.png", new { @title = "Add Contact" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.addContactInfo(this,${InvestorId});" })%>
+								<%: Html.Anchor(Html.Image("add_active.png", new { @title = "Add Contact" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.addContactInfo(this,${InvestorId});" })%>
 							</div>
 						</div>
 						{{if ContactInformations.length>0}} {{each(i,contact) ContactInformations}} {{tmpl(getItem(i,contact))
@@ -48,7 +48,7 @@
 					<div id="accountInfoMain">
 						<div id="AccountInfoAddNew" style="display: none" class="editor-row">
 							<div style="float: right">
-								<%: Html.Anchor(Html.Image("add.png", new { @title = "Add Account" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.addAccountInfo(this);" })%>
+								<%: Html.Anchor(Html.Image("add_active.png", new { @title = "Add Account" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.addAccountInfo(this);" })%>
 							</div>
 						</div>
 						{{if AccountInformations.length>0}} {{each(i,account) AccountInformations}} {{tmpl(getItem(i,account))

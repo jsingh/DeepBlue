@@ -31,10 +31,10 @@ deal.deleteDealExpense=function (id,img) {
 };
 deal.editDealExpense=function (img) {
 	var tr=$(img).parents("tr:first");
-	if(img.src.indexOf('Save.png')> -1) {
+	if(img.src.indexOf('Save_active.png')> -1) {
 		deal.saveExpense(tr);
 	} else {
-		img.src="/Assets/images/Save.png";
+		img.src="/Assets/images/Save_active.png";
 		deal.showElements(tr);
 	}
 };
@@ -70,7 +70,7 @@ deal.saveExpense=function (tr) {
 		deal.saveDeal();
 	}
 };
-deal.loadDealExpense=function (id) {
+deal.loadDealExpense=function (id) {	
 	var dt=new Date();
 	var url="/Deal/FindDealClosingCost?dealClosingCostId="+id+"&t="+dt.getTime();
 	$.getJSON(url,function (data) {
@@ -80,6 +80,7 @@ deal.loadDealExpense=function (id) {
 deal.calcTotalExpense=function () {
 	var total=0;
 	$("tbody tr","#tblDealExpense").each(function () { var amt=parseFloat($("#Amount",this).val());if(isNaN(amt)) { amt=0; } total+=amt; });
+	footer.show("tbodyDealExpense", "tfootDealExpense");
 	$("#SpnTotalExpenses").html(jHelper.dollarAmount(total.toString()));
 	$("#SpnFooterTotalExpenses").html(jHelper.dollarAmount(total.toString()));
 };

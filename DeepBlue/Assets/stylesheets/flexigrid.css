@@ -109,17 +109,18 @@
 	border-bottom: 1px solid #f3f3f3;
 }
 .flexigrid tr td {
-	background-color: #F5F5F5;
+	/*background-color: #F5F5F5;*/
 	white-space: nowrap;
 	overflow: hidden;
 }
 .flexigrid tr td.sorted div {
 }
 .flexigrid tr.erow td {
-	/*background: #f7f7f7;*/
-	background: #E9EAEC; /*border-bottom: 2px solid #B5B5B5;*/
+	/*background: #f7f7f7;
+	background: #E9EAEC; 
 	padding-top: 5px;
 	border-top: 1px solid #FFFFFF;
+	*/
 }
 .flexigrid tr.erow td.sorted {
 	background: #e3e3e3; /*border-bottom: 1px solid #e3e3e3;*/

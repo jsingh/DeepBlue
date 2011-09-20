@@ -15,12 +15,12 @@
 	}
 	,initDealEvents: function () {
 		$(".expandheader").click(function () {
-			$(".expandtitle").hide();
-			$(".expandimg").show();
+			//$(".expandtitle").hide();
+			//$(".expandimg").show();
 			var bolexpandsel=$(this).hasClass("expandsel");
-			$(".expandsel").removeClass("expandsel");
-			$(".fieldbox").hide();
-			$(".expandaddbtn").hide();
+			//$(".expandsel").removeClass("expandsel");
+			//$(".fieldbox").hide();
+			//$(".expandaddbtn").hide();
 			if(!bolexpandsel) {
 				$(this).addClass("expandsel");
 				$(".rightuarrow").remove();
@@ -33,6 +33,18 @@
 				$(".expandaddbtn",$(this).parent()).show().addClass("addbtn-extend");
 			} else {
 				$(this).removeClass("expandsel");
+				$(".expandtitle", this).hide();
+				$(".expandimg", this).show();
+				$(this).next(".fieldbox").hide();
+				$(this).prev(".expandaddbtn").hide();
+				switch ($(this).parent().get(0).id){
+					case "DealSellerInfo":
+						$(".fieldbox", $("#SellerInfo")).hide();
+						break;
+					case "DealUnderlyingDirects":
+						$(this).next().next(".fieldbox").hide();
+						break;
+				}
 			}
 		});
 	}
@@ -61,7 +73,7 @@
 			$.getJSON(url,function (data) {
 				$("#SaveDealBox").show();
 				$("#SearchDealName").val(data.DealName);
-				$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/mdeal.png");
+				$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/mdeal_active.png");
 				deal.loadTemplate(data);
 			});
 		}
@@ -72,6 +84,7 @@
 
 			$("#DealTemplate").tmpl(data).appendTo("#NewDeal");
 			$("#DealExpenseTemplate").tmpl(data).appendTo("#DealExpenses");
+			
 			$("#DealDocumentTemplate").tmpl(data).appendTo("#DealDocuments");
 			$("#DealSellerInfoTemplate").tmpl(data.SellerInfo).appendTo("#DealSellerInfo");
 			$("#DealUnderlyingFundTemplate").tmpl(data).appendTo("#DealUnderlyingFunds");
@@ -254,7 +267,7 @@
 			var url="/Deal/FindFund/?fundId="+fundId+"&t="+dt.getTime();
 			$("#NewDeal").html("<center><img src='/Assets/images/ajax.jpg'>&nbsp;Loading...</center>");
 			$("#SaveDealBox").show();
-			$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/cnewdeal.png");
+			$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/cnewdeal_active.png");
 			$.getJSON(url,function (data) {
 				data.FundName=fundName;
 				data.FundId=fundId;
@@ -310,6 +323,14 @@
 	,showElements: function (tr) {
 		$(".hide",tr).css("display","block");
 		$(".show",tr).css("display","none");
+	},
+	showFooter: function(body, foot){
+		if($("tr","#" + body).length > 0) {
+			$("#" + foot).show();
+		}
+		else{
+			$("#" + foot).hide();
+		}
 	}
 
 }

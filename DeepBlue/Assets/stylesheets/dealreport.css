@@ -80,12 +80,19 @@
 }
 .grid .tblUnderlyingFund_tr th {
 	background-image: none;
-	border-top: solid 1px #b5b5b5;
+	/*border-top: solid 1px #b5b5b5;*/
 }
 .grid .subdet-title th {
 	background-color: #d3d4d8;
 	background-image: none;
-	font-size: 13px;
+	font-size: 16px;
+	height:65px;
+	background-image: url("../images/header_bg.gif");
+	background-repeat: repeat-x;
+    font-weight: bold;
+    height: 65px;
+    text-shadow: none;	
+	filter: none;	
 }
 .tblUnderlyingDirect_tr th {
 	background-color: #BABFC5;

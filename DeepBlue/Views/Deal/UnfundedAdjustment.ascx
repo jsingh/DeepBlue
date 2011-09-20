@@ -19,7 +19,7 @@
 	<td class="ralign">
 		<%: Html.Hidden("DealUnderlyingFundId", "${DealUnderlyingFundId}")%>
 		<%: Html.Span("", new { id = "UpdateLoading" })%>
-		<%: Html.Image("Save.png", new { @id = "add", @class = "default-button {{if DealUnderlyingFundId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addUFA(this,${DealUnderlyingFundId});" })%>
+		<%: Html.Image("Save_active.png", new { @id = "add", @class = "default-button {{if DealUnderlyingFundId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addUFA(this,${DealUnderlyingFundId});" })%>
 		<%: Html.Image("Edit.png", new { @class = "default-button show gbutton", @onclick = "javascript:dealActivity.editUFA(this,${DealUnderlyingFundId});" })%>
 	</td>
 </tr>

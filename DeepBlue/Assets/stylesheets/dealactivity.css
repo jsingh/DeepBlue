@@ -2,7 +2,7 @@
     margin: 8px 0 0;
 }
 .editor-label {
-	width: 180px;
+	width: 145px;
 }
 .editor-field {
 	width: auto;
@@ -278,5 +278,16 @@
 	width: 110px;
 }
 .heading {
-	padding:12px 0 0;
+	padding-bottom:0px;
+}
+#SADetailBox{
+	display: block; 
+	margin-top: 30px;
+	float:left;
+}
+#ConversionDetail{
+	display: none; 
+	margin-left: 48px; 
+	clear: both;
+	float:left;
 }

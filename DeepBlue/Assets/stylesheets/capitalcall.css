@@ -35,6 +35,7 @@
 .cc-manual {
 	clear: both;
 	margin-left: 65px;
+	width:90%;
 }
 #ManualCapitalCall .manual, #ManualDistribution .manual {
 	padding: 0;
@@ -55,7 +56,7 @@
 }
 .investor-detail {
 	clear: both;
-	width: 95%;
+	width: 100%;
 }
 label {
 	color: #000;
@@ -84,7 +85,8 @@ label {
 }
 #SerCCTab, #SerCDTab {
 	float: right;
-	padding: 9px 90px 0 10px;
+	padding: 9px 0px 0 0px;
+	margin:0px;
 }
 /*#NewCCTab.select {
 	background-image: url(../images/newcctabsel.png);
@@ -131,7 +133,6 @@ label {
 	float: left;
 	height: 44px;
 	padding-bottom: 0;
-	padding-left: 65px;
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -150,7 +151,7 @@ label {
 	background-color: #CBD2DA;
 	clear: both;
 	float: left;
-	padding: 4px 20px 0;
+	padding: 4px 20px 0 65px;
 }
 .cc-box-det .editor-label {
 	text-align: right;
@@ -178,9 +179,9 @@ label {
 .cc-det-report {
 	clear: both;
 	float: left;
-	margin: 0 0 0 2%;
-	padding: 10px;
-	width: 95%;
+	margin: 0px;
+	padding: 10px 0px 10px 65px;
+	width: 90%;
 }
 .cc-report-main {
 	background-color: #CBD2DA;
@@ -196,4 +197,23 @@ label {
 #cntbox {
 	position: relative;
 	clear: both;
+}
+.tabinnerbox{
+	float:left;
+	width:90%;
+	padding-left: 65px;
+}
+#CapitalCallReport .editor-label-first{
+	width:96px;
+	padding-left:0px;
+}
+#CapitalDistributionReport .editor-label-first{
+	width:108px;
+	padding-left:0px;
+}
+#NewCapitalDistribution .editor-label-first{
+	width:109px;
+}
+#ManualCapitalDistribution .editor-label-first{
+	width:102px;
 }

@@ -4,7 +4,7 @@
 </div>
 <div class="direct-det">
 	<div id="fixincomediv">
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.FaceValue) %>
 		</div>
 		<div class="editor-field">
@@ -22,7 +22,7 @@
 		<div class="editor-field">
 			<%: Html.TextBox("Maturity", "${Maturity}", new { @class = "datefield", @id = "FI_Maturity" })%>
 		</div>
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.IssuedDate) %>
 		</div>
 		<div class="editor-field">
@@ -40,7 +40,7 @@
 		<div class="editor-field">
 			<%: Html.DropDownList("FixedIncomeCurrencyId", Model.Currencies, new { @val = "${FixedIncomeCurrencyId}" })%>
 		</div>
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.Frequency) %>
 		</div>
 		<div class="editor-field">
@@ -58,7 +58,7 @@
 		<div class="editor-field">
 			<%: Html.TextBox("FirstAccrualDate", "${FirstAccrualDate}", new { @class = "datefield", @id = "FI_FirstAccrualDate" })%>
 		</div>
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.FixedIncomeTypeId) %>
 		</div>
 		<div class="editor-field">
@@ -77,7 +77,7 @@
 		<div class="editor-field">
 			<%: Html.TextBox("FixedIncomeSymbol", "${FixedIncomeSymbol}")%>
 		</div>
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.FixedIncomeComments) %>
 		</div>
 		<div class="editor-field">
@@ -93,7 +93,7 @@
 </div>
 <div class="direct-det">
 	<div id="fidocument">
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.Label("Document Type") %>
 		</div>
 		<div class="editor-field">
@@ -105,7 +105,7 @@
 		<div class="editor-field">
 			<%: Html.TextBox("FixedIncomeDocumentDate", "${FixedIncomeDocumentDate}", new { @class = "datefield", @id = "FixedIncomeDocumentDate" })%>
 		</div>
-		<div class="editor-label">
+		<div class="editor-label" style="width:143px;padding-right:11px;">
 			<%: Html.DropDownList("FixedIncomeUploadTypeId", Model.UploadTypes, new { @val="1", @style = "width:85px", @onchange = "javascript:dealDirect.changeUploadType(this,'fidocument');" })%>
 		</div>
 		<div id="FileRow" class="editor-field" style="width: auto;">

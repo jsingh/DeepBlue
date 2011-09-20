@@ -21,7 +21,8 @@
 <div class="fieldbox">
 	<div class="section" style="width: 95%;">
 		<div class="dealdetail">
-			<div class="gbox">
+			<div>
+				<% Html.RenderPartial("TBoxTop"); %>
 				<table id="tblUnderlyingDirect" cellpadding="0" cellspacing="0" border="0" class="grid"
 					style="width: 100%">
 					<thead>
@@ -90,14 +91,14 @@
 							</td>
 							<td class="ralign">
 								<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
-								<%: Html.Image("add.png", new { @onclick = "javascript:deal.addUnderlyingDirect(this);" })%>
+								<%: Html.Image("add_active.png", new { @onclick = "javascript:deal.addUnderlyingDirect(this);" })%>
 								<%: Html.Hidden("DealUnderlyingDirectId", "${DealUnderlyingDirectId}")%>
 							</td>
 						</tr>
 					</thead>
 					<tbody id="tbodyUnderlyingDirect">
 					</tbody>
-					<tfoot>
+					<tfoot id="tfootUnderlyingDirect" style="display:none;">
 						<tr>
 							<td class="lalign">
 								<b>Total</b>
@@ -124,6 +125,7 @@
 						</tr>
 					</tfoot>
 				</table>
+				<% Html.RenderPartial("TBoxBottom"); %>
 			</div>
 		</div>
 	</div>

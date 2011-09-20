@@ -110,6 +110,11 @@
 				dealClose.setAutoComplete(tbldirectlist);
 				dealClose.calcCloseUF();
 				dealClose.calcCloseUD();
+				
+				$(":checkbox", "#DealUnderlyingDirects").each(function() {
+					$(this).jqTransCheckBox();
+				});
+
 			});
 		} else {
 			jAlert("Deal is required");
@@ -117,8 +122,10 @@
 		}
 	}
 	,clearTable: function (tbl) {
-		$("tbody",tbl).empty();
-		$("tfoot",tbl).empty();
+		//$("tbody",tbl).empty();
+		//$("tfoot",tbl).empty();
+		$("tbody",tbl).remove();
+		$("tfoot",tbl).remove();
 	}
 	,calcCloseUF: function () {
 		var tbl=$("#DealUnderlyingFundList");
@@ -212,7 +219,7 @@
 		var tr=$(img).parents("tr:first");var isShow=false;
 		var chk=$(":input[type='checkbox']",tr).get(0);
 		if(chk) { chk.checked=true; }
-		if(img.src.indexOf('add.png')> -1) {
+		if(img.src.indexOf('add_active.png')> -1) {
 			isShow=true;img.src="/Assets/images/Edit.png";
 		} else {
 			// img.src="/Assets/images/tick.png";
@@ -328,10 +335,10 @@
 	}
 	,expand: function () {
 		$(".headerbox").click(function () {
-			$(".headerbox").show();
-			$(".expandheader").hide();
-			$(".detail").hide();
-			$(".expandaddbtn").hide();
+			//$(".headerbox").show();
+			//$(".expandheader").hide();
+			//$(".detail").hide();
+			//$(".expandaddbtn").hide();
 			$(this).hide();
 			var actbox=$(this).parents(".act-box:first");
 			actbox.show();
@@ -370,6 +377,8 @@
 				jHelper.applyGridClass($("tbody",finaltbldirectlist));
 				dealClose.calcFinalCloseUF();
 				dealClose.calcFinalCloseUD();
+				//footer.show("tbodyDealCloseUnderlyingFund", "tfootDealCloseUnderlyingFund");
+				//footer.show("tbodyDealCloseUnderlyingDirect", "tfootDealCloseUnderlyingDirect");
 			});
 		} catch(e) { jAlert(e); }
 	}
@@ -411,6 +420,7 @@
 					var data={ "index": $("tbody tr","#DealUnderlyingFundList").length,"item": dufitem,"IsFinalClose": false };
 					data.index++;
 					dealClose.loadDUF(data,target,data.index);
+					//footer.show("tbodyDealCloseUnderlyingFund", "tfootDealCloseUnderlyingFund");
 				});
 			}
 		});
@@ -435,6 +445,7 @@
 			var chk=$("#chk",row).get(0);
 			if(chk)
 				chk.checked=true;
+			$(chk).jqTransCheckBox();
 		}
 	}
 	,saveDUD: function (img) {
@@ -454,6 +465,7 @@
 					var data={ "index": $("tbody tr","#DealUnderlyingDirects").length,"item": duditem,"IsFinalClose": false };
 					data.index++;
 					dealClose.loadDUD(data,target,data.index);
+					//footer.show("tbodyDealCloseUnderlyingDirect", "tfootDealCloseUnderlyingDirect");
 				});
 			}
 		});

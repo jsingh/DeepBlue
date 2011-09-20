@@ -4,7 +4,7 @@
 </div>
 <div class="direct-det">
 	<div id="equitysymboldiv">
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.EquitySymbol)%>
 		</div>
 		<div class="editor-field">
@@ -22,7 +22,7 @@
 		<div class="editor-field">
 			<%: Html.DropDownList("EquityCurrencyId", Model.Currencies, new { @id = "EquityCurrencyId", @val = "${CurrencyId}" })%>
 		</div>
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.EquitySecurityTypeId)%>
 		</div>
 		<div class="editor-field">
@@ -41,13 +41,13 @@
 		<div class="editor-field">
 			<%: Html.DropDownList("ShareClassTypeId", Model.ShareClassTypes, new { @id = "ShareClassType", @val = "${ShareClassTypeId}" })%>
 		</div>
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.EquityTypeId) %>
 		</div>
 		<div class="editor-field">
 			<%: Html.DropDownList("EquityTypeId", Model.EquityTypes, new { @id = "EquityType", @val = "${EquityTypeId}" })%>
 		</div>
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.EquityComments) %>
 		</div>
 		<div class="editor-field">
@@ -63,7 +63,7 @@
 </div>
 <div class="direct-det">
 	<div id="eqdocument">
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.Label("Document Type") %>
 		</div>
 		<div class="editor-field">
@@ -75,7 +75,7 @@
 		<div class="editor-field">
 			<%: Html.TextBox("EquityDocumentDate", "${EquityDocumentDate}", new { @class = "datefield", @id = "EquityDocumentDate" })%>
 		</div>
-		<div class="editor-label">
+		<div class="editor-label" style="width:143px;padding-right:11px;">
 			<%: Html.DropDownList("EquityUploadTypeId", Model.UploadTypes, new { @val = "1", @style = "width:85px", @onchange = "javascript:dealDirect.changeUploadType(this,'eqdocument');" })%>
 		</div>
 		<div id="FileRow" class="editor-field" style="width: auto;">

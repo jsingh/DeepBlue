@@ -49,7 +49,7 @@
 		<td>
 		</td>
 		<td>
-			<%: Html.ImageButton("Save90.png", new { @class = "default-button" })%>
+			<%: Html.ImageButton("Save_active.png", new { @class = "default-button" })%>
 		</td>
 		<td>
 			<%: Html.Span("", new { id = "SpnEquitySplitLoading" })%>

@@ -22,10 +22,10 @@
 		<%: Html.Span("",new { id = "UpdateEditCmtLoading" })%>
 	</div>
 	<div style="float: left; padding: 0 0 10px 5px;">
-		<%: Html.ImageButton("Update.png", new { @class="default-button" })%>
+		<%: Html.ImageButton("Update_active.png", new { @class="default-button" })%>
 	</div>
 	<div style="float: left; padding: 0 0 10px 5px;">
-		<%: Html.Image("Close.png", new { @class="default-button", onclick = "editTransaction.closeEditCommitAmtDialog();" })%>
+		<%: Html.Image("Close_active.png", new { @class="default-button", onclick = "editTransaction.closeEditCommitAmtDialog();" })%>
 	</div>
 </div>
 <% } %>

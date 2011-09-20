@@ -27,7 +27,7 @@
 			<%: Html.HiddenFor(model => model.InvestorId)%>
 			<%: Html.HiddenFor(model => model.FundId)%>
 			<div class="doc-header">
-				<div class="editor-label">
+				<div class="editor-label-first">
 					<%: Html.LabelFor(model => model.FromDate) %>
 				</div>
 				<div class="editor-field">
@@ -39,13 +39,13 @@
 				<div class="editor-field">
 					<%: Html.TextBox("ToDate", "", new { @id = "ToDate" })%>
 				</div>
-				<div class="editor-label">
+				<div class="editor-label-first">
 					<%: Html.LabelFor(model => model.DocumentTypeId) %>
 				</div>
 				<div class="editor-field">
 					<%: Html.DropDownListFor(model => model.DocumentTypeId, Model.DocumentTypes, new { @style = "width:190px" })%>
 				</div>
-				<div class="editor-label">
+				<div class="editor-label-first">
 					<%: Html.LabelFor(model => model.DocumentStatus)%>
 				</div>
 				<div class="editor-field">
@@ -63,7 +63,7 @@
 				</div>
 				<div class="editor-button">
 					<div style="float: left; padding: 0 0 10px 5px;">
-						<%: Html.ImageButton("Search.png", new { @class="default-button",@onclick="return documentSearch.onSubmit('SearchDocument');" })%>
+						<%: Html.ImageButton("search_active.png", new { @class = "default-button", @onclick = "return documentSearch.onSubmit('SearchDocument');" })%>
 					</div>
 				</div>
 			</div>
@@ -73,7 +73,8 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="doc-content">
-		<table cellpadding="0" cellspacing="0" border="0" id="SearchDocumentList" style="width: 100%">
+		<% Html.RenderPartial("TBoxTop"); %>
+		<table cellpadding="0" cellspacing="0" border="0" id="SearchDocumentList" style="width: 100%" class="grid">
 			<thead>
 				<tr>
 					<th sortname="DocumentDate" style="width: 10%;">
@@ -96,6 +97,7 @@
 				</tr>
 			</thead>
 		</table>
+		<% Html.RenderPartial("TBoxBottom"); %>
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">

@@ -8,6 +8,7 @@
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery.alerts.js")%>
 	<%= Html.JavascriptInclueTag("LogOn.js")%>
+	<%= Html.JavascriptInclueTag("ImageActive.js")%>
 	<%= Html.StylesheetLinkTag("site.css")%>
 	<%= Html.StylesheetLinkTag("logon.css")%>
 	<%= Html.StylesheetLinkTag("jquery.alerts.css")%>
@@ -27,7 +28,7 @@
 			</div>
 			<div id="logonmain">
 				<div class="content">
-					<% using (Html.BeginForm("LogOn", "Account", FormMethod.Post, new { @onsubmit = "return logon.submit(this); " })) { %>
+					<% using (Html.BeginForm("LogOn" ,  "Account", FormMethod.Post, new { @onsubmit = "return logon.submit(this); " })) { %>
 					<div class="editor-label">
 						<%: Html.LabelFor(m => m.UserName)%>
 					</div>
@@ -47,7 +48,7 @@
 						<%: Html.LabelFor(m => m.RememberMe)%>
 					</div>
 					<div class="editor-field clear" style="float: right">
-						<%: Html.ImageButton("Login.png")%>
+						<%: Html.ImageButton("login_active.png")%>
 					</div>
 					<%: Html.ValidationMessageFor(m => m.Errors)%>
 					<%: Html.Hidden("ReturnUrl", ViewData["ReturnUrl"])%>

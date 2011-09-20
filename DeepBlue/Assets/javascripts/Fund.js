@@ -35,9 +35,9 @@
 	}
 	,expand: function () {
 		$(".headerbox").click(function () {
-			$(".headerbox").show();
-			$(".expandheader").hide();
-			$(".detail").hide();
+			//$(".headerbox").show();
+			//$(".expandheader").hide();
+			//$(".detail").hide();
 			$(this).hide();
 			var parent=$(this).parent();
 			$(".expandheader",parent).show();

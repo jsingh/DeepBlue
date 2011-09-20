@@ -24,7 +24,8 @@
 				<%:Html.Span("",new { @id = "SpnTotalExpenses" })%>
 			</h5>
 			<br />
-			<div class="gbox" style="width: 95%;">
+			<div style="width: 95%;">
+				<% Html.RenderPartial("TBoxTop"); %>
 				<table id="tblDealExpense" cellpadding="0" cellspacing="0" border="0" class="grid">
 					<thead>
 						<tr>
@@ -54,14 +55,14 @@
 							</td>
 							<td class="ralign">
 								<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
-								<%: Html.Image("add.png", new { @onclick = "javascript:deal.addDealExpense(this);" })%>
+								<%: Html.Image("add_active.png", new { @onclick = "javascript:deal.addDealExpense(this);" })%>
 								<%: Html.Hidden("DealClosingCostId","${DealClosingCostId}")%>
 							</td>
 						</tr>
 					</thead>
 					<tbody id="tbodyDealExpense">
 					</tbody>
-					<tfoot>
+					<tfoot id="tfootDealExpense" style="display:none;">
 						<tr>
 							<td>
 								<b>Total</b>
@@ -75,6 +76,7 @@
 						</tr>
 					</tfoot>
 				</table>
+				<% Html.RenderPartial("TBoxBottom"); %>
 			</div>
 		</div>
 	</div>

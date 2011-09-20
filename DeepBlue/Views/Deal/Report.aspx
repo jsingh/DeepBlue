@@ -15,18 +15,18 @@
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
 		<div class="heading">
-			<div class="leftcol">
-				<div class="title">
-					INVESTMENTS</div>
-				<div class="arrow">
-				</div>
-				<div class="pname">
-					DEAL REPORT<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%></div>
+		<div class="leftcol">
+			<div class="title">
+				INVESTMENTS</div>
+			<div class="arrow">
 			</div>
-			<div class="rightcol">
-				<%: Html.TextBox("FundName", "SEARCH FUND", new { @id = "FundName", @class = "wm",  @style = "width:200px" })%>
-			</div>
+			<div class="pname">
+				DEAL REPORT<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%></div>
 		</div>
+		<div class="rightcol">
+			<%: Html.TextBox("FundName", "SEARCH FUND", new { @id = "FundName", @class = "wm",  @style = "width:200px" })%>
+		</div>
+	</div>
 	</div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
@@ -62,10 +62,11 @@
 		<div class="line">
 		</div>
 		<div id="ReportContent" class="report-content">
-			<div class="gbox" id="ReportBox">
+			<div id="ReportBox">
+				<% Html.RenderPartial("TBoxTop"); %>
 				<table cellpadding="0" class="grid" cellspacing="0" border="0" id="ReportList">
 					<thead>
-						<tr class="report_tr">
+						<tr>
 							<th sortname="DealId" style="display: none">
 								DealId
 							</th>
@@ -101,6 +102,7 @@
 					<tbody>
 					</tbody>
 				</table>
+				<% Html.RenderPartial("TBoxBottom"); %>
 			</div>
 			<br />
 			<br />
@@ -148,7 +150,8 @@
                </thead>
 			</table>
 			</div>
-			<table id="tblUnderlyingFund" class="grid" cellpadding="0" cellspacing="0" border="0">
+			<div class="gbox">
+			<table id="tblUnderlyingFund" class="grid ngrid" cellpadding="0" cellspacing="0" border="0">
 				<thead>
 					<tr class="tblUnderlyingFund_tr">
 						<th style="width:23%">
@@ -221,6 +224,7 @@
 				</tfoot>
 				{{/if}}
 			</table>
+			</div>
 			<br/>
 			<div class="gbox">
             <table cellpadding="0" cellspacing="0" border="0" class="grid">
@@ -234,7 +238,7 @@
 			</table>
 			</div>
 			<div class="gbox">
-			<table id="tblUnderlyingDirect" class="grid" cellpadding="0" cellspacing="0" border="0">
+			<table id="tblUnderlyingDirect" class="grid ngrid" cellpadding="0" cellspacing="0" border="0">
 				<thead>
 					<tr class="tblUnderlyingDirect_tr">
 						<th style="width: 15%">

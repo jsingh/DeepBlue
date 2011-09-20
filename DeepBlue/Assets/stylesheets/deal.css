@@ -183,6 +183,11 @@ h4 a {
 	font-size: 11px;
 	font-weight: bold;
 }
+.expandcontainer{
+	float:left;
+	width:90%;
+	padding-left:65px;
+}
 #SellerInfo {
 	background-color: #E9EAEC;
 	float: left;
@@ -191,7 +196,7 @@ h4 a {
 .headerbar {
 	color: #fff;
 	font-size: 14px;
-	padding: 0px 0 0 65px;
+	/*padding: 0px 0 0 65px;*/
 }
 .headerbar .leftcol {
 	float: left;
@@ -254,7 +259,7 @@ h4 a {
 	background-repeat: no-repeat;
 	float: right;
 	height: 9px;
-	margin-right: 132px;
+	/*margin-right: 132px;*/
 	margin-top: 21px;
 	width: 16px;
 }
@@ -266,13 +271,13 @@ h4 a {
 }
 #SaveDealBox {
 	display: none;
-	float: right;
-	width: auto;
-	margin: 40px 40px 50px 0;
+	float: left;
+	width: 90%;
+	margin: 40px 0px 50px 68px;
 }
 #AddDealDocument {
 	width: 1007px;
-	margin: 20px auto 0 15px;
+	margin: 20px auto 0 0px;
 }
 #AddNewIssuer{
 	  background-image: url("../images/dir_subheadbg.png");

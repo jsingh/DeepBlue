@@ -3,7 +3,7 @@
 <div class="content">
 	<%: Html.Hidden("IssuerId", "${IssuerId}")%>
 	<%: Html.Hidden("UnderlyingFundId", "${UnderlyingFundId}")%>
-	<div class="editor-label">
+	<div class="editor-label-first">
 		<label>
 			GP</label>
 	</div>
@@ -24,7 +24,7 @@
 	<div class="editor-field">
 		<%: Html.DropDownList("FundTypeId", Model.UnderlyingFundTypes, new { @val = "${FundTypeId}" })%>
 	</div>
-	<div class="editor-label">
+	<div class="editor-label-first">
 		<label>
 			Vintage Year</label>
 	</div>
@@ -45,7 +45,7 @@
 	<div class="editor-field">
 		<%: Html.TextBox("TerminationYear", "${TerminationYear}", new { @class = "wm", @onkeydown = "return jHelper.isNumeric(event);" })%>
 	</div>
-	<div class="editor-label">
+	<div class="editor-label-first">
 		<label>
 			Reporting</label>
 	</div>
@@ -66,7 +66,7 @@
 	<div class="editor-field" style="width: auto;">
 		<%: Html.CheckBox("IsFeesIncluded", false, new { @val = "${IsFeesIncluded}" })%>
 	</div>
-	<div class="editor-label">
+	<div class="editor-label-first">
 		<label>
 			Industry</label>
 	</div>
@@ -80,12 +80,12 @@
 	<div class="editor-field">
 		<%: Html.DropDownList("GeographyId", Model.Geographyes, new { @val = "${GeographyId}" })%>
 	</div>
-	<div class="editor-label">
+	<div class="editor-label-first">
 		<label>
 			Description</label>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextArea("Description", "${Description}", new { @style = "width:519px;height:160px;" })%>
+		<%: Html.TextArea("Description", "${Description}", new { @style = "width:486px;height:160px;" })%>
 	</div>
 </div>
 <div id="ExpandUnderlying">
@@ -106,10 +106,8 @@
 					Contact Information
 				</div>
 			</div>
-			<div class="rightuarrow">
-			</div>
 		</div>
-		<div class="detail" style="display: none; padding-left: 95px;" id="ContactInformation">
+		<div class="detail" style="display: none; padding-left: 36px;" id="ContactInformation">
 			<div class="editor-label">
 				<label>
 					Contact Name</label>
@@ -143,15 +141,15 @@
 					Registered Address</label>
 			</div>
 			<div class="editor-field">
-				<%: Html.TextArea("Address", "${Address}", new { @style = "width:515px;height:140px;" })%>
+				<%: Html.TextArea("Address", "${Address}", new { @style = "width:484px;height:140px;" })%>
 			</div>
 			<div class="savebox">
-				<div class="btn" id="CILoading">
-				</div>
-				<div class="btn">
-					<%: Html.Image("Save.png", new { @onclick = "javascript:underlyingFund.saveTemp('CILoading')" })%></div>
 				<div class="resetbtn">
 					<%: Html.Span("Reset", new { @onclick = "javascript:underlyingFund.reset('ContactInformation');" })%></div>
+				<div class="btn">
+					<%: Html.Image("Save_active.png", new { @onclick = "javascript:underlyingFund.saveTemp('CILoading')" })%></div>
+				<div class="btn" id="CILoading">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -172,12 +170,10 @@
 					Bank Information
 				</div>
 			</div>
-			<div class="rightuarrow">
-			</div>
 		</div>
-		<div class="detail" style="display: none; padding-left: 95px;" id="BankInformation">
+		<div class="detail" style="display: none; padding-left: 6px;" id="BankInformation">
 			<div>
-				<div class="editor-label">
+				<div class="editor-label-first">
 					<%: Html.Label("Bank Name")%>
 				</div>
 				<div class="editor-field">
@@ -189,7 +185,7 @@
 				<div class="editor-field">
 					<%: Html.TextBox("Account", "${Account}", new { @class = "wm" })%>
 				</div>
-				<div class="editor-label">
+				<div class="editor-label-first">
 					<%: Html.Label("ABA Number")%>
 				</div>
 				<div class="editor-field">
@@ -201,7 +197,7 @@
 				<div class="editor-field">
 					<%: Html.TextBox("Swift", "${Swift}", new { @class = "wm" })%>
 				</div>
-				<div class="editor-label">
+				<div class="editor-label-first">
 					<%: Html.Label("FFC Number")%>
 				</div>
 				<div class="editor-field">
@@ -213,7 +209,7 @@
 				<div class="editor-field">
 					<%: Html.TextBox("IBAN", "${IBAN}", new { @class = "wm" })%>
 				</div>
-				<div class="editor-label">
+				<div class="editor-label-first">
 					<%: Html.Label("Reference")%>
 				</div>
 				<div class="editor-field">
@@ -225,7 +221,7 @@
 				<div class="editor-field">
 					<%: Html.TextBox("AccountOf", "${AccountOf}", new { @class = "wm" })%>
 				</div>
-				<div class="editor-label">
+				<div class="editor-label-first">
 					<%: Html.Label("Attention")%>
 				</div>
 				<div class="editor-field">
@@ -238,13 +234,13 @@
 					<%: Html.TextBox("AccountPhone", "${AccountPhone}", new { @class = "wm" })%>
 				</div>
 			</div>
-			<div class="savebox">
-				<div class="btn" id="BILoading">
-				</div>
-				<div class="btn">
-					<%: Html.Image("Save.png", new { @onclick = "javascript:underlyingFund.saveTemp('BILoading')" })%></div>
+			<div class="savebox" style="width:652px;">
 				<div class="resetbtn">
 					<%: Html.Span("Reset", new { @onclick = "javascript:underlyingFund.reset('BankInformation');" })%></div>
+				<div class="btn">
+					<%: Html.Image("Save_active.png", new { @onclick = "javascript:underlyingFund.saveTemp('BILoading')" })%></div>
+				<div class="btn" id="BILoading">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -265,12 +261,10 @@
 					Document Information
 				</div>
 			</div>
-			<div class="rightuarrow">
-			</div>
 		</div>
-		<div class="detail" style="display: none; padding-left: 65px;" id="DocumentInformation">
+		<div class="detail" style="display: none; padding-left: 29px;" id="DocumentInformation">
 			<%using (Html.Form(new { @id = "frmDocumentInfo", @onsubmit = "return underlyingFund.saveDocument(this);" })) {%>
-			<div class="editor-label">
+			<div class="editor-label-first">
 				<%: Html.Label("Document Type") %>
 			</div>
 			<div class="editor-field">
@@ -285,7 +279,7 @@
 			<div class="editor-label">
 				<%: Html.DropDownList("UploadTypeId", Model.UploadTypes, new { @style = "width:85px", @onchange = "javascript:underlyingFund.changeUploadType(this);" })%>
 			</div>
-			<div id="FileRow" class="editor-field">
+			<div id="FileRow" class="editor-field" style="padding-left:12px;">
 				<div  style="padding: 0; margin: 0 0; width: auto;float:left;">
 					<%: Html.File("File", new { @id = "fileToUpload" })%></div>
 			</div>
@@ -298,14 +292,15 @@
 			<div class="editor-label" style="width: 317px">
 			</div>
 			<div class="editor-field" style="width: auto;">
-				<%: Html.ImageButton("Save.png", new { @id = "btnSaveDocument" })%>
+				<%: Html.ImageButton("Save_active.png", new { @id = "btnSaveDocument" })%>
 			</div>
 			<div class="cell" style="padding: 0; margin: 0;">
 				<%: Html.Span("", new { @id = "SpnDocLoading" })%>
 			</div>
-			<div style="clear: both; width: 70%; padding-left: 52px;">
+			<div style="clear: both; width: 70%; padding-left: 38px;">
 				<br />
-				<table id="DocumentList" cellpadding="0" cellspacing="0" border="0">
+				<% Html.RenderPartial("TBoxTop"); %>	
+				<table id="DocumentList" cellpadding="0" cellspacing="0" border="0" class="grid">
 					<thead>
 						<tr>
 							<th style="display: none">
@@ -327,15 +322,18 @@
 					<tbody>
 					</tbody>
 				</table>
+				<% Html.RenderPartial("TBoxBottom"); %>
 			</div>
 			<%} %>
 		</div>
 	</div>
 	<div class="line">
 	</div>
-	<div style="padding-top: 50px; float: right; padding-right: 200px;">
-		<span id="SpnSaveLoading"></span><span>
-			<%: Html.ImageButton("adduf.png", new { @id = "btnSave" })%>
-		</span>
+	<div class="btnbox">
+		<div style="padding: 30px 0px; float: right;">
+			<span id="SpnSaveLoading"></span><span>
+				<%: Html.ImageButton("adduf_active.png", new { @id = "btnSave" })%>
+			</span>
+		</div>
 	</div>
 </div>

@@ -25,7 +25,7 @@
 	<td class="ralign">
 		<%: Html.Hidden("UnderlyingFundNAVId","${UnderlyingFundNAVId}")%>
 		<%: Html.Span("", new { id = "UpdateLoading" })%>
-		<%: Html.Image("Save.png", new { @id = "add", @class = "default-button {{if UnderlyingFundNAVId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addUFV(this,${UnderlyingFundNAVId});" })%>
+		<%: Html.Image("Save_active.png", new { @id = "add", @class = "default-button {{if UnderlyingFundNAVId>0}}hide{{/if}}", @onclick = "javascript:dealActivity.addUFV(this,${UnderlyingFundNAVId});" })%>
 		{{if UnderlyingFundNAVId>0}} &nbsp;&nbsp;<%: Html.Image("Edit.png", new { @class = "default-button gbutton show", @onclick = "javascript:dealActivity.editUFV(this,${UnderlyingFundNAVId});" })%>&nbsp;&nbsp;<%: Html.Image("largedel.png", new { @class = "default-button gbutton", @onclick = "javascript:dealActivity.deleteUFV(${FundId},${UnderlyingFundNAVId},this);" })%>
 		{{/if}}
 	</td>

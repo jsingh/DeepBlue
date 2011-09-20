@@ -10,6 +10,7 @@
 	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.JavascriptInclueTag("Deal.js")%>
+	<%=Html.JavascriptInclueTag("Footer.js")%>
 	<%=Html.JavascriptInclueTag("DealExpense.js")%>
 	<%=Html.JavascriptInclueTag("DealUnderlyingFund.js")%>
 	<%=Html.JavascriptInclueTag("DealUnderlyingDirect.js")%>
@@ -67,10 +68,10 @@
 		<div id="DealUnderlyingDirects" class="content">
 		</div>
 		<div class="editor-field auto" id="SaveDealBox">
-			<div class="cell" style="text-align: right">
+			<div class="cell auto" style="float:right;">
+				<%: Html.ImageButton("cnewdeal_active.png", new { @id = "btnDummySaveDeal", onclick = "javascript:deal.saveDeal();" })%></div>
+			<div class="cell" style="float:right;text-align:right;">
 				<%: Html.Span("", new { id = "UpdateLoading" })%></div>
-			<div class="cell auto">
-				<%: Html.ImageButton("cnewdeal.png", new { @id = "btnDummySaveDeal",  onclick = "javascript:deal.saveDeal();" })%></div>
 		</div>
 	</div>
 	<div id="UpdateTargetId" style="display: none">

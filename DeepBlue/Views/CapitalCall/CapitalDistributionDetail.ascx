@@ -4,7 +4,7 @@
 	<div class="line">
 	</div>
 	<div class="cc-box-det dist-detail">
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<label>
 				Capital Distributed-</label>
 		</div>
@@ -18,7 +18,7 @@
 		<div class="editor-field">
 			${formatCurrency(ReturnManagementFees)}
 		</div>
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<label>
 				Return Fund Expense-</label>
 		</div>
@@ -40,11 +40,14 @@
 			${formatCurrency(ProfitsReturned)}
 		</div>
 	</div>
+	{{if CapitalDistributions.length>0}}
 	<div class="line">
 	</div>
+	{{/if}}
 	<div class="cc-box-det cc-det-report">
 		{{if CapitalDistributions.length>0}}
-		<div class="gbox">
+		<div>
+			<% Html.RenderPartial("TBoxTop"); %>
 			<table cellpadding="0" cellspacing="0" class="grid">
 				<thead>
 					<tr>
@@ -110,6 +113,7 @@
 					{{/each}}
 				</tbody>
 			</table>
+			<% Html.RenderPartial("TBoxBottom"); %>
 		</div>
 		{{/if}}
 	</div>

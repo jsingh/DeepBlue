@@ -150,7 +150,7 @@
 				<%: Html.Span("", new { id = "UpdateLoading" })%></div>
 			<div class="editor-button">
 				<div style="float: left; padding: 0 0 10px 5px;">
-					<%: Html.ImageButton("submit.png", new { @class="default-button", @onclick = "javascript:capitalCallReceive.onSubmit('CapitalCallReceive');" })%>
+					<%: Html.ImageButton("submit_active.png", new { @class="default-button", @onclick = "javascript:capitalCallReceive.onSubmit('CapitalCallReceive');" })%>
 				</div>
 				<div style="float: left; padding: 0 0 10px 5px;">
 					<%: Html.Span("", new { @id = "UpdateLoading" })%>

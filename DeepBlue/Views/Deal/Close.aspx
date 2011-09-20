@@ -7,6 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("DealClose.js")%>
+	<%=Html.JavascriptInclueTag("Footer.js")%>
 	<%=Html.JavascriptInclueTag("jAjaxTable.js")%>
 	<%=Html.StylesheetLinkTag("deal.css") %>
 	<%=Html.StylesheetLinkTag("dealclose.css") %>
@@ -24,7 +25,7 @@
 				</div>
 			</div>
 			<div class="rightcol">
-				<div style="margin: 0; padding: 0 10px 0 0; float: left;">
+				<div style="margin: 0; padding: 0 0 0 0; float: left;">
 					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none;" })%>
 				</div>
 				<div style="float: left">
@@ -43,10 +44,10 @@
 						<label>
 							<%: Html.Span("", new { @id = "SpnFundName" })%></label>
 					</div>
-					<div style="text-align: left;" class="cell">
+					<div style="text-align: left;padding-left:20px;" class="cell">
 						<label>
 							Deal No:-<%: Html.Span("", new { @id = "SpnDealNo", @style = "padding-left:10px;" })%></label></div>
-					<div style="margin-left: 25px;" class="cell auto">
+					<div style="margin-left: 8px;" class="cell auto">
 						<label>
 							Deal Name-<%: Html.Span("", new { @id = "SpnDealName", @style = "padding-left:10px;" })%></label></div>
 					<div id="LoadingDetail" class="cell auto">
@@ -69,7 +70,8 @@
 			</div>
 			<div class="dc-box">
 				<div class="section" style="margin-top: 0px">
-					<div class="gbox" style="width: 90%;">
+					<div style="width: 90%;padding-left:65px;">
+						<% Html.RenderPartial("TBoxTop"); %>
 						<table id="DealCloseList" class="grid" cellpadding="0" cellspacing="0" border="0"
 							style="width: 100%;">
 							<thead>
@@ -95,6 +97,7 @@
 							<tbody>
 							</tbody>
 						</table>
+						<% Html.RenderPartial("TBoxBottom"); %>
 					</div>
 				</div>
 			</div>
@@ -113,11 +116,13 @@
 						Deal Close<%}%>
 					</div>
 					<div id="NDExpandBox" class="expandheader expandsel" style="display: block;">
-						<div class="expandtitle" style="display: block;">
-							<div class="expandtitle">
-								<%: Html.Span("New Deal Close", new { @id = "SpnDCTitle" })%></div>
-						</div>
-						<div class="rightuarrow">
+						<div class="expandcontainer">
+							<div class="expandtitle" style="display: block;">
+								<div class="expandtitle">
+									<%: Html.Span("New Deal Close", new { @id = "SpnDCTitle" })%></div>
+							</div>
+							<div class="rightuarrow">
+							</div>
 						</div>
 					</div>
 					<div id="NDDetail" class="detail" style="display: block">
@@ -137,7 +142,7 @@
 						</div>
 						<div class="dc-box tabledetail">
 							<div class="gbox" style="width: 90%">
-								<table id="DealUnderlyingFundList" class="grid" cellpadding="0" cellspacing="0" border="0"
+								<table id="DealUnderlyingFundList" class="grid ngrid" cellpadding="0" cellspacing="0" border="0"
 									style="width: 100%;">
 									<thead>
 										<tr>
@@ -179,7 +184,7 @@
 						</div>
 						<div class="dc-box tabledetail">
 							<div class="gbox" style="width: 90%">
-								<table id="DealUnderlyingDirects" class="grid" cellpadding="0" cellspacing="0" border="0"
+								<table id="DealUnderlyingDirects" class="grid ngrid" cellpadding="0" cellspacing="0" border="0"
 									style="width: 100%;">
 									<thead>
 										<tr>
@@ -206,7 +211,7 @@
 						</div>
 						<div class="savefooter">
 							<div class="cell">
-								<%: Html.ImageButton("CloseDeal.png", new { @style="cursor:pointer", @onclick = "javascript:dealClose.saveDealClose('SpnDCloseLoading');" })%>
+								<%: Html.ImageButton("CloseDeal_active.png", new { @style = "cursor:pointer", @onclick = "javascript:dealClose.saveDealClose('SpnDCloseLoading');" })%>
 							</div>
 							<div class="cell">
 								<%: Html.Span("", new { @id = "SpnDCloseLoading" } )%>
@@ -229,24 +234,26 @@
 						</div>
 					</div>
 					<div id="FDExpandBox" class="expandheader expandsel" style="display: block">
-						<div class="expandtitle" style="display: block;">
-							<div class="expandtitle">
-								<%: Html.Span("Final Deal Close")%></div>
-						</div>
-						<div style="display: block; float: left;">
-							<%: Html.TextBox("CloseDate", "", new { @id = "Final_CloseDate" })%></div>
-						<div class="rightuarrow">
+						<div class="expandcontainer">
+							<div class="expandtitle" style="display: block;">
+								<div class="expandtitle">
+									<%: Html.Span("Final Deal Close")%></div>
+							</div>
+							<div style="display: block; float: left;">
+								<%: Html.TextBox("CloseDate", "", new { @id = "Final_CloseDate" })%></div>
+							<div class="rightuarrow">
+							</div>
 						</div>
 					</div>
 					<div class="detail" style="display: block">
-						<div class="dc-box">
+						<div class="dc-box"><br />
 							<div class="closetitle" style="margin-top: 0">
 								<div class="title">
 									All Underlying Funds</div>
 							</div>
 							<div class="dc-box tabledetail">
 								<div class="gbox" style="width: 90%">
-									<table id="FinalDealUnderlyingFundList" class="grid" cellpadding="0" cellspacing="0"
+									<table id="FinalDealUnderlyingFundList" class="grid ngrid" cellpadding="0" cellspacing="0"
 										border="0" style="width: 100%;">
 										<thead>
 											<tr>
@@ -280,7 +287,7 @@
 							</div>
 							<div class="dc-box tabledetail">
 								<div class="gbox" style="width: 90%">
-									<table id="FinalDealUnderlyingDirects" class="grid" cellpadding="0" cellspacing="0"
+									<table id="FinalDealUnderlyingDirects" class="grid ngrid" cellpadding="0" cellspacing="0"
 										border="0" style="width: 100%;">
 										<thead>
 											<tr>
@@ -306,7 +313,7 @@
 						</div>
 						<div class="savefooter">
 							<div class="cell">
-								<%: Html.ImageButton("FCloseDeal.png", new { @style = "cursor:pointer", @onclick = "javascript:dealClose.saveFinalDealClose('SpnFinalDCloseLoading');" })%>
+								<%: Html.ImageButton("FCloseDeal_active.png", new { @style = "cursor:pointer", @onclick = "javascript:dealClose.saveFinalDealClose('SpnFinalDCloseLoading');" })%>
 							</div>
 							<div class="cell">
 								<%: Html.Span("", new { @id = "SpnFinalDCloseLoading" } )%>
@@ -430,17 +437,17 @@
 						{{/if}}
 					{{else}}
 						{{if IsFinalClose!=true && item.DealUnderlyingFundId==0}}
-							<%: Html.Image("Add.png", new { @id="Add", @onclick = "javascript:dealClose.saveDUF(this);" })%>
+							<%: Html.Image("add_active.png", new { @id="Add", @onclick = "javascript:dealClose.saveDUF(this);" })%>
 						{{/if}}
 					{{/if}}
 				</td>
 		</tr>
 	</script>
 	<script id="DUFundsTemplate" type="text/x-jquery-tmpl"> 
-	<tbody>
+	<tbody id="tbodyDealCloseUnderlyingFund">
 		{{each(i, df) DealUnderlyingFunds}}	{{tmpl(getRow((i+1),df,false)) "#DUFEditTemplate"}} {{/each}}
 	</tbody>
-	<tfoot>
+	<tfoot id="tfootDealCloseUnderlyingFund">
 		<tr>
 			<td>
 			</td>
@@ -538,19 +545,19 @@
 					{{/if}}
 				{{else}}
 					{{if IsFinalClose!=true && item.DealUnderlyingDirectId==0}}
-				<%: Html.Image("Add.png", new { @id="Add", @onclick = "javascript:dealClose.saveDUD(this);" })%>
+				<%: Html.Image("add_active.png", new { @id="Add", @onclick = "javascript:dealClose.saveDUD(this);" })%>
 				{{/if}}
 				{{/if}}
 			</td>
 		</tr>
 	</script>
 	<script id="DUDirectsTemplate" type="text/x-jquery-tmpl">
-		<tbody>
+		<tbody id="tbodyDealCloseUnderlyingDirect">
 			{{each(i, direct)  DealUnderlyingDirects}}
 				{{tmpl(getRow((i+1),direct,false)) "#DUDEditTemplate"}}
 			{{/each}}
 		</tbody>
-		<tfoot>
+		<tfoot id="tfootDealCloseUnderlyingDirect">
 			<tr>
 				<td>
 				</td>

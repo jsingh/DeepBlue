@@ -8,8 +8,9 @@ body {
 	color: #000;
 	font-family: Calibri, Arial;
 	font-size: 12px;
-	background-image: url("../images/bg.jpg");
-	background-repeat: repeat;
+	/*background-image: url("../images/bg.jpg");
+	background-repeat: repeat;*/
+	background-color:#E9E9E9;
 }
 input, select {
 	font-family: Calibri, Arial;
@@ -39,6 +40,7 @@ h2 {
 }
 a {
 	text-decoration: none;
+	color:#0D538F
 }
 a img {
 	border: 0px;
@@ -116,7 +118,7 @@ a img {
 	width: 100%;
 	clear: both;
 }
-.editor-label {
+.editor-label, .editor-label-first, .editor-label-second{
 	float: left;
 	text-align: right;
 	font-weight: bold;
@@ -124,13 +126,38 @@ a img {
 	color: #000;
 	width: 135px;
 }
+.editor-label-first, .editor-label-second{
+	padding: 8px 5px 8px 0px;
+}
+#NewDeal .editor-label-first{
+	width:71px;
+	padding-right:20px;
+}
+#DealDocuments .editor-label-first{
+	width:78px;
+	padding-right:12px;
+}
+#DealSellerInfo .editor-label-first{
+	width:86px;
+}
+#AddUnderlyingFund .editor-label-first{
+	width:129px;
+	padding-right:37px;
+}
+#BankInformation  .editor-label-first{
+	padding-right:31px;
+}
+#DocumentInformation .editor-label-first{
+	width:116px;
+	padding-right:21px;
+}
 .editor-field {
 	text-align: left;
 	float: left;
 	clear: right;
 	color: #000;
 }
-.editor-label, .editor-field {
+.editor-label,.editor-field {
 	padding: 8px 5px;
 }
 
@@ -218,11 +245,13 @@ label {
 	width: 697px;
 	height: 34px;
 	text-align: left;
-	color: #000;
-	font-size: 13px;
+	color: #ffffff;
+	font-size: 17px;
 	font-weight: bold;
 	line-height: 34px;
 	width: 97%;
+	text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);	
 }
 .box-content {
 	border: solid 1px #C1ACAC;
@@ -310,8 +339,8 @@ label {
 	float: left;
 }
 .edit-investor {
-	width: 98%;
-	margin: 10px;
+	width: 90%;
+	margin: 10px 10px 10px 65px;
 	float: left;
 }
 .box {
@@ -506,10 +535,12 @@ h2 {
 	list-style: none;
 	float: left;
 	padding: 13px 16px 13px 0px;
-	color: #243352;
+	color: #1B4581;
+	font-family:Arial;
+	font-size:12px;
 }
 .mdiv li a {
-	color: #27599E;
+	color: #1B4581;
 	padding: 5px;
 }
 .topmenu {
@@ -533,6 +564,8 @@ h2 {
 	background-repeat: no-repeat;
 	margin-top: -23px;
 	padding-top: 39px;
+	font-family:Myriad Pro;
+	font-size:11px;
 }
 #menu #fundmnu .mnu-name {
 	background-image: url(../images/fund.png);
@@ -589,8 +622,8 @@ h2 {
 .heading {
 	border: 0px solid red;
 	float: left;
-	padding: 12px 0 12px 0;
-	width: 100%;
+	padding: 12px 0 12px 65px;
+	width: 90%;
 }
 .heading .title {
 	color: #000;
@@ -616,11 +649,11 @@ h2 {
 .heading .leftcol {
 	float: left;
 	border: solid 0px red;
-	margin-left: 65px;
+	/*margin-left: 65px;*/
 }
 .heading .rightcol {
 	float: right;
-	margin: -5px 65px 0 0;
+	margin: -5px 0px 0 0;
 	border: solid 0px red;
 	width: auto;
 }
@@ -654,8 +687,10 @@ h2 {
 	height: 36px;
 }
 .mdiv .sel {
-	color: #021E43;
+	color: #ffffff;
 	font-weight: bold;
+	text-shadow: #68717A 1px 1px 1px;
+	filter: Shadow(Color=#68717A,Direction=135,Strength=2);
 }
 .subul a {
 	color: #27599E;
@@ -714,7 +749,7 @@ h2 {
 }
 .hasDatepicker {
 	background-image: url(../images/datepicker.png);
-	background-position: right center;
+	background-position: 98% center;
 	background-repeat: no-repeat;
 }
 input.ui-autocomplete-loading[type="text"] {
@@ -779,6 +814,7 @@ input.ui-autocomplete-loading[type="text"] {
 .grid .row td, .grid .arow td {
 	background-color: #F5F5F5;
 	font-size: 12px;
+	font-family:Arial;
 	white-space: nowrap;
 }
 .grid .row td span, .grid .arow td span {
@@ -804,7 +840,12 @@ input.ui-autocomplete-loading[type="text"] {
 	background-color: #BABFC5;
 	color: #000000;
 	font-size: 12px;
+	font-family:Arial;
 	white-space: nowrap;
+}
+.grid thead tr th, .grid thead tr td {
+	text-shadow: #F7F1F1 1px 1px 1px;
+	/*filter: Shadow(Color=#F7F1F1,Direction=135,Strength=2);*/
 }
 .grid tfoot tr td {
 	font-size: 13px;
@@ -954,6 +995,9 @@ input.ui-autocomplete-loading[type="text"] {
 	height: 35px;
 	line-height: 35px;
 }
+.headerbar{
+	line-height: 30px;
+}
 /* jQuery Transform */
 .jqHidden {
 	display: none;
@@ -977,10 +1021,10 @@ input.ui-autocomplete-loading[type="text"] {
 	padding: 8px 10px 0 0px;
 }
 .jqCheckBox-Select {
-	background-image: url(../images/checktabsel.gif);
+	background-image: url(../images/checktabsel.png);
 	background-repeat: no-repeat;
 	width: 68px;
-	color: #03122f;
+	color: #ffffff;
 }
 .jqComboBox {
 	float: left;
@@ -1027,3 +1071,169 @@ input.ui-autocomplete-loading[type="text"] {
 	margin-top: 2px;
 }
 /* End jQuery Transform */
+
+.breadcrumb{
+	width:90%;
+	margin-left:65px;
+	float:left;
+}
+.breadcrumb .heading .leftcol{
+	margin-left:0px;
+}
+.breadcrumb .heading .rightcol{
+	margin-right:0px
+}
+.breadcrumb .editor-field{
+	padding-right:0px;
+}
+
+/* New Grid Style */
+.grid thead tr, .grid .row, .grid .arow, .grid tfoot tr{
+	background-repeat:  repeat-x;
+	background-color:inherit;
+}
+.grid thead tr
+,.flexigrid .grid thead tr{
+	background-image: url(../images/table_head_bg.gif);
+}
+.grid .row
+,.flexigrid .grid tr
+,tr.row{
+	background-image: url(../images/table_row_odd.gif);
+}
+.grid .arow
+,.flexigrid tr.erow
+,tr.arow{
+	background-image: url(../images/table_row_even.gif);
+}
+.grid tfoot tr{
+	background-image: url(../images/total_bg.gif);
+}
+.grid tfoot tr td{
+	font-weight:bold;
+}
+.grid thead tr th, .grid thead tr td,.grid .row td, .grid .arow td, .grid tfoot tr td{
+	background-color:inherit;
+	/*font-family:Arial;
+	font-size:12px;*/
+}
+.grid{
+	border:solid 0px #A7BACB;
+}
+	
+
+/*.ngrid thead tr th, .ngrid thead tr td{
+	text-shadow: #F7F1F1 1px 1px 1px;
+	filter: Shadow(Color=#F7F1F1,Direction=135,Strength=2);	
+}*/
+
+.tblbox{
+	padding:0px;
+	margin:0px;
+	width:100%;
+	
+}
+.tblbox .topl{
+	background-image: url(../images/th_l.png);
+	background-repeat:no-repeat;
+	background-position:left top;
+}
+.tblbox .topc{
+	background-image: url(../images/th_c.png);
+	background-repeat:repeat-x;
+	background-position:left top;
+	width:auto;
+}
+.tblbox .topr{
+	background-image: url(../images/th_r.png);
+	background-repeat:no-repeat;
+	background-position:right top;
+}
+.tblbox .bottoml{
+	background-image: url(../images/total_l.png);
+	background-repeat:no-repeat;
+	background-position:left bottom;
+}
+.tblbox .bottomc{
+	background-image: url(../images/total_c.png);
+	background-repeat:repeat-x;
+	background-position:left bottom;
+	width:auto;
+}
+.tblbox .bottomr{
+	background-image: url(../images/total_r.png);
+	background-repeat:no-repeat;
+	background-position:right bottom;
+}
+.tblbox .middlel{
+	border-left:1px solid #A7BACB;
+}
+.tblbox .middlec{
+	border-left:1px solid #A7BACB;
+	border-right:1px solid #A7BACB;
+}
+.tblbox .middler{
+	border-right:1px solid #A7BACB;
+}
+.tblbox .topl, .tblbox .topc, .tblbox .topr, 
+.tblbox .bottoml, .tblbox .bottomc, .tblbox .bottomr{
+	height:4px;
+}
+.tblbox .topl, .tblbox .topr, 
+.tblbox .bottoml, .tblbox .bottomr{
+	width:4px;
+}
+.tblbox .empty{
+	width:4px;
+	height:4px;
+}
+.tblbox .emptyc{
+	height:4px;
+}
+.grid tfoot tr td{
+	background-image:none;
+}
+.grid #MakeNewDUFund tr
+,.grid #MakeNewDUDirect tr
+,.grid #MakeNewDEHeader tr
+,.grid tbody tr.newrow{
+	background-image:none;
+}
+/* End New Grid Style */
+
+.btnbox{
+	float:left;
+	width:90%;
+	padding-left:65px;
+}
+
+
+/* -------------
+ * Checkboxes
+ * ------------- */
+span.jqTransformCheckboxWrapper {
+  display: block;
+  float: left;
+  padding-left:3px;
+}
+a.jqTransformCheckbox {
+  background: transparent url(../images/jcheckbox.png);
+  background-repeat: no-repeat;
+  background-position: center top;
+  vertical-align: middle;
+  height: 19px;
+  width: 18px;
+  display: block; /*display: -moz-inline-block;*/
+}
+/* -------------
+ * Checked - Used for both Radio and Checkbox
+ * ------------- */
+a.jqTransformChecked {
+  background-position: center bottom;
+}
+/* -------------
+ * Hidden - used to hide the original form elements
+ * ------------- */
+.jqTransformHidden {
+  display: none;
+}

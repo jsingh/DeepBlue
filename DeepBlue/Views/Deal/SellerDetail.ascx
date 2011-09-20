@@ -16,7 +16,7 @@
 	<div class="fieldbox">
 		<div class="section">
 			<div class="dealdetail">
-				<div class="editor-label">
+				<div class="editor-label-first">
 					<%: Html.LabelFor(model => model.SellerName) %>
 				</div>
 				<div class="editor-field auto">
@@ -28,7 +28,7 @@
 				<div class="editor-field auto">
 					<%: Html.TextBox("ContactName","${ContactName}") %>
 				</div>
-				<div class="editor-label">
+				<div class="editor-label-first">
 					<%: Html.LabelFor(model => model.CompanyName) %>
 				</div>
 				<div class="editor-field auto">
@@ -40,7 +40,7 @@
 				<div class="editor-field auto">
 					<%: Html.TextBox("Phone","${Phone}")%>
 				</div>
-				<div class="editor-label">
+				<div class="editor-label-first">
 					<%: Html.LabelFor(model => model.Email) %>
 				</div>
 				<div class="editor-field auto">
@@ -55,9 +55,9 @@
 				<div class="editor-label">
 				</div>
 				<%: Html.Hidden("DealId", "${DealId}")%>
-				<div class="editor-field auto" style="padding-left: 32%; width: auto;">
+				<div class="editor-field auto" style="padding-left: 27%; width: auto;">
 					<div class="cell auto">
-						<%: Html.ImageButton("Save90.png", new { style = "border:0;" })%></div>
+						<%: Html.ImageButton("Save_active.png", new { style = "border:0;" })%></div>
 					<div class="cell auto">
 						<b><%: Html.Anchor("Reset", "javascript:deal.sellerInfoReset();")%></b>
 					</div>

@@ -27,7 +27,7 @@
 			<div class="search">
 			</div>
 			<div class="editor-row">
-				<div class="editor-label" style="width: auto">
+				<div class="editor-label" style="width: auto;padding-left:0px;">
 					<%: Html.Label("Investor") %>
 				</div>
 				<div class="editor-field" style="width: auto">
@@ -103,7 +103,7 @@
 									<%: Html.DropDownListFor(model => model.InvestorTypeId,Model.InvestorTypes) %>
 								</div>
 								<div class="editor-field" style="clear: both; margin-left: 45%;">
-									<%: Html.ImageButton("submit.png", new { @class="default-button" })%>
+									<%: Html.ImageButton("submit_active.png", new { @class="default-button" })%>
 									<%: Html.Span("", new { @id = "UpdateLoading" })%>
 								</div>
 							</div>
@@ -160,8 +160,8 @@
 		<div class="editor-label">
 		</div>
 		<div class="editor-field" style="width: 220px">
-			<%: Html.Image("Save.png", new { @style = "cursor:pointer", @onclick = "javascript:transactionController.addFundClose();" })%>
-			&nbsp;&nbsp;<%: Html.Image("Cancel.png", new { @style = "cursor:pointer", @onclick = "javascript:transactionController.cancelFundClose();" })%>
+			<%: Html.Image("Save_active.png", new { @style = "cursor:pointer", @onclick = "javascript:transactionController.addFundClose();" })%>
+			&nbsp;&nbsp;<%: Html.Image("Cancel_active.png", new { @style = "cursor:pointer", @onclick = "javascript:transactionController.cancelFundClose();" })%>
 			&nbsp;&nbsp;<%: Html.Span("", new { @id = "Loading" })%>
 		</div>
 		<%}%>

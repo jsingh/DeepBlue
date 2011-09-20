@@ -93,8 +93,8 @@
 		<%: Html.Span("",new { @id = "UpdateLoading" })%>
 	</div>
 	<div class="editor-field">
-		&nbsp;&nbsp;<%: Html.Image("Save90.png", new { @class = "default-button", @onclick = "return editTransaction.save(this);" })%>
-		&nbsp;&nbsp;<%: Html.Image("Close.png", new { @class="default-button", @onclick = "$('#EditTransaction').dialog('close');" })%>
+		&nbsp;&nbsp;<%: Html.Image("Save_active.png", new { @class = "default-button", @onclick = "return editTransaction.save(this);" })%>
+		&nbsp;&nbsp;<%: Html.Image("Close_active.png", new { @class="default-button", @onclick = "$('#EditTransaction').dialog('close');" })%>
 	</div>
 </div>
 <% } %>

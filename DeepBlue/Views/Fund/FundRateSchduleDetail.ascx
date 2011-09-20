@@ -4,7 +4,7 @@
 	<%: Html.jQueryTemplateHidden("${index}_IsDelete", "", new { @id = "IsDelete" })%>
 	<%: Html.jQueryTemplateHidden("${index}_FundRateScheduleId", "${FRS.FundRateScheduleId}", new { @id = "FundRateScheduleId" })%>
 	<div style="float: left; width: 100%; margin: 10px 0;">
-		<div class="editor-label" style="float: left; width: auto;">
+		<div class="editor-label" style="float: left; width: auto;padding-left:0px;">
 			<%: Html.Label("Investor") %></div>
 		<div class="editor-field" style="float: left; width: auto;">
 			&nbsp;<%: Html.DropDownList("${index}_InvestorTypeId", Model.InvestorTypes, new { @id = "InvestorTypeId", @style="width:180px", @onchange="javascript:fund.changeInvestorType(this);", @class="investortype ddlist" , @val = "${FRS.InvestorTypeId}" } )%>
@@ -19,10 +19,11 @@
 		</div>
 	</div>
 	<div class="rate-grid">
-		<div class="gbox">
+		<div>
 			<%: Html.jQueryTemplateHidden("${index}_IsScheduleChange", "" , new { @id = "IsScheduleChange" })%>
 			<%: Html.jQueryTemplateHidden("ScheduleIndex", "${index}", new { @id = "ScheduleIndex" })%>
 			<%: Html.jQueryTemplateHidden("${index}_Tiers", "${FRS.FundRateScheduleTiers.length}", new { @id = "TiersCount" })%>
+			<% Html.RenderPartial("TBoxTop"); %>
 			<table cellpadding="0" cellspacing="0" border="0" class="grid" id="RateScheduleList">
 				<thead>
 					<tr>
@@ -62,6 +63,7 @@
 					</tr>
 				</tfoot>
 			</table>
+			<% Html.RenderPartial("TBoxBottom"); %>
 		</div>
 	</div>
 </div>

@@ -900,6 +900,8 @@
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
     <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
+    <Content Include="Assets\javascripts\Footer.js" />
+    <Content Include="Assets\javascripts\ImageActive.js" />
     <Content Include="Assets\javascripts\SecurityValue.js" />
     <Content Include="Assets\javascripts\Distribution.js" />
     <Content Include="Assets\javascripts\FeesExpense.js" />
@@ -1070,10 +1072,12 @@
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
+    <Content Include="Views\Shared\TBoxTop.ascx" />
     <Content Include="Views\Deal\DealFundDocumentList.ascx" />
     <Content Include="Views\Deal\ManualUnderlyingFundStockDistribution.ascx" />
     <Content Include="Views\Deal\ReconcileGrid.ascx" />
     <Content Include="Views\Deal\ReconcileReport.ascx" />
+    <Content Include="Views\Shared\TBoxBottom.ascx" />
     <Content Include="Views\Deal\UnderlyingFundDetail.ascx" />
     <Content Include="Views\Deal\UnderlyingFundDocumentList.ascx" />
     <Content Include="Views\Deal\UnderlyingFundStockDistribution.ascx" />

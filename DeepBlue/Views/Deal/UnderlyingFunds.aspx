@@ -31,36 +31,38 @@
 		</div>
 	</div>
 	<div class="headerbar">
-		<div class="leftcol">
-			Underlying Fund
-		</div>
-		<div class="addbtn" style="display: block">
-			<%using (Html.GreenButton(new { @id = "AddGP", @onclick = "javascript:dealDirect.add();" })) {%>Add
-			GP<%}%>
-		</div>
-		<div class="addbtn" style="display: block">
-			<%using (Html.GreenButton(new { @id = "lnkAddUnderlyingFund", @onclick = "javascript:underlyingFund.load(0,0);" })) {%>Add
-			new underlying fund<%}%>
-		</div>
-		<div class="rightcol">
-			<%: Html.TextBox("S_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @id = "S_UnderlyingFund", @style = "width:200px", @class = "wm" })%>
+		<div class="breadcrumb">
+			<div class="leftcol">
+				Underlying Fund
+			</div>
+			<div class="addbtn" style="display: block;margin-left:67px;">
+				<%using (Html.GreenButton(new { @id = "AddGP", @onclick = "javascript:dealDirect.add();" })) {%>Add
+				GP<%}%>
+			</div>
+			<div class="addbtn" style="display: block;margin-left:123px;">
+				<%using (Html.GreenButton(new { @id = "lnkAddUnderlyingFund", @onclick = "javascript:underlyingFund.load(0,0);" })) {%>Add
+				new underlying fund<%}%>
+			</div>
+			<div class="rightcol">
+				<%: Html.TextBox("S_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @id = "S_UnderlyingFund", @style = "width:200px", @class = "wm" })%>
+			</div>
 		</div>
 	</div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div id="UnderlyingFundDetail">
-		<div class="subheader" id="AddNewIssuer" style="display: none">
+		<div id="AddNewIssuer" style="display: none">
 			<%using (Html.Form(new { @id = "frmAddNewIssuer", @onsubmit = "return dealDirect.createNewIssuer(this);" })) {%>
 			<div id="NewIssuerDetail">
 			</div>
-			<div class="addissuer">
-				<div class="btn">
-					<%: Html.Span("", new { @id = "SpnNewLoading" })%></div>
-				<div class="btn">
-					<%: Html.ImageButton("addgp.png")%></div>
+			<div class="addissuer" style="width:980px;">
 				<div class="btnclose">
 					<%: Html.Image("issuerclose.png", new { @onclick = "javascript:dealDirect.close();" })%>
 				</div>
+				<div class="btn">
+					<%: Html.ImageButton("addgp.png")%></div>
+				<div class="btn">
+					<%: Html.Span("", new { @id = "SpnNewLoading" })%></div>
 			</div>
 			<%}%>
 		</div>

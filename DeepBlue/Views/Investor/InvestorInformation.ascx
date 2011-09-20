@@ -4,12 +4,12 @@
 <div class="editor-row">
 	<div class="editor-editbtn">
 		<div class="EditInvestorInfo show" style="float: left">
-			<%: Html.Anchor(Html.Image("Editbtn.png", new { @title = "Edit" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.editInvestorInfo(this);" })%>
+			<%: Html.Anchor(Html.Image("Editbtn_active.png", new { @title = "Edit" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.editInvestorInfo(this);" })%>
 		</div>
 		<div class="UpdateInvestorInfo hide" style="float: left; display: none;">
 			<%: Html.Span("", new { @id = "Loading" })%>
-			<%: Html.Anchor(Html.Image("Update.png").ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.saveInvestorDetail(this);" })%>&nbsp;&nbsp;
-			<%: Html.Anchor(Html.Image("Cancel.png").ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.cancelInvestorInfo(this);" })%>
+			<%: Html.Anchor(Html.Image("Update_active.png").ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.saveInvestorDetail(this);" })%>&nbsp;&nbsp;
+			<%: Html.Anchor(Html.Image("Cancel_active.png").ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.cancelInvestorInfo(this);" })%>
 		</div>
 	</div>
 </div>

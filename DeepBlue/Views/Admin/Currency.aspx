@@ -25,7 +25,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="admin-main">
 		<div class="admin-content">
-			<table cellpadding="0" cellspacing="0" border="0" id="CurrencyList">
+			<% Html.RenderPartial("TBoxTop"); %>
+			<table cellpadding="0" cellspacing="0" border="0" id="CurrencyList" class="grid">
 				<thead>
 					<tr>
 						<th sortname="Currency1" style="width: 40%">
@@ -39,6 +40,7 @@
 					</tr>
 				</thead>
 			</table>
+			<% Html.RenderPartial("TBoxBottom"); %>
 		</div>
 	</div>
 </asp:Content>
@@ -71,9 +73,9 @@
 	</td>
 	<td style="text-align:right;">
 		{{if row.cell[0]==0}}
-		<%: Html.Image("Add.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:currency.save(this,${row.cell[0]});" })%>
+		<%: Html.Image("add_active.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:currency.save(this,${row.cell[0]});" })%>
 		{{else}}
-		<%: Html.Image("Save.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:currency.save(this,${row.cell[0]});" })%>
+		<%: Html.Image("Save_active.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:currency.save(this,${row.cell[0]});" })%>
 		<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:currency.edit(this);" })%>
 		<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:currency.deleteRow(this,${row.cell[0]});" })%>
 		{{/if}}

@@ -20,19 +20,19 @@
 	<div class="section" id="AddDealDocument" style="display: none;">
 		<div class="dealdetail">
 		<% using (Html.Form(new { @id = "frmDealDocument", @onsubmit = "return deal.saveDealDocument(this);", @enctype = "multipart/form-data" })) {%>
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.Label("Document Type")%>
 		</div>
 		<div class="editor-field" style="width: 278px">
 			<%: Html.DropDownList("DocumentTypeId", Model.DocumentTypes, new { @style = "width:197px" })%>
 		</div>
-		<div class="editor-label" style="clear: right">
+		<div class="editor-label" style="clear: right;width:124px;">
 			<%: Html.Label("Document Date ")%>
 		</div>
 		<div class="editor-field">
 			<%: Html.TextBox("DocumentDate")%>
 		</div>
-		<div class="editor-label">
+		<div class="editor-label-first">
 			<%: Html.Label("For")%>
 		</div>
 		<div class="editor-field" style="width: auto;">
@@ -46,7 +46,7 @@
 				<%: Html.DropDownList("DocumentStatusId", Model.DocumentStatusTypes, new { @style = "width:85px", @val="2", @onchange = "javascript:deal.documentChangeType(this);" })%>
 			</div>
 		</div>
-		<div class="editor-label" style="clear: right">
+		<div class="editor-label" style="clear: right;width:114px;">
 			<%: Html.Label("File / Link ")%>
 		</div>
 		<div class="editor-field" style="width: auto;">
@@ -62,12 +62,12 @@
 		</div>
 		<div class="editor-label" style="width: 317px">
 		</div>
-		<div class="editor-field" style="width: auto; float: right; margin: 20px 47px 5px;">
+		<div class="editor-field" style="width: auto; float: right; margin: 20px 128px 5px;">
 			<div class="cell" style="width: auto;">
 				<%: Html.Span("", new { @id = "SpnDealDocLoading" })%>
 			</div>
 			<div class="cell" style="width: auto;">
-				<%: Html.ImageButton("Upload.png", new { @id = "btnSaveDocument" })%></div>
+				<%: Html.ImageButton("Upload_active.png", new { @id = "btnSaveDocument" })%></div>
 			<div class="cell" style="width: auto;">
 				<%: Html.Anchor("Reset", "javascript:deal.documentInfoReset();")%></div>
 		</div>
@@ -78,7 +78,8 @@
 	</div>
 	<div class="section" style="width: 95%">
 		<div class="dealdetail">
-		<table cellpadding="0" cellspacing="0" border="0" id="DealDocumentList" style="width: 100%">
+		<% Html.RenderPartial("TBoxTop"); %>
+		<table cellpadding="0" cellspacing="0" border="0" id="DealDocumentList" style="width: 100%" class="grid">
 			<thead>
 				<tr>
 					<th>
@@ -100,6 +101,7 @@
 			<tbody>
 			</tbody>
 		</table>
+		<% Html.RenderPartial("TBoxBottom"); %>
 		</div>
 	</div>
 </div>

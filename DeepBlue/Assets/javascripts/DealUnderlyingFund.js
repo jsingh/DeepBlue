@@ -19,6 +19,7 @@
 	deal.applyUFAutocomplete(tr);
 	$("tr:odd","#tbodyUnderlyingFund").removeClass("row").removeClass("arow").addClass("arow");
 	$("tr:even","#tbodyUnderlyingFund").removeClass("row").removeClass("arow").addClass("row");
+	footer.show("tbodyUnderlyingFund", "tfootUnderlyingFund");
 };
 deal.calcDUF=function () {
 	var tbl=$("#tblUnderlyingFund");
@@ -53,6 +54,7 @@ deal.calcDUF=function () {
 	$("#SpnTotalFundNAV",tbl).html(jHelper.numberFormat(totalNAV.toString()));
 	$("#SpnTotalCAmount",tbl).html(jHelper.dollarAmount(totalCA.toString()));
 	$("#SpnTotalUAmount",tbl).html(jHelper.dollarAmount(totalUFA.toString()));
+
 };
 deal.applyUFAutocomplete=function (tr) {
 	var underlyingFund=$("#UnderlyingFund",tr);
@@ -77,16 +79,17 @@ deal.deleteUnderlyingFund=function (id,img) {
 			} else {
 				tr.remove();
 				deal.setIndex($("#tblUnderlyingFund"));
+				footer.show("tbodyUnderlyingFund", "tfootUnderlyingFund");
 			}
 		});
 	}
 };
 deal.editUnderlyingFund=function (img) {
 	var tr=$(img).parents("tr:first");
-	if(img.src.indexOf('Save.png')> -1) {
+	if(img.src.indexOf('Save_active.png')> -1) {
 		deal.saveUnderlyingFund(tr);
 	} else {
-		img.src="/Assets/images/Save.png";
+		img.src="/Assets/images/Save_active.png";
 		deal.showElements(tr);
 	}
 };

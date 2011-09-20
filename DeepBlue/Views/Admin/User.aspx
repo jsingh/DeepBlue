@@ -25,7 +25,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="admin-main">
 		<div class="admin-content">
-			<table cellpadding="0" cellspacing="0" border="0" id="UserList">
+			<% Html.RenderPartial("TBoxTop"); %>
+			<table cellpadding="0" cellspacing="0" border="0" id="UserList" class="grid">
 				<thead>
 					<tr>
 						<th sortname="FirstName" style="width: 20%">
@@ -48,6 +49,7 @@
 					</tr>
 				</thead>
 			</table>
+			<% Html.RenderPartial("TBoxBottom"); %>
 		</div>
 	</div>
 </asp:Content>
@@ -87,16 +89,16 @@
 	</td>
 	<td style="text-align:right;width:10%;">
 		{{if row.cell[0]==0}}
-		<%: Html.Image("Add.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:user.save(this,${row.cell[0]});" })%>
+		<%: Html.Image("add_active.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:user.save(this,${row.cell[0]});" })%>
 		{{else}}
-		<%: Html.Image("Save.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:user.save(this,${row.cell[0]});" })%>
+		<%: Html.Image("Save_active.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:user.save(this,${row.cell[0]});" })%>
 		<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:user.edit(this,${row.cell[0]});" })%>
 		<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:user.deleteRow(this,${row.cell[0]});" })%>
 		{{/if}}
 		<%: Html.Hidden("UserId", "${row.cell[0]}") %>
 	</td>
 </tr>
-<tr id="EditRow${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
+<tr id="EditRow${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}} style="background-image:none;">
 		<td colspan=6 style="width: 100%;display:none;">
 			<%using(Html.Form(new { @id="frm${row.cell[0]}", @onsubmit = "return false;" })){%>
 			<div class="editor-label" style="clear:right">
@@ -152,8 +154,8 @@
 			</div>
 			{{if row.cell[0]>0}}
 				<div class="editor-label" style="clear:right;margin:0; padding: 2px 0 0 7px;">
-					<%: Html.Image("Editbtn.png", new { @onclick = "javascript:user.editPassword(${row.cell[0]});" }) %>
-					<%: Html.Image("Cancel.png", new { @onclick = "javascript:user.cancelPassword(${row.cell[0]});" }) %>
+					<%: Html.Image("Editbtn_active.png", new { @onclick = "javascript:user.editPassword(${row.cell[0]});" }) %>
+					<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:user.cancelPassword(${row.cell[0]});" }) %>
 				</div>
 			{{/if}}
 			<div class="editor-label">
@@ -170,8 +172,8 @@
 			</div>
 			<%: Html.Hidden("UserId", "${row.cell[0]}")%>
 			<div class="editor-label" style="margin-left:35%;margin-top:10px;width:200px;text-align:left;">
-				<%: Html.Image("Save.png", new { @class="submitbtn", @onclick = "javscript:user.save(${row.cell[0]});" } )%>
-				&nbsp;&nbsp;<%: Html.Image("Cancel.png", new { @onclick = "javascript:user.cacelEdit(${row.cell[0]});" }) %>
+				<%: Html.Image("Save_active.png", new { @class="submitbtn", @onclick = "javscript:user.save(${row.cell[0]});" } )%>
+				&nbsp;&nbsp;<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:user.cacelEdit(${row.cell[0]});" }) %>
 				&nbsp;&nbsp;<%:Html.Span("", new { @id = "Loading" })%>
 			</div>
 			<%}%>

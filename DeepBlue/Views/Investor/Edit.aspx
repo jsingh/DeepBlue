@@ -25,7 +25,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="edit-investor">
-		<div class="editor-label" style="width: auto">
+		<div class="editor-label" style="width: auto;padding-left:0px;">
 			<%: Html.Label("Investor") %>
 		</div>
 		<div class="editor-field" style="width: auto">

@@ -23,15 +23,17 @@
 	<div class="cc-box">
 		<div class="header">
 			<div class="tabbg">
-				<%using (Html.Tab(new { @id = "NewCCTab", @class = "section-tab-sel", @onclick = "javascript:capitalCall.selectTab('C',this);" })) {%>New
-				Capital Call
-				<%}%>
-				<%using (Html.Tab(new { @id = "ManCCTab", @class = "section-tab", @onclick = "javascript:capitalCall.selectTab('M',this);" })) {%>Manual
-				Capital Call
-				<%}%>
-				<%using (Html.Div(new { @id = "SerCCTab" })) {%>&nbsp;
-				<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...", new { @id = "SpnLoading", @style = "display:none" })%>&nbsp;<%: Html.TextBox("Fund", "SEARCH FUND", new { @class = "wm", @style = "width:200px" })%>
-				<%}%>
+				<div class="tabinnerbox">
+					<%using (Html.Tab(new { @id = "NewCCTab", @class = "section-tab-sel", @onclick = "javascript:capitalCall.selectTab('C',this);" })) {%>New
+					Capital Call
+					<%}%>
+					<%using (Html.Tab(new { @id = "ManCCTab", @class = "section-tab", @onclick = "javascript:capitalCall.selectTab('M',this);" })) {%>Manual
+					Capital Call
+					<%}%>
+					<%using (Html.Div(new { @id = "SerCCTab" })) {%>
+					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...&nbsp;", new { @id = "SpnLoading", @style = "display:none;float:left;" })%><%: Html.TextBox("Fund", "SEARCH FUND", new { @class = "wm", @style = "width:200px" })%>
+					<%}%>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -65,7 +67,7 @@
 				<div class="line">
 				</div>
 				<div class="cc-box-det">
-					<div class="editor-label">
+					<div class="editor-label" style="width:118px;text-align:left;">
 						<%: Html.LabelFor(model => model.CapitalAmountCalled)%>
 					</div>
 					<div class="editor-field" style="width: auto">
@@ -77,16 +79,16 @@
 					<div class="editor-field" style="width: auto">
 						<%: Html.TextBox("CapitalCallDate","", new { @style = "width:110px" })%>
 					</div>
-					<div class="editor-label" style="clear: right; width: 148px;">
+					<div class="editor-label" style="clear: right; width: 145px;">
 						<%: Html.LabelFor(model => model.CapitalCallDueDate) %>
 					</div>
 					<div class="editor-field">
 						<%: Html.TextBox("CapitalCallDueDate","", new { @style = "width:110px" })%>
 					</div>
-					<div class="editor-label" style="width: auto;">
-						<%: Html.CheckBox("AddManagementFees", false, new { @style = "width:auto", @display = "Add Management Fees", @onclick = "javascript:capitalCall.selectMFee(this);" })%>
+					<div class="editor-label" style="width: auto;text-align:left;">
+						<%: Html.CheckBox("AddManagementFees", false, new { @style = "width:auto;", @displaywidth = "118px", @display = "Add Management Fees", @onclick = "javascript:capitalCall.selectMFee(this);" })%>
 					</div>
-					<div id="ManFeeMain" style="display: none; float: left; margin-left: 115px;">
+					<div id="ManFeeMain" style="display: none; float: left; margin-left: 42px;">
 						<div class="editor-label fromcell">
 							<%: Html.LabelFor(model => model.FromDate) %>
 						</div>
@@ -100,10 +102,10 @@
 							<%: Html.TextBox("ManagementFees", "", new { @onkeydown = "return jHelper.isCurrency(event);", @onkeyup = "javascript:capitalCall.calcExistingInvestmentAmount();" })%>
 						</div>
 					</div>
-					<div class="editor-label">
-						<%: Html.CheckBox("AddFundExpenses", false, new { @style = "width:auto", @displaywidth = "113px", @display = "Add Fund Expenses", @onclick = "javascript:capitalCall.selectFundExp(this);" })%>
+					<div class="editor-label" style="text-align:left;">
+						<%: Html.CheckBox("AddFundExpenses", false, new { @style = "width:auto;", @displaywidth = "118px", @display = "Add Fund Expenses", @onclick = "javascript:capitalCall.selectFundExp(this);" })%>
 					</div>
-					<div id="FunExpAmount" style="display: none; float: left; margin-left: 197px;">
+					<div id="FunExpAmount" style="display: none; float: left; margin-left: 115px;">
 						<div class="editor-label fromcell">
 							Fund Expense Amount:
 						</div>
@@ -127,9 +129,9 @@
 						<%: Html.Span("", new { @id = "SpnExistingInvestmentAmount" })%>
 						<%: Html.HiddenFor(model => model.ExistingInvestmentAmount)%>
 					</div>
-					<div class="editor-button" style="margin: 0 0 0 25%; padding-top: 10px; width: auto;">
+					<div class="editor-button" style="margin: 0 0 0 57%; padding-top: 10px; width: auto;">
 						<div style="float: left; padding: 0 0 10px 5px;">
-							<%: Html.Image("submit.png", new { @class = "default-button", @onclick = "javascript:capitalCall.save('CapitalCall');" })%>
+							<%: Html.Image("submit_active.png", new { @class = "default-button", @onclick = "javascript:capitalCall.save('CapitalCall');" })%>
 						</div>
 						<div style="float: left; padding: 0 0 10px 5px;">
 							<%: Html.Span("", new { @id = "UpdateLoading" })%>
@@ -143,6 +145,7 @@
 			<div id="UpdateTargetId" style="display: none">
 			</div>
 			<div id="TierDetailMain" class="TierDetail-Main">
+				<% Html.RenderPartial("TBoxTop"); %>
 				<table cellpadding="0" cellspacing="0" border="0" id="TierDetail" class="grid">
 					<thead>
 						<tr>
@@ -166,6 +169,7 @@
 					<tbody>
 					</tbody>
 				</table>
+				<% Html.RenderPartial("TBoxBottom"); %>
 			</div>
 		</div>
 		<div id="NewManualCapitalCall" style="display: none">
@@ -176,7 +180,7 @@
 				<div class="cc-box-det manual">
 					<table cellpadding="0" cellspacing="0" border="0" class="mancctbl">
 						<tr>
-							<td>
+							<td style="width:172px;">
 								<%: Html.LabelFor(model => model.CapitalCallNumber)%>
 							</td>
 							<td>
@@ -237,11 +241,12 @@
 				</div>
 				<div class="cc-box-det manual">
 					<div class="cc-manual">
-						<div class="editor-label">
+						<div class="editor-label" style="padding-left:0px;">
 							<%: Html.Anchor(Html.Image("addinvestor.png").ToHtmlString(),"javascript:manualCapitalCall.addInvestor();") %>
 						</div>
 						<div id="InvestorDetail" class="investor-detail">
-							<div class="gbox">
+							<div>
+								<% Html.RenderPartial("TBoxTop"); %>
 								<table cellpadding="0" cellspacing="0" id="InvestorList" class="grid">
 									<thead>
 										<tr>
@@ -270,13 +275,14 @@
 									<tbody>
 									</tbody>
 								</table>
+								<% Html.RenderPartial("TBoxBottom"); %>
 							</div>
 						</div>
 					</div>
 					<%: Html.HiddenFor(model => model.InvestorCount)%>
 					<div class="editor-button" style="margin: 0 0 0 40%; padding-top: 10px; width: auto;">
 						<div style="float: left; padding: 0 0 10px 5px;">
-							<%: Html.Image("submit.png", new { @class = "default-button", @onclick = "javascript:manualCapitalCall.save('ManualCapitalCall');" })%>
+							<%: Html.Image("submit_active.png", new { @class = "default-button", @onclick = "javascript:manualCapitalCall.save('ManualCapitalCall');" })%>
 						</div>
 						<div style="float: left; padding: 0 0 10px 5px;">
 							<%: Html.Span("", new { @id = "ManualUpdateLoading" })%>

@@ -40,7 +40,7 @@
 	color: #02766F;
 	width: 200px;
 	float: left;
-	margin: 10px 0px 0px 90px;
+	margin: 10px 0px 0px 0px;
 	font-weight: bold;
 }
 #content {
@@ -53,27 +53,27 @@
 	background-image: url(../images/minus.png);
 }
 .savebox {
-	float: right;
+	float: left;
 	clear: both;
 	margin-top: 10px;
-	margin-right: 47%;
+	width:623px;
 }
 .savebox .btn {
-	float: left;
+	float: right;
 }
 .savebox .resetbtn {
-	float: left;
+	float: right;
 	font-weight: bold;
 	margin-left: 24px;
 	margin-top: 5px;
 	cursor: pointer;
 }
 .expandtitle {
-	padding-left: 51px;
+	padding-left: 0px;
 }
 .headerbox {
-	padding-left: 30px;
-	width: 100%;
+	padding-left: 65px;
+	width: 90%;
 }
 .detail {
 	background-color: #E9EAEC;
@@ -85,7 +85,7 @@
 }
 .rightdarrow {
 	float: right;
-	padding-right: 72px;
+	/*padding-right: 72px;*/
 	vertical-align: middle;
 	padding-top: 10px;
 }
@@ -107,7 +107,7 @@
     width: 130px;
 }
 .expandbtn {
-	  width: 91.5%;
+	  width: 90%;
 }
 .headerbar .leftcol {
 	font-size:18px;

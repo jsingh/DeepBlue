@@ -31,7 +31,7 @@
 .fund-box-det {
 	clear: both;
 	float: left;
-	padding: 5px 20px;
+	padding: 5px 20px 5px 51px;
 }
 .fund-box-det .editor-field input[type="text"] {
 	width: 150px;
@@ -43,7 +43,8 @@
 .headerbox {
 	cursor: pointer;
 	float: left;
-	width: 100%;
+	width: 90%;
+	padding-left:65px;
 }
 .editor-field {
 	width: auto;
@@ -57,20 +58,20 @@
 	font-weight: bold;
 	height: 23px;
 	line-height: 15px;
-	margin: 10px 0 0 65px;
+	margin: 10px 0 0 0px;
 	padding-left: 20px;
 	width: 200px;
 }
 .rightdarrow {
 	float: right;
-	padding-right: 93px;
+	padding-right: 0px;
 	padding-top: 10px;
 	vertical-align: middle;
 }
 .rate-detail {
 	clear: both;
-	margin: 0 auto 10px;
-	width: 95%;
+	padding-left:65px;
+	width: 90%;
 }
 .rate-grid {
 	width: 100%;
@@ -87,8 +88,8 @@
 	cursor: pointer;
 }
 #FundDetail {
-	margin: 0 auto;
-	padding: 0 0 10px;
+	/*margin: 0 auto;*/
+	padding: 0 0 10px 65px;
 	width: 90%;
 }
 /* expand header */
@@ -130,7 +131,7 @@
 	float: left;
 	white-space: nowrap;
 	width: 200px;
-	margin-left: 65px;
+	/*margin-left: 65px;*/
 }
 .expandaddbtn {
 	display: none;
@@ -151,7 +152,6 @@
 	background-repeat: no-repeat;
 	float: right;
 	height: 9px;
-	margin-right: 93px;
 	margin-top: 12px;
 	width: 16px;
 }
@@ -175,4 +175,19 @@
 }
 .section-tab-box{
 	 float: left; padding-left: 65px;
+}
+.expandbtn{
+	float:left;
+	width:90%;
+	padding-left:65px;
+}
+#BankInformation .editor-label{
+	width:130px;
+}
+#BankInformation .editor-label-first{
+	width:125px;
+	padding-right:72px;
+}
+#BankInformation .editor-label-second{
+	width:123px;
 }

@@ -35,7 +35,7 @@
 				<%: Html.DropDownListFor(model => model.CapitalDistributionId, Model.CapitalDistributions, new { @style = "width:200px;" })%>
 			</div>
 			<div class="editor-label" style="width: auto; clear: right;">
-				<%: Html.ImageButton("submit.png", new { @class="default-button" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
+				<%: Html.ImageButton("submit_active.png", new { @class="default-button" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
 			</div>
 			<%: Html.HiddenFor(model => model.FundId)%>
 			<%}%>

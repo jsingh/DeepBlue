@@ -14,7 +14,7 @@
 	<div class="editor-field">
 		<%: Html.jQueryTemplateTextBoxFor(model => model.FundName, new { @style = "width:220px;" }) %>
 	</div>
-	<div class="editor-label" style="clear: right">
+	<div class="editor-label" style="clear: right;width:65px;">
 		<%: Html.LabelFor(model => model.TaxId) %>
 	</div>
 	<div class="editor-field">
@@ -90,8 +90,8 @@
 			<div class="expandtitle">
 				Rate Schedules
 			</div>
-		</div>
-		<div class="rightuarrow">
+			<div class="rightuarrow">
+			</div>
 		</div>
 	</div>
 	<div class="detail" style="display: none" id="RateSchdules">
@@ -124,19 +124,19 @@
 			<div class="expandtitle">
 				Bank Information
 			</div>
-		</div>
-		<div class="rightuarrow">
+			<div class="rightuarrow">
+			</div>
 		</div>
 	</div>
 	<div class="detail" style="display: none" id="BankInformation">
 		<div>
-			<div class="editor-label">
+			<div class="editor-label-first">
 				<%: Html.Label("Bank Name") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("BankName", "${BankDetail[0].BankName}")%>
 			</div>
-			<div class="editor-label" style="clear: right">
+			<div class="editor-label-second" style="clear: right">
 				<%: Html.Label("Account Number") %>
 			</div>
 			<div class="editor-field">
@@ -148,13 +148,13 @@
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("ABANumber", "${BankDetail[0].ABANumber}", new { @onkeydown = "return jHelper.isNumeric(event);" })%>
 			</div>
-			<div class="editor-label">
+			<div class="editor-label-first">
 				<%: Html.Label("Swift Code")%>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("Swift", "${BankDetail[0].Swift}") %>
 			</div>
-			<div class="editor-label" style="clear: right">
+			<div class="editor-label-second" style="clear: right">
 				<%: Html.Label("Account Number Cash") %>
 			</div>
 			<div class="editor-field">
@@ -166,13 +166,13 @@
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("FFCNumber", "${BankDetail[0].FFCNumber}")%>
 			</div>
-			<div class="editor-label">
+			<div class="editor-label-first">
 				<%: Html.Label("IBAN") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("IBAN", "${BankDetail[0].IBAN}")%>
 			</div>
-			<div class="editor-label" style="clear: right">
+			<div class="editor-label-second" style="clear: right">
 				<%: Html.Label("Reference") %>
 			</div>
 			<div class="editor-field">
@@ -184,13 +184,13 @@
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("AccountOf", "${BankDetail[0].AccountOf}")%>
 			</div>
-			<div class="editor-label">
+			<div class="editor-label-first">
 				<%: Html.Label("Attention") %>
 			</div>
 			<div class="editor-field">
 				<%: Html.jQueryTemplateTextBox("Attention", "${BankDetail[0].Attention}")%>
 			</div>
-			<div class="editor-label" style="clear: right">
+			<div class="editor-label-second" style="clear: right">
 				<%: Html.Label("Telephone") %>
 			</div>
 			<div class="editor-field">
@@ -210,7 +210,7 @@
 </div>
 <div class="editor-button" style="width: 300px; padding: 20px 0 0 0">
 	<div style="float: left; padding: 0 0 10px 5px;">
-		<%: Html.ImageButton("{{if FundId>0}}modifyfund.png{{else}}addfund.png{{/if}}", new { @class = "default-button", onclick = "return fund.save(this);" })%>
+		<%: Html.ImageButton("{{if FundId>0}}modifyfund_active.png{{else}}addfund_active.png{{/if}}", new { @class = "default-button", onclick = "return fund.save(this);" })%>
 	</div>
 	<div style="float: left; padding: 0 0 10px 5px;">
 		<%: Html.Span("",new { id = "UpdateLoading" })%>

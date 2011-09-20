@@ -4,8 +4,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>
-		WILLOWRIDGE :: <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+	<title>WILLOWRIDGE ::
+		<asp:ContentPlaceHolder ID="TitleContent" runat="server" />
 	</title>
 	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
@@ -20,17 +20,24 @@
 	<%= Html.JavascriptInclueTag("DeepBlue.js")%>
 	<%= Html.JavascriptInclueTag("menu.js")%>
 	<%= Html.JavascriptInclueTag("jsDate.js")%>
+	<%= Html.JavascriptInclueTag("ImageActive.js")%>
 	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
 	<%= Html.StylesheetLinkTag("jquery.alerts.css")%>
 	<%= Html.StylesheetLinkTag("site.css")%>
 	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
 </head>
 <body>
+	<% string mnuresize = "true";
+	if (Response.Cookies["mnuresize"] != null) {
+		mnuresize = Response.Cookies["mnuresize"].Value;
+	}
+	%>
 	<div id="header">
 		<div id="topheader" class="topheader">
 			<div class="cname">
 				WILLOWRIDGE</div>
-			<div id="navminimize" class="uparrow" onclick="javascript:deepBlue.minimize(this);">
+			<div id="navminimize" class='uparrow <%=(mnuresize == "true" ? "downarrow" : string.Empty)%>'
+				onclick="javascript:deepBlue.minimize(this);">
 			</div>
 			<div class="key">
 				<%if (Request.IsAuthenticated) {%>
@@ -42,7 +49,7 @@
 			<div class="setting">
 			</div>
 		</div>
-		<div id="menu">
+		<div id="menu" class='<%=(mnuresize == "true" ? "minimize" : string.Empty)%>'>
 			<div id="menubox">
 				<% using (Html.TopMenu((ViewData["MenuName"] == "DealManagement"), "Deal_Management", new { @id = "investmentmnu" })) {%>
 				<%: Html.TopMenuLink("INVESTMENTS")%>

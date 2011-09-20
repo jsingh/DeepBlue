@@ -81,9 +81,9 @@
 	}
 	,expand: function () {
 		$(".headerbox").click(function () {
-			$(".headerbox").show();
-			$(".expandheader").hide();
-			$(".detail").hide();
+			//$(".headerbox").show();
+			//$(".expandheader").hide();
+			//$(".detail").hide();
 			$(this).hide();
 			var parent=$(this).parent();
 			$(".expandheader",parent).show();
@@ -113,12 +113,12 @@
 			addUnderlyingfund.empty();
 			addUnderlyingfund.css("text-align","left");
 			$("#UnderlyingFundTemplate").tmpl(data).appendTo(addUnderlyingfund);
-			$("#btnSave").attr("src","/Assets/images/muf.png");
+			$("#btnSave").attr("src","/Assets/images/muf_active.png");
 			$("#lnkAddUnderlyingFund").removeClass("green-btn-sel");
 			if(id==0) {
 				//src=lnkAddUnderlyingFund.attr("src").replace("addnufund.png","addnufundselect.png");
 				$("#S_UnderlyingFund").val("");
-				$("#btnSave").attr("src","/Assets/images/adduf.png");
+				$("#btnSave").attr("src","/Assets/images/adduf_active.png");
 				$("#lnkAddUnderlyingFund").addClass("green-btn-sel");
 			}
 			underlyingFund.setUp();

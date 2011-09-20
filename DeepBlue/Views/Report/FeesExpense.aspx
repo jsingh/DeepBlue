@@ -38,7 +38,7 @@
 				<%: Html.TextBoxFor(model => model.EndDate)%>
 			</div>
 			<div class="editor-label" style="width: auto; clear: right;">
-				<%: Html.ImageButton("submit.png", new { @class="default-button" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
+				<%: Html.ImageButton("submit_active.png", new { @class="default-button" })%>&nbsp;<%: Html.Span( Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%>
 			</div>
 			<%: Html.HiddenFor(model => model.FundId)%>
 			<%}%>
@@ -70,24 +70,26 @@
 	</div>
 	<div id="ReportMain">
 		<div id="ReportDetail" class="rep-main" style="display: none">
-			<table cellpadding="0" cellspacing="0" border="0" id="FeesExpenseList">
-				<thead>
-					<tr>
-						<th sortname="Date" style="width: 15%">
-							Date
-						</th>
-						<th sortname="Type" style="width: 20%;">
-							Type
-						</th>
-						<th sortname="Amount" align="right" style="width: 20%; text-align: right;">
-							Amount
-						</th>
-						<th sortname="Note">
-							Note
-						</th>
-					</tr>
-				</thead>
-			</table>
+			<div id="ReportContent">
+				<table cellpadding="0" cellspacing="0" border="0" id="FeesExpenseList" class="grid">
+					<thead>
+						<tr>
+							<th sortname="Date" style="width: 15%">
+								Date
+							</th>
+							<th sortname="Type" style="width: 20%;">
+								Type
+							</th>
+							<th sortname="Amount" align="right" style="width: 20%; text-align: right;">
+								Amount
+							</th>
+							<th sortname="Note">
+								Note
+							</th>
+						</tr>
+					</thead>
+				</table><br />
+			</div>
 		</div>
 	</div>
 </asp:Content>

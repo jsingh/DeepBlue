@@ -7,7 +7,7 @@
 	cursor: pointer;
 }
 #fitab {
-	width: 98px;
+	width: 109px;
 	height: 27px;
 	float: left;
 	background-image: url(../images/fitab.png);
@@ -19,7 +19,7 @@
 	background-image: url(../images/equitytabsel.png);
 }
 #fitab.sel {
-	width: 109px;
+	width: 98px;
 	background-image: url(../images/fitabsel.png);
 }
 .last {
@@ -50,22 +50,23 @@
 }
 .direct {
 	float: right;
-	padding-right: 235px;
+	padding-right: 0px;
 	padding-bottom: 23px;
 	margin-top: 20px;
 }
 .addissuer {
-	float: right;
+	float: left;
 	clear: both;
-	margin-right: 22%;
+	/*margin-right: 22%;*/
 	margin-top: 20px;
+	width:1043px;
 }
 .addissuer .btn {
-	float: left;
+	float: right;
 	cursor: pointer;
 }
 .addissuer .btnclose {
-	float: left;
+	float: right;
 	margin-left: 35px;
 	margin-top: 10px;
 	cursor: pointer;
@@ -94,7 +95,7 @@
 	clear: both;
 	float: left;
 	background-color: #CBD2DA;
-	padding: 20px;
+	padding: 20px 20px 20px 0px;
 	min-width: 960px;
 }
 #existingEquity {
@@ -162,11 +163,23 @@
 	width: 120px;
 }
 .headerbar .addbtn {
-	margin: 0 0 0 123px;
+	margin: 0 0 0 96px;
 	padding: 0;
 	float: left;
 }
 .headerbar .rightcol {
 	float: right;
-	margin: 0 50px 0 0;
+	/*margin: 0 50px 0 0;*/
+}
+
+#equitysymboldiv .editor-label-first{
+	width:133px;
+	padding-right:26px;
+}
+#eqdocument .editor-label-first, #fidocument .editor-label-first{
+	width:139px;
+	padding-right:20px;
+}
+#fixincomediv .editor-label-first{
+	width:154px;
 }
