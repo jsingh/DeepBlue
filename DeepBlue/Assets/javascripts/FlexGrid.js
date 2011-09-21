@@ -325,7 +325,7 @@
 		} else {
 			$(g.gDiv).append(pt);
 		}
-		//g.bDiv.className='bDiv';
+		g.bDiv.className='bDiv';
 		$(pt).before(g.bDiv);
 		g.hTable.cellPadding=0;
 		g.hTable.cellSpacing=0;
@@ -359,7 +359,7 @@
 			 		$(this).empty().append(thdiv).removeAttr('width');
 			 	}
 			);
-		//g.bDiv.className='bDiv';
+		g.bDiv.className='bDiv';
 		g.bDivBox.className='bDivBox';
 
 		//$("thead",t).remove();

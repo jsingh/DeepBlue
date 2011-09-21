@@ -3,7 +3,7 @@
 		var flexigrid=$(that).parents(".flexigrid:first");
 		var row=$("#Row0",flexigrid).get(0);
 		if(!row) {
-			var tbody=$(".bDiv table tbody",flexigrid);
+			var tbody=$(".middlec table tbody",flexigrid);
 			var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,"",false]}] };
 			$("#GridTemplate").tmpl(data).prependTo(tbody);
 			var tr=$("tr:first",tbody);
@@ -34,7 +34,7 @@
 					jAlert(data);
 				} else {
 					tr.remove();
-					jHelper.applyFlexGridClass($(".bDiv:first"));
+					jHelper.applyFlexGridClass($(".middlec:first"));
 				}
 			});
 		}
@@ -55,7 +55,7 @@
 					$("#GridTemplate").tmpl(loadData).insertAfter(tr);
 					$(tr).remove();
 					var newTR=$("#Row"+arr[1]);
-					jHelper.applyFlexGridClass($(".bDiv:first"));
+					jHelper.applyFlexGridClass($(".middlec:first"));
 					jHelper.checkValAttr(newTR);
 				});
 			}

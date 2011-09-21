@@ -52,7 +52,7 @@
 					<%: Html.Image("issuerclose.png", new { @onclick = "javascript:dealDirect.close();" })%>
 				</div>
 				<div class="btn">
-					<%: Html.ImageButton("addcompany.png")%></div>
+					<%: Html.ImageButton("savecompany.png")%></div>
 				<div class="btn">
 					<%: Html.Span("", new { @id = "SpnNewLoading" })%></div>
 			</div>

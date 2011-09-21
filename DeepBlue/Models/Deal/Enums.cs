@@ -17,11 +17,11 @@ namespace DeepBlue.Models.Deal.Enums {
 	}
 
 	public enum Currency {
-		USD = 1,
 		AUD = 2,
 		CAD = 3,
 		EUR = 4,
-		JPY = 5
+		JPY = 5,
+		USD = 6
 	}
 
 	public enum ReconcileType {

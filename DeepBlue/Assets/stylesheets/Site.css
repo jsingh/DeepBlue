@@ -1092,18 +1092,13 @@ input.ui-autocomplete-loading[type="text"] {
 	background-repeat:  repeat-x;
 	background-color:inherit;
 }
-.grid thead tr
-,.flexigrid .grid thead tr{
+.grid thead tr, .flexigrid .grid thead tr{
 	background-image: url(../images/table_head_bg.gif);
 }
-.grid .row
-,.flexigrid .grid tr
-,tr.row{
+.grid .row, .flexigrid .grid tr, tr.row{
 	background-image: url(../images/table_row_odd.gif);
 }
-.grid .arow
-,.flexigrid tr.erow
-,tr.arow{
+.grid .arow, .flexigrid tr.erow, tr.arow{
 	background-image: url(../images/table_row_even.gif);
 }
 .grid tfoot tr{
@@ -1120,7 +1115,9 @@ input.ui-autocomplete-loading[type="text"] {
 .grid{
 	border:solid 0px #A7BACB;
 }
-	
+.grid #row0, .grid #Row0{
+	background-image:none;
+}
 
 /*.ngrid thead tr th, .ngrid thead tr td{
 	text-shadow: #F7F1F1 1px 1px 1px;
