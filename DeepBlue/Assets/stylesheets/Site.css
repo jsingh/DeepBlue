@@ -162,7 +162,7 @@ a img {
 }
 
 .editor-field input[type="text"], .editor-field input[type="password"] {
-	width: 160px;
+	width: 96%;
 }
 .editor-field select {
 	width: 164px;

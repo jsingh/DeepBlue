@@ -904,6 +904,8 @@
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="LastUpdatedBy" Type="int" />
           <Property Name="ContactCompany" Type="varchar" MaxLength="100" />
+          <Property Name="Title" Type="varchar" MaxLength="100" />
+          <Property Name="Notes" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="ContactAddress">
           <Key>
@@ -1538,7 +1540,7 @@
           <Property Name="View" Type="varchar" MaxLength="50" />
           <Property Name="QueryString" Type="varchar" MaxLength="255" />
           <Property Name="LogText" Type="varchar" MaxLength="500" />
-          <Property Name="UserAgent" Type="varchar" MaxLength="250" />
+          <Property Name="UserAgent" Type="varchar" MaxLength="200" />
           <Property Name="MachineName" Type="varchar" MaxLength="100" />
           <Property Name="ProcessID" Type="varchar" MaxLength="100" />
           <Property Name="ProcessName" Type="varchar" MaxLength="100" />
@@ -4537,6 +4539,8 @@
           <NavigationProperty Name="Deals1" Relationship="DeepBlueModel.FK_Deal_SellerContact" FromRole="Contact" ToRole="Deal" />
           <NavigationProperty Name="InvestorContacts" Relationship="DeepBlueModel.FK_InvestorContact_Contact" FromRole="Contact" ToRole="InvestorContact" />
           <NavigationProperty Name="UnderlyingFunds" Relationship="DeepBlueModel.FK_UnderlyingFund_Contact" FromRole="Contact" ToRole="UnderlyingFund" />
+          <Property Type="String" Name="Title" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Notes" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ContactAddress">
           <Key>
@@ -7669,7 +7673,9 @@
             <ScalarProperty Name="CommunicationTypeName" ColumnName="CommunicationTypeName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Contacts"><EntityTypeMapping TypeName="DeepBlueModel.Contact"><MappingFragment StoreEntitySet="Contact">
-            <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+            <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
             <ScalarProperty Name="EntityID" ColumnName="EntityID" />
             <ScalarProperty Name="ContactName" ColumnName="ContactName" />
             <ScalarProperty Name="Designation" ColumnName="Designation" />

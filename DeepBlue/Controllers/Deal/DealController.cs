@@ -1186,10 +1186,14 @@ namespace DeepBlue.Controllers.Deal {
 				underlyingFund.Contact.EntityID = Authentication.CurrentEntity.EntityID;
 				underlyingFund.Contact.ContactName = model.ContactName;
 				underlyingFund.Contact.LastName = "n/a";
+				underlyingFund.Contact.Title = model.ContactTitle;
+				underlyingFund.Contact.Notes = model.ContactNotes;
 				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.Email, model.Email);
 				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.HomePhone, model.Phone);
 				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebAddress, model.WebAddress);
 				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.MailingAddress, model.Address);
+				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebUsername, model.WebUsername);
+				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebPassword, model.WebPassword);
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveUnderlyingFund(underlyingFund);
 				if (errorInfo != null) {
 					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
@@ -3065,7 +3069,7 @@ namespace DeepBlue.Controllers.Deal {
 				issuer = new Models.Entity.Issuer();
 			}
 			issuer.Name = model.Name;
-			issuer.ParentName = model.ParentName;
+			issuer.ParentName =  model.ParentName == null? string.Empty:model.ParentName;
 			issuer.CountryID = model.CountryId;
 			issuer.EntityID = Authentication.CurrentEntity.EntityID;
 			return DealRepository.SaveIssuer(issuer);

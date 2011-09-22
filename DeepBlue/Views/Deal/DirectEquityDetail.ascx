@@ -56,12 +56,12 @@
 		<%: Html.Hidden("EquityId", "${EquityId}") %>
 	</div>
 </div>
-<div class="line">
-</div>
-<br />
-<div class="line">
-</div>
-<div class="direct-det">
+<div class="direct-det" style="display:none;">
+	<div class="line">
+	</div>
+	<br />
+	<div class="line">
+	</div>
 	<div id="eqdocument">
 		<div class="editor-label-first">
 			<%: Html.Label("Document Type") %>

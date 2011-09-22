@@ -132,6 +132,22 @@ namespace DeepBlue.Models.Deal {
 		[EmailAttribute(ErrorMessage = "Invalid Email")]
 		public string Email { get; set; }
 
+		[StringLength(100, ErrorMessage = "Title must be under 100 characters.")]
+		[DisplayName("Title")]
+		public string ContactTitle { get; set; }
+
+		[StringLength(500, ErrorMessage = "Notes must be under 100 characters.")]
+		[DisplayName("Notes")]
+		public string ContactNotes { get; set; }
+
+		[StringLength(200, ErrorMessage = "Web User name must be under 200 characters.")]
+		[DisplayName("Web User name")]
+		public string WebUsername { get; set; }
+
+		[StringLength(200, ErrorMessage = "Web Password must be under 200 characters.")]
+		[DisplayName("Web Password")]
+		public string WebPassword { get; set; }
+
 		/* Bank Info */
 	 
 		[StringLength(50, ErrorMessage = "Bank Name must be under 50 characters.")]

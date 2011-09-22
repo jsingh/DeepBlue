@@ -21,7 +21,7 @@
 			underlyingFund.formatPercent("IncentiveFee");
 			underlyingFund.expand();
 			$("#Issuer").autocomplete({ source: "/Deal/FindIssuers",minLength: 1
-			,select: function (event,ui) { $("#IssuerId").val(ui.item.id); },appendTo: "body",delay: 300
+			,select: function (event,ui) {$("#IssuerId").val(ui.item.id); },appendTo: "body",delay: 300
 			});
 		});
 	}
@@ -128,6 +128,7 @@
 			jHelper.jqCheckBox(addUnderlyingfund);
 			$("#Description").val($.trim($("#Description").val()));
 			$("#Address").val($.trim($("#Address").val()));
+			$("#ContactNotes").val($.trim($("#ContactNotes").val()));
 			$("#Doc_DocumentDate").datepicker({ changeMonth: true,changeYear: true });
 			var p=new Array();
 			p[p.length]={ "name": "UnderlyingFundId","value": underlyingFund.getUnderlyingFundId() };

@@ -52,7 +52,9 @@ namespace DeepBlue.Models.Admin.Enums {
 		Email = 6,
 		WebAddress = 7,
 		Company = 8,
-		MailingAddress = 9
+		MailingAddress = 9,
+		WebUsername = 10,
+		WebPassword = 11
 	}
 
 	public enum ExportType {

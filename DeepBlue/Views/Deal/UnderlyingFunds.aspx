@@ -55,7 +55,7 @@
 			<%using (Html.Form(new { @id = "frmAddNewIssuer", @onsubmit = "return dealDirect.createNewIssuer(this);" })) {%>
 			<div id="NewIssuerDetail">
 			</div>
-			<div class="addissuer" style="width:980px;">
+			<div class="addissuer" style="width:664px;">
 				<div class="btnclose">
 					<%: Html.Image("issuerclose.png", new { @onclick = "javascript:dealDirect.close();" })%>
 				</div>
@@ -76,12 +76,7 @@
 	<script type="text/javascript">		underlyingFund.init();</script>
 	<%= Html.jQueryAutoComplete("S_UnderlyingFund", new AutoCompleteOptions {
 																		  Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
-																		  OnSelect = "function(event, ui) { underlyingFund.load(ui.item.id,0);}"
-	})%>
-	<%= Html.jQueryAutoComplete("Issuer", new AutoCompleteOptions {
-	Source = "/Deal/FindIssuers",
-	MinLength = 1,
-																	  OnSelect = "function(event, ui) { underlyingFund.selectIssuer(ui.item.id);}"
+																		  OnSelect = "function(event, ui) {underlyingFund.load(ui.item.id,0);}"
 	})%>
 	<script id="IssuerDetailTemplate" type="text/x-jquery-tmpl"> 
 		<%Html.RenderPartial("IssuerDetail", new DeepBlue.Models.Deal.IssuerDetailModel());%>

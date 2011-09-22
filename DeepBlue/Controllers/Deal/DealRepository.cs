@@ -836,6 +836,8 @@ namespace DeepBlue.Controllers.Deal {
 													   BankName = underlyingFund.Account.BankName,
 													   ContactId = (underlyingFund.Contact != null ? underlyingFund.Contact.ContactID : 0),
 													   ContactName = (underlyingFund.Contact != null ? underlyingFund.Contact.ContactName : string.Empty),
+													   ContactTitle = (underlyingFund.Contact != null ? underlyingFund.Contact.Title : string.Empty),
+													   ContactNotes = (underlyingFund.Contact != null ? underlyingFund.Contact.Notes : string.Empty),
 													   IncentiveFee = underlyingFund.IncentiveFee,
 													   LegalFundName = underlyingFund.LegalFundName,
 													   Description = underlyingFund.Description,
@@ -861,6 +863,8 @@ namespace DeepBlue.Controllers.Deal {
 					model.Email = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.Email);
 					model.Phone = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.HomePhone);
 					model.WebAddress = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebAddress);
+					model.WebUsername = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebUsername);
+					model.WebPassword = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebPassword);
 				}
 				else {
 					model = new CreateUnderlyingFundModel();
