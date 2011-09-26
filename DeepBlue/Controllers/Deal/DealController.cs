@@ -1161,7 +1161,7 @@ namespace DeepBlue.Controllers.Deal {
 					underlyingFund.Account.LastUpdatedDate = DateTime.Now;
 
 					underlyingFund.Account.BankName = model.BankName;
-					underlyingFund.Account.AccountNumberCash = "n/a";
+					underlyingFund.Account.AccountNumberCash = model.AccountNumber;
 					underlyingFund.Account.Account1 = model.Account;
 					underlyingFund.Account.AccountOf = model.AccountOf;
 					underlyingFund.Account.Attention = model.Attention;
@@ -1170,6 +1170,7 @@ namespace DeepBlue.Controllers.Deal {
 					underlyingFund.Account.Routing = model.Routing;
 					underlyingFund.Account.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					underlyingFund.Account.LastUpdatedDate = DateTime.Now;
+					underlyingFund.Account.FFC = model.FFC;
 					underlyingFund.Account.FFCNumber = model.FFCNumber;
 					underlyingFund.Account.SWIFT = model.Swift;
 					underlyingFund.Account.Phone = model.AccountPhone;
@@ -1193,7 +1194,9 @@ namespace DeepBlue.Controllers.Deal {
 				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebAddress, model.WebAddress);
 				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.MailingAddress, model.Address);
 				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebUsername, model.WebUsername);
-				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebPassword, model.WebPassword);
+				if (model.ChangeWebPassword) {
+					AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebPassword, model.WebPassword);
+				}
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveUnderlyingFund(underlyingFund);
 				if (errorInfo != null) {
 					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);

@@ -58,7 +58,7 @@ dealActivity.submitUFPRCashDistribution=function (frm) {
 			loading.empty();
 			if($.trim(data)!="") { dealActivity.processErrMsg(data,frm); } else {
 				jAlert("Post Record Date Cash Distributions Saved");
-				dealActivity.resetCashDistribution();
+				//dealActivity.resetCashDistribution();
 			}
 		});
 	} catch(e) { jAlert(e); }

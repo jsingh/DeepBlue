@@ -61,7 +61,7 @@
 						var arr=data.data.split("||");
 						if(arr[0]=="True") {
 							jAlert("Underlying Direct Added.");
-							$("#DirectMain").hide();
+							//$("#DirectMain").hide();
 							$("#AddNewIssuer").hide();
 							$("#S_Issuer").val("");
 							dealDirect.loadSelectImages(false);

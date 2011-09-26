@@ -154,8 +154,18 @@
 				<label>
 					Web Password</label>
 			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("WebPassword", "${WebPassword}", new { @class = "wm" })%>
+			
+			<div class="editor-field" style="padding-right:0px;">
+				{{if WebPassword != null }}
+				<%: Html.Password("WebPassword", "", new { @class = "wm",@style="width:160px;",@disabled = "disabled"})%>
+				{{else}}
+				<%: Html.Password("WebPassword", "", new { @class = "wm", @style="width:160px;"})%>
+				{{/if}}
+			</div>
+			<div class="editor-label" style="clear: none; padding: 0px; width: 175px; text-align: left;">
+				<%: Html.Hidden("ChangeWebPassword", "{{if WebPassword == null }}true{{else}}false{{/if}}")%>
+				<%: Html.Image("Editbtn_active.png", new { @id = "EditWebPassword", @onclick = "javascript:underlyingFund.editWebPassword();", @style = "{{if WebPassword == null }}display:none{{/if}}" })%>
+				<%: Html.Image("Cancel_active.png", new { @id = "CancelWebPassword", @onclick = "javascript:underlyingFund.cancelWebPassword();", @style = "{{if WebPassword == null }}display:none{{/if}}" })%>
 			</div>
 			<div class="editor-label">
 				<label>
@@ -217,19 +227,19 @@
 					<%: Html.Label("Account Name")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("AccountName", "", new { @class = "wm" })%>
+					<%: Html.TextBox("Account", "${Account}", new { @class = "wm" })%>
 				</div>
 				<div class="editor-label" style="clear:right;">
 					<%: Html.Label("Account Number")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("Account", "${Account}", new { @class = "wm" })%>
+					<%: Html.TextBox("AccountNumber", "${AccountNumber}", new { @class = "wm" })%>
 				</div>
 				<div class="editor-label-first">
-					<%: Html.Label("FF Name")%>
+					<%: Html.Label("FFC Name")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("FFName", "", new { @class = "wm" })%>
+					<%: Html.TextBox("FFC", "${FFC}", new { @class = "wm" })%>
 				</div>
 				<div class="editor-label" style="clear:right;">
 					<%: Html.Label("FFC Number")%>

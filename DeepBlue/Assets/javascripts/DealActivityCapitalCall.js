@@ -78,7 +78,7 @@ dealActivity.submitUFCapitalCall=function (frm) {
 					dealActivity.processErrMsg(data,frm);
 				} else {
 					jAlert("Capital Calls Saved");
-					dealActivity.resetCapitalCall();
+					//dealActivity.resetCapitalCall();
 				}
 			});
 		}

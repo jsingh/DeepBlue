@@ -61,7 +61,7 @@ dealActivity.submitUFPRCapitalCall=function (frm) {
 				dealActivity.processErrMsg(data,frm);
 			} else {
 				jAlert("Post Record Capital Calls Saved");
-				dealActivity.resetCapitalCall();
+				//dealActivity.resetCapitalCall();
 				//dealActivity.loadPRCC(true); 
 			}
 		});

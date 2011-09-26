@@ -148,6 +148,7 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Web Password")]
 		public string WebPassword { get; set; }
 
+		public bool ChangeWebPassword { get; set; }
 		/* Bank Info */
 	 
 		[StringLength(50, ErrorMessage = "Bank Name must be under 50 characters.")]
@@ -155,8 +156,12 @@ namespace DeepBlue.Models.Deal {
 		public string BankName { get; set; }
 
 		[StringLength(40, ErrorMessage = "Account No must be under 40 characters.")]
-		[DisplayName("Account Number")]
+		[DisplayName("Account Name")]
 		public string Account { get; set; }
+
+		[StringLength(50, ErrorMessage = "Account Number No must be under 50 characters.")]
+		[DisplayName("Account Number")]
+		public string AccountNumber { get; set; }
 
 		[DisplayName("ABA#")]
 		public int? Routing { get; set; }
@@ -176,6 +181,10 @@ namespace DeepBlue.Models.Deal {
 		[StringLength(50, ErrorMessage = "Swift Code must be under 50 characters.")]
 		[DisplayName("Swift")]
 		public string Swift { get; set; }
+
+		[StringLength(50, ErrorMessage = "FFC must be under 50 characters.")]
+		[DisplayName("FFC Name")]
+		public string FFC { get; set; }
 
 		[StringLength(50, ErrorMessage = "FFC Number must be under 50 characters.")]
 		[DisplayName("FFCNumber")]

@@ -99,7 +99,7 @@ dealActivity.submitUFStockDistribution=function (frm) {
 				loading.empty();
 				if($.trim(data)!="") { dealActivity.processErrMsg(data,frm); } else {
 					jAlert("Stock Distributions Saved");
-					dealActivity.resetStockDistribution();
+					//dealActivity.resetStockDistribution();
 				}
 			});
 		}

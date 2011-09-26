@@ -145,6 +145,9 @@
 				,resizeWidth: false
 				,useBoxStyle: false
 			});
+
+			//load contact list
+			//underlyingFundContact.load();
 		});
 	}
 	,documentRefresh: function () {
@@ -164,6 +167,7 @@
 				$("#BILoading").empty();
 				$("#CILoading").empty();
 				var arr=data.split("||");
+				
 				if(arr[0]=="True") {
 					$("#UnderlyingFundId").val(arr[1]);
 					if(underlyingFund.onAfterUnderlyingFundSave) {
@@ -172,9 +176,10 @@
 						if(underlyingFund.tempSave==false) {
 							jAlert("Underlying Fund Added.");
 							$("#lnkAddUnderlyingFund").removeClass("green-btn-sel");
-							$("#AddUnderlyingFund").hide();
+							//$("#AddUnderlyingFund").hide();
 							$("#S_UnderlyingFund").val("");
 						}
+						underlyingFund.cancelWebPassword();
 					}
 				} else { jAlert(data); }
 				underlyingFund.tempSave=false;
@@ -192,6 +197,10 @@
 		var target=$("#"+targetId);
 		$(":input[type='text']",target).val("");
 		$("textarea",target).val("");
+		if(targetId =="ContactInformation"){
+			$(":input[type='password']",target).val("");
+			underlyingFund.editWebPassword();
+		}
 	}
 	,saveDocument: function (frm) {
 		try {
@@ -281,5 +290,15 @@
 				}
 			});
 		}
+	}
+	,editWebPassword: function () {
+		$("#WebPassword").removeAttr("disabled");
+		$("#ChangeWebPassword").val("true");
+	}
+	,cancelWebPassword: function () {
+		$("#WebPassword").val("").attr("disabled","disabled");
+		$("#ChangeWebPassword").val("false");
+		$("#EditWebPassword").show();
+		$("#CancelWebPassword").show();
 	}
 }

@@ -113,7 +113,7 @@
 					$("#TabFundGrid").click();
 					fund.init();
 				} else {
-					fund.deleteTab(fundId,false);
+					//fund.deleteTab(fundId,false);
 				}
 			}
 		});

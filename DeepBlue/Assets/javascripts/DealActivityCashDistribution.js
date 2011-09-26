@@ -94,7 +94,7 @@ dealActivity.submitUFCashDistribution=function (frm) {
 				loading.empty();
 				if($.trim(data)!="") { dealActivity.processErrMsg(data,frm); } else {
 					jAlert("Cash Distributions Saved");
-					dealActivity.resetCashDistribution();
+					//dealActivity.resetCashDistribution();
 				}
 			});
 		}

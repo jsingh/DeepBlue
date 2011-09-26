@@ -202,7 +202,7 @@
 						jAlert("Deal Saved");
 						$("#SearchDealName").val("");
 						$("#M_Fund").val("");
-						$("#DealMain").hide();
+						//$("#DealMain").hide();
 					}
 				}
 			});
