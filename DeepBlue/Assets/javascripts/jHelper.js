@@ -258,6 +258,10 @@
 		$("tr:even",target).removeClass("erow");
 		$("tr:odd",target).removeClass("erow").addClass("erow");
 	}
+	,applyFlexEditGridClass: function (target) {
+		$("tr.disprow:even",target).removeClass("erow");
+		$("tr.disprow:odd",target).removeClass("erow").addClass("erow");
+	}
 	,expandExpMenu: function (that) {
 		var pos=$(that).offset();
 		$(".exportlist").css({ "top": pos.top+13,"left": pos.left }).show();

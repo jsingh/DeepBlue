@@ -835,10 +835,10 @@ namespace DeepBlue.Controllers.Deal {
 													   Attention = underlyingFund.Account.Attention,
 													   Reference = underlyingFund.Account.Reference,
 													   BankName = underlyingFund.Account.BankName,
-													   ContactId = (underlyingFund.Contact != null ? underlyingFund.Contact.ContactID : 0),
-													   ContactName = (underlyingFund.Contact != null ? underlyingFund.Contact.ContactName : string.Empty),
-													   ContactTitle = (underlyingFund.Contact != null ? underlyingFund.Contact.Title : string.Empty),
-													   ContactNotes = (underlyingFund.Contact != null ? underlyingFund.Contact.Notes : string.Empty),
+													   //ContactId = (underlyingFund.Contact != null ? underlyingFund.Contact.ContactID : 0),
+													   //ContactName = (underlyingFund.Contact != null ? underlyingFund.Contact.ContactName : string.Empty),
+													   //ContactTitle = (underlyingFund.Contact != null ? underlyingFund.Contact.Title : string.Empty),
+													   //ContactNotes = (underlyingFund.Contact != null ? underlyingFund.Contact.Notes : string.Empty),
 													   IncentiveFee = underlyingFund.IncentiveFee,
 													   LegalFundName = underlyingFund.LegalFundName,
 													   Description = underlyingFund.Description,
@@ -860,13 +860,13 @@ namespace DeepBlue.Controllers.Deal {
 													   Swift = underlyingFund.Account.SWIFT,
 												   }).SingleOrDefault();
 				if (model != null) {
-					List<CommunicationDetailModel> communications = GetContactCommunications(context, model.ContactId);
-					model.Address = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.MailingAddress);
-					model.Email = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.Email);
-					model.Phone = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.HomePhone);
-					model.WebAddress = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebAddress);
-					model.WebUsername = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebUsername);
-					model.WebPassword = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebPassword);
+					//List<CommunicationDetailModel> communications = GetContactCommunications(context, model.ContactId);
+					//model.Address = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.MailingAddress);
+					//model.Email = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.Email);
+					//model.Phone = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.HomePhone);
+					//model.WebAddress = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebAddress);
+					//model.WebUsername = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebUsername);
+					//model.WebPassword = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebPassword);
 				}
 				else {
 					model = new CreateUnderlyingFundModel();
@@ -961,6 +961,72 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public List<UnderlyingFundContactList> GetAllUnderlyingFundContacts(int underlyingFundId, int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<UnderlyingFundContactList> query = (from UnderlyingFundContact in context.UnderlyingFundContacts
+															   where UnderlyingFundContact.UnderlyingtFundID  == underlyingFundId
+																select new UnderlyingFundContactList {
+																	UnderlyingFundContactId = UnderlyingFundContact.UnderlyingFundContactId,
+																	UnderlyingFundId = UnderlyingFundContact.UnderlyingtFundID,
+																	ContactId = UnderlyingFundContact.Contact.ContactID,
+																	ContactName = UnderlyingFundContact.Contact.ContactName,
+																	ContactTitle = UnderlyingFundContact.Contact.Title,
+																	ContactNotes = UnderlyingFundContact.Contact.Notes,
+																});
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<UnderlyingFundContactList> paginatedList = new PaginatedList<UnderlyingFundContactList>(query, pageIndex, pageSize);
+				foreach (var UnderlyingFundContact in paginatedList) {
+					List<CommunicationDetailModel> communications = GetContactCommunications(context, UnderlyingFundContact.ContactId);
+					UnderlyingFundContact.Address = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.MailingAddress);
+					UnderlyingFundContact.Email = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.Email);
+					UnderlyingFundContact.Phone = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.HomePhone);
+					UnderlyingFundContact.WebAddress = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebAddress);
+					UnderlyingFundContact.WebUsername = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebUsername);
+					UnderlyingFundContact.WebPassword = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebPassword);
+				}
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public UnderlyingFundContact FindUnderlyingFundContact(int underlyingFundContactId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.UnderlyingFundContacts
+					.Include("Contact")
+					.Include("Contact.ContactCommunications")
+					.Include("Contact.ContactCommunications.Communication")
+					.Where(underlyingFundContact => underlyingFundContact.UnderlyingFundContactId == underlyingFundContactId).SingleOrDefault();
+
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveUnderlyingFundContact(UnderlyingFundContact underlyingFundContact) {
+			return underlyingFundContact.Save();
+		}
+
+		public bool DeleteUnderlyingFundContact(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				UnderlyingFundContact underlyingFundContact = context.UnderlyingFundContacts.SingleOrDefault(fundcontact => fundcontact.UnderlyingFundContactId == id);
+				if (underlyingFundContact != null) {
+
+					List<ContactCommunication> contactCommunications = underlyingFundContact.Contact.ContactCommunications.ToList();
+					foreach (var contactCommunication in contactCommunications) {
+						context.Communications.DeleteObject(contactCommunication.Communication);
+						context.ContactCommunications.DeleteObject(contactCommunication);
+					}
+					
+					context.Contacts.DeleteObject(underlyingFundContact.Contact);
+					context.SaveChanges();
+
+					context.UnderlyingFundContacts.DeleteObject(underlyingFundContact);
+					context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
+		}
+
+
 		#endregion
 
 		#region Communication
@@ -973,6 +1039,18 @@ namespace DeepBlue.Controllers.Deal {
 						CommunicationValue = communication.CommunicationValue,
 						CommunicationTypeId = communication.CommunicationTypeID
 					}).ToList();
+		}
+
+		public List<CommunicationDetailModel> GetContactCommunications(int? contactId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from contactCommunication in context.ContactCommunications
+						join communication in context.Communications on contactCommunication.CommunicationID equals communication.CommunicationID
+						where contactCommunication.ContactID == contactId
+						select new CommunicationDetailModel {
+							CommunicationValue = communication.CommunicationValue,
+							CommunicationTypeId = communication.CommunicationTypeID
+						}).ToList();
+			}
 		}
 
 		public string GetCommunicationValue(List<CommunicationDetailModel> communications, Models.Admin.Enums.CommunicationType communicationType) {

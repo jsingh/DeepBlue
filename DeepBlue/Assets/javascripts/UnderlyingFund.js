@@ -147,7 +147,7 @@
 			});
 
 			//load contact list
-			//underlyingFundContact.load();
+			underlyingFundContact.load();
 		});
 	}
 	,documentRefresh: function () {

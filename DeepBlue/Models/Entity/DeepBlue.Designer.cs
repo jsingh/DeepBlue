@@ -150,6 +150,8 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_UnderlyingFundStockDistribution", "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), "UnderlyingFundStockDistributionLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistributionLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Log_LogType", "LogType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.LogType), "Log", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Log), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_LogDetail_Log", "Log", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Log), "LogDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.LogDetail), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundContact_Contact", "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Contact), "UnderlyingFundContact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundContact), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundContact_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFund), "UnderlyingFundContact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundContact), true)]
 
 #endregion
 
@@ -1736,6 +1738,22 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<LogType> _LogTypes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<UnderlyingFundContact> UnderlyingFundContacts
+        {
+            get
+            {
+                if ((_UnderlyingFundContacts == null))
+                {
+                    _UnderlyingFundContacts = base.CreateObjectSet<UnderlyingFundContact>("UnderlyingFundContacts");
+                }
+                return _UnderlyingFundContacts;
+            }
+        }
+        private ObjectSet<UnderlyingFundContact> _UnderlyingFundContacts;
 
         #endregion
         #region AddTo Methods
@@ -2506,6 +2524,14 @@ namespace DeepBlue.Models.Entity
         public void AddToLogTypes(LogType logType)
         {
             base.AddObject("LogTypes", logType);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UnderlyingFundContacts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUnderlyingFundContacts(UnderlyingFundContact underlyingFundContact)
+        {
+            base.AddObject("UnderlyingFundContacts", underlyingFundContact);
         }
 
         #endregion
@@ -8938,6 +8964,28 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFund_Contact", "UnderlyingFund", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundContact_Contact", "UnderlyingFundContact")]
+        public EntityCollection<UnderlyingFundContact> UnderlyingFundContacts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingFundContact>("DeepBlueModel.FK_UnderlyingFundContact_Contact", "UnderlyingFundContact");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundContact>("DeepBlueModel.FK_UnderlyingFundContact_Contact", "UnderlyingFundContact", value);
                 }
             }
         }
@@ -31669,6 +31717,28 @@ namespace DeepBlue.Models.Entity
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundContact_UnderlyingFund", "UnderlyingFundContact")]
+        public EntityCollection<UnderlyingFundContact> UnderlyingFundContacts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingFundContact>("DeepBlueModel.FK_UnderlyingFundContact_UnderlyingFund", "UnderlyingFundContact");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundContact>("DeepBlueModel.FK_UnderlyingFundContact_UnderlyingFund", "UnderlyingFundContact", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -33166,6 +33236,188 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundCashDistribution_UnderlyingFund", "UnderlyingFund", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="UnderlyingFundContact")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class UnderlyingFundContact : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new UnderlyingFundContact object.
+        /// </summary>
+        /// <param name="underlyingFundContactId">Initial value of the UnderlyingFundContactId property.</param>
+        public static UnderlyingFundContact CreateUnderlyingFundContact(global::System.Int32 underlyingFundContactId)
+        {
+            UnderlyingFundContact underlyingFundContact = new UnderlyingFundContact();
+            underlyingFundContact.UnderlyingFundContactId = underlyingFundContactId;
+            return underlyingFundContact;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UnderlyingFundContactId
+        {
+            get
+            {
+                return _UnderlyingFundContactId;
+            }
+            set
+            {
+                if (_UnderlyingFundContactId != value)
+                {
+                    OnUnderlyingFundContactIdChanging(value);
+                    ReportPropertyChanging("UnderlyingFundContactId");
+                    _UnderlyingFundContactId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("UnderlyingFundContactId");
+                    OnUnderlyingFundContactIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _UnderlyingFundContactId;
+        partial void OnUnderlyingFundContactIdChanging(global::System.Int32 value);
+        partial void OnUnderlyingFundContactIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UnderlyingtFundID
+        {
+            get
+            {
+                return _UnderlyingtFundID;
+            }
+            set
+            {
+                OnUnderlyingtFundIDChanging(value);
+                ReportPropertyChanging("UnderlyingtFundID");
+                _UnderlyingtFundID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UnderlyingtFundID");
+                OnUnderlyingtFundIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UnderlyingtFundID;
+        partial void OnUnderlyingtFundIDChanging(Nullable<global::System.Int32> value);
+        partial void OnUnderlyingtFundIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> ContactID
+        {
+            get
+            {
+                return _ContactID;
+            }
+            set
+            {
+                OnContactIDChanging(value);
+                ReportPropertyChanging("ContactID");
+                _ContactID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ContactID");
+                OnContactIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _ContactID;
+        partial void OnContactIDChanging(Nullable<global::System.Int32> value);
+        partial void OnContactIDChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundContact_Contact", "Contact")]
+        public Contact Contact
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Contact>("DeepBlueModel.FK_UnderlyingFundContact_Contact", "Contact").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Contact>("DeepBlueModel.FK_UnderlyingFundContact_Contact", "Contact").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Contact> ContactReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Contact>("DeepBlueModel.FK_UnderlyingFundContact_Contact", "Contact");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Contact>("DeepBlueModel.FK_UnderlyingFundContact_Contact", "Contact", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundContact_UnderlyingFund", "UnderlyingFund")]
+        public UnderlyingFund UnderlyingFund
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundContact_UnderlyingFund", "UnderlyingFund").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundContact_UnderlyingFund", "UnderlyingFund").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<UnderlyingFund> UnderlyingFundReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundContact_UnderlyingFund", "UnderlyingFund");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFundContact_UnderlyingFund", "UnderlyingFund", value);
                 }
             }
         }

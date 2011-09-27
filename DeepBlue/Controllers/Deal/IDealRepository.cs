@@ -92,6 +92,12 @@ namespace DeepBlue.Controllers.Deal {
 		List<UnderlyingFundDocumentList> GetAllUnderlyingFundDocuments(int underlyingFundId, int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundDocument(UnderlyingFundDocument underlyingFundDocument);
 		bool DeleteUnderlyingFundDocument(int underlyingFundDocumentId);
+		List<UnderlyingFundContactList> GetAllUnderlyingFundContacts(int underlyingFundId, int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		UnderlyingFundContact FindUnderlyingFundContact(int underlyingFundContactId);
+		IEnumerable<ErrorInfo> SaveUnderlyingFundContact(UnderlyingFundContact underlyingFundContact);
+		string GetCommunicationValue(List<CommunicationDetailModel> communications, Models.Admin.Enums.CommunicationType communicationType);
+		List<CommunicationDetailModel> GetContactCommunications(int? contactId);
+		bool DeleteUnderlyingFundContact(int id);
 		#endregion
 
 		#region UnderlyingFundStockDistribution

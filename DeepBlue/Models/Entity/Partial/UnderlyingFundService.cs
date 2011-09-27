@@ -57,80 +57,80 @@ namespace DeepBlue.Models.Entity.Partial {
 						}
 						/* End Account */
 					}
-					if (underlyingFund.Contact != null) {
-						/* Contact & Communication */
-						key = default(EntityKey);
-						originalItem = null;
-						key = context.CreateEntityKey("Contacts", underlyingFund.Contact);
-						if (context.TryGetObjectByKey(key, out originalItem)) {
-							context.ApplyCurrentValues(key.EntitySetName, underlyingFund.Contact);
-						}
-						else {
-							updateUnderlyingFund.Contact = new Contact {
-								ContactName = underlyingFund.Contact.ContactName,
-								Designation = underlyingFund.Contact.Designation,
-								CreatedBy = underlyingFund.Contact.CreatedBy,
-								CreatedDate = underlyingFund.Contact.CreatedDate,
-								EntityID = underlyingFund.Contact.EntityID,
-								FirstName = underlyingFund.Contact.FirstName,
-								LastName = underlyingFund.Contact.LastName,
-								LastUpdatedBy = underlyingFund.Contact.LastUpdatedBy,
-								LastUpdatedDate = underlyingFund.Contact.LastUpdatedDate,
-								MiddleName = underlyingFund.Contact.MiddleName,
-								ReceivesDistributionNotices = underlyingFund.Contact.ReceivesDistributionNotices,
-								ReceivesFinancials = underlyingFund.Contact.ReceivesFinancials,
-								ReceivesInvestorLetters = underlyingFund.Contact.ReceivesInvestorLetters,
-								ReceivesK1 = underlyingFund.Contact.ReceivesK1
-							};
+					//if (underlyingFund.Contact != null) {
+					//    /* Contact & Communication */
+					//    key = default(EntityKey);
+					//    originalItem = null;
+					//    key = context.CreateEntityKey("Contacts", underlyingFund.Contact);
+					//    if (context.TryGetObjectByKey(key, out originalItem)) {
+					//        context.ApplyCurrentValues(key.EntitySetName, underlyingFund.Contact);
+					//    }
+					//    else {
+					//        updateUnderlyingFund.Contact = new Contact {
+					//            ContactName = underlyingFund.Contact.ContactName,
+					//            Designation = underlyingFund.Contact.Designation,
+					//            CreatedBy = underlyingFund.Contact.CreatedBy,
+					//            CreatedDate = underlyingFund.Contact.CreatedDate,
+					//            EntityID = underlyingFund.Contact.EntityID,
+					//            FirstName = underlyingFund.Contact.FirstName,
+					//            LastName = underlyingFund.Contact.LastName,
+					//            LastUpdatedBy = underlyingFund.Contact.LastUpdatedBy,
+					//            LastUpdatedDate = underlyingFund.Contact.LastUpdatedDate,
+					//            MiddleName = underlyingFund.Contact.MiddleName,
+					//            ReceivesDistributionNotices = underlyingFund.Contact.ReceivesDistributionNotices,
+					//            ReceivesFinancials = underlyingFund.Contact.ReceivesFinancials,
+					//            ReceivesInvestorLetters = underlyingFund.Contact.ReceivesInvestorLetters,
+					//            ReceivesK1 = underlyingFund.Contact.ReceivesK1
+					//        };
 
-						}
-						foreach (var contactCommunication in underlyingFund.Contact.ContactCommunications) {
-							key = default(EntityKey);
-							originalItem = null;
-							key = context.CreateEntityKey("ContactCommunications", contactCommunication);
-							if (context.TryGetObjectByKey(key, out originalItem)) {
-								context.ApplyCurrentValues(key.EntitySetName, contactCommunication);
-								key = default(EntityKey);
-								originalItem = null;
-								key = context.CreateEntityKey("Communications", contactCommunication.Communication);
-								if (context.TryGetObjectByKey(key, out originalItem)) {
-									context.ApplyCurrentValues(key.EntitySetName, contactCommunication.Communication);
-								}
-							}
-							else {
-								Contact contact = null;
-								if (updateUnderlyingFund.Contact != null) {
-									contact = updateUnderlyingFund.Contact;
-								}
-								else {
-									contact = context.Contacts.SingleOrDefault(cont => cont.ContactID == contactCommunication.Contact.ContactID);
-								}
-								if (contact != null) {
-									contact.ContactCommunications.Add(new ContactCommunication {
-										CreatedBy = contactCommunication.CreatedBy,
-										CreatedDate = contactCommunication.CreatedDate,
-										EntityID = contactCommunication.EntityID,
-										LastUpdatedBy = contactCommunication.LastUpdatedBy,
-										LastUpdatedDate = contactCommunication.LastUpdatedDate,
-										Communication = new Communication {
-											CommunicationComment = contactCommunication.Communication.CommunicationComment,
-											CommunicationTypeID = contactCommunication.Communication.CommunicationTypeID,
-											CommunicationValue = contactCommunication.Communication.CommunicationValue,
-											CreatedBy = contactCommunication.Communication.CreatedBy,
-											CreatedDate = contactCommunication.Communication.CreatedDate,
-											EntityID = contactCommunication.Communication.EntityID,
-											IsPreferred = contactCommunication.Communication.IsPreferred,
-											LastFourPhone = contactCommunication.Communication.LastFourPhone,
-											LastUpdatedBy = contactCommunication.Communication.LastUpdatedBy,
-											LastUpdatedDate = contactCommunication.Communication.LastUpdatedDate,
-											Listed = contactCommunication.Communication.Listed
-										}
-									});
-								}
-							}
-						}
-						/* End Contact & Communication */
-					}
+					//    }
+					//    foreach (var contactCommunication in underlyingFund.Contact.ContactCommunications) {
+					//        key = default(EntityKey);
+					//        originalItem = null;
+					//        key = context.CreateEntityKey("ContactCommunications", contactCommunication);
+					//        if (context.TryGetObjectByKey(key, out originalItem)) {
+					//            context.ApplyCurrentValues(key.EntitySetName, contactCommunication);
+					//            key = default(EntityKey);
+					//            originalItem = null;
+					//            key = context.CreateEntityKey("Communications", contactCommunication.Communication);
+					//            if (context.TryGetObjectByKey(key, out originalItem)) {
+					//                context.ApplyCurrentValues(key.EntitySetName, contactCommunication.Communication);
+					//            }
+					//        }
+					//        else {
+					//            Contact contact = null;
+					//            if (updateUnderlyingFund.Contact != null) {
+					//                contact = updateUnderlyingFund.Contact;
+					//            }
+					//            else {
+					//                contact = context.Contacts.SingleOrDefault(cont => cont.ContactID == contactCommunication.Contact.ContactID);
+					//            }
+					//            if (contact != null) {
+					//                contact.ContactCommunications.Add(new ContactCommunication {
+					//                    CreatedBy = contactCommunication.CreatedBy,
+					//                    CreatedDate = contactCommunication.CreatedDate,
+					//                    EntityID = contactCommunication.EntityID,
+					//                    LastUpdatedBy = contactCommunication.LastUpdatedBy,
+					//                    LastUpdatedDate = contactCommunication.LastUpdatedDate,
+					//                    Communication = new Communication {
+					//                        CommunicationComment = contactCommunication.Communication.CommunicationComment,
+					//                        CommunicationTypeID = contactCommunication.Communication.CommunicationTypeID,
+					//                        CommunicationValue = contactCommunication.Communication.CommunicationValue,
+					//                        CreatedBy = contactCommunication.Communication.CreatedBy,
+					//                        CreatedDate = contactCommunication.Communication.CreatedDate,
+					//                        EntityID = contactCommunication.Communication.EntityID,
+					//                        IsPreferred = contactCommunication.Communication.IsPreferred,
+					//                        LastFourPhone = contactCommunication.Communication.LastFourPhone,
+					//                        LastUpdatedBy = contactCommunication.Communication.LastUpdatedBy,
+					//                        LastUpdatedDate = contactCommunication.Communication.LastUpdatedDate,
+					//                        Listed = contactCommunication.Communication.Listed
+					//                    }
+					//                });
+					//            }
+					//        }
+					//    }
+					//    /* End Contact & Communication */
+					//}
 					originalItem = null;
 					key = default(EntityKey);
 					key = context.CreateEntityKey("UnderlyingFunds", underlyingFund);

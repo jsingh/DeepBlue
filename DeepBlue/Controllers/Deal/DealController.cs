@@ -1177,26 +1177,26 @@ namespace DeepBlue.Controllers.Deal {
 					underlyingFund.Account.IBAN = model.IBAN;
 				}
 
-				if (underlyingFund.Contact == null) {
-					underlyingFund.Contact = new Contact();
-					underlyingFund.Contact.CreatedBy = Authentication.CurrentUser.UserID;
-					underlyingFund.Contact.CreatedDate = DateTime.Now;
-				}
-				underlyingFund.Contact.LastUpdatedBy = Authentication.CurrentUser.UserID;
-				underlyingFund.Contact.LastUpdatedDate = DateTime.Now;
-				underlyingFund.Contact.EntityID = Authentication.CurrentEntity.EntityID;
-				underlyingFund.Contact.ContactName = model.ContactName;
-				underlyingFund.Contact.LastName = "n/a";
-				underlyingFund.Contact.Title = model.ContactTitle;
-				underlyingFund.Contact.Notes = model.ContactNotes;
-				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.Email, model.Email);
-				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.HomePhone, model.Phone);
-				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebAddress, model.WebAddress);
-				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.MailingAddress, model.Address);
-				AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebUsername, model.WebUsername);
-				if (model.ChangeWebPassword) {
-					AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebPassword, model.WebPassword);
-				}
+				//if (underlyingFund.Contact == null) {
+				//    underlyingFund.Contact = new Contact();
+				//    underlyingFund.Contact.CreatedBy = Authentication.CurrentUser.UserID;
+				//    underlyingFund.Contact.CreatedDate = DateTime.Now;
+				//}
+				//underlyingFund.Contact.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				//underlyingFund.Contact.LastUpdatedDate = DateTime.Now;
+				//underlyingFund.Contact.EntityID = Authentication.CurrentEntity.EntityID;
+				//underlyingFund.Contact.ContactName = model.ContactName;
+				//underlyingFund.Contact.LastName = "n/a";
+				//underlyingFund.Contact.Title = model.ContactTitle;
+				//underlyingFund.Contact.Notes = model.ContactNotes;
+				//AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.Email, model.Email);
+				//AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.HomePhone, model.Phone);
+				//AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebAddress, model.WebAddress);
+				//AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.MailingAddress, model.Address);
+				//AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebUsername, model.WebUsername);
+				//if (model.ChangeWebPassword) {
+				//    AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebPassword, model.WebPassword);
+				//}
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveUnderlyingFund(underlyingFund);
 				if (errorInfo != null) {
 					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
@@ -1325,6 +1325,132 @@ namespace DeepBlue.Controllers.Deal {
 		public JsonResult FindUnderlyingFunds(string term) {
 			return Json(DealRepository.FindUnderlyingFunds(term), JsonRequestBehavior.AllowGet);
 		}
+
+		[HttpGet]
+		public JsonResult UnderlyingFundContactList(int pageIndex, int pageSize, string sortName, string sortOrder, int underlyingFundId) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<UnderlyingFundContactList> underlyingFundContacts = DealRepository.GetAllUnderlyingFundContacts(underlyingFundId, pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var underlyingFundContact in underlyingFundContacts) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {
+					  underlyingFundContact.UnderlyingFundContactId,
+					  underlyingFundContact.UnderlyingFundId,
+					  underlyingFundContact.ContactId,
+					  underlyingFundContact.ContactName,
+					  underlyingFundContact.ContactTitle,
+					  underlyingFundContact.ContactNotes,
+					  underlyingFundContact.Address,
+					  underlyingFundContact.Email,
+					  underlyingFundContact.Phone,
+					  underlyingFundContact.WebAddress,
+					  underlyingFundContact.WebUsername,
+					  underlyingFundContact.WebPassword
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		// GET: /Admin/EditUser
+		[HttpGet]
+		public ActionResult EditUnderlyingFundContact(int id) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			UnderlyingFundContact underlyingFundContact = DealRepository.FindUnderlyingFundContact(id);
+			List<CommunicationDetailModel> communications = DealRepository.GetContactCommunications(underlyingFundContact.ContactID);
+
+			flexgridData.total = totalRows;
+			flexgridData.page = 0;
+			flexgridData.rows.Add(new FlexigridRow {
+				cell = new List<object> {
+					  underlyingFundContact.UnderlyingFundContactId,
+					  underlyingFundContact.UnderlyingtFundID,
+					  underlyingFundContact.ContactID,
+					  underlyingFundContact.Contact.ContactName ,
+					  underlyingFundContact.Contact.Title,
+					  underlyingFundContact.Contact.Notes,
+					  DealRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.MailingAddress),
+					  DealRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.Email),
+					  DealRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.HomePhone),
+					  DealRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebAddress),
+					  DealRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebUsername),
+					  DealRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebPassword)
+				}
+			});
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		// GET: /Deal/CreateUnderlyingFundContact
+		[HttpPost]
+		public string CreateUnderlyingFundContact(FormCollection collection) {
+			UnderlyingFundContactModel model = new UnderlyingFundContactModel();
+			ResultModel resultModel = new ResultModel();
+			IEnumerable<ErrorInfo> errorInfo = null;
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				UnderlyingFundContact underlyingFundContact = DealRepository.FindUnderlyingFundContact(model.UnderlyingFundContactId);
+				if (underlyingFundContact == null) {
+					underlyingFundContact = new UnderlyingFundContact();
+					underlyingFundContact.UnderlyingtFundID = model.UnderlyingFundId ;
+				}
+				if (underlyingFundContact.Contact == null) {
+					underlyingFundContact.Contact = new Contact();
+					underlyingFundContact.Contact.CreatedBy = Authentication.CurrentUser.UserID;
+					underlyingFundContact.Contact.CreatedDate = DateTime.Now;
+				}
+				underlyingFundContact.Contact.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				underlyingFundContact.Contact.LastUpdatedDate = DateTime.Now;
+				underlyingFundContact.Contact.EntityID = Authentication.CurrentEntity.EntityID;
+				underlyingFundContact.Contact.ContactName = model.ContactName;
+				underlyingFundContact.Contact.LastName = "n/a";
+				underlyingFundContact.Contact.Title = model.ContactTitle;
+				underlyingFundContact.Contact.Notes = model.ContactNotes;
+				AddCommunication(underlyingFundContact.Contact, Models.Admin.Enums.CommunicationType.Email, model.Email);
+				AddCommunication(underlyingFundContact.Contact, Models.Admin.Enums.CommunicationType.HomePhone, model.Phone);
+				AddCommunication(underlyingFundContact.Contact, Models.Admin.Enums.CommunicationType.WebAddress, model.WebAddress);
+				AddCommunication(underlyingFundContact.Contact, Models.Admin.Enums.CommunicationType.MailingAddress, model.Address);
+				AddCommunication(underlyingFundContact.Contact, Models.Admin.Enums.CommunicationType.WebUsername, model.WebUsername);
+				if (model.ChangeWebPassword) {
+					AddCommunication(underlyingFundContact.Contact, Models.Admin.Enums.CommunicationType.WebPassword, model.WebPassword);
+				}
+
+				errorInfo = DealRepository.SaveUnderlyingFundContact(underlyingFundContact);
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					resultModel.Result = underlyingFundContact.UnderlyingFundContactId.ToString();
+				}
+				else {
+					resultModel.Result = "Error||" + resultModel.Result;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+				if (string.IsNullOrEmpty(resultModel.Result) ==false) {
+					resultModel.Result = "Error||" + resultModel.Result;
+				}
+			}
+			return resultModel.Result.ToString();
+		}
+
+		[HttpGet]
+		public string DeleteUnderlyingFundContact(int id) {
+			if (DealRepository.DeleteUnderlyingFundContact(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
 
 		#endregion
 

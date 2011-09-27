@@ -121,6 +121,8 @@
     <Compile Include="Models\CapitalCall\ManagementFeeRateScheduleTierDetail.cs" />
     <Compile Include="Models\Deal\ActivityDealModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundContactModel.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundContactList.cs" />
     <Compile Include="Models\Deal\DealFundDetail.cs" />
     <Compile Include="Models\Deal\DealFundDocumentList.cs" />
     <Compile Include="Models\Deal\FixedIncomeDocumentModel.cs" />
@@ -222,6 +224,7 @@
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalCallLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalDistributionLineItemService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingFundContactService.cs" />
     <Compile Include="Models\Entity\Partial\LogService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorAccountService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorContactService.cs" />
@@ -247,6 +250,7 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVHistoryService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingFundContact.cs" />
     <Compile Include="Models\Entity\Validation\InvestorContact.cs" />
     <Compile Include="Models\Entity\Validation\Log.cs" />
     <Compile Include="Models\Entity\Validation\User.cs" />
@@ -900,6 +904,7 @@
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
     <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
+    <Content Include="Assets\javascripts\UnderlyingFundContact.js" />
     <Content Include="Assets\javascripts\Footer.js" />
     <Content Include="Assets\javascripts\ImageActive.js" />
     <Content Include="Assets\javascripts\SecurityValue.js" />

@@ -108,86 +108,29 @@
 			</div>
 		</div>
 		<div class="detail" style="display: none; padding-left: 36px;" id="ContactInformation">
-			<div class="editor-label">
-				<label>
-					Contact Name</label>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("ContactName", "${ContactName}", new { @class = "wm" })%>
-			</div>
-			<div class="editor-label" style="clear: right">
-				<label>
-					Title</label>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("ContactTitle", "${ContactTitle}", new { @class = "wm" })%>
-			</div>
-			<div class="editor-label">
-				<label>
-					Phone Number</label>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("Phone", "${Phone}", new { @class = "wm" })%>
-			</div>
-			<div class="editor-label" style="clear: right">
-				<label>
-					Email</label>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("Email", "${Email}", new { @class = "wm" })%>
-			</div>
-			<div class="editor-label">
-				<label>
-					Web Address</label>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("WebAddress", "${WebAddress}", new { @class = "wm" })%>
-			</div>
-			<div class="editor-label" style="clear: right">
-				<label>
-					Web User name</label>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("WebUsername", "${WebUsername}", new { @class = "wm" })%>
-			</div>
-			<div class="editor-label">
-				<label>
-					Web Password</label>
-			</div>
-			
-			<div class="editor-field" style="padding-right:0px;">
-				{{if WebPassword != null }}
-				<%: Html.Password("WebPassword", "", new { @class = "wm",@style="width:160px;",@disabled = "disabled"})%>
-				{{else}}
-				<%: Html.Password("WebPassword", "", new { @class = "wm", @style="width:160px;"})%>
-				{{/if}}
-			</div>
-			<div class="editor-label" style="clear: none; padding: 0px; width: 175px; text-align: left;">
-				<%: Html.Hidden("ChangeWebPassword", "{{if WebPassword == null }}true{{else}}false{{/if}}")%>
-				<%: Html.Image("Editbtn_active.png", new { @id = "EditWebPassword", @onclick = "javascript:underlyingFund.editWebPassword();", @style = "{{if WebPassword == null }}display:none{{/if}}" })%>
-				<%: Html.Image("Cancel_active.png", new { @id = "CancelWebPassword", @onclick = "javascript:underlyingFund.cancelWebPassword();", @style = "{{if WebPassword == null }}display:none{{/if}}" })%>
-			</div>
-			<div class="editor-label">
-				<label>
-					Registered Address</label>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextArea("Address", "${Address}", new { @style = "width:484px;height:70px;" })%>
-			</div>
-			<div class="editor-label">
-				<label>
-					Notes</label>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextArea("ContactNotes", "${ContactNotes}", new { @style = "width:484px;height:100px;" })%>
-			</div>
-			<div class="savebox">
-				<div class="resetbtn">
-					<%: Html.Span("Reset", new { @onclick = "javascript:underlyingFund.reset('ContactInformation');" })%></div>
-				<div class="btn">
-					<%: Html.Image("Save_active.png", new { @onclick = "javascript:underlyingFund.saveTemp('CILoading')" })%></div>
-				<div class="btn" id="CILoading">
-				</div>
+			<div style="clear: both; width: 70%; padding-left: 38px;">
+				<% Html.RenderPartial("TBoxTop"); %>
+				<table cellpadding="0" cellspacing="0" border="0" id="ContactList" class="grid">
+					<thead>
+						<tr>
+							<th sortname="ContactName" style="width: 20%">
+								Contact Name
+							</th>
+							<th sortname="ContactTitle" style="width: 20%">
+								Title
+							</th>
+							<th sortname="Phone" style="width: 20%">
+								Phone
+							</th>
+							<th sortname="Email" style="width: 30%">
+								Email
+							</th>
+							<th style="width: 10%">
+							</th>
+						</tr>
+					</thead>
+				</table>
+				<% Html.RenderPartial("TBoxBottom"); %>
 			</div>
 		</div>
 	</div>
@@ -349,7 +292,7 @@
 			</div>
 			<div style="clear: both; width: 70%; padding-left: 38px;">
 				<br />
-				<% Html.RenderPartial("TBoxTop"); %>	
+				<% Html.RenderPartial("TBoxTop"); %>
 				<table id="DocumentList" cellpadding="0" cellspacing="0" border="0" class="grid">
 					<thead>
 						<tr>
@@ -387,3 +330,121 @@
 		</div>
 	</div>
 </div>
+
+<script id="AddContactButtonTemplate" type="text/x-jquery-tmpl">
+	<%using (Html.GreenButton(new { @onclick = "javascript:underlyingFundContact.add(this);" })) {%>Add Contact<%}%>
+</script>
+<script id="ContactGridTemplate" type="text/x-jquery-tmpl">
+	{{each(i,row) rows}}
+	<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow disprow"{{else}}class="disprow"{{/if}}>
+		<td style="width: 20%">
+			<%: Html.Span("${row.cell[3]}", new { @class = "show" })%>
+		</td>
+		<td style="width: 20%">
+			<%: Html.Span("${row.cell[4]}", new { @class = "show" })%>
+		</td>
+		<td style="width: 20%">
+			<%: Html.Span("${row.cell[8]}", new { @class = "show" })%>
+		</td>
+		<td style="width: 30%">
+			<%: Html.Span("${row.cell[7]}", new { @class = "show" })%>
+		</td>
+		<td style="text-align:right;width:10%;">
+			{{if row.cell[0]==0}}
+			<%: Html.Image("add_active.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:underlyingFundContact.save(this,${row.cell[0]});" })%>
+			{{else}}
+			<%: Html.Image("Save_active.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:underlyingFundContact.save(this,${row.cell[0]});" })%>
+			<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:underlyingFundContact.edit(this,${row.cell[0]});" })%>
+			<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:underlyingFundContact.deleteRow(this,${row.cell[0]});" })%>
+			{{/if}}
+			<%: Html.Hidden("UnderlyingFundContactId", "${row.cell[0]}") %>
+		</td>
+	</tr>
+	<tr id="EditRow${row.cell[0]}" style="background-image:none;">
+		<td colspan=6 style="width: 100%;display:none;">
+			<%using(Html.Form(new { @id="frm${row.cell[0]}", @onsubmit = "return false;" })){%>
+			<div class="editor-label">
+				<label>
+					Contact Name</label>
+			</div>
+			<div class="editor-field">
+				<%: Html.TextBox("ContactName", "${row.cell[3]}", new { @class = "wm" })%>
+			</div>
+			<div class="editor-label" style="clear: right">
+				<label>
+					Title</label>
+			</div>
+			<div class="editor-field">
+				<%: Html.TextBox("ContactTitle", "${row.cell[4]}", new { @class = "wm" })%>
+			</div>
+			<div class="editor-label">
+				<label>
+					Phone Number</label>
+			</div>
+			<div class="editor-field">
+				<%: Html.TextBox("Phone", "${row.cell[8]}", new { @class = "wm" })%>
+			</div>
+			<div class="editor-label" style="clear: right">
+				<label>
+					Email</label>
+			</div>
+			<div class="editor-field">
+				<%: Html.TextBox("Email", "${row.cell[7]}", new { @class = "wm" })%>
+			</div>
+			<div class="editor-label">
+				<label>
+					Web Address</label>
+			</div>
+			<div class="editor-field">
+				<%: Html.TextBox("WebAddress", "${row.cell[9]}", new { @class = "wm" })%>
+			</div>
+			<div class="editor-label" style="clear: right">
+				<label>
+					Web User name</label>
+			</div>
+			<div class="editor-field">
+				<%: Html.TextBox("WebUsername", "${row.cell[10]}", new { @class = "wm" })%>
+			</div>
+			<div class="editor-label">
+				<label>
+					Web Password</label>
+			</div>
+			
+			<div class="editor-field" style="padding-right:0px;">
+				{{if row.cell[11] != null }}
+				<%: Html.Password("WebPassword", "", new { @class = "wm",@style="width:160px;",@disabled = "disabled"})%>
+				{{else}}
+				<%: Html.Password("WebPassword", "", new { @class = "wm", @style="width:160px;"})%>
+				{{/if}}
+			</div>
+			<div class="editor-label" style="clear: none; padding: 0px; width: 175px; text-align: left;">
+				<%: Html.Hidden("ChangeWebPassword", "{{if row.cell[11] == null }}true{{else}}false{{/if}}")%>
+				<%: Html.Image("Editbtn_active.png", new { @id = "EditWebPassword", @onclick = "javascript:underlyingFundContact.editWebPassword(${row.cell[0]});", @style = "{{if row.cell[11] == null }}display:none{{/if}}" })%>
+				<%: Html.Image("Cancel_active.png", new { @id = "CancelWebPassword", @onclick = "javascript:underlyingFundContact.cancelWebPassword(${row.cell[0]});", @style = "{{if row.cell[11] == null }}display:none{{/if}}" })%>
+			</div>
+			<div class="editor-label">
+				<label>
+					Registered Address</label>
+			</div>
+			<div class="editor-field">
+				<%: Html.TextArea("Address", "${row.cell[7]}", new { @style = "width:484px;height:70px;" })%>
+			</div>
+			<div class="editor-label">
+				<label>
+					Notes</label>
+			</div>
+			<div class="editor-field">
+				<%: Html.TextArea("ContactNotes", "${row.cell[6]}", new { @style = "width:484px;height:100px;" })%>
+			</div>
+			<%: Html.Hidden("UnderlyingFundContactId", "${row.cell[0]}")%>
+			<div class="editor-label" style="margin-left:35%;margin-top:10px;width:200px;text-align:left;">
+				<%: Html.Image("Save_active.png", new { @class="submitbtn", @onclick = "javscript:underlyingFundContact.save(${row.cell[0]});" } )%>
+				&nbsp;&nbsp;<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:underlyingFundContact.cacelEdit(${row.cell[0]});" }) %>
+				&nbsp;&nbsp;<%:Html.Span("", new { @id = "Loading" })%>
+			</div>
+
+			<%}%>
+		</td>
+	</tr>
+	{{/each}}
+</script>
