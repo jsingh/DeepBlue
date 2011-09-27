@@ -507,10 +507,6 @@
             <End Role="Account" EntitySet="Account" />
             <End Role="UnderlyingFund" EntitySet="UnderlyingFund" />
           </AssociationSet>
-          <AssociationSet Name="FK_UnderlyingFund_Contact" Association="DeepBlueModel.Store.FK_UnderlyingFund_Contact">
-            <End Role="Contact" EntitySet="Contact" />
-            <End Role="UnderlyingFund" EntitySet="UnderlyingFund" />
-          </AssociationSet>
           <AssociationSet Name="FK_UnderlyingFund_Geography" Association="DeepBlueModel.Store.FK_UnderlyingFund_Geography">
             <End Role="Geography" EntitySet="Geography" />
             <End Role="UnderlyingFund" EntitySet="UnderlyingFund" />
@@ -3241,18 +3237,6 @@
             </Principal>
             <Dependent Role="UnderlyingFund">
               <PropertyRef Name="AccountID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UnderlyingFund_Contact">
-          <End Role="Contact" Type="DeepBlueModel.Store.Contact" Multiplicity="0..1" />
-          <End Role="UnderlyingFund" Type="DeepBlueModel.Store.UnderlyingFund" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Contact">
-              <PropertyRef Name="ContactID" />
-            </Principal>
-            <Dependent Role="UnderlyingFund">
-              <PropertyRef Name="ContactID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
