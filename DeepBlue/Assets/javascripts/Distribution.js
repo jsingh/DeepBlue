@@ -12,9 +12,9 @@
 			var target=$("#ReportDetail");
 			target.show();
 			var grid=$("#DistributionList");
-				grid.flexRemoveSortClass();
-		grid.flexOptions({ sortname: "" });
-		distributionReport.onGridInit();
+			grid.flexRemoveSortClass();
+			grid.flexOptions({ sortname: "" });
+			distributionReport.onGridInit();
 			var param=$(frm).serializeArray();
 			grid.flexOptions({ params: param });
 			grid.flexReload();

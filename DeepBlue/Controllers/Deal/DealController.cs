@@ -1227,10 +1227,10 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		[HttpGet]
-		public JsonResult UnderlyingFundList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public JsonResult UnderlyingFundList(int pageIndex, int pageSize, string sortName, string sortOrder, int? gpId) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			List<UnderlyingFundListModel> underlyingFunds = DealRepository.GetAllUnderlyingFunds(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			List<UnderlyingFundListModel> underlyingFunds = DealRepository.GetAllUnderlyingFunds(pageIndex, pageSize, sortName, sortOrder, ref totalRows, gpId);
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var underlyingFund in underlyingFunds) {
@@ -1394,7 +1394,7 @@ namespace DeepBlue.Controllers.Deal {
 				UnderlyingFundContact underlyingFundContact = DealRepository.FindUnderlyingFundContact(model.UnderlyingFundContactId);
 				if (underlyingFundContact == null) {
 					underlyingFundContact = new UnderlyingFundContact();
-					underlyingFundContact.UnderlyingtFundID = model.UnderlyingFundId ;
+					underlyingFundContact.UnderlyingtFundID = model.UnderlyingFundId;
 				}
 				if (underlyingFundContact.Contact == null) {
 					underlyingFundContact.Contact = new Contact();
@@ -1434,7 +1434,7 @@ namespace DeepBlue.Controllers.Deal {
 						}
 					}
 				}
-				if (string.IsNullOrEmpty(resultModel.Result) ==false) {
+				if (string.IsNullOrEmpty(resultModel.Result) == false) {
 					resultModel.Result = "Error||" + resultModel.Result;
 				}
 			}
@@ -1528,12 +1528,12 @@ namespace DeepBlue.Controllers.Deal {
 					List<DealUnderlyingDirect> dealUnderlyingDirects = DealRepository.GetAllDealUnderlyingDirects(securityTypeId, equitySplit.EquityID);
 
 					foreach (var dealUnderlyingDirect in dealUnderlyingDirects) {
-						
+
 						// Update Deal Underlying Direct number of shares and fmv.
 
 						dealUnderlyingDirect.NumberOfShares = dealUnderlyingDirect.NumberOfShares * equitySplit.SplitFactor;
 						dealUnderlyingDirect.FMV = dealUnderlyingDirect.NumberOfShares * dealUnderlyingDirect.PurchasePrice;
-						
+
 						errorInfo = DealRepository.SaveDealUnderlyingDirect(dealUnderlyingDirect);
 						if (errorInfo != null)
 							break;
@@ -2268,7 +2268,7 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		//
-		// GET: /Fund/FindStockDistributionIssuers
+		// GET: /Deal/FindStockDistributionIssuers
 		[HttpGet]
 		public JsonResult FindStockDistributionIssuers(string term, int underlyingFundId) {
 			return Json(DealRepository.FindStockIssuers(term, underlyingFundId), JsonRequestBehavior.AllowGet);
@@ -2838,6 +2838,20 @@ namespace DeepBlue.Controllers.Deal {
 			return Json(model, JsonRequestBehavior.AllowGet);
 		}
 
+		public JsonResult DirectList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DirectListModel> directs = DealRepository.GetAllDirects(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var direct in directs) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> { direct.DirectId, direct.DirectName }
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
 		public JsonResult EquityList(int issuerId, int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -3198,17 +3212,32 @@ namespace DeepBlue.Controllers.Deal {
 				issuer = new Models.Entity.Issuer();
 			}
 			issuer.Name = model.Name;
-			issuer.ParentName =  model.ParentName == null? string.Empty:model.ParentName;
+			issuer.ParentName = model.ParentName == null ? string.Empty : model.ParentName;
 			issuer.CountryID = model.CountryId;
 			issuer.EntityID = Authentication.CurrentEntity.EntityID;
+			issuer.IsGP = model.IsUnderlyingFundModel;
 			return DealRepository.SaveIssuer(issuer);
 		}
 
 		//
-		// GET: /Fund/FindIssuers
+		// GET: /Deal/FindIssuers
 		[HttpGet]
 		public JsonResult FindIssuers(string term) {
 			return Json(DealRepository.FindIssuers(term), JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/FindCompanys
+		[HttpGet]
+		public JsonResult FindCompanys(string term) {
+			return Json(DealRepository.FindCompanys(term), JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/FindGPs
+		[HttpGet]
+		public JsonResult FindGPs(string term) {
+			return Json(DealRepository.FindGPs(term), JsonRequestBehavior.AllowGet);
 		}
 
 		[HttpGet]

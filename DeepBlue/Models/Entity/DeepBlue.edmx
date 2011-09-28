@@ -1530,6 +1530,7 @@
           <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="ParentName" Type="varchar" MaxLength="100" />
           <Property Name="CountryID" Type="int" />
+          <Property Name="IsGP" Type="bit" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -5333,6 +5334,7 @@
           <NavigationProperty Name="Equities" Relationship="DeepBlueModel.FK_Equity_Issuer" FromRole="Issuer" ToRole="Equity" />
           <NavigationProperty Name="FixedIncomes" Relationship="DeepBlueModel.FK_FixedIncome_Issuer" FromRole="Issuer" ToRole="FixedIncome" />
           <NavigationProperty Name="UnderlyingFunds" Relationship="DeepBlueModel.FK_UnderlyingFund_Issuer" FromRole="Issuer" ToRole="UnderlyingFund" />
+          <Property Type="Boolean" Name="IsGP" />
         </EntityType>
         <EntityType Name="ManagementFeeRateSchedule">
           <Key>
@@ -8240,7 +8242,8 @@
             <ScalarProperty Name="InvestorTypeName" ColumnName="InvestorTypeName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Issuers"><EntityTypeMapping TypeName="DeepBlueModel.Issuer"><MappingFragment StoreEntitySet="Issuer">
-            <ScalarProperty Name="IssuerID" ColumnName="IssuerID" />
+            <ScalarProperty Name="IsGP" ColumnName="IsGP" />
+                <ScalarProperty Name="IssuerID" ColumnName="IssuerID" />
             <ScalarProperty Name="EntityID" ColumnName="EntityID" />
             <ScalarProperty Name="Name" ColumnName="Name" />
             <ScalarProperty Name="ParentName" ColumnName="ParentName" />

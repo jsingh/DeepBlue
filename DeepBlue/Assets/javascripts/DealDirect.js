@@ -106,9 +106,9 @@
 					$("#AddNewIssuer").hide();
 					$("#AddGP").removeClass("green-btn-sel");
 					dealDirect.loadSelectImages(false);
-					if(dealDirect.onCreateNewIssuer) {
-						dealDirect.onCreateNewIssuer(arr[1]);
-					}
+					//if(dealDirect.onCreateNewIssuer) {
+					//	dealDirect.onCreateNewIssuer(arr[1]);
+					//}
 				} else { jAlert(data); }
 			});
 		} catch(e) { jAlert(e); }
@@ -132,7 +132,25 @@
 		$("#AddGP").removeClass("green-btn-sel");
 		dealDirect.loadSelectImages(false);
 	}
-	,load: function (id) {
+	,load: function (id,directName) {
+		var addNewFund=$("#DirectDetailBox");
+		var addNewFundTab;
+		addNewFundTab=$("#TabDirectGrid");
+		var data={ id: id,DirectName: directName };
+		var tab=$("#Tab"+id);
+		var editbox=$("#Edit"+id);
+		if(tab.get(0)) {
+			addNewFundTab.after(tab);
+			addNewFund.after(editbox);
+		} else {
+			$("#SectionTemplate").tmpl(data).insertAfter(addNewFund);
+			$("#TabTemplate").tmpl(data).insertAfter(addNewFundTab);
+			editbox=$("#Edit"+id);
+			dealDirect.open(id);
+		}
+		$(".center",$("#Tab"+id)).click();
+	}
+	,open: function (id) {
 		var issuerDetail=$("#IssuerDetail");
 		var eqDetail=$("#EQdetail");
 		var fixedIncome=$("#FixedIncome");
@@ -184,6 +202,12 @@
 				break;
 		}
 	}
+	,selectDirectTab: function (that,detailid) {
+		$(".section-tab").removeClass("section-tab-sel");
+		$(".section-det").hide();
+		$(that).addClass("section-tab-sel");
+		$("#"+detailid).show();
+	}
 	,tabEquitySelect: function (type) {
 		$("#NewEqTab").removeClass("tabselect");
 		$("#ExistingEqTab").removeClass("tabselect");
@@ -212,6 +236,24 @@
 	,copyName: function (txt) {
 		var parent=$(txt).parents("#DetailBox:first");
 		$("#ParentName",parent).val(txt.value);
+	}
+	,onGridSuccess: function (t,g) {
+		//jHelper.checkValAttr(t);
+		//jHelper.jqCheckBox(t);
+		//$(window).resize();
+		$("tbody tr",t).each(function () {
+			var tdlen=$("td",this).length;
+			if(tdlen<4) {
+				$("td:last",this).attr("colspan",(5-$("td",this).length));
+			}
+		});
+	}
+	,onInit: function (g) {
+		//var data={ name: "Add Cash Distribution Type" };
+		//$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
+	}
+	,onTemplate: function (tbody,data) {
+		$("#GridTemplate").tmpl(data).appendTo(tbody);
 	}
 }
 

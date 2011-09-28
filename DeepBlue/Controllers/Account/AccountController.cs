@@ -54,7 +54,7 @@ namespace DeepBlue.Controllers.Account {
 							return Redirect(model.ReturnUrl);
 					}
 					else {
-						return RedirectToAction("Index", "Home");
+						return RedirectToAction("Index", "Fund");
 					}
 				}
 				else {

@@ -183,3 +183,26 @@
 #fixincomediv .editor-label-first{
 	width:154px;
 }
+#DirectListBox{
+	clear:both;
+	width: 90%;
+	padding-left: 60px;
+}
+#DirectList tbody tr, #DirectList tbody tr td {
+	background-image: none;
+}
+#DirectList tbody {
+     background-image: url("../images/table_row_odd.gif");
+     background-repeat: repeat-x;
+     background-color: #fff;
+}
+.tab-delete {
+    background-image: url("../images/tabdelete.png");
+    background-position: left top;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 16px;
+    margin: 7px 0 0 -18px;
+    width: 16px;
+}

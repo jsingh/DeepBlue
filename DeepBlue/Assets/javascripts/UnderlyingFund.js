@@ -1,6 +1,7 @@
 ﻿var underlyingFund={
 	tempSave: false
 	,onAfterUnderlyingFundSave: null
+	,newFundData: null
 	,init: function () {
 		jHelper.resizeIframe();
 		jHelper.waterMark();
@@ -14,19 +15,19 @@
 			$("#UnderlyingFundDetail").scrollTop(0);
 		}
 	}
-	,setUp: function () {
+	,setUp: function (box) {
 		$(document).ready(function () {
-			underlyingFund.formatPercent("TaxRate");
-			underlyingFund.formatPercent("ManagementFee");
-			underlyingFund.formatPercent("IncentiveFee");
-			underlyingFund.expand();
-			$("#Issuer").autocomplete({ source: "/Deal/FindIssuers",minLength: 1
-			,select: function (event,ui) {$("#IssuerId").val(ui.item.id); },appendTo: "body",delay: 300
+			underlyingFund.formatPercent("TaxRate",box);
+			underlyingFund.formatPercent("ManagementFee",box);
+			underlyingFund.formatPercent("IncentiveFee",box);
+			underlyingFund.expand(box);
+			$("#Issuer",box).autocomplete({ source: "/Deal/FindGPs",minLength: 1
+			,select: function (event,ui) { $("#IssuerId",box).val(ui.item.id); },appendTo: "body",delay: 300
 			});
 		});
 	}
-	,formatPercent: function (txtid) {
-		var txt=$("#"+txtid);
+	,formatPercent: function (txtid,box) {
+		var txt=$("#"+txtid,box);
 		if($.trim(txt.val())!="") {
 			txt.val(txt.val()+"%");
 		}
@@ -79,8 +80,8 @@
 			$("#IssuerId").val(0);
 		}
 	}
-	,expand: function () {
-		$(".headerbox").click(function () {
+	,expand: function (box) {
+		$(".headerbox",box).click(function () {
 			//$(".headerbox").show();
 			//$(".expandheader").hide();
 			//$(".detail").hide();
@@ -91,7 +92,7 @@
 			var display=detail.attr("issearch");
 			detail.show();
 		});
-		$(".expandheader").click(function () {
+		$(".expandheader",box).click(function () {
 			var expandheader=$(this);
 			var parent=$(expandheader).parent();
 			expandheader.hide();
@@ -103,9 +104,33 @@
 	,getUnderlyingFundId: function () {
 		return parseInt($("#UnderlyingFundId").val());
 	}
-	,load: function (id,issuerId) {
+	,selectTab: function (that,detailid) {
+		$(".section-tab").removeClass("section-tab-sel");
+		$(".section-det").hide();
+		$(that).addClass("section-tab-sel");
+		$("#"+detailid).show();
+	}
+	,load: function (id,issuerId,fundName) {
+		var addNewFund=$("#UnderlyingFundDetail");
+		var addNewFundTab;
+		addNewFundTab=$("#TabFundGrid");
+		var data={ id: id,FundName: fundName };
+		var tab=$("#Tab"+id);
+		var editbox=$("#Edit"+id);
+		if(tab.get(0)) {
+			addNewFundTab.after(tab);
+			addNewFund.after(editbox);
+		} else {
+			$("#SectionTemplate").tmpl(data).insertAfter(addNewFund);
+			$("#TabTemplate").tmpl(data).insertAfter(addNewFundTab);
+			editbox=$("#Edit"+id);
+			underlyingFund.open(id,issuerId,editbox);
+		}
+		$(".center",$("#Tab"+id)).click();
+	}
+	,open: function (id,issuerId,box) {
 		var lnkAddUnderlyingFund=$("#lnkAddUnderlyingFund");
-		var addUnderlyingfund=$("#AddUnderlyingFund");
+		var addUnderlyingfund=$("#AddUnderlyingFund",box);
 		addUnderlyingfund.empty();
 		addUnderlyingfund.css("text-align","center").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 		addUnderlyingfund.show();
@@ -113,26 +138,25 @@
 			addUnderlyingfund.empty();
 			addUnderlyingfund.css("text-align","left");
 			$("#UnderlyingFundTemplate").tmpl(data).appendTo(addUnderlyingfund);
-			$("#btnSave").attr("src","/Assets/images/muf_active.png");
+			$("#btnSave",addUnderlyingfund).attr("src","/Assets/images/muf_active.png");
 			$("#lnkAddUnderlyingFund").removeClass("green-btn-sel");
 			if(id==0) {
 				//src=lnkAddUnderlyingFund.attr("src").replace("addnufund.png","addnufundselect.png");
-				$("#S_UnderlyingFund").val("");
-				$("#btnSave").attr("src","/Assets/images/adduf_active.png");
+				$("#btnSave",addUnderlyingfund).attr("src","/Assets/images/adduf_active.png");
 				$("#lnkAddUnderlyingFund").addClass("green-btn-sel");
 			}
-			underlyingFund.setUp();
+			underlyingFund.setUp(box);
 			jHelper.checkValAttr(addUnderlyingfund);
 			jHelper.formatDateTxt(addUnderlyingfund);
 			jHelper.jqComboBox(addUnderlyingfund);
 			jHelper.jqCheckBox(addUnderlyingfund);
-			$("#Description").val($.trim($("#Description").val()));
-			$("#Address").val($.trim($("#Address").val()));
-			$("#ContactNotes").val($.trim($("#ContactNotes").val()));
-			$("#Doc_DocumentDate").datepicker({ changeMonth: true,changeYear: true });
+			$("#Description",addUnderlyingfund).val($.trim($("#Description",addUnderlyingfund).val()));
+			$("#Address",addUnderlyingfund).val($.trim($("#Address",addUnderlyingfund).val()));
+			$("#ContactNotes",addUnderlyingfund).val($.trim($("#ContactNotes",addUnderlyingfund).val()));
+			$("#Doc_DocumentDate",addUnderlyingfund).datepicker({ changeMonth: true,changeYear: true });
 			var p=new Array();
-			p[p.length]={ "name": "UnderlyingFundId","value": underlyingFund.getUnderlyingFundId() };
-			$("#DocumentList").flexigrid({
+			p[p.length]={ "name": "UnderlyingFundId","value": id };
+			$("#DocumentList",addUnderlyingfund).flexigrid({
 				usepager: true
 				,url: "/Deal/UnderlyingFundDocumentList"
 				,params: p
@@ -147,7 +171,7 @@
 			});
 
 			//load contact list
-			underlyingFundContact.load();
+			underlyingFundContact.load(id);
 		});
 	}
 	,documentRefresh: function () {
@@ -157,27 +181,46 @@
 		grid.flexOptions({ params: p });
 		grid.flexReload();
 	}
+	,deleteTab: function (id,isConfirm) {
+		var isRemove=true;
+		if(isConfirm) {
+			isRemove=confirm("Are you sure you want to remove this fund?");
+		}
+		if(isRemove) {
+			$("#Tab"+id).remove();
+			$("#Edit"+id).remove();
+			$("#tabdel"+id).remove();
+			$("#TabFundGrid").click();
+		}
+	}
 	,save: function (frm) {
 		try {
-			var loading=$("#SpnSaveLoading");
+			var loading=$("#SpnSaveLoading",frm);
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 			$.post("/Deal/UpdateUnderlyingFund",$(frm).serializeForm(),function (data) {
 				loading.empty();
-				$("#SpnDocLoading").empty();
-				$("#BILoading").empty();
-				$("#CILoading").empty();
+				$("#SpnDocLoading",frm).empty();
+				$("#BILoading",frm).empty();
+				$("#CILoading",frm).empty();
 				var arr=data.split("||");
-				
 				if(arr[0]=="True") {
-					$("#UnderlyingFundId").val(arr[1]);
+					var ufund=$("#UnderlyingFundId",frm);
+					var isNew=false;
+					if(ufund.val()==0) {
+						isNew=true;
+					}
+					ufund.val(arr[1]);
 					if(underlyingFund.onAfterUnderlyingFundSave) {
-						underlyingFund.onAfterUnderlyingFundSave();
+						underlyingFund.onAfterUnderlyingFundSave(arr[1]);
 					} else {
 						if(underlyingFund.tempSave==false) {
 							jAlert("Underlying Fund Added.");
 							$("#lnkAddUnderlyingFund").removeClass("green-btn-sel");
 							//$("#AddUnderlyingFund").hide();
-							$("#S_UnderlyingFund").val("");
+							if(isNew) {
+								underlyingFund.deleteTab(0,false);
+								underlyingFund.load(arr[1],0,$("#FundName",frm).val());
+							}
 						}
 						underlyingFund.cancelWebPassword();
 					}
@@ -186,6 +229,12 @@
 			});
 		} catch(e) { jAlert(e); }
 		return false;
+	}
+	,searchGP: function (gpId) {
+		var grid=$("#UnderlyingFundList");
+		var param=[{ name: "gpId",value: gpId}];
+		grid.flexOptions({ params: param });
+		grid.flexReload();
 	}
 	,saveTemp: function (loadingId) {
 		var loading=$("#"+loadingId);
@@ -197,7 +246,7 @@
 		var target=$("#"+targetId);
 		$(":input[type='text']",target).val("");
 		$("textarea",target).val("");
-		if(targetId =="ContactInformation"){
+		if(targetId=="ContactInformation") {
 			$(":input[type='password']",target).val("");
 			underlyingFund.editWebPassword();
 		}
@@ -300,5 +349,23 @@
 		$("#ChangeWebPassword").val("false");
 		$("#EditWebPassword").show();
 		$("#CancelWebPassword").show();
+	}
+	,onGridSuccess: function (t,g) {
+		//jHelper.checkValAttr(t);
+		//jHelper.jqCheckBox(t);
+		//$(window).resize();
+		$("tbody tr",t).each(function () {
+			var tdlen=$("td",this).length;
+			if(tdlen<4) {
+				$("td:last",this).attr("colspan",(5-$("td",this).length));
+			}
+		});
+	}
+	,onInit: function (g) {
+		//var data={ name: "Add Cash Distribution Type" };
+		//$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
+	}
+	,onTemplate: function (tbody,data) {
+		$("#GridTemplate").tmpl(data).appendTo(tbody);
 	}
 }

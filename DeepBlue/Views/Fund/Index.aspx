@@ -43,13 +43,13 @@
 			<table id="FundList" cellpadding="0" cellspacing="0" border="0" class="grid">
 				<thead>
 					<tr>
-						<th sortname="FundID" style="width: 1%; display: none;">
+						<%--<th sortname="FundID" style="width: 1%; display: none;">
 							Fund Id
-						</th>
-						<th sortname="FundName" style="width: 26%">
+						</th>--%>
+						<th sortname="FundName" style="width: 26%" colspan=4>
 							Fund Name
 						</th>
-						<th sortname="TaxId" style="width: 12%">
+						<%--<th sortname="TaxId" style="width: 12%">
 							Tax ID
 						</th>
 						<th sortname="CommitmentAmount" style="width: 14%">
@@ -65,7 +65,7 @@
 							Schedule Termination Date
 						</th>
 						<th align="right" style="width: 5%">
-						</th>
+						</th>--%>
 					</tr>
 				</thead>
 			</table>
@@ -76,12 +76,14 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List", 
-																ControllerName = "Fund"
-															   , SortName = "FundName"
+	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List"
+															   ,ControllerName = "Fund"
+															   ,SortName = "FundName"
 															   ,ResizeWidth = false
 															   ,Paging = true
 															   ,OnRowBound = "fund.onRowBound"
+															   ,OnTemplate = "fund.onTemplate"
+															   ,OnSuccess = "fund.onGridSuccess"
 															   ,BoxStyle = false
 })%>
 	<script type="text/javascript">
@@ -89,6 +91,17 @@
 			fund.newFundData = <%=JsonSerializer.ToJsonObject(Model)%>;
 			fund.init();
 		});
+	</script>
+	<script id="GridTemplate" type="text/x-jquery-tmpl">
+		{{each(i,row) rows}}
+			{{if i%4==0}}
+				<tr>
+			{{/if}}
+				<td><a href="javascript:fund.edit(${row.cell[0]},'${row.cell[1]}')">${row.cell[1]}</a></td>
+			{{if i%4==3}}
+				</tr>
+			{{/if}}
+		{{/each}}
 	</script>
 	<script id="FundAddTemplate" type="text/x-jquery-tmpl">
 		<% Html.RenderPartial("FundDetail", Model); %>

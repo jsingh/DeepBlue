@@ -10,15 +10,19 @@ namespace DeepBlue.Models.Deal {
 	public class UnderlyingFundContactModel {
 
 		public int UnderlyingFundContactId { get; set; }
+
 		public int UnderlyingFundId { get; set; }
+
 		public int ContactId { get; set; }
 
 		[StringLength(100, ErrorMessage = "Contact Name must be under 100 characters.")]
 		[DisplayName("Contact Name")]
+		[Required(ErrorMessage = "Contact Name is required")]
 		public string ContactName { get; set; }
 
 		[StringLength(200, ErrorMessage = "Web Address must be under 200 characters.")]
 		[DisplayName("Web Address")]
+		[WebAddress(ErrorMessage = "Invalid Web Address")]
 		public string WebAddress { get; set; }
 
 		[StringLength(200, ErrorMessage = "Mailing Address must be under 200 characters.")]

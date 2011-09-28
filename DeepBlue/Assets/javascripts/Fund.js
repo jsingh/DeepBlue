@@ -284,6 +284,20 @@
 		$("#Edit",lastcell).click(function () { fund.edit(data.cell[0],data.cell[1]); });
 		$("td:not(:last)",tr).click(function () { fund.edit(data.cell[0],data.cell[1]); });
 	}
+	,onTemplate: function (tbody,data) {
+		$("#GridTemplate").tmpl(data).appendTo(tbody);
+	}
+	,onGridSuccess: function (t,g) {
+		//jHelper.checkValAttr(t);
+		//jHelper.jqCheckBox(t);
+		//$(window).resize();
+		$("tbody tr",t).each(function () {
+			var tdlen=$("td",this).length;
+			if(tdlen<4) {
+				$("td:last",this).attr("colspan",(5-$("td",this).length));
+			}
+		});
+	}
 }
 $.extend(window,{
 	getTier: function (index,rowindex,item) { var data={ index: index,rowIndex: rowindex,tier: item };return data; }

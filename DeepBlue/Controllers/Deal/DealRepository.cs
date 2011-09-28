@@ -786,9 +786,13 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region UnderlyingFund
-		public List<UnderlyingFundListModel> GetAllUnderlyingFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+		public List<UnderlyingFundListModel> GetAllUnderlyingFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? gpId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<UnderlyingFundListModel> query = (from underlyingFund in context.UnderlyingFunds
+				IQueryable<UnderlyingFund> underlyingFunds = context.UnderlyingFunds;
+				if (gpId > 0) {
+					underlyingFunds = underlyingFunds.Where(uf => uf.IssuerID == gpId);
+				}
+				IQueryable<UnderlyingFundListModel> query = (from underlyingFund in underlyingFunds
 															 select new UnderlyingFundListModel {
 																 FundName = underlyingFund.FundName,
 																 FundType = underlyingFund.UnderlyingFundType.Name,
@@ -1975,6 +1979,21 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public List<DirectListModel> GetAllDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<DirectListModel> query = (from issuer in context.Issuers 
+													 where issuer.IsGP == false
+													 select new DirectListModel {
+														 DirectId = issuer.IssuerID,
+														 DirectName = issuer.Name 
+													 });
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<DirectListModel> paginatedList = new PaginatedList<DirectListModel>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
 		public CreateIssuerModel FindIssuerModel(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				CreateIssuerModel createIssuerModel = new CreateIssuerModel();
@@ -1989,41 +2008,6 @@ namespace DeepBlue.Controllers.Deal {
 														   ParentName = issuer.ParentName,
 														   Country = (country != null ? country.CountryName : string.Empty)
 													   }).SingleOrDefault();
-				/* createIssuerModel.EquityDetailModel = (from equity in context.Equities
-													   where equity.IssuerID == id
-													   select new EquityDetailModel {
-														   EquityId = equity.EquityID,
-														   CurrencyId = equity.CurrencyID,
-														   EquityType = (equity.EquityType != null ? equity.EquityType.Equity : string.Empty),
-														   EquityTypeId = equity.EquityTypeID,
-														   Industry = (equity.Industry != null ? equity.Industry.Industry1 : string.Empty),
-														   IndustryId = equity.IndustryID,
-														   IssuerId = equity.IssuerID,
-														   Public = equity.Public,
-														   ShareClassType = (equity.ShareClassType != null ? equity.ShareClassType.ShareClass : string.Empty),
-														   ShareClassTypeId = equity.ShareClassTypeID,
-														   Symbol = equity.Symbol,
-													   }).FirstOrDefault();
-				createIssuerModel.FixedIncomeDetailModel = (from fixedIncome in context.FixedIncomes
-															where fixedIncome.IssuerID == id
-															select new FixedIncomeDetailModel {
-																CouponInformation = fixedIncome.CouponInformation,
-																CurrencyId = fixedIncome.CurrencyID,
-																FaceValue = fixedIncome.FaceValue,
-																FirstAccrualDate = fixedIncome.FirstAccrualDate,
-																FirstCouponDate = fixedIncome.FirstCouponDate,
-																FixedIncomeId = fixedIncome.FixedIncomeID,
-																FixedIncomeType = (fixedIncome.FixedIncomeType != null ? fixedIncome.FixedIncomeType.FixedIncomeType1 : string.Empty),
-																Symbol = fixedIncome.Symbol,
-																Maturity = fixedIncome.Maturity,
-																FixedIncomeTypeId = fixedIncome.FixedIncomeTypeID,
-																Frequency = fixedIncome.Frequency,
-																IndustryId = fixedIncome.IndustryID,
-																IssuedDate = fixedIncome.IssuedDate,
-																IssuerId = fixedIncome.IssuerID,
-																Industry = (fixedIncome.Industry != null ? fixedIncome.Industry.Industry1 : string.Empty)
-															}).FirstOrDefault();
-				 */
 				return createIssuerModel;
 			}
 		}
@@ -2045,6 +2029,34 @@ namespace DeepBlue.Controllers.Deal {
 																	value = issuer.Name
 																});
 				return new PaginatedList<AutoCompleteList>(issuerListQuery, 1, AutoCompleteOptions.RowsLength);
+			}
+		}
+
+		public List<AutoCompleteList> FindCompanys(string issuerName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> companyListQuery = (from issuer in context.Issuers
+																where issuer.Name.StartsWith(issuerName) && issuer.IsGP == false 
+																orderby issuer.Name
+																select new AutoCompleteList {
+																	id = issuer.IssuerID,
+																	label = issuer.Name,
+																	value = issuer.Name
+																});
+				return new PaginatedList<AutoCompleteList>(companyListQuery, 1, AutoCompleteOptions.RowsLength);
+			}
+		}
+
+		public List<AutoCompleteList> FindGPs(string issuerName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> gpListQuery = (from issuer in context.Issuers
+																 where issuer.Name.StartsWith(issuerName) && issuer.IsGP == true 
+																 orderby issuer.Name
+																 select new AutoCompleteList {
+																	 id = issuer.IssuerID,
+																	 label = issuer.Name,
+																	 value = issuer.Name
+																 });
+				return new PaginatedList<AutoCompleteList>(gpListQuery, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
 

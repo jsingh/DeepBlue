@@ -191,3 +191,15 @@
 #BankInformation .editor-label-second{
 	width:123px;
 }
+/*.grid #row0, .grid #Row0{
+  background-image: url("../images/table_row_odd.gif");
+}
+*/
+#FundList tbody tr, #FundList tbody tr td {
+	background-image: none;
+}
+#FundList tbody {
+     background-image: url("../images/table_row_odd.gif");
+     background-repeat: repeat-x;
+     background-color: #fff;
+}

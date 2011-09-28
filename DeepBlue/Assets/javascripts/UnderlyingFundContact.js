@@ -1,8 +1,9 @@
 ﻿var underlyingFundContact={
-	load: function (){
+	load: function (ufid) {
+		var box=$("#Edit"+ufid);
 		var p=new Array();
-		p[p.length]={ "name": "UnderlyingFundId","value": underlyingFund.getUnderlyingFundId() };
-		$("#ContactList").flexigrid({
+		p[p.length]={ "name": "UnderlyingFundId","value": ufid };
+		$("#ContactList",box).flexigrid({
 			usepager: true
 			,url: "/Deal/UnderlyingFundContactList"
 			,params: p
@@ -21,29 +22,31 @@
 			,tableName: "Contact"
 		});
 	}
-	,add: function (that) {
+	,add: function (that,ufid) {
 		var flexigrid=$(that).parents(".flexigrid:first");
 		var row=$("#Row0",flexigrid).get(0);
 		if(!row) {
 			var tbody=$(".middlec table tbody",flexigrid);
-			var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,"","","","","","","","",""]}] };
+			var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,ufid,"","","","","","","",""]}] };
 			$("#EditRow"+0).remove();
 			$("#ContactGridTemplate").tmpl(data).prependTo(tbody);
 			var tr=$("tr:first",tbody);
 			jHelper.jqCheckBox($("#EditRow"+0));
-			this.editRow(0);
+			this.editRow(0,flexigrid);
 			$("#Add",tr).show();
 			underlyingFundContact.trimData();
 		}
 	}
 	,edit: function (img,id) {
-		this.editRow(id);
+		var grid=$(img).parents(".flexigrid:first");
+		this.editRow(id,grid);
 	}
-	,editRow: function (id) {
-		$("td","#Row"+id).hide();
-		$("td","#EditRow"+id).show();
+	,editRow: function (id,grid) {
+		$("td","#Row"+id,grid).hide();
+		$("td","#EditRow"+id,grid).show();
 	}
 	,deleteRow: function (img,id) {
+		var grid=$(img).parents(".flexigrid:first");
 		if(confirm("Are you sure you want to delete this contact?")) {
 			var tr=$(img).parents("tr:first");
 			var imgsrc=img.src;
@@ -56,22 +59,20 @@
 					jAlert(data);
 				} else {
 					tr.remove();
-					$("#EditRow"+id).remove();
+					$("#EditRow"+id,grid).remove();
 					jHelper.applyFlexEditGridClass($(".middlec:first"));
 				}
 			});
 		}
 	}
-	,save: function (id) {
+	,save: function (img,id) {
 		try {
-			var frm=$("#frm"+id);
-			var ufid=underlyingFund.getUnderlyingFundId();
-			
+			var frm=$(img).parents("form:first");
+			var ufid=$("#UnderlyingFundId",frm).val();
 			underlyingFund.tempSave=false;
 			underlyingFund.onAfterUnderlyingFundSave=null;
 			if(ufid>0) {
 				var param=$(frm).serializeArray();
-				param[param.length]={ "name": "UnderlyingFundId","value": ufid };
 				var url="/Deal/CreateUnderlyingFundContact";
 				var loading=$("#Loading",frm);
 				loading.html(jHelper.savingHTML());
@@ -82,34 +83,40 @@
 					if($.trim(arr[0])=="Error") {
 						jAlert(arr[1]);
 					} else {
+						jAlert("Underlying Fund Contact Saved");
+						var box=$("#Edit"+ufid);
 						$.getJSON("/Deal/EditUnderlyingFundContact?_"+(new Date).getTime()+"&id="+arr[0],function (loadData) {
-							var tbl =$("#ContactList");
-							var tr=$("#Row"+id, tbl);
-							$("#EditRow"+id, tbl).remove();
+							var tbl=$("#ContactList",box);
+							var tr=$("#Row"+id,tbl);
+							$("#EditRow"+id,tbl).remove();
 							$("#ContactGridTemplate").tmpl(loadData).insertAfter(tr);
 							$(tr).remove();
 							var newTR=$("#EditRow"+arr[0]);
 							jHelper.applyFlexEditGridClass($(".middlec:first"));
 							jHelper.checkValAttr(newTR);
+							underlyingFundContact.cacelEdit(arr[0]);
 							//jHelper.jqCheckBox(newTR);
 						});
 					}
 				});
 			} else {
 				underlyingFund.tempSave=true;
-				underlyingFund.onAfterUnderlyingFundSave=function () { underlyingFundContact.save(id); }
+				underlyingFund.onAfterUnderlyingFundSave=function (ufid) {
+					$("#UnderlyingFundId",frm).val(ufid);
+					underlyingFundContact.save(img,id);
+				}
 				$("#btnSave").click();
 			}
 		} catch(e) { jAlert(e); }
 		return false;
 	}
 	,editWebPassword: function (id) {
-		var frm = $("#frm"+id);
+		var frm=$("#frm"+id);
 		$("#WebPassword",frm).removeAttr("disabled");
 		$("#ChangeWebPassword",frm).val("true");
 	}
 	,cancelWebPassword: function (id) {
-		var frm = $("#frm"+id);
+		var frm=$("#frm"+id);
 		$("#WebPassword",frm).val("").attr("disabled","disabled");
 		$("#ChangeWebPassword",frm).val("false");
 		$("#EditWebPassword",frm).show();
@@ -127,10 +134,12 @@
 		jHelper.checkValAttr(t);
 		jHelper.jqCheckBox(t);
 		$(window).resize();
-		underlyingFundContact.trimData();
 	}
 	,onInit: function (g) {
-		$("#AddContactButtonTemplate").tmpl("").prependTo(g.pDiv);
+		var box=$(g.bDivBox).parents("#AddUnderlyingFund");
+		var ufid=$("#UnderlyingFundId",box);
+		var data={ UnderlyingFundId: ufid };
+		$("#AddContactButtonTemplate").tmpl(data).prependTo(g.pDiv);
 	}
 	,onTemplate: function (tbody,data) {
 		$("#ContactGridTemplate").tmpl(data).appendTo(tbody);
@@ -145,8 +154,8 @@
 			bDivBox.height(ah);
 		}
 	}
-	,trimData: function(){
-		$("#Address", "#ContactList").val($.trim($("#Address", "#ContactList").val()));
-		$("#ContactNotes", "#ContactList").val($.trim($("#ContactNotes", "#ContactList").val()));
+	,trimData: function () {
+		$("#Address","#ContactList").val($.trim($("#Address","#ContactList").val()));
+		$("#ContactNotes","#ContactList").val($.trim($("#ContactNotes","#ContactList").val()));
 	}
 }

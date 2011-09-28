@@ -172,7 +172,7 @@
 				<div class="editor-field">
 					<%: Html.TextBox("Account", "${Account}", new { @class = "wm" })%>
 				</div>
-				<div class="editor-label" style="clear:right;">
+				<div class="editor-label" style="clear: right;">
 					<%: Html.Label("Account Number")%>
 				</div>
 				<div class="editor-field">
@@ -184,7 +184,7 @@
 				<div class="editor-field">
 					<%: Html.TextBox("FFC", "${FFC}", new { @class = "wm" })%>
 				</div>
-				<div class="editor-label" style="clear:right;">
+				<div class="editor-label" style="clear: right;">
 					<%: Html.Label("FFC Number")%>
 				</div>
 				<div class="editor-field">
@@ -227,7 +227,7 @@
 					<%: Html.TextBox("AccountPhone", "${AccountPhone}", new { @class = "wm" })%>
 				</div>
 			</div>
-			<div class="savebox" style="width:652px;">
+			<div class="savebox" style="width: 652px;">
 				<div class="resetbtn">
 					<%: Html.Span("Reset", new { @onclick = "javascript:underlyingFund.reset('BankInformation');" })%></div>
 				<div class="btn">
@@ -237,7 +237,7 @@
 			</div>
 		</div>
 	</div>
-	<div style="display:none;">
+	<div style="display: none;">
 		<div class="line">
 		</div>
 		<div class="headerbox">
@@ -272,11 +272,11 @@
 			<div class="editor-label">
 				<%: Html.DropDownList("UploadTypeId", Model.UploadTypes, new { @style = "width:85px", @onchange = "javascript:underlyingFund.changeUploadType(this);" })%>
 			</div>
-			<div id="FileRow" class="editor-field" style="padding-left:12px;">
-				<div  style="padding: 0; margin: 0 0; width: auto;float:left;">
+			<div id="FileRow" class="editor-field" style="padding-left: 12px;">
+				<div style="padding: 0; margin: 0 0; width: auto; float: left;">
 					<%: Html.File("File", new { @id = "fileToUpload" })%></div>
 			</div>
-			<div id="LinkRow" style="display: none;margin:0 0;" class="editor-field">
+			<div id="LinkRow" style="display: none; margin: 0 0;" class="editor-field">
 				<%: Html.TextBox("FilePath", "", new { @style = "width:250px" })%>
 				<%: Html.Hidden("FileId", "0")%>
 			</div>
@@ -330,9 +330,8 @@
 		</div>
 	</div>
 </div>
-
 <script id="AddContactButtonTemplate" type="text/x-jquery-tmpl">
-	<%using (Html.GreenButton(new { @onclick = "javascript:underlyingFundContact.add(this);" })) {%>Add Contact<%}%>
+	<%using (Html.GreenButton(new { @onclick = "javascript:underlyingFundContact.add(this,${UnderlyingFundId});" })) {%>Add Contact<%}%>
 </script>
 <script id="ContactGridTemplate" type="text/x-jquery-tmpl">
 	{{each(i,row) rows}}
@@ -350,19 +349,14 @@
 			<%: Html.Span("${row.cell[7]}", new { @class = "show" })%>
 		</td>
 		<td style="text-align:right;width:10%;">
-			{{if row.cell[0]==0}}
-			<%: Html.Image("add_active.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:underlyingFundContact.save(this,${row.cell[0]});" })%>
-			{{else}}
-			<%: Html.Image("Save_active.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:underlyingFundContact.save(this,${row.cell[0]});" })%>
 			<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:underlyingFundContact.edit(this,${row.cell[0]});" })%>
 			<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:underlyingFundContact.deleteRow(this,${row.cell[0]});" })%>
-			{{/if}}
 			<%: Html.Hidden("UnderlyingFundContactId", "${row.cell[0]}") %>
 		</td>
 	</tr>
 	<tr id="EditRow${row.cell[0]}" style="background-image:none;">
 		<td colspan=6 style="width: 100%;display:none;">
-			<%using(Html.Form(new { @id="frm${row.cell[0]}", @onsubmit = "return false;" })){%>
+			<%using(Html.Form(new { @class="UFContactDetail", @id="frm${row.cell[0]}", @onsubmit = "return false;" })){%>
 			<div class="editor-label">
 				<label>
 					Contact Name</label>
@@ -409,7 +403,6 @@
 				<label>
 					Web Password</label>
 			</div>
-			
 			<div class="editor-field" style="padding-right:0px;">
 				{{if row.cell[11] != null }}
 				<%: Html.Password("WebPassword", "", new { @class = "wm",@style="width:160px;",@disabled = "disabled"})%>
@@ -427,18 +420,19 @@
 					Registered Address</label>
 			</div>
 			<div class="editor-field">
-				<%: Html.TextArea("Address", "${row.cell[7]}", new { @style = "width:484px;height:70px;" })%>
+				<%=Html.jQueryTemplateTextArea("Address", "${row.cell[7]}", 3,50, new {} )%>
 			</div>
 			<div class="editor-label">
 				<label>
 					Notes</label>
 			</div>
 			<div class="editor-field">
-				<%: Html.TextArea("ContactNotes", "${row.cell[6]}", new { @style = "width:484px;height:100px;" })%>
+				<%=Html.jQueryTemplateTextArea("ContactNotes", "${row.cell[6]}", 6,50, new {} )%>
 			</div>
 			<%: Html.Hidden("UnderlyingFundContactId", "${row.cell[0]}")%>
+			<%: Html.Hidden("UnderlyingFundId", "${row.cell[1]}")%>
 			<div class="editor-label" style="margin-left:35%;margin-top:10px;width:200px;text-align:left;">
-				<%: Html.Image("Save_active.png", new { @class="submitbtn", @onclick = "javscript:underlyingFundContact.save(${row.cell[0]});" } )%>
+				<%: Html.Image("Save_active.png", new { @class="submitbtn", @onclick = "javscript:underlyingFundContact.save(this,${row.cell[0]});" } )%>
 				&nbsp;&nbsp;<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:underlyingFundContact.cacelEdit(${row.cell[0]});" }) %>
 				&nbsp;&nbsp;<%:Html.Span("", new { @id = "Loading" })%>
 			</div>

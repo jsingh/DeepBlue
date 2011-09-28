@@ -875,7 +875,7 @@ input.ui-autocomplete-loading[type="text"] {
 	visibility: hidden;
 	margin: 0 2px;
 }
-.grid tbody tr:hover .gbutton {
+.grid tbody tr:hover td .gbutton {
 	visibility: visible;
 }
 .grid tbody tr:hover td {
@@ -1118,12 +1118,10 @@ input.ui-autocomplete-loading[type="text"] {
 .grid #row0, .grid #Row0{
 	background-image:none;
 }
-
 /*.ngrid thead tr th, .ngrid thead tr td{
 	text-shadow: #F7F1F1 1px 1px 1px;
 	filter: Shadow(Color=#F7F1F1,Direction=135,Strength=2);	
 }*/
-
 .tblbox{
 	padding:0px;
 	margin:0px;

@@ -81,7 +81,7 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region UnderlyingFund
-		List<UnderlyingFundListModel> GetAllUnderlyingFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<UnderlyingFundListModel> GetAllUnderlyingFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? gpId);
 		List<UnderlyingFund> GetAllUnderlyingFunds();
 		CreateUnderlyingFundModel FindUnderlyingFundModel(int underlyingFundId, int issuerId);
 		UnderlyingFund FindUnderlyingFund(int underlyingFundId);
@@ -215,8 +215,11 @@ namespace DeepBlue.Controllers.Deal {
 		bool DeleteIssuer(int issuerId);
 		bool IssuerNameAvailable(string issuerName, int issuerId);
 		IEnumerable<ErrorInfo> SaveIssuer(Models.Entity.Issuer issuer);
+		List<DirectListModel> GetAllDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		Models.Entity.Issuer FindIssuer(int issuerId);
 		List<AutoCompleteList> FindIssuers(string issuerName);
+		List<AutoCompleteList> FindCompanys(string issuerName);
+		List<AutoCompleteList> FindGPs(string issuerName);
 		List<DeepBlue.Models.Entity.Issuer> GetAllIssuers();
 		IEnumerable<ErrorInfo> SaveUnderlyingDirectDocument(UnderlyingDirectDocument underlyingDirectDocument);
 

@@ -24325,6 +24325,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _CountryID;
         partial void OnCountryIDChanging(Nullable<global::System.Int32> value);
         partial void OnCountryIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsGP
+        {
+            get
+            {
+                return _IsGP;
+            }
+            set
+            {
+                OnIsGPChanging(value);
+                ReportPropertyChanging("IsGP");
+                _IsGP = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsGP");
+                OnIsGPChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsGP;
+        partial void OnIsGPChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsGPChanged();
 
         #endregion
     

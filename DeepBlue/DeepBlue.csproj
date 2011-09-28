@@ -121,6 +121,7 @@
     <Compile Include="Models\CapitalCall\ManagementFeeRateScheduleTierDetail.cs" />
     <Compile Include="Models\Deal\ActivityDealModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
+    <Compile Include="Models\Deal\DirectListModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundContactModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundContactList.cs" />
     <Compile Include="Models\Deal\DealFundDetail.cs" />
