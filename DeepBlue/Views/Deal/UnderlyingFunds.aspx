@@ -55,7 +55,7 @@
 		<%using (Html.Form(new { @id = "frmAddNewIssuer", @onsubmit = "return dealDirect.createNewIssuer(this);" })) {%>
 		<div id="NewIssuerDetail">
 		</div>
-		<div class="addissuer" style="width: 664px;">
+		<div class="addissuer" style="width: 985px;">
 			<div class="btnclose">
 				<%: Html.Image("issuerclose.png", new { @onclick = "javascript:dealDirect.close();" })%>
 			</div>
@@ -92,6 +92,17 @@
 	</div>
 	<div id="UnderlyingFundDetail">
 	</div>
+	<div id="AnnualMeetingDateList" style="display: none">
+		<table cellpadding="0" cellspacing="0" id="MeetingDateList" class="grid">
+			<thead>
+				<tr>
+					<th sortname="AnnualMeetingDate">
+						Date
+					</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%= Html.jQueryAutoComplete("S_GP", new AutoCompleteOptions {
@@ -109,6 +120,14 @@
 	, OnInit = "underlyingFund.onInit"
 	, OnTemplate = "underlyingFund.onTemplate"
 	, BoxStyle = false 
+	, RowsLength = 50
+	})%>
+	<%=Html.jQueryFlexiGrid("MeetingDateList", new FlexigridOptions {
+	ActionName = "AnnualMeetingDateList",
+	ControllerName = "Deal",
+	HttpMethod = "GET", Autoload=false,
+	SortName = "AnnualMeetingDate",
+	Paging = true,
 	})%>
 	<script type="text/javascript">
 		$(document).ready(function(){

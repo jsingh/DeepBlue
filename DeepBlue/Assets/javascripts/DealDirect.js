@@ -20,51 +20,51 @@
 			},appendTo: "body",delay: 300
 			});
 	}
-	,setUpIssuer: function () {
-		$("#I_Country","#frmIssuer")
-		.blur(function () { if($.trim(this.value)=="") { $("#CountryId","#frmIssuer").val(0); } })
+	,setUpIssuer: function (box) {
+		$("#I_Country",box)
+		.blur(function () { if($.trim(this.value)=="") { $("#CountryId",box).val(0); } })
 		.autocomplete({ source: "/Admin/FindCountrys",minLength: 1
 			,select: function (event,ui) {
-				$("#CountryId","#frmIssuer").val(ui.item.id);
+				$("#CountryId",box).val(ui.item.id);
 			},appendTo: "body",delay: 300
 		});
-		$("#EquityIndustry","#frmIssuer")
-		.blur(function () { if($.trim(this.value)=="") { $("#EquityIndustryId","#frmIssuer").val(0); } })
+		$("#EquityIndustry",box)
+		.blur(function () { if($.trim(this.value)=="") { $("#EquityIndustryId",box).val(0); } })
 		.autocomplete({ source: "/Admin/FindIndustrys",minLength: 1
 			,select: function (event,ui) {
-				$("#EquityIndustryId","#frmIssuer").val(ui.item.id);
+				$("#EquityIndustryId",box).val(ui.item.id);
 			},appendTo: "body",delay: 300
 		});
-		$("#FixedIncomeIndustry","#frmIssuer")
-		.blur(function () { if($.trim(this.value)=="") { $("#FixedIncomeIndustryId","#frmIssuer").val(0); } })
+		$("#FixedIncomeIndustry",box)
+		.blur(function () { if($.trim(this.value)=="") { $("#FixedIncomeIndustryId",box).val(0); } })
 		.autocomplete({ source: "/Admin/FindIndustrys",minLength: 1
 			,select: function (event,ui) {
-				$("#FixedIncomeIndustryId","#frmIssuer").val(ui.item.id);
+				$("#FixedIncomeIndustryId",box).val(ui.item.id);
 			},appendTo: "body",delay: 300
 		});
-		$(".datefield","#DirectMain").each(function () {
+		$(".datefield",box).each(function () {
 			$(this).datepicker({ changeMonth: true,changeYear: true });
 		});
 	}
 	,save: function (frm) {
 		try {
-			var loading=$("#SpnSaveIssuerLoading");
+			var loading=$("#SpnSaveIssuerLoading",frm);
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 			$.ajaxFileUpload(
 				{
 					url: '/Deal/UpdateIssuer',
 					secureuri: false,
-					formId: 'frmIssuer',
+					formId: frm.id,
 					dataType: 'json',
 					success: function (data,status) {
 						loading.empty();
 						var arr=data.data.split("||");
 						if(arr[0]=="True") {
 							jAlert("Underlying Direct Added.");
-							//$("#DirectMain").hide();
 							$("#AddNewIssuer").hide();
 							$("#S_Issuer").val("");
 							dealDirect.loadSelectImages(false);
+							dealDirect.deleteTab(arr[1],false);
 						} else {
 							jAlert(data.data);
 						}
@@ -122,6 +122,7 @@
 		var data={ "IssuerId": 0,"CountryId": 225,"Country": "United States" };
 		data.IsUnderlyingFundModel=dealDirect.isUnderlyingFundModel;
 		$("#IssuerDetailTemplate").tmpl(data).appendTo(newIssuerDetail);
+		jHelper.applyDatePicker(newIssuerDetail);
 		dealDirect.setUpNewIssuer();
 		$("#AddGP").addClass("green-btn-sel");
 		if(dealDirect.onAddIssuer)
@@ -146,21 +147,21 @@
 			$("#SectionTemplate").tmpl(data).insertAfter(addNewFund);
 			$("#TabTemplate").tmpl(data).insertAfter(addNewFundTab);
 			editbox=$("#Edit"+id);
-			dealDirect.open(id);
+			dealDirect.open(id,editbox);
 		}
 		$(".center",$("#Tab"+id)).click();
 	}
-	,open: function (id) {
-		var issuerDetail=$("#IssuerDetail");
-		var eqDetail=$("#EQdetail");
-		var fixedIncome=$("#FixedIncome");
-		var loading=$("#SpnIssuerLoading");
-		$("#DirectMain").hide();
-		issuerDetail.empty();eqDetail.empty();fixedIncome.empty();
+	,open: function (id,box) {
+		var issuerDetail=$("#IssuerDetail",box);
+		var eqDetail=$("#EQdetail",box);
+		var fixedIncome=$("#FixedIncome",box);
+		var loading=$("#SpnIssuerLoading",box);
+		issuerDetail.empty();
+		eqDetail.empty();
+		fixedIncome.empty();
 		if(id>0) {
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
 			$.getJSON("/Deal/FindIssuer",{ "_": (new Date).getTime(),"id": id },function (data) {
-				$("#DirectMain").show();
 				loading.empty();
 				$("#IssuerDetailTemplate").tmpl(data.IssuerDetailModel).appendTo(issuerDetail);
 				$("#EquityDetailTemplate").tmpl(data.EquityDetailModel).appendTo(eqDetail);
@@ -173,16 +174,17 @@
 				jHelper.trimTextArea(eqDetail);
 				jHelper.jqComboBox(eqDetail);
 				jHelper.jqComboBox(fixedIncome);
-				dealDirect.setUpIssuer();
-				$("#tblExistingEquity").flexigrid({ usepager: true
-			,url: "/Deal/DirectEquityList"
-			,onRowBound: dealDirect.onEquityRowBound
-			,method: "GET"
-			,sortname: "EquityID"
-			,sortorder: "desc"
-			,autoload: false
-			,height: 0
-			,useBoxStyle: false
+				jHelper.applyDatePicker(issuerDetail);
+				dealDirect.setUpIssuer(box);
+				$("#tblExistingEquity",box).flexigrid({ usepager: true
+					,url: "/Deal/DirectEquityList"
+					,onRowBound: dealDirect.onEquityRowBound
+					,method: "GET"
+					,sortname: "EquityID"
+					,sortorder: "desc"
+					,autoload: false
+					,height: 0
+					,useBoxStyle: false
 				});
 			});
 		}
@@ -200,6 +202,18 @@
 				break;
 			case "F": FI.show();fitab.addClass("sel");
 				break;
+		}
+	}
+	,deleteTab: function (id,isConfirm) {
+		var isRemove=true;
+		if(isConfirm) {
+			isRemove=confirm("Are you sure you want to remove this direct?");
+		}
+		if(isRemove) {
+			$("#Tab"+id).remove();
+			$("#Edit"+id).remove();
+			$("#tabdel"+id).remove();
+			$("#TabDirectGrid").click();
 		}
 	}
 	,selectDirectTab: function (that,detailid) {
@@ -254,6 +268,17 @@
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);
+	}
+	,openAMD: function () {
+		$("#AnnualMeetingDateList")
+		.dialog({ title: "Annual Meeting Dates"
+		,modal: true
+		,position: 'middle'
+		,autoResize: false
+		,open: function () {
+			$("#MeetingDateList").flexReload();
+		}
+		});
 	}
 }
 

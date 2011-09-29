@@ -2090,6 +2090,28 @@ namespace DeepBlue.Controllers.Deal {
 			return underlyingDirectDocument.Save();
 		}
 
+		public bool FindAnnualMeetingDateHistory(int issuerID, DateTime annualMeetingDate) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from annualMeeting in context.AnnualMeetingHistories
+						 where annualMeeting.IssuerID == issuerID && annualMeeting.AnnualMeetingDate == EntityFunctions.TruncateTime(annualMeetingDate)
+						 select annualMeeting.AnnualMeetingHistroyID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveAnnualMeetingHistory(AnnualMeetingHistory annualMeetingHistory) {
+			return annualMeetingHistory.Save();
+		}
+
+		public List<AnnualMeetingHistory> GetAllAnnualMettingDates(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AnnualMeetingHistory> query = (from annualMeetingHistory in context.AnnualMeetingHistories
+														  select annualMeetingHistory);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<AnnualMeetingHistory> paginatedList = new PaginatedList<AnnualMeetingHistory>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
 
 		#region Equity
 

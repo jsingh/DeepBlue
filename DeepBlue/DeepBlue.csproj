@@ -222,6 +222,7 @@
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\Partial\ActivityTypeService.cs" />
+    <Compile Include="Models\Entity\Partial\AnnualMeetingHistoryService.cs" />
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalCallLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalDistributionLineItemService.cs" />
@@ -251,6 +252,7 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVHistoryService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
+    <Compile Include="Models\Entity\Validation\AnnualMeetingHistory.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundContact.cs" />
     <Compile Include="Models\Entity\Validation\InvestorContact.cs" />
     <Compile Include="Models\Entity\Validation\Log.cs" />
@@ -905,6 +907,7 @@
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
     <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
+    <Content Include="Assets\javascripts\jquery.contextMenu.js" />
     <Content Include="Assets\javascripts\UnderlyingFundContact.js" />
     <Content Include="Assets\javascripts\Footer.js" />
     <Content Include="Assets\javascripts\ImageActive.js" />
@@ -1017,6 +1020,7 @@
     <Content Include="Assets\stylesheets\issuer.css" />
     <Content Include="Assets\stylesheets\jquery-ui-1.8.10.custom.css" />
     <Content Include="Assets\stylesheets\jquery.alerts.css" />
+    <Content Include="Assets\stylesheets\jquery.contextMenu.css" />
     <Content Include="Assets\stylesheets\logon.css" />
     <Content Include="Assets\stylesheets\newinvestor.css" />
     <Content Include="Assets\stylesheets\popup.css" />

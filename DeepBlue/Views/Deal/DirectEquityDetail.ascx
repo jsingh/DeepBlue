@@ -20,7 +20,7 @@
 			<%: Html.LabelFor(model => model.EquityCurrencyId)%>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownList("EquityCurrencyId", Model.Currencies, new { @id = "EquityCurrencyId", @val = "${CurrencyId}" })%>
+			<%: Html.DropDownList("EquityCurrencyId", Model.Currencies, new { @id = "EquityCurrencyId", @val = "${CurrencyId}", @refresh="true", @action="Currency" })%>
 		</div>
 		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.EquitySecurityTypeId)%>
@@ -39,13 +39,13 @@
 			<%: Html.LabelFor(model => model.ShareClassTypeId) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownList("ShareClassTypeId", Model.ShareClassTypes, new { @id = "ShareClassType", @val = "${ShareClassTypeId}" })%>
+			<%: Html.DropDownList("ShareClassTypeId", Model.ShareClassTypes, new { @id = "ShareClassType", @val = "${ShareClassTypeId}", @refresh = "true", @action = "ShareClassType" })%>
 		</div>
 		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.EquityTypeId) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownList("EquityTypeId", Model.EquityTypes, new { @id = "EquityType", @val = "${EquityTypeId}" })%>
+			<%: Html.DropDownList("EquityTypeId", Model.EquityTypes, new { @id = "EquityType", @val = "${EquityTypeId}", @refresh = "true", @action = "EquityType" })%>
 		</div>
 		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.EquityComments) %>

@@ -687,7 +687,7 @@
 						<%: Html.Label("Corporate Action") %>
 					</div>
 					<div class="editor-field" style="margin-left: 10px">
-						<%: Html.DropDownList("ActivityTypeId", Model.ActivityTypes, new { @onchange = "javascript:dealActivity.changeAType(this);" })%>
+						<%: Html.DropDownList("ActivityTypeId", Model.ActivityTypes, new { @refresh="true", @action="ActivityType", @onchange = "javascript:dealActivity.changeAType(this);" })%>
 					</div>
 					<div id="SplitDetail" style="display: none; clear: both; margin-left: 95px;">
 						<%using (Html.Form(new { @id = "frmEquitySplit", @onsubmit = "return dealActivity.createSA(this);", @style = "float:left;" })) {%>

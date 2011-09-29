@@ -5,6 +5,7 @@
 	overflow: hidden;
 	color: #000;
 	width: 100%;
+	margin-bottom: 5px;
 }
 .flexigrid div.sDiv2 {
 	float: left;
@@ -116,11 +117,7 @@
 .flexigrid tr td.sorted div {
 }
 .flexigrid tr.erow td {
-	/*background: #f7f7f7;
-	background: #E9EAEC; 
-	padding-top: 5px;
-	border-top: 1px solid #FFFFFF;
-	*/
+	/*background: #f7f7f7; 	background: #E9EAEC;  	padding-top: 5px; 	border-top: 1px solid #FFFFFF; 	*/
 }
 .flexigrid tr.erow td.sorted {
 	background: #e3e3e3; /*border-bottom: 1px solid #e3e3e3;*/
@@ -130,14 +127,15 @@
 /*.flexigrid div.bDiv tr:hover td, .flexigrid div.bDiv tr:hover td.sorted, .flexigrid div.bDiv tr.trOver td.sorted, .flexigrid div.bDiv tr.trOver td {
 	background: #d9ebf5;
 }*/
-.flexigrid div.bDiv tr td .gbutton {
+.flexigrid tr td .gbutton {
 	visibility: hidden;
 	margin: 0 2px;
 	cursor: pointer;
 }
-.flexigrid div.bDiv tr:hover td .gbutton {
+/*.flexigrid tr td:hover .gbutton {
 	visibility: visible;
 }
+*/
 .flexigrid div.pDiv {
 	/*background: url(../images/wbg.gif) repeat-x 0 -1px; 	border: 1px solid #ccc;*/
 	overflow: hidden;
@@ -309,7 +307,7 @@ div.pGroup {
 }
 .flexigrid tr td .jqComboBox input.ui-autocomplete-input[type="text"], .pGroup .jqComboBox input.ui-autocomplete-input {
 	width: 35px;
-	top:0;
+	top: 0;
 }
 .flexigrid .bDiv tr td input.ui-autocomplete-input[type="text"] {
 	width: 85%;

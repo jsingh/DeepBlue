@@ -58,7 +58,8 @@
 						$("#GridTemplate").tmpl(loadData).insertAfter(tr);
 						$(tr).remove();
 						var newTR=$("#EditRow"+arr[1]);
-						jHelper.applyFlexGridClass($(".middlec:first"));
+						//jHelper.applyFlexGridClass($(".middlec:first"));
+						jHelper.applyFlexEditGridClass($(".middlec:first"));
 						jHelper.checkValAttr(newTR);
 						jHelper.jqCheckBox(newTR);
 					});

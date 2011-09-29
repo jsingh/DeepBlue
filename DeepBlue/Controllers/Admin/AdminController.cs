@@ -908,7 +908,7 @@ namespace DeepBlue.Controllers.Admin {
 			else
 				return string.Empty;
 		}
-	
+
 		#endregion
 
 		#region UnderlyingFundType
@@ -1010,7 +1010,7 @@ namespace DeepBlue.Controllers.Admin {
 			else
 				return string.Empty;
 		}
-		
+
 		#endregion
 
 		#region ShareClassType
@@ -1328,7 +1328,7 @@ namespace DeepBlue.Controllers.Admin {
 			else
 				return string.Empty;
 		}
-		
+
 		#endregion
 
 		#region ReportingFrequency
@@ -1548,7 +1548,7 @@ namespace DeepBlue.Controllers.Admin {
 			else
 				return string.Empty;
 		}
-		
+
 		#endregion
 
 		#endregion
@@ -2417,7 +2417,7 @@ namespace DeepBlue.Controllers.Admin {
 			return Json(AdminRepository.FindCountrys(term), JsonRequestBehavior.AllowGet);
 		}
 		#endregion
-		
+
 		#region State
 		//
 		// GET: /Admin/FindStates
@@ -2426,7 +2426,7 @@ namespace DeepBlue.Controllers.Admin {
 			return Json(AdminRepository.FindStates(term), JsonRequestBehavior.AllowGet);
 		}
 		#endregion
-		
+
 		#region Currency
 		//
 		// GET: /Admin/Currency
@@ -2752,7 +2752,7 @@ namespace DeepBlue.Controllers.Admin {
 				ModelState.AddModelError("Email", ErrorMessage);
 			}
 			if (model.ChangePassword) {
-				if(string.IsNullOrEmpty(model.Password))
+				if (string.IsNullOrEmpty(model.Password))
 					ModelState.AddModelError("Password", "Password is required");
 			}
 			if (ModelState.IsValid) {
@@ -2761,10 +2761,10 @@ namespace DeepBlue.Controllers.Admin {
 					user = new USER();
 					user.CreatedDate = DateTime.Now;
 				}
-				
+
 				user.EntityID = Authentication.CurrentEntity.EntityID;
 				user.LastUpdatedDate = DateTime.Now;
-				
+
 				user.FirstName = model.FirstName;
 				user.LastName = model.LastName;
 				user.MiddleName = model.MiddleName;
@@ -2828,6 +2828,46 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 
+		#endregion
+
+		#region "Select List"
+		[HttpGet]
+		public JsonResult SelectList(string actionName) {
+			List<SelectListItem> items = null;
+			switch (actionName) {
+				case "FundType":
+					items = SelectListFactory.GetUnderlyingFundTypeSelectList(AdminRepository.GetAllUnderlyingFundTypes());
+					break;
+				case "ReportingFrequency":
+					items = SelectListFactory.GetReportingFrequencySelectList(AdminRepository.GetAllReportingFrequencies());
+					break;
+				case "ReportingType":
+					items = SelectListFactory.GetReportingTypeSelectList(AdminRepository.GetAllReportingTypes());
+					break;
+				case "Industry":
+					items = SelectListFactory.GetIndustrySelectList(AdminRepository.GetAllIndusties());
+					break;
+				case "Geography":
+					items = SelectListFactory.GetGeographySelectList(AdminRepository.GetAllGeographies());
+					break;
+				case "InvestorType":
+					items = SelectListFactory.GetInvestorTypeSelectList(AdminRepository.GetAllInvestorTypes());
+					break;
+				case "ActivityType":
+					items = SelectListFactory.GetActivityTypeSelectList(AdminRepository.GetAllActivityTypes());
+					break;
+				case "Currency":
+					items = SelectListFactory.GetCurrencySelectList(AdminRepository.GetAllCurrencies());
+					break;
+				case "ShareClassType":
+					items = SelectListFactory.GetShareClassTypeSelectList(AdminRepository.GetAllShareClassTypes());
+					break;
+				case "EquityType":
+					items = SelectListFactory.GetEquityTypeSelectList(AdminRepository.GetAllEquityTypes());
+					break;
+			}
+			return Json(items, JsonRequestBehavior.AllowGet);
+		}
 		#endregion
 
 		public ActionResult Result() {

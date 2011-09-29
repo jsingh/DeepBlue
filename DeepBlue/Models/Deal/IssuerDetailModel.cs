@@ -33,6 +33,8 @@ namespace DeepBlue.Models.Deal {
 
 		public string Country { get; set; }
 
+		public DateTime? AnnualMeetingDate { get; set; }
+
 		public int? IssuerRatingId { get; set; }
 
 		public List<SelectListItem> IssuerRatings { get; set; }

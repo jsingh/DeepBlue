@@ -222,6 +222,9 @@ namespace DeepBlue.Controllers.Deal {
 		List<AutoCompleteList> FindGPs(string issuerName);
 		List<DeepBlue.Models.Entity.Issuer> GetAllIssuers();
 		IEnumerable<ErrorInfo> SaveUnderlyingDirectDocument(UnderlyingDirectDocument underlyingDirectDocument);
+		bool FindAnnualMeetingDateHistory(int issuerID, DateTime annualMeetingDate);
+		IEnumerable<ErrorInfo> SaveAnnualMeetingHistory(AnnualMeetingHistory annualMeetingHistory);
+		List<AnnualMeetingHistory> GetAllAnnualMettingDates(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 
 		#region Equity
 		List<Equity> GetAllEquity(int issuerId);
@@ -242,6 +245,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<AutoCompleteList> FindFixedIncomeDirects(string issuerName);
 		object FindFixedIncomeSecurityConversionModel(int fixedIncomeId);
 		#endregion
+
 		#endregion
 
 	}

@@ -192,8 +192,9 @@
 	background-image: none;
 }
 #DirectList tbody {
-     background-image: url("../images/table_row_odd.gif");
+     /*background-image: url("../images/table_row_odd.gif");
      background-repeat: repeat-x;
+*/
      background-color: #fff;
 }
 .tab-delete {
@@ -203,6 +204,6 @@
     cursor: pointer;
     float: left;
     height: 16px;
-    margin: 7px 0 0 -18px;
+    margin: 7px 0 0 -15px;
     width: 16px;
 }

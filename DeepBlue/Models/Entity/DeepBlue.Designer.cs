@@ -152,6 +152,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_LogDetail_Log", "Log", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Log), "LogDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.LogDetail), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundContact_Contact", "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Contact), "UnderlyingFundContact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundContact), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundContact_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFund), "UnderlyingFundContact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundContact), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_AnnualMeetingHistory_Issuer", "Issuer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Issuer), "AnnualMeetingHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.AnnualMeetingHistory), true)]
 
 #endregion
 
@@ -1754,6 +1755,22 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<UnderlyingFundContact> _UnderlyingFundContacts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AnnualMeetingHistory> AnnualMeetingHistories
+        {
+            get
+            {
+                if ((_AnnualMeetingHistories == null))
+                {
+                    _AnnualMeetingHistories = base.CreateObjectSet<AnnualMeetingHistory>("AnnualMeetingHistories");
+                }
+                return _AnnualMeetingHistories;
+            }
+        }
+        private ObjectSet<AnnualMeetingHistory> _AnnualMeetingHistories;
 
         #endregion
         #region AddTo Methods
@@ -2532,6 +2549,14 @@ namespace DeepBlue.Models.Entity
         public void AddToUnderlyingFundContacts(UnderlyingFundContact underlyingFundContact)
         {
             base.AddObject("UnderlyingFundContacts", underlyingFundContact);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AnnualMeetingHistories EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAnnualMeetingHistories(AnnualMeetingHistory annualMeetingHistory)
+        {
+            base.AddObject("AnnualMeetingHistories", annualMeetingHistory);
         }
 
         #endregion
@@ -4063,6 +4088,152 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Address>("DeepBlueModel.FK_Address_AddressType", "Address", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="AnnualMeetingHistory")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AnnualMeetingHistory : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AnnualMeetingHistory object.
+        /// </summary>
+        /// <param name="annualMeetingHistroyID">Initial value of the AnnualMeetingHistroyID property.</param>
+        /// <param name="issuerID">Initial value of the IssuerID property.</param>
+        public static AnnualMeetingHistory CreateAnnualMeetingHistory(global::System.Int32 annualMeetingHistroyID, global::System.Int32 issuerID)
+        {
+            AnnualMeetingHistory annualMeetingHistory = new AnnualMeetingHistory();
+            annualMeetingHistory.AnnualMeetingHistroyID = annualMeetingHistroyID;
+            annualMeetingHistory.IssuerID = issuerID;
+            return annualMeetingHistory;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 AnnualMeetingHistroyID
+        {
+            get
+            {
+                return _AnnualMeetingHistroyID;
+            }
+            set
+            {
+                if (_AnnualMeetingHistroyID != value)
+                {
+                    OnAnnualMeetingHistroyIDChanging(value);
+                    ReportPropertyChanging("AnnualMeetingHistroyID");
+                    _AnnualMeetingHistroyID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("AnnualMeetingHistroyID");
+                    OnAnnualMeetingHistroyIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _AnnualMeetingHistroyID;
+        partial void OnAnnualMeetingHistroyIDChanging(global::System.Int32 value);
+        partial void OnAnnualMeetingHistroyIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 IssuerID
+        {
+            get
+            {
+                return _IssuerID;
+            }
+            set
+            {
+                OnIssuerIDChanging(value);
+                ReportPropertyChanging("IssuerID");
+                _IssuerID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IssuerID");
+                OnIssuerIDChanged();
+            }
+        }
+        private global::System.Int32 _IssuerID;
+        partial void OnIssuerIDChanging(global::System.Int32 value);
+        partial void OnIssuerIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> AnnualMeetingDate
+        {
+            get
+            {
+                return _AnnualMeetingDate;
+            }
+            set
+            {
+                OnAnnualMeetingDateChanging(value);
+                ReportPropertyChanging("AnnualMeetingDate");
+                _AnnualMeetingDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AnnualMeetingDate");
+                OnAnnualMeetingDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _AnnualMeetingDate;
+        partial void OnAnnualMeetingDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnAnnualMeetingDateChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_AnnualMeetingHistory_Issuer", "Issuer")]
+        public Issuer Issuer
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Issuer>("DeepBlueModel.FK_AnnualMeetingHistory_Issuer", "Issuer").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Issuer>("DeepBlueModel.FK_AnnualMeetingHistory_Issuer", "Issuer").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Issuer> IssuerReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Issuer>("DeepBlueModel.FK_AnnualMeetingHistory_Issuer", "Issuer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Issuer>("DeepBlueModel.FK_AnnualMeetingHistory_Issuer", "Issuer", value);
                 }
             }
         }
@@ -24349,6 +24520,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Boolean> _IsGP;
         partial void OnIsGPChanging(Nullable<global::System.Boolean> value);
         partial void OnIsGPChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> AnnualMeetingDate
+        {
+            get
+            {
+                return _AnnualMeetingDate;
+            }
+            set
+            {
+                OnAnnualMeetingDateChanging(value);
+                ReportPropertyChanging("AnnualMeetingDate");
+                _AnnualMeetingDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AnnualMeetingDate");
+                OnAnnualMeetingDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _AnnualMeetingDate;
+        partial void OnAnnualMeetingDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnAnnualMeetingDateChanged();
 
         #endregion
     
@@ -24416,6 +24611,28 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFund>("DeepBlueModel.FK_UnderlyingFund_Issuer", "UnderlyingFund", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_AnnualMeetingHistory_Issuer", "AnnualMeetingHistory")]
+        public EntityCollection<AnnualMeetingHistory> AnnualMeetingHistories
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AnnualMeetingHistory>("DeepBlueModel.FK_AnnualMeetingHistory_Issuer", "AnnualMeetingHistory");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AnnualMeetingHistory>("DeepBlueModel.FK_AnnualMeetingHistory_Issuer", "AnnualMeetingHistory", value);
                 }
             }
         }

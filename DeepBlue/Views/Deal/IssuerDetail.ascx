@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.IssuerDetailModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<%: Html.Hidden("NewIssuerId", "${IssuerId}")%>
+<%: Html.Hidden("IssuerId", "${IssuerId}")%>
 <%: Html.Hidden("CountryId", "${CountryId}")%>
 <%: Html.Hidden("IsUnderlyingFundModel", "${IsUnderlyingFundModel}")%>
 <div id="DetailBox" style="float:left;clear:both;">
@@ -10,12 +10,14 @@
 	<div class="editor-field">
 		<%: Html.TextBox("Name", "${Name}", new { @class = "wm"})%>
 	</div>
-	<div class="editor-label" style="clear: right;{{if IsUnderlyingFundModel==true}}{{/if}};display:none;">
-		{{if IsUnderlyingFundModel==true}}GP Parent{{else}}Company Parent{{/if}}
+	{{if IsUnderlyingFundModel==true}}
+	<div class="editor-label" style="clear: right;">
+		Annual Meeting
 	</div>
-	<div class="editor-field" style="display:none;">
-		<%: Html.TextBox("ParentName", "${ParentName}", new { @class = "wm" })%>
+	<div class="editor-field">
+		<%: Html.TextBox("AnnualMeetingDate", "${AnnualMeetingDate}", new { @class = "datefield", @style="width:102px" })%>&nbsp;<%: Html.Anchor("See Full List", "javascript:dealDirect.openAMD();") %>
 	</div>
+	{{/if}}
 	<div class="editor-label" style="clear: right">
 		<%: Html.LabelFor(model => model.CountryId)%>
 	</div>

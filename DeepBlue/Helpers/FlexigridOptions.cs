@@ -26,7 +26,7 @@ namespace DeepBlue.Helpers {
 			OnTemplate = string.Empty;
 			TableName = string.Empty;
 			ExportExcel = false;
-			BoxStyle = true;
+			BoxStyle = false;
 		}
 		public string HttpMethod { get; set; }
 		public int Height { get; set; }

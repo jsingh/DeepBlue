@@ -22,7 +22,7 @@
 			Fund Type</label>
 	</div>
 	<div class="editor-field">
-		<%: Html.DropDownList("FundTypeId", Model.UnderlyingFundTypes, new { @val = "${FundTypeId}" })%>
+		<%: Html.DropDownList("FundTypeId", Model.UnderlyingFundTypes, new { @val = "${FundTypeId}", @refresh="true", @action="FundType" })%>
 	</div>
 	<div class="editor-label-first">
 		<label>
@@ -50,14 +50,14 @@
 			Reporting</label>
 	</div>
 	<div class="editor-field">
-		<%: Html.DropDownList("ReportingFrequencyId", Model.Reportings, new { @val = "${ReportingFrequencyId}" })%>
+		<%: Html.DropDownList("ReportingFrequencyId", Model.Reportings, new { @val = "${ReportingFrequencyId}", @refresh = "true", @action = "ReportingFrequency" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<label>
 			Reporting Type</label>
 	</div>
 	<div class="editor-field">
-		<%: Html.DropDownList("ReportingTypeId", Model.ReportingTypes, new { @val = "${ReportingTypeId}" })%>
+		<%: Html.DropDownList("ReportingTypeId", Model.ReportingTypes, new { @val = "${ReportingTypeId}", @refresh = "true", @action = "ReportingType" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<label>
@@ -71,14 +71,14 @@
 			Industry</label>
 	</div>
 	<div class="editor-field">
-		<%: Html.DropDownList("IndustryId", Model.Industries, new { @val = "${IndustryId}" })%>
+		<%: Html.DropDownList("IndustryId", Model.Industries, new { @val = "${IndustryId}", @refresh = "true", @action = "Industry" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<label>
 			Geography</label>
 	</div>
 	<div class="editor-field">
-		<%: Html.DropDownList("GeographyId", Model.Geographyes, new { @val = "${GeographyId}" })%>
+		<%: Html.DropDownList("GeographyId", Model.Geographyes, new { @val = "${GeographyId}", @refresh = "true", @action = "Geography" })%>
 	</div>
 	<div class="editor-label-first">
 		<label>

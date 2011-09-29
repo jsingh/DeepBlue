@@ -27,7 +27,7 @@
 			<div class="search">
 			</div>
 			<div class="editor-row">
-				<div class="editor-label" style="width: auto;padding-left:0px;">
+				<div class="editor-label" style="width: auto; padding-left: 0px;">
 					<%: Html.Label("Investor") %>
 				</div>
 				<div class="editor-field" style="width: auto">
@@ -100,7 +100,7 @@
 								</div>
 								<div class="editor-field">
 									<%: Html.Span("",new { @id = "disp_InvestorTypeId", @style = "display:none"  }) %>
-									<%: Html.DropDownListFor(model => model.InvestorTypeId,Model.InvestorTypes) %>
+									<%: Html.DropDownListFor(model => model.InvestorTypeId, Model.InvestorTypes, new { @refresh="true", @action = "InvestorType" })%>
 								</div>
 								<div class="editor-field" style="clear: both; margin-left: 45%;">
 									<%: Html.ImageButton("submit_active.png", new { @class="default-button" })%>

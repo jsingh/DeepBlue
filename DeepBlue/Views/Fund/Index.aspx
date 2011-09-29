@@ -85,6 +85,7 @@
 															   ,OnTemplate = "fund.onTemplate"
 															   ,OnSuccess = "fund.onGridSuccess"
 															   ,BoxStyle = false
+															   , RowsLength = 50
 })%>
 	<script type="text/javascript">
 		$(document).ready(function(){

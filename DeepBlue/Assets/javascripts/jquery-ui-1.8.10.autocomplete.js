@@ -24,6 +24,12 @@
 			doc=this.element[0].ownerDocument,
 			suppressKeyPress;
 
+			var ul=$("#refDropDown");
+			if(!ul.get(0)) {
+				ul=$("<ul id='refDropDown' class='contextMenu'><li class='refresh'><a href='#refresh'>Refresh</a></li></ul>");
+				$("body").append(ul);
+			}
+
 			var id=this.element.attr("id");
 			var input=$(this.element.get(0));
 			if(id.indexOf('jqCBSTextBox')<0) {
@@ -40,7 +46,8 @@
 						}
 					});
 				}
-				$(".right",this.elementBox)
+				var rightbtn=$(".right",this.elementBox);
+				rightbtn
 				.click(function () {
 					// close if already visible
 					if(input.autocomplete("widget").is(":visible")) {
@@ -56,6 +63,16 @@
 					input.focus();
 
 				});
+
+				$(this.elementBox)
+				.contextMenu({
+					menu: 'refDropDown'
+				},
+					function (action,el,pos) {
+						if(action=="refresh") {
+							rightbtn.click();
+						}
+					});
 			}
 
 			this.element

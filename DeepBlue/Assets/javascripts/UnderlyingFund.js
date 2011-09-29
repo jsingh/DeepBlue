@@ -184,7 +184,7 @@
 	,deleteTab: function (id,isConfirm) {
 		var isRemove=true;
 		if(isConfirm) {
-			isRemove=confirm("Are you sure you want to remove this fund?");
+			isRemove=confirm("Are you sure you want to remove this underlying fund?");
 		}
 		if(isRemove) {
 			$("#Tab"+id).remove();

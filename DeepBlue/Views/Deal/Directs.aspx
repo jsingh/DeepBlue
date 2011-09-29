@@ -34,9 +34,9 @@
 				<%using (Html.GreenButton(new { @id = "AddCompany", @onclick = "javascript:dealDirect.add();" })) {%>Add
 				Company<%}%>
 			</div>
-			<div class="rightcol" style="display: block;">
+			<div class="rightcol" style="display: none;">
 				<%: Html.Span("", new { @id = "SpnIssuerLoading" })%>
-				<%: Html.TextBox("S_Issuer", "SEARCH ISSUER", new { @class = "wm", @style = "width:200px", @id = "S_Issuer" })%>
+				<%: Html.TextBox("S_Issuer", "SEARCH ISSUER", new { @class = "wm", @style = "width:200px;", @id = "S_Issuer" })%>
 			</div>
 		</div>
 	</div>
@@ -72,7 +72,7 @@
 		<table id="DirectList" cellpadding="0" cellspacing="0" border="0" class="grid">
 			<thead>
 				<tr>
-					<th colspan="4">
+					<th colspan="4" sortname="DirectName">
 						Directs
 					</th>
 				</tr>
@@ -101,6 +101,7 @@
 	, OnInit = "dealDirect.onInit"
 	, OnTemplate = "dealDirect.onTemplate"
 	, BoxStyle = false 
+	, RowsLength = 50
 	})%>
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 		{{each(i,row) rows}}
@@ -135,8 +136,8 @@
 		</div>
 	</script>
 	<script id="SectionTemplate" type="text/x-jquery-tmpl">
-		<div id="DirectMain"  class="section-det" style="display: none">
-			<%using (Html.Form(new { @id = "frmIssuer", @onsubmit = "return dealDirect.save(this);" })) {%>
+		<div id="Edit${id}"  class="section-det" style="display: none">
+			<%using (Html.Form(new { @id = "frmIssuer${id}", @onsubmit = "return dealDirect.save(this);" })) {%>
 			<div id="IssuerDetail">
 			</div>
 			<div class="editor-label" style="width: 128px; padding-right: 26px;">

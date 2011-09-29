@@ -2969,10 +2969,10 @@ namespace DeepBlue.Controllers.Deal {
 						resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 					}
 
-					documentError = ValidateUnderlyingDirectDocument(equityUnderlyingDirectDocumentModel, ref isValidDocument);
-					if (isValidDocument) {
-						resultModel.Result += documentError;
-					}
+					//documentError = ValidateUnderlyingDirectDocument(equityUnderlyingDirectDocumentModel, ref isValidDocument);
+					//if (isValidDocument) {
+					//	resultModel.Result += documentError;
+					//}
 
 					FixedIncomeDetailModel fixedIncomeDetailModel = new FixedIncomeDetailModel();
 					this.TryUpdateModel(fixedIncomeDetailModel);
@@ -3024,7 +3024,7 @@ namespace DeepBlue.Controllers.Deal {
 							errorInfo = SaveEquity(ref equityDetailModel);
 							if (errorInfo == null) {
 								equityUnderlyingDirectDocumentModel.SecurityId = equityDetailModel.EquityId;
-								resultModel.Result += SaveUnderlyingDirectDocument(equityUnderlyingDirectDocumentModel);
+								//resultModel.Result += SaveUnderlyingDirectDocument(equityUnderlyingDirectDocumentModel);
 							}
 							resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 						}
@@ -3216,7 +3216,20 @@ namespace DeepBlue.Controllers.Deal {
 			issuer.CountryID = model.CountryId;
 			issuer.EntityID = Authentication.CurrentEntity.EntityID;
 			issuer.IsGP = model.IsUnderlyingFundModel;
-			return DealRepository.SaveIssuer(issuer);
+			issuer.AnnualMeetingDate = model.AnnualMeetingDate;
+			IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveIssuer(issuer);
+			if (errorInfo == null) {
+				if (model.AnnualMeetingDate.HasValue) {
+					if (DealRepository.FindAnnualMeetingDateHistory(model.IssuerId, (model.AnnualMeetingDate ?? Convert.ToDateTime("01/01/1900"))) == false) {
+						AnnualMeetingHistory annualMeetingHistory = new AnnualMeetingHistory {
+							AnnualMeetingDate = model.AnnualMeetingDate,
+							IssuerID = issuer.IssuerID 
+						};
+						errorInfo = DealRepository.SaveAnnualMeetingHistory(annualMeetingHistory);
+					}
+				}
+			}
+			return errorInfo;
 		}
 
 		//
@@ -3247,6 +3260,26 @@ namespace DeepBlue.Controllers.Deal {
 			else
 				return string.Empty;
 		}
+
+		//
+		// GET: /Deal/AnnualMeetingDateList
+		[HttpGet]
+		public JsonResult AnnualMeetingDateList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<AnnualMeetingHistory> annualMeetingDates = DealRepository.GetAllAnnualMettingDates(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var annualMeetingDate in annualMeetingDates) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {
+						(annualMeetingDate.AnnualMeetingDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy")
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
 
 		#endregion
 

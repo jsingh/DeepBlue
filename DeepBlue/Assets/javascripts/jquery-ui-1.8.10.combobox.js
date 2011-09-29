@@ -6,13 +6,21 @@
 					selected=select.children(":selected"),
 					value=selected.val()?selected.text():"";
 
+			var ul=$("#refDropDown");
+			if(!ul.get(0)) {
+				ul=$("<ul id='refDropDown' class='contextMenu'><li class='refresh'><a href='#refresh'>Refresh</a></li></ul>");
+				$("body").append(ul);
+			}
+
 			var cbox=this.cbox=$("<div class='jqComboBox'>")
 			.insertAfter(select);
-			var cleft=$("<div class='left'>");
 
+			var cleft=$("<div class='left'>");
 			var input=this.input=$("<input selectid='"+select.attr("id")+"' id='jqCBSTextBox_"+select.attr("name")+"' name='jqCBSTextBox_"+select.attr("name")+"'>");
 			cbox.append(cleft);
 			cleft.append(input);
+
+
 
 			var w=$(select).css("width");
 			if(w.indexOf("px")>0) {
@@ -72,7 +80,7 @@
 						.appendTo(ul);
 			};
 
-			this.button=$("<div>")
+			var rightbtn=this.button=$("<div>")
 					.insertAfter(cleft)
 					.addClass("right")
 					.click(function () {
@@ -89,6 +97,30 @@
 						input.autocomplete("search","");
 						input.focus();
 					});
+
+			var refresh=select.attr("refresh");
+			if(refresh=="true") {
+				var actionName=select.attr("action");
+				cbox
+					.contextMenu({
+						menu: 'refDropDown'
+					},
+					function (action,el,pos) {
+						if(action=="refresh") {
+							input.val("Loading...");
+							$.getJSON("/Admin/SelectList?actionName="+actionName,function (data) {
+								input.val("");
+								var ddl=select.get(0);
+								ddl.options.length=null;
+								$.each(data,function (i,item) {
+									listItem=new Option(item.Text,item.Value,false,false);
+									ddl.options[ddl.options.length]=listItem;
+								});
+								rightbtn.click();
+							});
+						}
+					});
+			}
 		},
 
 		destroy: function () {
