@@ -27,7 +27,7 @@
 				$yes.addClass(cls).addClass("jqCR");
 				$no.addClass(cls);
 
-				if($input.hasClass("hide")){
+				if($input.hasClass("hide")) {
 					$yes.addClass("hide");
 					$no.addClass("hide");
 					$input.removeClass("hide").hide();
@@ -84,47 +84,47 @@
 		});
 	};
 
-    $.fn.jqTransCheckBox = function() {
-		return this.each(function() {
-		 
-		  if ($(this).attr("nojnice") != "true") {
-			
-			if ($(this).hasClass('jqTransformHidden')) { return; }
-			
-			var $input = $(this);
-			var inputSelf = this;
+	$.fn.jqTransCheckBox=function () {
+		return this.each(function () {
 
-			//set the click on the label
-			//var oLabel = jqTransformGetLabel($input);
-			//oLabel && oLabel.click(function() { aLink.trigger('click'); });
-			var aLink = $('<a href="#" class="jqTransformCheckbox"></a>');
-			//wrap and add the link
-			$input.addClass('jqTransformHidden').wrap('<span class="jqTransformCheckboxWrapper"></span>').parent().prepend(aLink);
-			//on change, change the class of the link
-			$input.change(function() {
-			  this.checked && aLink.addClass('jqTransformChecked') || aLink.removeClass('jqTransformChecked');
-			  return true;
-			});
-			// Click Handler, trigger the click and change event on the input
-			aLink.click(function() {
-			  //do nothing if the original input is disabled
-			  if ($input.attr('disabled')) { return false; }
-			  //trigger the envents on the input object
-			  
-			 inputSelf.checked=!inputSelf.checked;
-			 $input.triggerHandler("click");
-			 $input.trigger("change");
+			if($(this).attr("nojnice")!="true") {
 
-			  //$input.trigger('click').trigger("change");
-			  return false;
-			});
+				if($(this).hasClass('jqTransformHidden')) { return; }
 
-			//            // set the default state
-			this.checked && aLink.addClass('jqTransformChecked');
-			
-		  }
+				var $input=$(this);
+				var inputSelf=this;
+
+				//set the click on the label
+				//var oLabel = jqTransformGetLabel($input);
+				//oLabel && oLabel.click(function() { aLink.trigger('click'); });
+				var aLink=$('<a href="#" class="jqTransformCheckbox"></a>');
+				//wrap and add the link
+				$input.addClass('jqTransformHidden').wrap('<span class="jqTransformCheckboxWrapper"></span>').parent().prepend(aLink);
+				//on change, change the class of the link
+				$input.change(function () {
+					this.checked&&aLink.addClass('jqTransformChecked')||aLink.removeClass('jqTransformChecked');
+					return true;
+				});
+				// Click Handler, trigger the click and change event on the input
+				aLink.click(function () {
+					//do nothing if the original input is disabled
+					if($input.attr('disabled')) { return false; }
+					//trigger the envents on the input object
+
+					inputSelf.checked=!inputSelf.checked;
+					$input.triggerHandler("click");
+					$input.trigger("change");
+
+					//$input.trigger('click').trigger("change");
+					return false;
+				});
+
+				//            // set the default state
+				this.checked&&aLink.addClass('jqTransformChecked');
+
+			}
 		});
-    };
+	};
 
 })(jQuery);
  

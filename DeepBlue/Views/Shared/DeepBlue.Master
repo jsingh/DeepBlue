@@ -99,6 +99,8 @@
 					<%: Html.ActionLink("Update Investor Information", "Edit", "Investor", null, new { @class = (ViewData["PageName"] == "Update Investor Information" ? "sel" : "") })%></li>
 				<li>
 					<%: Html.ActionLink("Investor Commitment", "New", "Transaction", null, new { @class = (ViewData["PageName"] == "Investor Commitment" ? "sel" : "") })%></li>
+				<li>
+					<%: Html.ActionLink("Investor Library", "Library", "Investor", null, new { @class = (ViewData["PageName"] == "Investor Library" ? "sel" : "") })%></li>
 			</ul>
 			<%}%>
 			<%using (Html.SubMenu("Deal_Management", (ViewData["MenuName"] == "DealManagement"))) {%>

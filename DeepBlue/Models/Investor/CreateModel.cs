@@ -7,105 +7,74 @@ using System.ComponentModel;
 using System.Web.Mvc;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
+using DeepBlue.Models.Admin.Enums;
  
 
 namespace DeepBlue.Models.Investor {
-	public class CreateModel {
 
-		public SelectListModel SelectList = new SelectListModel();
+	public class CreateModel : InvestorInformation {
 
-		public int InvestorId { get; set; }
+		public CreateModel() {
+			AddressId = 0;
+			Phone = string.Empty;
+			Fax = string.Empty;
+			Email = string.Empty;
+			WebAddress = string.Empty;
+			Address1 = string.Empty;
+			Address2 = string.Empty;
+			City = string.Empty;
+			State = 0;
+			Zip = string.Empty;
+			Country = (int)DefaultCountry.USA;
+			CountryName = "United States";
+			InvestorId = 0;
+		}
 
-		[Required(ErrorMessage = "Investor Name is required")]
-		[StringLength(100, ErrorMessage = "Investor Name must be under 100 characters.")]
-		[DisplayName("Investor Name")]
-		public string InvestorName { get; set; }
+		public int? AddressId { get; set; }
 
-		[DisplayName("Display Name")]
-		public string Alias { get; set; }
+		public int? ContactAddressId { get; set; }
 
-		[Required(ErrorMessage = "Social Security/ Tax Id is required")]
-		[StringLength(50, ErrorMessage = "Investor Name must be under 50 characters.")]
-		[DisplayName("Social Security/ Tax Id")]
-		public string SocialSecurityTaxId { get; set; }
-
-		[DisplayName("Domestic/ Foreign")]
-		public bool DomesticForeign { get; set; }
-
-		[Required(ErrorMessage = "State Of Residency is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "State Of Residency is required")]
-		[DisplayName("State of Residency")]
-		public int StateOfResidency { get; set; }
-
-		[Required(ErrorMessage = "EntityType is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "EntityType is required")]
-		[DisplayName("EntityType")]
-		public int EntityType { get; set; }
-
-		[DisplayName("FOIA")]
-		public bool FOIA { get; set; }
-
-		[DisplayName("ERISA")]
-		public bool ERISA { get; set; }
-
-		[DisplayName("Restricted Person")]
-		public bool RestrictedPerson { get; set; }
-
-		[DisplayName("Source")]
-		public int Source { get; set; }
-
-		[DisplayName("Notes")]
-		public string Notes { get; set; }
-
-		/* Address Information */
-		[DisplayName("Telephone No")]
+		[DisplayName("Phone")]
 		public string Phone { get; set; }
 
-		[DisplayName("Fax No")]
+		[DisplayName("Fax")]
 		public string Fax { get; set; }
 
 		[DisplayName("Email")]
+		[Email(ErrorMessage = "Invalid Email")]
 		public string Email { get; set; }
 
 		[DisplayName("Web Address")]
+		[WebAddress(ErrorMessage = "Invalid Web Address")]
 		public string WebAddress { get; set; }
 
+		[StringLength(40, ErrorMessage = "Address1 must be under 40 characters.")]
 		[DisplayName("Address1")]
 		public string Address1 { get; set; }
 
 		[DisplayName("Address2")]
 		public string Address2 { get; set; }
 
-		[DisplayName("City")]
+		[StringLength(30, ErrorMessage = "City must be under 30 characters.")]
 		public string City { get; set; }
 
 		[DisplayName("State")]
-		public int State { get; set; }
+		public int? State { get; set; }
 
 		public string StateName { get; set; }
 
 		[DisplayName("Zip")]
+		[Zip(ErrorMessage = "Invalid Postal Code")]
 		public string Zip { get; set; }
 
 		[DisplayName("Country")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Country is required")]
 		public int Country { get; set; }
 
 		public string CountryName { get; set; }
 
-		public int AccountLength { get; set; }
+		public object InvestorCommunications { get; set; }
 
-		/* Contact Information */
-		public int ContactLength { get; set; }
-
-		public CustomFieldModel CustomField { get; set; }
 	}
 
-	public class SelectListModel {
-		public List<SelectListItem> Countries { get; set; }
-		public List<SelectListItem> States { get; set; }
-		public List<SelectListItem> InvestorEntityTypes { get; set; }
-		public List<SelectListItem> AddressTypes { get; set; }
-		public List<SelectListItem> DomesticForeigns { get; set; }
-		public List<SelectListItem> Source { get; set; }
-	}
 }

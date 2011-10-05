@@ -453,9 +453,7 @@ label {
 	color: red;
 	display: none;
 }
-#contactInfoMain .editor-field {
-	width: auto;
-}
+ 
 #admin_accordion {
 	width: 50%;
 	margin: 10px auto;
@@ -653,7 +651,7 @@ h2 {
 }
 .heading .rightcol {
 	float: right;
-	margin: -5px 0px 0 0;
+	margin: -7px 0px 0 0;
 	border: solid 0px red;
 	width: auto;
 }

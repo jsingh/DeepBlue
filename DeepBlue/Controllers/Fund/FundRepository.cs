@@ -5,6 +5,7 @@ using System.Web;
 using DeepBlue.Models.Entity;
 using DeepBlue.Models.Fund;
 using DeepBlue.Helpers;
+using System.Data.Objects;
 
 namespace DeepBlue.Controllers.Fund {
 	public class FundRepository : IFundRepository {
@@ -95,6 +96,21 @@ namespace DeepBlue.Controllers.Fund {
 																  id = fund.FundID,
 																  label = fund.FundName,
 																  value = fund.FundName
+															  });
+				return new PaginatedList<AutoCompleteList>(fundListQuery, 1, AutoCompleteOptions.RowsLength);
+			}
+		}
+
+		public List<AutoCompleteList> FindFundClosings(string fundName, int? fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> fundListQuery = (from fundClosing in context.FundClosings
+															  where fundClosing.Name.StartsWith(fundName)
+															  && fundClosing.FundID == (fundId ?? 0)
+															  orderby fundClosing.Name
+															  select new AutoCompleteList {
+																  id = fundClosing.FundClosingID,
+																  label = fundClosing.Name,
+																  value = fundClosing.Name
 															  });
 				return new PaginatedList<AutoCompleteList>(fundListQuery, 1, AutoCompleteOptions.RowsLength);
 			}

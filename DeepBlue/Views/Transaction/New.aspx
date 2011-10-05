@@ -6,8 +6,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
-	<%=Html.JavascriptInclueTag("TransactionController.js") %>
+	<%=Html.JavascriptInclueTag("InvestorCommitment.js") %>
 	<%=Html.JavascriptInclueTag("EditTransaction.js") %>
+	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
+	<%=Html.StylesheetLinkTag("flexigrid.css") %>
 	<%=Html.StylesheetLinkTag("transaction.css")%>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
@@ -17,116 +19,21 @@
 				<span class="title">INVESTORS</span><span class="arrow"></span><span class="pname">Investor
 					Commitment</span></div>
 			<div class="rightcol">
+				<div style="margin: 0; padding: 0 0 0 0; float: left;">
+					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none;" })%>
+				</div>
+				<div style="float: left">
+					<%: Html.TextBox("Investor", "SEARCH INVESTOR", new { @id = "Investor", @class = "wm", @style = "width:200px" })%>
+				</div>
 			</div>
 		</div>
 	</div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-	<div class="edit-investor">
-		<div id="editinfo">
-			<div class="search">
-			</div>
-			<div class="editor-row">
-				<div class="editor-label" style="width: auto; padding-left: 0px;">
-					<%: Html.Label("Investor") %>
-				</div>
-				<div class="editor-field" style="width: auto">
-					<%: Html.TextBox("Investor", "SEARCH INVESTOR", new { @class="wm", style = "width:200px" })%></div>
-				<div class="editor-field">
-					&nbsp;<%=Html.Span("",new { id = "Loading" })%>
-				</div>
-			</div>
-			<div class="edit-info" id="investorInfo" style="display: none">
-				<div class="box">
-					<div class="box-top">
-						<div class="box-left">
-						</div>
-						<div class="box-center">
-							Investor:&nbsp;
-							<%:Html.Span("",new { id = "TitleInvestorName" })%>
-						</div>
-						<div class="box-right">
-						</div>
-					</div>
-					<div class="box-content">
-						<% Html.EnableClientValidation(); %>
-						<% using (Html.Form(new { @id = "frmTransaction", @onsubmit = "return transactionController.save(this);" })) {%>
-						<%: Html.HiddenFor(model => model.InvestorId)%>
-						<div class="edit-left">
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.Label("Investor Name") %>
-								</div>
-								<div class="editor-field">
-									<div id="InvestorName">
-										<%: Html.DisplayFor(model => model.InvestorName)%></div>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.Label("Display Name") %>
-								</div>
-								<div class="editor-field">
-									<div id="DisplayName">
-										<%: Html.DisplayFor(model => model.DisplayName)%></div>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.FundId) %>
-								</div>
-								<div class="editor-field">
-									<%: Html.TextBox("FundName", "")%>
-									<%: Html.Hidden("FundId", "0")%>
-								</div>
-								<div class="editor-label" style="clear: right; white-space: nowrap">
-									<%: Html.LabelFor(model => model.TotalCommitment) %>
-								</div>
-								<div class="editor-field">
-									<%: Html.TextBox("TotalCommitment","") %>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.FundClosingId) %>
-								</div>
-								<div class="editor-field">
-									<%: Html.DropDownListFor(model => model.FundClosingId, Model.FundClosings, new { @onchange = "javascript:transactionController.checkFundClose(this.value);" })%>
-								</div>
-							</div>
-							<div class="editor-row">
-								<div class="editor-label">
-									<%: Html.LabelFor(model => model.InvestorTypeId) %>
-								</div>
-								<div class="editor-field">
-									<%: Html.Span("",new { @id = "disp_InvestorTypeId", @style = "display:none"  }) %>
-									<%: Html.DropDownListFor(model => model.InvestorTypeId, Model.InvestorTypes, new { @refresh="true", @action = "InvestorType" })%>
-								</div>
-								<div class="editor-field" style="clear: both; margin-left: 45%;">
-									<%: Html.ImageButton("submit_active.png", new { @class="default-button" })%>
-									<%: Html.Span("", new { @id = "UpdateLoading" })%>
-								</div>
-							</div>
-						</div>
-						<div class="edit-right" id="accordion">
-							<h3>
-								<a href="#">Fund Details</a></h3>
-							<div>
-								<div id="LoadingFundDetail">
-									<%: Html.Image("ajax.jpg")%>&nbsp;Loading...
-								</div>
-								<div id="FundDetails">
-								</div>
-							</div>
-						</div>
-						<% } %>
-					</div>
-				</div>
-			</div>
+	<div id="TransactionMain">
+		<div id="TransactionContainer">
 		</div>
-	</div>
-	<div id="EditCommitmentAmount" style="display: none">
-		<% Html.RenderPartial("EditCommitmentAmount", Model.EditCommitmentAmountModel); %>
+		<%: Html.HiddenFor(model => model.InvestorId)%>
 	</div>
 	<div id="EditTransaction">
 	</div>
@@ -159,9 +66,9 @@
 		</div>
 		<div class="editor-label">
 		</div>
-		<div class="editor-field" style="width: 220px">
-			<%: Html.Image("Save_active.png", new { @style = "cursor:pointer", @onclick = "javascript:transactionController.addFundClose();" })%>
-			&nbsp;&nbsp;<%: Html.Image("Cancel_active.png", new { @style = "cursor:pointer", @onclick = "javascript:transactionController.cancelFundClose();" })%>
+		<div class="editor-field" style="width: 250px">
+			<%: Html.Image("Save_active.png", new { @style = "cursor:pointer", @onclick = "javascript:investorCommitment.addFundClose();" })%>
+			&nbsp;&nbsp;<%: Html.Image("Cancel_active.png", new { @style = "cursor:pointer", @onclick = "javascript:investorCommitment.cancelFundClose();" })%>
 			&nbsp;&nbsp;<%: Html.Span("", new { @id = "Loading" })%>
 		</div>
 		<%}%>
@@ -169,32 +76,17 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%= Html.jQueryAutoComplete("Investor", new AutoCompleteOptions { Source = "/Investor/FindInvestors", MinLength=1,
-																			OnSelect = "function(event, ui){ transactionController.selectInvestor(ui.item.id);}"
-})%>
-	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength=1,
-																	  OnSelect = "function(event, ui){ transactionController.loadFundClosing(ui.item.id);}"
-})%>
-	<%= Html.jQueryAutoComplete("CloseFundName", new AutoCompleteOptions {	Source = "/Fund/FindFunds",
-																			MinLength = 1,
-																			OnSelect = "function(event, ui){ $('#FundId','#frmAddFundClose').val(ui.item.id);}"
+																	  OnSelect = "function(event, ui){ investorCommitment.selectInvestor(ui.item.id);}"
 })%>
 	<%= Html.jQueryDatePicker("CommittedDate")%>
 	<%= Html.jQueryDatePicker("FundClosingDate")%>
 	<%= Html.jQueryAccordion("accordion", new AccordionOptions { Disabled = true, Active = 0 })%>
 	<script type="text/javascript">
-		transactionController.init();
-		$("#EditCommitmentAmount").dialog({
-			title: "Edit Commitment Amount",
-			autoOpen: false,
-			width: 430,
-			modal: true,
-			position: 'middle',
-			autoResize: true
-		});
+		investorCommitment.init();
 		$("#EditTransaction").dialog({
 			title: "Transaction",
 			autoOpen: false,
-			width: 600,
+			width: 900,
 			modal: true,
 			position: 'top',
 			autoResize: true
@@ -210,5 +102,60 @@
 	</script>
 	<script id="TransactionTemplate" type="text/x-jquery-tmpl">
 			<% Html.RenderPartial("EditTransaction", Model.EditModel); %>
+	</script>
+	<script id="TransactionInformationTemplate" type="text/x-jquery-tmpl"> 
+		<% Html.RenderPartial("TransactionInformation");%>
+	</script>
+	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
+<%using (Html.GreenButton(new { @onclick = "javascript:investorCommitment.add(this);" })) {%>${name}<%}%>
+	</script>
+	<script id="GridTemplate" type="text/x-jquery-tmpl">
+		{{each(i,row) rows}}
+		<tr id="Row${row.cell[9]}" {{if i%2>0}}class="erow"{{/if}}>
+			<td>
+				{{if row.cell[9]==0}}
+				<%: Html.TextBox("FundName", "${row.cell[2]}", new { })%>
+				<%: Html.Hidden("FundId","${row.cell[1]}") %>
+				{{else}}
+				<%: Html.Span("${row.cell[2]}", new {  })%>
+				{{/if}}
+			</td>
+			<td>
+				<%: Html.Span("${row.cell[4]}", new { id="SpnInvestorType", @style="display:none"  })%>
+				{{if row.cell[9]==0}}
+				<%: Html.DropDownListFor(model => model.InvestorTypeId, Model.InvestorTypes, new { @val="${row.cell[3]}", @refresh="true", @action = "InvestorType" })%>
+				{{/if}}
+			</td>
+			<td style="text-align:right">
+				<%: Html.Span("${formatCurrency(row.cell[5])}", new { @id="SpnCA", @class = "show" })%>
+				<%: Html.TextBox("TotalCommitment", "${row.cell[5]}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+			</td>
+			<td style="text-align:right">
+				<%: Html.Span("${formatCurrency(row.cell[6])}", new { @id="SpnUFA", @class = "show" })%>
+				{{if row.cell[9]>0}}
+				<%: Html.TextBox("UnfundedAmount", "${row.cell[6]}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+				{{/if}}
+			</td>
+			<td>
+				{{if row.cell[9]==0}}
+				<%: Html.TextBox("FundClose", "${row.cell[8]}", new {  })%>
+				<%: Html.Hidden("FundClosingId","${row.cell[7]}") %>
+				{{else}}
+				<%: Html.Span("${row.cell[8]}", new { })%>
+				{{/if}}
+			</td>
+			<td style="text-align:right;">
+				<%: Html.Hidden("InvestorFundId","${row.cell[9]}") %>
+				<%: Html.Hidden("InvestorId","${row.cell[10]}") %>
+				{{if row.cell[9]==0}}
+				<%: Html.Image("add_active.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:investorCommitment.addTransaction(this,${row.cell[9]});" })%>
+				{{else}}
+				<%: Html.Image("Save_active.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:investorCommitment.save(this,${row.cell[9]});" })%>
+				<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:investorCommitment.edit(this);" })%>
+				<%: Html.Image("trans.png", new { @class = "gbutton show", @title = "Transaction", @onclick = "javascript:investorCommitment.editTS(${row.cell[9]});" })%>
+				{{/if}}
+			</td>
+		</tr>
+		{{/each}}
 	</script>
 </asp:Content>

@@ -16,6 +16,8 @@ namespace DeepBlue.Models.Transaction {
 			FundClosings = new List<SelectListItem>();
 		}
 
+		[Required(ErrorMessage = "Investor is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Investor is required")]
 		[DisplayName("Investor")]
 		public int InvestorId { get; set; }
 		 

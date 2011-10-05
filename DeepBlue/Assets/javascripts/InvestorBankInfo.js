@@ -1,0 +1,5 @@
+﻿var investorBankInfo={
+	 add: function(){
+		
+	 }
+}

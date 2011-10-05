@@ -1,0 +1,127 @@
+﻿.heading {
+	padding-bottom: 6px;
+}
+.cnt-box-main {
+	padding-bottom: 50px;
+}
+.container {
+	float: left;
+	clear: both;
+	width: 100%;
+ 
+}
+.container-row {
+	clear: both;
+	float: left;
+	width: 100%;
+	height: 33px;
+}
+.left-nav, .right-nav, .fund-title, .lcap, .rcap, .inv-box {
+	float: left;
+	padding: 10px 0;
+}
+.inv-box {
+	width: 100%;
+	font-family: Arial;
+	font-size: 12px;
+	padding: 0;
+	margin: 0;
+}
+.left-nav, .right-nav {
+	width: 180px;
+	text-align: left;
+	border: solid 0px red;
+}
+.left-paging {
+	padding-top: 10px;
+	text-align: right;
+}
+.right-nav {
+   border: 0 solid red;
+    padding-top: 10px;
+    text-align: right;
+    width: 80px;
+    float:right;
+}
+.left-padding {
+ padding-left: 25px;
+    width: 155px;
+}
+.lcap, .rcap {
+	width: 171px;
+}
+.fund-title {
+	font-size: 12px;
+	text-align: right;
+	width: 175px;
+}
+.fundtitle-row {
+	height: 41px;
+	background-image: url(../images/library_fund_bg.gif);
+	background-repeat: repeat-x;
+}
+.fundtitle-row .fund-title {
+	font-family: Arial;
+	padding: 15px 0;
+}
+.tc-row {
+	background-image: url("../images/table_row_odd.gif");
+	background-repeat: repeat-x;
+}
+.blue {
+	background-image: url("../images/table_row_even.gif");
+	background-repeat: repeat-x;
+}
+.border {
+	background-image: url("../images/line.png");
+	background-position: center bottom;
+	background-repeat: repeat-x;
+}
+.inv-det-main {
+	clear: both;
+	height: auto;
+}
+.inv-arow {
+	background-image: url("../images/bg_blue.gif");
+	background-repeat: repeat-x;
+}
+.inv-row {
+	background-image: url("../images/bg_gray.gif");
+	background-repeat: repeat-x;
+}
+.inv-det {
+   font-size: 11px;
+    height: 117px;
+}
+.inv-det .container-row {
+	height: 29px;
+}
+.inv-det .container-row .fund-title
+ ,.inv-det .container-row .left-nav{
+  padding-bottom: 8px;
+    padding-top: 8px;
+}
+.middle-content {
+	width: 90%;
+	margin: 0 auto;
+	min-width:900px;
+}
+.inv-box .container-row {
+	width: auto;
+}
+.expand {
+	   padding: 3px 5px 0;
+	float: left;
+}
+.inv-name {
+	float: left;
+	padding: 2px 0 0;
+}
+.flexigrid .pDiv{
+	display:none;
+}
+.paging {
+	float:right;
+	cursor: pointer;
+	padding: 5px 0;
+}

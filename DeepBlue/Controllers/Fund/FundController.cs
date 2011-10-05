@@ -78,6 +78,13 @@ namespace DeepBlue.Controllers.Fund {
 		}
 
 		//
+		// GET: /Fund/FindFundClosings
+		[HttpGet]
+		public JsonResult FindFundClosings(string term, int? fundId) {
+			return Json(FundRepository.FindFundClosings(term, fundId), JsonRequestBehavior.AllowGet);
+		}
+
+		//
 		// GET: /Fund/FindDealFunds
 		[HttpGet]
 		public JsonResult FindDealFunds(int underlyingFundId, string term) {

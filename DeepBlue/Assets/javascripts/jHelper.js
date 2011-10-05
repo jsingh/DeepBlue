@@ -168,8 +168,16 @@
 		$(".datefield",target).each(function () { if($.trim(this.value)!="") { var dt=jHelper.formatDate(jHelper.parseJSONDate(this.value));if(dt.toString()=="01/01/1") { this.value=""; } else { this.value=dt; } } });
 	}
 	,checkValAttr: function (target) {
-		$("select",target).each(function () { var v=$(this).attr("val");if(v!="") { this.value=v; } });
-		$(":input:checkbox",target).each(function () { var v=$(this).attr("val");if(v.toLowerCase()=="true") { this.checked=true; } });
+		$("select",target).each(function () {
+			var v=$(this).attr("val");
+			if(v==undefined) { v=""; }
+			if(v!="") { this.value=v; }
+		});
+		$(":input:checkbox",target).each(function () {
+			var v=$(this).attr("val");
+			if(v==undefined) { v=""; }
+			if(v.toLowerCase()=="true") { this.checked=true; }
+		});
 	}
 	,applyDatePicker: function (target) {
 		$(".datefield",target).each(function () { $(this).datepicker({ changeMonth: true,changeYear: true }); });

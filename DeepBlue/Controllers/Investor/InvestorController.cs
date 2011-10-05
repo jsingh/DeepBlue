@@ -30,23 +30,6 @@ namespace DeepBlue.Controllers.Investor {
 			AdminRepository = adminRepository;
 		}
 
-		//
-		// GET: /Investor/
-		public ActionResult Index() {
-			return View();
-		}
-
-		public ActionResult ThankYou() {
-			ViewData["MenuName"] = "Investor";
-			return View();
-		}
-
-		//
-		// GET: /Investor/Details/5
-		public ActionResult Details(int id) {
-			return View();
-		}
-
 		#region New Investor
 
 		//
@@ -55,10 +38,10 @@ namespace DeepBlue.Controllers.Investor {
 			ViewData["MenuName"] = "Investor";
 			ViewData["PageName"] = "New Investor Setup";
 			CreateModel model = new CreateModel();
-			model.SelectList.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(AdminRepository.GetAllInvestorEntityTypes());
-			model.SelectList.AddressTypes = SelectListFactory.GetAddressTypeSelectList(AdminRepository.GetAllAddressTypes());
-			model.SelectList.DomesticForeigns = SelectListFactory.GetDomesticForeignList();
-			model.SelectList.Source = SelectListFactory.GetSourceList();
+			model.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(AdminRepository.GetAllInvestorEntityTypes());
+			//model.SelectList.AddressTypes = SelectListFactory.GetAddressTypeSelectList(AdminRepository.GetAllAddressTypes());
+			model.DomesticForeigns = SelectListFactory.GetDomesticForeignList();
+			model.Sources = SelectListFactory.GetSourceList();
 			model.CustomField = new CustomFieldModel();
 			model.CustomField.Fields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor);
 			model.CustomField.Values = new List<CustomFieldValueDetail>();
@@ -445,64 +428,6 @@ namespace DeepBlue.Controllers.Investor {
 			contactCommunication.Communication.EntityID = Authentication.CurrentEntity.EntityID;
 		}
 
-		#endregion
-
-		#region Update Investor
-
-		//
-		// GET: /Investor/Edit/5
-		[HttpGet]
-		public ActionResult Edit(int? id) {
-			EditModel model = new EditModel();
-			ViewData["MenuName"] = "Investor";
-			ViewData["PageName"] = "Update Investor Information";
-			model.id = id ?? 0;
-			model.SelectList.States = SelectListFactory.GetStateSelectList(AdminRepository.GetAllStates());
-			model.SelectList.DomesticForeigns = SelectListFactory.GetDomesticForeignList();
-			model.SelectList.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(AdminRepository.GetAllInvestorEntityTypes());
-			model.SelectList.Source = SelectListFactory.GetSourceList();
-			model.ContactInformations = new List<ContactInformation>();
-			model.AccountInformations = new List<AccountInformation>();
-			model.CustomField = new CustomFieldModel();
-			model.CustomField.Fields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor);
-			model.CustomField.Values = new List<CustomFieldValueDetail>();
-			model.CustomField.InitializeDatePicker = false;
-			model.CustomField.IsDisplayMode = true;
-			return View(model);
-		}
-
-		#endregion
-
-		#region Delete Investor Details
-
-		//
-		// GET: /Investor/Delete
-		[HttpGet]
-		public string Delete(int id) {
-			if (InvestorRepository.Delete(id) == false) {
-				return "Cann't Delete! Child record found!";
-			}
-			else {
-				return string.Empty;
-			}
-		}
-
-		//
-		// GET: /Investor/DeleteContactAddress
-		[HttpGet]
-		public bool DeleteContactAddress(int id) {
-			return InvestorRepository.DeleteInvestorContact(id);
-		}
-
-		//
-		// GET: /Investor/DeleteInvestorAccount
-		[HttpGet]
-		public bool DeleteInvestorAccount(int id) {
-			return InvestorRepository.DeleteInvestorAccount(id);
-		}
-
-		#endregion
-
 		//
 		// GET: /Investor/InvestorNameAvailable
 		[HttpGet]
@@ -554,12 +479,50 @@ namespace DeepBlue.Controllers.Investor {
 		}
 
 		public JsonResult FindInvestorDetail(int id) {
-			EditModel model = InvestorRepository.FindInvestorDetail(id);
+			EditModel model = null;
+			if (id > 0) {
+				model = InvestorRepository.FindInvestorDetail(id);
+			}
+			else {
+				model = new EditModel();
+				model.AddressInformations = new List<AddressInformation>();
+				model.AccountInformations = new List<AccountInformation>();
+				model.ContactInformations = new List<ContactInformation>();
+				List<AddressInformation> addresses = (List<AddressInformation>)model.AddressInformations;
+				addresses.Add(new AddressInformation { });
+				List<AccountInformation> accounts = (List<AccountInformation>)model.AccountInformations;
+				accounts.Add(new AccountInformation { });
+				List<ContactInformation> contacts = (List<ContactInformation>)model.ContactInformations;
+				contacts.Add(new ContactInformation { });
+			}
 			if (model != null) {
 				InvestorInformation investorInformation = (InvestorInformation)model;
 				LoadCustomFieldValues(ref investorInformation);
 			}
 			return Json(model, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Investor/InvestmentDetailList
+		[HttpGet]
+		public JsonResult InvestmentDetailList(int pageIndex, int pageSize, string sortName, string sortOrder, int investorId) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<FundInformation> fundInformations = InvestorRepository.GetInvestmentDetails(pageIndex, pageSize, sortName, sortOrder, ref totalRows, investorId);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var fundInformation in fundInformations) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> { 
+						fundInformation.FundName,
+						fundInformation.InvestorType,
+						FormatHelper.CurrencyFormat(fundInformation.TotalCommitment),
+						FormatHelper.CurrencyFormat(fundInformation.UnfundedAmount),
+						fundInformation.FundClose
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		public void LoadCustomFieldValues(ref InvestorInformation model) {
@@ -599,6 +562,89 @@ namespace DeepBlue.Controllers.Investor {
 				}
 			}
 		}
+
+		//
+		// GET: /Investor/
+		public ActionResult Index() {
+			return View();
+		}
+
+		public ActionResult ThankYou() {
+			ViewData["MenuName"] = "Investor";
+			return View();
+		}
+
+		//
+		// GET: /Investor/Details/5
+		public ActionResult Details(int id) {
+			return View();
+		}
+
+		public ActionResult Result() {
+			return View();
+		}
+
+		#endregion
+
+		#region Update Investor
+
+		//
+		// GET: /Investor/Edit/5
+		[HttpGet]
+		public ActionResult Edit(int? id) {
+			EditModel model = new EditModel();
+			ViewData["MenuName"] = "Investor";
+			ViewData["PageName"] = "Update Investor Information";
+			if ((id ?? 0) == 0) {
+				model.id = InvestorRepository.FindLastInvestorId();
+			}
+			else {
+				model.id = id ?? 0;
+			}
+			model.InvestorId = model.id;
+			model.DomesticForeigns = SelectListFactory.GetDomesticForeignList();
+			model.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(AdminRepository.GetAllInvestorEntityTypes());
+			model.Sources = SelectListFactory.GetSourceList();
+			model.ContactInformations = new List<ContactInformation>();
+			model.AccountInformations = new List<AccountInformation>();
+			model.CustomField = new CustomFieldModel();
+			model.CustomField.Fields = AdminRepository.GetAllCustomFields((int)DeepBlue.Models.Admin.Enums.Module.Investor);
+			model.CustomField.Values = new List<CustomFieldValueDetail>();
+			model.CustomField.InitializeDatePicker = false;
+			return View(model);
+		}
+
+		#endregion
+
+		#region Delete Investor Details
+
+		//
+		// GET: /Investor/Delete
+		[HttpGet]
+		public string Delete(int id) {
+			if (InvestorRepository.Delete(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		//
+		// GET: /Investor/DeleteContactAddress
+		[HttpGet]
+		public bool DeleteContactAddress(int id) {
+			return InvestorRepository.DeleteInvestorContact(id);
+		}
+
+		//
+		// GET: /Investor/DeleteInvestorAccount
+		[HttpGet]
+		public bool DeleteInvestorAccount(int id) {
+			return InvestorRepository.DeleteInvestorAccount(id);
+		}
+
+		#endregion
 
 		#region Investor Address
 		public ActionResult UpdateInvestorAddress(FormCollection collection) {
@@ -798,6 +844,49 @@ namespace DeepBlue.Controllers.Investor {
 			return Json(InvestorRepository.FindInvestorContactModel(id), JsonRequestBehavior.AllowGet);
 		}
 
+
+		public JsonResult ContactInformationList(int pageIndex, int pageSize, string sortName, string sortOrder, int investorId) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<ContactInformation> contactInformations = InvestorRepository.ContactInformationList(pageIndex,
+																										pageSize,
+																										sortName,
+																										sortOrder,
+																										ref totalRows,
+																										investorId);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var contact in contactInformations) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {
+							contact.ContactId,
+							contact.InvestorContactId,
+							contact.AddressId,
+							contact.ContactAddressId,
+							contact.Person,
+							contact.Designation,
+							contact.Phone,
+							contact.Fax,
+							contact.Email,
+							contact.WebAddress,
+							contact.Address1,
+							contact.Address2,
+							contact.City,
+							contact.Country,
+							contact.CountryName,
+							contact.State,
+							contact.StateName,
+							contact.Zip,
+							contact.DistributionNotices,
+							contact.Financials,
+							contact.K1,
+							contact.InvestorLetters
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
 		#endregion
 
 		#region Investor Bank Account
@@ -852,6 +941,38 @@ namespace DeepBlue.Controllers.Investor {
 			return Json(InvestorRepository.FindInvestorAccountModel(id), JsonRequestBehavior.AllowGet);
 		}
 
+		public JsonResult BankAccountInformationList(int pageIndex, int pageSize, string sortName, string sortOrder, int investorId) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<AccountInformation> accountInformations = InvestorRepository.BankAccountInformationList(pageIndex,
+																										pageSize,
+																										sortName,
+																										sortOrder,
+																										ref totalRows,
+																										investorId);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var account in accountInformations) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {
+							account.AccountId,
+							account.BankName,
+							account.AccountNumber,
+							account.ABANumber,
+							account.AccountOf,
+							account.FFC,
+							account.FFCNO,
+							account.Attention,
+							account.Swift,
+							account.IBAN,
+							account.Reference,
+							account.ByOrderOf
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
 		#endregion
 
 		#region Investor Information
@@ -859,12 +980,17 @@ namespace DeepBlue.Controllers.Investor {
 			InvestorInformation model = new InvestorInformation();
 			this.TryUpdateModel(model, collection);
 			ResultModel resultModel = new ResultModel();
+			string ErrorMessage = InvestorNameAvailable(model.InvestorName, model.InvestorId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("InvestorName", ErrorMessage);
+			}
 			if (ModelState.IsValid) {
 				// Attempt to update investor.
 				DeepBlue.Models.Entity.Investor investor = InvestorRepository.FindInvestor(model.InvestorId);
 				if (investor != null) {
+					investor.InvestorName = model.InvestorName;
 					investor.IsDomestic = model.DomesticForeign;
-					investor.Alias = model.DisplayName;
+					investor.Alias = model.Alias;
 					investor.Notes = model.Notes;
 					investor.ResidencyState = model.StateOfResidency;
 					investor.InvestorEntityTypeID = model.EntityType;
@@ -907,8 +1033,70 @@ namespace DeepBlue.Controllers.Investor {
 		}
 		#endregion
 
-		public ActionResult Result() {
+		#region Investor Library
+
+		[HttpGet]
+		public ActionResult Library() {
+			ViewData["MenuName"] = "Investor";
+			ViewData["PageName"] = "Investor Library";
 			return View();
 		}
+
+		[HttpGet]
+		public JsonResult InvestorLibraryList(int pageIndex, int pageSize, string sortName, string sortOrder, int? investorId, int? fundId) {
+			ResultModel resultModel = new ResultModel();
+			List<InvertorLibraryInformation> investorLibrary = null;
+			int totalRows = 0;
+			int leftPageIndex = 0;
+			int rightPageIndex = 0;
+			int totalPages = 0;
+
+			FlexigridData flexgridData = new FlexigridData();
+			List<InvestorList> investorLists = new List<InvestorList>();
+
+			investorLibrary = InvestorRepository.GetInvestorLibraryList(pageIndex, pageSize, sortName, sortOrder, ref totalRows, investorId, fundId);
+				flexgridData.total = totalRows;
+				flexgridData.page = pageIndex;
+				foreach (var fund in investorLibrary) {
+					flexgridData.rows.Add(new FlexigridRow {
+						cell = new List<object> {
+							new {
+								 fund.FundName, fund.FundID, fund.TotalCommitted
+							} 
+						}
+					});
+					foreach(var fundInformation in fund.FundInformations){
+						InvestorList investor = investorLists.FirstOrDefault(fundInvestor => fundInvestor.InvestorID == fundInformation.InvestorID);
+						if (investor == null) {
+							investorLists.Add(new InvestorList { InvestorID = fundInformation.InvestorID, InvestorName = fundInformation.InvestorName });
+						}
+					}
+				}
+			 
+			totalPages = Convert.ToInt32(Math.Ceiling(decimal.Divide((decimal)totalRows, (decimal)pageSize)));
+			if (totalPages > pageIndex) {
+				rightPageIndex = pageIndex + 1;
+			}
+			if (pageIndex > 1) {
+				leftPageIndex = pageIndex - 1;
+			}
+			return Json(new { FlexGridData = flexgridData, Investors = investorLists, LeftPageIndex = leftPageIndex, RightPageIndex = rightPageIndex, Library = investorLibrary }, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Investor/FindInvestorFunds
+		[HttpGet]
+		public JsonResult FindInvestorFunds(string term) {
+			return Json(InvestorRepository.FindInvestorFunds(term), JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Investor/FindFundInvestors
+		[HttpGet]
+		public JsonResult FindFundInvestors(string term) {
+			return Json(InvestorRepository.FindFundInvestors(term), JsonRequestBehavior.AllowGet);
+		}
+
+		#endregion
 	}
 }

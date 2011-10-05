@@ -17,6 +17,7 @@ namespace DeepBlue.Controllers.Fund {
 		CreateModel FindFundDetail(int fundId);
 		FundDetail FindLastFundDetail();
 		List<AutoCompleteList> FindFunds(string fundName);
+		List<AutoCompleteList> FindFundClosings(string fundClosingName, int? fundId);
 		List<AutoCompleteList> FindDealFunds(int underlyingFundId, string fundName);
 		bool TaxIdAvailable(string taxId, int fundId);
 		bool FundNameAvailable(string fundName, int fundId);

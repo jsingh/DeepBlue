@@ -68,6 +68,7 @@
 					p.page=data.page;
 				}
 				this.buildpager();
+				
 				if(p.onTemplate) {
 					p.onTemplate(tbody,data);
 				} else {

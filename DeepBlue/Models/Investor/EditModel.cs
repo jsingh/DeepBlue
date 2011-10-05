@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
 using System.ComponentModel.DataAnnotations;
+using DeepBlue.Models.Admin.Enums;
 
 namespace DeepBlue.Models.Investor {
 
@@ -18,14 +19,11 @@ namespace DeepBlue.Models.Investor {
 			AccountInformations = new List<AccountInformation>();
 			FundInformations = new FlexigridData();
 			InvestorName = string.Empty;
-			DisplayName = string.Empty;
 			Notes = string.Empty;
 			SocialSecurityTaxId = string.Empty;
 			EntityType = 0;
 			DomesticForeign = false;
 		}
-
-		public SelectListModel SelectList = new SelectListModel();
 
 		public object AddressInformations { get; set; }
 
@@ -36,21 +34,20 @@ namespace DeepBlue.Models.Investor {
 		public object FundInformations { get; set; }
 
 		public int id { get; set; }
- 
-	}
 
-	public class InvestorInformation {
-		
 		[Required(ErrorMessage = "Investor is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Investor is required")]
-		public int InvestorId { get; set; }
+		public override int InvestorId { get; set; }
+
+	}
+
+	public class InvestorInformation  {
 
 		[DisplayName("InvestorName")]
+		[Required(ErrorMessage = "Investor Name is required")]
+		[StringLength(100, ErrorMessage = "Investor Name must be under 30 characters.")]
 		public string InvestorName { get; set; }
-
-		[DisplayName("DisplayName")]
-		public string DisplayName { get; set; }
-
+		 
 		[DisplayName("FOIA")]
 		public bool FOIA { get; set; }
 
@@ -76,6 +73,8 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("EntityType")]
 		public int EntityType { get; set; }
 
+		public virtual int InvestorId { get; set; }
+
 		[DisplayName("Domestic/Foreign")]
 		public bool DomesticForeign { get; set; }
 
@@ -86,8 +85,21 @@ namespace DeepBlue.Models.Investor {
 		public string StateOfResidencyName { get; set; }
 
 		public CustomFieldModel CustomField { get; set; }
-	}
 
+		public int? AccountLength { get; set; }
+
+		public int? ContactLength { get; set; }
+
+		[DisplayName("Display Name")]
+		public string Alias { get; set; }
+
+		public List<SelectListItem> DomesticForeigns { get; set; }
+
+		public List<SelectListItem> InvestorEntityTypes { get; set; }
+
+		public List<SelectListItem> Sources { get; set; }
+	}
+ 
 	public class AddressInformation {
 		public AddressInformation() {
 			AddressId = 0;
@@ -100,10 +112,13 @@ namespace DeepBlue.Models.Investor {
 			City = string.Empty;
 			State = 0;
 			Zip = string.Empty;
-			Country = 0;
+			Country = (int)DefaultCountry.USA;
+			CountryName = "United States";
 		}
 
 		public int? AddressId { get; set; }
+
+		public int? ContactAddressId { get; set; }
 
 		[DisplayName("Telephone No")]
 		public string Phone { get; set; }
@@ -157,7 +172,7 @@ namespace DeepBlue.Models.Investor {
 	}
 
 	public class ContactInformation : AddressInformation {
-		public ContactInformation(){
+		public ContactInformation() {
 			ContactId = 0;
 			InvestorContactId = 0;
 		}
@@ -181,18 +196,18 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("K1")]
 		public bool K1 { get; set; }
 
-		public int? ContactAddressId { get; set; }
+		public IEnumerable<AddressInformation> AddressInformations { get; set; }
 
-		public object AddressInformations { get; set; }
+		public IEnumerable<ContactCommunicationInformation> ContactCommunications { get; set; }
 
 		[DisplayName("Investor Letters")]
 		public bool InvestorLetters { get; set; }
 	}
 
-	
+
 
 	public class AccountInformation {
-		public AccountInformation(){
+		public AccountInformation() {
 			AccountId = 0;
 			BankName = string.Empty;
 			AccountNumber = string.Empty;
@@ -251,12 +266,14 @@ namespace DeepBlue.Models.Investor {
 	}
 
 	public class FundInformation {
-		public FundInformation(){
+		public FundInformation() {
 			FundName = string.Empty;
 			TotalCommitment = 0;
 			UnfundedAmount = 0;
 			InvestorType = string.Empty;
+			FundClose = string.Empty;
 		}
+
 		public string FundName { get; set; }
 
 		public decimal? TotalCommitment { get; set; }
@@ -264,5 +281,29 @@ namespace DeepBlue.Models.Investor {
 		public decimal? UnfundedAmount { get; set; }
 
 		public string InvestorType { get; set; }
+
+		public string FundClose { get; set; }
+
+		public int FundId { get; set; }
+
+		public int? FundClosingId { get; set; }
+
+		public int? InvestorTypeId { get; set; }
+
+		public int InvestorFundTransactionId { get; set; }
+
+		public int InvestorFundId { get; set; }
+
+		public int InvestorId { get; set; }
+	}
+
+	public class ContactCommunicationInformation {
+
+		public int? ContactCommunicationId { get; set; }
+
+		public int CommunicationTypeId { get; set; }
+
+		public string CommunicationValue { get; set; }
+
 	}
 }

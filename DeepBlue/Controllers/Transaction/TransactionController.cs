@@ -9,7 +9,6 @@ using DeepBlue.Controllers.Investor;
 using DeepBlue.Models.Entity;
 using DeepBlue.Controllers.Admin;
 
-
 namespace DeepBlue.Controllers.Transaction {
 	public class TransactionController : BaseController {
 
@@ -29,16 +28,13 @@ namespace DeepBlue.Controllers.Transaction {
 
 		//
 		// GET: /Transaction/
-
 		public ActionResult Index() {
 			ViewData["MenuName"] = "Investor";
 			return View();
 		}
-
-
+		
 		//
 		// GET: /Transaction/New
-
 		public ActionResult New() {
 			ViewData["MenuName"] = "Investor";
 			ViewData["PageName"] = "Investor Commitment";
@@ -47,7 +43,7 @@ namespace DeepBlue.Controllers.Transaction {
 			emptyList.Add(new SelectListItem { Text = "Add Fund Close", Value = "-1" });
 			model.FundClosings = emptyList;
 			model.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(AdminRepository.GetAllInvestorTypes());
-			model.InvestorId = 0;
+			model.InvestorId = InvestorRepository.FindLastInvestorId();
 			model.EditModel = new EditModel();
 			model.EditModel.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(AdminRepository.GetAllInvestorTypes());
 			return View(model);
@@ -55,7 +51,6 @@ namespace DeepBlue.Controllers.Transaction {
 
 		//
 		// GET: /Transaction/CreateInvestorFund
-
 		public ActionResult CreateInvestorFund(FormCollection collection) {
 			CreateModel model = new CreateModel();
 			ResultModel resultModel = new ResultModel();
@@ -92,6 +87,7 @@ namespace DeepBlue.Controllers.Transaction {
 					investorFundTransaction.TransactionTypeID = (int)DeepBlue.Models.Transaction.Enums.TransactionType.OriginalCommitment;
 					investorFundTransaction.Notes = string.Empty;
 					investorFundTransaction.InvestorFundID = investorFund.InvestorFundID;
+					investorFundTransaction.CommittedDate = DateTime.Now;
 					errorInfo = InvestorRepository.SaveInvestorFundTransaction(investorFundTransaction);
 				}
 				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
@@ -114,8 +110,7 @@ namespace DeepBlue.Controllers.Transaction {
 		public ActionResult List(int id) {
 			return View(InvestorRepository.FindInvestorFunds(id));
 		}
-
-
+		
 		//
 		// GET: /Transaction/FundClosingList
 		[HttpGet]
@@ -278,7 +273,7 @@ namespace DeepBlue.Controllers.Transaction {
 			EditCommitmentAmountModel editModel = new EditCommitmentAmountModel();
 			InvestorFund investorFund = InvestorRepository.FindInvestorFund(id);
 			editModel.InvestorFundId = investorFund.InvestorFundID;
-			editModel.CommitmentAmount = investorFund.TotalCommitment;
+			editModel.TotalCommitment = investorFund.TotalCommitment;
 			editModel.UnfundedAmount = investorFund.UnfundedAmount ?? 0;
 			return Json(editModel, JsonRequestBehavior.AllowGet);
 		}
@@ -295,8 +290,8 @@ namespace DeepBlue.Controllers.Transaction {
 			ResultModel resultModel = new ResultModel();
 			if (ModelState.IsValid) {
 				InvestorFund investorFund = InvestorRepository.FindInvestorFund(editModel.InvestorFundId);
-				investorFund.UnfundedAmount = editModel.CommitmentAmount;
-				investorFund.TotalCommitment = editModel.CommitmentAmount;
+				investorFund.UnfundedAmount = editModel.TotalCommitment;
+				investorFund.TotalCommitment = editModel.UnfundedAmount;
 				InvestorRepository.SaveInvestorFund(investorFund);
 			}
 			else {
@@ -309,6 +304,35 @@ namespace DeepBlue.Controllers.Transaction {
 				}
 			}
 			return View("Result", resultModel);
+		}
+
+		//
+		// GET: /Investor/InvestmentDetailList
+		[HttpGet]
+		public JsonResult InvestmentDetailList(int pageIndex, int pageSize, string sortName, string sortOrder, int investorId) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DeepBlue.Models.Investor.FundInformation> fundInformations = InvestorRepository.GetInvestmentDetails(pageIndex, pageSize, sortName, sortOrder, ref totalRows, investorId);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var fundInformation in fundInformations) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> { 
+						fundInformation.InvestorFundTransactionId,
+						fundInformation.FundId,
+						fundInformation.FundName,
+						fundInformation.InvestorTypeId,
+						fundInformation.InvestorType,
+						fundInformation.TotalCommitment,
+						fundInformation.UnfundedAmount,
+						fundInformation.FundClosingId,
+						fundInformation.FundClose,
+						fundInformation.InvestorFundId,
+						fundInformation.InvestorId
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 	}
 }

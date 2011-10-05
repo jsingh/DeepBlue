@@ -1,60 +1,126 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Investor.EditModel>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Investor.InvestorInformation>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<%using (Html.Form(new { @onsubmit = "return false" })) {%>
-<div class="editor-row">
-	<div class="editor-editbtn">
-		<div class="EditInvestorInfo show" style="float: left">
-			<%: Html.Anchor(Html.Image("Editbtn_active.png", new { @title = "Edit" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.editInvestorInfo(this);" })%>
+{{if InvestorId>0}}
+<div class="section investor-titlebox">
+	<div class="info">
+		<div class="info-title" style="overflow: hidden">
+			${InvestorName}
 		</div>
-		<div class="UpdateInvestorInfo hide" style="float: left; display: none;">
-			<%: Html.Span("", new { @id = "Loading" })%>
-			<%: Html.Anchor(Html.Image("Update_active.png").ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.saveInvestorDetail(this);" })%>&nbsp;&nbsp;
-			<%: Html.Anchor(Html.Image("Cancel_active.png").ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.cancelInvestorInfo(this);" })%>
+		<div class="editor-field" style="margin-left: 150px; text-align: right;">
+			Display Name
+		</div>
+		<div class="editor-field">
+			${Alias}
+		</div>
+		<div class="editor-field" style="float: right; width: 191px; padding: 5px 5px 0;">
+			<%: Html.Span("&nbsp;", new { @id = "DeleteLoading", @style = "float:left;padding: 2px 5px 0;width:66px;" })%>
+			<%: Html.Image("delete_active.png", new { @id = "Delete", @style = "cursor:pointer", @onclick = "javascript:editInvestor.deleteInvestor(this);" })%>
 		</div>
 	</div>
 </div>
-<%: Html.Hidden("InvestorId", "${InvestorId}")%>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.SocialSecurityTaxId)%>
+<div class="line">
 </div>
-<div class="editor-field">
-	<%: Html.Span("${SocialSecurityTaxId}", new { id = "SocialSecurityTaxId" })%>
+<div class="section">
+	<div class="info">
+		<div class="info-title" style="overflow: hidden; margin-bottom: 0px;">
+			Investment Details
+		</div>
+	</div>
+	<div class="info" style="clear: both; width: 86%;">
+		<% Html.RenderPartial("TBoxTop"); %>
+		<table cellpadding="0" cellspacing="0" border="0" id="InvestmentList" class="grid">
+			<thead>
+				<tr>
+					<th sortname="FundName">
+						Fund Name
+					</th>
+					<th sortname="InvestorType">
+						Investor Type
+					</th>
+					<th sortname="TotalCommitment">
+						Total Commitment
+					</th>
+					<th sortname="UnfundedAmount">
+						Unfunded Amount
+					</th>
+					<th sortname="FundClose">
+						Fund Close
+					</th>
+				</tr>
+			</thead>
+		</table>
+		<% Html.RenderPartial("TBoxBottom"); %>
+	</div>
+	<br />
 </div>
-<div class="editor-label">
-	<%: Html.Label("State of Residency")%>
+<div class="line">
 </div>
-<div class="editor-field dropdown">
-	<%: Html.Span("${StateOfResidencyName}", new { @id = "Disp_StateOfResidency", @class = "show" })%>
-	<%: Html.TextBox("StateOfResidencyName", "${StateOfResidencyName}", new { @class = "hide" })%>
-	<%: Html.Hidden("StateOfResidency", "${StateOfResidency}")%>
+{{/if}}
+<div class="section">
+	<div class="info">
+		<div class="info-title" style="overflow: hidden">
+			Investor Information
+		</div>
+	</div>
+	<div class="info investorinfo-box">
+		<div class="editor-label firstcol">
+			<%: Html.LabelFor(model => model.InvestorName)%>
+		</div>
+		<div class="editor-field">
+			<%: Html.jQueryTemplateTextBoxFor(model => model.InvestorName)%>
+		</div>
+		<div class="editor-label" style="clear: right">
+			<%: Html.LabelFor(model => model.Alias) %>
+		</div>
+		<div class="editor-field">
+			<%: Html.TextBox("Alias","${Alias}", new {  })%>
+		</div>
+		<div class="editor-label" style="clear: right">
+			<%: Html.LabelFor(model => model.SocialSecurityTaxId)%>
+		</div>
+		<div class="editor-field">
+			<%: Html.jQueryTemplateTextBoxFor(model => model.SocialSecurityTaxId)%>
+		</div>
+		<div class="editor-label firstcol">
+			<%: Html.LabelFor(model => model.DomesticForeign) %>
+		</div>
+		<div class="editor-field">
+			<%: Html.DropDownList("DomesticForeign", Model.DomesticForeigns, new { @val = "${DomesticForeign}" })%>
+		</div>
+		<div class="editor-label" style="clear: right">
+			<%: Html.Label("State of Residency")%>
+		</div>
+		<div class="editor-field">
+			<%: Html.TextBox("StateOfResidencyName", "${StateOfResidencyName}", new {  })%>
+			<%: Html.Hidden("StateOfResidency", "${StateOfResidency}")%>
+		</div>
+		<div class="editor-label" style="clear: right">
+			<%: Html.LabelFor(model => model.EntityType) %>
+		</div>
+		<div class="editor-field">
+			<%: Html.DropDownList("EntityType", Model.InvestorEntityTypes, new { @val = "${EntityType}" })%>
+		</div>
+		<div class="editor-label firstcol">
+			<%: Html.LabelFor(model => model.Source) %>
+		</div>
+		<div class="editor-field">
+			<%: Html.DropDownListFor(model => model.Source, Model.Sources)%>
+		</div>
+		<div class="editor-label" style="clear: right">
+			<%: Html.LabelFor(model => model.FOIA) %>
+		</div>
+		<div class="editor-field">
+			<%: Html.CheckBoxFor(model => model.FOIA)%>
+		</div>
+		<div class="editor-label" style="clear: right">
+			<%: Html.LabelFor(model => model.ERISA) %>
+		</div>
+		<div class="editor-field">
+			<%: Html.CheckBoxFor(model => model.ERISA)%>
+		</div>
+		<% Html.RenderPartial("JQueryTemplateCustomFieldList", Model.CustomField);%>
+		<div class="editor-field" style="clear: both">
+			<%=Html.jQueryTemplateTextArea("Notes", "${Notes}", 4, 73, new {  })%>
+		</div>
+	</div>
 </div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.DomesticForeign) %>
-</div>
-<div class="editor-field dropdown">
-	<%: Html.Span("${DomesticForeignName}", new { @id = "Disp_DomesticForeigns", @class = "show" })%>
-	<%: Html.DropDownList("DomesticForeign", Model.SelectList.DomesticForeigns, new { @class = "hide", @val = "${DomesticForeign}" })%>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.EntityType) %>
-</div>
-<div class="editor-field dropdown">
-	<%: Html.Span("${EntityTypeName}", new { @id = "Disp_EntityType", @class = "show" })%>
-	<%: Html.DropDownList("EntityType", Model.SelectList.InvestorEntityTypes, new { @class = "hide", @val = "${EntityType}" })%>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.DisplayName) %>
-</div>
-<div class="editor-field dropdown">
-	<%: Html.Span("${DisplayName}", new { @id = "Disp_DisplayName", @class = "show" })%>
-	<%: Html.TextBox("DisplayName","${DisplayName}", new { @class = "hide" })%>
-</div>
-<div class="editor-label">
-	<%: Html.LabelFor(model => model.Notes) %>
-</div>
-<div class="editor-field">
-	<%: Html.Span("${formatEditor(Notes)}", new { @id = "Disp_Notes", @class = "notes show" })%>
-	<%=Html.jQueryTemplateTextArea("Notes", "${Notes}", 4, 28, new { @class = "hide" })%>
-</div>
-<% Html.RenderPartial("JQueryTemplateCustomFieldList", Model.CustomField);%>
-<%}%>

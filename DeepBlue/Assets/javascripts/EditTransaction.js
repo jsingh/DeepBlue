@@ -18,7 +18,7 @@
 				} else {
 					jAlert("Committed Amount Saved");
 					jHelper.resetFields(frm);
-					parent.transactionController.closeEditTransactionDialog(true);
+					parent.investorCommitment.closeEditTransactionDialog(true);
 				}
 			});
 		} catch(e) {
@@ -37,7 +37,7 @@
 					jAlert(data);
 				} else {
 					jAlert("Transaction Saved");
-					transactionController.loadFundDetails();
+					investorCommitment.loadFundDetails();
 					$("#EditTransaction").dialog("close");
 				}
 			});
@@ -83,12 +83,12 @@
 		$("#UpdateEditCmtLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Save...");
 	}
 	,closeDialog: function (reload) {
-		parent.transactionController.closeEditTransactionDialog(reload);
+		parent.investorCommitment.closeEditTransactionDialog(reload);
 	}
 	,closeEditCommitAmtDialog: function () {
 		$("#EditCommitmentAmount").dialog('close');
 		if($("#UpdateTargetId").html()=="True") {
-			transactionController.loadFundDetails();
+			investorCommitment.loadFundDetails();
 		}
 		$("#UpdateTargetId").html("");
 	}

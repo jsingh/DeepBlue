@@ -12,7 +12,6 @@ namespace DeepBlue.Models.Transaction {
 		
 		public EditModel(){
 			InvestorTypes = new List<SelectListItem>();
-			Date = DateTime.Now;
 		}		
 		
 		public int InvestorId { get; set; }
@@ -73,7 +72,7 @@ namespace DeepBlue.Models.Transaction {
 		[Required(ErrorMessage = "Commitment Amount is required")]
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Commitment Amount is required")]
 		[DisplayName("Commitment Amount")]
-		public decimal CommitmentAmount { get; set; }
+		public decimal TotalCommitment { get; set; }
 
 		public decimal UnfundedAmount { get; set; }
 	}

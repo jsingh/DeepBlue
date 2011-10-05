@@ -1,20 +1,160 @@
-﻿ 
+﻿#InvestorContainer{
+	min-width:1258px;
+}
+.heading {
+	width: 86%;
+}
+.section {
+	clear: both;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+.info {
+	padding-left: 65px;
+	width: 90%;
+}
+.info-title {
+	font-size: 16px;
+	font-weight: bold;
+	margin: 10px 0 20px 0;
+	float:left;
+}
+.editor-label, .editor-field {
+	padding: 8px 5px 8px 0px;
+}
+.editor-label, .editor-label-first, .editor-label-second {
+	width: 95px;
+}
 .editor-field {
-	width: auto;
+	width: 146px;
 }
-.editor-label {
-	width: 145px;
+.editor-field select {
+	width: 144px;
 }
-#ContactInfoBox, #AccountInfoBox, .contactinfo, .accountinfo {
-	width: 100%;
+.editor-field input[type="text"] {
+	width: 140px;
 }
-.contactinfo-box, .accountinfo-box {
-	width: 100%;
+.firstcol {
+	width: 95px;
+}
+.expandheader, .recon-expandheader {
+	cursor: pointer;
 	float: left;
+	width: 100%;
 }
-.field-validation-error {
+.expandheader .expandimg {
+	background: url("../images/plus.png") no-repeat scroll left center transparent;
+	color: #006059;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 8px 0 8px 20px;
+	white-space: nowrap;
+	text-transform: uppercase;
+}
+.expandsel {
+	color: #F7F7F7;
+	font-size: 18px; /*margin-top: 35px;*/
+	margin-top: -2px;
+	width: 100%;
+}
+.expandheader #title {
 	display: none;
 }
-.box-content .delete {
-	padding-left: 10px;
+.expandsel .expandbtn {
+	background-image: url("../images/rightuarrow.png");
+}
+.expandbtn {
+	background-image: url("../images/downarrow.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	float: left;
+	padding-left: 65px;
+	width: 86%;
+}
+.expandsel, .headerbar, .subheader {
+	background-image: url("../images/expandbg.png");
+	background-position: left top;
+	background-repeat: repeat-x;
+	height: 35px;
+	line-height: 35px;
+}
+.expandtitle {
+	text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
+}
+.fieldbox {
+	clear: both;
+	padding: 15px 0 0;
+	float: left;
+}
+.cell {
+	float: left;
+	height: 25px;
+	line-height: 25px;
+	margin-right: 10px;
+	font-weight: bold;
+}
+.cell a {
+	color: Black;
+	font-size: 14px;
+}
+.addbtn-extend {
+	left: 300px;
+	margin: 0;
+	padding-top: 0px;
+	position: absolute;
+}
+.expandaddbtn {
+	display: none;
+	float: left;
+	height: 31px;
+	line-height: 33px;
+	margin: 0px 0 0 70px;
+	padding-left: 30px;
+	width: auto;
+}
+.editor-field input.ui-autocomplete-input[type="text"] {
+	width: 110px;
+}
+.accountInfo, .accountinfo-box, .addressinfo-box, .contactinfo-box {
+	padding: 10px 0px 10px 0;
+	clear: both;
+	float: left;
+	width: 100%;
+}
+.info-detail {
+	    padding: 10px 0px 10px 30px;
+}
+.contactinfo-box .editor-label {
+	width: 113px;
+}
+.investorinfo-box .editor-field {
+	width: 253px;
+}
+.investorinfo-box .editor-label {
+	width: 109px;
+}
+ 
+.show {
+	display: none;
+}
+.hide {
+	display: block;
+}
+.addressinfo-box .editor-label{
+	width:115px;
+}
+.addressinfo-box .info-detail{
+	padding-left: 68px;
+}
+.accountinfo-box .info-detail{
+	padding-left: 88px;
+}
+.accountinfo-box .editor-field{
+	width: 166px;
+}
+.grid #row0, .grid #Row0{
+  background-image: url("../images/table_row_odd.gif");
 }

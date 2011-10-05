@@ -47,6 +47,7 @@ namespace DeepBlue.Controllers.Investor {
 		InvestorContact FindInvestorContact(int investorContactId);
 		object FindInvestorContactModel(int investorContactId);
 		IEnumerable<ErrorInfo> SaveInvestorContact(InvestorContact investorContact);
+		List<ContactInformation> ContactInformationList(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int investorId);
 		#endregion
 		
 		#region Investor Communication
@@ -58,11 +59,20 @@ namespace DeepBlue.Controllers.Investor {
 		InvestorAccount FindInvestorAccount(int investorAccountId);
 		object FindInvestorAccountModel(int investorAccountId);
 		IEnumerable<ErrorInfo> SaveInvestorAccount(InvestorAccount investorAccount);
+		List<AccountInformation> BankAccountInformationList(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int investorId);
 		#endregion
 
 		#region Investor Information
 		EditModel FindInvestorDetail(int investorId);
+		List<FundInformation> GetInvestmentDetails(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int investorId);
 		InvestorInformation FindInvestorInformation(int investorId);
+		int FindLastInvestorId();
+		#endregion
+
+		#region Investor Library
+		List<InvertorLibraryInformation> GetInvestorLibraryList(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? investorId, int? fundId);
+		List<AutoCompleteList> FindInvestorFunds(string fundName);
+		List<AutoCompleteList> FindFundInvestors(string investorName);
 		#endregion
 	}
 }

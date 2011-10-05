@@ -4,10 +4,31 @@
 .hide {
 	display: none;
 }
-.editor-field {
-	width: 195px;
+.contactInfo {
+	padding-left: 70px;
 }
-.fund-details{
-	clear:both;
-	width:98%;
+.contactInfo .editor-field {
+	width: 148px;
+}
+.accountInfo .info-detail {
+	padding-left: 88px;
+}
+.accountInfo .editor-field {
+	width: 166px;
+}
+.editor-field span {
+	overflow: hidden;
+}
+.addressinfo-box .editor-editbtn, .accountInfo .editor-editbtn, .contactInfo .editor-editbtn {
+	padding: 0px 111px 0 0;
+}
+.investor-titlebox .editor-field {
+	padding: 13px 5px 0 0;
+	margin: 0;
+}
+.investor-titlebox .info-title {
+	margin-bottom: 15px;
+}
+#InvestorContainer .flexigrid .pDiv {
+	height: 18px;
 }

@@ -251,7 +251,7 @@ namespace DeepBlue.Controllers.Investor {
 						where investor.InvestorID == investorId
 						select new EditModel {
 							InvestorName = investor.InvestorName,
-							DisplayName = investor.Alias,
+							Alias = investor.Alias,
 							DomesticForeign = investor.IsDomestic,
 							DomesticForeignName = (investor.IsDomestic ? "Domestic" : "Foreign"),
 							EntityType = investor.InvestorEntityTypeID,
@@ -261,13 +261,6 @@ namespace DeepBlue.Controllers.Investor {
 							StateOfResidencyName = investor.STATE.Name,
 							Notes = investor.Notes,
 							InvestorId = investor.InvestorID,
-							FundInformations = (from investorFund in investor.InvestorFunds
-												select new FundInformation {
-													FundName = investorFund.Fund.FundName,
-													TotalCommitment = investorFund.TotalCommitment,
-													UnfundedAmount = investorFund.UnfundedAmount,
-													InvestorType = investorFund.InvestorType.InvestorTypeName
-												}),
 							AccountInformations = (from account in investor.InvestorAccounts
 												   select new {
 													   ABANumber = account.Routing,
@@ -336,6 +329,31 @@ namespace DeepBlue.Controllers.Investor {
 												   })
 						}
 						).SingleOrDefault();
+			}
+		}
+
+		public List<FundInformation> GetInvestmentDetails(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int investorId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<FundInformation> query = (from investorFund in context.InvestorFunds
+													 where investorFund.InvestorID == investorId
+													 select new FundInformation {
+														 FundName = investorFund.Fund.FundName,
+														 TotalCommitment = investorFund.TotalCommitment,
+														 UnfundedAmount = investorFund.UnfundedAmount,
+														 InvestorType = investorFund.InvestorType.InvestorTypeName,
+														 FundClose = (from transaction in investorFund.InvestorFundTransactions
+																	  select new {
+																		  FundClose = transaction.FundClosing.Name
+																	  }).FirstOrDefault().FundClose,
+														 FundId = investorFund.FundID,
+														 InvestorTypeId = investorFund.InvestorTypeId,
+														 InvestorFundId = investorFund.InvestorFundID,
+														 InvestorId = investorFund.InvestorID
+													 });
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<FundInformation> paginatedList = new PaginatedList<FundInformation>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
 			}
 		}
 
@@ -451,6 +469,48 @@ namespace DeepBlue.Controllers.Investor {
 		public IEnumerable<ErrorInfo> SaveInvestorContact(InvestorContact investorContact) {
 			return investorContact.Save();
 		}
+
+		public List<ContactInformation> ContactInformationList(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int investorId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<ContactInformation> query = (from investorContact in context.InvestorContacts
+														where investorContact.InvestorID == investorId
+														select new ContactInformation {
+															Person = investorContact.Contact.ContactName,
+															DistributionNotices = investorContact.Contact.ReceivesDistributionNotices,
+															Financials = investorContact.Contact.ReceivesFinancials,
+															InvestorLetters = investorContact.Contact.ReceivesInvestorLetters,
+															K1 = investorContact.Contact.ReceivesK1,
+															Designation = investorContact.Contact.Designation,
+															ContactId = investorContact.ContactID,
+															InvestorId = investorContact.InvestorID,
+															InvestorContactId = investorContact.InvestorContactID,
+															AddressInformations = (from contactAddress in investorContact.Contact.ContactAddresses
+																				   select new AddressInformation {
+																					   Address1 = contactAddress.Address.Address1,
+																					   Address2 = contactAddress.Address.Address2,
+																					   Country = contactAddress.Address.Country,
+																					   CountryName = contactAddress.Address.COUNTRY1.CountryName,
+																					   State = contactAddress.Address.State,
+																					   StateName = contactAddress.Address.STATE1.Name,
+																					   City = contactAddress.Address.City,
+																					   Zip = contactAddress.Address.PostalCode,
+																					   AddressId = contactAddress.AddressID,
+																					   ContactAddressId = contactAddress.ContactAddressID
+																				   }),
+															ContactCommunications = (from contactCommunication in investorContact.Contact.ContactCommunications
+																					 select new ContactCommunicationInformation {
+																						 ContactCommunicationId = contactCommunication.ContactCommunicationID,
+																						 CommunicationTypeId = contactCommunication.Communication.CommunicationTypeID,
+																						 CommunicationValue = contactCommunication.Communication.CommunicationValue
+																					 }),
+														});
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<ContactInformation> paginatedList = new PaginatedList<ContactInformation>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
 		#endregion
 
 		#region Investor Bank Account
@@ -486,6 +546,33 @@ namespace DeepBlue.Controllers.Investor {
 		public IEnumerable<ErrorInfo> SaveInvestorAccount(InvestorAccount investorAccount) {
 			return investorAccount.Save();
 		}
+
+		public List<AccountInformation> BankAccountInformationList(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int investorId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AccountInformation> query = (from account in context.InvestorAccounts
+														where account.InvestorID == investorId
+														select new AccountInformation {
+															ABANumber = account.Routing,
+															AccountNumber = account.Account,
+															Attention = account.Attention,
+															AccountOf = account.AccountOf,
+															BankName = account.BankName,
+															ByOrderOf = account.ByOrderOf,
+															FFC = account.FFC,
+															FFCNO = account.FFCNumber,
+															AccountId = account.InvestorAccountID,
+															IBAN = account.IBAN,
+															Reference = account.Reference,
+															Swift = account.SWIFT,
+															InvestorId = account.InvestorID
+														});
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<AccountInformation> paginatedList = new PaginatedList<AccountInformation>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
 		#endregion
 
 		#region Investor Information
@@ -495,7 +582,7 @@ namespace DeepBlue.Controllers.Investor {
 						where investor.InvestorID == investorId
 						select new InvestorInformation {
 							InvestorName = investor.InvestorName,
-							DisplayName = investor.Alias,
+							Alias = investor.Alias,
 							DomesticForeign = investor.IsDomestic,
 							DomesticForeignName = (investor.IsDomestic ? "Domestic" : "Foreign"),
 							EntityType = investor.InvestorEntityTypeID,
@@ -508,6 +595,91 @@ namespace DeepBlue.Controllers.Investor {
 						}).SingleOrDefault();
 			}
 		}
+
+		public int FindLastInvestorId() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var lastInvestor = (from investor in context.Investors
+									orderby investor.InvestorID descending
+									select new {
+										InvestorID = investor.InvestorID
+									}).FirstOrDefault();
+				return (lastInvestor != null ? lastInvestor.InvestorID : 0);
+			}
+		}
+		#endregion
+
+		#region Investor Library
+
+		public List<InvertorLibraryInformation> GetInvestorLibraryList(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? investorId, int? fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.Fund> fundQuery = context.Funds;
+				if(fundId > 0){
+					fundQuery = fundQuery.Where(fund => fund.FundID == fundId);
+				}
+				var investorFundQuery = (from investorFund in context.InvestorFunds
+										 where (investorId > 0 ? investorFund.InvestorID == investorId : investorFund.InvestorID > 0)
+																			select new {
+																				FundID = investorFund.FundID
+																			}).Distinct();
+				IQueryable<InvertorLibraryInformation> query = (from fund in fundQuery
+																join fundInvestor in investorFundQuery on fund.FundID equals fundInvestor.FundID
+																orderby fund.FundName
+																select new InvertorLibraryInformation {
+																	FundName = fund.FundName,
+																	FundID = fund.FundID,
+																	FundInformations = (from investorFund in fund.InvestorFunds
+																						where (investorId > 0 ? investorFund.InvestorID == investorId : investorFund.InvestorID > 0)
+																						select new FundInvestorInformation {
+																							CommitmentAmount = investorFund.TotalCommitment,
+																							CommittedDate = investorFund
+																											.InvestorFundTransactions
+																											.Where(transaction => transaction.FundClosingID > 0)
+																											.FirstOrDefault().CommittedDate,
+																							FundClose = investorFund
+																											.InvestorFundTransactions
+																											.Where(transaction => transaction.FundClosingID > 0)
+																											.FirstOrDefault().FundClosing.Name,
+																							InvestorID = investorFund.InvestorID,
+																							InvestorName = investorFund.Investor.InvestorName,
+																							UnfundedAmount = investorFund.UnfundedAmount
+																						})
+																}
+				);
+				PaginatedList<InvertorLibraryInformation> paginatedList = new PaginatedList<InvertorLibraryInformation>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<AutoCompleteList> FindInvestorFunds(string fundName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.Funds
+															  where fund.InvestorFunds.Count() > 0
+															  where fund.FundName.StartsWith(fundName)
+															  orderby fund.FundName
+															  select new AutoCompleteList {
+																  id = fund.FundID,
+																  label = fund.FundName,
+																  value = fund.FundName
+															  });
+				return new PaginatedList<AutoCompleteList>(fundListQuery, 1, AutoCompleteOptions.RowsLength);
+			}
+		}
+
+		public List<AutoCompleteList> FindFundInvestors(string investorName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> query = (from investor in context.Investors 
+													  where investor.InvestorName.StartsWith(investorName) && investor.InvestorFunds.Count() > 0
+													  orderby investor.InvestorName
+													  select new AutoCompleteList {
+														  id = investor.InvestorID,
+														  label = investor.InvestorName + " (" + investor.Social + ")",
+														  value = investor.InvestorName
+													  });
+				return new PaginatedList<AutoCompleteList>(query, 1, AutoCompleteOptions.RowsLength);
+			}
+		}
+
 		#endregion
 	}
 }

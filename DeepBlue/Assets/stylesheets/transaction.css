@@ -1,71 +1,45 @@
-﻿.editor-label {
-	width: 90px;
-	white-space:nowrap;
+﻿.info {
+	padding-left: 65px;
+	width: 90%;
 }
-.editor-field {
-	width: 170px;
+.info-title {
+	font-size: 16px;
+	font-weight: bold;
+	margin: 10px 0 20px 0;
+	float: left;
 }
-.editor-link {
-	padding:5px;
+.investor-titlebox .editor-field {
+	padding: 13px 5px 0 0;
+	margin: 0;
+}
+.investor-titlebox .info-title {
+	margin-bottom: 15px;
+}
+.editor-field input.ui-autocomplete-input[type="text"] {
+	    width: 119px;
+}
+.show {
+	display: inline-block;
+}
+.hide {
+	display: none;
+}
+#EditTransaction .info{
+	padding-left:18px;
+}
+#EditTransaction .info-title {
+	   margin: 5px 0 5px 5px;
 }
 #EditTransaction .editor-label{
-	width: 120px;
-	text-align:left;
+	   width:127px;
 }
-.tab {
-	width: 100%;
-	float: left;
-	margin-right: 4px;
+#EditTransaction .editor-field{
+	width: 166px;
 }
-.tab-center {
-	background-image: url(../images/tab_unsel_c.png);
-	background-repeat: repeat-x;
-	height: 24px;
-	float: left;
-	    width: 342px;
-	line-height: 24px;
-	color: #4B4747;
+#EditTransaction .editor-btn{
+	   clear: both;
+    float: right;
+    padding-right: 38px;
+    text-align: right;
+    width: 311px;
 }
-.tab-left {
-	background-image: url(../images/tab_unsel_l.png);
-	background-repeat: no-repeat;
-	height: 24px;
-	width: 8px;
-	float: left;
-}
-.tab-right {
-	background-image: url(../images/tab_unsel_r.png);
-	background-repeat: no-repeat;
-	height: 24px;
-	width: 8px;
-	float: left;
-}
-.tab-center a {
-	color: white;
-	font-weight: bold;
-}
-.tab-cnt {
-	clear: both;
-	width: 99%;
-	border: 1px solid #E3E3E3;
-	float: left;
-	margin-bottom: 10px;
-}
-#FundDetails {
-	float: left;
-	width: 359px;
-	margin-left: 2px;
-}
-.edit-info .edit-right {
-	   width: 381px;
-}
-#frmEditTransaction{
-	float:left;
-	width:576px;
-}
-.editor-footer {
-	width:200px;
-	margin:0 auto;
-	clear:both;
-}
- 

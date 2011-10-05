@@ -19,10 +19,10 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("Designation")]
 		public string Designation { get; set; }
 
-		[DisplayName("Telephone No")]
+		[DisplayName("Telephone")]
 		public string ContactPhoneNumber { get; set; }
 
-		[DisplayName("Fax No")]
+		[DisplayName("Fax")]
 		public string ContactFaxNumber { get; set; }
 
 		[DisplayName("Email")]
@@ -31,7 +31,7 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("Web Address")]
 		public string ContactWebAddress { get; set; }
 
-		[DisplayName("Address1")]
+		[DisplayName("Address")]
 		public string ContactAddress1 { get; set; }
 
 		[DisplayName("Address2")]
@@ -53,7 +53,7 @@ namespace DeepBlue.Models.Investor {
 
 		public string ContactCountryName { get; set; }
 
-		[DisplayName("Receives Distribution/Capital Call Notices")]
+		[DisplayName("Receives Distribution / Capital Call Notices")]
 		public bool DistributionNotices { get; set; }
 
 		[DisplayName("Financials")]
