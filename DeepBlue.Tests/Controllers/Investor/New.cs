@@ -29,15 +29,15 @@ namespace DeepBlue.Tests.Controllers.Investor {
 			Assert.IsInstanceOfType<ActionResult>(base.ActionResult);
 		}
 
-        [Test]
-        public void get_list_of_countries_equal_239() {
-            Assert.AreEqual(Model.SelectList.Countries.Count, 239);
-        }
+		//[Test]
+		//public void get_list_of_countries_equal_239() {
+		//    Assert.AreEqual(Model.Countries.Count, 239);
+		//}
 
-        [Test]
-        public void get_list_of_states_equal_52() {
-            Assert.AreEqual(Model.SelectList.States.Count, 52);
-        }
+		//[Test]
+		//public void get_list_of_states_equal_52() {
+		//    Assert.AreEqual(Model.States.Count, 52);
+		//}
 		
     }
 }
