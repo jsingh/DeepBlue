@@ -28,9 +28,10 @@
 	margin: 0;
 }
 .left-nav, .right-nav {
-	width: 180px;
+	width: 210px;
 	text-align: left;
 	border: solid 0px red;
+	overflow:hidden;
 }
 .left-paging {
 	padding-top: 10px;
@@ -45,7 +46,7 @@
 }
 .left-padding {
  padding-left: 25px;
-    width: 155px;
+    width: 185px;
 }
 .lcap, .rcap {
 	width: 171px;
