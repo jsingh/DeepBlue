@@ -2865,6 +2865,24 @@ namespace DeepBlue.Controllers.Admin {
 				case "EquityType":
 					items = SelectListFactory.GetEquityTypeSelectList(AdminRepository.GetAllEquityTypes());
 					break;
+				case "DataType":
+					items = SelectListFactory.GetDataTypeSelectList(AdminRepository.GetAllDataTypes());
+					break;
+				case "Module":
+					items = SelectListFactory.GetModuleSelectList(AdminRepository.GetAllModules());
+					break;
+				case "CommunicationGroup":
+					items = SelectListFactory.GetCommunicationGroupingSelectList(AdminRepository.GetAllCommunicationGroupings());
+					break;
+				case "DocumentType":
+					items = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
+					break;
+				case "PurchaseType":
+					items = SelectListFactory.GetPurchaseTypeSelectList(AdminRepository.GetAllPurchaseTypes());
+					break;
+				case "FixedIncomeType":
+					items = SelectListFactory.GetFixedIncomeTypesSelectList(AdminRepository.GetAllFixedIncomeTypes());
+					break;
 			}
 			return Json(items, JsonRequestBehavior.AllowGet);
 		}

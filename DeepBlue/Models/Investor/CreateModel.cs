@@ -64,7 +64,7 @@ namespace DeepBlue.Models.Investor {
 		public string StateName { get; set; }
 
 		[DisplayName("Zip")]
-		[Zip(ErrorMessage = "Invalid Postal Code")]
+		[Zip(ErrorMessage = "Invalid Zip")]
 		public string Zip { get; set; }
 
 		[DisplayName("Country")]

@@ -29,7 +29,7 @@
 			<table cellpadding="0" cellspacing="0" border="0" id="FundClosingList" class="grid">
 				<thead>
 					<tr>
-						<th sortname="Name" style="width: 20%">
+						<th sortname="Name" style="width: 15%">
 							Name
 						</th>
 						<th sortname="FundName" style="width: 30%">
@@ -38,7 +38,7 @@
 						<th sortname="FundClosingDate" style="width: 20%">
 							Closing Date
 						</th>
-						<th sortname="IsFirstClosing" style="width: 20%">
+						<th sortname="IsFirstClosing" style="width: 30%">
 							First Closing
 						</th>
 						<th>
@@ -67,7 +67,7 @@
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 {{each(i,row) rows}}
 <tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
-	<td style="width:20%">
+	<td style="width:15%">
 		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
 		<%: Html.TextBox("Name", "${row.cell[1]}", new { @class = "hide" })%>
 	</td>
@@ -80,7 +80,7 @@
 		<%: Html.Span("${formatDate(row.cell[3])}", new { @class = "show" })%>
 		<%: Html.TextBox("FundClosingDate", "${formatDate(row.cell[3])}", new { @id="${i}_FundClosingDate", @class = "hide datefield" })%>
 	</td>
-	<td style="width: 20%;">
+	<td style="width: 30%;">
 		<%: Html.Span("{{if row.cell[4]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		
 		<%: Html.CheckBox("IsFirstClosing",false, new { @class = "hide", @val="${row.cell[4]}" })%>
 	</td>

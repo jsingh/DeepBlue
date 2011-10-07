@@ -182,13 +182,16 @@ namespace DeepBlue.Controllers.Investor {
 					investorAccount.Reference = Convert.ToString(collection[(index + 1).ToString() + "_" + "Reference"]);
 					investorAccount.AccountOf = Convert.ToString(collection[(index + 1).ToString() + "_" + "AccountOf"]);
 					investorAccount.FFC = Convert.ToString(collection[(index + 1).ToString() + "_" + "FFC"]);
-					investorAccount.FFCNumber = Convert.ToString(collection[(index + 1).ToString() + "_" + "FFCNO"]);
+					investorAccount.FFCNumber = Convert.ToString(collection[(index + 1).ToString() + "_" + "FFCNumber"]);
 					investorAccount.IBAN = Convert.ToString(collection[(index + 1).ToString() + "_" + "IBAN"]);
 					investorAccount.ByOrderOf = Convert.ToString(collection[(index + 1).ToString() + "_" + "ByOrderOf"]);
 					investorAccount.SWIFT = Convert.ToString(collection[(index + 1).ToString() + "_" + "Swift"]);
-					investorAccount.Account = Convert.ToString(collection[(index + 1).ToString() + "_" + "AccountNumber"]);
+					investorAccount.Account = Convert.ToString(collection[(index + 1).ToString() + "_" + "Account"]);
+					investorAccount.AccountNumberCash = Convert.ToString(collection[(index + 1).ToString() + "_" + "AccountNumber"]);
 					investorAccount.Attention = Convert.ToString(collection[(index + 1).ToString() + "_" + "Attention"]);
 					investorAccount.BankName = Convert.ToString(collection[(index + 1).ToString() + "_" + "BankName"]);
+					investorAccount.Phone = Convert.ToString(collection[(index + 1).ToString() + "_" + "AccountPhone"]);
+					investorAccount.Fax = Convert.ToString(collection[(index + 1).ToString() + "_" + "AccountFax"]);
 
 					if (string.IsNullOrEmpty(investorAccount.Comments) == false
 					  || string.IsNullOrEmpty(investorAccount.Reference) == false
@@ -199,8 +202,11 @@ namespace DeepBlue.Controllers.Investor {
 					  || string.IsNullOrEmpty(investorAccount.ByOrderOf) == false
 					  || string.IsNullOrEmpty(investorAccount.SWIFT) == false
 					  || string.IsNullOrEmpty(investorAccount.Account) == false
+					  || string.IsNullOrEmpty(investorAccount.AccountNumberCash) == false
 					  || string.IsNullOrEmpty(investorAccount.Attention) == false
 					  || string.IsNullOrEmpty(investorAccount.BankName) == false
+					  || string.IsNullOrEmpty(investorAccount.Phone) == false
+					  || string.IsNullOrEmpty(investorAccount.Fax) == false
 					  || investorAccount.Routing > 0) {
 						errorInfo = ValidationHelper.Validate(investorAccount);
 						if (errorInfo.Any()) {
@@ -895,6 +901,9 @@ namespace DeepBlue.Controllers.Investor {
 			AccountInformation model = new AccountInformation();
 			this.TryUpdateModel(model, collection);
 			ResultModel resultModel = new ResultModel();
+			if (string.IsNullOrEmpty(model.Account) ) {
+				ModelState.AddModelError("Account", "Account Name is required");
+			}
 			if (ModelState.IsValid) {
 				InvestorAccount investorAccount = null;
 				if ((model.AccountId ?? 0) > 0)
@@ -906,7 +915,8 @@ namespace DeepBlue.Controllers.Investor {
 				}
 				investorAccount.InvestorID = model.InvestorId;
 				investorAccount.EntityID = Authentication.CurrentEntity.EntityID;
-				investorAccount.Account = model.AccountNumber;
+				investorAccount.Account = model.Account;
+				investorAccount.AccountNumberCash = model.AccountNumber;
 				investorAccount.Attention = model.Attention;
 				investorAccount.Reference = model.Reference;
 				investorAccount.AccountOf = model.AccountOf;
@@ -914,9 +924,11 @@ namespace DeepBlue.Controllers.Investor {
 				investorAccount.SWIFT = model.Swift;
 				investorAccount.IBAN = model.IBAN;
 				investorAccount.FFC = model.FFC;
-				investorAccount.FFCNumber = model.FFCNO;
+				investorAccount.FFCNumber = model.FFCNumber;
 				investorAccount.ByOrderOf = model.ByOrderOf;
 				investorAccount.BankName = model.BankName;
+				investorAccount.Phone = model.AccountPhone;
+				investorAccount.Fax = model.AccountFax;
 				investorAccount.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				investorAccount.LastUpdatedDate = DateTime.Now;
 
@@ -961,7 +973,7 @@ namespace DeepBlue.Controllers.Investor {
 							account.ABANumber,
 							account.AccountOf,
 							account.FFC,
-							account.FFCNO,
+							account.FFCNumber,
 							account.Attention,
 							account.Swift,
 							account.IBAN,

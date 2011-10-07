@@ -832,7 +832,7 @@ namespace DeepBlue.Controllers.Deal {
 													   UnderlyingFundId = underlyingFund.UnderlyingtFundID,
 													   TotalSize = underlyingFund.TotalSize,
 													   TerminationYear = underlyingFund.TerminationYear,
-													   Routing = underlyingFund.Account.Routing,
+													   ABANumber = underlyingFund.Account.Routing,
 													   Account = underlyingFund.Account.Account1,
 													   AccountNumber = underlyingFund.Account.AccountNumberCash,
 													   AccountOf = underlyingFund.Account.AccountOf,
@@ -862,6 +862,7 @@ namespace DeepBlue.Controllers.Deal {
 													   FFCNumber = underlyingFund.Account.FFCNumber,
 													   IBAN = underlyingFund.Account.IBAN,
 													   Swift = underlyingFund.Account.SWIFT,
+													   AccountFax = underlyingFund.Account.Fax
 												   }).SingleOrDefault();
 				if (model != null) {
 					//List<CommunicationDetailModel> communications = GetContactCommunications(context, model.ContactId);

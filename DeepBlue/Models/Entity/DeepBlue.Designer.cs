@@ -18268,6 +18268,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _LastUpdatedBy;
         partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
         partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String FFC
+        {
+            get
+            {
+                return _FFC;
+            }
+            set
+            {
+                OnFFCChanging(value);
+                ReportPropertyChanging("FFC");
+                _FFC = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("FFC");
+                OnFFCChanged();
+            }
+        }
+        private global::System.String _FFC;
+        partial void OnFFCChanging(global::System.String value);
+        partial void OnFFCChanged();
 
         #endregion
     
@@ -21714,6 +21738,78 @@ namespace DeepBlue.Models.Entity
         private global::System.String _BankName;
         partial void OnBankNameChanging(global::System.String value);
         partial void OnBankNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AccountNumberCash
+        {
+            get
+            {
+                return _AccountNumberCash;
+            }
+            set
+            {
+                OnAccountNumberCashChanging(value);
+                ReportPropertyChanging("AccountNumberCash");
+                _AccountNumberCash = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("AccountNumberCash");
+                OnAccountNumberCashChanged();
+            }
+        }
+        private global::System.String _AccountNumberCash;
+        partial void OnAccountNumberCashChanging(global::System.String value);
+        partial void OnAccountNumberCashChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Phone
+        {
+            get
+            {
+                return _Phone;
+            }
+            set
+            {
+                OnPhoneChanging(value);
+                ReportPropertyChanging("Phone");
+                _Phone = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Phone");
+                OnPhoneChanged();
+            }
+        }
+        private global::System.String _Phone;
+        partial void OnPhoneChanging(global::System.String value);
+        partial void OnPhoneChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Fax
+        {
+            get
+            {
+                return _Fax;
+            }
+            set
+            {
+                OnFaxChanging(value);
+                ReportPropertyChanging("Fax");
+                _Fax = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Fax");
+                OnFaxChanged();
+            }
+        }
+        private global::System.String _Fax;
+        partial void OnFaxChanging(global::System.String value);
+        partial void OnFaxChanged();
 
         #endregion
     

@@ -68,16 +68,17 @@
 		<div id="DealUnderlyingDirects" class="content">
 		</div>
 		<div class="editor-field auto" id="SaveDealBox">
-			<div class="cell auto" style="float:right;">
+			<div class="cell auto" style="float: right;">
 				<%: Html.ImageButton("cnewdeal_active.png", new { @id = "btnDummySaveDeal", onclick = "javascript:deal.saveDeal();" })%></div>
-			<div class="cell" style="float:right;text-align:right;">
+			<div class="cell" style="float: right; text-align: right;">
 				<%: Html.Span("", new { id = "UpdateLoading" })%></div>
 		</div>
 	</div>
 	<div id="UpdateTargetId" style="display: none">
 	</div>
-	<div id="FullDealList" style="display: none">
-		<table cellpadding="0" cellspacing="0" border="0" id="DealList">
+	<div id="FullDealList" style="display: none;padding-left:10px;">
+		<% Html.RenderPartial("TBoxTop"); %>
+		<table cellpadding="0" cellspacing="0" border="0" id="DealList" class="grid">
 			<thead>
 				<tr>
 					<th sortname="DealId" style="width: 10%;" align="center">
@@ -92,9 +93,11 @@
 				</tr>
 			</thead>
 		</table>
+		<% Html.RenderPartial("TBoxBottom"); %>
 	</div>
-	<div id="FullFundList" style="display: none">
-		<table cellpadding="0" cellspacing="0" border="0" id="FundList">
+	<div id="FullFundList" style="display: none;padding-left:10px;">
+		<% Html.RenderPartial("TBoxTop"); %>
+		<table cellpadding="0" cellspacing="0" border="0" id="FundList" class="grid">
 			<thead>
 				<tr>
 					<th sortname="FundId" style="width: 10%;" align="center">
@@ -106,6 +109,7 @@
 				</tr>
 			</thead>
 		</table>
+		<% Html.RenderPartial("TBoxBottom"); %>
 	</div>
 	<div class="tooltip">
 	</div>

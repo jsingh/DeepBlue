@@ -72,7 +72,7 @@
 			underlyingFund.tempSave=false;
 			underlyingFund.onAfterUnderlyingFundSave=null;
 			if(ufid>0) {
-				var param=$(frm).serializeArray();
+				var param=$(frm).serializeForm();
 				var url="/Deal/CreateUnderlyingFundContact";
 				var loading=$("#Loading",frm);
 				loading.html(jHelper.savingHTML());

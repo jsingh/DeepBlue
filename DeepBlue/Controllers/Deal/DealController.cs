@@ -1167,7 +1167,7 @@ namespace DeepBlue.Controllers.Deal {
 					underlyingFund.Account.Attention = model.Attention;
 					underlyingFund.Account.EntityID = Authentication.CurrentEntity.EntityID;
 					underlyingFund.Account.Reference = model.Reference;
-					underlyingFund.Account.Routing = model.Routing;
+					underlyingFund.Account.Routing = model.ABANumber;
 					underlyingFund.Account.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					underlyingFund.Account.LastUpdatedDate = DateTime.Now;
 					underlyingFund.Account.FFC = model.FFC;
@@ -1175,6 +1175,7 @@ namespace DeepBlue.Controllers.Deal {
 					underlyingFund.Account.SWIFT = model.Swift;
 					underlyingFund.Account.Phone = model.AccountPhone;
 					underlyingFund.Account.IBAN = model.IBAN;
+					underlyingFund.Account.Fax = model.AccountFax;
 				}
 
 				//if (underlyingFund.Contact == null) {

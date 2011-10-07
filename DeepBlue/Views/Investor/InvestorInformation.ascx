@@ -21,35 +21,31 @@
 <div class="line">
 </div>
 <div class="section">
-	<div class="info">
-		<div class="info-title" style="overflow: hidden; margin-bottom: 0px;">
-			Investment Details
-		</div>
+	<div class="inv-info-title" style="overflow: hidden; margin-bottom: 0px;">
+		<span class="title">Investment Details</span>&nbsp;&nbsp;<span id="InvListLoading"></span>
 	</div>
-	<div class="info" style="clear: both; width: 86%;">
-		<% Html.RenderPartial("TBoxTop"); %>
+	<div class="info inv-grid">
 		<table cellpadding="0" cellspacing="0" border="0" id="InvestmentList" class="grid">
 			<thead>
 				<tr>
 					<th sortname="FundName">
 						Fund Name
 					</th>
-					<th sortname="InvestorType">
+					<th sortname="InvestorType" style="width: 10%;">
 						Investor Type
 					</th>
-					<th sortname="TotalCommitment">
+					<th sortname="TotalCommitment" style="width: 20%;" align="right">
 						Total Commitment
 					</th>
-					<th sortname="UnfundedAmount">
+					<th sortname="UnfundedAmount"  style="width: 20%;" align="right">
 						Unfunded Amount
 					</th>
-					<th sortname="FundClose">
+					<th sortname="FundClose" style="width: 20%;">
 						Fund Close
 					</th>
 				</tr>
 			</thead>
 		</table>
-		<% Html.RenderPartial("TBoxBottom"); %>
 	</div>
 	<br />
 </div>
@@ -119,7 +115,9 @@
 			<%: Html.CheckBoxFor(model => model.ERISA)%>
 		</div>
 		<% Html.RenderPartial("JQueryTemplateCustomFieldList", Model.CustomField);%>
-		<div class="editor-field" style="clear: both">
+		<div class="editor-label">
+		</div>
+		<div class="editor-field">
 			<%=Html.jQueryTemplateTextArea("Notes", "${Notes}", 4, 73, new {  })%>
 		</div>
 	</div>

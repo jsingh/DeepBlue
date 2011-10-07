@@ -10,6 +10,7 @@
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css") %>
 	<%=Html.StylesheetLinkTag("adminbackend.css") %>
+	<%=Html.StylesheetLinkTag("customfield.css")%>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
@@ -24,7 +25,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="admin-main">
-		<div class="admin-content">
+		<div class="admin-content cfcontent">
 			<% Html.RenderPartial("TBoxTop"); %>
 			<table cellpadding="0" cellspacing="0" border="0" id="CustomFieldList" class="grid">
 				<thead>
@@ -76,11 +77,11 @@
 	</td>
 	<td style="width: 18%">
 		<%: Html.Span("${row.cell[3]}", new { @class = "show" })%>
-		<%: Html.DropDownList("ModuleId", Model.Modules, new { @val="${row.cell[2]}", @class="hide" })%>
+		<%: Html.DropDownList("ModuleId", Model.Modules, new { @val="${row.cell[2]}", @class="hide", @refresh="true", @action="Module" })%>
 	</td>
 	<td style="width: 18%">
 		<%: Html.Span("${row.cell[5]}", new { @class = "show" })%>
-		<%: Html.DropDownList("DataTypeId",Model.DataTypes, new { @val="${row.cell[4]}", @class="hide" }) %>
+		<%: Html.DropDownList("DataTypeId",Model.DataTypes, new { @val="${row.cell[4]}", @class="hide", @refresh="true", @action="DataType" }) %>
 	</td>
 	<td style="width: 18%">
 		<%: Html.Span("${row.cell[6]}", new { @class = "show" })%>

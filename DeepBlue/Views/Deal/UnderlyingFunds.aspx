@@ -71,7 +71,7 @@
 			<div id="TabMain" class="section-tab-main">
 				<div class="section-tab-box">
 					<%using (Html.Tab(new { @id = "TabFundGrid", @class = "section-tab-sel", @onclick = "javascript:underlyingFund.selectTab(this,'UnderlyingFundListBox');" })) {%>Underlying
-					Fund Setup
+					Fund setup
 					<%}%>
 				</div>
 			</div>

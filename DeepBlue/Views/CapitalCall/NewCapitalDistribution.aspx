@@ -131,7 +131,7 @@
 					<div class="editor-field">
 						<%: Html.TextBoxFor(model => model.LPProfits, new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 					</div>
-					<div class="editor-button">
+					<div class="editor-button" style="width: 300px; padding-left: 130px;">
 						<div style="float: left; padding: 0 0 10px 5px;">
 							<%: Html.Image("submit_active.png", new { @class = "default-button", @onclick = "javascript:distribution.save('Distribution');" })%>
 						</div>
@@ -161,7 +161,7 @@
 						<%: Html.LabelFor(model => model.DistributionNumber) %>
 					</div>
 					<div class="editor-field">
-							<%: Html.Span("",new { @id= "SpnManualDistributionNumber"})%>
+						<%: Html.Span("",new { @id= "SpnManualDistributionNumber"})%>
 					</div>
 					<div class="editor-label" style="clear: right">
 						<%: Html.LabelFor(model => model.CapitalDistributionDate) %>
@@ -205,7 +205,7 @@
 				</div>
 				<div class="cc-box-det manual">
 					<div class="cc-manual">
-						<div class="editor-label" style="padding-left:0px;">
+						<div class="editor-label" style="padding-left: 0px;">
 							<%: Html.Anchor(Html.Image("addinvestor.png").ToHtmlString(),"javascript:manualDistribution.addInvestor();") %>
 						</div>
 						<div id="InvestorDetail" class="investor-detail">
@@ -244,7 +244,7 @@
 						</div>
 					</div>
 					<%: Html.HiddenFor(model => model.InvestorCount)%>
-					<div class="editor-button" style="padding-top:10px;">
+					<div class="editor-button" style="padding-top: 10px;">
 						<div style="float: left; padding: 0 0 10px 5px;">
 							<%: Html.Span("", new { @id = "ManualUpdateLoading" })%>
 						</div>

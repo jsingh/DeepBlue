@@ -15,7 +15,7 @@
 			grid.flexRemoveSortClass();
 			grid.flexOptions({ sortname: "" });
 			securityValueReport.onGridInit();
-			var param=$(frm).serializeArray();
+			var param=$(frm).serializeForm();
 			grid.flexOptions({ params: param });
 			grid.flexReload();
 		} catch(e) {

@@ -37,7 +37,7 @@
 			<%: Html.LabelFor(model => model.PurchaseTypeId) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownListFor(model => model.PurchaseTypeId, Model.PurchaseTypes, new { @val = "${PurchaseTypeId}" })%>
+			<%: Html.DropDownListFor(model => model.PurchaseTypeId, Model.PurchaseTypes, new { @val = "${PurchaseTypeId}", @refresh="true", @action = "PurchaseType" })%>
 		</div>
 		<div class="editor-label" id="divPartnerName">
 			<div class="editor-label">

@@ -145,7 +145,7 @@
 		try {
 			var loading=$("#UpdateLoading");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			$.post("/Investor/Create",$(frm).serializeArray(),function (data) {
+			$.post("/Investor/Create",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				if($.trim(data)!="") {
 					jAlert(data);

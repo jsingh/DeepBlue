@@ -13,22 +13,20 @@ namespace DeepBlue.Controllers
     {
 
 		protected override void OnActionExecuting(ActionExecutingContext filterContext) {
-		    //if new session        
-            if (filterContext.HttpContext.Session.IsNewSession)
-            {
-                string cookie = filterContext.HttpContext.Request.Headers["Cookie"];
-                //if cookie exists and sessionid index is greater than zero
-                if ((cookie !=null) &&    
-                    (cookie.IndexOf("ASP.NET_SessionId") >= 0)
-					&& this.ValueProvider.GetValue("controller").RawValue.ToString() != "Account")
-                {
-                    //redirect to desired session 
-                    //expiration action and controller
-                    filterContext.Result = RedirectToAction("LogOn", "Account");
-                    return;
-                }
-            }
-	
+			//if new session        
+			if (filterContext.HttpContext.Session.IsNewSession) {
+				string cookie = filterContext.HttpContext.Request.Headers["Cookie"];
+				//if cookie exists and sessionid index is greater than zero
+				if ((cookie != null) &&
+					(cookie.IndexOf("ASP.NET_SessionId") >= 0)
+					&& this.ValueProvider.GetValue("controller").RawValue.ToString() != "Account") {
+					//redirect to desired session 
+					//expiration action and controller
+					filterContext.Result = RedirectToAction("LogOn", "Account");
+					return;
+				}
+			}
+
 			//otherwise continue with action
 			base.OnActionExecuting(filterContext);
 		}

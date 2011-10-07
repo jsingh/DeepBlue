@@ -167,3 +167,6 @@
 	text-decoration: underline;
 	font-size: 11px;
 }
+.grid #row0, .grid #Row0{
+  background-image: url("../images/table_row_odd.gif");
+}

@@ -91,6 +91,15 @@
     <Compile Include="Controllers\Admin\CommunicationTypeBase.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\Admin\CreateCurrencyTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateCurrencyInvalidData.cs" />
+    <Compile Include="Controllers\Admin\CurrencyBase.cs" />
+    <Compile Include="Controllers\Admin\CreateFundExpenseTypeValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateFundExpenseTypeInvalidData.cs" />
+    <Compile Include="Controllers\Admin\FundExpenseTypeBase.cs" />
+    <Compile Include="Controllers\Admin\CreateUserValidData.cs" />
+    <Compile Include="Controllers\Admin\CreateUserInvalidData.cs" />
+    <Compile Include="Controllers\Admin\UserBase.cs" />
     <Compile Include="Controllers\Admin\CreateActivityTypeInvalidData.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -656,6 +665,15 @@
     <Compile Include="Models\Admin\CommunicationTypeValidData.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Admin\CurrencyValidData.cs" />
+    <Compile Include="Models\Admin\CurrencyInvalidData.cs" />
+    <Compile Include="Models\Admin\Currency.cs" />
+    <Compile Include="Models\Admin\FundExpenseTypeValidData.cs" />
+    <Compile Include="Models\Admin\FundExpenseTypeInvalidData.cs" />
+    <Compile Include="Models\Admin\FundExpenseType.cs" />
+    <Compile Include="Models\Admin\UserValidData.cs" />
+    <Compile Include="Models\Admin\UserInvalidData.cs" />
+    <Compile Include="Models\Admin\User.cs" />
     <Compile Include="Models\Admin\CustomField.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1028,7 +1046,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App.config" />
+    <Content Include="App.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DeepBlue\DeepBlue.csproj">

@@ -4,3 +4,11 @@
 .editor-label {
 	width: 80px;
 }
+.cfcontent{
+	min-width: 820px;
+}
+#content
+,#header
+,#footer { 
+	    min-width: 1124px;
+}

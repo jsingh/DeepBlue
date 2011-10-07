@@ -207,3 +207,12 @@
     margin: 7px 0 0 -15px;
     width: 16px;
 }
+.editor-field {
+    width: 179px;
+}
+.editor-field select {
+    width: 100%;
+}
+.editor-field input[type="text"], .editor-field input[type="password"] {
+    width: 89%;
+}

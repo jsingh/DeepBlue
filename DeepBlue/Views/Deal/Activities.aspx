@@ -346,7 +346,7 @@
 									<%: Html.Span("", new { @id="SpnSDUFName" })%></div>
 								<div class="cell" style="margin-left: 20px">
 									<div style="float: left">
-										Issuer:&nbsp;
+										Issuer&nbsp;&nbsp;
 									</div>
 									<div style="float: left">
 										<%: Html.TextBox("UFSDIssuerName","SEARCH ISSUER", new { @class = "wm" })%>

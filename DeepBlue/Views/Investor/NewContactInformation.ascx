@@ -102,8 +102,6 @@
 		<div class="editor-row">
 			<div class="editor-editbtn" style="padding-right: 115px;">
 				<div class="EditInvestorInfo" style="float: left">
-					<%=Html.Image("add_active.png", new { @title = "Add New Contact", @onclick = "javascript:investor.createContact(this);" })%>
-					&nbsp;&nbsp;
 					<%=Html.Image("delete_active.png", new { @title = "Delete Contact", @onclick = "javascript:investor.deleteContact(this);" })%>
 				</div>
 			</div>

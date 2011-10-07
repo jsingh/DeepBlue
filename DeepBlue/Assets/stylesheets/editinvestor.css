@@ -30,5 +30,33 @@
 	margin-bottom: 15px;
 }
 #InvestorContainer .flexigrid .pDiv {
-	height: 18px;
+	display:none;
+}
+#InvestorContainer .flexigrid .bpDiv {
+	display:block;
+}
+.inv-info-title {
+    background-color: #FFFFFF;
+    background-image: url("../images/header_bg.gif");
+    background-repeat: repeat-x;
+    clear: both;
+    color: #354866;
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
+    height: 41px;
+    margin: 10px 0 0 65px;
+    padding: 20px 0px 0px 0px;
+    width: 86%;
+}
+.inv-info-title .title{
+	padding:0 0 0 10px;
+}
+.inv-grid{
+	clear:both;
+	width:86%;
+}
+#InvListLoading{
+	font-size:12px;
+	font-weight:normal;
 }

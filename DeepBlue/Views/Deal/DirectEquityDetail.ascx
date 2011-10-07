@@ -67,7 +67,7 @@
 			<%: Html.Label("Document Type") %>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownList("EquityDocumentTypeId", Model.DocumentTypes, new { @val = "0" })%>
+			<%: Html.DropDownList("EquityDocumentTypeId", Model.DocumentTypes, new { @val = "0", @refresh = "true", @action = "DocumentType" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.Label("Document Date") %>

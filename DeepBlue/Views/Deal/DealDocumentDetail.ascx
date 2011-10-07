@@ -24,7 +24,7 @@
 			<%: Html.Label("Document Type")%>
 		</div>
 		<div class="editor-field" style="width: 278px">
-			<%: Html.DropDownList("DocumentTypeId", Model.DocumentTypes, new { @style = "width:197px" })%>
+			<%: Html.DropDownList("DocumentTypeId", Model.DocumentTypes, new { @style = "width:197px", @refresh = "true", @action = "DocumentType" })%>
 		</div>
 		<div class="editor-label" style="clear: right;width:124px;">
 			<%: Html.Label("Document Date ")%>

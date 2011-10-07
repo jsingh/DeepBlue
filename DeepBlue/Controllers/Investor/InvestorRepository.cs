@@ -264,18 +264,21 @@ namespace DeepBlue.Controllers.Investor {
 							AccountInformations = (from account in investor.InvestorAccounts
 												   select new {
 													   ABANumber = account.Routing,
-													   AccountNumber = account.Account,
+													   Account = account.Account,
+													   AccountNumber = account.AccountNumberCash,
 													   Attention = account.Attention,
 													   AccountOf = account.AccountOf,
 													   BankName = account.BankName,
 													   ByOrderOf = account.ByOrderOf,
 													   FFC = account.FFC,
-													   FFCNO = account.FFCNumber,
+													   FFCNumber = account.FFCNumber,
 													   AccountId = account.InvestorAccountID,
 													   IBAN = account.IBAN,
 													   Reference = account.Reference,
 													   Swift = account.SWIFT,
-													   InvestorId = investorId
+													   InvestorId = investorId,
+													   AccountPhone = account.Phone,
+													   AccountFax = account.Fax
 												   }),
 							AddressInformations = (from investorAddress in investor.InvestorAddresses
 												   select new {
@@ -527,7 +530,7 @@ namespace DeepBlue.Controllers.Investor {
 						where account.InvestorAccountID == investorAccountId
 						select new {
 							ABANumber = account.Routing,
-							AccountNumber = account.Account,
+							AccountNumber = account.AccountNumberCash,
 							Attention = account.Attention,
 							AccountOf = account.AccountOf,
 							BankName = account.BankName,
@@ -538,7 +541,10 @@ namespace DeepBlue.Controllers.Investor {
 							IBAN = account.IBAN,
 							Reference = account.Reference,
 							Swift = account.SWIFT,
-							InvestorId = account.InvestorID
+							InvestorId = account.InvestorID,
+							Account = account.Account,
+							AccountPhone = account.Phone,
+							AccountFax = account.Fax
 						}).FirstOrDefault();
 			}
 		}
@@ -559,7 +565,7 @@ namespace DeepBlue.Controllers.Investor {
 															BankName = account.BankName,
 															ByOrderOf = account.ByOrderOf,
 															FFC = account.FFC,
-															FFCNO = account.FFCNumber,
+															FFCNumber = account.FFCNumber,
 															AccountId = account.InvestorAccountID,
 															IBAN = account.IBAN,
 															Reference = account.Reference,
@@ -613,14 +619,14 @@ namespace DeepBlue.Controllers.Investor {
 		public List<InvertorLibraryInformation> GetInvestorLibraryList(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? investorId, int? fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<Models.Entity.Fund> fundQuery = context.Funds;
-				if(fundId > 0){
+				if (fundId > 0) {
 					fundQuery = fundQuery.Where(fund => fund.FundID == fundId);
 				}
 				var investorFundQuery = (from investorFund in context.InvestorFunds
 										 where (investorId > 0 ? investorFund.InvestorID == investorId : investorFund.InvestorID > 0)
-																			select new {
-																				FundID = investorFund.FundID
-																			}).Distinct();
+										 select new {
+											 FundID = investorFund.FundID
+										 }).Distinct();
 				IQueryable<InvertorLibraryInformation> query = (from fund in fundQuery
 																join fundInvestor in investorFundQuery on fund.FundID equals fundInvestor.FundID
 																orderby fund.FundName
@@ -668,7 +674,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public List<AutoCompleteList> FindFundInvestors(string investorName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> query = (from investor in context.Investors 
+				IQueryable<AutoCompleteList> query = (from investor in context.Investors
 													  where investor.InvestorName.StartsWith(investorName) && investor.InvestorFunds.Count() > 0
 													  orderby investor.InvestorName
 													  select new AutoCompleteList {

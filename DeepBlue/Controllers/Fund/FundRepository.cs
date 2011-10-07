@@ -175,18 +175,19 @@ namespace DeepBlue.Controllers.Fund {
 							BankDetail = (from fundAccount in fund.FundAccounts
 										  select new FundBankDetail {
 											  ABANumber = fundAccount.Routing,
-											  AccountNo = fundAccount.Account,
-											  AccountNumberCash = fundAccount.AccountNumberCash,
+											  Account = fundAccount.Account,
+											  AccountNumber = fundAccount.AccountNumberCash,
 											  AccountOf = fundAccount.AccountOf,
 											  Attention = fundAccount.Attention,
 											  BankName = fundAccount.BankName,
 											  FFCNumber = fundAccount.FFCNumber,
 											  IBAN = fundAccount.IBAN,
 											  Swift = fundAccount.SWIFT,
-											  Fax = fundAccount.Fax,
+											  AccountFax = fundAccount.Fax,
 											  Reference = fundAccount.Reference,
 											  AccountId = fundAccount.FundAccountID,
-											  Telephone = fundAccount.Phone
+											  AccountPhone = fundAccount.Phone,
+											  FFC = fundAccount.FFC,
 										  })
 						}).SingleOrDefault();
 			}

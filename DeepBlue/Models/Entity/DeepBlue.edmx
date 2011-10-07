@@ -1283,6 +1283,7 @@
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="LastUpdatedBy" Type="int" />
+          <Property Name="FFC" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="FundActivityHistory">
           <Key>
@@ -1429,6 +1430,9 @@
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="LastUpdatedBy" Type="int" />
           <Property Name="BankName" Type="varchar" MaxLength="50" />
+          <Property Name="AccountNumberCash" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Fax" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="InvestorAddress">
           <Key>
@@ -5056,6 +5060,7 @@
           <Property Name="LastUpdatedDate" Type="DateTime" />
           <Property Name="LastUpdatedBy" Type="Int32" />
           <NavigationProperty Name="Fund" Relationship="DeepBlueModel.FK_FundAccount_Fund" FromRole="FundAccount" ToRole="Fund" />
+          <Property Type="String" Name="FFC" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="FundActivityHistory">
           <Key>
@@ -5227,6 +5232,9 @@
           <Property Name="LastUpdatedBy" Type="Int32" />
           <Property Name="BankName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Investor" Relationship="DeepBlueModel.FK_InvestorAccount_Investor" FromRole="InvestorAccount" ToRole="Investor" />
+          <Property Type="String" Name="AccountNumberCash" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Phone" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Fax" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="InvestorAddress">
           <Key>
@@ -8078,7 +8086,8 @@
             <ScalarProperty Name="Carry" ColumnName="Carry" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="FundAccounts"><EntityTypeMapping TypeName="DeepBlueModel.FundAccount"><MappingFragment StoreEntitySet="FundAccount">
-            <ScalarProperty Name="FundAccountID" ColumnName="FundAccountID" />
+            <ScalarProperty Name="FFC" ColumnName="FFC" />
+                <ScalarProperty Name="FundAccountID" ColumnName="FundAccountID" />
             <ScalarProperty Name="FundID" ColumnName="FundID" />
             <ScalarProperty Name="EntityID" ColumnName="EntityID" />
             <ScalarProperty Name="BankName" ColumnName="BankName" />
@@ -8194,7 +8203,10 @@
             <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="InvestorAccounts"><EntityTypeMapping TypeName="DeepBlueModel.InvestorAccount"><MappingFragment StoreEntitySet="InvestorAccount">
-            <ScalarProperty Name="InvestorAccountID" ColumnName="InvestorAccountID" />
+            <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="AccountNumberCash" ColumnName="AccountNumberCash" />
+                <ScalarProperty Name="InvestorAccountID" ColumnName="InvestorAccountID" />
             <ScalarProperty Name="InvestorID" ColumnName="InvestorID" />
             <ScalarProperty Name="EntityID" ColumnName="EntityID" />
             <ScalarProperty Name="Routing" ColumnName="Routing" />

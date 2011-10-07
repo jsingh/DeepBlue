@@ -216,8 +216,6 @@ namespace DeepBlue.Controllers.CapitalCall {
 			}
 		}
 
-
-
 		public List<ManagementFeeRateScheduleTierDetail> GetAllManagementFeeRateScheduleTiers(int fundId, DateTime startDate, DateTime endDate) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from rateSchedule in context.FundRateSchedules

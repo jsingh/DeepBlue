@@ -14,7 +14,7 @@
 		try {
 			var loading=$("#UpdateLoading");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			$.post("/Transaction/CreateInvestorFund",$(frm).serializeArray(),function (data) {
+			$.post("/Transaction/CreateInvestorFund",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				if($.trim(data)!="") {
 					jAlert(data);
@@ -172,7 +172,7 @@
 			var frm=$(img).parents("form:first");
 			var loading=$("#UpdateLoading","#EditTransaction");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			$.post("/Transaction/CreateFundTransaction",$(frm).serializeArray(),function (data) {
+			$.post("/Transaction/CreateFundTransaction",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				if($.trim(data)!="") {
 					jAlert(data);
@@ -262,7 +262,7 @@
 			var frm=$("#frmAddFundClose");
 			var frmTransaction=$("#frmTransaction");
 			var loading=$("#Loading",frm);
-			var param=$(frm).serializeArray();
+			var param=$(frm).serializeForm();
 			var url="/Admin/UpdateFundClosing";
 			loading.html(jHelper.savingHTML());
 			$.post(url,param,function (data) {

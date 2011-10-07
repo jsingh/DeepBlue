@@ -193,6 +193,7 @@
 		$("#FundRateSchduleTierTemplate").tmpl(data).insertAfter(lastrow);
 		$("#TiersCount",grid).val(cnt);
 		var newRow=$("tbody tr:last",tbl);
+		jHelper.jqComboBox(newRow);
 		var txt=$(".datefield",tbl).get(0);
 		if(txt) {
 			fund.dateChecking(txt);

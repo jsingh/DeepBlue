@@ -8,7 +8,7 @@ using DeepBlue.Helpers;
 using System.Web.Mvc;
 
 namespace DeepBlue.Models.Deal {
-	public class CreateUnderlyingFundModel {
+	public class CreateUnderlyingFundModel : AccountInformationModel {
 
 		public int UnderlyingFundId { get; set; }
 
@@ -106,99 +106,6 @@ namespace DeepBlue.Models.Deal {
 
 		[DisplayName("Domestic")]
 		public bool IsDomestic { get; set; }
-
-		/* Contact Info */
-
-		//public int ContactId { get; set; }
-
-		//[StringLength(100, ErrorMessage = "Contact Name must be under 100 characters.")]
-		//[DisplayName("Contact Name")]
-		//public string ContactName { get; set; }
-
-		//[StringLength(200, ErrorMessage = "Web Address must be under 200 characters.")]
-		//[DisplayName("Web Address")]
-		//public string WebAddress { get; set; }
-
-		//[StringLength(200, ErrorMessage = "Mailing Address must be under 200 characters.")]
-		//[DisplayName("Mailing Address")]
-		//public string Address { get; set; }
-
-		//[StringLength(200, ErrorMessage = "Phone must be under 200 characters.")]
-		//[DisplayName("Phone")]
-		//public string Phone { get; set; }
-
-		//[StringLength(200, ErrorMessage = "Email must be under 200 characters.")]
-		//[DisplayName("Email")]
-		//[EmailAttribute(ErrorMessage = "Invalid Email")]
-		//public string Email { get; set; }
-
-		//[StringLength(100, ErrorMessage = "Title must be under 100 characters.")]
-		//[DisplayName("Title")]
-		//public string ContactTitle { get; set; }
-
-		//[StringLength(500, ErrorMessage = "Notes must be under 100 characters.")]
-		//[DisplayName("Notes")]
-		//public string ContactNotes { get; set; }
-
-		//[StringLength(200, ErrorMessage = "Web User name must be under 200 characters.")]
-		//[DisplayName("Web User name")]
-		//public string WebUsername { get; set; }
-
-		//[StringLength(200, ErrorMessage = "Web Password must be under 200 characters.")]
-		//[DisplayName("Web Password")]
-		//public string WebPassword { get; set; }
-
-		//public bool ChangeWebPassword { get; set; }
-		/* Bank Info */
-	 
-		[StringLength(50, ErrorMessage = "Bank Name must be under 50 characters.")]
-		[DisplayName("Bank Name")]
-		public string BankName { get; set; }
-
-		[StringLength(40, ErrorMessage = "Account No must be under 40 characters.")]
-		[DisplayName("Account Name")]
-		public string Account { get; set; }
-
-		[StringLength(50, ErrorMessage = "Account Number No must be under 50 characters.")]
-		[DisplayName("Account Number")]
-		public string AccountNumber { get; set; }
-
-		[DisplayName("ABA#")]
-		public int? Routing { get; set; }
-
-		[StringLength(50, ErrorMessage = "Account Of must be under 50 characters.")]
-		[DisplayName("Account Of")]
-		public string AccountOf { get; set; }
-
-		[StringLength(50, ErrorMessage = "Reference must be under 50 characters.")]
-		[DisplayName("Reference")]
-		public string Reference { get; set; }
-
-		[StringLength(50, ErrorMessage = "Attention must be under 50 characters.")]
-		[DisplayName("Attention")]
-		public string Attention { get; set; }
-
-		[StringLength(50, ErrorMessage = "Swift Code must be under 50 characters.")]
-		[DisplayName("Swift")]
-		public string Swift { get; set; }
-
-		[StringLength(50, ErrorMessage = "FFC must be under 50 characters.")]
-		[DisplayName("FFC Name")]
-		public string FFC { get; set; }
-
-		[StringLength(50, ErrorMessage = "FFC Number must be under 50 characters.")]
-		[DisplayName("FFCNumber")]
-		public string FFCNumber { get; set; }
-
-		[StringLength(50, ErrorMessage = "IBAN Number must be under 50 characters.")]
-		[DisplayName("IBAN")]
-		public string IBAN { get; set; }
-
-		[StringLength(50, ErrorMessage = "Telephone Number must be under 50 characters.")]
-		[DisplayName("Telephone")]
-		public string AccountPhone { get; set; }
-
-		/* End Bank Info */
 
 		public List<SelectListItem> UnderlyingFundTypes { get; set; }
 

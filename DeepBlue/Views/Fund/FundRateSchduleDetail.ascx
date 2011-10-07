@@ -4,14 +4,16 @@
 	<%: Html.jQueryTemplateHidden("${index}_IsDelete", "", new { @id = "IsDelete" })%>
 	<%: Html.jQueryTemplateHidden("${index}_FundRateScheduleId", "${FRS.FundRateScheduleId}", new { @id = "FundRateScheduleId" })%>
 	<div style="float: left; width: 100%; margin: 10px 0;">
-		<div class="editor-label" style="float: left; width: auto;padding-left:0px;">
-			<%: Html.Label("Investor") %></div>
-		<div class="editor-field" style="float: left; width: auto;">
-			&nbsp;<%: Html.DropDownList("${index}_InvestorTypeId", Model.InvestorTypes, new { @id = "InvestorTypeId", @style="width:180px", @onchange="javascript:fund.changeInvestorType(this);", @class="investortype ddlist" , @val = "${FRS.InvestorTypeId}" } )%>
-		</div>
-		<div style="float: left; margin-left: 15px;">
-			<%using (Html.GreenButton(new { @onclick = "javascript:fund.addRateSchedule(this);" })) {%>Add
-			Investor Type<%}%>
+		<div style="display:none">
+			<div class="editor-label" style="float: left; width: auto;padding-left:0px;">
+				<%: Html.Label("Investor") %></div>
+			<div class="editor-field" style="float: left; width: auto;">
+				&nbsp;<%: Html.DropDownList("${index}_InvestorTypeId", Model.InvestorTypes, new { @id = "InvestorTypeId", @style="width:180px", @onchange="javascript:fund.changeInvestorType(this);", @class="investortype ddlist" , @val = "${FRS.InvestorTypeId}" } )%>
+			</div>
+			<div style="float: left; margin-left: 15px;">
+				<%using (Html.GreenButton(new { @onclick = "javascript:fund.addRateSchedule(this);" })) {%>Add
+				Investor Type<%}%>
+			</div>
 		</div>
 		<div id="DeleteRateSchedule" style="float: right;">
 			<%using (Html.GreenButton(new { @class = "green-del-btn", @onclick = "javascript:fund.deleteInvestorType(this);" })) {%>Delete

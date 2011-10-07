@@ -975,7 +975,7 @@
 	background-color: #E9E9E9;
 	background-image: none;
 	overflow: auto;
-	zoom: 1;
+	zoom: 1;    border: 1px solid #DACFCF;
 }
 .ui-dialog .ui-dialog-buttonpane {
 	text-align: left;

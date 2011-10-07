@@ -34,7 +34,7 @@
 	padding: 5px 20px 5px 51px;
 }
 .fund-box-det .editor-field input[type="text"] {
-	width: 150px;
+    width: 149px;
 }
 .fund-box-det .editor-label {
 	text-align: right;
@@ -165,7 +165,6 @@
 	padding: 10px 0;
 }
 .detail .editor-label {
-	line-height: 20px;
 	text-align: right;
 }
 /* end expand header */

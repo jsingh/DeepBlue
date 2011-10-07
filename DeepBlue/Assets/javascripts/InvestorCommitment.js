@@ -28,6 +28,7 @@
 				target.empty();
 				$("#Investor").val(data.InvestorName);
 				$("#TransactionInformationTemplate").tmpl(data).appendTo(target);
+				var invloading=$("#InvListLoading");
 				var p=new Array();
 				p[p.length]={ "name": "investorId","value": id };
 				$("#InvestmentList",target).flexigrid({
@@ -42,6 +43,8 @@
 					,useBoxStyle: false
 					,onInit: investorCommitment.onInit
 					,onTemplate: investorCommitment.onTemplate
+					,onSubmit: function () { invloading.html(jHelper.loadingHTML());return true; }
+					,onSuccess: function () { invloading.empty(); }
 				});
 			});
 		} else {
@@ -188,7 +191,7 @@
 			var frm=$("#frmAddFundClose");
 			var frmTransaction=$("#frmTransaction");
 			var loading=$("#Loading",frm);
-			var param=$(frm).serializeArray();
+			var param=$(frm).serializeForm();
 			var url="/Admin/UpdateFundClosing";
 			loading.html(jHelper.savingHTML());
 			$.post(url,param,function (data) {
@@ -263,7 +266,7 @@
 					InvestorTypeId.style.display="none";
 					disp_InvestorTypeId.innerHTML=InvestorTypeId.options[InvestorTypeId.selectedIndex].text;
 					disp_InvestorTypeId.style.display="";
-				}else{
+				} else {
 					$(InvestorTypeId).combobox();
 				}
 			});
@@ -279,10 +282,10 @@
 		$("#InvestmentList").flexReload();
 	}
 	,add: function (that) {
-		var flexigrid=$(that).parents(".flexigrid:first");
+		var flexigrid=$("#InvestmentList");
 		var row=$("#Row0",flexigrid).get(0);
 		if(!row) {
-			var tbody=$(".middlec table tbody",flexigrid);
+			var tbody=$("tbody",flexigrid);
 			var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,0,"",0,"","","",0,"",0,investorCommitment.getInvestorId()]}] };
 			$("#GridTemplate").tmpl(data).prependTo(tbody);
 			var tr=$("tr:first",tbody);
@@ -298,8 +301,8 @@
 		$(window).resize();
 	}
 	,onInit: function (g) {
-		var data={ name: "Add Commitment" };
-		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
+		//var data={ name: "Add Commitment" };
+		//$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
 		//		$(window).resize(function () {
 		//			invEntityType.resizeGV(g);
 		//		});

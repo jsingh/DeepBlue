@@ -506,6 +506,12 @@ namespace DeepBlue.Controllers.CapitalCall {
 			CreateDistributionModel model = new CreateDistributionModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model, collection);
+			if (model.DistributionAmount > 0) {
+				decimal? distributionCheck = (model.PreferredReturn + model.PreferredCatchUp + model.ReturnFundExpenses + model.ReturnManagementFees + model.GPProfits + model.LPProfits);
+				if ((model.DistributionAmount > distributionCheck) == false) {
+					ModelState.AddModelError("DistributionAmount", "Distribution Amount is not correct");
+				}
+			}
 			if (ModelState.IsValid) {
 
 				// Attempt to create cash distribution.

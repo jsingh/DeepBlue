@@ -8,6 +8,7 @@ using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
 using System.ComponentModel.DataAnnotations;
 using DeepBlue.Models.Admin.Enums;
+using DeepBlue.Models.Deal;
 
 namespace DeepBlue.Models.Investor {
 
@@ -158,7 +159,7 @@ namespace DeepBlue.Models.Investor {
 		public string StateName { get; set; }
 
 		[DisplayName("Zip")]
-		[Zip(ErrorMessage = "Invalid Postal Code")]
+		[Zip(ErrorMessage = "Invalid Zip")]
 		public string Zip { get; set; }
 
 		[DisplayName("Country")]
@@ -206,14 +207,14 @@ namespace DeepBlue.Models.Investor {
 
 
 
-	public class AccountInformation {
+	public class AccountInformation : AccountInformationModel {
 		public AccountInformation() {
 			AccountId = 0;
 			BankName = string.Empty;
 			AccountNumber = string.Empty;
 			AccountOf = string.Empty;
 			FFC = string.Empty;
-			FFCNO = string.Empty;
+			FFCNumber = string.Empty;
 			Swift = string.Empty;
 			IBAN = string.Empty;
 			ByOrderOf = string.Empty;
@@ -221,48 +222,10 @@ namespace DeepBlue.Models.Investor {
 			Attention = string.Empty;
 		}
 
-		public int? AccountId { get; set; }
-
 		[Required(ErrorMessage = "Investor is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Investor is required")]
 		public int InvestorId { get; set; }
-
-		[Required(ErrorMessage = "Bank Name is required")]
-		[StringLength(50, ErrorMessage = "Bank Name must be under 50 characters.")]
-		[DisplayName("Bank Name")]
-		public string BankName { get; set; }
-
-		[Required(ErrorMessage = "Account Number is required")]
-		[StringLength(40, ErrorMessage = "Account must be under 40 characters.")]
-		[DisplayName("Account #")]
-		public string AccountNumber { get; set; }
-
-		[DisplayName("ABA #")]
-		public int? ABANumber { get; set; }
-
-		[DisplayName("Account Of")]
-		public string AccountOf { get; set; }
-
-		[DisplayName("FFC")]
-		public string FFC { get; set; }
-
-		[DisplayName("FFC#")]
-		public string FFCNO { get; set; }
-
-		[DisplayName("Swift")]
-		public string Swift { get; set; }
-
-		[DisplayName("IBAN")]
-		public string IBAN { get; set; }
-
-		[DisplayName("By Order Of")]
-		public string ByOrderOf { get; set; }
-
-		[DisplayName("Reference")]
-		public string Reference { get; set; }
-
-		[DisplayName("Attention")]
-		public string Attention { get; set; }
+		 
 	}
 
 	public class FundInformation {

@@ -16,29 +16,31 @@
 <div class="line">
 </div>
 <div class="section">
-	<div class="info">
-		<div class="info-title" style="overflow: hidden; margin-bottom: 10px;">
-			Investment Details
+	<div class="inv-info-title" style="overflow: hidden; margin-bottom: 0px;">
+		<div class="title">
+			Investment Details</div>
+		<div id="InvListLoading" class="title">
 		</div>
+		<%using (Html.BlueButton(new { @onclick = "javascript:investorCommitment.add(this);" })) {%>Add
+		Commitment<%}%>
 	</div>
 	<div class="info" style="clear: both; width: 90%;">
-		<% Html.RenderPartial("TBoxTop"); %>
 		<table cellpadding="0" cellspacing="0" border="0" id="InvestmentList" class="grid">
 			<thead>
 				<tr>
-					<th sortname="FundName" style="width: 15%">
+					<th sortname="FundName" style="width: 25%">
 						Fund Name
 					</th>
-					<th sortname="InvestorType" style="width: 15%">
+					<th sortname="InvestorType"  style="width: 18%">
 						Investor Type
 					</th>
-					<th sortname="TotalCommitment" style="width: 15%;text-align:right;" align=right>
+					<th sortname="TotalCommitment"  align="right">
 						Total Commitment
 					</th>
-					<th sortname="UnfundedAmount" style="width: 15%;text-align:right;" align=right>
+					<th sortname="UnfundedAmount"  align="right">
 						Unfunded Amount
 					</th>
-					<th sortname="FundClose" style="width: 15%">
+					<th sortname="FundClose" style="width: 18%">
 						Fund Close
 					</th>
 					<th style="width: 15%">
@@ -46,9 +48,7 @@
 				</tr>
 			</thead>
 		</table>
-		<% Html.RenderPartial("TBoxBottom"); %>
 	</div>
 	<br />
 </div>
-<div class="line">
-</div>
+<div class="line"> </div> 

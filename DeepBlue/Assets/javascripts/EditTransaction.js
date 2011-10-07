@@ -11,7 +11,7 @@
 		try {
 			var loading=$("#UpdateEditCmtLoading","#EditCommitmentAmount");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			$.post("/Transaction/UpdateCommitmentAmount",$(frm).serializeArray(),function (data) {
+			$.post("/Transaction/UpdateCommitmentAmount",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				if($.trim(data)!="") {
 					jAlert(data);
@@ -31,7 +31,7 @@
 			var frm=$(img).parents("form:first");
 			var loading=$("#UpdateLoading","#EditTransaction");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			$.post("/Transaction/CreateFundTransaction",$(frm).serializeArray(),function (data) {
+			$.post("/Transaction/CreateFundTransaction",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				if($.trim(data)!="") {
 					jAlert(data);

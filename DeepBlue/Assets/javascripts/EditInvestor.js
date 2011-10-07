@@ -58,6 +58,7 @@
 				jHelper.jqCheckBox(target);
 				editInvestor.formatEditor(target);
 				editInvestor.removeFirstLine();
+				var invloading=$("#InvListLoading");
 				var p=new Array();
 				p[p.length]={ "name": "investorId","value": id };
 				$("#InvestmentList",target).flexigrid({
@@ -70,6 +71,8 @@
 					,sortorder: "asc"
 					,autoload: true
 					,useBoxStyle: false
+					,onSubmit: function () { invloading.html(jHelper.loadingHTML());return true; }
+					,onSuccess: function () { invloading.empty(); }
 				});
 			});
 		}
@@ -97,13 +100,13 @@
 	}
 	,scrollTo: function (target) {
 		//setTimeout(function () {
-			var scrollElem=editInvestor.scrollableElement('html','body');
-			var targetOffset=$(target).offset().top;
-			// Animate to target
-			$(scrollElem).animate({ scrollTop: targetOffset-300 },400,function () {
-				// Set hash in URL after animation successful
-				//location.hash=target;
-			});
+		var scrollElem=editInvestor.scrollableElement('html','body');
+		var targetOffset=$(target).offset().top;
+		// Animate to target
+		$(scrollElem).animate({ scrollTop: targetOffset-300 },400,function () {
+			// Set hash in URL after animation successful
+			//location.hash=target;
+		});
 		//},0);
 		/*try {
 		setTimeout(function () {
@@ -180,6 +183,8 @@
 		var addInfo=$(".contactInfo:last",contactInfoMain);
 		$("#ContactInfoAddNew",contactInfoMain).hide();
 		editInvestor.setupAddressInfo(addInfo);
+		jHelper.jqCheckBox(addInfo);
+		jHelper.jqComboBox(addInfo);
 		$(".show",addInfo).hide();
 		$(".hide",addInfo).show();
 		$(".contactinfo-box:first .line").remove();
@@ -276,7 +281,7 @@
 			var frm=$("#EditInvestor");
 			var loading=$("#UpdateLoading",frm);
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			$.post("/Investor/UpdateInvestorInformation",$(frm).serializeArray(),function (data) {
+			$.post("/Investor/UpdateInvestorInformation",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				var arr=data.split("||");
 				if($.trim(arr[0])!="True") {
@@ -284,28 +289,6 @@
 					loading.empty();
 				} else {
 					jAlert("Investor Information Saved.");
-					/*
-					var investorInfo=$("#investorInfoMain");
-					var displayInvestorInfoMain=$("#displayInvestorInfoMain");
-					investorInfo.empty();
-					displayInvestorInfoMain.empty();
-					$.get("/Investor/FindInvestorInformation/"+arr[1]+"?_"+(new Date).getTime(),function (newdata) {
-					$("#InvestorInfoEditTemplate").tmpl(newdata).appendTo(investorInfo);
-					$("#DisplayInvestorInfoTemplate").tmpl(newdata).appendTo(displayInvestorInfoMain);
-					jHelper.checkValAttr(investorInfo);
-					jHelper.jqComboBox(investorInfo);
-					jHelper.jqCheckBox(investorInfo);
-					$("#StateOfResidencyName",investorInfo)
-					.autocomplete({ source: "/Admin/FindStates",minLength: 1
-					,select: function (event,ui) {
-					$("#StateOfResidency",investorInfo).val(ui.item.id);
-					}
-					,appendTo: "body",delay: 300
-					});
-					editInvestor.scrollTo(investorInfo);
-					editInvestor.formatEditor(displayInvestorInfoMain);
-					});
-					*/
 				}
 			});
 		} catch(e) {
@@ -317,7 +300,7 @@
 			var frm=$(img).parents("form:first");
 			var loading=$("#Loading",frm);
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			var param=$(frm).serializeArray();
+			var param=$(frm).serializeForm();
 			param[param.length]={ name: "InvestorId",value: editInvestor.getInvestorId() };
 			$.post("/Investor/UpdateInvestorAddress",param,function (data) {
 				var arr=data.split("||");
@@ -350,7 +333,7 @@
 			var frm=$(img).parents("form:first");
 			var loading=$("#Loading",frm);
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			$.post("/Investor/UpdateInvestorContact",$(frm).serializeArray(),function (data) {
+			$.post("/Investor/UpdateInvestorContact",$(frm).serializeForm(),function (data) {
 				var arr=data.split("||");
 				if($.trim(arr[0])!="True") {
 					jAlert(data);
@@ -387,7 +370,7 @@
 			var frm=$(img).parents("form:first");
 			var loading=$("#Loading",frm);
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-			var param=$(frm).serializeArray();
+			var param=$(frm).serializeForm();
 			param[param.length]={ name: "InvestorId",value: editInvestor.getInvestorId() };
 			$.post("/Investor/UpdateInvestorBankDetail",param,function (data) {
 				var arr=data.split("||");

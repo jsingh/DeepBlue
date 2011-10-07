@@ -1,3 +1,6 @@
-﻿ .grid tr td, .grid tr th {
- 	padding:0 10px;
- }
+﻿.grid tr td, .grid tr th {
+	padding: 0 10px;
+}
+#content, #header, #footer {
+	min-width: 1280px;
+}

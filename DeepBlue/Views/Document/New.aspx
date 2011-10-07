@@ -32,7 +32,7 @@
 			<%: Html.LabelFor(model => model.DocumentTypeId) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownListFor(model => model.DocumentTypeId,Model.DocumentTypes) %>
+			<%: Html.DropDownListFor(model => model.DocumentTypeId, Model.DocumentTypes, new { @refresh = "true", @action = "DocumentType" })%>
 		</div>
 		<div class="editor-label-first">
 			<%: Html.LabelFor(model => model.DocumentDate) %>

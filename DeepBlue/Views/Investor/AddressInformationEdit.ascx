@@ -1,7 +1,9 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<dynamic>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <div class="info-detail">
+{{if InvestorId>0}}
 	<%using (Html.Form(new { @onsubmit = "return false" })) {%>
+{{/if}}
 	<%: Html.Hidden("AddressId", "${AddressId}")%>
 	<div class="editor-label">
 		<%: Html.Label("Phone") %>
@@ -91,5 +93,7 @@
 		</div>
 	</div>
 	{{/if}}
+	{{if InvestorId>0}}
 <%}%>
+{{/if}}
 </div>

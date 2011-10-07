@@ -112,7 +112,7 @@ namespace DeepBlue.Controllers.Fund {
 			if (fundRateSchdules.Count == 0) {
 				fundRateSchdules.Add(new FundRateScheduleDetail {
 					FundId = fundId,
-					InvestorTypeId = 0,
+					InvestorTypeId = (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember,
 					RateScheduleId = 0,
 					FundRateScheduleId = 0,
 					RateScheduleTypeId = 0
@@ -215,19 +215,20 @@ namespace DeepBlue.Controllers.Fund {
 			}
 			else {
 				if ((bankDetailModel.ABANumber ?? 0) > 0 ||
-				   string.IsNullOrEmpty(bankDetailModel.AccountNumberCash) == false ||
+				   string.IsNullOrEmpty(bankDetailModel.AccountNumber) == false ||
 					string.IsNullOrEmpty(bankDetailModel.AccountOf) == false ||
 					string.IsNullOrEmpty(bankDetailModel.Attention) == false ||
 					string.IsNullOrEmpty(bankDetailModel.BankName) == false ||
-					string.IsNullOrEmpty(bankDetailModel.Fax) == false ||
+					string.IsNullOrEmpty(bankDetailModel.AccountFax) == false ||
+					string.IsNullOrEmpty(bankDetailModel.FFC) == false ||
 					string.IsNullOrEmpty(bankDetailModel.FFCNumber) == false ||
 					string.IsNullOrEmpty(bankDetailModel.IBAN) == false ||
 					string.IsNullOrEmpty(bankDetailModel.Reference) == false ||
 					string.IsNullOrEmpty(bankDetailModel.Swift) == false ||
-					string.IsNullOrEmpty(bankDetailModel.Telephone) == false
+					string.IsNullOrEmpty(bankDetailModel.AccountPhone) == false
 					) {
-					if (string.IsNullOrEmpty(bankDetailModel.AccountNo)) {
-						ModelState.AddModelError("AccountNo", "Account No is required");
+					if (string.IsNullOrEmpty(bankDetailModel.Account)) {
+						ModelState.AddModelError("Account", "Account is required");
 					}
 				}
 			}
@@ -239,7 +240,9 @@ namespace DeepBlue.Controllers.Fund {
 				else {
 					fund = new Models.Entity.Fund();
 				}
+
 				fund.Carry = model.Carry;
+				fund.RecycleProvision = model.RecycleProvision;
 				fund.DateClawbackTriggered = model.DateClawbackTriggered;
 				fund.EntityID = Authentication.CurrentEntity.EntityID;
 				fund.FinalTerminationDate = model.FinalTerminationDate;
@@ -247,11 +250,10 @@ namespace DeepBlue.Controllers.Fund {
 				fund.InceptionDate = model.InceptionDate;
 				fund.MgmtFeesCatchUpDate = model.MgmtFeesCatchUpDate;
 				fund.NumofAutoExtensions = model.NumofAutoExtensions;
-				fund.RecycleProvision = model.RecycleProvision;
 				fund.ScheduleTerminationDate = model.ScheduleTerminationDate;
 				fund.TaxID = model.TaxId;
 
-				if (string.IsNullOrEmpty(bankDetailModel.AccountNo) == false) {
+				if (string.IsNullOrEmpty(bankDetailModel.Account) == false) {
 					//Add bank account
 					FundAccount fundAccount;
 					if (bankDetailModel.AccountId > 0) {
@@ -261,21 +263,22 @@ namespace DeepBlue.Controllers.Fund {
 						fundAccount = new FundAccount();
 						fund.FundAccounts.Add(fundAccount);
 					}
-					fundAccount.Account = bankDetailModel.AccountNo;
-					fundAccount.AccountNumberCash = bankDetailModel.AccountNumberCash ?? string.Empty;
+					fundAccount.Account = bankDetailModel.Account;
+					fundAccount.AccountNumberCash = bankDetailModel.AccountNumber ?? string.Empty;
 					fundAccount.AccountOf = bankDetailModel.AccountOf ?? string.Empty;
 					fundAccount.Attention = bankDetailModel.Attention ?? string.Empty;
 					fundAccount.BankName = bankDetailModel.BankName ?? string.Empty;
 					fundAccount.CreatedBy = Authentication.CurrentUser.UserID;
 					fundAccount.CreatedDate = DateTime.Now;
 					fundAccount.EntityID = Authentication.CurrentEntity.EntityID;
-					fundAccount.Fax = bankDetailModel.Fax ?? string.Empty;
+					fundAccount.Fax = bankDetailModel.AccountFax ?? string.Empty;
+					fundAccount.FFC = bankDetailModel.FFC;
 					fundAccount.FFCNumber = bankDetailModel.FFCNumber ?? string.Empty;
 					fundAccount.IBAN = bankDetailModel.IBAN ?? string.Empty;
 					fundAccount.IsPrimary = false;
 					fundAccount.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					fundAccount.LastUpdatedDate = DateTime.Now;
-					fundAccount.Phone = bankDetailModel.Telephone ?? string.Empty;
+					fundAccount.Phone = bankDetailModel.AccountPhone ?? string.Empty;
 					fundAccount.Reference = bankDetailModel.Reference ?? string.Empty;
 					fundAccount.Routing = bankDetailModel.ABANumber;
 					fundAccount.SWIFT = bankDetailModel.Swift ?? string.Empty;
@@ -383,7 +386,7 @@ namespace DeepBlue.Controllers.Fund {
 			}
 			return View("Result", resultModel);
 		}
-
+		 
 		private string SaveCustomValues(FormCollection collection, int key) {
 			System.Text.StringBuilder result = new StringBuilder();
 			IEnumerable<ErrorInfo> errorInfo;

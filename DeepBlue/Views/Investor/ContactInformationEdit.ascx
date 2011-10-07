@@ -123,8 +123,6 @@
 		<div class="editor-row">
 			<div class="editor-editbtn">
 				<div class="EditInvestorInfo show" style="float: left">
-					<%: Html.Anchor(Html.Image("add_active.png", new { @title = "Add Contact" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.addContactInfo(this, ${InvestorId});" })%>
-					&nbsp;&nbsp;
 					<%: Html.Anchor(Html.Image("Editbtn_active.png", new { @title = "Edit Contact" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.editInvestorInfo(this);" })%>
 					&nbsp;&nbsp;
 					<%: Html.Anchor(Html.Image("delete_active.png", new { @title = "Delete Contact" }).ToHtmlString(), "#", new { @onclick = "javascript:editInvestor.deleteContact(this,${InvestorContactId});" })%>

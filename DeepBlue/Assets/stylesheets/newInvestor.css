@@ -1,4 +1,6 @@
-﻿#InvestorContainer{
+﻿#content
+,#header
+,#footer { 
 	min-width:1258px;
 }
 .heading {

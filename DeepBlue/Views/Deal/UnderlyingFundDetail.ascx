@@ -3,7 +3,7 @@
 <div class="content">
 	<%: Html.Hidden("IssuerId", "${IssuerId}")%>
 	<%: Html.Hidden("UnderlyingFundId", "${UnderlyingFundId}")%>
-	<div class="editor-label-first">
+	<div class="editor-label">
 		<label>
 			GP</label>
 	</div>
@@ -24,7 +24,7 @@
 	<div class="editor-field">
 		<%: Html.DropDownList("FundTypeId", Model.UnderlyingFundTypes, new { @val = "${FundTypeId}", @refresh="true", @action="FundType" })%>
 	</div>
-	<div class="editor-label-first">
+	<div class="editor-label">
 		<label>
 			Vintage Year</label>
 	</div>
@@ -45,7 +45,7 @@
 	<div class="editor-field">
 		<%: Html.TextBox("TerminationYear", "${TerminationYear}", new { @class = "wm", @onkeydown = "return jHelper.isNumeric(event);" })%>
 	</div>
-	<div class="editor-label-first">
+	<div class="editor-label">
 		<label>
 			Reporting</label>
 	</div>
@@ -66,7 +66,7 @@
 	<div class="editor-field" style="width: auto;">
 		<%: Html.CheckBox("IsFeesIncluded", false, new { @val = "${IsFeesIncluded}" })%>
 	</div>
-	<div class="editor-label-first">
+	<div class="editor-label">
 		<label>
 			Industry</label>
 	</div>
@@ -80,7 +80,7 @@
 	<div class="editor-field">
 		<%: Html.DropDownList("GeographyId", Model.Geographyes, new { @val = "${GeographyId}", @refresh = "true", @action = "Geography" })%>
 	</div>
-	<div class="editor-label-first">
+	<div class="editor-label">
 		<label>
 			Description</label>
 	</div>
@@ -153,8 +153,8 @@
 			</div>
 		</div>
 		<div class="detail" style="display: none; padding-left: 6px;" id="BankInformation">
-			<div>
-				<div class="editor-label-first">
+			<div style="padding-left:15px;">
+				<div class="editor-label">
 					<%: Html.Label("Bank Name")%>
 				</div>
 				<div class="editor-field">
@@ -164,21 +164,21 @@
 					<%: Html.Label("ABA Number")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("Routing", "${Routing}", new { @class = "wm", @onkeydown = "return jHelper.isNumeric(event);" })%>
+					<%: Html.TextBox("ABANumber", "${ABANumber}", new { @class = "wm", @onkeydown = "return jHelper.isNumeric(event);" })%>
 				</div>
-				<div class="editor-label-first">
+				<div class="editor-label" style="clear: right">
 					<%: Html.Label("Account Name")%>
 				</div>
 				<div class="editor-field">
 					<%: Html.TextBox("Account", "${Account}", new { @class = "wm" })%>
 				</div>
-				<div class="editor-label" style="clear: right;">
+				<div class="editor-label">
 					<%: Html.Label("Account Number")%>
 				</div>
 				<div class="editor-field">
 					<%: Html.TextBox("AccountNumber", "${AccountNumber}", new { @class = "wm" })%>
 				</div>
-				<div class="editor-label-first">
+				<div class="editor-label" style="clear: right">
 					<%: Html.Label("FFC Name")%>
 				</div>
 				<div class="editor-field">
@@ -190,7 +190,7 @@
 				<div class="editor-field">
 					<%: Html.TextBox("FFCNumber", "${FFCNumber}", new { @class = "wm" })%>
 				</div>
-				<div class="editor-label-first">
+				<div class="editor-label">
 					<%: Html.Label("Reference")%>
 				</div>
 				<div class="editor-field">
@@ -202,30 +202,36 @@
 				<div class="editor-field">
 					<%: Html.TextBox("Swift", "${Swift}", new { @class = "wm" })%>
 				</div>
-				<div class="editor-label-first">
+				<div class="editor-label" style="clear: right">
 					<%: Html.Label("IBAN")%>
 				</div>
 				<div class="editor-field">
 					<%: Html.TextBox("IBAN", "${IBAN}", new { @class = "wm" })%>
 				</div>
+				<div class="editor-label">
+					<%: Html.Label("Phone")%>
+				</div>
+				<div class="editor-field">
+					<%: Html.TextBox("AccountPhone", "${AccountPhone}", new { @class = "wm" })%>
+				</div>
 				<div class="editor-label" style="clear: right">
+					<%: Html.Label("Fax")%>
+				</div>
+				<div class="editor-field">
+					<%: Html.TextBox("AccountFax", "${AccountFax}", new { @class = "wm" })%>
+				</div>
+				<%--<div class="editor-label" style="clear: right">
 					<%: Html.Label("Account Of")%>
 				</div>
 				<div class="editor-field">
 					<%: Html.TextBox("AccountOf", "${AccountOf}", new { @class = "wm" })%>
 				</div>
-				<div class="editor-label-first">
+				<div class="editor-label">
 					<%: Html.Label("Attention")%>
 				</div>
 				<div class="editor-field">
 					<%: Html.TextBox("Attention", "${Attention}", new { @class = "wm" })%>
-				</div>
-				<div class="editor-label" style="clear: right">
-					<%: Html.Label("Telephone")%>
-				</div>
-				<div class="editor-field">
-					<%: Html.TextBox("AccountPhone", "${AccountPhone}", new { @class = "wm" })%>
-				</div>
+				</div>--%>
 			</div>
 			<div class="savebox" style="width: 652px;">
 				<div class="resetbtn">
@@ -257,11 +263,11 @@
 		</div>
 		<div class="detail" style="display: none; padding-left: 29px;" id="DocumentInformation">
 			<%using (Html.Form(new { @id = "frmDocumentInfo", @onsubmit = "return underlyingFund.saveDocument(this);" })) {%>
-			<div class="editor-label-first">
+			<div class="editor-label">
 				<%: Html.Label("Document Type") %>
 			</div>
 			<div class="editor-field">
-				<%: Html.DropDownList("DocumentTypeId", Model.DocumentTypes)%>
+				<%: Html.DropDownList("DocumentTypeId", Model.DocumentTypes, new { @refresh = "true", @action = "DocumentType" })%>
 			</div>
 			<div class="editor-label" style="clear: right">
 				<%: Html.Label("Document Date ") %>

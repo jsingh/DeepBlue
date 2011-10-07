@@ -62,7 +62,7 @@
 			<%: Html.LabelFor(model => model.FixedIncomeTypeId) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownList("FixedIncomeTypeId", Model.FixedIncomeTypes, new { @val = "${FixedIncomeTypeId}" })%>
+			<%: Html.DropDownList("FixedIncomeTypeId", Model.FixedIncomeTypes, new { @val = "${FixedIncomeTypeId}", @refresh="true", @action="FixedIncomeType" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.LabelFor(model => model.FixedIncomeIndustryId) %>
@@ -97,7 +97,7 @@
 			<%: Html.Label("Document Type") %>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownList("FixedIncomeDocumentTypeId", Model.DocumentTypes, new { @val = "0" })%>
+			<%: Html.DropDownList("FixedIncomeDocumentTypeId", Model.DocumentTypes, new { @val = "0", @refresh = "true", @action = "DocumentType" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.Label("Document Date") %>
@@ -105,15 +105,15 @@
 		<div class="editor-field">
 			<%: Html.TextBox("FixedIncomeDocumentDate", "${FixedIncomeDocumentDate}", new { @class = "datefield", @id = "FixedIncomeDocumentDate" })%>
 		</div>
-		<div class="editor-label" style="width:143px;padding-right:11px;">
+		<div class="editor-label" style="width: 143px; padding-right: 11px;">
 			<%: Html.DropDownList("FixedIncomeUploadTypeId", Model.UploadTypes, new { @val="1", @style = "width:85px", @onchange = "javascript:dealDirect.changeUploadType(this,'fidocument');" })%>
 		</div>
 		<div id="FileRow" class="editor-field" style="width: auto;">
-			<div style="padding: 0; margin: 0; width: auto;float:left;">
+			<div style="padding: 0; margin: 0; width: auto; float: left;">
 				<%: Html.File("FixedIncomeFile", new { @id = "equityFileToUpload" })%>
 				<%: Html.Hidden("FixedIncomeFileId")%>
 			</div>
-			<div style="padding: 0; margin: 0;float:left;">
+			<div style="padding: 0; margin: 0; float: left;">
 				<%: Html.Span("", new { @id = "SpnFixedIncomeDocLoading" })%>
 			</div>
 		</div>

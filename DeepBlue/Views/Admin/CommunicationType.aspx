@@ -70,7 +70,7 @@
 	</td>
 	<td style="width: 30%">
 		<%: Html.Span("${row.cell[2]}", new { @class = "show" })%>
-		<%: Html.DropDownListFor(model => model.CommunicationGroupId,Model.CommunicationGroupings, new { @class="hide", @val = "${row.cell[4]}" })%>
+		<%: Html.DropDownListFor(model => model.CommunicationGroupId,Model.CommunicationGroupings, new { @class="hide", @val = "${row.cell[4]}", @refresh="true", @action="CommunicationGroup" })%>
 	</td>
 	<td style="width: 30%;text-align:left;">
 		<%: Html.Span("{{if row.cell[3]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		

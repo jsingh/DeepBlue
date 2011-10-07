@@ -16,7 +16,7 @@
 	margin-bottom: 15px;
 }
 .editor-field input.ui-autocomplete-input[type="text"] {
-	    width: 119px;
+	width: 119px;
 }
 .show {
 	display: inline-block;
@@ -24,22 +24,63 @@
 .hide {
 	display: none;
 }
-#EditTransaction .info{
-	padding-left:18px;
+#EditTransaction .info {
+	padding-left: 18px;
 }
 #EditTransaction .info-title {
-	   margin: 5px 0 5px 5px;
+	margin: 5px 0 5px 5px;
 }
-#EditTransaction .editor-label{
-	   width:127px;
+#EditTransaction .editor-label {
+	width: 127px;
 }
-#EditTransaction .editor-field{
+#EditTransaction .editor-field {
 	width: 166px;
 }
-#EditTransaction .editor-btn{
-	   clear: both;
-    float: right;
-    padding-right: 38px;
-    text-align: right;
-    width: 311px;
+#EditTransaction .editor-btn {
+	clear: both;
+	float: right;
+	padding-right: 38px;
+	text-align: right;
+	width: 311px;
+}
+.inv-info-title {
+	background-color: #FFFFFF;
+	background-image: url("../images/header_bg.gif");
+	background-repeat: repeat-x;
+	clear: both;
+	color: #354866;
+	float: left;
+	font-size: 16px;
+	font-weight: bold;
+	height: 41px;
+	margin: 10px 0 0 65px;
+	padding: 20px 0px 0px 0px;
+	width: 90%;
+}
+.inv-info-title .title {
+	float: left;
+	margin: 5px 5px 0 0;
+	width: 128px;
+	padding-left: 10px;
+}
+#InvListLoading {
+	font-size: 12px;
+	font-weight: normal;
+}
+.inv-grid {
+	clear: both;
+	width: 90%;
+}
+.flexigrid .pDiv {
+	display: none;
+}
+.flexigrid .bpDiv {
+	display: block;
+}
+.jqComboBox {
+	width:100%;
+}
+.jqComboBox input.ui-autocomplete-input 
+,.bDiv table .jqComboBox .left {
+	width:79%;
 }

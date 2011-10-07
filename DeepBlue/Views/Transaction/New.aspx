@@ -106,9 +106,6 @@
 	<script id="TransactionInformationTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("TransactionInformation");%>
 	</script>
-	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
-<%using (Html.GreenButton(new { @onclick = "javascript:investorCommitment.add(this);" })) {%>${name}<%}%>
-	</script>
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 		{{each(i,row) rows}}
 		<tr id="Row${row.cell[9]}" {{if i%2>0}}class="erow"{{/if}}>
@@ -121,7 +118,7 @@
 				{{/if}}
 			</td>
 			<td>
-				<%: Html.Span("${row.cell[4]}", new { id="SpnInvestorType", @style="display:none"  })%>
+				<%: Html.Span("${row.cell[4]}", new { id="SpnInvestorType"  })%>
 				{{if row.cell[9]==0}}
 				<%: Html.DropDownListFor(model => model.InvestorTypeId, Model.InvestorTypes, new { @val="${row.cell[3]}", @refresh="true", @action = "InvestorType" })%>
 				{{/if}}

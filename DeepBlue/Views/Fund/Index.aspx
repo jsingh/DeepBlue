@@ -26,7 +26,7 @@
 			<div id="TabMain" class="section-tab-main">
 				<div class="section-tab-box">
 					<%using (Html.Tab(new { @id = "TabFundGrid", @class = "section-tab-sel", @onclick = "javascript:fund.selectTab(this,'FundDetail');" })) {%>Fund
-					Setup
+					setup
 					<%}%>
 					<%using (Html.Tab(new { @id = "TabAddNewFund", @onclick = "javascript:fund.selectTab(this,'AddNewFund');" })) {%>Add
 					New Fund

@@ -41,7 +41,7 @@
 	,save: function (id) {
 		try {
 			var frm=$("#frm"+id);
-			var param=$(frm).serializeArray();
+			var param=$(frm).serializeForm();
 			var url="/Admin/UpdateUser";
 			var loading=$("#Loading",frm);
 			loading.html(jHelper.savingHTML());
