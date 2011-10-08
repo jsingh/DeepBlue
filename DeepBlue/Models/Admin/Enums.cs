@@ -17,7 +17,8 @@ namespace DeepBlue.Models.Admin.Enums {
 
 	public enum AddressType {
 		Home = 1,
-		Work = 2
+		Work = 2,
+		MailingAddress = 3
 	}
 
 	public enum DefaultCountry {
@@ -51,10 +52,7 @@ namespace DeepBlue.Models.Admin.Enums {
 		Fax = 5,
 		Email = 6,
 		WebAddress = 7,
-		Company = 8,
-		MailingAddress = 9,
-		WebUsername = 10,
-		WebPassword = 11
+		Company = 8
 	}
 
 	public enum ExportType {

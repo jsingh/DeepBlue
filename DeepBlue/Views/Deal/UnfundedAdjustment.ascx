@@ -4,10 +4,10 @@
 	<td class="lalign">
 		<%: Html.Span("${FundName}")%>
 	</td>
-	<td class="lalign">
+	<td class="ralign">
 		<%: Html.Span("${CommitmentAmount}", new { @class = "money" })%>
 	</td>
-	 <td class="lalign">
+	 <td class="ralign">
 		<%: Html.Span("${UnfundedAmount}", new { @class = "money" })%>
 	</td>
 	<td class="lalign">

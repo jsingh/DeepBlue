@@ -1,4 +1,9 @@
-﻿.smalltab {
+﻿#content
+,#header
+,#footer { 
+	min-width:1258px;
+}
+.smalltab {
 	background-image: url(../images/smalltabunsel.png);
 	background-repeat: repeat-x;
 	min-width: 120px;
@@ -23,7 +28,7 @@
 	clear: both;
 	float: left;
 	margin-top: 10px;
-	width:100%;
+	width: 100%;
 }
 #AddUnderlyingFund .content {
 	clear: both;
@@ -52,11 +57,16 @@
 #AddUnderlyingFund .expand {
 	background-image: url(../images/minus.png);
 }
-.savebox {
+.info-detail {
+	width: 90%;
 	float: left;
+}
+.savebox {
 	clear: both;
-	margin-top: 10px;
-	width:623px;
+	float: right;
+	margin-top: 20px;
+	  padding-right: 10px;
+	width: 250px;
 }
 .savebox .btn {
 	float: right;
@@ -84,8 +94,7 @@
 	width: 100%;
 }
 .rightdarrow {
-	float: right;
-	/*padding-right: 72px;*/
+	float: right; /*padding-right: 72px;*/
 	vertical-align: middle;
 	padding-top: 10px;
 }
@@ -104,17 +113,17 @@
 	width: 160px;
 }
 .editor-field input.ui-autocomplete-input[type="text"] {
-    width: 130px;
+	width: 130px;
 }
 .expandbtn {
-	  width: 90%;
+	width: 90%;
 }
 .headerbar .leftcol {
-	font-size:18px;
+	font-size: 18px;
 	text-shadow: #0B0B0B 1px 1px 1px;
 	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
 }
-#UnderlyingFundListBox{
+#UnderlyingFundListBox {
 	width: 90%;
 	padding-left: 60px;
 	clear: both;
@@ -123,22 +132,36 @@
 	background-image: none;
 }
 #UnderlyingFundList tbody {
- /*    background-image: url("../images/table_row_odd.gif");
-     background-repeat: repeat-x;
-*/
-     background-color: #fff;
+	/*    background-image: url("../images/table_row_odd.gif");      background-repeat: repeat-x; */
+	background-color: #fff;
 }
 .tab-delete {
-    background-image: url("../images/tabdelete.png");
-    background-position: left top;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    float: left;
-    height: 16px;
-    margin: 7px 0 0 -15px;
-    width: 16px;
+	background-image: url("../images/tabdelete.png");
+	background-position: left top;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	float: left;
+	height: 16px;
+	margin: 7px 0 0 -15px;
+	width: 16px;
 }
-#AnnualMeetingDateList{
+#AnnualMeetingDateList {
 	width: 400px;
-	margin:0 auto;
+	margin: 0 auto;
+}
+#AddressInformation .editor-label {
+	width: 106px;
+}
+#BankInformation .editor-label {
+		width: 106px;
+}
+#AddressInformation .editor-field input.ui-autocomplete-input[type="text"] {
+	width: 118px;
+}
+#AddressInformation .editor-field {
+	width: 158px;
+}
+#AddressInformation .savebox
+,#BankInformation .savebox{
+	padding-right: 0px;
 }

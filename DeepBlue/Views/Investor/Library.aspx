@@ -99,17 +99,15 @@
 			</div><div class="line"></div>
 			{{each(i,investor) Investors}}
 				<div class="container-row">
-					<div class="inv-box  {{if i%2>0}}tc-row{{else}}blue{{/if}}">
+					<div class="inv-box inv-name-row {{if i%2>0}}tc-row{{else}}blue{{/if}}">
 						<div class="left-nav">&nbsp;&nbsp;
 						<div class="expand" style="cursor:pointer" onclick = "javascript:investorLibrary.expand('Investor${investor.InvestorID}',this);">
 						<%: Html.Image("Minus.png", new { @id="expandimg" })%>&nbsp;&nbsp;</div>
 						<div class="inv-name"><b>${investor.InvestorName}</b></div></div>
-						
 					</div>
 				</div><div class="line"></div>
 				<div class="container-row inv-det-main" id="Investor${investor.InvestorID}">
 						<div class="inv-box inv-det {{if i%2>0}}inv-row{{else}}inv-arow{{/if}}">
-							
 							<div class="container-row">
 									<div class="left-nav left-padding">Committed Amount</div>
 									{{each(i,row) FlexGridData.rows}}
@@ -117,7 +115,6 @@
 										${getCommimentAmount(row.cell[0].FundID,investor.InvestorID)}
 										</div>
 									{{/each}}
-									
 							</div>
 							<div class="container-row">
 									<div class="left-nav left-padding">Unfunded Amount</div>
@@ -126,25 +123,22 @@
 										${getUnfundedAmount(row.cell[0].FundID,investor.InvestorID)}
 										</div>
 									{{/each}}
-									
 							</div>
-								<div class="container-row">
+							<div class="container-row">
 									<div class="left-nav left-padding">Fund Close</div>
 									{{each(i,row) FlexGridData.rows}}
 										<div class="fund-title">
 										${getFundClose(row.cell[0].FundID,investor.InvestorID)}
 										</div>
 									{{/each}}
-									
 							</div>
-								<div class="container-row">
-									<div class="left-nav left-padding">Committed Date</div>
-									{{each(i,row) FlexGridData.rows}}
-										<div class="fund-title">
-										${getCommittedDate(row.cell[0].FundID,investor.InvestorID)}
-										</div>
-									{{/each}}
-									
+							<div class="container-row">
+								<div class="left-nav left-padding">Committed Date</div>
+								{{each(i,row) FlexGridData.rows}}
+									<div class="fund-title">
+									${getCommittedDate(row.cell[0].FundID,investor.InvestorID)}
+									</div>
+								{{/each}}
 							</div>
 							<div class="line"></div>
 						</div>

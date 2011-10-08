@@ -48,6 +48,7 @@ dealActivity.loadCC=function (isRefresh) {
 				$("#CapitalCallAddTemplate").tmpl(item).appendTo(target);
 			});
 			dealActivity.setUpRow($("tr",target));
+			jHelper.jqCheckBox(target);
 			rowsLength=$("tr",target).length;
 			if(rowsLength>0) { $("#CapitalCall").show(); }
 			$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");

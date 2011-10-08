@@ -58,7 +58,7 @@
 		<%: Html.LabelFor(model => model.RecycleProvision) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.jQueryTemplateTextBox("RecycleProvision", "${checkNullOrZero(RecycleProvision)}", new { @id = "RecycleProvision", @onkeydown = "return jHelper.isNumeric(event);" })%>
+		<%: Html.jQueryTemplateTextBox("RecycleProvision", "${checkNullOrZero(RecycleProvision)}", new { @id = "RecycleProvision", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</div>
 	<div class="editor-label">
 		<%: Html.LabelFor(model => model.MgmtFeesCatchUpDate) %>
@@ -70,7 +70,7 @@
 		<%: Html.LabelFor(model => model.Carry) %>
 	</div>
 	<div class="editor-field">
-		<%: Html.jQueryTemplateTextBox("Carry", "${checkNullOrZero(Carry)}", new { @id = "Carry", @onkeydown = "return jHelper.isNumeric(event);" })%>
+		<%: Html.jQueryTemplateTextBox("Carry", "${checkNullOrZero(Carry)}", new { @id = "Carry", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</div>
 	<% Html.RenderPartial("JQueryTemplateCustomFieldList", Model.CustomField);%>
 </div>

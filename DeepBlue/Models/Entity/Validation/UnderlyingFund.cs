@@ -84,12 +84,6 @@ namespace DeepBlue.Models.Entity {
 			if (underlyingFund.Account != null) {
 				errors = errors.Union(ValidationHelper.Validate(underlyingFund.Account));
 			}
-			if (underlyingFund.Contact != null) {
-				errors = errors.Union(ValidationHelper.Validate(underlyingFund.Contact));
-				foreach (ContactCommunication comm in underlyingFund.Contact.ContactCommunications) {
-					errors = errors.Union(ValidationHelper.Validate(comm.Communication));
-				}
-			}
 			return errors;
 		}
 	}

@@ -40,7 +40,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[StringLength(50, ErrorMessage = "Alias must be under 50 characters.")]
+			[StringLength(50, ErrorMessage = "Display Name must be under 50 characters.")]
 			public global::System.String Alias {
 				get;
 				set;

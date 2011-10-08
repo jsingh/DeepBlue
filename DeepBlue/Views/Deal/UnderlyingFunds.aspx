@@ -172,4 +172,7 @@
 			<%}%>
 		</div>
 	</script>
+	<script id="AddressTemplate" type="text/x-jquery-tmpl">
+		<%Html.RenderPartial("UnderlyingFundAddressInformationEdit");%>
+	</script>
 </asp:Content>

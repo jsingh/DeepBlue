@@ -1150,6 +1150,9 @@ namespace DeepBlue.Controllers.Deal {
 				underlyingFund.FundRegisteredOfficeID = ((model.FundRegisteredOfficeId ?? 0) > 0 ? model.FundRegisteredOfficeId : null);
 				underlyingFund.FundStructureID = ((model.FundStructureId ?? 0) > 0 ? model.FundStructureId : null);
 				underlyingFund.ManagerContactID = ((model.ManagerContactId ?? 0) > 0 ? model.ManagerContactId : null);
+				underlyingFund.WebUserName = model.WebUserName;
+				underlyingFund.WebPassword = model.WebPassword;
+
 
 				if (string.IsNullOrEmpty(model.BankName) == false && string.IsNullOrEmpty(model.Account) == false) {
 					if (underlyingFund.Account == null) {
@@ -1177,27 +1180,7 @@ namespace DeepBlue.Controllers.Deal {
 					underlyingFund.Account.IBAN = model.IBAN;
 					underlyingFund.Account.Fax = model.AccountFax;
 				}
-
-				//if (underlyingFund.Contact == null) {
-				//    underlyingFund.Contact = new Contact();
-				//    underlyingFund.Contact.CreatedBy = Authentication.CurrentUser.UserID;
-				//    underlyingFund.Contact.CreatedDate = DateTime.Now;
-				//}
-				//underlyingFund.Contact.LastUpdatedBy = Authentication.CurrentUser.UserID;
-				//underlyingFund.Contact.LastUpdatedDate = DateTime.Now;
-				//underlyingFund.Contact.EntityID = Authentication.CurrentEntity.EntityID;
-				//underlyingFund.Contact.ContactName = model.ContactName;
-				//underlyingFund.Contact.LastName = "n/a";
-				//underlyingFund.Contact.Title = model.ContactTitle;
-				//underlyingFund.Contact.Notes = model.ContactNotes;
-				//AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.Email, model.Email);
-				//AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.HomePhone, model.Phone);
-				//AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebAddress, model.WebAddress);
-				//AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.MailingAddress, model.Address);
-				//AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebUsername, model.WebUsername);
-				//if (model.ChangeWebPassword) {
-				//    AddCommunication(underlyingFund.Contact, Models.Admin.Enums.CommunicationType.WebPassword, model.WebPassword);
-				//}
+ 
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveUnderlyingFund(underlyingFund);
 				if (errorInfo != null) {
 					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
@@ -1206,6 +1189,54 @@ namespace DeepBlue.Controllers.Deal {
 					resultModel.Result = "True||" + underlyingFund.UnderlyingtFundID;
 				}
 
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpPost]
+		public ActionResult CreateUnderlyingFundAddress(FormCollection collection) {
+			UnderlyingFundAddressInformation model = new UnderlyingFundAddressInformation();
+			this.TryUpdateModel(model, collection);
+			ResultModel resultModel = new ResultModel();
+			if (ModelState.IsValid) {
+
+				Address address = DealRepository.FindUnderlyingFundAddress(model.UnderlyingFundId);
+
+				if (address == null) {
+					address = new Address();
+					address.CreatedBy = Authentication.CurrentUser.UserID;
+					address.CreatedDate = DateTime.Now;
+				}
+
+				address.EntityID = Authentication.CurrentEntity.EntityID;
+				address.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				address.LastUpdatedDate = DateTime.Now;
+
+				address.Address1 = model.Address1;
+				address.Address2 = model.Address2;
+				address.City = model.City;
+				address.Country = model.Country;
+				address.State = model.State;
+				address.PostalCode = model.Zip;
+
+				address.AddressTypeID = (int)DeepBlue.Models.Admin.Enums.AddressType.Work;
+
+				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveUnderlyingFundAddress(address);
+				if (errorInfo == null) {
+					UnderlyingFund underlyingFund = DealRepository.FindUnderlyingFund(model.UnderlyingFundId);
+					underlyingFund.FundRegisteredOfficeID = address.AddressID;
+					errorInfo = DealRepository.SaveUnderlyingFund(underlyingFund);
+				}
+				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 			}
 			else {
 				foreach (var values in ModelState.Values.ToList()) {
@@ -1343,12 +1374,9 @@ namespace DeepBlue.Controllers.Deal {
 					  underlyingFundContact.ContactName,
 					  underlyingFundContact.ContactTitle,
 					  underlyingFundContact.ContactNotes,
-					  underlyingFundContact.Address,
 					  underlyingFundContact.Email,
 					  underlyingFundContact.Phone,
 					  underlyingFundContact.WebAddress,
-					  underlyingFundContact.WebUsername,
-					  underlyingFundContact.WebPassword
 					}
 				});
 			}
@@ -1367,18 +1395,15 @@ namespace DeepBlue.Controllers.Deal {
 			flexgridData.page = 0;
 			flexgridData.rows.Add(new FlexigridRow {
 				cell = new List<object> {
-					  underlyingFundContact.UnderlyingFundContactId,
+					  underlyingFundContact.UnderlyingFundContactID,
 					  underlyingFundContact.UnderlyingtFundID,
 					  underlyingFundContact.ContactID,
 					  underlyingFundContact.Contact.ContactName ,
 					  underlyingFundContact.Contact.Title,
 					  underlyingFundContact.Contact.Notes,
-					  DealRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.MailingAddress),
 					  DealRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.Email),
 					  DealRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.HomePhone),
 					  DealRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebAddress),
-					  DealRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebUsername),
-					  DealRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebPassword)
 				}
 			});
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);
@@ -1412,16 +1437,10 @@ namespace DeepBlue.Controllers.Deal {
 				AddCommunication(underlyingFundContact.Contact, Models.Admin.Enums.CommunicationType.Email, model.Email);
 				AddCommunication(underlyingFundContact.Contact, Models.Admin.Enums.CommunicationType.HomePhone, model.Phone);
 				AddCommunication(underlyingFundContact.Contact, Models.Admin.Enums.CommunicationType.WebAddress, model.WebAddress);
-				AddCommunication(underlyingFundContact.Contact, Models.Admin.Enums.CommunicationType.MailingAddress, model.Address);
-				AddCommunication(underlyingFundContact.Contact, Models.Admin.Enums.CommunicationType.WebUsername, model.WebUsername);
-				if (model.ChangeWebPassword) {
-					AddCommunication(underlyingFundContact.Contact, Models.Admin.Enums.CommunicationType.WebPassword, model.WebPassword);
-				}
-
 				errorInfo = DealRepository.SaveUnderlyingFundContact(underlyingFundContact);
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 				if (string.IsNullOrEmpty(resultModel.Result)) {
-					resultModel.Result = underlyingFundContact.UnderlyingFundContactId.ToString();
+					resultModel.Result = underlyingFundContact.UnderlyingFundContactID.ToString();
 				}
 				else {
 					resultModel.Result = "Error||" + resultModel.Result;
@@ -3224,7 +3243,7 @@ namespace DeepBlue.Controllers.Deal {
 					if (DealRepository.FindAnnualMeetingDateHistory(model.IssuerId, (model.AnnualMeetingDate ?? Convert.ToDateTime("01/01/1900"))) == false) {
 						AnnualMeetingHistory annualMeetingHistory = new AnnualMeetingHistory {
 							AnnualMeetingDate = model.AnnualMeetingDate,
-							IssuerID = issuer.IssuerID 
+							IssuerID = issuer.IssuerID
 						};
 						errorInfo = DealRepository.SaveAnnualMeetingHistory(annualMeetingHistory);
 					}

@@ -123,6 +123,7 @@
     <Compile Include="Models\Deal\ActivityDealModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
     <Compile Include="Models\Deal\DirectListModel.cs" />
+    <Compile Include="Models\Deal\UnderlyingFundAddressInformation.cs" />
     <Compile Include="Models\Deal\UnderlyingFundContactModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundContactList.cs" />
     <Compile Include="Models\Deal\DealFundDetail.cs" />
@@ -223,6 +224,7 @@
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\Partial\ActivityTypeService.cs" />
+    <Compile Include="Models\Entity\Partial\AddressService.cs" />
     <Compile Include="Models\Entity\Partial\AnnualMeetingHistoryService.cs" />
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalCallLineItemService.cs" />
@@ -311,8 +313,13 @@
     <Compile Include="Models\Entity\Validation\UnderlyingFundCashDistribution.cs" />
     <Compile Include="Models\Fund\FundBankDetail.cs" />
     <Compile Include="Models\Fund\FundRateScheduleTierDetail.cs" />
+    <Compile Include="Models\Investor\AccountInformation.cs" />
+    <Compile Include="Models\Investor\AddressInformation.cs" />
     <Compile Include="Models\Investor\BankDetail.cs" />
+    <Compile Include="Models\Investor\ContactCommunicationInformation.cs" />
     <Compile Include="Models\Investor\ContactDetail.cs" />
+    <Compile Include="Models\Investor\FundInformation.cs" />
+    <Compile Include="Models\Investor\InvestorInformation.cs" />
     <Compile Include="Models\Investor\InvestorLibraryModel.cs" />
     <Compile Include="Models\Investor\ListModel.cs" />
     <Compile Include="Controllers\Report\ReportRepository.cs" />
@@ -1089,6 +1096,7 @@
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
+    <Content Include="Views\Deal\UnderlyingFundAddressInformationEdit.ascx" />
     <Content Include="Views\Investor\AddressInformationEdit.ascx" />
     <Content Include="Views\Investor\BankInformationEdit.ascx" />
     <Content Include="Views\Investor\ContactInformationEdit.ascx" />

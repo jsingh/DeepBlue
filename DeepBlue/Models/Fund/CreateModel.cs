@@ -45,14 +45,14 @@ namespace DeepBlue.Models.Fund {
 
 		[DisplayName("Recycle Provision %")]
 		[Range(0, 100, ErrorMessage = "Recycle Provision must be under 100%.")]
-		public int? RecycleProvision { get; set; }
+		public decimal? RecycleProvision { get; set; }
 
 		[DisplayName("Mgmt Fees Catchup Date")]
 		public DateTime? MgmtFeesCatchUpDate { get; set; }
 
 		[DisplayName("Carry %")]
 		[Range(0, 100, ErrorMessage = "Carry must be under 100%.")]
-		public int? Carry { get; set; }
+		public decimal? Carry { get; set; }
 
 		/* Bank Details */
 

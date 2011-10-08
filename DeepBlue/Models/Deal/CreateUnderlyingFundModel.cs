@@ -6,9 +6,15 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using DeepBlue.Helpers;
 using System.Web.Mvc;
+using DeepBlue.Models.Investor;
 
 namespace DeepBlue.Models.Deal {
+
 	public class CreateUnderlyingFundModel : AccountInformationModel {
+
+		public CreateUnderlyingFundModel() {
+			Country = (int)DeepBlue.Models.Admin.Enums.DefaultCountry.USA;
+		}
 
 		public int UnderlyingFundId { get; set; }
 
@@ -106,6 +112,57 @@ namespace DeepBlue.Models.Deal {
 
 		[DisplayName("Domestic")]
 		public bool IsDomestic { get; set; }
+
+		[StringLength(50, ErrorMessage = "Web UserName must be under 50 characters.")]
+		public string WebUserName { get; set; }
+
+		[StringLength(50, ErrorMessage = "Web Password must be under 50 characters.")]
+		public string WebPassword { get; set; }
+
+		/* Address Information */
+
+		[DisplayName("Telephone No")]
+		public string Phone { get; set; }
+
+		[DisplayName("Fax No")]
+		public string Fax { get; set; }
+
+		[DisplayName("Email")]
+		[Email(ErrorMessage = "Invalid Email")]
+		public string Email { get; set; }
+
+		[DisplayName("Web Address")]
+		[WebAddress(ErrorMessage = "Invalid Web Address")]
+		public string WebAddress { get; set; }
+
+		[StringLength(40, ErrorMessage = "Address1 must be under 40 characters.")]
+		[DisplayName("Address1")]
+		public string Address1 { get; set; }
+
+		[DisplayName("Address2")]
+		public string Address2 { get; set; }
+
+		[StringLength(30, ErrorMessage = "City must be under 30 characters.")]
+		public string City { get; set; }
+
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "State is required")]
+		[DisplayName("State")]
+		public int? State { get; set; }
+
+		public string StateName { get; set; }
+
+		[DisplayName("Zip")]
+		[Zip(ErrorMessage = "Invalid Zip")]
+		public string Zip { get; set; }
+
+		[DisplayName("Country")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Country is required")]
+		public int Country { get; set; }
+
+		public string CountryName { get; set; }
+
+		/* End Address Information */
+	 
 
 		public List<SelectListItem> UnderlyingFundTypes { get; set; }
 

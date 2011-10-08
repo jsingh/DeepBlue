@@ -14,13 +14,13 @@ namespace DeepBlue.Models.Entity {
 
 		public void SaveUnderlyingFundContact(UnderlyingFundContact underlyingFundContact) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				if (underlyingFundContact.UnderlyingFundContactId  == 0) {
+				if (underlyingFundContact.UnderlyingFundContactID  == 0) {
 					context.UnderlyingFundContacts.AddObject(underlyingFundContact);
 				}
 				else {
 					EntityKey key;
 					object originalItem;
-					UnderlyingFundContact updateUnderlyingFundContact = context.UnderlyingFundContacts.SingleOrDefault(deepblueUnderlyingFundContact => deepblueUnderlyingFundContact.UnderlyingFundContactId == underlyingFundContact.UnderlyingFundContactId);
+					UnderlyingFundContact updateUnderlyingFundContact = context.UnderlyingFundContacts.SingleOrDefault(deepblueUnderlyingFundContact => deepblueUnderlyingFundContact.UnderlyingFundContactID == underlyingFundContact.UnderlyingFundContactID);
 					if (underlyingFundContact.Contact != null) {
 						/* Contact & Communication */
 						key = default(EntityKey);

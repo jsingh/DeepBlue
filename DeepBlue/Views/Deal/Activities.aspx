@@ -106,7 +106,7 @@
 														Call Amount
 													</th>
 													<th class="lalign" style="width: 15%;">
-														Notice Date
+														Due Date
 													</th>
 													<th class="lalign" style="width: 15%">
 														Received Date
@@ -147,7 +147,7 @@
 								</div>
 								<div id="PRCCListBox" class="clear" style="display: none">
 									<%using (Html.Form(new { @id = "frmUFPRCapitalCall", @onsubmit = "return dealActivity.submitUFPRCapitalCall(this);" })) {%>
-									<div>
+									<div style="margin-top:45px;">
 										<% Html.RenderPartial("TBoxTop"); %>
 										<table cellpadding="0" cellspacing="0" border="0" id="PRCapitalCallList" class="grid">
 											<thead>
@@ -237,7 +237,7 @@
 														Amount
 													</th>
 													<th class="lalign" style="width: 15%">
-														Notice Date
+														Due Date
 													</th>
 													<th class="lalign" style="width: 15%">
 														Record Date
@@ -278,7 +278,7 @@
 									</div>
 									<div id="PRCDListBox" class="clear" style="display: none">
 										<%using (Html.Form(new { @id = "frmUFPRCashDistribution", @onsubmit = "return dealActivity.submitUFPRCashDistribution(this);" })) {%>
-										<div>
+										<div style="margin-top:45px;">
 											<% Html.RenderPartial("TBoxTop"); %>
 											<table cellpadding="0" cellspacing="0" border="0" id="PRCashDistributionList" class="grid">
 												<thead>
@@ -583,10 +583,10 @@
 												<th class="lalign" style="width: 20%">
 													Fund Name
 												</th>
-												<th class="lalign" style="width: 18%">
+												<th class="ralign" style="width: 18%">
 													Commitment Amount
 												</th>
-												<th class="lalign" style="width: 18%">
+												<th class="ralign" style="width: 18%">
 													Unfunded Amount
 												</th>
 												<th class="lalign" style="width: 20%;" id="UFA_NCA">
@@ -651,7 +651,7 @@
 												<th class="lalign" style="width: 20%">
 													Expense Type
 												</th>
-												<th class="lalign" style="width: 15%">
+												<th class="ralign" style="width: 15%">
 													Amount
 												</th>
 												<th class="lalign" style="width: 15%">

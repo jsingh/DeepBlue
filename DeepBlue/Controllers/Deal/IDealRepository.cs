@@ -85,6 +85,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<UnderlyingFund> GetAllUnderlyingFunds();
 		CreateUnderlyingFundModel FindUnderlyingFundModel(int underlyingFundId, int issuerId);
 		UnderlyingFund FindUnderlyingFund(int underlyingFundId);
+		Address FindUnderlyingFundAddress(int underlyingFundId);
 		IEnumerable<ErrorInfo> SaveUnderlyingFund(UnderlyingFund underlyingFund);
 		bool UnderlyingFundNameAvailable(string fundName, int underlyingFundId);
 		List<AutoCompleteList> FindUnderlyingFunds(string fundName);
@@ -98,6 +99,7 @@ namespace DeepBlue.Controllers.Deal {
 		string GetCommunicationValue(List<CommunicationDetailModel> communications, Models.Admin.Enums.CommunicationType communicationType);
 		List<CommunicationDetailModel> GetContactCommunications(int? contactId);
 		bool DeleteUnderlyingFundContact(int id);
+		IEnumerable<ErrorInfo> SaveUnderlyingFundAddress(Address address);
 		#endregion
 
 		#region UnderlyingFundStockDistribution

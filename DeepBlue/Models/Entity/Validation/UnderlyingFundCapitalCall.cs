@@ -33,7 +33,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage = "Notice Date is required")]
+			[Required(ErrorMessage = "Due Date is required")]
 			[DateRange()]
 			public global::System.DateTime NoticeDate {
 				get;

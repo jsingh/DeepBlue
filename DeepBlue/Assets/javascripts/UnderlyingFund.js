@@ -26,6 +26,35 @@
 			});
 		});
 	}
+	,setupCountryState: function (addInfo) {
+		$("#StateName",addInfo)
+				.autocomplete({ source: "/Admin/FindStates",minLength: 1
+				,select: function (event,ui) {
+					$("#State",addInfo).val(ui.item.id);
+				}
+				,appendTo: "body",delay: 300
+				});
+
+		$("#CountryName",addInfo)
+		.autocomplete({ source: "/Admin/FindCountrys",minLength: 1
+		,select: function (event,ui) {
+			$("#Country",addInfo).val(ui.item.id);
+			var stateRow=$("#AddressStateRow",addInfo);
+			var stateName=$("#StateName",stateRow);
+			var state=$("#State",stateRow);
+			state.val(52);
+			if(ui.item.label!="United States") {
+				stateRow.hide();
+			} else {
+				stateRow.show();
+				stateName.val("");
+				state.val(0);
+			}
+		}
+		,appendTo: "body",delay: 300
+		});
+
+	}
 	,formatPercent: function (txtid,box) {
 		var txt=$("#"+txtid,box);
 		if($.trim(txt.val())!="") {
@@ -146,6 +175,7 @@
 				$("#lnkAddUnderlyingFund").addClass("green-btn-sel");
 			}
 			underlyingFund.setUp(box);
+			underlyingFund.setupCountryState(box);
 			jHelper.checkValAttr(addUnderlyingfund);
 			jHelper.formatDateTxt(addUnderlyingfund);
 			jHelper.jqComboBox(addUnderlyingfund);
@@ -210,6 +240,7 @@
 						isNew=true;
 					}
 					ufund.val(arr[1]);
+					$("#UnderlyingFundList").flexReload();
 					if(underlyingFund.onAfterUnderlyingFundSave) {
 						underlyingFund.onAfterUnderlyingFundSave(arr[1]);
 					} else {
@@ -222,11 +253,43 @@
 								underlyingFund.load(arr[1],0,$("#FundName",frm).val());
 							}
 						}
-						underlyingFund.cancelWebPassword();
+						//underlyingFund.cancelWebPassword();
 					}
 				} else { jAlert(data); }
 				underlyingFund.tempSave=false;
 			});
+		} catch(e) { jAlert(e); }
+		return false;
+	}
+	,saveAddress: function (img,id) {
+		try {
+			var frm=$(img).parents("form:first");
+			var frmUnderlyingFund=$(frm).parents(".section-det:first");
+			var ufid=$("#UnderlyingFundId",frm).val();
+			underlyingFund.tempSave=false;
+			underlyingFund.onAfterUnderlyingFundSave=null;
+			if(ufid>0) {
+				var param=$(frm).serializeForm();
+				var url="/Deal/CreateUnderlyingFundAddress";
+				var loading=$("#AILoading",frm);
+				loading.html(jHelper.savingHTML());
+
+				$.post(url,param,function (data) {
+					loading.empty();
+					if($.trim(data)!="") {
+						jAlert(data);
+					} else {
+						jAlert("Underlying Fund Address Information Saved");
+					}
+				});
+			} else {
+				underlyingFund.tempSave=true;
+				underlyingFund.onAfterUnderlyingFundSave=function (ufid) {
+					$("#UnderlyingFundId",frm).val(ufid);
+					underlyingFund.saveAddress(img,id);
+				}
+				$("#btnSave",frmUnderlyingFund).click();
+			}
 		} catch(e) { jAlert(e); }
 		return false;
 	}
@@ -242,9 +305,22 @@
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 		$("#btnSave").click();
 	}
+	,cancelInfo: function (that) {
+		var cntdiv=$(that).parents(".editinfo:first").get(0);
+		$(".show",cntdiv).show();
+		$(".hide",cntdiv).hide();
+		//editInvestor.scroll(cntdiv);
+	}
+	,editInfo: function (that) {
+		var cntdiv=$(that).parents(".editinfo:first").get(0);
+		$(".show",cntdiv).hide();
+		$(".hide",cntdiv).show();
+		//editInvestor.scroll(cntdiv);;
+	}
 	,reset: function (targetId) {
 		var target=$("#"+targetId);
 		$(":input[type='text']",target).val("");
+		$(":input[type='hidden']",target).val("0");
 		$("textarea",target).val("");
 		if(targetId=="ContactInformation") {
 			$(":input[type='password']",target).val("");

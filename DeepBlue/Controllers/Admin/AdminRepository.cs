@@ -1804,7 +1804,6 @@ namespace DeepBlue.Controllers.Admin {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> query = (from contact in context.Contacts
 													  where contact.InvestorContacts.Count <= 0
-													  && contact.UnderlyingFunds.Count <= 0
 													  && contact.Deals1.Count <= 0
 													  && contact.ContactName.StartsWith(contactName)
 													  orderby contact.ContactName

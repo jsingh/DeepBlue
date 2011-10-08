@@ -68,6 +68,7 @@
 	,save: function (img,id) {
 		try {
 			var frm=$(img).parents("form:first");
+			var frmUnderlyingFund=$(frm).parents(".section-det:first");
 			var ufid=$("#UnderlyingFundId",frm).val();
 			underlyingFund.tempSave=false;
 			underlyingFund.onAfterUnderlyingFundSave=null;
@@ -105,7 +106,7 @@
 					$("#UnderlyingFundId",frm).val(ufid);
 					underlyingFundContact.save(img,id);
 				}
-				$("#btnSave").click();
+				$("#btnSave",frmUnderlyingFund).click();
 			}
 		} catch(e) { jAlert(e); }
 		return false;

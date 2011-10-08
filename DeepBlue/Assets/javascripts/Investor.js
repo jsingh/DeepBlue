@@ -150,7 +150,7 @@
 				if($.trim(data)!="") {
 					jAlert(data);
 				} else {
-					jAlert("Investor Saved.");
+					jAlert("Investor Information Saved.");
 					location.href="/Investor/New";
 				}
 			});

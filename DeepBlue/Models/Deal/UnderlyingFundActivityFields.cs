@@ -33,10 +33,10 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Underlying Fund")]
 		public int UnderlyingFundId { get; set; }
 
-		[Required(ErrorMessage = "Notice Date is required")]
+		[Required(ErrorMessage = "Due Date is required")]
 		[DateRange()]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-		[DisplayName("Notice Date")]
+		[DisplayName("Due Date")]
 		public DateTime? NoticeDate { get; set; }
 
 		[Required(ErrorMessage = "Received Date is required")]

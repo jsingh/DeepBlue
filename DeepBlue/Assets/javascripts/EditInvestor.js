@@ -173,10 +173,6 @@
 		});
 		$(table).flexAddData(data);
 	}
-	,applyAccordion: function ($invInfo) {
-		var $accordion=$("#accordion",$invInfo);
-		$accordion.accordion({ animated: false,active: -1,collapsible: true,autoHeight: false,navigation: true });
-	}
 	,addContactInfo: function (that,investorId) {
 		var contactInfoMain=$(that).parents("#contactInfoMain:first");
 		$("#ContactInfoEditTemplate").tmpl(getNewContact(investorId)).appendTo(contactInfoMain);

@@ -124,5 +124,38 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
+		public Address(IAddressService addressService)
+			: this() {
+			this.AddressService = addressService;
+		}
+
+		public Address() {
+		}
+
+		private IAddressService _AddressService;
+		public IAddressService AddressService {
+			get {
+				if (_AddressService == null) {
+					_AddressService = new AddressService();
+				}
+				return _AddressService;
+			}
+			set {
+				_AddressService = value;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> Save() {
+			IEnumerable<ErrorInfo> errors = Validate(this);
+			if (errors.Any()) {
+				return errors;
+			}
+			AddressService.SaveAddress(this);
+			return null;
+		}
+
+		private IEnumerable<ErrorInfo> Validate(Address address) {
+			return ValidationHelper.Validate(address);
+		}
 	}
 }

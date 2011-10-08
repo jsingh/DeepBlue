@@ -126,3 +126,6 @@
 	cursor: pointer;
 	padding: 5px 0;
 }
+.inv-name-row .left-nav{
+	width: 90%;
+}
