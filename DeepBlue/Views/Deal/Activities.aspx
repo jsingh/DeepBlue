@@ -40,10 +40,10 @@
 	</div>
 	<div class="header">
 		<div class="tabbg">
-			<%using (Html.Tab(new { @id = "UATab", @class = "section-tab-sel", @onclick = "javascript:dealActivity.selectTab('U',this);" })) {%>Underlying
+			<%using (Html.Tab(new { @id = "UATab", @class = "section-tab-sel", @onclick = "javascript:dealActivity.selectTab('U',this);" })) {%>Fund
 			Activities
 			<%}%>
-			<%using (Html.Tab(new { @id = "SATab", @onclick = "javascript:dealActivity.selectTab('S',this);" })) {%>Security
+			<%using (Html.Tab(new { @id = "SATab", @onclick = "javascript:dealActivity.selectTab('S',this);" })) {%>Direct
 			Activities
 			<%}%>
 			<%using (Html.Tab(new { @id = "RETab", @onclick = "javascript:dealActivity.selectTab('R',this);" })) {%>Reconciliation
@@ -108,10 +108,7 @@
 													<th class="lalign" style="width: 15%;">
 														Due Date
 													</th>
-													<th class="lalign" style="width: 15%">
-														Received Date
-													</th>
-													<th class="lalign" style="width: 15%">
+													<th class="lalign" style="width: 35%">
 														Deemed Capital Call
 													</th>
 													<th id="CCTC" style="display: none;" class="ralign ismanual">
@@ -239,10 +236,7 @@
 													<th class="lalign" style="width: 15%">
 														Due Date
 													</th>
-													<th class="lalign" style="width: 15%">
-														Record Date
-													</th>
-													<th class="lalign" style="width: 15%">
+													<th class="lalign" style="width: 30%">
 														Distribution Type
 													</th>
 													<th style="display: none;" class="ralign ismanual">
@@ -372,10 +366,10 @@
 													<th class="lalign">
 														Equity
 													</th>
-													<th class="lalign">
+													<th class="ralign">
 														NumberOfShares
 													</th>
-													<th class="lalign">
+													<th class="ralign">
 														Purchase Price
 													</th>
 													<th class="lalign">
@@ -384,8 +378,8 @@
 													<th class="lalign">
 														Distribution Date
 													</th>
-													<th class="lalign">
-														Tax Cost Base
+													<th class="ralign">
+														Tax Cost Basis Per Share
 													</th>
 													<th class="lalign">
 														Tax Cost Date
@@ -448,16 +442,16 @@
 											<th class="lalign" style="width: 20%">
 												Fund Name
 											</th>
-											<th class="lalign" style="width: 12%">
+											<th class="ralign" style="width: 12%">
 												Reported NAV
 											</th>
 											<th class="lalign" style="width: 12%">
 												Reporting Date
 											</th>
-											<th class="lalign" style="width: 12%">
+											<th class="ralign" style="width: 12%">
 												Calculated NAV
 											</th>
-											<th class="lalign" style="width: 12%">
+											<th class="ralign" style="width: 12%">
 												Update NAV
 											</th>
 											<th class="lalign" style="width: 12%">

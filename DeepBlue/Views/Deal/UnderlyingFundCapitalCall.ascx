@@ -17,9 +17,6 @@
 		<%: Html.TextBox("${Index}_NoticeDate", "{{if UnderlyingFundCapitalCallId>0}}${NoticeDate}{{/if}}", new { @class = "datefield", @id = "${Index}_CC_NoticeDate" })%>
 	</td>
 	<td class="lalign">
-		<%: Html.TextBox("${Index}_ReceivedDate", "{{if UnderlyingFundCapitalCallId>0}}${ReceivedDate}{{/if}}", new { @class = "datefield", @id = "${Index}_CC_ReceivedDate" })%>
-	</td>
-	<td class="lalign">
 		<%: Html.CheckBox("${Index}_IsDeemedCapitalCall", false, new { @class = "", @val = "${IsDeemedCapitalCall}" })%>
 	</td>
 	<td class="ralign ismanual" style="text-align: right;display:none;">

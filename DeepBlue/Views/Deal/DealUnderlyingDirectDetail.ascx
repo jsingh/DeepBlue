@@ -46,7 +46,7 @@
 								Fair Market Value
 							</th>
 							<th class="ralign" style="width: 12%">
-								Tax Cost Basic
+								Tax Cost Basis Per Share
 							</th>
 							<th class="lalign" style="width: 12%">
 								Tax Cost Date

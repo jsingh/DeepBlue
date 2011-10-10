@@ -12,10 +12,10 @@
 		<%: Html.Hidden("${Index}_SecurityId", "", new { @id = "SecurityId" })%>
 		<%: Html.Hidden("${Index}_SecurityTypeId", "", new { @id = "SecurityTypeId" })%>
 	</td>
-	<td class="lalign">
+	<td class="ralign">
 		<%: Html.TextBox("${Index}_NumberOfShares", "", new {  @onkeydown = "return jHelper.isNumeric(event);" })%>
 	</td>
-	<td class="lalign">
+	<td class="ralign">
 		<%: Html.TextBox("${Index}_PurchasePrice", "", new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td  class="lalign">
@@ -24,7 +24,7 @@
 	<td class="lalign">
 		<%: Html.TextBox("${Index}_DistributionDate", "", new { @id = "${Index}_DistributionDate", @class = "datefield" })%>
 	</td>
-	<td class="lalign">
+	<td class="ralign">
 		<%: Html.TextBox("${Index}_TaxCostBase", "", new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="lalign">

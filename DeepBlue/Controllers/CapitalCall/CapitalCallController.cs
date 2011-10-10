@@ -93,11 +93,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 				capitalCall.FundID = model.FundId;
 				capitalCall.CapitalCallNumber = Convert.ToString(CapitalCallRepository.FindCapitalCallNumber(model.FundId));
 				capitalCall.InvestmentAmount = (capitalCall.NewInvestmentAmount ?? 0) + (capitalCall.ExistingInvestmentAmount ?? 0);
-				capitalCall.InvestedAmountInterest = 0;
 
-				List<ManagementFeeRateScheduleTierDetail> tiers = null;
-				List<ManagementFeeDetail> managementFeeDetails = GetManagementFeeDetails(model.FundId, (model.FromDate ?? Convert.ToDateTime("01/01/1900")), (model.ToDate ?? Convert.ToDateTime("01/01/1900")), ref tiers);
-				ManagementFeeDetail managementFeeDetail = null;
 				List<InvestorFund> investorFunds = CapitalCallRepository.GetAllInvestorFunds(capitalCall.FundID);
 
 				if (investorFunds != null) {
@@ -119,14 +115,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 					if ((model.AddManagementFees ?? false) == true) {
 						capitalCall.ManagementFeeStartDate = model.FromDate;
 						capitalCall.ManagementFeeEndDate = model.ToDate;
-						capitalCall.ManagementFeeInterest = 0;
 						capitalCall.ManagementFees = model.ManagementFees;
-						//if (managementFeeDetails != null) {
-						//    capitalCall.ManagementFees =  managementFeeDetails.Sum(fee => fee.ManagementFee);
-						//}
-						//else {
-						//    capitalCall.ManagementFees = 0;
-						//}
 					}
 					else {
 						capitalCall.ManagementFees = 0;
@@ -146,29 +135,44 @@ namespace DeepBlue.Controllers.CapitalCall {
 							// Attempt to create capital call line item for each investor fund.
 
 							item = new CapitalCallLineItem();
+							
 							item.CreatedBy = Authentication.CurrentUser.UserID;
 							item.CreatedDate = DateTime.Now;
 							item.LastUpdatedBy = Authentication.CurrentUser.UserID;
 							item.LastUpdatedDate = DateTime.Now;
-							item.ExistingInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.ExistingInvestmentAmount;
-							item.FundExpenses = (investorFund.TotalCommitment / totalCommitment) * capitalCall.FundExpenses;
-							item.InvestedAmountInterest = (investorFund.TotalCommitment / totalCommitment) * capitalCall.InvestedAmountInterest;
-							item.InvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.InvestmentAmount;
-							item.InvestorID = investorFund.InvestorID;
-							item.ManagementFeeInterest = (investorFund.TotalCommitment / nonManagingMemberTotalCommitment) * capitalCall.ManagementFeeInterest;
 
-							if (managementFeeDetails != null) {
-								managementFeeDetail = managementFeeDetails.Where(fee => fee.InvestorId == investorFund.InvestorID).SingleOrDefault();
-								if (managementFeeDetail != null) {
-									item.ManagementFees = managementFeeDetail.ManagementFee;
+							// Calculate Management Fees investor fund
+
+							if ((model.AddManagementFees ?? false) == true) {
+								if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
+									item.ManagementFees = decimal.Multiply(
+															decimal.Divide(investorFund.TotalCommitment, nonManagingMemberTotalCommitment)
+															,(capitalCall.ManagementFees ?? 0));
 								}
 							}
 
+							// Calculate Fund Expense for investor fund
+
+							if ((model.AddFundExpenses ?? false) == true) {
+								item.FundExpenses = decimal.Multiply(
+													decimal.Divide(investorFund.TotalCommitment, totalCommitment)
+													, (capitalCall.FundExpenses ?? 0));
+							}
+
+							// Calculate Capital Amount for investor fund
+
+							decimal remainingAmount = decimal.Subtract(capitalCall.CapitalAmountCalled, decimal.Add((capitalCall.ManagementFees ?? 0), (capitalCall.FundExpenses ?? 0)));
+
+							item.CapitalAmountCalled = decimal.Multiply(
+														decimal.Divide(investorFund.TotalCommitment, totalCommitment)
+														, remainingAmount);
+
+
+							item.ExistingInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.ExistingInvestmentAmount;
 							item.NewInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.NewInvestmentAmount;
-
-							// Calculate capital call amount for each investor.
-							item.CapitalAmountCalled = (investorFund.TotalCommitment / totalCommitment) * capitalCall.CapitalAmountCalled;
-
+							item.InvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.InvestmentAmount;
+							item.InvestorID = investorFund.InvestorID;
+							
 							// Reduce investor unfunded amount = investor unfunded amount – capital call amount for investor.
 							investorFund.UnfundedAmount = investorFund.UnfundedAmount - item.CapitalAmountCalled;
 
@@ -200,6 +204,12 @@ namespace DeepBlue.Controllers.CapitalCall {
 				}
 			}
 			return View("Result", resultModel);
+		}
+
+		//
+		//GET : /CapitalCall/Result
+		public ActionResult Result() {
+			return View();
 		}
 
 		#endregion
@@ -850,10 +860,6 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		#endregion
 
-		//
-		//GET : /CapitalCall/Result
-		public ActionResult Result() {
-			return View();
-		}
+		
 	}
 }

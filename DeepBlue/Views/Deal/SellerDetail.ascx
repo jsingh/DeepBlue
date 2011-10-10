@@ -28,12 +28,6 @@
 				<div class="editor-field auto">
 					<%: Html.TextBox("ContactName","${ContactName}") %>
 				</div>
-				<div class="editor-label-first">
-					<%: Html.LabelFor(model => model.CompanyName) %>
-				</div>
-				<div class="editor-field auto">
-					<%: Html.TextBox("CompanyName","${CompanyName}")%>
-				</div>
 				<div class="editor-label" style="clear: right">
 					<%: Html.LabelFor(model => model.Phone) %>
 				</div>

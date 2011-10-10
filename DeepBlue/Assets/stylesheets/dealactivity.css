@@ -291,3 +291,9 @@
 	clear: both;
 	float:left;
 }
+.jqComboBox {
+	width: 100%;
+}
+.jqComboBox input.ui-autocomplete-input {
+	    width: 96%;
+}

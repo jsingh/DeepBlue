@@ -87,12 +87,34 @@
 		});
 	}
 	,setUpRow: function (tr) {
-		jHelper.applyDatePicker(tr);
+		dealActivity.applyDatePicker(tr);
 		jHelper.formatDateTxt(tr);
 		jHelper.checkValAttr(tr);
 		jHelper.formatDollar(tr);
 		jHelper.formatDateHtml(tr);
 		dealActivity.applyAutoComplete(tr);
+	}
+	,applyDatePicker: function (target) {
+		$(".datefield",target).each(function () {
+			var findid="";
+			if(this.id.indexOf("CC_NoticeDate")>0)
+				findid="CC_NoticeDate";
+			if(this.id.indexOf("CD_NoticeDate")>0)
+				findid="CD_NoticeDate";
+			if(findid!="") {
+				var curid=this.id;
+				$(this).datepicker({ changeMonth: true,changeYear: true,onSelect: function (dateText,inst) {
+					$(".datefield",target).each(function () {
+						if((this.id.indexOf(findid)>0)&&(this.id!=curid)) {
+							$(this).val(dateText);
+						}
+					});
+				}
+				});
+			} else {
+				$(this).datepicker({ changeMonth: true,changeYear: true });
+			}
+		});
 	}
 	,editRow: function (tr) {
 		$(".show",tr).hide();

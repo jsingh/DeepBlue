@@ -8,7 +8,7 @@ using DeepBlue.Helpers;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(DealUnderlyingFundAdjustmentMD))]
 	public partial class DealUnderlyingFundAdjustment {
-		public class DealUnderlyingFundAdjustmentMD : CreatedByFields {
+		public class DealUnderlyingFundAdjustmentMD  {
 			#region Primitive Properties
 
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "DealUnderlyingFundID is required")]
@@ -23,7 +23,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "UnfundedAmount is required")]
+			[Range(typeof(decimal), "0", "79228162514264337593543950335", ErrorMessage = "UnfundedAmount is required")]
 			public Nullable<global::System.Decimal> UnfundedAmount {
 				get;
 				set;

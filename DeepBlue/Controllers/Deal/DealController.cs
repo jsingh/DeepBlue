@@ -1783,7 +1783,7 @@ namespace DeepBlue.Controllers.Deal {
 			underlyingFundCashDistribution.FundID = model.FundId;
 			underlyingFundCashDistribution.NoticeDate = model.NoticeDate;
 			underlyingFundCashDistribution.PaidDate = model.PaidDate;
-			underlyingFundCashDistribution.ReceivedDate = model.ReceivedDate;
+			underlyingFundCashDistribution.ReceivedDate = DateTime.Now;
 			underlyingFundCashDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
 			underlyingFundCashDistribution.LastUpdatedDate = DateTime.Now;
 			errorInfo = DealRepository.SaveUnderlyingFundCashDistribution(underlyingFundCashDistribution);
@@ -2019,7 +2019,7 @@ namespace DeepBlue.Controllers.Deal {
 			underlyingFundCapitalCall.IsDeemedCapitalCall = model.IsDeemedCapitalCall ?? false;
 			underlyingFundCapitalCall.FundID = model.FundId;
 			underlyingFundCapitalCall.NoticeDate = model.NoticeDate;
-			underlyingFundCapitalCall.ReceivedDate = model.ReceivedDate;
+			underlyingFundCapitalCall.ReceivedDate = DateTime.Now;
 			underlyingFundCapitalCall.LastUpdatedBy = Authentication.CurrentUser.UserID;
 			underlyingFundCapitalCall.LastUpdatedDate = DateTime.Now;
 

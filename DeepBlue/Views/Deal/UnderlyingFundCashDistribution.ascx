@@ -17,10 +17,7 @@
 		<%: Html.TextBox("${Index}_NoticeDate", "{{if UnderlyingFundCashDistributionId>0}}${NoticeDate}{{/if}}", new { @class = "datefield", @id = "${Index}_CD_NoticeDate" })%>
 	</td>
 	<td class="lalign">
-		<%: Html.TextBox("${Index}_ReceivedDate", "{{if UnderlyingFundCashDistributionId>0}}${ReceivedDate}{{/if}}", new { @class = "datefield", @id = "${Index}_CD_ReceivedDate" })%>
-	</td>
-	<td class="lalign">
-		<%: Html.DropDownList("${Index}_CashDistributionTypeId", Model.CashDistributionTypes, new { @style = "width:160px", @val = "${CashDistributionTypeId}" })%>
+		<%: Html.DropDownList("${Index}_CashDistributionTypeId", Model.CashDistributionTypes, new {   @val = "${CashDistributionTypeId}" })%>
 	</td>
 	<td style="display:none;" class="ralign ismanual">
 		<%: Html.Span("${TotalCommitmentAmount}", new { @class = "money" })%>

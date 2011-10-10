@@ -17,8 +17,7 @@ namespace DeepBlue.Models.Deal {
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Commitment Amount is required")]
 		public decimal? CommitmentAmount { get; set; }
 
-		[Required(ErrorMessage = "Unfunded Amount is required")]
-		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Unfunded Amount is required")]
+		[Range(typeof(decimal), "0", "79228162514264337593543950335", ErrorMessage = "Unfunded Amount is required")]
 		public decimal? UnfundedAmount { get; set; }
 
 	}

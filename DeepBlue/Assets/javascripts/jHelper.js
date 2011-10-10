@@ -23,6 +23,7 @@
 			||(charCode==39)
 			||(charCode==46)
 			||(charCode==190)
+			||(charCode==110)
 			||(charCode==5)
 			||(charCode==9)
 			) {

@@ -43,6 +43,7 @@ dealActivity.loadCD=function (isRefresh) {
 			loading.empty();
 			$.each(data,function (i,item) { item["Index"]=i;$("#CashDistributionAddTemplate").tmpl(item).appendTo(target); });
 			dealActivity.setUpRow($("tr",target));
+			jHelper.jqComboBox(target);
 			rowsLength=$("tr",target).length;
 			if(rowsLength>0) { $("#CashDistribution").show(); }
 			$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");

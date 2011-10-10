@@ -283,3 +283,6 @@ h4 a {
 	  background-image: url("../images/dir_subheadbg.png");
 	    height: 110px;  padding: 20px 0 0;
 }
+#DealSellerInfo .editor-field {
+    width: 160px;
+}

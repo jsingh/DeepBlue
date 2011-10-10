@@ -251,7 +251,7 @@
 							Record Date
 						</th>
 						<th style="width: 9%">
-							Tax Cost Basic
+							Tax Cost Basis Per Share
 						</th>
 						<th style="width: 9%">
 							Tax Cost Date
