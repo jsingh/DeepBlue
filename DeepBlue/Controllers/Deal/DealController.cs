@@ -1119,6 +1119,33 @@ namespace DeepBlue.Controllers.Deal {
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				ModelState.AddModelError("FundName", ErrorMessage);
 			}
+			if (string.IsNullOrEmpty(model.BankName) == false
+			   || string.IsNullOrEmpty(model.Account) == false
+				|| string.IsNullOrEmpty(model.AccountNumber) == false
+				|| string.IsNullOrEmpty(model.FFC) == false
+				|| string.IsNullOrEmpty(model.FFCNumber) == false
+				|| string.IsNullOrEmpty(model.Reference) == false
+				|| string.IsNullOrEmpty(model.Swift) == false
+				|| string.IsNullOrEmpty(model.IBAN) == false
+				|| string.IsNullOrEmpty(model.AccountPhone) == false
+				|| string.IsNullOrEmpty(model.AccountFax) == false
+				|| model.ABANumber > 0 
+
+			) {
+
+				if (string.IsNullOrEmpty(model.BankName)) {
+					ModelState.AddModelError("BankName", "Bank Name is required");
+				}
+
+				if (string.IsNullOrEmpty(model.Account)) {
+					ModelState.AddModelError("Account", "Account Name is required");
+				}
+
+				if (string.IsNullOrEmpty(model.AccountNumber)) {
+					ModelState.AddModelError("AccountNumber", "Account Number is required");
+				}
+
+			}
 			if (ModelState.IsValid) {
 				UnderlyingFund underlyingFund = DealRepository.FindUnderlyingFund(model.UnderlyingFundId);
 				if (underlyingFund == null) {
@@ -1153,8 +1180,10 @@ namespace DeepBlue.Controllers.Deal {
 				underlyingFund.WebUserName = model.WebUserName;
 				underlyingFund.WebPassword = model.WebPassword;
 
+				
 
-				if (string.IsNullOrEmpty(model.BankName) == false && string.IsNullOrEmpty(model.Account) == false) {
+				if (string.IsNullOrEmpty(model.BankName) == false 
+					&& string.IsNullOrEmpty(model.Account) == false) {
 					if (underlyingFund.Account == null) {
 						underlyingFund.Account = new Models.Entity.Account();
 						underlyingFund.Account.CreatedBy = Authentication.CurrentUser.UserID;

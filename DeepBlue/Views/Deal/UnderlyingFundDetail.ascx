@@ -258,7 +258,7 @@
 					<div class="resetbtn">
 						<%: Html.Span("Reset", new { @onclick = "javascript:underlyingFund.reset('BankInformation');" })%></div>
 					<div class="btn">
-						<%: Html.Image("Save_active.png", new { @onclick = "javascript:underlyingFund.saveTemp('BILoading')" })%></div>
+						<%: Html.Image("Save_active.png", new { @onclick = "javascript:underlyingFund.saveTemp(this)" })%></div>
 					<div class="btn" id="BILoading">
 					</div>
 				</div>

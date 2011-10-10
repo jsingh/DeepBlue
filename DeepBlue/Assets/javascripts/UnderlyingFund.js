@@ -299,11 +299,16 @@
 		grid.flexOptions({ params: param });
 		grid.flexReload();
 	}
-	,saveTemp: function (loadingId) {
-		var loading=$("#"+loadingId);
+	,saveTemp: function (img) {
+		var frmUnderlyingFund=$(img).parents(".section-det:first");
+		var loading=$("#BILoading",frmUnderlyingFund);
 		underlyingFund.tempSave=true;
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
-		$("#btnSave").click();
+		underlyingFund.onAfterUnderlyingFundSave=function (ufid) {
+			loading.empty();
+			jAlert("Underlying Fund Bank Information Saved.");
+		}
+		$("#btnSave",frmUnderlyingFund).click();
 	}
 	,cancelInfo: function (that) {
 		var cntdiv=$(that).parents(".editinfo:first").get(0);
