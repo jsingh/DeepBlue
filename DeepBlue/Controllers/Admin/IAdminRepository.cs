@@ -113,10 +113,6 @@ namespace DeepBlue.Controllers.Admin {
 		IEnumerable<ErrorInfo> SaveDealClosingCostType(DealClosingCostType dealClosingCostType);
 		#endregion
 
-		#region DocumentType
-		List<DocumentType> GetAllDocumentTypes();
-		#endregion
-
 		#region Communication
 		string GetContactCommunicationValue(int contactId, DeepBlue.Models.Admin.Enums.CommunicationType communicationType);
 		#endregion
@@ -275,8 +271,7 @@ namespace DeepBlue.Controllers.Admin {
 		List<AutoCompleteList> FindDealContacts(string contactName);
 		Contact FindContact(int contactId);
 		#endregion
-
-
+		
 		#region User
 		List<USER> GetAllUsers(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		USER FindUser(int id);
@@ -284,6 +279,21 @@ namespace DeepBlue.Controllers.Admin {
 		bool EmailAvailable(string email, int userId);
 		bool DeleteUser(int id);
 		IEnumerable<ErrorInfo> SaveUser(USER user);
+		#endregion
+
+		#region  DocumentType
+		List<Models.Entity.DocumentType> GetAllDocumentTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<DocumentType> GetAllDocumentTypes(int documentSectionId);
+		DocumentType FindDocumentType(int id);
+		bool DocumentTypeNameAvailable(string documentTypeName, int documentTypeID);
+		bool DeleteDocumentType(int id);
+		IEnumerable<ErrorInfo> SaveDocumentType(DocumentType documentType);
+		List<DocumentSection> GetAllDocumentSections();
+		List<AutoCompleteList> FindDocumentTypes(string documentTypeName, int documentSectionId);
+		#endregion
+
+		#region Log
+		List<Log> GetAllLogs(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		#endregion
 	}
 }

@@ -322,7 +322,6 @@ namespace DeepBlue.Controllers.Investor {
 					}
 
 				}
-
 				if (string.IsNullOrEmpty(resultModel.Result)) {
 					errorInfo = InvestorRepository.SaveInvestor(investor);
 					if (errorInfo != null) {
@@ -331,6 +330,9 @@ namespace DeepBlue.Controllers.Investor {
 					else {
 						resultModel.Result += SaveCustomValues(collection, investor.InvestorID);
 					}
+				}
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					resultModel.Result = "True||" + investor.InvestorID;
 				}
 			}
 			if (ModelState.IsValid == false) {

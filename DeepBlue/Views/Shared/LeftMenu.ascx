@@ -71,4 +71,12 @@
 </ul>
 <%} %>
 <%break;%>
+<%case "DocumentManagement":%>
+<%using (Html.LeftMenu()) {%>
+<ul>
+	<li class="<%=(ViewData["PageName"] == "DocumentType" ? "sel" : "")%>">
+		<%: Html.ActionLink("DocumentType", "DocumentType", "Admin", null, new { @class = (ViewData["PageName"] == "DocumentType" ? "sel" : "") })%></li>
+</ul>
+<%} %>
+<%break;%>
 <%}%>

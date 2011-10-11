@@ -2406,7 +2406,6 @@ namespace DeepBlue.Controllers.Admin {
 				return string.Empty;
 		}
 
-
 		#endregion
 
 		#region Country
@@ -2830,7 +2829,126 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region "Select List"
+		#region DocumentType
+
+		public ActionResult DocumentType() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "DocumentManagement";
+			ViewData["PageName"] = "DocumentType";
+			EditDocumentTypeModel model = new EditDocumentTypeModel();
+			model.DocumentSections = SelectListFactory.GetDocumentSectionList(AdminRepository.GetAllDocumentSections()); ;
+			return View(model);
+		}
+
+		//
+		// GET: /Admin/DocumentTypeList
+		[HttpGet]
+		public JsonResult DocumentTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DeepBlue.Models.Entity.DocumentType> documentTypes = AdminRepository.GetAllDocumentTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var documentType in documentTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {documentType.DocumentTypeID,
+					  documentType.DocumentTypeName,
+					  documentType.DocumentSectionID,
+					  documentType.DocumentSection.Name
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditDocumentType
+		[HttpGet]
+		public JsonResult EditDocumentType(int id) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			DocumentType documentType = AdminRepository.FindDocumentType(id);
+			flexgridData.total = totalRows;
+			flexgridData.page = 0;
+			flexgridData.rows.Add(new FlexigridRow {
+				cell = new List<object> {documentType.DocumentTypeID,
+					 documentType.DocumentTypeName,
+					 documentType.DocumentSectionID,
+					 documentType.DocumentSection.Name
+					}
+			});
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/UpdateDocumentType
+		[HttpPost]
+		public ActionResult UpdateDocumentType(FormCollection collection) {
+			EditDocumentTypeModel model = new EditDocumentTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = DocumentTypeAvailable(model.DocumentTypeName, model.DocumentTypeID);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				DocumentType documentType = AdminRepository.FindDocumentType(model.DocumentTypeID);
+				if (documentType == null) {
+					documentType = new DocumentType();
+				}
+				documentType.EntityID = Authentication.CurrentEntity.EntityID;
+				documentType.DocumentTypeName = model.DocumentTypeName;
+				documentType.DocumentSectionID = model.DocumentSectionID;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveDocumentType(documentType);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				else {
+					resultModel.Result = "True||" + documentType.DocumentTypeID;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteDocumentType(int id) {
+			if (AdminRepository.DeleteDocumentType(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string DocumentTypeAvailable(string DocumentType, int DocumentTypeId) {
+			if (AdminRepository.DocumentTypeNameAvailable(DocumentType, DocumentTypeId))
+				return "Document Type Name already exists.";
+			else
+				return string.Empty;
+		}
+
+		//
+		// GET: /Admin/FindDocumentTypes
+		[HttpGet]
+		public JsonResult FindDocumentTypes(string term, int documentSectionId) {
+			return Json(AdminRepository.FindDocumentTypes(term, documentSectionId), JsonRequestBehavior.AllowGet);
+		}
+
+		#endregion
+
+		#region SelectList
 		[HttpGet]
 		public JsonResult SelectList(string actionName) {
 			List<SelectListItem> items = null;
@@ -2875,7 +2993,7 @@ namespace DeepBlue.Controllers.Admin {
 					items = SelectListFactory.GetCommunicationGroupingSelectList(AdminRepository.GetAllCommunicationGroupings());
 					break;
 				case "DocumentType":
-					items = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
+					items = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes((int)DeepBlue.Models.Admin.Enums.DocumentSection.Investor));
 					break;
 				case "PurchaseType":
 					items = SelectListFactory.GetPurchaseTypeSelectList(AdminRepository.GetAllPurchaseTypes());
@@ -2885,6 +3003,36 @@ namespace DeepBlue.Controllers.Admin {
 					break;
 			}
 			return Json(items, JsonRequestBehavior.AllowGet);
+		}
+		#endregion
+
+		#region Log
+		public ActionResult Log() {
+			return View();
+		}
+
+		//
+		// GET: /Admin/DocumentTypeList
+		[HttpGet]
+		public JsonResult LogList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DeepBlue.Models.Entity.Log> logss = AdminRepository.GetAllLogs(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var log in logss) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> { 
+						log.Controller,
+						log.Action,
+						log.View,
+						log.QueryString,
+						log.LogText,
+						log.LogDetails.FirstOrDefault().Detail
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 		#endregion
 

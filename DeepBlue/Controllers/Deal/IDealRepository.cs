@@ -16,7 +16,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<AutoCompleteList> FindDeals(string dealName, int? fundId);
 		bool DealNameAvailable(string dealName, int dealId, int fundId);
 		int GetMaxDealNumber(int fundId);
-		List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, bool? isNotClose);
 		object GetDealDetail(int dealId);
 		int FindLastDealId();
 		bool DeleteDeal(int dealId);
@@ -88,6 +88,7 @@ namespace DeepBlue.Controllers.Deal {
 		Address FindUnderlyingFundAddress(int underlyingFundId);
 		IEnumerable<ErrorInfo> SaveUnderlyingFund(UnderlyingFund underlyingFund);
 		bool UnderlyingFundNameAvailable(string fundName, int underlyingFundId);
+		List<AutoCompleteList> FindReconcileUnderlyingFunds(string fundName, int? fundId);
 		List<AutoCompleteList> FindUnderlyingFunds(string fundName);
 		UnderlyingFundDocument FindUnderlyingFundDocument(int underlyingFundDocumentId);
 		List<UnderlyingFundDocumentList> GetAllUnderlyingFundDocuments(int underlyingFundId, int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
@@ -205,11 +206,12 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region Reconcile
-		List<ReconcileReportModel> GetAllReconciles(DateTime startDate, DateTime endDate, int fundId);
-		List<ReconcileReportModel> GetAllUnderlyingCapitalCallReconciles(DateTime startDate, DateTime endDate, int fundId);
-		List<ReconcileReportModel> GetAllUnderlyingDistributionReconciles(DateTime startDate, DateTime endDate, int fundId);
-		List<ReconcileReportModel> GetAllCapitalCallReconciles(DateTime startDate, DateTime endDate, int fundId);
-		List<ReconcileReportModel> GetAllCapitalDistributionReconciles(DateTime startDate, DateTime endDate, int fundId);
+		List<ReconcileReportModel> GetAllReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId);
+		List<ReconcileReportModel> GetAllUnderlyingCapitalCallReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId);
+		List<ReconcileReportModel> GetAllUnderlyingDistributionReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId);
+		List<ReconcileReportModel> GetAllCapitalCallReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId);
+		List<ReconcileReportModel> GetAllCapitalDistributionReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId);
+		object GetAllFundExpenses(int? fundId, DateTime startDate, DateTime endDate);
 		#endregion
 
 		#region Direct

@@ -188,6 +188,22 @@ namespace DeepBlue.Helpers {
 			return moduleList;
 		}
 
+		public static List<SelectListItem> GetDocumentSectionList(List<DocumentSection> documentSections) {
+			List<SelectListItem> documentSectionList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			documentSectionList.Add(item);
+			foreach (var documentSection in documentSections) {
+				item = new SelectListItem();
+				item.Text = documentSection.Name;
+				item.Value = documentSection.DocumentSectionID.ToString();
+				documentSectionList.Add(item);
+			}
+			return documentSectionList;
+		}
+
+
 		public static List<SelectListItem> GetDataTypeSelectList(List<DataType> dataTypes) {
 			List<SelectListItem> dataTypeList = new List<SelectListItem>();
 			SelectListItem item = new SelectListItem();

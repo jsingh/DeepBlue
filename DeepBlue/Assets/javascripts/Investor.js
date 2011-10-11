@@ -147,11 +147,12 @@
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 			$.post("/Investor/Create",$(frm).serializeForm(),function (data) {
 				loading.empty();
-				if($.trim(data)!="") {
-					jAlert(data);
+				var arr=data.split("||");
+				if($.trim(arr[0])!="True") {
+					jAlert(arr[0]);
 				} else {
 					jAlert("Investor Information Saved.");
-					location.href="/Investor/New";
+					location.href="/Investor/Edit/"+arr[1];
 				}
 			});
 		} catch(e) {

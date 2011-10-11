@@ -1,13 +1,50 @@
 ﻿var dealReconcile={
 	setFundId: function (id) {
 		$("#ReconcileFundId").val(id);
-		dealReconcile.submit(0);
+		//dealReconcile.submit(0);
+	}
+	,init: function () {
+		$(document).ready(function () {
+			var rfundname=$("#ReconcileFundName");
+			var rufundname=$("#ReconcileUnderlyingFundName");
+			var rufundid=$("#ReconcileFundId");
+			rfundname
+				.autocomplete(
+				{
+					source: "/Fund/FindFunds"
+				,minLength: 1
+				,autoFocus: true
+				,select: function (event,ui) {
+					rufundid.val(0);
+					rufundname.val("");
+					dealReconcile.setFundId(ui.item.id);
+				}
+				,appendTo: "body",delay: 300
+				});
+			rufundname
+				.autocomplete(
+				{
+					source: function (request,response) {
+						$.getJSON("/Deal/FindReconcileUnderlyingFunds"+"?term="+request.term+"&fundId="+rufundid.val(),function (data) {
+							response(data);
+						});
+					}
+				,minLength: 1
+				,autoFocus: true
+				,select: function (event,ui) {
+					rufundid.val(ui.item.id);
+					//dealReconcile.submit(0);
+				}
+				,appendTo: "body",delay: 300
+				});
+
+		});
 	}
 	,getFundId: function () {
 		return parseInt($("#ReconcileFundId").val());
 	}
 	,changeDate: function () {
-		dealReconcile.submit(0);
+		//dealReconcile.submit(0);
 	}
 	,submit: function (type) {
 		try {
@@ -27,23 +64,21 @@
 				default: target=$("#ReconcilReport");loading=$("#SpnReconLoading");break;
 			}
 			target.empty();
-			if(parseInt(fundId)>0) {
-				loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
-				var param=$(frm).serializeForm();
-				param[param.length]={ name: "ReconcileType",value: type };
-				$.ajax({
-					type: "POST",
-					url: "/Deal/ReconcileList",
-					data: param,
-					dataType: "json",
-					cache: false,
-					success: function (data) {
-						loading.empty();
-						dealReconcile.generateReport(data,target,type);
-					},
-					error: function (data) { try { if(p.onError) { p.onError(data); } } catch(e) { } }
-				});
-			}
+			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+			var param=$(frm).serializeForm();
+			param[param.length]={ name: "ReconcileType",value: type };
+			$.ajax({
+				type: "POST",
+				url: "/Deal/ReconcileList",
+				data: param,
+				dataType: "json",
+				cache: false,
+				success: function (data) {
+					loading.empty();
+					dealReconcile.generateReport(data,target,type);
+				},
+				error: function (data) { try { if(p.onError) { p.onError(data); } } catch(e) { } }
+			});
 		} catch(e) {
 			jAlert(e);
 		}
@@ -63,6 +98,7 @@
 					,UFCDItems: function () { return { ReconcileTypeId: 2,Items: dealReconcile.findJSON(data.Results,2)} }
 					,CCItems: function () { return { ReconcileTypeId: 3,Items: dealReconcile.findJSON(data.Results,3)} }
 					,CDItems: function () { return { ReconcileTypeId: 4,Items: dealReconcile.findJSON(data.Results,4)} }
+					,FundExpenses: function () { return { ReconcileTypeId: 5,Items: data.FundExpenses} }
 				};
 				expand=true;
 				templateName="ReconcileReportTemplate";
@@ -118,8 +154,8 @@
 				detail.show();
 			}
 		});
-		$(".recon-expandtitle",".recon-expandheader").unbind('click').click(function () {
-			var expandheader=$(this).parents(".recon-expandheader:first");
+		$(".recon-expandheader").unbind('click').click(function () {
+			var expandheader=$(this);
 			var parent=$(expandheader).parent();
 			expandheader.hide();
 			var detail=$(".recon-detail",parent);

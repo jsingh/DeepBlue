@@ -1,0 +1,205 @@
+﻿.deal-box {
+	clear: both;
+	float: left;
+	width: 100%;
+}
+.deal-main {
+	width: 100%;
+	margin: 0;
+	clear: both;
+}
+#cntbox {
+	top: 98px;
+}
+.section-det {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+.deal-box-titie {
+	font-weight: bold;
+	padding: 10px 0 10px 65px;
+	font-size: 14px;
+}
+.deal-header {
+	text-align: right;
+	padding: 5px 0px 5px 0px;
+}
+.deal-content {
+	width: 100%;
+}
+.deal-box-det {
+	clear: both;
+	float: left;
+	padding: 5px 20px 5px 51px;
+}
+.deal-box-det .editor-field input[type="text"] {
+    width: 149px;
+}
+.deal-box-det .editor-label {
+	text-align: right;
+	white-space: nowrap;
+}
+.headerbox {
+	cursor: pointer;
+	float: left;
+	width: 90%;
+	padding-left:65px;
+}
+.editor-field {
+	width: auto;
+}
+.section-det .title {
+	background: url("../images/plus.png") no-repeat scroll left top transparent;
+	color: #02766F;
+	cursor: pointer;
+	float: left;
+	font-size: 14px;
+	font-weight: bold;
+	height: 23px;
+	line-height: 15px;
+	margin: 10px 0 0 0px;
+	padding-left: 20px;
+	width: 200px;
+}
+.rightdarrow {
+	float: right;
+	padding-right: 0px;
+	padding-top: 10px;
+	vertical-align: middle;
+}
+.rate-detail {
+	clear: both;
+	padding-left:65px;
+	width: 90%;
+}
+.rate-grid {
+	width: 100%;
+	clear: both;
+}
+.tab-delete {
+	background-image: url("../images/tabdelete.png");
+	background-position: left top;
+	background-repeat: no-repeat;
+	float: left;
+	height: 16px;
+	margin: 7px 0 0 -15px;
+	width: 16px;
+	cursor: pointer;
+}
+#DealDetail {
+	/*margin: 0 auto;*/
+	padding: 0 0 10px 65px;
+	width: 90%;
+}
+/* expand header */
+.expandheader, .recon-expandheader {
+	background-image: url("../images/downarrow.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	float: left;
+	padding: 0;
+	width: 90%;
+}
+.expandheader .expandimg, .recon-expandheader .expandimg {
+	padding: 15px 0 8px;
+}
+.expandsel {
+	color: #FFFFFF;
+	font-size: 18px;
+	padding: 0;
+	width: 100%;
+	margin-top: -2px;
+	background-image: url(../images/expandbg.png);
+	background-repeat: repeat-x;
+	background-position: left top;
+	height: 35px;
+	line-height: 35px;
+}
+.expandheader #title, .recon-expandheader #title {
+	display: none;
+}
+.expandimg {
+	float: left;
+}
+.expandtitle {
+	text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
+}
+.expandtitle, .recon-expandtitle {
+	float: left;
+	white-space: nowrap;
+	width: 200px;
+	/*margin-left: 65px;*/
+}
+.expandaddbtn {
+	display: none;
+	float: left;
+	height: 31px;
+	line-height: 33px;
+	margin: 5px 0 0 70px;
+	padding-left: 30px;
+	width: 151px;
+}
+.expandaddbtn a {
+	color: #000000;
+	font-size: 11px;
+	font-weight: bold;
+}
+.expandsel .rightuarrow {
+	background-image: url("../images/rightuarrow.png");
+	background-repeat: no-repeat;
+	float: right;
+	height: 9px;
+	margin-top: 12px;
+	width: 16px;
+}
+
+.detail {
+	background-color: #E9EAEC;
+	clear: both;
+	float: left;
+	margin: 0;
+	width: 100%;
+	padding: 10px 0;
+}
+.detail .editor-label {
+	text-align: right;
+}
+/* end expand header */
+.section-tab-main {
+	width: 100%;
+	padding-left:0;
+}
+.section-tab-box{
+	 float: left; padding-left: 65px;
+}
+.expandbtn{
+	float:left;
+	width:90%;
+	padding-left:65px;
+}
+#BankInformation .editor-label{
+	width:130px;
+}
+#BankInformation .editor-label-first{
+	width:125px;
+	padding-right:72px;
+}
+#BankInformation .editor-label-second{
+	width:123px;
+}
+/*.grid #row0, .grid #Row0{
+  background-image: url("../images/table_row_odd.gif");
+}
+*/
+#DealList tbody tr, #DealList tbody tr td {
+	background-image: none;
+}
+#DealList tbody {
+    /* background-image: url("../images/table_row_odd.gif");
+     background-repeat: repeat-x;
+*/
+     background-color: #fff;
+}

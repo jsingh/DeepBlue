@@ -83,3 +83,24 @@
 </div>
 <div class="line">
 </div>
+<div class="act-box">
+	<div class="group">
+		<div class="recon-headerbox" style="display: none;">
+			<div class="title">
+				<span>Fund Expenses</span>
+			</div>
+		</div>
+		<div style="display: block;" class="recon-expandheader expandsel">
+			<div class="expandbtn">
+				<div style="display: block;" class="recon-expandtitle">
+					Fund Expenses
+				</div>
+			</div>
+		</div>
+		<div class="recon-detail" id="RGFE" style="display: block;" issearch="true">
+			{{tmpl(FundExpenses) "#ReconcileGridTemplate"}}
+		</div>
+	</div>
+</div>
+<div class="line">
+</div>

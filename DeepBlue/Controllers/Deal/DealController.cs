@@ -58,6 +58,15 @@ namespace DeepBlue.Controllers.Deal {
 			return View("New", GetNewDealModel());
 		}
 
+		//
+		// GET: /Deal/List
+		public ActionResult List() {
+			ViewData["MenuName"] = "DealManagement";
+			ViewData["SubmenuName"] = "DealList";
+			ViewData["PageName"] = "DealList";
+			return View();
+		}
+
 		private CreateModel GetNewDealModel() {
 			CreateModel model = new CreateModel();
 			model.Contacts = SelectListFactory.GetEmptySelectList();
@@ -67,7 +76,7 @@ namespace DeepBlue.Controllers.Deal {
 			model.Issuers = SelectListFactory.GetIssuerSelectList(DealRepository.GetAllIssuers());
 			model.SecurityTypes = SelectListFactory.GetSecurityTypeSelectList(AdminRepository.GetAllSecurityTypes());
 			model.Securities = SelectListFactory.GetEmptySelectList();
-			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
+			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes((int)DeepBlue.Models.Admin.Enums.DocumentSection.Investor));
 			model.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
 			model.DocumentStatusTypes = SelectListFactory.GetDealDocumentStatusList();
 			model.DealId = DealRepository.FindLastDealId();
@@ -82,10 +91,10 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/DealList
 		[HttpGet]
-		public ActionResult DealList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public ActionResult DealList(int pageIndex, int pageSize, string sortName, string sortOrder, bool? isNotClose) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			List<DealListModel> deals = DealRepository.GetAllDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			List<DealListModel> deals = DealRepository.GetAllDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows, isNotClose);
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var deal in deals) {
@@ -1098,7 +1107,7 @@ namespace DeepBlue.Controllers.Deal {
 			model.InvestmentTypes = SelectListFactory.GetInvestmentTypeSelectList(AdminRepository.GetAllInvestmentTypes());
 			model.ManagerContacts = SelectListFactory.GetEmptySelectList();
 			model.FundRegisteredOffices = SelectListFactory.GetEmptySelectList();
-			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
+			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes((int)DeepBlue.Models.Admin.Enums.DocumentSection.Investor));
 			model.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
 			return View(model);
 		}
@@ -1385,6 +1394,11 @@ namespace DeepBlue.Controllers.Deal {
 		[HttpGet]
 		public JsonResult FindUnderlyingFunds(string term) {
 			return Json(DealRepository.FindUnderlyingFunds(term), JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public JsonResult FindReconcileUnderlyingFunds(string term, int? fundId) {
+			return Json(DealRepository.FindReconcileUnderlyingFunds(term, fundId), JsonRequestBehavior.AllowGet);
 		}
 
 		[HttpGet]
@@ -2734,22 +2748,26 @@ namespace DeepBlue.Controllers.Deal {
 			this.TryUpdateModel(model, collection);
 			string error = string.Empty;
 			List<ReconcileReportModel> allReconciles = null;
+			DateTime startDate = (model.StartDate ?? Convert.ToDateTime("01/01/1900"));
+			DateTime endDate = (model.EndDate ??  DateTime.MaxValue);
+			object allFundExpenses = null;
 			if (ModelState.IsValid) {
 				switch ((DeepBlue.Models.Deal.Enums.ReconcileType)model.ReconcileType) {
 					case ReconcileType.All:
-						allReconciles = DealRepository.GetAllReconciles((model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.MaxValue), model.FundId);
+						allReconciles = DealRepository.GetAllReconciles(startDate, endDate, model.FundId, model.UnderlyingFundId);
+						allFundExpenses = DealRepository.GetAllFundExpenses(model.FundId, startDate, endDate);
 						break;
 					case ReconcileType.UnderlyingFundCapitalCall:
-						allReconciles = DealRepository.GetAllUnderlyingCapitalCallReconciles((model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.MaxValue), model.FundId);
+						allReconciles = DealRepository.GetAllUnderlyingCapitalCallReconciles(startDate, endDate, model.FundId, model.UnderlyingFundId);
 						break;
 					case ReconcileType.UnderlyingFundCashDistribution:
-						allReconciles = DealRepository.GetAllUnderlyingDistributionReconciles((model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.MaxValue), model.FundId);
+						allReconciles = DealRepository.GetAllUnderlyingDistributionReconciles(startDate, endDate, model.FundId, model.UnderlyingFundId);
 						break;
 					case ReconcileType.CapitalCall:
-						allReconciles = DealRepository.GetAllCapitalCallReconciles((model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.MaxValue), model.FundId);
+						allReconciles = DealRepository.GetAllCapitalCallReconciles(startDate, endDate, model.FundId, model.UnderlyingFundId);
 						break;
 					case ReconcileType.CapitalDistribution:
-						allReconciles = DealRepository.GetAllCapitalDistributionReconciles((model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.MaxValue), model.FundId);
+						allReconciles = DealRepository.GetAllCapitalDistributionReconciles(startDate, endDate, model.FundId, model.UnderlyingFundId);
 						break;
 				}
 			}
@@ -2762,7 +2780,7 @@ namespace DeepBlue.Controllers.Deal {
 					}
 				}
 			}
-			return Json(new { Error = error, Results = allReconciles }, JsonRequestBehavior.AllowGet);
+			return Json(new { Error = error, Results = allReconciles, FundExpenses = allFundExpenses }, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -2860,9 +2878,9 @@ namespace DeepBlue.Controllers.Deal {
 			model.IssuerDetailModel.IssuerRatings = SelectListFactory.GetEmptySelectList();
 
 			model.EquityDetailModel.Currencies = SelectListFactory.GetCurrencySelectList(AdminRepository.GetAllCurrencies());
+			model.EquityDetailModel.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes((int)DeepBlue.Models.Admin.Enums.DocumentSection.Investor));
 			model.EquityDetailModel.ShareClassTypes = SelectListFactory.GetShareClassTypeSelectList(AdminRepository.GetAllShareClassTypes());
 			model.EquityDetailModel.EquityTypes = SelectListFactory.GetEquityTypeSelectList(AdminRepository.GetAllEquityTypes());
-			model.EquityDetailModel.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
 			model.EquityDetailModel.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
 			model.EquityDetailModel.EquitySecurityTypes = SelectListFactory.GetEquitySecurityTypeList();
 

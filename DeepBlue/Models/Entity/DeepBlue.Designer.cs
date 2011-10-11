@@ -153,6 +153,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_UnderlyingFundCapitalCallID", "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), "UnderlyingFundCapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCallLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), "UnderlyingFundNAVHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAVHistory), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_UnderlyingFundStockDistribution", "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), "UnderlyingFundStockDistributionLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistributionLineItem), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DocumentType_DocumentSection", "DocumentSection", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.DocumentSection), "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DocumentType), true)]
 
 #endregion
 
@@ -1771,6 +1772,22 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<USER> _USERs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<DocumentSection> DocumentSections
+        {
+            get
+            {
+                if ((_DocumentSections == null))
+                {
+                    _DocumentSections = base.CreateObjectSet<DocumentSection>("DocumentSections");
+                }
+                return _DocumentSections;
+            }
+        }
+        private ObjectSet<DocumentSection> _DocumentSections;
 
         #endregion
         #region AddTo Methods
@@ -2557,6 +2574,14 @@ namespace DeepBlue.Models.Entity
         public void AddToUSERs(USER uSER)
         {
             base.AddObject("USERs", uSER);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the DocumentSections EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDocumentSections(DocumentSection documentSection)
+        {
+            base.AddObject("DocumentSections", documentSection);
         }
 
         #endregion
@@ -14227,6 +14252,112 @@ namespace DeepBlue.Models.Entity
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="DocumentSection")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class DocumentSection : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new DocumentSection object.
+        /// </summary>
+        /// <param name="documentSectionID">Initial value of the DocumentSectionID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        public static DocumentSection CreateDocumentSection(global::System.Int32 documentSectionID, global::System.String name)
+        {
+            DocumentSection documentSection = new DocumentSection();
+            documentSection.DocumentSectionID = documentSectionID;
+            documentSection.Name = name;
+            return documentSection;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DocumentSectionID
+        {
+            get
+            {
+                return _DocumentSectionID;
+            }
+            set
+            {
+                if (_DocumentSectionID != value)
+                {
+                    OnDocumentSectionIDChanging(value);
+                    ReportPropertyChanging("DocumentSectionID");
+                    _DocumentSectionID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DocumentSectionID");
+                    OnDocumentSectionIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _DocumentSectionID;
+        partial void OnDocumentSectionIDChanging(global::System.Int32 value);
+        partial void OnDocumentSectionIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DocumentType_DocumentSection", "DocumentType")]
+        public EntityCollection<DocumentType> DocumentTypes
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DocumentType>("DeepBlueModel.FK_DocumentType_DocumentSection", "DocumentType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DocumentType>("DeepBlueModel.FK_DocumentType_DocumentSection", "DocumentType", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="DocumentType")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -14350,6 +14481,30 @@ namespace DeepBlue.Models.Entity
         private global::System.String _Description;
         partial void OnDescriptionChanging(global::System.String value);
         partial void OnDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> DocumentSectionID
+        {
+            get
+            {
+                return _DocumentSectionID;
+            }
+            set
+            {
+                OnDocumentSectionIDChanging(value);
+                ReportPropertyChanging("DocumentSectionID");
+                _DocumentSectionID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DocumentSectionID");
+                OnDocumentSectionIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _DocumentSectionID;
+        partial void OnDocumentSectionIDChanging(Nullable<global::System.Int32> value);
+        partial void OnDocumentSectionIDChanged();
 
         #endregion
     
@@ -14439,6 +14594,44 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundDocument>("DeepBlueModel.FK_UnderlyingFundDocument_DocumentType", "UnderlyingFundDocument", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DocumentType_DocumentSection", "DocumentSection")]
+        public DocumentSection DocumentSection
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DocumentSection>("DeepBlueModel.FK_DocumentType_DocumentSection", "DocumentSection").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DocumentSection>("DeepBlueModel.FK_DocumentType_DocumentSection", "DocumentSection").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<DocumentSection> DocumentSectionReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DocumentSection>("DeepBlueModel.FK_DocumentType_DocumentSection", "DocumentSection");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DocumentSection>("DeepBlueModel.FK_DocumentType_DocumentSection", "DocumentSection", value);
                 }
             }
         }

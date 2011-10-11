@@ -1,5 +1,5 @@
-﻿input[type="image"]{
-    margin: 8px 0 0;
+﻿input[type="image"] {
+	margin: 8px 0 0;
 }
 .editor-label {
 	width: 145px;
@@ -140,7 +140,7 @@
 #SecurityActivity {
 	background-color: #E9EAEC;
 }
- 
+
 .paging {
 	float: right;
 	font-size: 12px;
@@ -179,39 +179,38 @@
 	width: 98.3%;
 }
 .addbtn {
-    color: #F7F7F7;
-    float: left;
-    font-size: 12px;
-    left: 315px;
-    min-width: 640px;
-    position: absolute;
-    width: 64%;
+	color: #F7F7F7;
+	float: left;
+	font-size: 12px;
+	left: 315px;
+	min-width: 640px;
+	position: absolute;
+	width: 64%;
 }
 .addbtn .tblcell {
 	float: left;
-    margin:0 10px;
+	margin: 0 10px;
 }
-.addbtn .tblcell .jqComboBox
-{
-	margin:4px 0 0;
+.addbtn .tblcell .jqComboBox {
+	margin: 4px 0 0;
 }
-.addbtn .tblcell input[type="checkbox"]{
-	margin:8px 0 0;
+.addbtn .tblcell input[type="checkbox"] {
+	margin: 8px 0 0;
 }
-.addbtn .tblcell .green-btn{
-	margin:0;
-	padding:0;
+.addbtn .tblcell .green-btn {
+	margin: 0;
+	padding: 0;
 }
 .addbtn .rightcell {
 	float: right;
 }
 .subheader .name {
-	float: left;	
+	float: left;
 	text-shadow: #0B0B0B 1px 1px 1px;
 	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
 }
-.subheader .addbtn{
-	padding:2px 0 0 0;
+.subheader .addbtn {
+	padding: 2px 0 0 0;
 }
 #ConversionDetail input[type='text'] {
 	width: 200px;
@@ -271,29 +270,43 @@
 	background-image: url("../images/expandbgnoline.png");
 	margin-top: 0px;
 }
-.tblcell .green-btn{
-	margin-top:4px;
+.tblcell .green-btn {
+	margin-top: 4px;
 }
-#StockDistributionList .newrow td input{
+#StockDistributionList .newrow td input {
 	width: 110px;
 }
 .heading {
-	padding-bottom:0px;
+	padding-bottom: 0px;
 }
-#SADetailBox{
-	display: block; 
+#SADetailBox {
+	display: block;
 	margin-top: 30px;
-	float:left;
+	float: left;
 }
-#ConversionDetail{
-	display: none; 
-	margin-left: 48px; 
+#ConversionDetail {
+	display: none;
+	margin-left: 48px;
 	clear: both;
-	float:left;
+	float: left;
 }
 .jqComboBox {
 	width: 100%;
 }
 .jqComboBox input.ui-autocomplete-input {
-	    width: 96%;
+	width: 96%;
+}
+#RGFE {
+	width: 100%;
+	float:left;
+}
+#RGFE .grid-box {
+	float:left;
+	width: 90%;
+	padding-left: 65px;	
+	margin: 10px 0;
+	clear:both;
+}
+#RGFE .grid-box .gird {
+	width: 100%;
 }

@@ -144,7 +144,7 @@
 								</div>
 								<div id="PRCCListBox" class="clear" style="display: none">
 									<%using (Html.Form(new { @id = "frmUFPRCapitalCall", @onsubmit = "return dealActivity.submitUFPRCapitalCall(this);" })) {%>
-									<div style="margin-top:45px;">
+									<div style="margin-top: 45px;">
 										<% Html.RenderPartial("TBoxTop"); %>
 										<table cellpadding="0" cellspacing="0" border="0" id="PRCapitalCallList" class="grid">
 											<thead>
@@ -272,7 +272,7 @@
 									</div>
 									<div id="PRCDListBox" class="clear" style="display: none">
 										<%using (Html.Form(new { @id = "frmUFPRCashDistribution", @onsubmit = "return dealActivity.submitUFPRCashDistribution(this);" })) {%>
-										<div style="margin-top:45px;">
+										<div style="margin-top: 45px;">
 											<% Html.RenderPartial("TBoxTop"); %>
 											<table cellpadding="0" cellspacing="0" border="0" id="PRCashDistributionList" class="grid">
 												<thead>
@@ -353,7 +353,7 @@
 							<div class="clear">
 								<div id="StockDistribution" class="gridbox" style="display: none">
 									<%using (Html.Form(new { @id = "frmUFStockDistribution", @onsubmit = "return dealActivity.submitUFStockDistribution(this);" })) {%>
-									<div >
+									<div>
 										<% Html.RenderPartial("TBoxTop"); %>
 										<table cellpadding="0" cellspacing="0" border="0" id="StockDistributionList" class="grid">
 											<thead>
@@ -741,15 +741,22 @@
 							<div style="float: left">
 								<%using (Html.Form(new { @id = "frmReconcile", @onsubmit = "return dealReconcile.submit();" })) { %>
 								<div class="cell">
-								<%: Html.TextBox("StartDate", "START DATE", new { @id = "ReconStartDate",  @style = "width:100px" })%>&nbsp;&nbsp;
+									<%: Html.TextBox("StartDate", "START DATE", new { @id = "ReconStartDate",  @style = "width:100px" })%>&nbsp;&nbsp;
 								</div>
 								<div class="cell">
-								<%: Html.TextBox("EndDate", "END DATE", new { @id = "ReconEndDate",   @style = "width:100px" })%>&nbsp;&nbsp;
+									<%: Html.TextBox("EndDate", "END DATE", new { @id = "ReconEndDate",   @style = "width:100px" })%>&nbsp;&nbsp;
 								</div>
 								<div class="cell">
-								<%: Html.TextBox("ReconcileFundName", "SEARCH FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:200px" })%>
+									<%: Html.TextBox("ReconcileFundName", "SEARCH AMBERBROOK FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:200px" })%>
+								</div>
+								<div class="cell" style="padding-left: 10px;">
+									<%: Html.TextBox("ReconcileUnderlyingFundName", "SEARCH UNDERLYING FUND", new { @id = "ReconcileUnderlyingFundName", @class = "wm", @style = "width:200px" })%>
+								</div>
+								<div class="cell" style="padding-left: 10px;">
+									<%: Html.Image("search_active.png", new { @onclick = "javascript:dealReconcile.submit(0);" })%>
 								</div>
 								<%: Html.Hidden("FundId","", new { @id = "ReconcileFundId" })%>
+								<%: Html.Hidden("UnderlyingFundId", "", new { @id = "ReconcileUnderlyingFundId" })%>
 								<%}%>
 							</div>
 						</div>
@@ -801,10 +808,6 @@
 																	  Source = "/Fund/FindFunds",	MinLength = 1,
 																	  OnSelect = "function(event, ui) { dealActivity.setFLEFund(ui.item.id,ui.item.value);}"
 	})%>
-	<%= Html.jQueryAutoComplete("ReconcileFundName", new AutoCompleteOptions {
-																	  Source = "/Fund/FindFunds",	MinLength = 1,
-																	  OnSelect = "function(event, ui) { dealReconcile.setFundId(ui.item.id);}"
-	})%>
 	<%= Html.jQueryAutoComplete("UDV_UnderlyingDirect", new AutoCompleteOptions {
 	Source = "/Deal/FindIssuers",
 	MinLength = 1,
@@ -830,7 +833,7 @@
 	<%=Html.jQueryDatePicker("ConversionDate")%>
 	<%=Html.jQueryDatePicker("ReconStartDate", new DatePickerOptions { OnSelect = "dealReconcile.changeDate" })%>
 	<%=Html.jQueryDatePicker("ReconEndDate", new DatePickerOptions { OnSelect = "dealReconcile.changeDate" })%>
-	<script type="text/javascript">dealActivity.init();dealActivity.newFLEData=<%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.FundExpenseModel())%>;</script>
+	<script type="text/javascript">dealActivity.init();dealActivity.newFLEData=<%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.FundExpenseModel())%>;dealReconcile.init();</script>
 	<script id="CashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("UnderlyingFundCashDistribution", Model.UnderlyingFundCashDistributionModel); %>
 		<% Html.RenderPartial("ManualUnderlyingFundCashDistribution"); %>

@@ -68,7 +68,7 @@
 					p.page=data.page;
 				}
 				this.buildpager();
-				
+
 				if(p.onTemplate) {
 					p.onTemplate(tbody,data);
 				} else {
@@ -79,7 +79,7 @@
 						 function (i,row) {
 						 	var tr=document.createElement('tr');
 						 	if(i%2) { tr.className='erow'; }
-						 	tr.id='row'+i;
+						 	tr.id='row'+(i+1);
 						 	var i=0;
 						 	$("thead tr:first th",g.bDiv).each(function () {
 						 		var td=document.createElement('td');
@@ -308,9 +308,9 @@
 
 		g.gCDiv.className="fcDiv";
 
-		var pt = t;
-		if ($(t).parents(".tblbox").get(0)){
-			pt = $(t).parents(".tblbox").get(0); //new grid style
+		var pt=t;
+		if($(t).parents(".tblbox").get(0)) {
+			pt=$(t).parents(".tblbox").get(0); //new grid style
 		}
 
 		$(pt).before(g.gDiv);

@@ -35,7 +35,7 @@ namespace DeepBlue.Controllers.Document {
 			ViewData["SubmenuName"] = "";
 			ViewData["PageName"] = "NewDocument";
 			CreateModel model = new CreateModel();
-			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
+			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes((int)DeepBlue.Models.Admin.Enums.DocumentSection.Investor));
 			model.DocumentStatusTypes = SelectListFactory.GetDocumentStatusList();
 			model.DocumentStatus = (int)DocumentStatus.Investor;
 			model.UploadTypes = SelectListFactory.GetUploadTypeSelectList();
@@ -176,7 +176,7 @@ namespace DeepBlue.Controllers.Document {
 			ViewData["SubmenuName"] = "";
 			ViewData["PageName"] = "DocumentSearch";
 			SearchModel model = new SearchModel();
-			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes());
+			model.DocumentTypes = SelectListFactory.GetDocumentTypeSelectList(AdminRepository.GetAllDocumentTypes((int)DeepBlue.Models.Admin.Enums.DocumentSection.Investor));
 			model.DocumentStatusTypes = SelectListFactory.GetDocumentStatusList();
 			model.DocumentStatus = (int)DocumentStatus.Investor;
 			return View(model);

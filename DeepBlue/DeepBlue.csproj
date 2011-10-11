@@ -109,6 +109,7 @@
     <Compile Include="Helpers\WebAddressAttribute.cs" />
     <Compile Include="Helpers\ZipAttribute.cs" />
     <Compile Include="Models\Account\LogOnModel.cs" />
+    <Compile Include="Models\Admin\EditDocumentTypeModel.cs" />
     <Compile Include="Models\Admin\EditUserModel.cs" />
     <Compile Include="Models\Admin\EditCurrencyModel.cs" />
     <Compile Include="Models\Admin\EditFundExpenseTypeModel.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalCallLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalDistributionLineItemService.cs" />
+    <Compile Include="Models\Entity\Partial\DocumentTypeService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundContactService.cs" />
     <Compile Include="Models\Entity\Partial\LogService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorAccountService.cs" />
@@ -256,6 +258,7 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVHistoryService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
     <Compile Include="Models\Entity\Validation\AnnualMeetingHistory.cs" />
+    <Compile Include="Models\Entity\Validation\DocumentType.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundContact.cs" />
     <Compile Include="Models\Entity\Validation\InvestorContact.cs" />
     <Compile Include="Models\Entity\Validation\Log.cs" />
@@ -916,6 +919,9 @@
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
     <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
+    <Content Include="Assets\javascripts\Log.js" />
+    <Content Include="Assets\javascripts\DealList.js" />
+    <Content Include="Assets\javascripts\DocumentType.js" />
     <Content Include="Assets\javascripts\InvestorCommitment.js" />
     <Content Include="Assets\javascripts\InvestorContactInfo.js" />
     <Content Include="Assets\javascripts\InvestorBankInfo.js" />
@@ -1058,6 +1064,8 @@
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
     <Content Include="Views\Admin\CommunicationType.aspx" />
     <Content Include="Views\Admin\CashDistributionType.aspx" />
+    <Content Include="Views\Admin\DocumentType.aspx" />
+    <Content Include="Views\Admin\Log.aspx" />
     <Content Include="Views\Admin\User.aspx" />
     <Content Include="Views\Admin\Currency.aspx" />
     <Content Include="Views\Admin\ExportExcel.ascx" />

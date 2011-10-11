@@ -14,9 +14,9 @@ namespace DeepBlue.Models.Deal {
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
 		public DateTime? EndDate { get; set; }
 
-		[Required(ErrorMessage = "Fund is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Fund is required")]
-		public int FundId { get; set; }
+		public int? FundId { get; set; }
+
+		public int? UnderlyingFundId { get; set; }
 
 		public int ReconcileType { get; set; }
 		

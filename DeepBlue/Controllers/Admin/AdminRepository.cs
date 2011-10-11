@@ -970,16 +970,6 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region  DocumentTypes
-		public List<DocumentType> GetAllDocumentTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from document in context.DocumentTypes
-						orderby document.DocumentTypeName
-						select document).ToList();
-			}
-		}
-		#endregion
-
 		#region  Communication
 		public string GetContactCommunicationValue(int contactId, Models.Admin.Enums.CommunicationType communicationType) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -1876,6 +1866,99 @@ namespace DeepBlue.Controllers.Admin {
 			return user.Save();
 		}
 
+		#endregion
+
+		#region  DocumentType
+
+		public List<Models.Entity.DocumentType> GetAllDocumentTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.DocumentType> query = (from documentType in context.DocumentTypes.Include("DocumentSection")
+																select documentType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<DocumentType> paginatedList = new PaginatedList<DocumentType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public List<DocumentType> GetAllDocumentTypes(int documentSectionId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from documentType in context.DocumentTypes
+						where documentType.DocumentSectionID == documentSectionId
+						orderby documentType.DocumentTypeName
+						select documentType).ToList();
+			}
+		}
+
+		public DocumentType FindDocumentType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DocumentTypes.Include("DocumentSection").SingleOrDefault(type => type.DocumentTypeID == id);
+			}
+		}
+
+		public bool DocumentTypeNameAvailable(string documentTypeName, int documentTypeID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.DocumentTypes
+						 where type.DocumentTypeName == documentTypeName && type.DocumentTypeID != documentTypeID
+						 select type.DocumentTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteDocumentType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				DocumentType documentType = context.DocumentTypes.SingleOrDefault(type => type.DocumentTypeID == id);
+				if (documentType != null) {
+					if (documentType.DealFundDocuments.Count == 0
+						&& documentType.InvestorFundDocuments.Count == 0
+						&& documentType.UnderlyingDirectDocuments.Count == 0
+						&& documentType.UnderlyingFundDocuments.Count == 0
+						) {
+						context.DocumentTypes.DeleteObject(documentType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveDocumentType(DocumentType documentType) {
+			return documentType.Save();
+		}
+
+		public List<DocumentSection> GetAllDocumentSections() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DocumentSections.OrderBy(documentSection => documentSection.Name).ToList();
+			}
+		}
+
+		public List<AutoCompleteList> FindDocumentTypes(string documentTypeName, int documentSectionId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> documentTypeListQuery = (from documentType in context.DocumentTypes
+															   where documentType.DocumentSectionID == documentSectionId
+															   orderby documentType.DocumentTypeName
+															   select new AutoCompleteList {
+																   id = documentType.DocumentTypeID,
+																   label = documentType.DocumentTypeName,
+																   value = documentType.DocumentTypeName
+															   }).OrderBy(list => list.label);
+				return new PaginatedList<AutoCompleteList>(documentTypeListQuery, 1, AutoCompleteOptions.RowsLength);
+			}
+		}
+
+		#endregion
+
+		#region Log
+		public List<Log> GetAllLogs(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Log> query = (from log in context.Logs.Include("LogDetails")
+																orderby log.LogID descending
+																select log);
+				PaginatedList<Log> paginatedList = new PaginatedList<Log>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
 		#endregion
 
 	}

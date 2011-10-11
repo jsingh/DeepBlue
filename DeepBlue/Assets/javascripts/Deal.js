@@ -33,13 +33,13 @@
 				$(".expandaddbtn",$(this).parent()).show().addClass("addbtn-extend");
 			} else {
 				$(this).removeClass("expandsel");
-				$(".expandtitle", this).hide();
-				$(".expandimg", this).show();
+				$(".expandtitle",this).hide();
+				$(".expandimg",this).show();
 				$(this).next(".fieldbox").hide();
 				$(this).prev(".expandaddbtn").hide();
-				switch ($(this).parent().get(0).id){
+				switch($(this).parent().get(0).id) {
 					case "DealSellerInfo":
-						$(".fieldbox", $("#SellerInfo")).hide();
+						$(".fieldbox",$("#SellerInfo")).hide();
 						break;
 					case "DealUnderlyingDirects":
 						$(this).next().next(".fieldbox").hide();
@@ -84,7 +84,7 @@
 
 			$("#DealTemplate").tmpl(data).appendTo("#NewDeal");
 			$("#DealExpenseTemplate").tmpl(data).appendTo("#DealExpenses");
-			
+
 			$("#DealDocumentTemplate").tmpl(data).appendTo("#DealDocuments");
 			$("#DealSellerInfoTemplate").tmpl(data.SellerInfo).appendTo("#DealSellerInfo");
 			$("#DealUnderlyingFundTemplate").tmpl(data).appendTo("#DealUnderlyingFunds");
@@ -123,11 +123,25 @@
 			deal.calcDUF();
 			deal.calcDUD();
 			deal.documentSetUp();
+			deal.setupDocumentType();
 			jHelper.jqCheckBox(dealMain);
-
 
 			$("#DocumentDate").datepicker({ changeMonth: true,changeYear: true });
 		} catch(e) { jAlert(e); }
+	}
+	,setupDocumentType: function (target) {
+		$("#DocumentType",target).autocomplete(
+		{
+			source: function (request,response) {
+				$.getJSON("/Admin/FindDocumentTypes?term="+request.term+"&documentSectionId=2",function (data) {
+					response(data);
+				});
+			}
+		,minLength: 1
+		,autoFocus: true
+		,select: function (event,ui) { $("#DocumentTypeId",target).val(ui.item.id); }
+		,appendTo: "body",delay: 300
+		});
 	}
 	,uploadDocument: function () {
 		return false;
@@ -324,12 +338,12 @@
 		$(".hide",tr).css("display","block");
 		$(".show",tr).css("display","none");
 	},
-	showFooter: function(body, foot){
-		if($("tr","#" + body).length > 0) {
-			$("#" + foot).show();
+	showFooter: function (body,foot) {
+		if($("tr","#"+body).length>0) {
+			$("#"+foot).show();
 		}
-		else{
-			$("#" + foot).hide();
+		else {
+			$("#"+foot).hide();
 		}
 	}
 

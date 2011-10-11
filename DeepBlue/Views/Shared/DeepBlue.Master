@@ -109,7 +109,7 @@
 					<%: Html.ActionLink("Create New Deal", "New", "Deal", null, new { @class = (ViewData["SubmenuName"] == "Create New Deal" ? "sel" : "") })%>
 				</li>
 				<li>
-					<%: Html.ActionLink("Modify Deal", "Edit", "Deal", null, new { @class = (ViewData["SubmenuName"] == "Modify Deal" ? "sel" : "") })%>
+					<%: Html.ActionLink("Modify Deal", "List", "Deal", null, new { @class = (ViewData["SubmenuName"] == "DealList" ? "sel" : "") })%>
 				</li>
 				<li>
 					<%: Html.ActionLink("Close Deal", "Close", "Deal", null, new { @class = (ViewData["PageName"] == "CloseDeal" ? "sel" : "") })%>
@@ -154,6 +154,9 @@
 				</li>
 				<li>
 					<%: Html.ActionLink("Deal Management", "PurchaseType", "Admin", null, new { @class = (ViewData["SubmenuName"] == "DealManagement" ? "sel" : "") })%>
+				</li>
+				<li>
+					<%: Html.ActionLink("Document Management", "DocumentType", "Admin", null, new { @class = (ViewData["SubmenuName"] == "DocumentManagement" ? "sel" : "") })%>
 				</li>
 				<%if (AdminAuthorizeHelper.IsAdmin) {%>
 				<li>

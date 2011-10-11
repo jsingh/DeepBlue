@@ -88,5 +88,10 @@ namespace DeepBlue.Models.Admin.Enums {
 		/// </summary>
 		Stats = 5
 	}
+
+	public enum DocumentSection {
+		Investor = 1,
+		Deal = 2
+	}
 	
 }

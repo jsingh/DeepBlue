@@ -43,29 +43,9 @@
 			<table id="FundList" cellpadding="0" cellspacing="0" border="0" class="grid">
 				<thead>
 					<tr>
-						<%--<th sortname="FundID" style="width: 1%; display: none;">
-							Fund Id
-						</th>--%>
 						<th sortname="FundName" style="width: 26%" colspan=4>
 							Fund Name
 						</th>
-						<%--<th sortname="TaxId" style="width: 12%">
-							Tax ID
-						</th>
-						<th sortname="CommitmentAmount" style="width: 14%">
-							Committed Amount
-						</th>
-						<th sortname="UnfundedAmount" style="width: 14%">
-							Unfunded amount
-						</th>
-						<th sortname="InceptionDate" style="width: 14%">
-							Fund Start Date
-						</th>
-						<th sortname="ScheduleTerminationDate" style="width: 14%">
-							Schedule Termination Date
-						</th>
-						<th align="right" style="width: 5%">
-						</th>--%>
 					</tr>
 				</thead>
 			</table>

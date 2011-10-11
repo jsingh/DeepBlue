@@ -69,10 +69,10 @@ namespace DeepBlue.Models.Investor {
 		[DisplayName("Zip")]
 		[Zip(ErrorMessage = "Invalid Zip")]
 		public string Zip { get; set; }
-
-		[DisplayName("Country")]
+		
 		[Required(ErrorMessage = "Country is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Country is required")]
+		[DisplayName("Country")]
 		public int Country { get; set; }
 
 		public string CountryName { get; set; }

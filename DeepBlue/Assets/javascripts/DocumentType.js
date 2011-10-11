@@ -1,4 +1,4 @@
-﻿var customField={
+﻿var documentType={
 	add: function (that) {
 		var flexigrid=$(that).parents(".flexigrid:first");
 		var row=$("#Row0",flexigrid).get(0);
@@ -24,13 +24,13 @@
 		$(":input:first",tr).focus();
 	}
 	,deleteRow: function (img,id) {
-		if(confirm("Are you sure you want to delete this custom field?")) {
+		if(confirm("Are you sure you want to delete this document type?")) {
 			var tr=$(img).parents("tr:first");
 			var imgsrc=img.src;
 			$(img).attr("src","/Assets/images/ajax.jpg");
 			img.src=imgsrc;
 			var dt=new Date();
-			var url="/Admin/DeleteCustomField/"+id+"?t="+dt.getTime();
+			var url="/Admin/DeleteDocumentType/"+id+"?t="+dt.getTime();
 			$.get(url,function (data) {
 				if(data!="") {
 					jAlert(data);
@@ -44,7 +44,7 @@
 	,save: function (img,id) {
 		var tr=$("#Row"+id);
 		var param=jHelper.serialize(tr);
-		var url="/Admin/UpdateCustomField";
+		var url="/Admin/UpdateDocumentType";
 		var imgsrc=img.src;
 		$(img).attr("src","/Assets/images/ajax.jpg");
 		$.post(url,param,function (data) {
@@ -53,7 +53,7 @@
 			if(arr[0]!="True") {
 				jAlert(data);
 			} else {
-				$.getJSON("/Admin/EditCustomField?_"+(new Date).getTime()+"&id="+arr[1],function (loadData) {
+				$.getJSON("/Admin/EditDocumentType?_"+(new Date).getTime()+"&id="+arr[1],function (loadData) {
 					$("#GridTemplate").tmpl(loadData).insertAfter(tr);
 					$(tr).remove();
 					var newTR=$("#Row"+arr[1]);
@@ -72,10 +72,10 @@
 		$(window).resize();
 	}
 	,onInit: function (g) {
-		var data={ name: "Add Custom Field" };
+		var data={ name: "Add Document Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
 		//		$(window).resize(function () {
-		//			customField.resizeGV(g);
+		//			documentType.resizeGV(g);
 		//		});
 	}
 	,onTemplate: function (tbody,data) {
