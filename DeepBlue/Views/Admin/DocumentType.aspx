@@ -33,7 +33,7 @@
 						<th sortname="DocumentTypeName" style="width: 40%">
 							Document Type
 						</th>
-						<th sortname="Name" style="width: 25%">
+						<th sortname="DocumentSectionName" style="width: 25%">
 							Document Section
 						</th>
 						<th>

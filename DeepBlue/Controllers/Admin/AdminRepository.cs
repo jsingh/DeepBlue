@@ -1874,7 +1874,14 @@ namespace DeepBlue.Controllers.Admin {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<Models.Entity.DocumentType> query = (from documentType in context.DocumentTypes.Include("DocumentSection")
 																select documentType);
-				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				switch (sortName) {
+					case "DocumentSectionName":
+						query = (sortOrder == "asc" ? query.OrderBy(documentType => documentType.DocumentSection.Name) : query.OrderByDescending(documentType => documentType.DocumentSection.Name));
+						break;
+					default:
+						query = query.OrderBy(sortName, (sortOrder == "asc"));
+						break;
+				}
 				PaginatedList<DocumentType> paginatedList = new PaginatedList<DocumentType>(query, pageIndex, pageSize);
 				totalRows = paginatedList.TotalCount;
 				return paginatedList;
