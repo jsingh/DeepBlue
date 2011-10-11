@@ -41,7 +41,7 @@ namespace DeepBlue.Tests.Controllers.Deal {
 			// Spin up the controller with the mock http context, and the mock repository
 			DefaultController = new DealController(MockDealRepository.Object, MockAdminRepository.Object, MockCapitalCallRepository.Object, MockFundRepository.Object);
 			DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
-			MockAdminRepository.Setup(x=>x.GetAllDocumentTypes()).Returns(new List<DocumentType>());
+			MockAdminRepository.Setup(x => x.GetAllDocumentTypes((int)DeepBlue.Models.Admin.Enums.DocumentSection.Investor)).Returns(new List<DocumentType>());
 			MockAdminRepository.Setup(x =>x.GetAllPurchaseTypes()).Returns(new List<PurchaseType>());
 			MockAdminRepository.Setup(x => x.GetAllDealClosingCostTypes()).Returns(new List<DealClosingCostType>());
 			MockDealRepository.Setup(x=>x.GetAllUnderlyingFunds()).Returns(new List<UnderlyingFund>());

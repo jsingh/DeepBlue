@@ -28,7 +28,7 @@ namespace DeepBlue.Tests.Controllers.Document {
 			// Spin up the controller with the mock http context, and the mock repository
 			DefaultController = new DocumentController(MockRepository.Object, MockAdminRepository.Object);
 			DefaultController.ControllerContext = new ControllerContext(DeepBlue.Helpers.HttpContextFactory.GetHttpContext(), new RouteData(), new Mock<ControllerBase>().Object);
-			MockAdminRepository.Setup(x => x.GetAllDocumentTypes()).Returns(new List<DocumentType>());
+			MockAdminRepository.Setup(x => x.GetAllDocumentTypes((int)DeepBlue.Models.Admin.Enums.DocumentSection.Investor)).Returns(new List<DocumentType>());
 		}
 
 
