@@ -73,6 +73,14 @@
 					}
 				});
 
+
+			input.data("autocomplete")._renderMenu=function (ul,items) {
+				var self=this;
+				$.each(items,function (index,item) {
+					self._renderItem(ul,item);
+				});
+			};
+
 			input.data("autocomplete")._renderItem=function (ul,item) {
 				return $("<li></li>")
 						.data("item.autocomplete",item)

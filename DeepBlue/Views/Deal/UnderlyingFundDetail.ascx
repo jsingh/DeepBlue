@@ -76,7 +76,7 @@
 		<%: Html.TextBox("Website", "${Website}")%>
 	</div>
 	<div class="editor-label">
-		<%: Html.Label("Web UserName")%>
+		<%: Html.Label("Web User Name")%>
 	</div>
 	<div class="editor-field">
 		<%: Html.TextBox("WebUserName","${WebUserName}")%>

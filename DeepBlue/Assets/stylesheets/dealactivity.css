@@ -278,6 +278,7 @@
 }
 .heading {
 	padding-bottom: 0px;
+	height:0px;
 }
 #SADetailBox {
 	display: block;

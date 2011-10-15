@@ -14,7 +14,8 @@
 				collision: "none"
 			},
 			search: "",
-			source: null
+			source: null,
+			fullSearch: false
 		},
 
 		pending: 0,
@@ -59,9 +60,9 @@
 					var autocomplete=input.data("autocomplete");
 					autocomplete.options.minLength=0;
 					// pass empty string as value to search for, displaying all results
+					self.options.fullSearch=true;
 					input.autocomplete("search","");
 					input.focus();
-
 				});
 
 				$(this.elementBox)
@@ -419,9 +420,24 @@
 
 		_renderMenu: function (ul,items) {
 			var self=this;
+			if(this.options.fullSearch) {
+				var source=this.options.source;
+				var search=this.options.search;
+				var cacheNames=this.options.cacheNames;
+				var isCacheName=false;
+				for(var i=0;i<cacheNames.length;i++) {
+					if(cacheNames[i]==source) {
+						isCacheName=true;
+					}
+				}
+				if(isCacheName==false) {
+					self._renderItem(ul,{ id: "0",value: "--Select One--",label: "--Select One--",otherid: "0",otherid2: "0",othervalues: [],option: null });
+				}
+			}
 			$.each(items,function (index,item) {
 				self._renderItem(ul,item);
 			});
+			this.options.fullSearch=false;
 		},
 
 		_renderItem: function (ul,item) {
