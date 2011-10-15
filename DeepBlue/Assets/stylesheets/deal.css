@@ -117,11 +117,9 @@ h4 a {
 .dealdetail {
 	float: left;
 	padding-left: 65px;
-	width: 93%;
+	width: 90.8%;
 }
-.dealdetail .cell {
-	font-size: 14px;
-}
+ 
 .section {
 	margin: 5px 0px;
 	float: left;
@@ -285,4 +283,26 @@ h4 a {
 }
 #DealSellerInfo .editor-field {
     width: 160px;
+}
+
+#tblUnderlyingDirect  td input[type="text"]
+,#tblUnderlyingDirect td select {
+	max-width: 101px;
+}
+#tblUnderlyingFund td input[type="text"]
+,#tblUnderlyingFund td select {
+	max-width: 129px;
+}
+#SellerInfo .dealdetail{
+	    padding-left: 30px;
+    width: 68%;
+}
+#SellerInfo .savebox{
+	 padding-left: 27%; width: auto;float:right;
+}
+#DealUnderlyingFunds .dealdetail
+,#DealUnderlyingDirects .dealdetail
+,#DealDocuments .dealdetail
+,#DealExpenses .dealdetail{
+	width: 94.5%;
 }

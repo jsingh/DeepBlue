@@ -46,10 +46,10 @@
 					</div>
 					<div style="text-align: left;padding-left:20px;" class="cell">
 						<label>
-							Deal No:-<%: Html.Span("", new { @id = "SpnDealNo", @style = "padding-left:10px;" })%></label></div>
+							Deal No<%: Html.Span("", new { @id = "SpnDealNo", @style = "padding-left:10px;" })%></label></div>
 					<div style="margin-left: 8px;" class="cell auto">
 						<label>
-							Deal Name-<%: Html.Span("", new { @id = "SpnDealName", @style = "padding-left:10px;" })%></label></div>
+							Deal Name<%: Html.Span("", new { @id = "SpnDealName", @style = "padding-left:10px;" })%></label></div>
 					<div id="LoadingDetail" class="cell auto">
 						<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...", new { @id = "SpnGridLoading", @style="display:none;" })%>
 					</div>

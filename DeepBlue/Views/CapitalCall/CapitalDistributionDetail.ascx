@@ -4,51 +4,43 @@
 	<div class="line">
 	</div>
 	<div class="cc-box-det dist-detail">
-		<div class="editor-label-first">
-			<label>
-				Capital Distributed-</label>
+		<div class="editor-label">
+			<%: Html.Label("Capital Distributed")%>
 		</div>
 		<div class="editor-field">
 			${formatCurrency(CapitalDistributed)}
 		</div>
 		<div class="editor-label" style="clear: right;">
-			<label>
-				Return Management Fees-</label>
+			<%: Html.Label("Return Management Fees")%>
 		</div>
 		<div class="editor-field">
 			${formatCurrency(ReturnManagementFees)}
 		</div>
-		<div class="editor-label-first">
-			<label>
-				Return Fund Expense-</label>
+		<div class="editor-label">
+			<%: Html.Label("Return Fund Expense")%>
 		</div>
 		<div class="editor-field">
 			${formatCurrency(ReturnFundExpenses)}
 		</div>
 		<div class="editor-label" style="clear: right;">
-			<label>
-				Fund Expenses-</label>
+			<%: Html.Label("Fund Expenses")%>
 		</div>
 		<div class="editor-field">
 			${formatCurrency(FundExpenses)}
 		</div>
 		<div class="editor-label" style="clear: right;">
-			<label>
-				Profits Returned-</label>
+			<%: Html.Label("Profits Returned")%>
 		</div>
 		<div class="editor-field">
 			${formatCurrency(ProfitsReturned)}
 		</div>
 	</div>
-	{{if CapitalDistributions.length>0}}
-	<div class="line">
-	</div>
-	{{/if}}
-	<div class="cc-box-det cc-det-report">
 		{{if CapitalDistributions.length>0}}
-		<div>
-			<% Html.RenderPartial("TBoxTop"); %>
-			<table cellpadding="0" cellspacing="0" class="grid">
+			<div class="line">
+			</div>
+			<div class="cc-box-det cc-det-report">
+				<% Html.RenderPartial("TBoxTop"); %>
+				<table cellpadding="0" cellspacing="0" class="grid">
 				<thead>
 					<tr>
 						<th style="text-align:left;width:12%;">
@@ -113,8 +105,7 @@
 					{{/each}}
 				</tbody>
 			</table>
-			<% Html.RenderPartial("TBoxBottom"); %>
-		</div>
+				<% Html.RenderPartial("TBoxBottom"); %>
+			</div>
 		{{/if}}
-	</div>
 </div>

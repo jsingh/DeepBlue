@@ -4,7 +4,7 @@
 <%: Html.Hidden("CountryId", "${CountryId}")%>
 <%: Html.Hidden("IsUnderlyingFundModel", "${IsUnderlyingFundModel}")%>
 <div id="DetailBox" style="float:left;clear:both;">
-	<div class="editor-label" style="{{if IsUnderlyingFundModel==true}}width:157px{{else}}width:128px;padding-right:26px;{{/if}}" >
+	<div class="editor-label">
 		{{if IsUnderlyingFundModel==true}}GP{{else}}Company{{/if}}
 	</div>
 	<div class="editor-field">

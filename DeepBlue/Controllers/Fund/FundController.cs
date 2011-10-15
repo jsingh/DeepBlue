@@ -10,6 +10,7 @@ using DeepBlue.Controllers.Admin;
 using System.Text;
 using DeepBlue.Models.Admin.Enums;
 using DeepBlue.Models.Fund.Enums;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Fund {
 	public class FundController : BaseController {
@@ -53,10 +54,8 @@ namespace DeepBlue.Controllers.Fund {
 							fund.FundId,
 							fund.FundName,
 							fund.TaxId,
-							fund.CommitmentAmount,
-							fund.UnfundedAmount,
-							(fund.InceptionDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"),
-							(fund.InceptionDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy"),
+							fund.InceptionDate,
+							fund.ScheduleTerminationDate
 					}
 				});
 			}

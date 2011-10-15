@@ -27,7 +27,7 @@
 			<%: Html.HiddenFor(model => model.InvestorId)%>
 			<%: Html.HiddenFor(model => model.FundId)%>
 			<div class="doc-header">
-				<div class="editor-label-first">
+				<div class="editor-label">
 					<%: Html.LabelFor(model => model.FromDate) %>
 				</div>
 				<div class="editor-field">
@@ -39,13 +39,13 @@
 				<div class="editor-field">
 					<%: Html.TextBox("ToDate", "", new { @id = "ToDate" })%>
 				</div>
-				<div class="editor-label-first">
+				<div class="editor-label">
 					<%: Html.LabelFor(model => model.DocumentTypeId) %>
 				</div>
 				<div class="editor-field">
 					<%: Html.DropDownListFor(model => model.DocumentTypeId, Model.DocumentTypes, new { @style = "width:190px", @refresh="true", @action="DocumentType" })%>
 				</div>
-				<div class="editor-label-first">
+				<div class="editor-label">
 					<%: Html.LabelFor(model => model.DocumentStatus)%>
 				</div>
 				<div class="editor-field">

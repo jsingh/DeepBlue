@@ -26,13 +26,13 @@
 			<span class="title">INVESTMENTS</span><span class="arrow"></span><span class="pname">CREATE
 				NEW DEAL</span></div>
 		<div class="rightcol">
-			<%: Html.TextBox("M_Fund","SEARCH FUND", new { @class="wm", @style="width:200px", @id="M_Fund" })%>
+			<%: Html.TextBox("M_Fund", "SEARCH AMBERBROOK FUND", new { @class = "wm", @style = "width:200px", @id = "M_Fund" })%>
 		</div>
 	</div>
 	<%}%>
 	<%}%>
-	<%if (ViewData["PageName"] == "Modify Deal") {%>
-	<%using (Html.Div(new { @id = "ModifyDealBox", @class = "navigation", @style = (ViewData["PageName"] == "Modify Deal" ? "display:block" : "display:none") })) {%>
+	<%if (ViewData["PageName"] == "DealList") {%>
+	<%using (Html.Div(new { @id = "ModifyDealBox", @class = "navigation", @style = (ViewData["PageName"] == "DealList" ? "display:block" : "display:none") })) {%>
 	<div id="modifyDealUL" class="heading">
 		<div class="leftcol">
 			<span class="title">INVESTMENTS</span><span class="arrow"></span><span class="pname">
@@ -55,10 +55,8 @@
 		<%}%>
 		<div id="DealExpenses" class="content">
 		</div>
-		<%using (Html.Form(new { @id = "frmDocumentInfo", @name = "frmDocumentInfo", @action = "/Deal/CreateDocument", @method = "POST", @onsubmit = "return deal.uploadDocument();" })) {%>
 		<div id="DealDocuments" class="content">
 		</div>
-		<%}%>
 		<%using (Html.Form(new { @id = "frmSellerInfo", @onsubmit = "return deal.saveSellerInfo(this);" })) {%>
 		<div id="DealSellerInfo" class="content">
 		</div>
@@ -129,7 +127,7 @@
 	<%if (ViewData["PageName"] == "Create New Deal" && Model.FundId > 0) {%>
 	<script type="text/javascript">$(document).ready(function() { deal.selectFund(<%=Model.FundId%>,'<%=Model.FundName%>'); });</script>
 	<%}%>
-	<%if (ViewData["PageName"] == "Modify Deal") {%>
+	<%if (ViewData["PageName"] == "DealList") {%>
 	<script type="text/javascript">$(document).ready(function() {  deal.loadDeal(<%=Model.DealId%>); });</script>
 	<%}%>
 	<script id="DealTemplate" type="text/x-jquery-tmpl">

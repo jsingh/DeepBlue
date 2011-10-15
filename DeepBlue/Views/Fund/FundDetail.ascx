@@ -11,10 +11,10 @@
 	<div class="editor-label">
 		<%: Html.LabelFor(model => model.FundName) %>
 	</div>
-	<div class="editor-field">
+	<div class="editor-field" style="width:auto">
 		<%: Html.jQueryTemplateTextBoxFor(model => model.FundName, new { @style = "width:220px;" }) %>
 	</div>
-	<div class="editor-label" style="clear: right; width: 65px;">
+	<div class="editor-label" style="clear: right;width:97px;">
 		<%: Html.LabelFor(model => model.TaxId) %>
 	</div>
 	<div class="editor-field">
@@ -214,12 +214,15 @@
 </div>
 <div class="line">
 </div>
-<div class="editor-button" style="width: 300px; padding: 20px 0 0 0">
-	<div style="float: left; padding: 0 0 10px 5px;">
-		<%: Html.ImageButton("{{if FundId>0}}modifyfund_active.png{{else}}addfund_active.png{{/if}}", new { @class = "default-button", onclick = "return fund.save(this);" })%>
-	</div>
+<div class="editor-button" style="width: 280px; padding: 20px 0 0 0">
 	<div style="float: left; padding: 0 0 10px 5px;">
 		<%: Html.Span("",new { id = "UpdateLoading" })%>
+	</div>
+	<div style="float: right; padding: 0 0 10px 5px;">
+		<%: Html.ImageButton("cancel_active.png", new { @class = "default-button", onclick = "javascript:fund.cancel(${FundId});" })%>
+	</div>
+	<div style="float: right; padding: 0 0 10px 5px;">
+		<%: Html.ImageButton("{{if FundId>0}}modifyfund_active.png{{else}}addfund_active.png{{/if}}", new { @class = "default-button", onclick = "return fund.save(this);" })%>
 	</div>
 </div>
 <%: Html.jQueryTemplateHiddenFor(model => model.FundId)%>

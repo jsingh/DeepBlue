@@ -10,6 +10,7 @@ using DeepBlue.Helpers;
 using DeepBlue.Controllers.Investor;
 using System.Text;
 using DeepBlue.Models.CapitalCall.Enums;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.CapitalCall {
 	public class CapitalCallController : BaseController {

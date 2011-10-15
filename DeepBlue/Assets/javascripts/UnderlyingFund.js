@@ -220,6 +220,7 @@
 			$("#Tab"+id).remove();
 			$("#Edit"+id).remove();
 			$("#tabdel"+id).remove();
+			$("#lnkAddUnderlyingFund").removeClass("green-btn-sel");
 			$("#TabFundGrid").click();
 		}
 	}
@@ -245,7 +246,7 @@
 						underlyingFund.onAfterUnderlyingFundSave(arr[1]);
 					} else {
 						if(underlyingFund.tempSave==false) {
-							jAlert("Underlying Fund Added.");
+							jAlert("Underlying Fund Saved.");
 							$("#lnkAddUnderlyingFund").removeClass("green-btn-sel");
 							//$("#AddUnderlyingFund").hide();
 							if(isNew) {

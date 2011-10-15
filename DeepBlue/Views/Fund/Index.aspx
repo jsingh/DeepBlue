@@ -15,9 +15,20 @@
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title">FUNDS</span><span class="arrow"></span><span class="pname">Fund
+				<span class="title">AMBERBROOK FUNDS</span><span class="arrow"></span><span class="pname">Amberbrook Fund
 					Setup</span></div>
 			<div class="rightcol">
+			</div>
+		</div>
+	</div>
+	<div class="headerbar">
+		<div class="breadcrumb">
+			<div class="leftcol">
+				Amberbrook Fund
+			</div>
+			<div class="addbtn" style="display: block; margin-left: 123px;">
+				<%using (Html.GreenButton(new { @id = "lnkAddFund", @onclick = "javascript:fund.edit(0,'');" })) {%>Add Amberbrook
+				Fund<%}%>
 			</div>
 		</div>
 	</div>
@@ -25,11 +36,8 @@
 		<div class="header">
 			<div id="TabMain" class="section-tab-main">
 				<div class="section-tab-box">
-					<%using (Html.Tab(new { @id = "TabFundGrid", @class = "section-tab-sel", @onclick = "javascript:fund.selectTab(this,'FundDetail');" })) {%>Fund
-					setup
-					<%}%>
-					<%using (Html.Tab(new { @id = "TabAddNewFund", @onclick = "javascript:fund.selectTab(this,'AddNewFund');" })) {%>Add
-					New Fund
+					<%using (Html.Tab(new { @id = "TabFundGrid", @class = "section-tab-sel", @onclick = "javascript:fund.selectTab(this,'FundDetail');" })) {%>Amberbrook Fund
+					Setup
 					<%}%>
 				</div>
 			</div>
@@ -43,8 +51,19 @@
 			<table id="FundList" cellpadding="0" cellspacing="0" border="0" class="grid">
 				<thead>
 					<tr>
-						<th sortname="FundName" style="width: 26%" colspan=4>
+						<th sortname="FundName">
 							Fund Name
+						</th>
+						<th sortname="TaxId" style="width: 15%">
+							Tax ID
+						</th>
+						<th sortname="InceptionDate" style="width: 20%">
+							Fund Start Date
+						</th>
+						<th sortname="ScheduleTerminationDate" style="width: 20%">
+							Schedule Termination Date
+						</th>
+						<th align="right" style="width: 15%">
 						</th>
 					</tr>
 				</thead>
@@ -65,7 +84,6 @@
 															   ,OnTemplate = "fund.onTemplate"
 															   ,OnSuccess = "fund.onGridSuccess"
 															   ,BoxStyle = false
-															   , RowsLength = 50
 })%>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -75,13 +93,25 @@
 	</script>
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 		{{each(i,row) rows}}
-			{{if i%4==0}}
-				<tr>
-			{{/if}}
-				<td><a href="javascript:fund.edit(${row.cell[0]},'${row.cell[1]}')">${row.cell[1]}</a></td>
-			{{if i%4==3}}
-				</tr>
-			{{/if}}
+			<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
+				<td>
+					${row.cell[1]}
+				</td>
+				<td>
+					${row.cell[2]}
+				</td>
+				<td>
+					${formatDate(row.cell[3])}
+				</td>
+				<td>
+					${formatDate(row.cell[4])}
+				</td>
+				<td style="text-align:right">
+					{{if row.cell[0]>0}}
+					<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:fund.edit(${row.cell[0]},'${row.cell[1]}');" })%>
+					{{/if}}
+				</td>
+			</tr>
 		{{/each}}
 	</script>
 	<script id="FundAddTemplate" type="text/x-jquery-tmpl">

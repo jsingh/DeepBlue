@@ -7,6 +7,7 @@ using DeepBlue.Models.Report;
 using DeepBlue.Helpers;
 using DeepBlue.Controllers.CapitalCall;
 using DeepBlue.Models.Entity;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Report {
 	public class ReportController : BaseController {

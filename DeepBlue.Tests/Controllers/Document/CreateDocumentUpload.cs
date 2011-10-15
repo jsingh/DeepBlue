@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MbUnit.Framework;
 using Moq;
 using DeepBlue.Models.Document;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Document {
 	public class CreateDocumentUpload : DocumentUploadBase {

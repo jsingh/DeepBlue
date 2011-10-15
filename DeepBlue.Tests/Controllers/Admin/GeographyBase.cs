@@ -9,6 +9,7 @@ using System.Web.Routing;
 using Moq;
 using MbUnit.Framework;
 using DeepBlue.Controllers.Admin;
+using DeepBlue.Controllers.Deal;
 
 namespace DeepBlue.Tests.Controllers.Admin {
     public class GeographyBase : Base {
@@ -18,6 +19,8 @@ namespace DeepBlue.Tests.Controllers.Admin {
 		public Mock<ITransactionRepository> MockTransactionRepository { get; set; }
 
 		public Mock<IAdminRepository> MockAdminRepository { get; set; }
+
+		public Mock<IDealRepository> MockDealRepository { get; set; }
 
         [SetUp]
         public override void Setup() {

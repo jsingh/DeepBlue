@@ -30,5 +30,10 @@
 	<%: Html.jQueryTemplateHidden("${index}_${rowIndex}_ManagementFeeRateScheduleId", "${tier.ManagementFeeRateScheduleId}", new { @id = "ManagementFeeRateScheduleId" })%>
 	<%: Html.jQueryTemplateHidden("${index}_${rowIndex}_ManagementFeeRateScheduleTierId", "${tier.ManagementFeeRateScheduleTierId}", new { @id = "ManagementFeeRateScheduleTierId" })%>
 </td>
+<td>
+	<div class="addyearbtn">
+		<%: Html.Image("addyear_active.png", new { @class="", @onclick = "javascript:fund.addNewRow(this);" })%>
+	</div>
+</td>
 </tr>
 			 

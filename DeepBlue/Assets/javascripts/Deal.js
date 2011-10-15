@@ -67,9 +67,11 @@
 		dealMain.hide();
 		if(dealId>0) {
 			dealMain.show();
+			$("#SaveDealBox",dealMain).hide();
+			$(".content",dealMain).empty();
 			var dt=new Date();
 			var url="/Deal/FindDeal/?dealId="+dealId+"&t="+dt.getTime();
-			$("#NewDeal").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+			$("#NewDeal").html("<center><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</center>");
 			$.getJSON(url,function (data) {
 				$("#SaveDealBox").show();
 				$("#SearchDealName").val(data.DealName);
@@ -81,7 +83,7 @@
 	,loadTemplate: function (data) {
 		try {
 			$(".content","#DealMain").empty();
-
+			$("#SaveDealBox","#DealMain").show();
 			$("#DealTemplate").tmpl(data).appendTo("#NewDeal");
 			$("#DealExpenseTemplate").tmpl(data).appendTo("#DealExpenses");
 
@@ -277,6 +279,8 @@
 		dealMain.hide();
 		if(fundId>0) {
 			dealMain.show();
+			$("#SaveDealBox",dealMain).hide();
+			$(".content",dealMain).empty();
 			var dt=new Date();
 			var url="/Deal/FindFund/?fundId="+fundId+"&t="+dt.getTime();
 			$("#NewDeal").html("<center><img src='/Assets/images/ajax.jpg'>&nbsp;Loading...</center>");

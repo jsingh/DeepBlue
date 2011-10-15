@@ -14,7 +14,7 @@
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title">FUNDS</span><span class="arrow"></span><span class="pname">Detail</span></div>
+				<span class="title">AMBERBROOK FUNDS</span><span class="arrow"></span><span class="pname">Detail</span></div>
 			<div class="rightcol">
 			</div>
 		</div>
@@ -30,7 +30,7 @@
 					Distribution Detail
 					<%}%>
 					<%using (Html.Div(new { @id = "SerCDTab" })) {%>
-					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...&nbsp;", new { @id = "SpnLoading", @style = "display:none;float:left;" })%><%: Html.TextBox("Fund","SEARCH FUND", new { @class="wm", @style = "width:200px" })%>
+					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...&nbsp;", new { @id = "SpnLoading", @style = "display:none;float:left;" })%><%: Html.TextBox("Fund","SEARCH AMBERBROOK FUND", new { @class="wm", @style = "width:200px" })%>
 					<%}%>
 				</div>
 			</div>

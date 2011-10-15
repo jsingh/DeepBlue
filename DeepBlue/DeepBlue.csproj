@@ -91,6 +91,7 @@
     <Compile Include="Helpers\AdvancedEntityTemplateFactory.cs" />
     <Compile Include="Helpers\AppSettingsHelper.cs" />
     <Compile Include="Helpers\Authentication.cs" />
+    <Compile Include="Helpers\ExcelConnection.cs" />
     <Compile Include="Helpers\ExportExcel.cs" />
     <Compile Include="Helpers\ExportPdfResult.cs" />
     <Compile Include="Helpers\ExportToPdf.cs" />
@@ -104,11 +105,16 @@
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\MvcButton.cs" />
     <Compile Include="Helpers\MvcTab.cs" />
+    <Compile Include="Helpers\PagingDataTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Helpers\SecurityContainer.cs" />
     <Compile Include="Helpers\SecurityExtensions.cs" />
     <Compile Include="Helpers\WebAddressAttribute.cs" />
     <Compile Include="Helpers\ZipAttribute.cs" />
     <Compile Include="Models\Account\LogOnModel.cs" />
+    <Compile Include="Models\Admin\DealContactList.cs" />
+    <Compile Include="Models\Admin\EditDealContactModel.cs" />
     <Compile Include="Models\Admin\EditDocumentTypeModel.cs" />
     <Compile Include="Models\Admin\EditUserModel.cs" />
     <Compile Include="Models\Admin\EditCurrencyModel.cs" />
@@ -202,9 +208,6 @@
     <Compile Include="Models\Deal\Enums.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Deal\ResultModel.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Models\Deal\UnderlyingFundCapitalCallModel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -218,7 +221,6 @@
     <Compile Include="Models\Deal\UnderlyingFundPostRecordCashDistributionModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundValuationModel.cs" />
     <Compile Include="Models\Deal\UnfundedAdjustmentModel.cs" />
-    <Compile Include="Models\Document\ResultModel.cs" />
     <Compile Include="Models\Entity\DeepBlue.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -230,6 +232,7 @@
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalCallLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalDistributionLineItemService.cs" />
+    <Compile Include="Models\Entity\Partial\ContactService.cs" />
     <Compile Include="Models\Entity\Partial\DocumentTypeService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundContactService.cs" />
     <Compile Include="Models\Entity\Partial\LogService.cs" />
@@ -417,7 +420,6 @@
     <Compile Include="Models\CapitalCall\ListModel.cs" />
     <Compile Include="Models\CapitalCall\ManagementFeeDetail.cs" />
     <Compile Include="Models\CapitalCall\CreateReceiveModel.cs" />
-    <Compile Include="Models\CapitalCall\ResultModel.cs" />
     <Compile Include="Models\Entity\Partial\CapitalCallService.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -548,8 +550,6 @@
     <Compile Include="Models\Fund\FundDetail.cs" />
     <Compile Include="Models\Fund\FundListModel.cs" />
     <Compile Include="Models\Fund\FundRateScheduleDetail.cs" />
-    <Compile Include="Models\Fund\ResultModel.cs" />
-    <Compile Include="Models\Investor\ResultModel.cs" />
     <Compile Include="Models\Report\CapitalCallSummaryModel.cs" />
     <Compile Include="Models\Report\CapitalCallReportDetail.cs" />
     <Compile Include="Models\Report\CapitalCallItem.cs" />
@@ -576,7 +576,6 @@
     <Compile Include="Models\Report\FeesExpenseReportDetail.cs" />
     <Compile Include="Models\Report\FundBreakDownModel.cs" />
     <Compile Include="Models\Report\FundBreakDownReportDetail.cs" />
-    <Compile Include="Models\Report\ResultModel.cs" />
     <Compile Include="Models\Report\SecurityValueModel.cs" />
     <Compile Include="Models\Report\SecurityValueReportDetail.cs" />
     <Compile Include="Models\Transaction\CreateModel.cs" />
@@ -588,7 +587,6 @@
     <Compile Include="Models\Transaction\EditModel.cs" />
     <Compile Include="Models\Transaction\Enums.cs" />
     <Compile Include="Models\Transaction\ErrorModel.cs" />
-    <Compile Include="Models\Transaction\ResultModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\AppSettings.cs" />
     <Compile Include="Util\ConfigUtil.cs" />
@@ -919,6 +917,7 @@
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
     <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
+    <Content Include="Assets\javascripts\DealContact.js" />
     <Content Include="Assets\javascripts\Log.js" />
     <Content Include="Assets\javascripts\DealList.js" />
     <Content Include="Assets\javascripts\DocumentType.js" />
@@ -1029,6 +1028,7 @@
     <Content Include="Assets\stylesheets\dealactivity.css" />
     <Content Include="Assets\stylesheets\dealclose.css" />
     <Content Include="Assets\stylesheets\dealdirect.css" />
+    <Content Include="Assets\stylesheets\deallist.css" />
     <Content Include="Assets\stylesheets\dealreport.css" />
     <Content Include="Assets\stylesheets\document.css" />
     <Content Include="Assets\stylesheets\editinvestor.css" />
@@ -1064,6 +1064,7 @@
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
     <Content Include="Views\Admin\CommunicationType.aspx" />
     <Content Include="Views\Admin\CashDistributionType.aspx" />
+    <Content Include="Views\Admin\DealContact.aspx" />
     <Content Include="Views\Admin\DocumentType.aspx" />
     <Content Include="Views\Admin\Log.aspx" />
     <Content Include="Views\Admin\User.aspx" />
@@ -1104,11 +1105,17 @@
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
+    <Content Include="Views\Deal\List.aspx" />
+    <Content Include="Views\Deal\Result.ascx" />
     <Content Include="Views\Deal\UnderlyingFundAddressInformationEdit.ascx" />
+    <Content Include="Views\Document\Result.ascx" />
+    <Content Include="Views\Fund\Result.ascx" />
     <Content Include="Views\Investor\AddressInformationEdit.ascx" />
     <Content Include="Views\Investor\BankInformationEdit.ascx" />
     <Content Include="Views\Investor\ContactInformationEdit.ascx" />
     <Content Include="Views\Investor\Library.aspx" />
+    <Content Include="Views\Investor\Result.ascx" />
+    <Content Include="Views\Transaction\Result.ascx" />
     <Content Include="Views\Transaction\TransactionInformation.ascx" />
     <Content Include="Views\Shared\TBoxTop.ascx" />
     <Content Include="Views\Deal\DealFundDocumentList.ascx" />
@@ -1142,14 +1149,12 @@
     <Content Include="Views\Deal\Report.aspx" />
     <Content Include="Views\Deal\DealUnderlyingDirectDetail.ascx" />
     <Content Include="Views\Deal\DealUnderlyingFundDetail.ascx" />
-    <Content Include="Views\Deal\Result.ascx" />
     <Content Include="Views\Deal\SellerDetail.ascx" />
     <Content Include="Views\Deal\DealDetail.ascx" />
     <Content Include="Views\Deal\New.aspx" />
     <Content Include="Views\Deal\UnfundedAdjustment.ascx" />
     <Content Include="Views\Document\List.ascx" />
     <Content Include="Views\Document\New.aspx" />
-    <Content Include="Views\Document\Result.ascx" />
     <Content Include="Views\Document\Search.aspx" />
     <Content Include="Views\Fund\FundRateSchduleTierDetail.ascx" />
     <Content Include="Views\Fund\FundRateSchduleDetail.ascx" />
@@ -1188,16 +1193,13 @@
     <Content Include="Views\Shared\CustomFieldList.ascx" />
     <Content Include="Views\Fund\FundDetail.ascx" />
     <Content Include="Views\Fund\Index.aspx" />
-    <Content Include="Views\Fund\Result.ascx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Investor\FundList.ascx" />
     <Content Include="Views\Investor\New.aspx" />
-    <Content Include="Views\Investor\Result.ascx" />
     <Content Include="Views\Investor\ThankYou.aspx" />
     <Content Include="Views\Shared\LeftMenu.ascx" />
     <Content Include="Views\Transaction\EditTransaction.ascx" />
     <Content Include="Views\Transaction\Error.ascx" />
-    <Content Include="Views\Transaction\Result.ascx" />
     <Content Include="Views\Transaction\Success.ascx" />
     <Content Include="Views\Transaction\Edit.aspx" />
     <Content Include="Views\Transaction\EditCommitmentAmount.ascx" />

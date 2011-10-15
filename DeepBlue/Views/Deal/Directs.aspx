@@ -140,7 +140,7 @@
 			<%using (Html.Form(new { @id = "frmIssuer${id}", @onsubmit = "return dealDirect.save(this);" })) {%>
 			<div id="IssuerDetail">
 			</div>
-			<div class="editor-label" style="width: 128px; padding-right: 26px;">
+			<div class="editor-label">
 				<%: Html.Label("Security Type")%>
 			</div>
 			<div class="editor-field" style="width: auto;">

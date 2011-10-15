@@ -119,22 +119,13 @@ namespace DeepBlue.Models.Deal {
 		[StringLength(50, ErrorMessage = "Web Password must be under 50 characters.")]
 		public string WebPassword { get; set; }
 
+		[StringLength(100, ErrorMessage = "Website must be under 100 characters.")]
+		[DisplayName("Website")]
+		[WebAddress(ErrorMessage = "Invalid Website")]
+		public string Website { get; set; }
+
 		/* Address Information */
-
-		[DisplayName("Telephone No")]
-		public string Phone { get; set; }
-
-		[DisplayName("Fax No")]
-		public string Fax { get; set; }
-
-		[DisplayName("Email")]
-		[Email(ErrorMessage = "Invalid Email")]
-		public string Email { get; set; }
-
-		[DisplayName("Web Address")]
-		[WebAddress(ErrorMessage = "Invalid Web Address")]
-		public string WebAddress { get; set; }
-
+ 
 		[StringLength(40, ErrorMessage = "Address1 must be under 40 characters.")]
 		[DisplayName("Address1")]
 		public string Address1 { get; set; }

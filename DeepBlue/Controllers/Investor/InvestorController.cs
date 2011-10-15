@@ -12,6 +12,7 @@ using System.Data;
 using DeepBlue.Controllers.Admin;
 using DeepBlue.Models.Admin.Enums;
 using System.Text;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Investor {
 

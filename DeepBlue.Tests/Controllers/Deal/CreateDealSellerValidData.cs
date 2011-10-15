@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MbUnit.Framework;
 using Moq;
 using DeepBlue.Models.Deal ;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.Deal {
     public class CreateDealSellerValidData : CreateDealSeller  {

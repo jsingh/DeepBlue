@@ -15,6 +15,7 @@ using DeepBlue.Models.Deal.Enums;
 using DeepBlue.Controllers.CapitalCall;
 using System.Web.UI;
 using System.Net;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Deal {
 	public class DealController : BaseController {
@@ -53,8 +54,8 @@ namespace DeepBlue.Controllers.Deal {
 		// GET: /Deal/Edit
 		public ActionResult Edit() {
 			ViewData["MenuName"] = "DealManagement";
-			ViewData["SubmenuName"] = "Modify Deal";
-			ViewData["PageName"] = "Modify Deal";
+			ViewData["SubmenuName"] = "DealList";
+			ViewData["PageName"] = "DealList";
 			return View("New", GetNewDealModel());
 		}
 
@@ -1094,7 +1095,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		[HttpGet]
 		public ActionResult UnderlyingFunds() {
-			ViewData["MenuName"] = "DealManagement";
+			ViewData["MenuName"] = "AssetManagement";
 			ViewData["SubmenuName"] = "UnderlyingFunds";
 			ViewData["PageName"] = "UnderlyingFunds";
 			CreateUnderlyingFundModel model = new CreateUnderlyingFundModel();
@@ -1188,8 +1189,7 @@ namespace DeepBlue.Controllers.Deal {
 				underlyingFund.ManagerContactID = ((model.ManagerContactId ?? 0) > 0 ? model.ManagerContactId : null);
 				underlyingFund.WebUserName = model.WebUserName;
 				underlyingFund.WebPassword = model.WebPassword;
-
-				
+				underlyingFund.Website = model.Website;
 
 				if (string.IsNullOrEmpty(model.BankName) == false 
 					&& string.IsNullOrEmpty(model.Account) == false) {
@@ -1520,7 +1520,7 @@ namespace DeepBlue.Controllers.Deal {
 		#region Activities
 
 		public ActionResult Activities() {
-			ViewData["MenuName"] = "DealManagement";
+			ViewData["MenuName"] = "ActivitiesManagement";
 			ViewData["SubmenuName"] = "Activities";
 			ViewData["PageName"] = "Activities";
 			CreateActivityModel model = new CreateActivityModel();
@@ -2393,7 +2393,11 @@ namespace DeepBlue.Controllers.Deal {
 			return View("Result", resultModel);
 		}
 
-		private UnderlyingFundNAV CreateUnderlyingFundValuation(int underlyingFundId, int fundId, decimal fundNAV, DateTime fundNAVDate, out IEnumerable<ErrorInfo> errorInfo) {
+		private UnderlyingFundNAV CreateUnderlyingFundValuation(int underlyingFundId, 
+																int fundId, 
+																decimal fundNAV, 
+																DateTime fundNAVDate, 
+																out IEnumerable<ErrorInfo> errorInfo) {
 
 			// Attempt to create deal underlying fund valuation.
 
@@ -2870,7 +2874,7 @@ namespace DeepBlue.Controllers.Deal {
 		// GET: /Deal/Directs
 		[HttpGet]
 		public ActionResult Directs() {
-			ViewData["MenuName"] = "DealManagement";
+			ViewData["MenuName"] = "AssetManagement";
 			ViewData["SubmenuName"] = "AddDirects";
 			ViewData["PageName"] = "AddDirects";
 			CreateIssuerModel model = new CreateIssuerModel();

@@ -8,6 +8,7 @@ using DeepBlue.Helpers;
 using DeepBlue.Controllers.Investor;
 using DeepBlue.Models.Entity;
 using DeepBlue.Controllers.Admin;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Transaction {
 	public class TransactionController : BaseController {

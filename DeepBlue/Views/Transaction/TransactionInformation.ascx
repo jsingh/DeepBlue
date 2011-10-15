@@ -6,7 +6,7 @@
 			${InvestorName}
 		</div>
 		<div class="editor-field" style="margin-left: 150px; text-align: right;">
-			Display Name
+			<b>Display Name</b>
 		</div>
 		<div class="editor-field">
 			${DisplayName}

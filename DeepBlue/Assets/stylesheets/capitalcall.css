@@ -3,27 +3,30 @@
 	float: left;
 }
 .editor-label {
+	width: 160px;
+}
+.editor-field {
+	width: 125px;
+}
+.editor-field input[type="text"], .editor-field input[type="password"] {
+	width: 110px;
+}
+
+#ManFeeMain .editor-field {
 	width: auto;
 }
-.editor-field input {
-	width: 150px;
+#ccduedatelbl {
+	width: 205px;
 }
-.edit-left {
-	width: 75%;
-	float: left;
-}
-.edit-right {
-	width: 25%;
-	float: left;
+#feeamountlbl{
+	width:auto;
+	padding-left:10px;
 }
 .fromcell {
 	width: auto;
 	clear: right;
 	text-align: right;
 	padding-right: 0px;
-}
-.editor-field .datetxt {
-	width: 110px;
 }
 .TierDetail-Main {
 	clear: both;
@@ -35,13 +38,9 @@
 .cc-manual {
 	clear: both;
 	margin-left: 65px;
-	width:90%;
+	width: 90%;
 }
-#ManualCapitalCall .manual, #ManualDistribution .manual {
-	padding: 0;
-	margin: 0;
-	width: 100%;
-}
+ 
 .bDiv td div input {
 	width: 96%;
 }
@@ -72,90 +71,38 @@ label {
 	margin: 10px 48px;
 }
 .cell {
-	float: left;
-	height: 25px;
-	line-height: 25px;
-	margin-right: 10px;
-	width: 180px;
+    float: left;
+    height: 20px;
+    line-height: 25px;
+    margin-right: 10px;
+    width: 180px;
 }
 .ccdetail .cell {
-	width: auto;
-	white-space: nowrap;
-	margin: 0px 20px 0px 20px;
+    margin: 0 20px;
+    padding-top: 6px;
+    white-space: nowrap;
+    width: auto;
 }
 #SerCCTab, #SerCDTab {
 	float: right;
 	padding: 9px 0px 0 0px;
-	margin:0px;
-}
-/*#NewCCTab.select {
-	background-image: url(../images/newcctabsel.png);
-}
-#ManCCTab.select {
-	background-image: url(../images/mancctabsel.png);
-}
-#NewCDTab {
-	background-image: url(../images/newcdtab.png);
-	width: 230px;
-}
-#ManCDTab {
-	background-image: url(../images/mancdtab.png);
-	width: 240px;
-}
-#NewCCDetailTab {
-	background-image: url(../images/ccdetailtab.png);
-	width: 215px;
-}
-#ManCDetailTab {
-	background-image: url(../images/cdetailtab.png);
-	width: 225px;
-}
-#NewCDTab.select {
-	background-image: url(../images/newcdtabsel.png);
-	width: 230px;
-}
-#ManCDTab.select {
-	background-image: url(../images/mancdtabsel.png);
-	width: 240px;
-}
-#NewCCDetailTab.select {
-	background-image: url(../images/ccdetailtabsel.png);
-	width: 213px;
-}
-#ManCDetailTab.select {
-	background-image: url(../images/cdetailtabsel.png);
-	width: 225px;
-}*/
-.tabbg {
-	background-image: url("../images/tabbg.png");
-	background-position: left bottom;
-	background-repeat: repeat-x;
-	float: left;
-	height: 44px;
-	padding-bottom: 0;
-	position: absolute;
-	left: 0;
-	right: 0;
+	margin: 0px;
 }
 .cc-box-main {
 	float: left;
 	width: 100%;
 	clear: both;
-	background-color: #CBD2DA;
 }
 .cc-box .header {
 	position: relative;
 	height: 40px;
 }
 .cc-box-det {
-	background-color: #CBD2DA;
 	clear: both;
 	float: left;
-	padding: 4px 20px 0 65px;
+	padding:4px 20px 0 42px;
 }
-.cc-box-det .editor-label {
-	text-align: right;
-}
+
 .mancctbl {
 	width: 95%;
 }
@@ -163,57 +110,71 @@ label {
 	padding: 10px 10px 10px 5px;
 	text-align: right;
 }
-.dist-detail .editor-label {
-	width: 155px;
-}
-.dist-detail .editor-field input[type='text'] {
-	width: 120px;
-}
- 
-.dist-detail .editor-field {
-	width: 125px;
-}
-.dist-detail .editor-field span {
-	font-weight: bold;
-}
-.cc-det-report {
-	clear: both;
+.tabbg {
+	background-image: url("../images/tabbg.png");
+	background-position: left bottom;
+	background-repeat: repeat-x;
 	float: left;
-	margin: 0px;
-	padding: 10px 0px 10px 65px;
+	height: 43px;
+	padding-bottom: 0;
+	position: absolute;
+	left: 0;
+	right: 0;
+}
+.tabinnerbox {
+	float: left;
 	width: 90%;
-}
-.cc-report-main {
-	background-color: #CBD2DA;
-}
-.exploading {
-	background-image: url("../images/ajax.jpg");
-	background-repeat: no-repeat;
-	height: 20px;
-	margin: 10px;
-	width: 100%;
-	padding-left: 20px;
-}
-#cntbox {
-	position: relative;
-	clear: both;
-}
-.tabinnerbox{
-	float:left;
-	width:90%;
 	padding-left: 65px;
 }
-#CapitalCallReport .editor-label-first{
-	width:96px;
-	padding-left:0px;
+#ManualCapitalCall .cc-box-det {
+	padding-left:29px;
 }
-#CapitalDistributionReport .editor-label-first{
-	width:108px;
-	padding-left:0px;
+.closetitle {
+    background-color: #FFFFFF;
+    background-image: url("../images/header_bg.gif");
+    background-repeat: repeat-x;
+    clear: both;
+    color: #354866;
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
+    height: 41px;
+    margin: 10px 0 0 65px;
+    padding: 20px 0 4px;
+    width: 90%;
 }
-#NewCapitalDistribution .editor-label-first{
-	width:109px;
+.closetitle .title {
+    padding-left: 20px;
+    white-space: nowrap;
 }
-#ManualCapitalDistribution .editor-label-first{
-	width:102px;
+.closetitle .title {
+    float: left;
+    margin: 5px 99px 0 0;
+    width: 150px;
+}
+.tabledetail {
+    padding-bottom: 5px;
+}
+.dc-box {
+    clear: both;
+    float: left;
+    width: 100%;
+}
+.tabledetail .gbox, .section .gbox {
+    margin-left: 65px;
+}
+.gbox {
+    background-image: url("../images/line.png");
+    background-position: left top;
+    background-repeat: repeat-x;
+    padding-top: 2px;
+}
+#NewCapitalDistribution .cc-box-det {
+	padding-left: 30px;
+}
+.editor-button {
+	  padding-top: 15px;
+}
+#ManualCapitalDistribution .cc-box-det{
+	padding-left: 34px;
 }

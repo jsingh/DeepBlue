@@ -7,10 +7,8 @@ body {
 	height: 100%;
 	color: #000;
 	font-family: Calibri, Arial;
-	font-size: 12px;
-	/*background-image: url("../images/bg.jpg");
-	background-repeat: repeat;*/
-	background-color:#E9E9E9;
+	font-size: 12px; /*background-image: url("../images/bg.jpg"); 	background-repeat: repeat;*/
+	background-color: #E9E9E9;
 }
 input, select {
 	font-family: Calibri, Arial;
@@ -40,7 +38,7 @@ h2 {
 }
 a {
 	text-decoration: none;
-	color:#0D538F
+	color: #0D538F;
 }
 a img {
 	border: 0px;
@@ -118,7 +116,7 @@ a img {
 	width: 100%;
 	clear: both;
 }
-.editor-label, .editor-label-first, .editor-label-second{
+.editor-label, .editor-label, .editor-label-second {
 	float: left;
 	text-align: right;
 	font-weight: bold;
@@ -126,30 +124,32 @@ a img {
 	color: #000;
 	width: 135px;
 }
-.editor-label-first, .editor-label-second{
+.editor-label, .editor-label-second {
 	padding: 8px 5px 8px 0px;
 }
-#NewDeal .editor-label-first{
-	width:71px;
-	padding-right:20px;
+#NewDeal .editor-label {
+	width: 85px;
+	padding-right: 20px;
+	padding-left: 0px;
 }
-#DealDocuments .editor-label-first{
-	width:78px;
-	padding-right:12px;
+#DealDocuments .editor-label {
+	padding-left: 0;
+	padding-right: 12px;
+	width: 89px;
 }
-#DealSellerInfo .editor-label-first{
-	width:86px;
+#DealSellerInfo .editor-label {
+	padding-left: 0;
+	width: 105px;
 }
-#AddUnderlyingFund .editor-label-first{
-	width:129px;
-	padding-right:37px;
+#AddUnderlyingFund .editor-label {
+	width: 129px;
 }
-#BankInformation  .editor-label-first{
-	padding-right:31px;
+#BankInformation .editor-label {
+	padding-right: 31px;
 }
-#DocumentInformation .editor-label-first{
-	width:116px;
-	padding-right:21px;
+#DocumentInformation .editor-label {
+	width: 116px;
+	padding-right: 21px;
 }
 .editor-field {
 	text-align: left;
@@ -157,7 +157,7 @@ a img {
 	clear: right;
 	color: #000;
 }
-.editor-label,.editor-field {
+.editor-label, .editor-field {
 	padding: 8px 5px;
 }
 
@@ -251,7 +251,7 @@ label {
 	line-height: 34px;
 	width: 97%;
 	text-shadow: #0B0B0B 1px 1px 1px;
-	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);	
+	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
 }
 .box-content {
 	border: solid 1px #C1ACAC;
@@ -373,21 +373,6 @@ label {
 	clear: both;
 	width: 100%;
 }
-/* ui-accordion */
-.ui-accordion .ui-accordion-content {
-	padding: 3px 10px 3px 10px;
-}
-.ui-accordion h3 {
-	height: 30px;
-}
-.ui-accordion .header-left {
-	float: left;
-}
-.ui-accordion .header-right {
-	float: right;
-	display: none;
-}
-
 .checkbox input {
 	width: auto;
 }
@@ -452,11 +437,6 @@ label {
 .field-validation-valid {
 	color: red;
 	display: none;
-}
- 
-#admin_accordion {
-	width: 50%;
-	margin: 10px auto;
 }
 .status {
 	height: 25px;
@@ -534,8 +514,8 @@ h2 {
 	float: left;
 	padding: 13px 16px 13px 0px;
 	color: #1B4581;
-	font-family:Arial;
-	font-size:12px;
+	font-family: Arial;
+	font-size: 12px;
 }
 .mdiv li a {
 	color: #1B4581;
@@ -562,8 +542,9 @@ h2 {
 	background-repeat: no-repeat;
 	margin-top: -23px;
 	padding-top: 39px;
-	font-family:Myriad Pro;
-	font-size:11px;
+	font-family: Myriad Pro;
+	font-size: 11px;
+	min-width: 50px;
 }
 #menu #fundmnu .mnu-name {
 	background-image: url(../images/fund.png);
@@ -627,11 +608,13 @@ h2 {
 	color: #000;
 	float: left;
 	font-weight: bold;
+	font-family: Myriad Pro,Arial;
 	text-transform: uppercase;
 }
 .heading .pname {
 	color: #29589E;
 	float: left;
+	font-family: Myriad Pro,Arial;
 	text-transform: uppercase;
 }
 .heading .arrow {
@@ -646,8 +629,7 @@ h2 {
 }
 .heading .leftcol {
 	float: left;
-	border: solid 0px red;
-	/*margin-left: 65px;*/
+	border: solid 0px red; /*margin-left: 65px;*/
 }
 .heading .rightcol {
 	float: right;
@@ -687,8 +669,8 @@ h2 {
 .mdiv .sel {
 	color: #ffffff;
 	font-weight: bold;
-	text-shadow: #68717A 1px 1px 1px;
-	filter: Shadow(Color=#68717A,Direction=135,Strength=2);
+	text-shadow: #1B2E43 1px 1px 1px;
+	filter: Shadow(Color=#1B2E43,Direction=135,Strength=2);
 }
 .subul a {
 	color: #27599E;
@@ -784,6 +766,8 @@ input.ui-autocomplete-loading[type="text"] {
 #topheader .cname {
 	float: left;
 	padding-left: 65px;
+	font-family: Georgia;
+	font-size: 18px;
 }
 .tooltip {
 	background-color: #F2F2A4;
@@ -812,7 +796,7 @@ input.ui-autocomplete-loading[type="text"] {
 .grid .row td, .grid .arow td {
 	background-color: #F5F5F5;
 	font-size: 12px;
-	font-family:Arial;
+	font-family: Arial;
 	white-space: nowrap;
 }
 .grid .row td span, .grid .arow td span {
@@ -838,12 +822,11 @@ input.ui-autocomplete-loading[type="text"] {
 	background-color: #BABFC5;
 	color: #000000;
 	font-size: 12px;
-	font-family:Arial;
+	font-family: Arial;
 	white-space: nowrap;
 }
 .grid thead tr th, .grid thead tr td {
-	text-shadow: #F7F1F1 1px 1px 1px;
-	/*filter: Shadow(Color=#F7F1F1,Direction=135,Strength=2);*/
+	text-shadow: #F7F1F1 1px 1px 1px; /*filter: Shadow(Color=#F7F1F1,Direction=135,Strength=2);*/
 }
 .grid tfoot tr td {
 	font-size: 13px;
@@ -888,7 +871,7 @@ input.ui-autocomplete-loading[type="text"] {
 .green-btn .left, .green-btn .right, .green-btn .center {
 	color: #002827;
 	float: left;
-	font-size: 14px;
+	font-size: 13px;
 	height: 31px;
 	line-height: 32px;
 	font-weight: bold;
@@ -942,7 +925,7 @@ input.ui-autocomplete-loading[type="text"] {
 	background-position: left bottom;
 	background-repeat: repeat-x;
 	float: left;
-	height: 40px;
+	height: 39px;
 	overflow: hidden;
 	padding-bottom: 4px;
 	padding-left: 60px;
@@ -958,7 +941,7 @@ input.ui-autocomplete-loading[type="text"] {
 	float: left;
 	width: 8px;
 	height: 40px;
-	color: #417a77;
+	color: #068B92;
 	font-size: 18px;
 	line-height: 38px;
 }
@@ -983,7 +966,7 @@ input.ui-autocomplete-loading[type="text"] {
 	width: auto;
 	background: url(../images/tab_s_c.png) repeat-x left top;
 	padding: 0 20px;
-	color: #1a4e77;
+	color: #222B3C;
 }
 /* end section tab */
 .expandsel, .headerbar, .subheader {
@@ -993,7 +976,7 @@ input.ui-autocomplete-loading[type="text"] {
 	height: 35px;
 	line-height: 35px;
 }
-.headerbar{
+.headerbar {
 	line-height: 30px;
 }
 /* jQuery Transform */
@@ -1048,7 +1031,7 @@ input.ui-autocomplete-loading[type="text"] {
 	line-height: 25px;
 	border: 0;
 	background-color: transparent;
-	float:left;
+	float: left;
 }
 .editor-label .jqComboBox {
 	float: right;
@@ -1065,139 +1048,131 @@ input.ui-autocomplete-loading[type="text"] {
 .bDiv table .jqComboBox .left {
 	width: 70%;
 }
-.headerbar .rightcol .jqComboBox{
+.headerbar .rightcol .jqComboBox {
 	margin-top: 2px;
 }
 /* End jQuery Transform */
 
-.breadcrumb{
-	width:90%;
-	margin-left:65px;
-	float:left;
+.breadcrumb {
+	width: 90%;
+	margin-left: 65px;
+	float: left;
 }
-.breadcrumb .heading .leftcol{
-	margin-left:0px;
+.breadcrumb .heading .leftcol {
+	margin-left: 0px;
 }
-.breadcrumb .heading .rightcol{
-	margin-right:0px
+.breadcrumb .heading .rightcol {
+	margin-right: 0px;
 }
-.breadcrumb .editor-field{
-	padding-right:0px;
+.breadcrumb .editor-field {
+	padding-right: 0px;
 }
 
 /* New Grid Style */
-.grid thead tr, .grid .row, .grid .arow, .grid tfoot tr{
-	background-repeat:  repeat-x;
-	background-color:inherit;
+.grid thead tr, .grid .row, .grid .arow, .grid tfoot tr {
+	background-repeat: repeat-x;
+	background-color: inherit;
 }
-.grid thead tr, .flexigrid .grid thead tr{
+.grid thead tr, .flexigrid .grid thead tr {
 	background-image: url(../images/table_head_bg.gif);
 }
-.grid .row, .flexigrid .grid tr, tr.row{
+.grid .row, .flexigrid .grid tr, tr.row {
 	background-image: url(../images/table_row_odd.gif);
 }
-.grid .arow, .flexigrid tr.erow, tr.arow{
+.grid .arow, .flexigrid tr.erow, tr.arow {
 	background-image: url(../images/table_row_even.gif);
 }
-.grid tfoot tr{
+.grid tfoot tr {
 	background-image: url(../images/total_bg.gif);
 }
-.grid tfoot tr td{
-	font-weight:bold;
+.grid tfoot tr td {
+	font-weight: bold;
 }
-.grid thead tr th, .grid thead tr td,.grid .row td, .grid .arow td, .grid tfoot tr td{
-	background-color:inherit;
-	/*font-family:Arial;
-	font-size:12px;*/
+.grid thead tr th, .grid thead tr td, .grid .row td, .grid .arow td, .grid tfoot tr td {
+	background-color: inherit; /*font-family:Arial; 	font-size:12px;*/
 }
-.grid{
-	border:solid 0px #A7BACB;
+.grid {
+	border: solid 0px #A7BACB;
 }
-.grid #row0, .grid #Row0{
-	background-image:none;
+.grid #row0, .grid #Row0 {
+	background-image: none;
 }
 /*.ngrid thead tr th, .ngrid thead tr td{
 	text-shadow: #F7F1F1 1px 1px 1px;
 	filter: Shadow(Color=#F7F1F1,Direction=135,Strength=2);	
 }*/
-.tblbox{
-	padding:0px;
-	margin:0px;
-	width:100%;
-	
+.tblbox {
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
 }
-.tblbox .topl{
+.tblbox .topl {
 	background-image: url(../images/th_l.png);
-	background-repeat:no-repeat;
-	background-position:left top;
+	background-repeat: no-repeat;
+	background-position: left top;
 }
-.tblbox .topc{
+.tblbox .topc {
 	background-image: url(../images/th_c.png);
-	background-repeat:repeat-x;
-	background-position:left top;
-	width:auto;
+	background-repeat: repeat-x;
+	background-position: left top;
+	width: auto;
 }
-.tblbox .topr{
+.tblbox .topr {
 	background-image: url(../images/th_r.png);
-	background-repeat:no-repeat;
-	background-position:right top;
+	background-repeat: no-repeat;
+	background-position: right top;
 }
-.tblbox .bottoml{
+.tblbox .bottoml {
 	background-image: url(../images/total_l.png);
-	background-repeat:no-repeat;
-	background-position:left bottom;
+	background-repeat: no-repeat;
+	background-position: left bottom;
 }
-.tblbox .bottomc{
+.tblbox .bottomc {
 	background-image: url(../images/total_c.png);
-	background-repeat:repeat-x;
-	background-position:left bottom;
-	width:auto;
+	background-repeat: repeat-x;
+	background-position: left bottom;
+	width: auto;
 }
-.tblbox .bottomr{
+.tblbox .bottomr {
 	background-image: url(../images/total_r.png);
-	background-repeat:no-repeat;
-	background-position:right bottom;
+	background-repeat: no-repeat;
+	background-position: right bottom;
 }
-.tblbox .middlel{
-	border-left:1px solid #A7BACB;
+.tblbox .middlel {
+	border-left: 1px solid #A7BACB;
 }
-.tblbox .middlec{
-	border-left:1px solid #A7BACB;
-	border-right:1px solid #A7BACB;
+.tblbox .middlec {
+	border-left: 1px solid #A7BACB;
+	border-right: 1px solid #A7BACB;
 }
-.tblbox .middler{
-	border-right:1px solid #A7BACB;
+.tblbox .middler {
+	border-right: 1px solid #A7BACB;
 }
-.tblbox .topl, .tblbox .topc, .tblbox .topr, 
-.tblbox .bottoml, .tblbox .bottomc, .tblbox .bottomr{
-	height:4px;
+.tblbox .topl, .tblbox .topc, .tblbox .topr, .tblbox .bottoml, .tblbox .bottomc, .tblbox .bottomr {
+	height: 4px;
 }
-.tblbox .topl, .tblbox .topr, 
-.tblbox .bottoml, .tblbox .bottomr{
-	width:4px;
+.tblbox .topl, .tblbox .topr, .tblbox .bottoml, .tblbox .bottomr {
+	width: 4px;
 }
-.tblbox .empty{
-	width:4px;
-	height:4px;
+.tblbox .empty {
+	width: 4px;
+	height: 4px;
 }
-.tblbox .emptyc{
-	height:4px;
+.tblbox .emptyc {
+	height: 4px;
 }
-.grid tfoot tr td{
-	background-image:none;
+.grid tfoot tr td {
+	background-image: none;
 }
-.grid #MakeNewDUFund tr
-,.grid #MakeNewDUDirect tr
-,.grid #MakeNewDEHeader tr
-,.grid tbody tr.newrow{
-	background-image:none;
+.grid #MakeNewDUFund tr, .grid #MakeNewDUDirect tr, .grid #MakeNewDEHeader tr, .grid tbody tr.newrow {
+	background-image: none;
 }
 /* End New Grid Style */
 
-.btnbox{
-	float:left;
-	width:90%;
-	padding-left:65px;
+.btnbox {
+	float: left;
+	width: 90%;
+	padding-left: 65px;
 }
 
 
@@ -1205,28 +1180,43 @@ input.ui-autocomplete-loading[type="text"] {
  * Checkboxes
  * ------------- */
 span.jqTransformCheckboxWrapper {
-  display: block;
-  float: left;
-  padding-left:3px;
+	display: block;
+	float: left;
+	padding-left: 3px;
 }
 a.jqTransformCheckbox {
-  background: transparent url(../images/jcheckbox.png);
-  background-repeat: no-repeat;
-  background-position: center top;
-  vertical-align: middle;
-  height: 19px;
-  width: 18px;
-  display: block; /*display: -moz-inline-block;*/
+	background: transparent url(../images/jcheckbox.png);
+	background-repeat: no-repeat;
+	background-position: center top;
+	vertical-align: middle;
+	height: 19px;
+	width: 18px;
+	display: block; /*display: -moz-inline-block;*/
 }
 /* -------------
  * Checked - Used for both Radio and Checkbox
  * ------------- */
 a.jqTransformChecked {
-  background-position: center bottom;
+	background-position: center bottom;
 }
 /* -------------
  * Hidden - used to hide the original form elements
  * ------------- */
 .jqTransformHidden {
-  display: none;
+	display: none;
 }
+/* New Changes */
+body,input, select {
+	font-family: Arial;
+	font-size: 12px;
+}
+#content
+,#header
+,#footer 
+,#submenu {
+	min-width:1258px;
+}
+.editor-label, .editor-label, .editor-label-second {
+	width: 145px;
+}
+ 

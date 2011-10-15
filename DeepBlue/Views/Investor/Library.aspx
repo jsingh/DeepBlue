@@ -25,7 +25,7 @@
 					<%: Html.TextBox("Investor", "SEARCH INVESTOR", new { @id = "Investor", @class = "wm", @style = "width:200px" })%>
 				</div>
 				<div style="float: left; padding-left: 20px;">
-					<%: Html.TextBox("Fund", "SEARCH FUND", new { @id = "Fund", @class = "wm", @style = "width:200px" })%>
+					<%: Html.TextBox("Fund", "SEARCH AMBERBROOK FUND", new { @id = "Fund", @class = "wm", @style = "width:200px" })%>
 				</div>
 				<%: Html.HiddenFor(model => model.InvestorID)%>
 				<%: Html.HiddenFor(model => model.FundID)%>
@@ -99,9 +99,9 @@
 			</div><div class="line"></div>
 			{{each(i,investor) Investors}}
 				<div class="container-row">
-					<div class="inv-box inv-name-row {{if i%2>0}}tc-row{{else}}blue{{/if}}">
+					<div class="inv-box inv-name-row {{if i%2>0}}tc-row{{else}}blue{{/if}}" style="cursor:pointer" onclick = "javascript:investorLibrary.expand('Investor${investor.InvestorID}',this);">
 						<div class="left-nav">&nbsp;&nbsp;
-						<div class="expand" style="cursor:pointer" onclick = "javascript:investorLibrary.expand('Investor${investor.InvestorID}',this);">
+						<div class="expand" style="cursor:pointer">
 						<%: Html.Image("Minus.png", new { @id="expandimg" })%>&nbsp;&nbsp;</div>
 						<div class="inv-name"><b>${investor.InvestorName}</b></div></div>
 					</div>

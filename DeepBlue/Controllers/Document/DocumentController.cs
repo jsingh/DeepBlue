@@ -11,6 +11,7 @@ using System.Text;
 using System.Configuration;
 using System.Text.RegularExpressions;
 using DeepBlue.Controllers.Admin;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Document {
 	public class DocumentController : BaseController {

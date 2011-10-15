@@ -28,19 +28,19 @@
 		<% using (Html.Form(new { @id = "AddNewDocument", @onsubmit = "return documentUpload.save(this);", @enctype = "multipart/form-data" })) {%>
 		<%: Html.HiddenFor(model => model.InvestorId)%>
 		<%: Html.HiddenFor(model => model.FundId)%>
-		<div class="editor-label-first">
+		<div class="editor-label">
 			<%: Html.LabelFor(model => model.DocumentTypeId) %>
 		</div>
 		<div class="editor-field">
 			<%: Html.DropDownListFor(model => model.DocumentTypeId, Model.DocumentTypes, new { @refresh = "true", @action = "DocumentType" })%>
 		</div>
-		<div class="editor-label-first">
+		<div class="editor-label">
 			<%: Html.LabelFor(model => model.DocumentDate) %>
 		</div>
 		<div class="editor-field">
 			<%: Html.TextBox("DocumentDate","",new { @id = "DocumentDate" }) %>
 		</div>
-		<div class="editor-label-first">
+		<div class="editor-label">
 			<%: Html.LabelFor(model => model.DocumentStatus)%>
 		</div>
 		<div class="editor-field">
@@ -54,7 +54,7 @@
 				<%: Html.DropDownListFor(model => model.DocumentStatus, Model.DocumentStatusTypes, new { @style = "width:85px", @onchange = "javascript:documentUpload.changeType(this);" })%>
 			</div>
 		</div>
-		<div class="editor-label-first">
+		<div class="editor-label">
 			<%: Html.LabelFor(model => model.FilePath)%>
 		</div>
 		<div class="editor-field">

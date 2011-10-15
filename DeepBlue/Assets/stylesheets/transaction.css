@@ -60,7 +60,7 @@
 .inv-info-title .title {
 	float: left;
 	margin: 5px 5px 0 0;
-	width: 128px;
+	width: 140px;
 	padding-left: 10px;
 }
 #InvListLoading {
@@ -83,4 +83,7 @@
 .jqComboBox input.ui-autocomplete-input 
 ,.bDiv table .jqComboBox .left {
 	width:79%;
+}
+.ui-dialog .ui-dialog-content {
+	padding:0;
 }

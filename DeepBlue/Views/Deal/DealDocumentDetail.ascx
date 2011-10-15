@@ -20,7 +20,7 @@
 	<div class="section" id="AddDealDocument" style="display: none;">
 		<div class="dealdetail">
 			<% using (Html.Form(new { @id = "frmDealDocument", @onsubmit = "return deal.saveDealDocument(this);", @enctype = "multipart/form-data" })) {%>
-			<div class="editor-label-first">
+			<div class="editor-label">
 				<%: Html.Label("Document Type")%>
 			</div>
 			<div class="editor-field" style="width: 278px">
@@ -33,7 +33,7 @@
 			<div class="editor-field">
 				<%: Html.TextBox("DocumentDate")%>
 			</div>
-			<div class="editor-label-first">
+			<div class="editor-label">
 				<%: Html.Label("For")%>
 			</div>
 			<div class="editor-field" style="width: auto;">

@@ -7,7 +7,7 @@
 	,pageInit: false
 	,newFundData: null
 	,init: function () {
-		fund.loadTemplate(fund.newFundData,$("#AddNewFund"));
+		//fund.loadTemplate(fund.newFundData,$("#AddNewFund"));
 	}
 	,setup: function (target) {
 		setTimeout(function () {
@@ -61,6 +61,18 @@
 		fund.setup(target);
 		jHelper.jqCheckBox(target);
 	}
+	,deleteFund: function (img,id) {
+		if(confirm("Are you sure you want to delete this fund?")) {
+			img.src="/Assets/images/ajax.jpg";
+			$.get("/Fund/Delete/"+id,function (data) {
+				if(data!="") {
+					jAlert(data);
+				} else {
+					$("#FundList").flexReload();
+				}
+			});
+		}
+	}
 	,deleteTab: function (id,isConfirm) {
 		var isRemove=true;
 		if(isConfirm) {
@@ -74,25 +86,26 @@
 		}
 	}
 	,edit: function (id,fundName) {
-		var addNewFund=$("#AddNewFund");
-		var addNewFundTab=$("#TabAddNewFund");
-		var data={ id: id,FundName: fundName };
-		var tab=$("#Tab"+id);
-		var editbox=$("#Edit"+id);
-		if(tab.get(0)) {
-			addNewFundTab.after(tab);
-			addNewFund.after(editbox);
+		var tbl=$("#FundList");
+		$("#EditRow"+id,tbl).remove();
+		$("#lnkAddFund").removeClass("green-btn-sel");
+		var row;
+		if(id==0) {
+			row=$("tr:first",tbl);
+			$("#lnkAddFund").addClass("green-btn-sel");
 		} else {
-			$("#SectionTemplate").tmpl(data).insertAfter(addNewFund);
-			$("#TabTemplate").tmpl(data).insertAfter(addNewFundTab);
-			this.open(id,$("#Edit"+id));
+			row=$("#Row"+id,tbl);
 		}
-		$(".center",$("#Tab"+id)).click();
+		var editRow=document.createElement("tr");
+		$(editRow).html("<td colspan=5 class='editcell'></td>").attr("id","EditRow"+id);
+		$(row).after(editRow);
+		var target=$("td",editRow);
+		fund.open(id,target);
 	}
 	,open: function (id,target) {
 		var dt=new Date();
 		var url="/Fund/FindFund/"+id+"?t="+dt.getTime();
-		target.html("<center><br/><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</center>");
+		target.html("<center><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</center>");
 		$.getJSON(url,function (data) {
 			fund.loadTemplate(data,target);
 		});
@@ -108,15 +121,14 @@
 				jAlert(data);
 			} else {
 				jAlert("Fund Saved.");
+				$("#lnkAddFund").removeClass("green-btn-sel");
 				$("#FundList").flexReload();
-				if(fundId==0) {
-					$("#TabFundGrid").click();
-					fund.init();
-				} else {
-					//fund.deleteTab(fundId,false);
-				}
 			}
 		});
+	}
+	,cancel: function (id) {
+		$("#EditRow"+id).remove();
+		$("#lnkAddFund").removeClass("green-btn-sel");
 	}
 	,changeRS: function (ddl) {
 		this.checkChange(ddl);

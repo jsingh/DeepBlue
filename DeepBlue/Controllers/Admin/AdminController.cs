@@ -8,6 +8,8 @@ using DeepBlue.Models.Admin.Enums;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
 using DeepBlue.Controllers.Transaction;
+using DeepBlue.Models.Deal;
+using DeepBlue.Controllers.Deal;
 
 namespace DeepBlue.Controllers.Admin {
 	public class AdminController : BaseController {
@@ -15,6 +17,8 @@ namespace DeepBlue.Controllers.Admin {
 		public IAdminRepository AdminRepository { get; set; }
 
 		public ITransactionRepository TransactionRepository { get; set; }
+
+		//public IDealRepository DealRepository { get; set; }
 
 		public AdminController()
 			: this(new AdminRepository(), new TransactionRepository()) {
@@ -2948,6 +2952,141 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
+		#region DealContact
+
+		[AdminAuthorize()]
+		public ActionResult DealContact() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "DealManagement";
+			ViewData["PageName"] = "DealContact";
+			return View();
+		}
+
+		//
+		// GET: /Admin/DealContactList
+		[HttpGet]
+		public JsonResult DealContactList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DealContactList> dealContacts = AdminRepository.GetAllDealContacts(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var dealContact in dealContacts) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {
+					  dealContact.ContactId,
+					  dealContact.ContactName,
+					  dealContact.ContactTitle,
+					  dealContact.ContactNotes,
+					  dealContact.Email,
+					  dealContact.Phone,
+					  dealContact.WebAddress
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditDealContact
+		[HttpGet]
+		public ActionResult EditDealContact(int id) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			Contact dealContact = AdminRepository.FindContact(id);
+			List<CommunicationDetailModel> communications = AdminRepository.GetContactCommunications(dealContact.ContactID);
+			flexgridData.total = totalRows;
+			flexgridData.page = 0;
+			flexgridData.rows.Add(new FlexigridRow {
+				cell = new List<object> {
+					  dealContact.ContactID,
+					  dealContact.ContactName,
+					  dealContact.Title,
+					  dealContact.Notes,
+					  AdminRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.Email),
+					  AdminRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.HomePhone),
+					  AdminRepository.GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebAddress),
+				}
+			});
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/UpdateDealContact
+		[HttpPost]
+		public ActionResult UpdateDealContact(FormCollection collection) {
+			EditDealContactModel model = new EditDealContactModel();
+			ResultModel resultModel = new ResultModel();
+			IEnumerable<ErrorInfo> errorInfo = null;
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				Contact contact = AdminRepository.FindContact(model.ContactId);
+				if (contact == null) {
+					contact = new Contact();
+					contact.CreatedBy = Authentication.CurrentUser.UserID;
+					contact.CreatedDate = DateTime.Now;
+				}
+				contact.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				contact.LastUpdatedDate = DateTime.Now;
+				contact.EntityID = Authentication.CurrentEntity.EntityID;
+				contact.ContactName = model.ContactName;
+				contact.LastName = "n/a";
+				contact.Title = model.ContactTitle;
+				contact.Notes = model.ContactNotes;
+				AddCommunication(contact, Models.Admin.Enums.CommunicationType.Email, model.Email);
+				AddCommunication(contact, Models.Admin.Enums.CommunicationType.HomePhone, model.Phone);
+				AddCommunication(contact, Models.Admin.Enums.CommunicationType.WebAddress, model.WebAddress);
+				errorInfo = AdminRepository.SaveDealContact(contact);
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					resultModel.Result += "True||" + contact.ContactID.ToString();
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		private void AddCommunication(DeepBlue.Models.Entity.Contact contact, DeepBlue.Models.Admin.Enums.CommunicationType communicationType, string value) {
+			ContactCommunication contactCommunication = contact.ContactCommunications.SingleOrDefault(communication => communication.Communication.CommunicationTypeID == (int)communicationType);
+			if (contactCommunication == null) {
+				contactCommunication = new ContactCommunication();
+				contactCommunication.CreatedBy = Authentication.CurrentUser.UserID;
+				contactCommunication.CreatedDate = DateTime.Now;
+				contactCommunication.Communication = new Communication();
+				contactCommunication.Communication.CreatedBy = Authentication.CurrentUser.UserID;
+				contactCommunication.Communication.CreatedDate = DateTime.Now;
+				contact.ContactCommunications.Add(contactCommunication);
+			}
+			contactCommunication.EntityID = Authentication.CurrentEntity.EntityID;
+			contactCommunication.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			contactCommunication.LastUpdatedDate = DateTime.Now;
+			contactCommunication.Communication.CommunicationTypeID = (int)communicationType;
+			contactCommunication.Communication.CommunicationValue = (string.IsNullOrEmpty(value) == false ? value : string.Empty);
+			contactCommunication.Communication.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			contactCommunication.Communication.LastUpdatedDate = DateTime.Now;
+			contactCommunication.Communication.EntityID = Authentication.CurrentEntity.EntityID;
+		}
+
+		[HttpGet]
+		public string DeleteDealContact(int id) {
+			if (AdminRepository.DeleteDealContact(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		#endregion
+
 		#region SelectList
 		[HttpGet]
 		public JsonResult SelectList(string actionName) {
@@ -3000,6 +3139,9 @@ namespace DeepBlue.Controllers.Admin {
 					break;
 				case "FixedIncomeType":
 					items = SelectListFactory.GetFixedIncomeTypesSelectList(AdminRepository.GetAllFixedIncomeTypes());
+					break;
+				case "FundExpenseType":
+					items = SelectListFactory.GetFundExpenseTypeSelectList(AdminRepository.GetAllFundExpenseTypes());
 					break;
 			}
 			return Json(items, JsonRequestBehavior.AllowGet);

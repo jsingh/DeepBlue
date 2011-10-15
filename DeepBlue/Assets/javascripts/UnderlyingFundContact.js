@@ -138,8 +138,8 @@
 	}
 	,onInit: function (g) {
 		var box=$(g.bDivBox).parents("#AddUnderlyingFund");
-		var ufid=$("#UnderlyingFundId",box);
-		var data={ UnderlyingFundId: ufid };
+		var ufid=$("#UnderlyingFundId",box).val();
+		var data={ "UnderlyingFundId": ufid};
 		$("#AddContactButtonTemplate").tmpl(data).prependTo(g.pDiv);
 	}
 	,onTemplate: function (tbody,data) {

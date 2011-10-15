@@ -20,7 +20,7 @@
 		$("td","#EditRow"+id).show();
 	}
 	,deleteRow: function (img,id) {
-		if(confirm("Are you sure you want to delete this data type?")) {
+		if(confirm("Are you sure you want to delete this user?")) {
 			var tr=$(img).parents("tr:first");
 			var imgsrc=img.src;
 			$(img).attr("src","/Assets/images/ajax.jpg");

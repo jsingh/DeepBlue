@@ -864,6 +864,7 @@ namespace DeepBlue.Controllers.Deal {
 													   AccountFax = underlyingFund.Account.Fax,
 													   WebPassword = underlyingFund.WebPassword,
 													   WebUserName = underlyingFund.WebUserName,
+													   Website = underlyingFund.Website,
 													   Address1 = (underlyingFund.Address != null ? underlyingFund.Address.Address1 : string.Empty),
 													   Address2 = (underlyingFund.Address != null ? underlyingFund.Address.Address1 : string.Empty),
 													   City = (underlyingFund.Address != null ? underlyingFund.Address.City : string.Empty),
@@ -995,23 +996,23 @@ namespace DeepBlue.Controllers.Deal {
 
 		public List<UnderlyingFundContactList> GetAllUnderlyingFundContacts(int underlyingFundId, int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<UnderlyingFundContactList> query = (from UnderlyingFundContact in context.UnderlyingFundContacts
-															   where UnderlyingFundContact.UnderlyingtFundID == underlyingFundId
+				IQueryable<UnderlyingFundContactList> query = (from underlyingFundContact in context.UnderlyingFundContacts
+															   where underlyingFundContact.UnderlyingtFundID == underlyingFundId
 															   select new UnderlyingFundContactList {
-																   UnderlyingFundContactId = UnderlyingFundContact.UnderlyingFundContactID,
-																   UnderlyingFundId = UnderlyingFundContact.UnderlyingtFundID,
-																   ContactId = UnderlyingFundContact.Contact.ContactID,
-																   ContactName = UnderlyingFundContact.Contact.ContactName,
-																   ContactTitle = UnderlyingFundContact.Contact.Title,
-																   ContactNotes = UnderlyingFundContact.Contact.Notes,
+																   UnderlyingFundContactId = underlyingFundContact.UnderlyingFundContactID,
+																   UnderlyingFundId = underlyingFundContact.UnderlyingtFundID,
+																   ContactId = underlyingFundContact.Contact.ContactID,
+																   ContactName = underlyingFundContact.Contact.ContactName,
+																   ContactTitle = underlyingFundContact.Contact.Title,
+																   ContactNotes = underlyingFundContact.Contact.Notes,
 															   });
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<UnderlyingFundContactList> paginatedList = new PaginatedList<UnderlyingFundContactList>(query, pageIndex, pageSize);
-				foreach (var UnderlyingFundContact in paginatedList) {
-					List<CommunicationDetailModel> communications = GetContactCommunications(context, UnderlyingFundContact.ContactId);
-					UnderlyingFundContact.Email = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.Email);
-					UnderlyingFundContact.Phone = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.HomePhone);
-					UnderlyingFundContact.WebAddress = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebAddress);
+				foreach (var underlyingFundContact in paginatedList) {
+					List<CommunicationDetailModel> communications = GetContactCommunications(context, underlyingFundContact.ContactId);
+					underlyingFundContact.Email = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.Email);
+					underlyingFundContact.Phone = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.HomePhone);
+					underlyingFundContact.WebAddress = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebAddress);
 				}
 				totalRows = paginatedList.TotalCount;
 				return paginatedList;

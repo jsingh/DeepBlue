@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MbUnit.Framework;
 using Moq;
 using DeepBlue.Models.CapitalCall ;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Tests.Controllers.CapitalCall {
     public class CreateCapitalCallReqularInvalidData : CreateCapitalCallReqular {

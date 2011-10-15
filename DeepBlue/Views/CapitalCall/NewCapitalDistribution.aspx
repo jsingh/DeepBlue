@@ -14,7 +14,7 @@
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title">FUNDS</span><span class="arrow"></span><span class="pname">Capital
+				<span class="title">AMBERBROOK FUNDS</span><span class="arrow"></span><span class="pname">Capital
 					Distribution</span></div>
 			<div class="rightcol">
 			</div>
@@ -31,7 +31,7 @@
 					Capital Distribution
 					<%}%>
 					<%using (Html.Div(new { @id = "SerCDTab" })) {%>
-					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...&nbsp;", new { @id = "SpnLoading", @style = "display:none;float:left;" })%><%: Html.TextBox("Fund","SEARCH FUND", new { @class="wm", @style = "width:200px" })%>
+					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...&nbsp;", new { @id = "SpnLoading", @style = "display:none;float:left;" })%><%: Html.TextBox("Fund", "SEARCH AMBERBROOK FUND", new { @class = "wm", @style = "width:200px" })%>
 					<%}%>
 				</div>
 			</div>
@@ -49,10 +49,10 @@
 				</div>
 				<div class="cell">
 					<label>
-						Capital Distributed-<%: Html.Span("", new { @id = "SpnDAmount", @style = "padding-left:10px;" })%></label></div>
+						Capital Distributed&nbsp;<%: Html.Span("", new { @id = "SpnDAmount", @style = "padding-left:10px;" })%></label></div>
 				<div class="cell auto">
 					<label>
-						Profits-<%: Html.Span("", new { @id = "SpnProfitAmount", @style = "padding-left:10px;" })%></label></div>
+						Profits&nbsp;<%: Html.Span("", new { @id = "SpnProfitAmount", @style = "padding-left:10px;" })%></label></div>
 				<div class="cell auto">
 					<label>
 						<%: Html.Anchor("Previous Capital Distributions","#", new { @id="lnkPCD", @target = "_blank", @style="color:Blue" })%>
@@ -67,7 +67,7 @@
 				<div class="line">
 				</div>
 				<div class="cc-box-det dist-detail">
-					<div class="editor-label-first">
+					<div class="editor-label">
 						<%: Html.LabelFor(model => model.DistributionNumber) %>
 					</div>
 					<div class="editor-field">
@@ -79,7 +79,7 @@
 					<div class="editor-field">
 						<%: Html.TextBox("DistributionAmount","", new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 					</div>
-					<div class="editor-label-first">
+					<div class="editor-label">
 						<%: Html.LabelFor(model => model.CapitalDistributionDate) %>
 					</div>
 					<div class="editor-field">
@@ -95,7 +95,7 @@
 				<div class="line">
 				</div>
 				<div class="cc-box-det dist-detail">
-					<div class="editor-label-first">
+					<div class="editor-label">
 						<%: Html.LabelFor(model => model.PreferredReturn)%>
 					</div>
 					<div class="editor-field amtbox" id="PreferredAmountBox">
@@ -107,7 +107,7 @@
 					<div class="editor-field amtbox" id="PreferredCatchUpBox">
 						<%: Html.TextBoxFor(model => model.PreferredCatchUp, new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 					</div>
-					<div class="editor-label-first">
+					<div class="editor-label">
 						<%: Html.LabelFor(model => model.ReturnFundExpenses)%>
 					</div>
 					<div class="editor-field amtbox" id="ReturnFundExpensesBox">
@@ -119,7 +119,7 @@
 					<div class="editor-field amtbox" id="ReturnManagementFeesBox">
 						<%: Html.TextBoxFor(model => model.ReturnManagementFees, new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 					</div>
-					<div class="editor-label-first">
+					<div class="editor-label">
 						<%: Html.LabelFor(model => model.GPProfits) %>
 					</div>
 					<div class="editor-field">
@@ -131,7 +131,7 @@
 					<div class="editor-field">
 						<%: Html.TextBoxFor(model => model.LPProfits, new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 					</div>
-					<div class="editor-button" style="width: 300px; padding-left: 130px;">
+					<div class="editor-button" style="width: 300px; padding-left: 240px;">
 						<div style="float: left; padding: 0 0 10px 5px;">
 							<%: Html.Image("submit_active.png", new { @class = "default-button", @onclick = "javascript:distribution.save('Distribution');" })%>
 						</div>
@@ -157,7 +157,7 @@
 				<div class="line">
 				</div>
 				<div class="cc-box-det dist-detail">
-					<div class="editor-label-first">
+					<div class="editor-label">
 						<%: Html.LabelFor(model => model.DistributionNumber) %>
 					</div>
 					<div class="editor-field">
@@ -175,7 +175,7 @@
 					<div class="editor-field">
 						<%: Html.TextBox("CapitalDistributionDueDate","", new { @id = "ManCapitalDistributionDueDate" })%>
 					</div>
-					<div class="editor-label-first">
+					<div class="editor-label">
 						<%: Html.LabelFor(model => model.DistributionAmount) %>
 					</div>
 					<div class="editor-field">
@@ -194,8 +194,7 @@
 						<%: Html.Span("", new { @id = "SpnReturnFundExpenses" })%>
 					</div>
 					<div class="editor-label" style="clear: right;">
-						<label>
-							Profits Returned-</label>
+						<%: Html.Label("Profits Returned")%>
 					</div>
 					<div class="editor-field">
 						<%: Html.Span("", new { @id = "SpnPreferredReturn" })%>
@@ -203,54 +202,51 @@
 				</div>
 				<div class="line">
 				</div>
-				<div class="cc-box-det manual">
-					<div class="cc-manual">
-						<div class="editor-label" style="padding-left: 0px;">
-							<%: Html.Anchor(Html.Image("addinvestor.png").ToHtmlString(),"javascript:manualDistribution.addInvestor();") %>
-						</div>
-						<div id="InvestorDetail" class="investor-detail">
-							<div>
-								<% Html.RenderPartial("TBoxTop"); %>
-								<table cellpadding="0" cellspacing="0" id="InvestorList" class="grid">
-									<thead>
-										<tr>
-											<th style="width: 15%">
-												Investor Name
-											</th>
-											<th style="text-align: right">
-												Capital Distribution Amount
-											</th>
-											<th style="text-align: right">
-												Return Management Fees
-											</th>
-											<th style="text-align: right">
-												Return Fund Expenses
-											</th>
-											<th style="width: 10%; text-align: right">
-												Profits (%)
-											</th>
-											<th style="text-align: right">
-												Profits Returned
-											</th>
-											<th style="width: 5%" align="center">
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-								<% Html.RenderPartial("TBoxBottom"); %>
-							</div>
-						</div>
+				<div class="closetitle">
+					<div class="title">
+						Investors</div>
+					<%using (Html.BlueButton(new { @onclick = "javascript:manualDistribution.addInvestor();" })) {%>Add
+					New Investor<%}%>
+				</div>
+				<div id="InvestorDetail" class="dc-box tabledetail">
+					<div class="gbox" style="width: 90%">
+						<table cellpadding="0" cellspacing="0" id="InvestorList" class="grid">
+							<thead>
+								<tr>
+									<th style="width: 15%">
+										Investor Name
+									</th>
+									<th style="text-align: right">
+										Capital Distribution Amount
+									</th>
+									<th style="text-align: right">
+										Return Management Fees
+									</th>
+									<th style="text-align: right">
+										Return Fund Expenses
+									</th>
+									<th style="width: 10%; text-align: right">
+										Profits (%)
+									</th>
+									<th style="text-align: right">
+										Profits Returned
+									</th>
+									<th style="width: 5%" align="center">
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
 					</div>
-					<%: Html.HiddenFor(model => model.InvestorCount)%>
-					<div class="editor-button" style="padding-top: 10px;">
-						<div style="float: left; padding: 0 0 10px 5px;">
-							<%: Html.Span("", new { @id = "ManualUpdateLoading" })%>
-						</div>
-						<div style="float: left; padding: 0 0 10px 5px;">
-							<%: Html.Image("submit_active.png", new { @class = "default-button", @onclick = "javascript:manualDistribution.save('ManualDistribution');" })%>
-						</div>
+				</div>
+				<%: Html.HiddenFor(model => model.InvestorCount)%>
+				<div class="editor-button" style="margin: 0 auto; padding-top: 10px; width: 153px;">
+					<div style="float: left; padding: 0 0 10px 5px;">
+						<%: Html.Span("", new { @id = "ManualUpdateLoading" })%>
+					</div>
+					<div style="float: right; padding: 0 0 10px 5px;">
+						<%: Html.Image("submit_active.png", new { @class = "default-button", @onclick = "javascript:manualDistribution.save('ManualDistribution');" })%>
 					</div>
 				</div>
 				<div class="line">
@@ -267,7 +263,6 @@
 	<%= Html.jQueryDatePicker("ManCapitalDistributionDueDate")%>
 	<%= Html.jQueryDatePicker("FromDate")%>
 	<%= Html.jQueryDatePicker("ToDate")%>
-	<%= Html.jQueryAccordion("accordion", new AccordionOptions { Disabled = true, Active = 0 })%>
 	<%= Html.jQueryAutoComplete("Fund", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { distribution.selectFund(ui.item.id);}"})%>
 	<script id="CapitalDistributionInvestorTemplate" type="text/x-jquery-tmpl"> 
 		<% Html.RenderPartial("CapitalDistributionInvestorDetail"); %>

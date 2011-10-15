@@ -12,6 +12,7 @@ namespace DeepBlue.Models.Transaction {
 		
 		public EditModel(){
 			InvestorTypes = new List<SelectListItem>();
+			Date = DateTime.Now;
 		}		
 		
 		public int InvestorId { get; set; }

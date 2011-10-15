@@ -56,11 +56,11 @@
 }
 #cntbox {    top: 179px;
 }
-.doc-header .editor-label-first{
-	width:78px;
+.doc-header .editor-label{
+	width:90px;
 	padding-left:0px;	
 }
-.doc-upload .editor-label-first{
-	width:78px;
+.doc-upload .editor-label{
+  width: 90px;
 	padding-left:0px;	
 }

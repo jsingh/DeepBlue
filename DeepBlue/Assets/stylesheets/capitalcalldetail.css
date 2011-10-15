@@ -1,6 +1,15 @@
 ﻿.grid tr td, .grid tr th {
 	padding: 0 10px;
 }
-#content, #header, #footer {
-	min-width: 1280px;
+#CapitalCallReport .dist-detail {
+	padding-left: 6px;
+}
+.cc-box-det, .cc-det-report {
+	clear: both;
+	float: left;
+	width: 90%;
+	padding: 10px 0 10px 65px;
+}
+#CapitalDistributionReport .dist-detail {
+	padding-left: 44px;
 }

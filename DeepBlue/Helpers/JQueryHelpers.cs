@@ -28,17 +28,6 @@ namespace DeepBlue.Helpers {
 			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
 		}
 
-		public static string jQueryAccordion(this HtmlHelper helper, string targetId, AccordionOptions options) {
-			StringBuilder scriptSrc = new StringBuilder();
-			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").accordion({")
-					 .Append("active:" + options.Active.ToString() + "")
-					 .Append(",autoHeight: " + options.AutoHeight.ToString().ToLower())
-					 .Append(",disabled: " + options.Disabled.ToString().ToLower())
-					 .Append(",collapsible: " + options.Collapsible.ToString().ToLower());
-			scriptSrc.Append("});});");
-			return string.Format("<script  type=\"text/javascript\">{0}</script>", scriptSrc.ToString());
-		}
-
 		public static string jQueryNumericTextBox(this HtmlHelper helper, string targetId) {
 			StringBuilder scriptSrc = new StringBuilder();
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").keyPress(function(event){jHelper.isNumeric(this);})});");

@@ -7,7 +7,7 @@
 		</div>
 		<div class="cell" style="width:159px;">
 			<%: Html.LabelFor(model => model.DealNumber) %>&nbsp;${DealNumber}</div>
-		<div class="cell auto">
+		<div class="cell auto" style="font-weight:normal;font-size:12px">
 			<%: Html.LabelFor(model => model.DealName)%><%: Html.TextBox("DealName", "${DealName}", new { @style = "width:184px;margin-left:10px;" })%></div>
 		{{if IsDealClose==true}}
 		<div class="cell auto" style="float: right;">
@@ -20,27 +20,27 @@
 </div>
 <div class="section">
 	<div class="dealdetail">
-		<div class="editor-label-first">
+		<div class="editor-label">
 			<%: Html.LabelFor(model => model.ContactId)%>
 		</div>
 		<div class="editor-field">
 			<%: Html.TextBox("Contact","${ContactName}") %>
 			<%: Html.HiddenFor(model => model.ContactId, new { @val = "${ContactId}" })%>
 		</div>
-		<div class="editor-label" style="clear: right">
+		<div class="editor-label" style="clear: right;width:109px;">
 			<%: Html.LabelFor(model => model.IsPartnered) %>
 		</div>
 		<div class="editor-field rdo" style="width: auto; clear: right;">
 			<%: Html.CheckBoxFor(model => model.IsPartnered, new { @val = "${IsPartnered}", @onclick = "javascript:deal.selectPartner(!this.checked);" })%>
 		</div>
-		<div class="editor-label-first">
+		<div class="editor-label">
 			<%: Html.LabelFor(model => model.PurchaseTypeId) %>
 		</div>
 		<div class="editor-field">
 			<%: Html.DropDownListFor(model => model.PurchaseTypeId, Model.PurchaseTypes, new { @val = "${PurchaseTypeId}", @refresh="true", @action = "PurchaseType" })%>
 		</div>
-		<div class="editor-label" id="divPartnerName">
-			<div class="editor-label">
+		<div id="divPartnerName" style="clear:right;float:left;">
+			<div class="editor-label" style="width:109px">
 				<%: Html.LabelFor(model => model.PartnerName)%></div>
 			<div class="editor-field">
 				<%: Html.TextBox("PartnerName","${PartnerName}")%></div>

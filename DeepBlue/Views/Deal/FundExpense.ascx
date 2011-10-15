@@ -3,7 +3,7 @@
 <tr id="FLE_${FundExpenseId}">
 	<td class="lalign">
 		<%: Html.Span("${FundExpenseType}", new { @class = "show" })%>
-		<%: Html.DropDownList("FundExpenseTypeId", Model.FundExpenseTypes, new { @val = "${FundExpenseTypeId}", @class = "hide" })%>
+		<%: Html.DropDownList("FundExpenseTypeId", Model.FundExpenseTypes, new { @val = "${FundExpenseTypeId}", @class = "hide", @refresh="true", @action="FundExpenseType" })%>
 	</td>
 	<td class="ralign">
 		<%: Html.Span("${Amount}", new { @class = "show money" })%>

@@ -70,12 +70,18 @@
 		<%: Html.DropDownList("GeographyId", Model.Geographyes, new { @val = "${GeographyId}", @refresh = "true", @action = "Geography" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
-		<%: Html.Label("Web User Name")%>
+		<%: Html.Label("Website")%>
+	</div>
+	<div class="editor-field">
+		<%: Html.TextBox("Website", "${Website}")%>
+	</div>
+	<div class="editor-label">
+		<%: Html.Label("Web UserName")%>
 	</div>
 	<div class="editor-field">
 		<%: Html.TextBox("WebUserName","${WebUserName}")%>
 	</div>
-	<div class="editor-label">
+	<div class="editor-label" style="clear: right">
 		<%: Html.Label("Web Password")%>
 	</div>
 	<div class="editor-field">
@@ -358,85 +364,3 @@
 		</div>
 	</div>
 </div>
-<script id="AddContactButtonTemplate" type="text/x-jquery-tmpl">
-	<%using (Html.GreenButton(new { @onclick = "javascript:underlyingFundContact.add(this,${UnderlyingFundId});" })) {%>Add Contact<%}%>
-</script>
-<script id="ContactGridTemplate" type="text/x-jquery-tmpl">
-	{{each(i,row) rows}}
-	<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow disprow"{{else}}class="disprow"{{/if}}>
-		<td style="width: 20%">
-			<%: Html.Span("${row.cell[3]}", new { @class = "show" })%>
-		</td>
-		<td style="width: 20%">
-			<%: Html.Span("${row.cell[4]}", new { @class = "show" })%>
-		</td>
-		<td style="width: 20%">
-			<%: Html.Span("${row.cell[7]}", new { @class = "show" })%>
-		</td>
-		<td style="width: 30%">
-			<%: Html.Span("${row.cell[6]}", new { @class = "show" })%>
-		</td>
-		<td style="text-align:right;width:10%;">
-			<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:underlyingFundContact.edit(this,${row.cell[0]});" })%>
-			<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:underlyingFundContact.deleteRow(this,${row.cell[0]});" })%>
-			<%: Html.Hidden("UnderlyingFundContactId", "${row.cell[0]}") %>
-		</td>
-	</tr>
-	<tr id="EditRow${row.cell[0]}" style="background-image:none;">
-		<td colspan=6 style="width: 100%;display:none;">
-			<%using(Html.Form(new { @class="UFContactDetail", @id="frm${row.cell[0]}", @onsubmit = "return false;" })){%>
-			<div class="editor-label">
-				<label>
-					Contact Name</label>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("ContactName", "${row.cell[3]}", new { @class = "wm" })%>
-			</div>
-			<div class="editor-label" style="clear: right">
-				<label>
-					Title</label>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("ContactTitle", "${row.cell[4]}", new { @class = "wm" })%>
-			</div>
-			<div class="editor-label">
-				<label>
-					Phone Number</label>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("Phone", "${row.cell[7]}", new { @class = "wm" })%>
-			</div>
-			<div class="editor-label" style="clear: right">
-				<label>
-					Email</label>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("Email", "${row.cell[6]}", new { @class = "wm" })%>
-			</div>
-			<div class="editor-label">
-				<label>
-					Web Address</label>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("WebAddress", "${row.cell[8]}", new { @class = "wm" })%>
-			</div>
-			<div class="editor-label">
-				<label>
-					Notes</label>
-			</div>
-			<div class="editor-field">
-				<%=Html.jQueryTemplateTextArea("ContactNotes", "${row.cell[5]}", 6,50, new {} )%>
-			</div>
-			<%: Html.Hidden("UnderlyingFundContactId", "${row.cell[0]}")%>
-			<%: Html.Hidden("UnderlyingFundId", "${row.cell[1]}")%>
-			<div class="editor-label" style="margin-left:35%;margin-top:10px;width:200px;text-align:left;">
-				<%: Html.Image("Save_active.png", new { @class="submitbtn", @onclick = "javscript:underlyingFundContact.save(this,${row.cell[0]});" } )%>
-				&nbsp;&nbsp;<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:underlyingFundContact.cacelEdit(${row.cell[0]});" }) %>
-				&nbsp;&nbsp;<%:Html.Span("", new { @id = "Loading" })%>
-			</div>
-
-			<%}%>
-		</td>
-	</tr>
-	{{/each}}
-</script>

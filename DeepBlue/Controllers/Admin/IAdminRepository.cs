@@ -6,6 +6,7 @@ using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
 using System.Web.DynamicData;
 using DeepBlue.Models.Deal;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Admin {
 	public interface IAdminRepository {
@@ -115,6 +116,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region Communication
 		string GetContactCommunicationValue(int contactId, DeepBlue.Models.Admin.Enums.CommunicationType communicationType);
+		List<CommunicationDetailModel> GetContactCommunications(int? contactId);
+		string GetCommunicationValue(List<CommunicationDetailModel> communications, Models.Admin.Enums.CommunicationType communicationType);
 		#endregion
 
 		#region SecurityType
@@ -269,7 +272,10 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region DealContacts
 		List<AutoCompleteList> FindDealContacts(string contactName);
+		List<DealContactList> GetAllDealContacts(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		Contact FindContact(int contactId);
+		IEnumerable<ErrorInfo> SaveDealContact(Contact contact);
+		bool DeleteDealContact(int id);
 		#endregion
 		
 		#region User

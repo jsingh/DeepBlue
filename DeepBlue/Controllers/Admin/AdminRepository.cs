@@ -8,6 +8,7 @@ using System.Web.DynamicData;
 using System.Reflection;
 using System.Linq.Expressions;
 using DeepBlue.Models.Deal;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Admin {
 	public class AdminRepository : IAdminRepository {
@@ -978,6 +979,35 @@ namespace DeepBlue.Controllers.Admin {
 						select contactCommunication.Communication.CommunicationValue).FirstOrDefault();
 			}
 		}
+
+		private List<CommunicationDetailModel> GetContactCommunications(DeepBlueEntities context, int contactId) {
+			return (from contactCommunication in context.ContactCommunications
+					join communication in context.Communications on contactCommunication.CommunicationID equals communication.CommunicationID
+					where contactCommunication.ContactID == contactId
+					select new CommunicationDetailModel {
+						CommunicationValue = communication.CommunicationValue,
+						CommunicationTypeId = communication.CommunicationTypeID
+					}).ToList();
+		}
+
+		public List<CommunicationDetailModel> GetContactCommunications(int? contactId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from contactCommunication in context.ContactCommunications
+						join communication in context.Communications on contactCommunication.CommunicationID equals communication.CommunicationID
+						where contactCommunication.ContactID == contactId
+						select new CommunicationDetailModel {
+							CommunicationValue = communication.CommunicationValue,
+							CommunicationTypeId = communication.CommunicationTypeID
+						}).ToList();
+			}
+		}
+
+		public string GetCommunicationValue(List<CommunicationDetailModel> communications, Models.Admin.Enums.CommunicationType communicationType) {
+			return (from communication in communications
+					where communication.CommunicationTypeId == (int)communicationType
+					select communication.CommunicationValue).SingleOrDefault();
+		}
+
 		#endregion
 
 		#region  SecurityType
@@ -1790,13 +1820,18 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region Deal Contact
 
+		private IQueryable<Contact> GetDealContactQuery(System.Data.Objects.ObjectSet<Contact> contacts) {
+			return contacts.Where(contact => contact.InvestorContacts.Count <= 0
+								  && contact.UnderlyingFundContacts.Count <= 0
+								 && contact.Deals1.Count <= 0
+								 );
+		}
+
 		public List<AutoCompleteList> FindDealContacts(string contactName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> query = (from contact in context.Contacts
-													  where contact.InvestorContacts.Count <= 0
-													  && contact.UnderlyingFundContacts.Count <= 0
-													  && contact.Deals1.Count <= 0
-													  && contact.ContactName.StartsWith(contactName)
+				IQueryable<Contact> dealContactQuery = GetDealContactQuery(context.Contacts);
+				IQueryable<AutoCompleteList> query = (from contact in dealContactQuery
+													  where contact.ContactName.StartsWith(contactName)
 													  orderby contact.ContactName
 													  select new AutoCompleteList {
 														  id = contact.ContactID,
@@ -1807,9 +1842,63 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
+		public List<DealContactList> GetAllDealContacts(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<DealContactList> query = (from contact in GetDealContactQuery(context.Contacts)
+															   select new DealContactList {
+																   ContactId = contact.ContactID,
+																   ContactName = contact.ContactName,
+																   ContactTitle = contact.Title,
+																   ContactNotes = contact.Notes,
+															   });
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<DealContactList> paginatedList = new PaginatedList<DealContactList>(query, pageIndex, pageSize);
+				foreach (var contact in paginatedList) {
+					List<CommunicationDetailModel> communications = GetContactCommunications(context, contact.ContactId);
+					contact.Email = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.Email);
+					contact.Phone = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.HomePhone);
+					contact.WebAddress = GetCommunicationValue(communications, Models.Admin.Enums.CommunicationType.WebAddress);
+				}
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
 		public Contact FindContact(int contactId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.Contacts.Where(contact => contact.ContactID == contactId).SingleOrDefault();
+				return context.Contacts.Include("ContactCommunications").Include("ContactCommunications.Communication").Where(contact => contact.ContactID == contactId).SingleOrDefault();
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveDealContact(Contact contact) {
+			return contact.Save();
+		}
+
+		public bool DeleteDealContact(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				Contact dealContact = context.Contacts.SingleOrDefault(contact => contact.ContactID == id);
+				if (dealContact != null) {
+					if (dealContact.Deals.Count() > 0 ||
+						dealContact.Deals1.Count() > 0 ||
+						dealContact.InvestorContacts.Count() > 0 ||
+						dealContact.UnderlyingFundContacts.Count() > 0
+						) {
+						return false;
+					}
+					var contactAddresses = dealContact.ContactAddresses.ToList();
+					foreach (var contactAddress in contactAddresses) {
+						context.ContactAddresses.DeleteObject(contactAddress);
+					}
+					var contactCommunications = dealContact.ContactCommunications.ToList();
+					foreach (var contactCommunication in contactCommunications) {
+						context.Communications.DeleteObject(contactCommunication.Communication);
+						context.ContactCommunications.DeleteObject(contactCommunication);
+					}
+					context.Contacts.DeleteObject(dealContact);
+					context.SaveChanges();
+					return true;
+				}
+				return false;
 			}
 		}
 

@@ -80,7 +80,6 @@
 })%>
 	<%= Html.jQueryDatePicker("CommittedDate")%>
 	<%= Html.jQueryDatePicker("FundClosingDate")%>
-	<%= Html.jQueryAccordion("accordion", new AccordionOptions { Disabled = true, Active = 0 })%>
 	<script type="text/javascript">
 		investorCommitment.init();
 		$("#EditTransaction").dialog({

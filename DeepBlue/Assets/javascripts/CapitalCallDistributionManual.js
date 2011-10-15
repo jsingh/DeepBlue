@@ -94,8 +94,10 @@
 		}
 		$("#InvestorCount").val(investorCount);
 		var data={ "Index": investorCount };
+		$("tr",target).each(function () { $(this).removeAttr("id"); });
 		$("#CapitalDistributionInvestorTemplate").tmpl(data).prependTo(target);
 		var tr=$("tr:first",target);
+		tr.attr("id","Row0");
 		$("#Investor",tr).autocomplete({ source: function (request,response) {
 			$.getJSON("/Investor/FindInvestors"+"?term="+request.term+"&fundId="+$("#FundId").val(),function (data) {
 				response(data);

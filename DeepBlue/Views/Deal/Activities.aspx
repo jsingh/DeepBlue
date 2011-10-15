@@ -607,7 +607,7 @@
 					<div id="FundLevelExpenses" class="group">
 						<div class="addbtn" style="display: none">
 							<div class="tblcell">
-								<%: Html.TextBox("FLE_Fund", "SEARCH FUND", new { @style = "width:200px", @class = "wm" })%>
+								<%: Html.TextBox("FLE_Fund", "SEARCH AMBERBROOK FUND", new { @style = "width:200px", @class = "wm" })%>
 							</div>
 							<div class="tblcell rightcell">
 								<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.makeNewFLE();" })) {%>Add
@@ -683,7 +683,7 @@
 					<div class="editor-field" style="margin-left: 10px">
 						<%: Html.DropDownList("ActivityTypeId", Model.ActivityTypes, new { @refresh="true", @action="ActivityType", @onchange = "javascript:dealActivity.changeAType(this);" })%>
 					</div>
-					<div id="SplitDetail" style="display: none; clear: both; margin-left: 95px;">
+					<div id="SplitDetail" style="display: none; clear: both; margin-left: 50px;">
 						<%using (Html.Form(new { @id = "frmEquitySplit", @onsubmit = "return dealActivity.createSA(this);", @style = "float:left;" })) {%>
 						<% Html.RenderPartial("EquitySplit", Model.EquitySplitModel);%>
 						<%}%>
@@ -766,6 +766,8 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div id="ExcelImport">
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">

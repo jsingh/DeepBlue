@@ -34,6 +34,7 @@
 	clear: both;
 	float: left;
 	padding-bottom: 30px;
+	padding-left: 17px;
 }
 #AddUnderlyingFund .title {
 	background: url(../images/plus.png) no-repeat scroll left top transparent;
@@ -150,7 +151,7 @@
 	margin: 0 auto;
 }
 #AddressInformation .editor-label {
-	width: 106px;
+	width: 105px;
 }
 #BankInformation .editor-label {
 		width: 106px;
@@ -163,5 +164,8 @@
 }
 #AddressInformation .savebox
 ,#BankInformation .savebox{
-	padding-right: 0px;
+	padding-right: 15px;
+}
+.editor-field {
+    width: 181px;
 }

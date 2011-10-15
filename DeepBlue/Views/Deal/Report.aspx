@@ -24,7 +24,7 @@
 				DEAL REPORT<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%></div>
 		</div>
 		<div class="rightcol">
-			<%: Html.TextBox("FundName", "SEARCH FUND", new { @id = "FundName", @class = "wm",  @style = "width:200px" })%>
+			<%: Html.TextBox("FundName", "SEARCH AMBERBROOK FUND", new { @id = "FundName", @class = "wm", @style = "width:200px" })%>
 		</div>
 	</div>
 	</div>

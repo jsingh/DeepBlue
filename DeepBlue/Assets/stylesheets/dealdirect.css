@@ -160,7 +160,7 @@
 	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
 }
 .editor-label {
-	width: 120px;
+	width: 133px;
 }
 .headerbar .addbtn {
 	margin: 0 0 0 107px;
@@ -172,17 +172,13 @@
 	/*margin: 0 50px 0 0;*/
 }
 
-#equitysymboldiv .editor-label-first{
+#equitysymboldiv .editor-label{
 	width:133px;
-	padding-right:26px;
 }
-#eqdocument .editor-label-first, #fidocument .editor-label-first{
+#eqdocument .editor-label, #fidocument .editor-label{
 	width:139px;
-	padding-right:20px;
 }
-#fixincomediv .editor-label-first{
-	width:154px;
-}
+ 
 #DirectListBox{
 	clear:both;
 	width: 90%;
@@ -207,12 +203,13 @@
     margin: 7px 0 0 -15px;
     width: 16px;
 }
-.editor-field {
-    width: 179px;
-}
+ 
 .editor-field select {
     width: 100%;
 }
 .editor-field input[type="text"], .editor-field input[type="password"] {
     width: 89%;
+}
+ .editor-field select {
+    width: 164px;
 }

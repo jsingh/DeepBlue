@@ -1,0 +1,14 @@
+﻿body,input, select {
+	font-family: Arial;
+	font-size: 12px;
+}
+#content
+,#header
+,#footer 
+,#submenu {
+	min-width:1258px;
+}
+.editor-label, .editor-label, .editor-label-second {
+	width: 145px;
+}
+ 

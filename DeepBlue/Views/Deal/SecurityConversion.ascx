@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.SecurityConversionModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<table cellspacing="20" cellpadding="0" border="0">
+<table cellspacing="15" cellpadding="0" border="0">
 	<tr>
 		<td>
 			<%: Html.LabelFor(model => model.OldSecurityTypeId)%>
