@@ -146,6 +146,7 @@
 		return null;
 	}
 	,resize: function () {
+		return;
 		var menu=$("#menu");
 		var cnt=$("#content");
 		var leftmenu=$("#leftmenu");

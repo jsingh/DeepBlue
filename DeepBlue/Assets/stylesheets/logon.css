@@ -1,18 +1,11 @@
 ﻿#footer {
-	position: absolute;
 	bottom: 0;
 }
 #content {
-	position: absolute;
-	top: 35px;
-	bottom: 35px;
 }
 #logon {
-	position: absolute;
-	top: 34%;
-	left: 36%;
-	float: left;
 	width: 350px;
+	margin: 22% auto;
 }
 #logonheader {
 	background-image: url("../images/expandbg.png");
@@ -39,8 +32,8 @@
 	width: 100%;
 }
 #logonmain .content {
-	width:245px;
-	margin:0 auto;
+	width: 245px;
+	margin: 0 auto;
 }
 .editor-label {
 	width: 70px;

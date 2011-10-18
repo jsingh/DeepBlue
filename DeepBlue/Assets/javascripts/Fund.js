@@ -11,6 +11,30 @@
 	}
 	,setup: function (target) {
 		setTimeout(function () {
+			var InvestorList=$("#InvestorList",target);
+			InvestorList.flexigrid({
+				usepager: true
+			,useBoxStyle: false
+			,url: "/Fund/InvestorFundList"
+			,onSubmit: function (p) {
+				p.params=null;
+				p.params=new Array();
+				p.params[p.params.length]={ "name": "fundId","value": $("#FundId",target).val() };
+				return true;
+			}
+			,onTemplate: function (tbody,data) {
+				$("#InvestorGridTemplate").tmpl(data).appendTo(tbody);
+			}
+			,rpOptions: [25,50,100,200]
+			,rp: 25
+			,resizeWidth: false
+			,method: "GET"
+			,sortname: "InvestorName"
+			,sortorder: ""
+			,autoload: true
+			,height: 0
+			});
+
 			jHelper.checkValAttr(target);
 			jHelper.jqComboBox(target);
 			$(".ddlist",target).each(function () {

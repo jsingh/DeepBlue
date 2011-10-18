@@ -136,7 +136,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 							// Attempt to create capital call line item for each investor fund.
 
 							item = new CapitalCallLineItem();
-							
+
 							item.CreatedBy = Authentication.CurrentUser.UserID;
 							item.CreatedDate = DateTime.Now;
 							item.LastUpdatedBy = Authentication.CurrentUser.UserID;
@@ -148,7 +148,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 								if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
 									item.ManagementFees = decimal.Multiply(
 															decimal.Divide(investorFund.TotalCommitment, nonManagingMemberTotalCommitment)
-															,(capitalCall.ManagementFees ?? 0));
+															, (capitalCall.ManagementFees ?? 0));
 								}
 							}
 
@@ -173,7 +173,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 							item.NewInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.NewInvestmentAmount;
 							item.InvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.InvestmentAmount;
 							item.InvestorID = investorFund.InvestorID;
-							
+
 							// Reduce investor unfunded amount = investor unfunded amount – capital call amount for investor.
 							investorFund.UnfundedAmount = investorFund.UnfundedAmount - item.CapitalAmountCalled;
 
@@ -517,12 +517,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 			CreateDistributionModel model = new CreateDistributionModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model, collection);
-			if (model.DistributionAmount > 0) {
-				decimal? distributionCheck = (model.PreferredReturn + model.PreferredCatchUp + model.ReturnFundExpenses + model.ReturnManagementFees + model.GPProfits + model.LPProfits);
-				if ((model.DistributionAmount > distributionCheck) == false) {
-					ModelState.AddModelError("DistributionAmount", "Distribution Amount is not correct");
-				}
-			}
+
+			CheckDistributionAmount(model);
+
 			if (ModelState.IsValid) {
 
 				// Attempt to create cash distribution.
@@ -532,6 +529,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 				distribution.CapitalDistributionDate = model.CapitalDistributionDate;
 				distribution.CapitalDistributionDueDate = model.CapitalDistributionDueDate;
 
+				distribution.CapitalReturn = model.CapitalReturn;
 				distribution.PreferredReturn = model.PreferredReturn;
 				distribution.ReturnManagementFees = model.ReturnManagementFees;
 				distribution.ReturnFundExpenses = model.ReturnFundExpenses;
@@ -565,12 +563,19 @@ namespace DeepBlue.Controllers.CapitalCall {
 						// Attempt to create cash distribution of each investor.
 
 						item = new CapitalDistributionLineItem();
-						item.CapitalReturn = 0;
+
 						item.CreatedBy = Authentication.CurrentUser.UserID;
 						item.CreatedDate = DateTime.Now;
 						item.LastUpdatedBy = Authentication.CurrentUser.UserID;
 						item.LastUpdatedDate = DateTime.Now;
 						item.InvestorID = investorFund.InvestorID;
+
+						if (distribution.CapitalReturn > 0) {
+							item.CapitalReturn = distribution.CapitalReturn * (investorFund.TotalCommitment / totalCommitment);
+						}
+						else {
+							item.CapitalReturn = 0;
+						}
 
 						if (distribution.PreferredCatchUp > 0) {
 							// ManagingMember investor type only
@@ -669,6 +674,16 @@ namespace DeepBlue.Controllers.CapitalCall {
 			return View(capitalCalls);
 		}
 
+
+		private void CheckDistributionAmount(CreateDistributionModel model) {
+			if (model.DistributionAmount > 0) {
+				decimal? distributionCheck = (model.CapitalReturn + model.PreferredReturn + model.PreferredCatchUp + model.ReturnFundExpenses + model.ReturnManagementFees + model.GPProfits + model.LPProfits);
+				if ((decimal.Round(model.DistributionAmount) == decimal.Round(distributionCheck ?? 0)) == false) {
+					ModelState.AddModelError("DistributionAmount", "Components of the distribution do not add up to total distribution amount");
+				}
+			}
+		}
+
 		#endregion
 
 		#region Manual Capital Distribution
@@ -679,6 +694,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 			CreateDistributionModel model = new CreateDistributionModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model, collection);
+
+			CheckDistributionAmount(model);
+
 			if (ModelState.IsValid) {
 
 				// Attempt to create cash distribution.
@@ -702,7 +720,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 				distribution.DistributionAmount = model.DistributionAmount;
 				distribution.DistributionNumber = Convert.ToString(CapitalCallRepository.FindCapitalCallDistributionNumber(model.FundId));
 				distribution.FundID = model.FundId;
+				distribution.CapitalReturn = model.CapitalReturn;
 				distribution.IsManual = true;
+				
 
 				int index;
 
@@ -861,6 +881,6 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		#endregion
 
-		
+
 	}
 }

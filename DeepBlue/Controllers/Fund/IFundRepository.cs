@@ -12,6 +12,7 @@ namespace DeepBlue.Controllers.Fund {
 
 		#region Fund
 		List<FundListModel> GetAllFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<InvestorListModel> GetAllInvestorFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId);
 		Helpers.FundLists GetAllFunds(int pageIndex, int pageSize);
 		Models.Entity.Fund FindFund(int fundId);
 		CreateModel FindFundDetail(int fundId);

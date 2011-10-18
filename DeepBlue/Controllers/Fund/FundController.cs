@@ -99,6 +99,28 @@ namespace DeepBlue.Controllers.Fund {
 			return Json(FindFundDetail(id), JsonRequestBehavior.AllowGet);
 		}
 
+		//
+		// GET: /Fund/InvestorFundList
+		[HttpGet]
+		public JsonResult InvestorFundList(int pageIndex, int pageSize, string sortName, string sortOrder, int fundId) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<InvestorListModel> investors = FundRepository.GetAllInvestorFunds(pageIndex, pageSize, sortName, sortOrder, ref totalRows, fundId);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var investor in investors) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {
+					  investor.InvestorName,
+					  investor.CommittedAmount,
+					  investor.UnfundedAmount,
+					  investor.CloseDate
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
 		private CreateModel FindFundDetail(int fundId) {
 			CreateModel fundDetail = FundRepository.FindFundDetail(fundId);
 			int index = 0;

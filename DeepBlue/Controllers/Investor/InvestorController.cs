@@ -904,7 +904,7 @@ namespace DeepBlue.Controllers.Investor {
 			AccountInformation model = new AccountInformation();
 			this.TryUpdateModel(model, collection);
 			ResultModel resultModel = new ResultModel();
-			if (string.IsNullOrEmpty(model.Account) ) {
+			if (string.IsNullOrEmpty(model.Account)) {
 				ModelState.AddModelError("Account", "Account Name is required");
 			}
 			if (ModelState.IsValid) {
@@ -1070,24 +1070,24 @@ namespace DeepBlue.Controllers.Investor {
 			List<InvestorList> investorLists = new List<InvestorList>();
 
 			investorLibrary = InvestorRepository.GetInvestorLibraryList(pageIndex, pageSize, sortName, sortOrder, ref totalRows, investorId, fundId);
-				flexgridData.total = totalRows;
-				flexgridData.page = pageIndex;
-				foreach (var fund in investorLibrary) {
-					flexgridData.rows.Add(new FlexigridRow {
-						cell = new List<object> {
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var fund in investorLibrary) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {
 							new {
 								 fund.FundName, fund.FundID, fund.TotalCommitted
 							} 
 						}
-					});
-					foreach(var fundInformation in fund.FundInformations){
-						InvestorList investor = investorLists.FirstOrDefault(fundInvestor => fundInvestor.InvestorID == fundInformation.InvestorID);
-						if (investor == null) {
-							investorLists.Add(new InvestorList { InvestorID = fundInformation.InvestorID, InvestorName = fundInformation.InvestorName });
-						}
+				});
+				foreach (var fundInformation in fund.FundInformations) {
+					InvestorList investor = investorLists.FirstOrDefault(fundInvestor => fundInvestor.InvestorID == fundInformation.InvestorID);
+					if (investor == null) {
+						investorLists.Add(new InvestorList { InvestorID = fundInformation.InvestorID, InvestorName = fundInformation.InvestorName });
 					}
 				}
-			 
+			}
+
 			totalPages = Convert.ToInt32(Math.Ceiling(decimal.Divide((decimal)totalRows, (decimal)pageSize)));
 			if (totalPages > pageIndex) {
 				rightPageIndex = pageIndex + 1;

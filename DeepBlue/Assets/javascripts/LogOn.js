@@ -1,6 +1,6 @@
 ﻿var logon={
 	init: function () {
-		logon.logonpos();			
+		//logon.logonpos();			
 		var frm=document.forms[0];
 		var userName=$("#UserName",frm);
 		userName.focus();

@@ -221,3 +221,20 @@
 .grid tr td .addyearbtn:hover img{
 	visibility:visible;
 }
+#InvestorDetail .flexigrid div.pDiv {
+	height:30px;
+}
+#InvestorDetail  .flexigrid .pGroup tr {
+	background-image:none;
+}
+#InvestorDetail  .flexigrid .pGroup tr td {
+	background-image:none;
+	padding:0;
+	height: auto;
+}
+#InvestorDetail .flexigrid  .jqComboBox .left {
+    width: 50%;
+}
+#InvestorDetail .flexigrid div.pDiv input[type="text"] {
+    width: auto;
+}

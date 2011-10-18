@@ -86,3 +86,6 @@ dealActivity.setUFVUnderlyingFund=function (id,name) {
 dealActivity.getUFVUnderlyingFund=function (id) {
 	return parseInt($("#UFVUnderlyingFundId").val());
 };
+dealActivity.importUFV=function(){
+	$("#ExcelImport").dialog("open");
+};

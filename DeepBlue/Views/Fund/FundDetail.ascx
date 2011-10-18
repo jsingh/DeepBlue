@@ -11,10 +11,10 @@
 	<div class="editor-label">
 		<%: Html.LabelFor(model => model.FundName) %>
 	</div>
-	<div class="editor-field" style="width:auto">
+	<div class="editor-field" style="width: auto">
 		<%: Html.jQueryTemplateTextBoxFor(model => model.FundName, new { @style = "width:220px;" }) %>
 	</div>
-	<div class="editor-label" style="clear: right;width:97px;">
+	<div class="editor-label" style="clear: right; width: 97px;">
 		<%: Html.LabelFor(model => model.TaxId) %>
 	</div>
 	<div class="editor-field">
@@ -79,6 +79,50 @@
 <div>
 	<div class="headerbox">
 		<div class="title">
+			<%: Html.Span("INVESTORS")%>
+		</div>
+		<div class="rightdarrow">
+			<%: Html.ImageButton("downarrow.png")%>
+		</div>
+	</div>
+	<div class="expandheader expandsel" style="display: none">
+		<div class="expandbtn">
+			<div class="expandtitle">
+				INVESTORS
+			</div>
+			<div class="rightuarrow">
+			</div>
+		</div>
+	</div>
+	<div class="detail" style="display: none;width:90%;padding:0 0 0 65px;" id="InvestorDetail">
+		<% Html.RenderPartial("TBoxTop"); %>
+		<table id="InvestorList" cellpadding="0" cellspacing="0" border="0" class="grid">
+			<thead>
+				<tr>
+					<th sortname="InvestorName">
+						Investor Name
+					</th>
+					<th sortname="CommittedAmount" style="width: 20%" align=right>
+						Committed Amount
+					</th>
+					<th sortname="UnfundedAmount" style="width: 20%" align=right>
+						Unfunded Amount
+					</th>
+					<th sortname="CloseDate" style="width: 20%">
+						Close Date
+					</th>
+				</tr>
+			</thead>
+		</table>
+		<% Html.RenderPartial("TBoxBottom"); %>
+		<br />
+	</div>
+</div>
+<div class="line">
+</div>
+<div>
+	<div class="headerbox">
+		<div class="title">
 			<%: Html.Span("RATE SCHEDULES")%>
 		</div>
 		<div class="rightdarrow">
@@ -88,7 +132,7 @@
 	<div class="expandheader expandsel" style="display: none">
 		<div class="expandbtn">
 			<div class="expandtitle">
-				Rate Schedules
+				RATE SCHEDULES
 			</div>
 			<div class="rightuarrow">
 			</div>
@@ -122,7 +166,7 @@
 	<div class="expandheader expandsel" style="display: none">
 		<div class="expandbtn">
 			<div class="expandtitle">
-				Bank Information
+				BANK INFORMATION
 			</div>
 			<div class="rightuarrow">
 			</div>

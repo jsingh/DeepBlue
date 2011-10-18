@@ -18,6 +18,7 @@ namespace DeepBlue.Models.CapitalCall {
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "CapitalAmountCalled is required")]
 		public decimal CapitalAmountCalled { get; set; }
 
+		[DisplayName("Capital Call Number")]
 		public string CapitalCallNumber { get; set; }
 
 		[DisplayName("Capital Call Date")]

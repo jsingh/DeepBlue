@@ -10,15 +10,15 @@ namespace DeepBlue.Models.Admin {
 	public class EditEquityTypeModel {
 		public EditEquityTypeModel() {
 			EquityTypeId = 0;
-			Equity = string.Empty;
+			EquityType = string.Empty;
 		}
 
 		public int EquityTypeId { get; set; }
 
-		[Required(ErrorMessage = "Equity is required")]
-		[StringLength(100, ErrorMessage = "Equity must be under 100 characters.")]
-		[DisplayName("Equity")]
-		public string Equity { get; set; }
+		[Required(ErrorMessage = "Equity Type is required")]
+		[StringLength(100, ErrorMessage = "Equity Type must be under 100 characters.")]
+		[DisplayName("EquityType")]
+		public string EquityType { get; set; }
 
 		[DisplayName("Enabled")]
 		public bool Enabled { get; set; }

@@ -99,9 +99,7 @@ namespace DeepBlue.Controllers.Admin {
 				investorType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveInvestorType(investorType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + investorType.InvestorTypeID;
@@ -209,9 +207,7 @@ namespace DeepBlue.Controllers.Admin {
 				investorEntityType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveInvestorEntityType(investorEntityType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + investorEntityType.InvestorEntityTypeID;
@@ -324,9 +320,7 @@ namespace DeepBlue.Controllers.Admin {
 				communicationType.CommunicationGroupingID = model.CommunicationGroupId;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCommunicationType(communicationType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + communicationType.CommunicationTypeID;
@@ -427,9 +421,7 @@ namespace DeepBlue.Controllers.Admin {
 				communicationGrouping.CommunicationGroupingName = model.CommunicationGroupingName;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCommunicationGrouping(communicationGrouping);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + communicationGrouping.CommunicationGroupingID;
@@ -558,9 +550,7 @@ namespace DeepBlue.Controllers.Admin {
 				customField.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCustomField(customField);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + customField.CustomFieldID;
@@ -661,9 +651,7 @@ namespace DeepBlue.Controllers.Admin {
 				dataType.DataTypeID = model.DataTypeId;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveDataType(dataType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + dataType.DataTypeID;
@@ -770,9 +758,7 @@ namespace DeepBlue.Controllers.Admin {
 				purchaseType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SavePurchaseType(purchaseType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + purchaseType.PurchaseTypeID;
@@ -875,9 +861,7 @@ namespace DeepBlue.Controllers.Admin {
 				dealClosingCostType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveDealClosingCostType(dealClosingCostType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + dealClosingCostType.DealClosingCostTypeID;
@@ -977,9 +961,7 @@ namespace DeepBlue.Controllers.Admin {
 				underlyingFundType.Name = model.Name;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveUnderlyingFundType(underlyingFundType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + underlyingFundType.UnderlyingFundTypeID;
@@ -1087,9 +1069,7 @@ namespace DeepBlue.Controllers.Admin {
 				shareClassType.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveShareClassType(shareClassType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + shareClassType.ShareClassTypeID;
@@ -1192,9 +1172,7 @@ namespace DeepBlue.Controllers.Admin {
 				cashDistributionType.Enabled = model.Enabled;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCashDistributionType(cashDistributionType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + cashDistributionType.CashDistributionTypeID;
@@ -1295,9 +1273,7 @@ namespace DeepBlue.Controllers.Admin {
 				fundExpenseType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFundExpenseType(fundExpenseType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + fundExpenseType.FundExpenseTypeID;
@@ -1405,9 +1381,7 @@ namespace DeepBlue.Controllers.Admin {
 				reportingFrequency.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveReportingFrequency(reportingFrequency);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + reportingFrequency.ReportingFrequencyID;
@@ -1515,9 +1489,7 @@ namespace DeepBlue.Controllers.Admin {
 				reportingType.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveReportingType(reportingType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + reportingType.ReportingTypeID;
@@ -1615,9 +1587,7 @@ namespace DeepBlue.Controllers.Admin {
 				module.ModuleName = model.ModuleName;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveModule(module);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True";
@@ -1720,9 +1690,7 @@ namespace DeepBlue.Controllers.Admin {
 				securityType.Enabled = model.Enabled;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveSecurityType(securityType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True";
@@ -1826,9 +1794,7 @@ namespace DeepBlue.Controllers.Admin {
 				geography.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveGeography(geography);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True";
@@ -1943,9 +1909,7 @@ namespace DeepBlue.Controllers.Admin {
 				industry.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveIndustry(industry);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + industry.IndustryID;
@@ -2056,9 +2020,7 @@ namespace DeepBlue.Controllers.Admin {
 				fileType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFileType(fileType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True";
@@ -2118,8 +2080,11 @@ namespace DeepBlue.Controllers.Admin {
 			flexgridData.page = pageIndex;
 			foreach (var equityType in equityTypes) {
 				flexgridData.rows.Add(new FlexigridRow {
-					cell = new List<object> {equityType.EquityTypeID,
-					  equityType.Equity, equityType.Enabled}
+					cell = new List<object> {
+						equityType.EquityTypeID,
+					    equityType.Equity,
+						equityType.Enabled
+					}
 				});
 			}
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);
@@ -2129,14 +2094,17 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/EquityType
 		[HttpGet]
 		public ActionResult EditEquityType(int id) {
-			EditEquityTypeModel model = new EditEquityTypeModel();
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
 			EquityType equityType = AdminRepository.FindEquityType(id);
-			if (equityType != null) {
-				model.EquityTypeId = equityType.EquityTypeID;
-				model.Equity = equityType.Equity;
-				model.Enabled = equityType.Enabled;
-			}
-			return View(model);
+			flexgridData.total = totalRows;
+			flexgridData.page = 0;
+			flexgridData.rows.Add(new FlexigridRow {
+				cell = new List<object> {equityType.EquityTypeID,
+					  equityType.Equity,
+					  equityType.Enabled}
+			});
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -2146,7 +2114,7 @@ namespace DeepBlue.Controllers.Admin {
 			EditEquityTypeModel model = new EditEquityTypeModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
-			string ErrorMessage = EquityTypeNameAvailable(model.Equity, model.EquityTypeId);
+			string ErrorMessage = EquityTypeNameAvailable(model.EquityType, model.EquityTypeId);
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				ModelState.AddModelError("Equity", ErrorMessage);
 			}
@@ -2157,19 +2125,17 @@ namespace DeepBlue.Controllers.Admin {
 					equityType.CreatedBy = Authentication.CurrentUser.UserID;
 					equityType.CreatedDate = DateTime.Now;
 				}
-				equityType.Equity = model.Equity;
+				equityType.Equity = model.EquityType;
 				equityType.Enabled = model.Enabled;
 				equityType.EntityID = Authentication.CurrentEntity.EntityID;
 				equityType.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				equityType.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveEquityType(equityType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
-					resultModel.Result = "True";
+					resultModel.Result = "True||" + equityType.EquityTypeID;
 				}
 			}
 			else {
@@ -2197,7 +2163,7 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpGet]
 		public string EquityTypeNameAvailable(string Equity, int EquityTypeID) {
 			if (AdminRepository.EquityTypeNameAvailable(Equity, EquityTypeID))
-				return "Equity already exist";
+				return "Equity Type already exist";
 			else
 				return string.Empty;
 		}
@@ -2271,9 +2237,7 @@ namespace DeepBlue.Controllers.Admin {
 				fixedIncomeType.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFixedIncomeType(fixedIncomeType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True";
@@ -2372,9 +2336,7 @@ namespace DeepBlue.Controllers.Admin {
 				activityType.Enabled = model.Enabled;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveActivityType(activityType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True";
@@ -2506,9 +2468,7 @@ namespace DeepBlue.Controllers.Admin {
 				currency.LastUpdatedDate = DateTime.Now;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCurrency(currency);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + currency.CurrencyID;
@@ -2629,9 +2589,7 @@ namespace DeepBlue.Controllers.Admin {
 				fundClosing.IsFirstClosing = model.IsFirstClosing;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFundClosing(fundClosing);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + fundClosing.FundClosingID;
@@ -2783,9 +2741,7 @@ namespace DeepBlue.Controllers.Admin {
 
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveUser(user);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + user.UserID;
@@ -2905,9 +2861,7 @@ namespace DeepBlue.Controllers.Admin {
 				documentType.DocumentSectionID = model.DocumentSectionID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveDocumentType(documentType);
 				if (errorInfo != null) {
-					foreach (var err in errorInfo.ToList()) {
-						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
-					}
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
 					resultModel.Result = "True||" + documentType.DocumentTypeID;

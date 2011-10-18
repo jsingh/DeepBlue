@@ -30,20 +30,28 @@
 			$("#CommittedAmount").html(jHelper.dollarAmount(data.TotalCommitment));
 			$("#UnfundedAmount").html(jHelper.dollarAmount(data.UnfundedAmount));
 			$("#CapitalCallNumber").val(data.CapitalCallNumber);
-			$("#SpnCapitalCallNumber").html(data.CapitalCallNumber);
+			$(".ccnumber").html(data.CapitalCallNumber);
 		});
 	}
 	,selectMFee: function (chk) {
-		if(chk.checked)
+		var spnAddMF=$("#SpnAddManagementFee");
+		if(chk.checked) {
 			$("#ManFeeMain").show();
-		else
+			spnAddMF.html("Management Fees");
+		} else {
 			$("#ManFeeMain").hide();
+			spnAddMF.html("Add Management Fees");
+		}
 	}
 	,selectFundExp: function (chk) {
-		if(chk.checked)
+		var spnAddFE=$("#SpnAddFundExpenses");
+		if(chk.checked) {
 			$("#FunExpAmount").show();
-		else
+			spnAddFE.html("Fund Expenses");
+		} else {
 			$("#FunExpAmount").hide();
+			spnAddFE.html("Add Fund Expenses");
+		}
 	}
 	,changeFromDate: function () {
 		var fromDate=$("#FromDate").val();

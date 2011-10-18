@@ -15,8 +15,8 @@
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title">AMBERBROOK FUNDS</span><span class="arrow"></span><span class="pname">Amberbrook Fund
-					Setup</span></div>
+				<span class="title">AMBERBROOK FUNDS</span><span class="arrow"></span><span class="pname">Amberbrook
+					Fund Library</span></div>
 			<div class="rightcol">
 			</div>
 		</div>
@@ -27,8 +27,8 @@
 				Amberbrook Fund
 			</div>
 			<div class="addbtn" style="display: block; margin-left: 123px;">
-				<%using (Html.GreenButton(new { @id = "lnkAddFund", @onclick = "javascript:fund.edit(0,'');" })) {%>Add Amberbrook
-				Fund<%}%>
+				<%using (Html.GreenButton(new { @id = "lnkAddFund", @onclick = "javascript:fund.edit(0,'');" })) {%>Add
+				Amberbrook Fund<%}%>
 			</div>
 		</div>
 	</div>
@@ -36,8 +36,8 @@
 		<div class="header">
 			<div id="TabMain" class="section-tab-main">
 				<div class="section-tab-box">
-					<%using (Html.Tab(new { @id = "TabFundGrid", @class = "section-tab-sel", @onclick = "javascript:fund.selectTab(this,'FundDetail');" })) {%>Amberbrook Fund
-					Setup
+					<%using (Html.Tab(new { @id = "TabFundGrid", @class = "section-tab-sel", @onclick = "javascript:fund.selectTab(this,'FundDetail');" })) {%>Amberbrook
+					Fund Library
 					<%}%>
 				</div>
 			</div>
@@ -138,5 +138,12 @@
 	<script id="SectionTemplate" type="text/x-jquery-tmpl">
 		<div class="section-det" id="Edit${id}" style="display: none">
 		</div>
+	</script>
+	<script id="InvestorGridTemplate" type="text/x-jquery-tmpl">
+	{{each(i,row) rows}}
+	<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
+		<td>${row.cell[0]}</td><td style="text-align:right">${formatCurrency(row.cell[1])}</td><td style="text-align:right">${formatCurrency(row.cell[2])}</td><td>${formatDate(row.cell[3])}</td>
+	</tr>
+	{{/each}}
 	</script>
 </asp:Content>

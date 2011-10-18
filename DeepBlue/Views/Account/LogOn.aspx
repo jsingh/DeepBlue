@@ -14,45 +14,47 @@
 	<%= Html.StylesheetLinkTag("jquery.alerts.css")%>
 </head>
 <body>
-	<div id="header">
-		<div class="topheader" id="topheader">
-			<div class="cname">
-				WILLOWRIDGE</div>
-		</div>
-	</div>
-	<div id="content">
-		<div id="logon">
-			<div id="logonheader">
-				<div style="padding-left: 5px">
-					Login</div>
+	<div class="container">
+		<div id="header">
+			<div class="topheader" id="topheader">
+				<div class="cname">
+					WILLOWRIDGE</div>
 			</div>
-			<div id="logonmain">
-				<div class="content">
-					<% using (Html.BeginForm("LogOn" ,  "Account", FormMethod.Post, new { @onsubmit = "return logon.submit(this); " })) { %>
-					<div class="editor-label">
-						<%: Html.LabelFor(m => m.UserName)%>
+		</div>
+		<div id="content">
+			<div id="logon">
+				<div id="logonheader">
+					<div style="padding-left: 5px">
+						Login</div>
+				</div>
+				<div id="logonmain">
+					<div class="content">
+						<% using (Html.BeginForm("LogOn", "Account", FormMethod.Post, new { @onsubmit = "return logon.submit(this); " })) { %>
+						<div class="editor-label">
+							<%: Html.LabelFor(m => m.UserName)%>
+						</div>
+						<div class="editor-field">
+							<%: Html.TextBoxFor(m => m.UserName)%>
+							<%: Html.ValidationMessageFor(m => m.UserName)%>
+						</div>
+						<div class="editor-label">
+							<%: Html.LabelFor(m => m.Password)%>
+						</div>
+						<div class="editor-field">
+							<%: Html.PasswordFor(m => m.Password)%>
+							<%: Html.ValidationMessageFor(m => m.Password)%>
+						</div>
+						<div class="editor-field clear" style="float: right">
+							<%: Html.CheckBoxFor(m => m.RememberMe)%>
+							<%: Html.LabelFor(m => m.RememberMe)%>
+						</div>
+						<div class="editor-field clear" style="float: right">
+							<%: Html.ImageButton("login_active.png")%>
+						</div>
+						<%: Html.ValidationMessageFor(m => m.Errors)%>
+						<%: Html.Hidden("ReturnUrl", ViewData["ReturnUrl"])%>
+						<% } %>
 					</div>
-					<div class="editor-field">
-						<%: Html.TextBoxFor(m => m.UserName)%>
-						<%: Html.ValidationMessageFor(m => m.UserName)%>
-					</div>
-					<div class="editor-label">
-						<%: Html.LabelFor(m => m.Password)%>
-					</div>
-					<div class="editor-field">
-						<%: Html.PasswordFor(m => m.Password)%>
-						<%: Html.ValidationMessageFor(m => m.Password)%>
-					</div>
-					<div class="editor-field clear" style="float: right">
-						<%: Html.CheckBoxFor(m => m.RememberMe)%>
-						<%: Html.LabelFor(m => m.RememberMe)%>
-					</div>
-					<div class="editor-field clear" style="float: right">
-						<%: Html.ImageButton("login_active.png")%>
-					</div>
-					<%: Html.ValidationMessageFor(m => m.Errors)%>
-					<%: Html.Hidden("ReturnUrl", ViewData["ReturnUrl"])%>
-					<% } %>
 				</div>
 			</div>
 		</div>

@@ -3,12 +3,18 @@
 	margin: 0px;
 	padding: 0px;
 }
-body {
+html, body {
 	height: 100%;
 	color: #000;
 	font-family: Calibri, Arial;
 	font-size: 12px; /*background-image: url("../images/bg.jpg"); 	background-repeat: repeat;*/
 	background-color: #E9E9E9;
+}
+.container {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -35px;
 }
 input, select {
 	font-family: Calibri, Arial;
@@ -1206,17 +1212,13 @@ a.jqTransformChecked {
 	display: none;
 }
 /* New Changes */
-body,input, select {
+body, input, select {
 	font-family: Arial;
 	font-size: 12px;
 }
-#content
-,#header
-,#footer 
-,#submenu {
-	min-width:1258px;
+#content, #header, #footer, #submenu {
+	min-width: 1258px;
 }
 .editor-label, .editor-label, .editor-label-second {
 	width: 145px;
 }
- 

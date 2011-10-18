@@ -34,6 +34,9 @@ namespace DeepBlue.Models.CapitalCall {
 		[DisplayName("Distribution Due Date")]
 		public DateTime CapitalDistributionDueDate { get; set; }
 
+		[DisplayName("Cost Return")]
+		public decimal? CapitalReturn { get; set; }
+
 		[DisplayName("Preferred Return")]
 		public decimal? PreferredReturn { get; set; }
 

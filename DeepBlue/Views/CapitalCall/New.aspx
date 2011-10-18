@@ -68,25 +68,31 @@
 				</div>
 				<div class="cc-box-det">
 					<div class="editor-label">
+						<%: Html.LabelFor(model => model.CapitalCallNumber)%>
+					</div>
+					<div class="editor-field">
+						<b><%: Html.Span("", new {  @id="SpnCapitalCallNumber" , @class = "ccnumber" })%></b>
+					</div>
+					<div class="editor-label" style="clear: right;">
 						<%: Html.LabelFor(model => model.CapitalAmountCalled)%>
 					</div>
 					<div class="editor-field">
 						<%: Html.TextBox("CapitalAmountCalled","", new { @onkeydown = "return jHelper.isCurrency(event);", @style = "width:110px", @onkeyup = "javascript:capitalCall.calcExistingInvestmentAmount();" })%>
 					</div>
-					<div class="editor-label" style="clear: right">
+					<div class="editor-label" style="clear: right;width:auto;">
 						<%: Html.LabelFor(model => model.CapitalCallDate) %>
 					</div>
 					<div class="editor-field">
 						<%: Html.TextBox("CapitalCallDate","", new { @style = "width:110px" })%>
 					</div>
-					<div class="editor-label" id="ccduedatelbl" style="clear: right">
+					<div class="editor-label" id="ccduedatelbl" style="clear: right;width:auto;">
 						<%: Html.LabelFor(model => model.CapitalCallDueDate) %>
 					</div>
 					<div class="editor-field">
 						<%: Html.TextBox("CapitalCallDueDate","", new { @style = "width:110px" })%>
 					</div>
 					<div class="editor-label">
-						<%: Html.Label("Add Management Fees")%>
+						<%: Html.Span("Add Management Fees", new { @id = "SpnAddManagementFee" })%>
 					</div>
 					<div class="editor-field">
 						<%: Html.CheckBox("AddManagementFees", false, new { @style = "width:auto;", @displaywidth = "118px", @display = "", @onclick = "javascript:capitalCall.selectMFee(this);" })%>
@@ -106,7 +112,7 @@
 						</div>
 					</div>
 					<div class="editor-label">
-						<%: Html.Label("Add Fund Expenses")%>
+						<%: Html.Span("Add Fund Expenses", new { @id = "SpnAddFundExpenses" })%>
 					</div>
 					<div class="editor-field">
 						<%: Html.CheckBox("AddFundExpenses", false, new { @style = "width:auto;", @displaywidth = "118px", @display = "", @onclick = "javascript:capitalCall.selectFundExp(this);" })%>
@@ -135,7 +141,7 @@
 						<%: Html.Span("", new { @id = "SpnExistingInvestmentAmount" })%>
 						<%: Html.HiddenFor(model => model.ExistingInvestmentAmount)%>
 					</div>
-					<div class="editor-button" style="margin: 0 0 0 57%; padding-top: 10px; width: auto;">
+					<div class="editor-button" style="margin: 0 0 0 46%; padding-top: 10px; width: auto;">
 						<div style="float: left; padding: 0 0 10px 5px;">
 							<%: Html.Image("submit_active.png", new { @class = "default-button", @onclick = "javascript:capitalCall.save('CapitalCall');" })%>
 						</div>
@@ -179,8 +185,8 @@
 			</div>
 		</div>
 		<div id="NewManualCapitalCall" style="display: none">
+			<% using (Html.Form(new { @id = "ManualCapitalCall", @onsubmit = "return false" })) {%>	
 			<div class="cc-box-main">
-				<% using (Html.Form(new { @id = "ManualCapitalCall", @onsubmit = "return false" })) {%>
 				<div class="line">
 				</div>
 				<div class="cc-box-det manual">
@@ -188,7 +194,7 @@
 						<%: Html.LabelFor(model => model.CapitalCallNumber)%>
 					</div>
 					<div class="editor-field">
-						<%: Html.Span("", new {  @id="SpnCapitalCallNumber"})%>
+						<b><%: Html.Span("", new { @id = "SpnCapitalCallNumber", @class = "ccnumber" })%></b>
 					</div>
 					<div class="editor-label" style="clear: right">
 						<%: Html.LabelFor(model => model.CapitalCallDate) %>
@@ -232,7 +238,8 @@
 					<div class="editor-field">
 						<%: Html.Span("", new { @id = "SpnManagementFees" })%>
 					</div>
-				</div><div class="line">
+				</div>
+				<div class="line">
 				</div>
 				<div class="closetitle">
 					<div class="title">

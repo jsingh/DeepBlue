@@ -96,6 +96,12 @@
 				</div>
 				<div class="cc-box-det dist-detail">
 					<div class="editor-label">
+						<%: Html.LabelFor(model => model.CapitalReturn)%>
+					</div>
+					<div class="editor-field amtbox" id="Div1">
+						<%: Html.TextBoxFor(model => model.CapitalReturn, new { @onkeydown = "return jHelper.isCurrency(event);" })%>
+					</div>
+					<div class="editor-label">
 						<%: Html.LabelFor(model => model.PreferredReturn)%>
 					</div>
 					<div class="editor-field amtbox" id="PreferredAmountBox">
@@ -154,6 +160,7 @@
 				<%: Html.HiddenFor(model => model.ReturnFundExpenses)%>
 				<%: Html.HiddenFor(model => model.GPProfits)%>
 				<%: Html.HiddenFor(model => model.PreferredReturn)%>
+				<%: Html.HiddenFor(model => model.CapitalReturn)%>
 				<div class="line">
 				</div>
 				<div class="cc-box-det dist-detail">
@@ -193,11 +200,17 @@
 					<div class="editor-field">
 						<%: Html.Span("", new { @id = "SpnReturnFundExpenses" })%>
 					</div>
-					<div class="editor-label" style="clear: right;">
+					<div class="editor-label">
 						<%: Html.Label("Profits Returned")%>
 					</div>
 					<div class="editor-field">
 						<%: Html.Span("", new { @id = "SpnPreferredReturn" })%>
+					</div>
+					<div class="editor-label" style="clear: right;">
+						<%: Html.Label("Cost Returned")%>
+					</div>
+					<div class="editor-field">
+						<%: Html.Span("", new { @id = "SpnCapitalReturn" })%>
 					</div>
 				</div>
 				<div class="line">
@@ -224,6 +237,9 @@
 									</th>
 									<th style="text-align: right">
 										Return Fund Expenses
+									</th>
+									<th style="text-align: right">
+										Cost Returned
 									</th>
 									<th style="width: 10%; text-align: right">
 										Profits (%)

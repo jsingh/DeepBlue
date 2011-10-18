@@ -26,31 +26,31 @@
 			<%: Html.jQueryTemplateHidden("ScheduleIndex", "${index}", new { @id = "ScheduleIndex" })%>
 			<%: Html.jQueryTemplateHidden("${index}_Tiers", "${FRS.FundRateScheduleTiers.length}", new { @id = "TiersCount" })%>
 			<% Html.RenderPartial("TBoxTop"); %>
-			<table cellpadding="0" cellspacing="0" border="0" id="RateScheduleList">
+			<table cellpadding="0" cellspacing="0" border="0" id="RateScheduleList" style="width:100%">
 				<thead>
 					<tr>
-						<th style="width: 8%; text-align: left;">
+						<th style="text-align: left;width:50px;">
 							Year
 						</th>
-						<th style="width: 10%; text-align: left;">
+						<th style="text-align: left;width:100px;">
 							From Date
 						</th>
-						<th style="width: 10%; text-align: left;">
+						<th style="text-align: left;width:100px;">
 							To Date
 						</th>
-						<th style="width: 18%; text-align: left;">
+						<th style="text-align: left;">
 							Fee Calculation Type
 						</th>
-						<th style="width: 10%; text-align: left;">
+						<th style="text-align: left;width:100px;">
 							Rate %
 						</th>
-						<th style="width: 10%; text-align: left;">
+						<th style="text-align: left;width:100px;">
 							Flat Fee
 						</th>
 						<th style="text-align: left;">
 							Comments
 						</th>
-						<th style="width: 10%">
+						<th style="width:100px">
 						</th>
 					</tr>
 				</thead>

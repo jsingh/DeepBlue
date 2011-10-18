@@ -21,8 +21,10 @@
 			$("#CaptialCallDetail").show();
 			$("#TitleFundName").html(data.FundName);
 			$("#Fund").val(data.FundName);
-			$("#CapitalCallReportTemplate").tmpl(data).prependTo(ccReportTarget);
-			$("#CapitalDistributionReportTemplate").tmpl(data).prependTo(cdReportTarget);
+			ccReportTarget.empty();
+			cdReportTarget.empty();
+			$("#CapitalCallReportTemplate").tmpl(data).appendTo(ccReportTarget);
+			$("#CapitalDistributionReportTemplate").tmpl(data).appendTo(cdReportTarget);
 		});
 	}
 	,selectTab: function (type,lnk) {

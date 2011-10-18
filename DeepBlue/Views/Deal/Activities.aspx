@@ -412,6 +412,10 @@
 						<div class="addbtn" style="display: none">
 							<div class="tblcell">
 								<%: Html.TextBox("UFV_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px",  @class = "wm" })%></div>
+							<%--<div class="tblcell">
+								<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.importUFV();" })) {%>Import Underlying Fund Valuation
+								<%}%>
+							</div>--%>
 						</div>
 						<div class="headerbox">
 							<div class="title">

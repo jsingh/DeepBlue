@@ -61,6 +61,8 @@
 			<%: Html.ActionLink("Industry", "Industry", "Admin", null, new { @class = (ViewData["PageName"] == "Industry" ? "sel" : "") })%></li>
 		<li class="<%=(ViewData["PageName"] == "DealContact" ? "sel" : "")%>">
 			<%: Html.ActionLink("DealContact", "DealContact", "Admin", null, new { @class = (ViewData["PageName"] == "DealContact" ? "sel" : "") })%></li>
+		<li class="<%=(ViewData["PageName"] == "EquityType" ? "sel" : "")%>">
+			<%: Html.ActionLink("Equity Type", "EquityType", "Admin", null, new { @class = (ViewData["PageName"] == "EquityType" ? "sel" : "") })%></li>
 	</ul>
 </div>
 <%} %>

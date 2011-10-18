@@ -31,6 +31,26 @@ namespace DeepBlue.Controllers.Fund {
 			}
 		}
 
+		public List<InvestorListModel> GetAllInvestorFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<InvestorListModel> investorFundListQuery = (from investorFund in context.InvestorFunds
+																	   where investorFund.FundID == fundId
+																  select new InvestorListModel {
+																		    InvestorName = investorFund.Investor.InvestorName,
+																			CommittedAmount = investorFund.TotalCommitment,
+																			UnfundedAmount = investorFund.UnfundedAmount,
+																			CloseDate = investorFund
+																						.InvestorFundTransactions
+																						.Where(transaction => transaction.FundClosingID > 0)
+																						.FirstOrDefault().FundClosing.FundClosingDate,
+																	   });
+				investorFundListQuery = investorFundListQuery.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<InvestorListModel> paginatedList = new PaginatedList<InvestorListModel>(investorFundListQuery, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
 		public Helpers.FundLists GetAllFunds(int pageIndex, int pageSize) {
 			Helpers.FundLists funds = new Helpers.FundLists();
 			using (DeepBlueEntities context = new DeepBlueEntities()) {

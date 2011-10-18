@@ -20,6 +20,9 @@
 	,calcPR: function () {
 		this.calc("txtPreferredReturn","PreferredReturn","SpnPreferredReturn");
 	}
+	,calcCR: function () {
+		this.calc("txtCapitalReturn","CapitalReturn","SpnCapitalReturn");
+	}
 	,calc: function (txtid,hdnid,lblid) {
 		var InvestorList=document.getElementById("InvestorList");
 		var tbody=$("tbody",InvestorList);

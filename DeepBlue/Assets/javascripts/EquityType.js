@@ -1,59 +1,91 @@
 ﻿var equityType={
-	init: function () {
-		jHelper.resizeIframe();
+	add: function (that) {
+		var flexigrid=$(that).parents(".flexigrid:first");
+		var row=$("#Row0",flexigrid).get(0);
+		if(!row) {
+			var tbody=$(".middlec table tbody",flexigrid);
+			var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,"",false]}] };
+			$("#GridTemplate").tmpl(data).prependTo(tbody);
+			var tr=$("tr:first",tbody);
+				jHelper.jqCheckBox(tr);
+			this.editRow(tr);
+			$("#Add",tr).show();
+		}
 	}
-	,add: function (id) {
-		var dt=new Date();
-		var url="/Admin/EditEquityType/"+id+"?t="+dt.getTime();
-		jHelper.createDialog(url,{
-			title: "Equity Type",
-			autoOpen: true,
-			width: 400,
-			modal: true,
-			position: 'middle',
-			autoResize: true
-		});
+	,edit: function (img) {
+		var tr=$(img).parents("tr:first");
+		this.editRow(tr);
+		$("#Save",tr).show();
 	}
-	,deleteType: function (id,img) {
+	,editRow: function (tr) {
+		$(".show",tr).hide();
+		$(".hide",tr).show();
+		$(":input:first",tr).focus();
+	}
+	,deleteRow: function (img,id) {
 		if(confirm("Are you sure you want to delete this equity type?")) {
+			var tr=$(img).parents("tr:first");
+			var imgsrc=img.src;
+			$(img).attr("src","/Assets/images/ajax.jpg");
+			img.src=imgsrc;
 			var dt=new Date();
 			var url="/Admin/DeleteEquityType/"+id+"?t="+dt.getTime();
 			$.get(url,function (data) {
 				if(data!="") {
 					jAlert(data);
 				} else {
-					$("#EquityTypeList").flexReload();
+					tr.remove();
+					jHelper.applyFlexGridClass($(".middlec:first"));
 				}
 			});
 		}
 	}
-	,onSubmit: function (formId) {
-		return jHelper.formSubmit(formId);
-	}
-	,onGridSuccess: function (t) {
-		$("tr",t).each(function () {
-			$("td:last div",this).html("<img id='Edit' class='gbutton' src='/Assets/images/Edit.png'/>");
+	,save: function (img,id) {
+		var tr=$("#Row"+id);
+		var param=jHelper.serialize(tr);
+		var url="/Admin/UpdateEquityType";
+		var imgsrc=img.src;
+		$(img).attr("src","/Assets/images/ajax.jpg");
+		$.post(url,param,function (data) {
+			img.src=imgsrc;
+			var arr=data.split("||");
+			if(arr[0]!="True") {
+				jAlert(data);
+			} else {
+				$.getJSON("/Admin/EditEquityType?_"+(new Date).getTime()+"&id="+arr[1],function (loadData) {
+					$("#GridTemplate").tmpl(loadData).insertAfter(tr);
+					$(tr).remove();
+					var newTR=$("#Row"+arr[1]);
+					jHelper.applyFlexGridClass($(".middlec:first"));
+					jHelper.checkValAttr(newTR);
+					jHelper.jqCheckBox(newTR);
+				});
+			}
 		});
 	}
-	,onRowClick: function (row) {
-		equityType.add(row.cell[0]);
+	,onGridSuccess: function (t,g) {
+		jHelper.checkValAttr(t);
+		jHelper.jqCheckBox(t);
+		$(window).resize();
 	}
-	,closeDialog: function (reload) {
-		$("#addDialog").dialog('close');
-		if(reload==true) {
-			$("#EquityTypeList").flexReload();
-		}
+	,onInit: function (g) {
+		var data={ name: "Add Equity Type" };
+		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
+		//		$(window).resize(function () {
+		//			equityType.resizeGV(g);
+		//		});
 	}
-	,onCreateEquityTypeBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+	,onTemplate: function (tbody,data) {
+		$("#GridTemplate").tmpl(data).appendTo(tbody);
 	}
-	,onCreateEquityTypeSuccess: function () {
-		$("#UpdateLoading").html("");
-		var UpdateTargetId=$("#UpdateTargetId");
-		if(jQuery.trim(UpdateTargetId.html())!="True") {
-			jAlert(UpdateTargetId.html())
-		} else {
-			parent.equityType.closeDialog(true);
+	,resizeGV: function (g) {
+		var admain=$(".admin-main");
+		var bDivBox=$(g.bDivBox);
+		bDivBox.css("height","auto");
+		var ah=admain.height()-220;
+		var h=bDivBox.height();
+		if(h>ah) {
+			bDivBox.height(ah);
 		}
 	}
 }
