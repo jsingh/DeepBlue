@@ -10,7 +10,7 @@ html, body {
 	font-size: 12px; /*background-image: url("../images/bg.jpg"); 	background-repeat: repeat;*/
 	background-color: #E9E9E9;
 }
-.container {
+.container-main {
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
@@ -52,7 +52,6 @@ a img {
 }
 /* Header & Footer */
 #header {
-	min-width: 1007px;
 	width: 100%;
 }
 #topheader, #menu, #header {
@@ -66,7 +65,6 @@ a img {
 	color: #A27F7F;
 	clear: both;
 	width: 100%;
-	min-width: 1007px;
 	float: left;
 }
 #footer .footercontent {
@@ -102,7 +100,6 @@ a img {
 	clear: both;
 	float: left;
 	width: 100%;
-	min-width: 1007px;
 }
 #cntbox {
 	float: left;
@@ -656,7 +653,6 @@ h2 {
 #submenu {
 	z-index: 1;
 	clear: both;
-	min-width: 1007px;
 	width: 100%;
 	float: left;
 	background-image: url(../images/fsmbg.png);
@@ -1217,8 +1213,9 @@ body, input, select {
 	font-size: 12px;
 }
 #content, #header, #footer, #submenu {
-	min-width: 1258px;
+	min-width: 1250px;
 }
 .editor-label, .editor-label, .editor-label-second {
 	width: 145px;
 }
+/* End New Changes */

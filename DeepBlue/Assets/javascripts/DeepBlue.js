@@ -8,7 +8,7 @@
 			var submenu=$("#submenu");
 			var topheader=$("#topheader");
 			var mnuresize=deepBlue.getCookie("mnu-resize");
-			
+
 			//topheader.click(function () { deepBlue.hideSubMenu(); });
 			//cnt.click(function () { deepBlue.hideSubMenu(); });
 			submenu.hide();
@@ -23,7 +23,6 @@
 			}
 			$(".topmenu").click(function () {
 				submenu.show();
-				deepBlue.resize();
 				$(".tab-sel").removeClass("tab-sel");
 				var showmenu=$(this);
 				var arrow=$("#arrow");
@@ -37,14 +36,7 @@
 				$(this).parents(".sub-select:first").addClass("subext");
 			});
 			deepBlue.setArrow($(".tab-sel:first"));
-			$(window).resize(function () {
-				setTimeout(function () {
-					deepBlue.resize();
-				});
-			});
-
 			deepBlue.ajaxSetup();
-			deepBlue.resize();
 		});
 	}
 	,ajaxSetup: function () {
@@ -95,19 +87,18 @@
 	}
 	,hideSubMenu: function () {
 		$("#submenu").hide();
-		deepBlue.resize();
 	}
-	,showSubMenu: function(){
+	,showSubMenu: function () {
 		var cnt=$("#content");
 		var submenu=$("#submenu");
 		var topheader=$("#topheader");
 		var mnuresize=deepBlue.getCookie("mnu-resize");
-		
+
 		if(mnuresize=="true") {
 			submenu.hide();
 			topheader.click(function () { deepBlue.hideSubMenu(); });
 			cnt.click(function () { deepBlue.hideSubMenu(); });
-		}else{
+		} else {
 			topheader.unbind('click');
 			cnt.unbind('click');
 			submenu.show();
@@ -123,7 +114,6 @@
 			$(that).addClass("downarrow");
 		}
 		deepBlue.setCookie("mnu-resize",menu.hasClass("minimize"));
-		deepBlue.resize();
 		deepBlue.showSubMenu();
 	}
 	,setCookie: function (name,value) {
@@ -146,7 +136,6 @@
 		return null;
 	}
 	,resize: function () {
-		return;
 		var menu=$("#menu");
 		var cnt=$("#content");
 		var leftmenu=$("#leftmenu");

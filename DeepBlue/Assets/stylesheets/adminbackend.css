@@ -1,6 +1,9 @@
-﻿#content {
+﻿.container-main {
 	background-image: url("../images/menu_bg_bot.gif");
 	background-repeat: repeat-y;
+}
+#content, #header, #footer, #submenu {
+	min-width: 1270px;
 }
 #leftmenu {
 	float: left;
@@ -9,7 +12,7 @@
 }
 .admin-main {
 	float: left;
-	width:77%;
+	width:77.8%;
 }
 #cntbox {
 	overflow: hidden;
@@ -38,7 +41,7 @@
 .admin-content {
 	float: left;
 	clear: both;
-	margin: 20px;
+	    margin: 20px 10px 20px 25px;
 	min-width:685px;
 	width:95%;
 }
