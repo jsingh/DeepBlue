@@ -14,7 +14,7 @@
 	<%= Html.StylesheetLinkTag("jquery.alerts.css")%>
 </head>
 <body>
-	<div class="container">
+	<div class="container-main">
 		<div id="header">
 			<div class="topheader" id="topheader">
 				<div class="cname">
