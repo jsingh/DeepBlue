@@ -112,4 +112,11 @@ $.extend(window,{
 		else
 			return "";
 	}
+	,getCloseDate: function (fundId,investorId) {
+		var investor=getInvestor(fundId,investorId);
+		if(investor)
+			return (investor.CloseDate==null?"":formatDate(investor.CloseDate));
+		else
+			return "";
+	}
 });

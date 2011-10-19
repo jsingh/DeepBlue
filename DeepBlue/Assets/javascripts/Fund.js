@@ -115,14 +115,14 @@
 		$("#lnkAddFund").removeClass("green-btn-sel");
 		var row;
 		if(id==0) {
-			row=$("tr:first",tbl);
+			row=$("tbody tr:first",tbl);
 			$("#lnkAddFund").addClass("green-btn-sel");
 		} else {
 			row=$("#Row"+id,tbl);
 		}
 		var editRow=document.createElement("tr");
 		$(editRow).html("<td colspan=5 class='editcell'></td>").attr("id","EditRow"+id);
-		$(row).after(editRow);
+		if(id==0) { $(row).before(editRow); } else { $(row).after(editRow); }
 		var target=$("td",editRow);
 		fund.open(id,target);
 	}
@@ -334,6 +334,19 @@
 				$("td:last",this).attr("colspan",(5-$("td",this).length));
 			}
 		});
+		if(fund.pageInit==false) {
+			var fundId=$("#DefaultFundId").val();
+			if(fundId>0) {
+				$("#Edit"+fundId).click();
+			}
+		}
+		fund.pageInit=true;
+	}
+	,onSubmit: function (p) {
+		p.params=null;
+		p.params=new Array();
+		p.params[p.params.length]={ "name": "fundId","value": $("#DefaultFundId").val() };
+		return true;
 	}
 }
 $.extend(window,{

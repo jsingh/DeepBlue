@@ -262,6 +262,8 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
     <Compile Include="Models\Entity\Validation\AnnualMeetingHistory.cs" />
     <Compile Include="Models\Entity\Validation\DocumentType.cs" />
+    <Compile Include="Models\Entity\Validation\FundAccount.cs" />
+    <Compile Include="Models\Entity\Validation\FundRateSchedule.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundContact.cs" />
     <Compile Include="Models\Entity\Validation\InvestorContact.cs" />
     <Compile Include="Models\Entity\Validation\Log.cs" />

@@ -30,22 +30,23 @@ namespace DeepBlue.Controllers.Fund {
 
 		//
 		// GET: /Fund/
-		public ActionResult Index() {
+		public ActionResult Index(int? id) {
 			ViewData["MenuName"] = "Fund Tracker";
 			ViewData["PageName"] = "Fund Setup";
 			CreateModel model = FindFundDetail(0);
 			model.MultiplierTypes = SelectListFactory.GetMultiplierTypeList(FundRepository.GetAllMultiplierTypes());
 			model.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(AdminRepository.GetAllInvestorTypes());
+			model.FundId = (id ?? 0);
 			return View(model);
 		}
 
 		//
 		// GET: /Fund/List
 		[HttpGet]
-		public ActionResult List(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public ActionResult List(int pageIndex, int pageSize, string sortName, string sortOrder, int? fundId) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			List<FundListModel> funds = FundRepository.GetAllFunds(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			List<FundListModel> funds = FundRepository.GetAllFunds(pageIndex, pageSize, sortName, sortOrder, ref totalRows, fundId);
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var fund in funds) {
@@ -234,25 +235,6 @@ namespace DeepBlue.Controllers.Fund {
 					ModelState.AddModelError(err.PropertyName, err.ErrorMessage);
 				}
 			}
-			else {
-				if ((bankDetailModel.ABANumber ?? 0) > 0 ||
-				   string.IsNullOrEmpty(bankDetailModel.AccountNumber) == false ||
-					string.IsNullOrEmpty(bankDetailModel.AccountOf) == false ||
-					string.IsNullOrEmpty(bankDetailModel.Attention) == false ||
-					string.IsNullOrEmpty(bankDetailModel.BankName) == false ||
-					string.IsNullOrEmpty(bankDetailModel.AccountFax) == false ||
-					string.IsNullOrEmpty(bankDetailModel.FFC) == false ||
-					string.IsNullOrEmpty(bankDetailModel.FFCNumber) == false ||
-					string.IsNullOrEmpty(bankDetailModel.IBAN) == false ||
-					string.IsNullOrEmpty(bankDetailModel.Reference) == false ||
-					string.IsNullOrEmpty(bankDetailModel.Swift) == false ||
-					string.IsNullOrEmpty(bankDetailModel.AccountPhone) == false
-					) {
-					if (string.IsNullOrEmpty(bankDetailModel.Account)) {
-						ModelState.AddModelError("Account", "Account is required");
-					}
-				}
-			}
 			if (ModelState.IsValid) {
 				Models.Entity.Fund fund;
 				if (model.FundId > 0) {
@@ -274,36 +256,35 @@ namespace DeepBlue.Controllers.Fund {
 				fund.ScheduleTerminationDate = model.ScheduleTerminationDate;
 				fund.TaxID = model.TaxId;
 
-				if (string.IsNullOrEmpty(bankDetailModel.Account) == false) {
-					//Add bank account
-					FundAccount fundAccount;
-					if (bankDetailModel.AccountId > 0) {
-						fundAccount = fund.FundAccounts.SingleOrDefault(account => account.FundAccountID == bankDetailModel.AccountId);
-					}
-					else {
-						fundAccount = new FundAccount();
-						fund.FundAccounts.Add(fundAccount);
-					}
-					fundAccount.Account = bankDetailModel.Account;
-					fundAccount.AccountNumberCash = bankDetailModel.AccountNumber ?? string.Empty;
-					fundAccount.AccountOf = bankDetailModel.AccountOf ?? string.Empty;
-					fundAccount.Attention = bankDetailModel.Attention ?? string.Empty;
-					fundAccount.BankName = bankDetailModel.BankName ?? string.Empty;
+				//Add bank account
+				FundAccount fundAccount;
+				if (bankDetailModel.AccountId > 0) {
+					fundAccount = fund.FundAccounts.SingleOrDefault(account => account.FundAccountID == bankDetailModel.AccountId);
+				}
+				else {
+					fundAccount = new FundAccount();
 					fundAccount.CreatedBy = Authentication.CurrentUser.UserID;
 					fundAccount.CreatedDate = DateTime.Now;
-					fundAccount.EntityID = Authentication.CurrentEntity.EntityID;
-					fundAccount.Fax = bankDetailModel.AccountFax ?? string.Empty;
-					fundAccount.FFC = bankDetailModel.FFC;
-					fundAccount.FFCNumber = bankDetailModel.FFCNumber ?? string.Empty;
-					fundAccount.IBAN = bankDetailModel.IBAN ?? string.Empty;
-					fundAccount.IsPrimary = false;
-					fundAccount.LastUpdatedBy = Authentication.CurrentUser.UserID;
-					fundAccount.LastUpdatedDate = DateTime.Now;
-					fundAccount.Phone = bankDetailModel.AccountPhone ?? string.Empty;
-					fundAccount.Reference = bankDetailModel.Reference ?? string.Empty;
-					fundAccount.Routing = bankDetailModel.ABANumber;
-					fundAccount.SWIFT = bankDetailModel.Swift ?? string.Empty;
+					fund.FundAccounts.Add(fundAccount);
 				}
+				fundAccount.EntityID = Authentication.CurrentEntity.EntityID;
+				fundAccount.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				fundAccount.LastUpdatedDate = DateTime.Now;
+
+				fundAccount.Account = bankDetailModel.Account;
+				fundAccount.AccountNumberCash = bankDetailModel.AccountNumber;
+				fundAccount.AccountOf = bankDetailModel.AccountOf;
+				fundAccount.Attention = bankDetailModel.Attention;
+				fundAccount.BankName = bankDetailModel.BankName;
+				fundAccount.Fax = bankDetailModel.AccountFax;
+				fundAccount.FFC = bankDetailModel.FFC;
+				fundAccount.FFCNumber = bankDetailModel.FFCNumber;
+				fundAccount.IBAN = bankDetailModel.IBAN;
+				fundAccount.IsPrimary = false;
+				fundAccount.Phone = bankDetailModel.AccountPhone;
+				fundAccount.Reference = bankDetailModel.Reference;
+				fundAccount.Routing = bankDetailModel.ABANumber;
+				fundAccount.SWIFT = bankDetailModel.Swift;
 
 				/* Add new fund rate schedule */
 				int FundRateSchedulesCount = DataTypeHelper.ToInt32(collection["FundRateSchedulesCount"]);
@@ -407,7 +388,7 @@ namespace DeepBlue.Controllers.Fund {
 			}
 			return View("Result", resultModel);
 		}
-		 
+
 		private string SaveCustomValues(FormCollection collection, int key) {
 			System.Text.StringBuilder result = new StringBuilder();
 			IEnumerable<ErrorInfo> errorInfo;

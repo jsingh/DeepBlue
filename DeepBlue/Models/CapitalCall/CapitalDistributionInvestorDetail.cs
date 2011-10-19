@@ -23,5 +23,9 @@ namespace DeepBlue.Models.CapitalCall {
 		public decimal? Profit { get; set; }
 
 		public decimal? ProfitReturn { get; set; }
+
+		public decimal? LPProfit { get; set; }
+
+		public decimal? CostReturn { get; set; }
 	}
 }

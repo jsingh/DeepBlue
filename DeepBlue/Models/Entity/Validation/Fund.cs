@@ -85,54 +85,5 @@ namespace DeepBlue.Models.Entity {
 			return errors;
 		}
 	}
-
-	[MetadataType(typeof(FundAccountMD))]
-	public partial class FundAccount {
-		public class FundAccountMD {
-			#region Primitive Properties
-			[Required(ErrorMessage = "EntityID is required")]
-			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
-			public global::System.Int32 EntityID {
-				get;
-				set;
-			}
-
-			[Required(ErrorMessage="Bank Name is required")]
-			[StringLength(50, ErrorMessage="Bank Name must be under 50 characters.")]
-			public global::System.String BankName {
-				get;
-				set;
-			}
-
-			[Required(ErrorMessage="Account is required")]
-			[StringLength(40, ErrorMessage="Account must be under 40 characters.")]
-			public global::System.String Account {
-				get;
-				set;
-			}
-			#endregion
-		}
-	}
-
-	[MetadataType(typeof(FundRateScheduleMD))]
-	public partial class FundRateSchedule {
-		public class FundRateScheduleMD {
-			#region Primitive Properties
-			
-			[Required(ErrorMessage="Investor Type is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "InvestorType is required")]
-			public global::System.Int32 InvestorTypeID {
-				get;
-				set;
-			}
-
-			[Required(ErrorMessage = "Rate Schedule Type is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "RateScheduleType is required")]
-			public global::System.Int32 RateScheduleTypeID {
-				get;
-				set;
-			}
-			#endregion
-		}
-	}
+	 
 }

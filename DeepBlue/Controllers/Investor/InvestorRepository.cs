@@ -645,6 +645,10 @@ namespace DeepBlue.Controllers.Investor {
 																											.InvestorFundTransactions
 																											.Where(transaction => transaction.FundClosingID > 0)
 																											.FirstOrDefault().FundClosing.Name,
+																							CloseDate = investorFund
+																											.InvestorFundTransactions
+																											.Where(transaction => transaction.FundClosingID > 0)
+																											.FirstOrDefault().FundClosing.FundClosingDate,
 																							InvestorID = investorFund.InvestorID,
 																							InvestorName = investorFund.Investor.InvestorName,
 																							UnfundedAmount = investorFund.UnfundedAmount

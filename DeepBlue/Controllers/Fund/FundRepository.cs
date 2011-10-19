@@ -12,9 +12,13 @@ namespace DeepBlue.Controllers.Fund {
 
 		#region Fund
 
-		public List<FundListModel> GetAllFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+		public List<FundListModel> GetAllFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Fund.FundListModel> fundListQuery = (from fund in context.Funds
+				IQueryable<Models.Entity.Fund> funds = context.Funds;
+				if (fundId > 0) {
+					funds = funds.Where(fund => fund.FundID == fundId);
+				}
+				IQueryable<Models.Fund.FundListModel> fundListQuery = (from fund in funds
 																	   select new FundListModel {
 																		   FundId = fund.FundID,
 																		   FundName = fund.FundName,

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DeepBlueModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="DeepBlueModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="DeepBlueModelStoreContainer">
           <EntitySet Name="Account" EntityType="DeepBlueModel.Store.Account" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ActivityType" EntityType="DeepBlueModel.Store.ActivityType" store:Type="Tables" Schema="dbo" />
@@ -844,6 +844,7 @@
           <Property Name="IsReconciled" Type="bit" Nullable="false" />
           <Property Name="ReconciliationMethod" Type="varchar" MaxLength="100" />
           <Property Name="PaidON" Type="datetime" />
+          <Property Name="LPProfits" Type="money" />
         </EntityType>
         <EntityType Name="CapitalDistributionProfit">
           <Key>
@@ -1285,8 +1286,8 @@
           <Property Name="EntityID" Type="int" Nullable="false" />
           <Property Name="BankName" Type="varchar" MaxLength="50" />
           <Property Name="Routing" Type="int" />
-          <Property Name="Account" Type="varchar" Nullable="false" MaxLength="40" />
-          <Property Name="AccountNumberCash" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Account" Type="varchar" MaxLength="40" />
+          <Property Name="AccountNumberCash" Type="varchar" MaxLength="50" />
           <Property Name="SWIFT" Type="varchar" MaxLength="50" />
           <Property Name="AccountOf" Type="varchar" MaxLength="50" />
           <Property Name="FFCNumber" Type="varchar" MaxLength="50" />
@@ -3698,8 +3699,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DeepBlueModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -4563,6 +4563,7 @@
           <Property Name="PaidON" Type="DateTime" />
           <NavigationProperty Name="CapitalDistribution" Relationship="DeepBlueModel.FK_CapitalDistributionLineItem_CapitalDistribution" FromRole="CapitalDistributionLineItem" ToRole="CapitalDistribution" />
           <NavigationProperty Name="Investor" Relationship="DeepBlueModel.FK_CapitalDistributionLineItem_Investor" FromRole="CapitalDistributionLineItem" ToRole="Investor" />
+          <Property Type="Decimal" Name="LPProfits" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="CapitalDistributionProfit">
           <Key>
@@ -5112,8 +5113,8 @@
           <Property Name="EntityID" Type="Int32" Nullable="false" />
           <Property Name="BankName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Routing" Type="Int32" />
-          <Property Name="Account" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
-          <Property Name="AccountNumberCash" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Account" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="AccountNumberCash" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="SWIFT" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="AccountOf" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="FFCNumber" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
@@ -7818,7 +7819,8 @@
             <ScalarProperty Name="LPProfits" ColumnName="LPProfits" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="CapitalDistributionLineItems"><EntityTypeMapping TypeName="DeepBlueModel.CapitalDistributionLineItem"><MappingFragment StoreEntitySet="CapitalDistributionLineItem">
-            <ScalarProperty Name="CapitalDistributionLineItemID" ColumnName="CapitalDistributionLineItemID" />
+            <ScalarProperty Name="LPProfits" ColumnName="LPProfits" />
+                <ScalarProperty Name="CapitalDistributionLineItemID" ColumnName="CapitalDistributionLineItemID" />
             <ScalarProperty Name="CapitalDistributionID" ColumnName="CapitalDistributionID" />
             <ScalarProperty Name="InvestorID" ColumnName="InvestorID" />
             <ScalarProperty Name="DistributionAmount" ColumnName="DistributionAmount" />

@@ -34,11 +34,17 @@ namespace DeepBlue.Models.Investor
 
 	}
 
-	public class InvestorList {
+	public class InvestorList : IComparable<InvestorList> {
 
 		public int InvestorID { get; set; }
 
+		public int FundID { get; set; }
+
 		public string InvestorName { get; set; }
+
+		public int CompareTo(InvestorList other) {
+			return this.InvestorName.CompareTo(other.InvestorName);
+		}
 	}
 
 	public class FundInvestorInformation : InvestorList  {
@@ -51,5 +57,6 @@ namespace DeepBlue.Models.Investor
 
 		public DateTime? CommittedDate { get; set; }
 
+		public DateTime? CloseDate { get; set; }
 	}
 }

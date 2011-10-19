@@ -62,10 +62,10 @@
 							Capital Distribution Due Date
 						</th>
 						<th style="text-align: right;width:6.5%;">
-							Profits (%)
+							LP Profit
 						</th>
 						<th style="text-align: right;width:9.5%;">
-							Profits Returned
+							Cost Returned
 						</th>
 						<th style="width:1%">
 						</th>
@@ -93,10 +93,10 @@
 							${formatDate(cd.CapitalDistributionDueDate)}
 						</td>
 						<td style="text-align: right">
-							${formatPercentage(cd.Profit)}
+							${formatCurrency(cd.LPProfit)}
 						</td>
 						<td style="text-align: right">
-							${formatCurrency(cd.ProfitReturn)}
+							${formatCurrency(cd.CostReturn)}
 						</td>
 						<td style="width: 5%" align="center">
 							<%: Html.Image("downarrow.png", new { @class = "ccexpandrow", @onclick = "javascript:capitalCallDetail.expandCD(this,${cd.CapitalDistrubutionId});" })%>

@@ -167,7 +167,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 														Profit = (capitalDistribution.Profits ?? 0) + (capitalDistribution.LPProfits ?? 0),
 														ProfitReturn = capitalDistribution.PreferredReturn,
 														ReturnFundExpenses = capitalDistribution.ReturnFundExpenses,
-														ReturnManagementFees = capitalDistribution.ReturnManagementFees
+														ReturnManagementFees = capitalDistribution.ReturnManagementFees,
+														LPProfit = capitalDistribution.LPProfits,
+														CostReturn = capitalDistribution.CapitalReturn
 													}),
 							CapitalCalls = (from capitalCall in fund.CapitalCalls
 											orderby capitalCall.CapitalCallID descending
@@ -211,7 +213,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 							Profit = capitalDistributionLineItem.Profits,
 							ProfitReturn = capitalDistributionLineItem.PreferredReturn,
 							ReturnFundExpenses = capitalDistributionLineItem.ReturnFundExpenses,
-							ReturnManagementFees = capitalDistributionLineItem.ReturnManagementFees
+							ReturnManagementFees = capitalDistributionLineItem.ReturnManagementFees,
+							LPProfit  = capitalDistributionLineItem.LPProfits,
+							CostReturn = capitalDistributionLineItem.CapitalReturn
 						}).ToList();
 			}
 		}

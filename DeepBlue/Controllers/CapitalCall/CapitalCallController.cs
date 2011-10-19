@@ -54,9 +54,6 @@ namespace DeepBlue.Controllers.CapitalCall {
 			CreateCapitalCallModel model = new CreateCapitalCallModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model, collection);
-			if ((model.NewInvestmentAmount ?? 0) <= 0) {
-				ModelState.AddModelError("NewInvestmentAmount", "New Investment Amount is required");
-			}
 			if ((model.AddManagementFees ?? false) == true) {
 				DateTime fromDate = (model.FromDate ?? Convert.ToDateTime("01/01/1900"));
 				DateTime toDate = (model.ToDate ?? Convert.ToDateTime("01/01/1900"));
@@ -166,7 +163,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 							item.CapitalAmountCalled = decimal.Multiply(
 														decimal.Divide(investorFund.TotalCommitment, totalCommitment)
-														, remainingAmount);
+														, capitalCall.CapitalAmountCalled);
 
 
 							item.ExistingInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.ExistingInvestmentAmount;
@@ -174,8 +171,16 @@ namespace DeepBlue.Controllers.CapitalCall {
 							item.InvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.InvestmentAmount;
 							item.InvestorID = investorFund.InvestorID;
 
-							// Reduce investor unfunded amount = investor unfunded amount – capital call amount for investor.
-							investorFund.UnfundedAmount = investorFund.UnfundedAmount - item.CapitalAmountCalled;
+							// Reduce investor unfunded amount = investor unfunded amount - (capital call amount + management fees + fund expenses).
+
+							investorFund.UnfundedAmount = decimal.Subtract((investorFund.UnfundedAmount ?? 0)
+																		   ,
+																		   decimal.Add(item.CapitalAmountCalled, 
+																					   decimal.Add(
+																									(item.ManagementFees ?? 0)
+																									, (item.FundExpenses ?? 0))
+																									)
+																		   );
 
 							capitalCall.CapitalCallLineItems.Add(item);
 						}
@@ -570,63 +575,49 @@ namespace DeepBlue.Controllers.CapitalCall {
 						item.LastUpdatedDate = DateTime.Now;
 						item.InvestorID = investorFund.InvestorID;
 
-						if (distribution.CapitalReturn > 0) {
-							item.CapitalReturn = distribution.CapitalReturn * (investorFund.TotalCommitment / totalCommitment);
-						}
-						else {
-							item.CapitalReturn = 0;
+						item.CapitalReturn = decimal.Multiply((distribution.CapitalReturn ?? 0),
+																decimal.Divide(investorFund.TotalCommitment, totalCommitment)
+																);
+
+						item.PreferredReturn = decimal.Multiply((distribution.PreferredReturn ?? 0),
+																decimal.Divide(investorFund.TotalCommitment, totalCommitment)
+																);
+
+						// Non ManagingMember investor type only
+						if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
+							item.ReturnManagementFees = decimal.Multiply((distribution.ReturnManagementFees ?? 0),
+																		 decimal.Divide(investorFund.TotalCommitment, nonManagingMemberTotalCommitment)
+																		);
 						}
 
-						if (distribution.PreferredCatchUp > 0) {
-							// ManagingMember investor type only
-							if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember) {
-								item.PreferredCatchUp = distribution.PreferredCatchUp * (investorFund.TotalCommitment / managingMemberTotalCommitment);
-							}
+						item.ReturnFundExpenses = decimal.Multiply((distribution.ReturnFundExpenses ?? 0),
+																decimal.Divide(investorFund.TotalCommitment, totalCommitment)
+																);
+
+						// ManagingMember investor type only
+						if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember) {
+							item.PreferredCatchUp = distribution.PreferredCatchUp;
 						}
-						else {
-							item.PreferredCatchUp = 0;
+
+						// ManagingMember investor type only
+						if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember) {
+							item.Profits = distribution.Profits;
 						}
-						if (distribution.PreferredReturn > 0) {
-							// NonManagingMember investor type only
-							if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
-								item.PreferredReturn = distribution.PreferredReturn * (investorFund.TotalCommitment / nonManagingMemberTotalCommitment);
-							}
-						}
-						else {
-							item.PreferredReturn = 0;
-						}
-						if (distribution.ReturnFundExpenses > 0) {
-							// NonManagingMember investor type only
-							if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
-								item.ReturnFundExpenses = distribution.ReturnFundExpenses * (investorFund.TotalCommitment / nonManagingMemberTotalCommitment);
-							}
-						}
-						else {
-							item.ReturnFundExpenses = 0;
-						}
-						if (distribution.ReturnManagementFees > 0) {
-							// NonManagingMember investor type only
-							if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
-								item.ReturnManagementFees = distribution.ReturnManagementFees * (investorFund.TotalCommitment / nonManagingMemberTotalCommitment);
-							}
-						}
-						else {
-							item.ReturnManagementFees = 0;
-						}
-						if (distribution.Profits > 0) {
-							// ManagingMember investor type only
-							if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember) {
-								item.Profits = distribution.Profits * (investorFund.TotalCommitment / managingMemberTotalCommitment);
-							}
-						}
-						if (distribution.LPProfits > 0) {
-							// NonManagingMember investor type only
-							if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
-								item.Profits = distribution.LPProfits * (investorFund.TotalCommitment / nonManagingMemberTotalCommitment);
-							}
-						}
+
+						item.LPProfits = decimal.Multiply((distribution.LPProfits ?? 0),
+														decimal.Divide(investorFund.TotalCommitment, totalCommitment)
+														);
+
+
 						// Calculate distribution amount of each investor.
-						item.DistributionAmount = model.DistributionAmount * (investorFund.TotalCommitment / totalCommitment);
+						item.DistributionAmount = (item.CapitalReturn ?? 0) 
+													+ (item.PreferredReturn ?? 0)
+													+ (item.ReturnManagementFees ?? 0)
+													+ (item.ReturnFundExpenses ?? 0)
+													+ (item.PreferredCatchUp ?? 0)
+													+ (item.Profits ?? 0)
+													+ (item.LPProfits ?? 0)
+													;
 						distribution.CapitalDistributionLineItems.Add(item);
 					}
 				}
@@ -722,7 +713,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 				distribution.FundID = model.FundId;
 				distribution.CapitalReturn = model.CapitalReturn;
 				distribution.IsManual = true;
-				
+
 
 				int index;
 

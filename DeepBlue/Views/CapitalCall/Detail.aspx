@@ -145,10 +145,10 @@
 					Capital Distribution Due Date
 				</th>
 				<th style="text-align: right;width:6.5%;">
-					Profits (%)
+					LP Profits
 				</th>
 				<th style="text-align: right;width:9.5%;">
-					Profits Returned
+					Cost Returned
 				</th>
 				<th style="width:1%">&nbsp;
 				</th>
@@ -176,10 +176,10 @@
 				${formatDate(cc.CapitalDistributionDueDate)}
 			</td>
 			<td style="text-align: right">
-				${formatPercentage(cc.Profit)}
+				${formatCurrency(cc.LPProfit)}
 			</td>
 			<td style="text-align: right">
-				${formatCurrency(cc.ProfitReturn)}
+				${formatCurrency(cc.CostReturn)}
 			</td>
 			<td>
 			</td>

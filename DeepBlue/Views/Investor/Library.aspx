@@ -74,7 +74,7 @@
 					</div>
 					{{/if}}</div>
 					{{each(i,row) FlexGridData.rows}}
-						<div class="fund-title">${row.cell[0].FundName}</div>
+						<div class="fund-title"><a href='/Fund?id=${row.cell[0].FundID}' style='color:#000;' target=_blank>${row.cell[0].FundName}</a></div>
 					{{/each}}
 					<div class="right-nav">{{if RightPageIndex>0}}
 					<div class="paging" onclick = "javascript:investorLibrary.paging('${RightPageIndex}',this);">
@@ -99,14 +99,14 @@
 			</div><div class="line"></div>
 			{{each(i,investor) Investors}}
 				<div class="container-row">
-					<div class="inv-box inv-name-row {{if i%2>0}}tc-row{{else}}blue{{/if}}" style="cursor:pointer" onclick = "javascript:investorLibrary.expand('Investor${investor.InvestorID}',this);">
+					<div class="inv-box inv-name-row {{if i%2>0}}tc-row{{else}}blue{{/if}}" style="cursor:pointer"  onclick = "javascript:investorLibrary.expand('Investor${investor.InvestorID}',this);">
 						<div class="left-nav">&nbsp;&nbsp;
 						<div class="expand" style="cursor:pointer">
-						<%: Html.Image("Minus.png", new { @id="expandimg" })%>&nbsp;&nbsp;</div>
+						<%: Html.Image("Pluss.png", new { @id="expandimg" })%>&nbsp;&nbsp;</div>
 						<div class="inv-name"><b>${investor.InvestorName}</b></div></div>
 					</div>
 				</div><div class="line"></div>
-				<div class="container-row inv-det-main" id="Investor${investor.InvestorID}">
+				<div class="container-row inv-det-main" id="Investor${investor.InvestorID}" style="display: none;">
 						<div class="inv-box inv-det {{if i%2>0}}inv-row{{else}}inv-arow{{/if}}">
 							<div class="container-row">
 									<div class="left-nav left-padding">Committed Amount</div>
@@ -133,10 +133,10 @@
 									{{/each}}
 							</div>
 							<div class="container-row">
-								<div class="left-nav left-padding">Committed Date</div>
+								<div class="left-nav left-padding">Close Date</div>
 								{{each(i,row) FlexGridData.rows}}
 									<div class="fund-title">
-									${getCommittedDate(row.cell[0].FundID,investor.InvestorID)}
+									${getCloseDate(row.cell[0].FundID,investor.InvestorID)}
 									</div>
 								{{/each}}
 							</div>

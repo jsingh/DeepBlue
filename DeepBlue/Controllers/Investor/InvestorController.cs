@@ -1083,11 +1083,12 @@ namespace DeepBlue.Controllers.Investor {
 				foreach (var fundInformation in fund.FundInformations) {
 					InvestorList investor = investorLists.FirstOrDefault(fundInvestor => fundInvestor.InvestorID == fundInformation.InvestorID);
 					if (investor == null) {
-						investorLists.Add(new InvestorList { InvestorID = fundInformation.InvestorID, InvestorName = fundInformation.InvestorName });
+						investorLists.Add(new InvestorList { FundID = fund.FundID, InvestorID = fundInformation.InvestorID, InvestorName = fundInformation.InvestorName });
+						
 					}
 				}
 			}
-
+			investorLists.Sort();
 			totalPages = Convert.ToInt32(Math.Ceiling(decimal.Divide((decimal)totalRows, (decimal)pageSize)));
 			if (totalPages > pageIndex) {
 				rightPageIndex = pageIndex + 1;

@@ -21,7 +21,7 @@ namespace DeepBlue.Tests.Controllers.Fund {
         public override void Setup() {
             // Arrange
             base.Setup();
-			base.ActionResult = base.DefaultController.Index();
+			base.ActionResult = base.DefaultController.Index(0);
         }
  
 		[Test]

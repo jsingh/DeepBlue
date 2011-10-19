@@ -7007,6 +7007,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.DateTime> _PaidON;
         partial void OnPaidONChanging(Nullable<global::System.DateTime> value);
         partial void OnPaidONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LPProfits
+        {
+            get
+            {
+                return _LPProfits;
+            }
+            set
+            {
+                OnLPProfitsChanging(value);
+                ReportPropertyChanging("LPProfits");
+                _LPProfits = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LPProfits");
+                OnLPProfitsChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _LPProfits;
+        partial void OnLPProfitsChanging(Nullable<global::System.Decimal> value);
+        partial void OnLPProfitsChanged();
 
         #endregion
     
@@ -17957,19 +17981,15 @@ namespace DeepBlue.Models.Entity
         /// <param name="fundAccountID">Initial value of the FundAccountID property.</param>
         /// <param name="fundID">Initial value of the FundID property.</param>
         /// <param name="entityID">Initial value of the EntityID property.</param>
-        /// <param name="account">Initial value of the Account property.</param>
-        /// <param name="accountNumberCash">Initial value of the AccountNumberCash property.</param>
         /// <param name="isPrimary">Initial value of the IsPrimary property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        public static FundAccount CreateFundAccount(global::System.Int32 fundAccountID, global::System.Int32 fundID, global::System.Int32 entityID, global::System.String account, global::System.String accountNumberCash, global::System.Boolean isPrimary, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        public static FundAccount CreateFundAccount(global::System.Int32 fundAccountID, global::System.Int32 fundID, global::System.Int32 entityID, global::System.Boolean isPrimary, global::System.DateTime createdDate, global::System.Int32 createdBy)
         {
             FundAccount fundAccount = new FundAccount();
             fundAccount.FundAccountID = fundAccountID;
             fundAccount.FundID = fundID;
             fundAccount.EntityID = entityID;
-            fundAccount.Account = account;
-            fundAccount.AccountNumberCash = accountNumberCash;
             fundAccount.IsPrimary = isPrimary;
             fundAccount.CreatedDate = createdDate;
             fundAccount.CreatedBy = createdBy;
@@ -18105,7 +18125,7 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String Account
         {
@@ -18117,7 +18137,7 @@ namespace DeepBlue.Models.Entity
             {
                 OnAccountChanging(value);
                 ReportPropertyChanging("Account");
-                _Account = StructuralObject.SetValidValue(value, false);
+                _Account = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("Account");
                 OnAccountChanged();
             }
@@ -18129,7 +18149,7 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String AccountNumberCash
         {
@@ -18141,7 +18161,7 @@ namespace DeepBlue.Models.Entity
             {
                 OnAccountNumberCashChanging(value);
                 ReportPropertyChanging("AccountNumberCash");
-                _AccountNumberCash = StructuralObject.SetValidValue(value, false);
+                _AccountNumberCash = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("AccountNumberCash");
                 OnAccountNumberCashChanged();
             }

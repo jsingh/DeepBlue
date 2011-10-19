@@ -30,6 +30,9 @@
 				<%using (Html.GreenButton(new { @id = "lnkAddFund", @onclick = "javascript:fund.edit(0,'');" })) {%>Add
 				Amberbrook Fund<%}%>
 			</div>
+			<div class="addbtn" style="display: block;float:right;">
+			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...&nbsp;", new { @id = "SpnLoading", @style = "display:none;float:left;" })%><%: Html.TextBox("Fund", "SEARCH AMBERBROOK FUND", new { @class = "wm", @style = "width:200px" })%>
+			</div>
 		</div>
 	</div>
 	<div class="fund-box">
@@ -73,8 +76,14 @@
 		<div class="section-det" id="AddNewFund" style="display: none">
 		</div>
 	</div>
+	<%: Html.HiddenFor(model => model.FundId, new { @id = "DefaultFundId" })%>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
+	<%= Html.jQueryAutoComplete("Fund", new AutoCompleteOptions { Source = "/Fund/FindFunds"
+																, MinLength = 1
+																,
+																  OnSelect = "function(event, ui) { $('#DefaultFundId').val(ui.item.id); $('#FundList').flexReload(); }"
+})%>
 	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List"
 															   ,ControllerName = "Fund"
 															   ,SortName = "FundName"
@@ -83,6 +92,7 @@
 															   ,OnRowBound = "fund.onRowBound"
 															   ,OnTemplate = "fund.onTemplate"
 															   ,OnSuccess = "fund.onGridSuccess"
+															   ,OnSubmit  = "fund.onSubmit"
 															   ,BoxStyle = false
 })%>
 	<script type="text/javascript">
@@ -108,7 +118,7 @@
 				</td>
 				<td style="text-align:right">
 					{{if row.cell[0]>0}}
-					<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:fund.edit(${row.cell[0]},'${row.cell[1]}');" })%>
+					<%: Html.Image("Edit.png", new { @id="Edit${row.cell[0]}", @class = "gbutton show", @onclick = "javascript:fund.edit(${row.cell[0]},'${row.cell[1]}');" })%>
 					{{/if}}
 				</td>
 			</tr>
