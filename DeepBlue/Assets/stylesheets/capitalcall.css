@@ -178,4 +178,9 @@ label {
 #ManualCapitalDistribution .cc-box-det{
 	padding-left: 15px;
 }
- 
+ .show {
+	display: block;
+}
+.hide {
+	display: none;
+}

@@ -69,7 +69,7 @@
 	<div class="gbox" style="margin:10px 0;">
 	<table cellpadding="0" cellspacing="0" border="0" class="grid">
 		<thead>
-			<tr>
+			<tr class="green-hrow">
 				<th style="width: 15%; text-align: left;">
 					Investor Name
 				</th>
@@ -94,7 +94,7 @@
 		</thead>
 		<tbody>
 		{{each(i,cc) Investors}}
-		<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
+		<tr {{if i%2==0}}class="row"{{else}}class="green-arow"{{/if}}>
 			<td>
 				${cc.InvestorName}
 			</td>
@@ -125,7 +125,7 @@
 	<div class="gbox" style="margin:10px 0;">
 	<table cellpadding="0" cellspacing="0" border="0" class="grid">
 		<thead>
-			<tr>
+			<tr class="green-hrow">
 				<th style="text-align:left;width:12%;">
 					Investor Name
 				</th>
@@ -156,7 +156,7 @@
 		</thead>
 		<tbody>
 		{{each(i,cc) Investors}}
-		<tr {{if i%2==0}}class="row"{{else}}class="arow"{{/if}}>
+		<tr {{if i%2==0}}class="row"{{else}}class="green-arow"{{/if}}>
 			<td>
 				${cc.InvestorName}
 			</td>

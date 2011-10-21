@@ -175,7 +175,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 							investorFund.UnfundedAmount = decimal.Subtract((investorFund.UnfundedAmount ?? 0)
 																		   ,
-																		   decimal.Add(item.CapitalAmountCalled, 
+																		   decimal.Add(item.CapitalAmountCalled,
 																					   decimal.Add(
 																									(item.ManagementFees ?? 0)
 																									, (item.FundExpenses ?? 0))
@@ -195,7 +195,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 							}
 						}
 						if (string.IsNullOrEmpty(resultModel.Result)) {
-							resultModel.Result += "True||" + (CapitalCallRepository.FindCapitalCallNumber(model.FundId));
+							resultModel.Result += "True||" + (CapitalCallRepository.FindCapitalCallNumber(model.FundId)) + "||" + capitalCall.CapitalCallID;
 						}
 					}
 				}
@@ -216,6 +216,151 @@ namespace DeepBlue.Controllers.CapitalCall {
 		//GET : /CapitalCall/Result
 		public ActionResult Result() {
 			return View();
+		}
+
+		#endregion
+
+		#region Modify Capital Call
+
+		//
+		// GET: /CapitalCall/ModifyCapitalCall
+		public ActionResult ModifyCapitalCall(int id) {
+			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["SubmenuName"] = "CapitalCall";
+			ViewData["PageName"] = "CapitalCall";
+			CreateCapitalCallModel model = CapitalCallRepository.FindCapitalCallModel(id);
+			return View(model);
+		}
+
+
+		//
+		// POST: /CapitalCall/UpdateCapitalCall
+		[HttpPost]
+		public ActionResult UpdateCapitalCall(FormCollection collection) {
+			CreateCapitalCallModel model = new CreateCapitalCallModel();
+			ResultModel resultModel = new ResultModel();
+			IEnumerable<ErrorInfo> errorInfo = null;
+			this.TryUpdateModel(model, collection);
+			if ((model.CapitalCallID ?? 0) == 0) {
+				ModelState.AddModelError("CapitalCallID", "CapitalCallID is required");
+			}
+			if ((model.AddManagementFees ?? false) == true) {
+				DateTime fromDate = (model.FromDate ?? Convert.ToDateTime("01/01/1900"));
+				DateTime toDate = (model.ToDate ?? Convert.ToDateTime("01/01/1900"));
+				if (fromDate.Year <= 1900)
+					ModelState.AddModelError("FromDate", "From Date is required");
+				if (toDate.Year <= 1900)
+					ModelState.AddModelError("ToDate", "To Date is required");
+				if (fromDate.Year > 1900 && toDate.Year > 1900) {
+					if (fromDate.Subtract(toDate).Days >= 0) {
+						ModelState.AddModelError("ToDate", "To Date must be greater than From Date");
+					}
+				}
+				if ((model.ManagementFees ?? 0) <= 1) {
+					ModelState.AddModelError("ManagementFees", "Fee Amount is required");
+				}
+			}
+			if (ModelState.IsValid) {
+
+				// Attempt to update capital call.
+
+				Models.Entity.CapitalCall capitalCall = CapitalCallRepository.FindCapitalCall((model.CapitalCallID ?? 0));
+
+				if (capitalCall != null) {
+
+					capitalCall.CapitalAmountCalled = model.CapitalAmountCalled;
+					capitalCall.CapitalCallDate = model.CapitalCallDate;
+					capitalCall.CapitalCallDueDate = model.CapitalCallDueDate;
+					capitalCall.CapitalCallTypeID = (int)Models.CapitalCall.Enums.CapitalCallType.Reqular;
+					capitalCall.LastUpdatedBy = Authentication.CurrentUser.UserID;
+					capitalCall.LastUpdatedDate = DateTime.Now;
+					capitalCall.ExistingInvestmentAmount = model.ExistingInvestmentAmount ?? 0;
+					capitalCall.NewInvestmentAmount = model.NewInvestmentAmount;
+					capitalCall.FundID = model.FundId;
+					capitalCall.InvestmentAmount = (capitalCall.NewInvestmentAmount ?? 0) + (capitalCall.ExistingInvestmentAmount ?? 0);
+
+					if ((model.AddFundExpenses ?? false) == true) {
+						capitalCall.FundExpenses = model.FundExpenseAmount ?? 0;
+					}
+					else {
+						capitalCall.FundExpenses = 0;
+					}
+
+					if ((model.AddManagementFees ?? false) == true) {
+						capitalCall.ManagementFeeStartDate = model.FromDate;
+						capitalCall.ManagementFeeEndDate = model.ToDate;
+						capitalCall.ManagementFees = model.ManagementFees;
+					}
+					else {
+						capitalCall.ManagementFees = 0;
+					}
+
+					// Check new investment amount and existing investment amount.
+
+					decimal investmentAmount = (capitalCall.NewInvestmentAmount ?? 0) + (capitalCall.ExistingInvestmentAmount ?? 0);
+					decimal capitalAmount = (capitalCall.CapitalAmountCalled) - (capitalCall.ManagementFees ?? 0) - (capitalCall.FundExpenses ?? 0);
+
+					if (((decimal.Round(investmentAmount) == decimal.Round(capitalAmount)) == false)) {
+						ModelState.AddModelError("NewInvestmentAmount", "(New Investment Amount + Existing Investment Amount) should be equal to (Capital Amount - Management Fees - Fund Expenses).");
+					}
+					else {
+						
+						errorInfo = CapitalCallRepository.SaveCapitalCall(capitalCall);
+						resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+
+						// Attempt to update capital call line item for each investor fund.
+						int rowIndex;
+						FormCollection rowCollection;
+						CapitalCallLineItemModel itemModel = null;
+
+						if (string.IsNullOrEmpty(resultModel.Result)) {
+
+							for (rowIndex = 1; rowIndex < model.CapitalCallLineItemsCount + 1; rowIndex++) {
+								rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(CapitalCallLineItemModel), "_");
+								itemModel = new CapitalCallLineItemModel();
+								this.TryUpdateModel(itemModel, rowCollection);
+								errorInfo = ValidationHelper.Validate(itemModel);
+								resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+								if (string.IsNullOrEmpty(resultModel.Result)) {
+									CapitalCallLineItem capitalCallLineItem = CapitalCallRepository.FindCapitalCallLineItem(itemModel.CapitalCallLineItemID);
+									if (capitalCallLineItem != null) {
+										capitalCallLineItem.LastUpdatedBy = Authentication.CurrentUser.UserID;
+										capitalCallLineItem.LastUpdatedDate = DateTime.Now;
+
+										capitalCallLineItem.CapitalAmountCalled = itemModel.CapitalAmountCalled;
+										capitalCallLineItem.ExistingInvestmentAmount = itemModel.ExistingInvestmentAmount;
+										capitalCallLineItem.FundExpenses = itemModel.FundExpenses;
+										capitalCallLineItem.InvestmentAmount = itemModel.InvestmentAmount;
+										capitalCallLineItem.ManagementFees = itemModel.ManagementFees;
+										capitalCallLineItem.NewInvestmentAmount = itemModel.NewInvestmentAmount;
+
+										errorInfo = CapitalCallRepository.SaveCapitalCallLineItem(capitalCallLineItem);
+										resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+									}
+								}
+								else {
+									break;
+								}
+							}
+
+						}
+
+						if (string.IsNullOrEmpty(resultModel.Result)) {
+							resultModel.Result += "True";
+						}
+					}
+				}
+			}
+			if (ModelState.IsValid == false) {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
 		}
 
 		#endregion
@@ -610,7 +755,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 
 						// Calculate distribution amount of each investor.
-						item.DistributionAmount = (item.CapitalReturn ?? 0) 
+						item.DistributionAmount = (item.CapitalReturn ?? 0)
 													+ (item.PreferredReturn ?? 0)
 													+ (item.ReturnManagementFees ?? 0)
 													+ (item.ReturnFundExpenses ?? 0)

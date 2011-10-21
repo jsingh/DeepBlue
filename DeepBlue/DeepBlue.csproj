@@ -920,6 +920,7 @@
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
     <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
+    <Content Include="Assets\javascripts\ModifyCapitalCall.js" />
     <Content Include="Assets\javascripts\DealContact.js" />
     <Content Include="Assets\javascripts\Log.js" />
     <Content Include="Assets\javascripts\DealList.js" />
@@ -1101,6 +1102,8 @@
     <Content Include="Views\CapitalCall\CapitalDistributionDetailList.ascx" />
     <Content Include="Views\CapitalCall\CapitalDistributionInvestorDetail.ascx" />
     <Content Include="Views\CapitalCall\CapitalDistributionDetail.ascx" />
+    <Content Include="Views\CapitalCall\ModifyCapitalDistribution.aspx" />
+    <Content Include="Views\CapitalCall\ModifyCapitalCall.aspx" />
     <Content Include="Views\CapitalCall\Detail.aspx" />
     <Content Include="Views\CapitalCall\NewCapitalDistribution.aspx" />
     <Content Include="Views\CapitalCall\CapitalDistributionList.aspx" />

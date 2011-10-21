@@ -29,12 +29,18 @@
 	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
 </head>
 <body>
+	<div id="LoadingPage" style="z-index: 1001; position: absolute; bottom: 0px; top: 0px;
+		left: 0px; right: 0px; background-color: #fff; padding-top: 35%;">
+		<center>
+			<%: Html.Image("ajax.jpg")%>&nbsp;Loading
+		</center>
+	</div>
 	<% string mnuresize = "true";
 	if (Response.Cookies["mnuresize"] != null) {
 		mnuresize = Response.Cookies["mnuresize"].Value;
 	}
 	%>
-	<div class="container-main">
+	<div id="ContainerMain" class="container-main">
 		<div id="header">
 			<div id="topheader" class="topheader">
 				<div class="cname">
@@ -225,10 +231,16 @@
 		</div>
 	</div>
 	<%Html.RenderPartial("Footer");%>
-	<script type="text/javascript">
-		deepBlue.init();
-	</script>
 	<%: Html.Hidden("mnuresize", (Response.Cookies["mnuresize"] != null ?  Request.Cookies["mnuresize"].Value : "false"))%>
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
+	<script type="text/javascript">
+		deepBlue.init();
+		window.onunload=function () {
+			$("#LoadingPage").show();
+		}
+		$(document).ready(function () {
+			$("#LoadingPage").hide();
+		});
+	</script>
 </body>
 </html>

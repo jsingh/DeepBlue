@@ -1,4 +1,4 @@
-﻿var capitalCall={
+﻿var modifyCapitalCall={
 	init: function () {
 		$(document).ready(function () {
 			jHelper.waterMark();
@@ -84,7 +84,7 @@
 		$("#SpnMFA","#CapitalCall").html("");
 		$("#SpnDetail","#CapitalCall").show();
 		$("#ManagementFees","#CapitalCall").val(0);
-		capitalCall.calcExistingInvestmentAmount();
+		modifyCapitalCall.calcExistingInvestmentAmount();
 	}
 	,calcManFee: function () {
 		this.resetManFee();
@@ -105,11 +105,21 @@
 			var target=$("tbody","#TierDetail");
 			target.empty();
 			$("#TierDetailTemplate").tmpl(data).appendTo(target);
-			capitalCall.calcExistingInvestmentAmount();
+			modifyCapitalCall.calcExistingInvestmentAmount();
 		});
 	}
 	,showDetail: function (img) {
 		$("#TierDetailMain").dialog("open");
+	}
+	,edit: function (img) {
+		var tr=$(img).parents("tr:first");
+		this.editRow(tr);
+		$("#Save",tr).show();
+	}
+	,editRow: function (tr) {
+		$(".show",tr).hide();
+		$(".hide",tr).show();
+		$(":input:first",tr).focus();
 	}
 	,calcExistingInvestmentAmount: function () {
 		var newInvestmentAmount=parseFloat($("#NewInvestmentAmount","#CapitalCall").val());
@@ -147,32 +157,12 @@
 			var param=$(frm).serializeForm();
 			param[param.length]={ name: "FundId",value: $("#FundId").val() };
 			param[param.length]={ name: "CapitalCallNumber",value: $("#CapitalCallNumber").val() };
-			$.post("/CapitalCall/Create",param,function (data) {
+			$.post("/CapitalCall/UpdateCapitalCall",param,function (data) {
 				loading.empty();
-				var arr=data.split("||");
-				if($.trim(arr[0])!="True") {
+				if($.trim(data)!="True") {
 					jAlert(data);
 				} else {
 					jAlert("Capital Call Saved.");
-					location.href="/CapitalCall/ModifyCapitalCall/"+arr[2];
-					/*$("#SpnCapitalCallNumber").html(arr[1]);
-					$("#CapitalCallNumber").val(arr[1]);
-					$("#SpnMFA").html("");
-					$("#SpnExistingInvestmentAmount").html("");
-					var chkmfee=$("#AddManagementFees").get(0);
-					if(chkmfee) {
-					chkmfee.checked=false;
-					capitalCall.selectMFee(chkmfee);
-					}
-					var chkae=$("#AddFundExpenses").get(0);
-					if(chkae) {
-					chkae.checked=false;
-					capitalCall.selectFundExp(chkae);
-					}
-					jHelper.resetFields(frm);
-					jHelper.removejqCheckBox(frm);
-					jHelper.jqCheckBox(frm);
-					*/
 				}
 			});
 		} catch(e) {

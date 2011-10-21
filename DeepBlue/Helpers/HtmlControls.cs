@@ -10,15 +10,16 @@ using System.Text;
 
 namespace DeepBlue.Helpers {
 	public static class HtmlControls {
+
 		#region Lable
-		public static MvcHtmlString LabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, object htmlAttributes){
+		public static MvcHtmlString LabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, object htmlAttributes) {
 			return LabelFor(html, expression, new RouteValueDictionary(htmlAttributes));
 		}
-		public static MvcHtmlString LabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IDictionary<string, object> htmlAttributes){
+		public static MvcHtmlString LabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IDictionary<string, object> htmlAttributes) {
 			ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, html.ViewData);
 			string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
 			string labelText = metadata.DisplayName ?? metadata.PropertyName ?? htmlFieldName.Split('.').Last();
-			if (String.IsNullOrEmpty(labelText)){
+			if (String.IsNullOrEmpty(labelText)) {
 				return MvcHtmlString.Empty;
 			}
 			TagBuilder tag = new TagBuilder("label");
@@ -28,6 +29,28 @@ namespace DeepBlue.Helpers {
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 		#endregion
+
+		#region TextBox
+		public static MvcHtmlString NumericTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes) {
+			ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
+			string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
+			TagBuilder tag = new TagBuilder("input");
+			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			string value = string.Empty;
+			if (metadata.Model != null) {
+				value = String.Format("{0:0.##;-0.##;\\}", (decimal)metadata.Model);
+			}
+			tag.Attributes.Add("type", "text");
+			tag.Attributes.Add("value", value);
+			if (tag.Attributes.Keys.Contains("id") == false) {
+				tag.Attributes.Add("id", metadata.PropertyName);
+			}
+			tag.Attributes.Add("name", metadata.PropertyName);
+			tag.Attributes.Add("for", htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName));
+			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+		}
+		#endregion
+
 		#region Image
 		public static MvcHtmlString Image(this HtmlHelper helper, string imagename) {
 			TagBuilder tag = new TagBuilder("img");
@@ -323,7 +346,7 @@ namespace DeepBlue.Helpers {
 
 		public static string jQueryTemplateTextArea(this HtmlHelper htmlHelper, string name, string value, int rows, int cols, object htmlAttributes) {
 			RouteValueDictionary dictionary = new RouteValueDictionary(htmlAttributes);
-			StringBuilder attributes  = new StringBuilder();
+			StringBuilder attributes = new StringBuilder();
 			foreach (var attribute in dictionary) {
 				attributes.AppendFormat(" {0}=\"{1}\"", attribute.Key, attribute.Value);
 			}
@@ -353,7 +376,7 @@ namespace DeepBlue.Helpers {
 		}
 
 		public static MvcHtmlString jQueryTemplateSpan(this HtmlHelper htmlHelper, string name, string className) {
-			return MvcHtmlString.Create(string.Format("<span id=\"{0}\" name=\"{0}\" class=\"{1}\">{2}</span>", name , className, (name.Contains("$") ? name :  "${" + name + "}")));
+			return MvcHtmlString.Create(string.Format("<span id=\"{0}\" name=\"{0}\" class=\"{1}\">{2}</span>", name, className, (name.Contains("$") ? name : "${" + name + "}")));
 		}
 
 

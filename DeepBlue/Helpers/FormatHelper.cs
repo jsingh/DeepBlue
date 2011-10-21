@@ -11,6 +11,11 @@ namespace DeepBlue.Helpers {
 		//    return String.Format("{0:N0}", (value ?? 0)); 
 		//}
 
+
+		public static string StringFormat(decimal? value, string format) {
+			return ((value ?? 0) == 0 ? string.Empty : String.Format(format, (value ?? 0)).Replace("$", ""));
+		}
+
 		public static string NumberFormat(decimal? value) {
 			return ((value ?? 0) == 0 ? string.Empty : String.Format("{0:C}", (value ?? 0)).Replace("$",""));
 		}

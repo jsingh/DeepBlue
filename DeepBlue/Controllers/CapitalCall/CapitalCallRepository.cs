@@ -10,7 +10,48 @@ using System.Data.Objects;
 namespace DeepBlue.Controllers.CapitalCall {
 	public class CapitalCallRepository : ICapitalCallRepository {
 
-		#region ICapitalCallRepository Members
+		#region CapitalCallRepository Members
+
+		public CreateCapitalCallModel FindCapitalCallModel(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from capitalCall in context.CapitalCalls
+						where capitalCall.CapitalCallID == id
+						select new CreateCapitalCallModel {
+							CapitalAmountCalled = capitalCall.CapitalAmountCalled,
+							CapitalCallDate = capitalCall.CapitalCallDate,
+							CapitalCallDueDate = capitalCall.CapitalCallDueDate,
+							CapitalCallNumber = capitalCall.CapitalCallNumber,
+							FromDate = capitalCall.ManagementFeeStartDate,
+							ToDate = capitalCall.ManagementFeeEndDate,
+							ExistingInvestmentAmount = capitalCall.ExistingInvestmentAmount,
+							FundExpenseAmount = capitalCall.FundExpenses,
+							FundId = capitalCall.FundID,
+							InvestedAmount = capitalCall.InvestmentAmount,
+							InvestedAmountInterest = capitalCall.InvestedAmountInterest,
+							ManagementFees = capitalCall.ManagementFees,
+							ManagementFeeInterest = capitalCall.ManagementFeeInterest,
+							NewInvestmentAmount = capitalCall.NewInvestmentAmount,
+							AddFundExpenses = (capitalCall.ManagementFees > 0 ? true : false),
+							AddManagementFees = (capitalCall.ManagementFees > 0 ? true : false),
+							CapitalCallID = capitalCall.CapitalCallID,
+							CapitalCallLineItemsCount = capitalCall.CapitalCallLineItems.Count(),
+							CapitalCallLineItems = (from item in capitalCall.CapitalCallLineItems
+													select new CapitalCallLineItemModel {
+														CapitalAmountCalled = item.CapitalAmountCalled,
+														CapitalCallID = item.CapitalCallID,
+														CapitalCallLineItemID = item.CapitalCallLineItemID,
+														ExistingInvestmentAmount = item.ExistingInvestmentAmount,
+														InvestedAmountInterest = item.InvestedAmountInterest,
+														FundExpenses = item.FundExpenses,
+														InvestmentAmount = item.InvestmentAmount,
+														ManagementFees = item.ManagementFees,
+														InvestorName = (item.Investor != null ? item.Investor.InvestorName : string.Empty),
+														ManagementFeeInterest = item.ManagementFeeInterest,
+														NewInvestmentAmount = item.NewInvestmentAmount
+													})
+						}).SingleOrDefault();
+			}
+		}
 
 		public List<Models.Entity.CapitalCall> GetCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -214,7 +255,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 							ProfitReturn = capitalDistributionLineItem.PreferredReturn,
 							ReturnFundExpenses = capitalDistributionLineItem.ReturnFundExpenses,
 							ReturnManagementFees = capitalDistributionLineItem.ReturnManagementFees,
-							LPProfit  = capitalDistributionLineItem.LPProfits,
+							LPProfit = capitalDistributionLineItem.LPProfits,
 							CostReturn = capitalDistributionLineItem.CapitalReturn
 						}).ToList();
 			}
