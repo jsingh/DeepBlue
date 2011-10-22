@@ -2,36 +2,39 @@
 	init: function () {
 		$(document).ready(function () {
 			jHelper.waterMark();
-			$("#TierDetailMain").dialog({
-				title: "Rate Schedule Detail",
-				autoOpen: false,
-				width: 700,
-				modal: true,
-				position: 'top',
-				autoResize: false
-			});
-			/*setTimeout(function () {
-			$("#CCDetail").hide();
-			},200);*/
+			var id=$("#SearchCapitalCallID").val();
+			if(id>0) {
+				modifyCapitalCall.selectCC(id);
+			}
 		});
 	}
 	,selectFund: function (id) {
-		$("#SpnLoading").show();
-		var dt=new Date();
-		var url="/CapitalCall/FundDetail?id="+id+"&t="+dt.getTime();
-		$("#lnkPCC").attr("href","#");
-		$.getJSON(url,function (data) {
-			$("#lnkPCC").attr("href","/CapitalCall/Detail?fundId="+id+"&typeId=1");
-			$("#SpnLoading").hide();
-			$("#CCDetail").show();
-			$("#FundId").val(data.FundId);
-			$("#Fund").val(data.FundName);
-			$("#TitleFundName").html(data.FundName);
-			$("#CommittedAmount").html(jHelper.dollarAmount(data.TotalCommitment));
-			$("#UnfundedAmount").html(jHelper.dollarAmount(data.UnfundedAmount));
-			$("#CapitalCallNumber").val(data.CapitalCallNumber);
-			$(".ccnumber").html(data.CapitalCallNumber);
+		$("#SearchFundID").val(id);
+		$("#SearchCapitalCall").val("--Select One--");
+		$("#SearchCapitalCallID").val(0);
+	}
+	,searchCC: function (request,response) {
+		$.getJSON("/CapitalCall/FindCapitalCalls?term="+request.term+"&fundId="+$("#SearchFundID").val(),function (data) {
+			response(data);
 		});
+	}
+	,selectCC: function (id) {
+		var target=$("#ModifyCapitalCall");
+		target.empty();
+		if(id>0) {
+			target.html("<center>"+jHelper.loadingHTML()+"</center>");
+			$.getJSON("/CapitalCall/FindCapitalCallModel/"+id,function (data) {
+				target.empty();
+				$("#ModifyCapitalCallTemplate").tmpl(data).appendTo(target);
+				$("#SearchFundName").val(data.FundName);
+				$("#SearchFundID").val(data.FundId);
+				$("#SearchCapitalCall").val(data.CapitalCallNumber+"# ("+data.FundName+")");
+				jHelper.checkValAttr(target);
+				jHelper.jqCheckBox(target);
+				jHelper.jqComboBox(target);
+				jHelper.applyDatePicker(target);
+			});
+		}
 	}
 	,selectMFee: function (chk) {
 		var spnAddMF=$("#SpnAddManagementFee");

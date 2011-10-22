@@ -90,11 +90,11 @@
 					<%}%>
 					<div class="sep">
 					</div>
-					<%--	<% using (Html.TopMenu((ViewData["MenuName"] == "Document"), "Doc_Management", new { @id = "docmnu" })) {%>
-				<%: Html.TopMenuLink("DOCUMENT MANAGEMENT")%>
-				<%}%>
-				<div class="sep">
-				</div>--%>
+					<%--<% using (Html.TopMenu((ViewData["MenuName"] == "Document"), "Doc_Management", new { @id = "docmnu" })) {%>
+					<%: Html.TopMenuLink("DOCUMENT MANAGEMENT")%>
+					<%}%>
+					<div class="sep">
+					</div>--%>
 					<% using (Html.TopMenu((ViewData["MenuName"] == "Admin"), "Adm_Management", new { @id = "admmnu" })) {%>
 					<%: Html.TopMenuLink("ADMIN")%>
 					<%}%>
@@ -159,7 +159,13 @@
 						<%: Html.ActionLink("Capital Call", "New", "CapitalCall", null, new { @class = (ViewData["PageName"] == "CapitalCall" ? "sel" : "") })%>
 					</li>
 					<li>
+						<%: Html.ActionLink("Modify Capital Call", "ModifyCapitalCall", "CapitalCall", null, new { @class = (ViewData["PageName"] == "ModifyCapitalCall" ? "sel" : "") })%>
+					</li>
+					<li>
 						<%: Html.ActionLink("Capital Distribution", "NewCapitalDistribution", "CapitalCall", null, new { @class = (ViewData["PageName"] == "CapitalDistribution" ? "sel" : "") })%>
+					</li>
+					<li>
+						<%: Html.ActionLink("Modify Capital Distribution", "ModifyCapitalDistribution", "CapitalCall", null, new { @class = (ViewData["PageName"] == "ModifyCapitalDistribution" ? "sel" : "") })%>
 					</li>
 					<li>
 						<%: Html.ActionLink("Detail", "Detail", "CapitalCall", null, new { @class = (ViewData["PageName"] == "Detail" ? "sel" : "") })%>
@@ -235,7 +241,7 @@
 	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
 	<script type="text/javascript">
 		deepBlue.init();
-		window.onunload=function () {
+		window.onunload = function () {
 			$("#LoadingPage").show();
 		}
 		$(document).ready(function () {

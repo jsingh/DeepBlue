@@ -920,6 +920,7 @@
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
     <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
+    <Content Include="Assets\javascripts\ModifyCapitalDistribution.js" />
     <Content Include="Assets\javascripts\ModifyCapitalCall.js" />
     <Content Include="Assets\javascripts\DealContact.js" />
     <Content Include="Assets\javascripts\Log.js" />
@@ -1027,6 +1028,7 @@
     <Content Include="Assets\stylesheets\adminflexigrid.css" />
     <Content Include="Assets\stylesheets\capitalcall.css" />
     <Content Include="Assets\stylesheets\capitalcalldetail.css" />
+    <Content Include="Assets\stylesheets\modifycapitaldistribution.css" />
     <Content Include="Assets\stylesheets\customfield.css" />
     <Content Include="Assets\stylesheets\deal.css" />
     <Content Include="Assets\stylesheets\dealactivity.css" />

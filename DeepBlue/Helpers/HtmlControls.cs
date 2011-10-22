@@ -379,9 +379,6 @@ namespace DeepBlue.Helpers {
 			return MvcHtmlString.Create(string.Format("<span id=\"{0}\" name=\"{0}\" class=\"{1}\">{2}</span>", name, className, (name.Contains("$") ? name : "${" + name + "}")));
 		}
 
-
-
-
 		public static MvcHtmlString jQueryTemplateTextBox(this HtmlHelper htmlHelper, string name) {
 			return jQueryTemplateTextBox(htmlHelper, name, "${" + name + "}", new { });
 		}
@@ -465,10 +462,14 @@ namespace DeepBlue.Helpers {
 		}
 
 		public static MvcHtmlString jQueryTemplateTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression) {
-			return jQueryTemplateTextBoxFor(htmlHelper, expression, new { });
+			return jQueryTemplateTextBoxFor(htmlHelper, expression, new { }, string.Empty);
 		}
 
 		public static MvcHtmlString jQueryTemplateTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression, object htmlAttributes) {
+			return jQueryTemplateTextBoxFor(htmlHelper, expression, htmlAttributes, string.Empty);
+		}
+
+		public static MvcHtmlString jQueryTemplateTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression, object htmlAttributes, string formatName) {
 			ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
 			string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
 			if (String.IsNullOrEmpty(htmlFieldName)) {
@@ -476,7 +477,12 @@ namespace DeepBlue.Helpers {
 			}
 			TagBuilder tag = new TagBuilder("input");
 			tag.Attributes.Add("type", "text");
-			tag.Attributes.Add("value", "${" + htmlFieldName + "}");
+			if (string.IsNullOrEmpty(formatName) == false) {
+				tag.Attributes.Add("value", "${" + formatName + "(" + htmlFieldName + ")" + "}");
+			}
+			else {
+				tag.Attributes.Add("value", "${" + htmlFieldName + "}");
+			}
 			tag.Attributes.Add("name", htmlFieldName);
 			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
 			if (tag.Attributes.Keys.Contains("id") == false) {
@@ -485,6 +491,7 @@ namespace DeepBlue.Helpers {
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 
+	 
 		#endregion
 	}
 }

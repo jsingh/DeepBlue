@@ -224,14 +224,12 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		//
 		// GET: /CapitalCall/ModifyCapitalCall
-		public ActionResult ModifyCapitalCall(int id) {
+		public ActionResult ModifyCapitalCall(int? id) {
 			ViewData["MenuName"] = "Fund Tracker";
 			ViewData["SubmenuName"] = "CapitalCall";
-			ViewData["PageName"] = "CapitalCall";
-			CreateCapitalCallModel model = CapitalCallRepository.FindCapitalCallModel(id);
-			return View(model);
+			ViewData["PageName"] = "ModifyCapitalCall";
+			return View(new CreateCapitalCallModel { CapitalCallID = id });
 		}
-
 
 		//
 		// POST: /CapitalCall/UpdateCapitalCall
@@ -304,7 +302,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 						ModelState.AddModelError("NewInvestmentAmount", "(New Investment Amount + Existing Investment Amount) should be equal to (Capital Amount - Management Fees - Fund Expenses).");
 					}
 					else {
-						
+
 						errorInfo = CapitalCallRepository.SaveCapitalCall(capitalCall);
 						resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 
@@ -314,8 +312,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 						CapitalCallLineItemModel itemModel = null;
 
 						if (string.IsNullOrEmpty(resultModel.Result)) {
-
-							for (rowIndex = 1; rowIndex < model.CapitalCallLineItemsCount + 1; rowIndex++) {
+							for (rowIndex = 0; rowIndex < model.CapitalCallLineItemsCount; rowIndex++) {
 								rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(CapitalCallLineItemModel), "_");
 								itemModel = new CapitalCallLineItemModel();
 								this.TryUpdateModel(itemModel, rowCollection);
@@ -361,6 +358,12 @@ namespace DeepBlue.Controllers.CapitalCall {
 				}
 			}
 			return View("Result", resultModel);
+		}
+
+		//
+		// GET: /CapitalCall/FindCapitalCall
+		public ActionResult FindCapitalCallModel(int id) {
+			return Json(CapitalCallRepository.FindCapitalCallModel(id), JsonRequestBehavior.AllowGet);
 		}
 
 		#endregion
@@ -769,7 +772,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 				IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalDistribution(distribution);
 				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				if (string.IsNullOrEmpty(resultModel.Result)) {
-					resultModel.Result += "True||" + (CapitalCallRepository.FindCapitalCallDistributionNumber(model.FundId));
+					resultModel.Result += "True||" + (CapitalCallRepository.FindCapitalCallDistributionNumber(model.FundId)) + "||" + distribution.CapitalDistributionID;
 				}
 			}
 			if (ModelState.IsValid == false) {
@@ -818,6 +821,129 @@ namespace DeepBlue.Controllers.CapitalCall {
 					ModelState.AddModelError("DistributionAmount", "Components of the distribution do not add up to total distribution amount");
 				}
 			}
+		}
+
+		#endregion
+
+		#region Modify Capital Distribution
+		//
+		// GET: /CapitalCall/ModifyCapitalDistribution
+		public ActionResult ModifyCapitalDistribution(int? id) {
+			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["SubmenuName"] = "CapitalCall";
+			ViewData["PageName"] = "ModifyCapitalDistribution";
+			return View(new CreateDistributionModel { CapitalDistributionID = id });
+		}
+
+
+		//
+		// POST: /CapitalCall/UpdateDistribution
+		[HttpPost]
+		public ActionResult UpdateDistribution(FormCollection collection) {
+			CreateDistributionModel model = new CreateDistributionModel();
+			ResultModel resultModel = new ResultModel();
+			IEnumerable<ErrorInfo> errorInfo = null;
+			this.TryUpdateModel(model, collection);
+			if ((model.CapitalDistributionID ?? 0) == 0) {
+				ModelState.AddModelError("CapitalDistributionID", "CapitalDistributionID is required");
+			}
+			CheckDistributionAmount(model);
+			if (ModelState.IsValid) {
+
+				// Attempt to create cash distribution.
+
+				CapitalDistribution distribution = CapitalCallRepository.FindCapitalDistribution((model.CapitalDistributionID ?? 0));
+
+				if (distribution != null) {
+					distribution.CapitalDistributionDate = model.CapitalDistributionDate;
+					distribution.CapitalDistributionDueDate = model.CapitalDistributionDueDate;
+
+					distribution.CapitalReturn = model.CapitalReturn;
+					distribution.PreferredReturn = model.PreferredReturn;
+					distribution.ReturnManagementFees = model.ReturnManagementFees;
+					distribution.ReturnFundExpenses = model.ReturnFundExpenses;
+					distribution.PreferredCatchUp = model.PreferredCatchUp;
+					distribution.Profits = model.GPProfits;
+					distribution.LPProfits = model.LPProfits;
+					distribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
+					distribution.LastUpdatedDate = DateTime.Now;
+					distribution.DistributionAmount = model.DistributionAmount;
+
+					errorInfo = CapitalCallRepository.SaveCapitalDistribution(distribution);
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+
+					// Attempt to update capital call line item for each investor fund.
+					int rowIndex;
+					FormCollection rowCollection;
+					CapitalDistributionLineItemModel itemModel = null;
+
+					if (string.IsNullOrEmpty(resultModel.Result)) {
+						for (rowIndex = 0; rowIndex < model.CapitalDistributionLineItemsCount; rowIndex++) {
+							rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(CapitalDistributionLineItemModel), "_");
+							itemModel = new CapitalDistributionLineItemModel();
+							this.TryUpdateModel(itemModel, rowCollection);
+							errorInfo = ValidationHelper.Validate(itemModel);
+							resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+							if (string.IsNullOrEmpty(resultModel.Result)) {
+
+								// Attempt to create cash distribution of each investor.
+
+								CapitalDistributionLineItem capitalDistributionLineItem = CapitalCallRepository.FindCapitalDistributionLineItem(itemModel.CapitalDistributionLineItemID);
+								if (capitalDistributionLineItem != null) {
+
+									capitalDistributionLineItem.LastUpdatedBy = Authentication.CurrentUser.UserID;
+									capitalDistributionLineItem.LastUpdatedDate = DateTime.Now;
+
+									capitalDistributionLineItem.CapitalReturn = itemModel.CapitalReturn;
+									capitalDistributionLineItem.PreferredReturn = itemModel.PreferredReturn;
+									capitalDistributionLineItem.ReturnManagementFees = itemModel.ReturnManagementFees;
+									capitalDistributionLineItem.ReturnFundExpenses = itemModel.ReturnFundExpenses;
+									capitalDistributionLineItem.PreferredCatchUp = itemModel.PreferredCatchUp;
+									capitalDistributionLineItem.Profits = itemModel.Profits;
+									capitalDistributionLineItem.LPProfits = itemModel.LPProfits;
+									capitalDistributionLineItem.DistributionAmount = itemModel.DistributionAmount;
+
+									errorInfo = CapitalCallRepository.SaveCapitalDistributionLineItem(capitalDistributionLineItem);
+									resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+								}
+								else {
+									break;
+								}
+							}
+						
+						}
+
+						if (string.IsNullOrEmpty(resultModel.Result)) {
+							resultModel.Result += "True";
+						}
+					}
+
+				}
+			}
+			if (ModelState.IsValid == false) {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		//
+		// GET: /CapitalCall/FindCapitalDistributionModel
+		public ActionResult FindCapitalDistributionModel(int id) {
+			return Json(CapitalCallRepository.FindCapitalDistributionModel(id), JsonRequestBehavior.AllowGet);
+		}
+
+
+		//
+		// GET: /CapitalCall/FindCapitalDistributions
+		[HttpGet]
+		public JsonResult FindCapitalDistributions(string term, int fundId) {
+			return Json(CapitalCallRepository.FindCapitalDistributions(term, fundId), JsonRequestBehavior.AllowGet);
 		}
 
 		#endregion
@@ -1013,6 +1139,13 @@ namespace DeepBlue.Controllers.CapitalCall {
 				}
 			}
 			return Json(model, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /CapitalCall/FindCapitalCalls
+		[HttpGet]
+		public JsonResult FindCapitalCalls(string term, int fundId) {
+			return Json(CapitalCallRepository.FindCapitalCalls(term, fundId), JsonRequestBehavior.AllowGet);
 		}
 
 		#endregion

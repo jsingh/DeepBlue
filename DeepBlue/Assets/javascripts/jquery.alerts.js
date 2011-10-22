@@ -125,13 +125,13 @@
 					break;
 			}
 
-			// Make draggable
-			if($.alerts.draggable) {
-				try {
-					$("#popup_container").draggable({ handle: $("#popup_title") });
-					$("#popup_title").css({ cursor: 'move' });
-				} catch(e) { /* requires jQuery UI draggables */ }
-			}
+//			// Make draggable
+//			if($.alerts.draggable) {
+//				try {
+//					$("#popup_container").draggable({ handle: $("#popup_title") });
+//					$("#popup_title").css({ cursor: 'move' });
+//				} catch(e) { /* requires jQuery UI draggables */ }
+//			}
 		},
 
 		_hide: function () {

@@ -8,7 +8,9 @@ using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.CapitalCall {
 	public class CreateDistributionModel {
-		
+
+		public int? CapitalDistributionID { get; set; }
+
 		[Required(ErrorMessage = "Fund is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue)]
 		[DisplayName("Fund")]
@@ -20,17 +22,17 @@ namespace DeepBlue.Models.CapitalCall {
 		public string DistributionNumber { get; set; }
 
 		[Required(ErrorMessage = "Distribution Amount is required")]
-		[Range(typeof(decimal),"1", "79228162514264337593543950335", ErrorMessage = "Distribution Amount is required")]
+		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Distribution Amount is required")]
 		[DisplayName("Distribution Amount")]
 		public decimal DistributionAmount { get; set; }
-		
+
 		[Required(ErrorMessage = "Distribution Date is required")]
 		[DateRange()]
 		[DisplayName("Distribution Date")]
 		public DateTime CapitalDistributionDate { get; set; }
-		
+
 		[Required(ErrorMessage = "Distribution Due Date is required")]
-        [DateRange()]
+		[DateRange()]
 		[DisplayName("Distribution Due Date")]
 		public DateTime CapitalDistributionDueDate { get; set; }
 
@@ -56,6 +58,44 @@ namespace DeepBlue.Models.CapitalCall {
 		public decimal? LPProfits { get; set; }
 
 		public int? InvestorCount { get; set; }
-	 
+
+		public string FundName { get; set; }
+
+		public decimal? TotalDistribution { get; set; }
+
+		public decimal? TotalProfit { get; set; }
+
+		public IEnumerable<CapitalDistributionLineItemModel> CapitalDistributionLineItems { get; set; }
+
+		public int CapitalDistributionLineItemsCount { get; set; }
+	}
+
+	public class CapitalDistributionLineItemModel {
+
+		[Required(ErrorMessage = "CapitalCallLineItemID is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CapitalCallLineItemID is required")]
+		public int CapitalDistributionID { get; set; }
+
+		[Required(ErrorMessage = "CapitalDistributionLineItemID is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CapitalDistributionLineItemID is required")]
+		public int CapitalDistributionLineItemID { get; set; }
+
+		public string InvestorName { get; set; }
+
+		public decimal DistributionAmount { get; set; }
+
+		public decimal? CapitalReturn { get; set; }
+
+		public decimal? PreferredReturn { get; set; }
+
+		public decimal? ReturnManagementFees { get; set; }
+
+		public decimal? ReturnFundExpenses { get; set; }
+
+		public decimal? PreferredCatchUp { get; set; }
+
+		public decimal? Profits { get; set; }
+
+		public decimal? LPProfits { get; set; }
 	}
 }

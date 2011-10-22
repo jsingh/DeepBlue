@@ -76,6 +76,12 @@ namespace DeepBlue.Models.CapitalCall {
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.##;-0.##;\\}")]
 		public decimal? InvestedAmount { get; set; }
 
+		public string FundName { get; set; }
+
+		public decimal? UnfundedAmount { get; set; }
+
+		public decimal? TotalCommitment { get; set; }
+
 		public int? InvestorCount { get; set; }
 
 		public bool? AddManagementFees { get; set; }

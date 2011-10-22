@@ -10,11 +10,15 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 	public interface ICapitalCallRepository {
 		CreateCapitalCallModel FindCapitalCallModel(int id);
+		CreateDistributionModel FindCapitalDistributionModel(int id);
+		List<AutoCompleteList> FindCapitalCalls(string capitalCallName, int fundId);
+		List<AutoCompleteList> FindCapitalDistributions(string capitalDistributionName, int fundId);
 		List<Models.Entity.CapitalCall> GetCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId);
 		List<Models.Entity.CapitalCall> GetCapitalCalls(int fundId);
 		List<CapitalDistribution> GetCapitalDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId);
 		List<CapitalDistribution> GetCapitalDistributions(int fundId);
 		Models.Entity.CapitalCall FindCapitalCall(int capitalCallId);
+		CapitalDistribution FindCapitalDistribution(int capitalDistributionId);
 		CapitalCallLineItem FindCapitalCallLineItem(int capitalCallLineItemId);
 		CapitalDistributionLineItem FindCapitalDistributionLineItem(int capitalDistributionLineItemId);
 		Models.Entity.Fund FindFund(int fundId);

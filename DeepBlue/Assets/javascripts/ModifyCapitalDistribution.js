@@ -1,31 +1,40 @@
-﻿var distribution={
+﻿var modifyCapitalDistribution={
 	init: function () {
 		$(document).ready(function () {
 			jHelper.waterMark();
+			var id=$("#SearchCapitalDistributionID").val();
+			if(id>0) {
+				modifyCapitalDistribution.selectCD(id);
+			}
 		});
 	}
 	,selectFund: function (id) {
-		$("#SpnLoading").show();
-		var dt=new Date();
-		var url="/CapitalCall/FundDetail?id="+id+"&t="+dt.getTime();
-		$("#lnkPCC").attr("href","#");
-		$.getJSON(url,function (data) {
-			$("#lnkPCC").attr("href","/CapitalCall/Detail?fundId="+id+"&typeId=1");
-			$("#lnkPCD").attr("href","/CapitalCall/Detail?fundId="+id+"&typeId=2");
-			$("#SpnLoading").hide();
-			$("#CCDetail").show();
-			$("#FundId").val(data.FundId);
-
-			$("#TitleFundName").html(data.FundName);
-			$("#Fund").val(data.FundName);
-			$("#SpnDAmount").html(jHelper.dollarAmount(data.TotalDistribution));
-			$("#SpnProfitAmount").html(jHelper.dollarAmount(data.TotalProfit));
-			$("#SpnDistributionNumber").html(data.DistributionNumber);
-			$("#SpnManualDistributionNumber").html(data.DistributionNumber);
-
-			$("#CommittedAmount").val(data.TotalCommitment);
-			$("#DistributionNumber").val(data.DistributionNumber);
+		$("#SearchFundID").val(id);
+		$("#SearchCapitalDistribution").val("--Select One--");
+		$("#SearchCapitalDistributionID").val(0);
+	}
+	,searchCD: function (request,response) {
+		$.getJSON("/CapitalCall/FindCapitalDistributions?term="+request.term+"&fundId="+$("#SearchFundID").val(),function (data) {
+			response(data);
 		});
+	}
+	,selectCD: function (id) {
+		var target=$("#ModifyCapitalDistribution");
+		target.empty();
+		if(id>0) {
+			target.html("<center>"+jHelper.loadingHTML()+"</center>");
+			$.getJSON("/CapitalCall/FindCapitalDistributionModel/"+id,function (data) {
+				target.empty();
+				$("#ModifyCapitalDistributionTemplate").tmpl(data).appendTo(target);
+				$("#SearchFundName").val(data.FundName);
+				$("#SearchFundID").val(data.FundId);
+				$("#SearchCapitalDistribution").val(data.DistributionNumber+"# ("+data.FundName+")");
+				jHelper.checkValAttr(target);
+				jHelper.jqCheckBox(target);
+				jHelper.jqComboBox(target);
+				jHelper.applyDatePicker(target);
+			});
+		}
 	}
 	,showControl: function (chk,boxId) {
 		var box=document.getElementById(boxId);
@@ -56,27 +65,28 @@
 			case "M": MCD.show();break;
 		}
 	}
+		,edit: function (img) {
+		var tr=$(img).parents("tr:first");
+		this.editRow(tr);
+		$("#Save",tr).show();
+	}
+	,editRow: function (tr) {
+		$(".show",tr).hide();
+		$(".hide",tr).show();
+		$(":input:first",tr).focus();
+	}
 	,save: function (frmid) {
 		try {
 			var frm=$("#"+frmid);
 			var loading=$("#UpdateLoading");
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 			var param=$(frm).serializeForm();
-			param[param.length]={ name: "FundId",value: $("#FundId").val() };
-			param[param.length]={ name: "DistributionNumber",value: $("#DistributionNumber").val() };
-			$.post("/CapitalCall/CreateDistribution",param,function (data) {
+			$.post("/CapitalCall/UpdateDistribution",param,function (data) {
 				loading.empty();
-				var arr=data.split("||");
-				if($.trim(arr[0])!="True") {
+				if($.trim(data)!="True") {
 					jAlert(data);
 				} else {
 					jAlert("Capital Distribution Saved.");
-					location.href = "/CapitalCall/ModifyCapitalDistribution/"+arr[2];
-					/*$("#SpnDistributionNumber").html(arr[1]);
-					$("#DistributionNumber").val(arr[1]);
-					$("#SpnManualDistributionNumber").html(arr[1]);
-					jHelper.resetFields(frm);
-					*/
 				}
 			});
 		} catch(e) {
