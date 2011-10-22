@@ -1028,6 +1028,7 @@
     <Content Include="Assets\stylesheets\adminflexigrid.css" />
     <Content Include="Assets\stylesheets\capitalcall.css" />
     <Content Include="Assets\stylesheets\capitalcalldetail.css" />
+    <Content Include="Assets\stylesheets\modifycapitalcall.css" />
     <Content Include="Assets\stylesheets\modifycapitaldistribution.css" />
     <Content Include="Assets\stylesheets\customfield.css" />
     <Content Include="Assets\stylesheets\deal.css" />

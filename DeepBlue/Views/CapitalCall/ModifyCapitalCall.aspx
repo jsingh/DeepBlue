@@ -7,6 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.StylesheetLinkTag("capitalcall.css")%>
+	<%=Html.StylesheetLinkTag("modifycapitalcall.css")%>
 	<%=Html.JavascriptInclueTag("ModifyCapitalCall.js") %>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
@@ -150,7 +151,7 @@
 								<%: Html.Span("${formatCurrency(ExistingInvestmentAmount)}", new { @id = "SpnExistingInvestmentAmount" })%>
 								<%: Html.jQueryTemplateHiddenFor(model => model.ExistingInvestmentAmount)%>
 							</div>
-							<div class="editor-label" style="clear: both; width: 100%;">
+							<div class="editor-label" style="clear: both; width: 100%;padding-left:25px;">
 								<% Html.RenderPartial("TBoxTop"); %>
 								<table cellpadding="0" cellspacing="0" border="0" class="grid">
 									<thead>
