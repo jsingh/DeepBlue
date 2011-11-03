@@ -10,6 +10,7 @@ using DeepBlue.Helpers;
 using DeepBlue.Controllers.Transaction;
 using DeepBlue.Models.Deal;
 using DeepBlue.Controllers.Deal;
+using System.IO;
 
 namespace DeepBlue.Controllers.Admin {
 	public class AdminController : BaseController {
@@ -2506,12 +2507,6 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region ExportExcel
-		public ActionResult ExportExcel(string tableName) {
-			return new ExportExcel { TableName = tableName, GridData = AdminRepository.FindTable(tableName) };
-		}
-		#endregion
-
 		#region Fund Closing
 		//
 		// GET: /Admin/FundClosing
@@ -2638,7 +2633,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region User
 
 		[AdminAuthorize()]
-		public ActionResult User() {
+		public ActionResult Users() {
 			ViewData["MenuName"] = "Admin";
 			ViewData["SubmenuName"] = "UserManagement";
 			ViewData["PageName"] = "User";
@@ -3102,6 +3097,55 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
+		#region FileUpload
+		////
+		//// POST: /Admin/Upload
+		//[HttpPost]
+		//[AcceptVerbs(HttpVerbs.Post)]
+		//public string Upload() {
+		//    if (string.IsNullOrEmpty(Request.Headers["UPLOAD-File-Name"]) == false) {
+		//        UploadFile fileUpload = new UploadFile("TempUploadPath", Request.Headers["UPLOAD-File-Name"]);
+		//        fileUpload.Upload(Request);
+		//    }
+		//    return string.Empty;
+		//}
+
+		//
+		// POST: /Admin/Upload
+		[HttpPost]
+		[AcceptVerbs(HttpVerbs.Post)]
+		public ActionResult Upload(FormCollection collection) {
+			ImportExcelFileModel model = new ImportExcelFileModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			if (model.UploadFile == null) {
+				ModelState.AddModelError("UploadFile", "File is required");
+			}
+			if (model.UploadFile != null) {
+				string ext = Path.GetExtension(model.UploadFile.FileName).ToLower();
+				if (ext != ".xls" && ext != ".xlsx") {
+					ModelState.AddModelError("UploadFile", ".xls, .xlsx files only allowed");
+				}
+			}
+			if (ModelState.IsValid) {
+				UploadFile fileUpload = new UploadFile(model.UploadFile, "TempUploadPath", model.UploadFile.FileName);
+				fileUpload.Upload();
+				model.FileName = fileUpload.FileName;
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			resultModel.Result = JsonSerializer.ToJsonObject(new { Result = resultModel.Result, FileName = model.FileName }).ToString();
+			return View("Result", resultModel);
+		}
+		#endregion
+
 		#region Log
 		public ActionResult Log() {
 			return View();
@@ -3130,6 +3174,167 @@ namespace DeepBlue.Controllers.Admin {
 			}
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
+		#endregion
+
+		#region SellerType
+
+		public ActionResult SellerType() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "DealManagement";
+			ViewData["PageName"] = "SellerType";
+			return View();
+		}
+
+		//
+		// GET: /Admin/SellerTypeList
+		[HttpGet]
+		public JsonResult SellerTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DeepBlue.Models.Entity.SellerType> sellerTypes = AdminRepository.GetAllSellerTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var sellerType in sellerTypes) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {sellerType.SellerTypeID,
+					  sellerType.SellerType1,
+					  sellerType.Enabled}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditSellerType
+		[HttpGet]
+		public ActionResult EditSellerType(int id) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			DeepBlue.Models.Entity.SellerType sellerType = AdminRepository.FindSellerType(id);
+			flexgridData.total = totalRows;
+			flexgridData.page = 0;
+			flexgridData.rows.Add(new FlexigridRow {
+				cell = new List<object> {sellerType.SellerTypeID,
+					  sellerType.SellerType1,
+					  sellerType.Enabled}
+			});
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/UpdateSellerType
+		[HttpPost]
+		public ActionResult UpdateSellerType(FormCollection collection) {
+			EditSellerTypeModel model = new EditSellerTypeModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			string ErrorMessage = SellerAvailable(model.SellerType, model.SellerTypeId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("Name", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				SellerType sellerType = AdminRepository.FindSellerType(model.SellerTypeId);
+				if (sellerType == null) {
+					sellerType = new SellerType();
+					sellerType.CreatedBy = Authentication.CurrentUser.UserID;
+					sellerType.CreatedDate = DateTime.Now;
+				}
+				sellerType.SellerType1 = model.SellerType;
+				sellerType.Enabled = model.Enabled;
+				sellerType.EntityID = Authentication.CurrentEntity.EntityID;
+				sellerType.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				sellerType.LastUpdatedDate = DateTime.Now;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveSellerType(sellerType);
+				if (errorInfo != null) {
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+				}
+				else {
+					resultModel.Result = "True||" + sellerType.SellerTypeID;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteSellerType(int id) {
+			if (AdminRepository.DeleteSellerType(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string SellerAvailable(string Seller, int SellerTypeId) {
+			if (AdminRepository.SellerTypeNameAvailable(Seller, SellerTypeId))
+				return "Seller Type already exists.";
+			else
+				return string.Empty;
+		}
+
+		//
+		// GET: /Fund/FindSellerTypes
+		[HttpGet]
+		public JsonResult FindSellerTypes(string term) {
+			return Json(AdminRepository.FindSellerTypes(term), JsonRequestBehavior.AllowGet);
+		}
+
+		#endregion
+
+		#region ExportExcel
+
+		public ActionResult Export() {
+			ViewData["MenuName"] = "Admin";
+			ViewData["SubmenuName"] = "ExportExcel";
+			ViewData["PageName"] = "ExportExcel";
+			return View();
+		}
+
+		public ActionResult ExportList() {
+			FlexigridData data = new FlexigridData { page = 1, total = 4 };
+			data.rows.Add(new FlexigridRow { cell = new List<object> { (int)DeepBlue.Models.Admin.Enums.ExportExcelType.Investor, "Investors" } });
+			data.rows.Add(new FlexigridRow { cell = new List<object> { (int)DeepBlue.Models.Admin.Enums.ExportExcelType.AmberbrookFund, "Amberbrook Funds" } });
+			data.rows.Add(new FlexigridRow { cell = new List<object> { (int)DeepBlue.Models.Admin.Enums.ExportExcelType.UnderlyingFund, "Underlying Funds" } });
+			data.rows.Add(new FlexigridRow { cell = new List<object> { (int)DeepBlue.Models.Admin.Enums.ExportExcelType.UnderlyingDirect, "Underlying Directs" } });
+			return Json(data, JsonRequestBehavior.AllowGet);
+		}
+
+		public ActionResult ExportExcel(string tableName, int? excelExportTypeId) {
+			if (excelExportTypeId > 0) {
+				string actionName = string.Empty;
+				switch((DeepBlue.Models.Admin.Enums.ExportExcelType)excelExportTypeId){
+					case  ExportExcelType.Investor:
+						actionName = "InvestorExportExcel";
+						break;		
+					case ExportExcelType.AmberbrookFund:
+						actionName = "FundExportExcel";
+						break;
+				}
+				return RedirectToAction(actionName);
+			}
+			else {
+				return new ExportExcel { TableName = tableName, GridData = AdminRepository.FindTable(tableName) };
+			}
+		}
+
+		public ActionResult InvestorExportExcel(){
+			return View(AdminRepository.GetAllInvestorExportList());
+		}
+
+		public ActionResult FundExportExcel() {
+			return View(AdminRepository.GetAllFundExportList());
+		}
+
 		#endregion
 
 		public ActionResult Result() {
