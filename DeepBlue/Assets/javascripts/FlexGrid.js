@@ -266,6 +266,7 @@
 						} else {
 							p.newp=1;
 							p.rp= +this.value;
+							$(":input[name='jqCBSTextBox_rp']").val(p.rp);
 							g.populate();
 						}
 					}

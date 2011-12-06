@@ -14,6 +14,11 @@ namespace DeepBlue.Helpers {
 			_AppSettingName = appSettingName;
 		}
 
+		public UploadFile(string appSettingName, params object[] args) {
+			_Arguments = args;
+			_AppSettingName = appSettingName;
+		}
+
 		public UploadFile(string appSettingName) {
 			_AppSettingName = appSettingName;
 		}
@@ -57,6 +62,26 @@ namespace DeepBlue.Helpers {
 			return true;
 		}
 
+		public bool Upload(HttpRequestBase request) {
+			string rootPath = HttpContext.Current.Server.MapPath("/");
+			string uploadFilePath = Path.Combine(rootPath, string.Format(ConfigurationManager.AppSettings[_AppSettingName], _Arguments));
+			string directoryName = Path.GetDirectoryName(uploadFilePath);
+			if (Directory.Exists(directoryName) == false) {
+				Directory.CreateDirectory(directoryName);
+			}
+			if (File.Exists(uploadFilePath)) {
+				File.Delete(uploadFilePath);
+			}
+			Stream inputStream = request.InputStream;
+			FileStream fileStream = new FileStream(uploadFilePath, FileMode.OpenOrCreate);
+			inputStream.CopyTo(fileStream);
+			fileStream.Close();
+			_FileInfo = new FileInfo(uploadFilePath);
+			FileName = _FileInfo.Name;
+			FilePath = directoryName.Replace(rootPath, "");
+			Size = _FileInfo.Length;
+			return true;
+		}
 
 		public bool Move(string tempFileName, params object[] args) {
 			if (File.Exists(tempFileName)) {

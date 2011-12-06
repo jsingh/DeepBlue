@@ -74,7 +74,7 @@
 	</div>
 	<div id="UpdateTargetId" style="display: none">
 	</div>
-	<div id="FullDealList" style="display: none;padding-left:10px;">
+	<div id="FullDealList" style="display: none; padding-left: 10px;">
 		<% Html.RenderPartial("TBoxTop"); %>
 		<table cellpadding="0" cellspacing="0" border="0" id="DealList" class="grid">
 			<thead>
@@ -93,7 +93,7 @@
 		</table>
 		<% Html.RenderPartial("TBoxBottom"); %>
 	</div>
-	<div id="FullFundList" style="display: none;padding-left:10px;">
+	<div id="FullFundList" style="display: none; padding-left: 10px;">
 		<% Html.RenderPartial("TBoxTop"); %>
 		<table cellpadding="0" cellspacing="0" border="0" id="FundList" class="grid">
 			<thead>
@@ -130,26 +130,26 @@
 	<%if (ViewData["PageName"] == "DealList") {%>
 	<script type="text/javascript">$(document).ready(function() {  deal.loadDeal(<%=Model.DealId%>); });</script>
 	<%}%>
-	<script id="DealTemplate" type="text/x-jquery-tmpl">
-		<% Html.RenderPartial("DealDetail", Model); %>
-	</script>
-	<script id="DealExpenseTemplate" type="text/x-jquery-tmpl">
-		<% Html.RenderPartial("DealExpenseDetail", Model); %>
-	</script>
-	<script id="DealSellerInfoTemplate" type="text/x-jquery-tmpl">
-		<% Html.RenderPartial("SellerDetail", Model.SellerInfo); %>
-	</script>
-	<script id="DealDocumentTemplate" type="text/x-jquery-tmpl">
-		<% Html.RenderPartial("DealDocumentDetail",Model); %>
-	</script>
-	<script id="DealUnderlyingFundTemplate" type="text/x-jquery-tmpl">
-		<% Html.RenderPartial("DealUnderlyingFundDetail",Model); %>
-	</script>
-	<script id="DealUnderlyingDirectTemplate" type="text/x-jquery-tmpl">
-		<% Html.RenderPartial("DealUnderlyingDirectDetail",Model); %>
-	</script>
-	<script id="DealExpensesRowTemplate" type="text/x-jquery-tmpl"> 
-		<tr id="DealExpense_${DealClosingCostId}">
+	<%using (Html.jQueryTemplateScript("DealTemplate")) {%>
+	<% Html.RenderPartial("DealDetail", Model); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("DealExpenseTemplate")) {%>
+	<% Html.RenderPartial("DealExpenseDetail", Model); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("DealSellerInfoTemplate")) {%>
+	<% Html.RenderPartial("SellerDetail", Model.SellerInfo); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("DealDocumentTemplate")) {%>
+	<% Html.RenderPartial("DealDocumentDetail", Model); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("DealUnderlyingFundTemplate")) {%>
+	<% Html.RenderPartial("DealUnderlyingFundDetail", Model); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("DealUnderlyingDirectTemplate")) {%>
+	<% Html.RenderPartial("DealUnderlyingDirectDetail", Model); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("DealExpensesRowTemplate")) {%>
+	<tr id="DealExpense_${DealClosingCostId}">
 		<td class="lalign">
 			<%: Html.DropDownList("DealClosingCostTypeId", Model.DealClosingCostTypes, new { @class="hide", @val = "${DealClosingCostTypeId}" })%>
 			<%: Html.Span("${Description}",new { @class = "show" })%>
@@ -168,10 +168,10 @@
 			<%: Html.Hidden("DealClosingCostId","${DealClosingCostId}")%>
 		</td>
 	</tr>
-	</script>
-	<script id="UnderlyingFundsRowTemplate" type="text/x-jquery-tmpl">
+	<%}%>
+	<%using (Html.jQueryTemplateScript("UnderlyingFundsRowTemplate")) {%>
 	<tr id="UnderlyingFund_${DealUnderlyingFundId}">
-		<td style="text-align:center; display:none;">
+		<td style="text-align: center; display: none;">
 			<%: Html.Span("", new { @id = "SpnIndex" }) %>
 		</td>
 		<td class="lalign">
@@ -182,10 +182,10 @@
 			<%: Html.TextBox("UnderlyingFund", "${FundName}", new { @class = "hide tooltiptxt", @id="UnderlyingFund",  @top = "198",  @style="width:78%" })%>
 			<%: Html.Hidden("UnderlyingFundId","${UnderlyingFundId}")%>
 		</td>
-        <td class="ralign">
+		<td class="ralign">
 			<%: Html.Span("${GrossPurchasePrice}", new { @class = "show money", @id = "SpnGrossPurchasePrice" })%>
 			<%: Html.TextBox("GrossPurchasePrice","${GrossPurchasePrice}",new { @class = "hide",  @id = "GrossPurchasePrice", @onkeyup = "javascript:deal.calcDUF();", @onkeydown = "return jHelper.isCurrency(event);" })%>
-		</td>	
+		</td>
 		<td class="ralign">
 			<%: Html.Span("${FundNAV}", new { @class = "show", @id = "SpnPercent" })%>
 			<%: Html.TextBox("FundNAV", "${FundNAV}",new { @class = "hide", @onkeyup="javascript:deal.calcDUF();", @onkeydown = "return jHelper.isCurrency(event);" })%>
@@ -193,7 +193,7 @@
 		<td class="ralign">
 			<%: Html.Span("${CommittedAmount}", new { @class = "show money", @id = "SpnCommittedAmount" })%>
 			<%: Html.TextBox("CommittedAmount","${CommittedAmount}",new { @class = "hide", @onkeyup="javascript:deal.calcDUF();", @onkeydown = "return jHelper.isCurrency(event);" })%>
-		</td>	
+		</td>
 		<td class="ralign">
 			<%: Html.Span("${UnfundedAmount}", new { @class = "show money", @id = "SpnUnfundedAmount" })%>
 			<%: Html.TextBox("UnfundedAmount","${UnfundedAmount}",new { @class = "hide", @onkeyup="javascript:deal.calcDUF();",  @onkeydown = "return jHelper.isCurrency(event);" })%>
@@ -215,10 +215,10 @@
 			<%: Html.Hidden("AdjustedCost","${AdjustedCost}")%>
 		</td>
 	</tr>
-	</script>
-	<script id="UnderlyingDirectsRowTemplate" type="text/x-jquery-tmpl"> 
+	<%}%>
+	<%using (Html.jQueryTemplateScript("UnderlyingDirectsRowTemplate")) {%>
 	<tr id="UnderlyingDirect_${DealUnderlyingDirectId}">
-		<td style="text-align: center;display:none;">
+		<td style="text-align: center; display: none;">
 			<%: Html.Span("", new { @id = "SpnIndex" }) %>
 		</td>
 		<td class="lalign">
@@ -238,11 +238,11 @@
 		<td class="ralign">
 			<%: Html.Span("${PurchasePrice}", new { @class = "show money", @id = "SpnPurchasePrice", @val="${PurchasePrice}" })%>
 			<%: Html.TextBox("PurchasePrice","${PurchasePrice}",new { @class = "hide",@id="PurchasePrice", @onkeyup="javascript:deal.calcDUD();", @onkeydown = "return jHelper.isCurrency(event);" })%>
-		</td>	
-        <td class="ralign">
+		</td>
+		<td class="ralign">
 			<%: Html.Span("${FMV}", new { @class = "show money", @id = "SpnFMV", @val="${FMV}" })%>
 			<%: Html.TextBox("FMV","${FMV}",new { @class = "hide", @id="FMV", @onkeyup="javascript:deal.calcDUD();", @onkeydown = "return jHelper.isCurrency(event);" })%>
-		</td>	
+		</td>
 		<td class="ralign">
 			<%: Html.Span("${TaxCostBase}", new { @class = "show", @id = "SpnTaxCostBase", @val="${TaxCostBase}" })%>
 			<%: Html.TextBox("TaxCostBase","${TaxCostBase}",new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
@@ -264,5 +264,5 @@
 			<%: Html.Hidden("AdjustedFMV","${AdjustedFMV}")%>
 		</td>
 	</tr>
-	</script>
+	<%}%>
 </asp:Content>

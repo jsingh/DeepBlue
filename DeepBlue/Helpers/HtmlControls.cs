@@ -344,6 +344,15 @@ namespace DeepBlue.Helpers {
 
 		#region JQueryTemplate Controls
 
+		public static JQueryTemplateScript jQueryTemplateScript(this HtmlHelper helper, string id) {
+			TagBuilder tagBuilder = new TagBuilder("script");
+			tagBuilder.Attributes.Add("id", id);
+			tagBuilder.Attributes.Add("type", "text/x-jquery-tmpl");
+			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
+			httpResponse.Write(tagBuilder.ToString(TagRenderMode.StartTag));
+			return new JQueryTemplateScript(helper.ViewContext.HttpContext.Response);
+		}
+
 		public static string jQueryTemplateTextArea(this HtmlHelper htmlHelper, string name, string value, int rows, int cols, object htmlAttributes) {
 			RouteValueDictionary dictionary = new RouteValueDictionary(htmlAttributes);
 			StringBuilder attributes = new StringBuilder();

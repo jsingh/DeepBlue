@@ -283,8 +283,10 @@
 	,loadingHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading..."; }
 	,savingHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving..."; }
 	,deleteHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Delete..."; }
+	,uploadingHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Upload..."; }
 	,jqCheckBox: function (target) { $(":input:checkbox",target).jqCheckBox(); }
 	,jqComboBox: function (target) { $("select",target).combobox(); }
+	,removejqComboBox: function (target) { $("select",target).combobox("destroy"); }
 	,removejqCheckBox: function (target) { $(".jqCheckBox",target).remove();$(".jqCDisplay",target).remove();$(".jqHidden",target).removeClass(); }
 }
 $.extend(window,{

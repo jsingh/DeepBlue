@@ -42,7 +42,9 @@ jQuery.extend({
 		$(form).appendTo('body');
 		if(tempForm.get(0)) {
 			$(":input[type='file']",tempForm).each(function () {
-				$(form).append($(this).clone());
+				var newfile=$(this).clone();
+				$(this).before(newfile);
+				$(form).append(this);
 			});
 			var input=document.createElement("input");
 			$(input).attr({

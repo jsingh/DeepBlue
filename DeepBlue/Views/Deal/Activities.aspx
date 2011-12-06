@@ -21,6 +21,8 @@
 	<%=Html.JavascriptInclueTag("DealReconcile.js")%>
 	<%=Html.JavascriptInclueTag("jAjaxTable.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
+	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
+	<%=Html.JavascriptInclueTag("ImportExcel.js")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
 	<%=Html.StylesheetLinkTag("dealactivity.css")%>
 </asp:Content>
@@ -412,10 +414,11 @@
 						<div class="addbtn" style="display: none">
 							<div class="tblcell">
 								<%: Html.TextBox("UFV_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:200px",  @class = "wm" })%></div>
-							<%--<div class="tblcell">
-								<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.importUFV();" })) {%>Import Underlying Fund Valuation
+							<div class="tblcell">
+								<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.importUFV();" })) {%>Import
+								Underlying Fund Valuation
 								<%}%>
-							</div>--%>
+							</div>
 						</div>
 						<div class="headerbox">
 							<div class="title">
@@ -840,43 +843,104 @@
 	<%=Html.jQueryDatePicker("ReconStartDate", new DatePickerOptions { OnSelect = "dealReconcile.changeDate" })%>
 	<%=Html.jQueryDatePicker("ReconEndDate", new DatePickerOptions { OnSelect = "dealReconcile.changeDate" })%>
 	<script type="text/javascript">dealActivity.init();dealActivity.newFLEData=<%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.FundExpenseModel())%>;dealReconcile.init();</script>
-	<script id="CashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
-		<% Html.RenderPartial("UnderlyingFundCashDistribution", Model.UnderlyingFundCashDistributionModel); %>
-		<% Html.RenderPartial("ManualUnderlyingFundCashDistribution"); %>
-	</script>
-	<script id="PRCashDistributionAddTemplate" type="text/x-jquery-tmpl"> 
-		<% Html.RenderPartial("UnderlyingFundPostRecordCashDistribution", Model.UnderlyingFundPostRecordCashDistributionModel); %>
-	</script>
-	<script id="CapitalCallAddTemplate" type="text/x-jquery-tmpl">
-		<% Html.RenderPartial("UnderlyingFundCapitalCall", Model.UnderlyingFundCapitalCallModel); %>
-		<% Html.RenderPartial("ManualUnderlyingFundCapitalCall"); %>
-	</script>
-	<script id="PRCapitalCallAddTemplate" type="text/x-jquery-tmpl">
-		<% Html.RenderPartial("UnderlyingFundPostRecordCapitalCall", Model.UnderlyingFundPostRecordCapitalCallModel); %>
-	</script>
-	<script id="StockDistributionAddTemplate" type="text/x-jquery-tmpl"> 
-		<% Html.RenderPartial("UnderlyingFundStockDistribution"); %>
-		<% Html.RenderPartial("ManualUnderlyingFundStockDistribution"); %>
-	</script>
-	<script id="StockDistributionDirectTemplate" type="text/x-jquery-tmpl"> 
-		<% Html.RenderPartial("ManualUnderlyingFundStockDistribution"); %>
-	</script>
-	<script id="UFValuationAddTemplate" type="text/x-jquery-tmpl">
-		<% Html.RenderPartial("UnderlyingFundValuation", Model.UnderlyingFundValuationModel); %>
-	</script>
-	<script id="UDVAddTemplate" type="text/x-jquery-tmpl">
-		<% Html.RenderPartial("UnderlyingDirectValuation", Model.UnderlyingDirectValuationModel); %>
-	</script>
-	<script id="UFAAddTemplate" type="text/x-jquery-tmpl"> 
-		<% Html.RenderPartial("UnfundedAdjustment", Model.UnfundedAdjustmentModel); %>
-	</script>
-	<script id="FLEAddTemplate" type="text/x-jquery-tmpl"> 
-		<% Html.RenderPartial("FundExpense", Model.FundLevelExpenseModel); %>
-	</script>
-	<script id="ReconcileReportTemplate" type="text/x-jquery-tmpl"> 
-		<% Html.RenderPartial("ReconcileReport"); %>
-	</script>
-	<script id="ReconcileGridTemplate" type="text/x-jquery-tmpl"> 
-		<% Html.RenderPartial("ReconcileGrid"); %>
-	</script>
+	<%using (Html.jQueryTemplateScript("CashDistributionAddTemplate")) {%>
+	<% Html.RenderPartial("UnderlyingFundCashDistribution", Model.UnderlyingFundCashDistributionModel); %>
+	<% Html.RenderPartial("ManualUnderlyingFundCashDistribution"); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("PRCashDistributionAddTemplate")) {%>
+	<% Html.RenderPartial("UnderlyingFundPostRecordCashDistribution", Model.UnderlyingFundPostRecordCashDistributionModel); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("CapitalCallAddTemplate")) {%>
+	<% Html.RenderPartial("UnderlyingFundCapitalCall", Model.UnderlyingFundCapitalCallModel); %>
+	<% Html.RenderPartial("ManualUnderlyingFundCapitalCall"); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("PRCapitalCallAddTemplate")) {%>
+	<% Html.RenderPartial("UnderlyingFundPostRecordCapitalCall", Model.UnderlyingFundPostRecordCapitalCallModel); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("StockDistributionAddTemplate")) {%>
+	<% Html.RenderPartial("UnderlyingFundStockDistribution"); %>
+	<% Html.RenderPartial("ManualUnderlyingFundStockDistribution"); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("StockDistributionDirectTemplate")) {%>
+	<% Html.RenderPartial("ManualUnderlyingFundStockDistribution"); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("UFValuationAddTemplate")) {%>
+	<% Html.RenderPartial("UnderlyingFundValuation", Model.UnderlyingFundValuationModel); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("UDVAddTemplate")) {%>
+	<% Html.RenderPartial("UnderlyingDirectValuation", Model.UnderlyingDirectValuationModel); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("UFAAddTemplate")) {%>
+	<% Html.RenderPartial("UnfundedAdjustment", Model.UnfundedAdjustmentModel); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("FLEAddTemplate")) {%>
+	<% Html.RenderPartial("FundExpense", Model.FundLevelExpenseModel); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("ReconcileReportTemplate")) {%>
+	<% Html.RenderPartial("ReconcileReport"); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("ReconcileGridTemplate")) {%>
+	<% Html.RenderPartial("ReconcileGrid"); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("ExcelImprtTemplate")) {%>
+	<div class="import-box">
+		<%using (Html.Form(new { @id = "frmUploadExcel", @onsubmit = "return false" })) { %>
+		<div class="editor-label" style="width:110px;">
+			<%: Html.Label("File")%></div>
+		<div class="editor-field">
+			<%: Html.File("UploadFile", new { @id = "UploadFile" })%>
+		</div>
+		<div class="editor-label" style="width:100px">	
+			<%: Html.Span("", new { @id = "SpnUELoading" })%>
+		</div>
+		<div class="editor-label" style="clear:right;width:auto;">
+			<%: Html.Image("Upload_active.png", new { @onclick = "javascript:importExcel.uploadExcel();" })%></div>
+		<div class="editor-field">
+			<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:$('#ExcelImport').dialog('close');" })%></div>
+		<%}%>
+	</div>
+	<div id="ImportUFV">
+	</div>
+	<div id="ProgressBar">
+	</div>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("ImportUFVTemplate")) {%>
+	<%using (Html.Form(new { @id = "frmImportUFV", @onsubmit = "return false" })) { %>
+	<div class="editor-label">
+		<%: Html.Label("Field Name")%></div>
+	<div class="editor-field">
+		<%: Html.Label("Excel Field Name")%></div>
+	<div class="editor-label">
+		<%: Html.Label("Underlying Fund")%></div>
+	<div class="editor-field">
+		<%: Html.DropDownList("UnderlyingFund", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+	<div class="editor-label">
+		<%: Html.Label("Amberbrook Fund")%></div>
+	<div class="editor-field">
+		<%: Html.DropDownList("AmberbrookFund", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+	<div class="editor-label">
+		<%: Html.Label("Update NAV")%></div>
+	<div class="editor-field">
+		<%: Html.DropDownList("UpdateNAV", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+	<div class="editor-label">
+		<%: Html.Label("Update Date")%></div>
+	<div class="editor-field">
+		<%: Html.DropDownList("UpdateDate", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+	<div class="editor-label">
+		<%: Html.Image("Save_active.png", new { @onclick = "javascript:importExcel.importUnderlyingFund('frmImportUFV',0);" })%></div>
+	<div class="editor-field">
+		<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:$('#ExcelImport').dialog('close');" })%></div>
+	<%: Html.Hidden("TotalRows", "${TotalRows}")%>
+	<%}%>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("ProgressBarTemplate")) {%>
+	<div class='prs-bar'>
+		<div class='total-rows'>
+			Rows ${CompletedRows} Of ${TotalRows}</div>
+		<div class="status-bar">
+			<div class='loading-status' style='width: ${Percent}%;'>
+			</div>
+		</div>
+	</div>
+	<%}%>
 </asp:Content>

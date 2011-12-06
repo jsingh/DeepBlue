@@ -15,10 +15,11 @@ namespace DeepBlue.Helpers {
 				ColumnName = "RowNumber",
 				AllowDBNull = false
 			});
-			this.PageSize = 10;
+			this.PageSize = 200;
 		}
 
 		public int PageSize { get; set; }
+ 
 
 		public int TotalPages {
 			get {
@@ -26,9 +27,16 @@ namespace DeepBlue.Helpers {
 			}
 		}
 
+		public int TotalRows {
+			get {
+				return this.Rows.Count;
+			}
+		}
+ 
+
 		public PagingDataTable Skip(int pageIndex) {
 			PagingDataTable filterTable = (PagingDataTable)this.Clone();
-			DataRow[] rows = this.Select("RowNumber>=" + (pageIndex - 1).ToString() + " && " + "RowNumber<=" + (pageIndex * this.PageSize).ToString());
+			DataRow[] rows = this.Select("RowNumber>" + ((pageIndex - 1) * this.PageSize).ToString() + " and " + "RowNumber<=" + (pageIndex * this.PageSize).ToString());
 			foreach (var row in rows) {
 				filterTable.ImportRow(row);
 			}

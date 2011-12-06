@@ -7,6 +7,7 @@
 			var bdy=$("body");
 			jHelper.waterMark(bdy);
 			jHelper.jqComboBox(bdy);
+			
 		});
 	}
 	,selectTab: function (type,lnk) {

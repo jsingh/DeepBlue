@@ -85,6 +85,8 @@ namespace DeepBlue.Controllers.Deal {
 		List<UnderlyingFund> GetAllUnderlyingFunds();
 		CreateUnderlyingFundModel FindUnderlyingFundModel(int underlyingFundId, int issuerId);
 		UnderlyingFund FindUnderlyingFund(int underlyingFundId);
+		int? FindUnderlyingFundID(string underlyingFundName);
+		int? FindFundID(string fundName);
 		Address FindUnderlyingFundAddress(int underlyingFundId);
 		IEnumerable<ErrorInfo> SaveUnderlyingFund(UnderlyingFund underlyingFund);
 		bool UnderlyingFundNameAvailable(string fundName, int underlyingFundId);

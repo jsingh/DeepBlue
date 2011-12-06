@@ -16,6 +16,8 @@ using DeepBlue.Controllers.CapitalCall;
 using System.Web.UI;
 using System.Net;
 using DeepBlue.Models.Admin;
+using System.Configuration;
+using System.Data;
 
 namespace DeepBlue.Controllers.Deal {
 	public class DealController : BaseController {
@@ -1139,7 +1141,7 @@ namespace DeepBlue.Controllers.Deal {
 				|| string.IsNullOrEmpty(model.IBAN) == false
 				|| string.IsNullOrEmpty(model.AccountPhone) == false
 				|| string.IsNullOrEmpty(model.AccountFax) == false
-				|| model.ABANumber > 0 
+				|| model.ABANumber > 0
 
 			) {
 
@@ -1191,7 +1193,7 @@ namespace DeepBlue.Controllers.Deal {
 				underlyingFund.WebPassword = model.WebPassword;
 				underlyingFund.Website = model.Website;
 
-				if (string.IsNullOrEmpty(model.BankName) == false 
+				if (string.IsNullOrEmpty(model.BankName) == false
 					&& string.IsNullOrEmpty(model.Account) == false) {
 					if (underlyingFund.Account == null) {
 						underlyingFund.Account = new Models.Entity.Account();
@@ -1218,7 +1220,7 @@ namespace DeepBlue.Controllers.Deal {
 					underlyingFund.Account.IBAN = model.IBAN;
 					underlyingFund.Account.Fax = model.AccountFax;
 				}
- 
+
 				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveUnderlyingFund(underlyingFund);
 				if (errorInfo != null) {
 					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
@@ -2393,10 +2395,10 @@ namespace DeepBlue.Controllers.Deal {
 			return View("Result", resultModel);
 		}
 
-		private UnderlyingFundNAV CreateUnderlyingFundValuation(int underlyingFundId, 
-																int fundId, 
-																decimal fundNAV, 
-																DateTime fundNAVDate, 
+		private UnderlyingFundNAV CreateUnderlyingFundValuation(int underlyingFundId,
+																int fundId,
+																decimal fundNAV,
+																DateTime fundNAVDate,
 																out IEnumerable<ErrorInfo> errorInfo) {
 
 			// Attempt to create deal underlying fund valuation.
@@ -2753,7 +2755,7 @@ namespace DeepBlue.Controllers.Deal {
 			string error = string.Empty;
 			List<ReconcileReportModel> allReconciles = null;
 			DateTime startDate = (model.StartDate ?? Convert.ToDateTime("01/01/1900"));
-			DateTime endDate = (model.EndDate ??  DateTime.MaxValue);
+			DateTime endDate = (model.EndDate ?? DateTime.MaxValue);
 			object allFundExpenses = null;
 			if (ModelState.IsValid) {
 				switch ((DeepBlue.Models.Deal.Enums.ReconcileType)model.ReconcileType) {
@@ -3426,6 +3428,104 @@ namespace DeepBlue.Controllers.Deal {
 
 			return resultModel.Result;
 		}
+		#endregion
+
+		#region Import Underlying Fund Valuation
+
+		[HttpPost]
+		public ActionResult ImportExcel(FormCollection collection) {
+			ImportExcelFileModel model = new ImportExcelFileModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			List<string> columns = new List<string>();
+			int totalRows = 0;
+			if (string.IsNullOrEmpty(model.FileName)) {
+				ModelState.AddModelError("FileName", "File Name is required");
+			}
+			if (ModelState.IsValid) {
+				string rootPath = Server.MapPath("/");
+				string uploadFilePath = Path.Combine(rootPath, string.Format(ConfigurationManager.AppSettings["TempUploadPath"], model.FileName));
+				string errorMessage = string.Empty;
+				PagingDataTable table = ExcelConnection.GetTable(uploadFilePath, uploadFilePath, ref errorMessage);
+				if (string.IsNullOrEmpty(errorMessage)) {
+					ExcelConnection.ImportExcelTable = table;
+					totalRows = table.TotalRows;
+					foreach (DataColumn column in table.Columns) {
+						columns.Add(column.ColumnName);
+					}
+					resultModel.Result = string.Empty;
+				}
+				else {
+					resultModel.Result += errorMessage;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new { Result = resultModel.Result, Columns = columns, TotalRows = totalRows });
+		}
+
+		[HttpPost]
+		public ActionResult ImportUnderlyingFundValuation(FormCollection collection) {
+			ImportUnderlyingFundValuationModel model = new ImportUnderlyingFundValuationModel();
+			ResultModel resultModel = new ResultModel();
+			int totalPages = 0;
+			int totalRows = 0;
+			int completedRows = 0;
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				if (ExcelConnection.ImportExcelTable != null) {
+					PagingDataTable table = ExcelConnection.ImportExcelTable.Skip(model.PageIndex);
+					totalPages = ExcelConnection.ImportExcelTable.TotalPages;
+					totalRows = ExcelConnection.ImportExcelTable.TotalRows;
+					if (totalPages > model.PageIndex) {
+						completedRows = (model.PageIndex * ExcelConnection.ImportExcelTable.PageSize);
+					}
+					else {
+						completedRows = totalRows;
+					}
+					string underlyingFundName = string.Empty;
+					string amberbrookFundName = string.Empty;
+					decimal updateNAV;
+					DateTime updateDate;
+					int? underlyingFundId;
+					int? fundId;
+					IEnumerable<ErrorInfo> errorInfo;
+					foreach (DataRow row in table.Rows) {
+						underlyingFundName = Convert.ToString(row[model.UnderlyingFund]);
+						amberbrookFundName = Convert.ToString(row[model.AmberbrookFund]);
+						decimal.TryParse(Convert.ToString(row[model.UpdateNAV]), out updateNAV);
+						DateTime.TryParse(Convert.ToString(row[model.UpdateDate]), out updateDate);
+						if (string.IsNullOrEmpty(amberbrookFundName) == false
+							&& string.IsNullOrEmpty(underlyingFundName) == false) {
+							underlyingFundId = DealRepository.FindUnderlyingFundID(underlyingFundName);
+							fundId = DealRepository.FindFundID(amberbrookFundName);
+							if (underlyingFundId > 0 && fundId > 0) {
+								CreateUnderlyingFundValuation((underlyingFundId ?? 0),(fundId ?? 0), updateNAV, updateDate, out errorInfo);
+							}
+						}
+					}
+					resultModel.Result = string.Empty;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new { Result = resultModel.Result, TotalRows = totalRows, CompletedRows = completedRows, TotalPages = totalPages, PageIndex = model.PageIndex });
+		}
+
 		#endregion
 
 		public ActionResult Result() {

@@ -17,7 +17,7 @@
 				$("#navminimize").addClass("downarrow");
 			}
 			deepBlue.setCookie("mnu-resize",menu.hasClass("minimize"));
-			deepBlue.showSubMenu();
+			deepBlue.showSubMenu();       
 			if(deepBlue.indexPage) {
 				submenu.show();
 			}
@@ -43,17 +43,12 @@
 		$.ajaxSetup({
 			cache: false
 			,complete: function (jqXHR,textStatus) {
-				if(textStatus=="timeout") {
-					jAlert("Ajax request is timeout");
-				}
-			}
-			,beforeSend: function (jqXHR,settings) {
-				if(settings.url.indexOf("/Assets/javascripts")>0) {
-					if(settings.url.indexOf("LogOn.js")>0) {
-						$.get("/Account/LogOff");
-						deepBlue.redirectLogOn();
+				if(jqXHR.responseText.indexOf("/LogOn.js")>0) {
+					deepBlue.redirectLogOn();
+				} else {
+					if(textStatus=="timeout") {
+						jAlert("Ajax request is timeout");
 					}
-					return false;
 				}
 			}
 			,error: function (x,jqxhr,settings,exception) {

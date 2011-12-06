@@ -278,7 +278,7 @@
 }
 .heading {
 	padding-bottom: 0px;
-	height:0px;
+	height: 0px;
 }
 #SADetailBox {
 	display: block;
@@ -299,15 +299,60 @@
 }
 #RGFE {
 	width: 100%;
-	float:left;
+	float: left;
 }
 #RGFE .grid-box {
-	float:left;
+	float: left;
 	width: 90%;
-	padding-left: 65px;	
+	padding-left: 65px;
 	margin: 10px 0;
-	clear:both;
+	clear: both;
 }
 #RGFE .grid-box .gird {
 	width: 100%;
+}
+.import-box {
+	margin: 20px 0;
+}
+#DropFileUpload {
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	background-color: #eee;
+	width: 90%;
+	margin: 0 auto;
+	height: 100px;
+	padding-top: 20%;
+	text-align: center;
+	font-size: 14px;
+	color: #555;
+}
+#DropFileUpload.hover {
+	border-color: #aaa;
+	background-color: #ddd;
+}
+#DropFileUpload.error {
+	border-color: #f00;
+	background-color: #faa;
+}
+#DropFileUpload .label {
+	margin: 25% 0 0;
+}
+.prs-bar {
+	font-weight: bold;
+	margin: 0 auto;
+	text-align: center;
+	width: 300px;
+}
+.total-rows {
+	margin: 10px 0;
+}
+.status-bar {
+	border: 1px solid #E0B1B1;
+	height: 20px;
+	margin: 0 auto 20px;
+	width: 100%;
+}
+.status-bar .loading-status {
+	background-color: #D6D6D6;
+	height: 20px;
 }

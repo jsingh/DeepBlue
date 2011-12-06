@@ -2303,5 +2303,20 @@ namespace DeepBlue.Controllers.Deal {
 
 		#endregion
 
+		public int? FindUnderlyingFundID(string underlyingFundName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from underlyingFund in context.UnderlyingFunds
+						where underlyingFund.FundName == underlyingFundName
+						select underlyingFund.UnderlyingtFundID).FirstOrDefault();
+			}
+		}
+
+		public int? FindFundID(string fundName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from fund in context.Funds
+						where fund.FundName == fundName
+						select fund.FundID).FirstOrDefault();
+			}
+		}
 	}
 }

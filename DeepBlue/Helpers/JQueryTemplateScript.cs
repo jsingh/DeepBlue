@@ -5,15 +5,15 @@ using System.Web;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DeepBlue.Helpers {
-	public class MvcDiv : IDisposable {
-
+	public class JQueryTemplateScript : IDisposable {
+		
 		private bool _disposed;
 		private HttpResponseBase _httpResponse;
 
 		public delegate void DisposeEventHandler(HttpResponseBase httpResponse);
 		public event DisposeEventHandler OnDispose;
 
-		public MvcDiv(HttpResponseBase httpResponse) {
+		public JQueryTemplateScript(HttpResponseBase httpResponse) {
 			_httpResponse = httpResponse;
 		}
 
@@ -30,11 +30,11 @@ namespace DeepBlue.Helpers {
                 {
                     this.OnDispose(_httpResponse);
                 }
-				_httpResponse.Write("</div>");
+				_httpResponse.Write("</script>");
 			}
 		}
 
-		public void EndDiv() {
+		public void EndTemplateScript() {
 			Dispose(true);
 		}
 	}
