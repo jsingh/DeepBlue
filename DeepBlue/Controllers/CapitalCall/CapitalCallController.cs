@@ -36,7 +36,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 		//
 		// GET: /CapitalCall/New
 		public ActionResult New() {
-			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["MenuName"] = "FundManagement";
 			ViewData["SubmenuName"] = "CapitalCall";
 			ViewData["PageName"] = "CapitalCall";
 			CreateCapitalCallModel model = new CreateCapitalCallModel();
@@ -225,8 +225,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 		//
 		// GET: /CapitalCall/ModifyCapitalCall
 		public ActionResult ModifyCapitalCall(int? id) {
-			ViewData["MenuName"] = "Fund Tracker";
-			ViewData["SubmenuName"] = "CapitalCall";
+			ViewData["MenuName"] = "FundManagement";
+			ViewData["SubmenuName"] = "ModifyCapitalCall";
 			ViewData["PageName"] = "ModifyCapitalCall";
 			return View(new CreateCapitalCallModel { CapitalCallID = id });
 		}
@@ -464,7 +464,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 		// GET: /CapitalCall/Receive
 		[HttpGet]
 		public ActionResult Receive(int? id, int? fundId) {
-			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["MenuName"] = "FundManagement";
 			ViewData["SubmenuName"] = "Capital Call";
 			ViewData["PageName"] = "Receive Capital Call";
 			CreateReceiveModel model = new CreateReceiveModel();
@@ -652,7 +652,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 		// GET: /CapitalCall/NewCapitalDistribution
 		[HttpGet]
 		public ActionResult NewCapitalDistribution() {
-			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["MenuName"] = "FundManagement";
 			ViewData["SubmenuName"] = "CapitalDistribution";
 			ViewData["PageName"] = "CapitalDistribution";
 			CreateDistributionModel model = new CreateDistributionModel();
@@ -791,7 +791,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 		// GET: /CapitalCall/CapitalDistributionList
 		[HttpGet]
 		public ActionResult CapitalDistributionList(int? id) {
-			ViewData["MenuName"] = "Fund Tracker";
+			ViewData["MenuName"] = "FundManagement";
 			ViewData["SubmenuName"] = "Capital Call";
 			ViewData["PageName"] = "Capital Distribution List";
 			CapitalDistributionListModel model = new CapitalDistributionListModel();
@@ -816,8 +816,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		private void CheckDistributionAmount(CreateDistributionModel model) {
 			if (model.DistributionAmount > 0) {
-				decimal? distributionCheck = (model.CapitalReturn + model.PreferredReturn + model.PreferredCatchUp + model.ReturnFundExpenses + model.ReturnManagementFees + model.GPProfits + model.LPProfits);
-				if ((decimal.Round(model.DistributionAmount) == decimal.Round(distributionCheck ?? 0)) == false) {
+                decimal distributionCheck = ((model.CapitalReturn ?? 0) + (model.PreferredReturn ?? 0) + (model.PreferredCatchUp ?? 0) + (model.ReturnFundExpenses ?? 0) + (model.ReturnManagementFees ?? 0) + (model.GPProfits ?? 0) + (model.LPProfits ?? 0));
+                if ((decimal.Round(model.DistributionAmount) == decimal.Round(distributionCheck)) == false) {
 					ModelState.AddModelError("DistributionAmount", "Components of the distribution do not add up to total distribution amount");
 				}
 			}
@@ -829,8 +829,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 		//
 		// GET: /CapitalCall/ModifyCapitalDistribution
 		public ActionResult ModifyCapitalDistribution(int? id) {
-			ViewData["MenuName"] = "Fund Tracker";
-			ViewData["SubmenuName"] = "CapitalCall";
+			ViewData["MenuName"] = "FundManagement";
+			ViewData["SubmenuName"] = "ModifyCapitalDistribution";
 			ViewData["PageName"] = "ModifyCapitalDistribution";
 			return View(new CreateDistributionModel { CapitalDistributionID = id });
 		}
@@ -1037,8 +1037,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 		//GET : /CapitalCall/Detail
 		[HttpGet]
 		public ActionResult Detail(int? fundId, int? typeId) {
-			ViewData["MenuName"] = "Fund Tracker";
-			ViewData["SubmenuName"] = "CapitalCall";
+			ViewData["MenuName"] = "FundManagement";
+			ViewData["SubmenuName"] = "Detail";
 			ViewData["PageName"] = "Detail";
 			if ((typeId ?? 0) == 0) {
 				typeId = (int)DetailType.CapitalCall;
