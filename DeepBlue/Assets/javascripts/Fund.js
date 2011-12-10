@@ -7,7 +7,7 @@
 	,pageInit: false
 	,newFundData: null
 	,init: function () {
-		//fund.loadTemplate(fund.newFundData,$("#AddNewFund"));
+		jHelper.waterMark($("body"));
 	}
 	,setup: function (target) {
 		setTimeout(function () {

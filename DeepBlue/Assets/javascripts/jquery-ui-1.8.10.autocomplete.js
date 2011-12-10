@@ -11,7 +11,7 @@
 			position: {
 				my: "left top",
 				at: "left bottom",
-				collision: "none"
+				collision: "flip"
 			},
 			search: "",
 			source: null,
@@ -174,6 +174,7 @@
 			this.response=function () {
 				return self._response.apply(self,arguments);
 			};
+
 			this.menu=$("<ul></ul>")
 			.addClass("ui-autocomplete")
 			.appendTo($(this.options.appendTo||"body",doc)[0])
@@ -304,8 +305,14 @@
 						dataType: "json",
 						autocompleteRequest: ++requestIndex,
 						success: function (data,status) {
-							if(this.autocompleteRequest===requestIndex) {
-								response(data);
+							if(data.Total) {
+								if(this.autocompleteRequest===requestIndex) {
+									response(data.data);
+								}
+							} else {
+								if(this.autocompleteRequest===requestIndex) {
+									response(data);
+								}
 							}
 						},
 						error: function () {
@@ -405,9 +412,11 @@
 			// size and position menu
 			ul.show();
 			this._resizeMenu();
-			ul.position($.extend({
-				of: this.element
-			},this.options.position));
+			ul.position($.extend({ of: this.element },this.options.position));
+
+			//			ul.parent().position($.extend({
+			//				of: this.element
+			//			},this.options.position));
 		},
 
 		_resizeMenu: function () {
@@ -499,6 +508,11 @@
 				event.preventDefault();
 				self.select(event);
 			});
+			/*var d=$("<div></div");
+			$("body").append(d);
+			d.attr("style",this.element.attr("style"));
+			d.append(this.element);
+			*/
 			this.refresh();
 		},
 
