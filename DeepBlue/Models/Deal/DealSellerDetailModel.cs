@@ -43,6 +43,10 @@ namespace DeepBlue.Models.Deal {
 		[StringLength(30, ErrorMessage = "Seller must be under 30 characters.")]
 		[DisplayName("Seller Name")]
 		public string SellerName { get; set; }
+
+		public string SellerType { get; set; }
+
+		public int? SellerTypeId { get; set; }
 		
 		[StringLength(200, ErrorMessage = "Company Name must be under 200 characters.")]
 		[DisplayName("Contact Company")]

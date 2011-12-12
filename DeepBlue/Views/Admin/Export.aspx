@@ -29,8 +29,8 @@
 			<table cellpadding="0" cellspacing="0" border="0" id="ExportList" class="grid">
 				<thead>
 					<tr>
-						<th style="width: 20%">
-							Export Name
+						<th style="width: 20%" sortname="TableName">
+							Table Name
 						</th>
 						<th style="width: 10%">
 						</th>
@@ -45,23 +45,33 @@
 	<%=Html.jQueryFlexiGrid("ExportList", new FlexigridOptions { 
     ActionName = "ExportList", ControllerName = "Admin",
 	HttpMethod = "GET",
-	SortName = "",
+	SortName = "TableName",
+	SortOrder = "asc",
 	Paging = true 
+	, OnSubmit = "exportExcel.onSubmit"
 	, OnSuccess= "exportExcel.onGridSuccess"
 	, OnRowClick = "exportExcel.onRowClick"
 	, OnInit = "exportExcel.onInit"
 	, OnTemplate = "exportExcel.onTemplate"
 })%>
-	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
-	</script>
+	<%using (Html.jQueryTemplateScript("AddButtonTemplate")) { %>
+	<%--<div class="editor-label" style="margin-top: 12px; padding: 0; width: auto;">
+		<%:Html.Label("Search")%></div>
+	<div class="editor-field" style="margin-top: 16px; padding: 0 0 0 5px;">
+		<%: Html.TextBox("Query", "", new  { @style = "text-align:left" })%></div>
+	<div class="editor-label" style="clear: right; margin: 3px 0 0; padding: 0 0 0 10px;
+		width: auto;">
+		<%: Html.Image("search_active.png", new { @onclick = "javascript:$('#ExportList').flexReload();" })%>
+	</div>--%>
+	<%}%>
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 {{each(i,row) rows}}
-<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow disprow"{{else}}class="disprow"{{/if}}>
+<tr id="Row${row}" {{if i%2>0}}class="erow disprow"{{else}}class="disprow"{{/if}}>
 	<td style="width: 20%">
 		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
 	</td>
 	<td style="text-align:right;width:10%;">
-		<%: Html.Image("Export-Excel_active.png", new { @class="gbutton", @onclick = "javascript:exportExcel.exportExcel(${row.cell[0]});" })%>
+		<%: Html.Image("Export-Excel_active.png", new { @class="gbutton", @onclick = "javascript:exportExcel.exportExcel('${row.cell[0]}');" })%>
 	</td>
 </tr>
 {{/each}}

@@ -16,7 +16,8 @@
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title">REPORTS</span><span class="arrow"></span><span class="pname">Fee Expense</span></div>
+				<span class="title">REPORTS</span><span class="arrow"></span><span class="pname">Fee
+					Expense</span></div>
 			<div class="rightcol">
 			</div>
 		</div>
@@ -71,6 +72,7 @@
 	<div id="ReportMain">
 		<div id="ReportDetail" class="rep-main" style="display: none">
 			<div id="ReportContent">
+				<% Html.RenderPartial("TBoxTop"); %>
 				<table cellpadding="0" cellspacing="0" border="0" id="FeesExpenseList" class="grid">
 					<thead>
 						<tr>
@@ -88,7 +90,8 @@
 							</th>
 						</tr>
 					</thead>
-				</table><br />
+				</table>
+				<% Html.RenderPartial("TBoxBottom"); %><br />
 			</div>
 		</div>
 	</div>
@@ -110,7 +113,7 @@
 	<script type="text/javascript">		feesExpenseReport.init();</script>
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 {{each(i,row) rows}}
-<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
+<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}}>
 	<td>
 	${formatDate(row.cell[0])}
 	</td>

@@ -9,7 +9,7 @@
 <div class="expandheader">
 	<div class="expandbtn">
 		<div class="expandimg" id="img">
-			ADD DEAL DOCUMENTS</div>
+			DEAL DOCUMENTS</div>
 		<div class="expandtitle" id="title">
 			<div class="expandtitle">
 				Deal Documents</div>
@@ -27,43 +27,47 @@
 				<%: Html.TextBox("DocumentType", "", new { @style = "width:163px" })%>
 				<%: Html.Hidden("DocumentTypeId", "0")%>
 			</div>
-			<div class="editor-label" style="clear: right; width: 124px;">
-				<%: Html.Label("Document Date ")%>
-			</div>
-			<div class="editor-field">
-				<%: Html.TextBox("DocumentDate")%>
-			</div>
-			<div class="editor-label">
+			<div class="editor-label" style="clear: right">
 				<%: Html.Label("For")%>
 			</div>
-			<div class="editor-field" style="width: auto;">
+			<div class="editor-field" style="width: 235px">
 				<div id="InvestorRow" style="display: none; float: left;">
 					<%: Html.TextBox("DocumentInvestorName", "", new { @onblur = "javascript:deal.documentInvestorBlur(this);", @style = "width:172px" })%>
 				</div>
 				<div id="FundRow" style="float: left;">
-					<%: Html.TextBox("DocumentFundName", "", new { @onblur = "javascript:deal.documentFundBlur(this);", @style = "width:163px" })%>
-				</div>
-				<div style="float: left; margin-left: 2px;">
-					<%: Html.DropDownList("DocumentStatusId", Model.DocumentStatusTypes, new { @style = "width:85px", @val="2", @onchange = "javascript:deal.documentChangeType(this);" })%>
+					<%: Html.TextBox("DocumentFundName", "SEARCH AMBERBROOK FUND", new { @onblur = "javascript:deal.documentFundBlur(this);", @style = "width:185px" })%>
 				</div>
 			</div>
-			<div class="editor-label" style="clear: right; width: 114px;">
-				<%: Html.Label("File / Link ")%>
-			</div>
-			<div class="editor-field" style="width: auto;">
-				<div id="FileRow" style="float: left">
-					<%: Html.File("DocumentFile", new { @id = "fileToUpload" })%>
+			<div id="dropbox" class="drop-files">
+				<div id="FilesList">
 				</div>
-				<div id="LinkRow" style="display: none; float: left;">
-					<%: Html.TextBox("DocumentFilePath", "", new { @style = "width:213px" })%>
-				</div>
-				<div style="float: left; margin-left: 2px;">
-					<%: Html.DropDownList("DocumentUploadTypeId", Model.UploadTypes, new { @style = "width:85px", @val = "1", @onchange = "javascript:deal.documentChangeUploadType(this);" })%>
+				<table cellpadding="0" cellspacing="10" border="0" style="width: 100%">
+					<tr>
+						<td style="text-align: center;">
+							<div class="editor-label">
+								<%: Html.Label("File / Link ")%>
+							</div>
+							<div class="editor-field" style="width: auto;">
+								<div id="FileRow" style="float: left">
+									<%: Html.File("DocumentFile", new { @id = "fileToUpload" })%>
+								</div>
+								<div id="LinkRow" style="display: none; float: left;">
+									<%: Html.TextBox("DocumentFilePath", "", new { @style = "width:213px" })%>
+								</div>
+								<div style="float: left; margin-left: 2px;">
+									<%: Html.DropDownList("DocumentUploadTypeId", Model.UploadTypes, new { @style = "width:85px", @val = "1", @onchange = "javascript:deal.documentChangeUploadType(this);" })%>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+				<div style="clear: both; float: right; color: #B3A8A8; margin: 18px 9px 0;">
+					Drop files here to upload.
 				</div>
 			</div>
 			<div class="editor-label" style="width: 317px">
 			</div>
-			<div class="editor-field" style="width: auto; float: right; margin: 20px 128px 5px;">
+			<div class="editor-field" style="width: auto; float: right; margin: 10px 0 0;">
 				<div class="cell" style="width: auto;">
 					<%: Html.Span("", new { @id = "SpnDealDocLoading" })%>
 				</div>
@@ -84,16 +88,16 @@
 				class="grid">
 				<thead>
 					<tr>
-						<th>
+						<th sortname="DocumentType">
 							Document Type
 						</th>
-						<th style="width: 20%">
+						<th style="width: 20%" sortname="DocumentDate">
 							Document Date
 						</th>
-						<th style="width: 20%">
+						<th style="width: 20%" sortname="FundName">
 							For
 						</th>
-						<th style="width: 20%">
+						<th style="width: 20%" sortname="FileName">
 							File/Link
 						</th>
 						<th align="right" style="width: 20%">

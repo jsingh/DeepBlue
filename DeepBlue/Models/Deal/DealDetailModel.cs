@@ -50,6 +50,10 @@ namespace DeepBlue.Models.Deal {
 
 		public int? SellerContactId { get; set; }
 
+		public int? SellerTypeId { get; set; }
+
+		public string SellerType { get; set; }
+
 		[DisplayName("Partnered")]
 		public bool IsPartnered { get; set; }
 
@@ -57,6 +61,8 @@ namespace DeepBlue.Models.Deal {
 		public string PartnerName { get; set; }
 
 		public bool IsDealClose { get; set; }
+
+		public string DocumentFileExtensions { get; set; }
 
 		public DealSellerDetailModel SellerInfo { get; set; }
 

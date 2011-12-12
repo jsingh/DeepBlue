@@ -17,6 +17,10 @@ namespace DeepBlue.Models.Deal {
 		[DateRange(ErrorMessage = "PaidOn is required.")]
 		public DateTime PaidOn { get; set; }
 
+		[Required(ErrorMessage = "Payment Date is required.")]
+		[DateRange(ErrorMessage = "Payment Date is required.")]
+		public DateTime PaymentDate { get; set; }
+
 		public bool IsReconciled { get; set; }
 
 		public string ChequeNumber { get; set; }

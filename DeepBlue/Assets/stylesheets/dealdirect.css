@@ -56,10 +56,9 @@
 }
 .addissuer {
 	float: left;
-	clear: both;
-	/*margin-right: 22%;*/
+	clear: both; /*margin-right: 22%;*/
 	margin-top: 20px;
-	width:723px;
+	width: 723px;
 }
 .addissuer .btn {
 	float: right;
@@ -95,8 +94,11 @@
 	clear: both;
 	float: left;
 	background-color: #CBD2DA;
-	padding: 20px 20px 20px 0px;
+	padding: 10px 20px 0px 0px;
 	min-width: 960px;
+}
+#fidocument, #eqdocument {
+	padding: 20px 20px 20px 0px;
 }
 #existingEquity {
 	clear: both;
@@ -168,19 +170,18 @@
 	float: left;
 }
 .headerbar .rightcol {
-	float: right;
-	/*margin: 0 50px 0 0;*/
+	float: right; /*margin: 0 50px 0 0;*/
 }
 
-#equitysymboldiv .editor-label{
-	width:133px;
+#equitysymboldiv .editor-label {
+	width: 133px;
 }
-#eqdocument .editor-label, #fidocument .editor-label{
-	width:139px;
+#eqdocument .editor-label, #fidocument .editor-label {
+	width: 139px;
 }
- 
-#DirectListBox{
-	clear:both;
+
+#DirectListBox {
+	clear: both;
 	width: 90%;
 	padding-left: 60px;
 }
@@ -188,28 +189,56 @@
 	background-image: none;
 }
 #DirectList tbody {
-     /*background-image: url("../images/table_row_odd.gif");
-     background-repeat: repeat-x;
-*/
-     background-color: #fff;
+	/*background-image: url("../images/table_row_odd.gif");      background-repeat: repeat-x; */
+	background-color: #fff;
 }
 .tab-delete {
-    background-image: url("../images/tabdelete.png");
-    background-position: left top;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    float: left;
-    height: 16px;
-    margin: 7px 0 0 -15px;
-    width: 16px;
+	background-image: url("../images/tabdelete.png");
+	background-position: left top;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	float: left;
+	height: 16px;
+	margin: 7px 0 0 -15px;
+	width: 16px;
 }
- 
+
 .editor-field select {
-    width: 100%;
+	width: 100%;
 }
 .editor-field input[type="text"], .editor-field input[type="password"] {
-    width: 89%;
+	width: 89%;
 }
- .editor-field select {
-    width: 164px;
+.editor-field select {
+	width: 164px;
+}
+.un-direct-list {
+	clear: both;
+	width: 90%;
+	padding: 0px 0 0 65px;
+}
+.flexigrid .grid tr.un-directedit-box {
+	background-image: none;
+	background-color: #CBD2DA;
+}
+.flexigrid .grid tr.un-directedit-box td.edit-cell {
+	padding: 0 0 3px;
+}
+.flexigrid .grid tr.un-directedit-box input[type="text"] {
+	width: 168px;
+}
+.flexigrid .grid tr.un-directedit-box select {
+	width: 173px;
+}
+.un-direct-list .flexigrid div.pDiv {
+	height: 32px;
+}
+.grid td .jqComboBox .left {
+	width: auto;
+}
+.flexigrid .bDiv tr.un-directedit-box td input.ui-autocomplete-input[type="text"] {
+	width: 139px;
+}
+.flexigrid div.pDiv {
+	height: 32px;
 }

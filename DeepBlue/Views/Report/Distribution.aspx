@@ -71,33 +71,35 @@
 	<div id="ReportMain">
 		<div id="ReportDetail" class="rep-main" style="display: none">
 			<div id="ReportContent">
+				<% Html.RenderPartial("TBoxTop"); %>
 				<table cellpadding="0" cellspacing="0" border="0" id="DistributionList" class="grid">
-				<thead>
-					<tr>
-						<th sortname="DealNo" style="width:10%">
-							Deal
-						</th>
-						<th sortname="FundName">
-							Fund
-						</th>
-						<th sortname="Date" style="width:15%">
-							Date
-						</th>
-						<th sortname="Amount" align="right" style="text-align: right;">
-							Amount
-						</th>
-						<th sortname="Type" style="width:10%">
-							Type
-						</th>
-						<th sortname="Stock">
-							Stock
-						</th>
-						<th sortname="NoOfShares" align="right" style="text-align: right">
-							#Shares
-						</th>
-					</tr>
-				</thead>
-			</table>
+					<thead>
+						<tr>
+							<th sortname="DealNo" style="width: 10%">
+								Deal
+							</th>
+							<th sortname="FundName">
+								Fund
+							</th>
+							<th sortname="Date" style="width: 15%">
+								Date
+							</th>
+							<th sortname="Amount" align="right" style="text-align: right;">
+								Amount
+							</th>
+							<th sortname="Type" style="width: 10%">
+								Type
+							</th>
+							<th sortname="Stock">
+								Stock
+							</th>
+							<th sortname="NoOfShares" align="right" style="text-align: right">
+								#Shares
+							</th>
+						</tr>
+					</thead>
+				</table>
+				<% Html.RenderPartial("TBoxBottom"); %>
 			</div>
 		</div>
 	</div>
@@ -119,7 +121,7 @@
 	<script type="text/javascript">		distributionReport.init();</script>
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 {{each(i,row) rows}}
-<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
+<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}}>
 	<td>
 	${row.cell[0]}
 	</td>

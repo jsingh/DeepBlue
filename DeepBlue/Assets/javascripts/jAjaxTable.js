@@ -53,7 +53,7 @@
 					 	} else {
 					 		$(tr).addClass(p.alternateRowClass);
 					 	}
-					 	tr.id='row'+i;
+					 	tr.id='row'+(i+1);
 					 	var i=0;
 					 	var celllength=$("thead tr th",t).length;
 					 	$("thead tr:first th",t).each(function () {

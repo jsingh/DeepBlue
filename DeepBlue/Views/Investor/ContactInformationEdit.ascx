@@ -49,7 +49,7 @@
 			<%: Html.Label("Web Address") %>
 		</div>
 		<div class="editor-field">
-			<%: Html.jQueryTemplateTextBox("WebAddress", "${getCommunicationValue(ContactCommunications," + ((int)DeepBlue.Models.Admin.Enums.CommunicationType.WebAddress).ToString() + ")}", new { @class = "comvalue hide", @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
+			<%: Html.jQueryTemplateTextBox("WebAddress", "${getCommunicationValue(ContactCommunications," + ((int)DeepBlue.Models.Admin.Enums.CommunicationType.WebAddress).ToString() + ")}", new { @class = "comvalue hide", @webaddress = "true", @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
 			<%: Html.jQueryTemplateSpan("WebAddress", "show")%>
 		</div>
 		<div class="editor-label" style="clear: right">

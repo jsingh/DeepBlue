@@ -4,36 +4,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>WILLOWRIDGE ::
-		<asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+	<title>WILLOWRIDGE ::<asp:ContentPlaceHolder ID="TitleContent" runat="server" />
 	</title>
-	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%>
-	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%>
-	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.autocomplete.js")%>
-	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.combobox.js")%>
-	<%= Html.JavascriptInclueTag("jquery.contextMenu.js")%>
-	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.extension.js")%>
-	<%= Html.JavascriptInclueTag("jquery.alerts.js")%>
-	<%= Html.JavascriptInclueTag("jquery.formatCurrency.js")%>
-	<%= Html.JavascriptInclueTag("jqueryform.js")%>
-	<%= Html.JavascriptInclueTag("jqTransform.js")%>
-	<%= Html.JavascriptInclueTag("jHelper.js")%>
-	<%= Html.JavascriptInclueTag("DeepBlue.js")%>
-	<%= Html.JavascriptInclueTag("menu.js")%>
-	<%= Html.JavascriptInclueTag("jsDate.js")%>
-	<%= Html.JavascriptInclueTag("ImageActive.js")%>
-	<%= Html.StylesheetLinkTag("jquery.contextMenu.css")%>
-	<%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%>
-	<%= Html.StylesheetLinkTag("jquery.alerts.css")%>
-	<%= Html.StylesheetLinkTag("site.css")%>
-	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
+	<%= Html.JavascriptInclueTag("jquery-1.4.1.min.js")%><%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%><%= Html.JavascriptInclueTag("jquery-ui-1.8.10.autocomplete.js")%>
+	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.combobox.js")%><%= Html.JavascriptInclueTag("jquery-ui-1.8.10.extension.js")%><%= Html.JavascriptInclueTag("jquery.contextMenu.js")%>
+	<%= Html.JavascriptInclueTag("jquery.alerts.js")%><%= Html.JavascriptInclueTag("jquery.formatCurrency.js")%><%= Html.JavascriptInclueTag("jqueryform.js")%><%= Html.JavascriptInclueTag("jqTransform.js")%>
+	<%= Html.JavascriptInclueTag("jHelper.js")%><%= Html.JavascriptInclueTag("DeepBlue.js")%><%= Html.JavascriptInclueTag("menu.js")%><%= Html.JavascriptInclueTag("jsDate.js")%><%= Html.JavascriptInclueTag("ImageActive.js")%>
+	<%= Html.StylesheetLinkTag("jquery.contextMenu.css")%><%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%><%= Html.StylesheetLinkTag("jquery.alerts.css")%><%= Html.StylesheetLinkTag("site.css")%><asp:ContentPlaceHolder
+		ID="HeaderContent" runat="server" />
 </head>
 <body>
 	<div id="LoadingPage" style="z-index: 1001; position: absolute; bottom: 0px; top: 0px;
 		left: 0px; right: 0px; background-color: #fff; padding-top: 35%;">
 		<center>
-			<%: Html.Image("ajax.jpg")%>&nbsp;Loading
-		</center>
+			<%: Html.Image("ajax.jpg")%>&nbsp;Loading</center>
 	</div>
 	<% string mnuresize = "true";
 	if (Response.Cookies["mnuresize"] != null) {
@@ -59,194 +43,20 @@
 				</div>
 			</div>
 			<div id="menu" class='<%=(mnuresize == "true" ? "minimize" : string.Empty)%>'>
-				<div id="menubox">
-					<% using (Html.TopMenu((ViewData["MenuName"] == "DealManagement"), "Deal_Management", new { @id = "investmentmnu" })) {%>
-					<%: Html.TopMenuLink("DEALS")%>
-					<%}%>
-					<div class="sep">
-					</div>
-					<% using (Html.TopMenu((ViewData["MenuName"] == "ActivitiesManagement"), "Activities_Management", new { @id = "investmentmnu" })) {%>
-					<%: Html.TopMenuLink("ACTIVITIES")%>
-					<%}%>
-					<div class="sep">
-					</div>
-					<% using (Html.TopMenu((ViewData["MenuName"] == "AssetManagement"), "Asset_Management", new { @id = "docmnu" })) {%>
-					<%: Html.TopMenuLink("ASSET LIBRARIES")%>
-					<%}%>
-					<div class="sep">
-					</div>
-					<% using (Html.TopMenu((ViewData["MenuName"] == "Fund Tracker"), "Fund_Management", new { @id = "fundmnu" })) {%>
-					<%: Html.TopMenuLink("AMBERBROOK FUNDS")%>
-					<%}%>
-					<div class="sep">
-					</div>
-					<% using (Html.TopMenu((ViewData["MenuName"] == "Investor"), "Investor_Management", new { @id = "invmnu" })) {%>
-					<%: Html.TopMenuLink("INVESTORS")%>
-					<%}%>
-					<div class="sep">
-					</div>
-					<% using (Html.TopMenu((ViewData["MenuName"] == "Accounting"), "", new { @id = "accmnu", @nosubmenu = "true" })) {%>
-					<%: Html.TopMenuLink("ACCOUNTING")%>
-					<%}%>
-					<div class="sep">
-					</div>
-					<%--<% using (Html.TopMenu((ViewData["MenuName"] == "Document"), "Doc_Management", new { @id = "docmnu" })) {%>
-					<%: Html.TopMenuLink("DOCUMENT MANAGEMENT")%>
-					<%}%>
-					<div class="sep">
-					</div>--%>
-					<% using (Html.TopMenu((ViewData["MenuName"] == "Admin"), "Adm_Management", new { @id = "admmnu" })) {%>
-					<%: Html.TopMenuLink("ADMIN")%>
-					<%}%>
-					<div class="sep">
-					</div>
-					<% using (Html.TopMenu((ViewData["MenuName"] == "Reports"), "Report_Management", new { @id = "repmnu" })) {%>
-					<%: Html.TopMenuLink("REPORTS")%>
-					<%}%>
-				</div>
-			</div>
-		</div>
-		<div id="submenu" style="display: none">
-			<div id="submenubox">
-				<%using (Html.SubMenu("Investor_Management", (ViewData["MenuName"] == "Investor"))) {%>
-				<ul>
-					<li>
-						<%: Html.ActionLink("New Investor Setup", "New", "Investor",null, new { @class = (ViewData["PageName"]=="New Investor Setup" ? "sel" : "") })%></li>
-					<li>
-						<%: Html.ActionLink("Update Investor Information", "Edit", "Investor", null, new { @class = (ViewData["PageName"] == "Update Investor Information" ? "sel" : "") })%></li>
-					<li>
-						<%: Html.ActionLink("Investor Commitment", "New", "Transaction", null, new { @class = (ViewData["PageName"] == "Investor Commitment" ? "sel" : "") })%></li>
-					<li>
-						<%: Html.ActionLink("Investor Library", "Library", "Investor", null, new { @class = (ViewData["PageName"] == "Investor Library" ? "sel" : "") })%></li>
-				</ul>
-				<%}%>
-				<%using (Html.SubMenu("Deal_Management", (ViewData["MenuName"] == "DealManagement"))) {%>
-				<ul>
-					<li>
-						<%: Html.ActionLink("Create New Deal", "New", "Deal", null, new { @class = (ViewData["SubmenuName"] == "Create New Deal" ? "sel" : "") })%>
-					</li>
-					<li>
-						<%: Html.ActionLink("Modify Deal", "List", "Deal", null, new { @class = (ViewData["SubmenuName"] == "DealList" ? "sel" : "") })%>
-					</li>
-					<li>
-						<%: Html.ActionLink("Close Deal", "Close", "Deal", null, new { @class = (ViewData["PageName"] == "CloseDeal" ? "sel" : "") })%>
-					</li>
-					<li>
-						<%: Html.ActionLink("Deal Report", "Report", "Deal", null, new { @class = (ViewData["PageName"] == "DealReport" ? "sel" : "") })%>
-					</li>
-				</ul>
-				<%}%>
-				<%using (Html.SubMenu("Activities_Management", (ViewData["MenuName"] == "ActivitiesManagement"))) {%>
-				<ul>
-					<li>
-						<%: Html.ActionLink("Activities", "Activities", "Deal", null, new { @class = (ViewData["PageName"] == "Activities" ? "sel" : "") })%>
-					</li>
-				</ul>
-				<%}%>
-				<%using (Html.SubMenu("Asset_Management", (ViewData["MenuName"] == "AssetManagement"))) {%>
-				<ul>
-					<li>
-						<%: Html.ActionLink("Direct Library", "Directs", "Deal", null, new { @class = (ViewData["PageName"] == "AddDirects" ? "sel" : "") })%>
-					</li>
-					<li>
-						<%: Html.ActionLink("Underlying Funds Library", "UnderlyingFunds", "Deal", null, new { @class = (ViewData["PageName"] == "UnderlyingFunds" ? "sel" : "") })%>
-					</li>
-				</ul>
-				<%}%>
-				<%using (Html.SubMenu("Fund_Management", true, (ViewData["MenuName"] == "Fund Tracker"))) {%>
-				<ul>
-					<li>
-						<%: Html.ActionLink("Capital Call", "New", "CapitalCall", null, new { @class = (ViewData["PageName"] == "CapitalCall" ? "sel" : "") })%>
-					</li>
-					<li>
-						<%: Html.ActionLink("Modify Capital Call", "ModifyCapitalCall", "CapitalCall", null, new { @class = (ViewData["PageName"] == "ModifyCapitalCall" ? "sel" : "") })%>
-					</li>
-					<li>
-						<%: Html.ActionLink("Capital Distribution", "NewCapitalDistribution", "CapitalCall", null, new { @class = (ViewData["PageName"] == "CapitalDistribution" ? "sel" : "") })%>
-					</li>
-					<li>
-						<%: Html.ActionLink("Modify Capital Distribution", "ModifyCapitalDistribution", "CapitalCall", null, new { @class = (ViewData["PageName"] == "ModifyCapitalDistribution" ? "sel" : "") })%>
-					</li>
-					<li>
-						<%: Html.ActionLink("Detail", "Detail", "CapitalCall", null, new { @class = (ViewData["PageName"] == "Detail" ? "sel" : "") })%>
-					</li>
-					<li>
-						<%: Html.ActionLink("Amberbrook Fund Library", "Index", "Fund", null, new { @onmouseover = "menu.msubopen(this,'')", @class = (ViewData["PageName"] == "Fund Setup" ? "sel" : "") })%>
-					</li>
-				</ul>
-				<%}%>
-				<%using (Html.SubMenu("Adm_Management", true, (ViewData["MenuName"] == "Admin"))) {%>
-				<ul>
-					<li>
-						<%: Html.ActionLink("Investor Management", "EntityType", "Admin", null, new { @class = (ViewData["SubmenuName"] == "InvestorManagement" ? "sel" : "") })%>
-					</li>
-					<li>
-						<%: Html.ActionLink("Custom Field Management", "CustomField", "Admin", null, new { @class = (ViewData["SubmenuName"] == "CustomFieldManagement" ? "sel" : "") })%>
-					</li>
-					<li>
-						<%: Html.ActionLink("Deal Management", "PurchaseType", "Admin", null, new { @class = (ViewData["SubmenuName"] == "DealManagement" ? "sel" : "") })%>
-					</li>
-					<li>
-						<%: Html.ActionLink("Document Management", "DocumentType", "Admin", null, new { @class = (ViewData["SubmenuName"] == "DocumentManagement" ? "sel" : "") })%>
-					</li>
-					<%if (AdminAuthorizeHelper.IsAdmin) {%>
-					<li>
-						<%: Html.ActionLink("User Management", "User", "Admin", null, new { @class = (ViewData["SubmenuName"] == "UserManagement" ? "sel" : "") })%>
-					</li>
-					<%}%>
-				</ul>
-				<%} %>
-				<%using (Html.SubMenu("Doc_Management", (ViewData["MenuName"] == "Document"))) {%>
-				<ul>
-					<li>
-						<%: Html.ActionLink("Document Search", "Search", "Document",null, new { @class = (ViewData["PageName"] == "DocumentSearch" ? "sel" : "") })%></li>
-					<li>
-						<%: Html.ActionLink("Document Upload", "New", "Document",null, new { @class = (ViewData["PageName"] == "NewDocument" ? "sel" : "") })%></li>
-				</ul>
-				<%} %>
-				<%using (Html.SubMenu("Report_Management", (ViewData["MenuName"] == "Reports"))) {%>
-				<ul>
-					<li>
-						<%: Html.ActionLink("Deal Detail", "DealDetail", "Report", null, new { @class = (ViewData["PageName"] == "DealDetail" ? "sel" : "") })%></li>
-					<li>
-						<%: Html.ActionLink("Deal Origination", "DealOrigination", "Report", null, new { @class = (ViewData["PageName"] == "DealOrigination" ? "sel" : "") })%></li>
-					<li>
-						<%: Html.ActionLink("Fund Break Down", "FundBreakDown", "Report", null, new { @class = (ViewData["PageName"] == "FundBreakDown" ? "sel" : "") })%></li>
-					<li>
-						<%: Html.ActionLink("Cash Distribution Summary", "CashDistributionSummary", "Report", null, new { @class = (ViewData["PageName"] == "CashDistributionSummary" ? "sel" : "") })%></li>
-					<li>
-						<%: Html.ActionLink("Capital Call Summary", "CapitalCallSummary", "Report", null, new { @class = (ViewData["PageName"] == "CapitalCallSummary" ? "sel" : "") })%></li>
-					<li>
-						<%: Html.ActionLink("Fees Expense", "FeesExpense", "Report", null, new { @class = (ViewData["PageName"] == "FeesExpense" ? "sel" : "") })%></li>
-					<li>
-						<%: Html.ActionLink("Distribution", "Distribution", "Report", null, new { @class = (ViewData["PageName"] == "Distribution" ? "sel" : "") })%></li>
-					<li>
-						<%: Html.ActionLink("Security Value", "SecurityValue", "Report", null, new { @class = (ViewData["PageName"] == "SecurityValue" ? "sel" : "") })%></li>
-				</ul>
-				<%} %>
+				<%: Html.Action("Menu","Home", null)%>
 			</div>
 		</div>
 		<div id="content">
 			<asp:ContentPlaceHolder ID="NavigationContent" runat="server" />
 			<div id="cntbox">
 				<div class="cnt-box-main">
-					<%Html.RenderPartial("LeftMenu");%>
-					<asp:ContentPlaceHolder ID="MainContent" runat="server" />
+					<%Html.RenderPartial("LeftMenu");%><asp:ContentPlaceHolder ID="MainContent" runat="server" />
 				</div>
 			</div>
 		</div>
 	</div>
-	<%Html.RenderPartial("Footer");%>
-	<%: Html.Hidden("mnuresize", (Response.Cookies["mnuresize"] != null ?  Request.Cookies["mnuresize"].Value : "false"))%>
-	<asp:ContentPlaceHolder ID="BottomContent" runat="server" />
-	<script type="text/javascript">
-		deepBlue.init();
-		window.onunload=function () {
-			$("#LoadingPage").show();
-		}
-		$(document).ready(function () {
-			$("#LoadingPage").hide();
-		});
-	</script>
+	<%Html.RenderPartial("Footer");%><%: Html.Hidden("mnuresize", (Response.Cookies["mnuresize"] != null ?  Request.Cookies["mnuresize"].Value : "false"))%><asp:ContentPlaceHolder
+		ID="BottomContent" runat="server" />
+	<script type="text/javascript">		deepBlue.init();window.onunload=function () { $("#LoadingPage").show(); };$(document).ready(function () { $("#LoadingPage").hide(); });</script>
 </body>
 </html>

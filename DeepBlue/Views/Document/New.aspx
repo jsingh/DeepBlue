@@ -35,12 +35,6 @@
 			<%: Html.DropDownListFor(model => model.DocumentTypeId, Model.DocumentTypes, new { @refresh = "true", @action = "DocumentType" })%>
 		</div>
 		<div class="editor-label">
-			<%: Html.LabelFor(model => model.DocumentDate) %>
-		</div>
-		<div class="editor-field">
-			<%: Html.TextBox("DocumentDate","",new { @id = "DocumentDate" }) %>
-		</div>
-		<div class="editor-label">
 			<%: Html.LabelFor(model => model.DocumentStatus)%>
 		</div>
 		<div class="editor-field">

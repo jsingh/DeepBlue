@@ -62,7 +62,7 @@
 	</script>
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 {{each(i,row) rows}}
-<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
+<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}}>
 	<td style="width: 40%">
 		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
 		<%: Html.TextBox("EquityType", "${row.cell[1]}", new { @class = "hide" })%>

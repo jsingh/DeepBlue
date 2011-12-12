@@ -30,13 +30,16 @@
 		<div class="breadcrumb">
 			<div class="leftcol">
 				Direct</div>
-			<div class="addbtn" style="display: block">
+			<div class="addbtn" style="display: block" id="AddCBtn">
 				<%using (Html.GreenButton(new { @id = "AddCompany", @onclick = "javascript:dealDirect.add();" })) {%>Add
 				Company<%}%>
+			</div>	
+			<div class="addbtn" id="AddUDBtn" style="display: none">
+				<%using (Html.GreenButton(new { @id = "AddUD" })) {%>Add Direct<%}%>
 			</div>
-			<div class="rightcol" style="display: none;">
+			<div class="rightcol" id="SearchCBox">
 				<%: Html.Span("", new { @id = "SpnIssuerLoading" })%>
-				<%: Html.TextBox("S_Issuer", "SEARCH ISSUER", new { @class = "wm", @style = "width:200px;", @id = "S_Issuer" })%>
+				<%: Html.TextBox("S_Issuer", "SEARCH COMPANY", new { @class = "wm", @style = "width:200px;", @id = "S_Issuer" })%>
 			</div>
 		</div>
 	</div>
@@ -73,7 +76,7 @@
 			<thead>
 				<tr>
 					<th colspan="4" sortname="DirectName">
-						Directs
+						Company
 					</th>
 				</tr>
 			</thead>
@@ -82,13 +85,15 @@
 	</div>
 	<div id="DirectDetailBox">
 	</div>
+	<%: Html.Hidden("SearchCompanyID","0") %>
+	<%: Html.Hidden("Mode",ViewData["mode"]) %>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<script type="text/javascript">		dealDirect.init();</script>
 	<%= Html.jQueryAutoComplete("S_Issuer", new AutoCompleteOptions {
 	Source = "/Deal/FindCompanys",
 	MinLength = 1,
-	OnSelect = "function(event, ui) { dealDirect.load(ui.item.id);}"
+	OnSelect = "function(event, ui) { dealDirect.searchCompany(ui.item.id);}"
 	})%>
 	<%=Html.jQueryFlexiGrid("DirectList", new FlexigridOptions {
 	ActionName = "DirectList",
@@ -96,6 +101,7 @@
 	HttpMethod = "GET",
 	SortName = "DirectName",
 	Paging = true 
+	, OnSubmit = "dealDirect.onSubmit"
 	, OnSuccess= "dealDirect.onGridSuccess"
 	, OnRowClick = "dealDirect.onRowClick"
 	, OnInit = "dealDirect.onInit"
@@ -103,67 +109,143 @@
 	, BoxStyle = false 
 	, RowsLength = 50
 	})%>
-	<script id="GridTemplate" type="text/x-jquery-tmpl">
-		{{each(i,row) rows}}
-			{{if i%4==0}}
+	<%using (Html.jQueryTemplateScript("GridTemplate")) {%>
+	{{each(i,row) rows}} {{if i%4==0}}
+	<tr>
+		{{/if}}
+		<td style="width:25%;"><div class="hidden-cell">
+			<a href="javascript:dealDirect.load(${row.cell[0]},'${row.cell[1]}')">${row.cell[1]}</a>
+			</div>
+		</td>
+		{{if i%4==3}}
+	</tr>
+	{{/if}} {{/each}}
+	<%}%>
+	<%using (Html.jQueryTemplateScript("IssuerDetailTemplate")) {%>
+	<%Html.RenderPartial("IssuerDetail", Model.IssuerDetailModel);%>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("EquityDetailTemplate")) {%>
+	<%Html.RenderPartial("DirectEquityDetail", Model.EquityDetailModel);%>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("FixedIncomeDetailTemplate")) {%>
+	<%Html.RenderPartial("FixedIncomeDetail", Model.FixedIncomeDetailModel);%>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("DirectListTemplate")) {%>
+	<div id="Edit${id}" class="section-det un-direct-list">
+		<% Html.RenderPartial("TBoxTop"); %>
+		<table cellpadding="0" cellspacing="0" border="0" class="grid" id="UnderlyingDirectList">
+			<thead>
 				<tr>
-			{{/if}}
-				<td><a href="javascript:dealDirect.load(${row.cell[0]},'${row.cell[1]}')">${row.cell[1]}</a></td>
-			{{if i%4==3}}
+					<th style="width:15%" sortname="SecurityType">
+						Security Type
+					</th>
+					<th sortname="Symbol">
+						Symbol
+					</th>
+					<th style="width:25%" sortname="Industry">
+						Industry
+					</th>
+					<th sortname="EquityType">
+						Equity Type
+					</th>
+					<th sortname="FixedIncomeType">
+						Fixed Income Type
+					</th>
+					<th>
+					</th>
 				</tr>
-			{{/if}}
+			</thead>
+		</table>
+		<% Html.RenderPartial("TBoxBottom"); %>
+	</div>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("UnderlyingDirectListRowTemplate")) {%>
+		{{each(i,row) rows}}
+	   <tr id="Row${row.ID}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}}>
+			<td>
+				${row.SecurityType}
+			</td>
+			<td>
+				${row.Symbol}
+			</td>
+			<td>
+				${row.Industry}
+			</td>
+			<td>
+				${row.EquityType}
+			</td>
+			<td>
+				${row.FixedIncomeType}
+			</td>
+			<td style="text-align:right;">
+				<%: Html.Hidden("ID", "${row.ID}")%>
+				<%: Html.Hidden("SecurityType", "${row.SecurityType}")%>
+				<%: Html.Image("Save_active.png", new { @id = "Save", @style="display:none;cursor:pointer;" })%>
+				<%: Html.Image("Edit.png", new { @class = "gbutton", @id = "Edit"  })%>
+				<%: Html.Image("largedel.png", new { @class = "gbutton", @onclick="javascript:dealDirect.deleteDirect(this,${row.ID},'${row.SecurityType}');"  })%>
+			</td>
+		</tr>
 		{{/each}}
-	</script>
-	<script id="IssuerDetailTemplate" type="text/x-jquery-tmpl"> 
-		<%Html.RenderPartial("IssuerDetail", Model.IssuerDetailModel);%>
-	</script>
-	<script id="EquityDetailTemplate" type="text/x-jquery-tmpl"> 
-		<%Html.RenderPartial("DirectEquityDetail", Model.EquityDetailModel);%>
-	</script>
-	<script id="FixedIncomeDetailTemplate" type="text/x-jquery-tmpl">
-		<%Html.RenderPartial("FixedIncomeDetail", Model.FixedIncomeDetailModel);%>
-	</script>
-	<script id="TabTemplate" type="text/x-jquery-tmpl">
-		<div style="float:left">
-			<div id="Tab${id}" onmousemove="javascript:$('#tabdel${id}').show();"
-			 onmouseout="javascript:$('#tabdel${id}').hide();"
-			   class="section-tab section-tab-sel">
-				<div class="left"></div>
-				<div class="center" onclick="javascript:dealDirect.selectDirectTab($(this).parent(),'Edit${id}');">${DirectName}</div>
-				<div class="right"></div>
-				<div class='tab-delete' style='display:none' id="tabdel${id}" onclick="javascript:dealDirect.deleteTab(${id},true);"></div>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("TabTemplate")) {%>
+	<div style="float: left">
+		<div id="Tab${id}" onmousemove="javascript:$('#tabdel${id}').show();" onmouseout="javascript:$('#tabdel${id}').hide();"
+			class="section-tab section-tab-sel">
+			<div class="left">
+			</div>
+			<div class="center" onclick="javascript:dealDirect.selectDirectTab($(this).parent(),'Edit${id}');">
+				${DirectName}</div>
+			<div class="right">
+			</div>
+			<div class='tab-delete' style='display: none' id="tabdel${id}" onclick="javascript:dealDirect.deleteTab(${id},true);">
 			</div>
 		</div>
-	</script>
-	<script id="SectionTemplate" type="text/x-jquery-tmpl">
-		<div id="Edit${id}"  class="section-det" style="display: none">
-			<%using (Html.Form(new { @id = "frmIssuer${id}", @onsubmit = "return dealDirect.save(this);" })) {%>
-			<div id="IssuerDetail">
-			</div>
-			<div class="editor-label">
-				<%: Html.Label("Security Type")%>
-			</div>
-			<div class="editor-field" style="width: auto;">
-				<div id="equitytab" class="sel" onclick="javascript:dealDirect.selectTab('E',this);">
-					&nbsp;
-				</div>
-				<div id="fitab" onclick="javascript:dealDirect.selectTab('F',this);">
-					&nbsp;
-				</div>
-			</div>
-			<div class="subdetail">
-				<div id="EQdetail">
-				</div>
-				<div id="FixedIncome" style="display: none">
-				</div>
-			</div>
-			<div class="btnbox">
-				<div class="direct">
-					<%: Html.Span("", new { @id = "SpnSaveIssuerLoading" } )%>&nbsp;&nbsp;&nbsp;
-					<%: Html.ImageButton("add_direct_active.png")%>
-				</div>
-			</div>
-			<%}%>
+	</div>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("SectionTemplate")) {%>
+	<div id="Edit${id}">
+		<%using (Html.Form(new { @id = "frmIssuer${id}", @onsubmit = "return dealDirect.save(this);" })) {%>
+		<div id="IssuerDetail">
+			{{tmpl(IssuerDetailModel) "#IssuerDetailTemplate"}}
 		</div>
+		<div style="clear:both;padding: 10px 0px;float:left;">
+		<div class="editor-label">
+			<%: Html.Label("Security Type")%>
+		</div>
+		<div class="editor-field" style="width: auto;padding:1px 0 0;">
+			<div id="equitytab" class="sel" onclick="javascript:dealDirect.selectTab('E',this);">
+				&nbsp;
+			</div>
+			<div id="fitab" onclick="javascript:dealDirect.selectTab('F',this);">
+				&nbsp;
+			</div>
+		</div>
+		</div>
+		<div class="line"></div>
+		<div class="subdetail">
+			<div id="EQdetail">
+				{{tmpl(EquityDetailModel) "#EquityDetailTemplate"}}
+			</div>
+			<div id="FixedIncome" style="display: none">
+				{{tmpl(FixedIncomeDetailModel) "#FixedIncomeDetailTemplate"}}
+			</div>
+		</div>
+		<div class="line"></div>
+		<div class="subdetail" style="clear:both;width:88%;">
+			<div class="editor-label" style="float: right;width:auto;padding-top:3px;">
+				<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:dealDirect.cancel(this);" })%>
+			</div>
+			<div class="editor-label" style="float:right;width:auto;">
+				<%: Html.ImageButton("add_direct_active.png")%>
+			</div><div class="editor-label" style="float:right;width:auto;">
+				<%: Html.Span("", new { @id = "SpnSaveIssuerLoading" } )%>&nbsp;&nbsp;&nbsp;
+			</div>
+		</div>
+		<%}%>
+	</div>
+	<%}%>
+	<script type="text/javascript">
+		dealDirect.newEquityData = <%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.EquityDetailModel())%>;
+		dealDirect.newFixedIncomeData = <%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.FixedIncomeDetailModel())%>;
 	</script>
 </asp:Content>

@@ -266,8 +266,13 @@ namespace DeepBlue.Controllers.Admin {
 		List<AutoCompleteList> FindStates(string countryName);
 		#endregion
 
-		#region DynamicData
+		#region ExportExcel
+		List<string> GetAllTables(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, string tableName);
 		object FindTable(string tableName);
+		InvestorExportExcelModel GetAllInvestorExportList();
+		FundExportExcelModel GetAllFundExportList();
+		UnderlyingFundExportExcelModel GetAllUnderlyingFundExportList();
+		 UnderlyingDirectExportExcelModel GetAllUnderlyingDirectExportList();
 		#endregion
 
 		#region DealContacts
@@ -300,6 +305,15 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region Log
 		List<Log> GetAllLogs(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		#endregion
+
+		#region SellerType
+		List<SellerType> GetAllSellerTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		SellerType FindSellerType(int id);
+		bool SellerTypeNameAvailable(string sellerTypeName, int sellerTypeId);
+		bool DeleteSellerType(int id);
+		IEnumerable<ErrorInfo> SaveSellerType(SellerType sellerType);
+		List<AutoCompleteList> FindSellerTypes(string sellerTypeName);
 		#endregion
 	}
 }

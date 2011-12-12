@@ -37,7 +37,7 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/InvestorType
 		[HttpGet]
 		public ActionResult InvestorType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "InvestorManagement";
 			ViewData["PageName"] = "InvestorType";
 			return View();
@@ -145,7 +145,7 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/EntityType
 		[HttpGet]
 		public ActionResult EntityType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "InvestorManagement";
 			ViewData["PageName"] = "InvestorEntityType";
 			return View();
@@ -251,7 +251,7 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/CommunicationType
 		[HttpGet]
 		public ActionResult CommunicationType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "InvestorManagement";
 			ViewData["PageName"] = "CommunicationType";
 			EditCommunicationTypeModel model = new EditCommunicationTypeModel();
@@ -365,7 +365,7 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/CommunicationGrouping
 		[HttpGet]
 		public ActionResult CommunicationGrouping() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "InvestorManagement";
 			ViewData["PageName"] = "CommunicationGrouping";
 			return View();
@@ -468,7 +468,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region Custom Field
 
 		public ActionResult CustomField() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "CustomFieldManagement";
 			ViewData["PageName"] = "CustomField";
 			EditCustomFieldModel model = new EditCustomFieldModel();
@@ -592,7 +592,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region Data Type
 
 		public ActionResult DataType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "CustomFieldManagement";
 			ViewData["PageName"] = "DataType";
 			return View();
@@ -699,7 +699,7 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/PurchaseType
 		[HttpGet]
 		public ActionResult PurchaseType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "PurchaseType";
 			return View();
@@ -802,7 +802,7 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/DealClosingCostType
 		[HttpGet]
 		public ActionResult DealClosingCostType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "DealClosingCostType";
 			return View();
@@ -903,7 +903,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region UnderlyingFundType
 
 		public ActionResult UnderlyingFundType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "UnderlyingFundType";
 			return View();
@@ -1003,7 +1003,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region ShareClassType
 
 		public ActionResult ShareClassType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "ShareClassType";
 			return View();
@@ -1111,7 +1111,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region CashDistributionType
 
 		public ActionResult CashDistributionType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "CashDistributionType";
 			return View();
@@ -1214,7 +1214,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region FundExpenseType
 
 		public ActionResult FundExpenseType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "FundExpenseType";
 			return View();
@@ -1315,7 +1315,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region ReportingFrequency
 
 		public ActionResult ReportingFrequency() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "ReportingFrequency";
 			return View();
@@ -1423,7 +1423,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region ReportingType
 
 		public ActionResult ReportingType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "ReportingType";
 			return View();
@@ -1533,7 +1533,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region Module
 
 		public ActionResult MODULE() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			return View();
 		}
 
@@ -1632,7 +1632,7 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/SecurityType
 		[HttpGet]
 		public ActionResult SecurityType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "SecurityType";
 			return View();
@@ -1731,7 +1731,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region Geography
 
 		public ActionResult Geography() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "Geography";
 			return View();
@@ -1839,7 +1839,7 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/Industry
 		[HttpGet]
 		public ActionResult Industry() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "Industry";
 			return View();
@@ -1958,7 +1958,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region File Type
 
 		public ActionResult FileType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "AdminFileType";
 			ViewData["PageName"] = "FileType";
 			return View();
@@ -1988,15 +1988,17 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/EntityType
 		[HttpGet]
 		public ActionResult EditFileType(int id) {
-			EditFileTypeModel model = new EditFileTypeModel();
-			FileType fileType = AdminRepository.FindFileType(id);
-			if (fileType != null) {
-				model.FileTypeId = fileType.FileTypeID;
-				model.FileTypeName = fileType.FileTypeName;
-				model.FileExtension = fileType.FileExtension;
-				model.Description = fileType.Description;
-			}
-			return View(model);
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			DeepBlue.Models.Entity.FileType fileType = AdminRepository.FindFileType(id);
+			flexgridData.total = totalRows;
+			flexgridData.page = 0;
+			flexgridData.rows.Add(new FlexigridRow {
+				cell = new List<object> {fileType.FileTypeID,
+					  fileType.FileTypeName,
+					  fileType.FileExtension}
+			});
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -2024,7 +2026,7 @@ namespace DeepBlue.Controllers.Admin {
 					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 				}
 				else {
-					resultModel.Result = "True";
+					resultModel.Result = "True||" + fileType.FileTypeID;
 				}
 			}
 			else {
@@ -2064,7 +2066,7 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/EquityType
 		[HttpGet]
 		public ActionResult EquityType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "EquityType";
 			return View();
@@ -2175,7 +2177,7 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/FixedIncomeType
 		[HttpGet]
 		public ActionResult FixedIncomeType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "FixedIncomeType";
 			return View();
@@ -2278,7 +2280,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region ActivityType
 
 		public ActionResult ActivityType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "CustomFieldManagement";
 			ViewData["PageName"] = "ActivityType";
 			return View();
@@ -2398,7 +2400,7 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/Currency
 		[HttpGet]
 		public ActionResult Currency() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "Currency";
 			return View();
@@ -2512,7 +2514,7 @@ namespace DeepBlue.Controllers.Admin {
 		// GET: /Admin/FundClosing
 		[HttpGet]
 		public ActionResult FundClosing() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "InvestorManagement";
 			ViewData["PageName"] = "FundClosing";
 			return View();
@@ -2634,7 +2636,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		[AdminAuthorize()]
 		public ActionResult Users() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "UserManagement";
 			ViewData["PageName"] = "User";
 			return View();
@@ -2787,7 +2789,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region DocumentType
 
 		public ActionResult DocumentType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DocumentManagement";
 			ViewData["PageName"] = "DocumentType";
 			EditDocumentTypeModel model = new EditDocumentTypeModel();
@@ -2903,9 +2905,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region DealContact
 
-		[AdminAuthorize()]
 		public ActionResult DealContact() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "DealContact";
 			return View();
@@ -3098,6 +3099,11 @@ namespace DeepBlue.Controllers.Admin {
 		#endregion
 
 		#region FileUpload
+
+		public ActionResult FileUpload() {
+			return View();
+		}
+
 		////
 		//// POST: /Admin/Upload
 		//[HttpPost]
@@ -3144,6 +3150,22 @@ namespace DeepBlue.Controllers.Admin {
 			resultModel.Result = JsonSerializer.ToJsonObject(new { Result = resultModel.Result, FileName = model.FileName }).ToString();
 			return View("Result", resultModel);
 		}
+
+		//
+		// POST: /Admin/Upload
+		[HttpPost]
+		[AcceptVerbs(HttpVerbs.Post)]
+		public JsonResult UploadFile() {
+			int index = 0;
+			string fileName = string.Empty;
+			for(index = 0; index < Request.Files.Count; index++){
+				UploadFile fileUpload = new UploadFile(Request.Files[index], "TempUploadPath", Request.Files[index].FileName);
+				fileUpload.Upload();
+				fileName = fileUpload.FileName;
+			}
+			return Json(new { Error = string.Empty, FileName = fileName });
+		}
+
 		#endregion
 
 		#region Log
@@ -3179,7 +3201,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region SellerType
 
 		public ActionResult SellerType() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
 			ViewData["PageName"] = "SellerType";
 			return View();
@@ -3294,11 +3316,18 @@ namespace DeepBlue.Controllers.Admin {
 		#region ExportExcel
 
 		public ActionResult Export() {
-			ViewData["MenuName"] = "Admin";
+			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "ExportExcel";
 			ViewData["PageName"] = "ExportExcel";
 			return View();
 		}
+
+		//public ActionResult ExportList(int pageIndex, int pageSize, string sortName, string sortOrder, string tableName) {
+		//    int totalRows = 0;
+		//    var rows = AdminRepository.GetAllTables(pageIndex, pageSize, sortName, sortOrder, ref totalRows, tableName);
+		//    return Json(new { total = totalRows, page = pageIndex,  rows = rows
+		//     }, JsonRequestBehavior.AllowGet);
+		//}
 
 		public ActionResult ExportList() {
 			FlexigridData data = new FlexigridData { page = 1, total = 4 };
@@ -3312,12 +3341,18 @@ namespace DeepBlue.Controllers.Admin {
 		public ActionResult ExportExcel(string tableName, int? excelExportTypeId) {
 			if (excelExportTypeId > 0) {
 				string actionName = string.Empty;
-				switch((DeepBlue.Models.Admin.Enums.ExportExcelType)excelExportTypeId){
-					case  ExportExcelType.Investor:
+				switch ((DeepBlue.Models.Admin.Enums.ExportExcelType)excelExportTypeId) {
+					case ExportExcelType.Investor:
 						actionName = "InvestorExportExcel";
-						break;		
+						break;
 					case ExportExcelType.AmberbrookFund:
 						actionName = "FundExportExcel";
+						break;
+					case ExportExcelType.UnderlyingFund:
+						actionName = "UnderlyingFundExportExcel";
+						break;
+					case ExportExcelType.UnderlyingDirect:
+						actionName = "UnderlyingDirectExportExcel";
 						break;
 				}
 				return RedirectToAction(actionName);
@@ -3327,12 +3362,20 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
-		public ActionResult InvestorExportExcel(){
+		public ActionResult InvestorExportExcel() {
 			return View(AdminRepository.GetAllInvestorExportList());
 		}
 
 		public ActionResult FundExportExcel() {
 			return View(AdminRepository.GetAllFundExportList());
+		}
+
+		public ActionResult UnderlyingFundExportExcel() {
+			return View(AdminRepository.GetAllUnderlyingFundExportList());
+		}
+
+		public ActionResult UnderlyingDirectExportExcel() {
+			return View(AdminRepository.GetAllUnderlyingDirectExportList());
 		}
 
 		#endregion

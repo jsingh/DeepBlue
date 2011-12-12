@@ -258,6 +258,14 @@ namespace DeepBlue.Helpers {
 			MvcDiv div = new MvcDiv(helper.ViewContext.HttpContext.Response);
 			return div;
 		}
+		public static MvcDiv Div(this HtmlHelper helper, RouteValueDictionary htmlAttributes) {
+			TagBuilder tagBuilder = new TagBuilder("div");
+			tagBuilder.MergeAttributes(htmlAttributes);
+			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
+			httpResponse.Write(tagBuilder.ToString(TagRenderMode.StartTag));
+			MvcDiv div = new MvcDiv(helper.ViewContext.HttpContext.Response);
+			return div;
+		}
 		public static MvcDiv Div(this HtmlHelper helper) {
 			return Div(helper, new { });
 		}
@@ -500,7 +508,145 @@ namespace DeepBlue.Helpers {
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 
-	 
+
 		#endregion
+
+		#region UnorderList
+		public static MvcControl UnorderList(this HtmlHelper helper) {
+			return UnorderList(helper, new { });
+		}
+		public static MvcControl UnorderList(this HtmlHelper helper, object htmlAttributes) {
+			return UnorderList(helper, new RouteValueDictionary(htmlAttributes));
+		}
+		public static MvcControl UnorderList(this HtmlHelper helper, RouteValueDictionary htmlAttributes) {
+			TagBuilder tagBuilder = new TagBuilder("ul");
+			tagBuilder.MergeAttributes(htmlAttributes);
+			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
+			httpResponse.Write(tagBuilder.ToString(TagRenderMode.StartTag));
+			MvcControl ul = new MvcControl(helper.ViewContext.HttpContext.Response, "ul");
+			return ul;
+		}
+		#endregion
+
+		#region OrderList
+		public static MvcControl OrderList(this HtmlHelper helper) {
+			return OrderList(helper, new { });
+		}
+		public static MvcControl OrderList(this HtmlHelper helper, object htmlAttributes) {
+			return OrderList(helper, new RouteValueDictionary(htmlAttributes));
+		}
+		public static MvcControl OrderList(this HtmlHelper helper, RouteValueDictionary htmlAttributes) {
+			TagBuilder tagBuilder = new TagBuilder("li");
+			tagBuilder.MergeAttributes(htmlAttributes);
+			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
+			httpResponse.Write(tagBuilder.ToString(TagRenderMode.StartTag));
+			MvcControl ul = new MvcControl(helper.ViewContext.HttpContext.Response, "li");
+			return ul;
+		}
+		#endregion
+
+		#region Table
+
+		public static MvcHtmlString Table(this HtmlHelper helper, TableOptions tableOption) {
+			TagBuilder tagBuilder = new TagBuilder("table");
+			tagBuilder.Attributes.Add("cellpadding", tableOption.CellPadding.ToString());
+			tagBuilder.Attributes.Add("cellspacing", tableOption.CellSpacing.ToString());
+			if (tableOption.Border > 0) {
+				tagBuilder.Attributes.Add("border", tableOption.Border.ToString());
+			}
+			if (string.IsNullOrEmpty(tableOption.Name) == false) {
+				tagBuilder.Attributes.Add("name", tableOption.Name);
+			}
+			if (string.IsNullOrEmpty(tableOption.ID) == false) {
+				tagBuilder.Attributes.Add("id", tableOption.ID);
+			}
+			if (string.IsNullOrEmpty(tableOption.Width)) {
+				tagBuilder.Attributes.Add("width", tableOption.Width);
+			}
+			tagBuilder.MergeAttributes(new RouteValueDictionary(tableOption.HtmlAttributes));
+			StringBuilder columnHTML = new StringBuilder();
+			columnHTML.Append("<thead><tr>");
+			foreach (var column in tableOption.Columns) {
+				TagBuilder th = new TagBuilder("th");
+				if (string.IsNullOrEmpty(column.Name) == false) {
+					th.Attributes.Add("name", column.Name);
+				}
+				if (string.IsNullOrEmpty(column.ID) == false) {
+					th.Attributes.Add("id", column.ID);
+				}
+				if (string.IsNullOrEmpty(column.SortName) == false) {
+					th.Attributes.Add("sortname", column.SortName);
+				}
+				if (string.IsNullOrEmpty(column.InnerHtml) == false) {
+					th.InnerHtml = column.InnerHtml;
+				}
+				th.MergeAttributes(new RouteValueDictionary(column.HtmlAttributes));
+				columnHTML.Append(th.ToString());
+			}
+			columnHTML.Append("</tr></thead>");
+			tagBuilder.InnerHtml = columnHTML.ToString();
+			return MvcHtmlString.Create(tagBuilder.ToString(TagRenderMode.Normal));
+		}
+
+		public static MvcControl TableRow(this HtmlHelper helper, object htmlAttributes) {
+			StringBuilder row = new StringBuilder();
+			StringBuilder attributes = new StringBuilder();
+			RouteValueDictionary values = new RouteValueDictionary(htmlAttributes);
+			foreach (var value in values) {
+				if (value.Key == "if") {
+					attributes.Append(" " + value.Value);
+				}
+				else {
+					attributes.AppendFormat(" {0}=\"{1}\"", value.Key, value.Value);
+				}
+			}
+			row.AppendFormat("<tr {0}>", attributes.ToString());
+			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
+			httpResponse.Write(row.ToString());
+			return new MvcControl(helper.ViewContext.HttpContext.Response, "tr");
+		}
+
+		public static MvcHtmlString TableRow(this HtmlHelper helper, object htmlAttributes, List<TableColumnOptions> columns) {
+			StringBuilder row = new StringBuilder();
+			StringBuilder attributes = new StringBuilder();
+			RouteValueDictionary values = new RouteValueDictionary(htmlAttributes);
+			foreach (var value in values) {
+				if (value.Key == "if") {
+					attributes.Append(" " + value.Value);
+				}
+				else {
+					attributes.AppendFormat(" {0}=\"{1}\"", value.Key, value.Value);
+				}
+			}
+			row.AppendFormat("<tr {0}>{1}</tr>", attributes.ToString(), TableCell(helper, columns));
+			return MvcHtmlString.Create(row.ToString());
+		}
+
+		public static MvcHtmlString TableCell(this HtmlHelper helper, List<TableColumnOptions> columns) {
+			StringBuilder row = new StringBuilder();
+			TagBuilder td = null;
+			foreach (var column in columns) {
+				td = new TagBuilder("td");
+				if (string.IsNullOrEmpty(column.Name) == false) {
+					td.Attributes.Add("name", column.Name);
+				}
+				if (string.IsNullOrEmpty(column.ID) == false) {
+					td.Attributes.Add("id", column.ID);
+				}
+				if (string.IsNullOrEmpty(column.SortName) == false) {
+					td.Attributes.Add("sortname", column.SortName);
+				}
+				if (string.IsNullOrEmpty(column.InnerHtml) == false) {
+					td.InnerHtml = column.InnerHtml;
+				}
+				td.MergeAttributes(new RouteValueDictionary(column.HtmlAttributes));
+				row.Append(td.ToString());
+			}
+			return MvcHtmlString.Create(row.ToString());
+		}
+
+
+		#endregion
+
 	}
 }

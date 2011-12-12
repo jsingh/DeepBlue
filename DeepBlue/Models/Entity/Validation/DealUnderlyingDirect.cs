@@ -31,21 +31,8 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage = "RecordDate is required")]
 			[DateRange()]
 			public global::System.DateTime RecordDate {
-				get;
-				set;
-			}
-
-			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "FMV is required")]
-			public global::System.Decimal FMV {
-				get;
-				set;
-			}
-
-			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "PurchasePrice is required")]
-			public global::System.Decimal PurchasePrice {
 				get;
 				set;
 			}

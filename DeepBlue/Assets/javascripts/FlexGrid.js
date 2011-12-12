@@ -55,6 +55,7 @@
 					$('.pPageStat',this.pDiv).html(p.nomsg);
 					$(t).append(tbody);
 					if(p.onSuccess) { p.onSuccess(t,g); }
+					if(p.onTemplate) { p.onTemplate(tbody,data); }
 					return false;
 				}
 				if(p.total>25) {
@@ -78,7 +79,7 @@
 						 data.rows,
 						 function (i,row) {
 						 	var tr=document.createElement('tr');
-						 	if(i%2) { tr.className='erow'; }
+						 	if(i%2) { tr.className='erow'; } else { tr.className='grow'; }
 						 	tr.id='row'+(i+1);
 						 	var i=0;
 						 	$("thead tr:first th",g.bDiv).each(function () {
@@ -203,7 +204,6 @@
 				if(p.params) {
 					for(var pi=0;pi<p.params.length;pi++) param[param.length]=p.params[pi];
 				}
-				param[param.length]={ name: "t",value: dt.getTime() };
 				$.ajax({
 					type: p.method,
 					url: p.url,
@@ -240,7 +240,7 @@
 				}
 			},
 			exportExcel: function () {
-				var features="width="+1+",height="+1;
+				var width=300;var height=200;var left=(screen.availWidth/2)-(width/2);var top=(screen.availHeight/2)-(height/2);var features="width="+width+",height="+height+",left="+left+",top="+top+",location=no,menubar=no,toobar=no,scrollbars=yes,resizable=yes,status=yes";
 				window.open("/Admin/ExportExcel?tableName="+p.tableName,p.tableName,features);
 			},
 			setPagingEvent: function (pDiv) {
@@ -449,7 +449,12 @@
 	};
 	$.fn.flexReload=function (p) {
 		return this.each(function () {
-			if(this.grid&&this.p.url) { this.grid.populate(); }
+			if(this.grid&&this.p.url) {
+				this.p.page=1;
+				this.p.newp=1;
+
+				this.grid.populate();
+			}
 		});
 	};
 	$.fn.flexRemoveSortClass=function (p) {

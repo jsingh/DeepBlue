@@ -10,7 +10,7 @@ namespace DeepBlue.Models.Entity {
 
 	[MetadataType(typeof(UnderlyingFundContactMD))]
 	public partial class UnderlyingFundContact {
-		public class UnderlyingFundContactMD : CreatedByFields {
+		public class UnderlyingFundContactMD  {
 		}
 
 		public UnderlyingFundContact(IUnderlyingFundContactService underlyingFundContactservice)

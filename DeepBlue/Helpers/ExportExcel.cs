@@ -23,7 +23,7 @@ namespace DeepBlue.Helpers {
 		public object GridData { get; set; }
 
 		public override void ExecuteResult(ControllerContext context) {
-			DataGrid grd = new DataGrid();
+			GridView grd = new GridView();
 
 			grd.DataSource = GridData;
 			grd.DataBind();

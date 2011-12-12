@@ -36,7 +36,8 @@ namespace DeepBlue.Controllers.Investor {
 		//
 		// GET: /Investor/New
 		public ActionResult New() {
-			ViewData["MenuName"] = "Investor";
+			ViewData["MenuName"] = "InvestorManagement";
+			ViewData["SubmenuName"] = "NewInvestorSetup";
 			ViewData["PageName"] = "New Investor Setup";
 			CreateModel model = new CreateModel();
 			model.InvestorEntityTypes = SelectListFactory.GetInvestorEntityTypesSelectList(AdminRepository.GetAllInvestorEntityTypes());
@@ -579,7 +580,7 @@ namespace DeepBlue.Controllers.Investor {
 		}
 
 		public ActionResult ThankYou() {
-			ViewData["MenuName"] = "Investor";
+			ViewData["MenuName"] = "InvestorManagement";
 			return View();
 		}
 
@@ -602,8 +603,9 @@ namespace DeepBlue.Controllers.Investor {
 		[HttpGet]
 		public ActionResult Edit(int? id) {
 			EditModel model = new EditModel();
-			ViewData["MenuName"] = "Investor";
-			ViewData["PageName"] = "Update Investor Information";
+			ViewData["MenuName"] = "InvestorManagement";
+			ViewData["SubmenuName"] = "UpdateInvestorInformation";
+			ViewData["PageName"] = "UpdateInvestorInformation";
 			if ((id ?? 0) == 0) {
 				model.id = InvestorRepository.FindLastInvestorId();
 			}
@@ -1052,8 +1054,9 @@ namespace DeepBlue.Controllers.Investor {
 
 		[HttpGet]
 		public ActionResult Library() {
-			ViewData["MenuName"] = "Investor";
-			ViewData["PageName"] = "Investor Library";
+			ViewData["MenuName"] = "InvestorManagement";
+			ViewData["SubmenuName"] = "InvestorLibrary";
+			ViewData["PageName"] = "InvestorLibrary";
 			return View();
 		}
 

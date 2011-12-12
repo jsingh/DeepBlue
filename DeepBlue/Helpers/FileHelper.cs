@@ -28,7 +28,7 @@ namespace DeepBlue.Helpers {
 				if (fileType == null) {
 					var arrExtensions = type.FileExtension.Split((",").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 					foreach (var ext in arrExtensions) {
-						if (ext.ToLower() == extension.Replace(".", "").ToLower()) {
+						if (ext.Replace(".", "").ToLower() == extension.Replace(".", "").ToLower()) {
 							fileType = type;
 							break;
 						}

@@ -6,7 +6,7 @@
 html, body {
 	height: 100%;
 	color: #000;
-	font-family: Calibri, Arial;
+	font-family: Arial, Helvetica;
 	font-size: 12px; /*background-image: url("../images/bg.jpg"); 	background-repeat: repeat;*/
 	background-color: #E9E9E9;
 }
@@ -17,7 +17,7 @@ html, body {
 	margin: 0 auto -35px;
 }
 input, select {
-	font-family: Calibri, Arial;
+	font-family: Arial, Helvetica;
 	font-size: 12px;
 }
 input[type="text"], input[type="password"], select {
@@ -482,9 +482,6 @@ h2 {
 #menu ul li {
 	float: left;
 }
-#menu.minimize {
-	height: 40px;
-}
 #menu.minimize .topmenu {
 	line-height: 40px;
 	height: 40px;
@@ -537,8 +534,10 @@ h2 {
 	line-height: 90px;
 	color: #fff;
 	font-size: 12px;
+	/*
 	text-shadow: #0B0B0B 1px 1px 1px;
-	filter: Shadow(Color=#0B0B0B, 	 			Direction=135,  			Strength=2);
+	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
+	*/
 }
 .mnu-name {
 	background-position: center center;
@@ -859,7 +858,11 @@ input.ui-autocomplete-loading[type="text"] {
 	visibility: hidden;
 	margin: 0 2px;
 }
-.grid tbody tr:hover td .gbutton {
+.grid tbody tr.grow:hover td .gbutton
+,.grid tbody tr.erow:hover td .gbutton
+,.grid tbody tr.arow:hover td .gbutton 
+,.grid tbody tr.row:hover td .gbutton 
+,.grid tbody tr.disprow:hover td .gbutton {
 	visibility: visible;
 }
 .grid tbody tr:hover td {
@@ -1035,6 +1038,7 @@ input.ui-autocomplete-loading[type="text"] {
 	border: 0;
 	background-color: transparent;
 	float: left;
+	width: 95%;
 }
 .editor-label .jqComboBox {
 	float: right;
@@ -1209,10 +1213,6 @@ a.jqTransformChecked {
 	display: none;
 }
 /* New Changes */
-body, input, select {
-	font-family: Arial;
-	font-size: 12px;
-}
 #content, #header, #footer, #submenu {
 	min-width: 1250px;
 }
@@ -1238,4 +1238,22 @@ body, input, select {
 ,.grid .green-hrow td{ 
 		text-shadow: 0px 0px 0px #F7F1F1;
 		color: #fff;
+}
+.add-new-lbbox{
+	width:210px;
+	margin:0 auto;
+}
+.add-new-library{
+	margin:10px 0;
+}
+.editor-label span, .editor-field span {
+	overflow: hidden;
+	width: 100%;
+}
+.hidden-cell {
+	width: 258px;
+	overflow: hidden;
+}
+#ReportManagement li a{
+	padding:0;
 }

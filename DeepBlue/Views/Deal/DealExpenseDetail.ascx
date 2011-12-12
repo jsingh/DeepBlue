@@ -9,7 +9,7 @@
 <div class="expandheader">
 	<div class="expandbtn">
 		<div class="expandimg" id="img">
-			ADD DEAL EXPENSES</div>
+			DEAL EXPENSES</div>
 		<div class="expandtitle" id="title">
 			<div class="expandtitle">
 				Deal Expenses</div>
@@ -29,7 +29,7 @@
 				<table id="tblDealExpense" cellpadding="0" cellspacing="0" border="0" class="grid">
 					<thead>
 						<tr>
-							<th class="lalign" style="width: 15%;">
+							<th class="lalign" style="width: 25%;">
 								Description
 							</th>
 							<th class="ralign" style="width: 15%;">
@@ -62,7 +62,7 @@
 					</thead>
 					<tbody id="tbodyDealExpense">
 					</tbody>
-					<tfoot id="tfootDealExpense" style="display:none;">
+					<tfoot id="tfootDealExpense" style="display: none;">
 						<tr>
 							<td>
 								<b>Total</b>

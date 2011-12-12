@@ -238,3 +238,6 @@
 #InvestorDetail .flexigrid div.pDiv input[type="text"] {
     width: auto;
 }
+.flexigrid div.pDiv {
+	height: 30px;
+}

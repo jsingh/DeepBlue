@@ -26,5 +26,7 @@ namespace DeepBlue.Models.Deal {
 
 		public int id { get; set; }
 
+		public int ParentId { get; set; }
+
 	}
 }

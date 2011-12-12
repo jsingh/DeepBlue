@@ -119,7 +119,7 @@ h4 a {
 	padding-left: 65px;
 	width: 90.8%;
 }
- 
+
 .section {
 	margin: 5px 0px;
 	float: left;
@@ -181,10 +181,10 @@ h4 a {
 	font-size: 11px;
 	font-weight: bold;
 }
-.expandcontainer{
-	float:left;
-	width:90%;
-	padding-left:65px;
+.expandcontainer {
+	float: left;
+	width: 90%;
+	padding-left: 65px;
 }
 #SellerInfo {
 	background-color: #E9EAEC;
@@ -193,8 +193,7 @@ h4 a {
 }
 .headerbar {
 	color: #fff;
-	font-size: 14px;
-	/*padding: 0px 0 0 65px;*/
+	font-size: 14px; /*padding: 0px 0 0 65px;*/
 }
 .headerbar .leftcol {
 	float: left;
@@ -256,8 +255,7 @@ h4 a {
 	background-image: url("../images/rightuarrow.png");
 	background-repeat: no-repeat;
 	float: right;
-	height: 9px;
-	/*margin-right: 132px;*/
+	height: 9px; /*margin-right: 132px;*/
 	margin-top: 21px;
 	width: 16px;
 }
@@ -277,32 +275,169 @@ h4 a {
 	width: 1007px;
 	margin: 20px auto 0 0px;
 }
-#AddNewIssuer{
-	  background-image: url("../images/dir_subheadbg.png");
-	    height: 110px;  padding: 20px 0 0;
+#AddNewIssuer {
+	background-image: url("../images/dir_subheadbg.png");
+	height: 110px;
+	padding: 20px 0 0;
 }
 #DealSellerInfo .editor-field {
-    width: 160px;
+	width: 166px;
 }
 
-#tblUnderlyingDirect  td input[type="text"]
-,#tblUnderlyingDirect td select {
+#tblUnderlyingDirect td input[type="text"], #tblUnderlyingDirect td select {
 	max-width: 101px;
 }
-#tblUnderlyingFund td input[type="text"]
-,#tblUnderlyingFund td select {
+#tblUnderlyingFund td input[type="text"], #tblUnderlyingFund td select {
 	max-width: 129px;
 }
-#SellerInfo .dealdetail{
-	    padding-left: 30px;
-    width: 68%;
+#SellerInfo .dealdetail {
+	padding-left: 30px;
+	width: 68%;
 }
-#SellerInfo .savebox{
-	 padding-left: 27%; width: auto;float:right;
+#SellerInfo .savebox {
+	padding-left: 27%;
+	width: auto;
+	float: right;
 }
-#DealUnderlyingFunds .dealdetail
-,#DealUnderlyingDirects .dealdetail
-,#DealDocuments .dealdetail
-,#DealExpenses .dealdetail{
+#DealUnderlyingFunds .dealdetail, #DealUnderlyingDirects .dealdetail, #DealDocuments .dealdetail, #DealExpenses .dealdetail {
 	width: 94.5%;
+}
+.grid td .jqComboBox {
+	width: 100%;
+}
+.grid td .jqComboBox .left {
+	width: 68%;
+}
+.drop-files{
+	border: 1px dashed #000000;
+    clear: both;
+    float: left;
+    min-height: 100px;
+    padding: 18px 0 0;
+    width: 100%;
+	font-weight: bold;
+}
+
+
+
+/*-------------------------
+	Dropbox Element
+--------------------------*/
+
+
+
+#dropbox {
+	/*background: url('../images/background_tile_3.jpg');
+	border-radius: 3px;
+	position: relative;
+	margin: 80px auto 90px;
+	min-height: 290px;
+	overflow: hidden;
+	padding-bottom: 40px;
+	width: 990px;
+	box-shadow: 0 0 4px rgba(0,0,0,0.3) inset,0 -3px 2px rgba(0,0,0,0.1);*/
+}
+
+
+#dropbox .message {
+	font-size: 11px;
+	text-align: center;
+	padding-top: 160px;
+	display: block;
+}
+
+#dropbox .message i {
+	color: #ccc;
+	font-size: 10px;
+}
+
+#dropbox:before {
+	border-radius: 3px 3px 0 0;
+}
+
+
+
+/*-------------------------
+	Image Previews
+--------------------------*/
+
+#dropbox #FilesList{
+	margin:0 10px;
+}
+
+#dropbox .preview {
+	float: left;
+	text-align: center;
+	margin:0 10px 10px 10px;
+	border: 1px solid #d2d2d2;
+	border-radius: 5px;
+	padding:10px 20px 18px;
+	width: 248px;
+}
+#dropbox .preview .file-name{
+	margin:0 10px 15px;
+	width: 218px;
+	overflow: hidden;
+}
+
+#dropbox .preview img {
+	max-width: 240px;
+	max-height: 180px;
+	border: 3px solid #fff;
+	display: block;
+	box-shadow: 0 0 2px #000;
+}
+
+#dropbox .imageHolder {
+	display: inline-block;
+	position: relative;
+}
+
+#dropbox .uploaded {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: url('../images/done.png') no-repeat center center rgba(255,255,255,0.5);
+	display: none;
+}
+
+#dropbox .preview.done .uploaded {
+	display: block;
+}
+
+
+
+/*-------------------------
+	Progress Bars
+--------------------------*/
+
+
+
+#dropbox .progressHolder {
+    border: 1px solid #D2D2D2;
+    border-radius: 2px 2px 2px 2px;
+    height: 12px;
+    width: 100%;
+}
+
+#dropbox .progress {
+	background-color: #2586d0;
+	border-radius: 5px;
+	height: 100%;
+	width:0px;
+}
+
+#dropbox .preview.done .progress {
+	width: 100% !important;
+}
+
+#dropbox .preview .remove{
+	float:right;
+	width: 16px;
+	height:16px;
+	background-image:url(../images/remove.png);
+	background-repeat:no-repeat;
+	cursor: pointer;
 }

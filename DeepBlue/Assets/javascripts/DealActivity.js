@@ -1,5 +1,14 @@
 ﻿var dealActivity={
 	newFLEData: null
+	,templates: [
+		 { id: "CashDistributionAddTemplate",url: "/Deal/CashDistributionAddTemplate" }
+		,{ id: "PRCashDistributionAddTemplate",url: "/Deal/UnderlyingFundPostRecordCashDistribution" }
+		,{ id: "CapitalCallAddTemplate",url: "/Deal/CapitalCallAddTemplate" }
+		,{ id: "PRCapitalCallAddTemplate",url: "/Deal/UnderlyingFundPostRecordCapitalCall" }
+		,{ id: "StockDistributionAddTemplate",url: "/Deal/StockDistributionAddTemplate" }
+		,{ id: "StockDistributionDirectTemplate",url: "/Deal/ManualUnderlyingFundStockDistribution" }
+		,{ id: "UFValuationAddTemplate",url: "/Deal/UnderlyingFundValuation" }
+		]
 	,init: function () {
 		jHelper.resizeIframe();
 		$(document).ready(function () {
@@ -7,8 +16,22 @@
 			var bdy=$("body");
 			jHelper.waterMark(bdy);
 			jHelper.jqComboBox(bdy);
-			
+			//dealActivity.loadTemplate(0);
 		});
+	}
+	,loadTemplate: function (index) {
+		if(index<dealActivity.templates.length) {
+			var url=dealActivity.templates[index].url;
+			var id=dealActivity.templates[index].id;
+			$.get(url,function (data) {
+				//var script=document.createElement("script");
+				//script.id=id;
+				//$(script).attr("type","text/x-jquery-tmpl").html(data);
+				//$("body").append(script);
+				$.tmpl(id, data);
+				dealActivity.loadTemplate(index+1);
+			});
+		}
 	}
 	,selectTab: function (type,lnk) {
 		$(".section-tab").removeClass("section-tab-sel");
@@ -129,12 +152,13 @@
 			$(".detail").hide();
 			$(".addbtn").hide();
 			$(this).hide();
+			var actGroup=$(this).parents(".act-group:first");
 			var parent=$(this).parent();
 			var actbox=$(parent).parents(".act-box:first");
 			var line=$(actbox).next();
-			var index=$(".act-box").index(actbox);
+			var index=$(".act-box",actGroup).index(actbox);
 			if(index>0) {
-				var firstActBox=$(".act-box:first");
+				var firstActBox=$(".act-box:first",actGroup);
 				$(firstActBox).before(actbox);
 				$(actbox).after(line);
 			}

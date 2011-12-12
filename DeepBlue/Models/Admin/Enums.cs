@@ -93,5 +93,16 @@ namespace DeepBlue.Models.Admin.Enums {
 		Investor = 1,
 		Deal = 2
 	}
+
+	public enum ExportExcelType {
+
+		Investor = 1,
+
+		AmberbrookFund = 2,
+
+		UnderlyingFund = 3,
+
+		UnderlyingDirect = 4
+	}
 	
 }

@@ -2,18 +2,25 @@
 	tempSave: false
 	,onAfterUnderlyingFundSave: null
 	,newFundData: null
+	,currentDetailBox: null
 	,init: function () {
-		jHelper.resizeIframe();
-		jHelper.waterMark();
-		underlyingFund.setUp();
-		dealDirect.isUnderlyingFundModel=true;
-		dealDirect.onCreateNewIssuer=function (id) {
-			underlyingFund.load(0,id);
-		}
-		dealDirect.onAddIssuer=function () {
-			$("#Name","#NewIssuerDetail").focus();
-			$("#UnderlyingFundDetail").scrollTop(0);
-		}
+		$(document).ready(function () {
+			jHelper.resizeIframe();
+			jHelper.waterMark();
+			underlyingFund.setUp();
+			dealDirect.isUnderlyingFundModel=true;
+			dealDirect.onCreateNewIssuer=function (id) {
+				//underlyingFund.load(0,id);
+				$("#DirectList").flexReload();
+			}
+			dealDirect.onAddIssuer=function () {
+				$("#Name","#NewIssuerDetail").focus();
+				$("#UnderlyingFundDetail").scrollTop(0);
+			}
+			if($("#Mode").val()=="direct") {
+				dealDirect.add();
+			}
+		});
 	}
 	,setUp: function (box) {
 		$(document).ready(function () {
@@ -69,7 +76,7 @@
 				if(data!="") {
 					jAlert(data);
 				} else {
-					$("#UnderlyingFundList").flexReload();
+					$("#DirectList").flexReload();
 				}
 			});
 		}
@@ -86,7 +93,7 @@
 	,closeDialog: function (reload) {
 		$("#addDialog").dialog('close');
 		if(reload==true) {
-			$("#UnderlyingFundList").flexReload();
+			$("#DirectList").flexReload();
 		}
 	}
 	,onCreateUnderlyingFundBegin: function () {
@@ -137,7 +144,27 @@
 		$(".section-tab").removeClass("section-tab-sel");
 		$(".section-det").hide();
 		$(that).addClass("section-tab-sel");
-		$("#"+detailid).show();
+		var AddGPBtn=$("#AddGPBtn");
+		var AddUFBtn=$("#AddUFBtn");
+		var SearchGP=$("#SearchGP");
+		AddGPBtn.hide();
+		AddUFBtn.hide();
+		SearchGP.hide();
+		var add=$("#lnkAddUnderlyingFund",AddUFBtn);
+		add.unbind("click");
+		underlyingFund.currentDetailBox=$("#"+detailid);
+		if(that.id!="TabFundGrid") {
+			AddUFBtn.show();
+			dealDirect.close();
+			add.click(function () {
+				//dealDirect.addUD(detailbox,detailid);
+				underlyingFund.addUF(underlyingFund.currentDetailBox,detailid.replace("Edit",""));
+			});
+		} else {
+			AddGPBtn.show();
+			SearchGP.show();
+		}
+		underlyingFund.currentDetailBox.show();
 	}
 	,load: function (id,issuerId,fundName) {
 		var addNewFund=$("#UnderlyingFundDetail");
@@ -150,12 +177,63 @@
 			addNewFundTab.after(tab);
 			addNewFund.after(editbox);
 		} else {
-			$("#SectionTemplate").tmpl(data).insertAfter(addNewFund);
+			$("#UnderlyingFundListTemplate").tmpl(data).insertAfter(addNewFund);
 			$("#TabTemplate").tmpl(data).insertAfter(addNewFundTab);
 			editbox=$("#Edit"+id);
-			underlyingFund.open(id,issuerId,editbox);
+			underlyingFund.ufList(id,editbox);
 		}
 		$(".center",$("#Tab"+id)).click();
+	}
+	,ufList: function (id,box) {
+		$("#UnderlyingFundList",box)
+		.flexigrid({
+			usepager: true
+			,useBoxStyle: false
+			,url: "/Deal/UnderlyingFundList"
+			,onSubmit: function (p) {
+				p.params=null;
+				p.params=new Array();
+				p.params[p.params.length]={ "name": "gpId","value": id };
+				return true;
+			}
+			,onTemplate: function (tbody,data) {
+				$("#UnderlyingFundListRowTemplate").tmpl(data).appendTo(tbody);
+				$("tr",tbody).each(function () {
+					var tr=this;
+					$("#Edit",this).click(function () {
+						underlyingFund.editUF(tr,$("#ID",tr).val(),$("#IssuerID",tr).val())
+					});
+				});
+			}
+			,rpOptions: [25,50,100,200]
+			,rp: 25
+			,resizeWidth: false
+			,method: "GET"
+			,sortname: "FundName"
+			,sortorder: ""
+			,autoload: true
+			,height: 0
+		});
+	}
+	,editUF: function (tr,id,issuerId) {
+		var trid="Edit_"+id;
+		var t=$(tr).parents("table:first");
+		$("#"+trid).remove();
+		var editTR=document.createElement("tr");
+		var td=document.createElement("td");
+		td.colSpan=$("thead tr:first th",t).length;
+		td.className="edit-cell";
+		$(td).html("<center>"+jHelper.loadingHTML()+"</center>");
+		editTR.className="un-directedit-box";
+		editTR.id=trid;
+		$(editTR).append(td);
+		$(tr).after(editTR);
+		var url="";
+		var templateName="SectionTemplate";
+		var data={ id: id };
+		$(td).empty();
+		$("#SectionTemplate").tmpl(data).appendTo(td);
+		underlyingFund.open(id,issuerId,td);
 	}
 	,open: function (id,issuerId,box) {
 		var lnkAddUnderlyingFund=$("#lnkAddUnderlyingFund");
@@ -172,7 +250,7 @@
 			if(id==0) {
 				//src=lnkAddUnderlyingFund.attr("src").replace("addnufund.png","addnufundselect.png");
 				$("#btnSave",addUnderlyingfund).attr("src","/Assets/images/adduf_active.png");
-				$("#lnkAddUnderlyingFund").addClass("green-btn-sel");
+				//$("#lnkAddUnderlyingFund").addClass("green-btn-sel");
 			}
 			underlyingFund.setUp(box);
 			underlyingFund.setupCountryState(box);
@@ -184,22 +262,27 @@
 			$("#Address",addUnderlyingfund).val($.trim($("#Address",addUnderlyingfund).val()));
 			$("#ContactNotes",addUnderlyingfund).val($.trim($("#ContactNotes",addUnderlyingfund).val()));
 			$("#Doc_DocumentDate",addUnderlyingfund).datepicker({ changeMonth: true,changeYear: true });
+			if(id==0) {
+				$(".show",addUnderlyingfund).hide();
+				$(".hide",addUnderlyingfund).show();
+			}
+			/*
 			var p=new Array();
 			p[p.length]={ "name": "UnderlyingFundId","value": id };
 			$("#DocumentList",addUnderlyingfund).flexigrid({
-				usepager: true
-				,url: "/Deal/UnderlyingFundDocumentList"
-				,params: p
-				,resizeWidth: true
-				,method: "GET"
-				,sortname: "DocumentDate"
-				,sortorder: "desc"
-				,autoload: true
-				,height: 200
-				,resizeWidth: false
-				,useBoxStyle: false
+			usepager: true
+			,url: "/Deal/UnderlyingFundDocumentList"
+			,params: p
+			,resizeWidth: true
+			,method: "GET"
+			,sortname: "DocumentDate"
+			,sortorder: "desc"
+			,autoload: true
+			,height: 200
+			,resizeWidth: false
+			,useBoxStyle: false
 			});
-
+			*/
 			//load contact list
 			underlyingFundContact.load(id);
 		});
@@ -224,8 +307,9 @@
 			$("#TabFundGrid").click();
 		}
 	}
-	,save: function (frm) {
+	,save: function (id) {
 		try {
+			var frm=$("#frmUnderlyingFund"+id,underlyingFund.currentDetailBox);
 			var loading=$("#SpnSaveLoading",frm);
 			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
 			$.post("/Deal/UpdateUnderlyingFund",$(frm).serializeForm(),function (data) {
@@ -237,22 +321,29 @@
 				if(arr[0]=="True") {
 					var ufund=$("#UnderlyingFundId",frm);
 					var isNew=false;
+					var tr=$(frm).parents("tr:first");
+					var t=$(frm).parents("#UnderlyingFundList:first");
 					if(ufund.val()==0) {
 						isNew=true;
+						$(t).flexReload();
 					}
 					ufund.val(arr[1]);
-					$("#UnderlyingFundList").flexReload();
+					$("#DirectList").flexReload();
 					if(underlyingFund.onAfterUnderlyingFundSave) {
 						underlyingFund.onAfterUnderlyingFundSave(arr[1]);
 					} else {
 						if(underlyingFund.tempSave==false) {
 							jAlert("Underlying Fund Saved.");
+							$(tr).remove();
+							$(t).flexReload();
+							/*
 							$("#lnkAddUnderlyingFund").removeClass("green-btn-sel");
 							//$("#AddUnderlyingFund").hide();
 							if(isNew) {
-								underlyingFund.deleteTab(0,false);
-								underlyingFund.load(arr[1],0,$("#FundName",frm).val());
+							underlyingFund.deleteTab(0,false);
+							underlyingFund.load(arr[1],0,$("#FundName",frm).val());
 							}
+							*/
 						}
 						//underlyingFund.cancelWebPassword();
 					}
@@ -295,12 +386,11 @@
 		return false;
 	}
 	,searchGP: function (gpId) {
-		var grid=$("#UnderlyingFundList");
-		var param=[{ name: "gpId",value: gpId}];
-		grid.flexOptions({ params: param });
+		$("#SearchCompanyID").val(gpId);
+		var grid=$("#DirectList");
 		grid.flexReload();
 	}
-	,saveTemp: function (img) {
+	,saveTemp: function (img,id) {
 		var frmUnderlyingFund=$(img).parents(".section-det:first");
 		var loading=$("#BILoading",frmUnderlyingFund);
 		underlyingFund.tempSave=true;
@@ -309,7 +399,7 @@
 			loading.empty();
 			jAlert("Underlying Fund Bank Information Saved.");
 		}
-		$("#btnSave",frmUnderlyingFund).click();
+		underlyingFund.save(id);
 	}
 	,cancelInfo: function (that) {
 		var cntdiv=$(that).parents(".editinfo:first").get(0);
@@ -449,5 +539,55 @@
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);
+	}
+	,onDLSubmit: function (p) {
+		p.params=new Array();
+		p.params[p.params.length]={ "name": "isGP","value": true };
+		p.params[p.params.length]={ "name": "companyId","value": $("#SearchCompanyID").val() };
+		return true;
+	}
+	,edit: function (img,className,className2) {
+		var box=$(img).parents(".section-det:first");
+		var editbox=$(className+":first",box);
+		$(".show",editbox).hide();
+		$(".hide",editbox).show();
+		editbox=$(className2+":first",box);
+		$(".show",editbox).hide();
+		$(".hide",editbox).show();
+	}
+	,cancelEdit: function (img,className,className2) {
+		var box=$(img).parents(".section-det:first");
+		var editbox=$(className+":first",box);
+		$(".show",editbox).show();
+		$(".hide",editbox).hide();
+		editbox=$(className2+":first",box);
+		$(".show",editbox).show();
+		$(".hide",editbox).hide();
+	}
+	,cancel: function (img) {
+		$(img).parents("tr:first").remove();
+	}
+	,addUF: function (box,issuerId) {
+		var t=$("#UnderlyingFundList",box);
+		var trid="Edit_0";
+		$("#"+trid,t).remove();
+		var firstRow=$("tbody tr:first",t);
+		var editTR=document.createElement("tr");
+		var td=document.createElement("td");
+		td.colSpan=$("thead tr:first th",t).length;
+		td.className="edit-cell";
+		$(td).html("<center>"+jHelper.loadingHTML()+"</center>");
+		editTR.className="un-directedit-box";
+		editTR.id=trid;
+		$(editTR).append(td);
+		if(firstRow.get(0)) {
+			$(firstRow).before(editTR);
+		} else {
+			$("tbody",t).before(editTR);
+		}
+		var data={ id: 0 };
+		$(td).empty();
+		$("#SectionTemplate").tmpl(data).appendTo(td);
+		underlyingFund.open(0,issuerId,td);
 	}
 }

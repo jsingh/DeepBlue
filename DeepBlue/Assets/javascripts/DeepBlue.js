@@ -17,7 +17,7 @@
 				$("#navminimize").addClass("downarrow");
 			}
 			deepBlue.setCookie("mnu-resize",menu.hasClass("minimize"));
-			deepBlue.showSubMenu();       
+			deepBlue.showSubMenu();
 			if(deepBlue.indexPage) {
 				submenu.show();
 			}
@@ -149,5 +149,24 @@
 			arrow.show();
 			arrow.css({ "left": pos.left+((showmenu.width()/2)) });
 		}
+	}
+	,redirectLibrary: function () {
+		var div=$("<div>");
+		var tmpl="<div class='add-new-lbbox'><div class='green-btn add-new-library'>"+
+				 "<div class='left'></div>"+
+				 "<div class='center'><a href='${link}/?mode=direct'>${name}</a></div>"+
+				 "<div class='right'></div></div></div>";
+		$.template("lbaddnewtemp",tmpl);
+		var data={ "link": "/Deal/Directs", "name": "Add New Direct" };
+		$.tmpl("lbaddnewtemp",data).appendTo(div);
+		var data={ "link": "/Deal/UnderlyingFunds", "name": "Add New Underlying Fund" };
+		$.tmpl("lbaddnewtemp",data).appendTo(div);
+		div
+		.dialog({
+			title: "Add New",
+			autoOpen: true,
+			modal: true,
+			position: 'middle',
+		});
 	}
 }

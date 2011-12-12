@@ -7,49 +7,57 @@
 		<%: Html.Label("GP")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("Issuer", "${IssuerName}", new { @id = "Issuer",   @onblur = "javascript:underlyingFund.checkIssuer(this);" })%>
+		<%: Html.TextBox("Issuer", "${IssuerName}", new { @id = "Issuer", @class="hide",  @onblur = "javascript:underlyingFund.checkIssuer(this);" })%>
+		<%: Html.Span("${IssuerName}", new { @class = "show" }) %>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.Label("Legal Fund Name")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("FundName", "${FundName}", new { @class = "wm" })%>
+		<%: Html.TextBox("FundName", "${FundName}", new { @class = "wm hide" })%>
+		<%: Html.Span("${FundName}", new { @class = "show" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.Label("Fund Type")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.DropDownList("FundTypeId", Model.UnderlyingFundTypes, new { @val = "${FundTypeId}", @refresh="true", @action="FundType" })%>
+		<%: Html.DropDownList("FundTypeId", Model.UnderlyingFundTypes, new { @class = "hide", @val = "${FundTypeId}", @refresh="true", @action="FundType" })%>
+		<%: Html.Span("${FundType}", new { @class = "show" })%>
 	</div>
 	<div class="editor-label">
 		<%: Html.Label("Vintage Year")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("VintageYear", "${VintageYear}", new { @onkeydown = "return jHelper.isNumeric(event);" })%>
+		<%: Html.TextBox("VintageYear", "${VintageYear}", new { @class = "hide", @onkeydown = "return jHelper.isNumeric(event);" })%>
+		<%: Html.Span("${VintageYear}", new { @class = "show" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.Label("Fund Size")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("TotalSize", "${TotalSize}", new { @onkeydown = "return jHelper.isNumeric(event);" })%>
+		<%: Html.TextBox("TotalSize", "${TotalSize}", new { @class="hide", @onkeydown = "return jHelper.isNumeric(event);" })%>
+		<%: Html.Span("${TotalSize}", new { @class = "show" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.Label("Termination Year")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("TerminationYear", "${TerminationYear}", new { @class = "wm", @onkeydown = "return jHelper.isNumeric(event);" })%>
+		<%: Html.TextBox("TerminationYear", "${TerminationYear}", new { @class = "wm hide", @onkeydown = "return jHelper.isNumeric(event);" })%>
+		<%: Html.Span("${TerminationYear}", new { @class = "show" })%>
 	</div>
 	<div class="editor-label">
 		<%: Html.Label("Reporting")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.DropDownList("ReportingFrequencyId", Model.Reportings, new { @val = "${ReportingFrequencyId}", @refresh = "true", @action = "ReportingFrequency" })%>
+		<%: Html.DropDownList("ReportingFrequencyId", Model.Reportings, new { @class="hide", @val = "${ReportingFrequencyId}", @refresh = "true", @action = "ReportingFrequency" })%>
+		<%: Html.Span("${ReportingFrequency}", new { @class = "show" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.Label("Reporting Type")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.DropDownList("ReportingTypeId", Model.ReportingTypes, new { @val = "${ReportingTypeId}", @refresh = "true", @action = "ReportingType" })%>
+		<%: Html.DropDownList("ReportingTypeId", Model.ReportingTypes, new { @class="hide", @val = "${ReportingTypeId}", @refresh = "true", @action = "ReportingType" })%>
+		<%: Html.Span("${ReportingType}", new { @class = "show" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.Label("Fees Included")%>
@@ -61,37 +69,43 @@
 		<%: Html.Label("Industry")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.DropDownList("IndustryId", Model.Industries, new { @val = "${IndustryId}", @refresh = "true", @action = "Industry" })%>
+		<%: Html.DropDownList("IndustryId", Model.Industries, new { @class="hide", @val = "${IndustryId}", @refresh = "true", @action = "Industry" })%>
+		<%: Html.Span("${Industry}", new { @class = "show" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.Label("Geography")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.DropDownList("GeographyId", Model.Geographyes, new { @val = "${GeographyId}", @refresh = "true", @action = "Geography" })%>
+		<%: Html.DropDownList("GeographyId", Model.Geographyes, new { @class="hide", @val = "${GeographyId}", @refresh = "true", @action = "Geography" })%>
+		<%: Html.Span("${Geography}", new { @class = "show" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.Label("Website")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("Website", "${Website}")%>
+		<%: Html.TextBox("Website", "${Website}", new { @class = "hide", @webaddress = "true" })%>
+		<%: Html.Span("${Website}", new { @class = "show" })%>
 	</div>
 	<div class="editor-label">
 		<%: Html.Label("Web User Name")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("WebUserName","${WebUserName}")%>
+		<%: Html.TextBox("WebUserName", "${WebUserName}", new { @class = "hide" })%>
+		<%: Html.Span("${WebUserName}", new { @class = "show" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.Label("Web Password")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.Password("WebPassword", "${WebPassword}")%>
+		<%: Html.TextBox("WebPassword", "${WebPassword}", new { @class = "hide" })%>
+		<%: Html.Span("${WebPassword}", new { @class = "show" })%>
 	</div>
 	<div class="editor-label">
 		<%: Html.Label("Description")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextArea("Description", "${Description}", new { @style = "width:486px;height:160px;" })%>
+		<%: Html.TextArea("Description", "${Description}", new { @class="hide", @style = "width:486px;height:160px;" })%>
+		<%: Html.Span("${Description}", new { @class = "show" })%>
 	</div>
 </div>
 <div id="ExpandUnderlying">
@@ -113,7 +127,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="detail" style="display: none; padding-left: 61px;" id="AddressInformation">
+		<div class="detail" style="display: none;" id="AddressInformation">
 			{{tmpl "#AddressTemplate"}}
 		</div>
 	</div>
@@ -180,73 +194,84 @@
 				</div>
 			</div>
 		</div>
-		<div class="detail" style="display: none; padding-left: 61px;" id="BankInformation">
-			<div class="info-detail">
+		<div class="detail" style="display: none;" id="BankInformation">
+			<div class="info-detail bank-info-detail">
 				<div class="editor-label">
 					<%: Html.Label("Bank Name")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("BankName", "${BankName}", new { @class = "wm" })%>
+					<%: Html.TextBox("BankName", "${BankName}", new { @class = "wm hide" })%>
+					<%: Html.Span("${BankName}", new { @class="show" })%>
 				</div>
 				<div class="editor-label" style="clear: right">
 					<%: Html.Label("ABA Number")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("ABANumber", "${ABANumber}", new { @class = "wm", @onkeydown = "return jHelper.isNumeric(event);" })%>
+					<%: Html.TextBox("ABANumber", "${ABANumber}", new { @class = "wm hide", @onkeydown = "return jHelper.isNumeric(event);" })%>
+					<%: Html.Span("${ABANumber}", new { @class = "show" })%>
 				</div>
 				<div class="editor-label" style="clear: right">
 					<%: Html.Label("Account Name")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("Account", "${Account}", new { @class = "wm" })%>
+					<%: Html.TextBox("Account", "${Account}", new { @class = "wm hide" })%>
+					<%: Html.Span("${Account}", new { @class = "show" })%>
 				</div>
 				<div class="editor-label">
 					<%: Html.Label("Account Number")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("AccountNumber", "${AccountNumber}", new { @class = "wm" })%>
+					<%: Html.TextBox("AccountNumber", "${AccountNumber}", new { @class = "wm hide" })%>
+					<%: Html.Span("${AccountNumber}", new { @class = "show" })%>
 				</div>
 				<div class="editor-label" style="clear: right">
 					<%: Html.Label("FFC Name")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("FFC", "${FFC}", new { @class = "wm" })%>
+					<%: Html.TextBox("FFC", "${FFC}", new { @class = "wm hide" })%>
+					<%: Html.Span("${FFC}", new { @class = "show" })%>
 				</div>
 				<div class="editor-label" style="clear: right;">
 					<%: Html.Label("FFC Number")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("FFCNumber", "${FFCNumber}", new { @class = "wm" })%>
+					<%: Html.TextBox("FFCNumber", "${FFCNumber}", new { @class = "wm hide" })%>
+					<%: Html.Span("${FFCNumber}", new { @class = "show" })%>
 				</div>
 				<div class="editor-label">
 					<%: Html.Label("Reference")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("Reference", "${Reference}", new { @class = "wm" })%>
+					<%: Html.TextBox("Reference", "${Reference}", new { @class = "wm hide" })%>
+					<%: Html.Span("${Reference}", new { @class = "show" })%>
 				</div>
 				<div class="editor-label" style="clear: right">
 					<%: Html.Label("Swift Code")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("Swift", "${Swift}", new { @class = "wm" })%>
+					<%: Html.TextBox("Swift", "${Swift}", new { @class = "wm hide" })%>
+					<%: Html.Span("${Swift}", new { @class = "show" })%>
 				</div>
 				<div class="editor-label" style="clear: right">
 					<%: Html.Label("IBAN")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("IBAN", "${IBAN}", new { @class = "wm" })%>
+					<%: Html.TextBox("IBAN", "${IBAN}", new { @class = "wm hide" })%>
+					<%: Html.Span("${IBAN}", new { @class = "show" })%>
 				</div>
 				<div class="editor-label">
 					<%: Html.Label("Phone")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("AccountPhone", "${AccountPhone}", new { @class = "wm" })%>
+					<%: Html.TextBox("AccountPhone", "${AccountPhone}", new { @class = "wm hide" })%>
+					<%: Html.Span("${AccountPhone}", new { @class = "show" })%>
 				</div>
 				<div class="editor-label" style="clear: right">
 					<%: Html.Label("Fax")%>
 				</div>
 				<div class="editor-field">
-					<%: Html.TextBox("AccountFax", "${AccountFax}", new { @class = "wm" })%>
+					<%: Html.TextBox("AccountFax", "${AccountFax}", new { @class = "wm hide" })%>
+					<%: Html.Span("${AccountFax}", new { @class = "show" })%>
 				</div>
 				<%--<div class="editor-label" style="clear: right">
 					<%: Html.Label("Account Of")%>
@@ -260,13 +285,20 @@
 				<div class="editor-field">
 					<%: Html.TextBox("Attention", "${Attention}", new { @class = "wm" })%>
 				</div>--%>
-				<div class="savebox">
-					<div class="resetbtn">
-						<%: Html.Span("Reset", new { @onclick = "javascript:underlyingFund.reset('BankInformation');" })%></div>
-					<div class="btn">
-						<%: Html.Image("Save_active.png", new { @onclick = "javascript:underlyingFund.saveTemp(this)" })%></div>
-					<div class="btn" id="BILoading">
+				<div>
+					{{if UnderlyingFundId>0}}
+					<div class="editor-label" style="float: right; width: auto;">
+						<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:underlyingFund.cancelEdit(this,'.bank-info-detail');" })%>
 					</div>
+					<div class="editor-label show" style="float: right; width: auto;">
+						<%: Html.Image("Editbtn_active.png", new { @onclick = "javascript:underlyingFund.edit(this,'.bank-info-detail');" })%>
+					</div>
+					<div class="editor-label hide" style="float: right; width: auto;">
+						<%: Html.Image("Save_active.png", new { @onclick = "javascript:underlyingFund.saveTemp(this,${UnderlyingFundId})" })%></div>
+					<div class="editor-label" style="float: right; width: auto;">
+						<%: Html.Span("", new { @id = "BILoading" })%>
+					</div>
+					{{/if}}
 				</div>
 			</div>
 		</div>
@@ -356,11 +388,24 @@
 	</div>
 	<div class="line">
 	</div>
-	<div class="btnbox">
-		<div style="padding: 30px 0px; float: right;">
-			<span id="SpnSaveLoading"></span><span>
-				<%: Html.ImageButton("adduf_active.png", new { @id = "btnSave" })%>
-			</span>
+	<div class="uf-btn-box">
+		<div class="editor-label" style="float: right; width: auto;">
+			<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:underlyingFund.cancel(this);" })%>
+		</div>
+		{{if UnderlyingFundId>0}}
+		<div class="editor-label show" style="float: right; width: auto;">
+			<%: Html.Image("Editbtn_active.png", new { @onclick = "javascript:underlyingFund.edit(this,'.content','.uf-btn-box');" })%>
+		</div>
+		{{/if}}
+		<div class="editor-label hide" style="float: right; width: auto;">
+			{{if UnderlyingFundId>0}}
+			<%: Html.Image("muf_active.png", new { @onclick = "javascript:underlyingFund.save(${UnderlyingFundId});" })%>
+			{{else}}
+			<%: Html.Image("adduf_active.png", new { @onclick = "javascript:underlyingFund.save(${UnderlyingFundId});" })%>
+			{{/if}}
+		</div>
+		<div class="editor-label" style="float: right; width: auto;">
+			<%: Html.Span("", new { @id = "SpnSaveLoading" })%>
 		</div>
 	</div>
 </div>

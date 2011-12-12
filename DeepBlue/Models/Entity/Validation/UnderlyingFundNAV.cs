@@ -25,7 +25,7 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			[Required(ErrorMessage = "FundNAV is required")]
-			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "FundNAV is required")]
+			[Range(typeof(decimal), "0.01", "79228162514264337593543950335", ErrorMessage = "FundNAV is required")]
 			public global::System.Decimal FundNAV {
 				get;
 				set;

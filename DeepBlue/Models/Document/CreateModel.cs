@@ -35,12 +35,7 @@ namespace DeepBlue.Models.Document {
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Document Type is required.")]
 		[DisplayName("Document Type")]
 		public int DocumentTypeId { get; set; }
-
-		[Required(ErrorMessage = "Document Date is required.")]
-		[DisplayName("Document Date")]
-        [DateRange()]
-		public DateTime DocumentDate { get; set; }
-
+ 
 		public string ModelErrorMessage { get; set; }
 
 		public int UploadType { get; set; }

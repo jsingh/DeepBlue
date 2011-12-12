@@ -45,5 +45,15 @@ namespace DeepBlue.Controllers.Report {
 		List<SecurityValueReportDetail> FindSecurityValueReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
 															   int fundId, DateTime startDate, DateTime endDate);
 		#endregion
+
+		#region UnderlyingFundNAV
+		List<UnderlyingFundNAVReportDetail> FindUnderlyingFundNAVReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
+														   int underlyingFundId, DateTime startDate, DateTime endDate);
+		#endregion
+
+		#region UnfundedCapitalCallBalance
+		List<UnfundedCapitalCallBalanceReportDetail> FindUnfundedCapitalCallBalanceReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
+														  int fundId, DateTime startDate, DateTime endDate);
+		#endregion
 	}
 }

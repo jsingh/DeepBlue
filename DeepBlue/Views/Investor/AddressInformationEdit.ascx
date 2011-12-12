@@ -30,7 +30,7 @@
 		<%: Html.Label("Web Address") %>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("WebAddress", "${getCommunicationValue(InvestorCommunications," + ((int)DeepBlue.Models.Admin.Enums.CommunicationType.WebAddress).ToString() + ")}", new { @class = "comvalue hide", @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
+		<%: Html.TextBox("WebAddress", "${getCommunicationValue(InvestorCommunications," + ((int)DeepBlue.Models.Admin.Enums.CommunicationType.WebAddress).ToString() + ")}", new { @class = "comvalue hide", @webaddress = "true", @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
 		<%: Html.Span("${WebAddress}", new { @class = "show", @id = "WebAddress" })%>
 	</div>
 	<div class="editor-label">

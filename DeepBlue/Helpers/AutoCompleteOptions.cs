@@ -25,7 +25,7 @@ namespace DeepBlue.Helpers {
 		public string OnSearch { get; set; }
 		public string OnSelect { get; set; }
 		public string OnChange { get; set; }
-		public static int RowsLength { get { return 500; } }
+		public static int RowsLength { get { return 1000; } }
 	}
 
 	public class AutoCompleteList {

@@ -134,7 +134,7 @@ input[type='text'] {
 	cursor: pointer;
 }
 .closing-det {
-	/*background-image: url(../images/fdcbg.png);*/
+	margin-top: -2px;
 }
 .expandaddbtn {
 	position: absolute;

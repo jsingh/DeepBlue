@@ -28,8 +28,8 @@ namespace DeepBlue.Controllers.Report {
 		#region Cash Distribution Summary
 
 		public ActionResult CashDistributionSummary() {
-			ViewData["MenuName"] = "Reports";
-			ViewData["PageName"] = "CashDistributionSummary";
+			ViewData["MenuName"] = "ReportManagement";
+			ViewData["SubmenuName"] = "CashDistributionSummary";
 			CashDistributionSummaryModel model = new CashDistributionSummaryModel();
 			model.CapitalDistributions = SelectListFactory.GetEmptySelectList();
 			return View(model);
@@ -82,8 +82,8 @@ namespace DeepBlue.Controllers.Report {
 		#region Capital Call Summary
 
 		public ActionResult CapitalCallSummary() {
-			ViewData["MenuName"] = "Reports";
-			ViewData["PageName"] = "CapitalCallSummary";
+			ViewData["MenuName"] = "ReportManagement";
+			ViewData["SubmenuName"] = "CapitalCallSummary";
 			CapitalCallSummaryModel model = new CapitalCallSummaryModel();
 			model.CapitalCalls = SelectListFactory.GetEmptySelectList();
 			return View(model);
@@ -136,8 +136,8 @@ namespace DeepBlue.Controllers.Report {
 		#region DealDetail
 
 		public ActionResult DealDetail() {
-			ViewData["MenuName"] = "Reports";
-			ViewData["PageName"] = "DealDetail";
+			ViewData["MenuName"] = "ReportManagement";
+			ViewData["SubmenuName"] = "DealDetail";
 			DealDetailModel model = new DealDetailModel();
 			return View(model);
 		}
@@ -181,8 +181,8 @@ namespace DeepBlue.Controllers.Report {
 		#region DealOrigination
 
 		public ActionResult DealOrigination() {
-			ViewData["MenuName"] = "Reports";
-			ViewData["PageName"] = "DealOrigination";
+			ViewData["MenuName"] = "ReportManagement";
+			ViewData["SubmenuName"] = "DealOrigination";
 			DealOriginationModel model = new DealOriginationModel();
 			return View(model);
 		}
@@ -228,8 +228,8 @@ namespace DeepBlue.Controllers.Report {
 		#region FundBreakDown
 
 		public ActionResult FundBreakDown() {
-			ViewData["MenuName"] = "Reports";
-			ViewData["PageName"] = "FundBreakDown";
+			ViewData["MenuName"] = "ReportManagement";
+			ViewData["SubmenuName"] = "FundBreakDown";
 			FundBreakDownModel model = new FundBreakDownModel();
 			return View(model);
 		}
@@ -275,8 +275,8 @@ namespace DeepBlue.Controllers.Report {
 		#region FeesExpense
 
 		public ActionResult FeesExpense() {
-			ViewData["MenuName"] = "Reports";
-			ViewData["PageName"] = "FeesExpense";
+			ViewData["MenuName"] = "ReportManagement";
+			ViewData["SubmenuName"] = "FeesExpense";
 			FeesExpenseModel model = new FeesExpenseModel();
 			return View(model);
 		}
@@ -294,8 +294,8 @@ namespace DeepBlue.Controllers.Report {
 			int pageSize = DataTypeHelper.ToInt32(collection["pageSize"]);
 			string sortName = collection["sortName"];
 			string sortOrder = collection["sortOrder"];
+			int totalRows = 0;
 			if (ModelState.IsValid) {
-				int totalRows = 0;
 				List<FeesExpenseReportDetail> feesExpenses = ReportRepository.FindFeesExpenseReport(pageIndex, pageSize, sortName, sortOrder, ref totalRows, model.FundId, (model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.Now));
 				flexgridData.total = totalRows;
 				flexgridData.page = 1;
@@ -319,7 +319,7 @@ namespace DeepBlue.Controllers.Report {
 					}
 				}
 			}
-			return Json(new { Error = error, Data = flexgridData }, JsonRequestBehavior.AllowGet);
+			return Json(new { Error = error, Data = flexgridData, page = pageIndex, total = totalRows }, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -349,8 +349,8 @@ namespace DeepBlue.Controllers.Report {
 		#region Distribution
 
 		public ActionResult Distribution() {
-			ViewData["MenuName"] = "Reports";
-			ViewData["PageName"] = "Distribution";
+			ViewData["MenuName"] = "ReportManagement";
+			ViewData["SubmenuName"] = "Distribution";
 			DistributionModel model = new DistributionModel();
 			return View(model);
 		}
@@ -368,8 +368,8 @@ namespace DeepBlue.Controllers.Report {
 			int pageSize = DataTypeHelper.ToInt32(collection["pageSize"]);
 			string sortName = collection["sortName"];
 			string sortOrder = collection["sortOrder"];
+			int totalRows = 0;
 			if (ModelState.IsValid) {
-				int totalRows = 0;
 				List<DistributionReportDetail> feesExpenses = ReportRepository.FindDistributionReport(pageIndex, pageSize, sortName, sortOrder, ref totalRows, model.FundId, (model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.Now));
 				flexgridData.total = totalRows;
 				flexgridData.page = 1;
@@ -396,14 +396,14 @@ namespace DeepBlue.Controllers.Report {
 					}
 				}
 			}
-			return Json(new { Error = error, Data = flexgridData }, JsonRequestBehavior.AllowGet);
+			return Json(new { Error = error, Data = flexgridData, page = pageIndex, total = totalRows }, JsonRequestBehavior.AllowGet);
 		}
 
 		//
 		// GET: /Deal/ExportDistributionDetail
 		[HttpGet]
 		public ActionResult ExportDistributionDetail(FormCollection collection) {
-		 	ExportDistributionDetailModel model = new ExportDistributionDetailModel();
+			ExportDistributionDetailModel model = new ExportDistributionDetailModel();
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
 				string error = string.Empty;
@@ -426,8 +426,8 @@ namespace DeepBlue.Controllers.Report {
 		#region SecurityValue
 
 		public ActionResult SecurityValue() {
-			ViewData["MenuName"] = "Reports";
-			ViewData["PageName"] = "SecurityValue";
+			ViewData["MenuName"] = "ReportManagement";
+			ViewData["SubmenuName"] = "SecurityValue";
 			SecurityValueModel model = new SecurityValueModel();
 			return View(model);
 		}
@@ -445,8 +445,8 @@ namespace DeepBlue.Controllers.Report {
 			int pageSize = DataTypeHelper.ToInt32(collection["pageSize"]);
 			string sortName = collection["sortName"];
 			string sortOrder = collection["sortOrder"];
+			int totalRows = 0;
 			if (ModelState.IsValid) {
-				int totalRows = 0;
 				List<SecurityValueReportDetail> feesExpenses = ReportRepository.FindSecurityValueReport(pageIndex, pageSize, sortName, sortOrder, ref totalRows, model.FundId, (model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.Now));
 				flexgridData.total = totalRows;
 				flexgridData.page = 1;
@@ -473,7 +473,7 @@ namespace DeepBlue.Controllers.Report {
 					}
 				}
 			}
-			return Json(new { Error = error, Data = flexgridData }, JsonRequestBehavior.AllowGet);
+			return Json(new { Error = error, Data = flexgridData, page = pageIndex, total = totalRows }, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -495,6 +495,157 @@ namespace DeepBlue.Controllers.Report {
 			}
 			if (model.SecurityValueReportDetails == null)
 				model.SecurityValueReportDetails = new List<SecurityValueReportDetail>();
+			return View(model);
+		}
+
+		#endregion
+
+
+		#region UnderlyingFundNAV
+
+		public ActionResult UnderlyingFundNAV() {
+			ViewData["MenuName"] = "ReportManagement";
+			ViewData["SubmenuName"] = "UnderlyingFundNAV";
+			UnderlyingFundNAVModel model = new UnderlyingFundNAVModel();
+			return View(model);
+		}
+
+		//
+		// POST: /Deal/UnderlyingFundNAVReport
+		[HttpPost]
+		public JsonResult UnderlyingFundNAVReport(FormCollection collection) {
+			UnderlyingFundNAVModel model = new UnderlyingFundNAVModel();
+			this.TryUpdateModel(model, collection);
+			string error = string.Empty;
+			ResultModel resultModel = new ResultModel();
+			FlexigridData flexgridData = new FlexigridData();
+			int pageIndex = DataTypeHelper.ToInt32(collection["pageIndex"]);
+			int pageSize = DataTypeHelper.ToInt32(collection["pageSize"]);
+			string sortName = collection["sortName"];
+			string sortOrder = collection["sortOrder"];
+			int totalRows = 0;
+			if (ModelState.IsValid) {
+				List<UnderlyingFundNAVReportDetail> underlyingFundNAVs = ReportRepository.FindUnderlyingFundNAVReport(pageIndex, pageSize, sortName, sortOrder, ref totalRows, model.UnderlyingFundId, (model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.Now));
+				flexgridData.total = totalRows;
+				flexgridData.page = 1;
+				foreach (var underlyingFundNAV in underlyingFundNAVs) {
+					flexgridData.rows.Add(new FlexigridRow {
+						cell = new List<object> {
+						   underlyingFundNAV.Date,
+						   underlyingFundNAV.DealNo,
+						   underlyingFundNAV.FundName,
+						   underlyingFundNAV.NAV,
+						   underlyingFundNAV.Receipt,
+						   underlyingFundNAV.Frequency,
+						   underlyingFundNAV.Method
+						}
+					});
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							error += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new { Error = error, Data = flexgridData, page = pageIndex, total = totalRows }, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/ExportUnderlyingFundNAVDetail
+		[HttpGet]
+		public ActionResult ExportUnderlyingFundNAVDetail(FormCollection collection) {
+			ExportUnderlyingFundNAVDetailModel model = new ExportUnderlyingFundNAVDetailModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				string error = string.Empty;
+				ResultModel resultModel = new ResultModel();
+				FlexigridData flexgridData = new FlexigridData();
+				int pageIndex = DataTypeHelper.ToInt32(collection["pageIndex"]);
+				int pageSize = DataTypeHelper.ToInt32(collection["pageSize"]);
+				string sortName = collection["sortName"];
+				string sortOrder = collection["sortOrder"];
+				int totalRows = 0;
+				model.UnderlyingFundNAVReportDetails = ReportRepository.FindUnderlyingFundNAVReport(pageIndex, pageSize, sortName, sortOrder, ref totalRows, model.UnderlyingFundId, (model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.Now));
+			}
+			if (model.UnderlyingFundNAVReportDetails == null)
+				model.UnderlyingFundNAVReportDetails = new List<UnderlyingFundNAVReportDetail>();
+			return View(model);
+		}
+
+		#endregion
+
+		#region UnfundedCapitalCallBalance
+
+		public ActionResult UnfundedCapitalCallBalance() {
+			ViewData["MenuName"] = "ReportManagement";
+			ViewData["SubmenuName"] = "UnfundedCapitalCallBalance";
+			UnfundedCapitalCallBalanceModel model = new UnfundedCapitalCallBalanceModel();
+			return View(model);
+		}
+
+		//
+		// POST: /Deal/UnfundedCapitalCallBalanceReport
+		[HttpPost]
+		public JsonResult UnfundedCapitalCallBalanceReport(FormCollection collection) {
+			UnfundedCapitalCallBalanceModel model = new UnfundedCapitalCallBalanceModel();
+			this.TryUpdateModel(model, collection);
+			string error = string.Empty;
+			ResultModel resultModel = new ResultModel();
+			FlexigridData flexgridData = new FlexigridData();
+			int pageIndex = DataTypeHelper.ToInt32(collection["pageIndex"]);
+			int pageSize = DataTypeHelper.ToInt32(collection["pageSize"]);
+			string sortName = collection["sortName"];
+			string sortOrder = collection["sortOrder"];
+			int totalRows = 0;
+			if (ModelState.IsValid) {
+				List<UnfundedCapitalCallBalanceReportDetail> unfundedCapitalCallBalances = ReportRepository.FindUnfundedCapitalCallBalanceReport(pageIndex, pageSize, sortName, sortOrder, ref totalRows, model.FundId, (model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.Now));
+				flexgridData.total = totalRows;
+				flexgridData.page = 1;
+				foreach (var unfundedCapitalCallBalance in unfundedCapitalCallBalances) {
+					flexgridData.rows.Add(new FlexigridRow {
+						cell = new List<object> {
+						   unfundedCapitalCallBalance.DealNo,
+						   unfundedCapitalCallBalance.FundName,
+						   unfundedCapitalCallBalance.UnfundedAmount
+						}
+					});
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							error += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new { Error = error, Data = flexgridData, page = pageIndex, total = totalRows }, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Deal/ExportUnfundedCapitalCallBalanceDetail
+		[HttpGet]
+		public ActionResult ExportUnfundedCapitalCallBalanceDetail(FormCollection collection) {
+			ExportUnfundedCapitalCallBalanceDetailModel model = new ExportUnfundedCapitalCallBalanceDetailModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				string error = string.Empty;
+				ResultModel resultModel = new ResultModel();
+				FlexigridData flexgridData = new FlexigridData();
+				int pageIndex = DataTypeHelper.ToInt32(collection["pageIndex"]);
+				int pageSize = DataTypeHelper.ToInt32(collection["pageSize"]);
+				string sortName = collection["sortName"];
+				string sortOrder = collection["sortOrder"];
+				int totalRows = 0;
+				model.UnfundedCapitalCallBalanceReportDetails = ReportRepository.FindUnfundedCapitalCallBalanceReport(pageIndex, pageSize, sortName, sortOrder, ref totalRows, model.FundId, (model.StartDate ?? Convert.ToDateTime("01/01/1900")), (model.EndDate ?? DateTime.Now));
+			}
+			if (model.UnfundedCapitalCallBalanceReportDetails == null)
+				model.UnfundedCapitalCallBalanceReportDetails = new List<UnfundedCapitalCallBalanceReportDetail>();
 			return View(model);
 		}
 

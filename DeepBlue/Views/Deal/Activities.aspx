@@ -480,76 +480,6 @@
 				<div class="line">
 				</div>
 				<div class="act-box">
-					<div id="UnderlyingDirectValuation" class="group">
-						<div class="addbtn" style="display: none">
-							<div class="tblcell">
-								<%: Html.TextBox("UDV_UnderlyingDirect", "SEARCH UNDERLYING DIRECT", new { @style = "width:200px", @class = "wm" })%></div>
-						</div>
-						<div class="headerbox">
-							<div class="title">
-								<%: Html.Span("Underlying Direct Valuation")%>
-							</div>
-						</div>
-						<div class="expandheader expandsel" style="display: none">
-							<div class="expandbtn">
-								<div class="expandtitle" style="display: block;">
-									Underlying Direct Valuation
-								</div>
-							</div>
-						</div>
-						<div class="detail" id="UDVDetail">
-							<div class="search-header">
-								<div class="cell">
-									<%: Html.Span("", new { @id="SpnUDVName" })%></div>
-								<div class="loadingcell" id="UDVLoading">
-								</div>
-							</div>
-							<div class="gridbox" id="UDValuation" style="display: none">
-								<%using (Html.Form(new { @id = "frmUDValuation", @onsubmit = "return dealActivity.submitUDV(this);" })) {%>
-								<div>
-									<% Html.RenderPartial("TBoxTop"); %>
-									<table cellpadding="0" cellspacing="0" border="0" id="UDValuationList" class="grid">
-										<thead>
-											<tr>
-												<th class="lalign" style="width: 25%">
-													Direct Name
-												</th>
-												<th class="lalign" style="width: 20%">
-													Fund Name
-												</th>
-												<th class="lalign" style="width: 12%">
-													Last Price
-												</th>
-												<th class="lalign" style="width: 12%">
-													Last Price Date
-												</th>
-												<th class="ralign" style="width: 12%">
-													New Price
-												</th>
-												<th class="lalign" style="width: 12%">
-													New Price Date
-												</th>
-												<th>
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
-									<% Html.RenderPartial("TBoxBottom"); %>
-								</div>
-								<center>
-									<span>
-										<%: Html.ImageButton("Save_active.png")%></span><span id="SpnUDVSaveLoading"></span></center>
-								<%}%>
-								<%:Html.Hidden("UDVIssuerId","0", new { @id = "UDVIssuerId" })%>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="line">
-				</div>
-				<div class="act-box">
 					<div id="UnfundedAdjustments" class="group">
 						<div class="addbtn" style="display: none">
 							<div class="tblcell">
@@ -676,63 +606,142 @@
 				</div>
 			</div>
 			<div id="SecurityActivity" class="act-group" style="display: none">
-				<div class="expandheader expandsel" style="display: none" id="SATitle">
-					<div class="expandbtn">
-						<div class="expandtitle" style="display: block;">
-							<%: Html.Span("", new { @id="SpnUDirectName" })%>
+				<div class="act-box">
+					<div id="DirectActivities" class="group">
+						<div class="headerbox">
+							<div class="title">
+								<%: Html.Span("Direct Activities")%>
+							</div>
+						</div>
+						<div class="expandheader expandsel" style="display: none" id="SATitle">
+							<div class="expandbtn">
+								<div class="expandtitle" style="display: block;">
+									Direct Activities<%: Html.Span("", new { @id="SpnUDirectName" })%>
+								</div>
+							</div>
+						</div>
+						<div class="detail clear sec-box" id="SADetailBox" issearch="true">
+							<div class="editor-label">
+								<%: Html.Label("Corporate Action") %>
+							</div>
+							<div class="editor-field" style="margin-left: 10px">
+								<%: Html.DropDownList("ActivityTypeId", Model.ActivityTypes, new { @refresh="true", @action="ActivityType", @onchange = "javascript:dealActivity.changeAType(this);" })%>
+							</div>
+							<div id="SplitDetail" style="display: none; clear: both; margin-left: 50px;">
+								<%using (Html.Form(new { @id = "frmEquitySplit", @onsubmit = "return dealActivity.createSA(this);", @style = "float:left;" })) {%>
+								<% Html.RenderPartial("EquitySplit", Model.EquitySplitModel);%>
+								<%}%>
+							</div>
+							<div id="ConversionDetail">
+								<%using (Html.Form(new { @id = "frmSecurityConversion", @onsubmit = "return dealActivity.createSecConversion(this);", @style = "float:left;" })) {%>
+								<% Html.RenderPartial("SecurityConversion", Model.SecurityConversionModel);%>
+								<%}%>
+							</div>
+							<%: Html.Hidden("DealUnderlyingDirectId", "0", new { @id = "DealUnderlyingDirectId" })%>
+							<div class="gridbox" style="margin-bottom: 20px; display: none;" id="NHPList">
+								<div class="subheading">
+									New Holding Pattern
+								</div>
+								<div class="cell" id="NHPLoading">
+								</div>
+								<div class="clear sec-box">
+									<div>
+										<% Html.RenderPartial("TBoxTop"); %>
+										<table cellpadding="0" cellspacing="0" border="0" id="NewHoldingPatternList" class="grid">
+											<thead>
+												<tr>
+													<th style="width: 20%" align="left">
+														Fund Name
+													</th>
+													<th style="width: 20%; text-align: right;" align="right">
+														Old Number of Shares
+													</th>
+													<th style="width: 20%; text-align: right;" align="right">
+														New Number of Shares
+													</th>
+													<th>
+													</th>
+												</tr>
+											</thead>
+										</table>
+										<% Html.RenderPartial("TBoxBottom"); %>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="clear sec-box" id="SADetailBox">
-					<div class="editor-label">
-						<%: Html.Label("Corporate Action") %>
-					</div>
-					<div class="editor-field" style="margin-left: 10px">
-						<%: Html.DropDownList("ActivityTypeId", Model.ActivityTypes, new { @refresh="true", @action="ActivityType", @onchange = "javascript:dealActivity.changeAType(this);" })%>
-					</div>
-					<div id="SplitDetail" style="display: none; clear: both; margin-left: 50px;">
-						<%using (Html.Form(new { @id = "frmEquitySplit", @onsubmit = "return dealActivity.createSA(this);", @style = "float:left;" })) {%>
-						<% Html.RenderPartial("EquitySplit", Model.EquitySplitModel);%>
-						<%}%>
-					</div>
-					<div id="ConversionDetail">
-						<%using (Html.Form(new { @id = "frmSecurityConversion", @onsubmit = "return dealActivity.createSecConversion(this);", @style = "float:left;" })) {%>
-						<% Html.RenderPartial("SecurityConversion", Model.SecurityConversionModel);%>
-						<%}%>
-					</div>
-					<%: Html.Hidden("DealUnderlyingDirectId", "0", new { @id = "DealUnderlyingDirectId" })%>
 				</div>
 				<div class="line">
 				</div>
-				<div class="gridbox" style="margin-bottom: 20px; display: none;" id="NHPList">
-					<div class="subheading">
-						New Holding Pattern
-					</div>
-					<div class="cell" id="NHPLoading">
-					</div>
-					<div class="clear sec-box">
-						<div>
-							<% Html.RenderPartial("TBoxTop"); %>
-							<table cellpadding="0" cellspacing="0" border="0" id="NewHoldingPatternList" class="grid">
-								<thead>
-									<tr>
-										<th style="width: 20%" align="left">
-											Fund Name
-										</th>
-										<th style="width: 20%; text-align: right;" align="right">
-											Old Number of Shares
-										</th>
-										<th style="width: 20%; text-align: right;" align="right">
-											New Number of Shares
-										</th>
-										<th>
-										</th>
-									</tr>
-								</thead>
-							</table>
-							<% Html.RenderPartial("TBoxBottom"); %>
+				<div class="act-box">
+					<div id="UnderlyingDirectValuation" class="group">
+						<div class="addbtn" style="display: none">
+							<div class="tblcell">
+								<%: Html.TextBox("UDV_UnderlyingDirect", "SEARCH UNDERLYING DIRECT", new { @style = "width:200px", @class = "wm" })%></div>
+						</div>
+						<div class="headerbox">
+							<div class="title">
+								<%: Html.Span("Underlying Direct Valuation")%>
+							</div>
+						</div>
+						<div class="expandheader expandsel" style="display: none">
+							<div class="expandbtn">
+								<div class="expandtitle" style="display: block;">
+									Underlying Direct Valuation
+								</div>
+							</div>
+						</div>
+						<div class="detail" id="UDVDetail">
+							<div class="search-header">
+								<div class="cell">
+									<%: Html.Span("", new { @id="SpnUDVName" })%></div>
+								<div class="loadingcell" id="UDVLoading">
+								</div>
+							</div>
+							<div class="gridbox" id="UDValuation" style="display: none">
+								<%using (Html.Form(new { @id = "frmUDValuation", @onsubmit = "return dealActivity.submitUDV(this);" })) {%>
+								<div>
+									<% Html.RenderPartial("TBoxTop"); %>
+									<table cellpadding="0" cellspacing="0" border="0" id="UDValuationList" class="grid">
+										<thead>
+											<tr>
+												<th class="lalign" style="width: 25%">
+													Direct Name
+												</th>
+												<th class="lalign" style="width: 20%">
+													Fund Name
+												</th>
+												<th class="lalign" style="width: 12%">
+													Last Price
+												</th>
+												<th class="lalign" style="width: 12%">
+													Last Price Date
+												</th>
+												<th class="ralign" style="width: 12%">
+													New Price
+												</th>
+												<th class="lalign" style="width: 12%">
+													New Price Date
+												</th>
+												<th>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+									<% Html.RenderPartial("TBoxBottom"); %>
+								</div>
+								<center>
+									<span>
+										<%: Html.ImageButton("Save_active.png")%></span><span id="SpnUDVSaveLoading"></span></center>
+								<%}%>
+								<%:Html.Hidden("UDVIssuerId","0", new { @id = "UDVIssuerId" })%>
+							</div>
 						</div>
 					</div>
+				</div>
+				<div class="line">
 				</div>
 			</div>
 			<div id="Reconciliation" class="act-group" style="display: none">
@@ -885,15 +894,15 @@
 	<%using (Html.jQueryTemplateScript("ExcelImprtTemplate")) {%>
 	<div class="import-box">
 		<%using (Html.Form(new { @id = "frmUploadExcel", @onsubmit = "return false" })) { %>
-		<div class="editor-label" style="width:110px;">
+		<div class="editor-label" style="width: 110px;">
 			<%: Html.Label("File")%></div>
 		<div class="editor-field">
 			<%: Html.File("UploadFile", new { @id = "UploadFile" })%>
 		</div>
-		<div class="editor-label" style="width:100px">	
+		<div class="editor-label" style="width: 100px">
 			<%: Html.Span("", new { @id = "SpnUELoading" })%>
 		</div>
-		<div class="editor-label" style="clear:right;width:auto;">
+		<div class="editor-label" style="clear: right; width: auto;">
 			<%: Html.Image("Upload_active.png", new { @onclick = "javascript:importExcel.uploadExcel();" })%></div>
 		<div class="editor-field">
 			<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:$('#ExcelImport').dialog('close');" })%></div>

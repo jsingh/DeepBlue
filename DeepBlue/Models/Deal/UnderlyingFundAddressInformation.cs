@@ -11,13 +11,11 @@ namespace DeepBlue.Models.Deal {
 
 		public UnderlyingFundAddressInformation() {
 			Country = (int)DeepBlue.Models.Admin.Enums.DefaultCountry.USA;
+			CountryName = "United States";
 		}
 
-		[Required(ErrorMessage = "Underlying Fund is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Underlying Fund is required")]
-		public int UnderlyingFundId { get; set; }
+		public int? UnderlyingFundId { get; set; }
  
-		[Required(ErrorMessage = "Address1 is required")]
 		[StringLength(40, ErrorMessage = "Address1 must be under 40 characters.")]
 		[DisplayName("Address1")]
 		public string Address1 { get; set; }

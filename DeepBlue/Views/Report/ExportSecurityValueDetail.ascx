@@ -9,9 +9,9 @@
 			<th>
 				Security
 			</th>
-			<th>
+			<%--	<th>
 				Security Type
-			</th>
+			</th>--%>
 			<th>
 				#Shares
 			</th>
@@ -19,10 +19,10 @@
 				Price
 			</th>
 			<th>
-				Total Value
+				Price Date
 			</th>
 			<th>
-				Price Date
+				Total Value
 			</th>
 		</tr>
 	</thead>
@@ -35,9 +35,9 @@
 			<td>
 				<%=distribution.Security%>
 			</td>
-			<td>
+			<%--	<td>
 				<%=distribution.SecurityType%>
-			</td>
+			</td>--%>
 			<td>
 				<%=distribution.NoOfShares%>
 			</td>
@@ -45,10 +45,10 @@
 				<%=distribution.Price%>
 			</td>
 			<td>
-				<%=distribution.Value%>
+				<%=(distribution.Date ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy")%>
 			</td>
 			<td>
-				<%=(distribution.Date ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy")%>
+				<%=distribution.Value%>
 			</td>
 		</tr>
 		<%}%>

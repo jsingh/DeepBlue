@@ -47,7 +47,7 @@ namespace DeepBlue.Models.Deal {
 		public DateTime? RecordDate { get; set; }
 
 		[Required(ErrorMessage = "FMV is required")]
-		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "FMV is required")]
+		[Range(typeof(decimal), "0.01", "79228162514264337593543950335", ErrorMessage = "FMV is required")]
 		[DisplayName("FMV")]
 		public decimal? FMV { get; set; }
 
@@ -60,11 +60,11 @@ namespace DeepBlue.Models.Deal {
 		public int? NumberOfShares { get; set; }
 
 		[Required(ErrorMessage = "Purchase Price is required")]
-		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Purchase Price is required")]
+		[Range(typeof(decimal), "0.01", "79228162514264337593543950335", ErrorMessage = "Purchase Price is required")]
 		[DisplayName("Purchase Price")]
 		public decimal PurchasePrice { get; set; }
 
-		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Purchase Price is required")]
+		[Range(typeof(decimal), "0.01", "79228162514264337593543950335", ErrorMessage = "Tax Cost Base is required")]
 		[DisplayName("Tax Cost Basis")]
 		public decimal? TaxCostBase { get; set; }
 

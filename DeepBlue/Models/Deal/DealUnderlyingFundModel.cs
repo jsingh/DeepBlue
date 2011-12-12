@@ -37,10 +37,10 @@ namespace DeepBlue.Models.Deal {
 		[DateRange()]
 		public DateTime? RecordDate { get; set; }
 
-		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Fund NAV is required")]
+		[Range(typeof(decimal), "0.01", "79228162514264337593543950335", ErrorMessage = "Fund NAV is required")]
 		public decimal? FundNAV { get; set; }
 
-		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Committed Amount is required")]
+		[Range(typeof(decimal), "0.01", "79228162514264337593543950335", ErrorMessage = "Committed Amount is required")]
 		public decimal? CommittedAmount { get; set; }
 
 		public decimal? Percent { get; set; }

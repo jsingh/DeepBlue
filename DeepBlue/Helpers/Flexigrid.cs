@@ -16,5 +16,9 @@ namespace DeepBlue.Helpers {
 		public List<FlexigridRow> rows = new List<FlexigridRow>();
 	}
 
-	
+	public class GridData {
+		public int page;
+		public int total;
+		public IEnumerable<object> rows;
+	}
 }

@@ -13,6 +13,8 @@ namespace DeepBlue.Models.Deal {
 
 		public string FundType { get; set; }
 
-		public string IssuerName { get; set; }
+		public string Industry { get; set; }
+
+		public int IssuerID { get; set; }
 	}
 }

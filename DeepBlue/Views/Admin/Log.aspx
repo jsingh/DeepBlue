@@ -67,7 +67,7 @@
 	</script>
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 {{each(i,row) rows}}
-<tr style='background-image:none;background-color:white;' id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
+<tr style='background-image:none;background-color:white;' id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}}>
 	{{each(j,ce) row.cell}}
 	<td style='white-space:normal;background-image:none;border-bottom:solid 1px #000;padding:10px'>${ce}</td>
 	{{/each}}

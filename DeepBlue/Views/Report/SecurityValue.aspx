@@ -71,33 +71,35 @@
 	<div id="ReportMain">
 		<div id="ReportDetail" class="rep-main" style="display: none">
 			<div id="ReportContent">
+				<% Html.RenderPartial("TBoxTop"); %>
 				<table cellpadding="0" cellspacing="0" border="0" id="SecurityValueList" class="grid">
-				<thead>
-					<tr>
-						<th sortname="DealNo" style="width: 10%">
-							Deal
-						</th>
-						<th sortname="Security">
-							Security
-						</th>
-						<th sortname="SecurityType" style="width: 10%">
-							Security Type
-						</th>
-						<th sortname="NoOfShares" align="right" style="text-align: right;">
-							#Shares
-						</th>
-						<th sortname="Price" align="right" style="text-align: right;">
-							Price
-						</th>
-						<th sortname="Value" align="right" style="text-align: right">
-							Total Value
-						</th>
-						<th sortname="Date" style="width: 10%">
-							Price Date
-						</th>
-					</tr>
-				</thead>
-			</table>
+					<thead>
+						<tr>
+							<th sortname="DealNo" style="width: 10%">
+								Deal
+							</th>
+							<th sortname="Security">
+								Security
+							</th>
+						<%--	<th sortname="SecurityType" style="width: 10%">
+								Security Type
+							</th>--%>
+							<th sortname="NoOfShares" align="right" style="text-align: right;">
+								#Shares
+							</th>
+							<th sortname="Price" align="right" style="text-align: right;">
+								Price
+							</th>
+							<th sortname="Date" style="width: 10%">
+								Price Date
+							</th>
+							<th sortname="Value" align="right" style="text-align: right">
+								Total Value
+							</th>
+						</tr>
+					</thead>
+				</table>
+				<% Html.RenderPartial("TBoxBottom"); %>
 			</div>
 		</div>
 	</div>
@@ -117,31 +119,31 @@
 	BoxStyle = false
 })%>
 	<script type="text/javascript">		securityValueReport.init();</script>
-	<script id="GridTemplate" type="text/x-jquery-tmpl">
-{{each(i,row) rows}}
-<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
-	<td>
-	${row.cell[0]}
-	</td>
-	<td>
-	${row.cell[1]}
-	</td>
-	<td>
-	${row.cell[2]}
-	</td>
-	<td style="text-align:right">
-	${formatNumber(row.cell[3],0)}
-	</td>
-	<td style="text-align:right">
-	${formatCurrency(row.cell[4])}
-	</td>
-	<td style="text-align:right">
-	${row.cell[5]}
-	</td>
-	<td>
-	${formatDate(row.cell[6])}
-	</td>
-</tr>
-{{/each}}
-	</script>
+	<%using(Html.jQueryTemplateScript("GridTemplate")){%>
+		{{each(i,row) rows}} 
+		<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}}>
+			<td>
+			${row.cell[0]}
+			</td>
+			<td>
+			${row.cell[1]}
+			</td>
+			<%--<td>
+			${row.cell[2]}
+			</td>--%>
+			<td style="text-align:right">
+			${formatNumber(row.cell[3],0)}
+			</td>
+			<td style="text-align:right">
+			${formatCurrency(row.cell[4])}
+			</td>
+			<td>
+			${formatDate(row.cell[6])}
+			</td>
+			<td style="text-align:right">
+			${row.cell[5]}
+			</td>
+		</tr>
+		{{/each}}
+	<%}%>
 </asp:Content>

@@ -103,7 +103,7 @@
 	</script>
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 		{{each(i,row) rows}}
-			<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
+			<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}}>
 				<td>
 					${row.cell[1]}
 				</td>
@@ -151,7 +151,7 @@
 	</script>
 	<script id="InvestorGridTemplate" type="text/x-jquery-tmpl">
 	{{each(i,row) rows}}
-	<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{/if}}>
+	<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}}>
 		<td>${row.cell[0]}</td><td style="text-align:right">${formatCurrency(row.cell[1])}</td><td style="text-align:right">${formatCurrency(row.cell[2])}</td><td>${formatDate(row.cell[3])}</td>
 	</tr>
 	{{/each}}

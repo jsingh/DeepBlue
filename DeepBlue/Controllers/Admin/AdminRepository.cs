@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Linq.Expressions;
 using DeepBlue.Models.Deal;
 using DeepBlue.Models.Admin;
+using System.Text;
 
 namespace DeepBlue.Controllers.Admin {
 	public class AdminRepository : IAdminRepository {
@@ -607,6 +608,16 @@ namespace DeepBlue.Controllers.Admin {
 		public IEnumerable<ErrorInfo> SaveShareClassType(ShareClassType shareClassType) {
 			return shareClassType.Save();
 		}
+
+		public List<ShareClassType> GetAllShareClassTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from shareClassType in context.ShareClassTypes
+						where shareClassType.Enabled == true
+						orderby shareClassType.ShareClass
+						select shareClassType).ToList();
+			}
+		}
+
 		#endregion
 
 		#region  ReportingType
@@ -1426,17 +1437,6 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region  ShareClassType
-		public List<ShareClassType> GetAllShareClassTypes() {
-			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from shareClassType in context.ShareClassTypes
-						where shareClassType.Enabled == true
-						orderby shareClassType.ShareClass
-						select shareClassType).ToList();
-			}
-		}
-		#endregion
-
 		#region  InvestmentType
 		public List<InvestmentType> GetAllInvestmentTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -1524,298 +1524,809 @@ namespace DeepBlue.Controllers.Admin {
 		public List<AutoCompleteList> FindStates(string stateName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> stateListQuery = (from state in context.STATEs
-																 where state.Name.StartsWith(stateName)
-																 orderby state.Name
-																 select new AutoCompleteList {
-																	 id = state.StateID,
-																	 label = state.Name,
-																	 value = state.Name
-																 }).OrderBy(list => list.label);
+															   where state.Name.StartsWith(stateName)
+															   orderby state.Name
+															   select new AutoCompleteList {
+																   id = state.StateID,
+																   label = state.Name,
+																   value = state.Name
+															   }).OrderBy(list => list.label);
 				return new PaginatedList<AutoCompleteList>(stateListQuery, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
 		#endregion
 
-		#region DynamicData
+		#region ExportExcel
+
+		public List<string> GetAllTables(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, string tableName) {
+			List<string> tables = new List<string> {
+					"Accounts",
+					"ActivityTypes",
+					"Addresses",
+					"AddressTypes",
+					"AnnualMeetingHistories",
+					"CapitalCallLineItems",
+					"CapitalCallLineItemTypes",
+					"CapitalCalls",
+					"CapitalCallTypes",
+					"CapitalDistributionLineItems",
+					"CapitalDistributionProfits",
+					"CapitalDistributions",
+					"CashDistributions",
+					"CashDistributionTypes",
+					"CommunicationGroupings",
+					"Communications",
+					"CommunicationTypes",
+					"ContactAddresses",
+					"ContactCommunications",
+					"Contacts",
+					"COUNTRies",
+					"Currencies",
+					"CustomFields",
+					"CustomFieldValues",
+					"DataTypes",
+					"DealClosingCosts",
+					"DealClosingCostTypes",
+					"DealClosings",
+					"DealFundDocuments",
+					"Deals",
+					"DealUnderlyingDirects",
+					"DealUnderlyingFundAdjustments",
+					"DealUnderlyingFunds",
+					"DocumentSections",
+					"DocumentTypes",
+					"ENTITies",
+					"Equities",
+					"EquitySplits",
+					"EquityTypes",
+					"Files",
+					"FileTypes",
+					"FixedIncomes",
+					"FixedIncomeTypes",
+					"FundAccounts",
+					"FundActivityHistories",
+					"FundClosings",
+					"FundExpenses",
+					"FundExpenseTypes",
+					"FundRateSchedules",
+					"Funds",
+					"Geographies",
+					"Industries",
+					"InvestmentTypes",
+					"InvestorAccounts",
+					"InvestorAddresses",
+					"InvestorCommunications",
+					"InvestorContacts",
+					"InvestorEntityTypes",
+					"InvestorFundDocuments",
+					"InvestorFunds",
+					"InvestorFundTransactions",
+					"Investors",
+					"InvestorTypes",
+					"Issuers",
+					"LogDetails",
+					"Logs",
+					"LogTypes",
+					"ManagementFeeRateSchedules",
+					"ManagementFeeRateScheduleTiers",
+					"MODULEs",
+					"MultiplierTypes",
+					"OptionFields",
+					"OptionFieldValueLists",
+					"Partners",
+					"PurchaseTypes",
+					"RateScheduleTypes",
+					"ReportingFrequencies",
+					"ReportingTypes",
+					"SecurityConversionDetails",
+					"SecurityConversions",
+					"SecurityTypes",
+					"SellerTypes",
+					"ShareClassTypes",
+					"STATEs",
+					"TransactionTypes",
+					"UnderlyingDirectDocuments",
+					"UnderlyingDirectLastPriceHistories",
+					"UnderlyingDirectLastPrices",
+					"UnderlyingFundCapitalCallLineItems",
+					"UnderlyingFundCapitalCalls",
+					"UnderlyingFundCashDistributions",
+					"UnderlyingFundContacts",
+					"UnderlyingFundDocuments",
+					"UnderlyingFundNAVHistories",
+					"UnderlyingFundNAVs",
+					"UnderlyingFunds",
+					"UnderlyingFundStockDistributionLineItems",
+					"UnderlyingFundStockDistributions",
+					"UnderlyingFundTypes",
+					"USERs",
+			};
+			var query = (from table in tables
+						 where table.StartsWith(tableName)
+						 select table);
+			if (sortOrder == "asc") {
+				query = query.OrderBy(q => q[0]);
+			}
+			else {
+				query = query.OrderByDescending(q => q[0]);
+			}
+			totalRows = tables.Count();
+			query = query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+			return query.ToList();
+		}
+
 		public object FindTable(string tableName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				object results = null;
-				int pageSize = 10000;
 				switch (tableName.ToLower()) {
 					case "account":
-						results = context.Accounts.OrderBy(account => account.AccountID).Take(pageSize).ToList();
+						results = context.Accounts.ToList();
 						break;
 					case "activitytype":
-						results = context.ActivityTypes.OrderBy(activitytype => activitytype.ActivityTypeID).Take(pageSize).ToList();
+						results = context.ActivityTypes.ToList();
 						break;
 					case "address":
-						results = context.Addresses.OrderBy(address => address.AddressID).Take(pageSize).ToList();
+						results = context.Addresses.ToList();
 						break;
 					case "addresstype":
-						results = context.AddressTypes.OrderBy(addresstype => addresstype.AddressTypeID).Take(pageSize).ToList();
+						results = context.AddressTypes.ToList();
+						break;
+					case "annualmeetinghistory":
+						results = context.AnnualMeetingHistories.ToList();
 						break;
 					case "capitalcall":
-						results = context.CapitalCalls.OrderBy(capitalcall => capitalcall.CapitalCallID).Take(pageSize).ToList();
+						results = context.CapitalCalls.ToList();
 						break;
 					case "capitalcalllineitem":
-						results = context.CapitalCallLineItems.OrderBy(capitalcalllineitem => capitalcalllineitem.CapitalCallLineItemID).Take(pageSize).ToList();
+						results = context.CapitalCallLineItems.ToList();
 						break;
 					case "capitalcalllineitemtype":
-						results = context.CapitalCallLineItemTypes.OrderBy(capitalcalllineitemtype => capitalcalllineitemtype.CapitalCallLineItemTypeID).Take(pageSize).ToList();
+						results = context.CapitalCallLineItemTypes.ToList();
 						break;
 					case "capitalcalltype":
-						results = context.CapitalCallTypes.OrderBy(capitalcalltype => capitalcalltype.CapitalCallTypeID).Take(pageSize).ToList();
+						results = context.CapitalCallTypes.ToList();
 						break;
 					case "capitaldistribution":
-						results = context.CapitalDistributions.OrderBy(capitaldistribution => capitaldistribution.CapitalDistributionID).Take(pageSize).ToList();
+						results = context.CapitalDistributions.ToList();
 						break;
 					case "capitaldistributionlineitem":
-						results = context.CapitalDistributionLineItems.OrderBy(capitaldistributionlineitem => capitaldistributionlineitem.CapitalDistributionLineItemID).Take(pageSize).ToList();
+						results = context.CapitalDistributionLineItems.ToList();
 						break;
 					case "capitaldistributionprofit":
-						results = context.CapitalDistributionProfits.OrderBy(capitaldistributionprofit => capitaldistributionprofit.CapitalDistributionProfitID).Take(pageSize).ToList();
+						results = context.CapitalDistributionProfits.ToList();
 						break;
 					case "cashdistribution":
-						results = context.CashDistributions.OrderBy(cashdistribution => cashdistribution.CashDistributionID).Take(pageSize).ToList();
+						results = context.CashDistributions.ToList();
 						break;
 					case "cashdistributiontype":
-						results = context.CashDistributionTypes.OrderBy(cashdistributiontype => cashdistributiontype.CashDistributionTypeID).Take(pageSize).ToList();
+						results = context.CashDistributionTypes.ToList();
 						break;
 					case "communication":
-						results = context.Communications.OrderBy(communication => communication.CommunicationID).Take(pageSize).ToList();
+						results = context.Communications.ToList();
 						break;
 					case "communicationgrouping":
-						results = context.CommunicationGroupings.OrderBy(communicationgrouping => communicationgrouping.CommunicationGroupingID).Take(pageSize).ToList();
+						results = context.CommunicationGroupings.ToList();
 						break;
 					case "communicationtype":
-						results = context.CommunicationTypes.OrderBy(communicationtype => communicationtype.CommunicationTypeID).Take(pageSize).ToList();
+						results = context.CommunicationTypes.ToList();
 						break;
 					case "contact":
-						results = context.Contacts.OrderBy(contact => contact.ContactID).Take(pageSize).ToList();
+						results = context.Contacts.ToList();
 						break;
 					case "contactaddress":
-						results = context.ContactAddresses.OrderBy(contactaddress => contactaddress.ContactAddressID).Take(pageSize).ToList();
+						results = context.ContactAddresses.ToList();
 						break;
 					case "contactcommunication":
-						results = context.ContactCommunications.OrderBy(contactcommunication => contactcommunication.ContactCommunicationID).Take(pageSize).ToList();
+						results = context.ContactCommunications.ToList();
 						break;
 					case "country":
-						results = context.COUNTRies.OrderBy(country => country.CountryID).Take(pageSize).ToList();
+						results = context.COUNTRies.ToList();
 						break;
 					case "currency":
-						results = context.Currencies.OrderBy(currency => currency.CurrencyID).Take(pageSize).ToList();
+						results = context.Currencies.ToList();
 						break;
 					case "customfield":
-						results = context.CustomFields.OrderBy(customfield => customfield.CustomFieldID).Take(pageSize).ToList();
+						results = context.CustomFields.ToList();
 						break;
 					case "customfieldvalue":
-						results = context.CustomFieldValues.OrderBy(customfieldvalue => customfieldvalue.CustomFieldValueID).Take(pageSize).ToList();
+						results = context.CustomFieldValues.ToList();
 						break;
 					case "datatype":
-						results = context.DataTypes.OrderBy(datatype => datatype.DataTypeID).Take(pageSize).ToList();
+						results = context.DataTypes.ToList();
 						break;
 					case "deal":
-						results = context.Deals.OrderBy(deal => deal.DealID).Take(pageSize).ToList();
+						results = context.Deals.ToList();
 						break;
 					case "dealclosing":
-						results = context.DealClosings.OrderBy(dealclosing => dealclosing.DealClosingID).Take(pageSize).ToList();
+						results = context.DealClosings.ToList();
 						break;
 					case "dealclosingcost":
-						results = context.DealClosingCosts.OrderBy(dealclosingcost => dealclosingcost.DealClosingCostID).Take(pageSize).ToList();
+						results = context.DealClosingCosts.ToList();
 						break;
 					case "dealclosingcosttype":
-						results = context.DealClosingCostTypes.OrderBy(dealclosingcosttype => dealclosingcosttype.DealClosingCostTypeID).Take(pageSize).ToList();
+						results = context.DealClosingCostTypes.ToList();
+						break;
+					case "dealfunddocument":
+						results = context.DealFundDocuments.ToList();
 						break;
 					case "dealunderlyingdirect":
-						results = context.DealUnderlyingDirects.OrderBy(dealunderlyingdirect => dealunderlyingdirect.DealUnderlyingDirectID).Take(pageSize).ToList();
+						results = context.DealUnderlyingDirects.ToList();
 						break;
 					case "dealunderlyingfund":
-						results = context.DealUnderlyingFunds.OrderBy(dealunderlyingfund => dealunderlyingfund.DealUnderlyingtFundID).Take(pageSize).ToList();
+						results = context.DealUnderlyingFunds.ToList();
 						break;
 					case "dealunderlyingfundadjustment":
-						results = context.DealUnderlyingFundAdjustments.OrderBy(dealunderlyingfundadjustment => dealunderlyingfundadjustment.DealUnderlyingFundAdjustmentID).Take(pageSize).ToList();
+						results = context.DealUnderlyingFundAdjustments.ToList();
+						break;
+					case "documentsection":
+						results = context.DocumentSections.ToList();
 						break;
 					case "documenttype":
-						results = context.DocumentTypes.OrderBy(documenttype => documenttype.DocumentTypeID).Take(pageSize).ToList();
+						results = context.DocumentTypes.ToList();
+						break;
+					case "entity":
+						results = context.ENTITies.ToList();
 						break;
 					case "equity":
-						results = context.Equities.OrderBy(equity => equity.EquityID).Take(pageSize).ToList();
+						results = context.Equities.ToList();
 						break;
 					case "equitysplit":
-						results = context.EquitySplits.OrderBy(equitysplit => equitysplit.EquiteSplitID).Take(pageSize).ToList();
+						results = context.EquitySplits.ToList();
 						break;
 					case "equitytype":
-						results = context.EquityTypes.OrderBy(equitytype => equitytype.EquityTypeID).Take(pageSize).ToList();
+						results = context.EquityTypes.ToList();
 						break;
 					case "file":
-						results = context.Files.OrderBy(file => file.FileID).Take(pageSize).ToList();
+						results = context.Files.ToList();
 						break;
 					case "filetype":
-						results = context.FileTypes.OrderBy(filetype => filetype.FileTypeID).Take(pageSize).ToList();
+						results = context.FileTypes.ToList();
 						break;
 					case "fixedincome":
-						results = context.FixedIncomes.OrderBy(fixedincome => fixedincome.FixedIncomeID).Take(pageSize).ToList();
+						results = context.FixedIncomes.ToList();
 						break;
 					case "fixedincometype":
-						results = context.FixedIncomeTypes.OrderBy(fixedincometype => fixedincometype.FixedIncomeTypeID).Take(pageSize).ToList();
+						results = context.FixedIncomeTypes.ToList();
 						break;
 					case "fund":
-						results = context.Funds.OrderBy(fund => fund.FundID).Take(pageSize).ToList();
+						results = context.Funds.ToList();
 						break;
 					case "fundaccount":
-						results = context.FundAccounts.OrderBy(fundaccount => fundaccount.FundAccountID).Take(pageSize).ToList();
+						results = context.FundAccounts.ToList();
 						break;
 					case "fundactivityhistory":
-						results = context.FundActivityHistories.OrderBy(fundactivityhistory => fundactivityhistory.FundActivityHistoryID).Take(pageSize).ToList();
+						results = context.FundActivityHistories.ToList();
 						break;
 					case "fundclosing":
-						results = context.FundClosings.OrderBy(fundclosing => fundclosing.FundClosingID).Take(pageSize).ToList();
+						results = context.FundClosings.ToList();
 						break;
 					case "fundexpense":
-						results = context.FundExpenses.OrderBy(fundexpense => fundexpense.FundExpenseID).Take(pageSize).ToList();
+						results = context.FundExpenses.ToList();
 						break;
 					case "fundexpensetype":
-						results = context.FundExpenseTypes.OrderBy(fundexpensetype => fundexpensetype.FundExpenseTypeID).Take(pageSize).ToList();
+						results = context.FundExpenseTypes.ToList();
 						break;
 					case "fundrateschedule":
-						results = context.FundRateSchedules.OrderBy(fundrateschedule => fundrateschedule.FundRateScheduleID).Take(pageSize).ToList();
+						results = context.FundRateSchedules.ToList();
 						break;
 					case "geography":
-						results = context.Geographies.OrderBy(geography => geography.GeographyID).Take(pageSize).ToList();
+						results = context.Geographies.ToList();
 						break;
 					case "industry":
-						results = context.Industries.OrderBy(industry => industry.IndustryID).Take(pageSize).ToList();
+						results = context.Industries.ToList();
 						break;
 					case "investmenttype":
-						results = context.InvestmentTypes.OrderBy(investmenttype => investmenttype.InvestmentTypeID).Take(pageSize).ToList();
+						results = context.InvestmentTypes.ToList();
 						break;
 					case "investor":
-						results = context.Investors.OrderBy(investor => investor.InvestorID).Take(pageSize).ToList();
+						results = context.Investors.ToList();
 						break;
 					case "investoraccount":
-						results = context.InvestorAccounts.OrderBy(investoraccount => investoraccount.InvestorAccountID).Take(pageSize).ToList();
+						results = context.InvestorAccounts.ToList();
 						break;
 					case "investoraddress":
-						results = context.InvestorAddresses.OrderBy(investoraddress => investoraddress.InvestorAddressID).Take(pageSize).ToList();
+						results = context.InvestorAddresses.ToList();
 						break;
 					case "investorcommunication":
-						results = context.InvestorCommunications.OrderBy(investorcommunication => investorcommunication.InvestorCommunicationID).Take(pageSize).ToList();
+						results = context.InvestorCommunications.ToList();
 						break;
 					case "investorcontact":
-						results = context.InvestorContacts.OrderBy(investorcontact => investorcontact.InvestorContactID).Take(pageSize).ToList();
+						results = context.InvestorContacts.ToList();
 						break;
 					case "investorentitytype":
-						results = context.InvestorEntityTypes.OrderBy(investorentitytype => investorentitytype.InvestorEntityTypeID).Take(pageSize).ToList();
+						results = context.InvestorEntityTypes.ToList();
 						break;
 					case "investorfund":
-						results = context.InvestorFunds.OrderBy(investorfund => investorfund.InvestorFundID).Take(pageSize).ToList();
+						results = context.InvestorFunds.ToList();
 						break;
 					case "investorfunddocument":
-						results = context.InvestorFundDocuments.OrderBy(investorfunddocument => investorfunddocument.InvestorFundDocumentID).Take(pageSize).ToList();
+						results = context.InvestorFundDocuments.ToList();
 						break;
 					case "investorfundtransaction":
-						results = context.InvestorFundTransactions.OrderBy(investorfundtransaction => investorfundtransaction.InvestorFundTransactionID).Take(pageSize).ToList();
+						results = context.InvestorFundTransactions.ToList();
 						break;
 					case "investortype":
-						results = context.InvestorTypes.OrderBy(investortype => investortype.InvestorTypeID).Take(pageSize).ToList();
+						results = context.InvestorTypes.ToList();
 						break;
 					case "issuer":
-						results = context.Issuers.OrderBy(issuer => issuer.IssuerID).Take(pageSize).ToList();
+						results = context.Issuers.ToList();
+						break;
+					case "log":
+						results = context.Logs.ToList();
+						break;
+					case "logdetail":
+						results = context.LogDetails.ToList();
+						break;
+					case "logtype":
+						results = context.LogTypes.ToList();
 						break;
 					case "managementfeerateschedule":
-						results = context.ManagementFeeRateSchedules.OrderBy(managementfeerateschedule => managementfeerateschedule.ManagementFeeRateScheduleID).Take(pageSize).ToList();
+						results = context.ManagementFeeRateSchedules.ToList();
 						break;
 					case "managementfeeratescheduletier":
-						results = context.ManagementFeeRateScheduleTiers.OrderBy(managementfeeratescheduletier => managementfeeratescheduletier.ManagementFeeRateScheduleTierID).Take(pageSize).ToList();
+						results = context.ManagementFeeRateScheduleTiers.ToList();
 						break;
 					case "module":
-						results = context.MODULEs.OrderBy(module => module.ModuleID).Take(pageSize).ToList();
+						results = context.MODULEs.ToList();
 						break;
 					case "multipliertype":
-						results = context.MultiplierTypes.OrderBy(multipliertype => multipliertype.MultiplierTypeID).Take(pageSize).ToList();
+						results = context.MultiplierTypes.ToList();
 						break;
 					case "optionfield":
-						results = context.OptionFields.OrderBy(optionfield => optionfield.OptionFieldID).Take(pageSize).ToList();
+						results = context.OptionFields.ToList();
 						break;
 					case "optionfieldvaluelist":
-						results = context.OptionFieldValueLists.OrderBy(optionfieldvaluelist => optionfieldvaluelist.OptionFieldValueListID).Take(pageSize).ToList();
+						results = context.OptionFieldValueLists.ToList();
 						break;
 					case "partner":
-						results = context.Partners.OrderBy(partner => partner.PartnerID).Take(pageSize).ToList();
+						results = context.Partners.ToList();
 						break;
 					case "purchasetype":
-						results = context.PurchaseTypes.OrderBy(purchasetype => purchasetype.PurchaseTypeID).Take(pageSize).ToList();
+						results = context.PurchaseTypes.ToList();
 						break;
 					case "ratescheduletype":
-						results = context.RateScheduleTypes.OrderBy(ratescheduletype => ratescheduletype.RateScheduleTypeID).Take(pageSize).ToList();
+						results = context.RateScheduleTypes.ToList();
 						break;
 					case "reportingfrequency":
-						results = context.ReportingFrequencies.OrderBy(reportingfrequency => reportingfrequency.ReportingFrequencyID).Take(pageSize).ToList();
+						results = context.ReportingFrequencies.ToList();
 						break;
 					case "reportingtype":
-						results = context.ReportingTypes.OrderBy(reportingtype => reportingtype.ReportingTypeID).Take(pageSize).ToList();
+						results = context.ReportingTypes.ToList();
 						break;
 					case "securityconversion":
-						results = context.SecurityConversions.OrderBy(securityconversion => securityconversion.SecurityConversionID).Take(pageSize).ToList();
+						results = context.SecurityConversions.ToList();
 						break;
 					case "securityconversiondetail":
-						results = context.SecurityConversionDetails.OrderBy(securityconversiondetail => securityconversiondetail.SecurityConversionDetailID).Take(pageSize).ToList();
+						results = context.SecurityConversionDetails.ToList();
 						break;
 					case "securitytype":
-						results = context.SecurityTypes.OrderBy(securitytype => securitytype.SecurityTypeID).Take(pageSize).ToList();
+						results = context.SecurityTypes.ToList();
+						break;
+					case "sellertype":
+						results = context.SellerTypes.ToList();
 						break;
 					case "shareclasstype":
-						results = context.ShareClassTypes.OrderBy(shareclasstype => shareclasstype.ShareClassTypeID).Take(pageSize).ToList();
+						results = context.ShareClassTypes.ToList();
 						break;
 					case "state":
-						results = context.STATEs.OrderBy(state => state.StateID).Take(pageSize).ToList();
+						results = context.STATEs.ToList();
 						break;
 					case "transactiontype":
-						results = context.TransactionTypes.OrderBy(transactiontype => transactiontype.TransactionTypeID).Take(pageSize).ToList();
+						results = context.TransactionTypes.ToList();
 						break;
 					case "underlyingdirectdocument":
-						results = context.UnderlyingDirectDocuments.OrderBy(underlyingdirectdocument => underlyingdirectdocument.UnderlyingDirectDocumentID).Take(pageSize).ToList();
+						results = context.UnderlyingDirectDocuments.ToList();
 						break;
 					case "underlyingdirectlastprice":
-						results = context.UnderlyingDirectLastPrices.OrderBy(underlyingdirectlastprice => underlyingdirectlastprice.UnderlyingDirectLastPriceID).Take(pageSize).ToList();
+						results = context.UnderlyingDirectLastPrices.ToList();
 						break;
 					case "underlyingdirectlastpricehistory":
-						results = context.UnderlyingDirectLastPriceHistories.OrderBy(underlyingdirectlastpricehistory => underlyingdirectlastpricehistory.UnderlyingDirectLastPriceHistoryID).Take(pageSize).ToList();
+						results = context.UnderlyingDirectLastPriceHistories.ToList();
 						break;
 					case "underlyingfund":
-						results = context.UnderlyingFunds.OrderBy(underlyingfund => underlyingfund.UnderlyingtFundID).Take(pageSize).ToList();
+						results = context.UnderlyingFunds.ToList();
 						break;
 					case "underlyingfundcapitalcall":
-						results = context.UnderlyingFundCapitalCalls.OrderBy(underlyingfundcapitalcall => underlyingfundcapitalcall.UnderlyingFundCapitalCallID).Take(pageSize).ToList();
+						results = context.UnderlyingFundCapitalCalls.ToList();
 						break;
 					case "underlyingfundcapitalcalllineitem":
-						results = context.UnderlyingFundCapitalCallLineItems.OrderBy(underlyingfundcapitalcalllineitem => underlyingfundcapitalcalllineitem.UnderlyingFundCapitalCallLineItemID).Take(pageSize).ToList();
+						results = context.UnderlyingFundCapitalCallLineItems.ToList();
 						break;
 					case "underlyingfundcashdistribution":
-						results = context.UnderlyingFundCashDistributions.OrderBy(underlyingfundcashdistribution => underlyingfundcashdistribution.UnderlyingFundCashDistributionID).Take(pageSize).ToList();
+						results = context.UnderlyingFundCashDistributions.ToList();
+						break;
+					case "underlyingfundcontact":
+						results = context.UnderlyingFundContacts.ToList();
 						break;
 					case "underlyingfunddocument":
-						results = context.UnderlyingFundDocuments.OrderBy(underlyingfunddocument => underlyingfunddocument.UnderlyingFundDocumentID).Take(pageSize).ToList();
+						results = context.UnderlyingFundDocuments.ToList();
 						break;
 					case "underlyingfundnav":
-						results = context.UnderlyingFundNAVs.OrderBy(underlyingfundnav => underlyingfundnav.UnderlyingFundNAVID).Take(pageSize).ToList();
+						results = context.UnderlyingFundNAVs.ToList();
 						break;
 					case "underlyingfundnavhistory":
-						results = context.UnderlyingFundNAVHistories.OrderBy(underlyingfundnavhistory => underlyingfundnavhistory.UnderlyingFundNAVHistoryID).Take(pageSize).ToList();
+						results = context.UnderlyingFundNAVHistories.ToList();
 						break;
 					case "underlyingfundstockdistribution":
-						results = context.UnderlyingFundStockDistributions.OrderBy(underlyingfundstockdistribution => underlyingfundstockdistribution.UnderlyingFundStockDistributionID).Take(pageSize).ToList();
+						results = context.UnderlyingFundStockDistributions.ToList();
 						break;
 					case "underlyingfundstockdistributionlineitem":
-						results = context.UnderlyingFundStockDistributionLineItems.OrderBy(underlyingfundstockdistributionlineitem => underlyingfundstockdistributionlineitem.UnderlyingFundStockDistributionLineItemID).Take(pageSize).ToList();
+						results = context.UnderlyingFundStockDistributionLineItems.ToList();
 						break;
 					case "underlyingfundtype":
-						results = context.UnderlyingFundTypes.OrderBy(underlyingfundtype => underlyingfundtype.UnderlyingFundTypeID).Take(pageSize).ToList();
+						results = context.UnderlyingFundTypes.ToList();
+						break;
+					case "user":
+						results = context.USERs.ToList();
 						break;
 				}
 				return results;
 			}
 		}
+
+		public InvestorExportExcelModel GetAllInvestorExportList() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				InvestorExportExcelModel model = new InvestorExportExcelModel();
+				model.Investors = (from investor in context.Investors
+								   select new {
+									   InvestorName = investor.InvestorName,
+									   DisplayName = investor.Alias,
+									   Social = investor.Social,
+									   InvestorEntityType = (investor.InvestorEntityType != null ? investor.InvestorEntityType.InvestorEntityTypeName : string.Empty),
+									   IsDomestic = investor.IsDomestic,
+									   StateOfResidency = (investor.STATE != null ? investor.STATE.Name : string.Empty),
+								   }).ToList();
+				model.InvestorAddresses = (from investorAddress in context.InvestorAddresses
+										   select new {
+											   InvestorName = investorAddress.Investor.InvestorName,
+											   Address1 = investorAddress.Address.Address1,
+											   Address2 = investorAddress.Address.Address2,
+											   City = investorAddress.Address.City,
+											   Country = investorAddress.Address.Country,
+											   Zip = investorAddress.Address.PostalCode,
+											   State = investorAddress.Address.State,
+											   Phone = (from investorCommunication in investorAddress.Investor.InvestorCommunications
+														where investorCommunication.Communication.CommunicationTypeID == (int)DeepBlue.Models.Admin.Enums.CommunicationType.HomePhone
+														select investorCommunication.Communication.CommunicationValue).FirstOrDefault(),
+											   Email = (from investorCommunication in investorAddress.Investor.InvestorCommunications
+														where investorCommunication.Communication.CommunicationTypeID == (int)DeepBlue.Models.Admin.Enums.CommunicationType.Email
+														select investorCommunication.Communication.CommunicationValue).FirstOrDefault(),
+											   WebAddress = (from investorCommunication in investorAddress.Investor.InvestorCommunications
+															 where investorCommunication.Communication.CommunicationTypeID == (int)DeepBlue.Models.Admin.Enums.CommunicationType.WebAddress
+															 select investorCommunication.Communication.CommunicationValue).FirstOrDefault(),
+											   Fax = (from investorCommunication in investorAddress.Investor.InvestorCommunications
+													  where investorCommunication.Communication.CommunicationTypeID == (int)DeepBlue.Models.Admin.Enums.CommunicationType.Fax
+													  select investorCommunication.Communication.CommunicationValue).FirstOrDefault(),
+										   }).ToList();
+
+				model.InvestorBanks = (from investorAccount in context.InvestorAccounts
+									   select new {
+										   InvestorName = investorAccount.Investor.InvestorName,
+										   BankName = investorAccount.BankName,
+										   ABANumber = investorAccount.Routing,
+										   AccountName = investorAccount.Account,
+										   AccountNumber = investorAccount.AccountNumberCash,
+										   FFCName = investorAccount.FFC,
+										   FFCNumber = investorAccount.FFCNumber,
+										   Reference = investorAccount.Reference,
+										   Swift = investorAccount.SWIFT,
+										   IBAN = investorAccount.IBAN,
+										   Phone = investorAccount.Phone,
+										   Fax = investorAccount.Fax
+									   }).ToList();
+
+				model.InvestorContacts = (from investorContact in context.InvestorContacts
+										  select new {
+											  InvestorName = investorContact.Investor.InvestorName,
+											  ContactPerson = investorContact.Contact.ContactName,
+											  Designation = investorContact.Contact.Designation,
+											  Phone = (from investorCommunication in investorContact.Contact.ContactCommunications
+													   where investorCommunication.Communication.CommunicationTypeID == (int)DeepBlue.Models.Admin.Enums.CommunicationType.HomePhone
+													   select investorCommunication.Communication.CommunicationValue).FirstOrDefault(),
+											  Fax = (from investorCommunication in investorContact.Contact.ContactCommunications
+													 where investorCommunication.Communication.CommunicationTypeID == (int)DeepBlue.Models.Admin.Enums.CommunicationType.Fax
+													 select investorCommunication.Communication.CommunicationValue).FirstOrDefault(),
+											  Email = (from investorCommunication in investorContact.Contact.ContactCommunications
+													   where investorCommunication.Communication.CommunicationTypeID == (int)DeepBlue.Models.Admin.Enums.CommunicationType.Email
+													   select investorCommunication.Communication.CommunicationValue).FirstOrDefault(),
+											  WebAddress = (from investorCommunication in investorContact.Contact.ContactCommunications
+															where investorCommunication.Communication.CommunicationTypeID == (int)DeepBlue.Models.Admin.Enums.CommunicationType.WebAddress
+															select investorCommunication.Communication.CommunicationValue).FirstOrDefault(),
+											  Address1 = (from investorAddress in investorContact.Contact.ContactAddresses
+														  select investorAddress.Address.Address1).FirstOrDefault(),
+											  City = (from investorAddress in investorContact.Contact.ContactAddresses
+													  select investorAddress.Address.City).FirstOrDefault(),
+											  State = (from investorAddress in investorContact.Contact.ContactAddresses
+													   select (investorAddress.Address.STATE1 != null ? investorAddress.Address.STATE1.Name : string.Empty)
+													  ).FirstOrDefault(),
+											  Zip = (from investorAddress in investorContact.Contact.ContactAddresses
+													 select investorAddress.Address.PostalCode
+													 ).FirstOrDefault(),
+											  Country = (from investorAddress in investorContact.Contact.ContactAddresses
+														 select (investorAddress.Address.COUNTRY1 != null ? investorAddress.Address.COUNTRY1.CountryName : string.Empty)
+											  ).FirstOrDefault(),
+											  ReceivesDistributionNotices = investorContact.Contact.ReceivesDistributionNotices,
+											  Financials = investorContact.Contact.ReceivesFinancials,
+											  K1 = investorContact.Contact.ReceivesK1,
+											  InvestorLetters = investorContact.Contact.ReceivesInvestorLetters
+										  }).ToList();
+
+				model.InvestorInvestments = (from investment in context.InvestorFunds
+											 select new {
+												 InvestorName = investment.Investor.InvestorName,
+												 FundName = investment.Fund.FundName,
+												 InvestorType = (investment.InvestorType != null ? investment.InvestorType.InvestorTypeName : string.Empty),
+												 TotalCommitment = investment.TotalCommitment,
+												 UnfundedAmount = (investment.UnfundedAmount ?? 0),
+												 FundClose = investment.InvestorFundTransactions
+												 .Where(transaction => transaction.FundClosingID > 0).FirstOrDefault().FundClosing.Name,
+												 CloseDate = investment.InvestorFundTransactions
+												 .Where(transaction => transaction.FundClosingID > 0).FirstOrDefault().FundClosing.FundClosingDate
+											 }).ToList();
+				return model;
+			}
+		}
+
+		public FundExportExcelModel GetAllFundExportList() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				FundExportExcelModel model = new FundExportExcelModel();
+				model.AmberbrookFunds = (from fund in context.Funds
+										 select new {
+											 FundName = fund.FundName,
+											 TaxID = fund.TaxID,
+											 FundStartDate = fund.InceptionDate,
+											 ScheduleTerminationDate = fund.ScheduleTerminationDate,
+											 FinalTerminationDate = fund.FinalTerminationDate,
+											 AutomaticExtensions = fund.NumofAutoExtensions,
+											 DateClawbackTriggered = fund.DateClawbackTriggered,
+											 RecycleProvision = fund.RecycleProvision,
+											 MgmtFeesCatchupDate = fund.MgmtFeesCatchUpDate,
+											 Carry = fund.Carry,
+										 }).ToList();
+
+				model.Investors = (from investor in context.InvestorFunds
+								   select new {
+									   FundName = investor.Fund.FundName,
+									   InvestorName = investor.Investor.InvestorName,
+									   TotalCommitment = investor.TotalCommitment,
+									   UnfundedAmount = (investor.UnfundedAmount ?? 0),
+									   FundClose = investor.InvestorFundTransactions
+									   .Where(transaction => transaction.FundClosingID > 0).FirstOrDefault().FundClosing.Name,
+									   CloseDate = investor.InvestorFundTransactions
+									   .Where(transaction => transaction.FundClosingID > 0).FirstOrDefault().FundClosing.FundClosingDate
+								   }).ToList();
+
+				model.RateSchdules = (from rateSchedule in context.FundRateSchedules
+									  join managementFeeRateSchedule in context.ManagementFeeRateSchedules on rateSchedule.RateScheduleID equals managementFeeRateSchedule.ManagementFeeRateScheduleID
+									  join managementFeeRateScheduleTier in context.ManagementFeeRateScheduleTiers on managementFeeRateSchedule.ManagementFeeRateScheduleID equals managementFeeRateScheduleTier.ManagementFeeRateScheduleID
+									  select new {
+										  FundName = rateSchedule.Fund.FundName,
+										  StartDate = managementFeeRateScheduleTier.StartDate,
+										  EndDate = managementFeeRateScheduleTier.EndDate,
+										  FeeCalculationType = (managementFeeRateScheduleTier.MultiplierType != null ? managementFeeRateScheduleTier.MultiplierType.Name : string.Empty),
+										  FlatFee = (managementFeeRateScheduleTier.MultiplierTypeID == (int)DeepBlue.Models.Fund.Enums.MutiplierType.FlatFee ? managementFeeRateScheduleTier.Multiplier : 0),
+										  Rate = (managementFeeRateScheduleTier.MultiplierTypeID == (int)DeepBlue.Models.Fund.Enums.MutiplierType.CapitalCommitted ? managementFeeRateScheduleTier.Multiplier : 0),
+										  Comments = managementFeeRateScheduleTier.Notes
+									  }).ToList();
+
+				model.BankInformations = (from fundAccount in context.FundAccounts
+										  select new {
+											  FundName = fundAccount.Fund.FundName,
+											  BankName = fundAccount.BankName,
+											  ABANumber = fundAccount.Routing,
+											  AccountName = fundAccount.Account,
+											  AccountNumber = fundAccount.AccountNumberCash,
+											  FFCName = fundAccount.FFC,
+											  FFCNumber = fundAccount.FFCNumber,
+											  Reference = fundAccount.Reference,
+											  Swift = fundAccount.SWIFT,
+											  IBAN = fundAccount.IBAN,
+											  Phone = fundAccount.Phone,
+											  Fax = fundAccount.Fax
+										  }).ToList();
+				return model;
+			}
+		}
+
+		public UnderlyingFundExportExcelModel GetAllUnderlyingFundExportList() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				UnderlyingFundExportExcelModel model = new UnderlyingFundExportExcelModel();
+
+				model.UnderlyingFunds = (from underlyingFund in context.UnderlyingFunds
+										 select new {
+											 UnderlyingFundName = underlyingFund.FundName,
+											 GP = underlyingFund.Issuer.Name,
+											 FundType = (underlyingFund.UnderlyingFundType != null ? underlyingFund.UnderlyingFundType.Name : string.Empty),
+											 VintageYear = underlyingFund.VintageYear,
+											 FundSize = underlyingFund.TotalSize,
+											 TerminationYear = underlyingFund.TerminationYear,
+											 Reporting = (underlyingFund.ReportingFrequency != null ? underlyingFund.ReportingFrequency.ReportingFrequency1 : string.Empty),
+											 ReportingType = (underlyingFund.ReportingType != null ? underlyingFund.ReportingType.Reporting : string.Empty),
+											 FeesIncluded = underlyingFund.IsFeesIncluded,
+											 Industry = (underlyingFund.Industry != null ? underlyingFund.Industry.Industry1 : string.Empty),
+											 Geography = (underlyingFund.Geography != null ? underlyingFund.Geography.Geography1 : string.Empty),
+											 Website = underlyingFund.Website,
+											 WebUserName = underlyingFund.WebUserName,
+											 WebPassword = underlyingFund.WebPassword,
+											 Description = underlyingFund.Description,
+											 Address1 = (underlyingFund.Address != null ? underlyingFund.Address.Address1 : string.Empty),
+											 Address2 = (underlyingFund.Address != null ? underlyingFund.Address.Address2 : string.Empty),
+											 City = (underlyingFund.Address != null ? underlyingFund.Address.City : string.Empty),
+											 State = (underlyingFund.Address != null ? (underlyingFund.Address.STATE1 != null ? underlyingFund.Address.STATE1.Name : string.Empty) : string.Empty),
+											 Zip = (underlyingFund.Address != null ? underlyingFund.Address.PostalCode : string.Empty),
+											 Country = (underlyingFund.Address != null ? (underlyingFund.Address.COUNTRY1 != null ? underlyingFund.Address.COUNTRY1.CountryName : string.Empty) : string.Empty),
+											 BankName = (underlyingFund.Account != null ? underlyingFund.Account.BankName : string.Empty),
+											 ABANumber = (underlyingFund.Account != null ? underlyingFund.Account.Routing : null),
+											 AccountName = (underlyingFund.Account != null ? underlyingFund.Account.Account1 : string.Empty),
+											 AccountNumber = (underlyingFund.Account != null ? underlyingFund.Account.AccountNumberCash : string.Empty),
+											 FFCName = (underlyingFund.Account != null ? underlyingFund.Account.FFC : string.Empty),
+											 FFCNumber = (underlyingFund.Account != null ? underlyingFund.Account.FFCNumber : string.Empty),
+											 Reference = (underlyingFund.Account != null ? underlyingFund.Account.Reference : string.Empty),
+											 Swift = (underlyingFund.Account != null ? underlyingFund.Account.SWIFT : string.Empty),
+											 IBAN = (underlyingFund.Account != null ? underlyingFund.Account.IBAN : string.Empty),
+											 Phone = (underlyingFund.Account != null ? underlyingFund.Account.Phone : string.Empty),
+											 Fax = (underlyingFund.Account != null ? underlyingFund.Account.Fax : string.Empty)
+										 }).ToList();
+
+				model.UnderlyingFundContacts = (from underlyingFundContact in context.UnderlyingFundContacts
+												select new {
+													UnderlyingFundName = underlyingFundContact.UnderlyingFund.FundName,
+													ContactName = underlyingFundContact.Contact.ContactName,
+													Title = underlyingFundContact.Contact.Title,
+													PhoneNumber = (from underlyingFundCommunication in underlyingFundContact.Contact.ContactCommunications
+																   where underlyingFundCommunication.Communication.CommunicationTypeID == (int)DeepBlue.Models.Admin.Enums.CommunicationType.HomePhone
+																   select underlyingFundCommunication.Communication.CommunicationValue).FirstOrDefault(),
+													Email = (from underlyingFundCommunication in underlyingFundContact.Contact.ContactCommunications
+															 where underlyingFundCommunication.Communication.CommunicationTypeID == (int)DeepBlue.Models.Admin.Enums.CommunicationType.Email
+															 select underlyingFundCommunication.Communication.CommunicationValue).FirstOrDefault(),
+													Notes = underlyingFundContact.Contact.Notes,
+													Fax = (from underlyingFundCommunication in underlyingFundContact.Contact.ContactCommunications
+														   where underlyingFundCommunication.Communication.CommunicationTypeID == (int)DeepBlue.Models.Admin.Enums.CommunicationType.Fax
+														   select underlyingFundCommunication.Communication.CommunicationValue).FirstOrDefault(),
+													WebAddress = (from underlyingFundCommunication in underlyingFundContact.Contact.ContactCommunications
+																  where underlyingFundCommunication.Communication.CommunicationTypeID == (int)DeepBlue.Models.Admin.Enums.CommunicationType.WebAddress
+																  select underlyingFundCommunication.Communication.CommunicationValue).FirstOrDefault(),
+												}).ToList();
+
+				model.UnderlyingFundCapitalCalls = (from underlyingFundCapitalCall in context.UnderlyingFundCapitalCalls
+													select new {
+														UnderlyingFundName = (underlyingFundCapitalCall.UnderlyingFund != null ?
+															underlyingFundCapitalCall.UnderlyingFund.FundName : string.Empty),
+														AmberbrookFundName = (underlyingFundCapitalCall.UnderlyingFund != null ?
+														underlyingFundCapitalCall.Fund.FundName : string.Empty),
+														underlyingFundCapitalCall.Amount,
+														underlyingFundCapitalCall.NoticeDate,
+														underlyingFundCapitalCall.PaidON,
+														underlyingFundCapitalCall.ReceivedDate,
+														DeemedCapitalCall = underlyingFundCapitalCall.IsDeemedCapitalCall,
+														PostRecordDateTransaction = underlyingFundCapitalCall.IsPostRecordDateTransaction,
+														Reconciled = underlyingFundCapitalCall.IsReconciled,
+														underlyingFundCapitalCall.ReconciliationMethod,
+														underlyingFundCapitalCall.ChequeNumber,
+													}).ToList();
+				model.UnderlyingFundCapitalCallLineItems = (from underlyingFundCapitalCallLineItem in context.UnderlyingFundCapitalCallLineItems
+															select new {
+																UnderlyingFundName = (underlyingFundCapitalCallLineItem.UnderlyingFund != null ?
+																					  underlyingFundCapitalCallLineItem.UnderlyingFund.FundName : string.Empty),
+																AmberbrookFundName = (underlyingFundCapitalCallLineItem.UnderlyingFundCapitalCall != null ?
+																					 underlyingFundCapitalCallLineItem.UnderlyingFundCapitalCall.Fund.FundName : string.Empty),
+																DealName = (underlyingFundCapitalCallLineItem.Deal != null ?
+																			underlyingFundCapitalCallLineItem.Deal.DealName : string.Empty),
+																underlyingFundCapitalCallLineItem.Amount,
+																underlyingFundCapitalCallLineItem.CapitalCallDate,
+																underlyingFundCapitalCallLineItem.ReceivedDate,
+															}).ToList();
+				model.UnderlyingFundCashDistributions = (from underlyingFundCashDistribution in context.UnderlyingFundCashDistributions
+														 select new {
+															 UnderlyingFundName = (underlyingFundCashDistribution.UnderlyingFund != null ?
+																					underlyingFundCashDistribution.UnderlyingFund.FundName : string.Empty),
+															 AmberbrookFundName = (underlyingFundCashDistribution.UnderlyingFund != null ?
+																					underlyingFundCashDistribution.Fund.FundName : string.Empty),
+															 underlyingFundCashDistribution.Amount,
+															 CashDistributionType = (underlyingFundCashDistribution.CashDistributionType != null ?
+																					  underlyingFundCashDistribution.CashDistributionType.Name : string.Empty),
+															 underlyingFundCashDistribution.NoticeDate,
+															 underlyingFundCashDistribution.PaidDate,
+															 underlyingFundCashDistribution.PaidON,
+															 underlyingFundCashDistribution.ReceivedDate,
+															 PostRecordDateTransaction = underlyingFundCashDistribution.IsPostRecordDateTransaction,
+															 Reconciled = underlyingFundCashDistribution.IsReconciled,
+															 underlyingFundCashDistribution.ReconciliationMethod,
+															 underlyingFundCashDistribution.ChequeNumber,
+														 }).ToList();
+				model.UnderlyingFundCashDistributionLineItems = (from underlyingFundCashDistributionLineItem in context.CashDistributions
+																 select new {
+																	 UnderlyingFundName = (underlyingFundCashDistributionLineItem.UnderlyingFund != null ?
+																					   underlyingFundCashDistributionLineItem.UnderlyingFund.FundName : string.Empty),
+																	 AmberbrookFundName = (underlyingFundCashDistributionLineItem.UnderlyingFundCashDistribution != null ?
+																						  underlyingFundCashDistributionLineItem.UnderlyingFundCashDistribution.Fund.FundName : string.Empty),
+																	 DealName = (underlyingFundCashDistributionLineItem.Deal != null ?
+																				 underlyingFundCashDistributionLineItem.Deal.DealName : string.Empty),
+																	 underlyingFundCashDistributionLineItem.Amount,
+																	 underlyingFundCashDistributionLineItem.DistributionDate,
+																 }).ToList();
+				model.UnderlyingFundStockDistributions = (from underlyingFundStockDistribution in context.UnderlyingFundStockDistributions
+														  select new {
+															  UnderlyingFundName = (underlyingFundStockDistribution.UnderlyingFund != null ?
+																				 underlyingFundStockDistribution.UnderlyingFund.FundName : string.Empty),
+															  AmberbrookFundName = (underlyingFundStockDistribution.UnderlyingFund != null ?
+																					 underlyingFundStockDistribution.Fund.FundName : string.Empty),
+															  underlyingFundStockDistribution.NumberOfShares,
+															  underlyingFundStockDistribution.PurchasePrice,
+															  underlyingFundStockDistribution.FMV,
+															  underlyingFundStockDistribution.DistributionDate,
+															  underlyingFundStockDistribution.NoticeDate,
+															  SecurityType = (underlyingFundStockDistribution.SecurityType != null ?
+															  underlyingFundStockDistribution.SecurityType.Name : string.Empty),
+															  underlyingFundStockDistribution.TaxCostBase,
+															  underlyingFundStockDistribution.TaxCostDate,
+														  }).ToList();
+				model.UnderlyingFundStockDistributionLineItems = (from underlyingFundStockDistributionLineItem in context.UnderlyingFundStockDistributionLineItems
+																  select new {
+																	  UnderlyingFundName = (underlyingFundStockDistributionLineItem.UnderlyingFund != null ?
+																				underlyingFundStockDistributionLineItem.UnderlyingFund.FundName : string.Empty),
+																	  AmberbrookFundName = (underlyingFundStockDistributionLineItem.UnderlyingFundStockDistribution != null ?
+																						   underlyingFundStockDistributionLineItem.UnderlyingFundStockDistribution.Fund.FundName : string.Empty),
+																	  DealName = (underlyingFundStockDistributionLineItem.Deal != null ?
+																				  underlyingFundStockDistributionLineItem.Deal.DealName : string.Empty),
+																	  underlyingFundStockDistributionLineItem.NumberOfShares,
+																	  underlyingFundStockDistributionLineItem.FMV,
+																  }).ToList();
+
+				return model;
+			}
+		}
+
+		public UnderlyingDirectExportExcelModel GetAllUnderlyingDirectExportList() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				UnderlyingDirectExportExcelModel model = new UnderlyingDirectExportExcelModel();
+
+				model.Directs = (from direct in context.Issuers
+								 join country in context.COUNTRies on direct.CountryID equals country.CountryID into countries
+								 from country in countries.DefaultIfEmpty()
+								 where direct.IsGP == false
+								 select new {
+									 CompanyName = direct.Name,
+									 direct.ParentName,
+									 Country = (country != null ? country.CountryName : string.Empty),
+									 direct.AnnualMeetingDate,
+									 direct.IsGP
+								 }).ToList();
+
+				model.Equities = (from equity in context.Equities
+								  select new {
+									  CompanyName = (equity.Issuer != null ? equity.Issuer.Name : string.Empty),
+									  equity.Symbol,
+									  EquityType = (equity.EquityType != null ? equity.EquityType.Equity : string.Empty),
+									  ShareClassType = (equity.ShareClassType != null ? equity.ShareClassType.ShareClass : string.Empty),
+									  Currency = (equity.Currency != null ? equity.Currency.Currency1 : string.Empty),
+									  Industry = (equity.Industry != null ? equity.Industry.Industry1 : string.Empty),
+									  equity.ISIN,
+									  equity.Public,
+									  equity.Comments
+								  }).ToList();
+
+				model.FixedIncomes = (from fixedIncome in context.FixedIncomes
+									  select new {
+										 CompanyName = (fixedIncome.Issuer != null ? fixedIncome.Issuer.Name : string.Empty),
+										 fixedIncome.Symbol,
+										 FixedIncomeType = (fixedIncome.FixedIncomeType != null ? fixedIncome.FixedIncomeType.FixedIncomeType1 : string.Empty),
+										 Currency = (fixedIncome.Currency != null ? fixedIncome.Currency.Currency1 : string.Empty),
+										 Industry = (fixedIncome.Industry != null ? fixedIncome.Industry.Industry1 : string.Empty),
+										 fixedIncome.CouponInformation,
+										 fixedIncome.FaceValue,
+										 fixedIncome.FirstAccrualDate,
+										 fixedIncome.FirstCouponDate,
+										 fixedIncome.Frequency,
+										 fixedIncome.ISIN,
+										 fixedIncome.IssuedDate,
+										 fixedIncome.Maturity,
+									  }).ToList();
+
+				return model;
+			}
+		}
+
 		#endregion
 
 		#region Deal Contact
@@ -1845,12 +2356,12 @@ namespace DeepBlue.Controllers.Admin {
 		public List<DealContactList> GetAllDealContacts(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<DealContactList> query = (from contact in GetDealContactQuery(context.Contacts)
-															   select new DealContactList {
-																   ContactId = contact.ContactID,
-																   ContactName = contact.ContactName,
-																   ContactTitle = contact.Title,
-																   ContactNotes = contact.Notes,
-															   });
+													 select new DealContactList {
+														 ContactId = contact.ContactID,
+														 ContactName = contact.ContactName,
+														 ContactTitle = contact.Title,
+														 ContactNotes = contact.Notes,
+													 });
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<DealContactList> paginatedList = new PaginatedList<DealContactList>(query, pageIndex, pageSize);
 				foreach (var contact in paginatedList) {
@@ -1943,9 +2454,9 @@ namespace DeepBlue.Controllers.Admin {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				USER user = context.USERs.SingleOrDefault(deleteUser => deleteUser.UserID == id);
 				if (user != null) {
-						context.USERs.DeleteObject(user);
-						context.SaveChanges();
-						return true;
+					context.USERs.DeleteObject(user);
+					context.SaveChanges();
+					return true;
 				}
 				return false;
 			}
@@ -2031,13 +2542,13 @@ namespace DeepBlue.Controllers.Admin {
 		public List<AutoCompleteList> FindDocumentTypes(string documentTypeName, int documentSectionId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> documentTypeListQuery = (from documentType in context.DocumentTypes
-															   where documentType.DocumentSectionID == documentSectionId
-															   orderby documentType.DocumentTypeName
-															   select new AutoCompleteList {
-																   id = documentType.DocumentTypeID,
-																   label = documentType.DocumentTypeName,
-																   value = documentType.DocumentTypeName
-															   }).OrderBy(list => list.label);
+																	  where documentType.DocumentSectionID == documentSectionId
+																	  orderby documentType.DocumentTypeName
+																	  select new AutoCompleteList {
+																		  id = documentType.DocumentTypeID,
+																		  label = documentType.DocumentTypeName,
+																		  value = documentType.DocumentTypeName
+																	  }).OrderBy(list => list.label);
 				return new PaginatedList<AutoCompleteList>(documentTypeListQuery, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
@@ -2048,13 +2559,83 @@ namespace DeepBlue.Controllers.Admin {
 		public List<Log> GetAllLogs(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<Log> query = (from log in context.Logs.Include("LogDetails")
-																orderby log.LogID descending
-																select log);
+										 orderby log.LogID descending
+										 select log);
 				PaginatedList<Log> paginatedList = new PaginatedList<Log>(query, pageIndex, pageSize);
 				totalRows = paginatedList.TotalCount;
 				return paginatedList;
 			}
 		}
+		#endregion
+
+		#region  SellerType
+
+		public List<Models.Entity.SellerType> GetAllSellerTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.SellerType> query = (from sellerType in context.SellerTypes
+															  select sellerType);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<Models.Entity.SellerType> paginatedList = new PaginatedList<Models.Entity.SellerType>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public SellerType FindSellerType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.SellerTypes.SingleOrDefault(field => field.SellerTypeID == id);
+			}
+		}
+
+		public bool SellerTypeNameAvailable(string sellerTypeName, int sellerTypeId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from sellerType in context.SellerTypes
+						 where sellerType.SellerType1 == sellerTypeName && sellerType.SellerTypeID != sellerTypeId
+						 select sellerType.SellerTypeID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteSellerType(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				SellerType sellerType = context.SellerTypes.SingleOrDefault(type => type.SellerTypeID == id);
+				if (sellerType != null) {
+					if (sellerType.Deals.Count == 0) {
+						context.SellerTypes.DeleteObject(sellerType);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveSellerType(SellerType sellerType) {
+			return sellerType.Save();
+		}
+
+		public List<SellerType> GetAllSellerTypes() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from sellerType in context.SellerTypes
+						where sellerType.Enabled == true
+						orderby sellerType.SellerType1
+						select sellerType).ToList();
+			}
+		}
+
+		public List<AutoCompleteList> FindSellerTypes(string sellerTypeName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> query = (from sellerType in context.SellerTypes
+													  where sellerType.SellerType1.StartsWith(sellerTypeName)
+													  orderby sellerType.SellerType1
+													  select new AutoCompleteList {
+														  id = sellerType.SellerTypeID,
+														  label = sellerType.SellerType1,
+														  value = sellerType.SellerType1
+													  });
+				return new PaginatedList<AutoCompleteList>(query, 1, AutoCompleteOptions.RowsLength);
+			}
+		}
+
 		#endregion
 
 	}

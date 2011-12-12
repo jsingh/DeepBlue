@@ -1,8 +1,60 @@
-﻿deal.addDealDocument=function () {
+﻿$(document).ready(function () {
+	fileUpload.url="/Deal/CreateDealFundDocument";
+	fileUpload.onValid=function () {
+		var frm=$("#frmDealDocument");
+		var dtypeid=parseInt($("#DocumentTypeId",frm).val());
+		if(isNaN(dtypeid)) { dtypeid=0; }
+		if(dtypeid<=0) {
+			jAlert("Document Type is required");
+			return false;
+		}
+		var dealId=deal.getDealId();
+		if(dealId==0) {
+			deal.onDealSuccess=null;
+			if(fileUpload.onUploadStart) {
+				deal.onDealSuccess=function () { fileUpload.onUploadStart(); }
+			}
+			deal.saveDeal();
+			return false;
+		}
+	};
+	fileUpload.onCreateBox=function (preview) {
+		$("#FilesList",fileUpload.form).append(preview);
+	};
+	fileUpload.onBeforeSend=function () {
+		var loading=$("#SpnDealDocLoading");
+		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Uploading...");
+		var frm=$("#frmDealDocument");
+		var p=$(frm).serializeForm();
+		p[p.length]={ "name": "DealId","value": deal.getDealId() };
+		return p;
+	};
+	fileUpload.onUploadFinished=function (index,file,jsonData,timeDiff) {
+		$("#preview_"+index).remove();
+		if($.trim(jsonData.data)!="") {
+			jAlert(jsonData.data);
+			return false;
+		}
+	};
+	fileUpload.onProgress=function (i,file,progress) {
+		$("#prsbar_"+i).css("width",progress+"%");
+	};
+	fileUpload.onAfterAll=function () {
+		fileUpload.onUploadStart=null;
+		var loading=$("#SpnDealDocLoading");
+		loading.empty();
+		deal.documentRefresh();
+	};
+});
+deal.addDealDocument=function () {
 	$("#AddDealDocument").show();
 };
 deal.saveDealDocument=function (frm) {
 	try {
+		if(fileUpload.onUploadStart) {
+			fileUpload.onUploadStart();
+			return false;
+		}
 		var loading=$("#SpnDealDocLoading");
 		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Uploading...");
 		var dealId=deal.getDealId();
@@ -24,6 +76,8 @@ deal.saveDealDocument=function (frm) {
 							jAlert("Document Saved");
 							deal.documentRefresh();
 							jHelper.resetFields(frm);
+							$("#DocumentFundName",frm).val("SEARCH AMBERBROOK FUND");
+							$("#DocumentType",frm).val("Search");
 						}
 					}
 					,error: function (data,status,e) {
@@ -95,12 +149,14 @@ deal.documentChangeUploadType=function (uploadType) {
 		LinkRow.style.display="";
 };
 deal.documentInfoReset=function () {
-	jHelper.resetFields($("#AddDealDocument"));
+	var target=$("#AddDealDocument");
+	$(".preview",target).remove();
+	jHelper.resetFields(target);
 };
 deal.documentSetUp=function () {
 	try {
 		$("#DealDocumentList").flexigrid({
-			usepager: false
+			usepager: true
 				,url: "/Deal/DealFundDocumentList"
 				,onSubmit: function (p) {
 					p.params=null;
@@ -116,6 +172,11 @@ deal.documentSetUp=function () {
 				,height: 200
 				,resizeWidth: false
 				,useBoxStyle: false
+				,onSuccess: function (t,p) {
+					if($("tbody tr",t).length<=0) {
+						deal.addDealDocument();
+					}
+				}
 		});
 		$("#DocumentFundName").autocomplete({ source: "/Fund/FindFunds",minLength: 1,select: function (event,ui) { $("#DocumentFundId").val(ui.item.id); },appendTo: "body",delay: 300 });
 	} catch(e) { jAlert(e); }

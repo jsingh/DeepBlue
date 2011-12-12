@@ -166,20 +166,40 @@
 	,checkReconcile: function (chk,txtid,dt) {
 		if(chk.checked) {
 			var txt=$("#"+txtid);
+			var PaymentDate=$("#"+txtid.replace("PaidOn","PaymentDate"));
 			if($.trim(txt.val())=="") {
-				txt.val(dt);
+				txt.val(PaymentDate.val());
 			}
 		}
+	}
+	,checkParentId: function (pid,txt,target) {
+		$(".datefield",target).each(function () {
+			var parentid=parseInt($(this).attr("parentid"));
+			if(isNaN(parentid)) { parentid=0; }
+			if(parentid>0) {
+				if(parentid==pid) {
+					this.value=txt.value;
+				}
+			}
+		});
 	}
 	,applyDatePicker: function (target) {
 		$(".datefield",target).each(function () {
 			var txt=this;
-			$(this).datepicker({ changeMonth: true,changeYear: true,onSelect: function () {
+			$(this)
+			.datepicker({ changeMonth: true,changeYear: true,onSelect: function () {
 				setTimeout(function () {
-					var tr=$(txt).parents("tr:first");
-					var chk=$(":checkbox",tr).get(0);
-					if($.trim(txt.value)!="") {
-						if(chk) { chk.checked=true; }
+					var parentid=parseInt($(txt).attr("parentid"));
+					if(isNaN(parentid)) { parentid=0; }
+					if(parentid>0) {
+						dealReconcile.checkParentId(parentid,txt,target);
+					}
+					if(txt.id.indexOf("PaidOn")>0) {
+						var tr=$(txt).parents("tr:first");
+						var chk=$(":checkbox",tr).get(0);
+						if($.trim(txt.value)!="") {
+							if(chk) { chk.checked=true; }
+						}
 					}
 				},100);
 			}

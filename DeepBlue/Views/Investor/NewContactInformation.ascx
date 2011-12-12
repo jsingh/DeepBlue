@@ -39,7 +39,7 @@
 			<%: Html.LabelFor(model => model.ContactWebAddress) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.TextBox("${i}_" + "ContactWebAddress", "${ContactWebAddress}", new { @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
+			<%: Html.TextBox("${i}_" + "ContactWebAddress", "${ContactWebAddress}", new { @webaddress = "true", @onblur = "javascript:jHelper.checkWebAddress(this);" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.LabelFor(model => model.ContactAddress1) %>

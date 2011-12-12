@@ -115,7 +115,7 @@ namespace DeepBlue.Controllers.Document {
 				InvestorFundDocument investorFundDocument = new InvestorFundDocument();
 				investorFundDocument.CreatedBy = Authentication.CurrentUser.UserID;
 				investorFundDocument.CreatedDate = DateTime.Now;
-				investorFundDocument.DocumentDate = model.DocumentDate;
+				investorFundDocument.DocumentDate = DateTime.Now;
 				investorFundDocument.DocumentTypeID = model.DocumentTypeId;
 				investorFundDocument.EntityID = Authentication.CurrentEntity.EntityID;
 				investorFundDocument.LastUpdatedBy = Authentication.CurrentUser.UserID;

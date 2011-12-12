@@ -250,7 +250,7 @@
 				} else {
 					$(t).html(v);
 					var p=$(target).offset();
-					$(t).css({ "margin-top": "-49px","left": p.left+50 })
+					$(t).css({ "margin-top": "-29px","left": p.left+50 })
 					$(t).fadeIn('slow');
 				}
 			},100);
@@ -264,8 +264,8 @@
 		$("tr:odd",target).removeClass("row").removeClass("arow").addClass("arow");
 	}
 	,applyFlexGridClass: function (target) {
-		$("tr:even",target).removeClass("erow");
-		$("tr:odd",target).removeClass("erow").addClass("erow");
+		$("tr:even",target).removeClass("erow").addClass("erow");
+		$("tr:odd",target).removeClass("erow").addClass("grow");
 	}
 	,applyFlexEditGridClass: function (target) {
 		$("tr.disprow:even",target).removeClass("erow");
@@ -273,13 +273,14 @@
 	}
 	,expandExpMenu: function (that) {
 		var pos=$(that).offset();
-		$(".exportlist").css({ "top": pos.top+13,"left": pos.left }).show();
+		$(".exportlist").css({ "z-index": 9999,"top": pos.top+13,"left": pos.left }).show();
 	}
 	,chooseExpMenu: function (id,name) {
 		$("#ExportId").val(id);
 		$("#lnkExportName").html(name);
 		$(".exportlist").hide();
 	}
+	,jqTransCheckBox: function (target) { try { $(":checkbox",target).each(function () { if(this.style.display!="none") { $(this).jqTransCheckBox(); } }); } catch(e) { } }
 	,loadingHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading..."; }
 	,savingHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving..."; }
 	,deleteHTML: function () { return "<img src='/Assets/images/ajax.jpg'/>&nbsp;Delete..."; }

@@ -1,62 +1,89 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.EquityDetailModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<div class="line">
-</div>
+{{if EquityId>0}}
+<%using (Html.Form(new { @id = "frmEquity", @onsubmit = "return false" })) {%>
+{{/if}}
 <div class="direct-det">
 	<div id="equitysymboldiv">
 		<div class="editor-label">
 			<%: Html.LabelFor(model => model.EquitySymbol)%>
 		</div>
 		<div class="editor-field">
-			<%: Html.TextBox("EquitySymbol", "${EquitySymbol}")%>
+			<%: Html.TextBox("EquitySymbol", "${EquitySymbol}", new { @class = "hide" })%>
+			<%: Html.Span("${EquitySymbol}", new { @class = "show" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.LabelFor(model => model.EquityISINO) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.TextBox("EquityISINO", "${EquityISINO}")%>
+			<%: Html.TextBox("EquityISINO", "${EquityISINO}", new { @class = "hide" })%>
+			<%: Html.Span("${EquityISINO}", new { @class = "show" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.LabelFor(model => model.EquityCurrencyId)%>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownList("EquityCurrencyId", Model.Currencies, new { @id = "EquityCurrencyId", @val = "${CurrencyId}", @refresh="true", @action="Currency" })%>
+			<%: Html.DropDownList("EquityCurrencyId", Model.Currencies, new { @class = "hide", @id = "EquityCurrencyId", @val = "${EquityCurrencyId}", @refresh = "true", @action = "Currency" })%>
+			<%: Html.Span("${EquityCurrency}", new { @class = "show" })%>
 		</div>
 		<div class="editor-label">
 			<%: Html.LabelFor(model => model.EquitySecurityTypeId)%>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownList("EquitySecurityTypeId", Model.EquitySecurityTypes, new { @id = "EquitySecurityTypeId", @val = "${EquitySecurityTypeId}" })%>
+			<%: Html.DropDownList("EquitySecurityTypeId", Model.EquitySecurityTypes, new { @class = "hide", @id = "EquitySecurityTypeId", @val = "${EquitySecurityTypeId}" })%>
+			<%: Html.Span("${EquitySecurityType}", new { @class = "show" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.LabelFor(model => model.EquityIndustryId)%>
 		</div>
 		<div class="editor-field">
-			<%: Html.TextBox("EquityIndustry", "${EquityIndustry}", new { @id = "EquityIndustry"  })%>
+			<%: Html.TextBox("EquityIndustry", "${EquityIndustry}", new { @class = "hide", @id = "EquityIndustry"  })%>
 			<%: Html.Hidden("EquityIndustryId", "${EquityIndustryId}", new { @id = "EquityIndustryId" })%>
+			<%: Html.Span("${EquityIndustry}", new { @class = "show" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.LabelFor(model => model.ShareClassTypeId) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownList("ShareClassTypeId", Model.ShareClassTypes, new { @id = "ShareClassType", @val = "${ShareClassTypeId}", @refresh = "true", @action = "ShareClassType" })%>
+			<%: Html.DropDownList("ShareClassTypeId", Model.ShareClassTypes, new { @class = "hide", @id = "ShareClassType", @val = "${ShareClassTypeId}", @refresh = "true", @action = "ShareClassType" })%>
+			<%: Html.Span("${ShareClassType}", new { @class = "show" })%>
 		</div>
 		<div class="editor-label">
 			<%: Html.LabelFor(model => model.EquityTypeId) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownList("EquityTypeId", Model.EquityTypes, new { @id = "EquityType", @val = "${EquityTypeId}", @refresh = "true", @action = "EquityType" })%>
+			<%: Html.DropDownList("EquityTypeId", Model.EquityTypes, new { @class = "hide", @id = "EquityType", @val = "${EquityTypeId}", @refresh = "true", @action = "EquityType" })%>
+			<%: Html.Span("${EquityType}", new { @class = "show" })%>
 		</div>
 		<div class="editor-label">
 			<%: Html.LabelFor(model => model.EquityComments) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.TextArea("EquityComments","${EquityComments}", 5, 50, new { })%>
+			<%=Html.jQueryTemplateTextArea("EquityComments","${EquityComments}", 5, 50, new { @class = "hide" })%>
+			<%: Html.Span("${EquityComments}", new { @class = "show" })%>
 		</div>
+		{{if EquityId>0}}
+		<div class="editor-label" style="float: right; width: auto;">
+			<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:dealDirect.cancel(this);" })%>
+		</div>
+		<div class="editor-label show" style="float: right; width: auto;">
+			<%: Html.Image("Editbtn_active.png", new { @onclick = "javascript:dealDirect.edit(this);" })%>
+		</div>
+		<div class="editor-label hide" style="float: right; width: auto;">
+			<%: Html.Image("Modify-Direct_active.png", new { @onclick = "javascript:dealDirect.modifyEquity(this);" })%>
+		</div>
+		<div class="editor-label" style="float: right; width: auto;">
+			<%: Html.Span("", new { @id = "SpnLoading" })%>
+		</div>
+		<%: Html.Hidden("IssuerId", "${IssuerId}")%>
+		{{/if}}
 		<%: Html.Hidden("EquityId", "${EquityId}") %>
 	</div>
 </div>
-<div class="direct-det" style="display:none;">
+{{if EquityId>0}}
+<%}%>
+{{/if}}
+<%--<div class="direct-det" style="display:none;">
 	<div class="line">
 	</div>
 	<br />
@@ -94,3 +121,4 @@
 </div>
 <div class="line">
 </div>
+--%>

@@ -55,12 +55,12 @@
 	,exportData: function () {
 		var exportTypeId=$("#ExportId").val();
 		var url="";
-		var features="width="+1+",height="+1;
+		var width=300;var height=200;var left=(screen.availWidth/2)-(width/2);var top=(screen.availHeight/2)-(height/2);var features="width="+width+",height="+height+",left="+left+",top="+top+",location=no,menubar=no,toobar=no,scrollbars=yes,resizable=yes,status=yes";
 		if(exportTypeId=="1"||exportTypeId=="4") {
 			var frm=$("#frmFeeExpense");
 			url="/Report/ExportDistributionDetail?FundId="+$("#FundId").val()+"&ExportTypeId="+exportTypeId;
 			url+="&StartDate="+$("#StartDate").val()+"&EndDate="+$("#EndDate").val()
-			window.open(url,"exportdeal",features);
+			window.open(url,"exportexcel",features);
 		}
 	}
 }

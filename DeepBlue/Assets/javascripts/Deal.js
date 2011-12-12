@@ -88,6 +88,8 @@
 			$("#DealExpenseTemplate").tmpl(data).appendTo("#DealExpenses");
 
 			$("#DealDocumentTemplate").tmpl(data).appendTo("#DealDocuments");
+			data.SellerInfo.SellerType=data.SellerType;
+			data.SellerInfo.SellerTypeId=data.SellerTypeId;
 			$("#DealSellerInfoTemplate").tmpl(data.SellerInfo).appendTo("#DealSellerInfo");
 			$("#DealUnderlyingFundTemplate").tmpl(data).appendTo("#DealUnderlyingFunds");
 			$("#DealUnderlyingDirectTemplate").tmpl(data).appendTo("#DealUnderlyingDirects");
@@ -99,9 +101,21 @@
 			} else {
 				$("#divPartnerName").hide();
 			}
-			$.each(data.DealExpenses,function (index,item) { deal.loadDealExpenseData(item); });
-			$.each(data.DealUnderlyingFunds,function (index,item) { deal.loadUnderlyingFundData(item); });
-			$.each(data.DealUnderlyingDirects,function (index,item) { deal.loadUnderlyingDirectData(item); });
+			if(data.DealExpenses.length>0) {
+				$.each(data.DealExpenses,function (index,item) { deal.loadDealExpenseData(item); });
+			} else {
+				deal.showMakeNewHeader('MakeNewDEHeader');
+			}
+			if(data.DealUnderlyingFunds.length>0) {
+				$.each(data.DealUnderlyingFunds,function (index,item) { deal.loadUnderlyingFundData(item); });
+			} else {
+				deal.showMakeNewHeader('MakeNewDUFund');
+			}
+			if(data.DealUnderlyingDirects.length>0) {
+				$.each(data.DealUnderlyingDirects,function (index,item) { deal.loadUnderlyingDirectData(item); });
+			} else {
+				deal.showMakeNewHeader('MakeNewDUDirect');
+			}
 
 			var trUF=$("tr:first","#MakeNewDUFund");
 			deal.applyUFAutocomplete(trUF);
@@ -111,6 +125,12 @@
 			$("#Contact").autocomplete({ source: "/Admin/FindDealContacts"
 			,minLength: 1
 			,select: function (event,ui) { $("#ContactId").val(ui.item.id); }
+			,appendTo: "body",delay: 300
+			});
+
+			$("#SellerType").autocomplete({ source: "/Admin/FindSellerTypes"
+			,minLength: 1
+			,select: function (event,ui) { $("#SellerTypeId").val(ui.item.id); }
 			,appendTo: "body",delay: 300
 			});
 
@@ -126,6 +146,8 @@
 			deal.calcDUD();
 			deal.documentSetUp();
 			deal.setupDocumentType();
+			fileUpload.form=$("#frmDealDocument",dealMain);
+			fileUpload.setDropBox($("#dropbox",dealMain));
 			jHelper.jqCheckBox(dealMain);
 
 			$("#DocumentDate").datepicker({ changeMonth: true,changeYear: true });
@@ -304,7 +326,10 @@
 			var url="/Deal/CreateSellerInfo";
 			var param=$(frm).serialize();
 			$.post(url,param,function (data) {
-				$("#SpnSellerUpdateLoading").html("");if(data!="") { jAlert(data); }
+				$("#SpnSellerUpdateLoading").html("");
+				if(data!="") { jAlert(data); } else {
+					jAlert("Deal Seller Information Saved");
+				}
 			});
 		} else {
 			deal.onDealSuccess=function () { deal.saveSellerInfo(frm); }

@@ -25,7 +25,6 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage = "Address1 is required")]
 			[StringLength(40, ErrorMessage = "Address1 must be under 40 characters.")]
 			public global::System.String Address1 {
 				get;

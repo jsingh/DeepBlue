@@ -65,7 +65,7 @@
 			});
 		}
 	}
-	,save: function (img,id) {
+	,save: function (img,id,isNew) {
 		try {
 			var frm=$(img).parents("form:first");
 			var frmUnderlyingFund=$(frm).parents(".section-det:first");
@@ -77,7 +77,6 @@
 				var url="/Deal/CreateUnderlyingFundContact";
 				var loading=$("#Loading",frm);
 				loading.html(jHelper.savingHTML());
-
 				$.post(url,param,function (data) {
 					loading.empty();
 					var arr=data.split("||");
@@ -85,7 +84,11 @@
 						jAlert(arr[1]);
 					} else {
 						jAlert("Underlying Fund Contact Saved");
-						var box=$("#Edit"+ufid);
+						var box;
+						box=$("#Edit"+ufid,underlyingFund.currentDetailBox);
+						if(!box.get(0)) {
+							box=$("#Edit0",underlyingFund.currentDetailBox);
+						}
 						$.getJSON("/Deal/EditUnderlyingFundContact?_"+(new Date).getTime()+"&id="+arr[0],function (loadData) {
 							var tbl=$("#ContactList",box);
 							var tr=$("#Row"+id,tbl);
@@ -104,9 +107,9 @@
 				underlyingFund.tempSave=true;
 				underlyingFund.onAfterUnderlyingFundSave=function (ufid) {
 					$("#UnderlyingFundId",frm).val(ufid);
-					underlyingFundContact.save(img,id);
+					underlyingFundContact.save(img,id,true);
 				}
-				$("#btnSave",frmUnderlyingFund).click();
+				underlyingFund.save(0);
 			}
 		} catch(e) { jAlert(e); }
 		return false;
@@ -139,7 +142,7 @@
 	,onInit: function (g) {
 		var box=$(g.bDivBox).parents("#AddUnderlyingFund");
 		var ufid=$("#UnderlyingFundId",box).val();
-		var data={ "UnderlyingFundId": ufid};
+		var data={ "UnderlyingFundId": ufid };
 		$("#AddContactButtonTemplate").tmpl(data).prependTo(g.pDiv);
 	}
 	,onTemplate: function (tbody,data) {

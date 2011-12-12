@@ -30,15 +30,16 @@ namespace DeepBlue.Controllers.Transaction {
 		//
 		// GET: /Transaction/
 		public ActionResult Index() {
-			ViewData["MenuName"] = "Investor";
+			ViewData["MenuName"] = "InvestorManagement";
 			return View();
 		}
 		
 		//
 		// GET: /Transaction/New
 		public ActionResult New() {
-			ViewData["MenuName"] = "Investor";
-			ViewData["PageName"] = "Investor Commitment";
+			ViewData["MenuName"] = "InvestorManagement";
+			ViewData["SubmenuName"] = "InvestorCommitment";
+			ViewData["PageName"] = "InvestorCommitment";
 			CreateModel model = new CreateModel();
 			List<SelectListItem> emptyList = SelectListFactory.GetEmptySelectList();
 			emptyList.Add(new SelectListItem { Text = "Add Fund Close", Value = "-1" });

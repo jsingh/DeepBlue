@@ -9,7 +9,7 @@
 <div class="expandheader">
 	<div class="expandbtn">
 		<div class="expandimg" id="img">
-			ADD UNDERLYING FUNDS</div>
+			UNDERLYING FUNDS</div>
 		<div class="expandtitle" id="title">
 			<div class="expandtitle">
 				Underlying Funds</div>

@@ -48,10 +48,10 @@
 	,exportDeal: function () {
 		var exportTypeId=$("#ExportId").val();
 		var url="";
-		var features="width="+1+",height="+1;
+		var width=300;var height=200;var left=(screen.availWidth/2)-(width/2);var top=(screen.availHeight/2)-(height/2);var features="width="+width+",height="+height+",left="+left+",top="+top+",location=no,menubar=no,toobar=no,scrollbars=yes,resizable=yes,status=yes";
 		if(exportTypeId=="1"||exportTypeId=="4") {
 			url="/Report/ExportCapitalCallDetail?CapitalCallId="+$("#CapitalCallId").val()+"&FundId="+$("#FundId").val()+"&ExportTypeId="+exportTypeId;
-			window.open(url,"exportdeal",features);
+			window.open(url,"exportexcel",features);
 		}
 	}
 }

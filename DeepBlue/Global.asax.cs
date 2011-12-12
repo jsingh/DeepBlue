@@ -15,9 +15,8 @@ namespace DeepBlue {
 	
 	public class MvcApplication : System.Web.HttpApplication {
 
- 
 		public static void RegisterRoutes(RouteCollection routes) {
-			
+
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 		 
 			routes.MapRoute(

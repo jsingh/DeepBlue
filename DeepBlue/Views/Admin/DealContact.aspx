@@ -123,7 +123,7 @@
 					Web Address</label>
 			</div>
 			<div class="editor-field">
-				<%: Html.TextBox("WebAddress", "${row.cell[6]}", new { @class = "wm" })%>
+				<%: Html.TextBox("WebAddress", "${row.cell[6]}", new { @class = "wm", @webaddress = "true" })%>
 			</div>
 			<div class="editor-label">
 				<label>

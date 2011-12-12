@@ -1,9 +1,7 @@
-﻿.container-main {
+﻿.container-main
+,#content {
 	background-image: url("../images/menu_bg_bot.gif");
 	background-repeat: repeat-y;
-}
-#content, #header, #footer, #submenu {
-	min-width: 1270px;
 }
 #leftmenu {
 	float: left;

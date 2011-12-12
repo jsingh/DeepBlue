@@ -23,7 +23,7 @@
 			</th>
 			<th style="text-align:center;width:10%;">
 				Payment Date
-			</th>
+			</th>                          
 			<th style="text-align:center;width:12%;">
 				Paid On
 			</th>
@@ -51,7 +51,7 @@
 				${formatCurrency(Amount)}
 			</td>
 			<td style="text-align:center">
-				${formatDate(PaymentDate)}
+				<%: Html.TextBox("${i}_PaymentDate", "${formatDate(PaymentDate)}", new { @parentid = "${ParentId}", @id = "${ReconcileTypeId}_${i}_PaymentDate", @class = "datefield" })%>
 			</td>
 			<td style="text-align:center">
 				<%: Html.TextBox("${i}_PaidOn", "", new { @id = "${ReconcileTypeId}_${i}_PaidOn", @class = "datefield" })%>

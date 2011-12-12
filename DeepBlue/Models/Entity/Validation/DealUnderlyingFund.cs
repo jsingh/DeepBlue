@@ -24,18 +24,18 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[Required(ErrorMessage = "RecordDate is required")]
-			[DateRange()]
-			public global::System.DateTime RecordDate {
+			[DateRange(ErrorMessage = "RecordDate is required")]
+			public Nullable<global::System.DateTime> RecordDate {
 				get;
 				set;
 			}
 
-            [Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "CommittedAmount is required")]
+            [Range(typeof(decimal), "0.01", "79228162514264337593543950335", ErrorMessage = "CommittedAmount is required")]
 			public global::System.Decimal CommittedAmount {
 				get;
 				set;
 			}
+
 			#endregion
 		}
 

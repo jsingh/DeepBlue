@@ -63,6 +63,8 @@
 			<%: Html.ActionLink("DealContact", "DealContact", "Admin", null, new { @class = (ViewData["PageName"] == "DealContact" ? "sel" : "") })%></li>
 		<li class="<%=(ViewData["PageName"] == "EquityType" ? "sel" : "")%>">
 			<%: Html.ActionLink("Equity Type", "EquityType", "Admin", null, new { @class = (ViewData["PageName"] == "EquityType" ? "sel" : "") })%></li>
+		<li class="<%=(ViewData["PageName"] == "SellerType" ? "sel" : "")%>">
+			<%: Html.ActionLink("Seller Type", "SellerType", "Admin", null, new { @class = (ViewData["PageName"] == "SellerType" ? "sel" : "") })%></li>
 	</ul>
 </div>
 <%} %>
@@ -71,7 +73,7 @@
 <%using (Html.LeftMenu()) {%>
 <ul>
 	<li class="<%=(ViewData["PageName"] == "User" ? "sel" : "")%>">
-		<%: Html.ActionLink("User", "User", "Admin", null, new { @class = (ViewData["PageName"] == "User" ? "sel" : "") })%></li>
+		<%: Html.ActionLink("User", "Users", "Admin", null, new { @class = (ViewData["PageName"] == "User" ? "sel" : "") })%></li>
 </ul>
 <%} %>
 <%break;%>
@@ -83,5 +85,12 @@
 </ul>
 <%} %>
 <%break;%>
+<%case "ExportExcel":%>
+<%using (Html.LeftMenu()) {%>
+<ul>
+	<li class="<%=(ViewData["PageName"] == "ExportExcel" ? "sel" : "")%>">
+		<%: Html.ActionLink("Export Excel", "Export", "Admin", null, new { @class = (ViewData["PageName"] == "ExportExcel" ? "sel" : "") })%></li>
+</ul>
+<%} %>
+<%break;%>
 <%}%>
- 

@@ -14,6 +14,7 @@ namespace DeepBlue.Models.Deal {
 
 		public CreateUnderlyingFundModel() {
 			Country = (int)DeepBlue.Models.Admin.Enums.DefaultCountry.USA;
+			CountryName = "United States";
 		}
 
 		public int UnderlyingFundId { get; set; }
@@ -40,6 +41,8 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Fund Type")]
 		public int FundTypeId { get; set; }
 
+		public string FundType { get; set; }
+
 		[Required(ErrorMessage = "GP is required")]
 		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "GP is required")]
 		[DisplayName("Issuer")]
@@ -64,14 +67,22 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Industry")]
 		public int? IndustryId { get; set; }
 
+		public string Industry { get; set; }
+
 		[DisplayName("Geography")]
 		public int? GeographyId { get; set; }
+
+		public string Geography { get; set; }
 
 		[DisplayName("Reporting")]
 		public int? ReportingFrequencyId { get; set; }
 
+		public string ReportingFrequency { get; set; }
+
 		[DisplayName("Reporting Type")]
 		public int? ReportingTypeId { get; set; }
+
+		public string ReportingType { get; set; }
 
 		[DisplayName("Fund Structure")]
 		public int? FundStructureId { get; set; }

@@ -50,8 +50,8 @@
 }
 #ReportContent.dealdetail {
 	width: 968px;
+	margin:0 auto;
 }
-
 #ReportContent td.title {
 	font-size: 23px;
 	font-weight: bold;
@@ -183,14 +183,8 @@
 	float:left;
 }
 #ReportDetail .flexigrid div.pDiv {
-	    line-height: 25px;
-    min-height: 25px;
-    margin:0; padding: 0;
+	 height: 30px;
 } 
-#ReportDetail .flexigrid .pDiv .pGLoading {
-	margin:0;
-	padding:0 0 0 18px;
-}
 .editor-label input[type="text"] {
 	width: 115px;
 }
