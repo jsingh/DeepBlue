@@ -16,7 +16,15 @@ namespace DeepBlue.Helpers {
 			PageSize = pageSize;
 			TotalCount = source.Count();
 			TotalPages = (int)Math.Ceiling(TotalCount / (double)PageSize);
-			
+			this.AddRange(source.Skip(PageIndex * PageSize).Take(PageSize));
+		}
+
+		public PaginatedList(IQueryable<T> source, int pageIndex, int pageSize, ref int totalCount) {
+			PageIndex = pageIndex - 1;
+			PageSize = pageSize;
+			TotalCount = source.Count();
+			TotalPages = (int)Math.Ceiling(TotalCount / (double)PageSize);
+			totalCount = TotalCount;
 			this.AddRange(source.Skip(PageIndex * PageSize).Take(PageSize));
 		}
  

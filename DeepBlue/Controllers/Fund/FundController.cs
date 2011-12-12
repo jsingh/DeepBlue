@@ -31,8 +31,9 @@ namespace DeepBlue.Controllers.Fund {
 		//
 		// GET: /Fund/
 		public ActionResult Index(int? id) {
-			ViewData["MenuName"] = "Fund Tracker";
-			ViewData["PageName"] = "Fund Setup";
+			ViewData["MenuName"] = "FundManagement";
+			ViewData["SubmenuName"] = "AmberbrookFundLibrary";
+			ViewData["PageName"] = "AmberbrookFundLibrary";
 			CreateModel model = FindFundDetail(0);
 			model.MultiplierTypes = SelectListFactory.GetMultiplierTypeList(FundRepository.GetAllMultiplierTypes());
 			model.InvestorTypes = SelectListFactory.GetInvestorTypeSelectList(AdminRepository.GetAllInvestorTypes());
@@ -69,7 +70,7 @@ namespace DeepBlue.Controllers.Fund {
 		public JsonResult GetAllFunds(int pageIndex, int pageSize) {
 			return Json(FundRepository.GetAllFunds(pageIndex, pageSize), JsonRequestBehavior.AllowGet);
 		}
-
+		
 		//
 		// GET: /Fund/FindFunds
 		[HttpGet]

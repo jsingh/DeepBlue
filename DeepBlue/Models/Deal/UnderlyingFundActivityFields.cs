@@ -39,7 +39,6 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Due Date")]
 		public DateTime? NoticeDate { get; set; }
 
-		[Required(ErrorMessage = "Received Date is required")]
 		[DateRange()]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
 		[DisplayName("Received Date")]

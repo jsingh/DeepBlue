@@ -16,7 +16,8 @@ namespace DeepBlue.Controllers.Deal {
 		List<AutoCompleteList> FindDeals(string dealName, int? fundId);
 		bool DealNameAvailable(string dealName, int dealId, int fundId);
 		int GetMaxDealNumber(int fundId);
-		List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, bool? isNotClose);
+		List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, bool? isNotClose, int? fundId);
+		List<DealFundListModel> GetAllCloseDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		object GetDealDetail(int dealId);
 		int FindLastDealId();
 		bool DeleteDeal(int dealId);
@@ -32,7 +33,7 @@ namespace DeepBlue.Controllers.Deal {
 		#region DealFundDocument
 		DealFundDocument FindDealFundDocument(int dealFundDocumentId);
 		IEnumerable<ErrorInfo> SaveDealFundDocument(DealFundDocument dealFundDocument);
-		List<DealFundDocumentList> GetAllDealFundDocuments(int dealId);
+		List<DealFundDocumentList> GetAllDealFundDocuments(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int dealId);
 		bool DeleteDealFundDocument(int dealFundDocumentId);
 		#endregion
 
@@ -66,6 +67,7 @@ namespace DeepBlue.Controllers.Deal {
 		IEnumerable<ErrorInfo> SaveDealClosing(DealClosing dealClosing);
 		CreateDealCloseModel FindDealClosingModel(int dealClosingId, int dealId);
 		CreateDealCloseModel GetFinalDealClosingModel(int dealId);
+		object GetFinalDealDetail(int dealId);
 		DealClosing FindDealClosing(int dealClosingId);
 		List<DealClosing> GetAllDealClosing(int dealId);
 		int GetMaxDealClosingNumber(int dealId);
@@ -121,6 +123,13 @@ namespace DeepBlue.Controllers.Deal {
 		List<UnderlyingFundCashDistributionModel> GetAllUnderlyingFundCashDistributions(int underlyingFundId);
 		bool DeleteUnderlyingFundCashDistribution(int id);
 		#endregion
+
+		//#region UnderlyingDirectDividendDistribution
+		//UnderlyingDirectDividendDistribution FindUnderlyingDirectDividendDistribution(int underlyingFundCashDistributionId);
+		//IEnumerable<ErrorInfo> SaveUnderlyingDirectDividendDistribution(UnderlyingDirectDividendDistribution underlyingFundCashDistribution);
+		//List<UnderlyingDirectDividendDistributionModel> GetAllUnderlyingDirectDividendDistributions(int underlyingFundId);
+		//bool DeleteUnderlyingDirectDividendDistribution(int id);
+		//#endregion
 
 		#region UnderlyingFundPostRecordCashDistribution
 		List<UnderlyingFundPostRecordCashDistributionModel> GetAllUnderlyingFundPostRecordCashDistributions(int underlyingFundId);
@@ -221,7 +230,7 @@ namespace DeepBlue.Controllers.Deal {
 		bool DeleteIssuer(int issuerId);
 		bool IssuerNameAvailable(string issuerName, int issuerId);
 		IEnumerable<ErrorInfo> SaveIssuer(Models.Entity.Issuer issuer);
-		List<DirectListModel> GetAllDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<DirectListModel> GetAllDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,bool isGP, int? companyId);
 		Models.Entity.Issuer FindIssuer(int issuerId);
 		List<AutoCompleteList> FindIssuers(string issuerName);
 		List<AutoCompleteList> FindCompanys(string issuerName);
@@ -231,6 +240,7 @@ namespace DeepBlue.Controllers.Deal {
 		bool FindAnnualMeetingDateHistory(int issuerID, DateTime annualMeetingDate);
 		IEnumerable<ErrorInfo> SaveAnnualMeetingHistory(AnnualMeetingHistory annualMeetingHistory);
 		List<AnnualMeetingHistory> GetAllAnnualMettingDates(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		IEnumerable<object> UnderlyingDirectList(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int companyId);
 
 		#region Equity
 		List<Equity> GetAllEquity(int issuerId);
@@ -241,6 +251,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<AutoCompleteList> FindEquityDirects(string issuerName);
 		string FindEquitySymbol(int id);
 		object FindEquitySecurityConversionModel(int equityId);
+		object FindEquityModel(int id);
 		#endregion
 
 		#region FixedIncome
@@ -250,9 +261,12 @@ namespace DeepBlue.Controllers.Deal {
 		bool DeleteFixedIncome(int id);
 		List<AutoCompleteList> FindFixedIncomeDirects(string issuerName);
 		object FindFixedIncomeSecurityConversionModel(int fixedIncomeId);
+		object FindFixedIncomeModel(int id);
 		#endregion
 
 		#endregion
+
+
 
 	}
 }

@@ -1150,6 +1150,5 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		#endregion
 
-
 	}
 }

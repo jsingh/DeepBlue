@@ -61,6 +61,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Deal_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Deal), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Deal_Partner", "Partner", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Partner), "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Deal), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Deal_PurchaseType", "PurchaseType", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.PurchaseType), "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Deal), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Deal_SellerType", "SellerType", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.SellerType), "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Deal), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealClosing_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "DealClosing", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealClosing), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealClosingCost_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "DealClosingCost", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealClosingCost), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealFundDocument_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Deal), "DealFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealFundDocument), true)]
@@ -154,6 +155,11 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_UnderlyingFundCapitalCallID", "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), "UnderlyingFundCapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCallLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), "UnderlyingFundNAVHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAVHistory), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_UnderlyingFundStockDistribution", "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), "UnderlyingFundStockDistributionLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistributionLineItem), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DividendDistribution_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "DividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DividendDistribution), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DividendDistribution_UnderlyingDirectDividendDistribution", "UnderlyingDirectDividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingDirectDividendDistribution), "DividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DividendDistribution), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingDirectDividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectDividendDistribution), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "UnderlyingDirectDividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectDividendDistribution), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DividendDistribution_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "DividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DividendDistribution), true)]
 
 #endregion
 
@@ -1504,6 +1510,22 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<SellerType> SellerTypes
+        {
+            get
+            {
+                if ((_SellerTypes == null))
+                {
+                    _SellerTypes = base.CreateObjectSet<SellerType>("SellerTypes");
+                }
+                return _SellerTypes;
+            }
+        }
+        private ObjectSet<SellerType> _SellerTypes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<ShareClassType> ShareClassTypes
         {
             get
@@ -1788,6 +1810,38 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<USER> _USERs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<DividendDistribution> DividendDistributions
+        {
+            get
+            {
+                if ((_DividendDistributions == null))
+                {
+                    _DividendDistributions = base.CreateObjectSet<DividendDistribution>("DividendDistributions");
+                }
+                return _DividendDistributions;
+            }
+        }
+        private ObjectSet<DividendDistribution> _DividendDistributions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<UnderlyingDirectDividendDistribution> UnderlyingDirectDividendDistributions
+        {
+            get
+            {
+                if ((_UnderlyingDirectDividendDistributions == null))
+                {
+                    _UnderlyingDirectDividendDistributions = base.CreateObjectSet<UnderlyingDirectDividendDistribution>("UnderlyingDirectDividendDistributions");
+                }
+                return _UnderlyingDirectDividendDistributions;
+            }
+        }
+        private ObjectSet<UnderlyingDirectDividendDistribution> _UnderlyingDirectDividendDistributions;
 
         #endregion
         #region AddTo Methods
@@ -2441,6 +2495,14 @@ namespace DeepBlue.Models.Entity
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the SellerTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSellerTypes(SellerType sellerType)
+        {
+            base.AddObject("SellerTypes", sellerType);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the ShareClassTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToShareClassTypes(ShareClassType shareClassType)
@@ -2582,6 +2644,22 @@ namespace DeepBlue.Models.Entity
         public void AddToUSERs(USER uSER)
         {
             base.AddObject("USERs", uSER);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the DividendDistributions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDividendDistributions(DividendDistribution dividendDistribution)
+        {
+            base.AddObject("DividendDistributions", dividendDistribution);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UnderlyingDirectDividendDistributions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUnderlyingDirectDividendDistributions(UnderlyingDirectDividendDistribution underlyingDirectDividendDistribution)
+        {
+            base.AddObject("UnderlyingDirectDividendDistributions", underlyingDirectDividendDistribution);
         }
 
         #endregion
@@ -3336,20 +3414,18 @@ namespace DeepBlue.Models.Entity
         /// <param name="addressID">Initial value of the AddressID property.</param>
         /// <param name="entityID">Initial value of the EntityID property.</param>
         /// <param name="addressTypeID">Initial value of the AddressTypeID property.</param>
-        /// <param name="address1">Initial value of the Address1 property.</param>
         /// <param name="city">Initial value of the City property.</param>
         /// <param name="country">Initial value of the Country property.</param>
         /// <param name="listed">Initial value of the Listed property.</param>
         /// <param name="isPreferred">Initial value of the IsPreferred property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        public static Address CreateAddress(global::System.Int32 addressID, global::System.Int32 entityID, global::System.Int32 addressTypeID, global::System.String address1, global::System.String city, global::System.Int32 country, global::System.Boolean listed, global::System.Boolean isPreferred, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        public static Address CreateAddress(global::System.Int32 addressID, global::System.Int32 entityID, global::System.Int32 addressTypeID, global::System.String city, global::System.Int32 country, global::System.Boolean listed, global::System.Boolean isPreferred, global::System.DateTime createdDate, global::System.Int32 createdBy)
         {
             Address address = new Address();
             address.AddressID = addressID;
             address.EntityID = entityID;
             address.AddressTypeID = addressTypeID;
-            address.Address1 = address1;
             address.City = city;
             address.Country = country;
             address.Listed = listed;
@@ -3440,7 +3516,7 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String Address1
         {
@@ -3452,7 +3528,7 @@ namespace DeepBlue.Models.Entity
             {
                 OnAddress1Changing(value);
                 ReportPropertyChanging("Address1");
-                _Address1 = StructuralObject.SetValidValue(value, false);
+                _Address1 = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("Address1");
                 OnAddress1Changed();
             }
@@ -5412,6 +5488,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.DateTime> _PaidON;
         partial void OnPaidONChanging(Nullable<global::System.DateTime> value);
         partial void OnPaidONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ChequeNumber
+        {
+            get
+            {
+                return _ChequeNumber;
+            }
+            set
+            {
+                OnChequeNumberChanging(value);
+                ReportPropertyChanging("ChequeNumber");
+                _ChequeNumber = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ChequeNumber");
+                OnChequeNumberChanged();
+            }
+        }
+        private global::System.String _ChequeNumber;
+        partial void OnChequeNumberChanging(global::System.String value);
+        partial void OnChequeNumberChanged();
 
         #endregion
     
@@ -7031,6 +7131,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Decimal> _LPProfits;
         partial void OnLPProfitsChanging(Nullable<global::System.Decimal> value);
         partial void OnLPProfitsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ChequeNumber
+        {
+            get
+            {
+                return _ChequeNumber;
+            }
+            set
+            {
+                OnChequeNumberChanging(value);
+                ReportPropertyChanging("ChequeNumber");
+                _ChequeNumber = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ChequeNumber");
+                OnChequeNumberChanged();
+            }
+        }
+        private global::System.String _ChequeNumber;
+        partial void OnChequeNumberChanging(global::System.String value);
+        partial void OnChequeNumberChanged();
 
         #endregion
     
@@ -11485,6 +11609,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _LastUpdatedBy;
         partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
         partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> SellerTypeID
+        {
+            get
+            {
+                return _SellerTypeID;
+            }
+            set
+            {
+                OnSellerTypeIDChanging(value);
+                ReportPropertyChanging("SellerTypeID");
+                _SellerTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SellerTypeID");
+                OnSellerTypeIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _SellerTypeID;
+        partial void OnSellerTypeIDChanging(Nullable<global::System.Int32> value);
+        partial void OnSellerTypeIDChanged();
 
         #endregion
     
@@ -11784,6 +11932,44 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_Deal_SellerType", "SellerType")]
+        public SellerType SellerType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SellerType>("DeepBlueModel.FK_Deal_SellerType", "SellerType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SellerType>("DeepBlueModel.FK_Deal_SellerType", "SellerType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<SellerType> SellerTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SellerType>("DeepBlueModel.FK_Deal_SellerType", "SellerType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SellerType>("DeepBlueModel.FK_Deal_SellerType", "SellerType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DealClosing_Deal", "DealClosing")]
         public EntityCollection<DealClosing> DealClosings
         {
@@ -11928,6 +12114,28 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundStockDistributionLineItem>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_Deal", "UnderlyingFundStockDistributionLineItem", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DividendDistribution_Deal", "DividendDistribution")]
+        public EntityCollection<DividendDistribution> DividendDistributions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_Deal", "DividendDistribution");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_Deal", "DividendDistribution", value);
                 }
             }
         }
@@ -14266,6 +14474,404 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DealUnderlyingFund>("DeepBlueModel.FK_DealUnderlyingFundAdjustment_DealUnderlyingFund", "DealUnderlyingFund", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="DividendDistribution")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class DividendDistribution : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new DividendDistribution object.
+        /// </summary>
+        /// <param name="dividendDistributionID">Initial value of the DividendDistributionID property.</param>
+        /// <param name="dealID">Initial value of the DealID property.</param>
+        /// <param name="amount">Initial value of the Amount property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        /// <param name="fundID">Initial value of the FundID property.</param>
+        public static DividendDistribution CreateDividendDistribution(global::System.Int32 dividendDistributionID, global::System.Int32 dealID, global::System.Decimal amount, global::System.DateTime createdDate, global::System.Int32 createdBy, global::System.Int32 fundID)
+        {
+            DividendDistribution dividendDistribution = new DividendDistribution();
+            dividendDistribution.DividendDistributionID = dividendDistributionID;
+            dividendDistribution.DealID = dealID;
+            dividendDistribution.Amount = amount;
+            dividendDistribution.CreatedDate = createdDate;
+            dividendDistribution.CreatedBy = createdBy;
+            dividendDistribution.FundID = fundID;
+            return dividendDistribution;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DividendDistributionID
+        {
+            get
+            {
+                return _DividendDistributionID;
+            }
+            set
+            {
+                if (_DividendDistributionID != value)
+                {
+                    OnDividendDistributionIDChanging(value);
+                    ReportPropertyChanging("DividendDistributionID");
+                    _DividendDistributionID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DividendDistributionID");
+                    OnDividendDistributionIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _DividendDistributionID;
+        partial void OnDividendDistributionIDChanging(global::System.Int32 value);
+        partial void OnDividendDistributionIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DealID
+        {
+            get
+            {
+                return _DealID;
+            }
+            set
+            {
+                OnDealIDChanging(value);
+                ReportPropertyChanging("DealID");
+                _DealID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DealID");
+                OnDealIDChanged();
+            }
+        }
+        private global::System.Int32 _DealID;
+        partial void OnDealIDChanging(global::System.Int32 value);
+        partial void OnDealIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UnderlyingDirectDividendDistributionID
+        {
+            get
+            {
+                return _UnderlyingDirectDividendDistributionID;
+            }
+            set
+            {
+                OnUnderlyingDirectDividendDistributionIDChanging(value);
+                ReportPropertyChanging("UnderlyingDirectDividendDistributionID");
+                _UnderlyingDirectDividendDistributionID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UnderlyingDirectDividendDistributionID");
+                OnUnderlyingDirectDividendDistributionIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UnderlyingDirectDividendDistributionID;
+        partial void OnUnderlyingDirectDividendDistributionIDChanging(Nullable<global::System.Int32> value);
+        partial void OnUnderlyingDirectDividendDistributionIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                OnAmountChanging(value);
+                ReportPropertyChanging("Amount");
+                _Amount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Amount");
+                OnAmountChanged();
+            }
+        }
+        private global::System.Decimal _Amount;
+        partial void OnAmountChanging(global::System.Decimal value);
+        partial void OnAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.Int32 _CreatedBy;
+        partial void OnCreatedByChanging(global::System.Int32 value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DistributionDate
+        {
+            get
+            {
+                return _DistributionDate;
+            }
+            set
+            {
+                OnDistributionDateChanging(value);
+                ReportPropertyChanging("DistributionDate");
+                _DistributionDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DistributionDate");
+                OnDistributionDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DistributionDate;
+        partial void OnDistributionDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnDistributionDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FundID
+        {
+            get
+            {
+                return _FundID;
+            }
+            set
+            {
+                OnFundIDChanging(value);
+                ReportPropertyChanging("FundID");
+                _FundID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundID");
+                OnFundIDChanged();
+            }
+        }
+        private global::System.Int32 _FundID;
+        partial void OnFundIDChanging(global::System.Int32 value);
+        partial void OnFundIDChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DividendDistribution_Deal", "Deal")]
+        public Deal Deal
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Deal>("DeepBlueModel.FK_DividendDistribution_Deal", "Deal").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Deal>("DeepBlueModel.FK_DividendDistribution_Deal", "Deal").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Deal> DealReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Deal>("DeepBlueModel.FK_DividendDistribution_Deal", "Deal");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Deal>("DeepBlueModel.FK_DividendDistribution_Deal", "Deal", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DividendDistribution_UnderlyingDirectDividendDistribution", "UnderlyingDirectDividendDistribution")]
+        public UnderlyingDirectDividendDistribution UnderlyingDirectDividendDistribution
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_DividendDistribution_UnderlyingDirectDividendDistribution", "UnderlyingDirectDividendDistribution").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_DividendDistribution_UnderlyingDirectDividendDistribution", "UnderlyingDirectDividendDistribution").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<UnderlyingDirectDividendDistribution> UnderlyingDirectDividendDistributionReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_DividendDistribution_UnderlyingDirectDividendDistribution", "UnderlyingDirectDividendDistribution");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_DividendDistribution_UnderlyingDirectDividendDistribution", "UnderlyingDirectDividendDistribution", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DividendDistribution_Fund", "Fund")]
+        public Fund Fund
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_DividendDistribution_Fund", "Fund").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_DividendDistribution_Fund", "Fund").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Fund> FundReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_DividendDistribution_Fund", "Fund");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Fund>("DeepBlueModel.FK_DividendDistribution_Fund", "Fund", value);
                 }
             }
         }
@@ -17958,6 +18564,50 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundStockDistribution>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Fund", "UnderlyingFundStockDistribution", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_Fund", "UnderlyingDirectDividendDistribution")]
+        public EntityCollection<UnderlyingDirectDividendDistribution> UnderlyingDirectDividendDistributions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_Fund", "UnderlyingDirectDividendDistribution");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_Fund", "UnderlyingDirectDividendDistribution", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DividendDistribution_Fund", "DividendDistribution")]
+        public EntityCollection<DividendDistribution> DividendDistributions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_Fund", "DividendDistribution");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_Fund", "DividendDistribution", value);
                 }
             }
         }
@@ -29125,6 +29775,284 @@ namespace DeepBlue.Models.Entity
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_SecurityType", "UnderlyingDirectDividendDistribution")]
+        public EntityCollection<UnderlyingDirectDividendDistribution> UnderlyingDirectDividendDistributions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_SecurityType", "UnderlyingDirectDividendDistribution");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_SecurityType", "UnderlyingDirectDividendDistribution", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="SellerType")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class SellerType : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new SellerType object.
+        /// </summary>
+        /// <param name="sellerTypeID">Initial value of the SellerTypeID property.</param>
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        /// <param name="enabled">Initial value of the Enabled property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        public static SellerType CreateSellerType(global::System.Int32 sellerTypeID, global::System.Int32 entityID, global::System.Boolean enabled, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        {
+            SellerType sellerType = new SellerType();
+            sellerType.SellerTypeID = sellerTypeID;
+            sellerType.EntityID = entityID;
+            sellerType.Enabled = enabled;
+            sellerType.CreatedDate = createdDate;
+            sellerType.CreatedBy = createdBy;
+            return sellerType;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SellerTypeID
+        {
+            get
+            {
+                return _SellerTypeID;
+            }
+            set
+            {
+                if (_SellerTypeID != value)
+                {
+                    OnSellerTypeIDChanging(value);
+                    ReportPropertyChanging("SellerTypeID");
+                    _SellerTypeID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SellerTypeID");
+                    OnSellerTypeIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SellerTypeID;
+        partial void OnSellerTypeIDChanging(global::System.Int32 value);
+        partial void OnSellerTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SellerType1
+        {
+            get
+            {
+                return _SellerType1;
+            }
+            set
+            {
+                OnSellerType1Changing(value);
+                ReportPropertyChanging("SellerType1");
+                _SellerType1 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SellerType1");
+                OnSellerType1Changed();
+            }
+        }
+        private global::System.String _SellerType1;
+        partial void OnSellerType1Changing(global::System.String value);
+        partial void OnSellerType1Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Enabled
+        {
+            get
+            {
+                return _Enabled;
+            }
+            set
+            {
+                OnEnabledChanging(value);
+                ReportPropertyChanging("Enabled");
+                _Enabled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Enabled");
+                OnEnabledChanged();
+            }
+        }
+        private global::System.Boolean _Enabled;
+        partial void OnEnabledChanging(global::System.Boolean value);
+        partial void OnEnabledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.Int32 _CreatedBy;
+        partial void OnCreatedByChanging(global::System.Int32 value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_Deal_SellerType", "Deal")]
+        public EntityCollection<Deal> Deals
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Deal>("DeepBlueModel.FK_Deal_SellerType", "Deal");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Deal>("DeepBlueModel.FK_Deal_SellerType", "Deal", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -29712,6 +30640,538 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvestorFundTransaction>("DeepBlueModel.FK_InvestorFundTransaction_TransactionType", "InvestorFundTransaction", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="UnderlyingDirectDividendDistribution")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class UnderlyingDirectDividendDistribution : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new UnderlyingDirectDividendDistribution object.
+        /// </summary>
+        /// <param name="underlyingDirectDividendDistributionID">Initial value of the UnderlyingDirectDividendDistributionID property.</param>
+        /// <param name="securityID">Initial value of the SecurityID property.</param>
+        /// <param name="securityTypeID">Initial value of the SecurityTypeID property.</param>
+        /// <param name="fundID">Initial value of the FundID property.</param>
+        /// <param name="amount">Initial value of the Amount property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        /// <param name="isPostRecordDateTransaction">Initial value of the IsPostRecordDateTransaction property.</param>
+        /// <param name="isReconciled">Initial value of the IsReconciled property.</param>
+        public static UnderlyingDirectDividendDistribution CreateUnderlyingDirectDividendDistribution(global::System.Int32 underlyingDirectDividendDistributionID, global::System.Int32 securityID, global::System.Int32 securityTypeID, global::System.Int32 fundID, global::System.Decimal amount, global::System.DateTime createdDate, global::System.Int32 createdBy, global::System.Boolean isPostRecordDateTransaction, global::System.Boolean isReconciled)
+        {
+            UnderlyingDirectDividendDistribution underlyingDirectDividendDistribution = new UnderlyingDirectDividendDistribution();
+            underlyingDirectDividendDistribution.UnderlyingDirectDividendDistributionID = underlyingDirectDividendDistributionID;
+            underlyingDirectDividendDistribution.SecurityID = securityID;
+            underlyingDirectDividendDistribution.SecurityTypeID = securityTypeID;
+            underlyingDirectDividendDistribution.FundID = fundID;
+            underlyingDirectDividendDistribution.Amount = amount;
+            underlyingDirectDividendDistribution.CreatedDate = createdDate;
+            underlyingDirectDividendDistribution.CreatedBy = createdBy;
+            underlyingDirectDividendDistribution.IsPostRecordDateTransaction = isPostRecordDateTransaction;
+            underlyingDirectDividendDistribution.IsReconciled = isReconciled;
+            return underlyingDirectDividendDistribution;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UnderlyingDirectDividendDistributionID
+        {
+            get
+            {
+                return _UnderlyingDirectDividendDistributionID;
+            }
+            set
+            {
+                if (_UnderlyingDirectDividendDistributionID != value)
+                {
+                    OnUnderlyingDirectDividendDistributionIDChanging(value);
+                    ReportPropertyChanging("UnderlyingDirectDividendDistributionID");
+                    _UnderlyingDirectDividendDistributionID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("UnderlyingDirectDividendDistributionID");
+                    OnUnderlyingDirectDividendDistributionIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _UnderlyingDirectDividendDistributionID;
+        partial void OnUnderlyingDirectDividendDistributionIDChanging(global::System.Int32 value);
+        partial void OnUnderlyingDirectDividendDistributionIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SecurityID
+        {
+            get
+            {
+                return _SecurityID;
+            }
+            set
+            {
+                OnSecurityIDChanging(value);
+                ReportPropertyChanging("SecurityID");
+                _SecurityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityID");
+                OnSecurityIDChanged();
+            }
+        }
+        private global::System.Int32 _SecurityID;
+        partial void OnSecurityIDChanging(global::System.Int32 value);
+        partial void OnSecurityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SecurityTypeID
+        {
+            get
+            {
+                return _SecurityTypeID;
+            }
+            set
+            {
+                OnSecurityTypeIDChanging(value);
+                ReportPropertyChanging("SecurityTypeID");
+                _SecurityTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityTypeID");
+                OnSecurityTypeIDChanged();
+            }
+        }
+        private global::System.Int32 _SecurityTypeID;
+        partial void OnSecurityTypeIDChanging(global::System.Int32 value);
+        partial void OnSecurityTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FundID
+        {
+            get
+            {
+                return _FundID;
+            }
+            set
+            {
+                OnFundIDChanging(value);
+                ReportPropertyChanging("FundID");
+                _FundID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FundID");
+                OnFundIDChanged();
+            }
+        }
+        private global::System.Int32 _FundID;
+        partial void OnFundIDChanging(global::System.Int32 value);
+        partial void OnFundIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                OnAmountChanging(value);
+                ReportPropertyChanging("Amount");
+                _Amount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Amount");
+                OnAmountChanged();
+            }
+        }
+        private global::System.Decimal _Amount;
+        partial void OnAmountChanging(global::System.Decimal value);
+        partial void OnAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DistributionDate
+        {
+            get
+            {
+                return _DistributionDate;
+            }
+            set
+            {
+                OnDistributionDateChanging(value);
+                ReportPropertyChanging("DistributionDate");
+                _DistributionDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DistributionDate");
+                OnDistributionDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DistributionDate;
+        partial void OnDistributionDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnDistributionDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> ReceivedDate
+        {
+            get
+            {
+                return _ReceivedDate;
+            }
+            set
+            {
+                OnReceivedDateChanging(value);
+                ReportPropertyChanging("ReceivedDate");
+                _ReceivedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ReceivedDate");
+                OnReceivedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _ReceivedDate;
+        partial void OnReceivedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnReceivedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.Int32 _CreatedBy;
+        partial void OnCreatedByChanging(global::System.Int32 value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsPostRecordDateTransaction
+        {
+            get
+            {
+                return _IsPostRecordDateTransaction;
+            }
+            set
+            {
+                OnIsPostRecordDateTransactionChanging(value);
+                ReportPropertyChanging("IsPostRecordDateTransaction");
+                _IsPostRecordDateTransaction = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsPostRecordDateTransaction");
+                OnIsPostRecordDateTransactionChanged();
+            }
+        }
+        private global::System.Boolean _IsPostRecordDateTransaction;
+        partial void OnIsPostRecordDateTransactionChanging(global::System.Boolean value);
+        partial void OnIsPostRecordDateTransactionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsReconciled
+        {
+            get
+            {
+                return _IsReconciled;
+            }
+            set
+            {
+                OnIsReconciledChanging(value);
+                ReportPropertyChanging("IsReconciled");
+                _IsReconciled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsReconciled");
+                OnIsReconciledChanged();
+            }
+        }
+        private global::System.Boolean _IsReconciled;
+        partial void OnIsReconciledChanging(global::System.Boolean value);
+        partial void OnIsReconciledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ReconciliationMethod
+        {
+            get
+            {
+                return _ReconciliationMethod;
+            }
+            set
+            {
+                OnReconciliationMethodChanging(value);
+                ReportPropertyChanging("ReconciliationMethod");
+                _ReconciliationMethod = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ReconciliationMethod");
+                OnReconciliationMethodChanged();
+            }
+        }
+        private global::System.String _ReconciliationMethod;
+        partial void OnReconciliationMethodChanging(global::System.String value);
+        partial void OnReconciliationMethodChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> PaidON
+        {
+            get
+            {
+                return _PaidON;
+            }
+            set
+            {
+                OnPaidONChanging(value);
+                ReportPropertyChanging("PaidON");
+                _PaidON = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PaidON");
+                OnPaidONChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _PaidON;
+        partial void OnPaidONChanging(Nullable<global::System.DateTime> value);
+        partial void OnPaidONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ChequeNumber
+        {
+            get
+            {
+                return _ChequeNumber;
+            }
+            set
+            {
+                OnChequeNumberChanging(value);
+                ReportPropertyChanging("ChequeNumber");
+                _ChequeNumber = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ChequeNumber");
+                OnChequeNumberChanged();
+            }
+        }
+        private global::System.String _ChequeNumber;
+        partial void OnChequeNumberChanging(global::System.String value);
+        partial void OnChequeNumberChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DividendDistribution_UnderlyingDirectDividendDistribution", "DividendDistribution")]
+        public EntityCollection<DividendDistribution> DividendDistributions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_UnderlyingDirectDividendDistribution", "DividendDistribution");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_UnderlyingDirectDividendDistribution", "DividendDistribution", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_Fund", "Fund")]
+        public Fund Fund
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_Fund", "Fund").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_Fund", "Fund").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Fund> FundReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_Fund", "Fund");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Fund>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_Fund", "Fund", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_SecurityType", "SecurityType")]
+        public SecurityType SecurityType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_SecurityType", "SecurityType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_SecurityType", "SecurityType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<SecurityType> SecurityTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_SecurityType", "SecurityType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SecurityType>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_SecurityType", "SecurityType", value);
                 }
             }
         }
@@ -32743,6 +34203,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.DateTime> _PaidON;
         partial void OnPaidONChanging(Nullable<global::System.DateTime> value);
         partial void OnPaidONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ChequeNumber
+        {
+            get
+            {
+                return _ChequeNumber;
+            }
+            set
+            {
+                OnChequeNumberChanging(value);
+                ReportPropertyChanging("ChequeNumber");
+                _ChequeNumber = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ChequeNumber");
+                OnChequeNumberChanged();
+            }
+        }
+        private global::System.String _ChequeNumber;
+        partial void OnChequeNumberChanging(global::System.String value);
+        partial void OnChequeNumberChanged();
 
         #endregion
     
@@ -33697,6 +35181,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.DateTime> _PaidON;
         partial void OnPaidONChanging(Nullable<global::System.DateTime> value);
         partial void OnPaidONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ChequeNumber
+        {
+            get
+            {
+                return _ChequeNumber;
+            }
+            set
+            {
+                OnChequeNumberChanging(value);
+                ReportPropertyChanging("ChequeNumber");
+                _ChequeNumber = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ChequeNumber");
+                OnChequeNumberChanged();
+            }
+        }
+        private global::System.String _ChequeNumber;
+        partial void OnChequeNumberChanging(global::System.String value);
+        partial void OnChequeNumberChanged();
 
         #endregion
     

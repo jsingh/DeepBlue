@@ -91,6 +91,7 @@
     <Compile Include="Helpers\AdvancedEntityTemplateFactory.cs" />
     <Compile Include="Helpers\AppSettingsHelper.cs" />
     <Compile Include="Helpers\Authentication.cs" />
+    <Compile Include="Helpers\EntityFunctions.cs" />
     <Compile Include="Helpers\ExcelConnection.cs" />
     <Compile Include="Helpers\ExportExcel.cs" />
     <Compile Include="Helpers\ExportPdfResult.cs" />
@@ -105,15 +106,18 @@
     <Compile Include="Helpers\JsonSerializer.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\MvcButton.cs" />
+    <Compile Include="Helpers\MvcControl.cs" />
     <Compile Include="Helpers\MvcTab.cs" />
     <Compile Include="Helpers\PagingDataTable.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Helpers\SecurityContainer.cs" />
     <Compile Include="Helpers\SecurityExtensions.cs" />
+    <Compile Include="Helpers\TableOptions.cs" />
     <Compile Include="Helpers\WebAddressAttribute.cs" />
     <Compile Include="Helpers\ZipAttribute.cs" />
     <Compile Include="Models\Account\LogOnModel.cs" />
+    <Compile Include="Models\Admin\EditSellerTypeModel.cs" />
     <Compile Include="Models\Admin\DealContactList.cs" />
     <Compile Include="Models\Admin\EditDealContactModel.cs" />
     <Compile Include="Models\Admin\EditDocumentTypeModel.cs" />
@@ -122,6 +126,11 @@
     <Compile Include="Models\Admin\EditFundExpenseTypeModel.cs" />
     <Compile Include="Models\Admin\EditActivityTypeModel.cs" />
     <Compile Include="Models\Admin\FileUploadModel.cs" />
+    <Compile Include="Models\Admin\FundExportExcelModel.cs" />
+    <Compile Include="Models\Admin\InvestorExportExcelModel.cs" />
+    <Compile Include="Models\Admin\MenuModel.cs" />
+    <Compile Include="Models\Admin\UnderlyingDirectExportExcelModel.cs" />
+    <Compile Include="Models\Admin\UnderlyingFundExportExcelModel.cs" />
     <Compile Include="Models\CapitalCall\CapitalCallInvestorDetail.cs" />
     <Compile Include="Models\CapitalCall\CapitalDistributionDetail.cs" />
     <Compile Include="Models\CapitalCall\CapitalDistributionInvestorDetail.cs" />
@@ -144,6 +153,7 @@
     <Compile Include="Models\Deal\ReconcileModel.cs" />
     <Compile Include="Models\Deal\ReconcileReportModel.cs" />
     <Compile Include="Models\Deal\UnderlyingDirectDocumentModel.cs" />
+    <Compile Include="Models\Deal\UnderlyingDirectDividendDistributionModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundDocumentList.cs" />
     <Compile Include="Models\Deal\UnderlyingFundDocumentModel.cs" />
     <Compile Include="Models\Deal\UnderlyingFundStockDistributionModel.cs" />
@@ -238,6 +248,8 @@
     <Compile Include="Models\Entity\Partial\CapitalDistributionLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\ContactService.cs" />
     <Compile Include="Models\Entity\Partial\DocumentTypeService.cs" />
+    <Compile Include="Models\Entity\Partial\SellerTypeService.cs" />
+    <Compile Include="Models\Entity\Partial\UnderlyingDirectDividendDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundContactService.cs" />
     <Compile Include="Models\Entity\Partial\LogService.cs" />
     <Compile Include="Models\Entity\Partial\InvestorAccountService.cs" />
@@ -268,6 +280,8 @@
     <Compile Include="Models\Entity\Validation\DocumentType.cs" />
     <Compile Include="Models\Entity\Validation\FundAccount.cs" />
     <Compile Include="Models\Entity\Validation\FundRateSchedule.cs" />
+    <Compile Include="Models\Entity\Validation\SellerType.cs" />
+    <Compile Include="Models\Entity\Validation\UnderlyingDirectDividendDistribution.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundContact.cs" />
     <Compile Include="Models\Entity\Validation\InvestorContact.cs" />
     <Compile Include="Models\Entity\Validation\Log.cs" />
@@ -560,6 +574,12 @@
     <Compile Include="Models\Report\CapitalCallSummaryModel.cs" />
     <Compile Include="Models\Report\CapitalCallReportDetail.cs" />
     <Compile Include="Models\Report\CapitalCallItem.cs" />
+    <Compile Include="Models\Report\ExportUnfundedCapitalCallBalanceDetailModel.cs" />
+    <Compile Include="Models\Report\UnfundedCapitalCallBalanceReportDetail.cs" />
+    <Compile Include="Models\Report\UnfundedCapitalCallBalanceModel.cs" />
+    <Compile Include="Models\Report\ExportUnderlyingFundNAVDetailModel.cs" />
+    <Compile Include="Models\Report\UnderlyingFundNAVReportDetail.cs" />
+    <Compile Include="Models\Report\UnderlyingFundNAVModel.cs" />
     <Compile Include="Models\Report\ExportDistributionDetailModel.cs" />
     <Compile Include="Models\Report\DistributionModel.cs" />
     <Compile Include="Models\Report\DistributionReportDetail.cs" />
@@ -924,6 +944,13 @@
     <Content Include="Assets\javascripts\CCSummaryReport.js" />
     <Content Include="Assets\javascripts\CashDistributionType.js" />
     <Content Include="Assets\javascripts\CapitalCallDistributionManual.js" />
+    <Content Include="Assets\javascripts\FileUploadScript.js" />
+    <Content Include="Assets\javascripts\html5.js" />
+    <Content Include="Assets\javascripts\jquery.filedrop.js" />
+    <Content Include="Assets\javascripts\UnfundedCapitalCallBalance.js" />
+    <Content Include="Assets\javascripts\UnderlyingFundNAV.js" />
+    <Content Include="Assets\javascripts\Export.js" />
+    <Content Include="Assets\javascripts\SellerType.js" />
     <Content Include="Assets\javascripts\ImportExcel.js" />
     <Content Include="Assets\javascripts\ModifyCapitalDistribution.js" />
     <Content Include="Assets\javascripts\ModifyCapitalCall.js" />
@@ -1058,30 +1085,29 @@
     <Content Include="Assets\stylesheets\popup.css" />
     <Content Include="Assets\stylesheets\printreport.css" />
     <Content Include="Assets\stylesheets\report.css" />
+    <Content Include="Assets\stylesheets\styles.css" />
     <Content Include="Assets\stylesheets\transaction.css" />
     <Content Include="bin\DeepBlue.dll" />
     <Content Include="bin\DeepBlue.pdb" />
     <Content Include="Global.asax" />
     <Content Include="Assets\stylesheets\site.css" />
-    <Content Include="obj\Debug\DeepBlue.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\DeepBlue.dll" />
-    <Content Include="obj\Debug\DeepBlue.pdb" />
-    <Content Include="obj\Debug\TempPE\Models.Entity.DeepBlue.Designer.cs.dll" />
-    <Content Include="obj\Release\DeepBlue.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Release\DeepBlue.dll" />
-    <Content Include="obj\Release\DeepBlue.pdb" />
-    <Content Include="obj\Release\TempPE\Models.Entity.DeepBlue.Designer.cs.dll" />
     <Content Include="Views\Account\LogOn.aspx" />
     <Content Include="Views\Admin\ActivityType.aspx" />
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
     <Content Include="Views\Admin\CommunicationType.aspx" />
     <Content Include="Views\Admin\CashDistributionType.aspx" />
+    <Content Include="Views\Admin\FileUpload.ascx" />
+    <Content Include="Views\Admin\UnderlyingDirectExportExcel.ascx" />
+    <Content Include="Views\Admin\UnderlyingFundExportExcel.ascx" />
+    <Content Include="Views\Admin\FundExportExcel.ascx" />
+    <Content Include="Views\Admin\Export.aspx" />
+    <Content Include="Views\Admin\InvestorExportExcel.ascx" />
+    <Content Include="Views\Admin\SellerType.aspx" />
     <Content Include="Views\Admin\DealContact.aspx" />
     <Content Include="Views\Admin\DocumentType.aspx" />
     <Content Include="Views\Admin\Log.aspx" />
-    <Content Include="Views\Admin\User.aspx" />
+    <Content Include="Views\Admin\Users.aspx" />
     <Content Include="Views\Admin\Currency.aspx" />
-    <Content Include="Views\Admin\ExportExcel.ascx" />
     <Content Include="Views\Admin\FundExpenseType.aspx" />
     <Content Include="Views\Admin\FixedIncomeType.aspx" />
     <Content Include="Views\Admin\EquityType.aspx" />
@@ -1119,8 +1145,11 @@
     <Content Include="Views\CapitalCall\Receive.aspx" />
     <Content Include="Views\CapitalCall\Result.ascx" />
     <Content Include="Views\Deal\Activities.aspx" />
+    <Content Include="Views\Deal\CapitalCallAddTemplate.ascx" />
+    <Content Include="Views\Deal\CashDistributionAddTemplate.ascx" />
     <Content Include="Views\Deal\List.aspx" />
     <Content Include="Views\Deal\Result.ascx" />
+    <Content Include="Views\Deal\StockDistributionAddTemplate.ascx" />
     <Content Include="Views\Deal\UnderlyingFundAddressInformationEdit.ascx" />
     <Content Include="Views\Document\Result.ascx" />
     <Content Include="Views\Fund\Result.ascx" />
@@ -1129,6 +1158,11 @@
     <Content Include="Views\Investor\ContactInformationEdit.ascx" />
     <Content Include="Views\Investor\Library.aspx" />
     <Content Include="Views\Investor\Result.ascx" />
+    <Content Include="Views\Report\ExportUnfundedCapitalCallBalanceDetail.ascx" />
+    <Content Include="Views\Report\UnfundedCapitalCallBalance.aspx" />
+    <Content Include="Views\Report\ExportUnderlyingFundNAVDetail.ascx" />
+    <Content Include="Views\Report\UnderlyingFundNAV.aspx" />
+    <Content Include="Views\Shared\Menu.ascx" />
     <Content Include="Views\Transaction\Result.ascx" />
     <Content Include="Views\Transaction\TransactionInformation.ascx" />
     <Content Include="Views\Shared\TBoxTop.ascx" />
@@ -1242,28 +1276,21 @@
     <Content Include="Views\Shared\DeepBluePopup.Master" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Models\Entity\DeepBlue.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DeepBlue.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\edmxResourcesToEmbed\Models\Entity\DeepBlue.csdl" />
-    <None Include="obj\Debug\edmxResourcesToEmbed\Models\Entity\DeepBlue.msl" />
-    <None Include="obj\Debug\edmxResourcesToEmbed\Models\Entity\DeepBlue.ssdl" />
-    <None Include="obj\Debug\ResolveAssemblyReference.cache" />
-    <None Include="obj\Release\DesignTimeResolveAssemblyReferences.cache" />
-    <None Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Release\edmxResourcesToEmbed\Models\Entity\DeepBlue.csdl" />
-    <None Include="obj\Release\edmxResourcesToEmbed\Models\Entity\DeepBlue.msl" />
-    <None Include="obj\Release\edmxResourcesToEmbed\Models\Entity\DeepBlue.ssdl" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Issuer\" />
     <Folder Include="Files\Documents\2\1\" />
     <Folder Include="Models\Issuer\" />
     <Folder Include="Views\Issuer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Models\Entity\DeepBlue.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DeepBlue.Designer.cs</LastGenOutput>
+    </EntityDeploy>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -9,6 +9,11 @@
 	<%=Html.JavascriptInclueTag("jquery.tooltip.min.js")%>
 	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
+	<%=Html.JavascriptInclueTag("jquery.filedrop.js")%>
+	<%=Html.JavascriptInclueTag("FileUploadScript.js")%>
+	<!--[if lt IE 9]>
+	<%=Html.JavascriptInclueTag("html5.js")%>
+	<![endif]-->
 	<%=Html.JavascriptInclueTag("Deal.js")%>
 	<%=Html.JavascriptInclueTag("Footer.js")%>
 	<%=Html.JavascriptInclueTag("DealExpense.js")%>
@@ -19,8 +24,8 @@
 	<%=Html.StylesheetLinkTag("deal.css")%>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
-	<%if (ViewData["PageName"] == "Create New Deal") {%>
-	<%using (Html.Div(new { @id = "DealFundList", @class = "navigation", @style = (ViewData["PageName"] == "Create New Deal" ? "display:block" : "display:none") })) {%>
+	<%if (ViewData["PageName"] == "CreateNewDeal") {%>
+	<%using (Html.Div(new { @id = "DealFundList", @class = "navigation", @style = (ViewData["PageName"] == "CreateNewDeal" ? "display:block" : "display:none") })) {%>
 	<div class="heading">
 		<div class="leftcol">
 			<span class="title">INVESTMENTS</span><span class="arrow"></span><span class="pname">CREATE
@@ -123,8 +128,8 @@
 																	  Source = "/Deal/FindDeals", MinLength = 1, 
 																	  OnSelect = "function(event, ui) {  deal.loadDeal(ui.item.id); }"
 	})%>
-	<script type="text/javascript">		deal.init();</script>
-	<%if (ViewData["PageName"] == "Create New Deal" && Model.FundId > 0) {%>
+	<script type="text/javascript">		deal.init();fileUpload.fileExt=<%=Model.DocumentFileExtensions%>;</script>
+	<%if (ViewData["PageName"] == "CreateNewDeal" && Model.FundId > 0) {%>
 	<script type="text/javascript">$(document).ready(function() { deal.selectFund(<%=Model.FundId%>,'<%=Model.FundName%>'); });</script>
 	<%}%>
 	<%if (ViewData["PageName"] == "DealList") {%>

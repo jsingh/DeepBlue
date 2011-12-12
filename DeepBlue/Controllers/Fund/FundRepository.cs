@@ -125,6 +125,20 @@ namespace DeepBlue.Controllers.Fund {
 			}
 		}
 
+		public List<AutoCompleteList> FindFunds(string fundName, ref int totalCount) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.Funds
+															  where fund.FundName.StartsWith(fundName)
+															  orderby fund.FundName
+															  select new AutoCompleteList {
+																  id = fund.FundID,
+																  label = fund.FundName,
+																  value = fund.FundName
+															  });
+				return new PaginatedList<AutoCompleteList>(fundListQuery, 1, AutoCompleteOptions.RowsLength, ref totalCount);
+			}
+		}
+
 		public List<AutoCompleteList> FindFundClosings(string fundName, int? fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> fundListQuery = (from fundClosing in context.FundClosings
