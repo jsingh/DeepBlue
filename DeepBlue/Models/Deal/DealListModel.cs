@@ -12,6 +12,8 @@ namespace DeepBlue.Models.Deal {
 
 		public string DealName { get; set; }
 
+		public string FundName { get; set; }
+
 	}
 
 	public class DealFundListModel {

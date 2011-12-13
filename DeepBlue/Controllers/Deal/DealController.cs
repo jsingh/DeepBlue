@@ -131,6 +131,23 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		//
+		// GET: /Deal/DealFundList
+		[HttpGet]
+		public ActionResult DealFundList(int pageIndex, int pageSize, string sortName, string sortOrder, bool? isNotClose, int? fundId) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DealListModel> deals = DealRepository.GetAllDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows, isNotClose, fundId);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var deal in deals) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> { deal.DealId, deal.DealName, deal.FundName }
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
 		// GET: /Deal/DealCloseList
 		[HttpGet]
 		public ActionResult DealCloseList(int pageIndex, int pageSize, string sortName, string sortOrder) {

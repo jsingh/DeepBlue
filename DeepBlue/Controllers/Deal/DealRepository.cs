@@ -137,6 +137,7 @@ namespace DeepBlue.Controllers.Deal {
 													   DealId = deal.DealID,
 													   DealNumber = deal.DealNumber,
 													   DealName = deal.DealName,
+													   FundName = deal.Fund.FundName
 												   });
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<DealListModel> paginatedList = new PaginatedList<DealListModel>(query, pageIndex, pageSize);

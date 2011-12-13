@@ -118,7 +118,7 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
-	<%=Html.jQueryFlexiGrid("DealList", new FlexigridOptions { ActionName = "DealList", ControllerName = "Deal", HttpMethod = "GET", SortName = "DealName", Paging = true, OnSuccess = "deal.onDealListSuccess", Autoload = false, ResizeWidth = false,   Width = 600, BoxStyle = false })%>
+	<%=Html.jQueryFlexiGrid("DealList", new FlexigridOptions { ActionName = "DealFundList", ControllerName = "Deal", HttpMethod = "GET", SortName = "DealName", Paging = true, OnSuccess = "deal.onDealListSuccess", Autoload = false, ResizeWidth = false,   Width = 600, BoxStyle = false })%>
 	<%=Html.jQueryFlexiGrid("FundList", new FlexigridOptions { ActionName = "List", ControllerName = "Fund", HttpMethod = "GET", SortName = "FundName", Paging = true, OnSuccess = "deal.onFundListSuccess", Autoload = false, ResizeWidth = false,   Width = 600, BoxStyle = false })%>
 	<%= Html.jQueryAutoComplete("M_Fund", new AutoCompleteOptions {
 																	  Source = "/Fund/FindFunds", MinLength = 1,
