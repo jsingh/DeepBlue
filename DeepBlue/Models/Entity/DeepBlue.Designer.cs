@@ -67,6 +67,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealFundDocument_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Deal), "DealFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealFundDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingDirect_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "DealUnderlyingDirect", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingDirect), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingFund_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "DealUnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingFund), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DividendDistribution_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "DividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DividendDistribution), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "UnderlyingFundCapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCallLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "UnderlyingFundStockDistributionLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistributionLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingDirect_DealClosing", "DealClosing", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.DealClosing), "DealUnderlyingDirect", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingDirect), true)]
@@ -79,6 +80,8 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_SecurityConversionDetail_DealUnderlyingDirect", "DealUnderlyingDirect", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DealUnderlyingDirect), "SecurityConversionDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.SecurityConversionDetail), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingFund_UnderlyingFund", "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFund), "DealUnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DealUnderlyingFundAdjustment_DealUnderlyingFund", "DealUnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.DealUnderlyingFund), "DealUnderlyingFundAdjustment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DealUnderlyingFundAdjustment), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DividendDistribution_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "DividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DividendDistribution), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DividendDistribution_UnderlyingDirectDividendDistribution", "UnderlyingDirectDividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingDirectDividendDistribution), "DividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DividendDistribution), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DocumentType_DocumentSection", "DocumentSection", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.DocumentSection), "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DocumentType), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_DocumentType", "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DocumentType), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectDocument_DocumentType", "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DocumentType), "UnderlyingDirectDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectDocument), true)]
@@ -103,6 +106,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_FundRateSchedule_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "FundRateSchedule", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.FundRateSchedule), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFund_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Fund), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingDirectDividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectDividendDistribution), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectLastPrice_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingDirectLastPrice", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectLastPrice), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCall_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCashDistribution_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingFundCashDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCashDistribution), true)]
@@ -137,6 +141,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_SecurityConversion_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "SecurityConversion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.SecurityConversion), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_SecurityConversion_SecurityTypeOld", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "SecurityConversion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.SecurityConversion), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_SecurityConversionDetail_SecurityConversion", "SecurityConversion", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityConversion), "SecurityConversionDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.SecurityConversionDetail), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "UnderlyingDirectDividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectDividendDistribution), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectDocument_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "UnderlyingDirectDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectLastPrice_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "UnderlyingDirectLastPrice", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectLastPrice), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistribution_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), true)]
@@ -155,11 +160,6 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_UnderlyingFundCapitalCallID", "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), "UnderlyingFundCapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCallLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), "UnderlyingFundNAVHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAVHistory), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_UnderlyingFundStockDistribution", "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), "UnderlyingFundStockDistributionLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistributionLineItem), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DividendDistribution_Deal", "Deal", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Deal), "DividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DividendDistribution), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DividendDistribution_UnderlyingDirectDividendDistribution", "UnderlyingDirectDividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingDirectDividendDistribution), "DividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DividendDistribution), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "UnderlyingDirectDividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectDividendDistribution), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_SecurityType", "SecurityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.SecurityType), "UnderlyingDirectDividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectDividendDistribution), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_DividendDistribution_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "DividendDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.DividendDistribution), true)]
 
 #endregion
 
@@ -738,6 +738,22 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<DealUnderlyingFundAdjustment> _DealUnderlyingFundAdjustments;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<DividendDistribution> DividendDistributions
+        {
+            get
+            {
+                if ((_DividendDistributions == null))
+                {
+                    _DividendDistributions = base.CreateObjectSet<DividendDistribution>("DividendDistributions");
+                }
+                return _DividendDistributions;
+            }
+        }
+        private ObjectSet<DividendDistribution> _DividendDistributions;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1574,6 +1590,22 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<UnderlyingDirectDividendDistribution> UnderlyingDirectDividendDistributions
+        {
+            get
+            {
+                if ((_UnderlyingDirectDividendDistributions == null))
+                {
+                    _UnderlyingDirectDividendDistributions = base.CreateObjectSet<UnderlyingDirectDividendDistribution>("UnderlyingDirectDividendDistributions");
+                }
+                return _UnderlyingDirectDividendDistributions;
+            }
+        }
+        private ObjectSet<UnderlyingDirectDividendDistribution> _UnderlyingDirectDividendDistributions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<UnderlyingDirectDocument> UnderlyingDirectDocuments
         {
             get
@@ -1810,38 +1842,6 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<USER> _USERs;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<DividendDistribution> DividendDistributions
-        {
-            get
-            {
-                if ((_DividendDistributions == null))
-                {
-                    _DividendDistributions = base.CreateObjectSet<DividendDistribution>("DividendDistributions");
-                }
-                return _DividendDistributions;
-            }
-        }
-        private ObjectSet<DividendDistribution> _DividendDistributions;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<UnderlyingDirectDividendDistribution> UnderlyingDirectDividendDistributions
-        {
-            get
-            {
-                if ((_UnderlyingDirectDividendDistributions == null))
-                {
-                    _UnderlyingDirectDividendDistributions = base.CreateObjectSet<UnderlyingDirectDividendDistribution>("UnderlyingDirectDividendDistributions");
-                }
-                return _UnderlyingDirectDividendDistributions;
-            }
-        }
-        private ObjectSet<UnderlyingDirectDividendDistribution> _UnderlyingDirectDividendDistributions;
 
         #endregion
         #region AddTo Methods
@@ -2108,6 +2108,14 @@ namespace DeepBlue.Models.Entity
         public void AddToDealUnderlyingFundAdjustments(DealUnderlyingFundAdjustment dealUnderlyingFundAdjustment)
         {
             base.AddObject("DealUnderlyingFundAdjustments", dealUnderlyingFundAdjustment);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the DividendDistributions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDividendDistributions(DividendDistribution dividendDistribution)
+        {
+            base.AddObject("DividendDistributions", dividendDistribution);
         }
     
         /// <summary>
@@ -2527,6 +2535,14 @@ namespace DeepBlue.Models.Entity
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the UnderlyingDirectDividendDistributions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUnderlyingDirectDividendDistributions(UnderlyingDirectDividendDistribution underlyingDirectDividendDistribution)
+        {
+            base.AddObject("UnderlyingDirectDividendDistributions", underlyingDirectDividendDistribution);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the UnderlyingDirectDocuments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToUnderlyingDirectDocuments(UnderlyingDirectDocument underlyingDirectDocument)
@@ -2644,22 +2660,6 @@ namespace DeepBlue.Models.Entity
         public void AddToUSERs(USER uSER)
         {
             base.AddObject("USERs", uSER);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DividendDistributions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDividendDistributions(DividendDistribution dividendDistribution)
-        {
-            base.AddObject("DividendDistributions", dividendDistribution);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the UnderlyingDirectDividendDistributions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToUnderlyingDirectDividendDistributions(UnderlyingDirectDividendDistribution underlyingDirectDividendDistribution)
-        {
-            base.AddObject("UnderlyingDirectDividendDistributions", underlyingDirectDividendDistribution);
         }
 
         #endregion
@@ -12080,6 +12080,28 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DividendDistribution_Deal", "DividendDistribution")]
+        public EntityCollection<DividendDistribution> DividendDistributions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_Deal", "DividendDistribution");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_Deal", "DividendDistribution", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_Deal", "UnderlyingFundCapitalCallLineItem")]
         public EntityCollection<UnderlyingFundCapitalCallLineItem> UnderlyingFundCapitalCallLineItems
         {
@@ -12114,28 +12136,6 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundStockDistributionLineItem>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_Deal", "UnderlyingFundStockDistributionLineItem", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DividendDistribution_Deal", "DividendDistribution")]
-        public EntityCollection<DividendDistribution> DividendDistributions
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_Deal", "DividendDistribution");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_Deal", "DividendDistribution", value);
                 }
             }
         }
@@ -14495,20 +14495,22 @@ namespace DeepBlue.Models.Entity
         /// Create a new DividendDistribution object.
         /// </summary>
         /// <param name="dividendDistributionID">Initial value of the DividendDistributionID property.</param>
+        /// <param name="securityID">Initial value of the SecurityID property.</param>
+        /// <param name="securityTypeID">Initial value of the SecurityTypeID property.</param>
         /// <param name="dealID">Initial value of the DealID property.</param>
         /// <param name="amount">Initial value of the Amount property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        /// <param name="fundID">Initial value of the FundID property.</param>
-        public static DividendDistribution CreateDividendDistribution(global::System.Int32 dividendDistributionID, global::System.Int32 dealID, global::System.Decimal amount, global::System.DateTime createdDate, global::System.Int32 createdBy, global::System.Int32 fundID)
+        public static DividendDistribution CreateDividendDistribution(global::System.Int32 dividendDistributionID, global::System.Int32 securityID, global::System.Int32 securityTypeID, global::System.Int32 dealID, global::System.Decimal amount, global::System.DateTime createdDate, global::System.Int32 createdBy)
         {
             DividendDistribution dividendDistribution = new DividendDistribution();
             dividendDistribution.DividendDistributionID = dividendDistributionID;
+            dividendDistribution.SecurityID = securityID;
+            dividendDistribution.SecurityTypeID = securityTypeID;
             dividendDistribution.DealID = dealID;
             dividendDistribution.Amount = amount;
             dividendDistribution.CreatedDate = createdDate;
             dividendDistribution.CreatedBy = createdBy;
-            dividendDistribution.FundID = fundID;
             return dividendDistribution;
         }
 
@@ -14541,6 +14543,54 @@ namespace DeepBlue.Models.Entity
         private global::System.Int32 _DividendDistributionID;
         partial void OnDividendDistributionIDChanging(global::System.Int32 value);
         partial void OnDividendDistributionIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SecurityID
+        {
+            get
+            {
+                return _SecurityID;
+            }
+            set
+            {
+                OnSecurityIDChanging(value);
+                ReportPropertyChanging("SecurityID");
+                _SecurityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityID");
+                OnSecurityIDChanged();
+            }
+        }
+        private global::System.Int32 _SecurityID;
+        partial void OnSecurityIDChanging(global::System.Int32 value);
+        partial void OnSecurityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SecurityTypeID
+        {
+            get
+            {
+                return _SecurityTypeID;
+            }
+            set
+            {
+                OnSecurityTypeIDChanging(value);
+                ReportPropertyChanging("SecurityTypeID");
+                _SecurityTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityTypeID");
+                OnSecurityTypeIDChanged();
+            }
+        }
+        private global::System.Int32 _SecurityTypeID;
+        partial void OnSecurityTypeIDChanging(global::System.Int32 value);
+        partial void OnSecurityTypeIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -14733,30 +14783,6 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.DateTime> _DistributionDate;
         partial void OnDistributionDateChanging(Nullable<global::System.DateTime> value);
         partial void OnDistributionDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 FundID
-        {
-            get
-            {
-                return _FundID;
-            }
-            set
-            {
-                OnFundIDChanging(value);
-                ReportPropertyChanging("FundID");
-                _FundID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("FundID");
-                OnFundIDChanged();
-            }
-        }
-        private global::System.Int32 _FundID;
-        partial void OnFundIDChanging(global::System.Int32 value);
-        partial void OnFundIDChanged();
 
         #endregion
     
@@ -14806,6 +14832,44 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DividendDistribution_SecurityType", "SecurityType")]
+        public SecurityType SecurityType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_DividendDistribution_SecurityType", "SecurityType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_DividendDistribution_SecurityType", "SecurityType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<SecurityType> SecurityTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SecurityType>("DeepBlueModel.FK_DividendDistribution_SecurityType", "SecurityType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SecurityType>("DeepBlueModel.FK_DividendDistribution_SecurityType", "SecurityType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DividendDistribution_UnderlyingDirectDividendDistribution", "UnderlyingDirectDividendDistribution")]
         public UnderlyingDirectDividendDistribution UnderlyingDirectDividendDistribution
         {
@@ -14834,44 +14898,6 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_DividendDistribution_UnderlyingDirectDividendDistribution", "UnderlyingDirectDividendDistribution", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DividendDistribution_Fund", "Fund")]
-        public Fund Fund
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_DividendDistribution_Fund", "Fund").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_DividendDistribution_Fund", "Fund").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Fund> FundReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Fund>("DeepBlueModel.FK_DividendDistribution_Fund", "Fund");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Fund>("DeepBlueModel.FK_DividendDistribution_Fund", "Fund", value);
                 }
             }
         }
@@ -18464,6 +18490,28 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_Fund", "UnderlyingDirectDividendDistribution")]
+        public EntityCollection<UnderlyingDirectDividendDistribution> UnderlyingDirectDividendDistributions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_Fund", "UnderlyingDirectDividendDistribution");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_Fund", "UnderlyingDirectDividendDistribution", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectLastPrice_Fund", "UnderlyingDirectLastPrice")]
         public EntityCollection<UnderlyingDirectLastPrice> UnderlyingDirectLastPrices
         {
@@ -18564,50 +18612,6 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundStockDistribution>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Fund", "UnderlyingFundStockDistribution", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_Fund", "UnderlyingDirectDividendDistribution")]
-        public EntityCollection<UnderlyingDirectDividendDistribution> UnderlyingDirectDividendDistributions
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_Fund", "UnderlyingDirectDividendDistribution");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_Fund", "UnderlyingDirectDividendDistribution", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DividendDistribution_Fund", "DividendDistribution")]
-        public EntityCollection<DividendDistribution> DividendDistributions
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_Fund", "DividendDistribution");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_Fund", "DividendDistribution", value);
                 }
             }
         }
@@ -29672,6 +29676,28 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_DividendDistribution_SecurityType", "DividendDistribution")]
+        public EntityCollection<DividendDistribution> DividendDistributions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_SecurityType", "DividendDistribution");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DividendDistribution>("DeepBlueModel.FK_DividendDistribution_SecurityType", "DividendDistribution", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_SecurityConversion_SecurityType", "SecurityConversion")]
         public EntityCollection<SecurityConversion> SecurityConversions
         {
@@ -29706,6 +29732,28 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SecurityConversion>("DeepBlueModel.FK_SecurityConversion_SecurityTypeOld", "SecurityConversion", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_SecurityType", "UnderlyingDirectDividendDistribution")]
+        public EntityCollection<UnderlyingDirectDividendDistribution> UnderlyingDirectDividendDistributions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_SecurityType", "UnderlyingDirectDividendDistribution");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_SecurityType", "UnderlyingDirectDividendDistribution", value);
                 }
             }
         }
@@ -29772,28 +29820,6 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundStockDistribution>("DeepBlueModel.FK_UnderlyingFundStockDistribution_SecurityType", "UnderlyingFundStockDistribution", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingDirectDividendDistribution_SecurityType", "UnderlyingDirectDividendDistribution")]
-        public EntityCollection<UnderlyingDirectDividendDistribution> UnderlyingDirectDividendDistributions
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_SecurityType", "UnderlyingDirectDividendDistribution");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingDirectDividendDistribution>("DeepBlueModel.FK_UnderlyingDirectDividendDistribution_SecurityType", "UnderlyingDirectDividendDistribution", value);
                 }
             }
         }

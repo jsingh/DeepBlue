@@ -16,6 +16,8 @@
 	<%=Html.JavascriptInclueTag("DealActivityEquitySplit.js")%>
 	<%=Html.JavascriptInclueTag("DealActivitySecConversion.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityFundExpense.js")%>
+	<%=Html.JavascriptInclueTag("DealActivityDividendDistribution.js")%>
+	<%=Html.JavascriptInclueTag("DealActivityPRDividendDistribution.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityUDValuation.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityUFAdjustment.js")%>
 	<%=Html.JavascriptInclueTag("DealReconcile.js")%>
@@ -743,6 +745,128 @@
 				</div>
 				<div class="line">
 				</div>
+				<div class="act-box">
+					<div id="NewDD" class="group">
+						<div class="addbtn" style="display: none;">
+							<div class="tblcell">
+								<%: Html.TextBox("DD_Direct", "SEARCH DIRECT", new { @style="width:200px", @class = "wm" })%></div>
+							<div class="tblcell">
+								<%: Html.CheckBox("IsManualDividendDistribution", false, new { @onclick = "javascript:dealActivity.showManualDDCtl('DDDetail');" })%>&nbsp;Manual
+								Dividend Distribution
+							</div>
+							<div class="tblcell rightcell">
+								<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.makeNewDD();" })) {%>Make
+								new dividend distribution<%}%>
+							</div>
+						</div>
+						<div class="headerbox">
+							<div class="title">
+								<%: Html.Span("New Dividend Distribution")%>
+							</div>
+						</div>
+						<div class="expandheader expandsel" style="display: none;">
+							<div class="expandbtn">
+								<div class="expandtitle shadow" style="display: block;">
+									New Dividend Distribution
+								</div>
+							</div>
+						</div>
+						<div class="detail" id="DDDetail">
+							<div class="search-header">
+								<div class="cell">
+									<%: Html.Span("", new { @id="SpnDDUDName" })%>
+								</div>
+								<div class="loadingcell" id="DDLoading">
+								</div>
+							</div>
+							<div id="DividendDistribution" class="gridbox" style="display: none;">
+								<%using (Html.Form(new { @id = "frmDDCapitalCall", @onsubmit = "return dealActivity.submitDD(this);" })) {%>
+								<div style="clear: both; width: 100%">
+									<div>
+										<% Html.RenderPartial("TBoxTop"); %>
+										<table cellpadding="0" cellspacing="0" border="0" id="DividendDistributionList" class="grid">
+											<thead>
+												<tr>
+													<th id="DDExpand" style="width: 5%; display: none;" class="calign ismanual">
+													</th>
+													<th class="lalign" style="width: 20%">
+														Fund Name
+													</th>
+													<th class="lalign" style="width: 20%">
+														Call Amount
+													</th>
+													<th class="lalign" style="width: 15%;">
+														Due Date
+													</th>
+													<th>
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+										<% Html.RenderPartial("TBoxBottom"); %>
+									</div>
+									<center>
+										<span>
+											<%: Html.ImageButton("Save_active.png")%></span><span id="SpnDDSaveLoading"></span></center>
+								</div>
+								<%}%>
+							</div>
+							<div id="PRDividendDistribution" class="gridbox" style="display: none">
+								<div class="subheader">
+									<div class="name">
+										Post Record Dividend Distribution</div>
+									<div class="addbtn">
+										<div class="tblcell rightcell">
+											<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.makeNewPRDD();" })) {%>Add
+											new post record date dividend distribution<%}%>
+										</div>
+									</div>
+									<div class="selectloading" id="PRDDLoading">
+									</div>
+								</div>
+								<div id="PRDDListBox" class="clear" style="display: none">
+									<%using (Html.Form(new { @id = "frmPRDividendDistribution", @onsubmit = "return dealActivity.submitPRDividendDistribution(this);" })) {%>
+									<div style="margin-top: 45px;">
+										<% Html.RenderPartial("TBoxTop"); %>
+										<table cellpadding="0" cellspacing="0" border="0" id="PRDividendDistributionList" class="grid">
+											<thead>
+												<tr>
+													<th class="lalign" style="width: 20%">
+														Fund Name
+													</th>
+													<th class="lalign" style="width: 20%">
+														Deal Name
+													</th>
+													<th class="lalign" style="width: 15%">
+														Distribution Amount
+													</th>
+													<th class="lalign" style="width: 15%">
+														Distribution Date
+													</th>
+													<th class="ralign">
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+										<% Html.RenderPartial("TBoxBottom"); %>
+									</div>
+									<center>
+										<span>
+											<%: Html.ImageButton("Save_active.png")%></span><span id="SpnPRDDSaveLoading"></span></center>
+									<%}%>
+								</div>
+							</div>
+							<%:Html.Hidden("DDDirectId", "0", new { @id = "DDDirectId" })%>
+							<%:Html.Hidden("DDDirectTypeId", "0", new { @id = "DDDirectTypeId" })%>
+						</div>
+					</div>
+				</div>
+				<div class="line">
+				</div>
 			</div>
 			<div id="Reconciliation" class="act-group" style="display: none">
 				<div class="navigation">
@@ -829,7 +953,12 @@
 	<%= Html.jQueryAutoComplete("UDV_UnderlyingDirect", new AutoCompleteOptions {
 	Source = "/Deal/FindIssuers",
 	MinLength = 1,
-																	  OnSelect = "function(event, ui) { dealActivity.setUDV(ui.item.id,ui.item.value);}"
+	OnSelect = "function(event, ui) { dealActivity.setUDV(ui.item.id,ui.item.value);}"
+	})%>
+	<%= Html.jQueryAutoComplete("DD_Direct", new AutoCompleteOptions {
+	Source = "/Deal/FindEquityFixedIncomeIssuers",
+	MinLength = 1,
+	OnSelect = "function(event, ui) { dealActivity.setDDDirect(ui.item);}"
 	})%>
 	<%=Html.jQueryAjaxTable("NewHoldingPatternList", new AjaxTableOptions {
 	ActionName = "NewHoldingPatternList",
@@ -890,6 +1019,13 @@
 	<%}%>
 	<%using (Html.jQueryTemplateScript("ReconcileGridTemplate")) {%>
 	<% Html.RenderPartial("ReconcileGrid"); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("DividendDistributionAddTemplate")) {%>
+	<% Html.RenderPartial("DividendDistribution"); %>
+	<% Html.RenderPartial("ManualDividendDistribution"); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("PRDividendDistributionAddTemplate")) {%>
+	<% Html.RenderPartial("PostRecordDividendDistribution"); %>
 	<%}%>
 	<%using (Html.jQueryTemplateScript("ExcelImprtTemplate")) {%>
 	<div class="import-box">

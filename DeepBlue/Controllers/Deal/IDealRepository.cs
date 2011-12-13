@@ -58,6 +58,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<DealUnderlyingDirect> GetAllDealUnderlyingDirects(int securityTypeId, int securityId);
 		List<DealUnderlyingDirectListModel> GetAllDealUnderlyingDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		List<DealUnderlyingDirect> GetAllDealClosingUnderlyingDirects(int dealId);
+		List<DealUnderlyingDirect> GetAllDealClosingUnderlyingDirects(int securityTypeID, int securityID, int fundID);
 		IEnumerable<ErrorInfo> SaveDealUnderlyingDirect(DealUnderlyingDirect dealUnderlyingDirect);
 		List<AutoCompleteList> FindDealUnderlyingDirects(string fundName);
 		List<AutoCompleteListExtend> FindEquityFixedIncomeIssuers(string issuerName);
@@ -124,13 +125,6 @@ namespace DeepBlue.Controllers.Deal {
 		bool DeleteUnderlyingFundCashDistribution(int id);
 		#endregion
 
-		//#region UnderlyingDirectDividendDistribution
-		//UnderlyingDirectDividendDistribution FindUnderlyingDirectDividendDistribution(int underlyingFundCashDistributionId);
-		//IEnumerable<ErrorInfo> SaveUnderlyingDirectDividendDistribution(UnderlyingDirectDividendDistribution underlyingFundCashDistribution);
-		//List<UnderlyingDirectDividendDistributionModel> GetAllUnderlyingDirectDividendDistributions(int underlyingFundId);
-		//bool DeleteUnderlyingDirectDividendDistribution(int id);
-		//#endregion
-
 		#region UnderlyingFundPostRecordCashDistribution
 		List<UnderlyingFundPostRecordCashDistributionModel> GetAllUnderlyingFundPostRecordCashDistributions(int underlyingFundId);
 		CashDistribution FindUnderlyingFundPostRecordCashDistribution(int cashDistributionId);
@@ -154,6 +148,23 @@ namespace DeepBlue.Controllers.Deal {
 		List<UnderlyingFundPostRecordCapitalCallModel> GetAllUnderlyingFundPostRecordCapitalCalls(int underlyingFundId);
 		decimal GetSumOfUnderlyingFundCapitalCallLineItem(int underlyingFundId, int dealId);
 		bool DeleteUnderlyingFundPostRecordCapitalCall(int id);
+		#endregion
+
+		#region UnderlyingDirectDividendDistribution
+		UnderlyingDirectDividendDistribution FindUnderlyingDirectDividendDistribution(int underlyingFundCashDistributionId);
+		DividendDistribution FindDividendDistribution(int underlyingDirectDividendDistributionID, int securityTypeID, int securityID, int dealID);
+		IEnumerable<ErrorInfo> SaveUnderlyingDirectDividendDistribution(UnderlyingDirectDividendDistribution underlyingFundCashDistribution);
+		IEnumerable<ErrorInfo> SaveDividendDistribution(DividendDistribution dividendDistribution);
+		List<DividendDistributionModel> GetAllUnderlyingDirectDividendDistributions(int securityTypeID, int securityID);
+		bool DeleteUnderlyingDirectDividendDistribution(int id);
+		#endregion
+
+		#region PostRecordDividendDistribution
+		DividendDistribution FindPostRecordDividendDistribution(int dividendDistributionID);
+		DividendDistribution FindPostRecordDividendDistribution(int underlyingFundDividendDistributionId, int securityTypeID, int securityID, int dealId);
+		IEnumerable<ErrorInfo> SavePostRecordDividendDistribution(DividendDistribution underlyingFundDividendDistribution);
+		List<PostRecordDividendDistributionModel> GetAllPostRecordDividendDistributions(int securityTypeID, int securityID);
+		bool DeletePostRecordDividendDistribution(int id);
 		#endregion
 
 		#region UnderlyingFundValuation

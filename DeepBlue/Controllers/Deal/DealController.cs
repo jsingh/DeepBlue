@@ -2863,135 +2863,234 @@ namespace DeepBlue.Controllers.Deal {
 
 		#endregion
 
-		//#region UnderlyingDirectDividendDistribution
+		#region UnderlyingDirectDividendDistribution
 
-		////
-		//// POST : /Deal/CreateUnderlyingDirectDividendDistribution
-		//[HttpPost]
-		//public ActionResult CreateUnderlyingDirectDividendDistribution(FormCollection collection) {
-		//    int totalRows = 0;
-		//    int.TryParse(collection["TotalRows"], out totalRows);
-		//    int rowIndex = 0;
-		//    ResultModel resultModel = new ResultModel();
-		//    FormCollection rowCollection;
-		//    UnderlyingDirectDividendDistributionModel model = null;
-		//    IEnumerable<ErrorInfo> errorInfo = null;
+		//
+		// POST : /Deal/CreateDirectDividendDistribution
+		[HttpPost]
+		public ActionResult CreateDirectDividendDistribution(FormCollection collection) {
+			int totalRows = 0;
+			int.TryParse(collection["TotalRows"], out totalRows);
+			int rowIndex = 0;
+			ResultModel resultModel = new ResultModel();
+			FormCollection rowCollection;
+			DividendDistributionModel model = null;
+			IEnumerable<ErrorInfo> errorInfo = null;
 
-		//    // Validate each rows.
-		//    for (rowIndex = 0; rowIndex < totalRows; rowIndex++) {
-		//        resultModel.Result = string.Empty;
-		//        rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(UnderlyingDirectDividendDistributionModel), "_");
-		//        model = new UnderlyingDirectDividendDistributionModel();
-		//        this.TryUpdateModel(model, rowCollection);
-		//        if (model.Amount > 0) {
-		//            errorInfo = ValidationHelper.Validate(model);
-		//            if (errorInfo.Any()) {
-		//                foreach (var err in errorInfo) {
-		//                    if (string.IsNullOrEmpty(err.ErrorMessage) == false)
-		//                        resultModel.Result += rowIndex + "_" + err.PropertyName + "||" + err.ErrorMessage + "\n";
-		//                }
-		//                break;
-		//            }
-		//        }
-		//    }
+			// Validate each rows.
+			for (rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+				resultModel.Result = string.Empty;
+				rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(DividendDistributionModel), "_");
+				model = new DividendDistributionModel();
+				this.TryUpdateModel(model, rowCollection);
+				if (model.Amount > 0) {
+					errorInfo = ValidationHelper.Validate(model);
+					if (errorInfo.Any()) {
+						foreach (var err in errorInfo) {
+							if (string.IsNullOrEmpty(err.ErrorMessage) == false)
+								resultModel.Result += rowIndex + "_" + err.PropertyName + "||" + err.ErrorMessage + "\n";
+						}
+						break;
+					}
+				}
+			}
 
-		//    if (string.IsNullOrEmpty(resultModel.Result)) {
-		//        for (rowIndex = 0; rowIndex < totalRows; rowIndex++) {
-		//            resultModel.Result = string.Empty;
-		//            rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(UnderlyingDirectDividendDistributionModel), "_");
-		//            model = new UnderlyingDirectDividendDistributionModel();
-		//            this.TryUpdateModel(model, rowCollection);
-		//            bool isManualDividendDistribution = false;
-		//            Boolean.TryParse(collection["IsManualDividendDistribution"], out isManualDividendDistribution);
-		//            model.IsManualDividendDistribution = isManualDividendDistribution;
-		//            errorInfo = ValidationHelper.Validate(model);
-		//            if (errorInfo.Any() == false) {
-		//                errorInfo = SaveUnderlyingDirectDividendDistribution(model, collection);
-		//            }
-		//        }
-		//    }
-		//    return View("Result", resultModel);
-		//}
+			if (string.IsNullOrEmpty(resultModel.Result)) {
+				for (rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+					resultModel.Result = string.Empty;
+					rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(DividendDistributionModel), "_");
+					model = new DividendDistributionModel();
+					this.TryUpdateModel(model, rowCollection);
+					bool isManualDividendDistribution = false;
+					Boolean.TryParse(collection["IsManualDividendDistribution"], out isManualDividendDistribution);
+					model.IsManualDividendDistribution = isManualDividendDistribution;
+					errorInfo = ValidationHelper.Validate(model);
+					if (errorInfo.Any() == false) {
+						errorInfo = SaveUnderlyingDirectDividendDistribution(model, collection);
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
 
-		//private IEnumerable<ErrorInfo> SaveUnderlyingDirectDividendDistribution(UnderlyingDirectDividendDistributionModel model, FormCollection collection) {
-		//    IEnumerable<ErrorInfo> errorInfo = null;
-		//    // Attempt to create underlying fund dividend distribution.
+		private IEnumerable<ErrorInfo> SaveUnderlyingDirectDividendDistribution(DividendDistributionModel model, FormCollection collection) {
+			IEnumerable<ErrorInfo> errorInfo = null;
+			// Attempt to create underlying fund dividend distribution.
 
-		//    UnderlyingDirectDividendDistribution underlyingDirectDividendDistribution = null;
-		//    if (model.UnderlyingDirectDividendDistributionId > 0)
-		//        underlyingDirectDividendDistribution = DealRepository.FindUnderlyingDirectDividendDistribution(model.UnderlyingDirectDividendDistributionId);
-		//    if (underlyingDirectDividendDistribution == null) {
-		//        underlyingDirectDividendDistribution = new UnderlyingDirectDividendDistribution();
-		//        underlyingDirectDividendDistribution.CreatedBy = Authentication.CurrentUser.UserID;
-		//        underlyingDirectDividendDistribution.CreatedDate = DateTime.Now;
-		//    }
-		//    underlyingDirectDividendDistribution.SecurityID = model.SecurityID;
-		//    underlyingDirectDividendDistribution.SecurityTypeID = model.SecurityTypeID;
-		//    underlyingDirectDividendDistribution.Amount = model.Amount ?? 0;
-		//    underlyingDirectDividendDistribution.IsPostRecordDateTransaction = false;
-		//    underlyingDirectDividendDistribution.FundID = model.FundId;
-		//    underlyingDirectDividendDistribution.DistributionDate = model.DistributionDate;
-		//    underlyingDirectDividendDistribution.ReceivedDate = DateTime.Now;
-		//    underlyingDirectDividendDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
-		//    underlyingDirectDividendDistribution.LastUpdatedDate = DateTime.Now;
-		//    errorInfo = DealRepository.SaveUnderlyingDirectDividendDistribution(underlyingDirectDividendDistribution);
-		//    if (errorInfo == null) {
+			UnderlyingDirectDividendDistribution underlyingDirectDividendDistribution = null;
+			if (model.UnderlyingDirectDividendDistributionId > 0)
+				underlyingDirectDividendDistribution = DealRepository.FindUnderlyingDirectDividendDistribution(model.UnderlyingDirectDividendDistributionId);
+			if (underlyingDirectDividendDistribution == null) {
+				underlyingDirectDividendDistribution = new UnderlyingDirectDividendDistribution();
+				underlyingDirectDividendDistribution.CreatedBy = Authentication.CurrentUser.UserID;
+				underlyingDirectDividendDistribution.CreatedDate = DateTime.Now;
+			}
+			underlyingDirectDividendDistribution.SecurityID = model.SecurityID;
+			underlyingDirectDividendDistribution.SecurityTypeID = model.SecurityTypeID;
+			underlyingDirectDividendDistribution.Amount = model.Amount ?? 0;
+			underlyingDirectDividendDistribution.IsPostRecordDateTransaction = false;
+			underlyingDirectDividendDistribution.FundID = model.FundId;
+			underlyingDirectDividendDistribution.DistributionDate = model.DistributionDate;
+			underlyingDirectDividendDistribution.ReceivedDate = DateTime.Now;
+			underlyingDirectDividendDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			underlyingDirectDividendDistribution.LastUpdatedDate = DateTime.Now;
+			errorInfo = DealRepository.SaveUnderlyingDirectDividendDistribution(underlyingDirectDividendDistribution);
+			if (errorInfo == null) {
+				// Attempt to create dividend distribution to each deal underlying direct.
+				List<DealUnderlyingDirect> dealUnderlyingDirects = DealRepository.GetAllDealClosingUnderlyingDirects(underlyingDirectDividendDistribution.SecurityTypeID 
+																													 ,underlyingDirectDividendDistribution.SecurityID
+																													 ,underlyingDirectDividendDistribution.FundID);
+				decimal? totalShares = dealUnderlyingDirects.Sum(direct => direct.NumberOfShares);
+				DividendDistribution dividendDistribution;
+				foreach (var dealUnderlyingDirect in dealUnderlyingDirects) {
+					dividendDistribution = DealRepository.FindDividendDistribution(
+																			underlyingDirectDividendDistribution.UnderlyingDirectDividendDistributionID,
+																			underlyingDirectDividendDistribution.SecurityTypeID,
+																			underlyingDirectDividendDistribution.SecurityID,
+																			dealUnderlyingDirect.DealID
+																			);
+					if (dividendDistribution == null) {
+						dividendDistribution = new DividendDistribution();
+						dividendDistribution.CreatedBy = Authentication.CurrentUser.UserID;
+						dividendDistribution.CreatedDate = DateTime.Now;
+					}
+					dividendDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
+					dividendDistribution.LastUpdatedDate = DateTime.Now;
 
-		//        // Attempt to create dividend distribution to each deal underlying fund.
+					// Assign Underlying Fund Dividend Distribution.
+					dividendDistribution.UnderlyingDirectDividendDistributionID = underlyingDirectDividendDistribution.UnderlyingDirectDividendDistributionID;
 
-		//        List<DealUnderlyingDirect> dealUnderlyingDirects = DealRepository.GetAllClosingDealUnderlyingFunds(underlyingDirectDividendDistribution.UnderlyingDirectID, underlyingDirectDividendDistribution.FundID);
-		//        DividendDistribution dividendDistribution;
-		//        foreach (var dealUnderlyingDirect in dealUnderlyingDirects) {
-		//            dividendDistribution = DealRepository.FindUnderlyingDirectPostRecordDividendDistribution(underlyingDirectDividendDistribution.UnderlyingDirectDividendDistributionID,
-		//                                                                    underlyingDirectDividendDistribution.UnderlyingDirectID,
-		//                                                                    dealUnderlyingDirect.DealID);
-		//            if (dividendDistribution == null) {
-		//                dividendDistribution = new DividendDistribution();
-		//                dividendDistribution.CreatedBy = Authentication.CurrentUser.UserID;
-		//                dividendDistribution.CreatedDate = DateTime.Now;
-		//            }
-		//            dividendDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
-		//            dividendDistribution.LastUpdatedDate = DateTime.Now;
+					// Calculate distribution amount = (Deal Underlying Direct NumberOfShares) * (Distribution Amount) * Total Number Of Shares.
+					if (model.IsManualDividendDistribution == true && dealUnderlyingDirects.Count > 1) {
+						dividendDistribution.Amount = DataTypeHelper.ToDecimal(collection[underlyingDirectDividendDistribution.FundID.ToString() + "_" + dealUnderlyingDirect.DealID.ToString() + "_" + "CallAmount"]);
+					}
+					else {
+						dividendDistribution.Amount = decimal.Divide(
+													  decimal.Multiply((dealUnderlyingDirect.NumberOfShares ?? 0), underlyingDirectDividendDistribution.Amount)
+													  ,(totalShares ?? 0));
+					}
 
-		//            // Assign Underlying Fund Dividend Distribution.
-		//            dividendDistribution.UnderlyingDirectDividendDistributionID = underlyingDirectDividendDistribution.UnderlyingDirectDividendDistributionID;
+					dividendDistribution.SecurityTypeID = underlyingDirectDividendDistribution.SecurityTypeID;
+					dividendDistribution.SecurityID = underlyingDirectDividendDistribution.SecurityID;
+					dividendDistribution.DealID = dealUnderlyingDirect.DealID;
+					dividendDistribution.DistributionDate = underlyingDirectDividendDistribution.DistributionDate;
+					errorInfo = DealRepository.SaveDividendDistribution(dividendDistribution);
+				}
+			}
+			return errorInfo;
+		}
 
-		//            // Calculate distribution amount = (Deal Underlying Fund Committed Amount) / (Total Deal Underlying Fund Committed Amount) * Total Dividend Distribution Amount.
-		//            if (model.IsManualDividendDistribution == true && dealUnderlyingDirects.Count > 1) {
-		//                dividendDistribution.Amount = DataTypeHelper.ToDecimal(collection[underlyingDirectDividendDistribution.FundID.ToString() + "_" + dealUnderlyingDirect.DealID.ToString() + "_" + "CallAmount"]);
-		//            }
-		//            else {
-		//                dividendDistribution.Amount = ((dealUnderlyingDirect.CommittedAmount ?? 0) / (dealUnderlyingDirects.Sum(fund => fund.CommittedAmount ?? 0))) * underlyingDirectDividendDistribution.Amount;
-		//            }
+		//
+		// GET: /Deal/DirectDividendDistributionList
+		[HttpGet]
+		public JsonResult DirectDividendDistributionList(int securityTypeID, int securityID) {
+			return Json(DealRepository.GetAllUnderlyingDirectDividendDistributions(securityTypeID, securityID), JsonRequestBehavior.AllowGet);
+		}
 
-		//            dividendDistribution.FundID = underlyingDirectDividendDistribution.FundID;
-		//            dividendDistribution.DealID = dealUnderlyingDirect.DealID;
-		//            errorInfo = DealRepository.SaveUnderlyingDirectPostRecordDividendDistribution(dividendDistribution);
-		//        }
-		//    }
-		//    return errorInfo;
-		//}
+		//
+		// GET: /Deal/DeleteUnderlyingDirectDividendDistribution
+		[HttpGet]
+		public string DeleteUnderlyingDirectDividendDistribution(int id) {
+			if (DealRepository.DeleteUnderlyingDirectDividendDistribution(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
 
-		////
-		//// GET: /Deal/UnderlyingDirectDividendDistributionList
-		//[HttpGet]
-		//public JsonResult UnderlyingDirectDividendDistributionList(int underlyingDirectId) {
-		//    return Json(DealRepository.GetAllUnderlyingDirectDividendDistributions(underlyingDirectId), JsonRequestBehavior.AllowGet);
-		//}
+		#endregion
 
-		////
-		//// GET: /Deal/DeleteUnderlyingDirectDividendDistribution
-		//[HttpGet]
-		//public string DeleteUnderlyingDirectDividendDistribution(int id) {
-		//    if (DealRepository.DeleteUnderlyingDirectDividendDistribution(id) == false) {
-		//        return "Cann't Delete! Child record found!";
-		//    }
-		//    else {
-		//        return string.Empty;
-		//    }
-		//}
+		#region PostRecordDividendDistribution
+		//
+		// GET: /Deal/PostRecordDividendDistributionList
+		[HttpGet]
+		public JsonResult PostRecordDividendDistributionList(int securityTypeID, int securityID) {
+			return Json(DealRepository.GetAllPostRecordDividendDistributions(securityTypeID, securityID), JsonRequestBehavior.AllowGet);
+		}
 
-		//#endregion
+		//
+		// POST : /Deal/CreatePostRecordDividendDistribution
+		[HttpPost]
+		public ActionResult CreatePostRecordDividendDistribution(FormCollection collection) {
+			int totalRows = 0;
+			int.TryParse(collection["TotalRows"], out totalRows);
+			int rowIndex = 0;
+			ResultModel resultModel = new ResultModel();
+			FormCollection rowCollection;
+			PostRecordDividendDistributionModel model = null;
+			IEnumerable<ErrorInfo> errorInfo = null;
+
+			// Validate each rows.
+			for (rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+				resultModel.Result = string.Empty;
+				rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(PostRecordDividendDistributionModel), "_");
+				model = new PostRecordDividendDistributionModel();
+				this.TryUpdateModel(model, rowCollection);
+				if (model.Amount > 0) {
+					errorInfo = ValidationHelper.Validate(model);
+					if (errorInfo.Any()) {
+						foreach (var err in errorInfo) {
+							if (string.IsNullOrEmpty(err.ErrorMessage) == false)
+								resultModel.Result += rowIndex + "_" + err.PropertyName + "||" + err.ErrorMessage + "\n";
+						}
+						break;
+					}
+				}
+			}
+
+			if (string.IsNullOrEmpty(resultModel.Result)) {
+				for (rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+					resultModel.Result = string.Empty;
+					rowCollection = FormCollectionHelper.GetFormCollection(collection, rowIndex, typeof(PostRecordDividendDistributionModel), "_");
+					model = new PostRecordDividendDistributionModel();
+					this.TryUpdateModel(model, rowCollection);
+					errorInfo = ValidationHelper.Validate(model);
+					if (errorInfo.Any() == false) {
+						errorInfo = SavePostRecordDividendDistribution(model);
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		private IEnumerable<ErrorInfo> SavePostRecordDividendDistribution(PostRecordDividendDistributionModel model) {
+			IEnumerable<ErrorInfo> errorInfo = null;
+			// Attempt to create post record capital call.
+
+			DividendDistribution dividendDistribution = null;
+			if (model.DividendDistributionID > 0) {
+				dividendDistribution = DealRepository.FindPostRecordDividendDistribution(model.DividendDistributionID);
+			}
+			if (dividendDistribution == null) {
+				dividendDistribution = new DividendDistribution();
+				dividendDistribution.CreatedBy = Authentication.CurrentUser.UserID;
+				dividendDistribution.CreatedDate = DateTime.Now;
+			}
+			dividendDistribution.SecurityID = model.SecurityID;
+			dividendDistribution.SecurityTypeID = model.SecurityTypeID;
+			dividendDistribution.Amount = model.Amount ?? 0;
+			dividendDistribution.DistributionDate = model.DistributionDate;
+			dividendDistribution.DealID = model.DealId;
+			dividendDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			dividendDistribution.LastUpdatedDate = DateTime.Now;
+			errorInfo = DealRepository.SavePostRecordDividendDistribution(dividendDistribution);
+			return errorInfo;
+		}
+
+		//
+		// GET: /Deal/DeletePostRecordDividendDistribution
+		[HttpGet]
+		public string DeletePostRecordDividendDistribution(int id) {
+			if (DealRepository.DeletePostRecordDividendDistribution(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		#endregion
 
 		#endregion
 

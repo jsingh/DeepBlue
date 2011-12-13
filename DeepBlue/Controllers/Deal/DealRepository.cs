@@ -591,6 +591,19 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public List<DealUnderlyingDirect> GetAllDealClosingUnderlyingDirects(int securityTypeID, int securityID, int fundID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DealUnderlyingDirects
+								.Where(
+										dealUnderlyingDirect => 
+										dealUnderlyingDirect.SecurityTypeID == securityTypeID 
+										&& dealUnderlyingDirect.SecurityID == securityID
+										&& dealUnderlyingDirect.Deal.FundID == fundID
+										&& dealUnderlyingDirect.DealClosingID != null
+								).ToList();
+			}
+		}
+
 		public bool DeleteDealUnderlyingDirect(int dealUnderlyingDirectId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				DealUnderlyingDirect dealUnderlyingDirect = context.DealUnderlyingDirects.SingleOrDefault(underlyingFund => underlyingFund.DealUnderlyingDirectID == dealUnderlyingDirectId);
@@ -1305,78 +1318,7 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
-
-		#region UnderlyingDirectDividendDistribution
-
-		//public UnderlyingDirectDividendDistribution FindUnderlyingDirectDividendDistribution(int underlyingDirectDividendDistributionId) {
-		//    using (DeepBlueEntities context = new DeepBlueEntities()) {
-		//        return (from dividendDistribution in context.UnderlyingDirectDividendDistributions
-		//                where dividendDistribution.UnderlyingDirectDividendDistributionID == underlyingDirectDividendDistributionId
-		//                select dividendDistribution).SingleOrDefault();
-		//    }
-		//}
-
-		//public IEnumerable<ErrorInfo> SaveUnderlyingDirectDividendDistribution(UnderlyingDirectDividendDistribution underlyingDirectDividendDistribution) {
-		//    return underlyingDirectDividendDistribution.Save();
-		//}
-
-		//public List<UnderlyingDirectDividendDistributionModel> GetAllUnderlyingDirectDividendDistributions(int securityID, int securityTypeID) {
-		//    using (DeepBlueEntities context = new DeepBlueEntities()) {
-		//        var dealUnderlyingDirectQuery = (from underlyingDirect in context.DealUnderlyingDirects
-		//                                         join deal in context.Deals on underlyingDirect.DealID equals deal.DealID
-		//                                         where 
-		//                                         underlyingDirect.SecurityID == securityID 
-		//                                         && underlyingDirect.SecurityTypeID == securityTypeID 
-		//                                         && underlyingDirect.DealClosingID != null
-		//                                         group deal by deal.FundID into deals
-		//                                         select new {
-		//                                             FundID = deals.Key,
-		//                                             SecurityID = securityID,
-		//                                             SecurityTypeID = securityTypeID
-		//                                         });
-		//        var newDividendDistributionQuery = (from dealUnderlyingDirect in dealUnderlyingDirectQuery
-		//                                            join fund in context.Funds on dealUnderlyingDirect.FundID equals fund.FundID
-		//                                            join direct in context.Issuers on new { dealUnderlyingDirect.SecurityID, dealUnderlyingDirect.SecurityTypeID } equals new { direct.IssuerID
-		//                                            select new UnderlyingDirectDividendDistributionModel {
-		//                                                FundId = fund.FundID,
-		//                                                FundName = fund.FundName,
-		//                                                UnderlyingDirectId = underlyingDirect.UnderlyingtFundID,
-		//                                                UnderlyingDirectName = underlyingDirect.FundName,
-		//                                                Deals = (from dealuf in context.DealUnderlyingDirects
-		//                                                         where dealuf.UnderlyingDirectID == underlyingDirect.UnderlyingtFundID && dealuf.Deal.FundID == fund.FundID && dealuf.DealClosingID != null
-		//                                                         group dealuf by dealuf.DealID into deals
-		//                                                         select new ActivityDealModel {
-		//                                                             CommitmentAmount = deals.Sum(duf => duf.CommittedAmount),
-		//                                                             DealId = deals.FirstOrDefault().DealID,
-		//                                                             FundId = deals.FirstOrDefault().Deal.FundID,
-		//                                                             DealName = deals.FirstOrDefault().Deal.DealName,
-		//                                                             DealNumber = deals.FirstOrDefault().Deal.DealNumber
-		//                                                         })
-		//                                            });
-		//        return newDividendDistributionQuery.OrderBy(cd => cd.FundName).ToList();
-		//    }
-		//}
-
-		//public bool DeleteUnderlyingDirectDividendDistribution(int id) {
-		//    using (DeepBlueEntities context = new DeepBlueEntities()) {
-		//        UnderlyingDirectDividendDistribution underlyingDirectDividendDistribution = context.UnderlyingDirectDividendDistributions.SingleOrDefault(distribution => distribution.UnderlyingDirectDividendDistributionID == id);
-		//        if (underlyingDirectDividendDistribution != null) {
-		//            List<DividendDistribution> dividendDistributions = underlyingDirectDividendDistribution.DividendDistributions.ToList();
-		//            foreach (var dividendDistribution in dividendDistributions) {
-		//                context.DividendDistributions.DeleteObject(dividendDistribution);
-		//            }
-		//            context.UnderlyingDirectDividendDistributions.DeleteObject(underlyingDirectDividendDistribution);
-		//            context.SaveChanges();
-		//            return true;
-		//        }
-		//        return false;
-		//    }
-		//}
-
-		#endregion
-
-	
-
+				
 		#region UnderlyingFundPostRecordCashDistribution
 
 		public List<UnderlyingFundPostRecordCashDistributionModel> GetAllUnderlyingFundPostRecordCashDistributions(int underlyingFundId) {
@@ -1465,6 +1407,17 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public DividendDistribution FindDividendDistribution(int underlyingDirectDividendDistributionID, int securityTypeID, int securityID, int dealID){
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DividendDistributions
+											.Where(dd => dd.UnderlyingDirectDividendDistributionID == underlyingDirectDividendDistributionID 
+											&& dd.SecurityTypeID == securityTypeID
+											&& dd.SecurityID == securityID
+											&& dd.DealID == dealID 
+											).FirstOrDefault();
+			}
+		}
+		
 		public IEnumerable<ErrorInfo> SaveUnderlyingFundCapitalCall(UnderlyingFundCapitalCall underlyingFundCapitalCall) {
 			return underlyingFundCapitalCall.Save();
 		}
@@ -1551,9 +1504,6 @@ namespace DeepBlue.Controllers.Deal {
 												   DealID = deals.Key,
 												   UnderlyingFundID = underlyingFundId
 											   });
-				var postRecordCapitalCalls = (from capitalCall in context.UnderlyingFundCapitalCallLineItems
-											  where capitalCall.UnderlyingFundID == underlyingFundId && capitalCall.UnderlyingFundCapitalCallID == null
-											  select capitalCall);
 				var newPRCapitalCallQuery = (from dealUnderlyingFund in dealUnderlyingFundQuery
 											 join deal in context.Deals on dealUnderlyingFund.DealID equals deal.DealID
 											 join underlyingFund in context.UnderlyingFunds on dealUnderlyingFund.UnderlyingFundID equals underlyingFund.UnderlyingtFundID
@@ -1600,6 +1550,145 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
+		
+		#region UnderlyingDirectDividendDistribution
+
+		public UnderlyingDirectDividendDistribution FindUnderlyingDirectDividendDistribution(int underlyingDirectDividendDistributionId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from dividendDistribution in context.UnderlyingDirectDividendDistributions
+						where dividendDistribution.UnderlyingDirectDividendDistributionID == underlyingDirectDividendDistributionId
+						select dividendDistribution).SingleOrDefault();
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveUnderlyingDirectDividendDistribution(UnderlyingDirectDividendDistribution underlyingDirectDividendDistribution) {
+			return underlyingDirectDividendDistribution.Save();
+		}
+
+		public IEnumerable<ErrorInfo> SaveDividendDistribution(DividendDistribution dividendDistribution) {
+			return dividendDistribution.Save();
+		}
+
+		public List<DividendDistributionModel> GetAllUnderlyingDirectDividendDistributions(int securityTypeID, int securityID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var dealUnderlyingDirectQuery = (from underlyingDirect in context.DealUnderlyingDirects
+												 join deal in context.Deals on underlyingDirect.DealID equals deal.DealID
+												 where
+												 underlyingDirect.SecurityID == securityID
+												 && underlyingDirect.SecurityTypeID == securityTypeID
+												 && underlyingDirect.DealClosingID != null
+												 group deal by deal.FundID into deals
+												 select new {
+													 FundID = deals.Key,
+													 SecurityID = securityID,
+													 SecurityTypeID = securityTypeID
+												 });
+				var newDividendDistributionQuery = (from dealUnderlyingDirect in dealUnderlyingDirectQuery
+													join fund in context.Funds on dealUnderlyingDirect.FundID equals fund.FundID
+													select new DividendDistributionModel {
+														FundId = fund.FundID,
+														FundName = fund.FundName,
+														SecurityID = dealUnderlyingDirect.SecurityID,
+														SecurityTypeID = dealUnderlyingDirect.SecurityTypeID,
+														Deals = (from dealud in context.DealUnderlyingDirects
+																 where dealud.SecurityID == dealUnderlyingDirect.SecurityID
+																 && dealud.SecurityTypeID == dealUnderlyingDirect.SecurityTypeID
+																 && dealud.DealClosingID != null
+																 group dealud by dealud.DealID into deals
+																 select new ActivityDealModel {
+																	 DealId = deals.FirstOrDefault().DealID,
+																	 FundId = deals.FirstOrDefault().Deal.FundID,
+																	 DealName = deals.FirstOrDefault().Deal.DealName,
+																	 DealNumber = deals.FirstOrDefault().Deal.DealNumber,
+																	 NoOfShares = deals.Sum(dd => dd.NumberOfShares)
+																 })
+													});
+				return newDividendDistributionQuery.OrderBy(cd => cd.FundName).ToList();
+			}
+		}
+
+		public bool DeleteUnderlyingDirectDividendDistribution(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				UnderlyingDirectDividendDistribution underlyingDirectDividendDistribution = context.UnderlyingDirectDividendDistributions.SingleOrDefault(distribution => distribution.UnderlyingDirectDividendDistributionID == id);
+				if (underlyingDirectDividendDistribution != null) {
+					List<DividendDistribution> dividendDistributions = underlyingDirectDividendDistribution.DividendDistributions.ToList();
+					foreach (var dividendDistribution in dividendDistributions) {
+						context.DividendDistributions.DeleteObject(dividendDistribution);
+					}
+					context.UnderlyingDirectDividendDistributions.DeleteObject(underlyingDirectDividendDistribution);
+					context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
+		}
+
+		#endregion
+
+		#region PostRecordDividendDistribution
+
+		public DividendDistribution FindPostRecordDividendDistribution(int dividendDistributionID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from dividendDistribution in context.DividendDistributions
+						where dividendDistribution.DividendDistributionID == dividendDistributionID
+						select dividendDistribution).SingleOrDefault();
+			}
+		}
+
+		public DividendDistribution FindPostRecordDividendDistribution(int underlyingFundDividendDistributionId, int securityTypeID, int securityID, int dealId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DividendDistributions.Where(dd => dd.UnderlyingDirectDividendDistributionID == underlyingFundDividendDistributionId
+														&& dd.SecurityTypeID == securityTypeID 
+														&& dd.SecurityID == securityID 
+														).FirstOrDefault();
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SavePostRecordDividendDistribution(DividendDistribution underlyingFundDividendDistribution) {
+			return underlyingFundDividendDistribution.Save();
+		}
+
+		public List<PostRecordDividendDistributionModel> GetAllPostRecordDividendDistributions(int securityTypeID, int securityID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var dealQuery = (from underlyingDirect in context.DealUnderlyingDirects 
+								 join deal in context.Deals on underlyingDirect.DealID equals deal.DealID
+								 where underlyingDirect.SecurityTypeID == securityTypeID 
+								 && underlyingDirect.SecurityID == securityID 
+								 && underlyingDirect.DealClosingID == null
+								 group deal by deal.DealID into deals
+								 select new {
+									 DealID = deals.Key,
+									 SecurityTypeID = securityTypeID,
+									 SecurityID = securityID 
+								 });
+				var newPRDividendDistributionQuery = (from dealUnderlyingDirect in dealQuery
+													  join deal in context.Deals on dealUnderlyingDirect.DealID equals deal.DealID
+													  select new PostRecordDividendDistributionModel {
+														  DealId = deal.DealID,
+														  DealName = deal.DealName,
+														  FundId = deal.FundID,
+														  FundName = deal.Fund.FundName,
+														  SecurityID = dealUnderlyingDirect.SecurityID,
+														  SecurityTypeID = dealUnderlyingDirect.SecurityTypeID 
+													  });
+				return newPRDividendDistributionQuery.OrderBy(dd => dd.FundName).ToList();
+			}
+		}
+
+		public bool DeletePostRecordDividendDistribution(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				DividendDistribution underlyingFundDividendDistribution = context.DividendDistributions.Where(capitalCall => capitalCall.DividendDistributionID == id).SingleOrDefault();
+				if (underlyingFundDividendDistribution != null) {
+					context.DividendDistributions.DeleteObject(underlyingFundDividendDistribution);
+					context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
+		}
+		
+		#endregion
+
 
 		#region UnderlyingFundValuation
 
@@ -2551,6 +2640,7 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 
+	  
 	}
 
 

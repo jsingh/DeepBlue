@@ -19,6 +19,8 @@ namespace DeepBlue.Models.Deal {
 			FundLevelExpenseModel = new FundExpenseModel();
 			UnderlyingDirectValuationModel = new UnderlyingDirectValuationModel();
 			UnfundedAdjustmentModel = new UnfundedAdjustmentModel();
+			DividendDistributionModel = new DividendDistributionModel();
+			PostRecordDividendDistributionModel = new PostRecordDividendDistributionModel();
 		}
 
 		public UnderlyingFundCapitalCallModel UnderlyingFundCapitalCallModel { get; set; }
@@ -30,6 +32,10 @@ namespace DeepBlue.Models.Deal {
 		public UnderlyingFundPostRecordCashDistributionModel UnderlyingFundPostRecordCashDistributionModel { get; set; }
 
 		public UnderlyingFundValuationModel UnderlyingFundValuationModel { get; set; }
+
+		public DividendDistributionModel DividendDistributionModel { get; set; }
+
+		public PostRecordDividendDistributionModel PostRecordDividendDistributionModel { get; set; }
 
 		public EquitySplitModel EquitySplitModel { get; set; }
 

@@ -40,6 +40,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
+			[Required(ErrorMessage = "DistributionDate is required")]
 			[DateRange(ErrorMessage = "DistributionDate is required")]
 			public Nullable<global::System.DateTime> DistributionDate {
 				get;
@@ -77,37 +78,7 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-
-			[Required(ErrorMessage = "IsPostRecordDateTransaction is required")]
-			public global::System.Boolean IsPostRecordDateTransaction {
-				get;
-				set;
-			}
-
-			[Required(ErrorMessage = "IsReconciled is required")]
-			public global::System.Boolean IsReconciled {
-				get;
-				set;
-			}
-
-			[StringLength(100, ErrorMessage = "ReconciliationMethod must be under 100 characters.")]
-			public global::System.String ReconciliationMethod {
-				get;
-				set;
-			}
-
-			[DateRange(ErrorMessage = "PaidON is required")]
-			public Nullable<global::System.DateTime> PaidON {
-				get;
-				set;
-			}
-
-			[StringLength(100, ErrorMessage = "ChequeNumber must be under 100 characters.")]
-			public global::System.String ChequeNumber {
-				get;
-				set;
-			}
-
+  
 			#endregion
 		}
 		public UnderlyingDirectDividendDistribution(IUnderlyingDirectDividendDistributionService underlyingDirectDividendDistributionService)

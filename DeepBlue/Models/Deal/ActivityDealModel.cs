@@ -18,5 +18,7 @@ namespace DeepBlue.Models.Deal {
 		public decimal? CommitmentAmount { get; set; }
 
 		public decimal? CallAmount { get; set; }
+
+		public int? NoOfShares  { get; set; }
 	}
 }
