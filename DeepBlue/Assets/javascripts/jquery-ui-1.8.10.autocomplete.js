@@ -305,14 +305,8 @@
 						dataType: "json",
 						autocompleteRequest: ++requestIndex,
 						success: function (data,status) {
-							if(data.Total) {
-								if(this.autocompleteRequest===requestIndex) {
-									response(data.data);
-								}
-							} else {
-								if(this.autocompleteRequest===requestIndex) {
-									response(data);
-								}
+							if(this.autocompleteRequest===requestIndex) {
+								response(data);
 							}
 						},
 						error: function () {
