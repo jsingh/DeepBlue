@@ -31,6 +31,7 @@
 			,onRowBound: false
 			,onSubmit: false
 			,onInit: false
+			,onBeforeAddData: false
 			,onTemplate: false
 			,width: 0
 			,useBoxStyle: true
@@ -39,6 +40,7 @@
 		var g={
 			hset: {},
 			addData: function (data) {
+				if(p.onBeforeAddData) { p.onBeforeAddData(data); }
 				if(p.preProcess) { data=p.preProcess(data); }
 				$('.pReload',this.pDiv).removeClass('loading');this.loading=false;
 				if(!data) { $('.pPageStat',this.pDiv).html(p.errormsg);return false; }
@@ -69,7 +71,6 @@
 					p.page=data.page;
 				}
 				this.buildpager();
-
 				if(p.onTemplate) {
 					p.onTemplate(tbody,data);
 				} else {
@@ -266,7 +267,7 @@
 						} else {
 							p.newp=1;
 							p.rp= +this.value;
-							$(":input[name='jqCBSTextBox_rp']").val(p.rp);
+							$(":input[name='jqCBSTextBox_rp']",g.gDiv).val(p.rp);
 							g.populate();
 						}
 					}

@@ -8,6 +8,11 @@ namespace DeepBlue.Models.Deal {
 
 	public class ReconcileSearchModel {
 
+		public ReconcileSearchModel(){
+			PageIndex = 1;
+			PageSize = 25;
+		}
+
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
 		public DateTime? StartDate { get; set; }
 
@@ -19,6 +24,10 @@ namespace DeepBlue.Models.Deal {
 		public int? UnderlyingFundId { get; set; }
 
 		public int ReconcileType { get; set; }
+
+		public int PageIndex { get; set; }
+
+		public int PageSize { get; set; }
 		
 	}
 }

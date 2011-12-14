@@ -202,6 +202,7 @@ div.pGroup {
 }
 .flexigrid .pReload.loading {
 	background: url(../images/load.gif) no-repeat center;
+	margin-left:0;
 }
 .flexigrid.ie div.bDiv th div, .flexigrid.ie div.bDiv td div, div.colCopy.ie div /* common inner cell properties*/ /* common inner cell properties*/ {
 	overflow: hidden;

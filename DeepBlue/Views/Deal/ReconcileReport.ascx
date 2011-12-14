@@ -87,6 +87,27 @@
 	<div class="group">
 		<div class="recon-headerbox" style="display: none;">
 			<div class="title">
+				<span>Dividend Distribution To Director</span>
+			</div>
+		</div>
+		<div style="display: block;" class="recon-expandheader expandsel">
+			<div class="expandbtn">
+				<div style="display: block;" class="recon-expandtitle">
+					Dividend Distribution To Director
+				</div>
+			</div>
+		</div>
+		<div class="recon-detail" id="RGDD" style="display: block;" issearch="true">
+			{{tmpl(DDItems) "#ReconcileGridTemplate"}}
+		</div>
+	</div>
+</div>
+<div class="line">
+</div>
+<div class="act-box">
+	<div class="group">
+		<div class="recon-headerbox" style="display: none;">
+			<div class="title">
 				<span>Fund Expenses</span>
 			</div>
 		</div>

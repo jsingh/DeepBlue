@@ -21,12 +21,14 @@
 	<%=Html.JavascriptInclueTag("DealActivityUDValuation.js")%>
 	<%=Html.JavascriptInclueTag("DealActivityUFAdjustment.js")%>
 	<%=Html.JavascriptInclueTag("DealReconcile.js")%>
+	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.JavascriptInclueTag("jAjaxTable.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
 	<%=Html.JavascriptInclueTag("ImportExcel.js")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
 	<%=Html.StylesheetLinkTag("dealactivity.css")%>
+	<%=Html.StylesheetLinkTag("flexigrid.css")%>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
@@ -1019,6 +1021,56 @@
 	<%}%>
 	<%using (Html.jQueryTemplateScript("ReconcileGridTemplate")) {%>
 	<% Html.RenderPartial("ReconcileGrid"); %>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("RECItemBoundTemplate")) {%>
+		{{each(i,item) Items}}
+		<tr {{if i%2==0}}class="grow"{{else}}class="erow"{{/if}}>
+			<td style="text-align:left;">
+				<div style="width:200px;overflow:hidden;">${CounterParty}</div>
+			</td>
+			<td style="text-align:left">
+				${FundName}
+			</td>
+			<td style="text-align:left">
+				${Type}
+			</td>
+			<td style="text-align:right">
+				${formatCurrency(Amount)}
+			</td>
+			<td style="text-align:left">
+				<%: Html.TextBox("${i}_PaymentDate", "${formatDate(PaymentDate)}", new { @style="width:100px", @parentid = "${ParentId}", @id = "${ReconcileTypeId}_${i}_PaymentDate", @class = "datefield" })%>
+			</td>
+			<td style="text-align:left">
+				<%: Html.TextBox("${i}_PaidOn", "", new { @style = "width:100px", @id = "${ReconcileTypeId}_${i}_PaidOn", @class = "datefield" })%>
+			</td>
+			<td style="text-align:center">
+				<%: Html.CheckBox("${i}_IsReconciled", false, new { @onclick = "javascript:dealReconcile.checkReconcile(this,'${ReconcileTypeId}_${i}_PaidOn','${formatDate(PaymentDate)}');" })%>
+			</td>
+			<td style="text-align:left">
+				<%: Html.TextBox("${i}_ChequeNumber", "${ChequeNumber}", new { @style = "width:120px" })%>
+				<%: Html.Hidden("${i}_ReconcileTypeId", "${ReconcileTypeId}")%>
+				<%: Html.Hidden("${i}_Id", "${id}")%>
+			</td>
+		</tr>
+		{{/each}}
+	<%}%>
+	<%using (Html.jQueryTemplateScript("RECFundExpenseTemplate")) {%>
+		{{each(i,item) Items}}
+		<tr {{if i%2==0}}class="grow"{{else}}class="erow"{{/if}}>
+			<td style="text-align:left">
+				${FundName}
+			</td>
+			<td style="text-align:left">
+				${FundExpense}
+			</td>
+			<td style="text-align:right">
+				${formatCurrency(Amount)}
+			</td>
+			<td style="text-align:left">
+				${formatDate(Date)}
+			</td>
+		</tr>
+		{{/each}}
 	<%}%>
 	<%using (Html.jQueryTemplateScript("DividendDistributionAddTemplate")) {%>
 	<% Html.RenderPartial("DividendDistribution"); %>

@@ -228,12 +228,13 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region Reconcile
-		List<ReconcileReportModel> GetAllReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId);
-		List<ReconcileReportModel> GetAllUnderlyingCapitalCallReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId);
-		List<ReconcileReportModel> GetAllUnderlyingDistributionReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId);
-		List<ReconcileReportModel> GetAllCapitalCallReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId);
-		List<ReconcileReportModel> GetAllCapitalDistributionReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId);
-		object GetAllFundExpenses(int? fundId, DateTime startDate, DateTime endDate);
+		List<ReconcileReportModel> GetAllReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId, int pageIndex,int pageSize,ref int[] totalRows);
+		List<ReconcileReportModel> GetAllUnderlyingCapitalCallReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId, int pageIndex, int pageSize, ref int totalRows);
+		List<ReconcileReportModel> GetAllUnderlyingDistributionReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId, int pageIndex, int pageSize, ref int totalRows);
+		List<ReconcileReportModel> GetAllCapitalCallReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId, int pageIndex, int pageSize, ref int totalRows);
+		List<ReconcileReportModel> GetAllCapitalDistributionReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId, int pageIndex, int pageSize, ref int totalRows);
+		List<ReconcileReportModel> GetAllDividendDistributionReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId, int pageIndex, int pageSize, ref int totalRows);
+		object GetAllFundExpenses(int? fundId, DateTime startDate, DateTime endDate, int pageIndex, int pageSize, ref int totalRows);
 		#endregion
 
 		#region Direct
