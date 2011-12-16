@@ -343,9 +343,12 @@
 			 		var thdiv=document.createElement('div');
 			 		thdiv.innerHTML="<span>"+this.innerHTML+"</span>";
 			 		if($(this).attr('sortname')) {
-			 			$(this).click(function (e) { g.changeSort(this); });
-			 			if($(this).attr('sortname')==p.sortname) {
-			 				this.className='sorted';
+			 			$(this)
+						.addClass("issortcol")
+						.click(function (e) { g.changeSort(this); });
+						var sname =$(this).attr('sortname');
+			 			if(sname==p.sortname) {
+			 				$(this).addClass("sorted");
 			 				if(p.sortorder=='') {
 			 					p.sortorder='asc';
 			 				}

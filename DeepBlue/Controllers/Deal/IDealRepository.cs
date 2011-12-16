@@ -5,6 +5,7 @@ using System.Text;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
 using DeepBlue.Models.Deal;
+using DeepBlue.Models.Deal.Enums;
 
 namespace DeepBlue.Controllers.Deal {
 	public interface IDealRepository {
@@ -228,12 +229,27 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region Reconcile
-		List<ReconcileReportModel> GetAllReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId, int pageIndex,int pageSize,ref int[] totalRows);
-		List<ReconcileReportModel> GetAllUnderlyingCapitalCallReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId, int pageIndex, int pageSize, ref int totalRows);
-		List<ReconcileReportModel> GetAllUnderlyingDistributionReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId, int pageIndex, int pageSize, ref int totalRows);
-		List<ReconcileReportModel> GetAllCapitalCallReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId, int pageIndex, int pageSize, ref int totalRows);
-		List<ReconcileReportModel> GetAllCapitalDistributionReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId, int pageIndex, int pageSize, ref int totalRows);
-		List<ReconcileReportModel> GetAllDividendDistributionReconciles(DateTime startDate, DateTime endDate, int? fundId, int? underlyingFundId, int pageIndex, int pageSize, ref int totalRows);
+		List<ReconcileReportModel> GetAllReconciles(DateTime startDate,
+													DateTime endDate,
+													int? fundId,
+													int? underlyingFundId,
+													bool isReconcile,
+													int pageIndex,
+													int pageSize,
+													string sortName,
+													string sortOrder,
+													ref int[] totalRows);
+		List<ReconcileReportModel> GetAllReconciles(DateTime startDate,
+													DateTime endDate,
+													int? fundId,
+													int? underlyingFundId,
+													bool isReconcile,
+													int pageIndex,
+													int pageSize,
+													string sortName,
+													string sortOrder,
+													ref int totalRows,
+													ReconcileType reconcileType);
 		object GetAllFundExpenses(int? fundId, DateTime startDate, DateTime endDate, int pageIndex, int pageSize, ref int totalRows);
 		#endregion
 

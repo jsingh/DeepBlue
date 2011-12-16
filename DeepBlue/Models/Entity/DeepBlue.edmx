@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DeepBlueModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="DeepBlueModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="DeepBlueModelStoreContainer">
           <EntitySet Name="Account" EntityType="DeepBlueModel.Store.Account" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ActivityType" EntityType="DeepBlueModel.Store.ActivityType" store:Type="Tables" Schema="dbo" />
@@ -898,6 +898,10 @@
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="LastUpdatedBy" Type="int" />
           <Property Name="DistributionDate" Type="datetime" />
+          <Property Name="IsReconciled" Type="bit" />
+          <Property Name="ReconciliationMethod" Type="varchar" MaxLength="100" />
+          <Property Name="PaidON" Type="datetime" />
+          <Property Name="ChequeNumber" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="CashDistributionType">
           <Key>
@@ -1178,6 +1182,10 @@
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="LastUpdatedBy" Type="int" />
           <Property Name="DistributionDate" Type="datetime" />
+          <Property Name="IsReconciled" Type="bit" />
+          <Property Name="ReconciliationMethod" Type="varchar" MaxLength="100" />
+          <Property Name="PaidON" Type="datetime" />
+          <Property Name="ChequeNumber" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="DocumentSection">
           <Key>
@@ -1992,6 +2000,10 @@
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="LastUpdatedBy" Type="int" />
           <Property Name="CapitalCallDate" Type="datetime" />
+          <Property Name="IsReconciled" Type="bit" />
+          <Property Name="ReconciliationMethod" Type="varchar" MaxLength="100" />
+          <Property Name="PaidON" Type="datetime" />
+          <Property Name="ChequeNumber" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="UnderlyingFundCashDistribution">
           <Key>
@@ -3853,8 +3865,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DeepBlueModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -4777,6 +4788,10 @@
           <NavigationProperty Name="Deal" Relationship="DeepBlueModel.FK_CashDistribution_Deal" FromRole="CashDistribution" ToRole="Deal" />
           <NavigationProperty Name="UnderlyingFund" Relationship="DeepBlueModel.FK_CashDistribution_UnderlyingFund" FromRole="CashDistribution" ToRole="UnderlyingFund" />
           <NavigationProperty Name="UnderlyingFundCashDistribution" Relationship="DeepBlueModel.FK_CashDistribution_UnderlyingFundCashDistribution" FromRole="CashDistribution" ToRole="UnderlyingFundCashDistribution" />
+          <Property Type="Boolean" Name="IsReconciled" />
+          <Property Type="String" Name="ReconciliationMethod" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="PaidON" />
+          <Property Type="String" Name="ChequeNumber" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CashDistributionType">
           <Key>
@@ -5123,6 +5138,10 @@
           <NavigationProperty Name="Deal" Relationship="DeepBlueModel.FK_DividendDistribution_Deal" FromRole="DividendDistribution" ToRole="Deal" />
           <NavigationProperty Name="SecurityType" Relationship="DeepBlueModel.FK_DividendDistribution_SecurityType" FromRole="DividendDistribution" ToRole="SecurityType" />
           <NavigationProperty Name="UnderlyingDirectDividendDistribution" Relationship="DeepBlueModel.FK_DividendDistribution_UnderlyingDirectDividendDistribution" FromRole="DividendDistribution" ToRole="UnderlyingDirectDividendDistribution" />
+          <Property Type="Boolean" Name="IsReconciled" />
+          <Property Type="String" Name="ReconciliationMethod" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="PaidON" />
+          <Property Type="String" Name="ChequeNumber" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="DocumentSection">
           <Key>
@@ -6107,6 +6126,10 @@
           <NavigationProperty Name="Deal" Relationship="DeepBlueModel.FK_UnderlyingFundCapitalCallLineItem_Deal" FromRole="UnderlyingFundCapitalCallLineItem" ToRole="Deal" />
           <NavigationProperty Name="UnderlyingFund" Relationship="DeepBlueModel.FK_UnderlyingFundCapitalCallLineItem_UnderlyingFund" FromRole="UnderlyingFundCapitalCallLineItem" ToRole="UnderlyingFund" />
           <NavigationProperty Name="UnderlyingFundCapitalCall" Relationship="DeepBlueModel.FK_UnderlyingFundCapitalCallLineItem_UnderlyingFundCapitalCallID" FromRole="UnderlyingFundCapitalCallLineItem" ToRole="UnderlyingFundCapitalCall" />
+          <Property Type="Boolean" Name="IsReconciled" />
+          <Property Type="String" Name="ReconciliationMethod" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="PaidON" />
+          <Property Type="String" Name="ChequeNumber" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="UnderlyingFundCashDistribution">
           <Key>
@@ -8168,7 +8191,11 @@
             <ScalarProperty Name="Amount" ColumnName="Amount" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="CashDistributions"><EntityTypeMapping TypeName="DeepBlueModel.CashDistribution"><MappingFragment StoreEntitySet="CashDistribution">
-            <ScalarProperty Name="CashDistributionID" ColumnName="CashDistributionID" />
+            <ScalarProperty Name="ChequeNumber" ColumnName="ChequeNumber" />
+                <ScalarProperty Name="PaidON" ColumnName="PaidON" />
+                <ScalarProperty Name="ReconciliationMethod" ColumnName="ReconciliationMethod" />
+                <ScalarProperty Name="IsReconciled" ColumnName="IsReconciled" />
+                <ScalarProperty Name="CashDistributionID" ColumnName="CashDistributionID" />
             <ScalarProperty Name="UnderlyingFundID" ColumnName="UnderlyingFundID" />
             <ScalarProperty Name="DealID" ColumnName="DealID" />
             <ScalarProperty Name="UnderluingFundCashDistributionID" ColumnName="UnderluingFundCashDistributionID" />
@@ -8384,7 +8411,11 @@
             <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="DividendDistributions"><EntityTypeMapping TypeName="DeepBlueModel.DividendDistribution"><MappingFragment StoreEntitySet="DividendDistribution">
-            <ScalarProperty Name="DividendDistributionID" ColumnName="DividendDistributionID" />
+            <ScalarProperty Name="ChequeNumber" ColumnName="ChequeNumber" />
+                <ScalarProperty Name="PaidON" ColumnName="PaidON" />
+                <ScalarProperty Name="ReconciliationMethod" ColumnName="ReconciliationMethod" />
+                <ScalarProperty Name="IsReconciled" ColumnName="IsReconciled" />
+                <ScalarProperty Name="DividendDistributionID" ColumnName="DividendDistributionID" />
             <ScalarProperty Name="SecurityID" ColumnName="SecurityID" />
             <ScalarProperty Name="SecurityTypeID" ColumnName="SecurityTypeID" />
             <ScalarProperty Name="DealID" ColumnName="DealID" />
@@ -9021,7 +9052,11 @@
             <ScalarProperty Name="ChequeNumber" ColumnName="ChequeNumber" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="UnderlyingFundCapitalCallLineItems"><EntityTypeMapping TypeName="DeepBlueModel.UnderlyingFundCapitalCallLineItem"><MappingFragment StoreEntitySet="UnderlyingFundCapitalCallLineItem">
-            <ScalarProperty Name="UnderlyingFundCapitalCallLineItemID" ColumnName="UnderlyingFundCapitalCallLineItemID" />
+            <ScalarProperty Name="ChequeNumber" ColumnName="ChequeNumber" />
+                <ScalarProperty Name="PaidON" ColumnName="PaidON" />
+                <ScalarProperty Name="ReconciliationMethod" ColumnName="ReconciliationMethod" />
+                <ScalarProperty Name="IsReconciled" ColumnName="IsReconciled" />
+                <ScalarProperty Name="UnderlyingFundCapitalCallLineItemID" ColumnName="UnderlyingFundCapitalCallLineItemID" />
             <ScalarProperty Name="UnderlyingFundID" ColumnName="UnderlyingFundID" />
             <ScalarProperty Name="DealID" ColumnName="DealID" />
             <ScalarProperty Name="UnderlyingFundCapitalCallID" ColumnName="UnderlyingFundCapitalCallID" />

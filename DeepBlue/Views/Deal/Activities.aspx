@@ -889,10 +889,17 @@
 									<%: Html.TextBox("EndDate", "END DATE", new { @id = "ReconEndDate",   @style = "width:100px" })%>&nbsp;&nbsp;
 								</div>
 								<div class="cell">
-									<%: Html.TextBox("ReconcileFundName", "SEARCH AMBERBROOK FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:200px" })%>
+									<%: Html.TextBox("ReconcileFundName", "SEARCH AMBERBROOK FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:180px" })%>
 								</div>
 								<div class="cell" style="padding-left: 10px;">
-									<%: Html.TextBox("ReconcileUnderlyingFundName", "SEARCH UNDERLYING FUND", new { @id = "ReconcileUnderlyingFundName", @class = "wm", @style = "width:200px" })%>
+									<%: Html.TextBox("ReconcileUnderlyingFundName", "SEARCH UNDERLYING FUND", new { @id = "ReconcileUnderlyingFundName", @class = "wm", @style = "width:180px" })%>
+								</div>
+								<div class="cell" style="padding-left: 10px;">
+									<%List<SelectListItem> options = new List<SelectListItem>();
+										options.Add(new SelectListItem { Text = "SEARCH UNRECONCILE", Value = "false" });
+										options.Add(new SelectListItem { Text = "SEARCH RECONCILE", Value = "true" });
+									%>
+									<%: Html.DropDownList("IsReconcile", options, new { @style="width:180px" })%>
 								</div>
 								<div class="cell" style="padding-left: 10px;">
 									<%: Html.Image("search_active.png", new { @onclick = "javascript:dealReconcile.submit(0);" })%>
@@ -1041,10 +1048,10 @@
 				<%: Html.TextBox("${i}_PaymentDate", "${formatDate(PaymentDate)}", new { @style="width:100px", @parentid = "${ParentId}", @id = "${ReconcileTypeId}_${i}_PaymentDate", @class = "datefield" })%>
 			</td>
 			<td style="text-align:left">
-				<%: Html.TextBox("${i}_PaidOn", "", new { @style = "width:100px", @id = "${ReconcileTypeId}_${i}_PaidOn", @class = "datefield" })%>
+				<%: Html.TextBox("${i}_PaidOn", "${formatDate(PaidOn)}", new { @style = "width:100px", @id = "${ReconcileTypeId}_${i}_PaidOn", @class = "datefield" })%>
 			</td>
 			<td style="text-align:center">
-				<%: Html.CheckBox("${i}_IsReconciled", false, new { @onclick = "javascript:dealReconcile.checkReconcile(this,'${ReconcileTypeId}_${i}_PaidOn','${formatDate(PaymentDate)}');" })%>
+				<%: Html.CheckBox("${i}_IsReconciled", false, new { @val="${IsReconciled}", @onclick = "javascript:dealReconcile.checkReconcile(this,'${ReconcileTypeId}_${i}_PaidOn','${formatDate(PaymentDate)}');" })%>
 			</td>
 			<td style="text-align:left">
 				<%: Html.TextBox("${i}_ChequeNumber", "${ChequeNumber}", new { @style = "width:120px" })%>

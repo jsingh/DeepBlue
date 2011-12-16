@@ -7727,6 +7727,102 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.DateTime> _DistributionDate;
         partial void OnDistributionDateChanging(Nullable<global::System.DateTime> value);
         partial void OnDistributionDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsReconciled
+        {
+            get
+            {
+                return _IsReconciled;
+            }
+            set
+            {
+                OnIsReconciledChanging(value);
+                ReportPropertyChanging("IsReconciled");
+                _IsReconciled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsReconciled");
+                OnIsReconciledChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsReconciled;
+        partial void OnIsReconciledChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsReconciledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ReconciliationMethod
+        {
+            get
+            {
+                return _ReconciliationMethod;
+            }
+            set
+            {
+                OnReconciliationMethodChanging(value);
+                ReportPropertyChanging("ReconciliationMethod");
+                _ReconciliationMethod = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ReconciliationMethod");
+                OnReconciliationMethodChanged();
+            }
+        }
+        private global::System.String _ReconciliationMethod;
+        partial void OnReconciliationMethodChanging(global::System.String value);
+        partial void OnReconciliationMethodChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> PaidON
+        {
+            get
+            {
+                return _PaidON;
+            }
+            set
+            {
+                OnPaidONChanging(value);
+                ReportPropertyChanging("PaidON");
+                _PaidON = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PaidON");
+                OnPaidONChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _PaidON;
+        partial void OnPaidONChanging(Nullable<global::System.DateTime> value);
+        partial void OnPaidONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ChequeNumber
+        {
+            get
+            {
+                return _ChequeNumber;
+            }
+            set
+            {
+                OnChequeNumberChanging(value);
+                ReportPropertyChanging("ChequeNumber");
+                _ChequeNumber = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ChequeNumber");
+                OnChequeNumberChanged();
+            }
+        }
+        private global::System.String _ChequeNumber;
+        partial void OnChequeNumberChanging(global::System.String value);
+        partial void OnChequeNumberChanged();
 
         #endregion
     
@@ -14783,6 +14879,102 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.DateTime> _DistributionDate;
         partial void OnDistributionDateChanging(Nullable<global::System.DateTime> value);
         partial void OnDistributionDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsReconciled
+        {
+            get
+            {
+                return _IsReconciled;
+            }
+            set
+            {
+                OnIsReconciledChanging(value);
+                ReportPropertyChanging("IsReconciled");
+                _IsReconciled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsReconciled");
+                OnIsReconciledChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsReconciled;
+        partial void OnIsReconciledChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsReconciledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ReconciliationMethod
+        {
+            get
+            {
+                return _ReconciliationMethod;
+            }
+            set
+            {
+                OnReconciliationMethodChanging(value);
+                ReportPropertyChanging("ReconciliationMethod");
+                _ReconciliationMethod = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ReconciliationMethod");
+                OnReconciliationMethodChanged();
+            }
+        }
+        private global::System.String _ReconciliationMethod;
+        partial void OnReconciliationMethodChanging(global::System.String value);
+        partial void OnReconciliationMethodChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> PaidON
+        {
+            get
+            {
+                return _PaidON;
+            }
+            set
+            {
+                OnPaidONChanging(value);
+                ReportPropertyChanging("PaidON");
+                _PaidON = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PaidON");
+                OnPaidONChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _PaidON;
+        partial void OnPaidONChanging(Nullable<global::System.DateTime> value);
+        partial void OnPaidONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ChequeNumber
+        {
+            get
+            {
+                return _ChequeNumber;
+            }
+            set
+            {
+                OnChequeNumberChanging(value);
+                ReportPropertyChanging("ChequeNumber");
+                _ChequeNumber = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ChequeNumber");
+                OnChequeNumberChanged();
+            }
+        }
+        private global::System.String _ChequeNumber;
+        partial void OnChequeNumberChanging(global::System.String value);
+        partial void OnChequeNumberChanged();
 
         #endregion
     
@@ -34659,6 +34851,102 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.DateTime> _CapitalCallDate;
         partial void OnCapitalCallDateChanging(Nullable<global::System.DateTime> value);
         partial void OnCapitalCallDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsReconciled
+        {
+            get
+            {
+                return _IsReconciled;
+            }
+            set
+            {
+                OnIsReconciledChanging(value);
+                ReportPropertyChanging("IsReconciled");
+                _IsReconciled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsReconciled");
+                OnIsReconciledChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsReconciled;
+        partial void OnIsReconciledChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsReconciledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ReconciliationMethod
+        {
+            get
+            {
+                return _ReconciliationMethod;
+            }
+            set
+            {
+                OnReconciliationMethodChanging(value);
+                ReportPropertyChanging("ReconciliationMethod");
+                _ReconciliationMethod = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ReconciliationMethod");
+                OnReconciliationMethodChanged();
+            }
+        }
+        private global::System.String _ReconciliationMethod;
+        partial void OnReconciliationMethodChanging(global::System.String value);
+        partial void OnReconciliationMethodChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> PaidON
+        {
+            get
+            {
+                return _PaidON;
+            }
+            set
+            {
+                OnPaidONChanging(value);
+                ReportPropertyChanging("PaidON");
+                _PaidON = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PaidON");
+                OnPaidONChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _PaidON;
+        partial void OnPaidONChanging(Nullable<global::System.DateTime> value);
+        partial void OnPaidONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ChequeNumber
+        {
+            get
+            {
+                return _ChequeNumber;
+            }
+            set
+            {
+                OnChequeNumberChanging(value);
+                ReportPropertyChanging("ChequeNumber");
+                _ChequeNumber = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ChequeNumber");
+                OnChequeNumberChanged();
+            }
+        }
+        private global::System.String _ChequeNumber;
+        partial void OnChequeNumberChanging(global::System.String value);
+        partial void OnChequeNumberChanged();
 
         #endregion
     

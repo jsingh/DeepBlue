@@ -30,7 +30,10 @@ namespace DeepBlue.Models.Deal.Enums {
 		UnderlyingFundCashDistribution = 2,
 		CapitalCall = 3,
 		CapitalDistribution = 4,
-		DividendDistribution = 5
+		DividendDistribution = 5,
+		PostRecordCapitalCall = 6,
+		PostRecordDistribution = 7,
+		PostRecordDividendDistribution = 8
 	}
 
 	public enum EquitySecurityType {

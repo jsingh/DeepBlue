@@ -235,6 +235,9 @@ div.pGroup {
 	background: url("../images/sort_up.png") no-repeat scroll right center transparent;
 	padding-right: 15px;
 }
+.flexigrid .issortcol{
+	cursor:pointer;
+}
 .flexigrid .bDiv span.sdesc {
 	background: url("../images/sort_down.png") no-repeat scroll right center transparent;
 	padding-right: 15px;

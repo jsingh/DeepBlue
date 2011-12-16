@@ -2330,6 +2330,7 @@ namespace DeepBlue.Controllers.Deal {
 			capitalCallLineItem.Amount = model.Amount ?? 0;
 			capitalCallLineItem.CapitalCallDate = model.CapitalCallDate;
 			capitalCallLineItem.DealID = model.DealId;
+			capitalCallLineItem.ReceivedDate = DateTime.Now;
 			capitalCallLineItem.LastUpdatedBy = Authentication.CurrentUser.UserID;
 			capitalCallLineItem.LastUpdatedDate = DateTime.Now;
 			errorInfo = DealRepository.SaveUnderlyingFundPostRecordCapitalCall(capitalCallLineItem);
@@ -3161,30 +3162,45 @@ namespace DeepBlue.Controllers.Deal {
 			DateTime startDate = (model.StartDate ?? Convert.ToDateTime("01/01/1900"));
 			DateTime endDate = (model.EndDate ?? DateTime.MaxValue);
 			object allFundExpenses = null;
-			int[] totalRowArrays = { 0, 0, 0, 0, 0, 0 };
+			string sortName = collection["sortName"];
+			string sortOrder = collection["sortOrder"];
+			if (string.IsNullOrEmpty(sortName)) sortName = "CounterParty";
+			if (string.IsNullOrEmpty(sortOrder)) sortOrder = "asc";
+			int[] totalRowArrays = new int[9];
 			int totalRows = 0;
 			int totalFundExpenses = 0;
 			if (ModelState.IsValid) {
-				switch ((DeepBlue.Models.Deal.Enums.ReconcileType)model.ReconcileType) {
-					case ReconcileType.All:
-						allReconciles = DealRepository.GetAllReconciles(startDate, endDate, model.FundId, model.UnderlyingFundId, model.PageIndex, model.PageSize, ref totalRowArrays);
-						allFundExpenses = DealRepository.GetAllFundExpenses(model.FundId, startDate, endDate, model.PageIndex, model.PageSize, ref totalFundExpenses);
-						break;
-					case ReconcileType.UnderlyingFundCapitalCall:
-						allReconciles = DealRepository.GetAllUnderlyingCapitalCallReconciles(startDate, endDate, model.FundId, model.UnderlyingFundId, model.PageIndex, model.PageSize, ref totalRows);
-						break;
-					case ReconcileType.UnderlyingFundCashDistribution:
-						allReconciles = DealRepository.GetAllUnderlyingDistributionReconciles(startDate, endDate, model.FundId, model.UnderlyingFundId, model.PageIndex, model.PageSize, ref totalRows);
-						break;
-					case ReconcileType.CapitalCall:
-						allReconciles = DealRepository.GetAllCapitalCallReconciles(startDate, endDate, model.FundId, model.UnderlyingFundId, model.PageIndex, model.PageSize, ref totalRows);
-						break;
-					case ReconcileType.CapitalDistribution:
-						allReconciles = DealRepository.GetAllCapitalDistributionReconciles(startDate, endDate, model.FundId, model.UnderlyingFundId, model.PageIndex, model.PageSize, ref totalRows);
-						break;
-					case ReconcileType.DividendDistribution:
-						allReconciles = DealRepository.GetAllDividendDistributionReconciles(startDate, endDate, model.FundId, model.UnderlyingFundId, model.PageIndex, model.PageSize, ref totalRows);
-						break;
+				DeepBlue.Models.Deal.Enums.ReconcileType reconcileType = (DeepBlue.Models.Deal.Enums.ReconcileType)model.ReconcileType;
+				if (reconcileType == ReconcileType.All) {
+					allReconciles = DealRepository.GetAllReconciles(startDate,
+																	endDate,
+																	model.FundId,
+																	model.UnderlyingFundId,
+																	model.IsReconcile,
+																	model.PageIndex,
+																	model.PageSize,
+																	sortName,
+																	sortOrder,
+																	ref totalRowArrays);
+					allFundExpenses = DealRepository.GetAllFundExpenses(model.FundId,
+																		startDate,
+																		endDate,
+																		model.PageIndex,
+																		model.PageSize,
+																		ref totalFundExpenses);
+				}
+				else {
+					allReconciles = DealRepository.GetAllReconciles(startDate,
+																	endDate,
+																	model.FundId,
+																	model.UnderlyingFundId,
+																	model.IsReconcile,
+																	model.PageIndex,
+																	model.PageSize,
+																	sortName,
+																	sortOrder,
+																	ref totalRows,
+																	reconcileType);
 				}
 			}
 			else {
@@ -3197,7 +3213,14 @@ namespace DeepBlue.Controllers.Deal {
 				}
 			}
 			totalRowArrays[model.ReconcileType] = totalRows;
-			return Json(new { Error = error, Results = allReconciles, FundExpenses = allFundExpenses, totalFundExpenses = totalFundExpenses, page = model.PageIndex, TotalRows = totalRowArrays }, JsonRequestBehavior.AllowGet);
+			return Json(new {
+				Error = error,
+				Results = allReconciles,
+				FundExpenses = allFundExpenses,
+				totalFundExpenses = totalFundExpenses,
+				page = model.PageIndex,
+				TotalRows = totalRowArrays
+			}, JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -3218,11 +3241,9 @@ namespace DeepBlue.Controllers.Deal {
 				this.TryUpdateModel(model, rowCollection);
 				IEnumerable<ErrorInfo> validateErrorInfo = ValidationHelper.Validate(model);
 				if (validateErrorInfo.Any() == false) {
-					if (model.IsReconciled) {
-						errorInfo = SaveReconcile(model);
-						if (errorInfo != null)
-							break;
-					}
+					errorInfo = SaveReconcile(model);
+					if (errorInfo != null)
+						break;
 				}
 			}
 			resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
@@ -3290,7 +3311,7 @@ namespace DeepBlue.Controllers.Deal {
 							errorInfo = DealRepository.SaveUnderlyingFundCashDistribution(underlyingFundCashDistribution);
 						}
 						break;
-					case  ReconcileType.DividendDistribution:
+					case ReconcileType.DividendDistribution:
 						UnderlyingDirectDividendDistribution underlyingDirectDividendDistribution = DealRepository.FindUnderlyingDirectDividendDistribution(model.Id);
 						if (underlyingDirectDividendDistribution != null) {
 							underlyingDirectDividendDistribution.IsReconciled = model.IsReconciled;
@@ -3301,7 +3322,43 @@ namespace DeepBlue.Controllers.Deal {
 							underlyingDirectDividendDistribution.ChequeNumber = model.ChequeNumber;
 							errorInfo = DealRepository.SaveUnderlyingDirectDividendDistribution(underlyingDirectDividendDistribution);
 						}
-					break;
+						break;
+					case ReconcileType.PostRecordCapitalCall:
+						UnderlyingFundCapitalCallLineItem underlyingFundCapitalCallLineItem = DealRepository.FindUnderlyingFundPostRecordCapitalCall(model.Id);
+						if (underlyingFundCapitalCallLineItem != null) {
+							underlyingFundCapitalCallLineItem.IsReconciled = model.IsReconciled;
+							underlyingFundCapitalCallLineItem.PaidON = model.PaidOn;
+							underlyingFundCapitalCallLineItem.CapitalCallDate = model.PaymentDate;
+							underlyingFundCapitalCallLineItem.LastUpdatedBy = Authentication.CurrentUser.UserID;
+							underlyingFundCapitalCallLineItem.LastUpdatedDate = DateTime.Now;
+							underlyingFundCapitalCallLineItem.ChequeNumber = model.ChequeNumber;
+							errorInfo = DealRepository.SaveUnderlyingFundPostRecordCapitalCall(underlyingFundCapitalCallLineItem);
+						}
+						break;
+					case ReconcileType.PostRecordDistribution:
+						CashDistribution cashDistribution = DealRepository.FindUnderlyingFundPostRecordCashDistribution(model.Id);
+						if (cashDistribution != null) {
+							cashDistribution.IsReconciled = model.IsReconciled;
+							cashDistribution.PaidON = model.PaidOn;
+							cashDistribution.DistributionDate = model.PaymentDate;
+							cashDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
+							cashDistribution.LastUpdatedDate = DateTime.Now;
+							cashDistribution.ChequeNumber = model.ChequeNumber;
+							errorInfo = DealRepository.SaveUnderlyingFundPostRecordCashDistribution(cashDistribution);
+						}
+						break;
+					case ReconcileType.PostRecordDividendDistribution:
+						DividendDistribution dividendDistribution = DealRepository.FindPostRecordDividendDistribution(model.Id);
+						if (dividendDistribution != null) {
+							dividendDistribution.IsReconciled = model.IsReconciled;
+							dividendDistribution.PaidON = model.PaidOn;
+							dividendDistribution.DistributionDate = model.PaymentDate;
+							dividendDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
+							dividendDistribution.LastUpdatedDate = DateTime.Now;
+							dividendDistribution.ChequeNumber = model.ChequeNumber;
+							errorInfo = DealRepository.SavePostRecordDividendDistribution(dividendDistribution);
+						}
+						break;
 				}
 			}
 			return errorInfo;

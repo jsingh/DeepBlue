@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<dynamic>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-{{if ReconcileTypeId<=5}}
+{{if ReconcileTypeId<=8}}
 		{{if Items.length>0}}
 		<div class="gridbox">
 		<%using (Html.Form(new { @id="frm${ReconcileTypeId}", @onsubmit = "return false" })) {%>
@@ -9,28 +9,28 @@
 				<table type="regrid" cellpadding="0" cellspacing="0" border="0" id="tbl${ReconcileTypeId}" class="grid">
 		<thead>
 		<tr>
-			<th style="text-align:left">
+			<th style="text-align:left" sortname="CounterParty">
 				Counter Party
 			</th>
-			<th style="text-align:left">
+			<th style="text-align:left" sortname="FundName">
 				Fund Name
 			</th>
-			<th style="text-align:left;width:5%;">
+			<th style="text-align:left;width:5%;" sortname="Type">
 				Type
 			</th>
-			<th style="text-align:right;">
+			<th style="text-align:right;" sortname="Amount">
 				Amount
 			</th>
-			<th style="text-align:left;width:100px;">
+			<th style="text-align:left;width:100px;" sortname="PaymentDate">
 				Payment Date
 			</th>                          
-			<th style="text-align:left;width:100px;">
+			<th style="text-align:left;width:100px;" sortname="PaidOn">
 				Paid On
 			</th>
 			<th style="text-align:left;width:50px;">
 				Reconcile
 			</th>
-			<th style="text-align:left;width:120px;">
+			<th style="text-align:left;width:120px;" sortname="ChequeNumber">
 				Cheque Number
 			</th>
 		</tr>

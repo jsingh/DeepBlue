@@ -108,6 +108,69 @@
 	<div class="group">
 		<div class="recon-headerbox" style="display: none;">
 			<div class="title">
+				<span>Post Record Capital Calls From Investments</span>
+			</div>
+		</div>
+		<div style="display: block;" class="recon-expandheader expandsel">
+			<div class="expandbtn">
+				<div style="display: block;" class="recon-expandtitle">
+					Post Record Capital Calls From Investments
+				</div>
+			</div>
+		</div>
+		<div class="recon-detail" id="PRCC" style="display: block;" issearch="true">
+			{{tmpl(PRCCItems) "#ReconcileGridTemplate"}}
+		</div>
+	</div>
+</div>
+<div class="line">
+</div>
+<div class="act-box">
+	<div class="group">
+		<div class="recon-headerbox" style="display: none;">
+			<div class="title">
+				<span>Post Record Distributions/Sales Of Investment</span>
+			</div>
+		</div>
+		<div style="display: block;" class="recon-expandheader expandsel">
+			<div class="expandbtn">
+				<div style="display: block;" class="recon-expandtitle">
+					Post Record Distributions/Sales Of Investment
+				</div>
+			</div>
+		</div>
+		<div class="recon-detail" id="PRCD" style="display: block;" issearch="true">
+			{{tmpl(PRCDItems) "#ReconcileGridTemplate"}}
+		</div>
+	</div>
+</div>
+<div class="line">
+</div>
+<div class="act-box">
+	<div class="group">
+		<div class="recon-headerbox" style="display: none;">
+			<div class="title">
+				<span>Post Record Dividend Distribution To Director</span>
+			</div>
+		</div>
+		<div style="display: block;" class="recon-expandheader expandsel">
+			<div class="expandbtn">
+				<div style="display: block;" class="recon-expandtitle">
+					Post Record Dividend Distribution To Director
+				</div>
+			</div>
+		</div>
+		<div class="recon-detail" id="PRDD" style="display: block;" issearch="true">
+			{{tmpl(PRDDItems) "#ReconcileGridTemplate"}}
+		</div>
+	</div>
+</div>
+<div class="line">
+</div>
+<div class="act-box">
+	<div class="group">
+		<div class="recon-headerbox" style="display: none;">
+			<div class="title">
 				<span>Fund Expenses</span>
 			</div>
 		</div>

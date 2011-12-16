@@ -25,6 +25,8 @@ namespace DeepBlue.Models.Deal {
 
 		public int ReconcileType { get; set; }
 
+		public bool IsReconcile { get; set; }
+
 		public int PageIndex { get; set; }
 
 		public int PageSize { get; set; }

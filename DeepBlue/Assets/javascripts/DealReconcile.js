@@ -98,12 +98,15 @@
 		if(data.Results!=null) {
 			if(type=="0") {
 				item={
-					UFCCItems: function () { return { ReconcileTypeId: 1,Items: dealReconcile.findJSON(data.Results,1)} }
-					,UFCDItems: function () { return { ReconcileTypeId: 2,Items: dealReconcile.findJSON(data.Results,2)} }
-					,CCItems: function () { return { ReconcileTypeId: 3,Items: dealReconcile.findJSON(data.Results,3)} }
-					,CDItems: function () { return { ReconcileTypeId: 4,Items: dealReconcile.findJSON(data.Results,4)} }
-					,DDItems: function () { return { ReconcileTypeId: 5,Items: dealReconcile.findJSON(data.Results,5)} }
-					,FundExpenses: function () { return { ReconcileTypeId: 6,Items: data.FundExpenses} }
+					UFCCItems: { ReconcileTypeId: 1,Items: dealReconcile.findJSON(data.Results,1) }
+					,UFCDItems: { ReconcileTypeId: 2,Items: dealReconcile.findJSON(data.Results,2) }
+					,CCItems: { ReconcileTypeId: 3,Items: dealReconcile.findJSON(data.Results,3) }
+					,CDItems: { ReconcileTypeId: 4,Items: dealReconcile.findJSON(data.Results,4) }
+					,DDItems: { ReconcileTypeId: 5,Items: dealReconcile.findJSON(data.Results,5) }
+					,PRCCItems: { ReconcileTypeId: 6,Items: dealReconcile.findJSON(data.Results,6) }
+					,PRCDItems: { ReconcileTypeId: 7,Items: dealReconcile.findJSON(data.Results,7) }
+					,PRDDItems: { ReconcileTypeId: 8,Items: dealReconcile.findJSON(data.Results,8) }
+					,FundExpenses: { ReconcileTypeId: 9,Items: data.FundExpenses }
 				};
 				expand=true;
 				templateName="ReconcileReportTemplate";
@@ -117,11 +120,14 @@
 				var gridData={};
 				if(type=="0") {
 					switch(this.id) {
-						case "tbl1": if(type=="0") { gridData.Results=dealReconcile.findJSON(data.Results,1);gridData.total=data.TotalRows[1]; } break;
-						case "tbl2": if(type=="0") { gridData.Results=dealReconcile.findJSON(data.Results,2);gridData.total=data.TotalRows[2]; } break;
-						case "tbl3": if(type=="0") { gridData.Results=dealReconcile.findJSON(data.Results,3);gridData.total=data.TotalRows[3]; } break;
-						case "tbl4": if(type=="0") { gridData.Results=dealReconcile.findJSON(data.Results,4);gridData.total=data.TotalRows[4]; } break;
-						case "tbl5": if(type=="0") { gridData.Results=dealReconcile.findJSON(data.Results,5);gridData.total=data.TotalRows[5]; } break;
+						case "tbl1": gridData.Results=item.UFCCItems.Items;gridData.total=data.TotalRows[1];break;
+						case "tbl2": gridData.Results=item.UFCDItems.Items;gridData.total=data.TotalRows[2];break;
+						case "tbl3": gridData.Results=item.CCItems.Items;gridData.total=data.TotalRows[3];break;
+						case "tbl4": gridData.Results=item.CDItems.Items;gridData.total=data.TotalRows[4];break;
+						case "tbl5": gridData.Results=item.DDItems.Items;gridData.total=data.TotalRows[5];break;
+						case "tbl6": gridData.Results=item.PRCCItems.Items;gridData.total=data.TotalRows[6];break;
+						case "tbl7": gridData.Results=item.PRCDItems.Items;gridData.total=data.TotalRows[7];break;
+						case "tbl8": gridData.Results=item.PRDDItems.Items;gridData.total=data.TotalRows[8];break;
 					}
 				} else {
 					gridData=item;
@@ -188,12 +194,13 @@
 					,onTemplate: function (tbody,jsondata) {
 						var data={ ReconcileTypeId: retype,Items: jsondata.Results };
 						$("#RECItemBoundTemplate").tmpl(data).appendTo(tbody);
+						jHelper.checkValAttr(tbody);
 					}
 					,rpOptions: [25,50,100,200]
 					,rp: 25
 					,resizeWidth: false
-					,sortname: ""
-					,sortorder: ""
+					,sortname: "CounterParty"
+					,sortorder: "asc"
 					,autoload: false
 					,height: 0
 					});
