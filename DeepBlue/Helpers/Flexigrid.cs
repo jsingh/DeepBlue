@@ -8,6 +8,13 @@ namespace DeepBlue.Helpers {
 
 	public class FlexigridRow {
 		public List<object> cell = new List<object>();
+
+
+		public object Add {
+			set {
+				cell.Add(value);
+			}
+		}
 	}
 
 	public class FlexigridData {

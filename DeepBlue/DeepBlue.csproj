@@ -952,6 +952,8 @@
     <Content Include="Assets\javascripts\FileUploadScript.js" />
     <Content Include="Assets\javascripts\html5.js" />
     <Content Include="Assets\javascripts\jquery.filedrop.js" />
+    <Content Include="Assets\javascripts\jquery.numberformatter.js" />
+    <Content Include="Assets\javascripts\jshashtable.js" />
     <Content Include="Assets\javascripts\UnfundedCapitalCallBalance.js" />
     <Content Include="Assets\javascripts\UnderlyingFundNAV.js" />
     <Content Include="Assets\javascripts\Export.js" />

@@ -41,7 +41,16 @@ namespace DeepBlue.Models.Report {
 			}
 		}
 
-		public decimal? CurrentUnfunded { get; set; }
+		public decimal? CurrentUnfunded {
+			get {
+				return (this.OrginalUnfunded ?? 0) - (this.TotalCapitalCall ?? 0);
+			}
+		}
+
+		public decimal? OrginalUnfunded { get; set; }
+
+		// Sum of all capital calls since deal close
+		public decimal? TotalCapitalCall { get; set; }
 
 		public decimal? OriginalCommitment { get; set; }
 
@@ -60,7 +69,15 @@ namespace DeepBlue.Models.Report {
 
 		public decimal? OrginalDiscount { get; set; }
 
-		public decimal? ReceivedDistributions { get; set; }
+		public decimal? ReceivedDistributions {
+			get {
+				return decimal.Add((this.CashDistributions ?? 0), (this.StockDistributions ?? 0));
+			}
+		}
+
+		public decimal? CashDistributions { get; set; }
+
+		public decimal? StockDistributions { get; set; }
 
 		public decimal? RealizedROI {
 			get {

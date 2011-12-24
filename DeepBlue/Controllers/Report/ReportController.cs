@@ -499,8 +499,7 @@ namespace DeepBlue.Controllers.Report {
 		}
 
 		#endregion
-
-
+		
 		#region UnderlyingFundNAV
 
 		public ActionResult UnderlyingFundNAV() {

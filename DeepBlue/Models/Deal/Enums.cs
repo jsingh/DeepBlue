@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 
 namespace DeepBlue.Models.Deal.Enums {
-    
+
 	public enum SecurityType {
-        Equity = 1,
-        FixedIncome = 2
-    }
+		Equity = 1,
+		FixedIncome = 2
+	}
 
 	public enum ActivityType {
 		Split = 1,
@@ -39,5 +39,17 @@ namespace DeepBlue.Models.Deal.Enums {
 	public enum EquitySecurityType {
 		Private = 0,
 		Public = 1
+	}
+
+	public enum UnderlyingFundType {
+		Buyout = 1,
+		BuyoutMezzanine = 2,
+		BuyoutVenture = 3,
+		Direct = 4,
+		FundOfFunds = 5,
+		Mezzanine = 6,
+		Note = 7,
+		RealEstate = 8,
+		Venture = 9
 	}
 }

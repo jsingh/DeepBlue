@@ -17,7 +17,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region InvestorManagement
 
 		#region  InvestorEntityType
-
+ 
 		public List<Models.Entity.InvestorEntityType> GetAllInvestorEntityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<Models.Entity.InvestorEntityType> query = (from entityType in context.InvestorEntityTypes

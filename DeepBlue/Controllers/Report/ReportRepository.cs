@@ -100,17 +100,28 @@ namespace DeepBlue.Controllers.Report {
 															  DealNumber = deal.DealNumber,
 															  FirstFundCloseDate = deal.DealClosings.FirstOrDefault().CloseDate,
 															  NetPurchasePrice = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.NetPurchasePrice),
-															  CurrentUnfunded = deal.DealUnderlyingFunds.Where(dealUnderlyingFund => dealUnderlyingFund.DealClosingID != null).Sum(dealUnderlyingFund => dealUnderlyingFund.UnfundedAmount),
+															  OrginalUnfunded = deal.DealUnderlyingFunds.Where(dealUnderlyingFund => dealUnderlyingFund.DealClosingID != null)
+																										 .Sum(dealUnderlyingFund => dealUnderlyingFund.UnfundedAmount),
 															  OriginalCommitment = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.CommittedAmount),
 															  ClosingCosts = deal.DealClosingCosts.Sum(dealClosingCost => dealClosingCost.Amount),
 															  UnfundedClosing = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.UnfundedAmount),
-															  ReceivedDistributions = deal.CashDistributions.Sum(cashDistribution => cashDistribution.Amount),
+															  CashDistributions = deal.CashDistributions.Sum(cashDistribution => cashDistribution.Amount),
+															  StockDistributions = deal.UnderlyingFundStockDistributionLineItems.Sum(stock => stock.FMV),
 															  NoOfShares = deal.DealUnderlyingDirects.Sum(dealUnderlyingDirect => dealUnderlyingDirect.NumberOfShares),
 															  PurchasePrice = deal.DealUnderlyingDirects.Sum(dealUnderlyingDirect => dealUnderlyingDirect.PurchasePrice),
 															  EstimatedNAV = deal.Fund.UnderlyingFundNAVs.Sum(underlyingFundNAV => underlyingFundNAV.FundNAV) +
 																			 deal.DealUnderlyingDirects.Sum(dealUnderlyingDirect => dealUnderlyingDirect.FMV)
 														  }).SingleOrDefault();
 				if (dealReportDetail != null) {
+					var q =  (from ufcc in context.UnderlyingFundCapitalCallLineItems
+														 join dealuf in context.DealUnderlyingFunds on new { ufcc.DealID, ufcc.UnderlyingFundID } equals new { dealuf.DealID, dealuf.UnderlyingFundID }
+													 where dealuf.DealID == dealId && dealuf.DealClosingID != null
+															 select ufcc);
+					int? totalCapitalCalls = q.Count();
+					if(totalCapitalCalls > 0 ){
+						dealReportDetail.TotalCapitalCall = q.Sum(d => d.Amount);
+					}
+
 					dealReportDetail.Details = (from capitalCall in context.UnderlyingFundCapitalCalls
 												where capitalCall.FundID == dealReportDetail.FundId
 												select new DealUnderlyingFundDetailModel {
@@ -178,13 +189,48 @@ namespace DeepBlue.Controllers.Report {
 		#region FundBreakDown
 		public FundBreakDownReportDetail FindFundBreakDownReport(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from fund in context.Funds
+			
+			 FundBreakDownReportDetail fundBreakDownReportDetail =	  (from fund in context.Funds
 						where fund.FundID == fundId
 						select new FundBreakDownReportDetail {
 							FundName = fund.FundName,
 							TotalUnderlyingFunds = fund.Deals.Sum(deal => deal.DealUnderlyingFunds.Count),
 							TotalDirects = fund.Deals.Sum(deal => deal.DealUnderlyingDirects.Count),
 						}).SingleOrDefault();
+			 if (fundBreakDownReportDetail != null) {
+				var dealUnderlyingFunds = (from duf in context.DealUnderlyingFunds
+												where duf.Deal.FundID == fundId
+												select new {
+													duf.CommittedAmount,
+													duf.UnderlyingFund.FundTypeID,
+													duf.Deal.IsPartnered
+												}).ToList();
+
+				 decimal? totalCommitment = dealUnderlyingFunds.Sum(duf => duf.CommittedAmount);
+				 var q =  (from duf in dealUnderlyingFunds where duf.FundTypeID == (int)Models.Deal.Enums.UnderlyingFundType.Venture select duf.CommittedAmount);
+				 if(q.Count() > 0){
+					fundBreakDownReportDetail.Venture = decimal.Divide((q.Sum() ?? 0), (totalCommitment ?? 0));
+				 }
+				 q = (from duf in dealUnderlyingFunds where duf.FundTypeID == (int)Models.Deal.Enums.UnderlyingFundType.Buyout select duf.CommittedAmount);
+				 if (q.Count() > 0) {
+					 fundBreakDownReportDetail.Buyout = decimal.Divide((q.Sum() ?? 0), (totalCommitment ?? 0));
+				 }
+				 q = (from duf in dealUnderlyingFunds where duf.FundTypeID == (int)Models.Deal.Enums.UnderlyingFundType.BuyoutVenture select duf.CommittedAmount);
+				 if (q.Count() > 0) {
+					 fundBreakDownReportDetail.BuyoutVenture = decimal.Divide((q.Sum() ?? 0), (totalCommitment ?? 0));
+				 }
+				 q = (from duf in dealUnderlyingFunds where duf.FundTypeID == (int)Models.Deal.Enums.UnderlyingFundType.FundOfFunds select duf.CommittedAmount);
+				 if (q.Count() > 0) {
+					 fundBreakDownReportDetail.FundOfFunds = decimal.Divide((q.Sum() ?? 0), (totalCommitment ?? 0));
+				 }
+				 q = (from duf in dealUnderlyingFunds where duf.FundTypeID == (int)Models.Deal.Enums.UnderlyingFundType.Mezzanine select duf.CommittedAmount);
+				 if (q.Count() > 0) {
+					 fundBreakDownReportDetail.Mezzanine = decimal.Divide((q.Sum() ?? 0), (totalCommitment ?? 0));
+				 }
+				 decimal? patnerDealTotalCommitment = dealUnderlyingFunds.Where(duf => duf.IsPartnered == true).Sum(duf => duf.CommittedAmount);
+				 fundBreakDownReportDetail.Partnered = decimal.Divide((patnerDealTotalCommitment ?? 0), (totalCommitment ?? 0));
+			 }
+			 return fundBreakDownReportDetail;
 			}
 		}
 		#endregion
