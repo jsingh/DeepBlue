@@ -6,10 +6,16 @@ using System.Configuration;
 
 namespace DeepBlue.Helpers {
 	public static class AppSettingsHelper {
-		public static int CurrentEntityID {
-			get {
-				return	Convert.ToInt32(ConfigurationManager.AppSettings["CurrentEntityID"]);
-			}
-		}
+		//public static int CurrentEntityID {
+		//    get {
+		//        return	Convert.ToInt32(ConfigurationManager.AppSettings["CurrentEntityID"]);
+		//    }
+		//}
+
+		//public static  string CurrentEntityName {
+		//    get {
+		//        return Convert.ToString(ConfigurationManager.AppSettings["CurrentEntityName"]);
+		//    }
+		//}
 	}
 }

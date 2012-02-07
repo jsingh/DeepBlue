@@ -14,7 +14,7 @@ dealActivity.deletePRDD=function (index,id,img) {
 		var tr=$(img).parents("tr:first");
 		var trid="PRDD_"+id;
 		var spnloading=$("#UpdateLoading",tr);
-		spnloading.html("<img src='/Assets/images/ajax.jpg'/>");
+		spnloading.html(jHelper.ajImg());
 		$.get(url,function (data) {
 			if(data!="") {
 				jAlert(data);
@@ -35,7 +35,7 @@ dealActivity.loadPRDD=function (isRefresh) {
 	if(isRefresh) {
 		target.empty();
 		$("#PRDDListBox").hide();
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		loading.html(jHelper.loadingHTML());
 		$.getJSON("/Deal/PostRecordDividendDistributionList"
 			,{ "_": (new Date).getTime()
 			,"securityTypeID": dealActivity.getDDDirectType()
@@ -57,7 +57,7 @@ dealActivity.submitPRDividendDistribution=function (frm) {
 	try {
 		var param=$(frm).serializeForm();
 		var loading=$("#SpnPRDDSaveLoading");
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		loading.html(jHelper.savingHTML());
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#PRDividendDistributionList").length) };
 		$.post("/Deal/CreatePostRecordDividendDistribution",param,function (data) {
 			loading.empty();

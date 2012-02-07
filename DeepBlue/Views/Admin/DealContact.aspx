@@ -82,7 +82,7 @@
 			<%: Html.Span("${row.cell[4]}", new { @class = "show" })%>
 		</td>
 		<td style="text-align:right;">
-			<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:dealContact.edit(this,${row.cell[0]});" })%>
+			<%: Html.Image("Edit.png", new { @class = "gbutton editbtn show", @onclick = "javascript:dealContact.edit(this,${row.cell[0]});" })%>
 			<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:dealContact.deleteRow(this,${row.cell[0]});" })%>
 			<%: Html.Hidden("ContactId", "${row.cell[0]}") %>
 		</td>

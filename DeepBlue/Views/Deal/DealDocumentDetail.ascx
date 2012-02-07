@@ -35,7 +35,7 @@
 					<%: Html.TextBox("DocumentInvestorName", "", new { @onblur = "javascript:deal.documentInvestorBlur(this);", @style = "width:172px" })%>
 				</div>
 				<div id="FundRow" style="float: left;">
-					<%: Html.TextBox("DocumentFundName", "SEARCH AMBERBROOK FUND", new { @onblur = "javascript:deal.documentFundBlur(this);", @style = "width:185px" })%>
+					<%: Html.TextBox("DocumentFundName", "SEARCH  FUND", new { @onblur = "javascript:deal.documentFundBlur(this);", @style = "width:185px" })%>
 				</div>
 			</div>
 			<div id="dropbox" class="drop-files">

@@ -13,7 +13,7 @@ namespace DeepBlue.Models.Deal {
 		[Required(ErrorMessage = "Underlying Fund is required")]
 		public string UnderlyingFund { get; set; }
 
-		[Required(ErrorMessage = "Amberbrook Fund is required")]
+		[Required(ErrorMessage = "Fund is required")]
 		public string AmberbrookFund { get; set; }
 
 		[Required(ErrorMessage = "Update NAV is required")]

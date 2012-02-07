@@ -32,6 +32,9 @@
 			,sortorder: ""
 			,autoload: false
 			,height: 0
+			,onSuccess:function(t,g){ 
+				jHelper.gridEditRow(t);
+			}
 		});
 		});
 		$("tbody tr",t).each(function () {
@@ -46,11 +49,11 @@
 		var expandRow=$("#ExpandRow_"+fundId);
 		if(expandRow.css("display")=="none") {
 			expandRow.css("display","");
-			expandImg.attr("src","/Assets/images/uparrow.png");
+			expandImg.attr("src",jHelper.getImagePath("uparrow.png"));
 			$("#DealList",expandRow).flexReload();
 		} else {
 			expandRow.css("display","none");
-			expandImg.attr("src","/Assets/images/downarrow.png");
+			expandImg.attr("src",jHelper.getImagePath("downarrow.png"));
 		}
 	}
 }

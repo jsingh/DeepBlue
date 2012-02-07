@@ -79,7 +79,7 @@
 		try {
 			var frm=$("#"+frmid);
 			var loading=$("#UpdateLoading");
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			loading.html(jHelper.savingHTML());
 			var param=$(frm).serializeForm();
 			$.post("/CapitalCall/UpdateDistribution",param,function (data) {
 				loading.empty();

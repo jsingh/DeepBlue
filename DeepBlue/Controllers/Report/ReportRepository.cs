@@ -13,7 +13,7 @@ namespace DeepBlue.Controllers.Report {
 		#region CashDistribution
 		public List<DistributionLineItem> DistributionLineItems(int fundId, int capitalDistributionlId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from distributionDetail in context.CapitalDistributionLineItems
+				return (from distributionDetail in context.CapitalDistributionLineItemsTable
 						where distributionDetail.CapitalDistribution.FundID == fundId && distributionDetail.CapitalDistributionID == capitalDistributionlId
 						select new DistributionLineItem {
 							InvestorName = distributionDetail.Investor.InvestorName,
@@ -26,7 +26,7 @@ namespace DeepBlue.Controllers.Report {
 
 		public CashDistributionReportDetail FindCapitalDistribution(int capitalDistributionlId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from cashDistribution in context.CapitalDistributions
+				return (from cashDistribution in context.CapitalDistributionsTable
 						where cashDistribution.CapitalDistributionID == capitalDistributionlId
 						select new CashDistributionReportDetail {
 							DistributionDate = cashDistribution.CapitalDistributionDate,
@@ -49,7 +49,7 @@ namespace DeepBlue.Controllers.Report {
 
 		public List<CapitalCallItem> CapitalCallLineItems(int fundId, int capitalCalllId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from capitalCallDetail in context.CapitalCallLineItems
+				return (from capitalCallDetail in context.CapitalCallLineItemsTable
 						where capitalCallDetail.CapitalCall.FundID == fundId && capitalCallDetail.CapitalCallID == capitalCalllId
 						select new CapitalCallItem {
 							InvestorName = capitalCallDetail.Investor.InvestorName,
@@ -63,7 +63,7 @@ namespace DeepBlue.Controllers.Report {
 
 		public CapitalCallReportDetail FindCapitalCall(int capitalCalllId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from capitalCall in context.CapitalCalls
+				return (from capitalCall in context.CapitalCallsTable
 						where capitalCall.CapitalCallID == capitalCalllId
 						select new CapitalCallReportDetail {
 							AmountForInv = capitalCall.InvestmentAmount,
@@ -91,7 +91,7 @@ namespace DeepBlue.Controllers.Report {
 		#region DealDetail
 		public DealDetailReportModel FindDealDetailReport(int dealId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				DealDetailReportModel dealReportDetail = (from deal in context.Deals
+				DealDetailReportModel dealReportDetail = (from deal in context.DealsTable
 														  where deal.DealID == dealId
 														  select new DealDetailReportModel {
 															  DealName = deal.DealName,
@@ -113,8 +113,8 @@ namespace DeepBlue.Controllers.Report {
 																			 deal.DealUnderlyingDirects.Sum(dealUnderlyingDirect => dealUnderlyingDirect.FMV)
 														  }).SingleOrDefault();
 				if (dealReportDetail != null) {
-					var q =  (from ufcc in context.UnderlyingFundCapitalCallLineItems
-														 join dealuf in context.DealUnderlyingFunds on new { ufcc.DealID, ufcc.UnderlyingFundID } equals new { dealuf.DealID, dealuf.UnderlyingFundID }
+					var q =  (from ufcc in context.UnderlyingFundCapitalCallLineItemsTable
+														 join dealuf in context.DealUnderlyingFundsTable on new { ufcc.DealID, ufcc.UnderlyingFundID } equals new { dealuf.DealID, dealuf.UnderlyingFundID }
 													 where dealuf.DealID == dealId && dealuf.DealClosingID != null
 															 select ufcc);
 					int? totalCapitalCalls = q.Count();
@@ -122,7 +122,7 @@ namespace DeepBlue.Controllers.Report {
 						dealReportDetail.TotalCapitalCall = q.Sum(d => d.Amount);
 					}
 
-					dealReportDetail.Details = (from capitalCall in context.UnderlyingFundCapitalCalls
+					dealReportDetail.Details = (from capitalCall in context.UnderlyingFundCapitalCallsTable
 												where capitalCall.FundID == dealReportDetail.FundId
 												select new DealUnderlyingFundDetailModel {
 													Amount = capitalCall.Amount,
@@ -131,7 +131,7 @@ namespace DeepBlue.Controllers.Report {
 													Type = "Capital Call"
 												})
 												.Union(
-													from cashDistribution in context.UnderlyingFundCashDistributions
+													from cashDistribution in context.UnderlyingFundCashDistributionsTable
 													where cashDistribution.FundID == dealReportDetail.FundId
 													select new DealUnderlyingFundDetailModel {
 														Amount = cashDistribution.Amount,
@@ -141,7 +141,7 @@ namespace DeepBlue.Controllers.Report {
 													}
 												)
 												.Union(
-													from stockDistribuion in context.UnderlyingFundStockDistributions
+													from stockDistribuion in context.UnderlyingFundStockDistributionsTable
 													where stockDistribuion.FundID == dealReportDetail.FundId
 													select new DealUnderlyingFundDetailModel {
 														Amount = stockDistribuion.NumberOfShares * stockDistribuion.PurchasePrice,
@@ -161,7 +161,7 @@ namespace DeepBlue.Controllers.Report {
 		#region DealOrigination
 		public DealOriginationReportModel FindDealOriginationReport(int dealId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from deal in context.Deals
+				return (from deal in context.DealsTable
 						where deal.DealID == dealId
 						select new DealOriginationReportModel {
 							DealName = deal.DealName,
@@ -190,7 +190,7 @@ namespace DeepBlue.Controllers.Report {
 		public FundBreakDownReportDetail FindFundBreakDownReport(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 			
-			 FundBreakDownReportDetail fundBreakDownReportDetail =	  (from fund in context.Funds
+			 FundBreakDownReportDetail fundBreakDownReportDetail =	  (from fund in context.FundsTable
 						where fund.FundID == fundId
 						select new FundBreakDownReportDetail {
 							FundName = fund.FundName,
@@ -198,7 +198,7 @@ namespace DeepBlue.Controllers.Report {
 							TotalDirects = fund.Deals.Sum(deal => deal.DealUnderlyingDirects.Count),
 						}).SingleOrDefault();
 			 if (fundBreakDownReportDetail != null) {
-				var dealUnderlyingFunds = (from duf in context.DealUnderlyingFunds
+				var dealUnderlyingFunds = (from duf in context.DealUnderlyingFundsTable
 												where duf.Deal.FundID == fundId
 												select new {
 													duf.CommittedAmount,
@@ -239,7 +239,7 @@ namespace DeepBlue.Controllers.Report {
 		public List<FeesExpenseReportDetail> FindFeesExpenseReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
 																   int fundId, DateTime startDate, DateTime endDate) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<FeesExpenseReportDetail> query = (from fundExpense in context.FundExpenses
+				IQueryable<FeesExpenseReportDetail> query = (from fundExpense in context.FundExpensesTable
 															 where
 															 fundExpense.FundID == fundId
 															 && EntityFunctions.TruncateTime(fundExpense.Date) >= EntityFunctions.TruncateTime(startDate)
@@ -269,7 +269,7 @@ namespace DeepBlue.Controllers.Report {
 		public List<DistributionReportDetail> FindDistributionReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
 															   int fundId, DateTime startDate, DateTime endDate) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<DistributionReportDetail> query = (from distribution in context.CashDistributions
+				IQueryable<DistributionReportDetail> query = (from distribution in context.CashDistributionsTable
 															  where
 															  distribution.UnderlyingFundCashDistribution.FundID == fundId
 															  && EntityFunctions.TruncateTime(distribution.UnderlyingFundCashDistribution.NoticeDate) >= EntityFunctions.TruncateTime(startDate)
@@ -284,10 +284,10 @@ namespace DeepBlue.Controllers.Report {
 																  Type = "Cash"
 															  })
 															 .Union(
-																from stockDistribution in context.UnderlyingFundStockDistributionLineItems
-																join equity in context.Equities on stockDistribution.UnderlyingFundStockDistribution.SecurityID equals equity.EquityID into equties
+																from stockDistribution in context.UnderlyingFundStockDistributionLineItemsTable
+																join equity in context.EquitiesTable on stockDistribution.UnderlyingFundStockDistribution.SecurityID equals equity.EquityID into equties
 																from equity in equties.DefaultIfEmpty()
-																join fixedIncome in context.FixedIncomes on stockDistribution.UnderlyingFundStockDistribution.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes
+																join fixedIncome in context.FixedIncomesTable on stockDistribution.UnderlyingFundStockDistribution.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes
 																from fixedIncome in fixedIncomes.DefaultIfEmpty()
 																where
 																stockDistribution.UnderlyingFundStockDistribution.FundID == fundId
@@ -330,10 +330,10 @@ namespace DeepBlue.Controllers.Report {
 		public List<SecurityValueReportDetail> FindSecurityValueReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
 															   int fundId, DateTime startDate, DateTime endDate) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<SecurityValueReportDetail> query = (from direct in context.DealUnderlyingDirects
-															   join equity in context.Equities on direct.SecurityID equals equity.EquityID into equties
+				IQueryable<SecurityValueReportDetail> query = (from direct in context.DealUnderlyingDirectsTable
+															   join equity in context.EquitiesTable on direct.SecurityID equals equity.EquityID into equties
 															   from equity in equties.DefaultIfEmpty()
-															   join fixedIncome in context.FixedIncomes on direct.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes
+															   join fixedIncome in context.FixedIncomesTable on direct.SecurityID equals fixedIncome.FixedIncomeID into fixedIncomes
 															   from fixedIncome in fixedIncomes.DefaultIfEmpty()
 															   where
 															   direct.Deal.FundID == fundId
@@ -376,7 +376,7 @@ namespace DeepBlue.Controllers.Report {
 		public List<UnderlyingFundNAVReportDetail> FindUnderlyingFundNAVReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
 														   int underlyingFundId, DateTime startDate, DateTime endDate) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<UnderlyingFundNAVReportDetail> query = (from underlyingFundNAV in context.UnderlyingFundNAVs
+				IQueryable<UnderlyingFundNAVReportDetail> query = (from underlyingFundNAV in context.UnderlyingFundNAVsTable
 																   where
 																   underlyingFundNAV.UnderlyingFundID == underlyingFundId
 																   && EntityFunctions.TruncateTime(underlyingFundNAV.FundNAVDate) >= EntityFunctions.TruncateTime(startDate)
@@ -414,7 +414,7 @@ namespace DeepBlue.Controllers.Report {
 		public List<UnfundedCapitalCallBalanceReportDetail> FindUnfundedCapitalCallBalanceReport(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
 														   int fundId, DateTime startDate, DateTime endDate) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<UnfundedCapitalCallBalanceReportDetail> query = (from dealUnderlyingFund in context.DealUnderlyingFunds
+				IQueryable<UnfundedCapitalCallBalanceReportDetail> query = (from dealUnderlyingFund in context.DealUnderlyingFundsTable
 																   where
 																   dealUnderlyingFund.Deal.FundID == fundId
 																   && EntityFunctions.TruncateTime(dealUnderlyingFund.RecordDate) >= EntityFunctions.TruncateTime(startDate)

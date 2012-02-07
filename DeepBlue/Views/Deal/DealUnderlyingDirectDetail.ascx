@@ -36,25 +36,25 @@
 							<th class="lalign">
 								Company
 							</th>
-							<th class="ralign" style="width: 12%">
+							<th class="ralign">
 								No. of Shares
 							</th>
-							<th class="ralign" style="width: 12%">
+							<th class="ralign">
 								Purchase Price
 							</th>
-							<th class="ralign" style="width: 12%">
+							<th class="ralign">
 								Fair Market Value
 							</th>
-							<th class="ralign" style="width: 12%">
+							<th class="ralign">
 								Tax Cost Basis Per Share
 							</th>
-							<th class="lalign" style="width: 12%">
+							<th class="lalign">
 								Tax Cost Date
 							</th>
-							<th class="lalign" style="width: 12%">
+							<th class="lalign">
 								Record Date
 							</th>
-							<th style="width: 10%">
+							<th style="width: 70px;">
 							</th>
 						</tr>
 					</thead>
@@ -83,7 +83,7 @@
 							<td class="ralign">
 								<%: Html.TextBox("TaxCostBase", "", new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 							</td>
-							<td class="lalign">
+							<td class="ralign">
 								<%: Html.TextBox("TaxCostDate", "", new { @class = "datefield", @id = "0_DirectTaxCostDate" })%>
 							</td>
 							<td class="lalign">

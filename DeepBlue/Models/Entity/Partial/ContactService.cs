@@ -24,7 +24,7 @@ namespace DeepBlue.Models.Entity {
 					EntityKey key;
 					object originalItem = null;
 
-					Contact updateContact = context.Contacts.SingleOrDefault(deepblueContact => deepblueContact.ContactID == contact.ContactID);
+					Contact updateContact = context.ContactsTable.SingleOrDefault(deepblueContact => deepblueContact.ContactID == contact.ContactID);
 
 					foreach (var contactCommunication in contact.ContactCommunications) {
 						key = default(EntityKey);

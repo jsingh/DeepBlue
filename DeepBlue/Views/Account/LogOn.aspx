@@ -18,7 +18,7 @@
 		<div id="header">
 			<div class="topheader" id="topheader">
 				<div class="cname">
-					WILLOWRIDGE</div>
+					<%=EntityHelper.EntityName%></div>
 			</div>
 		</div>
 		<div id="content">
@@ -43,6 +43,13 @@
 						<div class="editor-field">
 							<%: Html.PasswordFor(m => m.Password)%>
 							<%: Html.ValidationMessageFor(m => m.Password)%>
+						</div>
+						<div class="editor-label">
+							<%: Html.LabelFor(m => m.EntityCode)%>
+						</div>
+						<div class="editor-field">
+							<%: Html.TextBoxFor(m => m.EntityCode)%>
+							<%: Html.ValidationMessageFor(m => m.EntityCode)%>
 						</div>
 						<div class="editor-field clear" style="float: right">
 							<%: Html.CheckBoxFor(m => m.RememberMe)%>

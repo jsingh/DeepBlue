@@ -45,7 +45,7 @@ namespace DeepBlue.Helpers {
 		}
 
 		public bool Upload() {
-			string rootPath = HttpContext.Current.Server.MapPath("/");
+			string rootPath = HttpContext.Current.Server.MapPath("~/");
 			string uploadFilePath = Path.Combine(rootPath, string.Format(ConfigurationManager.AppSettings[_AppSettingName], _Arguments));
 			string directoryName = Path.GetDirectoryName(uploadFilePath);
 			if (Directory.Exists(directoryName) == false) {
@@ -63,7 +63,7 @@ namespace DeepBlue.Helpers {
 		}
 
 		public bool Upload(HttpRequestBase request) {
-			string rootPath = HttpContext.Current.Server.MapPath("/");
+			string rootPath = HttpContext.Current.Server.MapPath("~/");
 			string uploadFilePath = Path.Combine(rootPath, string.Format(ConfigurationManager.AppSettings[_AppSettingName], _Arguments));
 			string directoryName = Path.GetDirectoryName(uploadFilePath);
 			if (Directory.Exists(directoryName) == false) {
@@ -86,7 +86,7 @@ namespace DeepBlue.Helpers {
 		public bool Move(string tempFileName, params object[] args) {
 			if (File.Exists(tempFileName)) {
 				FileInfo tempFileInfo = new FileInfo(tempFileName);
-				string rootPath = HttpContext.Current.Server.MapPath("/");
+				string rootPath = HttpContext.Current.Server.MapPath("~/");
 				string uploadFilePath = Path.Combine(rootPath, string.Format(ConfigurationManager.AppSettings[_AppSettingName], args));
 				string directoryName = Path.GetDirectoryName(uploadFilePath);
 				if (Directory.Exists(directoryName) == false) {

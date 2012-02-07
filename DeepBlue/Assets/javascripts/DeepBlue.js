@@ -1,16 +1,15 @@
 ﻿var deepBlue={
 	indexPage: false
+	,rootUrl:""
 	,topMenuResize: false
 	,init: function () {
 		$(document).ready(function () {
+			$("#LoadingPage").hide();
 			var cnt=$("#content");
 			var menu=$("#menu");
 			var submenu=$("#submenu");
 			var topheader=$("#topheader");
 			var mnuresize=deepBlue.getCookie("mnu-resize");
-
-			//topheader.click(function () { deepBlue.hideSubMenu(); });
-			//cnt.click(function () { deepBlue.hideSubMenu(); });
 			submenu.hide();
 			if(mnuresize=="true") {
 				menu.addClass("minimize");
@@ -42,6 +41,7 @@
 	,ajaxSetup: function () {
 		$.ajaxSetup({
 			cache: false
+			,dataType: "html"
 			,complete: function (jqXHR,textStatus) {
 				if(jqXHR.responseText.indexOf("/LogOn.js")>0) {
 					deepBlue.redirectLogOn();
@@ -52,7 +52,7 @@
 				}
 			}
 			,error: function (x,jqxhr,settings,exception) {
-				if(x.responseText.indexOf('WILLOWRIDGE :: LogOn')>0) {
+				if(x.responseText.indexOf(':: LogOn')>0) {
 					$.get("/Account/LogOff");
 					deepBlue.redirectLogOn();
 				} else {
@@ -75,9 +75,9 @@
 	}
 	,redirectLogOn: function () {
 		if(parent) {
-			parent.window.location.href="/Account/LogOn";
+			parent.window.location.href=deepBlue.rootUrl+"/Account/LogOn";
 		} else {
-			location.href="/Account/LogOn";
+			location.href=deepBlue.rootUrl+"/Account/LogOn";
 		}
 	}
 	,hideSubMenu: function () {
@@ -157,9 +157,9 @@
 				 "<div class='center'><a href='${link}/?mode=direct'>${name}</a></div>"+
 				 "<div class='right'></div></div></div>";
 		$.template("lbaddnewtemp",tmpl);
-		var data={ "link": "/Deal/Directs", "name": "Add New Direct" };
+		var data={ "link": deepBlue.rootUrl + "/Deal/Directs", "name": "Add New Direct" };
 		$.tmpl("lbaddnewtemp",data).appendTo(div);
-		var data={ "link": "/Deal/UnderlyingFunds", "name": "Add New Underlying Fund" };
+		var data={ "link": deepBlue.rootUrl + "/Deal/UnderlyingFunds", "name": "Add New Underlying Fund" };
 		$.tmpl("lbaddnewtemp",data).appendTo(div);
 		div
 		.dialog({
@@ -170,3 +170,11 @@
 		});
 	}
 }
+$.ajaxPrefilter( function( options ) {
+	if(deepBlue.rootUrl!=""){
+		if(options.url.indexOf(deepBlue.rootUrl)<0){
+			options.url = deepBlue.rootUrl + options.url;
+		}
+	}
+});
+window.onunload=function () { $("#LoadingPage").show(); };

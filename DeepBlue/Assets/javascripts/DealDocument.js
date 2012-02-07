@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-	fileUpload.url="/Deal/CreateDealFundDocument";
+	fileUpload.url=deepBlue.rootUrl+"/Deal/CreateDealFundDocument";
 	fileUpload.onValid=function () {
 		var frm=$("#frmDealDocument");
 		var dtypeid=parseInt($("#DocumentTypeId",frm).val());
@@ -23,7 +23,7 @@
 	};
 	fileUpload.onBeforeSend=function () {
 		var loading=$("#SpnDealDocLoading");
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Uploading...");
+		loading.html(jHelper.uploadingHTML());
 		var frm=$("#frmDealDocument");
 		var p=$(frm).serializeForm();
 		p[p.length]={ "name": "DealId","value": deal.getDealId() };
@@ -56,7 +56,7 @@ deal.saveDealDocument=function (frm) {
 			return false;
 		}
 		var loading=$("#SpnDealDocLoading");
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Uploading...");
+		loading.html(jHelper.uploadingHTML());
 		var dealId=deal.getDealId();
 		if(dealId>0) {
 			var p=$(frm).serializeForm();
@@ -76,7 +76,7 @@ deal.saveDealDocument=function (frm) {
 							jAlert("Document Saved");
 							deal.documentRefresh();
 							jHelper.resetFields(frm);
-							$("#DocumentFundName",frm).val("SEARCH AMBERBROOK FUND");
+							$("#DocumentFundName",frm).val("SEARCH  FUND");
 							$("#DocumentType",frm).val("Search");
 						}
 					}
@@ -97,7 +97,7 @@ deal.saveDealDocument=function (frm) {
 };
 deal.deleteDealDocument=function (id,img) {
 	if(confirm("Are you sure you want to delete this document?")) {
-		img.src="/Assets/images/ajax.jpg";
+		img.src=jHelper.getImagePath("ajax.jpg");
 		$.get("/Deal/DeleteDealFundDocumentFile/"+id,function (data) {
 			if($.trim(data)!="") {
 				jAlert(data);

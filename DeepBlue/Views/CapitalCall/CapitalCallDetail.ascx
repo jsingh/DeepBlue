@@ -87,7 +87,7 @@
 						${formatDate(cc.CapitalCallDueDate)}
 					</td>
 					<td style="width: 5%" align="center">
-						<%: Html.Image("downarrow.png", new { @class = "ccexpandrow", @onclick = "javascript:capitalCallDetail.expandCC(this,${cc.CapitalCallId});" })%>
+						<%: Html.Image("downarrow.png", new { @class = "ccexpandrow editbtn", @onclick = "javascript:capitalCallDetail.expandCC(this,${cc.CapitalCallId});" })%>
 					</td>
 				</tr>
 				{{/each}}

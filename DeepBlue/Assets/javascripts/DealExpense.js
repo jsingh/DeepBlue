@@ -14,6 +14,7 @@
 	$(":input[name='Date']",tr).val(date);
 	deal.selectValue(tr);
 	jHelper.applyDatePicker(tr);
+	jHelper.gridEditRow(tr);
 	deal.calcTotalExpense();
 	$("#MakeNewDEHeader").hide();
 	$("tr:odd","#tbodyDealExpense").removeClass("row").removeClass("arow").addClass("arow");
@@ -34,9 +35,13 @@ deal.editDealExpense=function (img) {
 	if(img.src.indexOf('Save_active.png')> -1) {
 		deal.saveExpense(tr);
 	} else {
-		img.src="/Assets/images/Save_active.png";
+		img.src=jHelper.getImagePath("Save_active.png");
 		deal.showElements(tr);
 	}
+};
+deal.saveDE=function (img) {
+	var tr=$(img).parents("tr:first");
+		deal.saveExpense(tr);
 };
 deal.addDealExpense=function (img) {
 	var tr=$(img).parents("tr:first");
@@ -70,7 +75,7 @@ deal.saveExpense=function (tr) {
 		deal.saveDeal();
 	}
 };
-deal.loadDealExpense=function (id) {	
+deal.loadDealExpense=function (id) {
 	var dt=new Date();
 	var url="/Deal/FindDealClosingCost?dealClosingCostId="+id+"&t="+dt.getTime();
 	$.getJSON(url,function (data) {
@@ -80,7 +85,7 @@ deal.loadDealExpense=function (id) {
 deal.calcTotalExpense=function () {
 	var total=0;
 	$("tbody tr","#tblDealExpense").each(function () { var amt=parseFloat($("#Amount",this).val());if(isNaN(amt)) { amt=0; } total+=amt; });
-	footer.show("tbodyDealExpense", "tfootDealExpense");
+	footer.show("tbodyDealExpense","tfootDealExpense");
 	$("#SpnTotalExpenses").html(jHelper.dollarAmount(total.toString()));
 	$("#SpnFooterTotalExpenses").html(jHelper.dollarAmount(total.toString()));
 };

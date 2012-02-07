@@ -276,7 +276,7 @@
 		try {
 			var frm=$("#EditInvestor");
 			var loading=$("#UpdateLoading",frm);
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			loading.html(jHelper.savingHTML());
 			$.post("/Investor/UpdateInvestorInformation",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				var arr=data.split("||");
@@ -295,7 +295,7 @@
 		try {
 			var frm=$(img).parents("form:first");
 			var loading=$("#Loading",frm);
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			loading.html(jHelper.savingHTML());
 			var param=$(frm).serializeForm();
 			param[param.length]={ name: "InvestorId",value: editInvestor.getInvestorId() };
 			$.post("/Investor/UpdateInvestorAddress",param,function (data) {
@@ -328,7 +328,7 @@
 		try {
 			var frm=$(img).parents("form:first");
 			var loading=$("#Loading",frm);
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			loading.html(jHelper.savingHTML());
 			$.post("/Investor/UpdateInvestorContact",$(frm).serializeForm(),function (data) {
 				var arr=data.split("||");
 				if($.trim(arr[0])!="True") {
@@ -365,7 +365,7 @@
 		try {
 			var frm=$(img).parents("form:first");
 			var loading=$("#Loading",frm);
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			loading.html(jHelper.savingHTML());
 			var param=$(frm).serializeForm();
 			param[param.length]={ name: "InvestorId",value: editInvestor.getInvestorId() };
 			$.post("/Investor/UpdateInvestorBankDetail",param,function (data) {

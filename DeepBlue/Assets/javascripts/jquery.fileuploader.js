@@ -138,6 +138,7 @@ jQuery.extend({
 						jQuery.handleError(s,xml,status);
 				} catch(e) {
 					status="error";
+					alert(e);
 					jQuery.handleError(s,xml,status,e);
 				}
 

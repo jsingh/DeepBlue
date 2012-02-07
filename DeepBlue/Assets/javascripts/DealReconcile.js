@@ -68,7 +68,7 @@
 				default: target=$("#ReconcilReport");loading=$("#SpnReconLoading");break;
 			}
 			target.empty();
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+			loading.html(jHelper.loadingHTML());
 			var param=$(frm).serializeForm();
 			param[param.length]={ name: "ReconcileType",value: type };
 			$.ajax({
@@ -217,7 +217,7 @@
 		var frm=document.getElementById(frmid);
 		var param=$(frm).serializeForm();
 		var loading=$("#"+spnid);
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		loading.html(jHelper.savingHTML());
 		var tbl=$("#tbl"+typeid,frm);
 		var totalRows=($("tbody tr",tbl).length);
 		param[param.length]={ name: "TotalRows",value: totalRows };

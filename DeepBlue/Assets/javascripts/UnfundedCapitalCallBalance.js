@@ -58,7 +58,7 @@
 			var frm=$("#frmFeeExpense");
 			url="/Report/ExportUnfundedCapitalCallBalanceDetail?FundId="+$("#FundId").val()+"&ExportTypeId="+exportTypeId;
 			url+="&StartDate="+$("#StartDate").val()+"&EndDate="+$("#EndDate").val()
-			window.open(url,"exportexcel",features);
+			window.open(deepBlue.rootUrl+url,"exportexcel",features);
 		}
 	}
 }

@@ -166,7 +166,7 @@ div.pGroup {
 	vertical-align: text-top;
 	position: relative;
 	top: -5px;
-	text-align: center;
+	text-align: left;
 }
 .flexigrid div.pDiv div.pButton {
 	float: left;
@@ -310,7 +310,7 @@ div.pGroup {
 	width: 96%;
 }
 .flexigrid tr td .jqComboBox input.ui-autocomplete-input[type="text"], .pGroup .jqComboBox input.ui-autocomplete-input {
-	width: 35px;
+	width: 60px;
 	top: 0;
 }
 .flexigrid .bDiv tr td input.ui-autocomplete-input[type="text"] {
@@ -328,5 +328,12 @@ div.pGroup {
 	padding: 6px 6px 0 23px;
 }
 .flexigrid .pGroup td {
-	background-color: transparent;
+	    background-color: transparent;
+    background-image: none;
+    height: auto;
+    padding: 0;
+}
+
+.flexigrid .pGroup tr {
+	background-image:none;
 }

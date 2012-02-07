@@ -95,8 +95,8 @@ namespace DeepBlue.Models.CapitalCall {
 
 	public class CapitalCallLineItemModel {
 
-		[Required(ErrorMessage = "CapitalCallLineItemID is required")]
-		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CapitalCallLineItemID is required")]
+		[Required(ErrorMessage = "CapitalCallID is required")]
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CapitalCallID is required")]
 		public int CapitalCallID { get; set; }
 
 		[Required(ErrorMessage = "CapitalCallLineItemID is required")]
@@ -107,7 +107,7 @@ namespace DeepBlue.Models.CapitalCall {
 
 		public decimal CapitalAmountCalled { get; set; }
 
-		public decimal InvestmentAmount { get; set; }
+		public decimal? InvestmentAmount { get; set; }
 
 		public decimal? NewInvestmentAmount { get; set; }
 

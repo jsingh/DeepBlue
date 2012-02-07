@@ -15,8 +15,8 @@
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title">AMBERBROOK FUNDS</span><span class="arrow"></span><span class="pname">Amberbrook
-					Fund Library</span></div>
+				<span class="title">FUNDS</span><span class="arrow"></span><span class="pname"> Fund
+					Library</span></div>
 			<div class="rightcol">
 			</div>
 		</div>
@@ -24,14 +24,14 @@
 	<div class="headerbar">
 		<div class="breadcrumb">
 			<div class="leftcol">
-				Amberbrook Fund
+				Fund
 			</div>
 			<div class="addbtn" style="display: block; margin-left: 123px;">
 				<%using (Html.GreenButton(new { @id = "lnkAddFund", @onclick = "javascript:fund.edit(0,'');" })) {%>Add
-				Amberbrook Fund<%}%>
+				Fund<%}%>
 			</div>
-			<div class="addbtn" style="display: block;float:right;">
-			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...&nbsp;", new { @id = "SpnLoading", @style = "display:none;float:left;" })%><%: Html.TextBox("Fund", "SEARCH AMBERBROOK FUND", new { @class = "wm", @style = "width:200px" })%>
+			<div class="addbtn" style="display: block; float: right;">
+				<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...&nbsp;", new { @id = "SpnLoading", @style = "display:none;float:left;" })%><%: Html.TextBox("Fund", "SEARCH  FUND", new { @class = "wm", @style = "width:200px" })%>
 			</div>
 		</div>
 	</div>
@@ -39,8 +39,8 @@
 		<div class="header">
 			<div id="TabMain" class="section-tab-main">
 				<div class="section-tab-box">
-					<%using (Html.Tab(new { @id = "TabFundGrid", @class = "section-tab-sel", @onclick = "javascript:fund.selectTab(this,'FundDetail');" })) {%>Amberbrook
-					Fund Library
+					<%using (Html.Tab(new { @id = "TabFundGrid", @class = "section-tab-sel", @onclick = "javascript:fund.selectTab(this,'FundDetail');" })) {%>Fund
+					Library
 					<%}%>
 				</div>
 			</div>
@@ -65,6 +65,12 @@
 						</th>
 						<th sortname="ScheduleTerminationDate" style="width: 20%">
 							Schedule Termination Date
+						</th>
+						<th sortname="CommitmentAmount" style="width: 20%">
+							Commitment Amount
+						</th>
+						<th sortname="UnfundedAmount" style="width: 20%">
+							Unfunded Amount
 						</th>
 						<th align="right" style="width: 15%">
 						</th>
@@ -95,13 +101,13 @@
 															   ,OnSubmit  = "fund.onSubmit"
 															   ,BoxStyle = false
 })%>
-	<script type="text/javascript">
+	<%using (Html.JavaScript()) {%>
 		$(document).ready(function(){
 			fund.newFundData = <%=JsonSerializer.ToJsonObject(Model)%>;
 			fund.init();
 		});
-	</script>
-	<script id="GridTemplate" type="text/x-jquery-tmpl">
+	<%}%>
+	<%using (Html.jQueryTemplateScript("GridTemplate")) {%>
 		{{each(i,row) rows}}
 			<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}}>
 				<td>
@@ -116,24 +122,30 @@
 				<td>
 					${formatDate(row.cell[4])}
 				</td>
+				<td>
+					${formatCurrency(row.cell[5])}
+				</td>
+				<td>
+					${formatCurrency(row.cell[6])}
+				</td>
 				<td style="text-align:right">
 					{{if row.cell[0]>0}}
-					<%: Html.Image("Edit.png", new { @id="Edit${row.cell[0]}", @class = "gbutton show", @onclick = "javascript:fund.edit(${row.cell[0]},'${row.cell[1]}');" })%>
+					<%: Html.Image("Edit.png", new { @id = "Edit${row.cell[0]}", @class = "gbutton editbtn show", @onclick = "javascript:fund.edit(${row.cell[0]},'${row.cell[1]}');" })%>
 					{{/if}}
 				</td>
 			</tr>
 		{{/each}}
-	</script>
-	<script id="FundAddTemplate" type="text/x-jquery-tmpl">
+	<%}%>
+	<%using (Html.jQueryTemplateScript("FundAddTemplate")) {%>
 		<% Html.RenderPartial("FundDetail", Model); %>
-	</script>
-	<script id="FundRateSchduleTemplate" type="text/x-jquery-tmpl">
+	<%}%>
+	<%using (Html.jQueryTemplateScript("FundRateSchduleTemplate")) {%>
 		<% Html.RenderPartial("FundRateSchduleDetail", Model); %>
-	</script>
-	<script id="FundRateSchduleTierTemplate" type="text/x-jquery-tmpl">
+	<%}%>
+	<%using (Html.jQueryTemplateScript("FundRateSchduleTierTemplate")) {%>
 		<% Html.RenderPartial("FundRateSchduleTierDetail", Model); %>
-	</script>
-	<script id="TabTemplate" type="text/x-jquery-tmpl">
+	<%}%>
+	<%using (Html.jQueryTemplateScript("TabTemplate")) {%>
 		<div style="float:left">
 			<div id="Tab${id}" onmousemove="javascript:$('#tabdel${id}').show();"
 			 onmouseout="javascript:$('#tabdel${id}').hide();"
@@ -144,16 +156,19 @@
 				<div class='tab-delete' style='display:none' id="tabdel${id}" onclick="javascript:fund.deleteTab(${id},true);"></div>
 			</div>
 		</div>
-	</script>
-	<script id="SectionTemplate" type="text/x-jquery-tmpl">
+	<%}%>
+	<%using (Html.jQueryTemplateScript("SectionTemplate")) {%>
 		<div class="section-det" id="Edit${id}" style="display: none">
 		</div>
-	</script>
-	<script id="InvestorGridTemplate" type="text/x-jquery-tmpl">
-	{{each(i,row) rows}}
-	<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}}>
-		<td>${row.cell[0]}</td><td style="text-align:right">${formatCurrency(row.cell[1])}</td><td style="text-align:right">${formatCurrency(row.cell[2])}</td><td>${formatDate(row.cell[3])}</td>
-	</tr>
-	{{/each}}
-	</script>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("InvestorGridTemplate")) {%>
+		{{each(i,row) rows}}
+		<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}}>
+			<td>${row.cell[0]}</td>
+			<td style="text-align:right">${formatCurrency(row.cell[1])}</td>
+			<td style="text-align:right">${formatCurrency(row.cell[2])}</td>
+			<td>${formatDate(row.cell[3])}</td>
+		</tr>
+		{{/each}}
+	<%}%>
 </asp:Content>

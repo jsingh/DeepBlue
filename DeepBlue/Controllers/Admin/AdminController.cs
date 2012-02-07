@@ -13,6 +13,7 @@ using DeepBlue.Controllers.Deal;
 using System.IO;
 
 namespace DeepBlue.Controllers.Admin {
+
 	public class AdminController : BaseController {
 
 		public IAdminRepository AdminRepository { get; set; }
@@ -33,9 +34,11 @@ namespace DeepBlue.Controllers.Admin {
 		#region InvestorMangement
 
 		#region InvestorType
+
 		//
 		// GET: /Admin/InvestorType
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public ActionResult InvestorType() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "InvestorManagement";
@@ -46,6 +49,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/InvestorTypeList
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public JsonResult InvestorTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -65,6 +69,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/InvestorType
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public ActionResult EditInvestorType(int id) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -82,6 +87,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateInvestorType
 		[HttpPost]
+		[SystemEntityAuthorize]
 		public ActionResult UpdateInvestorType(FormCollection collection) {
 			EditInvestorTypeModel model = new EditInvestorTypeModel();
 			ResultModel resultModel = new ResultModel();
@@ -118,8 +124,8 @@ namespace DeepBlue.Controllers.Admin {
 			return View("Result", resultModel);
 		}
 
-
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public string DeleteInvestorType(int id) {
 			if (AdminRepository.DeleteInvestorType(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -130,6 +136,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public string InvestorTypeNameAvailable(string investorType, int investorTypeId) {
 			if (AdminRepository.InvestorTypeNameAvailable(investorType, investorTypeId))
 				return "Investor Type already exist";
@@ -139,7 +146,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
-		#region EntityType
+		#region Investor EntityType
 
 		//
 		// GET: /Admin/EntityType
@@ -250,6 +257,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/CommunicationType
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public ActionResult CommunicationType() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "InvestorManagement";
@@ -262,6 +270,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/CommunicationTypeList
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public JsonResult CommunicationTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -283,6 +292,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/CommunicationType
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public JsonResult EditCommunicationType(int id) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -302,6 +312,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateCommunicationType
 		[HttpPost]
+		[SystemEntityAuthorize]
 		public ActionResult UpdateCommunicationType(FormCollection collection) {
 			EditCommunicationTypeModel model = new EditCommunicationTypeModel();
 			ResultModel resultModel = new ResultModel();
@@ -339,8 +350,8 @@ namespace DeepBlue.Controllers.Admin {
 			return View("Result", resultModel);
 		}
 
-
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public string DeleteCommunicationType(int id) {
 			if (AdminRepository.DeleteCommunicationType(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -351,6 +362,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public string CommunicationTypeNameAvailable(string communicationTypeName, int communicationTypeId) {
 			if (AdminRepository.CommunicationTypeNameAvailable(communicationTypeName, communicationTypeId))
 				return "Communication Type already exist";
@@ -364,6 +376,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/CommunicationGrouping
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public ActionResult CommunicationGrouping() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "InvestorManagement";
@@ -374,6 +387,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/CommunicationGroupingList
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public JsonResult CommunicationGroupingList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -391,6 +405,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/CommunicationGrouping
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public ActionResult EditCommunicationGrouping(int id) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -406,6 +421,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateCommunicationGrouping
 		[HttpPost]
+		[SystemEntityAuthorize]
 		public ActionResult UpdateCommunicationGrouping(FormCollection collection) {
 			EditCommunicationGroupingModel model = new EditCommunicationGroupingModel();
 			ResultModel resultModel = new ResultModel();
@@ -420,6 +436,7 @@ namespace DeepBlue.Controllers.Admin {
 					communicationGrouping = new Models.Entity.CommunicationGrouping();
 				}
 				communicationGrouping.CommunicationGroupingName = model.CommunicationGroupingName;
+				communicationGrouping.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCommunicationGrouping(communicationGrouping);
 				if (errorInfo != null) {
 					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
@@ -440,8 +457,8 @@ namespace DeepBlue.Controllers.Admin {
 			return View("Result", resultModel);
 		}
 
-
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public string DeleteCommunicationGrouping(int id) {
 			if (AdminRepository.DeleteCommunicationGrouping(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -452,6 +469,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public string CommunicationGroupingNameAvailable(string communicationGrouping, int communicationGroupingId) {
 			if (AdminRepository.CommunicationGroupingNameAvailable(communicationGrouping, communicationGroupingId))
 				return "Communication Group already exist";
@@ -467,6 +485,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region Custom Field
 
+		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult CustomField() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "CustomFieldManagement";
@@ -482,6 +502,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/CustomFieldList
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public JsonResult CustomFieldList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -507,6 +528,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/EntityType
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public JsonResult EditCustomField(int id) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -530,6 +552,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateCustomField
 		[HttpPost]
+		[OtherEntityAuthorize]
 		public ActionResult UpdateCustomField(FormCollection collection) {
 			EditCustomFieldModel model = new EditCustomFieldModel();
 			ResultModel resultModel = new ResultModel();
@@ -570,6 +593,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string DeleteCustomField(int id) {
 			if (AdminRepository.DeleteCustomField(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -580,6 +604,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string CustomFieldTextAvailable(string customFieldText, int customFieldId, int moduleId) {
 			if (AdminRepository.CustomFieldTextAvailable(customFieldText, customFieldId, moduleId))
 				return "Custom Field already exists.";
@@ -591,6 +616,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region Data Type
 
+		[HttpGet]
+		[SystemEntityAuthorize]
 		public ActionResult DataType() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "CustomFieldManagement";
@@ -601,6 +628,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/DataTypeList
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public JsonResult DataTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -619,6 +647,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/DataType
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public ActionResult EditDataType(int id) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -635,6 +664,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateDataType
 		[HttpPost]
+		[SystemEntityAuthorize]
 		public ActionResult UpdateDataType(FormCollection collection) {
 			EditDataTypeModel model = new EditDataTypeModel();
 			ResultModel resultModel = new ResultModel();
@@ -650,6 +680,7 @@ namespace DeepBlue.Controllers.Admin {
 				}
 				dataType.DataTypeName = model.DataTypeName;
 				dataType.DataTypeID = model.DataTypeId;
+				dataType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveDataType(dataType);
 				if (errorInfo != null) {
 					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
@@ -671,6 +702,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public string DeleteDataType(int id) {
 			if (AdminRepository.DeleteDataType(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -681,6 +713,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public string DataTypeNameAvailable(string dataTypeName, int dataTypeId) {
 			if (AdminRepository.DataTypeNameAvailable(dataTypeName, dataTypeId))
 				return "Data Type already exists.";
@@ -960,6 +993,7 @@ namespace DeepBlue.Controllers.Admin {
 					underlyingFundType = new UnderlyingFundType();
 				}
 				underlyingFundType.Name = model.Name;
+				underlyingFundType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveUnderlyingFundType(underlyingFundType);
 				if (errorInfo != null) {
 					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
@@ -1110,6 +1144,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region CashDistributionType
 
+		[HttpGet]
+		[SystemEntityAuthorize]
 		public ActionResult CashDistributionType() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
@@ -1120,6 +1156,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/CashDistributionTypeList
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public JsonResult CashDistributionTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -1139,6 +1176,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/EditCashDistributionType
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public ActionResult EditCashDistributionType(int id) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -1156,6 +1194,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateCashDistributionType
 		[HttpPost]
+		[SystemEntityAuthorize]
 		public ActionResult UpdateCashDistributionType(FormCollection collection) {
 			EditCashDistributionTypeModel model = new EditCashDistributionTypeModel();
 			ResultModel resultModel = new ResultModel();
@@ -1171,6 +1210,7 @@ namespace DeepBlue.Controllers.Admin {
 				}
 				cashDistributionType.Name = model.Name;
 				cashDistributionType.Enabled = model.Enabled;
+				cashDistributionType.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveCashDistributionType(cashDistributionType);
 				if (errorInfo != null) {
 					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
@@ -1192,6 +1232,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public string DeleteCashDistributionType(int id) {
 			if (AdminRepository.DeleteCashDistributionType(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -1202,6 +1243,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public string CashDistributionTypeAvailable(string cashDistributionType, int cashDistributionTypeId) {
 			if (AdminRepository.CashDistributionTypeNameAvailable(cashDistributionType, cashDistributionTypeId))
 				return "Cash Distribution Type already exists.";
@@ -1532,6 +1574,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region Module
 
+		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult MODULE() {
 			ViewData["MenuName"] = "AdminManagement";
 			return View();
@@ -1540,6 +1584,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/ModuleList
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public JsonResult ModuleList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -1558,6 +1603,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/EntityType
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult EditModule(int id) {
 			EditModule model = new EditModule();
 			MODULE module = AdminRepository.FindModule(id);
@@ -1572,6 +1618,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateModule
 		[HttpPost]
+		[OtherEntityAuthorize]
 		public ActionResult UpdateModule(FormCollection collection) {
 			EditModule model = new EditModule();
 			ResultModel resultModel = new ResultModel();
@@ -1607,6 +1654,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string DeleteModule(int id) {
 			if (AdminRepository.DeleteModule(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -1617,6 +1665,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string ModuleFieldTextAvailable(string ModuleFieldText, int ModuleFieldId) {
 			if (AdminRepository.ModuleTextAvailable(ModuleFieldText, ModuleFieldId))
 				return "Custom Field Text already exists.";
@@ -1624,13 +1673,14 @@ namespace DeepBlue.Controllers.Admin {
 				return string.Empty;
 		}
 
-
 		#endregion
 
 		#region Security Type
+
 		//
 		// GET: /Admin/SecurityType
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult SecurityType() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
@@ -1641,6 +1691,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/SecurityTypeList
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public JsonResult SecurityTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -1660,6 +1711,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/SecurityType
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult EditSecurityType(int id) {
 			EditSecurityTypeModel model = new EditSecurityTypeModel();
 			SecurityType securityType = AdminRepository.FindSecurityType(id);
@@ -1674,6 +1726,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateSecurityType
 		[HttpPost]
+		[OtherEntityAuthorize]
 		public ActionResult UpdateSecurityType(FormCollection collection) {
 			EditSecurityTypeModel model = new EditSecurityTypeModel();
 			ResultModel resultModel = new ResultModel();
@@ -1710,6 +1763,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string DeleteSecurityType(int id) {
 			if (AdminRepository.DeleteSecurityType(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -1720,16 +1774,20 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string SecurityTypeNameAvailable(string Name, int SecurityTypeID) {
 			if (AdminRepository.SecurityTypeNameAvailable(Name, SecurityTypeID))
 				return "Name already exist";
 			else
 				return string.Empty;
 		}
+
 		#endregion
 
 		#region Geography
 
+		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult Geography() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
@@ -1740,6 +1798,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/GeographyList
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public JsonResult GeographyList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -1759,6 +1818,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/EditGeography
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult EditGeography(int id) {
 			EditGeographyModel model = new EditGeographyModel();
 			Geography geography = AdminRepository.FindGeography(id);
@@ -1773,6 +1833,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateGeography
 		[HttpPost]
+		[OtherEntityAuthorize]
 		public ActionResult UpdateGeography(FormCollection collection) {
 			EditGeographyModel model = new EditGeographyModel();
 			ResultModel resultModel = new ResultModel();
@@ -1814,6 +1875,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string DeleteGeography(int id) {
 			if (AdminRepository.DeleteGeography(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -1824,13 +1886,13 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string GeographyAvailable(string Geography, int GeographyId) {
 			if (AdminRepository.GeographyNameAvailable(Geography, GeographyId))
 				return "Geography already exists.";
 			else
 				return string.Empty;
 		}
-
 
 		#endregion
 
@@ -1957,6 +2019,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region File Type
 
+		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult FileType() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "AdminFileType";
@@ -1967,6 +2031,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/FileTypeList
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public JsonResult FileTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -1987,6 +2052,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/EntityType
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult EditFileType(int id) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -2004,6 +2070,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateFileType
 		[HttpPost]
+		[OtherEntityAuthorize]
 		public ActionResult UpdateFileType(FormCollection collection) {
 			EditFileTypeModel model = new EditFileTypeModel();
 			ResultModel resultModel = new ResultModel();
@@ -2042,6 +2109,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string DeleteFileType(int id) {
 			if (AdminRepository.DeleteFileType(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -2052,6 +2120,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string FileTypeNameAvailable(string FileTypeText, int FileTypeId) {
 			if (AdminRepository.FileTypeNameAvailable(FileTypeText, FileTypeId))
 				return "Name already exists.";
@@ -2170,12 +2239,14 @@ namespace DeepBlue.Controllers.Admin {
 			else
 				return string.Empty;
 		}
+
 		#endregion
 
 		#region FixedIncomeType
 		//
 		// GET: /Admin/FixedIncomeType
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult FixedIncomeType() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
@@ -2186,6 +2257,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/FixedIncomeTypeList
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public JsonResult FixedIncomeTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -2204,6 +2276,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/FixedIncomeType
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult EditFixedIncomeType(int id) {
 			EditFixedIncomeTypeModel model = new EditFixedIncomeTypeModel();
 			FixedIncomeType fixedIncomeType = AdminRepository.FindFixedIncomeType(id);
@@ -2218,6 +2291,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateFixedIncomeType
 		[HttpPost]
+		[OtherEntityAuthorize]
 		public ActionResult UpdateFixedIncomeType(FormCollection collection) {
 			EditFixedIncomeTypeModel model = new EditFixedIncomeTypeModel();
 			ResultModel resultModel = new ResultModel();
@@ -2259,6 +2333,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string DeleteFixedIncomeType(int id) {
 			if (AdminRepository.DeleteFixedIncomeType(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -2269,16 +2344,20 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string FixedIncomeTypeNameAvailable(string FixedIncomeType, int FixedIncomeTypeID) {
 			if (AdminRepository.FixedIncomeTypeNameAvailable(FixedIncomeType, FixedIncomeTypeID))
 				return "Fixed Income Type already exist";
 			else
 				return string.Empty;
 		}
+
 		#endregion
 
 		#region ActivityType
 
+		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult ActivityType() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "CustomFieldManagement";
@@ -2289,6 +2368,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/ActivityTypeList
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public JsonResult ActivityTypeList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -2308,6 +2388,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/EditActivityType
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult EditActivityType(int id) {
 			EditActivityTypeModel model = new EditActivityTypeModel();
 			ActivityType activityType = AdminRepository.FindActivityType(id);
@@ -2322,6 +2403,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateActivityType
 		[HttpPost]
+		[OtherEntityAuthorize]
 		public ActionResult UpdateActivityType(FormCollection collection) {
 			EditActivityTypeModel model = new EditActivityTypeModel();
 			ResultModel resultModel = new ResultModel();
@@ -2358,6 +2440,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string DeleteActivityType(int id) {
 			if (AdminRepository.DeleteActivityType(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -2368,6 +2451,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string ActivityTypeAvailable(string ActivityType, int ActivityTypeId) {
 			if (AdminRepository.ActivityTypeNameAvailable(ActivityType, ActivityTypeId))
 				return "Name already exists.";
@@ -2378,18 +2462,22 @@ namespace DeepBlue.Controllers.Admin {
 		#endregion
 
 		#region Country
+
 		//
 		// GET: /Admin/FindCountrys
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public JsonResult FindCountrys(string term) {
 			return Json(AdminRepository.FindCountrys(term), JsonRequestBehavior.AllowGet);
 		}
+
 		#endregion
 
 		#region State
 		//
 		// GET: /Admin/FindStates
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public JsonResult FindStates(string term) {
 			return Json(AdminRepository.FindStates(term), JsonRequestBehavior.AllowGet);
 		}
@@ -2399,6 +2487,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/Currency
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public ActionResult Currency() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
@@ -2409,6 +2498,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/CurrencyList
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public JsonResult CurrencyList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -2430,6 +2520,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/Currency
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public ActionResult EditCurrency(int id) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -2449,6 +2540,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateCurrency
 		[HttpPost]
+		[SystemEntityAuthorize]
 		public ActionResult UpdateCurrency(FormCollection collection) {
 			EditCurrencyModel model = new EditCurrencyModel();
 			ResultModel resultModel = new ResultModel();
@@ -2490,6 +2582,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public string DeleteCurrency(int id) {
 			if (AdminRepository.DeleteCurrency(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -2500,6 +2593,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[SystemEntityAuthorize]
 		public string CurrencyNameAvailable(string currencyName, int currencyId) {
 			if (AdminRepository.CurrencyNameAvailable(currencyName, currencyId))
 				return "Name already exist";
@@ -2513,6 +2607,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/FundClosing
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult FundClosing() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "InvestorManagement";
@@ -2523,6 +2618,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/FundClosingList
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public JsonResult FundClosingList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -2546,6 +2642,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/EditFundClosing
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult EditFundClosing(int id) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -2567,6 +2664,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateFundClosing
 		[HttpPost]
+		[OtherEntityAuthorize]
 		public ActionResult UpdateFundClosing(FormCollection collection) {
 			EditFundClosingModel model = new EditFundClosingModel();
 			ResultModel resultModel = new ResultModel();
@@ -2584,6 +2682,7 @@ namespace DeepBlue.Controllers.Admin {
 				fundClosing.FundClosingDate = model.FundClosingDate;
 				fundClosing.FundID = model.FundId;
 				fundClosing.IsFirstClosing = model.IsFirstClosing;
+				fundClosing.EntityID = Authentication.CurrentEntity.EntityID;
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveFundClosing(fundClosing);
 				if (errorInfo != null) {
 					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
@@ -2605,6 +2704,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string DeleteFundClosing(int id) {
 			if (AdminRepository.DeleteFundClosing(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -2615,6 +2715,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string FundClosingNameAvailable(string name, int fundClosingId, int fundId) {
 			if (AdminRepository.FundClosingNameAvailable(name, fundClosingId, fundId))
 				return "Name already exist";
@@ -2632,14 +2733,177 @@ namespace DeepBlue.Controllers.Admin {
 		}
 		#endregion
 
-		#region User
+		#region Entity
 
 		[AdminAuthorize()]
+		[SystemEntityAuthorize]
+		public ActionResult Entities() {
+			ViewData["MenuName"] = "AdminManagement";
+			ViewData["SubmenuName"] = "EntitySetup";
+			ViewData["PageName"] = "Entity";
+			return View();
+		}
+
+		//
+		// GET: /Admin/EntityList
+		[HttpGet]
+		[SystemEntityAuthorize]
+		public JsonResult EntityList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<ENTITY> Entities = AdminRepository.GetAllEntities(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var entity in Entities) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {
+					  entity.EntityID,
+					  entity.EntityName,
+					  entity.EntityCode,
+					  entity.Enabled
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditEntity
+		[HttpGet]
+		[SystemEntityAuthorize]
+		public ActionResult EditEntity(int id) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			ENTITY entity = AdminRepository.FindEntity(id);
+			flexgridData.total = totalRows;
+			flexgridData.page = 0;
+			flexgridData.rows.Add(new FlexigridRow {
+				cell = new List<object> {
+					  entity.EntityID,
+					  entity.EntityName,
+					  entity.EntityCode,
+					  entity.Enabled
+				}
+			});
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/UpdateEntity
+		[HttpPost]
+		[SystemEntityAuthorize]
+		public ActionResult UpdateEntity(FormCollection collection) {
+			ENTITY model = new ENTITY();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			bool isNewEntity = false;
+			string ErrorMessage = EntityNameAvailable(model.EntityName, model.EntityID);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("EntityName", ErrorMessage);
+			}
+			ErrorMessage = EntityCodeAvailable(model.EntityCode, model.EntityID);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("EntityCode", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				ENTITY entity = AdminRepository.FindEntity(model.EntityID);
+				if (entity == null) {
+					entity = new ENTITY();
+					entity.CreatedDate = DateTime.Now;
+					isNewEntity = true;
+				}
+				entity.EntityName = model.EntityName;
+				entity.EntityCode = model.EntityCode;
+				entity.Enabled = model.Enabled;
+
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveEntity(entity);
+				if (errorInfo != null) {
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+				}
+				else {
+					resultModel.Result = "True||" + entity.EntityID;
+					// Create default user
+					if (isNewEntity) {
+						string username = "admin";
+						string password = "admin";
+						string firstname = "admin";
+						string lastname = "admin";
+						string email = "admin@admin.com";
+						USER user = new USER();
+						user.Login = username;
+						user.PasswordSalt = SecurityExtensions.CreateSalt();
+						user.PasswordHash = password.CreateHash(user.PasswordSalt);
+						user.Email = email;
+						user.FirstName = firstname;
+						user.LastName = lastname;
+						user.EntityID = entity.EntityID;
+						user.CreatedDate = DateTime.Now;
+						user.LastUpdatedDate = DateTime.Now;
+						user.Enabled = true;
+						user.IsAdmin = true;
+						AdminRepository.SaveUser(user);
+					}
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		[SystemEntityAuthorize]
+		public string DeleteEntity(int id) {
+			if (id > 1) {
+				if (AdminRepository.DeleteEntity(id) == false) {
+					return "Cann't Delete! Child record found!";
+				}
+				else {
+					return string.Empty;
+				}
+			}
+			else {
+				return "Cann't Delete! Child record found!";
+			}
+		}
+
+		[HttpGet]
+		[SystemEntityAuthorize]
+		public string EntityNameAvailable(string entityName, int EntityId) {
+			if (AdminRepository.EntityNameAvailable(entityName, EntityId))
+				return "Entity Name already exists.";
+			else
+				return string.Empty;
+		}
+
+		[HttpGet]
+		[SystemEntityAuthorize]
+		public string EntityCodeAvailable(string entityName, int EntityId) {
+			if (AdminRepository.EntityCodeAvailable(entityName, EntityId))
+				return "Entity Code already exists.";
+			else
+				return string.Empty;
+		}
+
+		#endregion
+
+		#region User
+
+		[HttpGet]
+		[AdminAuthorize]
 		public ActionResult Users() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "UserManagement";
 			ViewData["PageName"] = "User";
-			return View();
+			EditUserModel model = new EditUserModel();
+			model.Entities = SelectListFactory.GetEntitiesSelectList(AdminRepository.GetAllEntities());
+			return View(model);
 		}
 
 		//
@@ -2662,7 +2926,8 @@ namespace DeepBlue.Controllers.Admin {
 					  user.Enabled,
 					  user.MiddleName,
 					  user.IsAdmin,
-					  user.PhoneNumber
+					  user.PhoneNumber,
+					  user.EntityID
 					}
 				});
 			}
@@ -2688,7 +2953,8 @@ namespace DeepBlue.Controllers.Admin {
 					  user.Enabled,
 					  user.MiddleName,
 					  user.IsAdmin,
-					  user.PhoneNumber
+					  user.PhoneNumber,
+					  user.EntityID
 				}
 			});
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);
@@ -2719,7 +2985,6 @@ namespace DeepBlue.Controllers.Admin {
 					user = new USER();
 					user.CreatedDate = DateTime.Now;
 				}
-
 				user.EntityID = Authentication.CurrentEntity.EntityID;
 				user.LastUpdatedDate = DateTime.Now;
 
@@ -2774,7 +3039,6 @@ namespace DeepBlue.Controllers.Admin {
 				return string.Empty;
 		}
 
-
 		[HttpGet]
 		public string EmailAvailable(string email, int UserId) {
 			if (AdminRepository.EmailAvailable(email, UserId))
@@ -2783,11 +3047,11 @@ namespace DeepBlue.Controllers.Admin {
 				return string.Empty;
 		}
 
-
 		#endregion
 
 		#region DocumentType
 
+		[HttpGet]
 		public ActionResult DocumentType() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DocumentManagement";
@@ -2905,6 +3169,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region DealContact
 
+		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult DealContact() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "DealManagement";
@@ -2915,6 +3181,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/DealContactList
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public JsonResult DealContactList(int pageIndex, int pageSize, string sortName, string sortOrder) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -2940,6 +3207,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/EditDealContact
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult EditDealContact(int id) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
@@ -2964,6 +3232,7 @@ namespace DeepBlue.Controllers.Admin {
 		//
 		// GET: /Admin/UpdateDealContact
 		[HttpPost]
+		[OtherEntityAuthorize]
 		public ActionResult UpdateDealContact(FormCollection collection) {
 			EditDealContactModel model = new EditDealContactModel();
 			ResultModel resultModel = new ResultModel();
@@ -3026,6 +3295,7 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public string DeleteDealContact(int id) {
 			if (AdminRepository.DeleteDealContact(id) == false) {
 				return "Cann't Delete! Child record found!";
@@ -3039,6 +3309,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region SelectList
 		[HttpGet]
+		[OtherEntityAuthorize]
 		public JsonResult SelectList(string actionName) {
 			List<SelectListItem> items = null;
 			switch (actionName) {
@@ -3100,6 +3371,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region FileUpload
 
+		[HttpGet]
+		[OtherEntityAuthorize]
 		public ActionResult FileUpload() {
 			return View();
 		}
@@ -3158,7 +3431,7 @@ namespace DeepBlue.Controllers.Admin {
 		public JsonResult UploadFile() {
 			int index = 0;
 			string fileName = string.Empty;
-			for(index = 0; index < Request.Files.Count; index++){
+			for (index = 0; index < Request.Files.Count; index++) {
 				UploadFile fileUpload = new UploadFile(Request.Files[index], "TempUploadPath", Request.Files[index].FileName);
 				fileUpload.Upload();
 				fileName = fileUpload.FileName;
@@ -3315,6 +3588,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region ExportExcel
 
+		[OtherEntityAuthorize]
 		public ActionResult Export() {
 			ViewData["MenuName"] = "AdminManagement";
 			ViewData["SubmenuName"] = "ExportExcel";
@@ -3329,15 +3603,17 @@ namespace DeepBlue.Controllers.Admin {
 		//     }, JsonRequestBehavior.AllowGet);
 		//}
 
+		[OtherEntityAuthorize]
 		public ActionResult ExportList() {
 			FlexigridData data = new FlexigridData { page = 1, total = 4 };
 			data.rows.Add(new FlexigridRow { cell = new List<object> { (int)DeepBlue.Models.Admin.Enums.ExportExcelType.Investor, "Investors" } });
-			data.rows.Add(new FlexigridRow { cell = new List<object> { (int)DeepBlue.Models.Admin.Enums.ExportExcelType.AmberbrookFund, "Amberbrook Funds" } });
+			data.rows.Add(new FlexigridRow { cell = new List<object> { (int)DeepBlue.Models.Admin.Enums.ExportExcelType.AmberbrookFund, "Funds" } });
 			data.rows.Add(new FlexigridRow { cell = new List<object> { (int)DeepBlue.Models.Admin.Enums.ExportExcelType.UnderlyingFund, "Underlying Funds" } });
 			data.rows.Add(new FlexigridRow { cell = new List<object> { (int)DeepBlue.Models.Admin.Enums.ExportExcelType.UnderlyingDirect, "Underlying Directs" } });
 			return Json(data, JsonRequestBehavior.AllowGet);
 		}
 
+		[OtherEntityAuthorize]
 		public ActionResult ExportExcel(string tableName, int? excelExportTypeId) {
 			if (excelExportTypeId > 0) {
 				string actionName = string.Empty;
@@ -3362,18 +3638,22 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
+		[OtherEntityAuthorize]
 		public ActionResult InvestorExportExcel() {
 			return View(AdminRepository.GetAllInvestorExportList());
 		}
 
+		[OtherEntityAuthorize]
 		public ActionResult FundExportExcel() {
 			return View(AdminRepository.GetAllFundExportList());
 		}
 
+		[OtherEntityAuthorize]
 		public ActionResult UnderlyingFundExportExcel() {
 			return View(AdminRepository.GetAllUnderlyingFundExportList());
 		}
 
+		[OtherEntityAuthorize]
 		public ActionResult UnderlyingDirectExportExcel() {
 			return View(AdminRepository.GetAllUnderlyingDirectExportList());
 		}

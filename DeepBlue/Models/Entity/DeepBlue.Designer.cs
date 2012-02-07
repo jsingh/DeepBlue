@@ -7961,12 +7961,14 @@ namespace DeepBlue.Models.Entity
         /// <param name="cashDistributionTypeID">Initial value of the CashDistributionTypeID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="enabled">Initial value of the Enabled property.</param>
-        public static CashDistributionType CreateCashDistributionType(global::System.Int32 cashDistributionTypeID, global::System.String name, global::System.Boolean enabled)
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        public static CashDistributionType CreateCashDistributionType(global::System.Int32 cashDistributionTypeID, global::System.String name, global::System.Boolean enabled, global::System.Int32 entityID)
         {
             CashDistributionType cashDistributionType = new CashDistributionType();
             cashDistributionType.CashDistributionTypeID = cashDistributionTypeID;
             cashDistributionType.Name = name;
             cashDistributionType.Enabled = enabled;
+            cashDistributionType.EntityID = entityID;
             return cashDistributionType;
         }
 
@@ -8047,6 +8049,30 @@ namespace DeepBlue.Models.Entity
         private global::System.Boolean _Enabled;
         partial void OnEnabledChanging(global::System.Boolean value);
         partial void OnEnabledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
 
         #endregion
     
@@ -8506,11 +8532,13 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         /// <param name="communicationGroupingID">Initial value of the CommunicationGroupingID property.</param>
         /// <param name="communicationGroupingName">Initial value of the CommunicationGroupingName property.</param>
-        public static CommunicationGrouping CreateCommunicationGrouping(global::System.Int32 communicationGroupingID, global::System.String communicationGroupingName)
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        public static CommunicationGrouping CreateCommunicationGrouping(global::System.Int32 communicationGroupingID, global::System.String communicationGroupingName, global::System.Int32 entityID)
         {
             CommunicationGrouping communicationGrouping = new CommunicationGrouping();
             communicationGrouping.CommunicationGroupingID = communicationGroupingID;
             communicationGrouping.CommunicationGroupingName = communicationGroupingName;
+            communicationGrouping.EntityID = entityID;
             return communicationGrouping;
         }
 
@@ -8567,6 +8595,30 @@ namespace DeepBlue.Models.Entity
         private global::System.String _CommunicationGroupingName;
         partial void OnCommunicationGroupingNameChanging(global::System.String value);
         partial void OnCommunicationGroupingNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
 
         #endregion
     
@@ -11241,10 +11293,12 @@ namespace DeepBlue.Models.Entity
         /// Create a new DataType object.
         /// </summary>
         /// <param name="dataTypeID">Initial value of the DataTypeID property.</param>
-        public static DataType CreateDataType(global::System.Int32 dataTypeID)
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        public static DataType CreateDataType(global::System.Int32 dataTypeID, global::System.Int32 entityID)
         {
             DataType dataType = new DataType();
             dataType.DataTypeID = dataTypeID;
+            dataType.EntityID = entityID;
             return dataType;
         }
 
@@ -11301,6 +11355,30 @@ namespace DeepBlue.Models.Entity
         private global::System.String _DataTypeName;
         partial void OnDataTypeNameChanging(global::System.String value);
         partial void OnDataTypeNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
 
         #endregion
     
@@ -15502,11 +15580,13 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         /// <param name="entityID">Initial value of the EntityID property.</param>
         /// <param name="enabled">Initial value of the Enabled property.</param>
-        public static ENTITY CreateENTITY(global::System.Int32 entityID, global::System.Boolean enabled)
+        /// <param name="entityCode">Initial value of the EntityCode property.</param>
+        public static ENTITY CreateENTITY(global::System.Int32 entityID, global::System.Boolean enabled, global::System.String entityCode)
         {
             ENTITY eNTITY = new ENTITY();
             eNTITY.EntityID = entityID;
             eNTITY.Enabled = enabled;
+            eNTITY.EntityCode = entityCode;
             return eNTITY;
         }
 
@@ -15611,6 +15691,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.DateTime> _CreatedDate;
         partial void OnCreatedDateChanging(Nullable<global::System.DateTime> value);
         partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String EntityCode
+        {
+            get
+            {
+                return _EntityCode;
+            }
+            set
+            {
+                OnEntityCodeChanging(value);
+                ReportPropertyChanging("EntityCode");
+                _EntityCode = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("EntityCode");
+                OnEntityCodeChanged();
+            }
+        }
+        private global::System.String _EntityCode;
+        partial void OnEntityCodeChanging(global::System.String value);
+        partial void OnEntityCodeChanged();
 
         #endregion
     
@@ -19677,12 +19781,14 @@ namespace DeepBlue.Models.Entity
         /// <param name="fundClosingID">Initial value of the FundClosingID property.</param>
         /// <param name="fundID">Initial value of the FundID property.</param>
         /// <param name="isFirstClosing">Initial value of the IsFirstClosing property.</param>
-        public static FundClosing CreateFundClosing(global::System.Int32 fundClosingID, global::System.Int32 fundID, global::System.Boolean isFirstClosing)
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        public static FundClosing CreateFundClosing(global::System.Int32 fundClosingID, global::System.Int32 fundID, global::System.Boolean isFirstClosing, global::System.Int32 entityID)
         {
             FundClosing fundClosing = new FundClosing();
             fundClosing.FundClosingID = fundClosingID;
             fundClosing.FundID = fundID;
             fundClosing.IsFirstClosing = isFirstClosing;
+            fundClosing.EntityID = entityID;
             return fundClosing;
         }
 
@@ -19811,6 +19917,30 @@ namespace DeepBlue.Models.Entity
         private global::System.String _Name;
         partial void OnNameChanging(global::System.String value);
         partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
 
         #endregion
     
@@ -37702,11 +37832,13 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         /// <param name="underlyingFundTypeID">Initial value of the UnderlyingFundTypeID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
-        public static UnderlyingFundType CreateUnderlyingFundType(global::System.Int32 underlyingFundTypeID, global::System.String name)
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        public static UnderlyingFundType CreateUnderlyingFundType(global::System.Int32 underlyingFundTypeID, global::System.String name, global::System.Int32 entityID)
         {
             UnderlyingFundType underlyingFundType = new UnderlyingFundType();
             underlyingFundType.UnderlyingFundTypeID = underlyingFundTypeID;
             underlyingFundType.Name = name;
+            underlyingFundType.EntityID = entityID;
             return underlyingFundType;
         }
 
@@ -37763,6 +37895,30 @@ namespace DeepBlue.Models.Entity
         private global::System.String _Name;
         partial void OnNameChanging(global::System.String value);
         partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
 
         #endregion
     

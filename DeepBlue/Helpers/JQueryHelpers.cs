@@ -7,15 +7,18 @@ using System.Web.Mvc;
 
 namespace DeepBlue.Helpers {
 	public static class JQueryHelpers {
-		
+
 		public static string jQueryAutoComplete(this HtmlHelper helper, string targetId, AutoCompleteOptions options) {
 			StringBuilder scriptSrc = new StringBuilder();
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").autocomplete({");
 			if (string.IsNullOrEmpty(options.Source) == false) {
-				scriptSrc.Append("source:\"" + options.Source + "\"");
+				if (options.Source.StartsWith("~") == false) {
+					options.Source = "~/" + options.Source;
+				}
+				scriptSrc.AppendFormat("source:\"{0}\"", HtmlControls.Url(helper, options.Source));
 			}
 			if (string.IsNullOrEmpty(options.SearchFunction) == false) {
-				scriptSrc.Append("source:" + options.SearchFunction);
+				scriptSrc.AppendFormat("source:{0}", options.SearchFunction);
 			}
 			scriptSrc.Append(",minLength:" + options.MinLength.ToString())
 			.Append(",autoFocus: true")
@@ -60,7 +63,7 @@ namespace DeepBlue.Helpers {
 					 .Append("usepager:" + options.Paging.ToString().ToLower())
 					 .Append(",useBoxStyle:" + options.BoxStyle.ToString().ToLower());
 			if (string.IsNullOrEmpty(options.ControllerName) == false && string.IsNullOrEmpty(options.ActionName) == false) {
-				scriptSrc.Append(",url:\"/" + options.ControllerName.ToString() + "/" + options.ActionName.ToString() + "\"");
+				scriptSrc.AppendFormat(",url:\"{0}\"", HtmlControls.Url(helper, options.ActionName, options.ControllerName));
 			}
 			if (string.IsNullOrEmpty(options.OnSuccess) == false) {
 				scriptSrc.Append(",onSuccess:" + options.OnSuccess + "");
@@ -114,7 +117,7 @@ namespace DeepBlue.Helpers {
 			scriptSrc.Append("$(document).ready(function(){$(\"#" + targetId + "\").ajaxTable({")
 					 .Append("usepager:" + options.Paging.ToString().ToLower());
 			if (string.IsNullOrEmpty(options.ControllerName) == false && string.IsNullOrEmpty(options.ActionName) == false) {
-				scriptSrc.Append(",url:\"/" + options.ControllerName.ToString() + "/" + options.ActionName.ToString() + "\"");
+				scriptSrc.AppendFormat(",url:\"{0}\"", HtmlControls.Url(helper, options.ActionName, options.ControllerName));
 			}
 			if (string.IsNullOrEmpty(options.OnSuccess) == false) {
 				scriptSrc.Append(",onSuccess:" + options.OnSuccess + "");

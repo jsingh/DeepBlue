@@ -25,7 +25,7 @@
 					<%: Html.TextBox("Investor", "SEARCH INVESTOR", new { @id = "Investor", @class = "wm", @style = "width:200px" })%>
 				</div>
 				<div style="float: left; padding-left: 20px;">
-					<%: Html.TextBox("Fund", "SEARCH AMBERBROOK FUND", new { @id = "Fund", @class = "wm", @style = "width:200px" })%>
+					<%: Html.TextBox("Fund", "SEARCH  FUND", new { @id = "Fund", @class = "wm", @style = "width:200px" })%>
 				</div>
 				<%: Html.HiddenFor(model => model.InvestorID)%>
 				<%: Html.HiddenFor(model => model.FundID)%>

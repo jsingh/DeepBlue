@@ -8,7 +8,7 @@
 	<tbody>
 		<tr>
 			<td>
-				<b>Amberbrook Funds</b>
+				<b>Funds</b>
 			</td>
 		</tr>
 		<tr>
@@ -52,7 +52,7 @@
 		</tr>
 		<tr>
 			<td>
-				<b>Amberbrook Fund Rate Schdules</b>
+				<b>Fund Rate Schdules</b>
 			</td>
 		</tr>
 		<tr>

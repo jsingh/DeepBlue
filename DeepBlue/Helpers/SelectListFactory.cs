@@ -578,5 +578,20 @@ namespace DeepBlue.Helpers {
 			return lists;
 		}
 
+		public static List<SelectListItem> GetEntitiesSelectList(List<ENTITY> entities) {
+			List<SelectListItem> entityList = new List<SelectListItem>();
+			SelectListItem item = new SelectListItem();
+			item.Text = "--Select One--";
+			item.Value = "0";
+			entityList.Add(item);
+			foreach (var entity in entities) {
+				item = new SelectListItem();
+				item.Text = entity.EntityName;
+				item.Value = entity.EntityID.ToString();
+				entityList.Add(item);
+			}
+			return entityList;
+		}
+
 	}
 }

@@ -14,6 +14,10 @@
 	<%=Html.JavascriptInclueTag("UnderlyingFundContact.js")%>
 	<%=Html.JavascriptInclueTag("DealDirect.js")%>
 	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
+	<%=Html.JavascriptInclueTag("jquery.html5filedrop.js")%>
+	<!--[if lt IE 9]>
+	<%=Html.JavascriptInclueTag("html5.js")%>
+	<![endif]-->
 	<%=Html.JavascriptInclueTag("flexgrid.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css")%>
 </asp:Content>
@@ -40,12 +44,15 @@
 				<%using (Html.GreenButton(new { @id = "AddGP", @onclick = "javascript:dealDirect.add();" })) {%>Add
 				GP<%}%>
 			</div>
-			<div class="addbtn" id="AddUFBtn" style="display: none; margin-left: 123px;">
+			<div class="addbtn" id="AddUFBtn" style="display: block; margin-left: 30px;">
 				<%using (Html.GreenButton(new { @id = "lnkAddUnderlyingFund" })) {%>Add
 				new underlying fund<%}%>
+			</div>	
+			<div style="float:right;margin-left:10px;">
+				<%: Html.TextBox("S_UF", "SEARCH UNDERLYING FUND", new { @id = "S_UF", @style = "width:220px", @class = "wm" })%>
 			</div>
-			<div class="rightcol" id="SearchGP">
-				<%: Html.TextBox("S_GP", "SEARCH GP", new { @id = "S_GP", @style = "width:200px", @class = "wm" })%>
+			<div  style="float:right;" id="SearchGP">
+				<%: Html.TextBox("S_GP", "SEARCH GP", new { @id = "S_GP", @style = "width:220px", @class = "wm" })%>
 			</div>
 		</div>
 	</div>
@@ -82,8 +89,19 @@
 		<table id="DirectList" cellpadding="0" cellspacing="0" border="0" class="grid">
 			<thead>
 				<tr>
-					<th colspan="4" sortname="DirectName">
+					<th sortname="FundName">
+						Underlying Fund Name
+					</th>
+					<th style="width:20%" sortname="FundType">
+						Fund Type
+					</th>
+					<th style="width:20%" sortname="Industry">
+						Industry
+					</th>
+					<th style="width:20%" sortname="GP">
 						GP
+					</th>
+					<th style="width:25%">
 					</th>
 				</tr>
 			</thead>
@@ -104,6 +122,7 @@
 		</table>
 	</div>
 	<%: Html.Hidden("SearchCompanyID","0") %>
+	<%: Html.Hidden("SearchUFID","0") %>
 	<%: Html.Hidden("Mode",ViewData["mode"]) %>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
@@ -111,11 +130,15 @@
 																		  Source = "/Deal/FindGPs", MinLength = 1,
 																		  OnSelect = "function(event, ui) {  underlyingFund.searchGP(ui.item.id); }"
 	})%>
+	<%= Html.jQueryAutoComplete("S_UF", new AutoCompleteOptions {
+			Source = "/Deal/FindUnderlyingFunds", MinLength = 1,
+			OnSelect = "function(event, ui) { underlyingFund.searchUF(ui.item.id); }"
+	})%>
 	<%=Html.jQueryFlexiGrid("DirectList", new FlexigridOptions {
-	ActionName = "DirectList",
+	ActionName = "UnderlyingFundList",
 	ControllerName = "Deal",
 	HttpMethod = "GET",
-	SortName = "DirectName",
+	SortName = "FundName",
 	Paging = true
 	, OnSubmit = "underlyingFund.onDLSubmit"
 	, OnSuccess= "underlyingFund.onGridSuccess"
@@ -131,10 +154,10 @@
 	SortName = "AnnualMeetingDate",
 	Paging = true,
 	})%>
-	<script type="text/javascript">
+	<%using(Html.JavaScript()){%>
 		underlyingFund.newFundData = <%=JsonSerializer.ToJsonObject(Model)%>;
 		underlyingFund.init();
-	</script>
+	<%}%>
 	<%using (Html.jQueryTemplateScript("GridTemplate")) {%>
 		{{each(i,row) rows}}
 			{{if i%4==0}}
@@ -181,10 +204,13 @@
 			<td>
 				${row.cell[3]}
 			</td>
+			<td>
+				${row.cell[5]}
+			</td>
 			<td style="text-align:right;">
 				<%: Html.Hidden("ID", "${row.cell[0]}")%>
 				<%: Html.Hidden("IssuerID", "${row.cell[4]}")%>
-				<%: Html.Image("Edit.png", new { @class = "gbutton", @id = "Edit"  })%>
+				<%: Html.Image("Edit.png", new { @class = "gbutton editbtn", @id = "Edit"  })%>
 			</td>
 		</tr>
 		{{/each}}
@@ -223,26 +249,26 @@
 	<%}%>
 	<%using (Html.jQueryTemplateScript("ContactGridTemplate")) {%>
 	{{each(i,row) rows}}
-	<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow disprow"{{else}}class="disprow"{{/if}}>
-		<td style="width: 20%">
-			<%: Html.Span("${row.cell[3]}", new { @class = "show" })%>
-		</td>
-		<td style="width: 20%">
-			<%: Html.Span("${row.cell[4]}", new { @class = "show" })%>
-		</td>
-		<td style="width: 20%">
-			<%: Html.Span("${row.cell[7]}", new { @class = "show" })%>
-		</td>
-		<td style="width: 30%">
-			<%: Html.Span("${row.cell[6]}", new { @class = "show" })%>
-		</td>
-		<td style="text-align:right;width:10%;">
-			<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:underlyingFundContact.edit(this,${row.cell[0]});" })%>
-			<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:underlyingFundContact.deleteRow(this,${row.cell[0]});" })%>
-			<%: Html.Hidden("UnderlyingFundContactId", "${row.cell[0]}") %>
-		</td>
-	</tr>
-	<tr id="EditRow${row.cell[0]}" style="background-image:none;background-color:#E9E9E9;">
+		<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow disprow"{{else}}class="disprow"{{/if}}>
+			<td style="width: 20%">
+				<%: Html.Span("${row.cell[3]}", new { @class = "show" })%>
+			</td>
+			<td style="width: 20%">
+				<%: Html.Span("${row.cell[4]}", new { @class = "show" })%>
+			</td>
+			<td style="width: 20%">
+				<%: Html.Span("${row.cell[7]}", new { @class = "show" })%>
+			</td>
+			<td style="width: 30%">
+				<%: Html.Span("${row.cell[6]}", new { @class = "show" })%>
+			</td>
+			<td style="text-align:right;width:10%;">
+				<%: Html.Image("Edit.png", new { @class = "gbutton editbtn show", @onclick = "javascript:underlyingFundContact.edit(this,${row.cell[0]});" })%>
+				<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:underlyingFundContact.deleteRow(this,${row.cell[0]});" })%>
+				<%: Html.Hidden("UnderlyingFundContactId", "${row.cell[0]}") %>
+			</td>
+		</tr>
+		<tr id="EditRow${row.cell[0]}" style="background-image:none;background-color:#E9E9E9;">
 		<td colspan=6 style="width: 100%;display:none;">
 			<%using(Html.Form(new { @class="UFContactDetail", @id="frm${row.cell[0]}", @onsubmit = "return false;" })){%>
 			<div class="editor-label">
@@ -293,4 +319,5 @@
 	</tr>
 	{{/each}}
 	<%}%> 
+	<script type="text/javascript">_fileExt=<%=Model.DocumentFileExtensions%>;</script>
 </asp:Content>

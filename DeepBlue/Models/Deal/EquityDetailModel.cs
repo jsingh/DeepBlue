@@ -31,7 +31,7 @@ namespace DeepBlue.Models.Deal {
 		[DisplayName("Security Type")]
 		public int EquitySecurityTypeId { get; set; }
 
-		[DisplayName("CUSIP NO")]
+		[DisplayName("Identifier")]
 		[StringLength(50, ErrorMessage = "SIN No./Cousip must be under 50 characters.")]
 		public string EquityISINO { get; set; }
 

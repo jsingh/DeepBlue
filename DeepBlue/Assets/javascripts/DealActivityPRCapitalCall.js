@@ -14,7 +14,7 @@ dealActivity.deletePRCC=function (index,id,img) {
 		var tr=$(img).parents("tr:first");
 		var trid="UFPRCC_"+id;
 		var spnloading=$("#UpdateLoading",tr);
-		spnloading.html("<img src='/Assets/images/ajax.jpg'/>");
+		spnloading.html(jHelper.ajImg());
 		$.get(url,function (data) {
 			if(data!="") {
 				jAlert(data);
@@ -35,7 +35,7 @@ dealActivity.loadPRCC=function (isRefresh) {
 	if(isRefresh) {
 		target.empty();
 		$("#PRCCListBox").hide();
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		loading.html(jHelper.loadingHTML());
 		$.getJSON("/Deal/UnderlyingFundPostRecordCapitalCallList",{ "_": (new Date).getTime(),"underlyingFundId": dealActivity.getCCUnderlyingFund() },function (data) {
 			loading.empty();
 			$.each(data,function (i,item) {
@@ -53,7 +53,7 @@ dealActivity.submitUFPRCapitalCall=function (frm) {
 	try {
 		var param=$(frm).serializeForm();
 		var loading=$("#SpnPRCCSaveLoading");
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		loading.html(jHelper.savingHTML());
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#PRCapitalCallList").length)};
 		$.post("/Deal/CreateUnderlyingFundPostRecordCapitalCall",param,function (data) {
 			loading.empty();

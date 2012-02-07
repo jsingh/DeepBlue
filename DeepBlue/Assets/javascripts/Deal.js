@@ -71,11 +71,11 @@
 			$(".content",dealMain).empty();
 			var dt=new Date();
 			var url="/Deal/FindDeal/?dealId="+dealId+"&t="+dt.getTime();
-			$("#NewDeal").html("<center><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</center>");
+			$("#NewDeal").html("<center>"+jHelper.loadingHTML()+"</center>");
 			$.getJSON(url,function (data) {
 				$("#SaveDealBox").show();
 				$("#SearchDealName").val(data.DealName);
-				$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/mdeal_active.png");
+				$("#btnDummySaveDeal","#SaveDealBox").attr("src",jHelper.getImagePath("mdeal_active.png"));
 				deal.loadTemplate(data);
 			});
 		}
@@ -149,8 +149,15 @@
 			fileUpload.form=$("#frmDealDocument",dealMain);
 			fileUpload.setDropBox($("#dropbox",dealMain));
 			jHelper.jqCheckBox(dealMain);
-
+			
 			$("#DocumentDate").datepicker({ changeMonth: true,changeYear: true });
+
+			if(data.DealUnderlyingFunds.length>0) {
+				$(".expandheader","#DealUnderlyingFunds").click();
+			}
+			if(data.DealUnderlyingDirects.length>0) {
+				$(".expandheader","#DealUnderlyingDirects").click();
+			}
 		} catch(e) { jAlert(e); }
 	}
 	,setupDocumentType: function (target) {
@@ -204,7 +211,7 @@
 		var spnindex=$("#SpnIndex",tr).get(0);if(spnindex) { index++;spnindex.innerHTML=index+"."; } return index;
 	}
 	,onCreateDealBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		$("#UpdateLoading").html(jHelper.savingHTML());
 	}
 	,onCreateDealSuccess: function () {
 		$("#UpdateLoading").html("");
@@ -225,7 +232,7 @@
 		try {
 			var frm=$("#AddNewDeal");
 			var loading=$("#UpdateLoading");
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			loading.html(jHelper.savingHTML());
 			$.post("/Deal/Create",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				var arr=data.split("||");
@@ -305,9 +312,9 @@
 			$(".content",dealMain).empty();
 			var dt=new Date();
 			var url="/Deal/FindFund/?fundId="+fundId+"&t="+dt.getTime();
-			$("#NewDeal").html("<center><img src='/Assets/images/ajax.jpg'>&nbsp;Loading...</center>");
+			$("#NewDeal").html("<center>"+jHelper.loadingHTML()+"</center>");
 			$("#SaveDealBox").show();
-			$("#btnDummySaveDeal","#SaveDealBox").attr("src","/Assets/images/cnewdeal_active.png");
+			$("#btnDummySaveDeal","#SaveDealBox").attr("src",jHelper.getImagePath("cnewdeal_active.png"));
 			$.getJSON(url,function (data) {
 				data.FundName=fundName;
 				data.FundId=fundId;
@@ -322,7 +329,7 @@
 		var dealId=deal.getDealId();
 		if(dealId>0) {
 			$("#DealId",frm).val(dealId);
-			$("#SpnSellerUpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			$("#SpnSellerUpdateLoading").html(jHelper.savingHTML());
 			var url="/Deal/CreateSellerInfo";
 			var param=$(frm).serialize();
 			$.post(url,param,function (data) {

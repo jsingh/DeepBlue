@@ -18,7 +18,7 @@ namespace DeepBlue.Models.Entity {
 					context.Deals.AddObject(deal);
 				}
 				else {
-					Deal updateDeal = context.Deals.SingleOrDefault(findDeal => findDeal.DealID == deal.DealID);
+					Deal updateDeal = context.DealsTable.SingleOrDefault(findDeal => findDeal.DealID == deal.DealID);
 					// Define an ObjectStateEntry and EntityKey for the current object. 
 					EntityKey key;
 					object originalItem;
@@ -143,7 +143,7 @@ namespace DeepBlue.Models.Entity {
 						contact = newDealContact;
 					}
 					else {
-						contact = context.Contacts.SingleOrDefault(cont => cont.ContactID == contactCommunication.Contact.ContactID);
+						contact = context.ContactsTable.SingleOrDefault(cont => cont.ContactID == contactCommunication.Contact.ContactID);
 					}
 					if (contact != null) {
 						contact.ContactCommunications.Add(new ContactCommunication {

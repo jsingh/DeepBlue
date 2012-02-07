@@ -8,10 +8,16 @@
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
 	<%=Html.StylesheetLinkTag("dealdirect.css")%>
+	<%=Html.StylesheetLinkTag("addufund.css")%>
+	<%=Html.StylesheetLinkTag("adddirect.css")%>
 	<%=Html.JavascriptInclueTag("DealDirect.js")%>
 	<%=Html.JavascriptInclueTag("FlexGrid.js")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css") %>
 	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
+	<%=Html.JavascriptInclueTag("jquery.html5filedrop.js")%>
+	<!--[if lt IE 9]>
+	<%=Html.JavascriptInclueTag("html5.js")%>
+	<![endif]-->
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
@@ -145,11 +151,8 @@
 					<th style="width:25%" sortname="Industry">
 						Industry
 					</th>
-					<th sortname="EquityType">
-						Equity Type
-					</th>
-					<th sortname="FixedIncomeType">
-						Fixed Income Type
+					<th sortname="Security">
+						Security
 					</th>
 					<th>
 					</th>
@@ -172,16 +175,13 @@
 				${row.Industry}
 			</td>
 			<td>
-				${row.EquityType}
-			</td>
-			<td>
-				${row.FixedIncomeType}
+				${row.Security}
 			</td>
 			<td style="text-align:right;">
 				<%: Html.Hidden("ID", "${row.ID}")%>
 				<%: Html.Hidden("SecurityType", "${row.SecurityType}")%>
 				<%: Html.Image("Save_active.png", new { @id = "Save", @style="display:none;cursor:pointer;" })%>
-				<%: Html.Image("Edit.png", new { @class = "gbutton", @id = "Edit"  })%>
+				<%: Html.Image("Edit.png", new { @class = "gbutton editbtn", @id = "Edit"  })%>
 				<%: Html.Image("largedel.png", new { @class = "gbutton", @onclick="javascript:dealDirect.deleteDirect(this,${row.ID},'${row.SecurityType}');"  })%>
 			</td>
 		</tr>
@@ -203,7 +203,7 @@
 	</div>
 	<%}%>
 	<%using (Html.jQueryTemplateScript("SectionTemplate")) {%>
-	<div id="Edit${id}">
+	<div id="Edit${id}" style="background-color:#CBD2DA;clear:both;float:left;width:100%;">
 		<%using (Html.Form(new { @id = "frmIssuer${id}", @onsubmit = "return dealDirect.save(this);" })) {%>
 		<div id="IssuerDetail">
 			{{tmpl(IssuerDetailModel) "#IssuerDetailTemplate"}}
@@ -231,7 +231,7 @@
 			</div>
 		</div>
 		<div class="line"></div>
-		<div class="subdetail" style="clear:both;width:88%;">
+		<div class="subdetail" style="clear:both;">
 			<div class="editor-label" style="float: right;width:auto;padding-top:3px;">
 				<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:dealDirect.cancel(this);" })%>
 			</div>
@@ -244,8 +244,23 @@
 		<%}%>
 	</div>
 	<%}%>
+	<%using (Html.jQueryTemplateScript("UnderlyingDirectDocumentTemplate")) {%>
+		{{each(f,file) rows}}
+		<tr id="Row${file.DocumentID}" {{if f%2>0}}class="erow"{{/if}}>
+			<td>
+				${file.DocumentTypeName}
+			</td>
+			<td>
+				${file.DocumentName}
+			</td>
+			<td>
+			</td>
+		</tr>
+		{{/each}}
+	<%}%>
 	<script type="text/javascript">
 		dealDirect.newEquityData = <%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.EquityDetailModel())%>;
 		dealDirect.newFixedIncomeData = <%=JsonSerializer.ToJsonObject(new DeepBlue.Models.Deal.FixedIncomeDetailModel())%>;
 	</script>
+	<script type="text/javascript">_fileExt=<%=Model.DocumentFileExtensions%>;</script>
 </asp:Content>

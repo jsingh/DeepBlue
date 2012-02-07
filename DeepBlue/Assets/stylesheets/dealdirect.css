@@ -185,13 +185,7 @@
 	width: 90%;
 	padding-left: 60px;
 }
-#DirectList tbody tr, #DirectList tbody tr td {
-	background-image: none;
-}
-#DirectList tbody {
-	/*background-image: url("../images/table_row_odd.gif");      background-repeat: repeat-x; */
-	background-color: #fff;
-}
+
 .tab-delete {
 	background-image: url("../images/tabdelete.png");
 	background-position: left top;
@@ -225,7 +219,7 @@
 	padding: 0 0 3px;
 }
 .flexigrid .grid tr.un-directedit-box input[type="text"] {
-	width: 168px;
+	width: 96%;
 }
 .flexigrid .grid tr.un-directedit-box select {
 	width: 173px;
@@ -233,12 +227,25 @@
 .un-direct-list .flexigrid div.pDiv {
 	height: 32px;
 }
-.grid td .jqComboBox .left {
-	width: auto;
-}
+
 .flexigrid .bDiv tr.un-directedit-box td input.ui-autocomplete-input[type="text"] {
 	width: 139px;
 }
 .flexigrid div.pDiv {
-	height: 32px;
+	height: 34px;
+}
+#equitysymboldiv {
+	width: 100%;
+	padding-left: 0;
+	padding-right: 0;
+}
+#equitysymboldiv .button-box {
+	clear: both;
+	float: right;
+	margin-right: 135px;
+	width: auto;
+}
+#equitysymboldiv .button {
+	float: right;
+	width: auto;
 }

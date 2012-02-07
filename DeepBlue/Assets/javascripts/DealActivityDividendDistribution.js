@@ -39,7 +39,7 @@ dealActivity.loadDD=function (isRefresh) {
 	if(isRefresh) {
 		target.empty();
 		$("#DividendDistribution").hide();
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		loading.html(jHelper.loadingHTML());
 		$.getJSON("/Deal/DirectDividendDistributionList",{ 
 			"_": (new Date).getTime()
 			,"securityTypeID": dealActivity.getDDDirectType()
@@ -67,7 +67,7 @@ dealActivity.submitDD=function (frm) {
 	try {
 		var param=$(frm).serializeForm();
 		var loading=$("#SpnDDSaveLoading");
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		loading.html(jHelper.savingHTML());
 		var chk=$("#IsManualDividendDistribution").get(0);
 		var totalRows=($("tbody tr[type='prow']","#DividendDistributionList").length);
 		var isManual=chk.checked;

@@ -10,6 +10,8 @@ using DeepBlue.Models.Entity;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Report {
+
+	[OtherEntityAuthorize]
 	public class ReportController : BaseController {
 
 		public IReportRepository ReportRepository { get; set; }

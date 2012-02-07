@@ -16,5 +16,7 @@ namespace DeepBlue.Models.Deal {
 		public string Industry { get; set; }
 
 		public int IssuerID { get; set; }
+
+		public string GP { get; set; }
 	}
 }

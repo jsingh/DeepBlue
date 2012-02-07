@@ -14,7 +14,7 @@ dealActivity.loadUFA=function () {
 	target.empty();
 	$("#UFAdjustment").hide();
 	$("#UFADetail").attr("issearch","true").show();
-	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+	loading.html(jHelper.loadingHTML());
 	$.getJSON("/Deal/UnfundedAdjustmentList",{ "_": (new Date).getTime(),"underlyingFundId": dealActivity.getUFAUnderlyingFund() },function (data) {
 		loading.empty();
 		$.each(data,function (i,item) {
@@ -37,7 +37,7 @@ dealActivity.editUFA=function (img,id) {
 dealActivity.addUFA=function (img,id) {
 	var tr=$(img).parents("tr:first");
 	var loading=$("#UpdateLoading",tr);
-	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+	loading.html(jHelper.savingHTML());
 	var url="/Deal/UpdateUnfundedAdjustment";
 	var param=jHelper.serialize(tr);
 	$.post(url,param,function (data) {
@@ -50,7 +50,7 @@ dealActivity.addUFA=function (img,id) {
 };
 dealActivity.findUFA=function (dufid) {
 	var url="/Deal/FindUnfundedAdjustment/?_"+(new Date()).getTime()+"&dealUnderlyingFundId="+dufid;
-	$("#UFALoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...")
+	$("#UFALoading").html(jHelper.loadingHTML())
 	$.getJSON(url,function (data) {
 		$("#UFALoading").empty();
 		var tbl=$("#UnfundedAdjustmentList");

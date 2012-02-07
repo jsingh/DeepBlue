@@ -31,6 +31,6 @@
 			grid.flexReload();
 		});
 	},selectCapitalCall: function (row) {
-		location.href="/CapitalCall/Receive/?id="+row.cell[0]+"&fundId="+$("#FundId").val();
+		location.href=deepBlue.rootUrl+"/CapitalCall/Receive/?id="+row.cell[0]+"&fundId="+$("#FundId").val();
 	}
 }

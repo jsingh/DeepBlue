@@ -18,7 +18,7 @@ namespace DeepBlue.Controllers.Document {
 
 		public List<DocumentDetail> FindDocuments(int pageIndex, int pageSize, string sortName, string sortOrder, DateTime fromDate, DateTime toDate, int investorId, int fundId, int documentTypeId, DocumentStatus documentStatus, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<DocumentDetail> entityTypeQuery = (from document in context.InvestorFundDocuments
+				IQueryable<DocumentDetail> entityTypeQuery = (from document in context.InvestorFundDocumentsTable
 														  where document.DocumentDate >= EntityFunctions.TruncateTime(fromDate) && document.DocumentDate <= EntityFunctions.TruncateTime(toDate)
 														  && (documentTypeId > 0 ? document.DocumentTypeID == documentTypeId : document.DocumentTypeID > 0)
 														  && (documentStatus == DocumentStatus.Investor ? (investorId > 0 ? (document.InvestorID ?? 0) == investorId : (document.InvestorID ?? 0) > 0) : (fundId > 0 ? (document.FundID ?? 0) == fundId : (document.FundID ?? 0) > 0))

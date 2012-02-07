@@ -11,10 +11,10 @@
 		<%: Html.Span("${UnfundedAmount}", new { @class = "money" })%>
 	</td>
 	<td class="lalign">
-		<%: Html.TextBox("CommitmentAmount", "{{if CommitmentAmount>0}}${CommitmentAmount}{{/if}}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+		<%: Html.TextBox("CommitmentAmount", "{{if CommitmentAmount>0}}${formatNumber(CommitmentAmount)}{{/if}}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="lalign">
-		<%: Html.TextBox("UnfundedAmount", "{{if UnfundedAmount>0}}${UnfundedAmount}{{/if}}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+		<%: Html.TextBox("UnfundedAmount", "{{if UnfundedAmount>0}}${formatNumber(UnfundedAmount)}{{/if}}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="ralign">
 		<%: Html.Hidden("DealUnderlyingFundId", "${DealUnderlyingFundId}")%>

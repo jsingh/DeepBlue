@@ -20,7 +20,7 @@
 	}
 	,onSuccess: function (t,p) {
 		$("#ReportLoading").hide();
-		$("tbody tr",t).addClass("row");
+		$("tbody tr",t).addClass("row").css("cursor","pointer");
 		var tfoot=$("tfoot","#ViewMoreDetail").get(0);
 		if(!tfoot) {
 			tfoot=document.createElement("tfoot");
@@ -28,7 +28,7 @@
 			tfoot.className="rep_tfoot";
 			var td=document.createElement("td");td.colSpan=10;
 			td.style.textAlign="center";
-			td.innerHTML="<a href='javascript:dealReport.viewMore();'>View more</a>&nbsp;<img src='/Assets/images/vmarrow.png'/>";
+			td.innerHTML="<a href='javascript:dealReport.viewMore();'>View more</a>&nbsp;"+jHelper.imageHTML("vmarrow.png");
 			$(trviewmore).append(td);
 			$(tfoot).append(trviewmore);
 			$("#ViewMoreDetail").append(tfoot);
@@ -39,7 +39,7 @@
 		var trempty=document.createElement("tr");
 		var td=document.createElement("td");
 		$(trempty).append(td);
-		$("td:last",tr).html("<img id='expandimg' src='/Assets/images/arrow_down.png'/>");
+		$("td:last",tr).html("<img id='expandimg' src='"+jHelper.getImagePath("arrow_down.png")+"'/>");
 	}
 	,onRowClick: function (row,tr) {
 		var dealId=row.cell[0];
@@ -56,7 +56,7 @@
 			var td=document.createElement("td");
 			td.colSpan=10;
 			td.className="expandRowBg";
-			td.innerHTML="<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...";
+			td.innerHTML=jHelper.loadingHTML();
 			$(trExpand).append(td);
 			$(tr).after(trExpand);
 			$.getJSON(url,function (data) {
@@ -130,7 +130,7 @@
 		var width=300;var height=200;var left=(screen.availWidth/2)-(width/2);var top=(screen.availHeight/2)-(height/2);var features="width="+width+",height="+height+",left="+left+",top="+top+",location=no,menubar=no,toobar=no,scrollbars=yes,resizable=yes,status=yes";
 		if(exportTypeId=="1"||exportTypeId=="4") {
 			url="/Deal/Export?fundId="+fundId+"&exportTypeId="+exportTypeId+"&sortName="+$("#SortName").val()+"&sortOrder="+$("#SortOrder").val();
-			window.open(url,"exportexcel",features);
+			window.open(deepBlue.rootUrl+url,"exportexcel",features);
 		}
 	}
 	,printArea: function () {

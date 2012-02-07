@@ -16,7 +16,7 @@ dealActivity.loadFLE=function () {
 	target.empty();
 	$("#FLE").hide();
 	$("#FLEDetail").attr("issearch","true").show();
-	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+	loading.html(jHelper.loadingHTML());
 	$.getJSON("/Deal/FundExpenseList",{ "_": (new Date).getTime(),"fundId": dealActivity.getFLEFundId() },function (data) {
 		loading.empty();
 		$.each(data,function (i,item) {
@@ -60,7 +60,7 @@ dealActivity.editFLE=function (img,id) {
 dealActivity.addFLE=function (img,id) {
 	var tr=$(img).parents("tr:first");
 	var loading=$("#UpdateLoading",tr);
-	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+	loading.html(jHelper.savingHTML());
 	var url="/Deal/CreateFundExpense";
 	var param=jHelper.serialize(tr);
 	$.post(url,param,function (data) {
@@ -73,7 +73,7 @@ dealActivity.addFLE=function (img,id) {
 };
 dealActivity.findFLE=function (feid) {
 	var url="/Deal/FindFundExpense/?_"+(new Date()).getTime()+"&fundExpenseId="+feid;
-	$("#FLELoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...")
+	$("#FLELoading").html(jHelper.loadingHTML())
 	$.getJSON(url,function (data) {
 		$("#FLELoading").empty();
 		var tbl=$("#FundExpenseList");

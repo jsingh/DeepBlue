@@ -31,14 +31,7 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-
-			[Required(ErrorMessage = "InvestmentAmount is required")]
-			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "InvestmentAmount is required")]
-			public global::System.Decimal InvestmentAmount {
-				get;
-				set;
-			}
-
+			 
 			[DateRange(ErrorMessage = "ReceivedDate is required")]
 			public Nullable<global::System.DateTime> ReceivedDate {
 				get;

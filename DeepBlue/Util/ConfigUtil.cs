@@ -24,7 +24,7 @@ namespace DeepBlue {
         /// This is used in the validation to make sure we are not inserting any
         /// data which is for an invalid Entity( 0, or SystemEntity)
         /// </summary>
-        EntityIDStartRange = 2,
+        EntityIDStartRange = 1,
         /// <summary>
         /// Data point used to make sure all the IDs start from this range. 
         /// Used for validation

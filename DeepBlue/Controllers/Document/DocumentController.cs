@@ -14,6 +14,8 @@ using DeepBlue.Controllers.Admin;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Document {
+
+	[OtherEntityAuthorize]
 	public class DocumentController : BaseController {
 
 		public IDocumentRepository DocumentRepository { get; set; }

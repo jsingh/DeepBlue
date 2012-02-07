@@ -97,7 +97,7 @@
 	,save: function (frm) {
 		try {
 			var loading=$("#SpnDocLoading");
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			loading.html(jHelper.savingHTML());
 			$.ajaxFileUpload(
 				{
 					url: '/Document/Create',

@@ -71,32 +71,32 @@
 	<script id="GridTemplate" type="text/x-jquery-tmpl">
 {{each(i,row) rows}}
 <tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}}>
-	<td style="width: 18%">
+	<td>
 		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
 		<%: Html.TextBox("CustomFieldText", "${row.cell[1]}", new { @class = "hide" })%>
 	</td>
-	<td style="width: 18%">
+	<td>
 		<%: Html.Span("${row.cell[3]}", new { @class = "show" })%>
 		<%: Html.DropDownList("ModuleId", Model.Modules, new { @val="${row.cell[2]}", @class="hide", @refresh="true", @action="Module" })%>
 	</td>
-	<td style="width: 18%">
+	<td>
 		<%: Html.Span("${row.cell[5]}", new { @class = "show" })%>
 		<%: Html.DropDownList("DataTypeId",Model.DataTypes, new { @val="${row.cell[4]}", @class="hide", @refresh="true", @action="DataType" }) %>
 	</td>
-	<td style="width: 18%">
+	<td>
 		<%: Html.Span("${row.cell[6]}", new { @class = "show" })%>
 		<%: Html.TextBox("OptionalText", "${row.cell[6]}", new { @class = "hide" }) %>
 	</td>
-	<td style="width: 25%;text-align:left;">
+	<td>
 		<%: Html.Span("{{if row.cell[7]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		
 		<%: Html.CheckBox("Search", new {  @class = "hide", @val="${row.cell[7]}" }) %>
 	</td>
-	<td style="text-align:right;">
+	<td style="text-align:right">
 		{{if row.cell[0]==0}}
 		<%: Html.Image("add_active.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:customField.save(this,${row.cell[0]});" })%>
 		{{else}}
 		<%: Html.Image("Save_active.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:customField.save(this,${row.cell[0]});" })%>
-		<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:customField.edit(this);" })%>
+		<%: Html.Image("Edit.png", new { @class = "gbutton editbtn show", @onclick = "javascript:customField.edit(this);" })%>
 		<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:customField.deleteRow(this,${row.cell[0]});" })%>
 		{{/if}}
 		<%: Html.Hidden("CustomFieldId", "${row.cell[0]}") %>

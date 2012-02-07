@@ -1,28 +1,3 @@
-/*
-* Default text - jQuery plugin for html5 dragging files from desktop to browser
-*
-* Author: Weixi Yen
-*
-* Email: [Firstname][Lastname]@gmail.com
-* 
-* Copyright (c) 2010 Resopollution
-* 
-* Licensed under the MIT license:
-*   http://www.opensource.org/licenses/mit-license.php
-*
-* Project home:
-*   http://www.github.com/weixiyen/jquery-filedrop
-*
-* Version:  0.1.0
-*
-* Features:
-*      Allows sending of extra parameters with file.
-*      Works with Firefox 3.6+
-*      Future-compliant with HTML5 spec (will work with Webkit browsers and IE9)
-* Usage:
-* 	See README at project homepage
-*
-*/
 (function ($) {
 
 	jQuery.event.props.push("dataTransfer");
@@ -58,6 +33,7 @@
 		stop_loop=false,
 		files_count=0,
 		_target,
+		_uploadPending,
 		files;
 
 	$.fn.filedrop=function (options) {
@@ -70,25 +46,34 @@
 	function drop(e) {
 		uploadPending(null);
 		opts.drop(e);
-		files=e.dataTransfer.files;
-		if(files===null||files===undefined) {
-			var uploadStart=function () { upload(); }
-			uploadPending(uploadStart);
-			opts.error(errors[0]);
-			return false;
-		}
-		files_count=files.length;
-		for(var i=0;i<files_count;i++) {
-			opts.uploadStarted(i,files[i],files_count);
-		}
-		if(beforeValid()==false) {
-			var uploadStart=function () { upload(); }
-			uploadPending(uploadStart);
-			return false;
+		if(e.dataTransfer) {
+			files=e.dataTransfer.files;
 		} else {
-			upload();
+			if(files) {
+				upload();
+				return false;
+			}
 		}
-		e.preventDefault();
+		//		if(files===null||files===undefined) {
+		//			var uploadStart=function () { upload(); }
+		//			uploadPending(uploadStart);
+		//			opts.error(errors[0]);
+		//			return false;
+		//		}
+		if(files) {
+			files_count=files.length;
+			for(var i=0;i<files_count;i++) {
+				opts.uploadStarted(i,files[i],files_count,_target);
+			}
+			if(beforeValid()==false) {
+				var uploadStart=function () { upload(); }
+				uploadPending(uploadStart);
+				return false;
+			} else {
+				upload();
+			}
+			e.preventDefault();
+		}
 		return false;
 	}
 
@@ -278,6 +263,7 @@
 	}
 
 	function uploadPending(uploadStart) {
+		_uploadPending=uploadStart;
 		return opts.uploadPending(uploadStart);
 	}
 

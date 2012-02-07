@@ -36,7 +36,7 @@
 					target.empty();
 					$("#CCSummaryReportTemplate").tmpl(data.Data).appendTo(target);
 				}
-			});
+			},"JSON");
 		} catch(e) {
 			jAlert(e);
 		}

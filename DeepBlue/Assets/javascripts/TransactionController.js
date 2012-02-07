@@ -13,7 +13,7 @@
 	,save: function (frm) {
 		try {
 			var loading=$("#UpdateLoading");
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			loading.html(jHelper.savingHTML());
 			$.post("/Transaction/CreateInvestorFund",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				if($.trim(data)!="") {
@@ -66,7 +66,7 @@
 		}
 	}
 	,onCreateFundBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		$("#UpdateLoading").html(jHelper.savingHTML());
 	}
 	,onCreateFundSuccess: function () {
 		$("#UpdateLoading").html("");
@@ -171,7 +171,7 @@
 		try {
 			var frm=$(img).parents("form:first");
 			var loading=$("#UpdateLoading","#EditTransaction");
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			loading.html(jHelper.savingHTML());
 			$.post("/Transaction/CreateFundTransaction",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				if($.trim(data)!="") {
@@ -191,7 +191,7 @@
 		$("#CommitmentAmount","#EditCommitmentAmount").val("");
 		$("#EditCommitmentAmount").dialog('open');
 		$("#UpdateEditCmtLoading","#EditCommitmentAmount").html("");
-		$("#EditCommitAmtLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		$("#EditCommitAmtLoading").html(jHelper.loadingHTML());
 		var dt=new Date();
 		$.getJSON("/Transaction/FindCommitmentAmount/"+investorFundId+"?t="+dt.getTime(),function (data) {
 			$("#EditCommitAmtLoading").html("");

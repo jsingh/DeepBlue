@@ -76,7 +76,7 @@
 		<%: Html.Image("add_active.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:currency.save(this,${row.cell[0]});" })%>
 		{{else}}
 		<%: Html.Image("Save_active.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:currency.save(this,${row.cell[0]});" })%>
-		<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:currency.edit(this);" })%>
+		<%: Html.Image("Edit.png", new { @class = "gbutton editbtn show", @onclick = "javascript:currency.edit(this);" })%>
 		<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:currency.deleteRow(this,${row.cell[0]});" })%>
 		{{/if}}
 		<%: Html.Hidden("CurrencyId", "${row.cell[0]}") %>

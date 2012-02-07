@@ -87,7 +87,7 @@
 	}
 	,deleteFund: function (img,id) {
 		if(confirm("Are you sure you want to delete this fund?")) {
-			img.src="/Assets/images/ajax.jpg";
+			img.src=jHelper.getImagePath("ajax.jpg");
 			$.get("/Fund/Delete/"+id,function (data) {
 				if(data!="") {
 					jAlert(data);
@@ -121,15 +121,19 @@
 			row=$("#Row"+id,tbl);
 		}
 		var editRow=document.createElement("tr");
-		$(editRow).html("<td colspan=5 class='editcell'></td>").attr("id","EditRow"+id);
-		if(id==0) { $(row).before(editRow); } else { $(row).after(editRow); }
+		$(editRow).html("<td colspan=7 class='editcell'></td>").attr("id","EditRow"+id);
+		if($(row).get(0)) {
+			if(id==0) { $(row).before(editRow); } else { $(row).after(editRow); }
+		} else {
+			$("tbody",tbl).append(editRow);
+		}
 		var target=$("td",editRow);
 		fund.open(id,target);
 	}
 	,open: function (id,target) {
 		var dt=new Date();
 		var url="/Fund/FindFund/"+id+"?t="+dt.getTime();
-		target.html("<center><img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...</center>");
+		target.html("<center>"+jHelper.loadingHTML()+"</center>");
 		$.getJSON(url,function (data) {
 			fund.loadTemplate(data,target);
 		});
@@ -137,7 +141,7 @@
 	,save: function (imgbtn) {
 		var frm=$(imgbtn).parents("form:first");
 		var loading=$("#UpdateLoading",frm);
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		loading.html(jHelper.savingHTML());
 		var fundId=parseInt($("#FundId",frm).val());
 		$.post("/Fund/Create",$(frm).serializeForm(),function (data) {
 			loading.empty();
@@ -317,7 +321,7 @@
 	}
 	,onRowBound: function (tr,data) {
 		var lastcell=$("td:last div",tr);
-		lastcell.html("<img id='Edit' class='gbutton' src='/Assets/images/Edit.png'/>");
+		lastcell.html("<img id='Edit' class='gbutton' src='"+jHelper.getImagePath("Edit.png")+"' />");
 		$("#Edit",lastcell).click(function () { fund.edit(data.cell[0],data.cell[1]); });
 		$("td:not(:last)",tr).click(function () { fund.edit(data.cell[0],data.cell[1]); });
 	}
@@ -327,11 +331,11 @@
 	,onGridSuccess: function (t,g) {
 		//jHelper.checkValAttr(t);
 		//jHelper.jqCheckBox(t);
-		//$(window).resize();
+		//
 		$("tbody tr",t).each(function () {
 			var tdlen=$("td",this).length;
 			if(tdlen<4) {
-				$("td:last",this).attr("colspan",(5-$("td",this).length));
+				$("td:last",this).attr("colspan",(7-$("td",this).length));
 			}
 		});
 		if(fund.pageInit==false) {
@@ -341,6 +345,7 @@
 			}
 		}
 		fund.pageInit=true;
+		jHelper.gridEditRow(t);
 	}
 	,onSubmit: function (p) {
 		p.params=null;

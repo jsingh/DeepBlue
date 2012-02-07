@@ -14,11 +14,11 @@
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title">AMBERBROOK FUNDS</span><span class="arrow"></span><span class="pname">Modify
+				<span class="title"> FUNDS</span><span class="arrow"></span><span class="pname">Modify
 					Capital Call</span></div>
 			<div class="rightcol">
 				<div style="float: left">
-					<%: Html.TextBox("SearchFundName", "SEARCH AMBERBROOK FUND", new { @class = "wm", @id = "SearchFundName", @style = "width: 200px" })%>
+					<%: Html.TextBox("SearchFundName", "SEARCH  FUND", new { @class = "wm", @id = "SearchFundName", @style = "width: 200px" })%>
 				</div>
 				<div style="float: left; padding-left: 10px;">
 					<%: Html.TextBox("SearchCapitalCall", "SEARCH CAPITAL CALL", new { @class = "wm", @id = "SearchCapitalCall", @style = "width: 200px" })%>
@@ -42,37 +42,37 @@
 	<%= Html.jQueryDatePicker("ToDate")%>
 	<%= Html.jQueryAutoComplete("SearchFundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { modifyCapitalCall.selectFund(ui.item.id);}" })%>
 	<%= Html.jQueryAutoComplete("SearchCapitalCall", new AutoCompleteOptions { SearchFunction = "modifyCapitalCall.searchCC", MinLength = 1, OnSelect = "function(event, ui) { modifyCapitalCall.selectCC(ui.item.id);}" })%>
-	<script id="CapitalCallInvestorTemplate" type="text/x-jquery-tmpl"> 
+	<%using (Html.jQueryTemplateScript("CapitalCallInvestorTemplate")) {%>
 		<% Html.RenderPartial("CapitalCallInvestorDetail"); %>
-	</script>
-	<script id="ModifyCapitalCallTemplate" type="text/x-jquery-tmpl">
+	<%}%>
+	<%using (Html.jQueryTemplateScript("ModifyCapitalCallTemplate")) {%>
 	 <div class="cc-main" id="CCDetail">
-		<div class="cc-box">
-			<div class="section ccdetail">
-				<div class="cell">
-					<label>
-						<%:Html.Span("${FundName}",new { id = "TitleFundName" })%></label>
-					<%: Html.jQueryTemplateHiddenFor(model => model.FundId)%>
-					<%: Html.jQueryTemplateHiddenFor(model => model.CapitalCallNumber)%>
-				</div>
-				<div class="cell">
+			<div class="cc-box">
+				<div class="section ccdetail">
+					<div class="cell">
+						<label>
+							<%:Html.Span("${FundName}", new { id = "TitleFundName" })%></label>
+						<%: Html.jQueryTemplateHiddenFor(model => model.FundId)%>
+						<%: Html.jQueryTemplateHiddenFor(model => model.CapitalCallNumber)%>
+					</div>
+							<div class="cell">
 					<label>
 						Committed Amount&nbsp;<%: Html.Span("${formatCurrency(TotalCommitment)}", new { @id = "CommittedAmount", @style = "padding-left:10px;" })%></label></div>
-				<div class="cell auto">
+							<div class="cell auto">
 					<label>
 						Unfunded Amount&nbsp;<%: Html.Span("${formatCurrency(UnfundedAmount)}", new { @id = "UnfundedAmount", @style = "padding-left:10px;" })%></label></div>
-				<div class="cell auto">
+									<div class="cell auto">
 					<label>
-						<%: Html.Anchor("Previous Capital Calls","/CapitalCall/Detail?fundId=${FundId}", new { @id="lnkPCC", @target = "_blank", @style="color:Blue" })%>
+						<%: Html.Anchor("Previous Capital Calls", "/CapitalCall/Detail?fundId=${FundId}", new { @id = "lnkPCC", @target = "_blank", @style = "color:Blue" })%>
 					</label>
 				</div>
+				</div>
 			</div>
-		</div>
 		<div id="NewCapitalCall">
 			<div class="cc-box-main">
 				<% using (Html.Form(new { @id = "CapitalCall", @onsubmit = "return false" })) {%>
 				<%: Html.jQueryTemplateHiddenFor(model => model.CapitalCallLineItemsCount)%>
-				<%: Html.jQueryTemplateHiddenFor(model => model.CapitalCallID) %>
+				<%: Html.jQueryTemplateHiddenFor(model => model.CapitalCallID)%>
 				<div class="line">
 				</div>
 				<div class="cc-box-det">
@@ -90,29 +90,29 @@
 						<%: Html.jQueryTemplateTextBoxFor(model => model.CapitalAmountCalled, new { @onkeydown = "return jHelper.isCurrency(event);", @style = "width:110px", @onkeyup = "javascript:modifyCapitalCall.calcExistingInvestmentAmount();" })%>
 					</div>
 					<div class="editor-label" style="clear: right; width: auto;">
-						<%: Html.LabelFor(model => model.CapitalCallDate) %>
+						<%: Html.LabelFor(model => model.CapitalCallDate)%>
 					</div>
 					<div class="editor-field">
-						<%: Html.jQueryTemplateTextBoxFor(model => model.CapitalCallDate, new { @style = "width:110px", @class="datefield" }, "formatDate")%>
+						<%: Html.jQueryTemplateTextBoxFor(model => model.CapitalCallDate, new { @style = "width:110px", @class = "datefield" }, "formatDate")%>
 					</div>
 					<div class="editor-label" id="ccduedatelbl" style="clear: right; width: auto;">
-						<%: Html.LabelFor(model => model.CapitalCallDueDate) %>
+						<%: Html.LabelFor(model => model.CapitalCallDueDate)%>
 					</div>
 					<div class="editor-field">
-						<%: Html.jQueryTemplateTextBoxFor(model => model.CapitalCallDueDate, new { @style = "width:110px", @class="datefield" }, "formatDate")%>
+						<%: Html.jQueryTemplateTextBoxFor(model => model.CapitalCallDueDate, new { @style = "width:110px", @class = "datefield" }, "formatDate")%>
 					</div>
 					<div class="editor-label">
 						<%: Html.Span("Add Management Fees", new { @id = "SpnAddManagementFee" })%>
 					</div>
 					<div class="editor-field">
-						<%: Html.CheckBox("AddManagementFees",false, new { @val="${AddManagementFees}", @style = "width:auto;", @displaywidth = "118px", @display = "", @onclick = "javascript:modifyCapitalCall.selectMFee(this);" })%>
+						<%: Html.CheckBox("AddManagementFees", false, new { @val = "${AddManagementFees}", @style = "width:auto;", @displaywidth = "118px", @display = "", @onclick = "javascript:modifyCapitalCall.selectMFee(this);" })%>
 					</div>
 						<div id="ManFeeMain" style="{{if AddManagementFees=="true"}}display: none;{{/if}}float: left;">	
 							<div class="editor-label">
-								<%: Html.LabelFor(model => model.FromDate) %>
+								<%: Html.LabelFor(model => model.FromDate)%>
 							</div>
 							<div class="editor-field">
-								<%: Html.jQueryTemplateTextBoxFor(model => model.FromDate, new { @class = "datefield", @id = "FromDate", @style="width:111px" }, "formatDate")%>&nbsp;<%: Html.LabelFor(model => model.ToDate) %>&nbsp;<%: Html.jQueryTemplateTextBoxFor(model => model.ToDate, new { @class = "datefield", @id = "ToDate", @style = "width:111px" }, "formatDate")%>
+								<%: Html.jQueryTemplateTextBoxFor(model => model.FromDate, new { @class = "datefield", @id = "FromDate", @style = "width:111px" }, "formatDate")%>&nbsp;<%: Html.LabelFor(model => model.ToDate)%>&nbsp;<%: Html.jQueryTemplateTextBoxFor(model => model.ToDate, new { @class = "datefield", @id = "ToDate", @style = "width:111px" }, "formatDate")%>
 							</div>
 							<div class="editor-label" id="feeamountlbl" style="clear: right;">
 								Fee Amount
@@ -125,27 +125,27 @@
 							<%: Html.Span("Add Fund Expenses", new { @id = "SpnAddFundExpenses" })%>
 						</div>
 						<div class="editor-field">
-							<%: Html.CheckBox("AddFundExpenses", false, new { @val="${AddFundExpenses}", @style = "width:auto;", @displaywidth = "118px", @display = "", @onclick = "javascript:modifyCapitalCall.selectFundExp(this);" })%>
+							<%: Html.CheckBox("AddFundExpenses", false, new { @val = "${AddFundExpenses}", @style = "width:auto;", @displaywidth = "118px", @display = "", @onclick = "javascript:modifyCapitalCall.selectFundExp(this);" })%>
 						</div>
 							<div id="FunExpAmount" style="{{if AddFundExpenses=="true"}}display: none;{{/if}}float: left;">
 								<div class="editor-label">
 									Fund Expense Amount
 								</div>
 								<div class="editor-field">
-									<%: Html.jQueryTemplateTextBoxFor(model => model.FundExpenseAmount, new { @class = "datetxt", @style = "width:111px", @onkeydown = "return jHelper.isCurrency(event);", @onkeyup = "javascript:modifyCapitalCall.calcExistingInvestmentAmount();" })%>
+									<%: Html.jQueryTemplateTextBoxFor(model => model.FundExpenseAmount, new {  @style = "width:111px", @onkeydown = "return jHelper.isCurrency(event);", @onkeyup = "javascript:modifyCapitalCall.calcExistingInvestmentAmount();" })%>
 								</div>
 							</div>
 							<div class="editor-label">
 								Capital Call Split For
 							</div>
 							<div class="editor-label">
-								<%: Html.LabelFor(model => model.NewInvestmentAmount) %>
+								<%: Html.LabelFor(model => model.NewInvestmentAmount)%>
 							</div>
 							<div class="editor-field">
-								<%: Html.jQueryTemplateTextBoxFor(model => model.NewInvestmentAmount, new { @class = "datetxt", @style = "width:110px;", @onkeydown = "return jHelper.isCurrency(event);", @onkeyup = "javascript:modifyCapitalCall.calcExistingInvestmentAmount();" })%>
+								<%: Html.jQueryTemplateTextBoxFor(model => model.NewInvestmentAmount, new {  @style = "width:110px;", @onkeydown = "return jHelper.isCurrency(event);", @onkeyup = "javascript:modifyCapitalCall.calcExistingInvestmentAmount();" })%>
 							</div>
 							<div class="editor-label" style="clear: right">
-								<%: Html.LabelFor(model => model.ExistingInvestmentAmount) %>
+								<%: Html.LabelFor(model => model.ExistingInvestmentAmount)%>
 							</div>
 							<div class="editor-field">
 								<%: Html.Span("${formatCurrency(ExistingInvestmentAmount)}", new { @id = "SpnExistingInvestmentAmount" })%>
@@ -163,13 +163,7 @@
 												Capital Amount Called
 											</th>
 											<th class="ralign">
-												Investment Amount
-											</th>
-											<th class="ralign">
 												New Investment Amount
-											</th>
-											<th class="ralign">
-												Existing Investment Amount
 											</th>
 											<th class="ralign">
 												Management Fees
@@ -189,30 +183,22 @@
 												</td>
 												<td class="ralign">
 													<%: Html.Span("${formatCurrency(item.CapitalAmountCalled)}", new { @class = "show" })%>
-													<%: Html.TextBox("${i}_CapitalAmountCalled", "${item.CapitalAmountCalled}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
-												</td>
-												<td class="ralign">
-													<%: Html.Span("${formatCurrency(item.InvestmentAmount)}", new { @class = "show" })%>
-													<%: Html.TextBox("${i}_InvestmentAmount", "${item.InvestmentAmount}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+													<%: Html.TextBox("${i}_CapitalAmountCalled", "${formatNumber(item.CapitalAmountCalled)}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 												</td>
 												<td class="ralign">
 													<%: Html.Span("${formatCurrency(item.NewInvestmentAmount)}", new { @class = "show" })%>
-													<%: Html.TextBox("${i}_NewInvestmentAmount", "${item.NewInvestmentAmount}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
-												</td>
-												<td class="ralign">
-													<%: Html.Span("${formatCurrency(item.ExistingInvestmentAmount)}", new { @class = "show" })%>
-													<%: Html.TextBox("${i}_ExistingInvestmentAmount", "${item.ExistingInvestmentAmount}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+													<%: Html.TextBox("${i}_NewInvestmentAmount", "${formatNumber(item.NewInvestmentAmount)}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 												</td>
 												<td class="ralign">
 													<%: Html.Span("${formatCurrency(item.ManagementFees)}", new { @class = "show" })%>
-													<%: Html.TextBox("${i}_ManagementFees", "${item.ManagementFees}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+													<%: Html.TextBox("${i}_ManagementFees", "${formatNumber(item.ManagementFees)}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 												</td>
 												<td class="ralign">
 													<%: Html.Span("${formatCurrency(item.FundExpenses)}", new { @class = "show" })%>
-													<%: Html.TextBox("${i}_FundExpenses", "${item.FundExpenses}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+													<%: Html.TextBox("${i}_FundExpenses", "${formatNumber(item.FundExpenses)}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 												</td>
 												<td class="ralign">
-													<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:modifyCapitalCall.edit(this);" })%>
+													<%: Html.Image("Edit.png", new { @class = "gbutton editbtn show", @onclick = "javascript:modifyCapitalCall.edit(this);" })%>
 													<%: Html.Hidden("${i}_CapitalCallID", "${item.CapitalCallID}")%>
 													<%: Html.Hidden("${i}_CapitalCallLineItemID", "${item.CapitalCallLineItemID}")%>
 												</td>
@@ -238,9 +224,9 @@
 					<div id="UpdateTargetId" style="display: none">
 					</div>
 				</div>
-			</div>
-	</script>
-	<script id="GridTemplate" type="text/x-jquery-tmpl"> 
+	</div>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("GridTemplate")) {%>
 		{{each(i,row) rows}}
 		<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}}>
 			<td>
@@ -255,13 +241,13 @@
 				<%: Html.Image("add_active.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:modifyCapitalCall.save(this,${row.cell[0]});" })%>
 				{{else}}
 				<%: Html.Image("Save_active.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:modifyCapitalCall.save(this,${row.cell[0]});" })%>
-				<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:modifyCapitalCall.edit(this);" })%>
+				<%: Html.Image("Edit.png", new { @class = "gbutton editbtn show", @onclick = "javascript:modifyCapitalCall.edit(this);" })%>
 				<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:modifyCapitalCall.deleteRow(this,${row.cell[0]});" })%>
 				{{/if}}
 				<%: Html.Hidden("ShareClassTypeId", "${row.cell[0]}") %>
 			</td>
 		</tr>
 		{{/each}}
-	</script>
+	<%}%>
 	<script type="text/javascript">		modifyCapitalCall.init()</script>
 </asp:Content>

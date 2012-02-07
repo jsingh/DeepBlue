@@ -89,7 +89,7 @@
 						 		if(row.cell.length>i) {
 						 			switch($(this).attr("datatype")) {
 						 				case "Boolean":
-						 					if(row.cell[i]==true) { div.innerHTML="<img src='/Assets/images/tick.png' />"; }
+						 					if(row.cell[i]==true) { div.innerHTML=jHelper.imageHTML("tick.png"); }
 						 					break;
 						 				case "money":
 						 					div.innerHTML=jHelper.dollarAmount(row.cell[i].toString());
@@ -242,7 +242,7 @@
 			},
 			exportExcel: function () {
 				var width=300;var height=200;var left=(screen.availWidth/2)-(width/2);var top=(screen.availHeight/2)-(height/2);var features="width="+width+",height="+height+",left="+left+",top="+top+",location=no,menubar=no,toobar=no,scrollbars=yes,resizable=yes,status=yes";
-				window.open("/Admin/ExportExcel?tableName="+p.tableName,p.tableName,features);
+				window.open(deepBlue.rootUrl+"/Admin/ExportExcel?tableName="+p.tableName,p.tableName,features);
 			},
 			setPagingEvent: function (pDiv) {
 				$('.pReload',pDiv).click(function () { g.populate() });
@@ -346,7 +346,7 @@
 			 			$(this)
 						.addClass("issortcol")
 						.click(function (e) { g.changeSort(this); });
-						var sname =$(this).attr('sortname');
+			 			var sname=$(this).attr('sortname');
 			 			if(sname==p.sortname) {
 			 				$(this).addClass("sorted");
 			 				if(p.sortorder=='') {
@@ -373,7 +373,7 @@
 		if(p.usepager) {
 			g.pDiv.className='pDiv';
 			g.pDiv.innerHTML='<div class="pDiv2"></div>';
-			var html='<div class="pGroup"> <div class="pFirst pButton"><span></span></div><div class="pPrev pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pcontrol">Page <input type="text" size="4" value="1" /> of <span> 1 </span></span></div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pNext pButton"><span></span></div><div class="pLast pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pReload pButton"><span></span></div></div>';
+			var html='<div class="pGroup"> <div class="pFirst pButton"><span></span></div><div class="pPrev pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pcontrol">Page <input type="text" size="4" value="1" style="width:40px;text-align:center;" /> of <span> 1 </span></span></div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pNext pButton"><span></span></div><div class="pLast pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pReload pButton"><span></span></div></div>';
 			//html+='<div class="btnseparator"></div><div class="pGroup"><span class="pPageStat"></span></div>';
 
 			$('div',g.pDiv).html(html);

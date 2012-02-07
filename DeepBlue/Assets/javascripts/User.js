@@ -4,10 +4,13 @@
 		var row=$("#Row0",flexigrid).get(0);
 		if(!row) {
 			var tbody=$(".middlec table tbody",flexigrid);
-			var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,"","","","",false,"",false,""]}] };
+			var data={ "page": 0,"total": 0,"rows": [{ "cell": [0,"","","","",true,"",true,"",0]}] };
 			$("#GridTemplate").tmpl(data).prependTo(tbody);
 			var tr=$("tr:first",tbody);
-			jHelper.jqCheckBox($("#EditRow"+0));
+			var erow=$("#EditRow"+0);
+			jHelper.checkValAttr(erow);
+			jHelper.jqComboBox(erow);
+			jHelper.jqCheckBox(erow);
 			this.editRow(0);
 			$("#Add",tr).show();
 		}
@@ -23,7 +26,7 @@
 		if(confirm("Are you sure you want to delete this user?")) {
 			var tr=$(img).parents("tr:first");
 			var imgsrc=img.src;
-			$(img).attr("src","/Assets/images/ajax.jpg");
+			$(img).attr("src",jHelper.getImagePath("ajax.jpg"));
 			img.src=imgsrc;
 			var dt=new Date();
 			var url="/Admin/DeleteUser/"+id+"?t="+dt.getTime();
@@ -61,7 +64,7 @@
 						//jHelper.applyFlexGridClass($(".middlec:first"));
 						jHelper.applyFlexEditGridClass($(".middlec:first"));
 						jHelper.checkValAttr(newTR);
-						jHelper.jqCheckBox(newTR);
+						jHelper.jqCheckBox(newTR);jHelper.gridEditRow(newTR);
 					});
 				}
 			});
@@ -86,15 +89,13 @@
 	}
 	,onGridSuccess: function (t,g) {
 		jHelper.checkValAttr(t);
+		jHelper.jqComboBox(t);
 		jHelper.jqCheckBox(t);
-		$(window).resize();
+		jHelper.gridEditRow(t);
 	}
 	,onInit: function (g) {
 		var data={ name: "Add User" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		//		$(window).resize(function () {
-		//			user.resizeGV(g);
-		//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

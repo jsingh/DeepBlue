@@ -27,7 +27,7 @@
 		if(confirm("Are you sure you want to delete this document type?")) {
 			var tr=$(img).parents("tr:first");
 			var imgsrc=img.src;
-			$(img).attr("src","/Assets/images/ajax.jpg");
+			$(img).attr("src",jHelper.getImagePath("ajax.jpg"));
 			img.src=imgsrc;
 			var dt=new Date();
 			var url="/Admin/DeleteDocumentType/"+id+"?t="+dt.getTime();
@@ -46,7 +46,7 @@
 		var param=jHelper.serialize(tr);
 		var url="/Admin/UpdateDocumentType";
 		var imgsrc=img.src;
-		$(img).attr("src","/Assets/images/ajax.jpg");
+		$(img).attr("src",jHelper.getImagePath("ajax.jpg"));
 		$.post(url,param,function (data) {
 			img.src=imgsrc;
 			var arr=data.split("||");
@@ -60,7 +60,7 @@
 					jHelper.applyFlexGridClass($(".middlec:first"));
 					jHelper.checkValAttr(newTR);
 					jHelper.jqComboBox(newTR);
-					jHelper.jqCheckBox(newTR);
+					jHelper.jqCheckBox(newTR);jHelper.gridEditRow(newTR);
 				});
 			}
 		});
@@ -69,14 +69,11 @@
 		jHelper.checkValAttr(t);
 		jHelper.jqComboBox(t);
 		jHelper.jqCheckBox(t);
-		$(window).resize();
+		jHelper.gridEditRow(t);
 	}
 	,onInit: function (g) {
 		var data={ name: "Add Document Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		//		$(window).resize(function () {
-		//			documentType.resizeGV(g);
-		//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

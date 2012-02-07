@@ -25,7 +25,7 @@
 		if(confirm("Are you sure you want to delete this deal closing cost type?")) {
 			var tr=$(img).parents("tr:first");
 			var imgsrc=img.src;
-			$(img).attr("src","/Assets/images/ajax.jpg");
+			$(img).attr("src",jHelper.getImagePath("ajax.jpg"));
 			img.src=imgsrc;
 			var dt=new Date();
 			var url="/Admin/DeleteDealClosingCostType/"+id+"?t="+dt.getTime();
@@ -44,7 +44,7 @@
 		var param=jHelper.serialize(tr);
 		var url="/Admin/UpdateDealClosingCostType";
 		var imgsrc=img.src;
-		$(img).attr("src","/Assets/images/ajax.jpg");
+		$(img).attr("src",jHelper.getImagePath("ajax.jpg"));
 		$.post(url,param,function (data) {
 			img.src=imgsrc;
 			var arr=data.split("||");
@@ -56,21 +56,18 @@
 					$(tr).remove();
 					var newTR=$("#Row"+arr[1]);
 					jHelper.applyFlexGridClass($(".middlec:first"));
-					jHelper.checkValAttr(newTR);
+					jHelper.checkValAttr(newTR);jHelper.gridEditRow(newTR);
 				});
 			}
 		});
 	}
 	,onGridSuccess: function (t,g) {
 		jHelper.checkValAttr(t);
-		$(window).resize();
+		jHelper.gridEditRow(t);
 	}
 	,onInit: function (g) {
 		var data={ name: "Add Deal Closing Cost Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		//		$(window).resize(function () {
-		//			dealClosingCostType.resizeGV(g);
-		//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

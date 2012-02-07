@@ -22,7 +22,7 @@ namespace DeepBlue.Helpers {
 			if (string.IsNullOrEmpty(FileDownloadName) == false) {
 				context.HttpContext.Response.AddHeader("content-disposition", "attachment;filename=" + this.FileDownloadName);
 			}
-			context.HttpContext.Response.WriteFile(Path.Combine(context.HttpContext.Server.MapPath("/"), this.VirtualPath));
+			context.HttpContext.Response.WriteFile(Path.Combine(context.HttpContext.Server.MapPath("~/"), this.VirtualPath));
 		}
 	}
 

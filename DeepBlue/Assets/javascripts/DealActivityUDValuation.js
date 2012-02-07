@@ -1,7 +1,7 @@
 ﻿dealActivity.findUDV=function (id) {
 	var dt=new Date();
 	var url="/Deal/FindUnderlyingDirectValuation/"+id+"?t="+dt.getTime();
-	$("#UDVLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...")
+	$("#UDVLoading").html(jHelper.loadingHTML())
 	$.getJSON(url,function (data) {
 		$("#UDVLoading").empty();
 		var tbl=$("#UDValuationList");
@@ -30,7 +30,7 @@ dealActivity.editUDV=function (img,id) {
 dealActivity.addUDV=function (img,id) {
 	var tr=$(img).parents("tr:first");
 	var loading=$("#UpdateLoading",tr);
-	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+	loading.html(jHelper.savingHTML());
 	var url="/Deal/CreateUnderlyingDirectValuation";
 	var param=jHelper.serialize(tr);
 	$.post(url,param,function (data) {
@@ -49,7 +49,7 @@ dealActivity.deleteUDV=function (id,img) {
 		var tr=$("#UDV_"+id);
 		var emptyRow=$("#EmptyUDV_"+id);
 		var spnloading=$("#UpdateLoading",tr);
-		spnloading.html("<img src='/Assets/images/ajax.jpg'/>");
+		spnloading.html(jHelper.ajImg());
 		$.get(url,function (data) {
 			if(data!="") {
 				jAlert(data);
@@ -76,7 +76,7 @@ dealActivity.loadUDV=function () {
 	var loading=$("#UDVLoading");
 	var tbl=$("#UDValuationList");
 	var target=$("tbody",tbl);
-	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+	loading.html(jHelper.loadingHTML());
 	target.empty();
 	$("#UDValuation").hide();
 	$.getJSON("/Deal/UnderlyingDirectValuationList",{ "_": (new Date).getTime(),"issuerId": dealActivity.getUDVIssuerId() },function (data) {
@@ -94,7 +94,7 @@ dealActivity.submitUDV=function (frm) {
 	try {
 		var param=$(frm).serializeForm();
 		var loading=$("#SpnUDVSaveLoading");
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		loading.html(jHelper.savingHTML());
 		param[param.length]={ name: "TotalRows",value: ($("tbody tr","#UDValuationList").length) };
 		$.post("/Deal/CreateUnderlyingDirectValuation",param,function (data) {
 			loading.empty();

@@ -25,6 +25,8 @@
 			cdReportTarget.empty();
 			$("#CapitalCallReportTemplate").tmpl(data).appendTo(ccReportTarget);
 			$("#CapitalDistributionReportTemplate").tmpl(data).appendTo(cdReportTarget);
+			jHelper.gridEditRow(ccReportTarget);
+			jHelper.gridEditRow(cdReportTarget);
 		});
 	}
 	,selectTab: function (type,lnk) {
@@ -40,7 +42,7 @@
 		}
 	}
 	,selectCapitalCall: function (row) {
-		location.href="/CapitalCall/Receive/?id="+row.cell[0]+"&fundId="+$("#FundId").val();
+		location.href=deepBlue.rootUrl+"/CapitalCall/Receive/?id="+row.cell[0]+"&fundId="+$("#FundId").val();
 	}
 	,expandCC: function (img,id) {
 		var tr=$(img).parents("tr:first");
@@ -49,12 +51,12 @@
 		var imgsrc="";
 		$(".expandrow").css("display","none");
 		if(img.src.indexOf("downarrow.png")>0) {
-			imgsrc="/Assets/images/rightuarrow.png";
+			imgsrc=jHelper.getImagePath("rightuarrow.png");
 		} else {
-			imgsrc="/Assets/images/downarrow.png";
+			imgsrc=jHelper.getImagePath("downarrow.png");
 			display="none";
 		}
-		$(".ccexpandrow").attr("src","/Assets/images/downarrow.png");
+		$(".ccexpandrow").attr("src",jHelper.getImagePath("downarrow.png"));
 		img.src=imgsrc;
 		if(!expandTR) {
 			expandTR=document.createElement("tr");
@@ -83,12 +85,12 @@
 		var imgsrc="";
 		$(".expandrow").css("display","none");
 		if(img.src.indexOf("downarrow.png")>0) {
-			imgsrc="/Assets/images/rightuarrow.png";
+			imgsrc=jHelper.getImagePath("rightuarrow.png");
 		} else {
-			imgsrc="/Assets/images/downarrow.png";
+			imgsrc=jHelper.getImagePath("downarrow.png");
 			display="none";
 		}
-		$(".ccexpandrow").attr("src","/Assets/images/downarrow.png");
+		$(".ccexpandrow").attr("src",jHelper.getImagePath("downarrow.png"));
 		img.src=imgsrc;
 		if(!expandTR) {
 			expandTR=document.createElement("tr");

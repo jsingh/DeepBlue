@@ -16,6 +16,13 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
+
+			[Required(ErrorMessage = "EntityID is required")]
+			[Range((int)ConfigUtil.EntityIDStartRange, int.MaxValue, ErrorMessage = "EntityID is required")]
+			public global::System.Int32 EntityID {
+				get;
+				set;
+			}
 			#endregion
 		}
 

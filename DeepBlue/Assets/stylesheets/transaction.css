@@ -80,10 +80,7 @@
 .jqComboBox {
 	width:100%;
 }
-.jqComboBox input.ui-autocomplete-input 
-,.bDiv table .jqComboBox .left {
-	width:79%;
-}
+ 
 .ui-dialog .ui-dialog-content {
 	padding:0;
 }

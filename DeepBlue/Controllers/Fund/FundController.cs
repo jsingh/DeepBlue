@@ -13,6 +13,8 @@ using DeepBlue.Models.Fund.Enums;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Fund {
+
+	[OtherEntityAuthorize]
 	public class FundController : BaseController {
 
 		public IFundRepository FundRepository { get; set; }
@@ -57,7 +59,9 @@ namespace DeepBlue.Controllers.Fund {
 							fund.FundName,
 							fund.TaxId,
 							fund.InceptionDate,
-							fund.ScheduleTerminationDate
+							fund.ScheduleTerminationDate,
+							fund.CommitmentAmount,
+							fund.UnfundedAmount
 					}
 				});
 			}

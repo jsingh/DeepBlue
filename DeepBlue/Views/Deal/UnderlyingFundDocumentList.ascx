@@ -32,7 +32,7 @@
 	   }
 	   else {
 		   fileName = item.FilePath.Replace("\\", "/") + "/" + item.FileName;
-		   if (System.IO.File.Exists(System.IO.Path.Combine(Server.MapPath("/"), fileName))) {
+		   if (System.IO.File.Exists(System.IO.Path.Combine(Server.MapPath("~/"), fileName))) {
 			   href = "/" + fileName;
 		   }
 		   else {

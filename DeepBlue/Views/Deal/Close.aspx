@@ -411,26 +411,26 @@
 			</td>
 			{{if IsFinalClose==true}}
 				<td class="ralign">
-					<%: Html.TextBox("${index}_ReassignedGPP", "${checkNullOrZero(item.ReassignedGPP)}", new { @class="", @id="ReassignedGPP"
+					<%: Html.TextBox("${index}_ReassignedGPP", "${formatNumber(checkNullOrZero(item.ReassignedGPP))}", new { @class="", @id="ReassignedGPP"
 					, @onkeyup="javascript:dealClose.calcFinalCloseUF();"
 					, @onkeydown = "return jHelper.isCurrency(event);" })%>
 				</td>
 			{{else}}
 				<td class="ralign">
 					<%: Html.Span("${item.CommittedAmount}", new { @class="show money" })%>
-					<%: Html.TextBox("${index}_CommittedAmount", "${checkNullOrZero(item.CommittedAmount)}", new { @class="hide", @id="CommittedAmount"
+					<%: Html.TextBox("${index}_CommittedAmount", "${formatNumber(checkNullOrZero(item.CommittedAmount))}", new { @class="hide", @id="CommittedAmount"
 					, @onkeyup="javascript:dealClose.calcCloseUF();"
 					, @onkeydown = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td class="ralign">
 					<%: Html.Span("${item.GrossPurchasePrice}", new { @class="show money" })%>
-					<%: Html.TextBox("${index}_GrossPurchasePrice", "${checkNullOrZero(item.GrossPurchasePrice)}", new { @class="hide",@id="GrossPurchasePrice"
+					<%: Html.TextBox("${index}_GrossPurchasePrice", "${formatNumber(checkNullOrZero(item.GrossPurchasePrice))}", new { @class="hide",@id="GrossPurchasePrice"
 					, @onkeyup="javascript:dealClose.calcCloseUF();"
 					, @onkeydown = "return jHelper.isCurrency(event);" })%>
 				</td>
 			{{/if}}
 				<td class="ralign">
-					<%: Html.TextBox("${index}_PostRecordDateCapitalCall", "${checkNullOrZero(item.PostRecordDateCapitalCall)}", new { @class=""
+					<%: Html.TextBox("${index}_PostRecordDateCapitalCall", "${formatNumber(checkNullOrZero(item.PostRecordDateCapitalCall))}", new { @class=""
 					, @id="PostRecordDateCapitalCall"
 					, @readonly="readonly"
 					, @style="background-color:#f5f5f5;color:#000;"
@@ -438,7 +438,7 @@
 					, @onkeydown = "return jHelper.isCurrency(event);" })%>
 				</td>
 				<td class="ralign">
-					<%: Html.TextBox("${index}_PostRecordDateDistribution", "${checkNullOrZero(item.PostRecordDateDistribution)}", new { @class=""
+					<%: Html.TextBox("${index}_PostRecordDateDistribution", "${formatNumber(checkNullOrZero(item.PostRecordDateDistribution))}", new { @class=""
 					, @id="PostRecordDateDistribution"
 					, @readonly="readonly"
 					, @style="background-color:#f5f5f5;color:#000;"
@@ -455,7 +455,7 @@
 				</td>
 				<td class="ralign">
 					<%:Html.Span("${item.UnfundedAmount}", new { @id="SpnDCUFA", @class="show money" })%> 
-					<%: Html.TextBox("${index}_UnfundedAmount", "${checkNullOrZero(item.UnfundedAmount)}", new { @class="hide", @id="UnfundedAmount",@onkeyup="javascript:dealClose.calcCloseUF();", @onkeydown = "return jHelper.isCurrency(event);" })%>
+					<%: Html.TextBox("${index}_UnfundedAmount", "${formatNumber(checkNullOrZero(item.UnfundedAmount))}", new { @class="hide", @id="UnfundedAmount",@onkeyup="javascript:dealClose.calcCloseUF();", @onkeydown = "return jHelper.isCurrency(event);" })%>
 				</td>
 			{{/if}}
 			{{if IsFinalClose==true}}
@@ -560,14 +560,14 @@
 			</td>
 			<td class="ralign">
 				<%: Html.Span("${item.PurchasePrice}", new { @class="show money" })%>
-				<%: Html.TextBox("${index}$PurchasePrice", "${checkNullOrZero(item.PurchasePrice)}", new { @class="hide",  @id="PurchasePrice"
+				<%: Html.TextBox("${index}$PurchasePrice", "${formatNumber(checkNullOrZero(item.PurchasePrice))}", new { @class="hide",  @id="PurchasePrice"
 				, @onkeyup="{{if IsFinalClose==true}}javascript:dealClose.calcFinalCloseUD();{{else}}javascript:dealClose.calcCloseUD();{{/if}}"
 				, @onkeydown = "return jHelper.isCurrency(event);" })%>
 			</td>
 			{{if IsFinalClose==true}}
 				<td class="ralign">
 					<%:Html.Span("${checkNullOrZero(item.AdjustedFMV)}", new { @class="show", @id="SpnFMV" })%>   
-					<%: Html.TextBox("${index}$AdjustedFMV", "${checkNullOrZero(item.AdjustedFMV)}", new { @class="hide", @id="AdjustedFMV"
+					<%: Html.TextBox("${index}$AdjustedFMV", "${formatNumber(checkNullOrZero(item.AdjustedFMV))}", new { @class="hide", @id="AdjustedFMV"
 					, @onkeyup="javascript:dealClose.calcFinalCloseUD();", @onkeydown = "return jHelper.isCurrency(event);" })%>
 				</td>
 			{{else}}
@@ -578,7 +578,7 @@
 			{{/if}}
 			{{if IsFinalClose==true}}
 				<td class="ralign">
-					<%: Html.TextBox("OriginalPurchasePrice", "${checkNullOrZero(item.PurchasePrice)}", new { @class=""
+					<%: Html.TextBox("OriginalPurchasePrice", "${formatNumber(checkNullOrZero(item.PurchasePrice))}", new { @class=""
 					, @id="OriginalPurchasePrice"
 				    , @readonly="readonly"
 					, @style="background-color:#f5f5f5;color:#000;"

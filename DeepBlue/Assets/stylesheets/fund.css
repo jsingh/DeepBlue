@@ -232,9 +232,7 @@
 	padding:0;
 	height: auto;
 }
-#InvestorDetail .flexigrid  .jqComboBox .left {
-    width: 50%;
-}
+ 
 #InvestorDetail .flexigrid div.pDiv input[type="text"] {
     width: auto;
 }

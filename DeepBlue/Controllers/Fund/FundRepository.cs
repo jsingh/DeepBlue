@@ -14,7 +14,7 @@ namespace DeepBlue.Controllers.Fund {
 
 		public List<FundListModel> GetAllFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.Fund> funds = context.Funds;
+				IQueryable<Models.Entity.Fund> funds = context.FundsTable;
 				if (fundId > 0) {
 					funds = funds.Where(fund => fund.FundID == fundId);
 				}
@@ -37,7 +37,7 @@ namespace DeepBlue.Controllers.Fund {
 
 		public List<InvestorListModel> GetAllInvestorFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<InvestorListModel> investorFundListQuery = (from investorFund in context.InvestorFunds
+				IQueryable<InvestorListModel> investorFundListQuery = (from investorFund in context.InvestorFundsTable
 																	   where investorFund.FundID == fundId
 																  select new InvestorListModel {
 																		    InvestorName = investorFund.Investor.InvestorName,
@@ -58,7 +58,7 @@ namespace DeepBlue.Controllers.Fund {
 		public Helpers.FundLists GetAllFunds(int pageIndex, int pageSize) {
 			Helpers.FundLists funds = new Helpers.FundLists();
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Helpers.FundList> fundListQuery = (from fund in context.Funds
+				IQueryable<Helpers.FundList> fundListQuery = (from fund in context.FundsTable
 															  select new Helpers.FundList {
 																  FundId = fund.FundID,
 																  FundName = fund.FundName
@@ -79,13 +79,14 @@ namespace DeepBlue.Controllers.Fund {
 							  .Include("FundAccounts")
 							  .Include("FundRateSchedules")
 							  .Include("InvestorFunds")
+							  .EntityFilter()
 							  .SingleOrDefault(fund => fund.FundID == fundId);
 			}
 		}
 
 		public FundDetail FindLastFundDetail() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from fund in context.Funds
+				return (from fund in context.FundsTable
 						orderby fund.FundID descending
 						select new FundDetail {
 							FundId = fund.FundID,
@@ -96,9 +97,9 @@ namespace DeepBlue.Controllers.Fund {
 
 		public List<AutoCompleteList> FindDealFunds(int underlyingFundId, string fundName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.Funds
-															  join deal in context.Deals on fund.FundID equals deal.FundID
-															  join dealUnderlyingFund in context.DealUnderlyingFunds on deal.DealID equals dealUnderlyingFund.DealID
+				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.FundsTable
+															  join deal in context.DealsTable on fund.FundID equals deal.FundID
+															  join dealUnderlyingFund in context.DealUnderlyingFundsTable on deal.DealID equals dealUnderlyingFund.DealID
 															  where fund.FundName.StartsWith(fundName) && dealUnderlyingFund.UnderlyingFundID == underlyingFundId
 															  group fund by fund.FundID into funds
 															  orderby funds.FirstOrDefault().FundName
@@ -113,7 +114,7 @@ namespace DeepBlue.Controllers.Fund {
 
 		public List<AutoCompleteList> FindFunds(string fundName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.Funds
+				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.FundsTable
 															  where fund.FundName.StartsWith(fundName)
 															  orderby fund.FundName
 															  select new AutoCompleteList {
@@ -127,7 +128,7 @@ namespace DeepBlue.Controllers.Fund {
 
 		public List<AutoCompleteList> FindFunds(string fundName, ref int totalCount) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.Funds
+				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.FundsTable
 															  where fund.FundName.StartsWith(fundName)
 															  orderby fund.FundName
 															  select new AutoCompleteList {
@@ -141,7 +142,7 @@ namespace DeepBlue.Controllers.Fund {
 
 		public List<AutoCompleteList> FindFundClosings(string fundName, int? fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> fundListQuery = (from fundClosing in context.FundClosings
+				IQueryable<AutoCompleteList> fundListQuery = (from fundClosing in context.FundClosingsTable
 															  where fundClosing.Name.StartsWith(fundName)
 															  && fundClosing.FundID == (fundId ?? 0)
 															  orderby fundClosing.Name
@@ -160,7 +161,7 @@ namespace DeepBlue.Controllers.Fund {
 
 		public bool TaxIdAvailable(string taxId, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from fund in context.Funds
+				return ((from fund in context.FundsTable
 						 where fund.TaxID == taxId && fund.FundID != fundId
 						 select fund.FundID).Count()) > 0 ? true : false;
 			}
@@ -168,7 +169,7 @@ namespace DeepBlue.Controllers.Fund {
 
 		public bool FundNameAvailable(string fundName, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from fund in context.Funds
+				return ((from fund in context.FundsTable
 						 where fund.FundName == fundName && fund.FundID != fundId
 						 select fund.FundID).Count()) > 0 ? true : false;
 			}
@@ -176,19 +177,19 @@ namespace DeepBlue.Controllers.Fund {
 
 		public decimal FindTotalCommittedAmount(int fundId, int investorTypeId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.InvestorFunds.Where(investorFund => investorFund.InvestorTypeId == investorTypeId && investorFund.FundID == fundId).Sum(invfund => invfund.TotalCommitment);
+				return context.InvestorFundsTable.Where(investorFund => investorFund.InvestorTypeId == investorTypeId && investorFund.FundID == fundId).Sum(invfund => invfund.TotalCommitment);
 			}
 		}
 
 		public string FindFundName(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.Funds.Where(fund => fund.FundID == fundId).Select(fund => fund.FundName).SingleOrDefault();
+				return context.FundsTable.Where(fund => fund.FundID == fundId).Select(fund => fund.FundName).SingleOrDefault();
 			}
 		}
 
 		public CreateModel FindFundDetail(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from fund in context.Funds
+				return (from fund in context.FundsTable
 						where fund.FundID == fundId
 						select new CreateModel {
 							FundName = fund.FundName,
@@ -241,6 +242,7 @@ namespace DeepBlue.Controllers.Fund {
 													.Include("ManagementFeeRateSchedule")
 													.Include("ManagementFeeRateSchedule.ManagementFeeRateScheduleTiers")
 													.Include("ManagementFeeRateSchedule.ManagementFeeRateScheduleTiers.MultiplierType")
+													.EntityFilter()
 						where rateSchedule.FundID == fundId
 						select rateSchedule).ToList();
 			}
@@ -248,13 +250,13 @@ namespace DeepBlue.Controllers.Fund {
 
 		public List<MultiplierType> GetAllMultiplierTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.MultiplierTypes.OrderBy(type => type.Name).ToList();
+				return context.MultiplierTypesTable.OrderBy(type => type.Name).ToList();
 			}
 		}
 
 		public void DeleteFundRateSchedule(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				FundRateSchedule rateSchedule = context.FundRateSchedules
+				FundRateSchedule rateSchedule = context.FundRateSchedulesTable
 													 .SingleOrDefault(schedule => schedule.FundRateScheduleID == id);
 				context.FundRateSchedules.DeleteObject(rateSchedule);
 				context.SaveChanges();
@@ -265,6 +267,7 @@ namespace DeepBlue.Controllers.Fund {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				ManagementFeeRateSchedule rateSchedule = context.ManagementFeeRateSchedules
 														.Include("ManagementFeeRateScheduleTiers")
+														.EntityFilter()
 														.SingleOrDefault(schedule => schedule.ManagementFeeRateScheduleID == id);
 				foreach (var tier in rateSchedule.ManagementFeeRateScheduleTiers) {
 					context.ManagementFeeRateScheduleTiers.DeleteObject(tier);
@@ -276,7 +279,7 @@ namespace DeepBlue.Controllers.Fund {
 
 		public FundRateSchedule FindRateSchedule(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.FundRateSchedules.Include("ManagementFeeRateSchedule")
+				return context.FundRateSchedules.Include("ManagementFeeRateSchedule").EntityFilter()
 												.SingleOrDefault(schedule => schedule.FundRateScheduleID == id);
 			}
 		}
@@ -286,6 +289,7 @@ namespace DeepBlue.Controllers.Fund {
 				return context.ManagementFeeRateSchedules
 												.Include("ManagementFeeRateScheduleTiers")
 												.Include("ManagementFeeRateScheduleTiers.MultiplierType")
+												.EntityFilter()
 												.SingleOrDefault(schedule => schedule.ManagementFeeRateScheduleID == id);
 			}
 		}
@@ -296,7 +300,7 @@ namespace DeepBlue.Controllers.Fund {
 
 		public ManagementFeeRateScheduleTier FindManagementFeeRateScheduleTier(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.ManagementFeeRateScheduleTiers.SingleOrDefault(tier => tier.ManagementFeeRateScheduleTierID == id);
+				return context.ManagementFeeRateScheduleTiersTable.SingleOrDefault(tier => tier.ManagementFeeRateScheduleTierID == id);
 			}
 		}
 

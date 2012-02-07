@@ -7,22 +7,30 @@ using DeepBlue.Models.Entity;
 using System.Text;
 using DeepBlue.Helpers;
 
-namespace DeepBlue.Controllers
-{
-    public class BaseController : Controller
-    {
+namespace DeepBlue.Controllers {
+	public class BaseController : Controller {
 
-		protected override void OnActionExecuting(ActionExecutingContext filterContext) {
-			if (this.ValueProvider.GetValue("controller").RawValue.ToString() != "Account") {
+		protected override void OnAuthorization(AuthorizationContext filterContext) {
+			//System entity 
+			string controllerName = Convert.ToString(this.ValueProvider.GetValue("controller").RawValue);
+			string actionName = Convert.ToString(this.ValueProvider.GetValue("action").RawValue);
+			if (controllerName != "Account") {
 				if (Authentication.CurrentUser == null || Authentication.CurrentEntity == null) {
-					filterContext.Result = RedirectToAction("LogOn", "Account");
-					return;
+					RedirectLogOn(filterContext);
+				}
+				else if(controllerName != "Home" && controllerName != "Admin") {
+					if (Authentication.IsSystemEntityUser) {
+						RedirectLogOn(filterContext);
+					}
 				}
 			}
-			//otherwise continue with action
-			base.OnActionExecuting(filterContext);
+			base.OnAuthorization(filterContext);
 		}
-	 
+
+		private void RedirectLogOn(AuthorizationContext filterContext) {
+			filterContext.Result = RedirectToAction("LogOn", "Account");
+		}
+
 		protected override void OnException(ExceptionContext filterContext) {
 			base.OnException(filterContext);
 
@@ -39,7 +47,9 @@ namespace DeepBlue.Controllers
 			log.LogText = filterContext.Exception.Message;
 			log.Controller = this.ValueProvider.GetValue("controller").RawValue.ToString();
 			log.Action = this.ValueProvider.GetValue("action").RawValue.ToString();
+
 			string qs = System.Web.HttpContext.Current.Request.ServerVariables["QUERY_STRING"].ToString();
+
 			if (qs != null) {
 				log.QueryString = qs;
 			}
@@ -53,7 +63,7 @@ namespace DeepBlue.Controllers
 			sb.Append("PATH_INFO: ").Append(System.Web.HttpContext.Current.Request.ServerVariables["PATH_INFO"].ToString()).Append(Environment.NewLine);
 			sb.Append("REMOTE_ADDR: ").Append(System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"].ToString()).Append(Environment.NewLine);
 			if (filterContext.Exception.InnerException != null) {
-				sb.Append("InnerException: ").Append(filterContext.Exception.InnerException.GetType().FullName).Append(filterContext.Exception.InnerException.Message)					.Append(Environment.NewLine);
+				sb.Append("InnerException: ").Append(filterContext.Exception.InnerException.GetType().FullName).Append(filterContext.Exception.InnerException.Message).Append(Environment.NewLine);
 			}
 			try {
 				sb.Append("StackTrace: " + filterContext.Exception.StackTrace);
@@ -66,19 +76,7 @@ namespace DeepBlue.Controllers
 
 			Logger.Write(log);
 
-			////If custom errors are On, do our custom error page.
-			//if (filterContext.HttpContext.IsCustomErrorEnabled) {
-			//    //Get the exception and the page that errored for the e-mail
-			//    System.Web.HttpContext.Current.Session.Add("Exception", filterContext.Exception.ToString());
-			//    System.Web.HttpContext.Current.Session.Add("ErrorPage", filterContext.HttpContext.Request.FilePath);
-
-			//    //Tell the framework we've handled the error
-			//    filterContext.ExceptionHandled = true;
-
-			//    //Show the custom error page.
-			//    this.View("../GroupApp/GenericError", new InFellowship.Controllers.Groups.SubmitIssueViewModel(BaseView.CurrentRequestID)).ExecuteResult(this.ControllerContext);
-			//}
 		}
 
-    }
+	}
 }

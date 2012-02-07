@@ -99,7 +99,7 @@
 		//var endDate=$.datepicker.formatDate('mm/dd/yy',Date.DateAdd("m",3,fromDate));
 		var dt=new Date();
 		var url="/CapitalCall/CalculateManagementFee/?fundId="+fundId+"&startDate="+fromDate+"&endDate="+toDate+"&t="+dt.getTime();
-		$("#SpnMFA","#CapitalCall").html("<img src='/Assets/images/ajax.jpg'>&nbsp;Calculating...")
+		$("#SpnMFA","#CapitalCall").html(jHelper.calculatingHTML());
 		$("#SpnDetail","#CapitalCall").hide();
 		$.getJSON(url,function (data) {
 			$("#SpnMFA","#CapitalCall").html(jHelper.dollarAmount(data.ManagementFee));
@@ -156,7 +156,7 @@
 		try {
 			var frm=$("#"+frmid);
 			var loading=$("#UpdateLoading");
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			loading.html(jHelper.savingHTML());
 			var param=$(frm).serializeForm();
 			param[param.length]={ name: "FundId",value: $("#FundId").val() };
 			param[param.length]={ name: "CapitalCallNumber",value: $("#CapitalCallNumber").val() };

@@ -11,6 +11,23 @@ using System.Text;
 namespace DeepBlue.Helpers {
 	public static class HtmlControls {
 
+		#region Url
+		public static string Url(this HtmlHelper helper) {
+			return new UrlHelper(helper.ViewContext.RequestContext).Content("~/");
+		}
+		public static string Url(this HtmlHelper helper, string content) {
+			if (content != null) {
+				if (content.StartsWith("~/") == false) {
+					content = "~" + (content.StartsWith("/") == false ? "/" + content : content);
+				}
+			}
+			return new UrlHelper(helper.ViewContext.RequestContext).Content(content);
+		}
+		public static string Url(this HtmlHelper helper, string actionName, string controllerName) {
+			return new UrlHelper(helper.ViewContext.RequestContext).Action(actionName, controllerName);
+		}
+		#endregion
+
 		#region Lable
 		public static MvcHtmlString LabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, object htmlAttributes) {
 			return LabelFor(html, expression, new RouteValueDictionary(htmlAttributes));
@@ -31,6 +48,7 @@ namespace DeepBlue.Helpers {
 		#endregion
 
 		#region TextBox
+
 		public static MvcHtmlString NumericTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes) {
 			ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
 			string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
@@ -49,30 +67,81 @@ namespace DeepBlue.Helpers {
 			tag.Attributes.Add("for", htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName));
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
+
+		public static MvcHtmlString DeepBlueTextBox(this HtmlHelper htmlHelper, string name) {
+			return DeepBlueTextBox(htmlHelper, name, string.Empty);
+		}
+
+		public static MvcHtmlString DeepBlueTextBox(this HtmlHelper htmlHelper, string name, object value) {
+			return DeepBlueTextBox(htmlHelper, name, value, new { });
+		}
+
+		public static MvcHtmlString DeepBlueTextBox(this HtmlHelper htmlHelper, string name, object value, IDictionary<string, object> htmlAttributes) {
+			TagBuilder tag = new TagBuilder("input");
+			tag.Attributes.Add("type", "text");
+			string textBoxName = name;
+			StringBuilder html = new StringBuilder();
+			if (htmlAttributes.ContainsKey("onkeydown")) {
+				string isCurrency = Convert.ToString((from v in htmlAttributes where v.Key == "onkeydown" select v.Value).FirstOrDefault());
+				if (isCurrency.Contains("jHelper.isCurrency")) {
+					string key = new Guid().ToString();
+					textBoxName = "amount_" + name;
+					html.AppendFormat("<input type=\"hidden\" id=\"{0}\" name=\"{1}\" value=\"{2}\" />", key, name, value);
+				}
+			}
+			tag.Attributes.Add("name", textBoxName);
+			tag.MergeAttributes(htmlAttributes);
+			html.Append(tag.ToString(TagRenderMode.Normal));
+			return MvcHtmlString.Create(html.ToString());
+		}
+
+		public static MvcHtmlString DeepBlueTextBox(this HtmlHelper htmlHelper, string name, object value, object htmlAttributes) {
+			return DeepBlueTextBox(htmlHelper, name, value, new RouteValueDictionary(htmlAttributes));
+		}
+
+		public static MvcHtmlString DeepBlueTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes) {
+			ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
+			string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
+			TagBuilder tag = new TagBuilder("input");
+			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			string value = string.Empty;
+			if (metadata.Model != null) {
+				value = String.Format("{0:0.##;-0.##;\\}", (decimal)metadata.Model);
+			}
+			tag.Attributes.Add("type", "text");
+			tag.Attributes.Add("value", value);
+			if (tag.Attributes.Keys.Contains("id") == false) {
+				tag.Attributes.Add("id", metadata.PropertyName);
+			}
+			tag.Attributes.Add("name", metadata.PropertyName);
+			tag.Attributes.Add("for", htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName));
+			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+		}
+
 		#endregion
 
 		#region Image
 		public static MvcHtmlString Image(this HtmlHelper helper, string imagename) {
 			TagBuilder tag = new TagBuilder("img");
-			tag.Attributes.Add("src", "/Assets/images/" + imagename);
+			tag.Attributes.Add("src", Url(helper, string.Format("/Assets/images/{0}", imagename)));
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 		public static MvcHtmlString Image(this HtmlHelper helper, string imagename, object htmlAttributes) {
 			TagBuilder tag = new TagBuilder("img");
-			tag.Attributes.Add("src", "/Assets/images/" + imagename);
+			tag.Attributes.Add("src", Url(helper, string.Format("/Assets/images/{0}", imagename)));
 			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 		public static MvcHtmlString ImageButton(this HtmlHelper helper, string imagename) {
 			TagBuilder tag = new TagBuilder("input");
 			tag.Attributes.Add("type", "image");
-			tag.Attributes.Add("src", "/Assets/images/" + imagename);
+			tag.Attributes.Add("src", Url(helper, string.Format("/Assets/images/{0}", imagename)));
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 		public static MvcHtmlString ImageButton(this HtmlHelper helper, string imagename, object htmlAttributes) {
 			TagBuilder tag = new TagBuilder("input");
 			tag.Attributes.Add("type", "image");
-			tag.Attributes.Add("src", "/Assets/images/" + imagename);
+			tag.Attributes.Add("src", Url(helper, string.Format("/Assets/images/{0}", imagename)));
 			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
@@ -106,10 +175,25 @@ namespace DeepBlue.Helpers {
 		public static MvcHtmlString Anchor(this HtmlHelper helper, string innerHTML, string href, object htmlAttributes) {
 			TagBuilder tag = new TagBuilder("a");
 			if (string.IsNullOrEmpty(href) == false) {
+				if (href.StartsWith("javascript") == false && href != "#") {
+					href = Url(helper, href);
+				}
 				tag.Attributes.Add("href", href);
 			}
 			tag.InnerHtml = innerHTML;
 			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+		}
+		public static MvcHtmlString Anchor(this HtmlHelper helper, string innerHTML, string href, IDictionary<string, object> htmlAttributes) {
+			TagBuilder tag = new TagBuilder("a");
+			if (string.IsNullOrEmpty(href) == false) {
+				if (href.StartsWith("javascript") == false && href != "#") {
+					href = Url(helper, href);
+				}
+				tag.Attributes.Add("href", href);
+			}
+			tag.InnerHtml = innerHTML;
+			tag.MergeAttributes(htmlAttributes);
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 		public static MvcHtmlString Anchor(this HtmlHelper helper, string innerHTML, object htmlAttributes) {
@@ -122,13 +206,15 @@ namespace DeepBlue.Helpers {
 
 		#region javascript
 		public static string JavascriptInclueTag(this HtmlHelper helper, string scriptname) {
-			return string.Format("<script src=\"/Assets/javascripts/{0}\" type=\"text/javascript\"></script>", scriptname);
+			return string.Format("<script src=\"{0}\" type=\"text/javascript\"></script>",
+				Url(helper, string.Format("~/Assets/javascripts/{0}", scriptname)));
 		}
 		#endregion
 
 		#region stylesheet
 		public static string StylesheetLinkTag(this HtmlHelper helper, string cssname) {
-			return string.Format("<link href=\"/Assets/stylesheets/{0}\" rel=\"stylesheet\" type=\"text/css\" />", cssname);
+			return string.Format("<link href=\"{0}\" rel=\"stylesheet\" type=\"text/css\" />",
+				Url(helper, string.Format("~/Assets/stylesheets/{0}", cssname)));
 		}
 		#endregion
 
@@ -258,6 +344,14 @@ namespace DeepBlue.Helpers {
 			MvcDiv div = new MvcDiv(helper.ViewContext.HttpContext.Response);
 			return div;
 		}
+		public static MvcDiv Div(this HtmlHelper helper, IDictionary<string, object> htmlAttributes) {
+			TagBuilder tagBuilder = new TagBuilder("div");
+			tagBuilder.MergeAttributes(htmlAttributes);
+			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
+			httpResponse.Write(tagBuilder.ToString(TagRenderMode.StartTag));
+			MvcDiv div = new MvcDiv(helper.ViewContext.HttpContext.Response);
+			return div;
+		}
 		public static MvcDiv Div(this HtmlHelper helper, RouteValueDictionary htmlAttributes) {
 			TagBuilder tagBuilder = new TagBuilder("div");
 			tagBuilder.MergeAttributes(htmlAttributes);
@@ -347,6 +441,17 @@ namespace DeepBlue.Helpers {
 		}
 		public static MvcButton BlueButton(this HtmlHelper helper) {
 			return BlueButton(helper, new { });
+		}
+		#endregion
+
+		#region javascipt
+
+		public static JavaScript JavaScript(this HtmlHelper helper) {
+			TagBuilder tagBuilder = new TagBuilder("script");
+			tagBuilder.Attributes.Add("type", "text/javascript");
+			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
+			httpResponse.Write(tagBuilder.ToString(TagRenderMode.StartTag));
+			return new JavaScript(helper.ViewContext.HttpContext.Response);
 		}
 		#endregion
 
@@ -487,6 +592,20 @@ namespace DeepBlue.Helpers {
 		}
 
 		public static MvcHtmlString jQueryTemplateTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TValue>> expression, object htmlAttributes, string formatName) {
+			if (string.IsNullOrEmpty(formatName)) {
+				IDictionary<string, object> dictionaries = new RouteValueDictionary(htmlAttributes);
+				if (dictionaries.ContainsKey("onkeydown")) {
+					int? count = (from dic in dictionaries where 
+									(
+									dic.Value.ToString().Contains("jHelper.isCurrency") == true ||
+									dic.Value.ToString().Contains("jHelper.isNumeric") == true
+									)
+								  select dic).Count();
+					if ((count ?? 0) > 0) {
+						formatName = "formatNumber";
+					}
+				}
+			}
 			ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
 			string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
 			if (String.IsNullOrEmpty(htmlFieldName)) {
@@ -507,8 +626,7 @@ namespace DeepBlue.Helpers {
 			}
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
-
-
+	 
 		#endregion
 
 		#region UnorderList
@@ -644,7 +762,6 @@ namespace DeepBlue.Helpers {
 			}
 			return MvcHtmlString.Create(row.ToString());
 		}
-
 
 		#endregion
 

@@ -14,12 +14,13 @@
 	deal.selectValue(tr);
 	jHelper.applyDatePicker(tr);
 	jHelper.setUpToolTip(tr);
+	jHelper.gridEditRow(tr);
 	deal.setIndex($("#tblUnderlyingFund"));
 	$("#MakeNewDUFund").hide();
 	deal.applyUFAutocomplete(tr);
 	$("tr:odd","#tbodyUnderlyingFund").removeClass("row").removeClass("arow").addClass("arow");
 	$("tr:even","#tbodyUnderlyingFund").removeClass("row").removeClass("arow").addClass("row");
-	footer.show("tbodyUnderlyingFund", "tfootUnderlyingFund");
+	footer.show("tbodyUnderlyingFund","tfootUnderlyingFund");
 };
 deal.calcDUF=function () {
 	var tbl=$("#tblUnderlyingFund");
@@ -51,7 +52,7 @@ deal.calcDUF=function () {
 		}
 	});
 	$("#SpnTotalFundGPP",tbl).html(jHelper.dollarAmount(totalGPP.toString()));
-	$("#SpnTotalFundNAV",tbl).html(jHelper.numberFormat(totalNAV.toString()));
+	$("#SpnTotalFundNAV",tbl).html(jHelper.dollarAmount(totalNAV.toString()));
 	$("#SpnTotalCAmount",tbl).html(jHelper.dollarAmount(totalCA.toString()));
 	$("#SpnTotalUAmount",tbl).html(jHelper.dollarAmount(totalUFA.toString()));
 
@@ -79,7 +80,7 @@ deal.deleteUnderlyingFund=function (id,img) {
 			} else {
 				tr.remove();
 				deal.setIndex($("#tblUnderlyingFund"));
-				footer.show("tbodyUnderlyingFund", "tfootUnderlyingFund");
+				footer.show("tbodyUnderlyingFund","tfootUnderlyingFund");
 			}
 		});
 	}
@@ -89,9 +90,13 @@ deal.editUnderlyingFund=function (img) {
 	if(img.src.indexOf('Save_active.png')> -1) {
 		deal.saveUnderlyingFund(tr);
 	} else {
-		img.src="/Assets/images/Save_active.png";
+		img.src=jHelper.getImagePath("Save_active.png");
 		deal.showElements(tr);
 	}
+};
+deal.saveUF=function (img) {
+	var tr=$(img).parents("tr:first");
+		deal.saveUnderlyingFund(tr);
 };
 deal.addUnderlyingFund=function (img) {
 	var tr=$(img).parents("tr:first");

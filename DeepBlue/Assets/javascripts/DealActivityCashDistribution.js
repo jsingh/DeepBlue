@@ -37,7 +37,7 @@ dealActivity.loadCD=function (isRefresh) {
 	if(isRefresh) {
 		target.empty();
 		$("#CashDistribution").hide();
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		loading.html(jHelper.loadingHTML());
 		$.getJSON("/Deal/UnderlyingFundCashDistributionList",{ "_": (new Date).getTime(),"underlyingFundId": dealActivity.getCDUnderlyingFundId() },function (data) {
 			$("#PRCashDistribution").show();
 			loading.empty();
@@ -60,7 +60,7 @@ dealActivity.submitUFCashDistribution=function (frm) {
 	try {
 		var param=$(frm).serializeForm();
 		var loading=$("#SpnCDSaveLoading");
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		loading.html(jHelper.savingHTML());
 		var chk=$("#IsManualCashDistribution").get(0);
 		var totalRows=($("tbody tr","#CashDistributionList").length);
 		var isManual=chk.checked;

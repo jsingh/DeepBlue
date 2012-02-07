@@ -38,7 +38,7 @@ dealActivity.loadCC=function (isRefresh) {
 	if(isRefresh) {
 		target.empty();
 		$("#CapitalCall").hide();
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		loading.html(jHelper.loadingHTML());
 		$.getJSON("/Deal/UnderlyingFundCapitalCallList",{ "_": (new Date).getTime()
 			,"underlyingFundId": dealActivity.getCCUnderlyingFund()
 		},function (data) {
@@ -65,7 +65,7 @@ dealActivity.submitUFCapitalCall=function (frm) {
 	try {
 		var param=$(frm).serializeForm();
 		var loading=$("#SpnCCSaveLoading");
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		loading.html(jHelper.savingHTML());
 		var chk=$("#IsManualCapitalCall").get(0);
 		var totalRows=($("tbody tr","#CapitalCallList").length);
 		var isManual=chk.checked;

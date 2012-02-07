@@ -15,7 +15,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public CreateCapitalCallModel FindCapitalCallModel(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from capitalCall in context.CapitalCalls
+				return (from capitalCall in context.CapitalCallsTable
 						where capitalCall.CapitalCallID == id
 						select new CreateCapitalCallModel {
 							CapitalAmountCalled = capitalCall.CapitalAmountCalled,
@@ -59,7 +59,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public CreateDistributionModel FindCapitalDistributionModel(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from capitalDistribution in context.CapitalDistributions
+				return (from capitalDistribution in context.CapitalDistributionsTable
 						where capitalDistribution.CapitalDistributionID == id
 						select new CreateDistributionModel {
 								CapitalDistributionDate = capitalDistribution.CapitalDistributionDate,
@@ -99,7 +99,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public List<Models.Entity.CapitalCall> GetCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.CapitalCall> query = (from capitalCall in context.CapitalCalls
+				IQueryable<Models.Entity.CapitalCall> query = (from capitalCall in context.CapitalCallsTable
 															   where capitalCall.FundID == fundId
 															   select capitalCall);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
@@ -111,7 +111,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public List<Models.Entity.CapitalCall> GetCapitalCalls(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from capitalCall in context.CapitalCalls
+				return (from capitalCall in context.CapitalCallsTable
 						where capitalCall.FundID == fundId
 						orderby capitalCall.CapitalCallID descending
 						select capitalCall).ToList();
@@ -120,7 +120,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public List<InvestorFund> GetAllInvestorFunds(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.InvestorFunds.Where(investorFunds => investorFunds.FundID == fundId).ToList();
+				return context.InvestorFundsTable.Where(investorFunds => investorFunds.FundID == fundId).ToList();
 			}
 		}
 
@@ -131,6 +131,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 							  .Include("InvestorFunds")
 							  .Include("FundRateSchedules")
 							  .Include("CapitalDistributions")
+							  .EntityFilter()
 							  .SingleOrDefault(fund => fund.FundID == fundId);
 			}
 		}
@@ -141,6 +142,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 							  .Include("CapitalCallLineItems")
 							  .Include("Fund")
 							  .Include("CapitalCallLineItems.Investor")
+							  .EntityFilter()
 							  .SingleOrDefault(capitalCall => capitalCall.CapitalCallID == capitalCallId);
 			}
 		}
@@ -151,19 +153,20 @@ namespace DeepBlue.Controllers.CapitalCall {
 							  .Include("CapitalDistributionLineItems")
 							  .Include("Fund")
 							  .Include("CapitalDistributionLineItems.Investor")
+							  .EntityFilter()
 							  .SingleOrDefault(capitalDistribution => capitalDistribution.CapitalDistributionID == capitalDistributionId);
 			}
 		}
 
 		public CapitalCallLineItem FindCapitalCallLineItem(int capitalCallLineItemId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.CapitalCallLineItems.Where(capitalCallLineItem => capitalCallLineItem.CapitalCallLineItemID == capitalCallLineItemId).SingleOrDefault();
+				return context.CapitalCallLineItemsTable.Where(capitalCallLineItem => capitalCallLineItem.CapitalCallLineItemID == capitalCallLineItemId).SingleOrDefault();
 			}
 		}
 
 		public CapitalDistributionLineItem FindCapitalDistributionLineItem(int capitalDistributionLineItemId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.CapitalDistributionLineItems.Where(capitalDistributionLineItem => capitalDistributionLineItem.CapitalDistributionLineItemID == capitalDistributionLineItemId).SingleOrDefault();
+				return context.CapitalDistributionLineItemsTable.Where(capitalDistributionLineItem => capitalDistributionLineItem.CapitalDistributionLineItemID == capitalDistributionLineItemId).SingleOrDefault();
 			}
 		}
 
@@ -185,7 +188,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public List<CapitalDistribution> GetCapitalDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<CapitalDistribution> query = (from capitalDistribution in context.CapitalDistributions
+				IQueryable<CapitalDistribution> query = (from capitalDistribution in context.CapitalDistributionsTable
 														 where capitalDistribution.FundID == fundId
 														 select capitalDistribution);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
@@ -197,7 +200,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public List<CapitalDistribution> GetCapitalDistributions(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from capitalDistribution in context.CapitalDistributions
+				return (from capitalDistribution in context.CapitalDistributionsTable
 						where capitalDistribution.FundID == fundId
 						orderby capitalDistribution.CapitalDistributionID descending
 						select capitalDistribution).ToList();
@@ -206,21 +209,21 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public int FindCapitalCallNumber(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				int? totalCapitalCalls = context.CapitalCalls.Where(capitalCall => capitalCall.FundID == fundId).Count();
+				int? totalCapitalCalls = context.CapitalCallsTable.Where(capitalCall => capitalCall.FundID == fundId).Count();
 				return (totalCapitalCalls ?? 0) + 1;
 			}
 		}
 
 		public int FindCapitalCallDistributionNumber(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				int? totalCapitalDistribution = context.CapitalDistributions.Where(capitalDistribution => capitalDistribution.FundID == fundId).Count();
+				int? totalCapitalDistribution = context.CapitalDistributionsTable.Where(capitalDistribution => capitalDistribution.FundID == fundId).Count();
 				return (totalCapitalDistribution ?? 0) + 1;
 			}
 		}
 
 		public FundDetail FindFundDetail(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from fund in context.Funds
+				return (from fund in context.FundsTable
 						where fund.FundID == fundId
 						select new FundDetail {
 							CapitalCallNumber = fund.CapitalCalls.Count() + 1,
@@ -237,7 +240,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public DetailModel FindDetail(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from fund in context.Funds
+				return (from fund in context.FundsTable
 						where fund.FundID == fundId
 						select new DetailModel {
 							FundId = fund.FundID,
@@ -283,7 +286,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public List<CapitalCallInvestorDetail> GetCapitalCallInvestors(int capitalCallId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from capitalCallLineItem in context.CapitalCallLineItems
+				return (from capitalCallLineItem in context.CapitalCallLineItemsTable
 						where capitalCallLineItem.CapitalCallID == capitalCallId
 						select new CapitalCallInvestorDetail {
 							CapitalCallAmount = capitalCallLineItem.CapitalAmountCalled,
@@ -298,7 +301,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public List<CapitalDistributionInvestorDetail> GetCapitalDistributionInvestors(int capitalDistributionId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from capitalDistributionLineItem in context.CapitalDistributionLineItems
+				return (from capitalDistributionLineItem in context.CapitalDistributionLineItemsTable
 						where capitalDistributionLineItem.CapitalDistributionID == capitalDistributionId
 						select new CapitalDistributionInvestorDetail {
 							CapitalDistributed = capitalDistributionLineItem.DistributionAmount,
@@ -317,9 +320,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public List<ManagementFeeRateScheduleTierDetail> GetAllManagementFeeRateScheduleTiers(int fundId, DateTime startDate, DateTime endDate) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from rateSchedule in context.FundRateSchedules
-						join managementFeeRateSchedule in context.ManagementFeeRateSchedules on rateSchedule.RateScheduleID equals managementFeeRateSchedule.ManagementFeeRateScheduleID
-						join managementFeeRateScheduleTier in context.ManagementFeeRateScheduleTiers on managementFeeRateSchedule.ManagementFeeRateScheduleID equals managementFeeRateScheduleTier.ManagementFeeRateScheduleID
+				return (from rateSchedule in context.FundRateSchedulesTable
+						join managementFeeRateSchedule in context.ManagementFeeRateSchedulesTable on rateSchedule.RateScheduleID equals managementFeeRateSchedule.ManagementFeeRateScheduleID
+						join managementFeeRateScheduleTier in context.ManagementFeeRateScheduleTiersTable on managementFeeRateSchedule.ManagementFeeRateScheduleID equals managementFeeRateScheduleTier.ManagementFeeRateScheduleID
 						where rateSchedule.FundID == fundId
 						&& rateSchedule.InvestorTypeID == (int)Models.Investor.Enums.InvestorType.NonManagingMember
 						&&
@@ -339,7 +342,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public List<NonManagingInvestorFundDetail> GetAllNonManagingInvestorFunds(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investorFund in context.InvestorFunds
+				return (from investorFund in context.InvestorFundsTable
 						where investorFund.FundID == fundId && investorFund.InvestorTypeId == (int)Models.Investor.Enums.InvestorType.NonManagingMember
 						select new NonManagingInvestorFundDetail {
 							InvestorId = investorFund.InvestorID,
@@ -350,7 +353,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public List<AutoCompleteList> FindCapitalCalls(string capitalCallName, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> capitalCallListQuery = (from capitalCall in context.CapitalCalls 
+				IQueryable<AutoCompleteList> capitalCallListQuery = (from capitalCall in context.CapitalCallsTable 
 																 where (fundId > 0 ? capitalCall.FundID == fundId : capitalCall.FundID > 0)
 																 && capitalCall.CapitalCallNumber.StartsWith(capitalCallName)
 																 orderby capitalCall.Fund.FundName, capitalCall.CapitalCallID 
@@ -365,7 +368,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public List<AutoCompleteList> FindCapitalDistributions(string capitalDistributionName, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> capitalDistributionListQuery = (from capitalDistribution in context.CapitalDistributions
+				IQueryable<AutoCompleteList> capitalDistributionListQuery = (from capitalDistribution in context.CapitalDistributionsTable
 																	 where (fundId > 0 ? capitalDistribution.FundID == fundId : capitalDistribution.FundID > 0)
 																	 && capitalDistribution.DistributionNumber.StartsWith(capitalDistributionName)
 																	 orderby capitalDistribution.Fund.FundName, capitalDistribution.CapitalDistributionID

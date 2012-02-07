@@ -188,5 +188,7 @@ namespace DeepBlue.Models.Deal {
 
 		public List<SelectListItem> UploadTypes { get; set; }
 
+		public string DocumentFileExtensions { get; set; }
+
 	}
 }

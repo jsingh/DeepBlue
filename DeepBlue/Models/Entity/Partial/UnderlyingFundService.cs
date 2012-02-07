@@ -16,7 +16,7 @@ namespace DeepBlue.Models.Entity.Partial {
 					context.UnderlyingFunds.AddObject(underlyingFund);
 				}
 				else {
-					UnderlyingFund updateUnderlyingFund = context.UnderlyingFunds.SingleOrDefault(deepblueUnderlyingFund => deepblueUnderlyingFund.UnderlyingtFundID == underlyingFund.UnderlyingtFundID);
+					UnderlyingFund updateUnderlyingFund = context.UnderlyingFundsTable.SingleOrDefault(deepblueUnderlyingFund => deepblueUnderlyingFund.UnderlyingtFundID == underlyingFund.UnderlyingtFundID);
 					//Update underlyingFund,underlyingFund account values
 					// Define an ObjectStateEntry and EntityKey for the current object. 
 					EntityKey key;

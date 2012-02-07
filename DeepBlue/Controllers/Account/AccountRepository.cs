@@ -24,5 +24,11 @@ namespace DeepBlue.Controllers.Account {
 				return context.USERs.Where(user => user.Login == userName && user.EntityID == entityId && user.Enabled == true).SingleOrDefault();
 			}
 		}
+
+		public ENTITY FetchUserEntity(string entityCode) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.ENTITies.Where(entity => entity.EntityCode == entityCode && entity.Enabled == true).SingleOrDefault();
+			}
+		}
 	}
 }

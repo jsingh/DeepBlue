@@ -67,7 +67,7 @@
 		<%: Html.Image("add_active.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:dataType.save(this,${row.cell[0]});" })%>
 		{{else}}
 		<%: Html.Image("Save_active.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:dataType.save(this,${row.cell[0]});" })%>
-		<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:dataType.edit(this);" })%>
+		<%: Html.Image("Edit.png", new { @class = "gbutton editbtn show", @onclick = "javascript:dataType.edit(this);" })%>
 		<%: Html.Image("largedel.png", new { @class = "gbutton show", @onclick = "javascript:dataType.deleteRow(this,${row.cell[0]});" })%>
 		{{/if}}
 		<%: Html.Hidden("DataTypeId", "${row.cell[0]}") %>

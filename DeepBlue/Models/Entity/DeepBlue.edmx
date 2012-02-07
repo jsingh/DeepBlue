@@ -910,6 +910,7 @@
           <Property Name="CashDistributionTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Communication">
           <Key>
@@ -934,6 +935,7 @@
           </Key>
           <Property Name="CommunicationGroupingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CommunicationGroupingName" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CommunicationType">
           <Key>
@@ -1052,6 +1054,7 @@
           </Key>
           <Property Name="DataTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="DataTypeName" Type="varchar" MaxLength="50" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Deal">
           <Key>
@@ -1212,6 +1215,7 @@
           <Property Name="EntityName" Type="varchar" MaxLength="60" />
           <Property Name="Enabled" Type="bit" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EntityCode" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="Equity">
           <Key>
@@ -1377,6 +1381,7 @@
           <Property Name="FundClosingDate" Type="datetime" />
           <Property Name="IsFirstClosing" Type="bit" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="FundExpense">
           <Key>
@@ -2113,6 +2118,7 @@
           </Key>
           <Property Name="UnderlyingFundTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="USER">
           <Key>
@@ -4801,6 +4807,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Enabled" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="UnderlyingFundCashDistributions" Relationship="DeepBlueModel.FK_UnderlyingFundCashDistribution_CashDistributionType" FromRole="CashDistributionType" ToRole="UnderlyingFundCashDistribution" />
+          <Property Type="Int32" Name="EntityID" Nullable="false" />
         </EntityType>
         <EntityType Name="Communication">
           <Key>
@@ -4829,6 +4836,7 @@
           <Property Name="CommunicationGroupingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CommunicationGroupingName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="CommunicationTypes" Relationship="DeepBlueModel.FK_CommunicationType_CommunicationGrouping" FromRole="CommunicationGrouping" ToRole="CommunicationType" />
+          <Property Type="Int32" Name="EntityID" Nullable="false" />
         </EntityType>
         <EntityType Name="CommunicationType">
           <Key>
@@ -4969,6 +4977,7 @@
           <Property Name="DataTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DataTypeName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="CustomFields" Relationship="DeepBlueModel.FK_DataType_CustomField" FromRole="DataType" ToRole="CustomField" />
+          <Property Type="Int32" Name="EntityID" Nullable="false" />
         </EntityType>
         <EntityType Name="Deal">
           <Key>
@@ -5175,6 +5184,7 @@
           <Property Name="Enabled" Type="Boolean" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" />
           <NavigationProperty Name="USERs" Relationship="DeepBlueModel.FK_USER_ENTITY" FromRole="ENTITY" ToRole="USER" />
+          <Property Type="String" Name="EntityCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Equity">
           <Key>
@@ -5381,6 +5391,7 @@
           <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Fund" Relationship="DeepBlueModel.FK_FundClosing_Fund" FromRole="FundClosing" ToRole="Fund" />
           <NavigationProperty Name="InvestorFundTransactions" Relationship="DeepBlueModel.FK_InvestorFundTransaction_FundClosing" FromRole="FundClosing" ToRole="InvestorFundTransaction" />
+          <Property Type="Int32" Name="EntityID" Nullable="false" />
         </EntityType>
         <EntityType Name="FundExpense">
           <Key>
@@ -6260,6 +6271,7 @@
           <Property Name="UnderlyingFundTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="UnderlyingFunds" Relationship="DeepBlueModel.FK_UnderlyingFund_UnderlyingFundType" FromRole="UnderlyingFundType" ToRole="UnderlyingFund" />
+          <Property Type="Int32" Name="EntityID" Nullable="false" />
         </EntityType>
         <EntityType Name="USER">
           <Key>
@@ -8207,7 +8219,8 @@
             <ScalarProperty Name="DistributionDate" ColumnName="DistributionDate" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="CashDistributionTypes"><EntityTypeMapping TypeName="DeepBlueModel.CashDistributionType"><MappingFragment StoreEntitySet="CashDistributionType">
-            <ScalarProperty Name="CashDistributionTypeID" ColumnName="CashDistributionTypeID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+                <ScalarProperty Name="CashDistributionTypeID" ColumnName="CashDistributionTypeID" />
             <ScalarProperty Name="Name" ColumnName="Name" />
             <ScalarProperty Name="Enabled" ColumnName="Enabled" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
@@ -8226,7 +8239,8 @@
             <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="CommunicationGroupings"><EntityTypeMapping TypeName="DeepBlueModel.CommunicationGrouping"><MappingFragment StoreEntitySet="CommunicationGrouping">
-            <ScalarProperty Name="CommunicationGroupingID" ColumnName="CommunicationGroupingID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+                <ScalarProperty Name="CommunicationGroupingID" ColumnName="CommunicationGroupingID" />
             <ScalarProperty Name="CommunicationGroupingName" ColumnName="CommunicationGroupingName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="CommunicationTypes"><EntityTypeMapping TypeName="DeepBlueModel.CommunicationType"><MappingFragment StoreEntitySet="CommunicationType">
@@ -8317,7 +8331,8 @@
             <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="DataTypes"><EntityTypeMapping TypeName="DeepBlueModel.DataType"><MappingFragment StoreEntitySet="DataType">
-            <ScalarProperty Name="DataTypeID" ColumnName="DataTypeID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+                <ScalarProperty Name="DataTypeID" ColumnName="DataTypeID" />
             <ScalarProperty Name="DataTypeName" ColumnName="DataTypeName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Deals"><EntityTypeMapping TypeName="DeepBlueModel.Deal"><MappingFragment StoreEntitySet="Deal">
@@ -8439,7 +8454,8 @@
             <ScalarProperty Name="DocumentSectionID" ColumnName="DocumentSectionID" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="ENTITies"><EntityTypeMapping TypeName="DeepBlueModel.ENTITY"><MappingFragment StoreEntitySet="ENTITY">
-            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+            <ScalarProperty Name="EntityCode" ColumnName="EntityCode" />
+                <ScalarProperty Name="EntityID" ColumnName="EntityID" />
             <ScalarProperty Name="EntityName" ColumnName="EntityName" />
             <ScalarProperty Name="Enabled" ColumnName="Enabled" />
             <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -8570,7 +8586,8 @@
             <ScalarProperty Name="ActivityTypeID" ColumnName="ActivityTypeID" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="FundClosings"><EntityTypeMapping TypeName="DeepBlueModel.FundClosing"><MappingFragment StoreEntitySet="FundClosing">
-            <ScalarProperty Name="FundClosingID" ColumnName="FundClosingID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+                <ScalarProperty Name="FundClosingID" ColumnName="FundClosingID" />
             <ScalarProperty Name="FundID" ColumnName="FundID" />
             <ScalarProperty Name="FundClosingDate" ColumnName="FundClosingDate" />
             <ScalarProperty Name="IsFirstClosing" ColumnName="IsFirstClosing" />
@@ -9150,7 +9167,8 @@
             <ScalarProperty Name="FMV" ColumnName="FMV" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="UnderlyingFundTypes"><EntityTypeMapping TypeName="DeepBlueModel.UnderlyingFundType"><MappingFragment StoreEntitySet="UnderlyingFundType">
-            <ScalarProperty Name="UnderlyingFundTypeID" ColumnName="UnderlyingFundTypeID" />
+            <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+                <ScalarProperty Name="UnderlyingFundTypeID" ColumnName="UnderlyingFundTypeID" />
             <ScalarProperty Name="Name" ColumnName="Name" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="USERs"><EntityTypeMapping TypeName="DeepBlueModel.USER"><MappingFragment StoreEntitySet="USER">

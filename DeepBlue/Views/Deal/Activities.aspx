@@ -548,7 +548,7 @@
 					<div id="FundLevelExpenses" class="group">
 						<div class="addbtn" style="display: none">
 							<div class="tblcell">
-								<%: Html.TextBox("FLE_Fund", "SEARCH AMBERBROOK FUND", new { @style = "width:200px", @class = "wm" })%>
+								<%: Html.TextBox("FLE_Fund", "SEARCH  FUND", new { @style = "width:200px", @class = "wm" })%>
 							</div>
 							<div class="tblcell rightcell">
 								<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.makeNewFLE();" })) {%>Add
@@ -889,7 +889,7 @@
 									<%: Html.TextBox("EndDate", "END DATE", new { @id = "ReconEndDate",   @style = "width:100px" })%>&nbsp;&nbsp;
 								</div>
 								<div class="cell">
-									<%: Html.TextBox("ReconcileFundName", "SEARCH AMBERBROOK FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:180px" })%>
+									<%: Html.TextBox("ReconcileFundName", "SEARCH  FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:180px" })%>
 								</div>
 								<div class="cell" style="padding-left: 10px;">
 									<%: Html.TextBox("ReconcileUnderlyingFundName", "SEARCH UNDERLYING FUND", new { @id = "ReconcileUnderlyingFundName", @class = "wm", @style = "width:180px" })%>
@@ -1119,7 +1119,7 @@
 	<div class="editor-field">
 		<%: Html.DropDownList("UnderlyingFund", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
 	<div class="editor-label">
-		<%: Html.Label("Amberbrook Fund")%></div>
+		<%: Html.Label("Fund")%></div>
 	<div class="editor-field">
 		<%: Html.DropDownList("AmberbrookFund", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
 	<div class="editor-label">

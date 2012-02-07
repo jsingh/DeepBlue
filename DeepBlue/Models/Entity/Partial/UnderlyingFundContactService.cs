@@ -20,7 +20,7 @@ namespace DeepBlue.Models.Entity {
 				else {
 					EntityKey key;
 					object originalItem;
-					UnderlyingFundContact updateUnderlyingFundContact = context.UnderlyingFundContacts.SingleOrDefault(deepblueUnderlyingFundContact => deepblueUnderlyingFundContact.UnderlyingFundContactID == underlyingFundContact.UnderlyingFundContactID);
+					UnderlyingFundContact updateUnderlyingFundContact = context.UnderlyingFundContactsTable.SingleOrDefault(deepblueUnderlyingFundContact => deepblueUnderlyingFundContact.UnderlyingFundContactID == underlyingFundContact.UnderlyingFundContactID);
 					if (underlyingFundContact.Contact != null) {
 						/* Contact & Communication */
 						key = default(EntityKey);
@@ -67,7 +67,7 @@ namespace DeepBlue.Models.Entity {
 									contact = updateUnderlyingFundContact.Contact;
 								}
 								else {
-									contact = context.Contacts.SingleOrDefault(cont => cont.ContactID == contactCommunication.Contact.ContactID);
+									contact = context.ContactsTable.SingleOrDefault(cont => cont.ContactID == contactCommunication.Contact.ContactID);
 								}
 								if (contact != null) {
 									contact.ContactCommunications.Add(new ContactCommunication {

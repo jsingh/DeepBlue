@@ -20,7 +20,7 @@ namespace DeepBlue.Models.Entity {
 				else {
 					EntityKey key;
 					object originalItem;
-					UnderlyingDirectDocument updateUnderlyingDirectDocument = context.UnderlyingDirectDocuments.SingleOrDefault(deepblueUnderlyingDirectDocument => deepblueUnderlyingDirectDocument.UnderlyingDirectDocumentID == underlyingDirectDocument.UnderlyingDirectDocumentID);
+					UnderlyingDirectDocument updateUnderlyingDirectDocument = context.UnderlyingDirectDocumentsTable.SingleOrDefault(deepblueUnderlyingDirectDocument => deepblueUnderlyingDirectDocument.UnderlyingDirectDocumentID == underlyingDirectDocument.UnderlyingDirectDocumentID);
 					/* Contact & Communication */
 					key = default(EntityKey);
 					originalItem = null;

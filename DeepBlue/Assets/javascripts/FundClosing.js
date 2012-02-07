@@ -26,7 +26,7 @@
 		if(confirm("Are you sure you want to delete this fund closing?")) {
 			var tr=$(img).parents("tr:first");
 			var imgsrc=img.src;
-			$(img).attr("src","/Assets/images/ajax.jpg");
+			$(img).attr("src",jHelper.getImagePath("ajax.jpg"));
 			img.src=imgsrc;
 			var dt=new Date();
 			var url="/Admin/DeleteFundClosing/"+id+"?t="+dt.getTime();
@@ -45,7 +45,7 @@
 		var param=jHelper.serialize(tr);
 		var url="/Admin/UpdateFundClosing";
 		var imgsrc=img.src;
-		$(img).attr("src","/Assets/images/ajax.jpg");
+		$(img).attr("src",jHelper.getImagePath("ajax.jpg"));
 		$.post(url,param,function (data) {
 			img.src=imgsrc;
 			var arr=data.split("||");
@@ -58,7 +58,7 @@
 					var newTR=$("#Row"+arr[1]);
 					jHelper.applyFlexGridClass($(".middlec:first"));
 					jHelper.checkValAttr(newTR);
-					fundClosing.setup(newTR);
+					fundClosing.setup(newTR);jHelper.gridEditRow(newTR);
 				});
 			}
 		});
@@ -66,7 +66,7 @@
 	,onGridSuccess: function (t,g) {
 		jHelper.checkValAttr(t);
 		fundClosing.setup(t);
-		$(window).resize();
+		jHelper.gridEditRow(t);
 	}
 	,setup: function (target) {
 		$("#FundName",target).each(function () {
@@ -85,9 +85,6 @@
 	,onInit: function (g) {
 		var data={ name: "Add Fund Closing" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		//		$(window).resize(function () {
-		//			fundClosing.resizeGV(g);
-		//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

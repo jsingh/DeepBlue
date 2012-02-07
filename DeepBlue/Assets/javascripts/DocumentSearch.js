@@ -43,12 +43,9 @@
 		}
 	}
 	,onGridSuccess: function (t,g) {
-		$(window).resize();
+		
 	}
 	,onInit: function (g) {
-//		$(window).resize(function () {
-//			documentSearch.resizeGV(g);
-//		});
 	}
 	,resizeGV: function (g) {
 		/*var admain=$(".doc-main");
@@ -81,8 +78,7 @@
 		return false;
 	}
 	,downloadFile: function (filePath,fileName) {
-		//window.open("/Document/DownloadDocument?filePath="+filePath+"&fileName="+fileName);
 		var url="/"+filePath+"/"+fileName;
-		window.open(url);
+		window.open(deepBlue.rootUrl+url);
 	}
 }

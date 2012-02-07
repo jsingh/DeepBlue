@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/DeepBlue.Master" Inherits="System.Web.Mvc.ViewPage<DeepBlue.Models.Admin.EditUserModel>" %>
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
@@ -66,12 +66,13 @@
 	, TableName = "User"
 	, ExportExcel = true
 })%>
-	<script id="AddButtonTemplate" type="text/x-jquery-tmpl">
-<%using (Html.GreenButton(new { @onclick = "javascript:user.add(this);" })) {%>${name}<%}%>
-	</script>
-	<script id="GridTemplate" type="text/x-jquery-tmpl">
-{{each(i,row) rows}}
-<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow disprow"{{else}}class="disprow"{{/if}}>
+	<%using (Html.jQueryTemplateScript("AddButtonTemplate")) {%>
+		<%using (Html.GreenButton(new { @onclick = "javascript:user.add(this);" })) {%>${name}<%}%>
+	 <%}%>
+	<%using(Html.jQueryTemplateScript("GridTemplate")){%>
+		{{each(i,row) rows}}
+			{{if row.cell[9]>1 || row.cell[0]==0}}
+				<tr id="Row${row.cell[0]}" {{if i%2>0}}class="erow disprow"{{else}}class="disprow"{{/if}}>
 	<td style="width: 20%">
 		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
 	</td>
@@ -98,7 +99,7 @@
 		<%: Html.Hidden("UserId", "${row.cell[0]}") %>
 	</td>
 </tr>
-<tr id="EditRow${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}} style="background-image:none;">
+				<tr id="EditRow${row.cell[0]}" {{if i%2>0}}class="erow"{{else}}class="grow"{{/if}} style="background-image:none;">
 		<td colspan=6 style="width: 100%;display:none;">
 			<%using(Html.Form(new { @id="frm${row.cell[0]}", @onsubmit = "return false;" })){%>
 			<div class="editor-label" style="clear:right">
@@ -179,6 +180,7 @@
 			<%}%>
 		</td>
 	</tr>
-{{/each}}
-	</script>
+			{{/if}}
+		{{/each}}
+	<%}%>
 </asp:Content>

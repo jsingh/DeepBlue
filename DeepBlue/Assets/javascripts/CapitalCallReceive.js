@@ -98,7 +98,7 @@
 		}
 	}
 	,onCreateCapitalCallBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		$("#UpdateLoading").html(jHelper.savingHTML());
 	}
 	,onCreateCapitalCallSuccess: function () {
 		$("#UpdateLoading").html("");
@@ -106,7 +106,7 @@
 		if(jQuery.trim(UpdateTargetId.html())!="") {
 			jAlert(UpdateTargetId.html())
 		} else {
-			location.href="/CapitalCall/List";
+			location.href=deepBlue.rootUrl+"/CapitalCall/List";
 		}
 	}
 	,onSubmit: function (formId) {

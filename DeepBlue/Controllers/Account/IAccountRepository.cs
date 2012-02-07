@@ -10,6 +10,7 @@ using DeepBlue.Models.Deal;
 namespace DeepBlue.Controllers.Account {
 	public interface IAccountRepository {
 		ENTITY FetchUserEntity(int entityId);
+		ENTITY FetchUserEntity(string entityCode);
 		USER FetchUserLogin(string userName, int entityId);
 	}
 }

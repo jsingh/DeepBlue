@@ -115,23 +115,23 @@
 							</td>
 							<td style="width: 15%">
 								<div>
-									<%: Html.TextBox("${Index}_"+ "CapitalAmountCalled","${CapitalAmountCalled}",new {  @id="CapitalAmountCalled", @onkeydown = "return jHelper.isCurrency(event);" })%></div>
+									<%: Html.TextBox("${Index}_"+ "CapitalAmountCalled","${formatNumber(CapitalAmountCalled)}",new {  @id="CapitalAmountCalled", @onkeydown = "return jHelper.isCurrency(event);" })%></div>
 							</td>
 							<td style="width: 10%">
 								<div>
-									<%: Html.TextBox("${Index}_" + "ManagementFees", "${ManagementFees}", new {   @id = "ManagementFees", @onkeydown = "return jHelper.isCurrency(event);" })%></div>
+									<%: Html.TextBox("${Index}_" + "ManagementFees", "${formatNumber(ManagementFees)}", new {   @id = "ManagementFees", @onkeydown = "return jHelper.isCurrency(event);" })%></div>
 							</td>
 							<td style="width: 15%">
 								<div>
-									<%: Html.TextBox("${Index}_" + "InvestmentAmount", "${InvestmentAmount}", new {   @id = "InvestmentAmount", @onkeydown = "return jHelper.isCurrency(event);" })%></div>
+									<%: Html.TextBox("${Index}_" + "InvestmentAmount", "${formatNumber(InvestmentAmount)}", new {   @id = "InvestmentAmount", @onkeydown = "return jHelper.isCurrency(event);" })%></div>
 							</td>
 							<td style="width: 15%">
 								<div>
-									<%: Html.TextBox("${Index}_" + "ManagementFeeInterest", "${ManagementFeeInterest}", new {   @id = "ManagementFeeInterest", @onkeydown = "return jHelper.isCurrency(event);" })%></div>
+									<%: Html.TextBox("${Index}_" + "ManagementFeeInterest", "${formatNumber(ManagementFeeInterest)}", new {   @id = "ManagementFeeInterest", @onkeydown = "return jHelper.isCurrency(event);" })%></div>
 							</td>
 							<td style="width: 15%">
 								<div>
-									<%: Html.TextBox("${Index}_" + "InvestedAmountInterest", "${InvestedAmountInterest}", new { @id = "InvestedAmountInterest", @onkeydown = "return jHelper.isCurrency(event);" })%></div>
+									<%: Html.TextBox("${Index}_" + "InvestedAmountInterest", "${formatNumber(InvestedAmountInterest)}", new { @id = "InvestedAmountInterest", @onkeydown = "return jHelper.isCurrency(event);" })%></div>
 							</td>
 							<td style="width: 10%">
 								<div>

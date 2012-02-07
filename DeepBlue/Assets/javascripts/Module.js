@@ -37,7 +37,7 @@
 		}
 	}
 	,onModuleBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		$("#UpdateLoading").html(jHelper.savingHTML());
 	}
 	,onModuleSuccess: function () {
 		$("#UpdateLoading").html("");

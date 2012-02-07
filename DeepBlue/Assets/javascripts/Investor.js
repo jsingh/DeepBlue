@@ -144,7 +144,7 @@
 	,save: function (frm) {
 		try {
 			var loading=$("#UpdateLoading");
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			loading.html(jHelper.savingHTML());
 			$.post("/Investor/Create",$(frm).serializeForm(),function (data) {
 				loading.empty();
 				var arr=data.split("||");
@@ -152,7 +152,7 @@
 					jAlert(arr[0]);
 				} else {
 					jAlert("Investor Information Saved.");
-					location.href="/Investor/Edit/"+arr[1];
+					location.href=deepBlue.rootUrl+"/Investor/Edit/"+arr[1];
 				}
 			});
 		} catch(e) {
@@ -346,7 +346,7 @@
 		return true;
 	}
 	,onBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		$("#UpdateLoading").html(jHelper.savingHTML());
 	}
 	,onSuccess: function () {
 		$("#UpdateLoading").html("");
@@ -355,7 +355,7 @@
 			jAlert(UpdateTargetId.html())
 		} else {
 			jAlert("Investor Saved.");
-			location.href="/Investor/New";
+			location.href=deepBlue.rootUrl+"/Investor/New";
 		}
 	}
 	,getInvestorId: function () {

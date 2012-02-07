@@ -70,7 +70,7 @@ dealActivity.getUnderlyingDirectId=function () {
 	return id;
 };
 dealActivity.onNHPSubmit=function (p) {
-	$("#NHPLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+	$("#NHPLoading").html(jHelper.loadingHTML());
 	return true;
 };
 dealActivity.onNHPSuccess=function (t,p) {
@@ -96,7 +96,7 @@ dealActivity.createSA=function (frm) {
 	var param=$(frm).serializeForm();
 	param[param.length]={ name: "ActivityTypeId",value: dealActivity.getActivityTypeId() };
 	param[param.length]={ name: "DealUnderlyingDirectId",value: dealActivity.getUnderlyingDirectId() };
-	$("#SpnEquitySplitLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+	$("#SpnEquitySplitLoading").html(jHelper.savingHTML());
 	$.post("/Deal/CreateSplitActivity?_"+(new Date()).getTime(),param,function (data) {
 		$("#SpnEquitySplitLoading").empty();
 		if($.trim(data)!="") {

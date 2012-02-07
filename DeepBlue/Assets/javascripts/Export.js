@@ -25,7 +25,7 @@
 		if(id<=4) {
 			var width=300;var height=200;var left=(screen.availWidth/2)-(width/2);var top=(screen.availHeight/2)-(height/2);var features="width="+width+",height="+height+",left="+left+",top="+top+",location=no,menubar=no,toobar=no,scrollbars=yes,resizable=yes,status=yes";
 			url="/Admin/ExportExcel?tableName=''&excelExportTypeId="+id;
-			window.open(url,"exportexcel",features);
+			window.open(deepBlue.rootUrl+url,"exportexcel",features);
 		}
 	}
 	,onSubmit: function (p) {
@@ -39,14 +39,11 @@
 	}
 	,onGridSuccess: function (t,g) {
 		jHelper.checkValAttr(t);
-		$(window).resize();
+		
 	}
 	,onInit: function (g) {
 		var data={ name: "Add Seller Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		//		$(window).resize(function () {
-		//			exportExcel.resizeGV(g);
-		//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

@@ -1,9 +1,43 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<dynamic>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
-<%switch (Convert.ToString(ViewData["SubmenuName"])) {%>
-<%case "InvestorManagement":%>
+<%@ Import Namespace="DeepBlue.Models.Admin" %>
+<%string pageName = Convert.ToString(ViewData["PageName"]);%>
+<% List<MenuModel> menus = MenuHelper.GetMenus();
+   foreach (MenuModel topmenu in menus) {%>
+<%foreach (MenuModel submenu in topmenu.Childs) {%>
+<%if (submenu.Name == Convert.ToString(ViewData["SubmenuName"])) {%>
 <%using (Html.LeftMenu()) {%>
 <div class="menubox">
+	<ul>
+		<%foreach (MenuModel menu in submenu.Childs) {
+		string className = (pageName == menu.Name ? "sel" : "");
+		IDictionary<string, object> dic = menu.HtmlAttributes;
+		if (dic.Keys.Contains("class") == false) {
+			dic.Add("class", className);
+		}
+		else {
+			dic["class"] = className;
+		}
+		%>
+		<li class="<%=className%>">
+			<%if ((string.IsNullOrEmpty(menu.ActionName) && (string.IsNullOrEmpty(menu.ControllerName)))) {%>
+			<%: Html.Anchor(menu.DisplayName, "#", dic)%>
+			<%}
+	 else {%>
+			<%: Html.ActionLink(menu.DisplayName, menu.ActionName, menu.ControllerName, menu.RouteValues, dic)%>
+			<%}%>
+		</li>
+		<%}%>
+	</ul>
+</div>
+<%}%>
+<%}%>
+<%}%>
+<%}%>
+<%--<%switch (Convert.ToString(ViewData["SubmenuName"])) {%>
+<%case "InvestorManagement":%>
+<%using (Html.LeftMenu()) {%>
+<div class="menubox" style="display: none">
 	<ul>
 		<li class="<%=(ViewData["PageName"] == "InvestorEntityType" ? "sel" : "")%>">
 			<%: Html.ActionLink("Investor Entity Type", "EntityType", "Admin",null, new {} )%></li>
@@ -15,17 +49,13 @@
 			<%: Html.ActionLink("Communication Grouping", "CommunicationGrouping", "Admin",null, new { @class = (ViewData["PageName"] == "CommunicationGrouping" ? "sel" : "") })%></li>
 		<li class="<%=(ViewData["PageName"] == "FundClosing" ? "sel" : "")%>">
 			<%: Html.ActionLink("Fund Closing", "FundClosing", "Admin", null, new { @class = (ViewData["PageName"] == "FundClosing" ? "sel" : "") })%></li>
-		<li class="<%=(ViewData["PageName"] == "Source" ? "sel" : "")%>">
-			<%: Html.Anchor("Source")%></li>
-		<li class="<%=(ViewData["PageName"] == "InvestorAccountingCategories" ? "sel" : "")%>">
-			<%: Html.Anchor("Investor Accounting Categories")%></li>
 	</ul>
 </div>
 <%} %>
 <%break;%>
 <%case "CustomFieldManagement":%>
 <%using (Html.LeftMenu()) {%>
-<div class="menubox">
+<div class="menubox" style="display: none">
 	<ul>
 		<li class="<%=(ViewData["PageName"] == "CustomField" ? "sel" : "")%>">
 			<%: Html.ActionLink("Custom Field", "CustomField", "Admin",null, new { @class = (ViewData["PageName"] == "CustomField" ? "sel" : "") })%></li>
@@ -37,7 +67,7 @@
 <%break;%>
 <%case "DealManagement":%>
 <%using (Html.LeftMenu()) {%>
-<div class="menubox">
+<div class="menubox" style="display: none">
 	<ul>
 		<li class="<%=(ViewData["PageName"] == "PurchaseType" ? "sel" : "")%>">
 			<%: Html.ActionLink("Purchase Type", "PurchaseType", "Admin", null, new { @class = (ViewData["PageName"] == "PurchaseType" ? "sel" : "") })%></li>
@@ -77,6 +107,14 @@
 </ul>
 <%} %>
 <%break;%>
+<%case "EntitySetup":%>
+<%using (Html.LeftMenu()) {%>
+<ul>
+	<li class="<%=(ViewData["PageName"] == "Entity" ? "sel" : "")%>">
+		<%: Html.ActionLink("Entities", "Entities", "Admin", null, new { @class = (ViewData["PageName"] == "Entity" ? "sel" : "") })%></li>
+</ul>
+<%} %>
+<%break;%>
 <%case "DocumentManagement":%>
 <%using (Html.LeftMenu()) {%>
 <ul>
@@ -94,3 +132,4 @@
 <%} %>
 <%break;%>
 <%}%>
+--%>

@@ -14,7 +14,7 @@ namespace DeepBlue.Controllers.Transaction {
 
 		public List<Models.Entity.Fund> GetAllFundNames() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from fund in context.Funds
+				return (from fund in context.FundsTable
 						orderby fund.FundName
 						select fund).ToList();
 			}
@@ -22,7 +22,7 @@ namespace DeepBlue.Controllers.Transaction {
 
 		public List<FundClosing> GetAllFundClosings(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from fundClose in context.FundClosings
+				return (from fundClose in context.FundClosingsTable
 						where fundClose.FundID == fundId
 						orderby fundClose.FundClosingDate descending
 						select fundClose).ToList();
@@ -31,7 +31,7 @@ namespace DeepBlue.Controllers.Transaction {
 
 		public object FindInvestorFundDetail(int investorFundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investorFund in context.InvestorFunds
+				return (from investorFund in context.InvestorFundsTable
 						where investorFund.InvestorFundID == investorFundId
 						select new {
 							InvestorName = investorFund.Investor.InvestorName,

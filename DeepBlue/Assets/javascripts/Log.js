@@ -3,14 +3,11 @@
 		jHelper.checkValAttr(t);
 		jHelper.jqComboBox(t);
 		jHelper.jqCheckBox(t);
-		$(window).resize();
+		
 	}
 	,onInit: function (g) {
 		var data={ name: "Add Document Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		//		$(window).resize(function () {
-		//			log.resizeGV(g);
-		//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

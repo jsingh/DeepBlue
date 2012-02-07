@@ -315,5 +315,15 @@ namespace DeepBlue.Controllers.Admin {
 		IEnumerable<ErrorInfo> SaveSellerType(SellerType sellerType);
 		List<AutoCompleteList> FindSellerTypes(string sellerTypeName);
 		#endregion
+
+		#region Entity
+		List<ENTITY> GetAllEntities(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		ENTITY FindEntity(int id);
+		bool EntityNameAvailable(string entityName, int entityID);
+		bool EntityCodeAvailable(string entityCode, int entityID);
+		bool DeleteEntity(int id);
+		IEnumerable<ErrorInfo> SaveEntity(ENTITY entity);
+		List<ENTITY> GetAllEntities();
+		#endregion
 	}
 }

@@ -2,7 +2,7 @@
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <asp:Content ID="TitleCnt" ContentPlaceHolderID="TitleContent" runat="server">
-	WILLOWRIDGE
+	<%=EntityHelper.EntityName%>
 </asp:Content>
 <asp:Content ID="MainCnt" ContentPlaceHolderID="MainContent" runat="server">
 </asp:Content>

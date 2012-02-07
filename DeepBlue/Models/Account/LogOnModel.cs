@@ -17,11 +17,17 @@ namespace DeepBlue.Models.Account {
 		[DisplayName("Password")]
 		public string Password { get; set; }
 
+		[Required(ErrorMessage = "EntityCode is required")]
+		[DataType(DataType.Password)]
+		[DisplayName("Entity Code")]
+		public string EntityCode { get; set; }
+
 		[DisplayName("Remember Me")]
 		public bool RememberMe { get; set; }
 
 		public string ReturnUrl { get; set; }
 
 		public string Errors { get; set; }
+ 
 	}
 }

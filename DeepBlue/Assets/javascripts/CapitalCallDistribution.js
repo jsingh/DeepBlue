@@ -10,8 +10,8 @@
 		var url="/CapitalCall/FundDetail?id="+id+"&t="+dt.getTime();
 		$("#lnkPCC").attr("href","#");
 		$.getJSON(url,function (data) {
-			$("#lnkPCC").attr("href","/CapitalCall/Detail?fundId="+id+"&typeId=1");
-			$("#lnkPCD").attr("href","/CapitalCall/Detail?fundId="+id+"&typeId=2");
+			$("#lnkPCC").attr("href",deepBlue.rootUrl+"/CapitalCall/Detail?fundId="+id+"&typeId=1");
+			$("#lnkPCD").attr("href",deepBlue.rootUrl+"/CapitalCall/Detail?fundId="+id+"&typeId=2");
 			$("#SpnLoading").hide();
 			$("#CCDetail").show();
 			$("#FundId").val(data.FundId);
@@ -60,7 +60,7 @@
 		try {
 			var frm=$("#"+frmid);
 			var loading=$("#UpdateLoading");
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			loading.html(jHelper.savingHTML());
 			var param=$(frm).serializeForm();
 			param[param.length]={ name: "FundId",value: $("#FundId").val() };
 			param[param.length]={ name: "DistributionNumber",value: $("#DistributionNumber").val() };
@@ -71,12 +71,7 @@
 					jAlert(data);
 				} else {
 					jAlert("Capital Distribution Saved.");
-					location.href = "/CapitalCall/ModifyCapitalDistribution/"+arr[2];
-					/*$("#SpnDistributionNumber").html(arr[1]);
-					$("#DistributionNumber").val(arr[1]);
-					$("#SpnManualDistributionNumber").html(arr[1]);
-					jHelper.resetFields(frm);
-					*/
+					location.href = deepBlue.rootUrl+"/CapitalCall/ModifyCapitalDistribution/"+arr[2];
 				}
 			});
 		} catch(e) {

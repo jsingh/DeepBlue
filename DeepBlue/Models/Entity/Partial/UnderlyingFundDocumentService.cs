@@ -20,7 +20,7 @@ namespace DeepBlue.Models.Entity {
 				else {
 					EntityKey key;
 					object originalItem;
-					UnderlyingFundDocument updateUnderlyingFundDocument = context.UnderlyingFundDocuments.SingleOrDefault(deepblueUnderlyingFundDocument => deepblueUnderlyingFundDocument.UnderlyingFundDocumentID == underlyingFundDocument.UnderlyingFundDocumentID);
+					UnderlyingFundDocument updateUnderlyingFundDocument = context.UnderlyingFundDocumentsTable.SingleOrDefault(deepblueUnderlyingFundDocument => deepblueUnderlyingFundDocument.UnderlyingFundDocumentID == underlyingFundDocument.UnderlyingFundDocumentID);
 					key = default(EntityKey);
 					originalItem = null;
 					key = context.CreateEntityKey("Files", underlyingFundDocument.File);

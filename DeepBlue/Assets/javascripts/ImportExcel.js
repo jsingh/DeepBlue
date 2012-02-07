@@ -132,7 +132,7 @@ var importExcel={
 				});
 				jHelper.jqComboBox(target);
 			}
-		});
+		},"JSON");
 	}
 	,importUnderlyingFund: function (formId,pageIndex) {
 		var frm=$("#"+formId);
@@ -159,6 +159,6 @@ var importExcel={
 					$('#ExcelImport').dialog('close');
 				}
 			}
-		});
+		},"JSON");
 	}
 }

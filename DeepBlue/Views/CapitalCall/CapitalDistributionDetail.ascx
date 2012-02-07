@@ -99,7 +99,7 @@
 							${formatCurrency(cd.CostReturn)}
 						</td>
 						<td style="width: 5%" align="center">
-							<%: Html.Image("downarrow.png", new { @class = "ccexpandrow", @onclick = "javascript:capitalCallDetail.expandCD(this,${cd.CapitalDistrubutionId});" })%>
+							<%: Html.Image("downarrow.png", new { @class = "ccexpandrow editbtn", @onclick = "javascript:capitalCallDetail.expandCD(this,${cd.CapitalDistrubutionId});" })%>
 						</td>
 					</tr>
 					{{/each}}

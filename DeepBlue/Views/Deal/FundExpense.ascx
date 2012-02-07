@@ -7,7 +7,7 @@
 	</td>
 	<td class="ralign">
 		<%: Html.Span("${Amount}", new { @class = "show money" })%>
-		<%: Html.TextBox("Amount", "{{if Amount>0}}${Amount}{{/if}}", new { @class="hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+		<%: Html.TextBox("Amount", "{{if Amount>0}}${formatNumber(Amount)}{{/if}}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="lalign">
 		<%: Html.Span("${Date}", new { @class = "show dispdate" })%>

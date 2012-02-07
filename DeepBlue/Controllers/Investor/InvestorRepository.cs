@@ -15,7 +15,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public Models.Entity.Investor FindInvestor(int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.Investors.SingleOrDefault(investor => investor.InvestorID == investorId);
+				return context.InvestorsTable.SingleOrDefault(investor => investor.InvestorID == investorId);
 			}
 		}
 
@@ -24,6 +24,7 @@ namespace DeepBlue.Controllers.Investor {
 				return (from investorFund in context.InvestorFunds
 						.Include("Fund")
 						.Include("InvestorFundTransactions")
+						.EntityFilter()
 						where investorFund.InvestorID == investorId
 						select investorFund)
 						.ToList();
@@ -37,6 +38,7 @@ namespace DeepBlue.Controllers.Investor {
 						.Include("Investor")
 						.Include("InvestorType")
 						.Include("InvestorFundTransactions")
+						.EntityFilter()
 						.SingleOrDefault(investorFund => investorFund.InvestorID == investorId && investorFund.FundID == fundId);
 			}
 		}
@@ -48,19 +50,20 @@ namespace DeepBlue.Controllers.Investor {
 						.Include("Investor")
 						.Include("InvestorType")
 						.Include("InvestorFundTransactions")
+						.EntityFilter()
 						.SingleOrDefault(investorFund => investorFund.InvestorFundID == investorFundId);
 			}
 		}
 
 		public InvestorFundTransaction FindInvestorFundTransaction(int transactionId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.InvestorFundTransactions.SingleOrDefault(investorFundTransaction => investorFundTransaction.InvestorFundTransactionID == transactionId);
+				return context.InvestorFundTransactionsTable.SingleOrDefault(investorFundTransaction => investorFundTransaction.InvestorFundTransactionID == transactionId);
 			}
 		}
 
 		public bool Delete(int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				DeepBlue.Models.Entity.Investor deepBlueInvestor = context.Investors.SingleOrDefault(investor => investor.InvestorID == investorId);
+				DeepBlue.Models.Entity.Investor deepBlueInvestor = context.InvestorsTable.SingleOrDefault(investor => investor.InvestorID == investorId);
 				if (deepBlueInvestor != null) {
 					if (deepBlueInvestor.CapitalCallLineItems.Count > 0 || deepBlueInvestor.CapitalDistributionLineItems.Count > 0) {
 						return false;
@@ -115,7 +118,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public bool DeleteInvestorContact(int investorContactId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				InvestorContact investorContact = context.InvestorContacts.SingleOrDefault(contact => contact.InvestorContactID == investorContactId);
+				InvestorContact investorContact = context.InvestorContactsTable.SingleOrDefault(contact => contact.InvestorContactID == investorContactId);
 				if (investorContact != null) {
 					List<ContactAddress> investorContactAddresses = investorContact.Contact.ContactAddresses.ToList();
 					foreach (var contactAddress in investorContactAddresses) {
@@ -140,7 +143,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public bool DeleteInvestorAccount(int investorAccountId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				InvestorAccount investorAccount = context.InvestorAccounts.SingleOrDefault(account => account.InvestorAccountID == investorAccountId);
+				InvestorAccount investorAccount = context.InvestorAccountsTable.SingleOrDefault(account => account.InvestorAccountID == investorAccountId);
 				if (investorAccount != null) {
 					context.InvestorAccounts.DeleteObject(investorAccount);
 					context.SaveChanges();
@@ -162,13 +165,13 @@ namespace DeepBlue.Controllers.Investor {
 
 		public InvestorType FindInvestorType(int investorTypeId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.InvestorTypes.SingleOrDefault(investorType => investorType.InvestorTypeID == investorTypeId);
+				return context.InvestorTypesTable.SingleOrDefault(investorType => investorType.InvestorTypeID == investorTypeId);
 			}
 		}
 
 		public List<AutoCompleteList> FindInvestors(string investorName, int? fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				var investors = context.Investors.AsQueryable();
+				var investors = context.InvestorsTable.AsQueryable();
 				investors = investors.Where(investor => investor.InvestorName.StartsWith(investorName));
 				if (fundId.HasValue)
 					investors = investors.Where(investor => investor.InvestorFunds.Where(investorFund => investorFund.FundID == fundId).Count() > 0);
@@ -187,7 +190,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public List<AutoCompleteList> FindOtherInvestors(string investorName, int excludeInvestorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> query = (from investor in context.Investors
+				IQueryable<AutoCompleteList> query = (from investor in context.InvestorsTable
 													  where investor.InvestorName.StartsWith(investorName) && investor.InvestorID != excludeInvestorId
 													  orderby investor.InvestorName
 													  select new AutoCompleteList {
@@ -201,7 +204,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public InvestorDetail GetInvestorDetail(int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investor in context.Investors
+				return (from investor in context.InvestorsTable
 						where investor.InvestorID == investorId
 						select new InvestorDetail {
 							InvestorName = investor.InvestorName,
@@ -214,7 +217,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public decimal FindSumOfSellAmount(int investorFundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investorFundTransaction in context.InvestorFundTransactions
+				return (from investorFundTransaction in context.InvestorFundTransactionsTable
 						where investorFundTransaction.InvestorFundID == investorFundId &&
 							  investorFundTransaction.TransactionTypeID == (int)DeepBlue.Models.Transaction.Enums.TransactionType.Sell
 						select investorFundTransaction.Amount ?? 0).Sum();
@@ -223,7 +226,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public bool InvestorNameAvailable(string invesorName, int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from investor in context.Investors
+				return ((from investor in context.InvestorsTable
 						 where investor.InvestorName == invesorName && investor.InvestorID != investorId
 						 select investor.InvestorID).Count()) > 0 ? true : false;
 			}
@@ -231,7 +234,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public bool SocialSecurityTaxIdAvailable(string socialSecurityId, int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from investor in context.Investors
+				return ((from investor in context.InvestorsTable
 						 where investor.Social == socialSecurityId && investor.InvestorID != investorId
 						 select investor.InvestorID).Count()) > 0 ? true : false;
 			}
@@ -247,7 +250,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public EditModel FindInvestorDetail(int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investor in context.Investors
+				return (from investor in context.InvestorsTable
 						where investor.InvestorID == investorId
 						select new EditModel {
 							InvestorName = investor.InvestorName,
@@ -337,7 +340,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public List<FundInformation> GetInvestmentDetails(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<FundInformation> query = (from investorFund in context.InvestorFunds
+				IQueryable<FundInformation> query = (from investorFund in context.InvestorFundsTable
 													 where investorFund.InvestorID == investorId
 													 select new FundInformation {
 														 FundName = investorFund.Fund.FundName,
@@ -368,13 +371,14 @@ namespace DeepBlue.Controllers.Investor {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.InvestorAddresses
 					.Include("Address")
+					.EntityFilter()
 					.Where(investorAddress => investorAddress.InvestorAddressID == investorAddressId).SingleOrDefault();
 			}
 		}
 
 		public object FindInvestorAddressModel(int investorAddressId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investorAddress in context.InvestorAddresses
+				return (from investorAddress in context.InvestorAddressesTable
 						where investorAddress.InvestorAddressID == investorAddressId
 						select new {
 							Address1 = investorAddress.Address.Address1,
@@ -409,6 +413,7 @@ namespace DeepBlue.Controllers.Investor {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.InvestorCommunications
 					.Include("Communication")
+					.EntityFilter()
 					.Where(investorCommunication => investorCommunication.InvestorID == investorId).ToList();
 			}
 		}
@@ -428,13 +433,14 @@ namespace DeepBlue.Controllers.Investor {
 							  .Include("Contact.ContactAddresses.Address")
 							  .Include("Contact.ContactCommunications")
 							  .Include("Contact.ContactCommunications.Communication")
+							  .EntityFilter()
 					.Where(investorContact => investorContact.InvestorContactID == investorContactId).SingleOrDefault();
 			}
 		}
 
 		public object FindInvestorContactModel(int investorContactId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investorContact in context.InvestorContacts
+				return (from investorContact in context.InvestorContactsTable
 						where investorContact.InvestorContactID == investorContactId
 						select new {
 							Person = investorContact.Contact.ContactName,
@@ -475,7 +481,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public List<ContactInformation> ContactInformationList(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<ContactInformation> query = (from investorContact in context.InvestorContacts
+				IQueryable<ContactInformation> query = (from investorContact in context.InvestorContactsTable
 														where investorContact.InvestorID == investorId
 														select new ContactInformation {
 															Person = investorContact.Contact.ContactName,
@@ -519,14 +525,14 @@ namespace DeepBlue.Controllers.Investor {
 		#region Investor Bank Account
 		public InvestorAccount FindInvestorAccount(int investorAccountId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.InvestorAccounts
+				return context.InvestorAccountsTable
 					   .Where(investorAccount => investorAccount.InvestorAccountID == investorAccountId).SingleOrDefault();
 			}
 		}
 
 		public object FindInvestorAccountModel(int investorAccountId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from account in context.InvestorAccounts
+				return (from account in context.InvestorAccountsTable
 						where account.InvestorAccountID == investorAccountId
 						select new {
 							ABANumber = account.Routing,
@@ -555,7 +561,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public List<AccountInformation> BankAccountInformationList(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AccountInformation> query = (from account in context.InvestorAccounts
+				IQueryable<AccountInformation> query = (from account in context.InvestorAccountsTable
 														where account.InvestorID == investorId
 														select new AccountInformation {
 															ABANumber = account.Routing,
@@ -584,7 +590,7 @@ namespace DeepBlue.Controllers.Investor {
 		#region Investor Information
 		public InvestorInformation FindInvestorInformation(int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investor in context.Investors
+				return (from investor in context.InvestorsTable
 						where investor.InvestorID == investorId
 						select new InvestorInformation {
 							InvestorName = investor.InvestorName,
@@ -604,7 +610,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public int FindLastInvestorId() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				var lastInvestor = (from investor in context.Investors
+				var lastInvestor = (from investor in context.InvestorsTable
 									orderby investor.InvestorID descending
 									select new {
 										InvestorID = investor.InvestorID
@@ -618,11 +624,11 @@ namespace DeepBlue.Controllers.Investor {
 
 		public List<InvertorLibraryInformation> GetInvestorLibraryList(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? investorId, int? fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.Fund> fundQuery = context.Funds;
+				IQueryable<Models.Entity.Fund> fundQuery = context.FundsTable;
 				if (fundId > 0) {
 					fundQuery = fundQuery.Where(fund => fund.FundID == fundId);
 				}
-				var investorFundQuery = (from investorFund in context.InvestorFunds
+				var investorFundQuery = (from investorFund in context.InvestorFundsTable
 										 where (investorId > 0 ? investorFund.InvestorID == investorId : investorFund.InvestorID > 0)
 										 select new {
 											 FundID = investorFund.FundID
@@ -663,7 +669,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public List<AutoCompleteList> FindInvestorFunds(string fundName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.Funds
+				IQueryable<AutoCompleteList> fundListQuery = (from fund in context.FundsTable
 															  where fund.InvestorFunds.Count() > 0
 															  where fund.FundName.StartsWith(fundName)
 															  orderby fund.FundName
@@ -678,7 +684,7 @@ namespace DeepBlue.Controllers.Investor {
 
 		public List<AutoCompleteList> FindFundInvestors(string investorName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> query = (from investor in context.Investors
+				IQueryable<AutoCompleteList> query = (from investor in context.InvestorsTable
 													  where investor.InvestorName.StartsWith(investorName) && investor.InvestorFunds.Count() > 0
 													  orderby investor.InvestorName
 													  select new AutoCompleteList {

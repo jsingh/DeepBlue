@@ -283,12 +283,17 @@ h4 a {
 #DealSellerInfo .editor-field {
 	width: 166px;
 }
-
 #tblUnderlyingDirect td input[type="text"], #tblUnderlyingDirect td select {
 	max-width: 101px;
 }
 #tblUnderlyingFund td input[type="text"], #tblUnderlyingFund td select {
 	max-width: 129px;
+}
+#tblUnderlyingDirect td.ralign input[type="text"], #tblUnderlyingDirect td.ralign select {
+	float:right;
+}
+#tblUnderlyingFund td.ralign input[type="text"], #tblUnderlyingFund td.ralign select {
+	float:right;
 }
 #SellerInfo .dealdetail {
 	padding-left: 30px;
@@ -305,9 +310,7 @@ h4 a {
 .grid td .jqComboBox {
 	width: 100%;
 }
-.grid td .jqComboBox .left {
-	width: 68%;
-}
+ 
 .drop-files{
 	border: 1px dashed #000000;
     clear: both;

@@ -14,14 +14,14 @@
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title">AMBERBROOK FUNDS</span><span class="arrow"></span><span class="pname">Modify
+				<span class="title"> FUNDS</span><span class="arrow"></span><span class="pname">Modify
 					Capital Distribution</span></div>
 			<div class="rightcol">
 				<div style="float: left">
-					<%: Html.TextBox("SearchFundName", "SEARCH AMBERBROOK FUND", new { @class = "wm", @id = "SearchFundName", @style = "width: 200px" })%>
+					<%: Html.TextBox("SearchFundName", "SEARCH  FUND", new { @class = "wm", @id = "SearchFundName", @style = "width: 250px" })%>
 				</div>
 				<div style="float: left; padding-left: 10px;">
-					<%: Html.TextBox("SearchCapitalDistribution", "SEARCH CAPITAL DISTRIBUTION", new { @class = "wm", @id = "SearchCapitalDistribution", @style = "width: 200px" })%>
+					<%: Html.TextBox("SearchCapitalDistribution", "SEARCH CAPITAL DISTRIBUTION", new { @class = "wm", @id = "SearchCapitalDistribution", @style = "width: 250px" })%>
 				</div>
 			</div>
 		</div>
@@ -193,38 +193,38 @@
 										</td>
 										<td class="ralign">
 											<%: Html.Span("${formatCurrency(item.DistributionAmount)}", new { @class = "show" })%>
-											<%: Html.TextBox("${i}_DistributionAmount", "${item.DistributionAmount}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+											<%: Html.TextBox("${i}_DistributionAmount", "${formatNumber(item.DistributionAmount)}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 										</td>
 										<td class="ralign">
 											<%: Html.Span("${formatCurrency(item.CapitalReturn)}", new { @class = "show" })%>
-											<%: Html.TextBox("${i}_CapitalReturn", "${item.CapitalReturn}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+											<%: Html.TextBox("${i}_CapitalReturn", "${formatNumber(item.CapitalReturn)}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 										</td>
 										<td class="ralign">
 											<%: Html.Span("${formatCurrency(item.PreferredReturn)}", new { @class = "show" })%>
-											<%: Html.TextBox("${i}_PreferredReturn", "${item.PreferredReturn}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+											<%: Html.TextBox("${i}_PreferredReturn", "${formatNumber(item.PreferredReturn)}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 										</td>
 										<td class="ralign">
 											<%: Html.Span("${formatCurrency(item.ReturnManagementFees)}", new { @class = "show" })%>
-											<%: Html.TextBox("${i}_ReturnManagementFees", "${item.ReturnManagementFees}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+											<%: Html.TextBox("${i}_ReturnManagementFees", "${formatNumber(item.ReturnManagementFees)}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 										</td>
 										<td class="ralign">
 											<%: Html.Span("${formatCurrency(item.ReturnFundExpenses)}", new { @class = "show" })%>
-											<%: Html.TextBox("${i}_ReturnFundExpenses", "${item.ReturnFundExpenses}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+											<%: Html.TextBox("${i}_ReturnFundExpenses", "${formatNumber(item.ReturnFundExpenses)}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 										</td>
 										<td class="ralign">
 											<%: Html.Span("${formatCurrency(item.PreferredCatchUp)}", new { @class = "show" })%>
-											<%: Html.TextBox("${i}_PreferredCatchUp", "${item.PreferredCatchUp}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+											<%: Html.TextBox("${i}_PreferredCatchUp", "${formatNumber(item.PreferredCatchUp)}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 										</td>
 										<td class="ralign">
 											<%: Html.Span("${formatCurrency(item.Profits)}", new { @class = "show" })%>
-											<%: Html.TextBox("${i}_Profits", "${item.Profits}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+											<%: Html.TextBox("${i}_Profits", "${formatNumber(item.Profits)}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 										</td>
 										<td class="ralign">
 											<%: Html.Span("${formatCurrency(item.LPProfits)}", new { @class = "show" })%>
-											<%: Html.TextBox("${i}_LPProfits", "${item.LPProfits}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+											<%: Html.TextBox("${i}_LPProfits", "${formatNumber(item.LPProfits)}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 										</td>
 										<td class="ralign">
-											<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:modifyCapitalDistribution.edit(this);" })%>
+											<%: Html.Image("Edit.png", new { @class = "gbutton editbtn show", @onclick = "javascript:modifyCapitalDistribution.edit(this);" })%>
 											<%: Html.Hidden("${i}_CapitalDistributionID", "${item.CapitalDistributionID}")%>
 											<%: Html.Hidden("${i}_CapitalDistributionLineItemID", "${item.CapitalDistributionLineItemID}")%>
 										</td>

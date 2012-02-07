@@ -15,22 +15,22 @@
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
 		<div class="heading">
-		<div class="leftcol">
-			<div class="title">
-				INVESTMENTS</div>
-			<div class="arrow">
+			<div class="leftcol">
+				<div class="title">
+					INVESTMENTS</div>
+				<div class="arrow">
+				</div>
+				<div class="pname">
+					DEAL REPORT<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%></div>
 			</div>
-			<div class="pname">
-				DEAL REPORT<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...",new { @id = "SpnLoading",@style="display:none" })%></div>
+			<div class="rightcol">
+				<%: Html.TextBox("FundName", "SEARCH  FUND", new { @id = "FundName", @class = "wm", @style = "width:200px" })%>
+			</div>
 		</div>
-		<div class="rightcol">
-			<%: Html.TextBox("FundName", "SEARCH AMBERBROOK FUND", new { @id = "FundName", @class = "wm", @style = "width:200px" })%>
-		</div>
-	</div>
 	</div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-	<div id="DealReportMain" style="float:left;display:none;width:100%;">
+	<div id="DealReportMain" style="float: left; display: none; width: 100%;">
 		<div class="menu exportlist" style="position: absolute; right: 85px;">
 			<ul>
 				<li><a href="javascript:jHelper.chooseExpMenu(2,'Pdf');">Pdf</a></li>
@@ -88,12 +88,12 @@
 							<th sortname="CommittedAmount" align="right" style="text-align: right; width: 13%">
 								<span>Commitment Amount</span>
 							</th>
-							<th sortname="UnfundedAmount" align="right" style="text-align: right; width: 12%">
-								<span>Unfunded Amount</span>
+							<th sortname="NoOfShares" align="right" style="text-align: right; width: 12%">
+								<span>No.Of Share</span>
 							</th>
-							<th class="sorted sdesc" sortname="TotalAmount" align="right" style="text-align: right;
+							<th sortname="FMV" align="right" style="text-align: right;
 								width: 12%">
-								<span>Total Amount</span>
+								<span>FMV</span>
 							</th>
 							<th style="width: 2%">
 							</th>
@@ -137,7 +137,7 @@
 	, Autoload = false
 	})%>
 	<%= Html.jQueryAutoComplete("FundName", new AutoCompleteOptions { Source = "/Fund/FindFunds", MinLength = 1, OnSelect = "function(event, ui) { dealReport.selectFund(ui.item.id,ui.item.label);}" })%>
-	<script id="DealDetailTemplate" type="text/x-jquery-tmpl"> 
+	<%using (Html.jQueryTemplateScript("DealDetailTemplate")) {%> 
 		<div class="treerow">
 			<div class="gbox">
             <table cellpadding="0" cellspacing="0" border="0" class="grid">
@@ -160,7 +160,7 @@
 						<th style="width:15%">
 							Record Date
 						</th>
-						<th style="width:12%">
+						<th style="text-align:right;width:12%">
 							Fund NAV
 						</th>
                         <th style="text-align:right;width:12%">
@@ -188,7 +188,7 @@
 						<td class="datecell">
 							${RecordDate}
 						</td>
-						<td>
+						<td class="dollarcell" style="text-align:right">
 							${FundNAV}
 						</td>
                         <td class="dollarcell" style="text-align:right">
@@ -211,9 +211,9 @@
 						</td>
                         <td>
                         </td>
-						<td style="text-align:left;">${TotalFundNAV}
+						<td style="text-align:right;">${TotalFundNAV}
 						</td>
-						<td></td>
+						<td style="text-align:right">${TotalGrossPurchasePrice}</td>
 						<td  style="text-align:right">${TotalCommitted}
 						</td>
                         <td style="text-align:right">${TotalUnfunded}
@@ -334,5 +334,5 @@
 			</table>
 			</div><br/><br/><div class="gbox"></div>
 		 </div>
-	</script>
+	<%}%>
 </asp:Content>

@@ -17,10 +17,10 @@ namespace DeepBlue.Controllers.Admin {
 		#region InvestorManagement
 
 		#region  InvestorEntityType
- 
+
 		public List<Models.Entity.InvestorEntityType> GetAllInvestorEntityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.InvestorEntityType> query = (from entityType in context.InvestorEntityTypes
+				IQueryable<Models.Entity.InvestorEntityType> query = (from entityType in context.InvestorEntityTypesTable
 																	  select entityType);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<Models.Entity.InvestorEntityType> paginatedList = new PaginatedList<Models.Entity.InvestorEntityType>(query, pageIndex, pageSize);
@@ -31,13 +31,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public InvestorEntityType FindInvestorEntityType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.InvestorEntityTypes.SingleOrDefault(entityType => entityType.InvestorEntityTypeID == id);
+				return context.InvestorEntityTypesTable.SingleOrDefault(entityType => entityType.InvestorEntityTypeID == id);
 			}
 		}
 
 		public bool InvestorEntityTypeNameAvailable(string investorEntityTypeName, int investorEntityTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from entityType in context.InvestorEntityTypes
+				return ((from entityType in context.InvestorEntityTypesTable
 						 where entityType.InvestorEntityTypeName == investorEntityTypeName && entityType.InvestorEntityTypeID != investorEntityTypeID
 						 select entityType.InvestorEntityTypeID).Count()) > 0 ? true : false;
 			}
@@ -45,7 +45,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteInvestorEntityType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				InvestorEntityType investorEntityType = context.InvestorEntityTypes.SingleOrDefault(entityType => entityType.InvestorEntityTypeID == id);
+				InvestorEntityType investorEntityType = context.InvestorEntityTypesTable.SingleOrDefault(entityType => entityType.InvestorEntityTypeID == id);
 				if (investorEntityType != null) {
 					if (investorEntityType.Investors.Count == 0) {
 						context.InvestorEntityTypes.DeleteObject(investorEntityType);
@@ -67,7 +67,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.InvestorType> GetAllInvestorTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.InvestorType> query = (from investorType in context.InvestorTypes
+				IQueryable<Models.Entity.InvestorType> query = (from investorType in context.InvestorTypesTable
 																select investorType);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<InvestorType> paginatedList = new PaginatedList<InvestorType>(query, pageIndex, pageSize);
@@ -78,7 +78,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<InvestorType> GetAllInvestorTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investorType in context.InvestorTypes
+				return (from investorType in context.InvestorTypesTable
 						where investorType.Enabled == true
 						orderby investorType.InvestorTypeName
 						select investorType).ToList();
@@ -87,13 +87,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public InvestorType FindInvestorType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.InvestorTypes.SingleOrDefault(type => type.InvestorTypeID == id);
+				return context.InvestorTypesTable.SingleOrDefault(type => type.InvestorTypeID == id);
 			}
 		}
 
 		public bool InvestorTypeNameAvailable(string investorTypeName, int investorTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.InvestorTypes
+				return ((from type in context.InvestorTypesTable
 						 where type.InvestorTypeName == investorTypeName && type.InvestorTypeID != investorTypeID
 						 select type.InvestorTypeID).Count()) > 0 ? true : false;
 			}
@@ -101,7 +101,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteInvestorType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				InvestorType investorType = context.InvestorTypes.SingleOrDefault(type => type.InvestorTypeID == id);
+				InvestorType investorType = context.InvestorTypesTable.SingleOrDefault(type => type.InvestorTypeID == id);
 				if (investorType != null) {
 					if (investorType.InvestorFunds.Count == 0) {
 						context.InvestorTypes.DeleteObject(investorType);
@@ -123,7 +123,9 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.CommunicationType> GetAllCommunicationTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.CommunicationType> query = (from communicationType in context.CommunicationTypes.Include("CommunicationGrouping")
+				IQueryable<Models.Entity.CommunicationType> query = (from communicationType in context.CommunicationTypes
+																		 .Include("CommunicationGrouping")
+																		 .EntityFilter()
 																	 select communicationType);
 				switch (sortName) {
 					case "CommunicationGroupingName":
@@ -141,7 +143,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<CommunicationType> GetAllCommunicationTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from communicationType in context.CommunicationTypes
+				return (from communicationType in context.CommunicationTypesTable
 						where communicationType.Enabled == true
 						orderby communicationType.CommunicationTypeName
 						select communicationType).ToList();
@@ -150,13 +152,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public CommunicationType FindCommunicationType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.CommunicationTypes.Include("CommunicationGrouping").SingleOrDefault(type => type.CommunicationTypeID == id);
+				return context.CommunicationTypes.Include("CommunicationGrouping").EntityFilter().SingleOrDefault(type => type.CommunicationTypeID == id);
 			}
 		}
 
 		public bool CommunicationTypeNameAvailable(string communicationTypeName, int communicationTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.CommunicationTypes
+				return ((from type in context.CommunicationTypesTable
 						 where type.CommunicationTypeName == communicationTypeName && type.CommunicationTypeID != communicationTypeID
 						 select type.CommunicationTypeID).Count()) > 0 ? true : false;
 			}
@@ -164,7 +166,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteCommunicationType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				CommunicationType communicationType = context.CommunicationTypes.SingleOrDefault(type => type.CommunicationTypeID == id);
+				CommunicationType communicationType = context.CommunicationTypesTable.SingleOrDefault(type => type.CommunicationTypeID == id);
 				if (communicationType != null) {
 					if (communicationType.Communications.Count == 0 && communicationType.CommunicationGrouping != null) {
 						context.CommunicationTypes.DeleteObject(communicationType);
@@ -186,7 +188,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.CommunicationGrouping> GetAllCommunicationGroupings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.CommunicationGrouping> query = (from communicationGrouping in context.CommunicationGroupings
+				IQueryable<Models.Entity.CommunicationGrouping> query = (from communicationGrouping in context.CommunicationGroupingsTable
 																		 select communicationGrouping);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<CommunicationGrouping> paginatedList = new PaginatedList<CommunicationGrouping>(query, pageIndex, pageSize);
@@ -197,7 +199,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<CommunicationGrouping> GetAllCommunicationGroupings() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from communicationGrouping in context.CommunicationGroupings
+				return (from communicationGrouping in context.CommunicationGroupingsTable
 						orderby communicationGrouping.CommunicationGroupingName
 						select communicationGrouping).ToList();
 			}
@@ -205,13 +207,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public CommunicationGrouping FindCommunicationGrouping(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.CommunicationGroupings.SingleOrDefault(type => type.CommunicationGroupingID == id);
+				return context.CommunicationGroupingsTable.SingleOrDefault(type => type.CommunicationGroupingID == id);
 			}
 		}
 
 		public bool CommunicationGroupingNameAvailable(string communicationGroupingName, int communicationGroupingID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.CommunicationGroupings
+				return ((from type in context.CommunicationGroupingsTable
 						 where type.CommunicationGroupingName == communicationGroupingName && type.CommunicationGroupingID != communicationGroupingID
 						 select type.CommunicationGroupingID).Count()) > 0 ? true : false;
 			}
@@ -219,7 +221,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteCommunicationGrouping(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				CommunicationGrouping communicationGrouping = context.CommunicationGroupings.SingleOrDefault(type => type.CommunicationGroupingID == id);
+				CommunicationGrouping communicationGrouping = context.CommunicationGroupingsTable.SingleOrDefault(type => type.CommunicationGroupingID == id);
 				if (communicationGrouping != null) {
 					if (communicationGrouping.CommunicationTypes.Count == 0) {
 						context.CommunicationGroupings.DeleteObject(communicationGrouping);
@@ -248,6 +250,7 @@ namespace DeepBlue.Controllers.Admin {
 				IQueryable<Models.Entity.CustomField> query = (from customField in context.CustomFields
 																						 .Include("MODULE")
 																						 .Include("DataType")
+																						 .EntityFilter()
 															   select customField);
 				switch (sortName) {
 					case "ModuleName":
@@ -268,7 +271,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<CustomFieldDetail> GetAllCustomFields(int moduleId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from field in context.CustomFields
+				return (from field in context.CustomFieldsTable
 						where field.ModuleID == moduleId
 						orderby field.CustomFieldText
 						select new CustomFieldDetail {
@@ -284,7 +287,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<MODULE> GetAllModules() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.MODULEs.OrderBy(module => module.ModuleName).ToList();
+				return context.MODULEsTable.OrderBy(module => module.ModuleName).ToList();
 			}
 		}
 
@@ -298,7 +301,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<DataType> GetAllDataTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.DataTypes.OrderBy(dataType => dataType.DataTypeName).ToList();
+				return context.DataTypesTable.OrderBy(dataType => dataType.DataTypeName).ToList();
 			}
 		}
 
@@ -308,19 +311,20 @@ namespace DeepBlue.Controllers.Admin {
 							  .Include("OptionFields")
 							  .Include("MODULE")
 							  .Include("DataType")
+							  .EntityFilter()
 							  .SingleOrDefault(field => field.CustomFieldID == id);
 			}
 		}
 
 		public CustomFieldValue FindCustomFieldValue(int customFieldId, int key) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.CustomFieldValues.SingleOrDefault(fieldValue => fieldValue.CustomFieldID == customFieldId && fieldValue.Key == key);
+				return context.CustomFieldValuesTable.SingleOrDefault(fieldValue => fieldValue.CustomFieldID == customFieldId && fieldValue.Key == key);
 			}
 		}
 
 		public bool CustomFieldTextAvailable(string customFieldText, int customFieldId, int moduleId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from field in context.CustomFields
+				return ((from field in context.CustomFieldsTable
 						 where field.CustomFieldText == customFieldText && field.CustomFieldID != customFieldId && field.ModuleID == moduleId
 						 select field.CustomFieldID).Count()) > 0 ? true : false;
 			}
@@ -328,7 +332,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteCustomField(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				CustomField customField = context.CustomFields.SingleOrDefault(field => field.CustomFieldID == id);
+				CustomField customField = context.CustomFieldsTable.SingleOrDefault(field => field.CustomFieldID == id);
 				if (customField != null) {
 					if (customField.OptionFields.Count == 0 && customField.CustomFieldValues.Count == 0) {
 						context.CustomFields.DeleteObject(customField);
@@ -353,7 +357,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<DataType> GetAllDataTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.DataType> query = (from customField in context.DataTypes
+				IQueryable<Models.Entity.DataType> query = (from customField in context.DataTypesTable
 															select customField);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<DataType> paginatedList = new PaginatedList<DataType>(query, pageIndex, pageSize);
@@ -364,13 +368,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public DataType FindDataType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.DataTypes.SingleOrDefault(dataType => dataType.DataTypeID == id);
+				return context.DataTypesTable.SingleOrDefault(dataType => dataType.DataTypeID == id);
 			}
 		}
 
 		public bool DataTypeNameAvailable(string dataTypeName, int dataTypeId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from dataType in context.DataTypes
+				return ((from dataType in context.DataTypesTable
 						 where dataType.DataTypeName == dataTypeName && dataType.DataTypeID != dataTypeId
 						 select dataType.DataTypeID).Count()) > 0 ? true : false;
 			}
@@ -378,7 +382,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteDataType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				DataType dataType = context.DataTypes.SingleOrDefault(type => type.DataTypeID == id);
+				DataType dataType = context.DataTypesTable.SingleOrDefault(type => type.DataTypeID == id);
 				if (dataType != null) {
 					if (dataType.CustomFields.Count == 0) {
 						context.DataTypes.DeleteObject(dataType);
@@ -404,7 +408,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.PurchaseType> GetAllPurchaseTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.PurchaseType> query = (from purchaseType in context.PurchaseTypes
+				IQueryable<Models.Entity.PurchaseType> query = (from purchaseType in context.PurchaseTypesTable
 																select purchaseType);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<PurchaseType> paginatedList = new PaginatedList<PurchaseType>(query, pageIndex, pageSize);
@@ -415,7 +419,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<PurchaseType> GetAllPurchaseTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from purchaseType in context.PurchaseTypes
+				return (from purchaseType in context.PurchaseTypesTable
 						orderby purchaseType.Name
 						select purchaseType).ToList();
 			}
@@ -423,13 +427,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public PurchaseType FindPurchaseType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.PurchaseTypes.SingleOrDefault(type => type.PurchaseTypeID == id);
+				return context.PurchaseTypesTable.SingleOrDefault(type => type.PurchaseTypeID == id);
 			}
 		}
 
 		public bool PurchaseTypeNameAvailable(string purchaseTypeName, int purchaseTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.PurchaseTypes
+				return ((from type in context.PurchaseTypesTable
 						 where type.Name == purchaseTypeName && type.PurchaseTypeID != purchaseTypeID
 						 select type.PurchaseTypeID).Count()) > 0 ? true : false;
 			}
@@ -437,7 +441,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeletePurchaseType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				PurchaseType purchaseType = context.PurchaseTypes.SingleOrDefault(type => type.PurchaseTypeID == id);
+				PurchaseType purchaseType = context.PurchaseTypesTable.SingleOrDefault(type => type.PurchaseTypeID == id);
 				if (purchaseType != null) {
 					if (purchaseType.Deals.Count == 0) {
 						context.PurchaseTypes.DeleteObject(purchaseType);
@@ -459,7 +463,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.DealClosingCostType> GetAllDealClosingCostTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.DealClosingCostType> query = (from dealClosingCostType in context.DealClosingCostTypes
+				IQueryable<Models.Entity.DealClosingCostType> query = (from dealClosingCostType in context.DealClosingCostTypesTable
 																	   select dealClosingCostType);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<DealClosingCostType> paginatedList = new PaginatedList<DealClosingCostType>(query, pageIndex, pageSize);
@@ -470,7 +474,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<DealClosingCostType> GetAllDealClosingCostTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from dealClosingCostType in context.DealClosingCostTypes
+				return (from dealClosingCostType in context.DealClosingCostTypesTable
 						orderby dealClosingCostType.Name
 						select dealClosingCostType).ToList();
 			}
@@ -478,13 +482,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public DealClosingCostType FindDealClosingCostType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.DealClosingCostTypes.SingleOrDefault(type => type.DealClosingCostTypeID == id);
+				return context.DealClosingCostTypesTable.SingleOrDefault(type => type.DealClosingCostTypeID == id);
 			}
 		}
 
 		public bool DealClosingCostTypeNameAvailable(string dealClosingCostTypeName, int dealClosingCostTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.DealClosingCostTypes
+				return ((from type in context.DealClosingCostTypesTable
 						 where type.Name == dealClosingCostTypeName && type.DealClosingCostTypeID != dealClosingCostTypeID
 						 select type.DealClosingCostTypeID).Count()) > 0 ? true : false;
 			}
@@ -492,7 +496,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteDealClosingCostType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				DealClosingCostType dealClosingCostType = context.DealClosingCostTypes.SingleOrDefault(type => type.DealClosingCostTypeID == id);
+				DealClosingCostType dealClosingCostType = context.DealClosingCostTypesTable.SingleOrDefault(type => type.DealClosingCostTypeID == id);
 				if (dealClosingCostType != null) {
 					if (dealClosingCostType.DealClosingCosts.Count == 0) {
 						context.DealClosingCostTypes.DeleteObject(dealClosingCostType);
@@ -514,7 +518,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.UnderlyingFundType> GetAllUnderlyingFundTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.UnderlyingFundType> query = (from underlyingfundtype in context.UnderlyingFundTypes
+				IQueryable<Models.Entity.UnderlyingFundType> query = (from underlyingfundtype in context.UnderlyingFundTypesTable
 																	  select underlyingfundtype);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<Models.Entity.UnderlyingFundType> paginatedList = new PaginatedList<Models.Entity.UnderlyingFundType>(query, pageIndex, pageSize);
@@ -525,13 +529,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public UnderlyingFundType FindUnderlyingFundType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.UnderlyingFundTypes.SingleOrDefault(field => field.UnderlyingFundTypeID == id);
+				return context.UnderlyingFundTypesTable.SingleOrDefault(field => field.UnderlyingFundTypeID == id);
 			}
 		}
 
 		public bool UnderlyingFundTypeNameAvailable(string underlyingfundtypeFieldText, int underlyingfundtypeFieldId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from field in context.UnderlyingFundTypes
+				return ((from field in context.UnderlyingFundTypesTable
 						 where field.Name == underlyingfundtypeFieldText && field.UnderlyingFundTypeID != underlyingfundtypeFieldId
 						 select field.UnderlyingFundTypeID).Count()) > 0 ? true : false;
 			}
@@ -539,7 +543,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteUnderlyingFundType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				UnderlyingFundType underlyingFundType = context.UnderlyingFundTypes.SingleOrDefault(field => field.UnderlyingFundTypeID == id);
+				UnderlyingFundType underlyingFundType = context.UnderlyingFundTypesTable.SingleOrDefault(field => field.UnderlyingFundTypeID == id);
 				if (underlyingFundType != null) {
 					if (underlyingFundType.UnderlyingFunds.Count == 0) {
 						context.UnderlyingFundTypes.DeleteObject(underlyingFundType);
@@ -557,7 +561,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<UnderlyingFundType> GetAllUnderlyingFundTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from underlyingFundType in context.UnderlyingFundTypes
+				return (from underlyingFundType in context.UnderlyingFundTypesTable
 						orderby underlyingFundType.Name
 						select underlyingFundType).ToList();
 			}
@@ -568,7 +572,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.ShareClassType> GetAllShareClassTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.ShareClassType> query = (from shareclasstype in context.ShareClassTypes
+				IQueryable<Models.Entity.ShareClassType> query = (from shareclasstype in context.ShareClassTypesTable
 																  select shareclasstype);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<Models.Entity.ShareClassType> paginatedList = new PaginatedList<Models.Entity.ShareClassType>(query, pageIndex, pageSize);
@@ -579,13 +583,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public ShareClassType FindShareClassType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.ShareClassTypes.SingleOrDefault(field => field.ShareClassTypeID == id);
+				return context.ShareClassTypesTable.SingleOrDefault(field => field.ShareClassTypeID == id);
 			}
 		}
 
 		public bool ShareClassTypeNameAvailable(string shareclasstypeFieldText, int shareclasstypeFieldId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from field in context.ShareClassTypes
+				return ((from field in context.ShareClassTypesTable
 						 where field.ShareClass == shareclasstypeFieldText && field.ShareClassTypeID != shareclasstypeFieldId
 						 select field.ShareClassTypeID).Count()) > 0 ? true : false;
 			}
@@ -593,7 +597,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteShareClassType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				ShareClassType shareClassType = context.ShareClassTypes.SingleOrDefault(field => field.ShareClassTypeID == id);
+				ShareClassType shareClassType = context.ShareClassTypesTable.SingleOrDefault(field => field.ShareClassTypeID == id);
 				if (shareClassType != null) {
 					if (shareClassType.UnderlyingFunds.Count == 0) {
 						context.ShareClassTypes.DeleteObject(shareClassType);
@@ -611,7 +615,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<ShareClassType> GetAllShareClassTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from shareClassType in context.ShareClassTypes
+				return (from shareClassType in context.ShareClassTypesTable
 						where shareClassType.Enabled == true
 						orderby shareClassType.ShareClass
 						select shareClassType).ToList();
@@ -624,7 +628,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.ReportingType> GetAllReportingTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.ReportingType> query = (from reportingtype in context.ReportingTypes
+				IQueryable<Models.Entity.ReportingType> query = (from reportingtype in context.ReportingTypesTable
 																 select reportingtype);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<Models.Entity.ReportingType> paginatedList = new PaginatedList<Models.Entity.ReportingType>(query, pageIndex, pageSize);
@@ -635,13 +639,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public ReportingType FindReportingType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.ReportingTypes.SingleOrDefault(field => field.ReportingTypeID == id);
+				return context.ReportingTypesTable.SingleOrDefault(field => field.ReportingTypeID == id);
 			}
 		}
 
 		public bool ReportingTypeNameAvailable(string reportingtypeFieldText, int reportingtypeFieldId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from field in context.ReportingTypes
+				return ((from field in context.ReportingTypesTable
 						 where field.Reporting == reportingtypeFieldText && field.ReportingTypeID != reportingtypeFieldId
 						 select field.ReportingTypeID).Count()) > 0 ? true : false;
 			}
@@ -649,7 +653,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteReportingType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				ReportingType reportingType = context.ReportingTypes.SingleOrDefault(field => field.ReportingTypeID == id);
+				ReportingType reportingType = context.ReportingTypesTable.SingleOrDefault(field => field.ReportingTypeID == id);
 				if (reportingType != null) {
 					if (reportingType.UnderlyingFunds.Count == 0) {
 						context.ReportingTypes.DeleteObject(reportingType);
@@ -668,7 +672,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<ReportingType> GetAllReportingTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from reportingType in context.ReportingTypes
+				return (from reportingType in context.ReportingTypesTable
 						where reportingType.Enabled == true
 						orderby reportingType.Reporting
 						select reportingType).ToList();
@@ -681,7 +685,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.ReportingFrequency> GetAllReportingFrequencies(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.ReportingFrequency> query = (from reportingfrequency in context.ReportingFrequencies
+				IQueryable<Models.Entity.ReportingFrequency> query = (from reportingfrequency in context.ReportingFrequenciesTable
 																	  select reportingfrequency);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<Models.Entity.ReportingFrequency> paginatedList = new PaginatedList<Models.Entity.ReportingFrequency>(query, pageIndex, pageSize);
@@ -692,13 +696,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public ReportingFrequency FindReportingFrequency(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.ReportingFrequencies.SingleOrDefault(field => field.ReportingFrequencyID == id);
+				return context.ReportingFrequenciesTable.SingleOrDefault(field => field.ReportingFrequencyID == id);
 			}
 		}
 
 		public bool ReportingFrequencyNameAvailable(string reportingfrequencyFieldText, int reportingfrequencyFieldId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from field in context.ReportingFrequencies
+				return ((from field in context.ReportingFrequenciesTable
 						 where field.ReportingFrequency1 == reportingfrequencyFieldText && field.ReportingFrequencyID != reportingfrequencyFieldId
 						 select field.ReportingFrequencyID).Count()) > 0 ? true : false;
 			}
@@ -706,7 +710,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteReportingFrequency(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				ReportingFrequency reportingFrequency = context.ReportingFrequencies.SingleOrDefault(field => field.ReportingFrequencyID == id);
+				ReportingFrequency reportingFrequency = context.ReportingFrequenciesTable.SingleOrDefault(field => field.ReportingFrequencyID == id);
 				if (reportingFrequency != null) {
 					if (reportingFrequency.UnderlyingFunds.Count == 0) {
 						context.ReportingFrequencies.DeleteObject(reportingFrequency);
@@ -724,7 +728,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<ReportingFrequency> GetAllReportingFrequencies() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from reportingFrequency in context.ReportingFrequencies
+				return (from reportingFrequency in context.ReportingFrequenciesTable
 						where reportingFrequency.Enabled == true
 						orderby reportingFrequency.ReportingFrequency1
 						select reportingFrequency).ToList();
@@ -736,7 +740,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.CashDistributionType> GetAllCashDistributionTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.CashDistributionType> query = (from cashDistributionType in context.CashDistributionTypes
+				IQueryable<Models.Entity.CashDistributionType> query = (from cashDistributionType in context.CashDistributionTypesTable
 																		select cashDistributionType);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<CashDistributionType> paginatedList = new PaginatedList<CashDistributionType>(query, pageIndex, pageSize);
@@ -747,7 +751,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<CashDistributionType> GetAllCashDistributionTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from cashDistributionType in context.CashDistributionTypes
+				return (from cashDistributionType in context.CashDistributionTypesTable
 						where cashDistributionType.Enabled == true
 						orderby cashDistributionType.Name
 						select cashDistributionType).ToList();
@@ -756,13 +760,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public CashDistributionType FindCashDistributionType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.CashDistributionTypes.SingleOrDefault(type => type.CashDistributionTypeID == id);
+				return context.CashDistributionTypesTable.SingleOrDefault(type => type.CashDistributionTypeID == id);
 			}
 		}
 
 		public bool CashDistributionTypeNameAvailable(string cashDistributionTypeName, int cashDistributionTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.CashDistributionTypes
+				return ((from type in context.CashDistributionTypesTable
 						 where type.Name == cashDistributionTypeName && type.CashDistributionTypeID != cashDistributionTypeID
 						 select type.CashDistributionTypeID).Count()) > 0 ? true : false;
 			}
@@ -770,7 +774,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteCashDistributionType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				CashDistributionType cashDistributionType = context.CashDistributionTypes.SingleOrDefault(type => type.CashDistributionTypeID == id);
+				CashDistributionType cashDistributionType = context.CashDistributionTypesTable.SingleOrDefault(type => type.CashDistributionTypeID == id);
 				if (cashDistributionType != null) {
 					if (cashDistributionType.UnderlyingFundCashDistributions.Count == 0) {
 						context.CashDistributionTypes.DeleteObject(cashDistributionType);
@@ -792,7 +796,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.FundExpenseType> GetAllFundExpenseTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.FundExpenseType> query = (from fundExpenseType in context.FundExpenseTypes
+				IQueryable<Models.Entity.FundExpenseType> query = (from fundExpenseType in context.FundExpenseTypesTable
 																   select fundExpenseType);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<FundExpenseType> paginatedList = new PaginatedList<FundExpenseType>(query, pageIndex, pageSize);
@@ -803,7 +807,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<FundExpenseType> GetAllFundExpenseTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from fundExpense in context.FundExpenseTypes
+				return (from fundExpense in context.FundExpenseTypesTable
 						orderby fundExpense.Name
 						select fundExpense).ToList();
 			}
@@ -812,13 +816,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public FundExpenseType FindFundExpenseType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.FundExpenseTypes.SingleOrDefault(type => type.FundExpenseTypeID == id);
+				return context.FundExpenseTypesTable.SingleOrDefault(type => type.FundExpenseTypeID == id);
 			}
 		}
 
 		public bool FundExpenseTypeNameAvailable(string fundExpenseTypeName, int fundExpenseTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.FundExpenseTypes
+				return ((from type in context.FundExpenseTypesTable
 						 where type.Name == fundExpenseTypeName && type.FundExpenseTypeID != fundExpenseTypeID
 						 select type.FundExpenseTypeID).Count()) > 0 ? true : false;
 			}
@@ -826,7 +830,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteFundExpenseType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				FundExpenseType fundExpenseType = context.FundExpenseTypes.SingleOrDefault(type => type.FundExpenseTypeID == id);
+				FundExpenseType fundExpenseType = context.FundExpenseTypesTable.SingleOrDefault(type => type.FundExpenseTypeID == id);
 				if (fundExpenseType != null) {
 					if (fundExpenseType.FundExpenses.Count == 0) {
 						context.FundExpenseTypes.DeleteObject(fundExpenseType);
@@ -850,9 +854,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.FundClosing> GetAllFundClosings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.FundClosing> query = (from fund in context.FundClosings
-																		 .Include("Fund")
-															   select fund);
+				IQueryable<Models.Entity.FundClosing> query = (from fund in context.FundClosings.Include("Fund").EntityFilter()  select fund);
 				if (sortName == "FundName") {
 					query = (sortOrder == "asc" ? query.OrderBy(fund => fund.Fund.FundName) : query.OrderByDescending(fund => fund.Fund.FundName));
 				}
@@ -867,13 +869,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public FundClosing FindFundClosing(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.FundClosings.Include("Fund").SingleOrDefault(fundClose => fundClose.FundClosingID == id);
+				return context.FundClosings.Include("Fund").EntityFilter().SingleOrDefault(fundClose => fundClose.FundClosingID == id);
 			}
 		}
 
 		public bool FundClosingNameAvailable(string name, int fundclosingId, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from fundClose in context.FundClosings
+				return ((from fundClose in context.FundClosingsTable
 						 where fundClose.Name == name && fundClose.FundClosingID != fundclosingId && fundClose.FundID == fundId
 						 select fundClose.FundClosingID).Count()) > 0 ? true : false;
 			}
@@ -881,7 +883,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteFundClosing(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				FundClosing fundclose = context.FundClosings.SingleOrDefault(close => close.FundClosingID == id);
+				FundClosing fundclose = context.FundClosingsTable.SingleOrDefault(close => close.FundClosingID == id);
 				if (fundclose != null) {
 					if (fundclose.InvestorFundTransactions.Count() == 0) {
 						context.FundClosings.DeleteObject(fundclose);
@@ -903,7 +905,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.MODULE> GetAllModules(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.MODULE> query = (from module in context.MODULEs
+				IQueryable<Models.Entity.MODULE> query = (from module in context.MODULEsTable
 														  select module);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<Models.Entity.MODULE> paginatedList = new PaginatedList<Models.Entity.MODULE>(query, pageIndex, pageSize);
@@ -914,13 +916,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public MODULE FindModule(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.MODULEs.SingleOrDefault(field => field.ModuleID == id);
+				return context.MODULEsTable.SingleOrDefault(field => field.ModuleID == id);
 			}
 		}
 
 		public bool ModuleTextAvailable(string moduleFieldText, int moduleFieldId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from field in context.MODULEs
+				return ((from field in context.MODULEsTable
 						 where field.ModuleName == moduleFieldText && field.ModuleID != moduleFieldId
 						 select field.ModuleID).Count()) > 0 ? true : false;
 			}
@@ -928,7 +930,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteModule(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				MODULE module = context.MODULEs.SingleOrDefault(field => field.ModuleID == id);
+				MODULE module = context.MODULEsTable.SingleOrDefault(field => field.ModuleID == id);
 				if (module != null) {
 					if (module.CustomFields.Count == 0) {
 						context.MODULEs.DeleteObject(module);
@@ -949,7 +951,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<COUNTRY> GetAllCountries() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from country in context.COUNTRies
+				return (from country in context.COUNTRiesTable
 						orderby country.CountryName ascending
 						select country).ToList();
 			}
@@ -957,7 +959,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<STATE> GetAllStates() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from state in context.STATEs
+				return (from state in context.STATEsTable
 						orderby state.Name ascending
 						select state).ToList();
 			}
@@ -965,7 +967,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<InvestorEntityType> GetAllInvestorEntityTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investorEntityType in context.InvestorEntityTypes
+				return (from investorEntityType in context.InvestorEntityTypesTable
 						where investorEntityType.Enabled == true
 						orderby investorEntityType.InvestorEntityTypeName
 						select investorEntityType).ToList();
@@ -974,7 +976,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<AddressType> GetAllAddressTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from addressType in context.AddressTypes
+				return (from addressType in context.AddressTypesTable
 						orderby addressType.AddressTypeName
 						select addressType).ToList();
 			}
@@ -985,15 +987,15 @@ namespace DeepBlue.Controllers.Admin {
 		#region  Communication
 		public string GetContactCommunicationValue(int contactId, Models.Admin.Enums.CommunicationType communicationType) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from contactCommunication in context.ContactCommunications
+				return (from contactCommunication in context.ContactCommunicationsTable
 						where contactCommunication.ContactID == contactId && contactCommunication.Communication.CommunicationTypeID == (int)communicationType
 						select contactCommunication.Communication.CommunicationValue).FirstOrDefault();
 			}
 		}
 
 		private List<CommunicationDetailModel> GetContactCommunications(DeepBlueEntities context, int contactId) {
-			return (from contactCommunication in context.ContactCommunications
-					join communication in context.Communications on contactCommunication.CommunicationID equals communication.CommunicationID
+			return (from contactCommunication in context.ContactCommunicationsTable
+					join communication in context.CommunicationsTable on contactCommunication.CommunicationID equals communication.CommunicationID
 					where contactCommunication.ContactID == contactId
 					select new CommunicationDetailModel {
 						CommunicationValue = communication.CommunicationValue,
@@ -1003,8 +1005,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<CommunicationDetailModel> GetContactCommunications(int? contactId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from contactCommunication in context.ContactCommunications
-						join communication in context.Communications on contactCommunication.CommunicationID equals communication.CommunicationID
+				return (from contactCommunication in context.ContactCommunicationsTable
+						join communication in context.CommunicationsTable on contactCommunication.CommunicationID equals communication.CommunicationID
 						where contactCommunication.ContactID == contactId
 						select new CommunicationDetailModel {
 							CommunicationValue = communication.CommunicationValue,
@@ -1025,7 +1027,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.SecurityType> GetAllSecurityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.SecurityType> query = (from securityType in context.SecurityTypes
+				IQueryable<Models.Entity.SecurityType> query = (from securityType in context.SecurityTypesTable
 																select securityType);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<SecurityType> paginatedList = new PaginatedList<SecurityType>(query, pageIndex, pageSize);
@@ -1036,7 +1038,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<SecurityType> GetAllSecurityTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from securityType in context.SecurityTypes
+				return (from securityType in context.SecurityTypesTable
 						orderby securityType.Name
 						select securityType).ToList();
 			}
@@ -1044,13 +1046,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public SecurityType FindSecurityType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.SecurityTypes.SingleOrDefault(type => type.SecurityTypeID == id);
+				return context.SecurityTypesTable.SingleOrDefault(type => type.SecurityTypeID == id);
 			}
 		}
 
 		public bool SecurityTypeNameAvailable(string securityTypeName, int securityTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.SecurityTypes
+				return ((from type in context.SecurityTypesTable
 						 where type.Name == securityTypeName && type.SecurityTypeID != securityTypeID
 						 select type.SecurityTypeID).Count()) > 0 ? true : false;
 			}
@@ -1058,7 +1060,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteSecurityType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				SecurityType securityType = context.SecurityTypes.SingleOrDefault(type => type.SecurityTypeID == id);
+				SecurityType securityType = context.SecurityTypesTable.SingleOrDefault(type => type.SecurityTypeID == id);
 				if (securityType != null) {
 					if (securityType.DealUnderlyingDirects.Count == 0) {
 						context.SecurityTypes.DeleteObject(securityType);
@@ -1080,7 +1082,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.Geography> GetAllGeographys(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.Geography> query = (from geography in context.Geographies
+				IQueryable<Models.Entity.Geography> query = (from geography in context.GeographiesTable
 															 select geography);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<Models.Entity.Geography> paginatedList = new PaginatedList<Models.Entity.Geography>(query, pageIndex, pageSize);
@@ -1091,13 +1093,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public Geography FindGeography(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.Geographies.SingleOrDefault(field => field.GeographyID == id);
+				return context.GeographiesTable.SingleOrDefault(field => field.GeographyID == id);
 			}
 		}
 
 		public bool GeographyNameAvailable(string geographyFieldText, int geographyFieldId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from field in context.Geographies
+				return ((from field in context.GeographiesTable
 						 where field.Geography1 == geographyFieldText && field.GeographyID != geographyFieldId
 						 select field.GeographyID).Count()) > 0 ? true : false;
 			}
@@ -1105,7 +1107,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteGeography(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				Geography geography = context.Geographies.SingleOrDefault(field => field.GeographyID == id);
+				Geography geography = context.GeographiesTable.SingleOrDefault(field => field.GeographyID == id);
 				if (geography != null) {
 					if (geography.UnderlyingFunds.Count == 0) {
 						context.Geographies.DeleteObject(geography);
@@ -1123,7 +1125,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Geography> GetAllGeographies() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from geogryphy in context.Geographies
+				return (from geogryphy in context.GeographiesTable
 						where geogryphy.Enabled == true
 						orderby geogryphy.Geography1
 						select geogryphy).ToList();
@@ -1135,7 +1137,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.Industry> GetAllIndustrys(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.Industry> query = (from industry in context.Industries
+				IQueryable<Models.Entity.Industry> query = (from industry in context.IndustriesTable
 															select industry);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<Models.Entity.Industry> paginatedList = new PaginatedList<Models.Entity.Industry>(query, pageIndex, pageSize);
@@ -1146,13 +1148,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public Industry FindIndustry(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.Industries.SingleOrDefault(field => field.IndustryID == id);
+				return context.IndustriesTable.SingleOrDefault(field => field.IndustryID == id);
 			}
 		}
 
 		public bool IndustryNameAvailable(string industryFieldText, int industryFieldId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from field in context.Industries
+				return ((from field in context.IndustriesTable
 						 where field.Industry1 == industryFieldText && field.IndustryID != industryFieldId
 						 select field.IndustryID).Count()) > 0 ? true : false;
 			}
@@ -1160,7 +1162,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteIndustry(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				Industry industry = context.Industries.SingleOrDefault(field => field.IndustryID == id);
+				Industry industry = context.IndustriesTable.SingleOrDefault(field => field.IndustryID == id);
 				if (industry != null) {
 					if (industry.UnderlyingFunds.Count == 0) {
 						context.Industries.DeleteObject(industry);
@@ -1178,7 +1180,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Industry> GetAllIndusties() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from industry in context.Industries
+				return (from industry in context.IndustriesTable
 						where industry.Enabled == true
 						orderby industry.Industry1
 						select industry).ToList();
@@ -1187,7 +1189,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<AutoCompleteList> FindIndustrys(string industryName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> industryListQuery = (from industry in context.Industries
+				IQueryable<AutoCompleteList> industryListQuery = (from industry in context.IndustriesTable
 																  where industry.Industry1.StartsWith(industryName)
 																  orderby industry.Industry1
 																  select new AutoCompleteList {
@@ -1205,7 +1207,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.FileType> GetAllFileTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.FileType> query = (from fileType in context.FileTypes
+				IQueryable<Models.Entity.FileType> query = (from fileType in context.FileTypesTable
 															select fileType);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<Models.Entity.FileType> paginatedList = new PaginatedList<Models.Entity.FileType>(query, pageIndex, pageSize);
@@ -1216,13 +1218,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public FileType FindFileType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.FileTypes.SingleOrDefault(field => field.FileTypeID == id);
+				return context.FileTypesTable.SingleOrDefault(field => field.FileTypeID == id);
 			}
 		}
 
 		public bool FileTypeNameAvailable(string fileTypeFieldText, int fileTypeFieldId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from field in context.FileTypes
+				return ((from field in context.FileTypesTable
 						 where field.FileTypeName == fileTypeFieldText && field.FileTypeID != fileTypeFieldId
 						 select field.FileTypeID).Count()) > 0 ? true : false;
 			}
@@ -1230,7 +1232,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteFileType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				FileType fileType = context.FileTypes.SingleOrDefault(field => field.FileTypeID == id);
+				FileType fileType = context.FileTypesTable.SingleOrDefault(field => field.FileTypeID == id);
 				if (fileType != null) {
 					if (fileType.Files.Count == 0) {
 						context.FileTypes.DeleteObject(fileType);
@@ -1248,7 +1250,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<FileType> GetAllFileTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from fileType in context.FileTypes
+				return (from fileType in context.FileTypesTable
 						orderby fileType.FileTypeName
 						select fileType).ToList();
 			}
@@ -1264,7 +1266,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public File FindFile(int fileId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.Files.Where(file => file.FileID == fileId).SingleOrDefault();
+				return context.FilesTable.Where(file => file.FileID == fileId).SingleOrDefault();
 			}
 		}
 
@@ -1274,7 +1276,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.EquityType> GetAllEquityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.EquityType> query = (from equityType in context.EquityTypes
+				IQueryable<Models.Entity.EquityType> query = (from equityType in context.EquityTypesTable
 															  select equityType);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<EquityType> paginatedList = new PaginatedList<EquityType>(query, pageIndex, pageSize);
@@ -1285,7 +1287,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<EquityType> GetAllEquityTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from equityType in context.EquityTypes
+				return (from equityType in context.EquityTypesTable
 						where equityType.Enabled == true
 						orderby equityType.Equity
 						select equityType).ToList();
@@ -1294,13 +1296,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public EquityType FindEquityType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.EquityTypes.SingleOrDefault(type => type.EquityTypeID == id);
+				return context.EquityTypesTable.SingleOrDefault(type => type.EquityTypeID == id);
 			}
 		}
 
 		public bool EquityTypeNameAvailable(string equityTypeName, int equityTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.EquityTypes
+				return ((from type in context.EquityTypesTable
 						 where type.Equity == equityTypeName && type.EquityTypeID != equityTypeID
 						 select type.EquityTypeID).Count()) > 0 ? true : false;
 			}
@@ -1308,7 +1310,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteEquityType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				EquityType equityType = context.EquityTypes.SingleOrDefault(type => type.EquityTypeID == id);
+				EquityType equityType = context.EquityTypesTable.SingleOrDefault(type => type.EquityTypeID == id);
 				if (equityType != null) {
 					if (equityType.Equities.Count == 0) {
 						context.EquityTypes.DeleteObject(equityType);
@@ -1330,7 +1332,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.FixedIncomeType> GetAllFixedIncomeTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.FixedIncomeType> query = (from fixedIncomeType in context.FixedIncomeTypes
+				IQueryable<Models.Entity.FixedIncomeType> query = (from fixedIncomeType in context.FixedIncomeTypesTable
 																   select fixedIncomeType);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<FixedIncomeType> paginatedList = new PaginatedList<FixedIncomeType>(query, pageIndex, pageSize);
@@ -1341,7 +1343,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<FixedIncomeType> GetAllFixedIncomeTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from fixedIncomeType in context.FixedIncomeTypes
+				return (from fixedIncomeType in context.FixedIncomeTypesTable
 						where fixedIncomeType.Enabled == true
 						orderby fixedIncomeType.FixedIncomeType1
 						select fixedIncomeType).ToList();
@@ -1350,13 +1352,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public FixedIncomeType FindFixedIncomeType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.FixedIncomeTypes.SingleOrDefault(type => type.FixedIncomeTypeID == id);
+				return context.FixedIncomeTypesTable.SingleOrDefault(type => type.FixedIncomeTypeID == id);
 			}
 		}
 
 		public bool FixedIncomeTypeNameAvailable(string fixedIncomeTypeName, int fixedIncomeTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.FixedIncomeTypes
+				return ((from type in context.FixedIncomeTypesTable
 						 where type.FixedIncomeType1 == fixedIncomeTypeName && type.FixedIncomeTypeID != fixedIncomeTypeID
 						 select type.FixedIncomeTypeID).Count()) > 0 ? true : false;
 			}
@@ -1364,7 +1366,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteFixedIncomeType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				FixedIncomeType fixedIncomeType = context.FixedIncomeTypes.SingleOrDefault(type => type.FixedIncomeTypeID == id);
+				FixedIncomeType fixedIncomeType = context.FixedIncomeTypesTable.SingleOrDefault(type => type.FixedIncomeTypeID == id);
 				if (fixedIncomeType != null) {
 					if (fixedIncomeType.FixedIncomes.Count == 0) {
 						context.FixedIncomeTypes.DeleteObject(fixedIncomeType);
@@ -1386,7 +1388,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.Currency> GetAllCurrencies(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.Currency> query = (from currency in context.Currencies
+				IQueryable<Models.Entity.Currency> query = (from currency in context.CurrenciesTable
 															select currency);
 				query = query.OrderBy("CurrencyID", (sortOrder == "asc"));
 				PaginatedList<Models.Entity.Currency> paginatedList = new PaginatedList<Models.Entity.Currency>(query, pageIndex, pageSize);
@@ -1397,13 +1399,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public Currency FindCurrency(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.Currencies.SingleOrDefault(field => field.CurrencyID == id);
+				return context.CurrenciesTable.SingleOrDefault(field => field.CurrencyID == id);
 			}
 		}
 
 		public bool CurrencyNameAvailable(string currencyFieldText, int currencyFieldId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from field in context.Currencies
+				return ((from field in context.CurrenciesTable
 						 where field.Currency1 == currencyFieldText && field.CurrencyID != currencyFieldId
 						 select field.CurrencyID).Count()) > 0 ? true : false;
 			}
@@ -1411,7 +1413,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteCurrency(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				Currency currency = context.Currencies.SingleOrDefault(field => field.CurrencyID == id);
+				Currency currency = context.CurrenciesTable.SingleOrDefault(field => field.CurrencyID == id);
 				if (currency != null) {
 					if (currency.Equities.Count == 0 && currency.FixedIncomes.Count == 0) {
 						context.Currencies.DeleteObject(currency);
@@ -1429,7 +1431,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Currency> GetAllCurrencies() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from currency in context.Currencies
+				return (from currency in context.CurrenciesTable
 						where currency.Enabled == true
 						orderby currency.Currency1
 						select currency).ToList();
@@ -1440,7 +1442,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region  InvestmentType
 		public List<InvestmentType> GetAllInvestmentTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from investmentType in context.InvestmentTypes
+				return (from investmentType in context.InvestmentTypesTable
 						where investmentType.Enabled == true
 						orderby investmentType.Investment
 						select investmentType).ToList();
@@ -1452,7 +1454,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.ActivityType> GetAllActivityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.ActivityType> query = (from activityType in context.ActivityTypes
+				IQueryable<Models.Entity.ActivityType> query = (from activityType in context.ActivityTypesTable
 																select activityType);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<ActivityType> paginatedList = new PaginatedList<ActivityType>(query, pageIndex, pageSize);
@@ -1463,7 +1465,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<ActivityType> GetAllActivityTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from activityType in context.ActivityTypes
+				return (from activityType in context.ActivityTypesTable
 						where activityType.Enabled == true
 						orderby activityType.Name
 						select activityType).ToList();
@@ -1472,13 +1474,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public ActivityType FindActivityType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.ActivityTypes.SingleOrDefault(type => type.ActivityTypeID == id);
+				return context.ActivityTypesTable.SingleOrDefault(type => type.ActivityTypeID == id);
 			}
 		}
 
 		public bool ActivityTypeNameAvailable(string activityTypeName, int activityTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.ActivityTypes
+				return ((from type in context.ActivityTypesTable
 						 where type.Name == activityTypeName && type.ActivityTypeID != activityTypeID
 						 select type.ActivityTypeID).Count()) > 0 ? true : false;
 			}
@@ -1486,7 +1488,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteActivityType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				ActivityType activityType = context.ActivityTypes.SingleOrDefault(type => type.ActivityTypeID == id);
+				ActivityType activityType = context.ActivityTypesTable.SingleOrDefault(type => type.ActivityTypeID == id);
 				if (activityType != null) {
 					if (activityType.FundActivityHistories.Count == 0) {
 						context.ActivityTypes.DeleteObject(activityType);
@@ -1507,7 +1509,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region Country
 		public List<AutoCompleteList> FindCountrys(string countryName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> countryListQuery = (from country in context.COUNTRies
+				IQueryable<AutoCompleteList> countryListQuery = (from country in context.COUNTRiesTable
 																 where country.CountryName.StartsWith(countryName)
 																 orderby country.CountryName
 																 select new AutoCompleteList {
@@ -1523,7 +1525,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region State
 		public List<AutoCompleteList> FindStates(string stateName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> stateListQuery = (from state in context.STATEs
+				IQueryable<AutoCompleteList> stateListQuery = (from state in context.STATEsTable
 															   where state.Name.StartsWith(stateName)
 															   orderby state.Name
 															   select new AutoCompleteList {
@@ -1660,304 +1662,304 @@ namespace DeepBlue.Controllers.Admin {
 				object results = null;
 				switch (tableName.ToLower()) {
 					case "account":
-						results = context.Accounts.ToList();
+						results = context.AccountsTable.ToList();
 						break;
 					case "activitytype":
-						results = context.ActivityTypes.ToList();
+						results = context.ActivityTypesTable.ToList();
 						break;
 					case "address":
-						results = context.Addresses.ToList();
+						results = context.AddressesTable.ToList();
 						break;
 					case "addresstype":
-						results = context.AddressTypes.ToList();
+						results = context.AddressTypesTable.ToList();
 						break;
 					case "annualmeetinghistory":
-						results = context.AnnualMeetingHistories.ToList();
+						results = context.AnnualMeetingHistoriesTable.ToList();
 						break;
 					case "capitalcall":
-						results = context.CapitalCalls.ToList();
+						results = context.CapitalCallsTable.ToList();
 						break;
 					case "capitalcalllineitem":
-						results = context.CapitalCallLineItems.ToList();
+						results = context.CapitalCallLineItemsTable.ToList();
 						break;
 					case "capitalcalllineitemtype":
-						results = context.CapitalCallLineItemTypes.ToList();
+						results = context.CapitalCallLineItemTypesTable.ToList();
 						break;
 					case "capitalcalltype":
-						results = context.CapitalCallTypes.ToList();
+						results = context.CapitalCallTypesTable.ToList();
 						break;
 					case "capitaldistribution":
-						results = context.CapitalDistributions.ToList();
+						results = context.CapitalDistributionsTable.ToList();
 						break;
 					case "capitaldistributionlineitem":
-						results = context.CapitalDistributionLineItems.ToList();
+						results = context.CapitalDistributionLineItemsTable.ToList();
 						break;
 					case "capitaldistributionprofit":
-						results = context.CapitalDistributionProfits.ToList();
+						results = context.CapitalDistributionProfitsTable.ToList();
 						break;
 					case "cashdistribution":
-						results = context.CashDistributions.ToList();
+						results = context.CashDistributionsTable.ToList();
 						break;
 					case "cashdistributiontype":
-						results = context.CashDistributionTypes.ToList();
+						results = context.CashDistributionTypesTable.ToList();
 						break;
 					case "communication":
-						results = context.Communications.ToList();
+						results = context.CommunicationsTable.ToList();
 						break;
 					case "communicationgrouping":
-						results = context.CommunicationGroupings.ToList();
+						results = context.CommunicationGroupingsTable.ToList();
 						break;
 					case "communicationtype":
-						results = context.CommunicationTypes.ToList();
+						results = context.CommunicationTypesTable.ToList();
 						break;
 					case "contact":
-						results = context.Contacts.ToList();
+						results = context.ContactsTable.ToList();
 						break;
 					case "contactaddress":
-						results = context.ContactAddresses.ToList();
+						results = context.ContactAddressesTable.ToList();
 						break;
 					case "contactcommunication":
-						results = context.ContactCommunications.ToList();
+						results = context.ContactCommunicationsTable.ToList();
 						break;
 					case "country":
-						results = context.COUNTRies.ToList();
+						results = context.COUNTRiesTable.ToList();
 						break;
 					case "currency":
-						results = context.Currencies.ToList();
+						results = context.CurrenciesTable.ToList();
 						break;
 					case "customfield":
-						results = context.CustomFields.ToList();
+						results = context.CustomFieldsTable.ToList();
 						break;
 					case "customfieldvalue":
-						results = context.CustomFieldValues.ToList();
+						results = context.CustomFieldValuesTable.ToList();
 						break;
 					case "datatype":
-						results = context.DataTypes.ToList();
+						results = context.DataTypesTable.ToList();
 						break;
 					case "deal":
-						results = context.Deals.ToList();
+						results = context.DealsTable.ToList();
 						break;
 					case "dealclosing":
-						results = context.DealClosings.ToList();
+						results = context.DealClosingsTable.ToList();
 						break;
 					case "dealclosingcost":
-						results = context.DealClosingCosts.ToList();
+						results = context.DealClosingCostsTable.ToList();
 						break;
 					case "dealclosingcosttype":
-						results = context.DealClosingCostTypes.ToList();
+						results = context.DealClosingCostTypesTable.ToList();
 						break;
 					case "dealfunddocument":
-						results = context.DealFundDocuments.ToList();
+						results = context.DealFundDocumentsTable.ToList();
 						break;
 					case "dealunderlyingdirect":
-						results = context.DealUnderlyingDirects.ToList();
+						results = context.DealUnderlyingDirectsTable.ToList();
 						break;
 					case "dealunderlyingfund":
-						results = context.DealUnderlyingFunds.ToList();
+						results = context.DealUnderlyingFundsTable.ToList();
 						break;
 					case "dealunderlyingfundadjustment":
-						results = context.DealUnderlyingFundAdjustments.ToList();
+						results = context.DealUnderlyingFundAdjustmentsTable.ToList();
 						break;
 					case "documentsection":
-						results = context.DocumentSections.ToList();
+						results = context.DocumentSectionsTable.ToList();
 						break;
 					case "documenttype":
-						results = context.DocumentTypes.ToList();
+						results = context.DocumentTypesTable.ToList();
 						break;
 					case "entity":
-						results = context.ENTITies.ToList();
+						results = context.ENTITiesTable.ToList();
 						break;
 					case "equity":
-						results = context.Equities.ToList();
+						results = context.EquitiesTable.ToList();
 						break;
 					case "equitysplit":
-						results = context.EquitySplits.ToList();
+						results = context.EquitySplitsTable.ToList();
 						break;
 					case "equitytype":
-						results = context.EquityTypes.ToList();
+						results = context.EquityTypesTable.ToList();
 						break;
 					case "file":
-						results = context.Files.ToList();
+						results = context.FilesTable.ToList();
 						break;
 					case "filetype":
-						results = context.FileTypes.ToList();
+						results = context.FileTypesTable.ToList();
 						break;
 					case "fixedincome":
-						results = context.FixedIncomes.ToList();
+						results = context.FixedIncomesTable.ToList();
 						break;
 					case "fixedincometype":
-						results = context.FixedIncomeTypes.ToList();
+						results = context.FixedIncomeTypesTable.ToList();
 						break;
 					case "fund":
-						results = context.Funds.ToList();
+						results = context.FundsTable.ToList();
 						break;
 					case "fundaccount":
-						results = context.FundAccounts.ToList();
+						results = context.FundAccountsTable.ToList();
 						break;
 					case "fundactivityhistory":
-						results = context.FundActivityHistories.ToList();
+						results = context.FundActivityHistoriesTable.ToList();
 						break;
 					case "fundclosing":
-						results = context.FundClosings.ToList();
+						results = context.FundClosingsTable.ToList();
 						break;
 					case "fundexpense":
-						results = context.FundExpenses.ToList();
+						results = context.FundExpensesTable.ToList();
 						break;
 					case "fundexpensetype":
-						results = context.FundExpenseTypes.ToList();
+						results = context.FundExpenseTypesTable.ToList();
 						break;
 					case "fundrateschedule":
-						results = context.FundRateSchedules.ToList();
+						results = context.FundRateSchedulesTable.ToList();
 						break;
 					case "geography":
-						results = context.Geographies.ToList();
+						results = context.GeographiesTable.ToList();
 						break;
 					case "industry":
-						results = context.Industries.ToList();
+						results = context.IndustriesTable.ToList();
 						break;
 					case "investmenttype":
-						results = context.InvestmentTypes.ToList();
+						results = context.InvestmentTypesTable.ToList();
 						break;
 					case "investor":
-						results = context.Investors.ToList();
+						results = context.InvestorsTable.ToList();
 						break;
 					case "investoraccount":
-						results = context.InvestorAccounts.ToList();
+						results = context.InvestorAccountsTable.ToList();
 						break;
 					case "investoraddress":
-						results = context.InvestorAddresses.ToList();
+						results = context.InvestorAddressesTable.ToList();
 						break;
 					case "investorcommunication":
-						results = context.InvestorCommunications.ToList();
+						results = context.InvestorCommunicationsTable.ToList();
 						break;
 					case "investorcontact":
-						results = context.InvestorContacts.ToList();
+						results = context.InvestorContactsTable.ToList();
 						break;
 					case "investorentitytype":
-						results = context.InvestorEntityTypes.ToList();
+						results = context.InvestorEntityTypesTable.ToList();
 						break;
 					case "investorfund":
-						results = context.InvestorFunds.ToList();
+						results = context.InvestorFundsTable.ToList();
 						break;
 					case "investorfunddocument":
-						results = context.InvestorFundDocuments.ToList();
+						results = context.InvestorFundDocumentsTable.ToList();
 						break;
 					case "investorfundtransaction":
-						results = context.InvestorFundTransactions.ToList();
+						results = context.InvestorFundTransactionsTable.ToList();
 						break;
 					case "investortype":
-						results = context.InvestorTypes.ToList();
+						results = context.InvestorTypesTable.ToList();
 						break;
 					case "issuer":
-						results = context.Issuers.ToList();
+						results = context.IssuersTable.ToList();
 						break;
 					case "log":
-						results = context.Logs.ToList();
+						results = context.LogsTable.ToList();
 						break;
 					case "logdetail":
-						results = context.LogDetails.ToList();
+						results = context.LogDetailsTable.ToList();
 						break;
 					case "logtype":
-						results = context.LogTypes.ToList();
+						results = context.LogTypesTable.ToList();
 						break;
 					case "managementfeerateschedule":
-						results = context.ManagementFeeRateSchedules.ToList();
+						results = context.ManagementFeeRateSchedulesTable.ToList();
 						break;
 					case "managementfeeratescheduletier":
-						results = context.ManagementFeeRateScheduleTiers.ToList();
+						results = context.ManagementFeeRateScheduleTiersTable.ToList();
 						break;
 					case "module":
-						results = context.MODULEs.ToList();
+						results = context.MODULEsTable.ToList();
 						break;
 					case "multipliertype":
-						results = context.MultiplierTypes.ToList();
+						results = context.MultiplierTypesTable.ToList();
 						break;
 					case "optionfield":
-						results = context.OptionFields.ToList();
+						results = context.OptionFieldsTable.ToList();
 						break;
 					case "optionfieldvaluelist":
-						results = context.OptionFieldValueLists.ToList();
+						results = context.OptionFieldValueListsTable.ToList();
 						break;
 					case "partner":
-						results = context.Partners.ToList();
+						results = context.PartnersTable.ToList();
 						break;
 					case "purchasetype":
-						results = context.PurchaseTypes.ToList();
+						results = context.PurchaseTypesTable.ToList();
 						break;
 					case "ratescheduletype":
-						results = context.RateScheduleTypes.ToList();
+						results = context.RateScheduleTypesTable.ToList();
 						break;
 					case "reportingfrequency":
-						results = context.ReportingFrequencies.ToList();
+						results = context.ReportingFrequenciesTable.ToList();
 						break;
 					case "reportingtype":
-						results = context.ReportingTypes.ToList();
+						results = context.ReportingTypesTable.ToList();
 						break;
 					case "securityconversion":
-						results = context.SecurityConversions.ToList();
+						results = context.SecurityConversionsTable.ToList();
 						break;
 					case "securityconversiondetail":
-						results = context.SecurityConversionDetails.ToList();
+						results = context.SecurityConversionDetailsTable.ToList();
 						break;
 					case "securitytype":
-						results = context.SecurityTypes.ToList();
+						results = context.SecurityTypesTable.ToList();
 						break;
 					case "sellertype":
-						results = context.SellerTypes.ToList();
+						results = context.SellerTypesTable.ToList();
 						break;
 					case "shareclasstype":
-						results = context.ShareClassTypes.ToList();
+						results = context.ShareClassTypesTable.ToList();
 						break;
 					case "state":
-						results = context.STATEs.ToList();
+						results = context.STATEsTable.ToList();
 						break;
 					case "transactiontype":
-						results = context.TransactionTypes.ToList();
+						results = context.TransactionTypesTable.ToList();
 						break;
 					case "underlyingdirectdocument":
-						results = context.UnderlyingDirectDocuments.ToList();
+						results = context.UnderlyingDirectDocumentsTable.ToList();
 						break;
 					case "underlyingdirectlastprice":
-						results = context.UnderlyingDirectLastPrices.ToList();
+						results = context.UnderlyingDirectLastPricesTable.ToList();
 						break;
 					case "underlyingdirectlastpricehistory":
-						results = context.UnderlyingDirectLastPriceHistories.ToList();
+						results = context.UnderlyingDirectLastPriceHistoriesTable.ToList();
 						break;
 					case "underlyingfund":
-						results = context.UnderlyingFunds.ToList();
+						results = context.UnderlyingFundsTable.ToList();
 						break;
 					case "underlyingfundcapitalcall":
-						results = context.UnderlyingFundCapitalCalls.ToList();
+						results = context.UnderlyingFundCapitalCallsTable.ToList();
 						break;
 					case "underlyingfundcapitalcalllineitem":
-						results = context.UnderlyingFundCapitalCallLineItems.ToList();
+						results = context.UnderlyingFundCapitalCallLineItemsTable.ToList();
 						break;
 					case "underlyingfundcashdistribution":
-						results = context.UnderlyingFundCashDistributions.ToList();
+						results = context.UnderlyingFundCashDistributionsTable.ToList();
 						break;
 					case "underlyingfundcontact":
-						results = context.UnderlyingFundContacts.ToList();
+						results = context.UnderlyingFundContactsTable.ToList();
 						break;
 					case "underlyingfunddocument":
-						results = context.UnderlyingFundDocuments.ToList();
+						results = context.UnderlyingFundDocumentsTable.ToList();
 						break;
 					case "underlyingfundnav":
-						results = context.UnderlyingFundNAVs.ToList();
+						results = context.UnderlyingFundNAVsTable.ToList();
 						break;
 					case "underlyingfundnavhistory":
-						results = context.UnderlyingFundNAVHistories.ToList();
+						results = context.UnderlyingFundNAVHistoriesTable.ToList();
 						break;
 					case "underlyingfundstockdistribution":
-						results = context.UnderlyingFundStockDistributions.ToList();
+						results = context.UnderlyingFundStockDistributionsTable.ToList();
 						break;
 					case "underlyingfundstockdistributionlineitem":
-						results = context.UnderlyingFundStockDistributionLineItems.ToList();
+						results = context.UnderlyingFundStockDistributionLineItemsTable.ToList();
 						break;
 					case "underlyingfundtype":
-						results = context.UnderlyingFundTypes.ToList();
+						results = context.UnderlyingFundTypesTable.ToList();
 						break;
 					case "user":
-						results = context.USERs.ToList();
+						results = context.USERsTable.ToList();
 						break;
 				}
 				return results;
@@ -1967,7 +1969,7 @@ namespace DeepBlue.Controllers.Admin {
 		public InvestorExportExcelModel GetAllInvestorExportList() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				InvestorExportExcelModel model = new InvestorExportExcelModel();
-				model.Investors = (from investor in context.Investors
+				model.Investors = (from investor in context.InvestorsTable
 								   select new {
 									   InvestorName = investor.InvestorName,
 									   DisplayName = investor.Alias,
@@ -1976,7 +1978,7 @@ namespace DeepBlue.Controllers.Admin {
 									   IsDomestic = investor.IsDomestic,
 									   StateOfResidency = (investor.STATE != null ? investor.STATE.Name : string.Empty),
 								   }).ToList();
-				model.InvestorAddresses = (from investorAddress in context.InvestorAddresses
+				model.InvestorAddresses = (from investorAddress in context.InvestorAddressesTable
 										   select new {
 											   InvestorName = investorAddress.Investor.InvestorName,
 											   Address1 = investorAddress.Address.Address1,
@@ -1999,7 +2001,7 @@ namespace DeepBlue.Controllers.Admin {
 													  select investorCommunication.Communication.CommunicationValue).FirstOrDefault(),
 										   }).ToList();
 
-				model.InvestorBanks = (from investorAccount in context.InvestorAccounts
+				model.InvestorBanks = (from investorAccount in context.InvestorAccountsTable
 									   select new {
 										   InvestorName = investorAccount.Investor.InvestorName,
 										   BankName = investorAccount.BankName,
@@ -2015,7 +2017,7 @@ namespace DeepBlue.Controllers.Admin {
 										   Fax = investorAccount.Fax
 									   }).ToList();
 
-				model.InvestorContacts = (from investorContact in context.InvestorContacts
+				model.InvestorContacts = (from investorContact in context.InvestorContactsTable
 										  select new {
 											  InvestorName = investorContact.Investor.InvestorName,
 											  ContactPerson = investorContact.Contact.ContactName,
@@ -2051,7 +2053,7 @@ namespace DeepBlue.Controllers.Admin {
 											  InvestorLetters = investorContact.Contact.ReceivesInvestorLetters
 										  }).ToList();
 
-				model.InvestorInvestments = (from investment in context.InvestorFunds
+				model.InvestorInvestments = (from investment in context.InvestorFundsTable
 											 select new {
 												 InvestorName = investment.Investor.InvestorName,
 												 FundName = investment.Fund.FundName,
@@ -2070,7 +2072,7 @@ namespace DeepBlue.Controllers.Admin {
 		public FundExportExcelModel GetAllFundExportList() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				FundExportExcelModel model = new FundExportExcelModel();
-				model.AmberbrookFunds = (from fund in context.Funds
+				model.AmberbrookFunds = (from fund in context.FundsTable
 										 select new {
 											 FundName = fund.FundName,
 											 TaxID = fund.TaxID,
@@ -2084,7 +2086,7 @@ namespace DeepBlue.Controllers.Admin {
 											 Carry = fund.Carry,
 										 }).ToList();
 
-				model.Investors = (from investor in context.InvestorFunds
+				model.Investors = (from investor in context.InvestorFundsTable
 								   select new {
 									   FundName = investor.Fund.FundName,
 									   InvestorName = investor.Investor.InvestorName,
@@ -2096,9 +2098,9 @@ namespace DeepBlue.Controllers.Admin {
 									   .Where(transaction => transaction.FundClosingID > 0).FirstOrDefault().FundClosing.FundClosingDate
 								   }).ToList();
 
-				model.RateSchdules = (from rateSchedule in context.FundRateSchedules
-									  join managementFeeRateSchedule in context.ManagementFeeRateSchedules on rateSchedule.RateScheduleID equals managementFeeRateSchedule.ManagementFeeRateScheduleID
-									  join managementFeeRateScheduleTier in context.ManagementFeeRateScheduleTiers on managementFeeRateSchedule.ManagementFeeRateScheduleID equals managementFeeRateScheduleTier.ManagementFeeRateScheduleID
+				model.RateSchdules = (from rateSchedule in context.FundRateSchedulesTable
+									  join managementFeeRateSchedule in context.ManagementFeeRateSchedulesTable on rateSchedule.RateScheduleID equals managementFeeRateSchedule.ManagementFeeRateScheduleID
+									  join managementFeeRateScheduleTier in context.ManagementFeeRateScheduleTiersTable on managementFeeRateSchedule.ManagementFeeRateScheduleID equals managementFeeRateScheduleTier.ManagementFeeRateScheduleID
 									  select new {
 										  FundName = rateSchedule.Fund.FundName,
 										  StartDate = managementFeeRateScheduleTier.StartDate,
@@ -2109,7 +2111,7 @@ namespace DeepBlue.Controllers.Admin {
 										  Comments = managementFeeRateScheduleTier.Notes
 									  }).ToList();
 
-				model.BankInformations = (from fundAccount in context.FundAccounts
+				model.BankInformations = (from fundAccount in context.FundAccountsTable
 										  select new {
 											  FundName = fundAccount.Fund.FundName,
 											  BankName = fundAccount.BankName,
@@ -2132,7 +2134,7 @@ namespace DeepBlue.Controllers.Admin {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				UnderlyingFundExportExcelModel model = new UnderlyingFundExportExcelModel();
 
-				model.UnderlyingFunds = (from underlyingFund in context.UnderlyingFunds
+				model.UnderlyingFunds = (from underlyingFund in context.UnderlyingFundsTable
 										 select new {
 											 UnderlyingFundName = underlyingFund.FundName,
 											 GP = underlyingFund.Issuer.Name,
@@ -2168,7 +2170,7 @@ namespace DeepBlue.Controllers.Admin {
 											 Fax = (underlyingFund.Account != null ? underlyingFund.Account.Fax : string.Empty)
 										 }).ToList();
 
-				model.UnderlyingFundContacts = (from underlyingFundContact in context.UnderlyingFundContacts
+				model.UnderlyingFundContacts = (from underlyingFundContact in context.UnderlyingFundContactsTable
 												select new {
 													UnderlyingFundName = underlyingFundContact.UnderlyingFund.FundName,
 													ContactName = underlyingFundContact.Contact.ContactName,
@@ -2188,7 +2190,7 @@ namespace DeepBlue.Controllers.Admin {
 																  select underlyingFundCommunication.Communication.CommunicationValue).FirstOrDefault(),
 												}).ToList();
 
-				model.UnderlyingFundCapitalCalls = (from underlyingFundCapitalCall in context.UnderlyingFundCapitalCalls
+				model.UnderlyingFundCapitalCalls = (from underlyingFundCapitalCall in context.UnderlyingFundCapitalCallsTable
 													select new {
 														UnderlyingFundName = (underlyingFundCapitalCall.UnderlyingFund != null ?
 															underlyingFundCapitalCall.UnderlyingFund.FundName : string.Empty),
@@ -2204,7 +2206,7 @@ namespace DeepBlue.Controllers.Admin {
 														underlyingFundCapitalCall.ReconciliationMethod,
 														underlyingFundCapitalCall.ChequeNumber,
 													}).ToList();
-				model.UnderlyingFundCapitalCallLineItems = (from underlyingFundCapitalCallLineItem in context.UnderlyingFundCapitalCallLineItems
+				model.UnderlyingFundCapitalCallLineItems = (from underlyingFundCapitalCallLineItem in context.UnderlyingFundCapitalCallLineItemsTable
 															select new {
 																UnderlyingFundName = (underlyingFundCapitalCallLineItem.UnderlyingFund != null ?
 																					  underlyingFundCapitalCallLineItem.UnderlyingFund.FundName : string.Empty),
@@ -2216,7 +2218,7 @@ namespace DeepBlue.Controllers.Admin {
 																underlyingFundCapitalCallLineItem.CapitalCallDate,
 																underlyingFundCapitalCallLineItem.ReceivedDate,
 															}).ToList();
-				model.UnderlyingFundCashDistributions = (from underlyingFundCashDistribution in context.UnderlyingFundCashDistributions
+				model.UnderlyingFundCashDistributions = (from underlyingFundCashDistribution in context.UnderlyingFundCashDistributionsTable
 														 select new {
 															 UnderlyingFundName = (underlyingFundCashDistribution.UnderlyingFund != null ?
 																					underlyingFundCashDistribution.UnderlyingFund.FundName : string.Empty),
@@ -2234,7 +2236,7 @@ namespace DeepBlue.Controllers.Admin {
 															 underlyingFundCashDistribution.ReconciliationMethod,
 															 underlyingFundCashDistribution.ChequeNumber,
 														 }).ToList();
-				model.UnderlyingFundCashDistributionLineItems = (from underlyingFundCashDistributionLineItem in context.CashDistributions
+				model.UnderlyingFundCashDistributionLineItems = (from underlyingFundCashDistributionLineItem in context.CashDistributionsTable
 																 select new {
 																	 UnderlyingFundName = (underlyingFundCashDistributionLineItem.UnderlyingFund != null ?
 																					   underlyingFundCashDistributionLineItem.UnderlyingFund.FundName : string.Empty),
@@ -2245,7 +2247,7 @@ namespace DeepBlue.Controllers.Admin {
 																	 underlyingFundCashDistributionLineItem.Amount,
 																	 underlyingFundCashDistributionLineItem.DistributionDate,
 																 }).ToList();
-				model.UnderlyingFundStockDistributions = (from underlyingFundStockDistribution in context.UnderlyingFundStockDistributions
+				model.UnderlyingFundStockDistributions = (from underlyingFundStockDistribution in context.UnderlyingFundStockDistributionsTable
 														  select new {
 															  UnderlyingFundName = (underlyingFundStockDistribution.UnderlyingFund != null ?
 																				 underlyingFundStockDistribution.UnderlyingFund.FundName : string.Empty),
@@ -2261,7 +2263,7 @@ namespace DeepBlue.Controllers.Admin {
 															  underlyingFundStockDistribution.TaxCostBase,
 															  underlyingFundStockDistribution.TaxCostDate,
 														  }).ToList();
-				model.UnderlyingFundStockDistributionLineItems = (from underlyingFundStockDistributionLineItem in context.UnderlyingFundStockDistributionLineItems
+				model.UnderlyingFundStockDistributionLineItems = (from underlyingFundStockDistributionLineItem in context.UnderlyingFundStockDistributionLineItemsTable
 																  select new {
 																	  UnderlyingFundName = (underlyingFundStockDistributionLineItem.UnderlyingFund != null ?
 																				underlyingFundStockDistributionLineItem.UnderlyingFund.FundName : string.Empty),
@@ -2281,8 +2283,8 @@ namespace DeepBlue.Controllers.Admin {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				UnderlyingDirectExportExcelModel model = new UnderlyingDirectExportExcelModel();
 
-				model.Directs = (from direct in context.Issuers
-								 join country in context.COUNTRies on direct.CountryID equals country.CountryID into countries
+				model.Directs = (from direct in context.IssuersTable
+								 join country in context.COUNTRiesTable on direct.CountryID equals country.CountryID into countries
 								 from country in countries.DefaultIfEmpty()
 								 where direct.IsGP == false
 								 select new {
@@ -2293,7 +2295,7 @@ namespace DeepBlue.Controllers.Admin {
 									 direct.IsGP
 								 }).ToList();
 
-				model.Equities = (from equity in context.Equities
+				model.Equities = (from equity in context.EquitiesTable
 								  select new {
 									  CompanyName = (equity.Issuer != null ? equity.Issuer.Name : string.Empty),
 									  equity.Symbol,
@@ -2306,21 +2308,21 @@ namespace DeepBlue.Controllers.Admin {
 									  equity.Comments
 								  }).ToList();
 
-				model.FixedIncomes = (from fixedIncome in context.FixedIncomes
+				model.FixedIncomes = (from fixedIncome in context.FixedIncomesTable
 									  select new {
-										 CompanyName = (fixedIncome.Issuer != null ? fixedIncome.Issuer.Name : string.Empty),
-										 fixedIncome.Symbol,
-										 FixedIncomeType = (fixedIncome.FixedIncomeType != null ? fixedIncome.FixedIncomeType.FixedIncomeType1 : string.Empty),
-										 Currency = (fixedIncome.Currency != null ? fixedIncome.Currency.Currency1 : string.Empty),
-										 Industry = (fixedIncome.Industry != null ? fixedIncome.Industry.Industry1 : string.Empty),
-										 fixedIncome.CouponInformation,
-										 fixedIncome.FaceValue,
-										 fixedIncome.FirstAccrualDate,
-										 fixedIncome.FirstCouponDate,
-										 fixedIncome.Frequency,
-										 fixedIncome.ISIN,
-										 fixedIncome.IssuedDate,
-										 fixedIncome.Maturity,
+										  CompanyName = (fixedIncome.Issuer != null ? fixedIncome.Issuer.Name : string.Empty),
+										  fixedIncome.Symbol,
+										  FixedIncomeType = (fixedIncome.FixedIncomeType != null ? fixedIncome.FixedIncomeType.FixedIncomeType1 : string.Empty),
+										  Currency = (fixedIncome.Currency != null ? fixedIncome.Currency.Currency1 : string.Empty),
+										  Industry = (fixedIncome.Industry != null ? fixedIncome.Industry.Industry1 : string.Empty),
+										  fixedIncome.CouponInformation,
+										  fixedIncome.FaceValue,
+										  fixedIncome.FirstAccrualDate,
+										  fixedIncome.FirstCouponDate,
+										  fixedIncome.Frequency,
+										  fixedIncome.ISIN,
+										  fixedIncome.IssuedDate,
+										  fixedIncome.Maturity,
 									  }).ToList();
 
 				return model;
@@ -2331,8 +2333,10 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region Deal Contact
 
-		private IQueryable<Contact> GetDealContactQuery(System.Data.Objects.ObjectSet<Contact> contacts) {
-			return contacts.Where(contact => contact.InvestorContacts.Count <= 0
+		private IQueryable<Contact> GetDealContactsTable(System.Data.Objects.ObjectSet<Contact> contacts) {
+			return contacts
+				   .EntityFilter()
+				   .Where(contact => contact.InvestorContacts.Count <= 0
 								  && contact.UnderlyingFundContacts.Count <= 0
 								 && contact.Deals1.Count <= 0
 								 );
@@ -2340,8 +2344,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<AutoCompleteList> FindDealContacts(string contactName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Contact> dealContactQuery = GetDealContactQuery(context.Contacts);
-				IQueryable<AutoCompleteList> query = (from contact in dealContactQuery
+				IQueryable<Contact> dealContactsTable = GetDealContactsTable(context.Contacts);
+				IQueryable<AutoCompleteList> query = (from contact in dealContactsTable
 													  where contact.ContactName.StartsWith(contactName)
 													  orderby contact.ContactName
 													  select new AutoCompleteList {
@@ -2355,7 +2359,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<DealContactList> GetAllDealContacts(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<DealContactList> query = (from contact in GetDealContactQuery(context.Contacts)
+				IQueryable<DealContactList> query = (from contact in GetDealContactsTable(context.Contacts)
 													 select new DealContactList {
 														 ContactId = contact.ContactID,
 														 ContactName = contact.ContactName,
@@ -2377,7 +2381,11 @@ namespace DeepBlue.Controllers.Admin {
 
 		public Contact FindContact(int contactId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.Contacts.Include("ContactCommunications").Include("ContactCommunications.Communication").Where(contact => contact.ContactID == contactId).SingleOrDefault();
+				return context.Contacts
+					.Include("ContactCommunications")
+					.Include("ContactCommunications.Communication")
+					.EntityFilter()
+					.Where(contact => contact.ContactID == contactId).SingleOrDefault();
 			}
 		}
 
@@ -2387,7 +2395,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteDealContact(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				Contact dealContact = context.Contacts.SingleOrDefault(contact => contact.ContactID == id);
+				Contact dealContact = context.ContactsTable.SingleOrDefault(contact => contact.ContactID == id);
 				if (dealContact != null) {
 					if (dealContact.Deals.Count() > 0 ||
 						dealContact.Deals1.Count() > 0 ||
@@ -2419,7 +2427,8 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<USER> GetAllUsers(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.USER> query = (from user in context.USERs
+				IQueryable<Models.Entity.USER> query = (from user in context.USERsTable
+															.EntityFilter()
 														select user);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<Models.Entity.USER> paginatedList = new PaginatedList<Models.Entity.USER>(query, pageIndex, pageSize);
@@ -2430,13 +2439,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public USER FindUser(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.USERs.SingleOrDefault(user => user.UserID == id);
+				return context.USERsTable.EntityFilter().SingleOrDefault(user => user.UserID == id);
 			}
 		}
 
 		public bool UserNameAvailable(string userName, int userId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from user in context.USERs
+				return ((from user in context.USERsTable
 						 where user.Login == userName && user.UserID != userId
 						 select user.UserID).Count()) > 0 ? true : false;
 			}
@@ -2444,7 +2453,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool EmailAvailable(string email, int userId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from user in context.USERs
+				return ((from user in context.USERsTable
 						 where user.Email == email && user.UserID != userId
 						 select user.UserID).Count()) > 0 ? true : false;
 			}
@@ -2452,7 +2461,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteUser(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				USER user = context.USERs.SingleOrDefault(deleteUser => deleteUser.UserID == id);
+				USER user = context.USERsTable.SingleOrDefault(deleteUser => deleteUser.UserID == id);
 				if (user != null) {
 					context.USERs.DeleteObject(user);
 					context.SaveChanges();
@@ -2472,7 +2481,9 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.DocumentType> GetAllDocumentTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.DocumentType> query = (from documentType in context.DocumentTypes.Include("DocumentSection")
+				IQueryable<Models.Entity.DocumentType> query = (from documentType in context.DocumentTypes
+																					 .Include("DocumentSection")
+																					 .EntityFilter()
 																select documentType);
 				switch (sortName) {
 					case "DocumentSectionName":
@@ -2490,7 +2501,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<DocumentType> GetAllDocumentTypes(int documentSectionId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from documentType in context.DocumentTypes
+				return (from documentType in context.DocumentTypesTable
 						where documentType.DocumentSectionID == documentSectionId
 						orderby documentType.DocumentTypeName
 						select documentType).ToList();
@@ -2499,13 +2510,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public DocumentType FindDocumentType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.DocumentTypes.Include("DocumentSection").SingleOrDefault(type => type.DocumentTypeID == id);
+				return context.DocumentTypes.Include("DocumentSection").EntityFilter().SingleOrDefault(type => type.DocumentTypeID == id);
 			}
 		}
 
 		public bool DocumentTypeNameAvailable(string documentTypeName, int documentTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from type in context.DocumentTypes
+				return ((from type in context.DocumentTypesTable
 						 where type.DocumentTypeName == documentTypeName && type.DocumentTypeID != documentTypeID
 						 select type.DocumentTypeID).Count()) > 0 ? true : false;
 			}
@@ -2513,7 +2524,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteDocumentType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				DocumentType documentType = context.DocumentTypes.SingleOrDefault(type => type.DocumentTypeID == id);
+				DocumentType documentType = context.DocumentTypesTable.SingleOrDefault(type => type.DocumentTypeID == id);
 				if (documentType != null) {
 					if (documentType.DealFundDocuments.Count == 0
 						&& documentType.InvestorFundDocuments.Count == 0
@@ -2535,13 +2546,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<DocumentSection> GetAllDocumentSections() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.DocumentSections.OrderBy(documentSection => documentSection.Name).ToList();
+				return context.DocumentSectionsTable.OrderBy(documentSection => documentSection.Name).ToList();
 			}
 		}
 
 		public List<AutoCompleteList> FindDocumentTypes(string documentTypeName, int documentSectionId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> documentTypeListQuery = (from documentType in context.DocumentTypes
+				IQueryable<AutoCompleteList> documentTypeListQuery = (from documentType in context.DocumentTypesTable
 																	  where documentType.DocumentSectionID == documentSectionId
 																	  orderby documentType.DocumentTypeName
 																	  select new AutoCompleteList {
@@ -2558,7 +2569,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region Log
 		public List<Log> GetAllLogs(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Log> query = (from log in context.Logs.Include("LogDetails")
+				IQueryable<Log> query = (from log in context.Logs.Include("LogDetails").EntityFilter()
 										 orderby log.LogID descending
 										 select log);
 				PaginatedList<Log> paginatedList = new PaginatedList<Log>(query, pageIndex, pageSize);
@@ -2572,7 +2583,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.SellerType> GetAllSellerTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.SellerType> query = (from sellerType in context.SellerTypes
+				IQueryable<Models.Entity.SellerType> query = (from sellerType in context.SellerTypesTable
 															  select sellerType);
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<Models.Entity.SellerType> paginatedList = new PaginatedList<Models.Entity.SellerType>(query, pageIndex, pageSize);
@@ -2583,13 +2594,13 @@ namespace DeepBlue.Controllers.Admin {
 
 		public SellerType FindSellerType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.SellerTypes.SingleOrDefault(field => field.SellerTypeID == id);
+				return context.SellerTypesTable.SingleOrDefault(field => field.SellerTypeID == id);
 			}
 		}
 
 		public bool SellerTypeNameAvailable(string sellerTypeName, int sellerTypeId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return ((from sellerType in context.SellerTypes
+				return ((from sellerType in context.SellerTypesTable
 						 where sellerType.SellerType1 == sellerTypeName && sellerType.SellerTypeID != sellerTypeId
 						 select sellerType.SellerTypeID).Count()) > 0 ? true : false;
 			}
@@ -2597,7 +2608,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public bool DeleteSellerType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				SellerType sellerType = context.SellerTypes.SingleOrDefault(type => type.SellerTypeID == id);
+				SellerType sellerType = context.SellerTypesTable.SingleOrDefault(type => type.SellerTypeID == id);
 				if (sellerType != null) {
 					if (sellerType.Deals.Count == 0) {
 						context.SellerTypes.DeleteObject(sellerType);
@@ -2615,7 +2626,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<SellerType> GetAllSellerTypes() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return (from sellerType in context.SellerTypes
+				return (from sellerType in context.SellerTypesTable
 						where sellerType.Enabled == true
 						orderby sellerType.SellerType1
 						select sellerType).ToList();
@@ -2624,7 +2635,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<AutoCompleteList> FindSellerTypes(string sellerTypeName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> query = (from sellerType in context.SellerTypes
+				IQueryable<AutoCompleteList> query = (from sellerType in context.SellerTypesTable
 													  where sellerType.SellerType1.StartsWith(sellerTypeName)
 													  orderby sellerType.SellerType1
 													  select new AutoCompleteList {
@@ -2638,5 +2649,67 @@ namespace DeepBlue.Controllers.Admin {
 
 		#endregion
 
+		#region Entity
+
+		public List<ENTITY> GetAllEntities(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.ENTITY> query = (from entity in context.ENTITiesTable
+														  select entity);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<Models.Entity.ENTITY> paginatedList = new PaginatedList<Models.Entity.ENTITY>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public ENTITY FindEntity(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.ENTITiesTable.SingleOrDefault(entity => entity.EntityID == id);
+			}
+		}
+
+		public bool EntityNameAvailable(string entityName, int entityID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from entity in context.ENTITiesTable
+						 where entity.EntityName == entityName && entity.EntityID != entityID
+						 select entity.EntityID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool EntityCodeAvailable(string entityCode, int entityID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from entity in context.ENTITiesTable
+						 where entity.EntityCode == entityCode && entity.EntityID != entityID
+						 select entity.EntityID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteEntity(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				ENTITY entity = context.ENTITiesTable.SingleOrDefault(e => e.EntityID == id);
+				if (entity != null) {
+					if (entity.USERs.Count == 0) {
+						context.ENTITies.DeleteObject(entity);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveEntity(ENTITY entity) {
+			return entity.Save();
+		}
+
+		public List<ENTITY> GetAllEntities() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from entity in context.ENTITies
+						orderby entity.EntityName
+						select entity).ToList();
+			}
+		}
+
+		#endregion
 	}
 }

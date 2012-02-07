@@ -124,12 +124,12 @@
 			</td>
 			<td style="text-align:right">
 				<%: Html.Span("${formatCurrency(row.cell[5])}", new { @id="SpnCA", @class = "show" })%>
-				<%: Html.TextBox("TotalCommitment", "${row.cell[5]}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+				<%: Html.TextBox("TotalCommitment", "${formatNumber(row.cell[5])}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 			</td>
 			<td style="text-align:right">
 				<%: Html.Span("${formatCurrency(row.cell[6])}", new { @id="SpnUFA", @class = "show" })%>
 				{{if row.cell[9]>0}}
-				<%: Html.TextBox("UnfundedAmount", "${row.cell[6]}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
+				<%: Html.TextBox("UnfundedAmount", "${formatNumber(row.cell[6])}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 				{{/if}}
 			</td>
 			<td>
@@ -147,7 +147,7 @@
 				<%: Html.Image("add_active.png", new { @id = "Add", @style="display:none;cursor:pointer;" , @onclick = "javascript:investorCommitment.addTransaction(this,${row.cell[9]});" })%>
 				{{else}}
 				<%: Html.Image("Save_active.png", new { @id = "Save", @style="display:none;cursor:pointer;", @onclick = "javascript:investorCommitment.save(this,${row.cell[9]});" })%>
-				<%: Html.Image("Edit.png", new { @class = "gbutton show", @onclick = "javascript:investorCommitment.edit(this);" })%>
+				<%: Html.Image("Edit.png", new { @class = "gbutton editbtn show", @onclick = "javascript:investorCommitment.edit(this);" })%>
 				<%: Html.Image("trans.png", new { @class = "gbutton show", @title = "Transaction", @onclick = "javascript:investorCommitment.editTS(${row.cell[9]});" })%>
 				{{/if}}
 			</td>

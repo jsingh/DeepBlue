@@ -21,7 +21,7 @@
 		var url="/CapitalCall/FundDetail?id="+id+"&t="+dt.getTime();
 		$("#lnkPCC").attr("href","#");
 		$.getJSON(url,function (data) {
-			$("#lnkPCC").attr("href","/CapitalCall/Detail?fundId="+id+"&typeId=1");
+			$("#lnkPCC").attr("href",deepBlue.rootUrl+"/CapitalCall/Detail?fundId="+id+"&typeId=1");
 			$("#SpnLoading").hide();
 			$("#CCDetail").show();
 			$("#FundId").val(data.FundId);
@@ -96,7 +96,7 @@
 		//var endDate=$.datepicker.formatDate('mm/dd/yy',Date.DateAdd("m",3,fromDate));
 		var dt=new Date();
 		var url="/CapitalCall/CalculateManagementFee/?fundId="+fundId+"&startDate="+fromDate+"&endDate="+toDate+"&t="+dt.getTime();
-		$("#SpnMFA","#CapitalCall").html("<img src='/Assets/images/ajax.jpg'>&nbsp;Calculating...")
+		$("#SpnMFA","#CapitalCall").html(jHelper.calculatingHTML())
 		$("#SpnDetail","#CapitalCall").hide();
 		$.getJSON(url,function (data) {
 			$("#SpnMFA","#CapitalCall").html(jHelper.dollarAmount(data.ManagementFee));
@@ -143,7 +143,7 @@
 		try {
 			var frm=$("#"+frmid);
 			var loading=$("#UpdateLoading");
-			loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+			loading.html(jHelper.savingHTML());
 			var param=$(frm).serializeForm();
 			param[param.length]={ name: "FundId",value: $("#FundId").val() };
 			param[param.length]={ name: "CapitalCallNumber",value: $("#CapitalCallNumber").val() };
@@ -154,25 +154,7 @@
 					jAlert(data);
 				} else {
 					jAlert("Capital Call Saved.");
-					location.href="/CapitalCall/ModifyCapitalCall/"+arr[2];
-					/*$("#SpnCapitalCallNumber").html(arr[1]);
-					$("#CapitalCallNumber").val(arr[1]);
-					$("#SpnMFA").html("");
-					$("#SpnExistingInvestmentAmount").html("");
-					var chkmfee=$("#AddManagementFees").get(0);
-					if(chkmfee) {
-					chkmfee.checked=false;
-					capitalCall.selectMFee(chkmfee);
-					}
-					var chkae=$("#AddFundExpenses").get(0);
-					if(chkae) {
-					chkae.checked=false;
-					capitalCall.selectFundExp(chkae);
-					}
-					jHelper.resetFields(frm);
-					jHelper.removejqCheckBox(frm);
-					jHelper.jqCheckBox(frm);
-					*/
+					location.href=deepBlue.rootUrl+"/CapitalCall/ModifyCapitalCall/"+arr[2];
 				}
 			});
 		} catch(e) {

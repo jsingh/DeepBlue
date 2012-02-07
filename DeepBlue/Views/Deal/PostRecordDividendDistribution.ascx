@@ -10,7 +10,7 @@
 		<%: Html.Hidden("${Index}_DealId", "${DealId}")%>
 	</td>
 	<td class="lalign">
-		<%: Html.TextBox("${Index}_Amount", "{{if Amount>0}}${Amount}{{/if}}", new { @class = "", @onkeydown = "return jHelper.isCurrency(event);" })%>
+		<%: Html.TextBox("${Index}_Amount", "{{if Amount>0}}${formatNumber(Amount)}{{/if}}", new { @class = "", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="lalign">
 		<%: Html.TextBox("${Index}_DistributionDate", "{{if DividendDistributionID>0}}${DistributionDate}{{/if}}", new { @class = "datefield", @id = "${Index}_PRCC_DistributionDate" })%>

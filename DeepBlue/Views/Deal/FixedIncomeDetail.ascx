@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<DeepBlue.Models.Deal.FixedIncomeDetailModel>" %>
 <%@ Import Namespace="DeepBlue.Helpers" %>
 {{if FixedIncomeId>0}}
-<%using (Html.Form(new { @class = "frm-fixedincome", @id = "frm_${FixedIncomeId}_FixedIncome", @onsubmit = "return false" })) {%>
+<%using (Html.Form(new { @class = "frm-fixedincome frm-security", @id = "frm_${FixedIncomeId}_FixedIncome", @onsubmit = "return false" })) {%>
 {{/if}}
 <div class="direct-det">
 	<div id="fixincomediv">
@@ -110,69 +110,76 @@
 		<div class="editor-field">
 			<%: Html.DropDownList("FixedIncomeDocumentTypeId", Model.DocumentTypes, new { @val = "0", @refresh = "true", @action = "DocumentType" })%>
 		</div>
-		<div class="editor-field" style="clear: righ; width: auto;">
-			<%: Html.DropDownList("FixedIncomeUploadTypeId", Model.UploadTypes, new { @val = "1", @style = "width:100px", @onchange = "javascript:dealDirect.changeUploadType(this,'fidocument');" })%>
-		</div>
-		<div id="FileRow" class="editor-field" style="width: auto;">
-			<div style="padding: 0; margin: 0; width: auto; float: left;">
-				<%: Html.File("FixedIncomeFile", new { @id = "equityFileToUpload" })%>
-				<%: Html.Hidden("FixedIncomeFileId")%>
+		<%--<div id="dropbox" class="drop-files" style="margin: 0 0 0 57px; padding: 38px 0 0 0;
+			width: 90%;">
+			<div id="FilesList">
+			</div>--%>
+			<div class="editor-field">
+				<%: Html.DropDownList("FixedIncomeUploadTypeId", Model.UploadTypes, new { @val = "1", @style = "width:100px", @onchange = "javascript:dealDirect.changeUploadType(this,'fidocument');" })%>
 			</div>
-			<div style="padding: 0; margin: 0; float: left;">
-				<%: Html.Span("", new { @id = "SpnFixedIncomeDocLoading" })%>
+			<div id="FileRow" class="editor-field" style="width: auto;">
+				<div style="padding: 0; margin: 0; width: auto; float: left;">
+					<%: Html.File("FixedIncomeFile", new { @id = "equityFileToUpload" })%>
+					<%: Html.Hidden("FixedIncomeFileId")%>
+				</div>
+				<div style="padding: 0; margin: 0; float: left;">
+					<%: Html.Span("", new { @id = "SpnFixedIncomeDocLoading" })%>
+				</div>
 			</div>
-		</div>
-		<div id="LinkRow" style="display: none; width: auto; margin: 0" class="editor-field">
-			<%: Html.TextBox("FixedIncomeFilePath", "", new { @style = "width:250px" })%>
-		</div>
-		{{if Documents.length > 0}}
-		<div class="editor-label">&nbsp;
-		</div>
-		<div class="editor-field" style="width: 500px;">
-			<table cellpadding="0" cellspacing="0" border="0" class="grid">
+			<div id="LinkRow" style="display: none; width: auto; margin: 0" class="editor-field">
+				<%: Html.TextBox("FixedIncomeFilePath", "", new { @style = "width:250px" })%>
+			</div>
+			<%--<div style="clear: both; float: right; color: #B3A8A8; margin: 42px 9px 0 0;">
+				Drop files here to upload.
+			</div>--%>
+		<%--</div>--%>
+		<div style="width: 900px; clear: both; float: left; margin-left: 57px;">
+			<% Html.RenderPartial("TBoxTop"); %>
+			<table cellpadding="0" cellspacing="0" border="0" class="grid" id="DocumentList">
 				<thead>
 					<tr>
-						<th>
+						<th style="display: none">
+							ID
+						</th>
+						<th style="width: 30%">
 							Document Type
 						</th>
-						<th>
+						<th style="width: 20%;">
+							Document Date
+						</th>
+						<th style="width: 30%">
 							File Name
+						</th>
+						<th align="right">
 						</th>
 					</tr>
 				</thead>
 				<tbody>
-					{{each(f,file) Documents}}
-					<tr id="Row${file.DocumentID}" {{if f%2>0}}class="erow"{{/if}}>
-						<td>
-							${file.DocumentTypeName}
-						</td>
-						<td>
-							${file.DocumentName}
-						</td>
-					</tr>
-					{{/each}}
 				</tbody>
 			</table>
+			<% Html.RenderPartial("TBoxBottom"); %>
 		</div>
-		{{/if}}
 	</div>
 </div>
 {{if FixedIncomeId>0}}
-<div class="line"></div>
-<div class="direct-det"  style="width:90%;">
-	<%: Html.Hidden("IssuerId", "${IssuerId}")%>
-	<div class="editor-label" style="float: right;width:auto;">
-		<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:dealDirect.cancel(this);" })%>
-	</div>
-	<div class="editor-label show" style="float: right;width:auto;">
-		<%: Html.Image("Editbtn_active.png", new { @onclick = "javascript:dealDirect.edit(this);" })%>
-	</div>
-	<div class="editor-label hide" style="float: right;width:auto;">
-		<%: Html.Image("Modify-Direct_active.png", new { @onclick = "javascript:dealDirect.modifyFixedIncome(this);" })%>
-	</div>
-	<div class="editor-label" style="float: right;width:auto;">
-		<%: Html.Span("", new { @id = "SpnLoading" })%>
+<div class="line">
+</div>
+<div class="direct-det">
+	<div style="float: right; clear: both; margin-right: 135px">
+		<%: Html.Hidden("IssuerId", "${IssuerId}")%>
+		<div class="editor-label" style="float: right; width: auto;">
+			<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:dealDirect.cancel(this);" })%>
+		</div>
+		<div class="editor-label show" style="float: right; width: auto;">
+			<%: Html.Image("Editbtn_active.png", new { @onclick = "javascript:dealDirect.edit(this);" })%>
+		</div>
+		<div class="editor-label hide" style="float: right; width: auto;">
+			<%: Html.Image("Modify-Direct_active.png", new { @onclick = "javascript:dealDirect.modifyFixedIncome(this);" })%>
+		</div>
+		<div class="editor-label" style="float: right; width: auto;">
+			<%: Html.Span("", new { @id = "SpnLoading" })%>
+		</div>
 	</div>
 </div>
 <%}%>
-{{/if}}
+{{/if}} 

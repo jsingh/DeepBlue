@@ -15,7 +15,7 @@
 		<%: Html.Span("${LastPriceDate}", new { @id = "LastPriceDate", @class = "dispdate", @val = "${LastPriceDate}" })%>
 	</td>
 	<td class="lalign">
-		<%: Html.TextBox("NewPrice", "{{if NewPrice > 0}}${NewPrice}{{/if}}", new {  @onkeydown = "return jHelper.isCurrency(event);" })%>
+		<%: Html.TextBox("NewPrice", "{{if NewPrice > 0}}${formatNumber(NewPrice)}{{/if}}", new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="lalign">
 		<%: Html.TextBox("NewPriceDate", "${NewPriceDate}", new { @class = "datefield", @id = "${UnderlyingDirectLastPriceId}_UDV_NewPriceDate" })%>

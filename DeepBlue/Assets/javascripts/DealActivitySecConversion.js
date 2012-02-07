@@ -79,7 +79,7 @@ dealActivity.createSecConversion=function (frm) {
 	var param=$(frm).serializeForm();
 	param[param.length]={ name: "ActivityTypeId",value: dealActivity.getActivityTypeId() };
 	param[param.length]={ name: "DealUnderlyingDirectId",value: dealActivity.getUnderlyingDirectId() };
-	$("#SpnSecCoversionLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+	$("#SpnSecCoversionLoading").html(jHelper.savingHTML());
 	$.post("/Deal/CreateConversionActivity?_"+(new Date()).getTime(),param,function (data) {
 		$("#SpnSecCoversionLoading").empty();
 		var arr=data.split("||");

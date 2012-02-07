@@ -23,10 +23,11 @@
 	deal.setIndex($("#tblUnderlyingDirect"));
 	deal.applyUDAutocomplete(tr);
 	jHelper.setUpToolTip(tr);
+	jHelper.gridEditRow(tr);
 	$("#MakeNewDUDirect").hide();
 	$("tr:odd","#tbodyUnderlyingDirect").removeClass("row").removeClass("arow").addClass("arow");
 	$("tr:even","#tbodyUnderlyingDirect").removeClass("row").removeClass("arow").addClass("row");
-	footer.show("tbodyUnderlyingDirect", "tfootUnderlyingDirect");
+	footer.show("tbodyUnderlyingDirect","tfootUnderlyingDirect");
 };
 deal.calcDUD=function () {
 	var tbl=$("#tblUnderlyingDirect");
@@ -82,19 +83,18 @@ deal.deleteUnderlyingDirect=function (id,img) {
 			} else {
 				tr.remove();
 				deal.setIndex($("#tblUnderlyingDirect"));
-				footer.show("tbodyUnderlyingDirect", "tfootUnderlyingDirect");
+				footer.show("tbodyUnderlyingDirect","tfootUnderlyingDirect");
 			}
 		});
 	}
 };
 deal.editUnderlyingDirect=function (img) {
 	var tr=$(img).parents("tr:first");
-	if(img.src.indexOf('Save_active.png')> -1) {
-		deal.saveUnderlyingDirect(tr);
-	} else {
-		img.src="/Assets/images/Save_active.png";
-		deal.showElements(tr);
-	}
+	deal.showElements(tr);
+};
+deal.saveUD=function (img) {
+	var tr=$(img).parents("tr:first");
+	deal.saveUnderlyingDirect(tr);
 };
 deal.addUnderlyingDirect=function (img) {
 	var tr=$(img).parents("tr:first");

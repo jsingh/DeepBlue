@@ -9,8 +9,15 @@ using DeepBlue.Controllers.Account;
 
 namespace DeepBlue.Helpers {
 	public static class Authentication {
+
 		private const string entityKey = "CurrentEntity";
 		private const string user = "CurrentUser";
+
+		public static bool IsSystemEntityUser {
+			get {
+				return (Authentication.CurrentEntity.EntityID == (int)ConfigUtil.SystemEntityID);
+			}
+		}
 
 		public static USER CurrentUser {
 			get {
@@ -35,17 +42,13 @@ namespace DeepBlue.Helpers {
 				SecurityContainer.GetHttpContext().Session[entityKey] = value;
 			}
 		}
- 
 
 		public static void Flush() {
 			Authentication.CurrentUser = null;
 			Authentication.CurrentEntity = null;
 		}
-		
+				
 	}
 
-	public class AuthenticationException : System.Exception {
-		public AuthenticationException(string message)
-			: base(message) { }
-	}
+ 
 }

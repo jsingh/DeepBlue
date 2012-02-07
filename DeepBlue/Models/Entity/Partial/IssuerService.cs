@@ -16,7 +16,7 @@ namespace DeepBlue.Models.Entity {
 					context.Issuers.AddObject(issuer);
 				}
 				else {
-					Issuer updateIssuer = context.Issuers.SingleOrDefault(deepblueIssuer => deepblueIssuer.IssuerID == issuer.IssuerID);
+					Issuer updateIssuer = context.IssuersTable.SingleOrDefault(deepblueIssuer => deepblueIssuer.IssuerID == issuer.IssuerID);
 					//Update issuer,issuer account values
 					// Define an ObjectStateEntry and EntityKey for the current object. 
 					EntityKey key;

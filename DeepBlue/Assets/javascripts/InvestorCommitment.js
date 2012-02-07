@@ -44,7 +44,7 @@
 					,onInit: investorCommitment.onInit
 					,onTemplate: investorCommitment.onTemplate
 					,onSubmit: function () { invloading.html(jHelper.loadingHTML());return true; }
-					,onSuccess: function () { invloading.empty(); }
+					,onSuccess: function (t,g) { invloading.empty(); jHelper.gridEditRow(t); }
 				});
 			});
 		} else {
@@ -56,7 +56,7 @@
 		var param=jHelper.serialize(tr);
 		var url="/Transaction/CreateInvestorFund";
 		var imgsrc=img.src;
-		$(img).attr("src","/Assets/images/ajax.jpg");
+		$(img).attr("src",jHelper.getImagePath("ajax.jpg"));
 		$.post(url,param,function (data) {
 			img.src=imgsrc;
 			if($.trim(data)!="") {
@@ -73,7 +73,7 @@
 		var param=jHelper.serialize(tr);
 		var url="/Transaction/UpdateCommitmentAmount";
 		var imgsrc=img.src;
-		$(img).attr("src","/Assets/images/ajax.jpg");
+		$(img).attr("src",jHelper.getImagePath("ajax.jpg"));
 		$.post(url,param,function (data) {
 			img.src=imgsrc;
 			if($.trim(data)!="") {
@@ -298,14 +298,11 @@
 	,onGridSuccess: function (t,g) {
 		jHelper.checkValAttr(t);
 		jHelper.jqCheckBox(t);
-		$(window).resize();
+		
 	}
 	,onInit: function (g) {
 		//var data={ name: "Add Commitment" };
 		//$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		//		$(window).resize(function () {
-		//			invEntityType.resizeGV(g);
-		//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

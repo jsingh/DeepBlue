@@ -11,6 +11,8 @@ using DeepBlue.Controllers.Admin;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Transaction {
+
+	[OtherEntityAuthorize]
 	public class TransactionController : BaseController {
 
 		public ITransactionRepository TransactionRepository { get; set; }

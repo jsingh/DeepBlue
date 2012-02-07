@@ -37,7 +37,7 @@ dealActivity.loadSD=function (isRefresh) {
 	if(isRefresh) {
 		target.empty();
 		$("#StockDistribution").hide();
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+		loading.html(jHelper.loadingHTML());
 		$.getJSON("/Deal/UnderlyingFundStockDistributionList",{ "_": (new Date).getTime(),"underlyingFundId": dealActivity.getSDUnderlyingFundId() },function (data) {
 			$("#PRStockDistribution").show();
 			loading.empty();
@@ -87,7 +87,7 @@ dealActivity.submitUFStockDistribution=function (frm) {
 	try {
 		var param=$(frm).serializeForm();
 		var loading=$("#SpnSDSaveLoading");
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		loading.html(jHelper.savingHTML());
 		var chk=$("#IsManualStockDistribution").get(0);
 		var totalRows=($("tbody tr","#StockDistributionList").length);
 		var isManual=chk.checked;

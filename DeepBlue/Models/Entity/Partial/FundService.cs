@@ -16,7 +16,7 @@ namespace DeepBlue.Models.Entity {
 				if (fund.FundID == 0) {
 					context.Funds.AddObject(fund);
 				} else {
-					Fund updateFund = context.Funds.SingleOrDefault(deepblueFund => deepblueFund.FundID == fund.FundID);
+					Fund updateFund = context.FundsTable.SingleOrDefault(deepblueFund => deepblueFund.FundID == fund.FundID);
 					//Update fund,fund account values
 					// Define an ObjectStateEntry and EntityKey for the current object. 
 					EntityKey key;

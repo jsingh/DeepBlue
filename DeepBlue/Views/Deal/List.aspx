@@ -36,7 +36,7 @@
 				<thead>
 					<tr>
 						<th sortname="FundName">
-							Amberbrook Fund Name
+							Fund Name
 						</th>
 						<th></th>
 					</tr>
@@ -96,9 +96,9 @@
 		<td>${deal.cell[1]}</td>
 		<td style="text-align:right">
 			<%if(Convert.ToString(ViewData["CloseDeal"])=="True"){%>
-				<%: Html.Anchor(Html.Image("CloseDeal_active.png", new { @class = "gbutton" }).ToHtmlString(), "/Deal/Close/${deal.cell[0]}")%>
+				<%: Html.Anchor(Html.Image("CloseDeal_active.png", new { @class = "gbutton editbtn" }).ToHtmlString(), "/Deal/Close/${deal.cell[0]}")%>
 			<%}else{%>
-				<%: Html.Anchor(Html.Image("Editbtn_active.png", new { @class = "gbutton" }).ToHtmlString(), "/Deal/Edit/${deal.cell[0]}")%>
+				<%: Html.Anchor(Html.Image("Editbtn_active.png", new { @class = "gbutton editbtn" }).ToHtmlString(), "/Deal/Edit/${deal.cell[0]}")%>
 			<%}%>
 		</td>
 	</tr>

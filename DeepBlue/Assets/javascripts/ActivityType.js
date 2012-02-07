@@ -29,7 +29,7 @@
 	}
 	,onGridSuccess: function (t) {
 		$("tr",t).each(function () {
-			$("td:last div",this).html("<img id='Edit' class='gbutton' src='/Assets/images/Edit.png'/>");
+			$("td:last div",this).html("<img id='Edit' class='gbutton' src='"+jHelper.getImagePath("Edit.png")+"'/>");
 		});
 	}
 	,onRowClick: function (row) {
@@ -45,7 +45,7 @@
 		return jHelper.formSubmit(formId);
 	}
 	,onCreateBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		$("#UpdateLoading").html(jHelper.savingHTML());
 	}
 	,onCreateSuccess: function () {
 		$("#UpdateLoading").html("");

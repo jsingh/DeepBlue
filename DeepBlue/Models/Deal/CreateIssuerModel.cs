@@ -21,6 +21,7 @@ namespace DeepBlue.Models.Deal {
 		public EquityDetailModel EquityDetailModel { get; set; }
 
 		public FixedIncomeDetailModel FixedIncomeDetailModel { get; set; }
-		
+
+		public string DocumentFileExtensions { get; set; }
 	}
 }

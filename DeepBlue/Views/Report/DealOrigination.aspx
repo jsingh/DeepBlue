@@ -26,7 +26,7 @@
 			<%using (Html.BeginForm("", "", FormMethod.Get, new { @onsubmit = "return dealOrgReport.onSubmit(this);" })) {%>
 			<div class="editor-label" style="width: auto;">
 				<%: Html.LabelFor(model => model.FundId)%>
-				<%: Html.TextBox("FundName", "SEARCH AMBERBROOK FUND", new { @class = "wm", @id = "FundName", @style = "width:200px" })%>
+				<%: Html.TextBox("FundName", "SEARCH  FUND", new { @class = "wm", @id = "FundName", @style = "width:200px" })%>
 			</div>
 			<div class="editor-label" style="width: auto; clear: right;">
 				<%: Html.LabelFor(model => model.DealId)%>

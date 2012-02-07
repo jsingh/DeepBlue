@@ -2,7 +2,7 @@
 	onGridSuccess: function (t,g) {
 		jHelper.checkValAttr(t);
 		jHelper.jqCheckBox(t);
-		$(window).resize();
+		
 	}
 	,onInit: function (g) {
 		var box=$(g.bDivBox).parents("#AddUnderlyingFund");

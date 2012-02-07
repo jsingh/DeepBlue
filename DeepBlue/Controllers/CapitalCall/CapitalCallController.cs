@@ -13,6 +13,8 @@ using DeepBlue.Models.CapitalCall.Enums;
 using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.CapitalCall {
+
+	[OtherEntityAuthorize]
 	public class CapitalCallController : BaseController {
 
 		public IFundRepository FundRepository { get; set; }
@@ -272,10 +274,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 					capitalCall.CapitalCallTypeID = (int)Models.CapitalCall.Enums.CapitalCallType.Reqular;
 					capitalCall.LastUpdatedBy = Authentication.CurrentUser.UserID;
 					capitalCall.LastUpdatedDate = DateTime.Now;
-					capitalCall.ExistingInvestmentAmount = model.ExistingInvestmentAmount ?? 0;
 					capitalCall.NewInvestmentAmount = model.NewInvestmentAmount;
 					capitalCall.FundID = model.FundId;
-					capitalCall.InvestmentAmount = (capitalCall.NewInvestmentAmount ?? 0) + (capitalCall.ExistingInvestmentAmount ?? 0);
 
 					if ((model.AddFundExpenses ?? false) == true) {
 						capitalCall.FundExpenses = model.FundExpenseAmount ?? 0;
@@ -325,9 +325,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 										capitalCallLineItem.LastUpdatedDate = DateTime.Now;
 
 										capitalCallLineItem.CapitalAmountCalled = itemModel.CapitalAmountCalled;
-										capitalCallLineItem.ExistingInvestmentAmount = itemModel.ExistingInvestmentAmount;
 										capitalCallLineItem.FundExpenses = itemModel.FundExpenses;
-										capitalCallLineItem.InvestmentAmount = itemModel.InvestmentAmount;
 										capitalCallLineItem.ManagementFees = itemModel.ManagementFees;
 										capitalCallLineItem.NewInvestmentAmount = itemModel.NewInvestmentAmount;
 
@@ -812,8 +810,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 			ViewData["PageNo"] = pageIndex;
 			return View(capitalCalls);
 		}
-
-
+		
 		private void CheckDistributionAmount(CreateDistributionModel model) {
 			if (model.DistributionAmount > 0) {
                 decimal distributionCheck = ((model.CapitalReturn ?? 0) + (model.PreferredReturn ?? 0) + (model.PreferredCatchUp ?? 0) + (model.ReturnFundExpenses ?? 0) + (model.ReturnManagementFees ?? 0) + (model.GPProfits ?? 0) + (model.LPProfits ?? 0));
@@ -834,8 +831,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 			ViewData["PageName"] = "ModifyCapitalDistribution";
 			return View(new CreateDistributionModel { CapitalDistributionID = id });
 		}
-
-
+		
 		//
 		// POST: /CapitalCall/UpdateDistribution
 		[HttpPost]
@@ -937,8 +933,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 		public ActionResult FindCapitalDistributionModel(int id) {
 			return Json(CapitalCallRepository.FindCapitalDistributionModel(id), JsonRequestBehavior.AllowGet);
 		}
-
-
+		
 		//
 		// GET: /CapitalCall/FindCapitalDistributions
 		[HttpGet]

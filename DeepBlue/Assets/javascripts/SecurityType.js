@@ -32,7 +32,7 @@
 	}
 	,onGridSuccess: function (t) {
 		$("tr",t).each(function () {
-			$("td:last div",this).html("<img id='Edit' class='gbutton' src='/Assets/images/Edit.png'/>");
+			$("td:last div",this).html("<img id='Edit' class='gbutton' src='"+jHelper.getImagePath("Edit.png")+"'/>");
 		});
 	}
 	,onRowClick: function (row) {
@@ -40,7 +40,7 @@
 	}
 	,onRowBound: function (tr,data) {
 		if(data.cell[2]==true) {
-			$("td:eq(2) div",tr).html("<img id='Edit' src='/Assets/images/tick.png'/>");
+			$("td:eq(2) div",tr).html("<img id='Edit' src='"+jHelper.getImagePath("tick.png")+"'/>");
 		}
 	}
 	,closeDialog: function (reload) {
@@ -50,7 +50,7 @@
 		}
 	}
 	,onCreateSecurityTypeBegin: function () {
-		$("#UpdateLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		$("#UpdateLoading").html(jHelper.savingHTML());
 	}
 	,onCreateSecurityTypeSuccess: function () {
 		$("#UpdateLoading").html("");

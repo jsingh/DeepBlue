@@ -43,5 +43,8 @@ namespace DeepBlue.Models.Admin {
 		public bool Enabled { get; set; }
 
 		public bool IsAdmin { get; set; }
+
+		public List<SelectListItem> Entities { get; set; } 
+
 	}
 }

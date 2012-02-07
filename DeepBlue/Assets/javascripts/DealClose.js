@@ -293,9 +293,9 @@
 		var chk=$(":input[type='checkbox']",tr).get(0);
 		if(chk) { chk.checked=true; }
 		if(img.src.indexOf('add_active.png')> -1) {
-			isShow=true;img.src="/Assets/images/Edit.png";
+			isShow=true;img.src=jHelper.getImagePath("Edit.png");
 		} else {
-			// img.src="/Assets/images/tick.png";
+			// img.src=jHelper.getImagePath("tick.png");
 		}
 		dealClose.showElements(tr,isShow);
 	}
@@ -313,7 +313,7 @@
 	}
 	,saveDealClose: function (loadingId) {
 		var loading=$("#"+loadingId);
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		loading.html(jHelper.savingHTML());
 		var frm=$("#frmDealClose");
 		$("#TotalUnderlyingFunds",frm).val($("tbody tr","#DealUnderlyingFundList").length);
 		$("#TotalUnderlyingDirects",frm).val($("tbody tr","#DealUnderlyingDirects").length);
@@ -340,7 +340,7 @@
 	}
 	,saveFinalDealClose: function (loadingId) {
 		var loading=$("#"+loadingId);
-		loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+		loading.html(jHelper.savingHTML());
 		var frm=$("#frmFinalDealClose");
 		$("#TotalUnderlyingFunds",frm).val($("tbody tr","#FinalDealUnderlyingFundList").length);
 		$("#TotalUnderlyingDirects",frm).val($("tbody tr","#FinalDealUnderlyingDirects").length);
@@ -367,8 +367,10 @@
 		return jHelper.formSubmit(formId,false);
 	}
 	,onGridSuccess: function (t) {
-		$("tbody tr",t).each(function () {
-			$("td:last",this).html("<img id='Edit' src='/Assets/images/Edit.png'/>");
+		$("tbody tr",t)
+		.each(function () {
+			$(this).css("cursor","pointer");
+			$("td:last",this).html("<img id='Edit' class='gbutton' src='"+jHelper.getImagePath("Edit.png")+"'/>");
 		});
 	}
 	,onRowClick: function (row) {
@@ -490,7 +492,7 @@
 	}
 	,saveDUF: function (img) {
 		var oldSrc=img.src;
-		img.src="/Assets/images/ajax.jpg";
+		img.src=jHelper.getImagePath("ajax.jpg");
 		var tr=$(img).parents("tr:first");
 		var param=jHelper.serialize(tr);
 		$.post("/Deal/CreateClosingDealUnderlyingFund",param,function (data) {
@@ -536,7 +538,7 @@
 	}
 	,saveDUD: function (img) {
 		var oldSrc=img.src;
-		img.src="/Assets/images/ajax.jpg";
+		img.src=jHelper.getImagePath("ajax.jpg");
 		var tr=$(img).parents("tr:first");
 		var param=jHelper.serialize(tr);
 		$.post("/Deal/CreateClosingDealUnderlyingDirect",param,function (data) {

@@ -50,7 +50,7 @@
 		if(confirm("Are you sure you want to delete this contact?")) {
 			var tr=$(img).parents("tr:first");
 			var imgsrc=img.src;
-			$(img).attr("src","/Assets/images/ajax.jpg");
+			$(img).attr("src",jHelper.getImagePath("ajax.jpg"));
 			img.src=imgsrc;
 			var dt=new Date();
 			var url="/Deal/DeleteUnderlyingFundContact/"+id+"?t="+dt.getTime();
@@ -137,7 +137,7 @@
 	,onGridSuccess: function (t,g) {
 		jHelper.checkValAttr(t);
 		jHelper.jqCheckBox(t);
-		$(window).resize();
+		
 	}
 	,onInit: function (g) {
 		var box=$(g.bDivBox).parents("#AddUnderlyingFund");

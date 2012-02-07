@@ -35,8 +35,8 @@
 		<%: Html.Label("Fund Size")%>
 	</div>
 	<div class="editor-field">
-		<%: Html.TextBox("TotalSize", "${TotalSize}", new { @class="hide", @onkeydown = "return jHelper.isNumeric(event);" })%>
-		<%: Html.Span("${TotalSize}", new { @class = "show" })%>
+		<%: Html.TextBox("TotalSize", "${formatNumber(TotalSize,0)}", new { @class = "hide", @onkeydown = "return jHelper.isNumeric(event);" })%>
+		<%: Html.Span("${formatCurrency(TotalSize)}", new { @class = "show" })%>
 	</div>
 	<div class="editor-label" style="clear: right">
 		<%: Html.Label("Termination Year")%>
@@ -303,7 +303,7 @@
 			</div>
 		</div>
 	</div>
-	<div style="display: none;">
+	<div>
 		<div class="line">
 		</div>
 		<div class="headerbox">
@@ -335,29 +335,36 @@
 			<div class="editor-field">
 				<%: Html.TextBox("DocumentDate", DateTime.Now.ToString("MM/dd/yyyy"), new { @id = "Doc_DocumentDate" })%>
 			</div>
-			<div class="editor-label">
-				<%: Html.DropDownList("UploadTypeId", Model.UploadTypes, new { @style = "width:85px", @onchange = "javascript:underlyingFund.changeUploadType(this);" })%>
+			<div id="dropbox" class="drop-files" style="padding: 38px 0 0 45px; margin: 0; width: 91%;">
+				<div id="FilesList">
+				</div>
+				<div class="editor-label" style="padding-right:0">
+					<%: Html.DropDownList("UploadTypeId", Model.UploadTypes, new { @style = "width:85px", @onchange = "javascript:underlyingFund.changeUploadType(this);" })%>
+				</div>
+				<div id="LinkRow" style="display: none; margin: 0 0;" class="editor-field">
+					<%: Html.TextBox("FilePath", "", new { @style = "width:250px" })%>
+					<%: Html.Hidden("FileId", "0")%>
+				</div>
+				<div id="FileRow" class="editor-field" style="padding-left: 12px;">
+					<div style="padding: 0; margin: 0 0; width: auto; float: left;">
+						<%: Html.File("File", new { @id = "fileToUpload" })%></div>
+				</div>
+				<div class="editor-field" style="width: auto;">
+				</div>
+				<div class="editor-label" style="width: 317px">
+				</div>
+				<div style="clear: both; float: right; color: #B3A8A8; margin: 18px 9px 0;">
+					Drop files here to upload.
+				</div>
 			</div>
-			<div id="FileRow" class="editor-field" style="padding-left: 12px;">
-				<div style="padding: 0; margin: 0 0; width: auto; float: left;">
-					<%: Html.File("File", new { @id = "fileToUpload" })%></div>
-			</div>
-			<div id="LinkRow" style="display: none; margin: 0 0;" class="editor-field">
-				<%: Html.TextBox("FilePath", "", new { @style = "width:250px" })%>
-				<%: Html.Hidden("FileId", "0")%>
-			</div>
-			<div class="editor-field" style="width: auto;">
-			</div>
-			<div class="editor-label" style="width: 317px">
-			</div>
-			<div class="editor-field" style="width: auto;">
-				<%: Html.ImageButton("Save_active.png", new { @id = "btnSaveDocument" })%>
+			<div class="editor-field" style="float: right; padding-right: 55px; padding-top: 21px;
+				width: auto;">
+				<%: Html.ImageButton("Upload_active.png", new { @id = "btnSaveDocument" })%>
 			</div>
 			<div class="cell" style="padding: 0; margin: 0;">
 				<%: Html.Span("", new { @id = "SpnDocLoading" })%>
 			</div>
-			<div style="clear: both; width: 70%; padding-left: 38px;">
-				<br />
+			<div style="clear: both; width: 92%; padding-left: 38px;">
 				<% Html.RenderPartial("TBoxTop"); %>
 				<table id="DocumentList" cellpadding="0" cellspacing="0" border="0" class="grid">
 					<thead>

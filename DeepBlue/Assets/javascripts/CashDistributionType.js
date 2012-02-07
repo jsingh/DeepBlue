@@ -26,7 +26,7 @@
 		if(confirm("Are you sure you want to delete this cash distribution type?")) {
 			var tr=$(img).parents("tr:first");
 			var imgsrc=img.src;
-			$(img).attr("src","/Assets/images/ajax.jpg");
+			$(img).attr("src",jHelper.getImagePath("ajax.jpg"));
 			img.src=imgsrc;
 			var dt=new Date();
 			var url="/Admin/DeleteCashDistributionType/"+id+"?t="+dt.getTime();
@@ -45,7 +45,7 @@
 		var param=jHelper.serialize(tr);
 		var url="/Admin/UpdateCashDistributionType";
 		var imgsrc=img.src;
-		$(img).attr("src","/Assets/images/ajax.jpg");
+		$(img).attr("src",jHelper.getImagePath("ajax.jpg"));
 		$.post(url,param,function (data) {
 			img.src=imgsrc;
 			var arr=data.split("||");
@@ -59,6 +59,7 @@
 					jHelper.applyFlexGridClass($(".middlec:first"));
 					jHelper.checkValAttr(newTR);
 					jHelper.jqCheckBox(newTR);
+					jHelper.gridEditRow(newTR);
 				});
 			}
 		});
@@ -66,14 +67,11 @@
 	,onGridSuccess: function (t,g) {
 		jHelper.checkValAttr(t);
 		jHelper.jqCheckBox(t);
-		$(window).resize();
+		jHelper.gridEditRow(t);
 	}
 	,onInit: function (g) {
 		var data={ name: "Add Cash Distribution Type" };
 		$("#AddButtonTemplate").tmpl(data).prependTo(g.pDiv);
-		//		$(window).resize(function () {
-		//			cashDistributionType.resizeGV(g);
-		//		});
 	}
 	,onTemplate: function (tbody,data) {
 		$("#GridTemplate").tmpl(data).appendTo(tbody);

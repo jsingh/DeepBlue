@@ -85,7 +85,7 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region UnderlyingFund
-		List<UnderlyingFundListModel> GetAllUnderlyingFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? gpId);
+		List<UnderlyingFundListModel> GetAllUnderlyingFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? gpId, int? underlyingFundID);
 		List<UnderlyingFund> GetAllUnderlyingFunds();
 		CreateUnderlyingFundModel FindUnderlyingFundModel(int underlyingFundId, int issuerId);
 		UnderlyingFund FindUnderlyingFund(int underlyingFundId);
@@ -294,7 +294,13 @@ namespace DeepBlue.Controllers.Deal {
 
 		#endregion
 
-
+		#region UnderlyingDirectDocument
+		List<UnderlyingDirectDocumentList> GetAllUnderlyingDirectDocuments(int pageIndex, int pageSize,
+		   string sortName, string sortOrder, ref int totalRows
+		   , int securityID, int securityTypeID
+		   );
+		bool DeleteUnderlyingDirectDocument(int underlyingDirectDocumentId);
+		#endregion
 
 	}
 }

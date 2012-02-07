@@ -20,15 +20,13 @@
 			cbox.append(cleft);
 			cleft.append(input);
 
-
-
-			var w=$(select).css("width");
-			if(w.indexOf("px")>0) {
-				w=parseInt($.trim(w.replace("px","")))-34;
-				if(w>0) {
-					$(input).css("width",w);
-				}
-			}
+//			var w=$(select).css("width");
+//			if(w.indexOf("px")>0) {
+//				w=parseInt($.trim(w.replace("px","")));
+//				if(w>0) {
+//					$(input).css("width",w);
+//				}
+//			}
 			if(select.hasClass("hide")) {
 				select.removeClass("hide");
 				select.hide();

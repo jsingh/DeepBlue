@@ -7,6 +7,7 @@ using DeepBlue.Models.Account;
 using DeepBlue.Models.Entity;
 using DeepBlue.Helpers;
 using System.Web.Security;
+using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Account {
 	public class AccountController : BaseController {
@@ -38,33 +39,57 @@ namespace DeepBlue.Controllers.Account {
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
 				bool isAuthenticated = false;
-				ENTITY entity = AccountRepository.FetchUserEntity(AppSettingsHelper.CurrentEntityID);
-				USER userLogin = AccountRepository.FetchUserLogin(model.UserName, entity.EntityID);
-				if (userLogin != null) {
-					if (userLogin.PasswordHash.ComparePassword(userLogin.PasswordSalt, model.Password)) {
-						isAuthenticated = true;
+				ENTITY entity = AccountRepository.FetchUserEntity(model.EntityCode);
+				if (entity != null) {
+					USER userLogin = AccountRepository.FetchUserLogin(model.UserName, entity.EntityID);
+					if (userLogin != null) {
+						if (userLogin.PasswordHash.ComparePassword(userLogin.PasswordSalt, model.Password)) {
+							isAuthenticated = true;
+						}
 					}
-				}
-				if (isAuthenticated) {
-					Authentication.CurrentUser = userLogin;
-					Authentication.CurrentEntity = entity;
-					FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-					if (IsLocalUrl(model.ReturnUrl) && model.ReturnUrl.Length > 1 && model.ReturnUrl.StartsWith("/")
-						&& !model.ReturnUrl.StartsWith("//") && !model.ReturnUrl.StartsWith("/\\")) {
+					if (isAuthenticated) {
+						Authentication.CurrentUser = userLogin;
+						Authentication.CurrentEntity = entity;
+						FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+						UrlHelper url = new UrlHelper(this.Request.RequestContext);
+						string rootUrl = url.Content("~/").ToLower();
+						string returnUrl = string.Empty;
+						if (string.IsNullOrEmpty(model.ReturnUrl) == false) {
+							if (IsLocalUrl(model.ReturnUrl) && model.ReturnUrl.Length > 1 && model.ReturnUrl.StartsWith("/")
+								&& !model.ReturnUrl.StartsWith("//") && !model.ReturnUrl.StartsWith("/\\")
+								&& model.ReturnUrl.ToLower() != rootUrl
+							) {
+								returnUrl = model.ReturnUrl;
+							}
+						}
+						if (string.IsNullOrEmpty(returnUrl) == false) {
 							return Redirect(model.ReturnUrl);
-					}
-					else {
-						return RedirectToAction("Index", "Fund");
+						}
+						else {
+							if (Authentication.IsSystemEntityUser) {
+								MenuModel menu = MenuHelper.FirstLeftMenu("AdminManagement");
+								if (menu != null) {
+									return RedirectToAction(menu.ActionName, menu.ControllerName);
+								}
+								else {
+									ModelState.AddModelError("Errors", "Admin menu does not exist");
+								}
+							}
+							else {
+								return RedirectToAction("Index", "Fund");
+							}
+						}
 					}
 				}
-				else {
+
+				if (isAuthenticated == false) {
 					ModelState.AddModelError("Errors", "Invalid Login");
 				}
 			}
 			// If we got this far, something failed, redisplay form
 			return View(model);
 		}
- 
+
 		public ActionResult LogOff() {
 			Authentication.Flush();
 			FormsAuthentication.SignOut();

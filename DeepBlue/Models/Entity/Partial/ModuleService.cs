@@ -16,7 +16,7 @@ namespace DeepBlue.Models.Entity {
 				if (module.ModuleID == 0) {
 					context.MODULEs.AddObject(module);
 				} else {
-					context.MODULEs.SingleOrDefault(entityType => entityType.ModuleID == module.ModuleID);
+					context.MODULEsTable.SingleOrDefault(entityType => entityType.ModuleID == module.ModuleID);
 					context.MODULEs.ApplyCurrentValues(module);
 				}
 				context.SaveChanges();

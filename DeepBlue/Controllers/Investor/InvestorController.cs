@@ -16,6 +16,7 @@ using DeepBlue.Models.Admin;
 
 namespace DeepBlue.Controllers.Investor {
 
+	[OtherEntityAuthorize]
 	public class InvestorController : BaseController {
 
 		public IInvestorRepository InvestorRepository { get; set; }

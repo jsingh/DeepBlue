@@ -140,7 +140,7 @@
 			 
 		<tr class="frow">
 			<td colspan="3" style="font-style: italic">
-				Willowridge Incorporated
+				<%=EntityHelper.EntityName%> Incorporated
 			</td>
 			<td colspan="3" style="text-align: right">
 				<%=DateTime.Now.ToLongDateString()%>

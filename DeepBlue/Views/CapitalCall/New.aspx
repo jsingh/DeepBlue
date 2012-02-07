@@ -14,7 +14,7 @@
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title">AMBERBROOK FUNDS</span><span class="arrow"></span><span class="pname">Capital
+				<span class="title"> FUNDS</span><span class="arrow"></span><span class="pname">Capital
 					Call</span></div>
 			<div class="rightcol">
 			</div>
@@ -31,7 +31,7 @@
 					Capital Call
 					<%}%>
 					<%using (Html.Div(new { @id = "SerCCTab" })) {%>
-					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...&nbsp;", new { @id = "SpnLoading", @style = "display:none;float:left;" })%><%: Html.TextBox("Fund", "SEARCH AMBERBROOK FUND", new { @class = "wm", @style = "width:200px" })%>
+					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...&nbsp;", new { @id = "SpnLoading", @style = "display:none;float:left;" })%><%: Html.TextBox("Fund", "SEARCH  FUND", new { @class = "wm", @style = "width:200px" })%>
 					<%}%>
 				</div>
 			</div>
@@ -102,7 +102,7 @@
 							<%: Html.LabelFor(model => model.FromDate) %>
 						</div>
 						<div class="editor-field">
-							<%: Html.TextBox("FromDate", "", new { @class = "datetxt", @id = "FromDate", @style="width:111px" })%>&nbsp;<%: Html.LabelFor(model => model.ToDate) %>&nbsp;<%: Html.TextBox("ToDate", "", new { @class = "datetxt", @id = "ToDate", @style = "width:111px" })%>
+							<%: Html.TextBox("FromDate", "", new {   @id = "FromDate", @style="width:111px" })%>&nbsp;<%: Html.LabelFor(model => model.ToDate) %>&nbsp;<%: Html.TextBox("ToDate", "", new { @class = "datetxt", @id = "ToDate", @style = "width:111px" })%>
 						</div>
 						<div class="editor-label" id="feeamountlbl" style="clear: right;">
 							Fee Amount
@@ -122,7 +122,7 @@
 							Fund Expense Amount
 						</div>
 						<div class="editor-field">
-							<%: Html.TextBox("FundExpenseAmount", "", new { @class = "datetxt", @style="width:111px", @onkeydown = "return jHelper.isCurrency(event);", @onkeyup="javascript:capitalCall.calcExistingInvestmentAmount();" })%>
+							<%: Html.TextBox("FundExpenseAmount", "", new {  @style="width:111px", @onkeydown = "return jHelper.isCurrency(event);", @onkeyup="javascript:capitalCall.calcExistingInvestmentAmount();" })%>
 						</div>
 					</div>
 					<div class="editor-label">
@@ -132,7 +132,7 @@
 						<%: Html.LabelFor(model => model.NewInvestmentAmount) %>
 					</div>
 					<div class="editor-field">
-						<%: Html.TextBoxFor(model => model.NewInvestmentAmount, new { @class = "datetxt", @style="width:110px;", @onkeydown = "return jHelper.isCurrency(event);", @onkeyup="javascript:capitalCall.calcExistingInvestmentAmount();" })%>
+						<%: Html.TextBoxFor(model => model.NewInvestmentAmount, new {   @style="width:110px;", @onkeydown = "return jHelper.isCurrency(event);", @onkeyup="javascript:capitalCall.calcExistingInvestmentAmount();" })%>
 					</div>
 					<div class="editor-label" style="clear: right">
 						<%: Html.LabelFor(model => model.ExistingInvestmentAmount) %>

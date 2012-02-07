@@ -6,6 +6,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Reflection;
 
 namespace DeepBlue.Helpers {
 	public class ValidationHelper {
@@ -15,6 +16,7 @@ namespace DeepBlue.Helpers {
 		/// <param name="instance"></param>
 		/// <returns></returns>
 		public static IEnumerable<ErrorInfo> Validate(object instance) {
+
 			var metadataAttrib = instance.GetType().GetCustomAttributes(typeof(MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
 			var buddyClassOrModelClass = metadataAttrib != null ? metadataAttrib.MetadataClassType : instance.GetType();
 			var buddyClassProperties = TypeDescriptor.GetProperties(buddyClassOrModelClass).Cast<PropertyDescriptor>();
@@ -31,6 +33,43 @@ namespace DeepBlue.Helpers {
 												 select new ErrorInfo("ClassLevelCustom", attribute.FormatErrorMessage(attribute.ErrorMessage), instance);
 
 			errors.AddRange(classErrors);
+
+			string tableName = instance.GetType().Name;
+			PropertyInfo property = instance.GetType().GetProperty("EntityID");
+			bool isEntityColumnExist = (property != null);
+			if (isEntityColumnExist) {
+				List<ErrorInfo> entityErrors = new List<ErrorInfo>();
+				string expression = string.Empty;
+				int entityID = 0;
+				object value = property.GetValue(instance, null);
+				if (value != null) {
+					int.TryParse(value.ToString(), out entityID);
+				}
+				EntityPermission permission = null;
+				Table table;
+				Enum.TryParse(tableName, out table);
+				if (table != Table.NULL && table != Table.ENTITY) {
+					permission = EntityHelper.Permissions.GetEntityPermission(table);
+				}
+				if (permission != null && entityID > 0) {
+					if (permission.IsSystemEntity == false && permission.IsOtherEntity == false) {
+						entityErrors.Add(new ErrorInfo("EntityID", "Entity permission disabled"));
+					}
+					else {
+						if (permission.IsSystemEntity == true) {
+							property.SetValue(instance, (int)ConfigUtil.SystemEntityID, null);
+						}
+						else if (entityID != Authentication.CurrentEntity.EntityID) {
+							if (!(Authentication.IsSystemEntityUser && table == Table.USER)) {
+								entityErrors.Add(new ErrorInfo("EntityID", "Invalid EntityID"));
+							}
+						}
+					}
+				}
+				if (entityErrors.Count() > 0) {
+					errors.AddRange((from err in entityErrors select new ErrorInfo(err.PropertyName, err.ErrorMessage)).ToArray());
+				}
+			}
 			return errors.AsEnumerable();
 		}
 
@@ -43,7 +82,7 @@ namespace DeepBlue.Helpers {
 			}
 			return errors.ToString();
 		}
-		
+
 	}
 
 	public class ErrorInfo {
@@ -61,5 +100,5 @@ namespace DeepBlue.Helpers {
 		public object Object { get; set; }
 		public string PropertyName { get; set; }
 	}
-	 
+
 }

@@ -2,7 +2,7 @@
 	var ufid=dealActivity.getUFVUnderlyingFund();
 	var dt=new Date();
 	var url="/Deal/FindUnderlyingFundValuation/?underlyingFundId="+ufid+"&fundId="+fundid+"&t="+dt.getTime();
-	$("#UFVLoading").html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...")
+	$("#UFVLoading").html(jHelper.loadingHTML())
 	$.getJSON(url,function (data) {
 		$("#UFVLoading").empty();
 		var tbl=$("#UnderlyingFundValuationList");
@@ -32,7 +32,7 @@ dealActivity.editUFV=function (img,id) {
 dealActivity.addUFV=function (img,id) {
 	var tr=$(img).parents("tr:first");
 	var loading=$("#UpdateLoading",tr);
-	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Saving...");
+	loading.html(jHelper.savingHTML());
 	var url="/Deal/CreateUnderlyingFundValuation";
 	var param=jHelper.serialize(tr);
 	var ufid=dealActivity.getUFVUnderlyingFund();
@@ -52,7 +52,7 @@ dealActivity.deleteUFV=function (fundId,id,img) {
 		var tr=$(img).parents("tr:first");
 		var trid="UFV_"+fundId;
 		var spnloading=$("#UpdateLoading",tr);
-		spnloading.html("<img src='/Assets/images/ajax.jpg'/>");
+		spnloading.html(jHelper.ajImg());
 		$.get(url,function (data) {
 			if(data!="") {
 				jAlert(data);
@@ -68,7 +68,7 @@ dealActivity.setUFVUnderlyingFund=function (id,name) {
 	var loading=$("#UFVLoading");
 	var tbl=$("#UnderlyingFundValuationList");
 	$("#SpnUFVName").html(name);
-	loading.html("<img src='/Assets/images/ajax.jpg'/>&nbsp;Loading...");
+	loading.html(jHelper.loadingHTML());
 	$("#PRValuation").hide();
 	$("tbody",tbl).empty();
 	$("#UFVDetail").attr("issearch","true").show();

@@ -1,0 +1,11 @@
+﻿#DirectList tbody tr, #DirectList tbody tr td {
+	background-image: none;
+}
+#DirectList tbody {
+	background-color: #fff;
+}
+#dropbox .preview
+,#dropbox .progressHolder
+{
+	    border: 1px solid #B5B1B1;
+}
