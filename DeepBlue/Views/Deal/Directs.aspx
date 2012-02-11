@@ -232,6 +232,7 @@
 		</div>
 		<div class="line"></div>
 		<div class="subdetail" style="clear:both;">
+			<div style="float:right;clear:both;margin-right:135px;">
 			<div class="editor-label" style="float: right;width:auto;padding-top:3px;">
 				<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:dealDirect.cancel(this);" })%>
 			</div>
@@ -239,6 +240,7 @@
 				<%: Html.ImageButton("add_direct_active.png")%>
 			</div><div class="editor-label" style="float:right;width:auto;">
 				<%: Html.Span("", new { @id = "SpnSaveIssuerLoading" } )%>&nbsp;&nbsp;&nbsp;
+			</div>
 			</div>
 		</div>
 		<%}%>

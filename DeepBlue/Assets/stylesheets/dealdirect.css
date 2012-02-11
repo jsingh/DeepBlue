@@ -95,7 +95,6 @@
 	float: left;
 	background-color: #CBD2DA;
 	padding: 10px 20px 0px 0px;
-	min-width: 960px;
 }
 #fidocument, #eqdocument {
 	padding: 20px 20px 20px 0px;
@@ -154,6 +153,7 @@
 .direct-det {
 	width: 100%;
 	float: left;
+	clear:both;
 	background-color: #CBD2DA;
 }
 .headerbar .leftcol {

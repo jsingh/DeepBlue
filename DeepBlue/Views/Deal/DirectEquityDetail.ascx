@@ -28,7 +28,7 @@
 		</div>
 		<div class="line">
 		</div>
-		<br />
+		<br /> 
 		<div class="editor-label">
 			<%: Html.LabelFor(model => model.EquityCurrencyId)%>
 		</div>
