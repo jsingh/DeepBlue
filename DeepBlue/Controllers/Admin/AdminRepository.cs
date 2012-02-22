@@ -2688,7 +2688,7 @@ namespace DeepBlue.Controllers.Admin {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				ENTITY entity = context.ENTITiesTable.SingleOrDefault(e => e.EntityID == id);
 				if (entity != null) {
-					if (entity.USERs.Count == 0) {
+					if (entity.USERs.Count == 0 && entity.EntityMenus.Count == 0) {
 						context.ENTITies.DeleteObject(entity);
 						context.SaveChanges();
 						return true;
