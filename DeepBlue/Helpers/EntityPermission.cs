@@ -8,9 +8,7 @@ namespace DeepBlue.Helpers {
 
 		private string _tableName = string.Empty;
 
-		public string ControllerName { get; set; }
-
-		public string ActionName { get; set; }
+		public string URL { get; set; }
 
 		public Table TableName {
 			get {
@@ -86,6 +84,8 @@ namespace DeepBlue.Helpers {
 		UnderlyingFund,
 		UnderlyingFundDocument,
 		UnderlyingFundType,
-		USER
+		USER,
+		EntityMenu,
+		Menu
 	}
 }

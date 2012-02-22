@@ -17,40 +17,43 @@ namespace DeepBlue.Helpers {
 			Permissions = new List<EntityPermission>();
 
 			// Admin
-			Permissions.Add(new EntityPermission { TableName = Table.InvestorEntityType, ControllerName = "Admin", ActionName = "EntityType", IsSystemEntity = true, IsOtherEntity = true });
-			Permissions.Add(new EntityPermission { TableName = Table.InvestorType, ControllerName = "Admin", ActionName = "InvestorType", IsSystemEntity = true, IsOtherEntity = false });
-			Permissions.Add(new EntityPermission { TableName = Table.CommunicationType, ControllerName = "Admin", ActionName = "CommunicationType", IsSystemEntity = true, IsOtherEntity = false });
-			Permissions.Add(new EntityPermission { TableName = Table.CommunicationGrouping, ControllerName = "Admin", ActionName = "CommunicationGrouping", IsSystemEntity = true, IsOtherEntity = false });
-			Permissions.Add(new EntityPermission { TableName = Table.FundClosing, ControllerName = "Admin", ActionName = "FundClosing", IsSystemEntity = false, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.InvestorEntityType, URL = "/Admin/EntityType", IsSystemEntity = true, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.InvestorType, URL = "/Admin/InvestorType", IsSystemEntity = true, IsOtherEntity = false });
+			Permissions.Add(new EntityPermission { TableName = Table.CommunicationType, URL = "/Admin/CommunicationType", IsSystemEntity = true, IsOtherEntity = false });
+			Permissions.Add(new EntityPermission { TableName = Table.CommunicationGrouping, URL = "/Admin/CommunicationGrouping", IsSystemEntity = true, IsOtherEntity = false });
+			Permissions.Add(new EntityPermission { TableName = Table.FundClosing, URL = "/Admin/FundClosing", IsSystemEntity = false, IsOtherEntity = true });
 
 			// Custom Fields
-			Permissions.Add(new EntityPermission { TableName = Table.CustomField, ControllerName = "Admin", ActionName = "CustomField", IsSystemEntity = false, IsOtherEntity = true });
-			Permissions.Add(new EntityPermission { TableName = Table.DataType, ControllerName = "Admin", ActionName = "DataType", IsSystemEntity = true, IsOtherEntity = false });
+			Permissions.Add(new EntityPermission { TableName = Table.CustomField, URL = "/Admin/CustomField", IsSystemEntity = false, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.DataType, URL = "/Admin/DataType", IsSystemEntity = true, IsOtherEntity = false });
 
 			// Deal Management
-			Permissions.Add(new EntityPermission { TableName = Table.PurchaseType, ControllerName = "Admin", ActionName = "PurchaseType", IsSystemEntity = true, IsOtherEntity = true });
-			Permissions.Add(new EntityPermission { TableName = Table.DealClosingCostType, ControllerName = "Admin", ActionName = "DealClosingCostType", IsSystemEntity = true, IsOtherEntity = true });
-			Permissions.Add(new EntityPermission { TableName = Table.UnderlyingFundType, ControllerName = "Admin", ActionName = "UnderlyingFundType", IsSystemEntity = true, IsOtherEntity = true });
-			Permissions.Add(new EntityPermission { TableName = Table.ShareClassType, ControllerName = "Admin", ActionName = "ShareClassType", IsSystemEntity = true, IsOtherEntity = true });
-			Permissions.Add(new EntityPermission { TableName = Table.CashDistributionType, ControllerName = "Admin", ActionName = "CashDistributionType", IsSystemEntity = true, IsOtherEntity = false });
-			Permissions.Add(new EntityPermission { TableName = Table.FundExpenseType, ControllerName = "Admin", ActionName = "FundExpenseType", IsSystemEntity = true, IsOtherEntity = true });
-			Permissions.Add(new EntityPermission { TableName = Table.ReportingFrequency, ControllerName = "Admin", ActionName = "ReportingFrequency", IsSystemEntity = true, IsOtherEntity = true });
-			Permissions.Add(new EntityPermission { TableName = Table.ReportingType, ControllerName = "Admin", ActionName = "ReportingType", IsSystemEntity = true, IsOtherEntity = true });
-			Permissions.Add(new EntityPermission { TableName = Table.Currency, ControllerName = "Admin", ActionName = "Currency", IsSystemEntity = true, IsOtherEntity = false });
-			Permissions.Add(new EntityPermission { TableName = Table.Industry, ControllerName = "Admin", ActionName = "Industry", IsSystemEntity = true, IsOtherEntity = true });
-			Permissions.Add(new EntityPermission { TableName = Table.Contact, ControllerName = "Admin", ActionName = "DealContact", IsSystemEntity = false, IsOtherEntity = true });
-			Permissions.Add(new EntityPermission { TableName = Table.EquityType, ControllerName = "Admin", ActionName = "EquityType", IsSystemEntity = true, IsOtherEntity = true });
-			Permissions.Add(new EntityPermission { TableName = Table.FixedIncomeType, ControllerName = "Admin", ActionName = "FixedIncomeType", IsSystemEntity = true, IsOtherEntity = true });
-			Permissions.Add(new EntityPermission { TableName = Table.SellerType, ControllerName = "Admin", ActionName = "SellerType", IsSystemEntity = true, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.PurchaseType, URL = "/Admin/PurchaseType", IsSystemEntity = true, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.DealClosingCostType, URL = "/Admin/DealClosingCostType", IsSystemEntity = true, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.UnderlyingFundType, URL = "/Admin/UnderlyingFundType", IsSystemEntity = true, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.ShareClassType, URL = "/Admin/ShareClassType", IsSystemEntity = true, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.CashDistributionType, URL = "/Admin/CashDistributionType", IsSystemEntity = true, IsOtherEntity = false });
+			Permissions.Add(new EntityPermission { TableName = Table.FundExpenseType, URL = "/Admin/FundExpenseType", IsSystemEntity = true, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.ReportingFrequency, URL = "/Admin/ReportingFrequency", IsSystemEntity = true, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.ReportingType, URL = "/Admin/ReportingType", IsSystemEntity = true, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.Currency, URL = "/Admin/Currency", IsSystemEntity = true, IsOtherEntity = false });
+			Permissions.Add(new EntityPermission { TableName = Table.Industry, URL = "/Admin/Industry", IsSystemEntity = true, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.Contact, URL = "/Admin/DealContact", IsSystemEntity = false, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.EquityType, URL = "/Admin/EquityType", IsSystemEntity = true, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.FixedIncomeType, URL = "/Admin/FixedIncomeType", IsSystemEntity = true, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.SellerType, URL = "/Admin/SellerType", IsSystemEntity = true, IsOtherEntity = true });
 
 			// Document Management
-			Permissions.Add(new EntityPermission { TableName = Table.DocumentType, ControllerName = "Admin", ActionName = "DocumentType", IsSystemEntity = true, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.DocumentType, URL = "/Admin/DocumentType", IsSystemEntity = true, IsOtherEntity = true });
 
 			// User Management
-			Permissions.Add(new EntityPermission { TableName = Table.USER, ControllerName = "Admin", ActionName = "Users", IsSystemEntity = false, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.USER, URL = "/Admin/Users", IsSystemEntity = false, IsOtherEntity = true });
 
 			// Entity Management
-			Permissions.Add(new EntityPermission { TableName = Table.ENTITY, ControllerName = "Admin", ActionName = "Entities", IsSystemEntity = true, IsOtherEntity = false });
+			Permissions.Add(new EntityPermission { TableName = Table.ENTITY, URL = "/Admin/Entities", IsSystemEntity = true, IsOtherEntity = false });
+
+			// Menu
+			Permissions.Add(new EntityPermission { TableName = Table.Menu, URL = "/Admin/Menu", IsSystemEntity = true, IsOtherEntity = false });
 		}
 
 		public static string EntityName {

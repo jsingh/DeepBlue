@@ -7,9 +7,21 @@ using DeepBlue.Models.Admin;
 using System.Xml.Linq;
 using System.Web.Routing;
 using DeepBlue.Helpers;
+using DeepBlue.Models.Entity;
+using DeepBlue.Controllers.Admin;
 
 namespace DeepBlue.Controllers {
 	public class HomeController : BaseController {
+
+		public IAdminRepository AdminRepository { get; set; }
+
+		public HomeController()
+			: this(new AdminRepository()) {
+		}
+
+		public HomeController(IAdminRepository adminRepository) {
+			AdminRepository = adminRepository;
+		}
 
 		//
 		// GET: /Home/
@@ -17,19 +29,7 @@ namespace DeepBlue.Controllers {
 			ViewData["MenuName"] = "DealManagement";
 			return View();
 		}
-
-		[ChildActionOnly]
-		public ActionResult Menu() {
-			ViewData = this.ControllerContext.ParentActionViewContext.ViewData;
-			return View(MenuHelper.GetMenus());
-		}
-
-		[ChildActionOnly]
-		public ActionResult LeftMenu() {
-			ViewData = this.ControllerContext.ParentActionViewContext.ViewData;
-			return View(MenuHelper.GetMenus());
-		}
-
+	  
 	}
 }
 

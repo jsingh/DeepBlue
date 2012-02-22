@@ -20,7 +20,6 @@ namespace DeepBlue.Controllers.Admin {
 
 		public ITransactionRepository TransactionRepository { get; set; }
 
-		//public IDealRepository DealRepository { get; set; }
 
 		public AdminController()
 			: this(new AdminRepository(), new TransactionRepository()) {
@@ -2793,6 +2792,7 @@ namespace DeepBlue.Controllers.Admin {
 		[HttpPost]
 		[SystemEntityAuthorize]
 		public ActionResult UpdateEntity(FormCollection collection) {
+			ICacheManager cacheManager = new MemoryCacheManager();
 			ENTITY model = new ENTITY();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
@@ -2815,7 +2815,6 @@ namespace DeepBlue.Controllers.Admin {
 				entity.EntityName = model.EntityName;
 				entity.EntityCode = model.EntityCode;
 				entity.Enabled = model.Enabled;
-
 				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveEntity(entity);
 				if (errorInfo != null) {
 					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
@@ -2843,6 +2842,12 @@ namespace DeepBlue.Controllers.Admin {
 						user.IsAdmin = true;
 						AdminRepository.SaveUser(user);
 					}
+				}
+				// Create entity menu
+				if (AdminRepository.GetEntityMenuCount(entity.EntityID) <= 0) {
+					AdminRepository.SaveEntityMenu(entity.EntityID);
+					// Remove entity menu cache
+					cacheManager.RemoveByPattern(string.Format(MenuHelper.ENTITYMENUKEY, entity.EntityID));
 				}
 			}
 			else {
@@ -3656,6 +3661,282 @@ namespace DeepBlue.Controllers.Admin {
 		[OtherEntityAuthorize]
 		public ActionResult UnderlyingDirectExportExcel() {
 			return View(AdminRepository.GetAllUnderlyingDirectExportList());
+		}
+
+		#endregion
+
+		#region Menu
+
+		[HttpGet]
+		[SystemEntityAuthorize]
+		public ActionResult Menu() {
+			ViewData["MenuName"] = "AdminManagement";
+			ViewData["SubmenuName"] = "EntitySetup";
+			ViewData["PageName"] = "Menu";
+			return View();
+		}
+
+		//
+		// GET: /Admin/MenuList
+		[HttpGet]
+		[SystemEntityAuthorize]
+		public JsonResult MenuList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DeepBlue.Models.Entity.Menu> menus = AdminRepository.GetAllMenus(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var menu in menus) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {menu.MenuID,
+					  menu.DisplayName,
+					  menu.ParentMenuID,
+					 (menu.Menu2 != null ? (menu.Menu2.Menu2 != null ? menu.Menu2.Menu2.DisplayName + " -> " : string.Empty) : string.Empty) + (menu.Menu2 != null ? menu.Menu2.DisplayName : string.Empty),
+					  menu.Title,
+					  menu.URL
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditMenu
+		[HttpGet]
+		[SystemEntityAuthorize]
+		public JsonResult EditMenu(int id) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			Menu menu = AdminRepository.FindMenu(id);
+			flexgridData.total = totalRows;
+			flexgridData.page = 0;
+			flexgridData.rows.Add(new FlexigridRow {
+				cell = new List<object> {menu.MenuID,
+					  menu.DisplayName,
+					  menu.ParentMenuID,
+					  (menu.Menu2 != null ? (menu.Menu2.Menu2 != null ? menu.Menu2.Menu2.DisplayName + " -> " : string.Empty) : string.Empty) + (menu.Menu2 != null ? menu.Menu2.DisplayName : string.Empty),
+					  menu.Title,
+					  menu.URL
+					}
+			});
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/UpdateMenu
+		[HttpPost]
+		[SystemEntityAuthorize]
+		public ActionResult UpdateMenu(FormCollection collection) {
+			ICacheManager cacheManager = new MemoryCacheManager();
+			EditMenuModel model = new EditMenuModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				Menu menu = AdminRepository.FindMenu(model.MenuID);
+				if (menu == null) {
+					menu = new Menu();
+				}
+				menu.DisplayName = model.DisplayName;
+				menu.ParentMenuID = model.ParentMenuID;
+				menu.URL = model.URL;
+				menu.Title = model.Title;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveMenu(menu);
+				if (errorInfo != null) {
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+				}
+				else {
+					// Remove entity menu cache
+					cacheManager.RemoveByPattern(MenuHelper.ENTITYMENUKEY);
+					resultModel.Result = "True||" + menu.MenuID;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		[SystemEntityAuthorize]
+		public string DeleteMenu(int id) {
+			if (AdminRepository.DeleteMenu(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				// Remove entity menu cache
+				ICacheManager cacheManager = new MemoryCacheManager();
+				cacheManager.RemoveByPattern(MenuHelper.ENTITYMENUKEY);
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		[SystemEntityAuthorize]
+		public string MenuAvailable(string Menu, int MenuID) {
+			if (AdminRepository.MenuNameAvailable(Menu, MenuID))
+				return "Menu Name already exists.";
+			else
+				return string.Empty;
+		}
+
+		[HttpGet]
+		public JsonResult FindMenus(string term, int? menuID) {
+			return Json(AdminRepository.FindMenus(term, menuID), JsonRequestBehavior.AllowGet);
+		}
+
+		#endregion
+
+		#region EntityMenu
+
+		[HttpGet]
+		public ActionResult EntityMenu() {
+			ViewData["EntityMenuName"] = "AdminManagement";
+			ViewData["SubentityMenuName"] = "EntitySetup";
+			ViewData["PageName"] = "EntityMenu";
+			return View();
+		}
+
+		//
+		// GET: /Admin/EntityMenuList
+		[HttpGet]
+		public JsonResult EntityMenuList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<EntityMenuModel> entityMenus = AdminRepository.GetAllEntityMenus(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var entityMenu in entityMenus) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {entityMenu.EntityMenuID,
+					  entityMenu.DisplayName, 
+					  entityMenu.MenuID, 
+					  entityMenu.MenuName,
+					  entityMenu.SortOrder
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/EditEntityMenu
+		[HttpGet]
+		public JsonResult EditEntityMenu(int id) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			EntityMenuModel entityMenu = AdminRepository.GetEntityMenu(id);
+			flexgridData.total = totalRows;
+			flexgridData.page = 0;
+			flexgridData.rows.Add(new FlexigridRow {
+				cell = new List<object> {entityMenu.EntityMenuID,
+					  entityMenu.DisplayName, 
+					  entityMenu.MenuID, 
+					  entityMenu.MenuName,
+					  entityMenu.SortOrder
+					}
+			});
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/UpdateEntityMenu
+		[HttpPost]
+		public ActionResult UpdateEntityMenu(FormCollection collection) {
+			ICacheManager cacheManager = new MemoryCacheManager();
+			EditEntityMenuModel model = new EditEntityMenuModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model);
+			//string ErrorMessage = EntityMenuAvailable(model.DisplayName, model.EntityMenuID);
+			//if (String.IsNullOrEmpty(ErrorMessage) == false) {
+			//    ModelState.AddModelError("DisplayName", ErrorMessage);
+			//}
+			if (ModelState.IsValid) {
+				EntityMenu entityMenu = AdminRepository.FindEntityMenu(model.EntityMenuID);
+				if (entityMenu == null) {
+					entityMenu = new EntityMenu();
+				}
+				entityMenu.DisplayName = model.DisplayName;
+				entityMenu.MenuID = model.MenuID;
+				entityMenu.EntityID = Authentication.CurrentEntity.EntityID;
+				IEnumerable<ErrorInfo> errorInfo = AdminRepository.SaveEntityMenu(entityMenu);
+				if (errorInfo != null) {
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+				}
+				else {
+					// Remove entity menu cache
+					cacheManager.RemoveByPattern(string.Format(MenuHelper.ENTITYMENUKEY, entityMenu.EntityID));
+					resultModel.Result = "True||" + entityMenu.EntityMenuID;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		//
+		// GET: /Admin/UpdateEntityMenuSortOrder
+		[HttpPost]
+		public ActionResult UpdateEntityMenuSortOrder(FormCollection collection) {
+			ICacheManager cacheManager = new MemoryCacheManager();
+			ResultModel resultModel = new ResultModel();
+			int entityMenuID = 0;
+			int alterEntityMenuID = 0;
+			int.TryParse(collection["entityMenuID"], out entityMenuID);
+			int.TryParse(collection["alterEntityMenuID"], out alterEntityMenuID);
+			EntityMenu entityMenu = AdminRepository.FindEntityMenu(entityMenuID);
+			EntityMenu alterEntityMenu = AdminRepository.FindEntityMenu(alterEntityMenuID);
+			IEnumerable<ErrorInfo> errorInfo = null;
+			if (entityMenu != null && alterEntityMenu != null) {
+				int entityMenuSortOrder = entityMenu.SortOrder;
+				int alterEntityMenuSortOrder = alterEntityMenu.SortOrder;
+				entityMenu.SortOrder = alterEntityMenuSortOrder;
+				alterEntityMenu.SortOrder = entityMenuSortOrder;
+				AdminRepository.SaveEntityMenu(entityMenu);
+				AdminRepository.SaveEntityMenu(alterEntityMenu);
+			}
+			if (errorInfo != null) {
+				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			else {
+				// Remove entity menu cache
+				cacheManager.RemoveByPattern(string.Format(MenuHelper.ENTITYMENUKEY, entityMenu.EntityID));
+				resultModel.Result = "True||" + entityMenu.EntityMenuID;
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		public string DeleteEntityMenu(int id) {
+			if (AdminRepository.DeleteEntityMenu(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				// Remove entity menu cache
+				ICacheManager cacheManager = new MemoryCacheManager();
+				cacheManager.RemoveByPattern(string.Format(MenuHelper.ENTITYMENUKEY, id));
+				return string.Empty;
+			}
+		}
+
+		[HttpGet]
+		public string EntityMenuAvailable(string EntityMenu, int EntityMenuID) {
+			if (AdminRepository.EntityMenuNameAvailable(EntityMenu, EntityMenuID))
+				return "EntityMenu Name already exists.";
+			else
+				return string.Empty;
 		}
 
 		#endregion

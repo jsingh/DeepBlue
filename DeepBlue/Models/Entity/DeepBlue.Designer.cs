@@ -86,7 +86,9 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_DocumentType", "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DocumentType), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingDirectDocument_DocumentType", "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DocumentType), "UnderlyingDirectDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingDirectDocument), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundDocument_DocumentType", "DocumentType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.DocumentType), "UnderlyingFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundDocument), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_EntityMenu_Entity", "ENTITY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.ENTITY), "EntityMenu", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.EntityMenu), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_USER_ENTITY", "ENTITY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.ENTITY), "USER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.USER), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_EntityMenu_Menu", "Menu", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Menu), "EntityMenu", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.EntityMenu), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Equity_EquityType", "EquityType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.EquityType), "Equity", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Equity), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Equity_Industry", "Industry", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Industry), "Equity", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Equity), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Equity_Issuer", "Issuer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Issuer), "Equity", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Equity), true)]
@@ -135,6 +137,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_ManagementFeeRateSchedule_RateScheduleType", "RateScheduleType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.RateScheduleType), "ManagementFeeRateSchedule", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.ManagementFeeRateSchedule), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_ManagementFeeRateScheduleTier_ManagementFeeRateSchedule", "ManagementFeeRateSchedule", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.ManagementFeeRateSchedule), "ManagementFeeRateScheduleTier", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.ManagementFeeRateScheduleTier), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_ManagementFeeRateScheduleTier_MultiplierType", "MultiplierType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.MultiplierType), "ManagementFeeRateScheduleTier", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.ManagementFeeRateScheduleTier), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_Menu_Menu", "Menu", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Menu), "Menu1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.Menu), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_OptionFieldValueList_OptionField", "OptionField", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.OptionField), "OptionFieldValueList", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.OptionFieldValueList), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_ReportingFrequency", "ReportingFrequency", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.ReportingFrequency), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_ReportingType", "ReportingType", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.ReportingType), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
@@ -806,6 +809,22 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<EntityMenu> EntityMenus
+        {
+            get
+            {
+                if ((_EntityMenus == null))
+                {
+                    _EntityMenus = base.CreateObjectSet<EntityMenu>("EntityMenus");
+                }
+                return _EntityMenus;
+            }
+        }
+        private ObjectSet<EntityMenu> _EntityMenus;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<Equity> Equities
         {
             get
@@ -1330,6 +1349,22 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<ManagementFeeRateScheduleTier> _ManagementFeeRateScheduleTiers;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Menu> Menus
+        {
+            get
+            {
+                if ((_Menus == null))
+                {
+                    _Menus = base.CreateObjectSet<Menu>("Menus");
+                }
+                return _Menus;
+            }
+        }
+        private ObjectSet<Menu> _Menus;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2143,6 +2178,14 @@ namespace DeepBlue.Models.Entity
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the EntityMenus EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToEntityMenus(EntityMenu entityMenu)
+        {
+            base.AddObject("EntityMenus", entityMenu);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the Equities EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToEquities(Equity equity)
@@ -2404,6 +2447,14 @@ namespace DeepBlue.Models.Entity
         public void AddToManagementFeeRateScheduleTiers(ManagementFeeRateScheduleTier managementFeeRateScheduleTier)
         {
             base.AddObject("ManagementFeeRateScheduleTiers", managementFeeRateScheduleTier);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Menus EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToMenus(Menu menu)
+        {
+            base.AddObject("Menus", menu);
         }
     
         /// <summary>
@@ -15726,6 +15777,28 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_EntityMenu_Entity", "EntityMenu")]
+        public EntityCollection<EntityMenu> EntityMenus
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EntityMenu>("DeepBlueModel.FK_EntityMenu_Entity", "EntityMenu");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EntityMenu>("DeepBlueModel.FK_EntityMenu_Entity", "EntityMenu", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_USER_ENTITY", "USER")]
         public EntityCollection<USER> USERs
         {
@@ -15738,6 +15811,244 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<USER>("DeepBlueModel.FK_USER_ENTITY", "USER", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="EntityMenu")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class EntityMenu : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new EntityMenu object.
+        /// </summary>
+        /// <param name="entityMenuID">Initial value of the EntityMenuID property.</param>
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        /// <param name="menuID">Initial value of the MenuID property.</param>
+        /// <param name="displayName">Initial value of the DisplayName property.</param>
+        /// <param name="sortOrder">Initial value of the SortOrder property.</param>
+        public static EntityMenu CreateEntityMenu(global::System.Int32 entityMenuID, global::System.Int32 entityID, global::System.Int32 menuID, global::System.String displayName, global::System.Int32 sortOrder)
+        {
+            EntityMenu entityMenu = new EntityMenu();
+            entityMenu.EntityMenuID = entityMenuID;
+            entityMenu.EntityID = entityID;
+            entityMenu.MenuID = menuID;
+            entityMenu.DisplayName = displayName;
+            entityMenu.SortOrder = sortOrder;
+            return entityMenu;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityMenuID
+        {
+            get
+            {
+                return _EntityMenuID;
+            }
+            set
+            {
+                if (_EntityMenuID != value)
+                {
+                    OnEntityMenuIDChanging(value);
+                    ReportPropertyChanging("EntityMenuID");
+                    _EntityMenuID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("EntityMenuID");
+                    OnEntityMenuIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _EntityMenuID;
+        partial void OnEntityMenuIDChanging(global::System.Int32 value);
+        partial void OnEntityMenuIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 MenuID
+        {
+            get
+            {
+                return _MenuID;
+            }
+            set
+            {
+                OnMenuIDChanging(value);
+                ReportPropertyChanging("MenuID");
+                _MenuID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MenuID");
+                OnMenuIDChanged();
+            }
+        }
+        private global::System.Int32 _MenuID;
+        partial void OnMenuIDChanging(global::System.Int32 value);
+        partial void OnMenuIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String DisplayName
+        {
+            get
+            {
+                return _DisplayName;
+            }
+            set
+            {
+                OnDisplayNameChanging(value);
+                ReportPropertyChanging("DisplayName");
+                _DisplayName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("DisplayName");
+                OnDisplayNameChanged();
+            }
+        }
+        private global::System.String _DisplayName;
+        partial void OnDisplayNameChanging(global::System.String value);
+        partial void OnDisplayNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SortOrder
+        {
+            get
+            {
+                return _SortOrder;
+            }
+            set
+            {
+                OnSortOrderChanging(value);
+                ReportPropertyChanging("SortOrder");
+                _SortOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SortOrder");
+                OnSortOrderChanged();
+            }
+        }
+        private global::System.Int32 _SortOrder;
+        partial void OnSortOrderChanging(global::System.Int32 value);
+        partial void OnSortOrderChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_EntityMenu_Entity", "ENTITY")]
+        public ENTITY ENTITY
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ENTITY>("DeepBlueModel.FK_EntityMenu_Entity", "ENTITY").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ENTITY>("DeepBlueModel.FK_EntityMenu_Entity", "ENTITY").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<ENTITY> ENTITYReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ENTITY>("DeepBlueModel.FK_EntityMenu_Entity", "ENTITY");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ENTITY>("DeepBlueModel.FK_EntityMenu_Entity", "ENTITY", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_EntityMenu_Menu", "Menu")]
+        public Menu Menu
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Menu>("DeepBlueModel.FK_EntityMenu_Menu", "Menu").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Menu>("DeepBlueModel.FK_EntityMenu_Menu", "Menu").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Menu> MenuReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Menu>("DeepBlueModel.FK_EntityMenu_Menu", "Menu");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Menu>("DeepBlueModel.FK_EntityMenu_Menu", "Menu", value);
                 }
             }
         }
@@ -27362,6 +27673,244 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<MultiplierType>("DeepBlueModel.FK_ManagementFeeRateScheduleTier_MultiplierType", "MultiplierType", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="Menu")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Menu : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Menu object.
+        /// </summary>
+        /// <param name="menuID">Initial value of the MenuID property.</param>
+        /// <param name="displayName">Initial value of the DisplayName property.</param>
+        public static Menu CreateMenu(global::System.Int32 menuID, global::System.String displayName)
+        {
+            Menu menu = new Menu();
+            menu.MenuID = menuID;
+            menu.DisplayName = displayName;
+            return menu;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 MenuID
+        {
+            get
+            {
+                return _MenuID;
+            }
+            set
+            {
+                if (_MenuID != value)
+                {
+                    OnMenuIDChanging(value);
+                    ReportPropertyChanging("MenuID");
+                    _MenuID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("MenuID");
+                    OnMenuIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _MenuID;
+        partial void OnMenuIDChanging(global::System.Int32 value);
+        partial void OnMenuIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String DisplayName
+        {
+            get
+            {
+                return _DisplayName;
+            }
+            set
+            {
+                OnDisplayNameChanging(value);
+                ReportPropertyChanging("DisplayName");
+                _DisplayName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("DisplayName");
+                OnDisplayNameChanged();
+            }
+        }
+        private global::System.String _DisplayName;
+        partial void OnDisplayNameChanging(global::System.String value);
+        partial void OnDisplayNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> ParentMenuID
+        {
+            get
+            {
+                return _ParentMenuID;
+            }
+            set
+            {
+                OnParentMenuIDChanging(value);
+                ReportPropertyChanging("ParentMenuID");
+                _ParentMenuID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ParentMenuID");
+                OnParentMenuIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _ParentMenuID;
+        partial void OnParentMenuIDChanging(Nullable<global::System.Int32> value);
+        partial void OnParentMenuIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String URL
+        {
+            get
+            {
+                return _URL;
+            }
+            set
+            {
+                OnURLChanging(value);
+                ReportPropertyChanging("URL");
+                _URL = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("URL");
+                OnURLChanged();
+            }
+        }
+        private global::System.String _URL;
+        partial void OnURLChanging(global::System.String value);
+        partial void OnURLChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Title
+        {
+            get
+            {
+                return _Title;
+            }
+            set
+            {
+                OnTitleChanging(value);
+                ReportPropertyChanging("Title");
+                _Title = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Title");
+                OnTitleChanged();
+            }
+        }
+        private global::System.String _Title;
+        partial void OnTitleChanging(global::System.String value);
+        partial void OnTitleChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_EntityMenu_Menu", "EntityMenu")]
+        public EntityCollection<EntityMenu> EntityMenus
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EntityMenu>("DeepBlueModel.FK_EntityMenu_Menu", "EntityMenu");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EntityMenu>("DeepBlueModel.FK_EntityMenu_Menu", "EntityMenu", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_Menu_Menu", "Menu1")]
+        public EntityCollection<Menu> Menu1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Menu>("DeepBlueModel.FK_Menu_Menu", "Menu1");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Menu>("DeepBlueModel.FK_Menu_Menu", "Menu1", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_Menu_Menu", "Menu")]
+        public Menu Menu2
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Menu>("DeepBlueModel.FK_Menu_Menu", "Menu").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Menu>("DeepBlueModel.FK_Menu_Menu", "Menu").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Menu> Menu2Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Menu>("DeepBlueModel.FK_Menu_Menu", "Menu");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Menu>("DeepBlueModel.FK_Menu_Menu", "Menu", value);
                 }
             }
         }

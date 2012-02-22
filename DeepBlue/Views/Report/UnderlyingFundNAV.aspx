@@ -26,8 +26,12 @@
 			<% Html.EnableClientValidation(); %>
 			<%using (Html.Form(new { @id = "frmUnderlyingFundNAV", @onsubmit = "return underlyingFundNAVReport.onSubmit(this);" })) {%>
 			<div class="editor-label" style="width: auto;">
+				<div style="float:left">
 				<%: Html.LabelFor(model => model.UnderlyingFundId)%>
+				</div>
+				<div style="float:left;text-align:right;">
 				<%: Html.TextBox("FundName", "SEARCH UNDERLYING FUND", new { @class = "wm", @id = "FundName", @style = "width:200px" })%>
+				</div>
 			</div>
 			<div class="editor-label" style="width: auto; clear: right;">
 				<%: Html.LabelFor(model => model.StartDate)%>

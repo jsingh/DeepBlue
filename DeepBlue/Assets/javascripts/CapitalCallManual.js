@@ -93,7 +93,8 @@
 		$("#CapitalCallInvestorTemplate").tmpl(data).prependTo(target);
 		var tr=$("tr:first",target);
 		tr.attr("id","Row0");
-		$("#Investor",tr).autocomplete({ source: function (request,response) {
+		$("#Investor",tr)
+		.autocomplete({ source: function (request,response) {
 			$.getJSON("/Investor/FindInvestors"+"?term="+request.term+"&fundId="+$("#FundId").val(),function (data) {
 				response(data);
 			});

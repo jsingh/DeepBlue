@@ -52,6 +52,8 @@ namespace DeepBlue.Controllers.Account {
 						Authentication.CurrentEntity = entity;
 						FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
 						UrlHelper url = new UrlHelper(this.Request.RequestContext);
+						string redirectUrl = string.Empty;
+						EntityMenuModel menu = null;
 						string rootUrl = url.Content("~/").ToLower();
 						string returnUrl = string.Empty;
 						if (string.IsNullOrEmpty(model.ReturnUrl) == false) {
@@ -67,17 +69,26 @@ namespace DeepBlue.Controllers.Account {
 						}
 						else {
 							if (Authentication.IsSystemEntityUser) {
-								MenuModel menu = MenuHelper.FirstLeftMenu("AdminManagement");
-								if (menu != null) {
-									return RedirectToAction(menu.ActionName, menu.ControllerName);
-								}
-								else {
-									ModelState.AddModelError("Errors", "Admin menu does not exist");
-								}
+								menu = MenuHelper.GetMenu("/Admin/EntityType");
+								if (menu != null)
+									redirectUrl = menu.URL;
+								else
+									redirectUrl = "/Admin/EntityType";
 							}
 							else {
-								return RedirectToAction("Index", "Fund");
+								menu = MenuHelper.GetMenu("/Fund");
+								if (menu != null)
+									redirectUrl = menu.URL;
+								else
+									redirectUrl = "/Fund";
 							}
+							if (menu != null) {
+								if (menu.URL.Contains("?"))
+									redirectUrl += "&menuid=" + menu.MenuID;
+								else
+									redirectUrl += "?menuid=" + menu.MenuID;
+							}
+							return Redirect(redirectUrl);
 						}
 					}
 				}

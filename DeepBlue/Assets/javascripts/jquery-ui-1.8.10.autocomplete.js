@@ -426,8 +426,8 @@
 			if(this.options.fullSearch) {
 				var source=this.options.source;
 				var search=this.options.search;
-				var cacheNames=this.options.cacheNames;
 				var isCacheName=false;
+				var cacheNames=this.options.cacheNames;
 				for(var i=0;i<cacheNames.length;i++) {
 					if(cacheNames[i]==source) {
 						isCacheName=true;

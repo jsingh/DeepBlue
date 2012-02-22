@@ -33,8 +33,6 @@ namespace DeepBlue {
 															   typeof(RemoteUID_Attribute),
 															   typeof(RemoteAttributeAdapter));
 		}
-
 		 
-
 	}
 }

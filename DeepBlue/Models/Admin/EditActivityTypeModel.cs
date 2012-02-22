@@ -10,17 +10,22 @@ using System.Web.Mvc;
 
 
 namespace DeepBlue.Models.Admin {
-	public class EditFundExpenseTypeModel {
-		public EditFundExpenseTypeModel() {
-			FundExpenseTypeId = 0;
+	public class EditActivityTypeModel {
+		public EditActivityTypeModel() {
+			ActivityTypeId = 0;
 			Name = string.Empty;
+			Enabled = false;
 		}
 
-		public int FundExpenseTypeId { get; set; }
+		public int ActivityTypeId { get; set; }
 
-		[Required(ErrorMessage = "Fund Expense Type is required")]
-		[StringLength(50, ErrorMessage = "Fund Expense Type must be under 50 characters.")]
+		[Required(ErrorMessage = "Name is required")]
+		[StringLength(100, ErrorMessage = "Name must be under 100 characters.")]
 		[DisplayName("Name")]
 		public string Name { get; set; }
+
+		[DisplayName("Enable")]
+		public bool Enabled { get; set; }
+
 	}
 }

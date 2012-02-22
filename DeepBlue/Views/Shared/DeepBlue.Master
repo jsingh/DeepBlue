@@ -1,6 +1,29 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
 
 <%@ Import Namespace="DeepBlue.Helpers" %>
+<%List<DeepBlue.Models.Admin.EntityMenuModel> _Menus = MenuHelper.GetMenus();%>
+<% 
+	int menuid = (Request["menuid"] == null ? 0 : Convert.ToInt32(Request["menuid"]));
+	DeepBlue.Models.Admin.EntityMenuModel currentMenu = null;
+	DeepBlue.Models.Admin.EntityMenuModel submenu = null;
+	DeepBlue.Models.Admin.EntityMenuModel topmenu = null;
+	currentMenu = _Menus.Where(m => m.MenuID == menuid).FirstOrDefault();
+	string className = string.Empty;
+	if (currentMenu != null) {
+		if (currentMenu.ParentMenuID > 0) {
+			submenu = _Menus.Where(m => m.MenuID == currentMenu.ParentMenuID).FirstOrDefault();
+		}
+	}
+	if (submenu != null) {
+		if (submenu.ParentMenuID > 0) {
+			topmenu = _Menus.Where(m => m.MenuID == submenu.ParentMenuID).FirstOrDefault();
+		}
+	}
+	List<DeepBlue.Models.Admin.EntityMenuModel> topMenus = (from menu in _Menus
+															where menu.ParentMenuID == 0
+															select menu).ToList();
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,10 +31,17 @@
 		<%=EntityHelper.EntityName%>
 		::<asp:ContentPlaceHolder ID="TitleContent" runat="server" />
 	</title>
+	<%if (currentMenu != null) {
+	   if (string.IsNullOrEmpty(currentMenu.Title) == false) {
+	%>
+	<title>
+		<%=EntityHelper.EntityName%>::<%=currentMenu.Title%></title>
+	<%}
+   }%>
 	<%= Html.JavascriptInclueTag("jquery-1.7.1.min.js")%><%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%><%= Html.JavascriptInclueTag("jquery-ui-1.8.10.autocomplete.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.combobox.js")%><%= Html.JavascriptInclueTag("jquery-ui-1.8.10.extension.js")%><%= Html.JavascriptInclueTag("jquery.contextMenu.js")%>
 	<%= Html.JavascriptInclueTag("jquery.alerts.js")%><%= Html.JavascriptInclueTag("jquery.formatCurrency.js")%><%= Html.JavascriptInclueTag("jqueryform.js")%><%= Html.JavascriptInclueTag("jqTransform.js")%>
-	<%= Html.JavascriptInclueTag("jshashtable.js")%><%= Html.JavascriptInclueTag("jquery.numberformatter.js")%><%= Html.JavascriptInclueTag("jHelper.js")%><%= Html.JavascriptInclueTag("DeepBlue.js")%><%= Html.JavascriptInclueTag("menu.js")%><%= Html.JavascriptInclueTag("jsDate.js")%><%= Html.JavascriptInclueTag("ImageActive.js")%>
+	<%= Html.JavascriptInclueTag("jshashtable.js")%><%= Html.JavascriptInclueTag("jquery.numberformatter.js")%><%= Html.JavascriptInclueTag("jHelper.js")%><%= Html.JavascriptInclueTag("DeepBlue.js")%><%= Html.JavascriptInclueTag("Menu.js")%><%= Html.JavascriptInclueTag("jsDate.js")%><%= Html.JavascriptInclueTag("ImageActive.js")%>
 	<%= Html.StylesheetLinkTag("jquery.contextMenu.css")%><%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%><%= Html.StylesheetLinkTag("jquery.alerts.css")%><%= Html.StylesheetLinkTag("site.css")%><asp:ContentPlaceHolder
 		ID="HeaderContent" runat="server" />
 </head>
@@ -45,14 +75,159 @@
 				</div>
 			</div>
 			<div id="menu" class='<%=(mnuresize == "true" ? "minimize" : string.Empty)%>'>
-				<%: Html.Action("Menu","Home", null)%>
+				<%using (Html.Div(new { @id = "menubox", @class = "topmenu-item" })) {%>
+				<!--Top Menu Render-->
+				<%foreach (DeepBlue.Models.Admin.EntityMenuModel tmenu in topMenus) {
+		  string id = string.Empty;
+		  switch (tmenu.MenuName) {
+			  case "Deals": id = "investmentmnu"; break;
+			  case "Activities": id = "investmentmnu"; break;
+			  case "Asset Libraries": id = "docmnu"; break;
+			  case "Funds": id = "fundmnu"; break;
+			  case "Investors": id = "invmnu"; break;
+			  case "Accounting": id = "accmnu"; break;
+			  case "Admin": id = "admenu"; break;
+			  case "Reports": id = "repmnu"; break;
+		  }
+				%>
+				<% className = string.Empty;
+	   if (topmenu != null) {
+		   if (tmenu.MenuID == topmenu.MenuID) {
+			   className = " current sub-select";
+		   }
+	   }
+	   else {
+		   if (submenu != null) {
+			   if (tmenu.MenuID == submenu.MenuID) {
+				   className = " current tab-sel";
+			   }
+		   }
+	   }
+				%>
+				<div class="topmenu<%=className%>" id="<%=id%>" onclick="menu.mopen(this,<%=tmenu.MenuID%>)">
+					<div class="mnu-name">
+						<%=tmenu.DisplayName%></div>
+				</div>
+				<div class="sep">
+					&nbsp;</div>
+				<%}%>
+				<!--End Top Menu Render-->
+				<%}%>
+				<!--Sub Menu Render-->
+				<%using (Html.Div(new { @id = "submenu", @style = "display:none" })) {%>
+				<%using (Html.Div(new { @id = "submenubox" })) {%>
+				<%
+		  foreach (DeepBlue.Models.Admin.EntityMenuModel tmenu in topMenus) {
+			  List<DeepBlue.Models.Admin.EntityMenuModel> submenus = (from menu in _Menus
+																	  where menu.ParentMenuID == tmenu.MenuID
+																	  select menu).ToList();
+				%>
+				<% className = string.Empty;
+	   if (topmenu != null) {
+		   if (tmenu.MenuID == topmenu.MenuID) {
+			   className = " current sub-select";
+		   }
+	   }
+	   else {
+		   if (submenu != null) {
+			   if (tmenu.MenuID == submenu.MenuID) {
+				   className = " current sub-select";
+			   }
+		   }
+	   }
+				%>
+				<div class="mdiv<%=className%>" id="<%=tmenu.MenuID%>">
+					<ul>
+						<%
+			  foreach (DeepBlue.Models.Admin.EntityMenuModel smenu in submenus) {
+				  className = string.Empty;
+				  if (currentMenu != null) {
+					  if (smenu.MenuID == currentMenu.MenuID) {
+						  className = " sel";
+					  }
+				  }
+				  if (string.IsNullOrEmpty(className)) {
+					  if (submenu != null) {
+						  if (smenu.MenuID == submenu.MenuID) {
+							  className = " sel";
+						  }
+					  }
+				  }
+				  string url = smenu.URL;
+				  if (url.Contains("javascript") == false) {
+					  if (smenu.URL.Contains("?")) {
+						  url += "&menuid=" + smenu.MenuID;
+					  }
+					  else {
+						  url += "?menuid=" + smenu.MenuID;
+					  }
+				  }
+						%>
+						<li>
+							<%:Html.Anchor(smenu.DisplayName, url, new { @class = className })%></li>
+						<%}%>
+					</ul>
+				</div>
+				<%}%>
+				<%}%>
+				<%}%>
+				<!--End Sub Menu Render-->
 			</div>
 		</div>
 		<div id="content">
 			<asp:ContentPlaceHolder ID="NavigationContent" runat="server" />
 			<div id="cntbox">
 				<div class="cnt-box-main">
-					<%Html.RenderPartial("LeftMenu", "Home");%>
+					<% 
+						List<DeepBlue.Models.Admin.EntityMenuModel> leftmenus = null;
+						if (topmenu != null) {
+							leftmenus = (from menu in _Menus
+										 where menu.ParentMenuID == submenu.MenuID
+										 select menu).ToList();
+						}
+						else if (currentMenu != null) {
+							leftmenus = (from menu in _Menus
+										 where menu.ParentMenuID == currentMenu.MenuID
+										 select menu).ToList();
+						}
+					%>
+					<%if (leftmenus != null) { %>
+					<%using (Html.LeftMenu()) {%><div class="menubox">
+						<ul>
+							<%foreach (DeepBlue.Models.Admin.EntityMenuModel menu in leftmenus) {
+			 className = string.Empty;
+			 if (currentMenu != null) {
+				 if (menu.MenuID == currentMenu.MenuID || menu.URL == currentMenu.URL) {
+					 className = " sel";
+				 }
+			 }
+			 if (string.IsNullOrEmpty(className)) {
+				 if (submenu != null) {
+					 if (menu.MenuID == submenu.MenuID) {
+						 className = " sel";
+					 }
+				 }
+			 }
+							%>
+							<li class="<%=className%>">
+								<%
+			 string url = menu.URL;
+			 if (url.Contains("javascript") == false) {
+				 if (menu.URL.Contains("?")) {
+					 url += "&menuid=" + menu.MenuID;
+				 }
+				 else {
+					 url += "?menuid=" + menu.MenuID;
+				 }
+			 }
+								%>
+								<%:Html.Anchor(menu.DisplayName, url, new { @class = className })%>
+							</li>
+							<%}%>
+						</ul>
+					</div>
+					<%}%>
+					<%}%>
 					<asp:ContentPlaceHolder ID="MainContent" runat="server" />
 				</div>
 			</div>

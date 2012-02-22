@@ -325,5 +325,26 @@ namespace DeepBlue.Controllers.Admin {
 		IEnumerable<ErrorInfo> SaveEntity(ENTITY entity);
 		List<ENTITY> GetAllEntities();
 		#endregion
+
+		#region  Menu
+		List<Models.Entity.Menu> GetAllMenus(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		Menu FindMenu(int id);
+		bool MenuNameAvailable(string menuName, int menuID);
+		bool DeleteMenu(int id);
+		IEnumerable<ErrorInfo> SaveMenu(Menu menu);
+		List<AutoCompleteList> FindMenus(string menuName, int? menuID);
+		#endregion
+
+		#region EntityMenu
+		int? GetEntityMenuCount(int entityID);
+		List<EntityMenuModel> GetAllEntityMenus();
+		List<EntityMenuModel> GetAllEntityMenus(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		EntityMenuModel GetEntityMenu(int id);
+		EntityMenu FindEntityMenu(int id);
+		bool EntityMenuNameAvailable(string entityMenuName, int entityMenuID);
+		bool DeleteEntityMenu(int id);
+		bool SaveEntityMenu(int entityID);
+		IEnumerable<ErrorInfo> SaveEntityMenu(EntityMenu entityMenu);
+		#endregion
 	}
 }

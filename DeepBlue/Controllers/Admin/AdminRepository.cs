@@ -854,7 +854,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public List<Models.Entity.FundClosing> GetAllFundClosings(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<Models.Entity.FundClosing> query = (from fund in context.FundClosings.Include("Fund").EntityFilter()  select fund);
+				IQueryable<Models.Entity.FundClosing> query = (from fund in context.FundClosings.Include("Fund").EntityFilter() select fund);
 				if (sortName == "FundName") {
 					query = (sortOrder == "asc" ? query.OrderBy(fund => fund.Fund.FundName) : query.OrderByDescending(fund => fund.Fund.FundName));
 				}
@@ -2711,5 +2711,214 @@ namespace DeepBlue.Controllers.Admin {
 		}
 
 		#endregion
+
+		#region  Menu
+
+		public List<Models.Entity.Menu> GetAllMenus(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.Menu> query = (from menu in context.Menus
+															.Include("Menu2")
+															.Include("Menu2.Menu2")
+														select menu);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<Menu> paginatedList = new PaginatedList<Menu>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+
+		public bool SaveEntityMenu(int entityID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				List<Menu> menus = (from menu in context.MenusTable
+									orderby menu.MenuID
+									select menu).ToList();
+				int sortOrder = 0;
+				bool isNotPermission = false;
+				EntityPermission permission = null;
+				string url = string.Empty;
+				foreach (var menu in menus) {
+					isNotPermission = false;
+					permission = EntityHelper.Permissions.Where(p => p.URL == menu.URL).FirstOrDefault();
+					if (entityID == (int)ConfigUtil.SystemEntityID) {
+						if (permission != null) {
+							if (permission.IsSystemEntity == false)
+								isNotPermission = true;
+						}
+						else if (menu.DisplayName != "Admin" && menu.URL != "/Admin/EntityMenu") {
+							isNotPermission = true;
+						}
+					}
+					else {
+						if (permission != null) {
+							if (permission.IsOtherEntity == false)
+								isNotPermission = true;
+						}
+					}
+					if (isNotPermission == false) {
+						sortOrder++;
+						context.EntityMenus.AddObject(new EntityMenu {
+							EntityID = entityID,
+							DisplayName = menu.DisplayName,
+							MenuID = menu.MenuID,
+							SortOrder = sortOrder
+						});
+					}
+				}
+				return context.SaveChanges() > 0;
+			}
+		}
+
+		public Menu FindMenu(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.Menus.Include("Menu2").Include("Menu2.Menu2").SingleOrDefault(type => type.MenuID == id);
+			}
+		}
+
+		public bool MenuNameAvailable(string menuName, int menuID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.MenusTable
+						 where type.DisplayName == menuName && type.MenuID != menuID
+						 select type.MenuID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteMenu(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				Menu menu = context.MenusTable.SingleOrDefault(type => type.MenuID == id);
+				if (menu != null) {
+					bool isChildRecordsAvailable = false;
+					if (menu.EntityMenus.Count > 0)
+						isChildRecordsAvailable = true;
+					if (menu.Menu1 != null)
+						isChildRecordsAvailable = (menu.Menu1.Count() > 0);
+					if (isChildRecordsAvailable == false) {
+						context.Menus.DeleteObject(menu);
+						context.SaveChanges();
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveMenu(Menu menu) {
+			return menu.Save();
+		}
+
+		public List<AutoCompleteList> FindMenus(string menuName, int? menuID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Contact> dealContactsTable = GetDealContactsTable(context.Contacts);
+				var menus = context.MenusTable;
+				if (menuID > 0)
+					menus = menus.Where(m => m.ParentMenuID != menuID);
+				IQueryable<AutoCompleteList> query = (from menu in menus
+													  where menu.DisplayName.StartsWith(menuName)
+													  orderby menu.DisplayName
+													  select new AutoCompleteList {
+														  id = menu.MenuID,
+														  label = (menu.Menu2 != null ? (menu.Menu2.Menu2 != null ? menu.Menu2.Menu2.DisplayName + " -> " : string.Empty) + menu.Menu2.DisplayName + " -> " : string.Empty) + menu.DisplayName,
+														  value = menu.DisplayName
+													  });
+				return new PaginatedList<AutoCompleteList>(query, 1, AutoCompleteOptions.RowsLength);
+			}
+		}
+
+		#endregion
+
+		#region  EntityMenu
+
+		public int? GetEntityMenuCount(int entityID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.EntityMenusTable.Where(entityMenu => entityMenu.EntityID == entityID).Count();
+			}
+		}
+
+		public List<EntityMenuModel> GetAllEntityMenus() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from entityMenu in context.EntityMenusTable
+						orderby entityMenu.SortOrder
+						select new EntityMenuModel {
+							DisplayName = (entityMenu.DisplayName == "" ? entityMenu.Menu.DisplayName : entityMenu.DisplayName),
+							EntityMenuID = entityMenu.EntityMenuID,
+							MenuID = entityMenu.MenuID,
+							Title = entityMenu.Menu.Title,
+							URL = entityMenu.Menu.URL,
+							MenuName = entityMenu.Menu.DisplayName,
+							ParentMenuID = (entityMenu.Menu.ParentMenuID ?? 0),
+							 SortOrder = entityMenu.SortOrder
+						}).ToList();
+			}
+		}
+
+		public List<EntityMenuModel> GetAllEntityMenus(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<EntityMenuModel> query = (from entityMenu in context.EntityMenusTable
+													 select new EntityMenuModel {
+														 DisplayName = (entityMenu.DisplayName == string.Empty ? entityMenu.Menu.DisplayName : entityMenu.DisplayName),
+														 EntityMenuID = entityMenu.EntityMenuID,
+														 MenuID = entityMenu.MenuID,
+														 MenuName = (entityMenu.Menu.Menu2 != null ? (entityMenu.Menu.Menu2.Menu2 != null ? entityMenu.Menu.Menu2.Menu2.DisplayName + " -> " : string.Empty) + entityMenu.Menu.Menu2.DisplayName + " -> " : string.Empty) + entityMenu.Menu.DisplayName,
+  														   ParentMenuID = entityMenu.Menu.ParentMenuID,
+														    SortOrder = entityMenu.SortOrder,
+															 Title = entityMenu.Menu.Title,
+															  URL = entityMenu.Menu.URL
+													 });
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<EntityMenuModel> paginatedList = new PaginatedList<EntityMenuModel>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public EntityMenuModel GetEntityMenu(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from entityMenu in context.EntityMenusTable
+						where entityMenu.EntityMenuID == id
+						select new EntityMenuModel {
+								DisplayName = (entityMenu.DisplayName == string.Empty ? entityMenu.Menu.DisplayName : entityMenu.DisplayName),
+								EntityMenuID = entityMenu.EntityMenuID,
+								MenuID = entityMenu.MenuID,
+								MenuName = (entityMenu.Menu.Menu2 != null ? (entityMenu.Menu.Menu2.Menu2 != null ? entityMenu.Menu.Menu2.Menu2.DisplayName + " -> " : string.Empty) + entityMenu.Menu.Menu2.DisplayName + " -> " : string.Empty) + entityMenu.Menu.DisplayName,
+								ParentMenuID = entityMenu.Menu.ParentMenuID,
+								SortOrder  = entityMenu.SortOrder,
+								Title = entityMenu.Menu.Title,
+								URL  = entityMenu.Menu.URL 
+						}).SingleOrDefault();
+			}
+		}
+
+		public EntityMenu FindEntityMenu(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.EntityMenusTable.Where(entityMenu => entityMenu.EntityMenuID == id).SingleOrDefault();
+			}
+		}
+
+		public bool EntityMenuNameAvailable(string entityMenuName, int entityMenuID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from type in context.EntityMenusTable
+						 where type.DisplayName == entityMenuName && type.EntityMenuID != entityMenuID
+						 select type.EntityMenuID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteEntityMenu(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				EntityMenu entityMenu = context.EntityMenusTable.SingleOrDefault(type => type.EntityMenuID == id);
+				if (entityMenu != null) {
+					context.EntityMenus.DeleteObject(entityMenu);
+					context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveEntityMenu(EntityMenu entityMenu) {
+			return entityMenu.Save();
+		}
+
+		#endregion
+
 	}
 }

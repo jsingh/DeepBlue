@@ -512,7 +512,7 @@ h2 {
 .mdiv li {
 	list-style: none;
 	float: left;
-	padding: 13px 16px 13px 0px;
+	padding: 13px 7px 13px 0px;
 	color: #1B4581;
 	font-family: Arial;
 	font-size: 12px;
@@ -533,6 +533,7 @@ h2 {
 	background-repeat: no-repeat;
 	line-height: 90px;
 	color: #fff;
+	text-transform: uppercase;
 	font-size: 12px; /* 	text-shadow: #0B0B0B 1px 1px 1px; 	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2); 	*/
 }
 .mnu-name {
@@ -1040,7 +1041,7 @@ input.ui-autocomplete-loading[type="text"] {
 	width: 95%;
 }
 .editor-label .jqComboBox {
-	float: right;
+	float: left;
 }
 .editor-field .jqComboBox, .editor-label .jqComboBox {
 	margin-top: -5px;

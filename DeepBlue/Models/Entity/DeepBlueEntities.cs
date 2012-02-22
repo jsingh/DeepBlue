@@ -569,7 +569,16 @@ namespace DeepBlue.Models.Entity {
 				return this.USERs.EntityFilter();
 			}
 		}
-
+		public IQueryable<EntityMenu> EntityMenusTable {
+			get {
+				return this.EntityMenus.EntityFilter();
+			}
+		}
+		public IQueryable<Menu> MenusTable {
+			get {
+				return this.Menus.EntityFilter();
+			}
+		}
 		#endregion
 	}
 

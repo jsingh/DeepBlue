@@ -250,10 +250,10 @@ namespace DeepBlue.Helpers {
 		#endregion
 
 		#region Menu
-		public static MvcDiv TopMenu(this HtmlHelper helper, bool isSelect, string subMenuId) {
-			return TopMenu(helper, isSelect, subMenuId, new { });
+		public static MvcDiv TopMenu(this HtmlHelper helper, bool isSelect, string subMenuID) {
+			return TopMenu(helper, isSelect, subMenuID, new { });
 		}
-		public static MvcDiv TopMenu(this HtmlHelper helper, bool isSelect, string subMenuId, object htmlAttributes) {
+		public static MvcDiv TopMenu(this HtmlHelper helper, bool isSelect, string subMenuID, object htmlAttributes) {
 			TagBuilder tagBuilder = new TagBuilder("div");
 			tagBuilder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
 			tagBuilder.AddCssClass("topmenu");
@@ -261,9 +261,9 @@ namespace DeepBlue.Helpers {
 				tagBuilder.AddCssClass("tab-sel");
 				tagBuilder.AddCssClass("current");
 			}
-			if (string.IsNullOrEmpty(subMenuId) == false) {
-				tagBuilder.Attributes.Add("onclick", "menu.mopen(this,'" + subMenuId + "')");
-				//tagBuilder.Attributes.Add("onmouseover", "menu.mopen(this,'" + subMenuId + "')");
+			if (string.IsNullOrEmpty(subMenuID) == false) {
+				tagBuilder.Attributes.Add("onclick", "menu.mopen(this,'" + subMenuID + "')");
+				//tagBuilder.Attributes.Add("onmouseover", "menu.mopen(this,'" + subMenuID + "')");
 				//tagBuilder.Attributes.Add("onmouseout", "menu.mclosetime()");
 			}
 			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
@@ -298,8 +298,8 @@ namespace DeepBlue.Helpers {
 			System.Text.StringBuilder sb = new StringBuilder();
 			return new MvcDiv(helper.ViewContext.HttpContext.Response);
 		}
-		public static MvcHtmlString SubMenuLink(this HtmlHelper helper, string menuName, string subMenuId, bool select) {
-			return Anchor(helper, menuName, "#", new { @class = "submenubg" + (select == true ? " sel" : ""), @onmouseover = "menu.msubopen(this,'" + subMenuId + "')" });
+		public static MvcHtmlString SubMenuLink(this HtmlHelper helper, string menuName, string subMenuID, bool select) {
+			return Anchor(helper, menuName, "#", new { @class = "submenubg" + (select == true ? " sel" : ""), @onmouseover = "menu.msubopen(this,'" + subMenuID + "')" });
 		}
 
 		public static MvcDiv InnerSubMenu(this HtmlHelper helper, string id, bool visible) {

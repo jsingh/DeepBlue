@@ -25,12 +25,12 @@
 			<% Html.EnableClientValidation(); %>
 			<%using (Html.BeginForm("", "", FormMethod.Get, new { @onsubmit = "return dealOrgReport.onSubmit(this);" })) {%>
 			<div class="editor-label" style="width: auto;">
-				<%: Html.LabelFor(model => model.FundId)%>
-				<%: Html.TextBox("FundName", "SEARCH  FUND", new { @class = "wm", @id = "FundName", @style = "width:200px" })%>
+				<div style="float:left"><%: Html.LabelFor(model => model.FundId)%></div>
+				<div style="float:left"><%: Html.TextBox("FundName", "SEARCH  FUND", new { @class = "wm", @id = "FundName", @style = "width:200px" })%></div>
 			</div>
 			<div class="editor-label" style="width: auto; clear: right;">
-				<%: Html.LabelFor(model => model.DealId)%>
-				<%: Html.TextBox("DealName", "SEARCH DEAL", new { @class = "wm", @id = "DealName", @style = "width:200px" })%>
+				<div style="float:left"><%: Html.LabelFor(model => model.DealId)%></div>
+				<div style="float:left"><%: Html.TextBox("DealName", "SEARCH DEAL", new { @class = "wm", @id = "DealName", @style = "width:200px" })%></div>
 				<%: Html.HiddenFor(model => model.DealId)%>
 			</div>
 			<div class="editor-label" style="width: auto; clear: right;">

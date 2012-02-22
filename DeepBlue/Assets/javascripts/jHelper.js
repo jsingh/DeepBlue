@@ -312,8 +312,11 @@
 			var img=$(".editbtn",td).get(0);
 			if(!img) {
 				td.click(function () {
-					var tr=$(this).parents("tr:first");
-					$(".editbtn",tr).click();
+					var l=$(":input:visible",this).length;
+					if(l<=0) {
+						var tr=$(this).parents("tr:first");
+						$(".editbtn",tr).click();
+					}
 				});
 			}
 		});

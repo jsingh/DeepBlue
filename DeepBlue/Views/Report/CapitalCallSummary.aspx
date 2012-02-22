@@ -25,8 +25,8 @@
 			<% Html.EnableClientValidation(); %>
 			<%using (Html.BeginForm("", "", FormMethod.Get, new { @onsubmit = "return ccsummaryReport.onSubmit(this);" })) {%>
 			<div class="editor-label" style="width: auto;">
-				<%: Html.LabelFor(model => model.FundId)%>
-				<%: Html.TextBox("FundName", "SEARCH  FUND", new { @class = "wm", @id = "FundName", @style = "width:200px" })%>
+				<div style="float:left"><%: Html.LabelFor(model => model.FundId)%></div>
+				<div style="float:left"><%: Html.TextBox("FundName", "SEARCH  FUND", new { @class = "wm", @id = "FundName", @style = "width:200px" })%></div>
 			</div>
 			<div class="editor-label" style="width: auto; clear: right;">
 				<%: Html.LabelFor(model => model.CapitalCallId)%>
