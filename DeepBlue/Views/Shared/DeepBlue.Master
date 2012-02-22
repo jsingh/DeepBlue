@@ -93,7 +93,7 @@
 				<% className = string.Empty;
 	   if (topmenu != null) {
 		   if (tmenu.MenuID == topmenu.MenuID) {
-			   className = " current sub-select";
+			   className = " current tab-sel";
 		   }
 	   }
 	   else {

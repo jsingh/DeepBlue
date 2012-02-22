@@ -33,7 +33,10 @@ namespace DeepBlue.Helpers {
 							where menu.ParentMenuID == topmenu.MenuID
 							select menu).FirstOrDefault();
 			}
-			return leftmenu;
+			if (leftmenu == null)
+				return topmenu;
+			else
+				return leftmenu;
 		}
 
 

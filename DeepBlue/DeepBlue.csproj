@@ -1240,7 +1240,6 @@
     <Content Include="Views\Report\UnfundedCapitalCallBalance.aspx" />
     <Content Include="Views\Report\ExportUnderlyingFundNAVDetail.ascx" />
     <Content Include="Views\Report\UnderlyingFundNAV.aspx" />
-    <Content Include="Views\Shared\Menu.ascx" />
     <Content Include="Views\Shared\RenderLeftMenu.ascx" />
     <Content Include="Views\Transaction\Result.ascx" />
     <Content Include="Views\Transaction\TransactionInformation.ascx" />
@@ -1290,7 +1289,6 @@
     <Content Include="Views\Investor\FundList.ascx" />
     <Content Include="Views\Investor\New.aspx" />
     <Content Include="Views\Investor\ThankYou.aspx" />
-    <Content Include="Views\Shared\LeftMenu.ascx" />
     <Content Include="Views\Transaction\EditTransaction.ascx" />
     <Content Include="Views\Transaction\Error.ascx" />
     <Content Include="Views\Transaction\Success.ascx" />
