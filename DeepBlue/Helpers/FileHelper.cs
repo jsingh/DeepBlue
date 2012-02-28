@@ -57,5 +57,18 @@ namespace DeepBlue.Helpers {
 			}
 		}
 
+
+		public static void DeleteFile(Models.Entity.File file) {
+			try {
+				if (file != null) {
+					string rootPath = HttpContext.Current.Server.MapPath("~/");
+					string fileName = Path.Combine(rootPath, file.FilePath, file.FileName);
+					if (File.Exists(fileName)) {
+						File.Delete(fileName);
+					}
+				}
+			}
+			catch { }
+		}
 	}
 }

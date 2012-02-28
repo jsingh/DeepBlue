@@ -810,11 +810,11 @@ namespace DeepBlue.Controllers.CapitalCall {
 			ViewData["PageNo"] = pageIndex;
 			return View(capitalCalls);
 		}
-		
+
 		private void CheckDistributionAmount(CreateDistributionModel model) {
 			if (model.DistributionAmount > 0) {
-                decimal distributionCheck = ((model.CapitalReturn ?? 0) + (model.PreferredReturn ?? 0) + (model.PreferredCatchUp ?? 0) + (model.ReturnFundExpenses ?? 0) + (model.ReturnManagementFees ?? 0) + (model.GPProfits ?? 0) + (model.LPProfits ?? 0));
-                if ((decimal.Round(model.DistributionAmount) == decimal.Round(distributionCheck)) == false) {
+				decimal distributionCheck = ((model.CapitalReturn ?? 0) + (model.PreferredReturn ?? 0) + (model.PreferredCatchUp ?? 0) + (model.ReturnFundExpenses ?? 0) + (model.ReturnManagementFees ?? 0) + (model.GPProfits ?? 0) + (model.LPProfits ?? 0));
+				if ((decimal.Round(model.DistributionAmount) == decimal.Round(distributionCheck)) == false) {
 					ModelState.AddModelError("DistributionAmount", "Components of the distribution do not add up to total distribution amount");
 				}
 			}
@@ -831,7 +831,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 			ViewData["PageName"] = "ModifyCapitalDistribution";
 			return View(new CreateDistributionModel { CapitalDistributionID = id });
 		}
-		
+
 		//
 		// POST: /CapitalCall/UpdateDistribution
 		[HttpPost]
@@ -906,7 +906,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 									break;
 								}
 							}
-						
+
 						}
 
 						if (string.IsNullOrEmpty(resultModel.Result)) {
@@ -933,7 +933,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 		public ActionResult FindCapitalDistributionModel(int id) {
 			return Json(CapitalCallRepository.FindCapitalDistributionModel(id), JsonRequestBehavior.AllowGet);
 		}
-		
+
 		//
 		// GET: /CapitalCall/FindCapitalDistributions
 		[HttpGet]
@@ -1055,6 +1055,16 @@ namespace DeepBlue.Controllers.CapitalCall {
 		[HttpGet]
 		public JsonResult FindDetail(int fundId) {
 			return Json(CapitalCallRepository.FindDetail(fundId), JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public JsonResult FindCapitalCallDetail(int fundId, decimal? capitalCallAmount, DateTime? capitalCallDate, DateTime? capitalCallDueDate) {
+			return Json(CapitalCallRepository.FindCapitalCallDetail(fundId, capitalCallAmount, capitalCallDate, capitalCallDueDate), JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public JsonResult FindCapitalDistributionDetail(int fundId, decimal? capitalDistributionAmount, DateTime? capitalDistributionDate, DateTime? capitalDistributionDueDate) {
+			return Json(CapitalCallRepository.FindCapitalDistributionDetail(fundId, capitalDistributionAmount, capitalDistributionDate, capitalDistributionDueDate), JsonRequestBehavior.AllowGet);
 		}
 
 		//

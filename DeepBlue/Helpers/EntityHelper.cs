@@ -22,6 +22,7 @@ namespace DeepBlue.Helpers {
 			Permissions.Add(new EntityPermission { TableName = Table.CommunicationType, URL = "/Admin/CommunicationType", IsSystemEntity = true, IsOtherEntity = false });
 			Permissions.Add(new EntityPermission { TableName = Table.CommunicationGrouping, URL = "/Admin/CommunicationGrouping", IsSystemEntity = true, IsOtherEntity = false });
 			Permissions.Add(new EntityPermission { TableName = Table.FundClosing, URL = "/Admin/FundClosing", IsSystemEntity = false, IsOtherEntity = true });
+			Permissions.Add(new EntityPermission { TableName = Table.Geography, URL = "/Admin/Geography", IsSystemEntity = true, IsOtherEntity = false });
 
 			// Custom Fields
 			Permissions.Add(new EntityPermission { TableName = Table.CustomField, URL = "/Admin/CustomField", IsSystemEntity = false, IsOtherEntity = true });

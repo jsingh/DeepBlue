@@ -3243,6 +3243,10 @@ namespace DeepBlue.Controllers.Admin {
 			ResultModel resultModel = new ResultModel();
 			IEnumerable<ErrorInfo> errorInfo = null;
 			this.TryUpdateModel(model);
+			string ErrorMessage = DealContactNameAvailable(model.ContactName, model.ContactId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("ContactName", ErrorMessage);
+			}
 			if (ModelState.IsValid) {
 				Contact contact = AdminRepository.FindContact(model.ContactId);
 				if (contact == null) {
@@ -3276,6 +3280,15 @@ namespace DeepBlue.Controllers.Admin {
 				}
 			}
 			return View("Result", resultModel);
+		}
+
+		[HttpGet]
+		[OtherEntityAuthorize]
+		public string DealContactNameAvailable(string dealContactName, int contactID) {
+			if (AdminRepository.DealContactNameAvailable(dealContactName, contactID))
+				return "Contact Name already exists.";
+			else
+				return string.Empty;
 		}
 
 		private void AddCommunication(DeepBlue.Models.Entity.Contact contact, DeepBlue.Models.Admin.Enums.CommunicationType communicationType, string value) {

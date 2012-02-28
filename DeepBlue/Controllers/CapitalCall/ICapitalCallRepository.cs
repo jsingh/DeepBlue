@@ -26,6 +26,8 @@ namespace DeepBlue.Controllers.CapitalCall {
 		int FindCapitalCallNumber(int fundId);
 		int FindCapitalCallDistributionNumber(int fundId);
 		DetailModel FindDetail(int fundId);
+		CapitalCallDetail FindCapitalCallDetail(int fundId, decimal? capitalCallAmount, DateTime? capitalCallDate, DateTime? capitalCallDueDate);
+		CapitalDistributionDetail FindCapitalDistributionDetail(int fundId, decimal? capitalDistributionAmount, DateTime? capitalDistributionDate, DateTime? capitalDistributionDueDate);
 		List<ManagementFeeRateScheduleTierDetail> GetAllManagementFeeRateScheduleTiers(int fundId, DateTime startDate, DateTime endDate);
 		List<CapitalCallInvestorDetail> GetCapitalCallInvestors(int capitalCallId);
 		List<CapitalDistributionInvestorDetail> GetCapitalDistributionInvestors(int capitalDistributionId);

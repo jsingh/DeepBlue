@@ -372,6 +372,7 @@ namespace DeepBlue.Controllers.Deal {
 						context.Files.DeleteObject(documentfile);
 					}
 					context.SaveChanges();
+					FileHelper.DeleteFile(documentfile);
 					return true;
 				}
 				return false;
@@ -1071,6 +1072,7 @@ namespace DeepBlue.Controllers.Deal {
 						context.Files.DeleteObject(documentfile);
 					}
 					context.SaveChanges();
+					FileHelper.DeleteFile(documentfile);
 					return true;
 				}
 				return false;
@@ -2899,6 +2901,7 @@ namespace DeepBlue.Controllers.Deal {
 						context.Files.DeleteObject(documentfile);
 					}
 					context.SaveChanges();
+					FileHelper.DeleteFile(documentfile);
 					return true;
 				}
 				return false;
@@ -2906,9 +2909,6 @@ namespace DeepBlue.Controllers.Deal {
 		}
 		 
 		#endregion
-
-
-
-
+		
 	}
 }

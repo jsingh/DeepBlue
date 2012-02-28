@@ -280,6 +280,7 @@ namespace DeepBlue.Controllers.Admin {
 		List<DealContactList> GetAllDealContacts(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		Contact FindContact(int contactId);
 		IEnumerable<ErrorInfo> SaveDealContact(Contact contact);
+		bool DealContactNameAvailable(string dealContactName, int contactID);
 		bool DeleteDealContact(int id);
 		#endregion
 		

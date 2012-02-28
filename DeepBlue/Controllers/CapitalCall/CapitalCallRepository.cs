@@ -62,37 +62,37 @@ namespace DeepBlue.Controllers.CapitalCall {
 				return (from capitalDistribution in context.CapitalDistributionsTable
 						where capitalDistribution.CapitalDistributionID == id
 						select new CreateDistributionModel {
-								CapitalDistributionDate = capitalDistribution.CapitalDistributionDate,
-								CapitalDistributionDueDate = capitalDistribution.CapitalDistributionDueDate,
-								CapitalDistributionID = capitalDistribution.CapitalDistributionID,
-								CapitalReturn  = capitalDistribution.CapitalReturn,
-								DistributionAmount = capitalDistribution.DistributionAmount,
-								DistributionNumber = capitalDistribution.DistributionNumber,
-								FundId = capitalDistribution.FundID,
-								GPProfits = capitalDistribution.Profits,
-								LPProfits  = capitalDistribution.LPProfits,
-								PreferredCatchUp  = capitalDistribution.PreferredCatchUp,
-								PreferredReturn = capitalDistribution.PreferredReturn,
-								ReturnFundExpenses = capitalDistribution.ReturnFundExpenses,
-								ReturnManagementFees = capitalDistribution.ReturnManagementFees,
-								TotalDistribution = capitalDistribution.Fund.CapitalDistributions.Sum(distribution => capitalDistribution.DistributionAmount),
-								TotalProfit = capitalDistribution.Fund.CapitalDistributions.Sum(distribution => capitalDistribution.Profits),
-								FundName = capitalDistribution.Fund.FundName,
-								CapitalDistributionLineItemsCount = capitalDistribution.CapitalDistributionLineItems.Count(),
-								CapitalDistributionLineItems = (from item in capitalDistribution.CapitalDistributionLineItems
-																select new  CapitalDistributionLineItemModel {
-																		CapitalDistributionID = item.CapitalDistributionID,
-																		CapitalDistributionLineItemID = item.CapitalDistributionLineItemID, 
-																		CapitalReturn = item.CapitalReturn,
-																		DistributionAmount  = item.DistributionAmount,
-																		InvestorName = item.Investor.InvestorName,
-																		LPProfits = item.LPProfits,
-																		PreferredCatchUp = item.PreferredCatchUp,
-																		PreferredReturn = item.PreferredReturn,
-																		Profits = item.Profits,
-																		ReturnFundExpenses= item.ReturnFundExpenses,
-																		ReturnManagementFees  = item.ReturnManagementFees
-																})
+							CapitalDistributionDate = capitalDistribution.CapitalDistributionDate,
+							CapitalDistributionDueDate = capitalDistribution.CapitalDistributionDueDate,
+							CapitalDistributionID = capitalDistribution.CapitalDistributionID,
+							CapitalReturn = capitalDistribution.CapitalReturn,
+							DistributionAmount = capitalDistribution.DistributionAmount,
+							DistributionNumber = capitalDistribution.DistributionNumber,
+							FundId = capitalDistribution.FundID,
+							GPProfits = capitalDistribution.Profits,
+							LPProfits = capitalDistribution.LPProfits,
+							PreferredCatchUp = capitalDistribution.PreferredCatchUp,
+							PreferredReturn = capitalDistribution.PreferredReturn,
+							ReturnFundExpenses = capitalDistribution.ReturnFundExpenses,
+							ReturnManagementFees = capitalDistribution.ReturnManagementFees,
+							TotalDistribution = capitalDistribution.Fund.CapitalDistributions.Sum(distribution => capitalDistribution.DistributionAmount),
+							TotalProfit = capitalDistribution.Fund.CapitalDistributions.Sum(distribution => capitalDistribution.Profits),
+							FundName = capitalDistribution.Fund.FundName,
+							CapitalDistributionLineItemsCount = capitalDistribution.CapitalDistributionLineItems.Count(),
+							CapitalDistributionLineItems = (from item in capitalDistribution.CapitalDistributionLineItems
+															select new CapitalDistributionLineItemModel {
+																CapitalDistributionID = item.CapitalDistributionID,
+																CapitalDistributionLineItemID = item.CapitalDistributionLineItemID,
+																CapitalReturn = item.CapitalReturn,
+																DistributionAmount = item.DistributionAmount,
+																InvestorName = item.Investor.InvestorName,
+																LPProfits = item.LPProfits,
+																PreferredCatchUp = item.PreferredCatchUp,
+																PreferredReturn = item.PreferredReturn,
+																Profits = item.Profits,
+																ReturnFundExpenses = item.ReturnFundExpenses,
+																ReturnManagementFees = item.ReturnManagementFees
+															})
 						}).SingleOrDefault();
 			}
 		}
@@ -353,15 +353,15 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 		public List<AutoCompleteList> FindCapitalCalls(string capitalCallName, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> capitalCallListQuery = (from capitalCall in context.CapitalCallsTable 
-																 where (fundId > 0 ? capitalCall.FundID == fundId : capitalCall.FundID > 0)
-																 && capitalCall.CapitalCallNumber.StartsWith(capitalCallName)
-																 orderby capitalCall.Fund.FundName, capitalCall.CapitalCallID 
-																 select new AutoCompleteList {
-																	 id = capitalCall.CapitalCallID,
-																	 label = capitalCall.CapitalCallNumber + "# (" + capitalCall.Fund.FundName + ")",
-																	 value = capitalCall.CapitalCallNumber + "# (" + capitalCall.Fund.FundName + ")"
-																 });
+				IQueryable<AutoCompleteList> capitalCallListQuery = (from capitalCall in context.CapitalCallsTable
+																	 where (fundId > 0 ? capitalCall.FundID == fundId : capitalCall.FundID > 0)
+																	 && capitalCall.CapitalCallNumber.StartsWith(capitalCallName)
+																	 orderby capitalCall.Fund.FundName, capitalCall.CapitalCallID
+																	 select new AutoCompleteList {
+																		 id = capitalCall.CapitalCallID,
+																		 label = capitalCall.CapitalCallNumber + "# (" + capitalCall.Fund.FundName + ")",
+																		 value = capitalCall.CapitalCallNumber + "# (" + capitalCall.Fund.FundName + ")"
+																	 });
 				return new PaginatedList<AutoCompleteList>(capitalCallListQuery, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
@@ -369,17 +369,59 @@ namespace DeepBlue.Controllers.CapitalCall {
 		public List<AutoCompleteList> FindCapitalDistributions(string capitalDistributionName, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> capitalDistributionListQuery = (from capitalDistribution in context.CapitalDistributionsTable
-																	 where (fundId > 0 ? capitalDistribution.FundID == fundId : capitalDistribution.FundID > 0)
-																	 && capitalDistribution.DistributionNumber.StartsWith(capitalDistributionName)
-																	 orderby capitalDistribution.Fund.FundName, capitalDistribution.CapitalDistributionID
-																	 select new AutoCompleteList {
-																		 id = capitalDistribution.CapitalDistributionID,
-																		 label = capitalDistribution.DistributionNumber + "# (" + capitalDistribution.Fund.FundName + ")",
-																		 value = capitalDistribution.DistributionNumber + "# (" + capitalDistribution.Fund.FundName + ")"
-																	 });
+																			 where (fundId > 0 ? capitalDistribution.FundID == fundId : capitalDistribution.FundID > 0)
+																			 && capitalDistribution.DistributionNumber.StartsWith(capitalDistributionName)
+																			 orderby capitalDistribution.Fund.FundName, capitalDistribution.CapitalDistributionID
+																			 select new AutoCompleteList {
+																				 id = capitalDistribution.CapitalDistributionID,
+																				 label = capitalDistribution.DistributionNumber + "# (" + capitalDistribution.Fund.FundName + ")",
+																				 value = capitalDistribution.DistributionNumber + "# (" + capitalDistribution.Fund.FundName + ")"
+																			 });
 				return new PaginatedList<AutoCompleteList>(capitalDistributionListQuery, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
+
+		public CapitalCallDetail FindCapitalCallDetail(int fundId, decimal? capitalCallAmount, DateTime? capitalCallDate, DateTime? capitalCallDueDate) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from capitalCall in context.CapitalCalls
+						where capitalCall.FundID == fundId && capitalCall.CapitalAmountCalled == capitalCallAmount
+						&& EntityFunctions.TruncateTime(capitalCall.CapitalCallDate) == capitalCallDate
+						&& EntityFunctions.TruncateTime(capitalCall.CapitalCallDueDate) == capitalCallDueDate
+						select new CapitalCallDetail {
+							CapitalCallId = capitalCall.CapitalCallID,
+							CapitalCallAmount = capitalCall.CapitalAmountCalled,
+							CapitalCallDate = capitalCall.CapitalCallDate,
+							CapitalCallDueDate = capitalCall.CapitalCallDueDate,
+							FundExpenses = capitalCall.FundExpenses,
+							ManagementFees = capitalCall.ManagementFees,
+							Number = capitalCall.CapitalCallNumber
+						}).FirstOrDefault();
+			}
+		}
+
+		public CapitalDistributionDetail FindCapitalDistributionDetail(int fundId, decimal? capitalDistributionAmount, DateTime? capitalDistributionDate, DateTime? capitalDistributionDueDate) { 
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from capitalDistribution in context.CapitalDistributions
+						where capitalDistribution.FundID == fundId 
+						&& capitalDistribution.DistributionAmount == capitalDistributionAmount
+						&& EntityFunctions.TruncateTime(capitalDistribution.CapitalDistributionDate) == capitalDistributionDate
+						&& EntityFunctions.TruncateTime(capitalDistribution.CapitalDistributionDueDate) == capitalDistributionDueDate
+						select new CapitalDistributionDetail {
+							CapitalDistributed = capitalDistribution.DistributionAmount,
+							Number = capitalDistribution.DistributionNumber,
+							CapitalDistrubutionId = capitalDistribution.CapitalDistributionID,
+							CapitalDistributionDate = capitalDistribution.CapitalDistributionDate,
+							CapitalDistributionDueDate = capitalDistribution.CapitalDistributionDueDate,
+							Profit = (capitalDistribution.Profits ?? 0) + (capitalDistribution.LPProfits ?? 0),
+							ProfitReturn = capitalDistribution.PreferredReturn,
+							ReturnFundExpenses = capitalDistribution.ReturnFundExpenses,
+							ReturnManagementFees = capitalDistribution.ReturnManagementFees,
+							LPProfit = capitalDistribution.LPProfits,
+							CostReturn = capitalDistribution.CapitalReturn
+						}).FirstOrDefault();
+			}
+		}
+
 		#endregion
 	}
 }

@@ -1012,6 +1012,7 @@ input.ui-autocomplete-loading[type="text"] {
 	cursor: pointer;
 	position: relative;
 	width:100%;
+	overflow: hidden;
 }
 .jqComboBox .left, .jqComboBox .right {
 	float: left;

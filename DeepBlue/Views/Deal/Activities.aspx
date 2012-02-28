@@ -892,14 +892,14 @@
 									<%: Html.TextBox("ReconcileFundName", "SEARCH  FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:180px" })%>
 								</div>
 								<div class="cell" style="padding-left: 10px;">
-									<%: Html.TextBox("ReconcileUnderlyingFundName", "SEARCH UNDERLYING FUND", new { @id = "ReconcileUnderlyingFundName", @class = "wm", @style = "width:180px" })%>
+									<%: Html.TextBox("ReconcileUnderlyingFundName", "SEARCH UNDERLYING FUND", new { @id = "ReconcileUnderlyingFundName", @class = "wm", @style = "width:200px" })%>
 								</div>
-								<div class="cell" style="padding-left: 10px;">
+								<div class="cell" style="padding-left: 10px;width:200px;">
 									<%List<SelectListItem> options = new List<SelectListItem>();
 										options.Add(new SelectListItem { Text = "SEARCH UNRECONCILE", Value = "false" });
 										options.Add(new SelectListItem { Text = "SEARCH RECONCILE", Value = "true" });
 									%>
-									<%: Html.DropDownList("IsReconcile", options, new { @style="width:180px" })%>
+									<%: Html.DropDownList("IsReconcile", options, new { @style="width:190px" })%>
 								</div>
 								<div class="cell" style="padding-left: 10px;">
 									<%: Html.Image("search_active.png", new { @onclick = "javascript:dealReconcile.submit(0);" })%>

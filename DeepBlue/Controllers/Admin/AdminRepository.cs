@@ -2421,6 +2421,19 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
+		public bool DealContactNameAvailable(string dealContactName, int contactID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from contact in GetDealContactsTable(context.Contacts)
+							where contact.ContactName == dealContactName && contact.ContactID != contactID 
+							select new DealContactList {
+								ContactId = contact.ContactID,
+								ContactName = contact.ContactName,
+								ContactTitle = contact.Title,
+								ContactNotes = contact.Notes,
+							}).Count() > 0 ? true : false;
+			}
+		}
+
 		#endregion
 
 		#region User
@@ -2830,7 +2843,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		public int? GetEntityMenuCount(int entityID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.EntityMenusTable.Where(entityMenu => entityMenu.EntityID == entityID).Count();
+				return context.EntityMenus.Where(entityMenu => entityMenu.EntityID == entityID).Count();
 			}
 		}
 
