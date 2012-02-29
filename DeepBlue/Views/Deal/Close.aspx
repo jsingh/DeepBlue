@@ -553,7 +553,7 @@
 				{{/if}}
 			</td>
 			<td class="ralign">
-				<%: Html.Span("${item.NumberOfShares}", new { @class="show" })%>
+				<%: Html.Span("${formatNumber(item.NumberOfShares)}", new { @class="show" })%>
 				<%: Html.TextBox("${index}$NumberOfShares", "${checkNullOrZero(item.NumberOfShares)}", new { @class="hide", @id="NumberOfShares"
 				,  @onkeyup="{{if IsFinalClose==true}}javascript:dealClose.calcFinalCloseUD();{{else}}javascript:dealClose.calcCloseUD();{{/if}}"
 				,  @onkeydown = "return jHelper.isNumeric(event);" })%>
@@ -566,13 +566,13 @@
 			</td>
 			{{if IsFinalClose==true}}
 				<td class="ralign">
-					<%:Html.Span("${checkNullOrZero(item.AdjustedFMV)}", new { @class="show", @id="SpnFMV" })%>   
+					<%:Html.Span("${formatCurrency(checkNullOrZero(item.AdjustedFMV))}", new { @class="show", @id="SpnFMV" })%>   
 					<%: Html.TextBox("${index}$AdjustedFMV", "${formatNumber(checkNullOrZero(item.AdjustedFMV))}", new { @class="hide", @id="AdjustedFMV"
 					, @onkeyup="javascript:dealClose.calcFinalCloseUD();", @onkeydown = "return jHelper.isCurrency(event);" })%>
 				</td>
 			{{else}}
 				<td class="ralign">
-					<%:Html.Span("${checkNullOrZero(item.FMV)}", new { @class="show", @id="SpnFMV" })%>   
+					<%:Html.Span("${formatCurrency(checkNullOrZero(item.FMV))}", new { @class="show", @id="SpnFMV" })%>   
 					<%: Html.TextBox("${index}$FMV", "${checkNullOrZero(item.FMV)}", new { @class="hide", @id="FMV", @onkeyup="javascript:dealClose.calcCloseUD();", @onkeydown = "return jHelper.isCurrency(event);" })%>
 				</td>
 			{{/if}}

@@ -33,8 +33,28 @@
 		}
 		return false;
 	}
-	,cfloat: function (value) {
-		var retValue=parseFloat(value);if(isNaN(retValue)) { return 0; } else { return retValue; }
+	,cFloat: function (value) {
+		try {
+			if($.trim(value)=="") {
+				return 0;
+			}
+			if(value==undefined) {
+				return 0;
+			}
+			var retvalue=value;
+			retvalue=retvalue.replace(/\$/g,'');
+			retvalue=retvalue.replace(/\%/g,'');
+			retvalue=retvalue.replace(/\,/g,'');
+			var v=parseFloat(retvalue);
+			if(isNaN(v)==false) {
+				return v;
+			} else {
+				return 0;
+			}
+		} catch(e) {
+			//alert(e);
+			return value;
+		}
 	}
 	,checkEmail: function (txt) {
 		if($.trim(txt.value)!="") {
@@ -212,9 +232,11 @@
 	}
 	,formatDollar: function (target) {
 		$(".money",target).each(function () {
-			var amt=parseFloat($(this).attr("val"));
-			if(isNaN(parseFloat(amt))) { amt=$.trim($(this).html()); }
-			if(isNaN(parseFloat(amt))) { amt=0; }
+			var va=$.trim($(this).attr("val"));
+			if(va=="") {
+				va=$.trim($(this).html());
+			}
+			var amt=jHelper.cFloat(va);
 			if(amt==0) { this.innerHTML=""; }
 			else {
 				this.innerHTML=jHelper.dollarAmount(amt.toString());
@@ -251,7 +273,7 @@
 		.mouseover(function () {
 			$(".tooltip").remove();
 			var t=document.createElement("div");
-			var mtop=0;//parseInt($(target).attr("top"));
+			var mtop=0; //parseInt($(target).attr("top"));
 			if(isNaN(mtop)) { mtop=0; }
 			t.className="tooltip";
 			$(target).after(t);

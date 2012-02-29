@@ -112,15 +112,15 @@
 		$("#TierDetailMain").dialog("open");
 	}
 	,calcExistingInvestmentAmount: function () {
-		var newInvestmentAmount=parseFloat($("#NewInvestmentAmount","#CapitalCall").val());
-		var capitalAmountCalled=parseFloat($("#CapitalAmountCalled","#CapitalCall").val());
+		var newInvestmentAmount=jHelper.cFloat($("#NewInvestmentAmount","#CapitalCall").val());
+		var capitalAmountCalled=jHelper.cFloat($("#CapitalAmountCalled","#CapitalCall").val());
 		if(isNaN(newInvestmentAmount)) { newInvestmentAmount=0; }
 		if(isNaN(capitalAmountCalled)) { capitalAmountCalled=0; }
-		var fundExpenseAmount=parseFloat($("#FundExpenseAmount","#CapitalCall").val());
+		var fundExpenseAmount=jHelper.cFloat($("#FundExpenseAmount","#CapitalCall").val());
 		if(isNaN(fundExpenseAmount)) { fundExpenseAmount=0; }
-		var fundExpenseAmount=parseFloat($("#FundExpenseAmount","#CapitalCall").val());
+		var fundExpenseAmount=jHelper.cFloat($("#FundExpenseAmount","#CapitalCall").val());
 		if(isNaN(fundExpenseAmount)) { fundExpenseAmount=0; }
-		var managementFees=parseFloat($("#ManagementFees","#CapitalCall").val());
+		var managementFees=jHelper.cFloat($("#ManagementFees","#CapitalCall").val());
 		if(isNaN(managementFees)) { managementFees=0; }
 		var existingInvAmount=((capitalAmountCalled-fundExpenseAmount-managementFees)-newInvestmentAmount);
 		if(existingInvAmount<=0) { existingInvAmount=0; }

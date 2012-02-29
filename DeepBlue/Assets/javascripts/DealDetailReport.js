@@ -46,7 +46,7 @@ $.extend(window,{
 		if(d==null) {
 			return "";
 		}
-		d=parseFloat(d).toFixed(2);
+		d=jHelper.cFloat(d).toFixed(2);
 		if(isNaN(d)) {
 			return "";
 		}

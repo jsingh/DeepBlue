@@ -9,7 +9,7 @@
 		this.calc("txtReturnFundExpenses","ReturnFundExpenses","SpnReturnFundExpenses");
 	}
 	,calcGP: function (txt) {
-		var p=parseFloat(txt.value);
+		var p=jHelper.cFloat(txt.value);
 		if(isNaN(p)) { p=0; }
 		if(p>100) {
 			jAlert("Profit must be under 100%.");
@@ -28,7 +28,7 @@
 		var tbody=$("tbody",InvestorList);
 		var total=0;
 		$("tr",tbody).each(function () {
-			var amt=parseFloat($("#"+txtid,this).val());
+			var amt=jHelper.cFloat($("#"+txtid,this).val());
 			if(isNaN(amt)) {
 				amt=0;
 			}

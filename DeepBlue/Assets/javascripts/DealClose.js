@@ -196,11 +196,11 @@
 		var tbl=$("#DealUnderlyingFundList");
 		var totalCA=0;var totalGPP=0;var totalPRCC=0;var totalPRCD=0;var totalNPP=0;var totalUFA=0;
 		$("tbody tr",tbl).each(function () {
-			var gpp=parseFloat($("#GrossPurchasePrice",this).val());
-			var prcc=parseFloat($("#PostRecordDateCapitalCall",this).val());
-			var prcd=parseFloat($("#PostRecordDateDistribution",this).val());
-			var ufa=parseFloat($("#UnfundedAmount",this).val());
-			var ca=parseFloat($("#CommittedAmount",this).val());
+			var gpp=jHelper.cFloat($("#GrossPurchasePrice",this).val());
+			var prcc=jHelper.cFloat($("#PostRecordDateCapitalCall",this).val());
+			var prcd=jHelper.cFloat($("#PostRecordDateDistribution",this).val());
+			var ufa=jHelper.cFloat($("#UnfundedAmount",this).val());
+			var ca=jHelper.cFloat($("#CommittedAmount",this).val());
 			if(isNaN(gpp)) { gpp=0; } if(isNaN(prcc)) { prcc=0; } if(isNaN(prcd)) { prcd=0; }
 			if(isNaN(ufa)) { ufa=0; } if(isNaN(ca)) { ca=0; }
 			var npp=(gpp+(prcc-prcd));
@@ -227,15 +227,15 @@
 		var totalNOS=0;var totalPrice=0;var totalFMV=0;
 		$("tbody tr",tbl).each(function () {
 			var nos=parseInt($("#NumberOfShares",this).val());
-			var price=parseFloat($("#PurchasePrice",this).val());
-			var fmv=parseFloat($("#FMV",this).val());
+			var price=jHelper.cFloat($("#PurchasePrice",this).val());
+			var fmv=jHelper.cFloat($("#FMV",this).val());
 			if(isNaN(nos)) { nos=0; } if(isNaN(price)) { price=0; } if(isNaN(fmv)) { fmv=0; }
 			totalNOS+=nos;
 			totalPrice+=price;
 			totalFMV+=fmv;
 		});
 		$("tfoot tr:first",tbl).each(function () {
-			$("#SpnTotalNoOfShares",this).html(jHelper.dollarAmount(totalNOS.toString()));
+			$("#SpnTotalNoOfShares",this).html(formatNumber(totalNOS.toString()));
 			$("#SpnTotalPurchasePrice",this).html(jHelper.dollarAmount(totalPrice.toString()));
 			$("#SpnTotalFMV",this).html(jHelper.dollarAmount(totalFMV.toString()));
 		});
@@ -244,10 +244,10 @@
 		var tbl=$("#FinalDealUnderlyingFundList");
 		var totalGPP=0;var totalPRCC=0;var totalPRCD=0;var totalAC=0;var totalOGPP=0;
 		$("tbody tr",tbl).each(function () {
-			var gpp=parseFloat($("#ReassignedGPP",this).val());
-			var prcc=parseFloat($("#PostRecordDateCapitalCall",this).val());
-			var prcd=parseFloat($("#PostRecordDateDistribution",this).val());
-			var ogpp=parseFloat($("#OrginalGrossPurchasePrice",this).val());
+			var gpp=jHelper.cFloat($("#ReassignedGPP",this).val());
+			var prcc=jHelper.cFloat($("#PostRecordDateCapitalCall",this).val());
+			var prcd=jHelper.cFloat($("#PostRecordDateDistribution",this).val());
+			var ogpp=jHelper.cFloat($("#OrginalGrossPurchasePrice",this).val());
 			if(isNaN(gpp)) { gpp=0; } if(isNaN(prcc)) { prcc=0; } if(isNaN(prcd)) { prcd=0; }
 			if(isNaN(ogpp)) { ogpp=0; }
 			var ac=(gpp+(prcc-prcd));
@@ -271,9 +271,9 @@
 		var totalNOS=0;var totalPrice=0;var totalFMV=0;var totalOPP=0;
 		$("tbody tr",tbl).each(function () {
 			var nos=parseInt($("#NumberOfShares",this).val());
-			var price=parseFloat($("#PurchasePrice",this).val());
-			var fmv=parseFloat($("#AdjustedFMV",this).val());
-			var opp=parseFloat($("#OriginalPurchasePrice",this).val());
+			var price=jHelper.cFloat($("#PurchasePrice",this).val());
+			var fmv=jHelper.cFloat($("#AdjustedFMV",this).val());
+			var opp=jHelper.cFloat($("#OriginalPurchasePrice",this).val());
 			if(isNaN(nos)) { nos=0; } if(isNaN(price)) { price=0; } if(isNaN(fmv)) { fmv=0; }
 			if(isNaN(opp)) { opp=0; }
 			totalNOS+=nos;
@@ -400,9 +400,9 @@
 		var totPRCC=0;
 		var totPRD=0;
 		$("tbody tr","#tblDealUnderlyingFund").each(function () {
-			var rgpp=parseFloat($("#ReassignedGPP",this).val());
-			var prcc=parseFloat($("#PostRecordDateCapitalCall",this).val());
-			var prd=parseFloat($("#PostRecordDateDistribution",this).val());
+			var rgpp=jHelper.cFloat($("#ReassignedGPP",this).val());
+			var prcc=jHelper.cFloat($("#PostRecordDateCapitalCall",this).val());
+			var prd=jHelper.cFloat($("#PostRecordDateDistribution",this).val());
 			if(isNaN(rgpp)) { rgpp=0; } if(isNaN(prcc)) { prcc=0; } if(isNaN(prd)) { prd=0; }
 			totRGPP+=rgpp;
 			totPRCC+=prcc;

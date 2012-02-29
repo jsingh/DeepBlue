@@ -68,7 +68,7 @@ dealActivity.submitUFCashDistribution=function (frm) {
 		/*if(totalRows>0&&isManual) {
 		var msg="";var isFocus=false;
 		$(".manualcamount").each(function () {
-		var amount=parseFloat(this.value);if(isNaN(amount)) { amount=0; }
+		var amount=jHelper.cFloat(this.value);if(isNaN(amount)) { amount=0; }
 		if(amount>0) {
 		var parentRow=$(this).parents("tr:first");
 		var dealname=$(".dealname",parentRow).html();

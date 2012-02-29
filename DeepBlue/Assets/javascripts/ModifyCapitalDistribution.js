@@ -46,11 +46,11 @@
 		}
 	}
 	,calcProfit: function () {
-		var DistributionAmount=jHelper.cfloat($("#DistributionAmount").val());
-		var PreferredReturn=jHelper.cfloat($("#PreferredReturn").val());
-		var ReturnManagementFees=jHelper.cfloat($("#ReturnManagementFees").val());
-		var ReturnFundExpenses=jHelper.cfloat($("#ReturnFundExpenses").val());
-		var PreferredCatchUp=jHelper.cfloat($("#PreferredCatchUp").val());
+		var DistributionAmount=jHelper.cFloat($("#DistributionAmount").val());
+		var PreferredReturn=jHelper.cFloat($("#PreferredReturn").val());
+		var ReturnManagementFees=jHelper.cFloat($("#ReturnManagementFees").val());
+		var ReturnFundExpenses=jHelper.cFloat($("#ReturnFundExpenses").val());
+		var PreferredCatchUp=jHelper.cFloat($("#PreferredCatchUp").val());
 		var profit=(DistributionAmount-PreferredReturn-ReturnManagementFees-ReturnFundExpenses-PreferredCatchUp);
 	}
 	,selectTab: function (type,lnk) {

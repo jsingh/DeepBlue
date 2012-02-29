@@ -130,8 +130,8 @@
 				message+=this.innerHTML+"\n";
 			}
 		});
-		var UnfundedAmount=parseFloat($("#UnfundedAmount",frm).val());
-		var CommitmentAmount=parseFloat($("#CommitmentAmount",frm).val());
+		var UnfundedAmount=jHelper.cFloat($("#UnfundedAmount",frm).val());
+		var CommitmentAmount=jHelper.cFloat($("#CommitmentAmount",frm).val());
 		if(isNaN(UnfundedAmount)) {
 			UnfundedAmount=0;
 		}

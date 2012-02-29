@@ -37,17 +37,17 @@ deal.calcDUD=function () {
 		var pp=$("#PurchasePrice",this);
 		var fmv=$("#FMV",this);
 		if(nos.get(0)) {
-			var a=parseFloat(nos.val());
+			var a=jHelper.cFloat(nos.val());
 			if(isNaN(a)) { a=0; }
 			totalNOS+=a;
 		}
 		if(pp.get(0)) {
-			var a=parseFloat(pp.val());
+			var a=jHelper.cFloat(pp.val());
 			if(isNaN(a)) { a=0; }
 			totalPP+=a;
 		}
 		if(fmv.get(0)) {
-			var a=parseFloat(fmv.val());
+			var a=jHelper.cFloat(fmv.val());
 			if(isNaN(a)) { a=0; }
 			totalFMV+=a;
 		}
@@ -191,8 +191,8 @@ deal.loadIssuers=function (issuerName,issuerId) {
 };
 deal.calcFMV=function (txt) {
 	/*var tr=$(txt).parents("tr:first");
-	var noofsha=parseFloat($("#NumberOfShares",tr).val());
-	var price=parseFloat($("#PurchasePrice",tr).val());
+	var noofsha=jHelper.cFloat($("#NumberOfShares",tr).val());
+	var price=jHelper.cFloat($("#PurchasePrice",tr).val());
 	var FMV=$("#FMV",tr);
 	if(isNaN(noofsha)) { noofsha=0; }
 	if(isNaN(price)) { price=0; }
@@ -205,7 +205,7 @@ deal.loadPurchasePrice=function (tr) {
 	var securityId=$("#SecurityId",tr).val();
 	PurchasePrice.val("Loading Purchase Price...");
 	$.get("/Deal/FindLastPurchasePrice?_"+(new Date()).getTime()+"&fundId="+deal.getFundId()+"&securityId="+securityId+"&securityTypeId="+securityTypeId,function (data) {
-		data=parseFloat(data);
+		data=jHelper.cFloat(data);
 		if(data>0) { PurchasePrice.val(data.toFixed(2)); } else { PurchasePrice.val(""); }
 		deal.calcFMV(PurchasePrice);
 	});

@@ -31,22 +31,22 @@ deal.calcDUF=function () {
 		var ufa=$("#UnfundedAmount",this);
 		var gpp=$("#GrossPurchasePrice",this);
 		if(fundNAV.get(0)) {
-			var a=parseFloat(fundNAV.val());
+			var a=jHelper.cFloat(fundNAV.val());
 			if(isNaN(a)) { a=0; }
 			totalNAV+=a;
 		}
 		if(ca.get(0)) {
-			var a=parseFloat(ca.val());
+			var a=jHelper.cFloat(ca.val());
 			if(isNaN(a)) { a=0; }
 			totalCA+=a;
 		}
 		if(ufa.get(0)) {
-			var a=parseFloat(ufa.val());
+			var a=jHelper.cFloat(ufa.val());
 			if(isNaN(a)) { a=0; }
 			totalUFA+=a;
 		}
 		if(gpp.get(0)) {
-			var a=parseFloat(gpp.val());
+			var a=jHelper.cFloat(gpp.val());
 			if(isNaN(a)) { a=0; }
 			totalGPP+=a;
 		}
@@ -55,7 +55,6 @@ deal.calcDUF=function () {
 	$("#SpnTotalFundNAV",tbl).html(jHelper.dollarAmount(totalNAV.toString()));
 	$("#SpnTotalCAmount",tbl).html(jHelper.dollarAmount(totalCA.toString()));
 	$("#SpnTotalUAmount",tbl).html(jHelper.dollarAmount(totalUFA.toString()));
-
 };
 deal.applyUFAutocomplete=function (tr) {
 	var underlyingFund=$("#UnderlyingFund",tr);
@@ -96,7 +95,7 @@ deal.editUnderlyingFund=function (img) {
 };
 deal.saveUF=function (img) {
 	var tr=$(img).parents("tr:first");
-		deal.saveUnderlyingFund(tr);
+	deal.saveUnderlyingFund(tr);
 };
 deal.addUnderlyingFund=function (img) {
 	var tr=$(img).parents("tr:first");
@@ -139,7 +138,7 @@ deal.FindFundNAV=function (ufid,tr) {
 	FundNAV.attr("readonly","readonly").val("Loading FundNAV...");
 	$.get("/Deal/FindFundNAV?_"+(new Date()).getTime()+"&underlyingFundId="+ufid+"&fundId="+deal.getFundId(),function (data) {
 		var fundNAV="";
-		data=parseFloat(data);
+		data=jHelper.cFloat(data);
 		if(data>0) { fundNAV=data.toFixed(2); }
 		FundNAV.removeAttr("readonly","readonly").val(fundNAV);
 	});

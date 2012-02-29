@@ -19,7 +19,7 @@
 		var tbody=$("tbody",InvestorList);
 		var total=0;
 		$("tr",tbody).each(function () {
-			var amt=parseFloat($("#"+txtid,this).val());
+			var amt=jHelper.cFloat($("#"+txtid,this).val());
 			if(isNaN(amt)) {
 				amt=0;
 			}
