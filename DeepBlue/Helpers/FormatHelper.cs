@@ -17,7 +17,7 @@ namespace DeepBlue.Helpers {
 		}
 
 		public static string NumberFormat(decimal? value) {
-			return ((value ?? 0) == 0 ? string.Empty : String.Format("{0:C}", (value ?? 0)).Replace("$",""));
+			return ((value ?? 0) == 0 ? string.Empty : String.Format("{0:C}", (value ?? 0)).Replace("$","").Replace(".00",""));
 		}
 		
 		public static string CurrencyFormat(decimal? value) {

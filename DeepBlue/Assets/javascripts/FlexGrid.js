@@ -451,6 +451,13 @@
 			}
 		});
 	};
+	$.fn.flexExist=function (p) {
+		return this.each(function () {
+			if(this.grid&&this.p.url) {
+				return true;
+			}
+		});
+	};
 	$.fn.flexReload=function (p) {
 		return this.each(function () {
 			if(this.grid&&this.p.url) {

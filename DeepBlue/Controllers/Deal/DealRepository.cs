@@ -1384,6 +1384,18 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public object FindUnderlyingFundPostRecordCashDistribution(int underlyingFundId, int dealId, decimal amount, DateTime distributionDate) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from cashDistribution in context.CashDistributionsTable
+						where cashDistribution.UnderlyingFundID == underlyingFundId
+														&& cashDistribution.DealID == dealId
+														&& EntityFunctions.TruncateTime(cashDistribution.DistributionDate) == distributionDate
+														&& cashDistribution.Amount == amount
+						select new { cashDistribution.CashDistributionID }
+						).FirstOrDefault();
+			}
+		}
+
 		public IEnumerable<ErrorInfo> SaveUnderlyingFundPostRecordCashDistribution(CashDistribution cashDistribution) {
 			return cashDistribution.Save();
 		}
@@ -1440,6 +1452,8 @@ namespace DeepBlue.Controllers.Deal {
 											).FirstOrDefault();
 			}
 		}
+
+
 
 		public IEnumerable<ErrorInfo> SaveUnderlyingFundCapitalCall(UnderlyingFundCapitalCall underlyingFundCapitalCall) {
 			return underlyingFundCapitalCall.Save();
@@ -1510,6 +1524,18 @@ namespace DeepBlue.Controllers.Deal {
 				return context.UnderlyingFundCapitalCallLineItemsTable.Where(lineItem => lineItem.UnderlyingFundCapitalCallID == underlyingFundCapitalCallId
 														&& lineItem.UnderlyingFundID == underlyingFundId
 														&& lineItem.DealID == dealId).FirstOrDefault();
+			}
+		}
+
+		public object FindUnderlyingFundPostRecordCapitalCall(int underlyingFundId, int dealId, decimal amount, DateTime capitalCallDate) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from lineItem in context.UnderlyingFundCapitalCallLineItemsTable
+						where lineItem.UnderlyingFundID == underlyingFundId
+														&& lineItem.DealID == dealId
+														&& EntityFunctions.TruncateTime(lineItem.CapitalCallDate) == capitalCallDate
+														&& lineItem.Amount == amount
+						select new { UnderlyingFundCapitalCallID = lineItem.UnderlyingFundCapitalCallID }
+						).FirstOrDefault();
 			}
 		}
 
@@ -2869,21 +2895,21 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region UnderlyingDirectDocument
 
-		public List<UnderlyingDirectDocumentList> GetAllUnderlyingDirectDocuments(int pageIndex, int pageSize, 
+		public List<UnderlyingDirectDocumentList> GetAllUnderlyingDirectDocuments(int pageIndex, int pageSize,
 			string sortName, string sortOrder, ref int totalRows
 			, int securityID, int securityTypeID
 			) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<UnderlyingDirectDocumentList> query = (from document in context.UnderlyingDirectDocumentsTable
-																where document.SecurityTypeID == securityTypeID && document.SecurityID == securityID
-																select new UnderlyingDirectDocumentList {
-																	DocumentDate = document.DocumentDate,
-																	DocumentType = document.DocumentType.DocumentTypeName,
-																	FileName = document.File.FileName,
-																	FilePath = document.File.FilePath,
-																	FileTypeName = document.File.FileType.FileTypeName,
-																	DocumentId = document.UnderlyingDirectDocumentID
-																});
+																  where document.SecurityTypeID == securityTypeID && document.SecurityID == securityID
+																  select new UnderlyingDirectDocumentList {
+																	  DocumentDate = document.DocumentDate,
+																	  DocumentType = document.DocumentType.DocumentTypeName,
+																	  FileName = document.File.FileName,
+																	  FilePath = document.File.FilePath,
+																	  FileTypeName = document.File.FileType.FileTypeName,
+																	  DocumentId = document.UnderlyingDirectDocumentID
+																  });
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<UnderlyingDirectDocumentList> paginatedList = new PaginatedList<UnderlyingDirectDocumentList>(query, pageIndex, pageSize);
 				totalRows = paginatedList.TotalCount;
@@ -2907,8 +2933,260 @@ namespace DeepBlue.Controllers.Deal {
 				return false;
 			}
 		}
-		 
+
 		#endregion
-		
+
+		#region View Activities
+
+		public List<DealReportModel> GetAllActivitiesDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId, int? dealID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<DealReportModel> query = (from deal in context.DealsTable
+													 where deal.FundID == fundId
+													 select new DealReportModel {
+														 DealId = deal.DealID,
+														 DealName = deal.DealName,
+														 DealNumber = deal.DealNumber,
+														 DealDate = deal.CreatedDate,
+														 NetPurchasePrice = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.NetPurchasePrice),
+														 GrossPurchasePrice = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.GrossPurchasePrice),
+														 CommittedAmount = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.CommittedAmount),
+														 UnfundedAmount = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.UnfundedAmount),
+														 TotalAmount = deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.CommittedAmount)
+																	  - deal.DealUnderlyingFunds.Sum(dealUnderlyingFund => dealUnderlyingFund.UnfundedAmount),
+														 NoOfShares = deal.DealUnderlyingDirects.Sum(dealUnderlyingDirect => dealUnderlyingDirect.NumberOfShares),
+														 FMV = deal.DealUnderlyingDirects.Sum(dealUnderlyingDirect => dealUnderlyingDirect.FMV),
+													 });
+				if (dealID.HasValue) {
+					query = query.Where(d => d.DealId == dealID);
+				}
+				if (string.IsNullOrEmpty(sortName)) {
+					query = query.OrderBy(q => new { q.DealNumber });
+				}
+				else {
+					query = query.OrderBy(sortName, (sortOrder == "asc"));
+				}
+				PaginatedList<DealReportModel> paginatedList = new PaginatedList<DealReportModel>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public object GetUnderlyingFundCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? underlyingFundID, int dealID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var query = (from capitalCall in context.UnderlyingFundCapitalCallsTable
+							 where capitalCall.UnderlyingFundCapitalCallLineItems.Where(item => item.DealID == dealID).Count() > 0
+							 && ((underlyingFundID ?? 0) > 0 ? capitalCall.UnderlyingFundID == underlyingFundID : capitalCall.UnderlyingFundID > 0)
+							 && capitalCall.UnderlyingFundCapitalCallID != null 
+							 select new {
+								 UnderlyingFundName = capitalCall.UnderlyingFund.FundName,
+								 capitalCall.Fund.FundName,
+								 capitalCall.NoticeDate,
+								 capitalCall.Amount,
+								 capitalCall.IsDeemedCapitalCall
+							 });
+				
+				totalRows = query.Count();
+				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+				return query.ToList();
+			}
+		}
+
+		public object GetUnderlyingFundCashDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? underlyingFundID, int dealID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var query = (from cashDistribution in context.UnderlyingFundCashDistributionsTable 
+							 where 
+							 cashDistribution.CashDistributions.Where(d => d.DealID == dealID && d.UnderluingFundCashDistributionID != null).Count() > 0
+							 && ((underlyingFundID ?? 0) > 0 ? cashDistribution.UnderlyingFundID == underlyingFundID : cashDistribution.UnderlyingFundID > 0)
+							 select new {
+								 UnderlyingFundName = cashDistribution.UnderlyingFund.FundName,
+								 cashDistribution.Fund.FundName,
+								 cashDistribution.NoticeDate,
+								 cashDistribution.Amount,
+								 CashDistributionType = cashDistribution.CashDistributionType.Name 
+							 });
+				totalRows = query.Count();
+				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+				return query.ToList();
+			}
+		}
+
+		public object GetUnderlyingFundPostRecordCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? underlyingFundID, int dealID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var query = (from capitalCallLineItem in context.UnderlyingFundCapitalCallLineItemsTable
+							 where capitalCallLineItem.DealID == dealID
+							 && ((underlyingFundID ?? 0) > 0 ? capitalCallLineItem.UnderlyingFundID == underlyingFundID : capitalCallLineItem.UnderlyingFundID > 0)
+							 && capitalCallLineItem.UnderlyingFundCapitalCallID == null
+							 select new {
+								 UnderlyingFundName = capitalCallLineItem.UnderlyingFund.FundName,
+								 capitalCallLineItem.Deal.Fund.FundName,
+								 capitalCallLineItem.Deal.DealName,
+								 capitalCallLineItem.CapitalCallDate,
+								 capitalCallLineItem.Amount,
+							 });
+				totalRows = query.Count();
+				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+				return query.ToList();
+			}
+		}
+
+		public object GetUnderlyingFundPostRecordCashDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? underlyingFundID, int dealID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var query = (from cashDistribution in context.CashDistributionsTable
+							 where cashDistribution.DealID == dealID 
+							 && ((underlyingFundID ?? 0) > 0 ? cashDistribution.UnderlyingFundID == underlyingFundID : cashDistribution.UnderlyingFundID > 0)
+							 && cashDistribution.UnderluingFundCashDistributionID == null
+							 select new {
+								 UnderlyingFundName = cashDistribution.UnderlyingFund.FundName,
+								 cashDistribution.Deal.Fund.FundName,
+								 cashDistribution.Deal.DealName,
+								 cashDistribution.DistributionDate,
+								 cashDistribution.Amount,
+							 });
+				totalRows = query.Count();
+				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+				return query.ToList();
+			}
+		}
+
+		public object GetUnderlyingFundStockDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? underlyingFundID, int dealID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var query = (from stockDistribution in context.UnderlyingFundStockDistributionsTable 
+							 where 
+							 stockDistribution.UnderlyingFundStockDistributionLineItems.Where(d => d.DealID == dealID && d.UnderlyingFundStockDistributionID != null).Count() > 0
+							 && ((underlyingFundID ?? 0) > 0 ? stockDistribution.UnderlyingFundID == underlyingFundID : stockDistribution.UnderlyingFundID > 0)
+							 select new {
+								 UnderlyingFundName = stockDistribution.UnderlyingFund.FundName,
+								 stockDistribution.Fund.FundName,
+								 stockDistribution.NoticeDate,
+								 stockDistribution.DistributionDate,
+								 stockDistribution.TaxCostBase,
+								 stockDistribution.TaxCostDate,
+								 stockDistribution.PurchasePrice,
+								 stockDistribution.FMV,
+								 stockDistribution.NumberOfShares,
+							 });
+				totalRows = query.Count();
+				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+				return query.ToList();
+			}
+		}
+
+		public object GetUnderlyingFundAdjustments(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
+			int? dealUnderlyingFundID, int dealID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				var query = (from dealUnderlyingFund in context.DealUnderlyingFundsTable 
+							 where dealUnderlyingFund.DealID == dealID 
+							 && ((dealUnderlyingFundID ?? 0) > 0 ? dealUnderlyingFund.DealUnderlyingtFundID == dealUnderlyingFundID : dealUnderlyingFund.DealUnderlyingtFundID > 0)
+							 select new {
+								 CommitmentAmount = dealUnderlyingFund.CommittedAmount,
+								 UnfundedAmount = dealUnderlyingFund.UnfundedAmount,
+								 DealUnderlyingFundId = dealUnderlyingFund.DealUnderlyingtFundID,
+								 FundName = dealUnderlyingFund.Deal.Fund.FundName,
+								 UnderlyingFundName = dealUnderlyingFund.UnderlyingFund.FundName
+							 });
+				totalRows = query.Count();
+				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+				return query.ToList();
+			}
+		}
+
+		public object GetUnderlyingFundValuations(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? dealUnderlyingFundID, int? underlyingFundID, int dealID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				DateTime todayDate;
+				DateTime.TryParse(DateTime.Now.ToString("MM/dd/yyyy"), out todayDate);
+				var query = (from dealUnderlyingFund in context.DealUnderlyingFundsTable
+							 join fund in context.FundsTable on dealUnderlyingFund.Deal.FundID equals fund.FundID
+							 join underlyingFund in context.UnderlyingFundsTable on dealUnderlyingFund.UnderlyingFundID equals underlyingFund.UnderlyingtFundID
+							 join underlyingFundNAV in context.UnderlyingFundNAVsTable on new {
+								 dealUnderlyingFund.UnderlyingFundID,
+								 dealUnderlyingFund.Deal.FundID
+							 } equals new {
+								 underlyingFundNAV.UnderlyingFundID,
+								 underlyingFundNAV.FundID
+							 } into underlyingFundNAVs
+							 from underlyingFundNAV in underlyingFundNAVs.DefaultIfEmpty()
+							 where 
+							 dealUnderlyingFund.DealID == dealID 
+							 && ((dealUnderlyingFundID ?? 0) > 0 ? dealUnderlyingFund.DealUnderlyingtFundID == dealUnderlyingFundID : dealUnderlyingFund.DealUnderlyingtFundID > 0)
+							 && ((underlyingFundID ?? 0) > 0 ? dealUnderlyingFund.UnderlyingFundID == underlyingFundID : dealUnderlyingFund.UnderlyingFundID > 0)
+							 select new UnderlyingFundValuationModel {
+								 FundId = fund.FundID,
+								 FundName = fund.FundName,
+								 UnderlyingFundId = underlyingFund.UnderlyingtFundID,
+								 UnderlyingFundName = underlyingFund.FundName,
+								 FundNAV = (underlyingFundNAV != null ? underlyingFundNAV.FundNAV : 0),
+								 FundNAVDate = (underlyingFundNAV != null ? underlyingFundNAV.FundNAVDate : DateTime.MinValue),
+								 TotalCapitalCall = (from cc in context.UnderlyingFundCapitalCallsTable
+													 where cc.UnderlyingFundID == underlyingFund.UnderlyingtFundID
+													 && cc.FundID == fund.FundID
+													 && cc.NoticeDate >= (underlyingFundNAV != null ? EntityFunctions.TruncateTime(underlyingFundNAV.FundNAVDate) : todayDate)
+													 select cc.Amount).Sum(),
+								 TotalPostRecordCapitalCall = (from pcc in context.UnderlyingFundCapitalCallLineItemsTable
+															   where pcc.UnderlyingFundID == underlyingFund.UnderlyingtFundID
+															   && pcc.Deal.FundID == fund.FundID
+															   && pcc.CapitalCallDate >= (underlyingFundNAV != null ? EntityFunctions.TruncateTime(underlyingFundNAV.FundNAVDate) : todayDate)
+															   && pcc.UnderlyingFundCapitalCallID == null
+															   select pcc.Amount).Sum(),
+								 TotalDistribution = (from ds in context.UnderlyingFundCashDistributionsTable
+													  where ds.UnderlyingFundID == underlyingFund.UnderlyingtFundID
+													  && ds.FundID == fund.FundID
+													  && ds.NoticeDate >= (underlyingFundNAV != null ? EntityFunctions.TruncateTime(underlyingFundNAV.FundNAVDate) : todayDate)
+													  select ds.Amount).Sum(),
+								 TotalPostRecordDistribution = (from pds in context.CashDistributionsTable
+																where pds.UnderlyingFundID == underlyingFund.UnderlyingtFundID
+																&& pds.Deal.FundID == fund.FundID
+																&& pds.DistributionDate >= (underlyingFundNAV != null ? EntityFunctions.TruncateTime(underlyingFundNAV.FundNAVDate) : todayDate)
+																&& pds.UnderluingFundCashDistributionID == null
+																select pds.Amount).Sum(),
+								 UnderlyingFundNAVId = (underlyingFundNAV != null ? underlyingFundNAV.UnderlyingFundNAVID : 0),
+								 UpdateNAV = underlyingFundNAV.FundNAV
+							 });
+
+				totalRows = query.Count();
+				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+				return query.ToList();
+			}
+		}
+
+		public object GetUnderlyingFundValuationHistories(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? dealUnderlyingFundID, int? underlyingFundID, int dealID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				DateTime todayDate;
+				DateTime.TryParse(DateTime.Now.ToString("MM/dd/yyyy"), out todayDate);
+
+				var query = (from dealUnderlyingFund in context.DealUnderlyingFundsTable
+							 join fund in context.FundsTable on dealUnderlyingFund.Deal.FundID equals fund.FundID
+							 join underlyingFund in context.UnderlyingFundsTable on dealUnderlyingFund.UnderlyingFundID equals underlyingFund.UnderlyingtFundID
+							 join underlyingFundNAV in context.UnderlyingFundNAVsTable on new {
+								 dealUnderlyingFund.UnderlyingFundID,
+								 dealUnderlyingFund.Deal.FundID
+							 } equals new {
+								 underlyingFundNAV.UnderlyingFundID,
+								 underlyingFundNAV.FundID
+							 } 
+							 join navHistory in context.UnderlyingFundNAVHistoriesTable on underlyingFundNAV.UnderlyingFundNAVID equals navHistory.UnderlyingFundNAVID 
+							 where
+							 dealUnderlyingFund.DealID == dealID
+							 && ((dealUnderlyingFundID ?? 0) > 0 ? dealUnderlyingFund.DealUnderlyingtFundID == dealUnderlyingFundID : dealUnderlyingFund.DealUnderlyingtFundID > 0)
+							 && ((underlyingFundID ?? 0) > 0 ? dealUnderlyingFund.UnderlyingFundID == underlyingFundID : dealUnderlyingFund.UnderlyingFundID > 0)
+							 select new UnderlyingFundValuationModel {
+								 FundId = fund.FundID,
+								 FundName = fund.FundName,
+								 UnderlyingFundId = underlyingFund.UnderlyingtFundID,
+								 UnderlyingFundName = underlyingFund.FundName,
+								 FundNAV = (navHistory != null ? navHistory.FundNAV : 0),
+								 FundNAVDate = (navHistory != null ? navHistory.FundNAVDate : DateTime.MinValue)
+							 });
+
+				totalRows = query.Count();
+				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+				return query.ToList();
+			}
+		}
+
+		#endregion
+
+
+
+		 
 	}
 }

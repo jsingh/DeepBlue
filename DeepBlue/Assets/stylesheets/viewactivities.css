@@ -1,0 +1,17 @@
+﻿.tab-delete {
+	background-image: url("../images/tabdelete.png");
+	background-position: left top;
+	background-repeat: no-repeat;
+	float: left;
+	height: 16px;
+	margin: 7px 0 0 -15px;
+	width: 16px;
+	cursor: pointer;
+}
+.expandsel {
+    margin-top: 0px;
+}
+.recon-detail{
+	clear:both;
+}
+ 

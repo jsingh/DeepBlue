@@ -1,0 +1,116 @@
+﻿1. Investor Import
+----------------------
+C7_20tblLPPaymentInstructions => Investor, InvestorAccount
+// WARNING: The following values are present in our database, but not present in Blue, so setting those to NULL
+FFC
+FFCNO
+IBAN
+ByOrderOf
+Swift
+
+C7_25LPContactinfo => InvestorContact, ContactAddress
+
+2. Fund import
+--------------------
+C6_10AmberbrookFundInfo => Fund, FundAccount
+Things to note>>>>>:
+fund.TaxID = Guid.NewGuid().ToString("N").Substring(0, 25);
+// WARNING: these fields are not present in Blue
+fund.NumofAutoExtensions
+fund.DateClawbackTriggered;
+fund.RecycleProvision;
+fund.MgmtFeesCatchUpDate;
+fund.Carry;
+//WARNING: This field is present in blue but not present in Deepblue
+blueFund.AmberbrookFundNo
+
+3. Investor Fund Import
+----------------------------------
+C6_20tblLPCommitment => InvestorFund
+When adding an investor to a fund, we look for existing fund closing for that fund. If an existing fund closing is found, the investor is added to the fund
+using the existing fund closing, else a new fund closing is created.
+
+4. Underlying Fund Import
+-------------------------------
+C7_10tblGPPaymentInstructions => UnderlyingFund, UnderlyingFundContacts, UnderlyingFundContactCommunications, UnderlyingFundAccount, UnderlyingFund.RegisteredOfficeAddress
+Things to note>>>>>:
+When importing Underlying funds, we create a new Issuer, and assign all the Underlying Funds to it.
+Name of the issuer is set as "Data Conversion from Blue" + DateTime.Now
+
+5. Direct Import
+-----------------------
+The following table is used for importing equities from blue into DeepBlue: 4_20tblStockTable
+Equities in DeepBlue have the following 2 properties, which take their value from:
+EquityType			=> 4_20tblStockTable.Security seems to have EquityType and ShareClassType clubbed together. We are exporting Security to EquityType	
+ShareClassType		=> The imported equities dont have any values
+We also assign 4_20tblStockTable.Company as the Issuer to the Equity.
+Each unique (Company, Security, Symbol) in 4_20tblStockTable is imported as an Equity in DeepBlue
+
+6. Deals
+---------------------
+C6_15tblAmberbrookDealInfo	=> Deal
+C5_10tblDealOrigination => Contains information about both directs as well as underlying funds in the deal. We check the associated C7_10tblGPPaymentInstructions table to find if the entry in  
+C5_10tblDealOrigination is direct or a fund (C7_10tblGPPaymentInstructions.FundType)
+if C5_10tblDealOrigination is a Direct, Then
+       We look for directs in the C5_11tblDealOriginationDirects table[C5_11tblDealOriginationDirects.Where(x => x.Direct.Equals(C5_10tblDealOrigination.Fund)).Where(x => x.DealNo == C5_10tblDealOrigination.DealNo)]
+Else
+	  We import the underlying fund
+
+C6_40tblDealExpenses => DealClosingCost
+C6_15tblAmberbrookDealInfo => DealSellerContact
+C6_15tblAmberbrookDealInfo.ContactName => DealContact
+
+7. Capital Calls
+-----------------------
+C3_10tblCallsandFeesFromAmberbrook => CapitalCall
+C3_20tblCallsandFeesDistribution => CapitalCallLineItem
+            // Before calling InvestorFundImport, Make sure InvestorImport.ImportInvestors has already been run
+            // Before calling CapitalCallImport, Make sure InvestorFundImport.ImportInvestorFunds has already been run
+            // CapitalCallImport.ImportCapitalCall(Globals.CookieContainer);
+
+8. Capital Distribution import
+--------------------------------------
+C2_10tblDistFromAmberbrookCash =>CapitalDistribution
+C6_30tblLPDistributions => CapitalDistributionLineItem
+
+IMPORTANT: Since currently in DeepBlue, we dont have a mechanism to pull back the Post back data transactions, we have to import all the Post record date transactions
+before we import any capital calls or cash distribution on the underlying fund level, as those closes all the deals
+
+9 a. Underlying Fund Capital Call Post record date transactions
+---------------------------------------
+Post record data capital calls are stored in C1_30tblPostRecordDateTransactions 
+C1_30tblPostRecordDateTransactions.Where(x => x.TransactionType.Contains("call"
+ 
+9 b. Underlying Fund Cash Distribution Post record date transaction
+---------------------------------------------------------------------
+C1_30tblPostRecordDateTransactions.Where(x => x.TransactionType.Contains("cash")
+
+            
+10. Underlying Fund Capital Call
+----------------------------------------
+Running this import closes all the deals in which the Underlying Fund is present
+UF makes capital call in an Amberbrook fund, which are then attributed to different deals. In Blue, the table C1_20tblCallsToAmberbrook contains the capital call, as well the
+distribution of that capital call among the deals. In deepblue, the capital call is stored in UnderlyingFundCapitalCall table, and the distribution of the call amount in the deals is stored in
+the UnderlyingFundCapitalCallLineItem table. So import the same data, we group by AmberbrookFundNo, Fund(i.e. UnderlyingFund) and NoticeDate, as all the assumtion is that all the deals
+for the same call would have the same NoticeData
+ UFCC = from blueCC in context.C1_20tblCallsToAmberbrook
+             group blueCC by
+             new { blueCC.AmberbrookFundNo, blueCC.Fund, blueCC.NoticeDate } into g
+             select g;
+would be populated in the UnderlyingFundCapitalCall table.
+UnderlyingFundCapitalCallLineItem entries = from C1_20tblCallsToAmberbrook where .Where(x => x.NoticeDate == ufCC.Key.NoticeDate).Where(x => x.Fund == ufCC.Key.Fund).Where(x => x.AmberbrookFundNo == ufCC.Key.AmberbrookFundNo).
+11. Cash Distributions
+---------------------------------
+Similar logic as for 10, except this one goes against the C1_10tblDistToAmberbrookCash table, and the distributions are imported into the UnderlyingFundCashDistribution table.
+
+
+Meta data import
+-----------------
+Issuer import
+----------------
+Each distinct 4_20tblStockTable.Company value is created as an Issuer in DeepBlue
+
+EquityType import
+------------------
+Each distinct 4_20tblStockTable.Security value is created as an equity type in DeepBlue
+

@@ -130,6 +130,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<UnderlyingFundPostRecordCashDistributionModel> GetAllUnderlyingFundPostRecordCashDistributions(int underlyingFundId);
 		CashDistribution FindUnderlyingFundPostRecordCashDistribution(int cashDistributionId);
 		CashDistribution FindUnderlyingFundPostRecordCashDistribution(int underlyingFundCashDistributionId, int underlyingFundId, int dealId);
+		object FindUnderlyingFundPostRecordCashDistribution(int underlyingFundId, int dealId, decimal amount, DateTime distributionDate);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundPostRecordCashDistribution(CashDistribution cashDistribution);
 		decimal GetSumOfCashDistribution(int underlyingFundId, int dealId);
 		bool DeleteUnderlyingFundPostRecordCashDistribution(int id);
@@ -145,6 +146,7 @@ namespace DeepBlue.Controllers.Deal {
 		#region UnderlyingFundPostRecordCapitalCall
 		UnderlyingFundCapitalCallLineItem FindUnderlyingFundPostRecordCapitalCall(int underlyingFundCapitalCallLineItemId);
 		UnderlyingFundCapitalCallLineItem FindUnderlyingFundPostRecordCapitalCall(int underlyingFundCapitalCallId, int underlyingFundId, int dealId);
+		object FindUnderlyingFundPostRecordCapitalCall(int underlyingFundId, int dealId, decimal amount, DateTime capitalCallDate);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundPostRecordCapitalCall(UnderlyingFundCapitalCallLineItem underlyingFundCapitalCallLineItem);
 		List<UnderlyingFundPostRecordCapitalCallModel> GetAllUnderlyingFundPostRecordCapitalCalls(int underlyingFundId);
 		decimal GetSumOfUnderlyingFundCapitalCallLineItem(int underlyingFundId, int dealId);
@@ -258,7 +260,7 @@ namespace DeepBlue.Controllers.Deal {
 		bool DeleteIssuer(int issuerId);
 		bool IssuerNameAvailable(string issuerName, int issuerId);
 		IEnumerable<ErrorInfo> SaveIssuer(Models.Entity.Issuer issuer);
-		List<DirectListModel> GetAllDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,bool isGP, int? companyId);
+		List<DirectListModel> GetAllDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, bool isGP, int? companyId);
 		Models.Entity.Issuer FindIssuer(int issuerId);
 		List<AutoCompleteList> FindIssuers(string issuerName);
 		List<AutoCompleteList> FindCompanys(string issuerName);
@@ -295,11 +297,20 @@ namespace DeepBlue.Controllers.Deal {
 		#endregion
 
 		#region UnderlyingDirectDocument
-		List<UnderlyingDirectDocumentList> GetAllUnderlyingDirectDocuments(int pageIndex, int pageSize,
-		   string sortName, string sortOrder, ref int totalRows
-		   , int securityID, int securityTypeID
-		   );
+		List<UnderlyingDirectDocumentList> GetAllUnderlyingDirectDocuments(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int securityID, int securityTypeID);
 		bool DeleteUnderlyingDirectDocument(int underlyingDirectDocumentId);
+		#endregion
+
+		#region View Activities
+		List<DealReportModel> GetAllActivitiesDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId, int? dealID);
+		object GetUnderlyingFundCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? underlyingFundID, int dealID);
+		object GetUnderlyingFundCashDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? underlyingFundID, int dealID);
+		object GetUnderlyingFundPostRecordCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? underlyingFundID, int dealID);
+		object GetUnderlyingFundPostRecordCashDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? underlyingFundID, int dealID);
+		object GetUnderlyingFundStockDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? underlyingFundID, int dealID);
+		object GetUnderlyingFundAdjustments(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? dealUnderlyingFundID, int dealID);
+		object GetUnderlyingFundValuations(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? dealUnderlyingFundID, int? underlyingFundID, int dealID);
+		object GetUnderlyingFundValuationHistories(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? dealUnderlyingFundID, int? underlyingFundID, int dealID);
 		#endregion
 
 	}

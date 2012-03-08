@@ -97,10 +97,10 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<script type="text/javascript">		dealDirect.init();</script>
 	<%= Html.jQueryAutoComplete("S_Issuer", new AutoCompleteOptions {
-	Source = "/Deal/FindCompanys",
-	MinLength = 1,
-	OnSelect = "function(event, ui) { dealDirect.searchCompany(ui.item.id);}"
-	})%>
+									Source = "/Deal/FindCompanys",
+									MinLength = 1,
+									OnSelect = "function(event, ui) { dealDirect.searchCompany(ui.item.id);}"
+									})%>
 	<%=Html.jQueryFlexiGrid("DirectList", new FlexigridOptions {
 	ActionName = "DirectList",
 	ControllerName = "Deal",

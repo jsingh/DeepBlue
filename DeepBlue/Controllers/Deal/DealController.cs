@@ -179,7 +179,12 @@ namespace DeepBlue.Controllers.Deal {
 					deal = new Models.Entity.Deal();
 					deal.CreatedBy = Authentication.CurrentUser.UserID;
 					deal.CreatedDate = DateTime.Now;
-					deal.DealNumber = DealRepository.GetMaxDealNumber(model.FundId);
+					if (model.DealNumber <= 0) {
+						deal.DealNumber = DealRepository.GetMaxDealNumber(model.FundId);
+					}
+					else {
+						deal.DealNumber = model.DealNumber;
+					}
 				}
 
 				deal.EntityID = Authentication.CurrentEntity.EntityID;
@@ -282,6 +287,21 @@ namespace DeepBlue.Controllers.Deal {
 			}
 			return Json(dealDetail, JsonRequestBehavior.AllowGet);
 		}
+
+		//
+		// GET: /Deal/FindDealCloseModel
+		[HttpGet]
+		public JsonResult FindDealCloseModel(int dealID) {
+			Models.Entity.Deal deal = DealRepository.FindDeal(dealID);
+			CreateDealCloseModel model = null;
+			if (deal != null) {
+				model = new CreateDealCloseModel { DealId = deal.DealID, DealName = deal.DealName, DealNumber = deal.DealNumber };
+			}else{
+				model = new CreateDealCloseModel();
+			}
+			return Json(model, JsonRequestBehavior.AllowGet);
+		}
+
 
 		//
 		// GET: /Deal/FindDeals
@@ -1168,7 +1188,7 @@ namespace DeepBlue.Controllers.Deal {
 						, FormatHelper.CurrencyFormat(deal.NetPurchasePrice)
 						, FormatHelper.CurrencyFormat(deal.GrossPurchasePrice)
 						, FormatHelper.CurrencyFormat(deal.CommittedAmount)
-						, FormatHelper.CurrencyFormat(deal.NoOfShares)
+						, FormatHelper.NumberFormat(deal.NoOfShares)
 						, FormatHelper.CurrencyFormat(deal.FMV)
 					}
 				});
@@ -1697,6 +1717,97 @@ namespace DeepBlue.Controllers.Deal {
 			return View(model);
 		}
 
+		#region View Activities
+
+		public ActionResult ViewActivities() {
+			return View();
+		}
+
+		//
+		// GET: /Deal/ActivityDealsList
+		[HttpGet]
+		public JsonResult ActivityDealsList(int pageIndex, int pageSize, string sortName, string sortOrder, int fundId, int? dealID) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<DealReportModel> deals = DealRepository.GetAllActivitiesDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows, fundId, dealID);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var deal in deals) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> { 
+						deal.DealId
+						, deal.DealNumber
+						, deal.DealName
+						, deal.DealDate.ToString("MM/dd/yyyy")
+						, FormatHelper.CurrencyFormat(deal.NetPurchasePrice)
+						, FormatHelper.CurrencyFormat(deal.GrossPurchasePrice)
+						, FormatHelper.CurrencyFormat(deal.CommittedAmount)
+						, FormatHelper.NumberFormat(deal.NoOfShares)
+						, FormatHelper.CurrencyFormat(deal.FMV)
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public JsonResult GetUnderlyingFundCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, int underlyingFundID, int dealID) {
+			int totalRows = 0;
+			var rows = DealRepository.GetUnderlyingFundCapitalCalls(pageIndex, pageSize, sortName, sortOrder, ref totalRows, underlyingFundID, dealID);
+			return Json(new { total = totalRows, rows = rows }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public JsonResult GetUnderlyingFundCashDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, int underlyingFundID, int dealID) {
+			int totalRows = 0;
+			var rows = DealRepository.GetUnderlyingFundCashDistributions(pageIndex, pageSize, sortName, sortOrder, ref totalRows, underlyingFundID, dealID);
+			return Json(new { total = totalRows, rows = rows }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public JsonResult GetUnderlyingFundPostRecordCapitalCalls(int pageIndex, int pageSize, string sortName, string sortOrder, int underlyingFundID, int dealID) {
+			int totalRows = 0;
+			var rows = DealRepository.GetUnderlyingFundPostRecordCapitalCalls(pageIndex, pageSize, sortName, sortOrder, ref totalRows, underlyingFundID, dealID);
+			return Json(new { total = totalRows, rows = rows }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public JsonResult GetUnderlyingFundPostRecordCashDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, int underlyingFundID, int dealID) {
+			int totalRows = 0;
+			var rows = DealRepository.GetUnderlyingFundPostRecordCashDistributions(pageIndex, pageSize, sortName, sortOrder, ref totalRows, underlyingFundID, dealID);
+			return Json(new { total = totalRows, rows = rows }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public JsonResult GetUnderlyingFundStockDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, int underlyingFundID, int dealID) {
+			int totalRows = 0;
+			var rows = DealRepository.GetUnderlyingFundStockDistributions(pageIndex, pageSize, sortName, sortOrder, ref totalRows, underlyingFundID, dealID);
+			return Json(new { total = totalRows, rows = rows }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public JsonResult GetUnderlyingFundAdjustments(int pageIndex, int pageSize, string sortName, string sortOrder, int dealUnderlyingFundID, int dealID) {
+			int totalRows = 0;
+			var rows = DealRepository.GetUnderlyingFundAdjustments(pageIndex, pageSize, sortName, sortOrder, ref totalRows, dealUnderlyingFundID, dealID);
+			return Json(new { total = totalRows, rows = rows }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public JsonResult GetUnderlyingFundValuations(int pageIndex, int pageSize, string sortName, string sortOrder, int dealUnderlyingFundID, int underlyingFundID, int dealID) {
+			int totalRows = 0;
+			var rows = DealRepository.GetUnderlyingFundValuations(pageIndex, pageSize, sortName, sortOrder, ref totalRows, dealUnderlyingFundID, underlyingFundID, dealID);
+			return Json(new { total = totalRows, rows = rows }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public JsonResult GetUnderlyingFundValuationHistories(int pageIndex, int pageSize, string sortName, string sortOrder, int dealUnderlyingFundID, int underlyingFundID, int dealID) {
+			int totalRows = 0;
+			var rows = DealRepository.GetUnderlyingFundValuationHistories(pageIndex, pageSize, sortName, sortOrder, ref totalRows, dealUnderlyingFundID, underlyingFundID, dealID);
+			return Json(new { total = totalRows, rows = rows }, JsonRequestBehavior.AllowGet);
+		}
+
+		#endregion
+		
 		#region SecurityActivities
 
 		//
@@ -2117,6 +2228,11 @@ namespace DeepBlue.Controllers.Deal {
 			return errorInfo;
 		}
 
+		[HttpGet]
+		public object FindUnderlyingFundPostRecordCashDistribution(int underlyingFundId, int dealId, decimal amount, DateTime distributionDate) {
+			return Json(DealRepository.FindUnderlyingFundPostRecordCashDistribution(underlyingFundId, dealId, amount, distributionDate), JsonRequestBehavior.AllowGet);
+		}
+
 		//
 		// GET: /Deal/DeleteUnderlyingFundPostRecordCapitalCall
 		[HttpGet]
@@ -2260,6 +2376,7 @@ namespace DeepBlue.Controllers.Deal {
 			return Json(DealRepository.GetAllUnderlyingFundCapitalCalls(underlyingFundId), JsonRequestBehavior.AllowGet);
 		}
 
+
 		//
 		// GET: /Deal/DeleteUnderlyingFundCapitalCall
 		[HttpGet]
@@ -2351,7 +2468,6 @@ namespace DeepBlue.Controllers.Deal {
 			if (errorInfo == null) {
 
 				// Update post record date capital call amount to deal underlying fund and reduce unfunded amount.
-
 				List<DealUnderlyingFund> dealUnderlyingFunds = DealRepository.GetAllNotClosingDealUnderlyingFunds(capitalCallLineItem.UnderlyingFundID, capitalCallLineItem.DealID);
 				foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
 					if (dealUnderlyingFund.DealClosingID == null && dealUnderlyingFund.DealID == capitalCallLineItem.DealID) {
@@ -2362,9 +2478,15 @@ namespace DeepBlue.Controllers.Deal {
 							break;
 					}
 				}
+
 			}
 
 			return errorInfo;
+		}
+
+		[HttpGet]
+		public JsonResult FindUnderlyingFundPostRecordCapitalCall(int underlyingFundId, int dealId, decimal amount, DateTime capitalCallDate) {
+			return Json(DealRepository.FindUnderlyingFundPostRecordCapitalCall(underlyingFundId, dealId, amount, capitalCallDate), JsonRequestBehavior.AllowGet);
 		}
 
 		//
@@ -3884,7 +4006,7 @@ namespace DeepBlue.Controllers.Deal {
 			flexgridData.page = pageIndex;
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);
 		}
-			 
+
 		[HttpGet]
 		public ActionResult UnderlyingDirectDocumentList(int pageIndex, int pageSize, string sortName, string sortOrder, int securityID, int securityTypeID) {
 			int totalRows = 0;
@@ -3996,7 +4118,7 @@ namespace DeepBlue.Controllers.Deal {
 			if (model.FixedIncomeFile != null) {
 				fileName = model.FixedIncomeFile.FileName;
 			}
-			if (string.IsNullOrEmpty(fileName)==false) {
+			if (string.IsNullOrEmpty(fileName) == false) {
 				UnderlyingDirectDocumentModel fixedIncomeUnderlyingDirectDocumentModel = new UnderlyingDirectDocumentModel {
 					DocumentDate = DateTime.Now,
 					DocumentTypeId = model.FixedIncomeDocumentTypeId,
