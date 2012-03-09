@@ -31,7 +31,7 @@
 			<span class="title">INVESTMENTS</span><span class="arrow"></span><span class="pname">CREATE
 				NEW DEAL</span></div>
 		<div class="rightcol">
-			<%: Html.TextBox("M_Fund", "SEARCH  FUND", new { @class = "wm", @style = "width:200px", @id = "M_Fund" })%>
+			<%: Html.TextBox("M_Fund", "SEARCH FUND", new { @class = "wm", @style = "width:200px", @id = "M_Fund" })%>
 		</div>
 	</div>
 	<%}%>

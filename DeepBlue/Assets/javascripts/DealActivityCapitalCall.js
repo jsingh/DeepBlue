@@ -19,12 +19,16 @@ dealActivity.expandMCCTree=function (index,img) {
 	$("#ManualUFCC_Deal_"+index).css("display",display);
 };
 dealActivity.setCCUnderlyingFund=function (id,name) {
-	$("#CCUnderlyingFundId").val(id);
-	$("#SpnCCUFName").html(name);
-	$("tbody","#CapitalCallList").empty();
-	$("tbody","#PRCapitalCallList").empty();
-	$("#CCDetail").attr("issearch","true").show();
-	dealActivity.loadCC(true);
+	if(id>0) {
+		$("#CCUnderlyingFundId").val(id);
+		$("#SpnCCUFName").html(name);
+		$("tbody","#CapitalCallList").empty();
+		$("tbody","#PRCapitalCallList").empty();
+		$("#CCDetail").attr("issearch","true").show();
+		dealActivity.loadCC(true);
+	} else {
+		jAlert("Underlying Fund is required");
+	}
 };
 dealActivity.loadCC=function (isRefresh) {
 	var tbl=$("#CapitalCallList");

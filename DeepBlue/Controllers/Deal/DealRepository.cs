@@ -109,7 +109,7 @@ namespace DeepBlue.Controllers.Deal {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				var deals = context.DealsTable.AsQueryable();
 				deals = deals.Where(deal => deal.DealName.StartsWith(dealName));
-				if (fundId.HasValue)
+				if ((fundId ?? 0) > 0)
 					deals = deals.Where(deal => deal.FundID == fundId);
 
 				IQueryable<AutoCompleteList> dealListQuery = (from deal in deals
@@ -124,15 +124,17 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, bool? isNotClose, int? fundId) {
+		public List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, bool? isNotClose, int? fundId, int? dealId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<DeepBlue.Models.Entity.Deal> deals = context.DealsTable;
 				if ((isNotClose ?? false) == true) {
 					deals = deals.Where(deal => deal.DealClosings.Where(dealClosing => dealClosing.IsFinalClose == true).Count() <= 0);
 				}
-				if (fundId > 0) {
+				if ((fundId ?? 0) > 0) 
 					deals = deals.Where(deal => deal.FundID == fundId);
-				}
+				if ((dealId ?? 0) > 0)
+					deals = deals.Where(deal => deal.DealID == dealId);
+
 				IQueryable<DealListModel> query = (from deal in deals
 												   select new DealListModel {
 													   DealId = deal.DealID,
@@ -147,10 +149,16 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public List<DealFundListModel> GetAllCloseDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+		public List<DealFundListModel> GetAllCloseDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? fundID, int? dealID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<DeepBlue.Models.Entity.Deal> deals = context.DealsTable;
 				deals = deals.Where(deal => deal.DealClosings.Where(dealClosing => dealClosing.IsFinalClose == true).Count() <= 0);
+
+				if ((fundID ?? 0) > 0)
+					deals = deals.Where(deal => deal.FundID == fundID);
+				if ((dealID ?? 0) > 0)
+					deals = deals.Where(deal => deal.DealID == dealID);
+
 				IQueryable<DealFundListModel> query = (from deal in deals
 													   join fund in context.FundsTable on deal.FundID equals fund.FundID
 													   where fund.Deals.Count() > 0
@@ -2984,7 +2992,7 @@ namespace DeepBlue.Controllers.Deal {
 								 capitalCall.Amount,
 								 capitalCall.IsDeemedCapitalCall
 							 });
-				
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				totalRows = query.Count();
 				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
 				return query.ToList();
@@ -3004,6 +3012,7 @@ namespace DeepBlue.Controllers.Deal {
 								 cashDistribution.Amount,
 								 CashDistributionType = cashDistribution.CashDistributionType.Name 
 							 });
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				totalRows = query.Count();
 				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
 				return query.ToList();
@@ -3023,6 +3032,7 @@ namespace DeepBlue.Controllers.Deal {
 								 capitalCallLineItem.CapitalCallDate,
 								 capitalCallLineItem.Amount,
 							 });
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				totalRows = query.Count();
 				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
 				return query.ToList();
@@ -3042,6 +3052,7 @@ namespace DeepBlue.Controllers.Deal {
 								 cashDistribution.DistributionDate,
 								 cashDistribution.Amount,
 							 });
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				totalRows = query.Count();
 				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
 				return query.ToList();
@@ -3065,6 +3076,7 @@ namespace DeepBlue.Controllers.Deal {
 								 stockDistribution.FMV,
 								 stockDistribution.NumberOfShares,
 							 });
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				totalRows = query.Count();
 				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
 				return query.ToList();
@@ -3084,6 +3096,7 @@ namespace DeepBlue.Controllers.Deal {
 								 FundName = dealUnderlyingFund.Deal.Fund.FundName,
 								 UnderlyingFundName = dealUnderlyingFund.UnderlyingFund.FundName
 							 });
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				totalRows = query.Count();
 				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
 				return query.ToList();
@@ -3141,7 +3154,7 @@ namespace DeepBlue.Controllers.Deal {
 								 UnderlyingFundNAVId = (underlyingFundNAV != null ? underlyingFundNAV.UnderlyingFundNAVID : 0),
 								 UpdateNAV = underlyingFundNAV.FundNAV
 							 });
-
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				totalRows = query.Count();
 				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
 				return query.ToList();
@@ -3176,7 +3189,7 @@ namespace DeepBlue.Controllers.Deal {
 								 FundNAV = (navHistory != null ? navHistory.FundNAV : 0),
 								 FundNAVDate = (navHistory != null ? navHistory.FundNAVDate : DateTime.MinValue)
 							 });
-
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				totalRows = query.Count();
 				query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
 				return query.ToList();

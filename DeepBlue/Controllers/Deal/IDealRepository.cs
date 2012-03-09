@@ -17,8 +17,8 @@ namespace DeepBlue.Controllers.Deal {
 		List<AutoCompleteList> FindDeals(string dealName, int? fundId);
 		bool DealNameAvailable(string dealName, int dealId, int fundId);
 		int GetMaxDealNumber(int fundId);
-		List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, bool? isNotClose, int? fundId);
-		List<DealFundListModel> GetAllCloseDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		List<DealListModel> GetAllDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, bool? isNotClose, int? fundId, int? dealId);
+		List<DealFundListModel> GetAllCloseDeals(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? fundID, int? dealID);
 		object GetDealDetail(int dealId);
 		int FindLastDealId();
 		bool DeleteDeal(int dealId);

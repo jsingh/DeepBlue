@@ -16,7 +16,7 @@
 		<div class="recon-detail" style="display: block;" issearch="true">
 			<div style="width: 90%; margin: 0 auto; clear: both;">
 				<% Html.RenderPartial("TBoxTop"); %>
-				<table cellpadding="0" cellspacing="0" border="0" id="tblCC" class="grid" url="/Deal/GetUnderlyingFundCapitalCalls"
+				<table cellpadding="0" cellspacing="0" border="0" id="tblCC" class="grid" sortname="UnderlyingFundName" sortorder="asc" url="/Deal/GetUnderlyingFundCapitalCalls"
 					templatename="CapitalCallListTemplate">
 					<thead>
 						<tr>
@@ -61,7 +61,7 @@
 		<div class="recon-detail" style="display: block;" issearch="true">
 			<div style="width: 90%; margin: 0 auto; clear: both;">
 				<% Html.RenderPartial("TBoxTop"); %>
-				<table cellpadding="0" cellspacing="0" border="0" id="tblCD" class="grid" url="/Deal/GetUnderlyingFundCashDistributions"
+				<table cellpadding="0" cellspacing="0" border="0" id="tblCD" class="grid" sortname="UnderlyingFundName" sortorder="asc" url="/Deal/GetUnderlyingFundCashDistributions"
 					templatename="CashDistributionListTemplate">
 					<thead>
 						<tr>
@@ -109,7 +109,7 @@
 		<div class="recon-detail" style="display: block;" issearch="true">
 			<div style="width: 90%; margin: 0 auto; clear: both;">
 				<% Html.RenderPartial("TBoxTop"); %>
-				<table cellpadding="0" cellspacing="0" border="0" id="tblPRCC" class="grid" url="/Deal/GetUnderlyingFundPostRecordCapitalCalls"
+				<table cellpadding="0" cellspacing="0" border="0" id="tblPRCC" class="grid" sortname="UnderlyingFundName" sortorder="asc" url="/Deal/GetUnderlyingFundPostRecordCapitalCalls"
 					templatename="PostRecordCapitalCallListTemplate">
 					<thead>
 						<tr>
@@ -125,7 +125,7 @@
 							<th style="text-align: right;" sortname="Amount">
 								Amount
 							</th>
-							<th style="text-align: left; width: 100px;" sortname="NoticeDate">
+							<th style="text-align: left; width: 100px;" sortname="CapitalCallDate">
 								Capital Call Date
 							</th>
 						</tr>
@@ -157,7 +157,7 @@
 		<div class="recon-detail" style="display: block;" issearch="true">
 			<div style="width: 90%; margin: 0 auto; clear: both;">
 				<% Html.RenderPartial("TBoxTop"); %>
-				<table cellpadding="0" cellspacing="0" border="0" id="tblPRCD" class="grid" url="/Deal/GetUnderlyingFundPostRecordCashDistributions"
+				<table cellpadding="0" cellspacing="0" border="0" id="tblPRCD" class="grid" sortname="UnderlyingFundName" sortorder="asc" url="/Deal/GetUnderlyingFundPostRecordCashDistributions"
 					templatename="PostRecordCashDistributionListTemplate">
 					<thead>
 						<tr>
@@ -205,7 +205,7 @@
 		<div class="recon-detail" style="display: block;" issearch="true">
 			<div style="width: 90%; margin: 0 auto; clear: both;">
 				<% Html.RenderPartial("TBoxTop"); %>
-				<table cellpadding="0" cellspacing="0" border="0" id="tblSD" class="grid" url="/Deal/GetUnderlyingFundStockDistributions"
+				<table cellpadding="0" cellspacing="0" border="0" id="tblSD" class="grid" sortname="UnderlyingFundName" sortorder="asc" url="/Deal/GetUnderlyingFundStockDistributions"
 					templatename="StockDistributionListTemplate">
 					<thead>
 						<tr>
@@ -262,7 +262,7 @@
 		<div class="recon-detail" style="display: block;" issearch="true">
 			<div style="width: 90%; margin: 0 auto; clear: both;">
 				<% Html.RenderPartial("TBoxTop"); %>
-				<table cellpadding="0" cellspacing="0" border="0" id="tblUA" class="grid" url="/Deal/GetUnderlyingFundAdjustments"
+				<table cellpadding="0" cellspacing="0" border="0" id="tblUA" class="grid" sortname="UnderlyingFundName" sortorder="asc" url="/Deal/GetUnderlyingFundAdjustments"
 					templatename="UnderlyingFundAdjustmentTemplate">
 					<thead>
 						<tr>
@@ -307,7 +307,7 @@
 		<div class="recon-detail" style="display: block;" issearch="true">
 			<div style="width: 90%; margin: 0 auto; clear: both;">
 				<% Html.RenderPartial("TBoxTop"); %>
-				<table cellpadding="0" cellspacing="0" border="0" id="tblUFV" class="grid" url="/Deal/GetUnderlyingFundValuations"
+				<table cellpadding="0" cellspacing="0" border="0" id="tblUFV" class="grid" sortname="UnderlyingFundName" sortorder="asc" url="/Deal/GetUnderlyingFundValuations"
 					templatename="UnderlyingFundValuationTemplate">
 					<thead>
 						<tr>
@@ -323,7 +323,7 @@
 							<th style="text-align: left" sortname="FundNAVDate">
 								Reporting Date
 							</th>
-							<th style="text-align: right" sortname="CalculateNAV">
+							<th style="text-align: right">
 								Calculated NAV
 							</th>
 						</tr>
@@ -355,7 +355,7 @@
 		<div class="recon-detail" style="display: block;" issearch="true">
 			<div style="width: 90%; margin: 0 auto; clear: both;">
 				<% Html.RenderPartial("TBoxTop"); %>
-				<table cellpadding="0" cellspacing="0" border="0" id="tblUFVH" class="grid" url="/Deal/GetUnderlyingFundValuationHistories"
+				<table cellpadding="0" cellspacing="0" border="0" id="tblUFVH" class="grid" sortname="UnderlyingFundName" sortorder="asc" url="/Deal/GetUnderlyingFundValuationHistories"
 					templatename="UnderlyingFundValuationHistoryTemplate">
 					<thead>
 						<tr>

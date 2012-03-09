@@ -24,6 +24,12 @@
 					<%}%>
 					</span></div>
 			<div class="rightcol">
+				<div style="float:left">
+				<%: Html.TextBox("M_Fund", "SEARCH FUND", new { @class = "wm", @style="width:300px", @id = "M_Fund" })%>
+				</div>
+				<div style="float:left; margin-left:20px;">
+				<%: Html.TextBox("M_Deal", "SEARCH DEAL", new { @class = "wm", @style = "width:300px", @id = "M_Deal" })%>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -47,6 +53,8 @@
 		<div class="section-det" id="AddNewDeal" style="display: none">
 		</div>
 	</div>
+	<%:Html.Hidden("FundID", "0")%>
+	<%:Html.Hidden("DealID", "0")%>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
 	<%=Html.jQueryFlexiGrid("DealList", new FlexigridOptions {
@@ -61,6 +69,15 @@
 															   ,BoxStyle = false
 															   ,RowsLength = 50
 })%>
+<%= Html.jQueryAutoComplete("M_Fund", new AutoCompleteOptions {
+																 Source = "/Fund/FindFunds", MinLength = 1,
+																 OnSelect = "function(event, ui) { $('#FundID').val(ui.item.id); $('#DealID').val(0); $('#M_Deal').val('SEARCH DEAL');  dealList.search(); }"
+	})%>
+	<%= Html.jQueryAutoComplete("M_Deal", new AutoCompleteOptions {
+																	SearchFunction = "dealList.searchDeal",
+																	MinLength = 1,
+																	  OnSelect = "function(event, ui) { $('#DealID').val(ui.item.id); dealList.search();  }"
+	})%>
 	<%using(Html.jQueryTemplateScript("GridTemplate")){ %>
 		{{each(i,row) rows}}
 		<tr {{if i%2==0}}class="row"{{else}}class="erow"{{/if}} style="cursor:pointer" onclick="javascript:dealList.expandFund(${row.FundID});">
@@ -73,7 +90,7 @@
 						<div class="line"></div>
 						<div style="width:700px;margin:0 0 0 20px;padding:10px 0">
 						<% Html.RenderPartial("TBoxTop"); %>
-							<table cellpadding=0 cellspacing=0 border=0 class="grid deal-list" id="DealList" fundid="${row.FundID}">
+							<table cellpadding=0 cellspacing=0 border=0 class="grid deal-list" id="FundDealList" fundid="${row.FundID}">
 								<thead>
 									<tr>
 										<th sortname="DealNumber" style="width:10%">Deal Number</th>
@@ -91,7 +108,9 @@
 	<%}%>
 	<%using(Html.jQueryTemplateScript("DealGridTemplate")){ %>
 	{{each(j,deal) rows}}
-	<tr {{if j%2==0}}class="row"{{else}}class="erow"{{/if}}>
+	<tr onclick="<%if(Convert.ToString(ViewData["CloseDeal"])=="True"){%>
+	location.href='/Deal/Close/${deal.cell[0]}?menuid=<%=Request["menuid"]%>'
+	<%}else{%>location.href='/Deal/Edit/${deal.cell[0]}?menuid=<%=Request["menuid"]%>'<%}%>" {{if j%2==0}}class="row"{{else}}class="erow"{{/if}}>
 		<td>${deal.cell[2]}</td>
 		<td>${deal.cell[1]}</td>
 		<td style="text-align:right">

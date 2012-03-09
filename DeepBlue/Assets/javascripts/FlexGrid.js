@@ -39,6 +39,7 @@
 		$(t).show();
 		var g={
 			hset: {},
+			isChangeSort: false,
 			addData: function (data) {
 				if(p.onBeforeAddData) { p.onBeforeAddData(data); }
 				if(p.preProcess) { data=p.preProcess(data); }
@@ -127,6 +128,7 @@
 				if(p.onSuccess) { p.onSuccess(t,g); }
 				this.bDiv.scrollLeft=this.bDiv.scrollLeft;
 				if($.browser.opera) { $(t).css('visibility','visible'); }
+				g.isChangeSort=false;
 			},
 			changeSort: function (th) {
 				if(this.loading) { return true; }
@@ -140,6 +142,7 @@
 				$('.sasc',this.bDiv).removeClass('sasc');
 				$('div span',th).addClass('s'+p.sortorder);
 				p.sortname=$(th).attr('sortname');
+				g.isChangeSort=true;
 				if(p.onChangeSort) {
 					p.onChangeSort(p.sortname,p.sortorder);
 				} else {

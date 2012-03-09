@@ -212,6 +212,9 @@
 						return true;
 					}
 					,onSuccess: function (t,g) {
+						if(g.isChangeSort==true) {
+							return;
+						}
 						var flexigrid=$(t).parents(".flexigrid:first");
 						var rows=$("tbody tr",t).length;
 						if(rows>0) {
@@ -258,8 +261,8 @@
 					,rp: 25
 					,resizeWidth: false
 					,method: "GET"
-					,sortname: "DocumentId"
-					,sortorder: "desc"
+					,sortname: grid.attr("sortname")
+					,sortorder: grid.attr("sortorder")
 					,autoload: isAutoLoad
 					,height: 0
 				});

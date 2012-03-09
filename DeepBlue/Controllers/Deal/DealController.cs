@@ -118,10 +118,10 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/DealList
 		[HttpGet]
-		public ActionResult DealList(int pageIndex, int pageSize, string sortName, string sortOrder, bool? isNotClose, int? fundId) {
+		public ActionResult DealList(int pageIndex, int pageSize, string sortName, string sortOrder, bool? isNotClose, int? fundId, int? dealId) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			List<DealListModel> deals = DealRepository.GetAllDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows, isNotClose, fundId);
+			List<DealListModel> deals = DealRepository.GetAllDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows, isNotClose, fundId,dealId);
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var deal in deals) {
@@ -135,10 +135,10 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/DealFundList
 		[HttpGet]
-		public ActionResult DealFundList(int pageIndex, int pageSize, string sortName, string sortOrder, bool? isNotClose, int? fundId) {
+		public ActionResult DealFundList(int pageIndex, int pageSize, string sortName, string sortOrder, bool? isNotClose, int? fundId, int? dealId) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			List<DealListModel> deals = DealRepository.GetAllDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows, isNotClose, fundId);
+			List<DealListModel> deals = DealRepository.GetAllDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows, isNotClose, fundId, dealId);
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var deal in deals) {
@@ -152,13 +152,12 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/DealCloseList
 		[HttpGet]
-		public ActionResult DealCloseList(int pageIndex, int pageSize, string sortName, string sortOrder) {
+		public ActionResult DealCloseList(int pageIndex, int pageSize, string sortName, string sortOrder, int? fundID, int? dealID) {
 			int totalRows = 0;
-			List<DealFundListModel> funds = DealRepository.GetAllCloseDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			List<DealFundListModel> funds = DealRepository.GetAllCloseDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows, fundID, dealID);
 			return Json(new { page = pageIndex, total = totalRows, rows = funds }, JsonRequestBehavior.AllowGet);
 		}
-
-
+		
 		//
 		// POST: /Deal/Create
 		[HttpPost]
@@ -301,8 +300,7 @@ namespace DeepBlue.Controllers.Deal {
 			}
 			return Json(model, JsonRequestBehavior.AllowGet);
 		}
-
-
+		
 		//
 		// GET: /Deal/FindDeals
 		[HttpGet]
