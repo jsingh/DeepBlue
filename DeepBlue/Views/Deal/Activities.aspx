@@ -65,7 +65,7 @@
 					<div id="NewCapitalCall" class="group">
 						<div class="addbtn" style="display: none;">
 							<div class="tblcell">
-								<%: Html.TextBox("CC_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style="width:300px", @class = "wm" })%></div>
+								<%: Html.TextBox("CC_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style="width:250px", @class = "wm" })%></div>
 							<div class="tblcell">
 								<%: Html.CheckBox("IsManualCapitalCall", false, new { @onclick = "javascript:dealActivity.showManualCCCtl('CCDetail');" })%>&nbsp;Manual
 								Capital Call
@@ -192,7 +192,7 @@
 					<div id="NewCashDistribution" class="group">
 						<div class="addbtn" style="display: none;">
 							<div class="tblcell">
-								<%: Html.TextBox("CD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:300px", @class = "wm" })%>
+								<%: Html.TextBox("CD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:250px", @class = "wm" })%>
 							</div>
 							<div class="tblcell">
 								<%: Html.CheckBox("IsManualCashDistribution", false, new { @onclick = "javascript:dealActivity.showManualCDCtl('CDDetail');" })%>&nbsp;Manual
@@ -321,7 +321,7 @@
 					<div id="New Stock Distribution" class="group">
 						<div class="addbtn" style="display: none;">
 							<div class="tblcell">
-								<%: Html.TextBox("SD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:300px", @class = "wm" })%></div>
+								<%: Html.TextBox("SD_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:250px", @class = "wm" })%></div>
 							<div class="tblcell">
 								<%: Html.CheckBox("IsManualStockDistribution", false, new { @onclick = "javascript:dealActivity.showManualSDCtl('SDDetail');" })%>&nbsp;Manual
 								Stock Distribution
@@ -417,7 +417,7 @@
 					<div id="UnderlyingFundValuation" class="group">
 						<div class="addbtn" style="display: none">
 							<div class="tblcell">
-								<%: Html.TextBox("UFV_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:300px",  @class = "wm" })%></div>
+								<%: Html.TextBox("UFV_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:250px", @class = "wm" })%></div>
 							<div class="tblcell">
 								<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.importUFV();" })) {%>Import
 								Underlying Fund Valuation
@@ -487,7 +487,7 @@
 					<div id="UnfundedAdjustments" class="group">
 						<div class="addbtn" style="display: none">
 							<div class="tblcell">
-								<%: Html.TextBox("UFA_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:300px", @class = "wm" })%>
+								<%: Html.TextBox("UFA_UnderlyingFund", "SEARCH UNDERLYING FUND", new { @style = "width:250px", @class = "wm" })%>
 							</div>
 						</div>
 						<div class="headerbox">
@@ -548,7 +548,7 @@
 					<div id="FundLevelExpenses" class="group">
 						<div class="addbtn" style="display: none">
 							<div class="tblcell">
-								<%: Html.TextBox("FLE_Fund", "SEARCH  FUND", new { @style = "width:300px", @class = "wm" })%>
+								<%: Html.TextBox("FLE_Fund", "SEARCH  FUND", new { @style = "width:250px", @class = "wm" })%>
 							</div>
 							<div class="tblcell rightcell">
 								<%using (Html.GreenButton(new { @onclick = "javascript:dealActivity.makeNewFLE();" })) {%>Add
@@ -681,7 +681,7 @@
 					<div id="UnderlyingDirectValuation" class="group">
 						<div class="addbtn" style="display: none">
 							<div class="tblcell">
-								<%: Html.TextBox("UDV_UnderlyingDirect", "SEARCH UNDERLYING DIRECT", new { @style = "width:300px", @class = "wm" })%></div>
+								<%: Html.TextBox("UDV_UnderlyingDirect", "SEARCH UNDERLYING DIRECT", new { @style = "width:250px", @class = "wm" })%></div>
 						</div>
 						<div class="headerbox">
 							<div class="title">
@@ -751,7 +751,7 @@
 					<div id="NewDD" class="group">
 						<div class="addbtn" style="display: none;">
 							<div class="tblcell">
-								<%: Html.TextBox("DD_Direct", "SEARCH DIRECT", new { @style="width:300px", @class = "wm" })%></div>
+								<%: Html.TextBox("DD_Direct", "SEARCH DIRECT", new { @style = "width:250px", @class = "wm" })%></div>
 							<div class="tblcell">
 								<%: Html.CheckBox("IsManualDividendDistribution", false, new { @onclick = "javascript:dealActivity.showManualDDCtl('DDDetail');" })%>&nbsp;Manual
 								Dividend Distribution
@@ -892,9 +892,9 @@
 									<%: Html.TextBox("ReconcileFundName", "SEARCH  FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:180px" })%>
 								</div>
 								<div class="cell" style="padding-left: 10px;">
-									<%: Html.TextBox("ReconcileUnderlyingFundName", "SEARCH UNDERLYING FUND", new { @id = "ReconcileUnderlyingFundName", @class = "wm", @style = "width:300px" })%>
+									<%: Html.TextBox("ReconcileUnderlyingFundName", "SEARCH UNDERLYING FUND", new { @id = "ReconcileUnderlyingFundName", @class = "wm", @style = "width:280px" })%>
 								</div>
-								<div class="cell" style="padding-left: 10px;width:300px;">
+								<div class="cell" style="padding-left: 10px;width:250px;">
 									<%List<SelectListItem> options = new List<SelectListItem>();
 										options.Add(new SelectListItem { Text = "SEARCH UNRECONCILE", Value = "false" });
 										options.Add(new SelectListItem { Text = "SEARCH RECONCILE", Value = "true" });

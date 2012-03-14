@@ -73,66 +73,81 @@ namespace DeepBlue.ImportData {
 		}
 
 		public static HttpWebResponse SendRequest(string url, byte[] postData, bool isPost, CookieCollection cookies, bool allowAutoRedirect = false, string contentType = null) {
-			string requestMethod = isPost ? "POST" : "GET";
+			try {
 
-			HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
-			// AllowAutoRedirect = false means HttpWebRequest will not automatically follow 302 response
-			webRequest.AllowAutoRedirect = allowAutoRedirect;
-			webRequest.CookieContainer = new CookieContainer();
-			foreach (Cookie cookie in cookies) {
-				webRequest.CookieContainer.Add(cookie);
-			}
-			webRequest.Method = requestMethod;
-			webRequest.Referer = url;
-			webRequest.Headers.Add("origin", Globals.BaseUrl);
-			webRequest.UserAgent = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; SLCC1; .NET CLR 2.0.50727; InfoPath.2; .NET CLR 3.5.21022;";
+				//Util.Log("SendRequest: " + url);
 
-			HttpWebResponse webResponse = null;
-			if (isPost) {
-				if (string.IsNullOrEmpty(contentType)) {
-					webRequest.ContentType = "application/x-www-form-urlencoded";
+				string requestMethod = isPost ? "POST" : "GET";
+
+				//Util.Log("SendRequest RequestMethod: " + requestMethod);
+
+				HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
+				// AllowAutoRedirect = false means HttpWebRequest will not automatically follow 302 response
+				webRequest.AllowAutoRedirect = allowAutoRedirect;
+				webRequest.CookieContainer = new CookieContainer();
+				foreach (Cookie cookie in cookies) {
+					webRequest.CookieContainer.Add(cookie);
+				}
+				webRequest.Method = requestMethod;
+				webRequest.Referer = url;
+				webRequest.Headers.Add("origin", Globals.BaseUrl);
+				webRequest.UserAgent = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; SLCC1; .NET CLR 2.0.50727; InfoPath.2; .NET CLR 3.5.21022;";
+
+				HttpWebResponse webResponse = null;
+				if (isPost) {
+					if (string.IsNullOrEmpty(contentType)) {
+						webRequest.ContentType = "application/x-www-form-urlencoded";
+					}
+					else {
+						webRequest.ContentType = contentType;
+					}
+					webRequest.ContentLength = postData.Length;
+					using (Stream writer = webRequest.GetRequestStream()) {
+						writer.Write(postData, 0, postData.Length);
+					}
+					webResponse = (HttpWebResponse)webRequest.GetResponse();
 				}
 				else {
-					webRequest.ContentType = contentType;
+					if (!string.IsNullOrEmpty(contentType)) {
+						webRequest.ContentType = contentType;
+					}
+					webRequest.ContentLength = 0;
+					//req.Proxy = new System.Net.WebProxy(ProxyString, true); //true means no proxy
+					webResponse = (HttpWebResponse)webRequest.GetResponse();
 				}
-				webRequest.ContentLength = postData.Length;
-				using (Stream writer = webRequest.GetRequestStream()) {
-					writer.Write(postData, 0, postData.Length);
+
+				string returnedCookie = string.Empty;
+				foreach (Cookie c in webResponse.Cookies) {
+					returnedCookie += string.Format("  CookieName:{0}, Value:{1} ", c.Name, c.Value);
 				}
-				webResponse = (HttpWebResponse)webRequest.GetResponse();
-			}
-			else {
-				if (!string.IsNullOrEmpty(contentType)) {
-					webRequest.ContentType = contentType;
+				//We need to add any response cookies to our cookie container
+				cookies.Add(webResponse.Cookies);
+
+				////Only for debug
+				//using (var stream = new StreamReader(webResponse.GetResponseStream())) {
+				//    System.Diagnostics.Debug.WriteLine(stream.ReadToEnd());
+				//}
+
+				if (webResponse.StatusCode == HttpStatusCode.Found) {
+					string locationtoRedirect = Globals.BaseUrl;
+					if (webResponse.Headers["Location"].StartsWith("/") == false) {
+						locationtoRedirect += "/";
+					}
+					locationtoRedirect += webResponse.Headers["Location"];
+					webResponse = SendRequest(locationtoRedirect, null, false, cookies);
 				}
-				webRequest.ContentLength = 0;
-				//req.Proxy = new System.Net.WebProxy(ProxyString, true); //true means no proxy
-				webResponse = (HttpWebResponse)webRequest.GetResponse();
+
+				return webResponse;
 			}
-
-			string returnedCookie = string.Empty;
-			foreach (Cookie c in webResponse.Cookies) {
-				returnedCookie += string.Format("  CookieName:{0}, Value:{1} ", c.Name, c.Value);
-			}
-			//We need to add any response cookies to our cookie container
-			cookies.Add(webResponse.Cookies);
-
-			////Only for debug
-			//using (var stream = new StreamReader(webResponse.GetResponseStream())) {
-			//    System.Diagnostics.Debug.WriteLine(stream.ReadToEnd());
-			//}
-
-			if (webResponse.StatusCode == HttpStatusCode.Found) {
-				string locationtoRedirect = Globals.BaseUrl;
-				if (webResponse.Headers["Location"].StartsWith("/") == false) {
-					locationtoRedirect += "/";
+			catch (Exception ex) {
+				string message = ex.Message;
+				if (ex.InnerException != null) {
+					message += Environment.NewLine + " Inner Exception : " + ex.InnerException.Message;
 				}
-				locationtoRedirect += webResponse.Headers["Location"];
-				webResponse = SendRequest(locationtoRedirect, null, false, cookies);
+				Util.Log("SendRequest Exception URL :" + url);
+				Util.Log("SendRequest Exception :" + message);
+				throw ex;
 			}
-
-			return webResponse;
-
 		}
 
 		public static NameValueCollection SetUpForm<T>(T obj, string keyPrefix, string valuePrefix, string[] excludedProperties = null) {

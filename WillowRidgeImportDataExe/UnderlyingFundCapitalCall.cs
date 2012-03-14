@@ -299,7 +299,7 @@ namespace DeepBlue.ImportData {
 			}
 			deepBlueCC.Amount = amount;
 			// On the UI, this field is labelled Due Date
-			deepBlueCC.NoticeDate = blueCapitalCall.NoticeDate;
+			deepBlueCC.NoticeDate = blueCapitalCall.NoticeDate.Date;
 
 
 			if (blueCapitalCall.Paid.HasValue) {
@@ -402,7 +402,9 @@ namespace DeepBlue.ImportData {
 			UnderlyingFundCapitalCallModel model = new UnderlyingFundCapitalCallModel();
 			model.FundId = capitalCall.FundID;
 			model.Amount = capitalCall.Amount;
-			model.NoticeDate = capitalCall.NoticeDate;
+			if(capitalCall.NoticeDate.HasValue)
+				model.NoticeDate = capitalCall.NoticeDate.Value;
+
 			model.UnderlyingFundId = capitalCall.UnderlyingFundID;
 
 			if (model.Amount <= 0) {
@@ -562,7 +564,7 @@ namespace DeepBlue.ImportData {
 							model.DealId = prdcc.DealId;
 							model.Amount = Math.Abs((decimal)postRecordDateTransaction.Proceeds);
 							if (postRecordDateTransaction.EffectiveDate.HasValue) {
-								model.CapitalCallDate = postRecordDateTransaction.EffectiveDate;
+								model.CapitalCallDate = postRecordDateTransaction.EffectiveDate.Value.Date;
 							}
 							model.FundId = prdcc.FundId;
 							formValues = HttpWebRequestUtil.SetUpForm(model, "0_", string.Empty);

@@ -72,7 +72,7 @@ namespace DeepBlue.ImportData {
 								dealClosingModel.DealClosingId = Convert.ToInt32(row.cell[0]);
 								dealClosingModel.DealNumber = Convert.ToInt32(row.cell[1]);
 								//dealClosingModel.DealCloseName = Convert.ToString(row.cell[2]);
-								dealClosingModel.CloseDate = Convert.ToDateTime(row.cell[3]);
+								dealClosingModel.CloseDate = Convert.ToDateTime(row.cell[3]).Date;
 								//dealClosingModel.TotalNetPurchasePrice = Convert.ToDecimal(row.cell[4]);
 								dealClosings.Add(dealClosingModel);
 							}
@@ -151,7 +151,7 @@ namespace DeepBlue.ImportData {
 				return 0;
 			}
 
-			model.CloseDate = (purchaseDate ?? DateTime.Now);
+			model.CloseDate = (purchaseDate ?? DateTime.Now).Date;
 
 			model.DealNumber = dealClosingDetail.DealNumber;
 
@@ -160,6 +160,9 @@ namespace DeepBlue.ImportData {
 			int totalDirects = 0;
 			foreach (DealUnderlyingDirectModel direct in dealClosingDetail.DealUnderlyingDirects) {
 				if (!direct.DealClosingId.HasValue) {
+					if (direct.RecordDate.HasValue) {
+						direct.RecordDate = (direct.RecordDate ?? Convert.ToDateTime("01/01/1900")).ToLocalTime();
+					}
 					direct.IsClose = true;
 					formValues = formValues.Combine(HttpWebRequestUtil.SetUpForm(direct, (++totalDirects) + "_", string.Empty));
 				}
@@ -168,6 +171,9 @@ namespace DeepBlue.ImportData {
 			int totalUFs = 0;
 			foreach (DealUnderlyingFundModel uf in dealClosingDetail.DealUnderlyingFunds) {
 				if (!uf.DealClosingId.HasValue) {
+					if (uf.RecordDate.HasValue) {
+						uf.RecordDate = (uf.RecordDate ?? Convert.ToDateTime("01/01/1900")).ToLocalTime();
+					}
 					uf.IsClose = true;
 					formValues = formValues.Combine(HttpWebRequestUtil.SetUpForm(uf, (++totalUFs) + "_", string.Empty));
 				}
@@ -245,4 +251,3 @@ namespace DeepBlue.ImportData {
 }
 
 
- 

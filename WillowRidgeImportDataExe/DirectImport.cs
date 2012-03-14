@@ -433,7 +433,9 @@ namespace DeepBlue.ImportData {
                             CreateIssuerModel model = (CreateIssuerModel)js.Deserialize(resp, typeof(CreateIssuerModel));
                             issuer =  new Issuer();
                             issuer.IssuerID = issuerId;
-                            issuer.AnnualMeetingDate = model.IssuerDetailModel.AnnualMeetingDate;
+							if(model.IssuerDetailModel.AnnualMeetingDate.HasValue)
+								issuer.AnnualMeetingDate = model.IssuerDetailModel.AnnualMeetingDate.Value.Date;
+
                             issuer.CountryID = model.IssuerDetailModel.CountryId;
                             issuer.IsGP = model.IssuerDetailModel.IsUnderlyingFundModel;
                             issuer.Name = model.IssuerDetailModel.Name;

@@ -141,9 +141,9 @@ namespace DeepBlue.ImportData {
 		private static CapitalCall GetCapitalCallFromBlue(C3_10tblCallsandFeesFromAmberbrook blueCapitalCall, BlueEntities context, CookieCollection cookies) {
 			CapitalCall deepBlueCC = new CapitalCall();
 			//deepBlueCC.FundID;
-			deepBlueCC.CapitalCallDate = blueCapitalCall.NoticeDate;
+			deepBlueCC.CapitalCallDate = blueCapitalCall.NoticeDate.Date;
 			if (blueCapitalCall.DueDate.HasValue) {
-				deepBlueCC.CapitalCallDueDate = blueCapitalCall.DueDate.Value;
+				deepBlueCC.CapitalCallDueDate = blueCapitalCall.DueDate.Value.Date;
 			}
 			// The CapitalAmountCalled is used for investing in new investments and existing investments
 			// CapitalAmountCalled = NewInvestmentAmount + ExistingInvestmentAmount
@@ -316,6 +316,7 @@ namespace DeepBlue.ImportData {
 			// On the server side CapitalCallModel is used which is same as CapitalCall, except for the following mismatched names
 			formValues["InvestedAmount"] = capitalCall.InvestmentAmount.ToString();
 
+			/*
 			if (capitalCall.CapitalCallLineItems.Count > 0) {
 				formValues.Add("InvestorCount", capitalCall.CapitalCallLineItems.Count.ToString());
 				int index = 0;
@@ -324,12 +325,21 @@ namespace DeepBlue.ImportData {
 					formValues = formValues.Combine(HttpWebRequestUtil.SetUpForm(li, index + "_", string.Empty));
 				}
 			}
+			 * */
 
 			// Send the request 
 			//string url = HttpWebRequestUtil.GetUrl("CapitalCall/CreateManualCapitalCall");
 			string url = HttpWebRequestUtil.GetUrl("CapitalCall/Create");
 			formdata = HttpWebRequestUtil.ToFormValue(formValues);
+
+			//Util.Log("CapitalCall URL : " + url);
+
 			byte[] postData = System.Text.Encoding.ASCII.GetBytes(formdata);
+
+			//Util.Log("CapitalCall POST DATA : " + formdata);
+
+			Util.Log("CapitalCall FundID : " + capitalCall.FundID);
+
 			HttpWebResponse response = HttpWebRequestUtil.SendRequest(url, postData, true, cookies);
 			if (response.StatusCode == System.Net.HttpStatusCode.OK) {
 				using (Stream receiveStream = response.GetResponseStream()) {
@@ -341,7 +351,12 @@ namespace DeepBlue.ImportData {
 						readStream.Close();
 					}
 				}
-
+			}
+			if (capitalCallNumber > 0) {
+				Util.Log("Create CapitalCall Number : " + capitalCallNumber);
+			}
+			else {
+				Util.Log("Create CapitalCall Error : " + resp);
 			}
 			return capitalCallNumber;
 		}

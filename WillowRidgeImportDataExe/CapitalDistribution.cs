@@ -134,8 +134,8 @@ namespace DeepBlue.ImportData {
         private static CapitalDistribution GetCapitalDistributionFromBlue(C2_10tblDistFromAmberbrookCash blueCapitalDist, BlueEntities context, CookieCollection cookies, out string resp) {
             resp = string.Empty;
             CapitalDistribution deepBlueCD = new CapitalDistribution();
-            deepBlueCD.CapitalDistributionDate = blueCapitalDist.NoticeDate;
-            deepBlueCD.CapitalDistributionDueDate = blueCapitalDist.EffectiveDate;
+			deepBlueCD.CapitalDistributionDate = blueCapitalDist.NoticeDate.Date;
+			deepBlueCD.CapitalDistributionDueDate = blueCapitalDist.EffectiveDate.Date;
             deepBlueCD.DistributionAmount = (decimal)blueCapitalDist.TotalCashDistribution;
             deepBlueCD.IsManual = true;
             if (blueCapitalDist.TotalCarry.HasValue) {
@@ -259,8 +259,8 @@ namespace DeepBlue.ImportData {
             resp = string.Empty;
             formdata = string.Empty;
             DeepBlue.Models.CapitalCall.CreateDistributionModel model = new DeepBlue.Models.CapitalCall.CreateDistributionModel();
-            model.CapitalDistributionDate = capitalDistribution.CapitalDistributionDate;
-            model.CapitalDistributionDueDate = capitalDistribution.CapitalDistributionDueDate;
+			model.CapitalDistributionDate = capitalDistribution.CapitalDistributionDate.Date;
+			model.CapitalDistributionDueDate = capitalDistribution.CapitalDistributionDueDate.Date;
             model.FundId = capitalDistribution.FundID;
 
             // initialize
@@ -304,6 +304,7 @@ namespace DeepBlue.ImportData {
             model.InvestorCount = capitalDistribution.CapitalDistributionLineItems.Count;
             NameValueCollection formValues = HttpWebRequestUtil.SetUpForm(model, string.Empty, string.Empty, new string[] { "CapitalDistributionLineItems" });
 
+			/*
             if (capitalDistribution.CapitalDistributionLineItems.Count > 0) {
                 int index = 0;
                 foreach (CapitalDistributionLineItem li in capitalDistribution.CapitalDistributionLineItems.ToList()) {
@@ -313,7 +314,9 @@ namespace DeepBlue.ImportData {
                     formValues = formValues.Combine(HttpWebRequestUtil.SetUpForm(li, index + "_", string.Empty));
                 }
             }
-            
+			* */
+
+			Util.Log("Capital Distribution FundID : " + capitalDistribution.FundID);
 
             // Send the request 
             // string url = HttpWebRequestUtil.GetUrl("CapitalCall/CreateManualDistribution");
@@ -333,6 +336,12 @@ namespace DeepBlue.ImportData {
                 }
 
             }
+			if (distributionNumber > 0) {
+				Util.Log("Capital Distribution Number : " + distributionNumber);
+			}
+			else {
+				Util.Log("Capital Distribution Error : " + resp);
+			}
             return distributionNumber;
         }
 

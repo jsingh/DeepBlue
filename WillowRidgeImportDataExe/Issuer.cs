@@ -34,7 +34,7 @@ namespace DeepBlue.ImportData {
                 try {
                     IssuerDetailModel model = new IssuerDetailModel();
                     model.CountryId = Globals.DefaultCountryID;
-                    model.AnnualMeetingDate = DateTime.Today;
+                    model.AnnualMeetingDate = DateTime.Now.Date;
                     model.Name = issuer.Name;
 
                     formValues = formValues.Combine(HttpWebRequestUtil.SetUpForm(model, string.Empty, string.Empty));

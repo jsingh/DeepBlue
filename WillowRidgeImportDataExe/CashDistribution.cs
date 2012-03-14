@@ -286,17 +286,19 @@ namespace DeepBlue.ImportData {
 
 			deepBlueCD.Amount = amount;
 			// On the UI, this field is labelled Due Date
-			deepBlueCD.NoticeDate = blueCashDist.NoticeDate;
+			if (blueCashDist.NoticeDate.HasValue)
+				deepBlueCD.NoticeDate = blueCashDist.NoticeDate.Value.Date;
+
 			// PRDCD is stored in the 1-30tblpostrecorddatetransactions table(Transaction type = cash distribution). so we assuming all the calls here are non-prdcc 
 			deepBlueCD.IsPostRecordDateTransaction = false;
 
 			// We dont need to provider the value for Received date, as it is assigned on the server side (to DateTime.Now)
 			// deepBlueCD.ReceivedDate = DateTime.Now;
 			if (blueCashDist.ReceivedDate.HasValue) {
-				deepBlueCD.ReceivedDate = blueCashDist.ReceivedDate;
+				deepBlueCD.ReceivedDate = blueCashDist.ReceivedDate.Value.Date;
 			}
 			else {
-				deepBlueCD.ReceivedDate = DateTime.Now;
+				deepBlueCD.ReceivedDate = (DateTime.Now).Date;
 			}
 
 			// This should be handled in the reconciliation
@@ -336,7 +338,9 @@ namespace DeepBlue.ImportData {
 			cashDistLineItem.Amount = (decimal)blueCashDist.Proceeds;
 			// WARNING: Is this mapping ok?
 			// Actually the UI doesnt ask for this field, so i think we are ok here.
-			cashDistLineItem.DistributionDate = blueCashDist.ReceivedDate;
+			if (blueCashDist.ReceivedDate.HasValue)
+				cashDistLineItem.DistributionDate = blueCashDist.ReceivedDate.Value.Date;
+
 			return cashDistLineItem;
 		}
 
@@ -356,7 +360,7 @@ namespace DeepBlue.ImportData {
 			return fundId;
 		}
 
-		
+
 		private static Hashtable BlueFunds = new Hashtable();
 		private static C6_10AmberbrookFundInfo GetBlueFund(string fundNumber, BlueEntities context) {
 			if (BlueFunds.ContainsKey(fundNumber)) {
@@ -393,8 +397,12 @@ namespace DeepBlue.ImportData {
 			model.UnderlyingFundId = cashDist.UnderlyingFundID;
 			model.CashDistributionTypeId = cashDist.CashDistributionTypeID;
 			model.Amount = cashDist.Amount;
-			model.NoticeDate = cashDist.NoticeDate;
-			model.ReceivedDate = cashDist.ReceivedDate;
+
+			if (cashDist.NoticeDate.HasValue)
+				model.NoticeDate = cashDist.NoticeDate.Value.Date;
+
+			if (cashDist.ReceivedDate.HasValue)
+				model.ReceivedDate = cashDist.ReceivedDate.Value.Date;
 
 			NameValueCollection formValues = HttpWebRequestUtil.SetUpForm(model, "0_", string.Empty);
 			// This should be manual cash distribution
@@ -533,7 +541,7 @@ namespace DeepBlue.ImportData {
 								model.DealId = prdcd.DealId;
 								model.Amount = Math.Abs((decimal)postRecordDateTransaction.Proceeds);
 								if (postRecordDateTransaction.EffectiveDate.HasValue) {
-									model.DistributionDate = postRecordDateTransaction.EffectiveDate;
+									model.DistributionDate = postRecordDateTransaction.EffectiveDate.Value.Date;
 								}
 
 								// Check already exist

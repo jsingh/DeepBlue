@@ -275,7 +275,7 @@ namespace DeepBlue.ImportData {
             int? fundClosingId = null;
             DeepBlue.Models.Admin.EditFundClosingModel fundClosing = new DeepBlue.Models.Admin.EditFundClosingModel();
             fundClosing.Name = "FC-" + DateTime.Now.ToString();
-            fundClosing.FundClosingDate = DateTime.Now;
+            fundClosing.FundClosingDate = DateTime.Now.Date;
             fundClosing.FundId = fundId;
             fundClosing.IsFirstClosing = false;
 

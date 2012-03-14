@@ -7,13 +7,20 @@ using System.Threading;
 using DeepBlue.Models.Investor;
 
 using System.Configuration;
+using System.Web.Script.Serialization;
+using System.IO;
+using System.Runtime.Serialization.Json;
+using System.Text.RegularExpressions;
+using DeepBlue.Models.Deal;
+using System.Globalization;
 
 namespace DeepBlue.ImportData {
 	class Program {
+	
 		static void Main(string[] args) {
 
 			try {
-				 
+				
 				//// 1. Investor Import
 				InvestorImport.ImportInvestors(Globals.CookieContainer);
 
@@ -28,7 +35,7 @@ namespace DeepBlue.ImportData {
 
 				////5. Direct Import
 				DirectsImport.ImportEquities(Globals.CookieContainer);
-				 
+
 				//6. Deals
 				DealImport.ImportDeals(Globals.CookieContainer);
 
@@ -46,14 +53,14 @@ namespace DeepBlue.ImportData {
 
 				//9b PRDCD
 				CashDistributionImport.ImportPostRecordDateCashDistribution(Globals.CookieContainer);
-
+ 
 				//10. Underlying Fund Capital Call
 				UnderlyingFundCapitalCallImport.ImportCapitalCall(Globals.CookieContainer);
 
 				//11. Cash Distributions
 				CashDistributionImport.ImportCashDistribution(Globals.CookieContainer);
 
-				Util.Log("Press any key to continue........");
+				Console.WriteLine("Press any key to continue........");
 				Console.ReadLine();
 
 			}

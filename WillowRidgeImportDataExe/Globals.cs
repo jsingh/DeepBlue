@@ -79,7 +79,7 @@ namespace DeepBlue.ImportData {
 			string directory = codeBase.Substring(0, codeBase.LastIndexOf("/"));
 
 
-			ConsoleLogFile = "ConsoleLogFile.html";
+			ConsoleLogFile = "ConsoleLogFile.txt";
 
 			ConsoleErrorLogFile = "ConsoleErrorLogFile_" + LogFile;
 			ConsoleWarningLogFile = "ConsoleWarningLogFile_" + LogFile;

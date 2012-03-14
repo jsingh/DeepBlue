@@ -10,16 +10,7 @@ namespace DeepBlue.ImportData {
 
 		public static void Log(string log) {
 			try {
-				if (System.IO.File.Exists(Globals.ConsoleLogFile) == false) {
-					log = "<div style='background-color:black'>";
-					using (TextWriter tw = new StreamWriter(Globals.ConsoleLogFile, true)) {
-						tw.WriteLine(log + Environment.NewLine + Environment.NewLine);
-						tw.Flush();
-						tw.Close();
-					}
-				}
 				Console.WriteLine(log);
-				log = "<font style='color:" + Console.ForegroundColor.ToString() + "'>" + log + "</font><br/>";
 				using (TextWriter tw = new StreamWriter(Globals.ConsoleLogFile, true)) {
 					tw.WriteLine(log + Environment.NewLine + Environment.NewLine);
 					tw.Flush();
@@ -88,7 +79,7 @@ namespace DeepBlue.ImportData {
 				tw.Close();
 			}
             Console.ForegroundColor = ConsoleColor.Green;
-            Util.Log(error);
+			Util.Log(error);
             Console.ResetColor();
         }
 
@@ -99,7 +90,7 @@ namespace DeepBlue.ImportData {
 				tw.Close();
 			}
 			Console.ForegroundColor = ConsoleColor.Yellow;
-            Util.Log(error);
+			Util.Log(error);
             Console.ResetColor();
         }
 
