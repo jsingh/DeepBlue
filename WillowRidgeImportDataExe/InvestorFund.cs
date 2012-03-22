@@ -197,7 +197,8 @@ namespace DeepBlue.ImportData {
                 resp += err;
                 Util.WriteError(err);
             }
-            investorFund.InvestorTypeId = !string.IsNullOrEmpty(blueInvestorFund.Designation) && blueInvestorFund.Designation.Contains("Managing") ? (int)Models.Investor.Enums.InvestorType.ManagingMember : (int)Models.Investor.Enums.InvestorType.ManagingMember;
+            
+			investorFund.InvestorTypeId = !string.IsNullOrEmpty(blueInvestorFund.Designation) && blueInvestorFund.Designation.Contains("Managing") ? (int)Models.Investor.Enums.InvestorType.ManagingMember : (int)Models.Investor.Enums.InvestorType.NonManagingMember;
             investorFund.TotalCommitment = blueInvestorFund.CommitmentAmount;
             investorFund.UnfundedAmount = blueInvestorFund.CommitmentAmount;
 

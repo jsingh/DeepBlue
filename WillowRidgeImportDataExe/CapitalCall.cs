@@ -64,7 +64,7 @@ namespace DeepBlue.ImportData {
 								 + "FundID:" + capitalCall.FundID + Environment.NewLine
 								 + "CapitalAmountCalled:" + capitalCall.CapitalAmountCalled + Environment.NewLine
 								 + "CapitalCallDate:" + capitalCall.CapitalCallDate + Environment.NewLine
-								 + "CapitalCallDueDate:" + capitalCall.CapitalCallDueDate + Environment.NewLine 
+								 + "CapitalCallDueDate:" + capitalCall.CapitalCallDueDate + Environment.NewLine
 								 );
 							ImportErrors.Add(new KeyValuePair<CapitalCall, Exception>(capitalCall, new Exception("Error creating Capital Call. Error:" + resp)));
 							string msg = "RESULT: FAIL";
@@ -94,6 +94,7 @@ namespace DeepBlue.ImportData {
 				List<C3_10tblCallsandFeesFromAmberbrook> blueCapitalCalls = context.C3_10tblCallsandFeesFromAmberbrook.ToList();
 				foreach (C3_10tblCallsandFeesFromAmberbrook blueCapitalCall in blueCapitalCalls) {
 					try {
+
 						bool success = true;
 						string errorMsg = string.Empty;
 						TotalImportRecords++;
@@ -140,6 +141,7 @@ namespace DeepBlue.ImportData {
 
 		private static CapitalCall GetCapitalCallFromBlue(C3_10tblCallsandFeesFromAmberbrook blueCapitalCall, BlueEntities context, CookieCollection cookies) {
 			CapitalCall deepBlueCC = new CapitalCall();
+
 			//deepBlueCC.FundID;
 			deepBlueCC.CapitalCallDate = blueCapitalCall.NoticeDate.Date;
 			if (blueCapitalCall.DueDate.HasValue) {
@@ -149,28 +151,23 @@ namespace DeepBlue.ImportData {
 			// CapitalAmountCalled = NewInvestmentAmount + ExistingInvestmentAmount
 			deepBlueCC.CapitalAmountCalled = (decimal)blueCapitalCall.TotalAmountCollected;
 			// Capital Call Number
-			deepBlueCC.CapitalCallTypeID = (int)DeepBlue.Models.CapitalCall.Enums.CapitalCallType.Manual;
+
+			//deepBlueCC.CapitalCallTypeID = (int)DeepBlue.Models.CapitalCall.Enums.CapitalCallType.Manual;
+
 			deepBlueCC.ManagementFees = (decimal)blueCapitalCall.ManagementFees;
-			if (blueCapitalCall.Expenses.HasValue) {
-				deepBlueCC.FundExpenses = (decimal)blueCapitalCall.Expenses.Value;
-			}
+
+			deepBlueCC.FundExpenses = (decimal)(blueCapitalCall.Expenses ?? 0);
+
 			// NetCapital = TotalAmountCollected - ManagementFees - FundExpenses;
 
 			// Initialize the values
-			deepBlueCC.NewInvestmentAmount = deepBlueCC.CapitalAmountCalled;
-			deepBlueCC.ExistingInvestmentAmount = 0;
-			if (blueCapitalCall.NewInvestments.HasValue && blueCapitalCall.NewInvestments.Value > 0) {
-				deepBlueCC.NewInvestmentAmount = (decimal)blueCapitalCall.NewInvestments.Value;
-			}
-
-			if (blueCapitalCall.OldInvestments.HasValue) {
-				deepBlueCC.ExistingInvestmentAmount = (decimal)blueCapitalCall.OldInvestments.Value;
-			}
+			deepBlueCC.NewInvestmentAmount = (decimal)(blueCapitalCall.NewInvestments ?? 0);
+			deepBlueCC.ExistingInvestmentAmount = (decimal)(blueCapitalCall.OldInvestments ?? 0);
 
 			// InvestmentAmount = NewInvestmentAmount + ExistingInvestmentAmount
 			// This is a required field right now, but the UI doesnt ask for it, and this should be calculated at the server.
 			// This is a bug.. we should have to set it here, but until this is fixed, set it
-			deepBlueCC.InvestmentAmount = deepBlueCC.NewInvestmentAmount.Value + deepBlueCC.ExistingInvestmentAmount.Value;
+			deepBlueCC.InvestmentAmount = decimal.Add((deepBlueCC.NewInvestmentAmount ?? 0), (deepBlueCC.ExistingInvestmentAmount ?? 0));
 
 			int? fundId = GetFundID(blueCapitalCall.AmberbrookFundNo, context, cookies);
 			if (fundId.HasValue) {
@@ -213,6 +210,7 @@ namespace DeepBlue.ImportData {
 				deepBlueCCLineItem.PaidON = blueCapitalCallLineItem.PaymentDate.Value;
 			}
 
+
 			// WARNING: Following fields are present in DeepBlue but not in blue
 			// The following fields are present in UI and should be provided
 			//deepBlueCCLineItem.ManagementFeeInterest;
@@ -248,6 +246,7 @@ namespace DeepBlue.ImportData {
 			//blueCapitalCallLineItem.DueDate;
 			return deepBlueCCLineItem;
 		}
+
 
 		private static int? GetFundID(string fundNumber, BlueEntities context, CookieCollection cookies) {
 			int? fundId = null;
@@ -309,23 +308,40 @@ namespace DeepBlue.ImportData {
 			int? capitalCallNumber = null;
 			resp = string.Empty;
 			formdata = string.Empty;
-			//DeepBlue.Models.CapitalCall.CreateCapitalCallModel capitalCallModel = new Models.CapitalCall.CreateCapitalCallModel();
-			//capitalCallModel.CapitalAmountCalled = capitalCall.CapitalAmountCalled;
-			//capitalCall.capitalcall
-			NameValueCollection formValues = HttpWebRequestUtil.SetUpForm(capitalCall, string.Empty, string.Empty, new string[] { "CapitalCallLineItems" });
-			// On the server side CapitalCallModel is used which is same as CapitalCall, except for the following mismatched names
-			formValues["InvestedAmount"] = capitalCall.InvestmentAmount.ToString();
+
+			CreateCapitalCallModel model = new CreateCapitalCallModel();
+
+
+			model.CapitalAmountCalled = capitalCall.CapitalAmountCalled;
+			model.CapitalCallDate = capitalCall.CapitalCallDate;
+			model.CapitalCallDueDate = capitalCall.CapitalCallDueDate;
+			model.ExistingInvestmentAmount = capitalCall.ExistingInvestmentAmount;
+			model.NewInvestmentAmount = capitalCall.NewInvestmentAmount;
+			model.FundId = capitalCall.FundID;
+			model.FundExpenseAmount = capitalCall.FundExpenses;
+			model.ManagementFees = capitalCall.ManagementFees;
+			if ((capitalCall.ManagementFees ?? 0) > 0) {
+				model.AddManagementFees = true;
+				model.FromDate = capitalCall.CapitalCallDate.Date;
+				model.ToDate = capitalCall.CapitalCallDueDate.AddDays(1).Date;
+			}
+			if ((capitalCall.FundExpenses ?? 0) > 0) {
+				model.AddFundExpenses = true;
+			}
+			NameValueCollection formValues = HttpWebRequestUtil.SetUpForm(model, string.Empty, string.Empty, new string[] { "CapitalCallLineItems" });
 
 			/*
-			if (capitalCall.CapitalCallLineItems.Count > 0) {
-				formValues.Add("InvestorCount", capitalCall.CapitalCallLineItems.Count.ToString());
-				int index = 0;
-				foreach (CapitalCallLineItem li in capitalCall.CapitalCallLineItems.ToList()) {
-					index++;
-					formValues = formValues.Combine(HttpWebRequestUtil.SetUpForm(li, index + "_", string.Empty));
-				}
-			}
-			 * */
+		   if (capitalCall.CapitalCallLineItems.Count > 0) {
+			   //formValues.Add("InvestorCount", capitalCall.CapitalCallLineItems.Count.ToString());
+			   int index = 0;
+			   foreach (CapitalCallLineItem li in capitalCall.CapitalCallLineItems.ToList()) {
+				   index++;
+				   //formValues = formValues.Combine(HttpWebRequestUtil.SetUpForm(li, index + "_", string.Empty));
+			   }
+		   }
+			 */
+
+		 
 
 			// Send the request 
 			//string url = HttpWebRequestUtil.GetUrl("CapitalCall/CreateManualCapitalCall");
