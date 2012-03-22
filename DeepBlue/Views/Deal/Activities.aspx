@@ -892,7 +892,7 @@
 									<%: Html.TextBox("ReconcileFundName", "SEARCH  FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:180px" })%>
 								</div>
 								<div class="cell" style="padding-left: 10px;">
-									<%: Html.TextBox("ReconcileUnderlyingFundName", "SEARCH UNDERLYING FUND", new { @id = "ReconcileUnderlyingFundName", @class = "wm", @style = "width:280px" })%>
+									<%: Html.TextBox("ReconcileUnderlyingFundName", "SEARCH UNDERLYING FUND", new { @id = "ReconcileUnderlyingFundName", @class = "wm", @style = "width:220px" })%>
 								</div>
 								<div class="cell" style="padding-left: 10px;width:250px;">
 									<%List<SelectListItem> options = new List<SelectListItem>();

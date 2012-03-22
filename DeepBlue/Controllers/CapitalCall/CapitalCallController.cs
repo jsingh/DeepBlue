@@ -124,7 +124,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 					// Check new investment amount and existing investment amount.
 
 					decimal investmentAmount = (capitalCall.NewInvestmentAmount ?? 0) + (capitalCall.ExistingInvestmentAmount ?? 0);
-					decimal capitalAmount = (capitalCall.CapitalAmountCalled) - (capitalCall.ManagementFees ?? 0) - (capitalCall.FundExpenses ?? 0);
+					decimal capitalAmount = capitalCall.CapitalAmountCalled - (capitalCall.ManagementFees ?? 0) - (capitalCall.FundExpenses ?? 0);
 
 					if (((decimal.Round(investmentAmount) == decimal.Round(capitalAmount)) == false)) {
 						ModelState.AddModelError("NewInvestmentAmount", "(New Investment Amount + Existing Investment Amount) should be equal to (Capital Amount - Management Fees - Fund Expenses).");
@@ -161,11 +161,12 @@ namespace DeepBlue.Controllers.CapitalCall {
 
 							// Calculate Capital Amount for investor fund
 
-							decimal remainingAmount = decimal.Subtract(capitalCall.CapitalAmountCalled, decimal.Add((capitalCall.ManagementFees ?? 0), (capitalCall.FundExpenses ?? 0)));
-
-							item.CapitalAmountCalled = decimal.Multiply(
-														decimal.Divide(investorFund.TotalCommitment, totalCommitment)
-														, capitalCall.CapitalAmountCalled);
+							item.CapitalAmountCalled = CalculateCapitalAmountCalled(investorFund.TotalCommitment,
+								totalCommitment,
+								nonManagingMemberTotalCommitment,
+								capitalCall.CapitalAmountCalled,
+								(capitalCall.ManagementFees ?? 0),
+								(DeepBlue.Models.Investor.Enums.InvestorType)investorFund.InvestorTypeId);
 
 
 							item.ExistingInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.ExistingInvestmentAmount;
@@ -212,6 +213,45 @@ namespace DeepBlue.Controllers.CapitalCall {
 				}
 			}
 			return View("Result", resultModel);
+		}
+
+		private static decimal CalculateCapitalAmountCalled(decimal memberCommitment,
+		decimal totalCommitment,
+		decimal nonManagingMemberCommitment,
+		decimal totalCapitalCall,
+		decimal managementFees, DeepBlue.Models.Investor.Enums.InvestorType investorType) {
+
+			decimal memberCommitmentAmount = 0;
+			decimal capitalCallAmount = 0;
+			decimal result = 0;
+
+			if (investorType == DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember) {
+
+				// Member commitment/Totalcommitment * (Total capital Call – ManagementFees)
+
+				memberCommitmentAmount = decimal.Divide(memberCommitment, totalCommitment);
+
+				capitalCallAmount = decimal.Subtract(totalCapitalCall, managementFees);
+
+				result = decimal.Multiply(memberCommitmentAmount, capitalCallAmount);
+
+			}
+			else {
+
+				// Member commitment / (sum of non managing member commitment ) * management fees
+
+				memberCommitmentAmount = decimal.Divide(memberCommitment, totalCommitment);
+
+				capitalCallAmount = decimal.Subtract(totalCapitalCall, managementFees);
+
+				result = decimal.Multiply(memberCommitmentAmount, capitalCallAmount);
+
+				memberCommitmentAmount = decimal.Divide(memberCommitment, nonManagingMemberCommitment);
+
+				result = decimal.Add(result, decimal.Multiply(memberCommitmentAmount, managementFees));
+			}
+
+			return result;
 		}
 
 		//
