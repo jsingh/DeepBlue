@@ -255,94 +255,113 @@ namespace DeepBlue.ImportData {
         }
 
         private static int? CreateManualCapitalDistribution(CookieCollection cookies, CapitalDistribution capitalDistribution, out string resp, out string formdata) {
-            int? distributionNumber = null;
+            int? capitalDistributionID = null;
             resp = string.Empty;
             formdata = string.Empty;
-            DeepBlue.Models.CapitalCall.CreateDistributionModel model = new DeepBlue.Models.CapitalCall.CreateDistributionModel();
-			model.CapitalDistributionDate = capitalDistribution.CapitalDistributionDate.Date;
-			model.CapitalDistributionDueDate = capitalDistribution.CapitalDistributionDueDate.Date;
-            model.FundId = capitalDistribution.FundID;
+			//DeepBlue.Models.CapitalCall.CreateDistributionModel model = new DeepBlue.Models.CapitalCall.CreateDistributionModel();
+			//model.CapitalDistributionDate = capitalDistribution.CapitalDistributionDate.Date;
+			//model.CapitalDistributionDueDate = capitalDistribution.CapitalDistributionDueDate.Date;
+			//model.FundId = capitalDistribution.FundID;
 
-            // initialize
-            model.CapitalReturn = model.PreferredReturn = model.PreferredCatchUp = model.ReturnFundExpenses = model.ReturnManagementFees = model.GPProfits = model.LPProfits = 0;
-            // Cost returned
-            if (capitalDistribution.CapitalReturn.HasValue) {
-                model.CapitalReturn = capitalDistribution.CapitalReturn;
-            }
-            // 
-            model.DistributionAmount = capitalDistribution.DistributionAmount;
-            DeepBlue.Models.CapitalCall.FundDetail fundDetail = FundImport.GetFundDetail(cookies, capitalDistribution.FundID);
-            if (fundDetail != null) {
-                model.DistributionNumber = fundDetail.DistributionNumber.Value.ToString();
-            }
+			//// initialize
+			//model.CapitalReturn = model.PreferredReturn = model.PreferredCatchUp = model.ReturnFundExpenses = model.ReturnManagementFees = model.GPProfits = model.LPProfits = 0;
+			//// Cost returned
+			//if (capitalDistribution.CapitalReturn.HasValue) {
+			//    model.CapitalReturn = capitalDistribution.CapitalReturn;
+			//}
+			//// 
+			//model.DistributionAmount = capitalDistribution.DistributionAmount;
+			//DeepBlue.Models.CapitalCall.FundDetail fundDetail = FundImport.GetFundDetail(cookies, capitalDistribution.FundID);
+			//if (fundDetail != null) {
+			//    model.DistributionNumber = fundDetail.DistributionNumber.Value.ToString();
+			//}
             
-            // Profits returned
-            if (capitalDistribution.PreferredReturn.HasValue) {
-                model.PreferredReturn = capitalDistribution.PreferredReturn;
-            }
-            if (capitalDistribution.ReturnFundExpenses.HasValue) {
-                model.ReturnFundExpenses = capitalDistribution.ReturnFundExpenses;
-            }
-            if (capitalDistribution.ReturnManagementFees.HasValue) {
-                model.ReturnManagementFees = capitalDistribution.ReturnManagementFees;
-            }
-            // the server does the distribution check. We need to make it pass
+			//// Profits returned
+			//if (capitalDistribution.PreferredReturn.HasValue) {
+			//    model.PreferredReturn = capitalDistribution.PreferredReturn;
+			//}
+			//if (capitalDistribution.ReturnFundExpenses.HasValue) {
+			//    model.ReturnFundExpenses = capitalDistribution.ReturnFundExpenses;
+			//}
+			//if (capitalDistribution.ReturnManagementFees.HasValue) {
+			//    model.ReturnManagementFees = capitalDistribution.ReturnManagementFees;
+			//}
+			//// the server does the distribution check. We need to make it pass
 
-            decimal distributionCheck = (model.CapitalReturn.Value + model.PreferredReturn.Value + model.PreferredCatchUp.Value + model.ReturnFundExpenses.Value + model.ReturnManagementFees.Value + model.GPProfits.Value + model.LPProfits.Value);
-            if (distributionCheck != model.DistributionAmount) {
-                model.CapitalReturn = model.CapitalReturn + (model.DistributionAmount - distributionCheck);
-            }
+			//decimal distributionCheck = (model.CapitalReturn.Value + model.PreferredReturn.Value + model.PreferredCatchUp.Value + model.ReturnFundExpenses.Value + model.ReturnManagementFees.Value + model.GPProfits.Value + model.LPProfits.Value);
+			//if (distributionCheck != model.DistributionAmount) {
+			//    model.CapitalReturn = model.CapitalReturn + (model.DistributionAmount - distributionCheck);
+			//}
 
-            // UI doesnt seem to ask for the following fields
-            //model.FundId;
-            //model.FundName;
-            //model.GPProfits = capitalDistribution.Profits;
-            //model.LPProfits;
-            //model.PreferredCatchUp;
-            //model.TotalDistribution;
-            //model.TotalProfit;
-            model.InvestorCount = capitalDistribution.CapitalDistributionLineItems.Count;
-            NameValueCollection formValues = HttpWebRequestUtil.SetUpForm(model, string.Empty, string.Empty, new string[] { "CapitalDistributionLineItems" });
+			//// UI doesnt seem to ask for the following fields
+			////model.FundId;
+			////model.FundName;
+			////model.GPProfits = capitalDistribution.Profits;
+			////model.LPProfits;
+			////model.PreferredCatchUp;
+			////model.TotalDistribution;
+			////model.TotalProfit;
+			//model.InvestorCount = capitalDistribution.CapitalDistributionLineItems.Count;
+            NameValueCollection formValues = HttpWebRequestUtil.SetUpForm(capitalDistribution, string.Empty, string.Empty, new string[] { "CapitalDistributionLineItems" });
 
-			/*
-            if (capitalDistribution.CapitalDistributionLineItems.Count > 0) {
-                int index = 0;
-                foreach (CapitalDistributionLineItem li in capitalDistribution.CapitalDistributionLineItems.ToList()) {
-                    index++;
-                    // li.Profits => GPProfits
-                    formValues.Add(index.ToString() + "_GPProfits", li.Profits.ToString());
-                    formValues = formValues.Combine(HttpWebRequestUtil.SetUpForm(li, index + "_", string.Empty));
-                }
-            }
-			* */
 
 			Util.Log("Capital Distribution FundID : " + capitalDistribution.FundID);
 
-            // Send the request 
-            // string url = HttpWebRequestUtil.GetUrl("CapitalCall/CreateManualDistribution");
-			string url = HttpWebRequestUtil.GetUrl("CapitalCall/CreateDistribution");
-            formdata = HttpWebRequestUtil.ToFormValue(formValues);
-            byte[] postData = System.Text.Encoding.ASCII.GetBytes(formdata);
-            HttpWebResponse response = HttpWebRequestUtil.SendRequest(url, postData, true, cookies);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK) {
-                using (Stream receiveStream = response.GetResponseStream()) {
-                    // Pipes the stream to a higher level stream reader with the required encoding format. 
-                    using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8)) {
-                        resp = readStream.ReadToEnd();
-                        distributionNumber = HttpWebRequestUtil.GetNewKeyFromResponse(resp);
-                        response.Close();
-                        readStream.Close();
-                    }
-                }
+			// Send the request 
+			string url = HttpWebRequestUtil.GetUrl("CapitalCall/ImportManualDistribution");
+			//string url = HttpWebRequestUtil.GetUrl("CapitalCall/CreateDistribution");
+			formdata = HttpWebRequestUtil.ToFormValue(formValues);
+			byte[] postData = System.Text.Encoding.ASCII.GetBytes(formdata);
+			HttpWebResponse response = HttpWebRequestUtil.SendRequest(url, postData, true, cookies);
+			if (response.StatusCode == System.Net.HttpStatusCode.OK) {
+				using (Stream receiveStream = response.GetResponseStream()) {
+					// Pipes the stream to a higher level stream reader with the required encoding format. 
+					using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8)) {
+						resp = readStream.ReadToEnd();
+						capitalDistributionID = HttpWebRequestUtil.GetNewKeyFromResponse(resp);
+						response.Close();
+						readStream.Close();
+					}
+				}
 
-            }
-			if (distributionNumber > 0) {
-				Util.Log("Capital Distribution Number : " + distributionNumber);
+			}
+			if (capitalDistributionID > 0) {
+				Util.Log("Capital Distribution ID : " + capitalDistributionID);
 			}
 			else {
 				Util.Log("Capital Distribution Error : " + resp);
 			}
-            return distributionNumber;
+
+			
+            if (capitalDistribution.CapitalDistributionLineItems.Count > 0 && capitalDistributionID > 0) {
+                int index = 0;
+				int? id = 0;
+                foreach (CapitalDistributionLineItem li in capitalDistribution.CapitalDistributionLineItems.ToList()) {
+					li.CapitalDistributionID = (capitalDistributionID ?? 0);
+                    index++;
+					formValues = HttpWebRequestUtil.SetUpForm(li, string.Empty, string.Empty);
+					url = HttpWebRequestUtil.GetUrl("CapitalCall/ImportManualDistributionLineItem");
+					formdata = HttpWebRequestUtil.ToFormValue(formValues);
+					postData = System.Text.Encoding.ASCII.GetBytes(formdata);
+					response = HttpWebRequestUtil.SendRequest(url, postData, true, cookies);
+					if (response.StatusCode == System.Net.HttpStatusCode.OK) {
+						using (Stream receiveStream = response.GetResponseStream()) {
+							// Pipes the stream to a higher level stream reader with the required encoding format. 
+							using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8)) {
+								resp = readStream.ReadToEnd();
+								id = HttpWebRequestUtil.GetNewKeyFromResponse(resp);
+								Util.Log("Capital Distribution Line Item ID : " + id);
+								response.Close();
+								readStream.Close();
+							}
+						}
+
+					}
+
+                }
+            }
+
+			return capitalDistributionID;
         }
 
         private static bool? IsCapitalDistributionAlreadyPresent(CapitalDistribution capitalDistribution) {

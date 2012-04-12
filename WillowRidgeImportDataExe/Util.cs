@@ -83,6 +83,22 @@ namespace DeepBlue.ImportData {
             Console.ResetColor();
         }
 
+		public static void WriteMissingUnderlyingFund(string error) {
+			using (TextWriter tw = new StreamWriter(Globals.ConsoleMissingUnderlyingFundFile, true)) {
+				tw.WriteLine(Environment.NewLine + error);
+				tw.Flush();
+				tw.Close();
+			}
+		}
+
+		public static void WriteSanityCheckFailed(string error) {
+			using (TextWriter tw = new StreamWriter(Globals.ConsoleSanityCheckFailedFile, true)) {
+				tw.WriteLine(Environment.NewLine + error);
+				tw.Flush();
+				tw.Close();
+			}
+		}
+
         public static void WriteWarning(string error) {
 			using (TextWriter tw = new StreamWriter(Globals.ConsoleWarningLogFile, true)) {
 				tw.WriteLine(Environment.NewLine + error);

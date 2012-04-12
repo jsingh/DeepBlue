@@ -53,7 +53,7 @@ namespace DeepBlue.ImportData {
             LogErrors(Errors);
             foreach (DeepBlue.Models.Entity.InvestorFund investorFund in investorFunds) {
                 string msg = string.Empty;
-                bool? investorFundAlreadyPresent = IsInvestorFundAlreadyPresent(investorFund.InvestorID, investorFund.FundID, investorFund.InvestorTypeId.Value, investorFund.TotalCommitment, out msg);
+                bool? investorFundAlreadyPresent = IsInvestorFundAlreadyPresent(investorFund.InvestorID, investorFund.FundID, investorFund.InvestorTypeID, investorFund.TotalCommitment, out msg);
                 if (investorFundAlreadyPresent.HasValue && !investorFundAlreadyPresent.Value) {
                     NameValueCollection formValues = new NameValueCollection();
                     TotalImportRecords++;
@@ -64,7 +64,7 @@ namespace DeepBlue.ImportData {
                             model.FundClosingId = fundClosingID.Value;
                             model.FundId = investorFund.FundID;
                             model.InvestorId = investorFund.InvestorID;
-                            model.InvestorTypeId = investorFund.InvestorTypeId.Value;
+                            model.InvestorTypeId = investorFund.InvestorTypeID;
                             model.TotalCommitment = investorFund.TotalCommitment;
 
                             formValues = formValues.Combine(HttpWebRequestUtil.SetUpForm(model, string.Empty, string.Empty, new string[] { "FundClosings", "InvestorTypes", "EditCommitmentAmountModel", "EditModel" }));
@@ -98,7 +98,7 @@ namespace DeepBlue.ImportData {
                         ImportErrors.Add(new KeyValuePair<DeepBlue.Models.Entity.InvestorFund, Exception>(investorFund, ex));
                     }
                 } else {
-                    string alreadyExistsMsg = string.Format("Investor already exists for InvestorId: {0}, FundId: {1}, CommitmentAmount: {2}, InvestorTypeId: {3}", investorFund.InvestorID, investorFund.FundID, investorFund.TotalCommitment, investorFund.InvestorTypeId);
+                    string alreadyExistsMsg = string.Format("Investor already exists for InvestorId: {0}, FundId: {1}, CommitmentAmount: {2}, InvestorTypeId: {3}", investorFund.InvestorID, investorFund.FundID, investorFund.TotalCommitment, investorFund.InvestorTypeID);
                     Util.WriteWarning(alreadyExistsMsg);
                     messageLog.AppendLine(alreadyExistsMsg);
                 }
@@ -198,7 +198,7 @@ namespace DeepBlue.ImportData {
                 Util.WriteError(err);
             }
             
-			investorFund.InvestorTypeId = !string.IsNullOrEmpty(blueInvestorFund.Designation) && blueInvestorFund.Designation.Contains("Managing") ? (int)Models.Investor.Enums.InvestorType.ManagingMember : (int)Models.Investor.Enums.InvestorType.NonManagingMember;
+			investorFund.InvestorTypeID = !string.IsNullOrEmpty(blueInvestorFund.Designation) && blueInvestorFund.Designation.Contains("Managing") ? (int)Models.Investor.Enums.InvestorType.ManagingMember : (int)Models.Investor.Enums.InvestorType.NonManagingMember;
             investorFund.TotalCommitment = blueInvestorFund.CommitmentAmount;
             investorFund.UnfundedAmount = blueInvestorFund.CommitmentAmount;
 

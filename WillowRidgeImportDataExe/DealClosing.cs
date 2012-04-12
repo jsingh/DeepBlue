@@ -174,6 +174,9 @@ namespace DeepBlue.ImportData {
 					if (uf.RecordDate.HasValue) {
 						uf.RecordDate = (uf.RecordDate ?? Convert.ToDateTime("01/01/1900")).ToLocalTime();
 					}
+					if (uf.EffectiveDate.HasValue) {
+						uf.EffectiveDate = (uf.EffectiveDate ?? Convert.ToDateTime("01/01/1900")).ToLocalTime();
+					}
 					uf.IsClose = true;
 					formValues = formValues.Combine(HttpWebRequestUtil.SetUpForm(uf, (++totalUFs) + "_", string.Empty));
 				}

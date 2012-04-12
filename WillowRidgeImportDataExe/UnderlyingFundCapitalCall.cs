@@ -80,7 +80,7 @@ namespace DeepBlue.ImportData {
 					}
 
 					// Do a Sanity Check
-					bool? alreadyExists = IsManualCapitalCallAlreadyCreated(capitalCall, out resp);
+					bool? alreadyExists = IsManualCapitalCallAlreadyCreated(cookies, capitalCall, out resp);
 					if (alreadyExists.HasValue && !alreadyExists.Value) {
 						if (SanityCheck(capitalCall, out resp)) {
 							CreateManualCapitalCall(cookies, capitalCall, out resp);
@@ -442,7 +442,43 @@ namespace DeepBlue.ImportData {
 			}
 		}
 
-		private static bool? IsManualCapitalCallAlreadyCreated(UnderlyingFundCapitalCall capitalCall, out string resp) {
+		private static object FindUnderlyingFundCapitalCall(CookieCollection cookies, UnderlyingFundCapitalCall capitalCall) {
+			string resp = string.Empty;
+			object ufCD = null;
+			// Send the request 
+			string url = HttpWebRequestUtil.GetUrl("Deal/FindUnderlyingFundCapitalCall");
+			url += "?fundID=" + capitalCall.FundID + "&amount=" + capitalCall.Amount + "&noticeDate=" + capitalCall.NoticeDate + "&underlyingFundID=" + capitalCall.UnderlyingFundID;
+			HttpWebResponse response = HttpWebRequestUtil.SendRequest(url, null, false, cookies, false, HttpWebRequestUtil.JsonContentType);
+			if (response.StatusCode == System.Net.HttpStatusCode.OK) {
+				using (Stream receiveStream = response.GetResponseStream()) {
+					// Pipes the stream to a higher level stream reader with the required encoding format. 
+					using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8)) {
+						resp = readStream.ReadToEnd();
+						if (!string.IsNullOrEmpty(resp)) {
+							JavaScriptSerializer js = new JavaScriptSerializer();
+							ufCD = (object)js.Deserialize(resp, typeof(object));
+						}
+						else {
+						}
+						response.Close();
+						readStream.Close();
+					}
+				}
+			}
+			return ufCD;
+		}
+
+		private static bool? IsManualCapitalCallAlreadyCreated(CookieCollection cookies, UnderlyingFundCapitalCall capitalCall, out string resp) {
+			bool? alreadyExists = null;
+			if (FindUnderlyingFundCapitalCall(cookies, capitalCall) != null) {
+				alreadyExists = true;
+			}
+			else {
+				alreadyExists = false;
+			}
+			resp = string.Empty;
+			return alreadyExists;
+			/*
 			bool? alreadyExists = null;
 			resp = string.Empty;
 			ReconcileSearchModel model = new ReconcileSearchModel();
@@ -485,6 +521,7 @@ namespace DeepBlue.ImportData {
 				}
 			}
 			return alreadyExists;
+			 * */
 		}
 		private static Hashtable _fundNoToFundName = new Hashtable();
 		private static string GetFundName(string fundNo) {

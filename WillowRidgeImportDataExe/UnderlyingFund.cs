@@ -428,7 +428,7 @@ namespace DeepBlue.ImportData {
             RecordsConvertedSuccessfully = 0;
             //List<DeepBlue.Models.Entity.UnderlyingFund> dbFunds = new List<DeepBlue.Models.Entity.UnderlyingFund>();
             using (BlueEntities context = new BlueEntities()) {
-                List<C7_10tblGPPaymentInstructions> uFunds = context.C7_10tblGPPaymentInstructions.Where(x => x.FundType != "Direct").ToList();
+                List<C7_10tblGPPaymentInstructions> uFunds = context.C7_10tblGPPaymentInstructions.ToList(); //.Where(x => x.FundType != "Direct").ToList();
                 foreach (C7_10tblGPPaymentInstructions uf in uFunds) {
                     try {
                         TotalConversionRecords++;

@@ -38,6 +38,9 @@ namespace DeepBlue.ImportData {
 		public static string ConsoleWarningLogFile = string.Empty;
 		public static string ConsoleSuccessLogFile = string.Empty;
 
+		public static string ConsoleMissingUnderlyingFundFile = string.Empty;
+		public static string ConsoleSanityCheckFailedFile = string.Empty;
+
 	 	public static string MessageFile = string.Empty;
 		public static string DefaultString = "Data Conversion from Blue";
 		public static string DefaultStringValue = "Data not found";
@@ -85,6 +88,9 @@ namespace DeepBlue.ImportData {
 			ConsoleWarningLogFile = "ConsoleWarningLogFile_" + LogFile;
 			ConsoleSuccessLogFile = "ConsoleSuccessLogFile_" + LogFile;
 
+			ConsoleMissingUnderlyingFundFile = "ConsoleMissingUnderlyingFundFile_" + LogFile;
+			ConsoleSanityCheckFailedFile = "ConsoleSanityCheckFailedFile_" + LogFile;
+
 			LogFile = directory + "/" + LogFile;
 			LogFile = LogFile.Replace("file:///", string.Empty);
 
@@ -97,6 +103,12 @@ namespace DeepBlue.ImportData {
 			ConsoleSuccessLogFile = directory + "/" + ConsoleSuccessLogFile;
 			ConsoleSuccessLogFile = ConsoleSuccessLogFile.Replace("file:///", string.Empty);
 
+			ConsoleMissingUnderlyingFundFile = directory + "/" + ConsoleMissingUnderlyingFundFile;
+			ConsoleMissingUnderlyingFundFile = ConsoleMissingUnderlyingFundFile.Replace("file:///", string.Empty);
+
+			ConsoleSanityCheckFailedFile = directory + "/" + ConsoleSanityCheckFailedFile;
+			ConsoleSanityCheckFailedFile = ConsoleSanityCheckFailedFile.Replace("file:///", string.Empty);
+
 			BaseUrl = ConfigurationManager.AppSettings["BaseUrl"];
 
 			string[] creds = ConfigurationManager.AppSettings["LoginCredentials"].Split(',');
@@ -104,7 +116,6 @@ namespace DeepBlue.ImportData {
 			string password = creds[1].Trim();
 			string entitycode = creds[2].Trim();
 			CookieContainer = new CookieCollection();
-
 
 			HttpWebRequestUtil.LoginPortal(username, password, entitycode, CookieContainer);
 

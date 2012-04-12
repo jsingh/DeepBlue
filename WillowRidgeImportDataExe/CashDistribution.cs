@@ -75,7 +75,7 @@ namespace DeepBlue.ImportData {
 					}
 
 					// Do a Sanity Check
-					bool? alreadyExists = IsManualCashDistributionAlreadyCreated(cashDist, out resp);
+					bool? alreadyExists = IsManualCashDistributionAlreadyCreated(cookies, cashDist, out resp);
 					if (alreadyExists.HasValue && !alreadyExists.Value) {
 						if (SanityCheck(cashDist, out resp)) {
 							CreateManualCashDistribution(cookies, cashDist, out resp);
@@ -146,6 +146,7 @@ namespace DeepBlue.ImportData {
 			else {
 				success = false;
 				resp = "Sanity check failed for UF: " + ufcd.UnderlyingFundID + " No UnderlyingFundCashDistributionModel found";
+				Util.WriteSanityCheckFailed(ufcd.UnderlyingFundID.ToString()+",");
 			}
 			return success;
 		}
@@ -171,14 +172,19 @@ namespace DeepBlue.ImportData {
 				// C1_20tblCallsToAmberbrook has deals also in the same table. We will group by (FundNo, Fund, NoticeDate) to get unique Capital Call (which should correspond to UnderlyingFundCapitalCall).
 				var ufCashDists = from blueCC in context.C1_10tblDistToAmberbrookCash
 								  group blueCC by
-								  new { blueCC.AmberbrookFundNo, blueCC.Fund, blueCC.NoticeDate } into g
+								  new { blueCC.AmberbrookFundNo, blueCC.Fund, blueCC.NoticeDate, blueCC.Proceeds } into g
 								  select g;
 				TotalImportRecords = 0;
 				RecordsImportedSuccessfully = 0;
 				messageLog.Append("");
 				foreach (var ufCD in ufCashDists) {
 					TotalImportRecords++;
-					List<C1_10tblDistToAmberbrookCash> blueCashDistsByDeal = context.C1_10tblDistToAmberbrookCash.Where(x => x.NoticeDate == ufCD.Key.NoticeDate).Where(x => x.Fund == ufCD.Key.Fund).Where(x => x.AmberbrookFundNo == ufCD.Key.AmberbrookFundNo).ToList();
+					List<C1_10tblDistToAmberbrookCash> blueCashDistsByDeal = context.C1_10tblDistToAmberbrookCash
+						.Where(x => x.NoticeDate == ufCD.Key.NoticeDate)
+						.Where(x => x.Fund == ufCD.Key.Fund)
+						.Where(x => x.AmberbrookFundNo == ufCD.Key.AmberbrookFundNo)
+						.Where(x => x.Proceeds == ufCD.Key.Proceeds)
+						.ToList();
 					string msg = string.Format("#{0} Getting cash dist .AmbFund#: {1}, Fund: {2}, NoticeDate: {3}, Total deals in this distribution:{4} ", TotalImportRecords, ufCD.Key.AmberbrookFundNo, ufCD.Key.Fund, ufCD.Key.NoticeDate, blueCashDistsByDeal.Count);
 					Util.Log(msg);
 					messageLog.Append(msg);
@@ -280,6 +286,7 @@ namespace DeepBlue.ImportData {
 			}
 			else {
 				resp = "Unable to find Underlying fund: " + blueCashDist.Fund;
+				Util.WriteMissingUnderlyingFund(blueCashDist.Fund);
 				Util.Log(resp);
 				return null;
 			}
@@ -433,8 +440,43 @@ namespace DeepBlue.ImportData {
 			}
 		}
 
-		private static bool? IsManualCashDistributionAlreadyCreated(UnderlyingFundCashDistribution cashDist, out string resp) {
+		private static object FindUnderlyingFundCashDistribution(CookieCollection cookies, UnderlyingFundCashDistribution cashDist) {
+			string resp = string.Empty;
+			object ufCD = null;
+			// Send the request 
+			string url = HttpWebRequestUtil.GetUrl("Deal/FindUnderlyingFundCashDistribution");
+			url += "?fundID=" + cashDist.FundID + "&amount=" + cashDist.Amount + "&noticeDate=" + cashDist.NoticeDate + "&underlyingFundID=" + cashDist.UnderlyingFundID;
+			HttpWebResponse response = HttpWebRequestUtil.SendRequest(url, null, false, cookies, false, HttpWebRequestUtil.JsonContentType);
+			if (response.StatusCode == System.Net.HttpStatusCode.OK) {
+				using (Stream receiveStream = response.GetResponseStream()) {
+					// Pipes the stream to a higher level stream reader with the required encoding format. 
+					using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8)) {
+						resp = readStream.ReadToEnd();
+						if (!string.IsNullOrEmpty(resp)) {
+							JavaScriptSerializer js = new JavaScriptSerializer();
+							ufCD = (object)js.Deserialize(resp, typeof(object));
+						}
+						else {
+						}
+						response.Close();
+						readStream.Close();
+					}
+				}
+			}
+			return ufCD;
+		}
+
+		private static bool? IsManualCashDistributionAlreadyCreated(CookieCollection cookies, UnderlyingFundCashDistribution cashDist, out string resp) {
 			bool? alreadyExists = null;
+			if (FindUnderlyingFundCashDistribution(cookies, cashDist) != null) {
+				alreadyExists = true;
+			}
+			else {
+				alreadyExists = false;
+			}
+			resp = string.Empty;
+			return alreadyExists;
+			/*
 			resp = string.Empty;
 			ReconcileSearchModel model = new ReconcileSearchModel();
 			// make the search criteria between start date and end date
@@ -476,6 +518,7 @@ namespace DeepBlue.ImportData {
 				}
 			}
 			return alreadyExists;
+			*/
 		}
 
 		public class ReconcileResult {

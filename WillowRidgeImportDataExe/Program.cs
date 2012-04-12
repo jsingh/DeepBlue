@@ -20,7 +20,7 @@ namespace DeepBlue.ImportData {
 		static void Main(string[] args) {
 
 			try {
-				
+
 				//// 1. Investor Import
 				InvestorImport.ImportInvestors(Globals.CookieContainer);
 
@@ -59,7 +59,7 @@ namespace DeepBlue.ImportData {
 
 				//11. Cash Distributions
 				CashDistributionImport.ImportCashDistribution(Globals.CookieContainer);
-
+				 
 				Console.WriteLine("Press any key to continue........");
 				Console.ReadLine();
 

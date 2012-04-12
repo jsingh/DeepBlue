@@ -806,6 +806,9 @@ namespace DeepBlue.ImportData {
 				model.CommittedAmount = blueAsset.CapitalCommitment;
 			}
 
+			if(blueAsset.EffectiveDate.HasValue)
+				model.EffectiveDate = blueAsset.EffectiveDate;
+
 			if (blueAsset.RecordDate.HasValue)
 				model.RecordDate = blueAsset.RecordDate.Value.Date;
 
