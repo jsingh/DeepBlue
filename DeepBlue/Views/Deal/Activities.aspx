@@ -468,6 +468,9 @@
 											<th class="lalign" style="width: 12%">
 												Update Date
 											</th>
+											<th class="lalign" style="width: 12%">
+												Effective Date
+											</th>
 											<th class="ralign">
 											</th>
 										</tr>
@@ -1130,6 +1133,10 @@
 		<%: Html.Label("Update Date")%></div>
 	<div class="editor-field">
 		<%: Html.DropDownList("UpdateDate", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+	<div class="editor-label">
+		<%: Html.Label("Effective Date")%></div>
+	<div class="editor-field">
+		<%: Html.DropDownList("EffectiveDate", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
 	<div class="editor-label">
 		<%: Html.Image("Save_active.png", new { @onclick = "javascript:importExcel.importUnderlyingFund('frmImportUFV',0);" })%></div>
 	<div class="editor-field">

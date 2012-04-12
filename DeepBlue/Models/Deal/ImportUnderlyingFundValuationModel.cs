@@ -22,5 +22,8 @@ namespace DeepBlue.Models.Deal {
 		[Required(ErrorMessage = "Update Date is required")]
 		public string UpdateDate { get; set; }
 
+		[Required(ErrorMessage = "Effective Date is required")]
+		public string EffectiveDate { get; set; }
+
 	}
 }

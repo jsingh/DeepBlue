@@ -473,6 +473,7 @@
 					<%: Html.Hidden("${index}_DealId","${item.DealId}")%>
 					<%: Html.Hidden("${index}_FundId","${item.FundId}")%>
 					<%: Html.Hidden("${index}_RecordDate","${formatDate(item.RecordDate)}")%>
+					<%: Html.Hidden("${index}_EffectiveDate","${formatDate(item.EffectiveDate)}")%>
 					<%: Html.Hidden("${index}_Percent","${item.Percent}")%>
 					<%: Html.Hidden("${index}_UnderlyingFundId", "${item.UnderlyingFundId}", new { @id = "UnderlyingFundId" })%>
 					{{if IsFinalClose==true}}

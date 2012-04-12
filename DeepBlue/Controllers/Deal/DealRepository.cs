@@ -393,7 +393,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		private IQueryable<DealUnderlyingFundModel> GetDealUnderlyingFundModel(DeepBlueEntities context, IQueryable<DealUnderlyingFund> dealUnderlyingFunds) {
 			return (from fund in dealUnderlyingFunds
-					join fundNAV in context.UnderlyingFundNAVsTable on new { fund.UnderlyingFundID, fund.Deal.FundID } equals new { fundNAV.UnderlyingFundID, fundNAV.FundID } into underlyingFundNAVS
+					join fundNAV in context.UnderlyingFundNAVsTable on new { fund.UnderlyingFundID, fund.Deal.FundID, fund.EffectiveDate } equals new { fundNAV.UnderlyingFundID, fundNAV.FundID, fundNAV.EffectiveDate } into underlyingFundNAVS
 					from fundNAV in underlyingFundNAVS.DefaultIfEmpty()
 					select new DealUnderlyingFundModel {
 						CommittedAmount = fund.CommittedAmount,
@@ -413,7 +413,8 @@ namespace DeepBlue.Controllers.Deal {
 						AdjustedCost = fund.AdjustedCost,
 						NetPurchasePrice = fund.NetPurchasePrice,
 						FundNAV = underlyingFundNAVS.FirstOrDefault().FundNAV,
-						IsClose = ((fund.DealClosingID ?? 0) > 0)
+						IsClose = ((fund.DealClosingID ?? 0) > 0),
+						EffectiveDate = fund.EffectiveDate
 					});
 		}
 
@@ -1295,6 +1296,17 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public object FindUnderlyingFundCashDistribution(int fundID, decimal amount, DateTime noticeDate, int underlyingFundID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from cashDistribution in context.UnderlyingFundCashDistributionsTable
+						where cashDistribution.FundID == fundID
+						&& cashDistribution.Amount == amount
+						&& EntityFunctions.TruncateTime(cashDistribution.NoticeDate) == noticeDate
+						&& cashDistribution.UnderlyingFundID == underlyingFundID
+						select new { cashDistribution.UnderlyingFundCashDistributionID }).FirstOrDefault();
+			}
+		}
+
 		public IEnumerable<ErrorInfo> SaveUnderlyingFundCashDistribution(UnderlyingFundCashDistribution underlyingFundCashDistribution) {
 			return underlyingFundCashDistribution.Save();
 		}
@@ -1461,7 +1473,16 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-
+		public object FindUnderlyingFundCapitalCall(int fundID, decimal amount, DateTime noticeDate, int underlyingFundID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from capitalCall in context.UnderlyingFundCapitalCallsTable
+						where capitalCall.FundID == fundID
+						&& capitalCall.Amount == amount
+						&& EntityFunctions.TruncateTime(capitalCall.NoticeDate) == noticeDate
+						&& capitalCall.UnderlyingFundID == underlyingFundID
+						select new { capitalCall.UnderlyingFundCapitalCallID }).FirstOrDefault();
+			}
+		}
 
 		public IEnumerable<ErrorInfo> SaveUnderlyingFundCapitalCall(UnderlyingFundCapitalCall underlyingFundCapitalCall) {
 			return underlyingFundCapitalCall.Save();
@@ -1754,12 +1775,13 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public UnderlyingFundValuationModel FindUnderlyingFundValuationModel(int underlyingFundId, int fundId) {
+		public UnderlyingFundValuationModel FindUnderlyingFundValuationModel(int underlyingFundId, int underlyingFundNAVId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<UnderlyingFundValuationModel> query = GetUnderlyingFundValuationModel(context, underlyingFundId);
-				return (from valuation in query
-						where valuation.FundId == fundId
-						select valuation).SingleOrDefault();
+				query = (from valuation in query
+						where valuation.UnderlyingFundNAVId == underlyingFundNAVId
+						select valuation);
+				return query.FirstOrDefault();
 			}
 		}
 
@@ -1779,9 +1801,15 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public UnderlyingFundNAV FindUnderlyingFundNAV(int underlyingFundId, int fundId) {
+		public UnderlyingFundNAV FindUnderlyingFundNAV(int underlyingFundId, int fundId, DateTime? effectiveDate) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.UnderlyingFundNAVsTable.Where(fundNAV => fundNAV.UnderlyingFundID == underlyingFundId && fundNAV.FundID == fundId).SingleOrDefault();
+			var query = context.UnderlyingFundNAVsTable.Where(fundNAV => fundNAV.UnderlyingFundID == underlyingFundId 
+					&& fundNAV.FundID == fundId 
+					);
+				if(effectiveDate.HasValue){
+					query = query.Where(ufv => EntityFunctions.TruncateTime(ufv.EffectiveDate) == effectiveDate);
+				}
+				return query.FirstOrDefault(); 
 			}
 		}
 
@@ -1832,6 +1860,7 @@ namespace DeepBlue.Controllers.Deal {
 							 UnderlyingFundName = underlyingFund.FundName,
 							 FundNAV = (underlyingFundNAV != null ? underlyingFundNAV.FundNAV : 0),
 							 FundNAVDate = (underlyingFundNAV != null ? underlyingFundNAV.FundNAVDate : DateTime.MinValue),
+							 EffectiveDate = (underlyingFundNAV != null ? underlyingFundNAV.EffectiveDate : DateTime.MinValue),
 							 TotalCapitalCall = (from cc in context.UnderlyingFundCapitalCallsTable
 												 where cc.UnderlyingFundID == underlyingFund.UnderlyingtFundID
 												 && cc.FundID == fund.FundID

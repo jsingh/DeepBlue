@@ -178,12 +178,7 @@ namespace DeepBlue.Controllers.Deal {
 					deal = new Models.Entity.Deal();
 					deal.CreatedBy = Authentication.CurrentUser.UserID;
 					deal.CreatedDate = DateTime.Now;
-					if (model.DealNumber <= 0) {
-						deal.DealNumber = DealRepository.GetMaxDealNumber(model.FundId);
-					}
-					else {
-						deal.DealNumber = model.DealNumber;
-					}
+					deal.DealNumber = DealRepository.GetMaxDealNumber(model.FundId);
 				}
 
 				deal.EntityID = Authentication.CurrentEntity.EntityID;
@@ -652,6 +647,7 @@ namespace DeepBlue.Controllers.Deal {
 			dealUnderlyingFund.RecordDate = model.RecordDate;
 			dealUnderlyingFund.UnderlyingFundID = model.UnderlyingFundId;
 			dealUnderlyingFund.UnfundedAmount = model.UnfundedAmount;
+			dealUnderlyingFund.EffectiveDate = model.EffectiveDate;
 
 			dealUnderlyingFund.NetPurchasePrice = (dealUnderlyingFund.GrossPurchasePrice ?? 0) + (dealUnderlyingFund.PostRecordDateCapitalCall ?? 0) - (dealUnderlyingFund.PostRecordDateDistribution ?? 0);
 			dealUnderlyingFund.AdjustedCost = (dealUnderlyingFund.ReassignedGPP ?? 0) + (dealUnderlyingFund.PostRecordDateCapitalCall ?? 0) - (dealUnderlyingFund.PostRecordDateDistribution ?? 0);
@@ -661,7 +657,7 @@ namespace DeepBlue.Controllers.Deal {
 			if (errorInfo == null) {
 				if ((model.FundNAV ?? 0) > 0) {
 					// Check the user changes the fund navigation.
-					UnderlyingFundNAV underlyingFundNAV = DealRepository.FindUnderlyingFundNAV(model.UnderlyingFundId, model.FundId);
+					UnderlyingFundNAV underlyingFundNAV = DealRepository.FindUnderlyingFundNAV(model.UnderlyingFundId, model.FundId, model.EffectiveDate);
 					bool isCreateFundNAV = false;
 					if (underlyingFundNAV == null)
 						isCreateFundNAV = true;		// Create new underlying fund valuation.
@@ -669,7 +665,7 @@ namespace DeepBlue.Controllers.Deal {
 						isCreateFundNAV = true; 	// If the user changes the fund navigation then update underlying fund valuation.
 
 					if (isCreateFundNAV)
-						CreateUnderlyingFundValuation(dealUnderlyingFund.UnderlyingFundID, model.FundId, (model.FundNAV ?? 0), DateTime.Now, out errorInfo);
+						CreateUnderlyingFundValuation(dealUnderlyingFund.UnderlyingFundID, model.FundId, (model.FundNAV ?? 0), DateTime.Now, model.EffectiveDate, out errorInfo);
 				}
 			}
 			return errorInfo;
@@ -2112,6 +2108,13 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		//
+		// GET: /Deal/FindUnderlyingFundCashDistribution
+		[HttpGet]
+		public JsonResult FindUnderlyingFundCashDistribution(int fundID, decimal amount, DateTime noticeDate, int underlyingFundID) {
+			return Json(DealRepository.FindUnderlyingFundCashDistribution(fundID, amount, noticeDate, underlyingFundID), JsonRequestBehavior.AllowGet);
+		}
+
+		//
 		// GET: /Deal/UnderlyingFundCashDistributionList
 		[HttpGet]
 		public JsonResult UnderlyingFundCashDistributionList(int underlyingFundId) {
@@ -2292,6 +2295,13 @@ namespace DeepBlue.Controllers.Deal {
 				}
 			}
 			return View("Result", resultModel);
+		}
+
+		//
+		// GET: /Deal/FindUnderlyingFundCapitalCall
+		[HttpGet]
+		public JsonResult FindUnderlyingFundCapitalCall(int fundID, decimal amount, DateTime noticeDate, int underlyingFundID) {
+			return Json(DealRepository.FindUnderlyingFundCapitalCall(fundID, amount, noticeDate, underlyingFundID), JsonRequestBehavior.AllowGet);
 		}
 
 		private IEnumerable<ErrorInfo> SaveUnderlyingFundCapitalCall(UnderlyingFundCapitalCallModel model, FormCollection collection) {
@@ -2643,8 +2653,8 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/FindUnderlyingFundValuation
 		[HttpGet]
-		public JsonResult FindUnderlyingFundValuation(int underlyingFundId, int fundId) {
-			UnderlyingFundValuationModel model = DealRepository.FindUnderlyingFundValuationModel(underlyingFundId, fundId);
+		public JsonResult FindUnderlyingFundValuation(int underlyingFundId,int underlyingFundNAVId) {
+			UnderlyingFundValuationModel model = DealRepository.FindUnderlyingFundValuationModel(underlyingFundId, underlyingFundNAVId);
 			if (model == null) {
 				model = new UnderlyingFundValuationModel();
 			}
@@ -2660,7 +2670,7 @@ namespace DeepBlue.Controllers.Deal {
 			ResultModel resultModel = new ResultModel();
 			if (ModelState.IsValid) {
 				IEnumerable<ErrorInfo> errorInfo;
-				UnderlyingFundNAV underlyingFundNAV = CreateUnderlyingFundValuation(model.UnderlyingFundId, model.FundId, (model.UpdateNAV ?? 0), model.UpdateDate, out errorInfo);
+				UnderlyingFundNAV underlyingFundNAV = CreateUnderlyingFundValuation(model.UnderlyingFundId, model.FundId, (model.UpdateNAV ?? 0), model.UpdateDate, model.EffectiveDate, out errorInfo);
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 				if (string.IsNullOrEmpty(resultModel.Result)) {
 					resultModel.Result = "True||" + underlyingFundNAV.UnderlyingFundNAVID + "||" + underlyingFundNAV.FundID;
@@ -2682,13 +2692,15 @@ namespace DeepBlue.Controllers.Deal {
 																int fundId,
 																decimal fundNAV,
 																DateTime fundNAVDate,
+																DateTime? effectiveDate,
 																out IEnumerable<ErrorInfo> errorInfo) {
 
 			// Attempt to create deal underlying fund valuation.
 
-			UnderlyingFundNAV underlyingFundNAV = DealRepository.FindUnderlyingFundNAV(underlyingFundId, fundId);
+			UnderlyingFundNAV underlyingFundNAV = DealRepository.FindUnderlyingFundNAV(underlyingFundId, fundId, effectiveDate);
 			decimal existingFundNAV = 0;
 			DateTime existingFundNAVDate = Convert.ToDateTime("01/01/1900");
+			//bool isExisting = false;
 			if (underlyingFundNAV == null) {
 				underlyingFundNAV = new UnderlyingFundNAV();
 				underlyingFundNAV.CreatedBy = Authentication.CurrentUser.UserID;
@@ -2697,11 +2709,13 @@ namespace DeepBlue.Controllers.Deal {
 			else {
 				existingFundNAV = underlyingFundNAV.FundNAV ?? 0;
 				existingFundNAVDate = underlyingFundNAV.FundNAVDate;
+				//isExisting = true;
 			}
 			underlyingFundNAV.UnderlyingFundID = underlyingFundId;
 			underlyingFundNAV.FundID = fundId;
 			underlyingFundNAV.FundNAV = fundNAV;
 			underlyingFundNAV.FundNAVDate = fundNAVDate;
+			underlyingFundNAV.EffectiveDate = effectiveDate;
 			underlyingFundNAV.LastUpdatedBy = Authentication.CurrentUser.UserID;
 			underlyingFundNAV.LastUpdatedDate = DateTime.Now;
 			errorInfo = DealRepository.SaveUnderlyingFundNAV(underlyingFundNAV);
@@ -4322,6 +4336,7 @@ namespace DeepBlue.Controllers.Deal {
 					string amberbrookFundName = string.Empty;
 					decimal updateNAV;
 					DateTime updateDate;
+					DateTime effectiveDate;
 					int? underlyingFundId;
 					int? fundId;
 					IEnumerable<ErrorInfo> errorInfo;
@@ -4330,12 +4345,13 @@ namespace DeepBlue.Controllers.Deal {
 						amberbrookFundName = Convert.ToString(row[model.AmberbrookFund]);
 						decimal.TryParse(Convert.ToString(row[model.UpdateNAV]), out updateNAV);
 						DateTime.TryParse(Convert.ToString(row[model.UpdateDate]), out updateDate);
+						DateTime.TryParse(Convert.ToString(row[model.EffectiveDate]), out effectiveDate);
 						if (string.IsNullOrEmpty(amberbrookFundName) == false
 							&& string.IsNullOrEmpty(underlyingFundName) == false) {
 							underlyingFundId = DealRepository.FindUnderlyingFundID(underlyingFundName);
 							fundId = DealRepository.FindFundID(amberbrookFundName);
 							if (underlyingFundId > 0 && fundId > 0) {
-								CreateUnderlyingFundValuation((underlyingFundId ?? 0), (fundId ?? 0), updateNAV, updateDate, out errorInfo);
+								CreateUnderlyingFundValuation((underlyingFundId ?? 0), (fundId ?? 0), updateNAV, updateDate, effectiveDate, out errorInfo);
 							}
 						}
 					}

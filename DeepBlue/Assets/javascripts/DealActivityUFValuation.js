@@ -1,7 +1,7 @@
 ﻿dealActivity.findUFV=function (fundid,id) {
 	var ufid=dealActivity.getUFVUnderlyingFund();
 	var dt=new Date();
-	var url="/Deal/FindUnderlyingFundValuation/?underlyingFundId="+ufid+"&fundId="+fundid+"&t="+dt.getTime();
+	var url="/Deal/FindUnderlyingFundValuation/?underlyingFundId="+ufid+"&underlyingFundNAVId="+id+"&t="+dt.getTime();
 	$("#UFVLoading").html(jHelper.loadingHTML())
 	$.getJSON(url,function (data) {
 		$("#UFVLoading").empty();
@@ -86,6 +86,6 @@ dealActivity.setUFVUnderlyingFund=function (id,name) {
 dealActivity.getUFVUnderlyingFund=function (id) {
 	return parseInt($("#UFVUnderlyingFundId").val());
 };
-dealActivity.importUFV=function(){
+dealActivity.importUFV=function () {
 	$("#ExcelImport").dialog("open");
 };

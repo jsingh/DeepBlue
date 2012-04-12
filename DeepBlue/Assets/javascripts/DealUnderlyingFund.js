@@ -66,7 +66,8 @@ deal.applyUFAutocomplete=function (tr) {
 			underlyingFundId.val(ui.item.id);
 			deal.FindFundNAV(ui.item.id,tr);
 		}
-	,appendTo: "body",delay: 300
+		,appendTo: "body"
+		,delay: 300
 	});
 };
 deal.deleteUnderlyingFund=function (id,img) {

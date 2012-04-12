@@ -1,0 +1,463 @@
+﻿#DealMain {
+	float: left;
+}
+.cell {
+	width: 180px;
+	float: left;
+	height: 25px;
+	line-height: 25px;
+	margin-right: 10px;
+}
+.cell a {
+	color: Black;
+}
+.auto {
+	width: auto;
+}
+.fieldbox {
+	clear: both;
+	margin: 20px 0 20px 0;
+	float: left;
+	width: 100%;
+	clear: both;
+	display: none;
+}
+.rdo input {
+	width: auto;
+}
+.checkbox, .rdo input {
+	border: 0px;
+	margin-top: 2px;
+}
+.editor-field {
+	width: 180px;
+}
+h5 {
+	font-size: 16px;
+	font-weight: bold;
+}
+.expandbtn {
+	cursor: pointer;
+	float: left;
+	width: auto;
+	padding:0;
+	margin:0;
+	width: 100%;
+}
+
+#DealDeail {
+	float: left;
+}
+h4 {
+	font-size: 16px;
+	font-weight: normal;
+	text-align: left;
+}
+h4 a {
+	text-decoration: underline;
+	color: #558EE3;
+	white-space: nowrap;
+}
+.fundname {
+	width: 200px;
+	overflow: hidden;
+	float: left;
+}
+.hide {
+	display: none;
+}
+.show {
+	display: inline-block;
+}
+.seefull {
+	clear: both;
+	float: right;
+	color: #fff;
+	font-size: 12px;
+	margin-top: -5px;
+}
+.seefull a {
+	color: #fff;
+}
+.auto-width {
+	width: auto;
+}
+.checkbox input {
+	border: 0px;
+}
+.make {
+	font-size: 12px;
+	margin-left: 50px;
+	color: #4E98BF;
+	text-decoration: none;
+}
+.makenew-header {
+	float: left;
+	padding-top: 10px;
+	display: none;
+}
+.right-search {
+	float: right;
+	margin: 5px 0 5px 0;
+}
+.left-search {
+	float: left;
+	margin: 5px 0 5px 0;
+	padding-top: 10px;
+}
+.blue {
+	color: Blue;
+}
+.dealdetail {
+	width: 97%;
+	margin: 0 auto;
+}
+
+.section {
+	margin: 5px 0px;
+	float: left;
+	width: 100%;
+}
+#DealMain .content {
+	clear: both;
+	float: left;
+	width: 100%;
+}
+.expandheader, .recon-expandheader {
+	cursor: pointer;
+	float: left;
+	width: 100%;
+}
+.expandheader .expandimg, .recon-expandheader .expandimg {
+	background: url("../images/plus.png") no-repeat scroll left center transparent;
+	color: #006059;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 8px 0 8px 20px;
+	white-space: nowrap;
+	text-transform: uppercase;
+	margin-left: 15px;
+}
+.expandsel {
+	color: #F7F7F7;
+	font-size: 18px;
+	margin-top: 35px;
+	width: 100%;
+}
+.expandheader #title, .recon-expandheader #title {
+	display: none;
+}
+.expandimg {
+	float: left;
+}
+.expandtitle {
+	text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
+}
+.expandtitle, .recon-expandtitle {
+	float: left;
+	width: auto;
+	white-space: nowrap;
+	color: white;
+	margin-right: 20px;
+	margin-left: 15px;
+}
+.expandaddbtn {
+	float: left;
+	padding-left: 30px;
+	display: none;
+	width: auto;
+	height: 31px;
+	margin: 5px 0 0 70px;
+	line-height: 33px;
+}
+.expandaddbtn a {
+	color: #000;
+	font-size: 11px;
+	font-weight: bold;
+}
+.expandcontainer {
+	float: left;
+	width: 90%;
+	padding-left: 65px;
+}
+#SellerInfo {
+	background-color: #E9EAEC;
+	float: left;
+	width: 100%;
+}
+.headerbar {
+	color: #fff;
+	font-size: 14px; /*padding: 0px 0 0 65px;*/
+}
+.headerbar .leftcol {
+	float: left;
+}
+.ddleft {
+	background-image: url(../images/dropdown_l.png);
+	float: left;
+	height: 27px;
+	width: 6px;
+}
+.ddcenter {
+	background-image: url(../images/dropdown_c.png);
+	background-repeat: repeat-x;
+	float: left;
+	height: 27px;
+	width: 150px;
+}
+.ddright {
+	background-image: url(../images/dropdown_r.png);
+	float: left;
+	height: 27px;
+	width: 28px;
+}
+.close {
+	clear: right;
+	float: right;
+	margin-right: 120px;
+	margin-top: -20px;
+}
+.direct {
+	float: right;
+	padding-right: 120px;
+	padding-bottom: 100px;
+}
+.issuerbtn {
+	float: right;
+	padding-left: 30px;
+	display: none;
+	background-image: url(../images/btn_issuer.png);
+	background-repeat: no-repeat;
+	width: 252px;
+	height: 31px;
+	margin: 10px 0 0 70px;
+	line-height: 33px;
+}
+.issuerbtn a {
+	color: #000;
+	font-size: 11px;
+	font-weight: bold;
+}
+#divPartnerName {
+	clear: right;
+	width: auto;
+	display: none;
+	padding: 0;
+	margin: 0;
+}
+.expandsel .rightuarrow {
+	background-image: url("../images/rightuarrow.png");
+	background-repeat: no-repeat;
+	float: right;
+	height: 9px; /*margin-right: 132px;*/
+	margin-top: 21px;
+	width: 16px;
+}
+.addbtn-extend {
+	left: 445px;
+	margin: 0;
+	padding-top: 37px;
+	position: absolute;
+}
+#SaveDealBox {
+	display: none;
+	float: left;
+	width: 90%;
+	margin: 40px 0px 50px 68px;
+}
+#AddDealDocument {
+	width: 100%;
+	margin: 20px 0;
+}
+#AddNewIssuer {
+	background-image: url("../images/dir_subheadbg.png");
+	height: 110px;
+	padding: 20px 0 0;
+}
+#DealSellerInfo .editor-field {
+	width: 166px;
+}
+#tblUnderlyingDirect td input[type="text"], #tblUnderlyingDirect td select {
+	max-width: 101px;
+}
+#tblUnderlyingFund td input[type="text"], #tblUnderlyingFund td select {
+	max-width: 129px;
+}
+#tblUnderlyingDirect td.ralign input[type="text"], #tblUnderlyingDirect td.ralign select {
+	float:right;
+}
+#tblUnderlyingFund td.ralign input[type="text"], #tblUnderlyingFund td.ralign select {
+	float:right;
+}
+#SellerInfo .savebox {
+	padding-left: 27%;
+	width: auto;
+	float: right;
+}
+.grid td .jqComboBox {
+	width: 100%;
+}
+.drop-files{
+	border: 1px dashed #000000;
+    clear: both;
+    float: left;
+    min-height: 100px;
+    padding: 18px 0 0;
+    width: 98%;
+	font-weight: bold;
+}
+
+
+
+/*-------------------------
+	Dropbox Element
+--------------------------*/
+
+
+
+#dropbox {
+	/*background: url('../images/background_tile_3.jpg');
+	border-radius: 3px;
+	position: relative;
+	margin: 80px auto 90px;
+	min-height: 290px;
+	overflow: hidden;
+	padding-bottom: 40px;
+	width: 990px;
+	box-shadow: 0 0 4px rgba(0,0,0,0.3) inset,0 -3px 2px rgba(0,0,0,0.1);*/
+}
+
+
+#dropbox .message {
+	font-size: 11px;
+	text-align: center;
+	padding-top: 160px;
+	display: block;
+}
+
+#dropbox .message i {
+	color: #ccc;
+	font-size: 10px;
+}
+
+#dropbox:before {
+	border-radius: 3px 3px 0 0;
+}
+
+
+
+/*-------------------------
+	Image Previews
+--------------------------*/
+
+#dropbox #FilesList{
+	margin:0 10px;
+}
+
+#dropbox .preview {
+	float: left;
+	text-align: center;
+	margin:0 10px 10px 10px;
+	border: 1px solid #d2d2d2;
+	border-radius: 5px;
+	padding:10px 20px 18px;
+	width: 248px;
+}
+#dropbox .preview .file-name{
+	margin:0 10px 15px;
+	width: 218px;
+	overflow: hidden;
+}
+
+#dropbox .preview img {
+	max-width: 240px;
+	max-height: 180px;
+	border: 3px solid #fff;
+	display: block;
+	box-shadow: 0 0 2px #000;
+}
+
+#dropbox .imageHolder {
+	display: inline-block;
+	position: relative;
+}
+
+#dropbox .uploaded {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: url('../images/done.png') no-repeat center center rgba(255,255,255,0.5);
+	display: none;
+}
+
+#dropbox .preview.done .uploaded {
+	display: block;
+}
+
+/*-------------------------
+	Progress Bars
+--------------------------*/
+#dropbox .progressHolder {
+    border: 1px solid #D2D2D2;
+    border-radius: 2px 2px 2px 2px;
+    height: 12px;
+    width: 100%;
+}
+
+#dropbox .progress {
+	background-color: #2586d0;
+	border-radius: 5px;
+	height: 100%;
+	width:0px;
+}
+
+#dropbox .preview.done .progress {
+	width: 100% !important;
+}
+
+#dropbox .preview .remove{
+	float:right;
+	width: 16px;
+	height:16px;
+	background-image:url(../images/remove.png);
+	background-repeat:no-repeat;
+	cursor: pointer;
+}
+#leftmenu {
+}
+.deal-sub-menu-box {
+	display:none;
+}
+.expandbtn .arrow{
+	background-image: url("../images/downarrow.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    width:16px;
+    height: 9px;
+    float:right;
+    margin-right:15px;
+    margin-top: 12px;
+}
+.expandsel .arrow {
+	background-image: url(../images/rightuarrow.png);
+}
+#content {
+	overflow-x:hidden;
+}
+body{
+	overflow-x:hidden;
+}
+#leftmenu {
+	width:200px;
+}
+.container-main, #content {
+    background-image: url("../images/deal_menu_bg_bot.gif");
+    background-repeat: repeat-y;
+}
+#leftmenu li.sel {
+	 background-image: url("../images/deal_left_menu_sel.gif");
+    background-repeat: repeat-x;
+}

@@ -99,9 +99,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 				if (investorFunds != null) {
 
 					// Find non managing total commitment.
-					decimal nonManagingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember).Sum(fund => fund.TotalCommitment);
+					decimal nonManagingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeID == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember).Sum(fund => fund.TotalCommitment);
 					// Find managing total commitment.
-					decimal managingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember).Sum(fund => fund.TotalCommitment);
+					decimal managingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeID == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember).Sum(fund => fund.TotalCommitment);
 					// Calculate managing total commitment.
 					decimal totalCommitment = nonManagingMemberTotalCommitment + managingMemberTotalCommitment;
 
@@ -144,7 +144,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 							// Calculate Management Fees investor fund
 
 							if ((model.AddManagementFees ?? false) == true) {
-								if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
+								if (investorFund.InvestorTypeID == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
 									item.ManagementFees = decimal.Multiply(
 															decimal.Divide(investorFund.TotalCommitment, nonManagingMemberTotalCommitment)
 															, (capitalCall.ManagementFees ?? 0));
@@ -166,7 +166,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 								nonManagingMemberTotalCommitment,
 								capitalCall.CapitalAmountCalled,
 								(capitalCall.ManagementFees ?? 0),
-								(DeepBlue.Models.Investor.Enums.InvestorType)investorFund.InvestorTypeId);
+								(DeepBlue.Models.Investor.Enums.InvestorType)investorFund.InvestorTypeID);
 
 
 							item.ExistingInvestmentAmount = (investorFund.TotalCommitment / totalCommitment) * capitalCall.ExistingInvestmentAmount;
@@ -743,9 +743,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 				if (investorFunds != null) {
 
 					// Find non managing member total commitment.
-					decimal nonManagingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember).Sum(fund => fund.TotalCommitment);
+					decimal nonManagingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeID == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember).Sum(fund => fund.TotalCommitment);
 					// Find managing member total commitment.
-					decimal managingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember).Sum(fund => fund.TotalCommitment);
+					decimal managingMemberTotalCommitment = investorFunds.Where(fund => fund.InvestorTypeID == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember).Sum(fund => fund.TotalCommitment);
 					// Find total commitment.
 					decimal totalCommitment = nonManagingMemberTotalCommitment + managingMemberTotalCommitment;
 
@@ -770,7 +770,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 																);
 
 						// Non ManagingMember investor type only
-						if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
+						if (investorFund.InvestorTypeID == (int)DeepBlue.Models.Investor.Enums.InvestorType.NonManagingMember) {
 							item.ReturnManagementFees = decimal.Multiply((distribution.ReturnManagementFees ?? 0),
 																		 decimal.Divide(investorFund.TotalCommitment, nonManagingMemberTotalCommitment)
 																		);
@@ -781,12 +781,12 @@ namespace DeepBlue.Controllers.CapitalCall {
 																);
 
 						// ManagingMember investor type only
-						if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember) {
+						if (investorFund.InvestorTypeID == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember) {
 							item.PreferredCatchUp = distribution.PreferredCatchUp;
 						}
 
 						// ManagingMember investor type only
-						if (investorFund.InvestorTypeId == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember) {
+						if (investorFund.InvestorTypeID == (int)DeepBlue.Models.Investor.Enums.InvestorType.ManagingMember) {
 							item.Profits = distribution.Profits;
 						}
 
@@ -1061,6 +1061,57 @@ namespace DeepBlue.Controllers.CapitalCall {
 						}
 					}
 				}
+			}
+			return View("Result", resultModel);
+		}
+
+		//
+		// POST: /CapitalCall/ImportManualDistribution
+		[HttpPost]
+		public ActionResult ImportManualDistribution(FormCollection collection) {
+			CapitalDistribution distribution = new CapitalDistribution();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(distribution, collection);
+			distribution.DistributionNumber = Convert.ToString(CapitalCallRepository.FindCapitalCallDistributionNumber(distribution.FundID));
+			distribution.CreatedBy = Authentication.CurrentUser.UserID;
+			distribution.CreatedDate = DateTime.Now;
+			distribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			distribution.LastUpdatedDate = DateTime.Now;
+			IEnumerable<ErrorInfo> errorInfo = ValidationHelper.Validate(distribution);
+			if (errorInfo.Any() == false) {
+				// Attempt to create cash distribution.
+				errorInfo = CapitalCallRepository.SaveCapitalDistribution(distribution);
+				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					resultModel.Result += "True||" + distribution.CapitalDistributionID;
+				}
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpPost]
+		public ActionResult ImportManualDistributionLineItem(FormCollection collection) {
+			CapitalDistributionLineItem item = new CapitalDistributionLineItem();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(item, collection);
+			item.CreatedBy = Authentication.CurrentUser.UserID;
+			item.CreatedDate = DateTime.Now;
+			item.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			item.LastUpdatedDate = DateTime.Now;
+			IEnumerable<ErrorInfo> errorInfo = ValidationHelper.Validate(item);
+			if (errorInfo.Any() == false) {
+					// Attempt to create cash distribution of each investor.
+					errorInfo = CapitalCallRepository.SaveCapitalDistributionLineItem(item);
+					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+					if (string.IsNullOrEmpty(resultModel.Result)) {
+						resultModel.Result += "True||" + item.CapitalDistributionLineItemID;
+					}
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 			}
 			return View("Result", resultModel);
 		}

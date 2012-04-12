@@ -22,6 +22,10 @@
 		<%: Html.Span("${UpdateDate}", new { @class = "{{if UnderlyingFundNAVId==0}}hide{{else}}show{{/if}} dispdate", @val = "${UpdateDate}" })%>
 		<%: Html.TextBox("UpdateDate", "${UpdateDate}", new { @class = "datefield {{if UnderlyingFundNAVId==0}}show{{else}}hide{{/if}}", @id = "${UnderlyingFundNAVId}_UFV_UpdateDate" })%>
 	</td>
+	<td class="lalign">
+		<%: Html.Span("${EffectiveDate}", new { @class = "{{if UnderlyingFundNAVId==0}}hide{{else}}show{{/if}} dispdate", @val = "${EffectiveDate}" })%>
+		<%: Html.TextBox("EffectiveDate", "${EffectiveDate}", new { @class = "datefield {{if UnderlyingFundNAVId==0}}show{{else}}hide{{/if}}", @id = "${UnderlyingFundNAVId}_UFV_EffectiveDate" })%>
+	</td>
 	<td class="ralign">
 		<%: Html.Hidden("UnderlyingFundNAVId","${UnderlyingFundNAVId}")%>
 		<%: Html.Span("", new { id = "UpdateLoading" })%>

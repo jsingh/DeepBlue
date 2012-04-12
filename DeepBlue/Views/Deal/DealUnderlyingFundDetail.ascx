@@ -34,22 +34,25 @@
 							<th class="lalign">
 								Fund Name
 							</th>
-							<th class="ralign" style="width: 15%;">
+							<th class="ralign" style="width: 100px;">
 								Gross Purchase Price
 							</th>
-							<th class="ralign" style="width: 10%">
+							<th class="ralign" style="width: 100px">
 								Fund NAV
 							</th>
-							<th class="ralign">
+							<th class="lalign" style="width: 85px">
+								Effective Date
+							</th>
+							<th class="ralign" style="width: 100px;">
 								Capital Commitment
 							</th>
-							<th class="ralign">
+							<th class="ralign" style="width: 100px;">
 								Amount Unfunded
 							</th>
-							<th class="lalign">
+							<th class="lalign" style="width: 85px;">
 								Record Date
 							</th>
-							<th style="width: 10%">
+							<th style="width: 100px;">
 							</th>
 						</tr>
 					</thead>
@@ -70,6 +73,9 @@
 							<td class="ralign">
 								<%: Html.TextBox("FundNAV", "", new { @id = "FundNAV", @onkeyup = "javascript:deal.calcDUF();", @onkeydown = "return jHelper.isCurrency(event);" })%>
 							</td>
+							<td class="lalign">
+								<%: Html.TextBox("EffectiveDate", "", new { @style="width:85px;", @class = "datefield", @id = "0_EffectiveDate" })%>
+							</td>
 							<td class="ralign">
 								<%: Html.TextBox("CommittedAmount", "", new { @id = "CommittedAmount", @onkeyup = "javascript:deal.calcDUF();", @onkeydown = "return jHelper.isCurrency(event);" })%>
 							</td>
@@ -77,7 +83,7 @@
 								<%: Html.TextBox("UnfundedAmount", "", new { @id = "UnfundedAmount", @onkeyup = "javascript:deal.calcDUF();", @onkeydown = "return jHelper.isCurrency(event);" })%>
 							</td>
 							<td class="lalign">
-								<%: Html.TextBox("RecordDate", "", new { @class = "datefield", @id = "0_RecordDate" })%>
+								<%: Html.TextBox("RecordDate", "", new { @style = "width:85px;", @class = "datefield", @id = "0_RecordDate" })%>
 							</td>
 							<td class="ralign">
 								<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>
@@ -101,6 +107,7 @@
 							<td class="ralign">
 								<%:Html.Span("", new { @id = "SpnTotalFundNAV" })%>
 							</td>
+							<td></td>
 							<td class="ralign">
 								<%:Html.Span("", new { @id = "SpnTotalCAmount" })%>
 							</td>

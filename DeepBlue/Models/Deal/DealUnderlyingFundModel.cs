@@ -60,6 +60,8 @@ namespace DeepBlue.Models.Deal {
 
 		public decimal? NetPurchasePrice { get; set; }
 
+		public DateTime? EffectiveDate { get; set; }
+
 		#region Final Deal Close Properties
 
 		public decimal? ReassignedGPP { get; set; }

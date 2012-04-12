@@ -34,7 +34,7 @@ namespace DeepBlue.Models.Deal {
 			get {
 				/*Calculate NAV = Total Fund NAV + 
 					  			 ((Total Capital Call + Total Post Record Capital Call) – (Total Distribution + Total Post Record Distribution)).
-				 */
+				*/
 				return (this.FundNAV ?? 0) + (((this.TotalCapitalCall ?? 0) + (this.TotalPostRecordCapitalCall ?? 0))
 											  - ((this.TotalDistribution ?? 0) + (this.TotalPostRecordDistribution ?? 0)));
 			}
@@ -53,6 +53,8 @@ namespace DeepBlue.Models.Deal {
 		public decimal? TotalPostRecordDistribution { get; set; }
 
 		public DateTime? FundNAVDate { get; set; }
+
+		public DateTime? EffectiveDate { get; set; }
 
 		[Required(ErrorMessage = "Update NAV is required")]
 		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "Update NAV is required")]

@@ -128,7 +128,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorContact_Investor", "Investor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Investor), "InvestorContact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorContact), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFund_Investor", "Investor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Investor), "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundDocument_Investor", "Investor", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Investor), "InvestorFundDocument", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundDocument), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFund_InvestorType", "InvestorType", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.InvestorType), "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFund), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFund_InvestorType", "InvestorType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.InvestorType), "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundTransaction_InvestorFund", "InvestorFund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.InvestorFund), "InvestorFundTransaction", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundTransaction), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_InvestorFundTransaction_TransactionType", "TransactionType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.TransactionType), "InvestorFundTransaction", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.InvestorFundTransaction), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_Issuer", "Issuer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Issuer), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
@@ -14204,6 +14204,54 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> NetPurchasePrice
+        {
+            get
+            {
+                return _NetPurchasePrice;
+            }
+            set
+            {
+                OnNetPurchasePriceChanging(value);
+                ReportPropertyChanging("NetPurchasePrice");
+                _NetPurchasePrice = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NetPurchasePrice");
+                OnNetPurchasePriceChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _NetPurchasePrice;
+        partial void OnNetPurchasePriceChanging(Nullable<global::System.Decimal> value);
+        partial void OnNetPurchasePriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AdjustedCost
+        {
+            get
+            {
+                return _AdjustedCost;
+            }
+            set
+            {
+                OnAdjustedCostChanging(value);
+                ReportPropertyChanging("AdjustedCost");
+                _AdjustedCost = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AdjustedCost");
+                OnAdjustedCostChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AdjustedCost;
+        partial void OnAdjustedCostChanging(Nullable<global::System.Decimal> value);
+        partial void OnAdjustedCostChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public Nullable<global::System.Decimal> PostRecordDateCapitalCall
         {
             get
@@ -14252,48 +14300,24 @@ namespace DeepBlue.Models.Entity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> NetPurchasePrice
+        public Nullable<global::System.DateTime> EffectiveDate
         {
             get
             {
-                return _NetPurchasePrice;
+                return _EffectiveDate;
             }
             set
             {
-                OnNetPurchasePriceChanging(value);
-                ReportPropertyChanging("NetPurchasePrice");
-                _NetPurchasePrice = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NetPurchasePrice");
-                OnNetPurchasePriceChanged();
+                OnEffectiveDateChanging(value);
+                ReportPropertyChanging("EffectiveDate");
+                _EffectiveDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EffectiveDate");
+                OnEffectiveDateChanged();
             }
         }
-        private Nullable<global::System.Decimal> _NetPurchasePrice;
-        partial void OnNetPurchasePriceChanging(Nullable<global::System.Decimal> value);
-        partial void OnNetPurchasePriceChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> AdjustedCost
-        {
-            get
-            {
-                return _AdjustedCost;
-            }
-            set
-            {
-                OnAdjustedCostChanging(value);
-                ReportPropertyChanging("AdjustedCost");
-                _AdjustedCost = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("AdjustedCost");
-                OnAdjustedCostChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _AdjustedCost;
-        partial void OnAdjustedCostChanging(Nullable<global::System.Decimal> value);
-        partial void OnAdjustedCostChanged();
+        private Nullable<global::System.DateTime> _EffectiveDate;
+        partial void OnEffectiveDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnEffectiveDateChanged();
 
         #endregion
     
@@ -24457,7 +24481,8 @@ namespace DeepBlue.Models.Entity
         /// <param name="totalCommitment">Initial value of the TotalCommitment property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        public static InvestorFund CreateInvestorFund(global::System.Int32 investorFundID, global::System.Int32 investorID, global::System.Int32 fundID, global::System.Decimal totalCommitment, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        /// <param name="investorTypeID">Initial value of the InvestorTypeID property.</param>
+        public static InvestorFund CreateInvestorFund(global::System.Int32 investorFundID, global::System.Int32 investorID, global::System.Int32 fundID, global::System.Decimal totalCommitment, global::System.DateTime createdDate, global::System.Int32 createdBy, global::System.Int32 investorTypeID)
         {
             InvestorFund investorFund = new InvestorFund();
             investorFund.InvestorFundID = investorFundID;
@@ -24466,6 +24491,7 @@ namespace DeepBlue.Models.Entity
             investorFund.TotalCommitment = totalCommitment;
             investorFund.CreatedDate = createdDate;
             investorFund.CreatedBy = createdBy;
+            investorFund.InvestorTypeID = investorTypeID;
             return investorFund;
         }
 
@@ -24694,26 +24720,26 @@ namespace DeepBlue.Models.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> InvestorTypeId
+        public global::System.Int32 InvestorTypeID
         {
             get
             {
-                return _InvestorTypeId;
+                return _InvestorTypeID;
             }
             set
             {
-                OnInvestorTypeIdChanging(value);
-                ReportPropertyChanging("InvestorTypeId");
-                _InvestorTypeId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("InvestorTypeId");
-                OnInvestorTypeIdChanged();
+                OnInvestorTypeIDChanging(value);
+                ReportPropertyChanging("InvestorTypeID");
+                _InvestorTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("InvestorTypeID");
+                OnInvestorTypeIDChanged();
             }
         }
-        private Nullable<global::System.Int32> _InvestorTypeId;
-        partial void OnInvestorTypeIdChanging(Nullable<global::System.Int32> value);
-        partial void OnInvestorTypeIdChanged();
+        private global::System.Int32 _InvestorTypeID;
+        partial void OnInvestorTypeIDChanging(global::System.Int32 value);
+        partial void OnInvestorTypeIDChanged();
 
         #endregion
     
@@ -37176,6 +37202,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _LastUpdatedBy;
         partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
         partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> EffectiveDate
+        {
+            get
+            {
+                return _EffectiveDate;
+            }
+            set
+            {
+                OnEffectiveDateChanging(value);
+                ReportPropertyChanging("EffectiveDate");
+                _EffectiveDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EffectiveDate");
+                OnEffectiveDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _EffectiveDate;
+        partial void OnEffectiveDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnEffectiveDateChanged();
 
         #endregion
     

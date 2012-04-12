@@ -199,6 +199,10 @@
 			<%: Html.Span("${FundNAV}", new { @class = "show money", @id = "SpnPercent" })%>
 			<%: Html.TextBox("FundNAV", "${formatNumber(FundNAV)}",new { @class = "hide", @onkeyup="javascript:deal.calcDUF();", @onkeydown = "return jHelper.isCurrency(event);" })%>
 		</td>
+		<td class="lalign">
+			<%: Html.Span("${EffectiveDate}", new { @class = "show dispdate", @id = "SpnEffectiveDate" })%>
+			<%: Html.TextBox("EffectiveDate", "${EffectiveDate}", new { @style = "width:85px;", @class = "hide datefield", @id = "${DealUnderlyingFundId}_EffectiveDate" })%>
+		</td>
 		<td class="ralign">
 			<%: Html.Span("${CommittedAmount}", new { @class = "show money", @id = "SpnCommittedAmount" })%>
 			<%: Html.TextBox("CommittedAmount", "${formatNumber(CommittedAmount)}", new { @class = "hide", @onkeyup = "javascript:deal.calcDUF();", @onkeydown = "return jHelper.isCurrency(event);" })%>
@@ -209,7 +213,7 @@
 		</td>
 		<td class="lalign">
 			<%: Html.Span("${RecordDate}", new { @class = "show dispdate", @id = "SpnRecordDate" })%>
-			<%: Html.TextBox("RecordDate", "${RecordDate}",new { @class = "hide datefield", @id = "${DealUnderlyingFundId}_RecordDate" })%>
+			<%: Html.TextBox("RecordDate", "${RecordDate}", new { @style = "width:85px;", @class = "hide datefield", @id = "${DealUnderlyingFundId}_RecordDate" })%>
 		</td>
 		<td class="ralign">
 			<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Saving...", new {  @style = "display:none;", @id = "spnAjax" })%>

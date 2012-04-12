@@ -177,7 +177,7 @@ namespace DeepBlue.Controllers.Fund {
 
 		public decimal FindTotalCommittedAmount(int fundId, int investorTypeId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				return context.InvestorFundsTable.Where(investorFund => investorFund.InvestorTypeId == investorTypeId && investorFund.FundID == fundId).Sum(invfund => invfund.TotalCommitment);
+				return context.InvestorFundsTable.Where(investorFund => investorFund.InvestorTypeID == investorTypeId && investorFund.FundID == fundId).Sum(invfund => invfund.TotalCommitment);
 			}
 		}
 

@@ -121,6 +121,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region UnderlyingFundCashDistribution
 		UnderlyingFundCashDistribution FindUnderlyingFundCashDistribution(int underlyingFundCashDistributionId);
+		object FindUnderlyingFundCashDistribution(int fundID, decimal amount, DateTime noticeDate, int underlyingFundID);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundCashDistribution(UnderlyingFundCashDistribution underlyingFundCashDistribution);
 		List<UnderlyingFundCashDistributionModel> GetAllUnderlyingFundCashDistributions(int underlyingFundId);
 		bool DeleteUnderlyingFundCashDistribution(int id);
@@ -138,6 +139,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region UnderlyingFundCapitalCall
 		UnderlyingFundCapitalCall FindUnderlyingFundCapitalCall(int underlyingFundCapitalCallId);
+		object FindUnderlyingFundCapitalCall(int fundID, decimal amount, DateTime noticeDate, int underlyingFundID);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundCapitalCall(UnderlyingFundCapitalCall underlyingFundCapitalCall);
 		List<UnderlyingFundCapitalCallModel> GetAllUnderlyingFundCapitalCalls(int underlyingFundId);
 		bool DeleteUnderlyingFundCapitalCall(int id);
@@ -172,8 +174,8 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region UnderlyingFundValuation
 		List<UnderlyingFundValuationModel> GetAllUnderlyingFundValuations(int underlyingFundId);
-		UnderlyingFundValuationModel FindUnderlyingFundValuationModel(int underlyingFundId, int fundId);
-		UnderlyingFundNAV FindUnderlyingFundNAV(int underlyingFundId, int fundId);
+		UnderlyingFundValuationModel FindUnderlyingFundValuationModel(int underlyingFundId, int underlyingFundNAVId);
+		UnderlyingFundNAV FindUnderlyingFundNAV(int underlyingFundId, int fundId, DateTime? effectiveDate);
 		bool DeleteUnderlyingFundValuation(int id);
 		decimal SumOfTotalCapitalCalls(int underlyingFundId, int fundId);
 		decimal SumOfTotalDistributions(int underlyingFundId, int fundId);

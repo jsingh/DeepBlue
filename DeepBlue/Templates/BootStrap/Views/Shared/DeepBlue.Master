@@ -1,0 +1,128 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<%@ Import Namespace="DeepBlue.Helpers" %>
+<%List<DeepBlue.Models.Admin.EntityMenuModel> _Menus = MenuHelper.GetMenus();%>
+<% 
+	int menuid = (Request["menuid"] == null ? 0 : Convert.ToInt32(Request["menuid"]));
+	DeepBlue.Models.Admin.EntityMenuModel currentMenu = null;
+	DeepBlue.Models.Admin.EntityMenuModel submenu = null;
+	DeepBlue.Models.Admin.EntityMenuModel topmenu = null;
+	currentMenu = _Menus.Where(m => m.MenuID == menuid).FirstOrDefault();
+	string className = string.Empty;
+	if (currentMenu != null) {
+		if (currentMenu.ParentMenuID > 0) {
+			submenu = _Menus.Where(m => m.MenuID == currentMenu.ParentMenuID).FirstOrDefault();
+		}
+	}
+	if (submenu != null) {
+		if (submenu.ParentMenuID > 0) {
+			topmenu = _Menus.Where(m => m.MenuID == submenu.ParentMenuID).FirstOrDefault();
+		}
+	}
+	List<DeepBlue.Models.Admin.EntityMenuModel> topMenus = (from menu in _Menus
+															where menu.ParentMenuID == 0
+															select menu).ToList();
+
+%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%=EntityHelper.EntityName%>::<asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+	</title>
+	<%if (currentMenu != null) {
+		if (string.IsNullOrEmpty(currentMenu.Title) == false) {
+		%>
+			<title><%=EntityHelper.EntityName%>::<%=currentMenu.Title%></title>
+		<%}
+   }%>
+	<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jquery-1.7.1.min.js")%>" type="text/javascript"></script>
+	<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jquery.tmpl.min.js")%>" type="text/javascript"></script>
+	<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jshashtable.js")%>" type="text/javascript"></script>
+	<link href="<%:Url.Content("~/Templates/BootStrap/Assets/stylesheets/jquery-ui-1.8.16.custom.css")%>"	rel="stylesheet" type="text/css" />
+	<link href="<%:Url.Content("~/Templates/BootStrap/Assets/stylesheets/bootstrap.min.css")%>"	rel="stylesheet" type="text/css" />
+	<link href="<%:Url.Content("~/Templates/BootStrap/Assets/stylesheets/docs.css")%>"	rel="stylesheet" type="text/css" />
+	<link href="<%:Url.Content("~/Templates/BootStrap/Assets/stylesheets/site.css")%>"	rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		body {
+			padding-top: 50px;
+		}
+	</style>
+	<asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
+</head>
+<body>
+	<% string mnuresize = "true";
+	if (Response.Cookies["mnuresize"] != null) {
+		mnuresize = Response.Cookies["mnuresize"].Value;
+	}
+	%>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a href="#" class="brand pull-left">
+					<%=EntityHelper.EntityName%></a>
+				<div class="nav-collapse">
+					<p class="navbar-text pull-right">
+						<%if (Request.IsAuthenticated) {%>
+						<%: Html.Anchor("Logoff", "/Account/LogOff", new { @title = "Log Off" })%>
+						<%}%>
+					</p>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="subnav">
+					<ul class="nav nav-pills">
+						<%foreach (var menu in topMenus) {%>
+						<li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">
+							<%=menu.DisplayName%><b class="caret"></b> </a>
+							<% var childMenus = (from m in _Menus
+							where m.ParentMenuID == menu.MenuID
+							select m).ToList();
+							%>
+							<%Html.RenderPartial("Menu", childMenus);%>
+						</li>
+						<%}%>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<asp:ContentPlaceHolder ID="NavigationContent" runat="server" />
+	<asp:ContentPlaceHolder ID="MainContent" runat="server" />
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<%Html.RenderPartial("Footer");%>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/DeepBlue.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/bootstrap/bootstrap-alert.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/bootstrap/bootstrap-tooltip.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/bootstrap/bootstrap-popover.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/bootstrap/bootstrap-carousel.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/bootstrap/bootstrap-transition.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/bootstrap/bootstrap-collapse.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/bootstrap/bootstrap-dropdown.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/bootstrap/bootstrap-modal.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/bootstrap/bootstrap-button.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/bootstrap/application.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jquery.contextMenu.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jquery-ui-1.8.10.custom.min.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jquery-ui-1.8.10.combobox.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jquery-ui-1.8.10.autocomplete.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jquery-ui-1.8.10.extension.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jHelper.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jquery.alerts.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jquery.formatCurrency.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jquery.numberformatter.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jqueryform.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/jsDate.js")%>" type="text/javascript"></script>
+<script src="<%:Url.Content("~/Templates/BootStrap/Assets/javascripts/flexgrid.js")%>" type="text/javascript"></script>
+<asp:contentplaceholder id="BottomContent" runat="server" />
+</html>

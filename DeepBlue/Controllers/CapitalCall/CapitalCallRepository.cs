@@ -343,7 +343,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 		public List<NonManagingInvestorFundDetail> GetAllNonManagingInvestorFunds(int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from investorFund in context.InvestorFundsTable
-						where investorFund.FundID == fundId && investorFund.InvestorTypeId == (int)Models.Investor.Enums.InvestorType.NonManagingMember
+						where investorFund.FundID == fundId && investorFund.InvestorTypeID == (int)Models.Investor.Enums.InvestorType.NonManagingMember
 						select new NonManagingInvestorFundDetail {
 							InvestorId = investorFund.InvestorID,
 							TotalCommitment = investorFund.TotalCommitment

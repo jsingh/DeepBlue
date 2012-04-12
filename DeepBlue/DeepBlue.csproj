@@ -26,9 +26,10 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PackageAsSingleFile>false</PackageAsSingleFile>
@@ -36,10 +37,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -61,7 +58,16 @@
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -98,6 +104,7 @@
     <Compile Include="Helpers\AdvancedEntityTemplateFactory.cs" />
     <Compile Include="Helpers\AppSettingsHelper.cs" />
     <Compile Include="Helpers\Authentication.cs" />
+    <Compile Include="Helpers\AuthorizeUsersAttribute.cs" />
     <Compile Include="Helpers\CacheExtensions.cs" />
     <Compile Include="Helpers\JavaScript.cs" />
     <Compile Include="Helpers\SystemEntityAuthorizeAttribute.cs" />
@@ -647,8 +654,80 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\AppSettings.cs" />
     <Compile Include="Util\ConfigUtil.cs" />
+    <Compile Include="ViewEngines\BuildManager.cs" />
+    <Compile Include="ViewEngines\TemplateBuildManagerViewEngine.cs" />
+    <Compile Include="ViewEngines\TemplateRazorViewEngine.cs" />
+    <Compile Include="ViewEngines\TemplateVirtualPathProviderViewEngine.cs" />
+    <Compile Include="ViewEngines\TemplateWebformViewEngine.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\stylesheets\newdeallayout.css" />
+    <Content Include="Templates\BootStrap\Assets\images\glyphicons-halflings-white.png" />
+    <Content Include="Templates\BootStrap\Assets\images\glyphicons-halflings.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-bg_glass_75_ffffff_1x400.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-bg_inset-soft_95_fef1ec_1x100.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-icons_222222_256x240.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-icons_454545_256x240.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-icons_888888_256x240.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Templates\BootStrap\Assets\images\ui-icons_f6cf3b_256x240.png" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\application.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\bootstrap-alert.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\bootstrap-button.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\bootstrap-carousel.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\bootstrap-collapse.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\bootstrap-dropdown.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\bootstrap-modal.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\bootstrap-popover.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\bootstrap-scrollspy.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\bootstrap-tab.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\Deal.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\DealDocument.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\DealExpense.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\DealUnderlyingDirect.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\DealUnderlyingFund.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\DeepBlue.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\FileUploadScript.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\flexgrid.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\bootstrap-tooltip.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\bootstrap-transition.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\bootstrap-typeahead.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\Fund.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\google-code-prettify\prettify.css" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\google-code-prettify\prettify.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jHelper.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jqTransform.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jquery-1.7.1.min.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jquery-ui-1.8.10.autocomplete.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jquery-ui-1.8.10.combobox.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jquery-ui-1.8.10.custom.min.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jquery-ui-1.8.10.extension.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jquery-ui-1.8.16.custom.min.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jquery.alerts.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jquery.contextMenu.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jquery.filedrop.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jquery.formatCurrency.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jquery.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\bootstrap\less-1.3.0.min.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jquery.numberformatter.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jquery.tmpl.min.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jqueryform.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jsDate.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\jshashtable.js" />
+    <Content Include="Templates\BootStrap\Assets\javascripts\LogOn.js" />
+    <Content Include="Templates\BootStrap\Assets\stylesheets\bootstrap.min.css" />
+    <Content Include="Templates\BootStrap\Assets\stylesheets\jquery-ui-1.8.16.custom.css" />
+    <Content Include="Templates\BootStrap\Assets\stylesheets\jquery.ui.1.8.16.ie.css" />
+    <Content Include="Templates\BootStrap\Assets\stylesheets\site.css" />
     <Content Include="Assets\images\acboxbg.png" />
     <Content Include="Assets\images\accounting.png" />
     <Content Include="Assets\images\actdownarrow.png" />
@@ -1221,6 +1300,24 @@
     <Content Include="bin\DeepBlue.pdb" />
     <Content Include="Global.asax" />
     <Content Include="Assets\stylesheets\site.css" />
+    <Content Include="Templates\BootStrap\Views\Account\LogOn.aspx" />
+    <Content Include="Templates\BootStrap\Assets\stylesheets\bootstrap-responsive.css" />
+    <Content Include="Templates\BootStrap\Assets\stylesheets\docs.css" />
+    <Content Include="Templates\BootStrap\Views\Deal\DealDetail.ascx" />
+    <Content Include="Templates\BootStrap\Views\Deal\DealDocumentDetail.ascx" />
+    <Content Include="Templates\BootStrap\Views\Deal\DealExpenseDetail.ascx" />
+    <Content Include="Templates\BootStrap\Views\Deal\DealUnderlyingDirectDetail.ascx" />
+    <Content Include="Templates\BootStrap\Views\Deal\DealUnderlyingFundDetail.ascx" />
+    <Content Include="Templates\BootStrap\Views\Deal\New.aspx" />
+    <Content Include="Templates\BootStrap\Views\Deal\SellerDetail.ascx" />
+    <Content Include="Templates\BootStrap\Views\Fund\FundDetail.ascx" />
+    <Content Include="Templates\BootStrap\Views\Fund\FundRateSchduleDetail.ascx" />
+    <Content Include="Templates\BootStrap\Views\Fund\FundRateSchduleTierDetail.ascx" />
+    <Content Include="Templates\BootStrap\Views\Fund\Index.aspx" />
+    <Content Include="Templates\BootStrap\Views\Fund\Result.ascx" />
+    <Content Include="Templates\BootStrap\Views\Shared\Footer.ascx" />
+    <Content Include="Templates\BootStrap\Views\Shared\Menu.ascx" />
+    <Content Include="Templates\BootStrap\Views\Shared\Result.ascx" />
     <Content Include="Views\Account\LogOn.aspx" />
     <Content Include="Views\Admin\ActivityType.aspx" />
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
@@ -1423,13 +1520,19 @@
     <Folder Include="Controllers\Issuer\" />
     <Folder Include="Files\Documents\2\1\" />
     <Folder Include="Models\Issuer\" />
+    <Folder Include="Templates\BootStrap\Assets\less\" />
     <Folder Include="Views\Issuer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Templates\BootStrap\Views\Shared\DeepBlue.Master" />
+    <Content Include="Templates\BootStrap\Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Models\Entity\DeepBlue.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DeepBlue.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Templates\BootStrap\Assets\javascripts\README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

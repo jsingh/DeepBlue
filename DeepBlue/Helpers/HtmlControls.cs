@@ -39,7 +39,7 @@ namespace DeepBlue.Helpers {
 			if (String.IsNullOrEmpty(labelText)) {
 				return MvcHtmlString.Empty;
 			}
-			TagBuilder tag = new TagBuilder("label");
+		    TagBuilder tag = new TagBuilder("label");
 			tag.MergeAttributes(htmlAttributes);
 			tag.Attributes.Add("for", html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName));
 			tag.SetInnerText(labelText);
@@ -144,6 +144,19 @@ namespace DeepBlue.Helpers {
 			tag.Attributes.Add("src", Url(helper, string.Format("/Assets/images/{0}", imagename)));
 			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+		}
+		#endregion
+
+		#region Image
+		public static MvcHtmlString Button(this HtmlHelper helper, string value, IDictionary<string, object> htmlAttributes) {
+			TagBuilder tag = new TagBuilder("button");
+			tag.MergeAttributes(htmlAttributes);
+			return MvcHtmlString.Create(string.Format("{0}{1}{2}", tag.ToString(TagRenderMode.StartTag), value, "</button>"));
+		}
+		public static MvcHtmlString Button(this HtmlHelper helper, string value, object htmlAttributes) {
+			TagBuilder tag = new TagBuilder("button");
+			tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			return MvcHtmlString.Create(string.Format("{0}{1}{2}", tag.ToString(TagRenderMode.StartTag), value, "</button>"));
 		}
 		#endregion
 
@@ -320,12 +333,18 @@ namespace DeepBlue.Helpers {
 		#endregion
 
 		#region LeftMenu
-		public static MvcDiv LeftMenu(this HtmlHelper helper) {
+		public static MvcDiv LeftMenu(this HtmlHelper helper, object htmlAttributes) {
 			TagBuilder tagBuilder = new TagBuilder("div");
 			tagBuilder.Attributes.Add("id", "leftmenu");
+			if (htmlAttributes != null) {
+				tagBuilder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			}
 			HttpResponseBase httpResponse = helper.ViewContext.HttpContext.Response;
 			httpResponse.Write(tagBuilder.ToString(TagRenderMode.StartTag));
 			return new MvcDiv(helper.ViewContext.HttpContext.Response);
+		}
+		public static MvcDiv LeftMenu(this HtmlHelper helper) {
+			return LeftMenu(helper, null);
 		}
 		#endregion
 

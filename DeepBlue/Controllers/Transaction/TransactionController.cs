@@ -67,7 +67,7 @@ namespace DeepBlue.Controllers.Transaction {
 					investorFund.CreatedBy = Authentication.CurrentUser.UserID;
 					investorFund.CreatedDate = DateTime.Now;
 					investorFund.FundID = model.FundId;
-					investorFund.InvestorTypeId = model.InvestorTypeId;
+					investorFund.InvestorTypeID = model.InvestorTypeId;
 					investorFund.TotalCommitment = model.TotalCommitment;
 					investorFund.UnfundedAmount = model.TotalCommitment;
 					investorFund.InvestorID = model.InvestorId;
@@ -123,10 +123,8 @@ namespace DeepBlue.Controllers.Transaction {
 			InvestorFund investorFund = InvestorRepository.FindInvestorFund(investorId, fundId);
 			FundDetail fundDetail = new FundDetail();
 			if (investorFund != null) {
-				if ((investorFund.InvestorTypeId ?? 0) > 0) {
-					fundDetail.InvestorTypeId = investorFund.InvestorTypeId ?? 0;
-					fundDetail.InvestorTypeName = investorFund.InvestorType.InvestorTypeName;
-				}
+				fundDetail.InvestorTypeId = investorFund.InvestorTypeID;
+				fundDetail.InvestorTypeName = investorFund.InvestorType.InvestorTypeName;
 			}
 			foreach (var fundClose in fundClosings) {
 				fundDetail.FundClosingDetails.Add(new FundClosingDetail(fundClose.FundClosingID, fundClose.Name + " - " + (fundClose.FundClosingDate ?? Convert.ToDateTime("01/01/1900")).ToString("MM/dd/yyyy")));
@@ -141,10 +139,8 @@ namespace DeepBlue.Controllers.Transaction {
 			InvestorFund investorFund = InvestorRepository.FindInvestorFund(investorId, fundId);
 			InvestorTypeDetail investorTypeDetail = new InvestorTypeDetail();
 			if (investorFund != null) {
-				if ((investorFund.InvestorTypeId ?? 0) > 0) {
-					investorTypeDetail.InvestorTypeId = investorFund.InvestorTypeId ?? 0;
-					investorTypeDetail.InvestorTypeName = investorFund.InvestorType.InvestorTypeName;
-				}
+				investorTypeDetail.InvestorTypeId = investorFund.InvestorTypeID;
+				investorTypeDetail.InvestorTypeName = investorFund.InvestorType.InvestorTypeName;
 			}
 			return Json(investorTypeDetail, JsonRequestBehavior.AllowGet);
 		}
@@ -225,7 +221,7 @@ namespace DeepBlue.Controllers.Transaction {
 						counterPartyInvestorFund.LastUpdatedDate = DateTime.Now;
 						counterPartyInvestorFund.TotalCommitment = model.CommitmentAmount;
 						counterPartyInvestorFund.UnfundedAmount = model.CommitmentAmount;
-						counterPartyInvestorFund.InvestorTypeId = investorFund.InvestorTypeId;
+						counterPartyInvestorFund.InvestorTypeID = investorFund.InvestorTypeID;
 					}
 					else {
 						counterPartyInvestorFund.TotalCommitment += model.CommitmentAmount;

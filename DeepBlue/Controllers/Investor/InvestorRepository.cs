@@ -352,7 +352,7 @@ namespace DeepBlue.Controllers.Investor {
 																		  FundClose = transaction.FundClosing.Name
 																	  }).FirstOrDefault().FundClose,
 														 FundId = investorFund.FundID,
-														 InvestorTypeId = investorFund.InvestorTypeId,
+														 InvestorTypeId = investorFund.InvestorTypeID,
 														 InvestorFundId = investorFund.InvestorFundID,
 														 InvestorId = investorFund.InvestorID
 													 });

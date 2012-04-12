@@ -10,9 +10,7 @@ using DeepBlue.Models.Entity;
 using System.Web.Security;
 
 namespace DeepBlue {
-	// Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-	// visit http://go.microsoft.com/?LinkId=9394801
-	
+	 
 	public class MvcApplication : System.Web.HttpApplication {
 
 		public static void RegisterRoutes(RouteCollection routes) {
@@ -32,7 +30,18 @@ namespace DeepBlue {
 			DataAnnotationsModelValidatorProvider.RegisterAdapter(
 															   typeof(RemoteUID_Attribute),
 															   typeof(RemoteAttributeAdapter));
+			RegisterViewEngine(ViewEngines.Engines);
 		}
-		 
+
+		public static void RegisterViewEngine(ViewEngineCollection viewEngines) {
+			// We do not need the default view engine
+			viewEngines.Clear();
+
+			var templateableRazorViewEngine = new TemplateWebformViewEngine {
+				CurrentTemplate = httpContext => httpContext.Request["template"] as string ??  string.Empty
+			};
+
+			viewEngines.Add(templateableRazorViewEngine);
+		}
 	}
 }

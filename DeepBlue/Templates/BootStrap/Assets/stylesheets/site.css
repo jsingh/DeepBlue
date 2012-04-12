@@ -1,0 +1,152 @@
+﻿body {
+	padding-top: 50px;
+}
+/* override bootstrap font  
+body {
+	font-family:  Arial, sans-serif;
+}
+p {
+	font-family:   Arial, sans-serif;
+}
+input, button, select, textarea {
+	font-family:  Arial, sans-serif;
+}
+.navbar-search .search-query {
+	font-family:  Arial, sans-serif;
+}
+  end override bootstrap font */
+.sidebar-nav {
+	padding: 9px 0;
+}
+.field-validation-error {
+	display: none;
+}
+.dropdown.open .dropdown-menu li {
+	position: relative;
+}
+.dropdown.open .dropdown-menu li .dropdown-menu {
+	display: none;
+}
+.dropdown.open .dropdown-menu li:hover .dropdown-menu {
+	display: block;
+	left: 100%;
+	position: absolute;
+	top: 0;
+}
+#funddetail.form-horizontal .control-label {
+	width: 180px;
+}
+#funddetail.form-horizontal .controls {
+	margin-left: 200px;
+}
+.footer {
+	margin-top: 10px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+#funddetail .rate-schedule-list, #funddetail .rate-detail, #funddetail .investor-list {
+	margin-left: 15px;
+	margin-right: 15px;
+}
+.clear {
+	clear: both;
+	height: 0;
+}
+#refDropDown {
+	display: none;
+}
+.control-label.right-align{
+	text-align:right;
+}
+.control-label.left-align{
+	text-align:left;
+}
+.control-label.auto{
+	width:auto;
+}
+.line-break {
+    border-bottom: 1px solid #EEEEEE;
+    clear: both;
+    height: 10px;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+table th.ralign
+,table td.ralign{
+	text-align:right;
+}
+table th.calign
+,table td.calign{
+	text-align:center;
+}
+table th.lalign
+,table td.lalign{
+	text-align:left;
+}
+.input-large.ui-autocomplete-input{
+	width: 183px;
+}
+jqComboBox.input-prepend .add-on, .jqComboBox.input-append .add-on{
+	vertical-align: top;
+}
+.control-group.center{
+	text-align:center;
+}
+.drop-files {
+	border:1px dashed #000000;
+	padding-top:10px;
+}
+/* Generic context menu styles */
+.contextMenu {
+	position: absolute;
+	width: 120px;
+	z-index: 99999;
+	border: solid 1px #CCC;
+	background: #FFF;
+	padding: 0px;
+	margin: 0px;
+	display: none;
+}
+.contextMenu.dropdown-menu {
+	border-radius: 5px;
+}
+/* End Generic context menu styles */
+/* alpha , omega  
+.span1.alpha
+,.span2.alpha 
+,.span3.alpha 
+,.span4.alpha 
+,.span5.alpha 
+,.span6.alpha 
+,.span7.alpha 
+,.span8.alpha 
+,.span9.alpha 
+,.span10.alpha 
+,.span11.alpha 
+,.span12.alpha 
+{
+	margin-left:0;
+}
+.span1.omega 
+,.span2.omega 
+,.span3.omega 
+,.span4.omega 
+,.span5.omega 
+,.span6.omega 
+,.span7.omega 
+,.span8.omega 
+,.span9.omega 
+,.span10.omega 
+,.span11.omega 
+,.span12.omega 
+{
+	margin-right:0;
+}
+  end alpha, omega */
+ /* deal */
+ .deal-detail-list{
+ 	clear:both;
+ 	margin-left:15px;
+ 	margin-right:15px;
+ }
+ /* end deal */
