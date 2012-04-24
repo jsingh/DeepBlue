@@ -320,7 +320,7 @@
 			if(attr.indexOf("jHelper.isCurrency")>0) {
 				if($.trim(this.value)!="") {
 					var number=$(this).val();
-					number=$.formatNumber(number,{ format: "#,###.00",locale: "us" });
+					number=$.formatNumber(number,{ format: "#,###",locale: "us" });
 					$(this).val(number);
 				}
 			}
@@ -379,6 +379,12 @@ $.extend(window,{
 		if(f==0) { format="#,###"; }
 		var n=$.formatNumber(d,{ format: format,locale: "us" });
 		if(n==".00") { n=""; }
+		if($.trim(n)!="") {
+			var l3=n.substr(n.length-3,n.length);
+			if(l3==".00") {
+				n=n.substr(0,n.length-3);
+			}
+		}
 		return n;
 	}
 	,checkNullOrZero: function (d) { if(d==null) { d=0; } if(isNaN(d)) { d=0; } if(d==0) { return ""; } else { return d; } }

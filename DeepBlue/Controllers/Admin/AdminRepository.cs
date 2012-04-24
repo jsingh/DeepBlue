@@ -1526,7 +1526,7 @@ namespace DeepBlue.Controllers.Admin {
 		public List<AutoCompleteList> FindStates(string stateName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> stateListQuery = (from state in context.STATEsTable
-															   where state.Name.StartsWith(stateName)
+															   where state.Name.StartsWith(stateName) && state.Name != "Others"
 															   orderby state.Name
 															   select new AutoCompleteList {
 																   id = state.StateID,
@@ -2424,13 +2424,13 @@ namespace DeepBlue.Controllers.Admin {
 		public bool DealContactNameAvailable(string dealContactName, int contactID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from contact in GetDealContactsTable(context.Contacts)
-							where contact.ContactName == dealContactName && contact.ContactID != contactID 
-							select new DealContactList {
-								ContactId = contact.ContactID,
-								ContactName = contact.ContactName,
-								ContactTitle = contact.Title,
-								ContactNotes = contact.Notes,
-							}).Count() > 0 ? true : false;
+						where contact.ContactName == dealContactName && contact.ContactID != contactID
+						select new DealContactList {
+							ContactId = contact.ContactID,
+							ContactName = contact.ContactName,
+							ContactTitle = contact.Title,
+							ContactNotes = contact.Notes,
+						}).Count() > 0 ? true : false;
 			}
 		}
 
@@ -2859,7 +2859,7 @@ namespace DeepBlue.Controllers.Admin {
 							URL = entityMenu.Menu.URL,
 							MenuName = entityMenu.Menu.DisplayName,
 							ParentMenuID = (entityMenu.Menu.ParentMenuID ?? 0),
-							 SortOrder = entityMenu.SortOrder
+							SortOrder = entityMenu.SortOrder
 						}).ToList();
 			}
 		}
@@ -2872,10 +2872,10 @@ namespace DeepBlue.Controllers.Admin {
 														 EntityMenuID = entityMenu.EntityMenuID,
 														 MenuID = entityMenu.MenuID,
 														 MenuName = (entityMenu.Menu.Menu2 != null ? (entityMenu.Menu.Menu2.Menu2 != null ? entityMenu.Menu.Menu2.Menu2.DisplayName + " -> " : string.Empty) + entityMenu.Menu.Menu2.DisplayName + " -> " : string.Empty) + entityMenu.Menu.DisplayName,
-  														   ParentMenuID = entityMenu.Menu.ParentMenuID,
-														    SortOrder = entityMenu.SortOrder,
-															 Title = entityMenu.Menu.Title,
-															  URL = entityMenu.Menu.URL
+														 ParentMenuID = entityMenu.Menu.ParentMenuID,
+														 SortOrder = entityMenu.SortOrder,
+														 Title = entityMenu.Menu.Title,
+														 URL = entityMenu.Menu.URL
 													 });
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<EntityMenuModel> paginatedList = new PaginatedList<EntityMenuModel>(query, pageIndex, pageSize);
@@ -2889,14 +2889,14 @@ namespace DeepBlue.Controllers.Admin {
 				return (from entityMenu in context.EntityMenusTable
 						where entityMenu.EntityMenuID == id
 						select new EntityMenuModel {
-								DisplayName = (entityMenu.DisplayName == string.Empty ? entityMenu.Menu.DisplayName : entityMenu.DisplayName),
-								EntityMenuID = entityMenu.EntityMenuID,
-								MenuID = entityMenu.MenuID,
-								MenuName = (entityMenu.Menu.Menu2 != null ? (entityMenu.Menu.Menu2.Menu2 != null ? entityMenu.Menu.Menu2.Menu2.DisplayName + " -> " : string.Empty) + entityMenu.Menu.Menu2.DisplayName + " -> " : string.Empty) + entityMenu.Menu.DisplayName,
-								ParentMenuID = entityMenu.Menu.ParentMenuID,
-								SortOrder  = entityMenu.SortOrder,
-								Title = entityMenu.Menu.Title,
-								URL  = entityMenu.Menu.URL 
+							DisplayName = (entityMenu.DisplayName == string.Empty ? entityMenu.Menu.DisplayName : entityMenu.DisplayName),
+							EntityMenuID = entityMenu.EntityMenuID,
+							MenuID = entityMenu.MenuID,
+							MenuName = (entityMenu.Menu.Menu2 != null ? (entityMenu.Menu.Menu2.Menu2 != null ? entityMenu.Menu.Menu2.Menu2.DisplayName + " -> " : string.Empty) + entityMenu.Menu.Menu2.DisplayName + " -> " : string.Empty) + entityMenu.Menu.DisplayName,
+							ParentMenuID = entityMenu.Menu.ParentMenuID,
+							SortOrder = entityMenu.SortOrder,
+							Title = entityMenu.Menu.Title,
+							URL = entityMenu.Menu.URL
 						}).SingleOrDefault();
 			}
 		}
@@ -2929,6 +2929,150 @@ namespace DeepBlue.Controllers.Admin {
 
 		public IEnumerable<ErrorInfo> SaveEntityMenu(EntityMenu entityMenu) {
 			return entityMenu.Save();
+		}
+
+		#endregion
+
+		#region Address
+
+		public Address FindAddress(int addressID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.Addresses.Where(address => address.AddressID == addressID).FirstOrDefault();
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveAddress(Address address) {
+			return address.Save();
+		}
+
+		#endregion
+
+		#region ScheduleK1
+
+		public bool DeleteScheduleK1(int id) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				PartnersShareForm partnersShareForm = context.PartnersShareFormsTable.SingleOrDefault(schedule => schedule.PartnersShareFormID == id);
+				if (partnersShareForm != null) {
+					context.PartnersShareForms.DeleteObject(partnersShareForm);
+					context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveScheduleK1(PartnersShareForm scheduleK1) {
+			return scheduleK1.Save();
+		}
+
+		public PartnersShareForm FindScheduleK1(int partnersShareFormID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.PartnersShareFormsTable.Where(schedule => schedule.PartnersShareFormID == partnersShareFormID).FirstOrDefault();
+			}
+		}
+
+		public ScheduleK1Model FindScheduleK1Model(int partnersShareFormID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from schedule in context.PartnersShareFormsTable
+						where schedule.PartnersShareFormID == partnersShareFormID
+						select new ScheduleK1Model {
+							AlternativeMinimumTax = schedule.AlternativeMinimumTax,
+							BeginingCapital = schedule.BeginingCapital,
+							BeginingLoss = schedule.BeginingLoss,
+							BeginingProfit = schedule.BeginingProfit,
+							BeginningCapitalAccount = schedule.BeginningCapitalAccount,
+							CapitalContributed = schedule.CapitalContributed,
+							Collectibles28GainLoss = schedule.Collectibles28GainLoss,
+							Credits = schedule.Credits,
+							CurrentYearIncrease = schedule.CurrentYearIncrease,
+							Distribution = schedule.Distribution,
+							EndingCapital = schedule.EndingCapital,
+							EndingCapitalAccount = schedule.EndingCapitalAccount,
+							EndingLoss = schedule.EndingLoss,
+							EndingProfit = schedule.EndingProfit,
+							ForeignTransaction = schedule.ForeignTransaction,
+							FundID = schedule.FundID,
+							GuaranteedPayment = schedule.GuaranteedPayment,
+							InterestIncome = schedule.InterestIncome,
+							IRSCenter = schedule.IRSCenter,
+							NetLongTermCapitalGainLoss = schedule.NetLongTermCapitalGainLoss,
+							NetRentalRealEstateIncome = schedule.NetRentalRealEstateIncome,
+							NetSection1231GainLoss = schedule.NetSection1231GainLoss,
+							NetShortTermCapitalGainLoss = schedule.NetShortTermCapitalGainLoss,
+							NonRecourse = schedule.NonRecourse,
+							OrdinaryBusinessIncome = schedule.OrdinaryBusinessIncome,
+							OrdinaryDividends = schedule.OrdinaryDividends,
+							OtherDeduction = schedule.OtherDeduction,
+							OtherIncomeLoss = schedule.OtherIncomeLoss,
+							OtherInformation = schedule.OtherInformation,
+							OtherNetRentalIncomeLoss = schedule.OtherNetRentalIncomeLoss,
+							PartnerAddressID = schedule.PartnerAddressID,
+							PartnerEIN = schedule.PartnerEIN,
+							PartnershipEIN = schedule.PartnershipEIN,
+							PartnerType = schedule.PartnerType,
+							QualifiedDividends = schedule.QualifiedDividends,
+							QualifiedNonRecourseFinancing = schedule.QualifiedNonRecourseFinancing,
+							Recourse = schedule.Recourse,
+							Royalties = schedule.Royalties,
+							Section179Deduction = schedule.Section179Deduction,
+							SelfEmploymentEarningLoss = schedule.SelfEmploymentEarningLoss,
+							TaxExemptIncome = schedule.TaxExemptIncome,
+							UnderlyingFundID = schedule.UnderlyingFundID,
+							UnrecapturedSection1250Gain = schedule.UnrecapturedSection1250Gain,
+							WithdrawalsAndDistributions = schedule.WithdrawalsAndDistributions,
+							FundName = schedule.Fund.FundName,
+							UnderlyingFundName = schedule.UnderlyingFund.FundName,
+							IsDomesticPartner = schedule.IsDomesticPartner,
+							IsForeignPartner = schedule.IsForeignPartner,
+							IsGAAP = schedule.IsGAAP,
+							IsGain = schedule.IsGain,
+							IsGeneralPartner = schedule.IsGeneralPartner,
+							IsLimitedPartner = schedule.IsLimitedPartner,
+							IsOther = schedule.IsOther,
+							IsPTP = schedule.IsPTP,
+							IsSection704 = schedule.IsSection704,
+							IsTaxBasis = schedule.IsTaxBasis,
+							PartnerAddress1 = schedule.Address.Address1,
+							PartnerAddress2 = schedule.Address.Address2,
+							PartnerCity = schedule.Address.City,
+							PartnerCountry = schedule.Address.Country,
+							PartnerCountryName = schedule.Address.COUNTRY1.CountryName,
+							PartnersShareFormID = schedule.PartnersShareFormID,
+							PartnerState = schedule.Address.State,
+							PartnerStateName = schedule.Address.STATE1.Name,
+							PartnerZip = schedule.Address.PostalCode,
+							PartnershipAddress1 = (schedule.UnderlyingFund.Address != null ? schedule.UnderlyingFund.Address.Address1 : string.Empty),
+							PartnershipAddress2 = (schedule.UnderlyingFund.Address != null ? schedule.UnderlyingFund.Address.Address2 : string.Empty),
+							PartnershipCity = (schedule.UnderlyingFund.Address != null ? schedule.UnderlyingFund.Address.City : string.Empty),
+							PartnershipCountryName = (schedule.UnderlyingFund.Address != null ? schedule.UnderlyingFund.Address.COUNTRY1.CountryName : string.Empty),
+							PartnershipStateName = (schedule.UnderlyingFund.Address != null ? (schedule.UnderlyingFund.Address.STATE1 != null ? schedule.UnderlyingFund.Address.STATE1.Name : string.Empty) : string.Empty),
+							PartnershipZip = (schedule.UnderlyingFund.Address != null ? schedule.UnderlyingFund.Address.PostalCode : string.Empty)
+						}).FirstOrDefault();
+			}
+		}
+
+		public List<Models.Admin.ScheduleK1ListModel> GetAllScheduleK1s(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? fundID, int? underlyingFundID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.PartnersShareForm> scheduleK1s = context.PartnersShareFormsTable;
+				if (fundID > 0) {
+					scheduleK1s = scheduleK1s.Where(schedule => schedule.FundID == fundID);
+				}
+				if (underlyingFundID > 0) {
+					scheduleK1s = scheduleK1s.Where(schedule => schedule.UnderlyingFundID == underlyingFundID);
+				}
+				IQueryable<Models.Admin.ScheduleK1ListModel> query = (from schedule in scheduleK1s
+																	  select new ScheduleK1ListModel {
+																		  PartnersShareFormID = schedule.PartnersShareFormID,
+																		  FundName = schedule.Fund.FundName,
+																		  UnderlyingFundName = schedule.UnderlyingFund.FundName,
+																		  PartnerEIN = schedule.PartnerEIN,
+																		  PartnershipEIN = schedule.PartnershipEIN
+																	  });
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<Models.Admin.ScheduleK1ListModel> paginatedList = new PaginatedList<Models.Admin.ScheduleK1ListModel>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
 		}
 
 		#endregion

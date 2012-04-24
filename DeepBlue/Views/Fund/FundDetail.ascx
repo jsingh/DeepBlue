@@ -2,7 +2,7 @@
 <%@ Import Namespace="DeepBlue.Helpers" %>
 <%using (Html.Form(new { @id = "${getFormIndex()}", @onsubmit = "return false;" })) {%>
 <div class="fund-box">
-	<div class="fund-box-titie">
+	<div class="fund-box-title">
 		Fund Details</div>
 </div>
 <div class="line">

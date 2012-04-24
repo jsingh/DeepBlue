@@ -7,12 +7,8 @@ using System.ComponentModel.DataAnnotations;
 using DeepBlue.Helpers;
 
 namespace DeepBlue.Models.Entity {
-	
-
 	public partial class DeepBlueEntities : ObjectContext {
-
 		#region Entity Filters
-
 		public IQueryable<Account> AccountsTable {
 			get {
 				return this.Accounts.EntityFilter();
@@ -579,7 +575,11 @@ namespace DeepBlue.Models.Entity {
 				return this.Menus.EntityFilter();
 			}
 		}
+		public IQueryable<PartnersShareForm> PartnersShareFormsTable {
+			get {
+				return this.PartnersShareForms.EntityFilter();
+			}
+		}
 		#endregion
 	}
-
 }

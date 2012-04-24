@@ -36,6 +36,9 @@
     <PublishDatabases>false</PublishDatabases>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accessibility">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -81,6 +84,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="wnvhtmlconvert, Version=3.9.0.25692, Culture=neutral, PublicKeyToken=5b5f377bc08a4d32, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\wnvhtmlconvert.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Account\AccountController.cs" />
@@ -106,6 +113,8 @@
     <Compile Include="Helpers\Authentication.cs" />
     <Compile Include="Helpers\AuthorizeUsersAttribute.cs" />
     <Compile Include="Helpers\CacheExtensions.cs" />
+    <Compile Include="Helpers\FakeView.cs" />
+    <Compile Include="Helpers\HtmlViewRenderer.cs" />
     <Compile Include="Helpers\JavaScript.cs" />
     <Compile Include="Helpers\SystemEntityAuthorizeAttribute.cs" />
     <Compile Include="Helpers\OtherEntityAuthorizeAttribute.cs" />
@@ -114,7 +123,6 @@
     <Compile Include="Helpers\EntityPermission.cs" />
     <Compile Include="Helpers\ExcelConnection.cs" />
     <Compile Include="Helpers\ExportExcel.cs" />
-    <Compile Include="Helpers\ExportPdfResult.cs" />
     <Compile Include="Helpers\ExportToPdf.cs" />
     <Compile Include="Helpers\ExportWordResult.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
@@ -155,6 +163,7 @@
     <Compile Include="Models\Admin\FundExportExcelModel.cs" />
     <Compile Include="Models\Admin\InvestorExportExcelModel.cs" />
     <Compile Include="Models\Admin\MenuModel.cs" />
+    <Compile Include="Models\Admin\ScheduleK1Model.cs" />
     <Compile Include="Models\Admin\UnderlyingDirectExportExcelModel.cs" />
     <Compile Include="Models\Admin\UnderlyingFundExportExcelModel.cs" />
     <Compile Include="Models\CapitalCall\CapitalCallInvestorDetail.cs" />
@@ -281,6 +290,7 @@
     <Compile Include="Models\Entity\Partial\EntityMenuService.cs" />
     <Compile Include="Models\Entity\Partial\EntityService.cs" />
     <Compile Include="Models\Entity\Partial\MenuService.cs" />
+    <Compile Include="Models\Entity\Partial\PartnersShareFormService.cs" />
     <Compile Include="Models\Entity\Partial\SellerTypeService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingDirectDividendDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundContactService.cs" />
@@ -317,6 +327,7 @@
     <Compile Include="Models\Entity\Validation\FundAccount.cs" />
     <Compile Include="Models\Entity\Validation\FundRateSchedule.cs" />
     <Compile Include="Models\Entity\Validation\Menu.cs" />
+    <Compile Include="Models\Entity\Validation\PartnersShareForm.cs" />
     <Compile Include="Models\Entity\Validation\SellerType.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingDirectDividendDistribution.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundContact.cs" />
@@ -377,6 +388,7 @@
     <Compile Include="Models\Fund\FundBankDetail.cs" />
     <Compile Include="Models\Fund\FundRateScheduleTierDetail.cs" />
     <Compile Include="Models\Fund\InvestorListModel.cs" />
+    <Compile Include="Models\Admin\ScheduleK1ListModel.cs" />
     <Compile Include="Models\Investor\AccountInformation.cs" />
     <Compile Include="Models\Investor\AddressInformation.cs" />
     <Compile Include="Models\Investor\BankDetail.cs" />
@@ -661,6 +673,8 @@
     <Compile Include="ViewEngines\TemplateWebformViewEngine.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\javascripts\ScheduleK1.js" />
+    <Content Include="Assets\stylesheets\schedulek1.css" />
     <Content Include="Assets\stylesheets\newdeallayout.css" />
     <Content Include="Templates\BootStrap\Assets\images\glyphicons-halflings-white.png" />
     <Content Include="Templates\BootStrap\Assets\images\glyphicons-halflings.png" />
@@ -1325,8 +1339,10 @@
     <Content Include="Views\Admin\CashDistributionType.aspx" />
     <Content Include="Views\Admin\Entities.aspx" />
     <Content Include="Views\Admin\EntityMenu.aspx" />
+    <Content Include="Views\Admin\ExportScheduleK1.aspx" />
     <Content Include="Views\Admin\FileUpload.ascx" />
     <Content Include="Views\Admin\Menu.aspx" />
+    <Content Include="Views\Admin\ScheduleK1.aspx" />
     <Content Include="Views\Admin\UnderlyingDirectExportExcel.ascx" />
     <Content Include="Views\Admin\UnderlyingFundExportExcel.ascx" />
     <Content Include="Views\Admin\FundExportExcel.ascx" />
@@ -1360,6 +1376,8 @@
     <Content Include="Views\Admin\SecurityType.aspx" />
     <Content Include="Views\Admin\ShareClassType.aspx" />
     <Content Include="Views\Admin\UnderlyingFundType.aspx" />
+    <Content Include="Views\Admin\ScheduleK1Detail.ascx" />
+    <Content Include="Views\Admin\ViewPage1.aspx" />
     <Content Include="Views\CapitalCall\CapitalCallDetail.ascx" />
     <Content Include="Views\CapitalCall\CapitalCallInvestorDetail.ascx" />
     <Content Include="Views\CapitalCall\CapitalCallList.ascx" />

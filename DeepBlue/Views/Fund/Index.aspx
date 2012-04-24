@@ -35,7 +35,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="fund-box">
+	<div class="schedule-box">
 		<div class="header">
 			<div id="TabMain" class="section-tab-main">
 				<div class="section-tab-box">
@@ -48,7 +48,7 @@
 	</div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-	<div class="fund-main">
+	<div class="schedule-main">
 		<div class="section-det" id="FundDetail">
 			<% Html.RenderPartial("TBoxTop"); %>
 			<table id="FundList" cellpadding="0" cellspacing="0" border="0" class="grid">

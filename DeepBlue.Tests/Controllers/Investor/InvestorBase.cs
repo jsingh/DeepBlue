@@ -91,6 +91,7 @@ namespace DeepBlue.Tests.Controllers.Investor {
             states.Add(new STATE() { StateID = 49, Abbr = "WV", Name = "West Virginia" });
             states.Add(new STATE() { StateID = 50, Abbr = "WI", Name = "Wisconsin" });
             states.Add(new STATE() { StateID = 51, Abbr = "WY", Name = "Wyoming" });
+			states.Add(new STATE() { StateID = 52, Abbr = "", Name = "Others" });
             return states;
         }
 

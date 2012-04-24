@@ -7,6 +7,7 @@ using DeepBlue.Helpers;
 using System.Web.DynamicData;
 using DeepBlue.Models.Deal;
 using DeepBlue.Models.Admin;
+using DeepBlue.Models.Fund;
 
 namespace DeepBlue.Controllers.Admin {
 	public interface IAdminRepository {
@@ -19,7 +20,7 @@ namespace DeepBlue.Controllers.Admin {
 		#endregion
 
 		#region InvestorManagement
-		
+
 		#region EntityType
 		List<InvestorEntityType> GetAllInvestorEntityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		InvestorEntityType FindInvestorEntityType(int id);
@@ -190,7 +191,7 @@ namespace DeepBlue.Controllers.Admin {
 		IEnumerable<ErrorInfo> SaveFileType(FileType fileType);
 		List<FileType> GetAllFileTypes();
 		#endregion
-		
+
 		#region File
 		IEnumerable<ErrorInfo> SaveFile(File file);
 		File FindFile(int fileId);
@@ -272,7 +273,7 @@ namespace DeepBlue.Controllers.Admin {
 		InvestorExportExcelModel GetAllInvestorExportList();
 		FundExportExcelModel GetAllFundExportList();
 		UnderlyingFundExportExcelModel GetAllUnderlyingFundExportList();
-		 UnderlyingDirectExportExcelModel GetAllUnderlyingDirectExportList();
+		UnderlyingDirectExportExcelModel GetAllUnderlyingDirectExportList();
 		#endregion
 
 		#region DealContacts
@@ -283,7 +284,7 @@ namespace DeepBlue.Controllers.Admin {
 		bool DealContactNameAvailable(string dealContactName, int contactID);
 		bool DeleteDealContact(int id);
 		#endregion
-		
+
 		#region User
 		List<USER> GetAllUsers(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		USER FindUser(int id);
@@ -336,6 +337,11 @@ namespace DeepBlue.Controllers.Admin {
 		List<AutoCompleteList> FindMenus(string menuName, int? menuID);
 		#endregion
 
+		#region Address
+		Address FindAddress(int addressID);
+		IEnumerable<ErrorInfo> SaveAddress(Address address);
+		#endregion
+
 		#region EntityMenu
 		int? GetEntityMenuCount(int entityID);
 		List<EntityMenuModel> GetAllEntityMenus();
@@ -346,6 +352,14 @@ namespace DeepBlue.Controllers.Admin {
 		bool DeleteEntityMenu(int id);
 		bool SaveEntityMenu(int entityID);
 		IEnumerable<ErrorInfo> SaveEntityMenu(EntityMenu entityMenu);
+		#endregion
+
+		#region ScheduleK1
+		List<ScheduleK1ListModel> GetAllScheduleK1s(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? fundID, int? underlyingFundID);
+		ScheduleK1Model FindScheduleK1Model(int partnersShareFormID);
+		PartnersShareForm FindScheduleK1(int partnersShareFormID);
+		bool DeleteScheduleK1(int id);
+		IEnumerable<ErrorInfo> SaveScheduleK1(PartnersShareForm scheduleK1);
 		#endregion
 	}
 }

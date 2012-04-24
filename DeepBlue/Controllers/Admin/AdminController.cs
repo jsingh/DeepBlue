@@ -11,6 +11,7 @@ using DeepBlue.Controllers.Transaction;
 using DeepBlue.Models.Deal;
 using DeepBlue.Controllers.Deal;
 using System.IO;
+using Winnovative.WnvHtmlConvert;
 
 namespace DeepBlue.Controllers.Admin {
 
@@ -3950,6 +3951,210 @@ namespace DeepBlue.Controllers.Admin {
 				return "EntityMenu Name already exists.";
 			else
 				return string.Empty;
+		}
+
+		#endregion
+
+		#region ScheduleK1
+
+		[OtherEntityAuthorize]
+		[HttpGet]
+		public ActionResult ScheduleK1() {
+			return View(new ScheduleK1Model());
+		}
+
+		//
+		// GET: /Admin/ScheduleK1List
+		[OtherEntityAuthorize]
+		[HttpGet]
+		public ActionResult ScheduleK1List(int pageIndex, int pageSize, string sortName, string sortOrder, int? fundID, int? underlyingFundID) {
+			FlexigridData flexgridData = new FlexigridData();
+			int totalRows = 0;
+			List<ScheduleK1ListModel> scheduleK1s = AdminRepository.GetAllScheduleK1s(pageIndex, pageSize, sortName, sortOrder, ref totalRows, fundID, underlyingFundID);
+			flexgridData.total = totalRows;
+			flexgridData.page = pageIndex;
+			foreach (var schedule in scheduleK1s) {
+				flexgridData.rows.Add(new FlexigridRow {
+					cell = new List<object> {
+							 schedule.PartnersShareFormID,
+							 schedule.UnderlyingFundName,
+							 schedule.PartnershipEIN,
+							 schedule.FundName,
+							 schedule.PartnerEIN
+					}
+				});
+			}
+			return Json(flexgridData, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/FindScheduleK1/1
+		[OtherEntityAuthorize]
+		[HttpGet]
+		public JsonResult FindScheduleK1(int id) {
+			ScheduleK1Model model = AdminRepository.FindScheduleK1Model(id);
+			if (model == null) {
+				model = new ScheduleK1Model();
+			}
+			return Json(model, JsonRequestBehavior.AllowGet);
+		}
+
+		//
+		// GET: /Admin/CreateScheduleK1
+		[HttpPost]
+		public ActionResult CreateScheduleK1(FormCollection collection) {
+			ScheduleK1Model model = new ScheduleK1Model();
+			this.TryUpdateModel(model);
+			IEnumerable<ErrorInfo> errorInfo = null;
+			ResultModel resultModel = new ResultModel();
+			if (ModelState.IsValid) {
+				PartnersShareForm scheduleK1;
+				if (model.PartnersShareFormID > 0) {
+					scheduleK1 = AdminRepository.FindScheduleK1((model.PartnersShareFormID ?? 0));
+				}
+				else {
+					scheduleK1 = new PartnersShareForm();
+					scheduleK1.CreatedBy = Authentication.CurrentUser.UserID;
+					scheduleK1.CreatedDate = DateTime.Now;
+				}
+
+				scheduleK1.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				scheduleK1.LastUpdatedDate = DateTime.Now;
+				scheduleK1.EntityID = Authentication.CurrentEntity.EntityID;
+
+				scheduleK1.AlternativeMinimumTax = model.AlternativeMinimumTax;
+				scheduleK1.BeginingCapital = model.BeginingCapital;
+				scheduleK1.BeginingLoss = model.BeginingLoss;
+				scheduleK1.BeginingProfit = model.BeginingProfit;
+				scheduleK1.BeginningCapitalAccount = model.BeginningCapitalAccount;
+				scheduleK1.CapitalContributed = model.CapitalContributed;
+				scheduleK1.Collectibles28GainLoss = model.Collectibles28GainLoss;
+				scheduleK1.Credits = model.Credits;
+				scheduleK1.CurrentYearIncrease = model.CurrentYearIncrease;
+				scheduleK1.Distribution = model.Distribution;
+				scheduleK1.EndingCapital = model.EndingCapital;
+				scheduleK1.EndingCapitalAccount = model.EndingCapitalAccount;
+				scheduleK1.EndingLoss = model.EndingLoss;
+				scheduleK1.EndingProfit = model.EndingProfit;
+				scheduleK1.ForeignTransaction = model.ForeignTransaction;
+				scheduleK1.FundID = model.FundID;
+				scheduleK1.GuaranteedPayment = model.GuaranteedPayment;
+				scheduleK1.InterestIncome = model.InterestIncome;
+				scheduleK1.IRSCenter = model.IRSCenter;
+				scheduleK1.IsDomesticPartner = model.IsDomesticPartner;
+				scheduleK1.IsForeignPartner = model.IsForeignPartner;
+				scheduleK1.IsGAAP = model.IsGAAP;
+				scheduleK1.IsGain = model.IsGain;
+				scheduleK1.IsGeneralPartner = model.IsGeneralPartner;
+				scheduleK1.IsLimitedPartner = model.IsLimitedPartner;
+				scheduleK1.IsOther = model.IsOther;
+				scheduleK1.IsPTP = model.IsPTP;
+				scheduleK1.IsSection704 = model.IsSection704;
+				scheduleK1.IsTaxBasis = model.IsTaxBasis;
+				scheduleK1.NetLongTermCapitalGainLoss = model.NetLongTermCapitalGainLoss;
+				scheduleK1.NetRentalRealEstateIncome = model.NetRentalRealEstateIncome;
+				scheduleK1.NetSection1231GainLoss = model.NetSection1231GainLoss;
+				scheduleK1.NetShortTermCapitalGainLoss = model.NetShortTermCapitalGainLoss;
+				scheduleK1.NonRecourse = model.NonRecourse;
+				scheduleK1.OrdinaryBusinessIncome = model.OrdinaryBusinessIncome;
+				scheduleK1.OrdinaryDividends = model.OrdinaryDividends;
+				scheduleK1.OtherDeduction = model.OtherDeduction;
+				scheduleK1.OtherIncomeLoss = model.OtherIncomeLoss;
+				scheduleK1.OtherInformation = model.OtherInformation;
+				scheduleK1.OtherNetRentalIncomeLoss = model.OtherNetRentalIncomeLoss;
+				scheduleK1.PartnerEIN = model.PartnerEIN;
+				scheduleK1.PartnershipEIN = model.PartnershipEIN;
+				scheduleK1.PartnerType = model.PartnerType;
+				scheduleK1.QualifiedDividends = model.QualifiedDividends;
+				scheduleK1.QualifiedNonRecourseFinancing = model.QualifiedNonRecourseFinancing;
+				scheduleK1.Recourse = model.Recourse;
+				scheduleK1.Royalties = model.Royalties;
+				scheduleK1.Section179Deduction = model.Section179Deduction;
+				scheduleK1.SelfEmploymentEarningLoss = model.SelfEmploymentEarningLoss;
+				scheduleK1.TaxExemptIncome = model.TaxExemptIncome;
+				scheduleK1.UnderlyingFundID = model.UnderlyingFundID;
+				scheduleK1.UnrecapturedSection1250Gain = model.UnrecapturedSection1250Gain;
+				scheduleK1.WithdrawalsAndDistributions = model.WithdrawalsAndDistributions;
+
+				Address partnerAddress = null;
+
+				if (model.PartnerAddressID > 0) {
+					partnerAddress = AdminRepository.FindAddress((model.PartnerAddressID ?? 0));
+				}
+
+				if (partnerAddress == null) {
+					partnerAddress = new Address();
+					partnerAddress.CreatedBy = Authentication.CurrentUser.UserID;
+					partnerAddress.CreatedDate = DateTime.Now;
+				}
+
+				partnerAddress.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				partnerAddress.LastUpdatedDate = DateTime.Now;
+				partnerAddress.EntityID = Authentication.CurrentEntity.EntityID;
+				partnerAddress.Address1 = model.PartnerAddress1;
+				partnerAddress.Address2 = model.PartnerAddress2;
+				partnerAddress.AddressTypeID = (int)DeepBlue.Models.Admin.Enums.AddressType.Work;
+				partnerAddress.City = model.PartnerCity;
+				partnerAddress.Country = model.PartnerCountry;
+				partnerAddress.State = model.PartnerState;
+				partnerAddress.PostalCode = model.PartnerZip;
+				errorInfo = AdminRepository.SaveAddress(partnerAddress);
+
+				if (errorInfo == null) {
+					scheduleK1.PartnerAddressID = partnerAddress.AddressID;
+					errorInfo = AdminRepository.SaveScheduleK1(scheduleK1);
+				}
+
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		//
+		// GET: /Admin/DeleteScheduleK1/1
+		[OtherEntityAuthorize]
+		[HttpGet]
+		public string DeleteScheduleK1(int id) {
+			if (AdminRepository.DeleteScheduleK1(id) == false) {
+				return "Cann't Delete! Child record found!";
+			}
+			else {
+				return string.Empty;
+			}
+		}
+
+		//
+		// GET: /Admin/ExportScheduleK1/1
+		[OtherEntityAuthorize]
+		[HttpGet]
+		public ActionResult ExportScheduleK1Pdf(int id) {
+			HtmlViewRenderer htmlViewRenderer = new HtmlViewRenderer();
+			var model = AdminRepository.FindScheduleK1Model(id);
+			// Render the view html to a string.
+			string htmlText = htmlViewRenderer.RenderViewToString(this, "ExportScheduleK1", model);
+			return new ExportToPdf("ScheduleK1.pdf", htmlText);
+		}
+
+
+		//
+		// GET: /Admin/ExportScheduleK1/1
+		[OtherEntityAuthorize]
+		[HttpGet]
+		public ActionResult ExportScheduleK1(int id) {
+			return View(AdminRepository.FindScheduleK1Model(id));
 		}
 
 		#endregion
