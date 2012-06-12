@@ -361,7 +361,7 @@
 				<td>${row.UnderlyingFundName}</td>
 				<td>${row.FundName}</td>
 				<td style="text-align:right">${formatCurrency(row.Amount)}</td>
-				<td>${formatDate(row.NoticeDate)}</td>
+				<td>${formatDate(row.DueDate)}</td>
 			</tr>
 		{{/each}}
 	<%}%>

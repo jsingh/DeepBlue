@@ -127,6 +127,8 @@
 						}
 					});
 			}
+
+			try { $(this.element).tipTip(); } catch(e) { }
 		},
 
 		destroy: function () {

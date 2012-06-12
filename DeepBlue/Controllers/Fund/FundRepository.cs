@@ -39,14 +39,14 @@ namespace DeepBlue.Controllers.Fund {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<InvestorListModel> investorFundListQuery = (from investorFund in context.InvestorFundsTable
 																	   where investorFund.FundID == fundId
-																  select new InvestorListModel {
-																		    InvestorName = investorFund.Investor.InvestorName,
-																			CommittedAmount = investorFund.TotalCommitment,
-																			UnfundedAmount = investorFund.UnfundedAmount,
-																			CloseDate = investorFund
-																						.InvestorFundTransactions
-																						.Where(transaction => transaction.FundClosingID > 0)
-																						.FirstOrDefault().FundClosing.FundClosingDate,
+																	   select new InvestorListModel {
+																		   InvestorName = investorFund.Investor.InvestorName,
+																		   CommittedAmount = investorFund.TotalCommitment,
+																		   UnfundedAmount = investorFund.UnfundedAmount,
+																		   CloseDate = investorFund
+																					   .InvestorFundTransactions
+																					   .Where(transaction => transaction.FundClosingID > 0)
+																					   .FirstOrDefault().FundClosing.FundClosingDate,
 																	   });
 				investorFundListQuery = investorFundListQuery.OrderBy(sortName, (sortOrder == "asc"));
 				PaginatedList<InvestorListModel> paginatedList = new PaginatedList<InvestorListModel>(investorFundListQuery, pageIndex, pageSize);
@@ -83,6 +83,15 @@ namespace DeepBlue.Controllers.Fund {
 							  .SingleOrDefault(fund => fund.FundID == fundId);
 			}
 		}
+
+		public Models.Entity.Fund FindFund(string fundName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.FundsTable
+							  .Where(fund => fund.FundName == fundName)
+							  .FirstOrDefault();
+			}
+		}
+
 
 		public FundDetail FindLastFundDetail() {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {

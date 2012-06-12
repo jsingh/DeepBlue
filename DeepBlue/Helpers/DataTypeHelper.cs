@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 
 namespace DeepBlue.Helpers {
-	public class DataTypeHelper {
+	public static class DataTypeHelper {
 
 		public static decimal ToDecimal(string value) {
 			decimal returnValue;
@@ -26,6 +27,20 @@ namespace DeepBlue.Helpers {
 
 		public static bool CheckBoolean(string value) {
 		  	return (string.IsNullOrEmpty(value) ? false : value.Contains("true"));
+		}
+
+		public static string GetValue(this DataRow row, string columnName) {
+			string value = string.Empty;
+			if (string.IsNullOrEmpty(columnName) == false) {
+				columnName = columnName.Trim();
+				if (string.IsNullOrEmpty(columnName) == false) {
+					try {
+						value = row[columnName].ToString();
+					}
+					catch { }
+				}
+			}
+			return value;
 		}
 	 
 	}

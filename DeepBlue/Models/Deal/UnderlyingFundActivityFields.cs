@@ -47,5 +47,6 @@ namespace DeepBlue.Models.Deal {
 		public string FundName { get; set; }
 
 		public string UnderlyingFundName { get; set; }
+
 	}
 }

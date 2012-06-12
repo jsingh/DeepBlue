@@ -15,6 +15,7 @@ namespace DeepBlue.Controllers.Fund {
 		List<InvestorListModel> GetAllInvestorFunds(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId);
 		Helpers.FundLists GetAllFunds(int pageIndex, int pageSize);
 		Models.Entity.Fund FindFund(int fundId);
+		Models.Entity.Fund FindFund(string fundName);
 		CreateModel FindFundDetail(int fundId);
 		FundDetail FindLastFundDetail();
 		//List<AutoCompleteList> FindFunds(string fundName,ref int totalCount);

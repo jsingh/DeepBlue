@@ -47,7 +47,7 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 			 
-			[Required(ErrorMessage = "Received Date is required")]
+			//[Required(ErrorMessage = "Received Date is required")]
 			[DateRange()]
 			public global::System.DateTime ReceivedDate {
 				get;

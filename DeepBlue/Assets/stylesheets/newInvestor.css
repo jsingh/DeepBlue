@@ -164,3 +164,24 @@
 .investorinfo-box{
 	  padding-left: 55px;
 }
+.investorimportsection .editor-label {
+    width: 160px;
+    text-align:right;
+    white-space: normal;
+}
+.save-box {
+    margin: 0 auto;
+    text-align: center;
+    width: 270px;
+}
+.tabbg {
+    background-image: url("../images/tabbg.png");
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    float: left;
+    height: 43px;
+    width: 100%;
+}
+#InvestorContactBox.investorimportsection .editor-label {
+	width: 235px;
+}

@@ -13,11 +13,19 @@ using DeepBlue.Controllers.Admin;
 using DeepBlue.Models.Admin.Enums;
 using System.Text;
 using DeepBlue.Models.Admin;
+using DeepBlue.Models.Excel;
+using System.Configuration;
+using System.IO;
+ 
 
 namespace DeepBlue.Controllers.Investor {
 
 	[OtherEntityAuthorize]
 	public class InvestorController : BaseController {
+
+		#region Constants
+		private const string EXCELINVESTORERROR_BY_KEY = "Investor-Excel-{0}";
+		#endregion
 
 		public IInvestorRepository InvestorRepository { get; set; }
 
@@ -1088,7 +1096,7 @@ namespace DeepBlue.Controllers.Investor {
 					InvestorList investor = investorLists.FirstOrDefault(fundInvestor => fundInvestor.InvestorID == fundInformation.InvestorID);
 					if (investor == null) {
 						investorLists.Add(new InvestorList { FundID = fund.FundID, InvestorID = fundInformation.InvestorID, InvestorName = fundInformation.InvestorName });
-						
+
 					}
 				}
 			}
@@ -1116,6 +1124,306 @@ namespace DeepBlue.Controllers.Investor {
 		public JsonResult FindFundInvestors(string term) {
 			return Json(InvestorRepository.FindFundInvestors(term), JsonRequestBehavior.AllowGet);
 		}
+
+		#endregion
+
+		#region Import Investor
+
+
+		[HttpPost]
+		public ActionResult ImportExcel(FormCollection collection) {
+			DeepBlue.Models.Deal.ImportExcelFileModel model = new DeepBlue.Models.Deal.ImportExcelFileModel();
+			ImportExcelModel importExcelModel = new DeepBlue.Models.Excel.ImportExcelModel();
+			importExcelModel.Tables = new List<ImportExcelTableModel>();
+			this.TryUpdateModel(model);
+			if (string.IsNullOrEmpty(model.FileName)) {
+				ModelState.AddModelError("FileName", "File Name is required");
+			}
+			if (ModelState.IsValid) {
+				string rootPath = Server.MapPath("~/");
+				string uploadFilePath = Path.Combine(rootPath, string.Format(ConfigurationManager.AppSettings["TempUploadPath"], model.FileName));
+				string errorMessage = string.Empty;
+				string sessionKey = string.Empty;
+				DataSet ds = ExcelConnection.GetDataSet(uploadFilePath, uploadFilePath, ref errorMessage, ref sessionKey);
+				ImportExcelTableModel tableModel = null;
+				if (string.IsNullOrEmpty(errorMessage)) {
+					foreach (DataTable dt in ds.Tables) {
+						tableModel = new ImportExcelTableModel();
+						tableModel.TableName = dt.TableName;
+						tableModel.TotalRows = dt.Rows.Count;
+						tableModel.SessionKey = sessionKey;
+						foreach (DataColumn column in dt.Columns) {
+							tableModel.Columns.Add(column.ColumnName);
+						}
+						importExcelModel.Tables.Add(tableModel);
+					}
+				}
+				else {
+					importExcelModel.Result += errorMessage;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							importExcelModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(importExcelModel);
+		}
+
+		#region ImportInvestorExcel
+
+		[HttpPost]
+		public ActionResult ImportInvestorExcel(FormCollection collection) {
+			ImportInvestorExcelModel model = new ImportInvestorExcelModel();
+			ResultModel resultModel = new ResultModel();
+			MemoryCacheManager cacheManager = new MemoryCacheManager();
+			int totalPages = 0;
+			int totalRows = 0;
+			int completedRows = 0;
+			int? succssRows = 0;
+			int? errorRows = 0;
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				string key = string.Format(EXCELINVESTORERROR_BY_KEY, model.SessionKey);
+				List<DeepBlue.Models.Deal.ImportExcelError> errors = cacheManager.Get(key, () => {
+					return new List<DeepBlue.Models.Deal.ImportExcelError>();
+				});
+				DataSet ds = ExcelConnection.ImportExcelDataset(model.SessionKey);
+				if (ds != null) {
+					PagingDataTable importExcelTable = null;
+					if (ds.Tables[model.InvestorTableName] != null) {
+						importExcelTable = (PagingDataTable)ds.Tables[model.InvestorTableName];
+					}
+					if (importExcelTable != null) {
+						importExcelTable.PageSize = model.PageSize;
+						PagingDataTable table = importExcelTable.Skip(model.PageIndex);
+						totalPages = importExcelTable.TotalPages;
+						totalRows = importExcelTable.TotalRows;
+						if (totalPages > model.PageIndex) {
+							completedRows = (model.PageIndex * importExcelTable.PageSize);
+						}
+						else {
+							completedRows = totalRows;
+						}
+
+						int rowNumber = 0;
+
+						string investorName = string.Empty;
+						string displayName = string.Empty;
+						string socialSecurityID = string.Empty;
+						bool domesticForeign = false;
+						string stateOfResidencyName = string.Empty;
+						string entityType = string.Empty;
+						string source = string.Empty;
+						string foia = string.Empty;
+						string erisa = string.Empty;
+						string notes = string.Empty;
+						string phone = string.Empty;
+						string fax = string.Empty;
+						string email = string.Empty;
+						string webAddress = string.Empty;
+						string address1 = string.Empty;
+						string address2 = string.Empty;
+						string city = string.Empty;
+						string stateName = string.Empty;
+						string zip = string.Empty;
+						string countryName = string.Empty;
+
+						Models.Entity.InvestorEntityType investorEntityType;
+						Models.Entity.STATE stateOfResidency;
+						Models.Entity.COUNTRY country;
+						Models.Entity.STATE state;
+
+						DeepBlue.Models.Deal.ImportExcelError error;
+
+
+						EmailAttribute emailValidation = new EmailAttribute();
+						ZipAttribute zipAttribute = new ZipAttribute();
+						WebAddressAttribute webAttribute = new WebAddressAttribute();
+						IEnumerable<ErrorInfo> errorInfo;
+
+						StringBuilder rowErrors;
+						foreach (DataRow row in table.Rows) {
+							int.TryParse(row.GetValue("RowNumber"), out rowNumber);
+
+							error = new DeepBlue.Models.Deal.ImportExcelError { RowNumber = rowNumber };
+							rowErrors = new StringBuilder();
+
+							investorName = string.Empty;
+							displayName = string.Empty;
+							socialSecurityID = string.Empty;
+							domesticForeign = false;
+							stateOfResidencyName = string.Empty;
+							entityType = string.Empty;
+							source = string.Empty;
+							foia = string.Empty;
+							erisa = string.Empty;
+							phone = string.Empty;
+							fax = string.Empty;
+							email = string.Empty;
+							webAddress = string.Empty;
+							address1 = string.Empty;
+							address2 = string.Empty;
+							city = string.Empty;
+							stateName = string.Empty;
+							zip = string.Empty;
+							countryName = string.Empty;
+
+							investorEntityType = null;
+							stateOfResidency = null;
+							state = null;
+							country = null;
+
+							DeepBlue.Models.Entity.Investor investor = InvestorRepository.FindInvestor(investorName);
+
+							if (investor != null) {
+								error.Errors.Add(new ErrorInfo(model.InvestorName, "Investor already exist"));
+							}
+							else {
+
+								investor = new Models.Entity.Investor();
+
+								if (string.IsNullOrEmpty(entityType) == false) {
+									investorEntityType = AdminRepository.FindInvestorEntityType(entityType);
+								}
+
+								if (string.IsNullOrEmpty(stateOfResidencyName) == false) {
+									stateOfResidency = AdminRepository.FindState(stateOfResidencyName);
+								}
+
+								if (string.IsNullOrEmpty(countryName) == false) {
+									country = AdminRepository.FindCountry(countryName);
+								}
+
+								if (string.IsNullOrEmpty(stateName) == false) {
+									state = AdminRepository.FindState(stateName);
+								}
+
+								investor.Alias = displayName;
+								investor.IsDomestic = domesticForeign;
+								investor.InvestorEntityTypeID = (investorEntityType != null ? investorEntityType.InvestorEntityTypeID : 0);
+								investor.InvestorName = investorName;
+								investor.FirstName = displayName;
+								investor.ResidencyState = (stateOfResidency != null ? stateOfResidency.StateID : 0);
+								investor.Social = socialSecurityID;
+								investor.Notes = notes;
+
+								investor.TaxID = 0;
+								investor.FirstName = string.Empty;
+								investor.LastName = "n/a";
+								investor.ManagerName = string.Empty;
+								investor.MiddleName = string.Empty;
+								investor.PrevInvestorID = 0;
+								investor.CreatedBy = Authentication.CurrentUser.UserID;
+								investor.CreatedDate = DateTime.Now;
+								investor.LastUpdatedBy = Authentication.CurrentUser.UserID;
+								investor.LastUpdatedDate = DateTime.Now;
+								investor.EntityID = Authentication.CurrentEntity.EntityID;
+								investor.TaxExempt = false;
+
+								// Attempt to create new investor address.
+								InvestorAddress investorAddress = new InvestorAddress();
+								investorAddress.CreatedBy = Authentication.CurrentUser.UserID;
+								investorAddress.CreatedDate = DateTime.Now;
+								investorAddress.EntityID = Authentication.CurrentEntity.EntityID;
+								investorAddress.LastUpdatedBy = Authentication.CurrentUser.UserID;
+								investorAddress.LastUpdatedDate = DateTime.Now;
+
+								investorAddress.Address = new Address();
+								investorAddress.Address.Address1 = address1;
+								investorAddress.Address.Address2 = address2;
+								investorAddress.Address.AddressTypeID = (int)DeepBlue.Models.Admin.Enums.AddressType.Work;
+								investorAddress.Address.City = city;
+								investorAddress.Address.Country = (country != null ? country.CountryID : 0);
+								investorAddress.Address.CreatedBy = Authentication.CurrentUser.UserID;
+								investorAddress.Address.CreatedDate = DateTime.Now;
+								investorAddress.Address.LastUpdatedBy = Authentication.CurrentUser.UserID;
+								investorAddress.Address.LastUpdatedDate = DateTime.Now;
+								investorAddress.Address.EntityID = Authentication.CurrentEntity.EntityID;
+								investorAddress.Address.PostalCode = zip;
+								investorAddress.Address.State = (state != null ? state.StateID : 0);
+
+								if (string.IsNullOrEmpty(investorAddress.Address.Address1) == false
+									|| string.IsNullOrEmpty(investorAddress.Address.Address2) == false
+									|| string.IsNullOrEmpty(investorAddress.Address.City) == false
+									|| string.IsNullOrEmpty(investorAddress.Address.PostalCode) == false
+									|| string.IsNullOrEmpty(investorAddress.Address.County) == false
+									|| string.IsNullOrEmpty(phone) == false
+									|| string.IsNullOrEmpty(email) == false
+									|| string.IsNullOrEmpty(webAddress) == false
+									|| string.IsNullOrEmpty(fax) == false
+									) {
+
+
+									errorInfo = ValidationHelper.Validate(investorAddress.Address);
+									if (errorInfo.Any()) {
+										error.Errors.Add(new ErrorInfo(model.Address1, ValidationHelper.GetErrorInfo(errorInfo)));
+									}
+									if (emailValidation.IsValid(email) == false)
+										error.Errors.Add(new ErrorInfo(model.Email, "Invalid Email"));
+									if (zipAttribute.IsValid(zip) == false)
+										error.Errors.Add(new ErrorInfo(model.Email, "Invalid Zip"));
+									if (webAttribute.IsValid(webAddress) == false)
+										error.Errors.Add(new ErrorInfo(model.Email, "Invalid  Web Address"));
+
+									if (string.IsNullOrEmpty(resultModel.Result)) {
+										/* Add New Investor Address */
+										investor.InvestorAddresses.Add(investorAddress);
+										/* Investor Communication Values */
+										AddCommunication(investor, Models.Admin.Enums.CommunicationType.HomePhone, phone);
+										AddCommunication(investor, Models.Admin.Enums.CommunicationType.Email, email);
+										AddCommunication(investor, Models.Admin.Enums.CommunicationType.WebAddress, webAddress);
+										AddCommunication(investor, Models.Admin.Enums.CommunicationType.Fax, fax);
+									}
+								}
+
+								if (error.Errors.Count() == 0) {
+									errorInfo = InvestorRepository.SaveInvestor(investor);
+									if (errorInfo != null) {
+										error.Errors.Add(new ErrorInfo(model.InvestorName, ValidationHelper.GetErrorInfo(errorInfo)));
+									}
+								}
+							}
+
+							StringBuilder sberror = new StringBuilder();
+							foreach (var e in error.Errors) {
+								sberror.AppendFormat("{0},", e.ErrorMessage);
+							}
+							importExcelTable.AddError(rowNumber - 1, sberror.ToString());
+							errors.Add(error);
+						}
+					}
+				}
+				if (errors != null) {
+					succssRows = errors.Where(e => e.Errors.Count == 0).Count();
+					errorRows = errors.Where(e => e.Errors.Count > 0).Count();
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new {
+				Result = resultModel.Result,
+				TotalRows = totalRows,
+				CompletedRows = completedRows,
+				TotalPages = totalPages,
+				PageIndex = model.PageIndex,
+				SuccessRows = succssRows,
+				ErrorRows = errorRows
+			});
+		}
+
+		#endregion
 
 		#endregion
 	}

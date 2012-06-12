@@ -32,6 +32,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 		List<CapitalCallInvestorDetail> GetCapitalCallInvestors(int capitalCallId);
 		List<CapitalDistributionInvestorDetail> GetCapitalDistributionInvestors(int capitalDistributionId);
 		IEnumerable<ErrorInfo> SaveCapitalCall(Models.Entity.CapitalCall capitalCall);
+		IEnumerable<ErrorInfo> SaveCapitalCallOnly(Models.Entity.CapitalCall capitalCall);
 		IEnumerable<ErrorInfo> SaveCapitalCallLineItem(CapitalCallLineItem capitalCallLineItem);
 		IEnumerable<ErrorInfo> SaveCapitalDistribution(CapitalDistribution capitalDistribution);
 		IEnumerable<ErrorInfo> SaveCapitalDistributionLineItem(CapitalDistributionLineItem capitalDistributionLineItem);

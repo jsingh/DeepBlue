@@ -12,6 +12,8 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region Deal
 		Models.Entity.Deal FindDeal(int dealId);
+		Models.Entity.Deal FindDeal(string dealName, int fundID);
+		int FindDealID(string fundName, int dealNumber);
 		DealDetailModel FindDealDetail(int dealId);
 		IEnumerable<ErrorInfo> SaveDeal(Models.Entity.Deal deal);
 		List<AutoCompleteList> FindDeals(string dealName, int? fundId);
@@ -26,6 +28,8 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region DealExpense
 		DealClosingCost FindDealClosingCost(int dealClosingCostId);
+		DealClosingCost FindDealClosingCost(int dealID, decimal amount, int dealClosingCostTypeID, DateTime date);
+		DealClosingCostType FindDealClosingCostType(string dealClosingCostType);
 		DealClosingCostModel FindDealClosingCostModel(int dealClosingCostId);
 		void DeleteDealClosingCost(int dealClosingCostId);
 		IEnumerable<ErrorInfo> SaveDealClosingCost(DealClosingCost dealClosingCost);
@@ -40,6 +44,13 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region DealUnderlyingFund
 		DealUnderlyingFund FindDealUnderlyingFund(int dealUnderlyingFundId);
+		DealUnderlyingFund FindDealUnderlyingFund(int dealID
+													, int underlyingFundID
+													, decimal grossPurchasePrice
+													, DateTime effectiveDate
+													, decimal capitalCommitment
+													, decimal unfundedAmount
+													, DateTime recordDate);
 		DealUnderlyingFundModel FindDealUnderlyingFundModel(int dealUnderlyingFundId);
 		List<DealUnderlyingFundModel> GetAllDealUnderlyingFundDetails(int dealId);
 		List<DealUnderlyingFund> GetDealUnderlyingFunds(int dealId);
@@ -53,6 +64,16 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region DealUnderlyingDirect
 		DealUnderlyingDirect FindDealUnderlyingDirect(int dealUnderlyingDirectId);
+		DealUnderlyingDirect FindDealUnderlyingDirect(int dealID
+												, int securityID
+												, int securityTypeID
+												, DateTime recordDate
+												, int noOfShares
+												, decimal fmv
+												, decimal purchasePrice
+												, decimal taxCostBase
+												, DateTime taxCostDate
+												);
 		DealUnderlyingDirectModel FindDealUnderlyingDirectModel(int dealUnderlyingDirectId);
 		bool DeleteDealUnderlyingDirect(int dealUnderlyingDirectId);
 		List<DealUnderlyingDirectModel> GetAllDealUnderlyingDirects(int dealId);
@@ -63,14 +84,17 @@ namespace DeepBlue.Controllers.Deal {
 		IEnumerable<ErrorInfo> SaveDealUnderlyingDirect(DealUnderlyingDirect dealUnderlyingDirect);
 		List<AutoCompleteList> FindDealUnderlyingDirects(string fundName);
 		List<AutoCompleteListExtend> FindEquityFixedIncomeIssuers(string issuerName);
+		object FindEquities();
 		#endregion
 
 		#region DealClosing
 		IEnumerable<ErrorInfo> SaveDealClosing(DealClosing dealClosing);
 		CreateDealCloseModel FindDealClosingModel(int dealClosingId, int dealId);
+		CreateDealCloseModel FindDealClosingModel(int dealId);
 		CreateDealCloseModel GetFinalDealClosingModel(int dealId);
 		object GetFinalDealDetail(int dealId);
 		DealClosing FindDealClosing(int dealClosingId);
+		DealClosing FindDealClosing(int dealID, int fundID,DateTime closeDate);
 		List<DealClosing> GetAllDealClosing(int dealId);
 		int GetMaxDealClosingNumber(int dealId);
 		bool DealCloseDateAvailable(DateTime dealCloseDate, int dealId, int dealCloseId);
@@ -89,6 +113,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<UnderlyingFund> GetAllUnderlyingFunds();
 		CreateUnderlyingFundModel FindUnderlyingFundModel(int underlyingFundId, int issuerId);
 		UnderlyingFund FindUnderlyingFund(int underlyingFundId);
+		UnderlyingFund FindUnderlyingFund(string underlyingFundName);
 		int? FindUnderlyingFundID(string underlyingFundName);
 		int? FindFundID(string fundName);
 		Address FindUnderlyingFundAddress(int underlyingFundId);
@@ -111,6 +136,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region UnderlyingFundStockDistribution
 		UnderlyingFundStockDistribution FindUnderlyingFundStockDistribution(int underlyingFundStockDistributionId);
+		UnderlyingFundStockDistributionLineItem FindUnderlyingFundStockDistributionLineItem(int underlyingFundStockDistributionID, int underlyingFundID, int dealID);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundStockDistribution(UnderlyingFundStockDistribution underlyingFundStockDistribution);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundStockDistributionLineItem(UnderlyingFundStockDistributionLineItem underlyingFundStockDistributionLineItem);
 		List<UnderlyingFundStockDistributionModel> GetAllUnderlyingFundStockDistributions(int underlyingFundId);
@@ -139,7 +165,7 @@ namespace DeepBlue.Controllers.Deal {
 
 		#region UnderlyingFundCapitalCall
 		UnderlyingFundCapitalCall FindUnderlyingFundCapitalCall(int underlyingFundCapitalCallId);
-		object FindUnderlyingFundCapitalCall(int fundID, decimal amount, DateTime noticeDate, int underlyingFundID);
+		object FindUnderlyingFundCapitalCall(int fundID, decimal amount, DateTime noticeDate, DateTime dueDate, int underlyingFundID);
 		IEnumerable<ErrorInfo> SaveUnderlyingFundCapitalCall(UnderlyingFundCapitalCall underlyingFundCapitalCall);
 		List<UnderlyingFundCapitalCallModel> GetAllUnderlyingFundCapitalCalls(int underlyingFundId);
 		bool DeleteUnderlyingFundCapitalCall(int id);
@@ -260,10 +286,11 @@ namespace DeepBlue.Controllers.Deal {
 		#region Direct
 		CreateIssuerModel FindIssuerModel(int id);
 		bool DeleteIssuer(int issuerId);
-		bool IssuerNameAvailable(string issuerName, int issuerId);
+		bool IssuerNameAvailable(string issuerName, int issuerId, bool isGP);
 		IEnumerable<ErrorInfo> SaveIssuer(Models.Entity.Issuer issuer);
 		List<DirectListModel> GetAllDirects(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, bool isGP, int? companyId);
 		Models.Entity.Issuer FindIssuer(int issuerId);
+		Models.Entity.Issuer FindIssuer(string issuerName);
 		List<AutoCompleteList> FindIssuers(string issuerName);
 		List<AutoCompleteList> FindCompanys(string issuerName);
 		List<AutoCompleteList> FindGPs(string issuerName);
@@ -278,6 +305,7 @@ namespace DeepBlue.Controllers.Deal {
 		List<Equity> GetAllEquity(int issuerId);
 		List<EquityListModel> GetAllEquity(int issuerId, int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		Equity FindEquity(int equityId);
+		Equity FindEquity(int issuerID, string symbol);
 		IEnumerable<ErrorInfo> SaveEquity(Equity equity);
 		bool DeleteEquity(int id);
 		List<AutoCompleteList> FindEquityDirects(string issuerName);

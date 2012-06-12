@@ -29,6 +29,12 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
+			[StringLength(500, ErrorMessage = "Notes must be under 500 characters.")]
+			public global::System.String Notes {
+				get;
+				set;
+			}
+
 			[Required(ErrorMessage = "CreatedBy is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "CreatedBy is required")]
 			public global::System.Int32 CreatedBy {

@@ -20,5 +20,9 @@ namespace DeepBlue.Models.Deal {
 		[Range(typeof(decimal), "0", "79228162514264337593543950335", ErrorMessage = "Unfunded Amount is required")]
 		public decimal? UnfundedAmount { get; set; }
 
+		[StringLength(500, ErrorMessage = "Notes must be under 500 characters.")]
+		public string Notes { get; set; }
+
+
 	}
 }

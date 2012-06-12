@@ -580,6 +580,11 @@ namespace DeepBlue.Models.Entity {
 				return this.PartnersShareForms.EntityFilter();
 			}
 		}
+		public IQueryable<Broker> BrokersTable {
+			get {
+				return this.Brokers.EntityFilter();
+			}
+		}
 		#endregion
 	}
 }

@@ -232,10 +232,13 @@
 	padding: 0;
 	width: auto;
 	float: right;
+	font-size: 11px;
 }
 .selectloading {
 	float: left;
-	margin: 10px;
+	margin: 0px;
+	font-size: 11px;
+	margin-left: 50px;
 	font-weight: normal;
 }
 .childrowcell {
@@ -274,7 +277,7 @@
 	margin-top: 4px;
 }
 #StockDistributionList .newrow td input {
-	width: 110px;
+	width: 172px;
 }
 .heading {
 	padding-bottom: 0px;
@@ -356,4 +359,87 @@
 	background-color: #D6D6D6;
 	height: 20px;
 }
- 
+.tool-tip {
+	border-bottom: 1px dotted #000000;
+	color: #000000;
+	outline: none;
+	cursor: help;
+	text-decoration: none;
+	position: relative;
+}
+
+.tool-tip .classic {
+	margin-left: -999em;
+	position: absolute;
+}
+
+.tool-tip:hover .classic {
+	border-radius: 5px 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+	font-family: Calibri, Tahoma, Geneva, sans-serif;
+	position: absolute;
+	left: 1em;
+	top: 2em;
+	z-index: 99;
+	margin-left: 0;
+	width: 250px;
+}
+
+.tool-tip:hover img {
+	border: 0;
+	margin: -10px 0 0 -55px;
+	float: left;
+	position: absolute;
+}
+
+.tool-tip:hover em {
+	font-family: Candara, Tahoma, Geneva, sans-serif;
+	font-size: 1.2em;
+	font-weight: bold;
+	display: block;
+	padding: 0.2em 0 0.6em 0;
+}
+
+.tool-tip .classic {
+	padding: 0.8em 1em;
+}
+
+.tool-tip .custom {
+	padding: 0.5em 0.8em 0.8em 2em;
+}
+
+.tool-tip a:hover {
+	background: transparent;
+}
+
+.tool-tip .classic {
+	background: #FFFFAA;
+	border: 1px solid #FFAD33;
+}
+
+.tool-tip .critical {
+	background: #FFCCAA;
+	border: 1px solid #FF3334;
+}
+
+.tool-tip .help {
+	background: #9FDAEE;
+	border: 1px solid #2BB0D7;
+}
+
+.tool-tip .info {
+	background: #9FDAEE;
+	border: 1px solid #2BB0D7;
+}
+
+.tool-tip .warning {
+	background: #FFFFAA;
+	border: 1px solid #FFAD33;
+}
+#ufsd_controls .editor-field{
+	width: 180px;
+}

@@ -23,6 +23,21 @@ namespace DeepBlue.Helpers {
 			return rowCollection;
 		}
 
+		public static FormCollection GetFormCollection<T>(T obj) {
+			FormCollection collection = null;
+			if (obj != null) {
+				collection = new FormCollection();
+				Type type = obj.GetType();
+				PropertyInfo[] properties = type.GetProperties();
+				foreach (PropertyInfo ppty in properties) {
+					Type propertyType = ppty.PropertyType;
+					object val = ppty.GetValue(obj, null);
+					collection.Add(ppty.Name, (val == null ? string.Empty : val.ToString()));
+				}
+			}
+			return collection;
+		}
+
 		public static FormCollection GetFormCollection(FormCollection collection, int rowIndex, Type type, string separator) {
 			FormCollection rowCollection = new FormCollection();
 			PropertyInfo[] propertyInfos;

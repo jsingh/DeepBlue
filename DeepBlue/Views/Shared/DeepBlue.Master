@@ -38,12 +38,15 @@
 		<%=EntityHelper.EntityName%>::<%=currentMenu.Title%></title>
 	<%}
    }%>
-	<%= Html.JavascriptInclueTag("jquery-1.7.1.min.js")%><%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%><%= Html.JavascriptInclueTag("jquery-ui-1.8.10.autocomplete.js")%>
+	<%= Html.JavascriptInclueTag("jquery-1.7.1.min.js")%>
+	<%= Html.JavascriptInclueTag("jquery.tipTip.js")%>
+	<%= Html.StylesheetLinkTag("tipTip.css")%>
+	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.custom.min.js")%><%= Html.JavascriptInclueTag("jquery-ui-1.8.10.autocomplete.js")%>
 	<%= Html.JavascriptInclueTag("jquery-ui-1.8.10.combobox.js")%><%= Html.JavascriptInclueTag("jquery-ui-1.8.10.extension.js")%><%= Html.JavascriptInclueTag("jquery.contextMenu.js")%>
 	<%= Html.JavascriptInclueTag("jquery.alerts.js")%><%= Html.JavascriptInclueTag("jquery.formatCurrency.js")%><%= Html.JavascriptInclueTag("jqueryform.js")%><%= Html.JavascriptInclueTag("jqTransform.js")%>
 	<%= Html.JavascriptInclueTag("jshashtable.js")%><%= Html.JavascriptInclueTag("jquery.numberformatter.js")%><%= Html.JavascriptInclueTag("jHelper.js")%><%= Html.JavascriptInclueTag("DeepBlue.js")%><%= Html.JavascriptInclueTag("Menu.js")%><%= Html.JavascriptInclueTag("jsDate.js")%><%= Html.JavascriptInclueTag("ImageActive.js")%>
-	<%= Html.StylesheetLinkTag("jquery.contextMenu.css")%><%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%><%= Html.StylesheetLinkTag("jquery.alerts.css")%><%= Html.StylesheetLinkTag("site.css")%><asp:ContentPlaceHolder
-		ID="HeaderContent" runat="server" />
+	<%= Html.StylesheetLinkTag("jquery.contextMenu.css")%><%= Html.StylesheetLinkTag("jquery-ui-1.8.10.custom.css")%><%= Html.StylesheetLinkTag("jquery.alerts.css")%><%= Html.StylesheetLinkTag("site.css")%>
+	<asp:ContentPlaceHolder	ID="HeaderContent" runat="server" />
 </head>
 <body>
 	<div id="LoadingPage" style="z-index: 1001; position: absolute; bottom: 0px; top: 0px;

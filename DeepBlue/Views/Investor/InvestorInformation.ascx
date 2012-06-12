@@ -63,19 +63,19 @@
 			<%: Html.LabelFor(model => model.InvestorName)%>
 		</div>
 		<div class="editor-field">
-			<%: Html.jQueryTemplateTextBoxFor(model => model.InvestorName)%>
+			<%: Html.jQueryTemplateTextBoxFor(model => model.InvestorName, new { @style = "width:238px" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.LabelFor(model => model.Alias) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.TextBox("Alias","${Alias}", new {  })%>
+			<%: Html.TextBox("Alias", "${Alias}", new { @style = "width:238px" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.LabelFor(model => model.SocialSecurityTaxId)%>
 		</div>
 		<div class="editor-field">
-			<%: Html.jQueryTemplateTextBoxFor(model => model.SocialSecurityTaxId)%>
+			<%: Html.jQueryTemplateTextBoxFor(model => model.SocialSecurityTaxId, new { @style = "width:238px" })%>
 		</div>
 		<div class="editor-label firstcol">
 			<%: Html.LabelFor(model => model.DomesticForeign) %>

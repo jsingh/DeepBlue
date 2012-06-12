@@ -25,7 +25,7 @@
 	<%=Html.JavascriptInclueTag("jAjaxTable.js")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
 	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
-	<%=Html.JavascriptInclueTag("ImportExcel.js")%>
+	<%=Html.JavascriptInclueTag("ImportUFVExcel.js")%>
 	<%=Html.StylesheetLinkTag("deal.css")%>
 	<%=Html.StylesheetLinkTag("dealactivity.css")%>
 	<%=Html.StylesheetLinkTag("flexigrid.css")%>
@@ -108,13 +108,16 @@
 													<th class="lalign" style="width: 20%">
 														Fund Name
 													</th>
-													<th class="lalign" style="width: 20%">
+													<th class="lalign" style="width: 100px">
 														Call Amount
 													</th>
-													<th class="lalign" style="width: 15%;">
+													<th class="lalign" style="width: 100px">
+														Management Fee
+													</th>
+													<th class="lalign" style="width: 100px">
 														Due Date
 													</th>
-													<th class="lalign" style="width: 35%">
+													<th class="lalign" style="width:120px">
 														Deemed Capital Call
 													</th>
 													<th id="CCTC" style="display: none;" class="ralign ismanual">
@@ -344,7 +347,7 @@
 							<div class="search-header">
 								<div class="cell">
 									<%: Html.Span("", new { @id="SpnSDUFName" })%></div>
-								<div class="cell" style="margin-left: 20px">
+							<%--	<div class="cell" style="margin-left: 20px">
 									<div style="float: left">
 										Issuer&nbsp;&nbsp;
 									</div>
@@ -352,7 +355,7 @@
 										<%: Html.TextBox("UFSDIssuerName","SEARCH ISSUER", new { @class = "wm" })%>
 										<%: Html.Hidden("UFSDIssuerId","")%>
 									</div>
-								</div>
+								</div>--%>
 								<div class="loadingcell" id="SDLoading">
 								</div>
 							</div>
@@ -370,10 +373,13 @@
 														Fund Name
 													</th>
 													<th class="lalign">
+														Issuer
+													</th>
+													<th class="lalign">
 														Equity
 													</th>
 													<th class="ralign">
-														NumberOfShares
+														No.OfShares
 													</th>
 													<th class="ralign">
 														Purchase Price
@@ -518,20 +524,23 @@
 									<table cellpadding="0" cellspacing="0" border="0" id="UnfundedAdjustmentList" class="grid">
 										<thead>
 											<tr>
-												<th class="lalign" style="width: 20%">
+												<th class="lalign">
 													Fund Name
 												</th>
-												<th class="ralign" style="width: 18%">
+												<th class="ralign" style="width: 110px">
 													Commitment Amount
 												</th>
-												<th class="ralign" style="width: 18%">
+												<th class="ralign" style="width: 80px">
 													Unfunded Amount
 												</th>
-												<th class="lalign" style="width: 20%;" id="UFA_NCA">
+												<th class="lalign" style="width: 110px" id="UFA_NCA">
 												</th>
-												<th class="lalign" style="width: 20%;" id="UFA_NUA">
+												<th class="lalign" style="width: 110px" id="UFA_NUA">
 												</th>
-												<th class="ralign">
+												<th class="lalign" style="width: 200" id="UFA_NOT">
+													Notes
+												</th>
+												<th class="ralign" style="width: 80px">
 												</th>
 											</tr>
 										</thead>
@@ -892,12 +901,12 @@
 									<%: Html.TextBox("EndDate", "END DATE", new { @id = "ReconEndDate",   @style = "width:100px" })%>&nbsp;&nbsp;
 								</div>
 								<div class="cell">
-									<%: Html.TextBox("ReconcileFundName", "SEARCH  FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:180px" })%>
+									<%: Html.TextBox("ReconcileFundName", "SEARCH  FUND", new { @id = "ReconcileFundName", @class = "wm", @style = "width:140px" })%>
 								</div>
 								<div class="cell" style="padding-left: 10px;">
-									<%: Html.TextBox("ReconcileUnderlyingFundName", "SEARCH UNDERLYING FUND", new { @id = "ReconcileUnderlyingFundName", @class = "wm", @style = "width:220px" })%>
+									<%: Html.TextBox("ReconcileUnderlyingFundName", "SEARCH UNDERLYING FUND", new { @id = "ReconcileUnderlyingFundName", @class = "wm", @style = "width:200px" })%>
 								</div>
-								<div class="cell" style="padding-left: 10px;width:250px;">
+								<div class="cell" style="padding-left: 10px;width:200px;">
 									<%List<SelectListItem> options = new List<SelectListItem>();
 										options.Add(new SelectListItem { Text = "SEARCH UNRECONCILE", Value = "false" });
 										options.Add(new SelectListItem { Text = "SEARCH RECONCILE", Value = "true" });
@@ -1142,6 +1151,7 @@
 	<div class="editor-field">
 		<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:$('#ExcelImport').dialog('close');" })%></div>
 	<%: Html.Hidden("TotalRows", "${TotalRows}")%>
+	<%: Html.Hidden("SessionKey", "${SessionKey}")%>
 	<%}%>
 	<%}%>
 	<%using (Html.jQueryTemplateScript("ProgressBarTemplate")) {%>

@@ -25,6 +25,9 @@ namespace DeepBlue.Models.Deal {
 			}
 		}
 
+		[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "ManagementFee is required")]
+		public decimal? ManagementFee { get; set; }
+
 		[DisplayName("Deemed Capital Call")]
 		public bool? IsDeemedCapitalCall { get; set; }
 

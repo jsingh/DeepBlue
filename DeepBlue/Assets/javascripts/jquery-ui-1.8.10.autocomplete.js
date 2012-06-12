@@ -238,6 +238,7 @@
 
 					self.close(event);
 					self.selectedItem=item;
+					self.element.attr("tooltip",item.label);
 				},
 				blur: function (event,ui) {
 					// don't set the value of the text field if it's already correct
@@ -256,6 +257,8 @@
 			if($.fn.bgiframe) {
 				this.menu.element.bgiframe();
 			}
+
+			try { $(this.element).tipTip(); } catch(e) { }
 		},
 
 		destroy: function () {

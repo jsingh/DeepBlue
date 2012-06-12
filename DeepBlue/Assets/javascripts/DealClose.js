@@ -108,6 +108,8 @@
 		var dealId=parseInt(dealClose.getDealId());
 		var newDealClose=$("#NewDealClose");
 		var finalDealClose=$("#FinalDealClose");
+		var DUFTableBox=$("#DUFTableBox");
+		var DUDTableBox=$("#DUDTableBox");
 		var tblduflist=$("#DealUnderlyingFundList");
 		var tbldirectlist=$("#DealUnderlyingDirects");
 		//finalDealClose.show();
@@ -119,6 +121,8 @@
 		$("#NewDealCloseBtn").show();
 		$("#NDExpandBox").show();
 		$("#NDDetail").hide();
+		DUFTableBox.hide();
+		DUDTableBox.hide();
 		if(isFirstTime) {
 			$("#NDExpandBox").hide();
 			$("#NewDealCloseBtn").hide();
@@ -138,6 +142,7 @@
 				}
 				$("#LoadingDetail").hide();
 				$("#SpnGridLoading").hide();
+
 				if(id>0) {
 					$("#SpnDCTitle").html("Edit Deal Close");
 					$("#SpnDCTitlelbl").html("Edit Deal Close");
@@ -179,6 +184,16 @@
 
 				jHelper.jqTransCheckBox(tbldirectlist);
 				jHelper.jqTransCheckBox(tblduflist);
+
+				var rows=0;
+				rows=$("tbody tr",tblduflist).length;
+				if(rows>0) {
+					DUFTableBox.show();
+				}
+				rows=$("tbody tr",tbldirectlist).length;
+				if(rows>0) {
+					DUDTableBox.show();
+				}
 
 			});
 		} else {
@@ -445,6 +460,11 @@
 	}
 	,loadFinalDealClose: function () {
 		try {
+			var fd_uf_box=$("#FinalDealClose_UF_Box");
+			var fd_ud_box=$("#FinalDealClose_UD_Box");
+			var fd_dd_box=$("#FinalDealClose_DealDetail_Box");
+			fd_uf_box.hide();
+			fd_ud_box.hide();
 			$.getJSON("/Deal/GetFianlDealCloseDetails?_="+(new Date()).getTime()+"&dealClosingId=0&dealId="+dealClose.getDealId(),function (data) {
 				$("#LoadingDetail").hide();
 
@@ -465,11 +485,23 @@
 				//footer.show("tbodyDealCloseUnderlyingFund", "tfootDealCloseUnderlyingFund");
 				//footer.show("tbodyDealCloseUnderlyingDirect", "tfootDealCloseUnderlyingDirect");
 				$("#FinalDealList").flexReload();
+
+				var rows=0;
+				rows=$("tbody tr",finaltblduflist).length;
+				if(rows>0) {
+					fd_uf_box.show();
+				}
+				rows=$("tbody tr",finaltbldirectlist).length;
+				if(rows>0) {
+					fd_ud_box.show();
+				}
+
 			});
 		} catch(e) { jAlert(e); }
 	}
 	/* Deal Underlying Fund */
 	,addDUF: function (tblid) {
+		$("#DUFTableBox").show();
 		var item={ "DealUnderlyingFundId": 0,"DealClosingId": 0,"DealId": dealClose.getDealId(),"FundId": $("#FundId").val() }
 		var data={ "index": 0,"item": item,"IsFinalClose": false };
 		var target=$("#"+tblid);
@@ -516,6 +548,7 @@
 	/* End Deal Underlying Fund */
 	/* Deal Underlying Direct */
 	,addDUD: function (tblid) {
+		$("#DUDTableBox").show();
 		var item={ "DealUnderlyingDirectId": 0,"DealClosingId": 0,"DealId": dealClose.getDealId(),"FundId": $("#FundId").val() }
 		var data={ "index": 0,"item": item,"IsFinalClose": false };
 		var target=$("#"+tblid);

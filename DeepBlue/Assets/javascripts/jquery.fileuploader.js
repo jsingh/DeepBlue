@@ -134,13 +134,21 @@ jQuery.extend({
 						// Fire the global callback
 						if(s.global)
 							jQuery.event.trigger("ajaxSuccess",[xml,s]);
-					} else
+					} else {
 						jQuery.handleError(s,xml,status);
+					}
 				} catch(e) {
 					status="error";
-					alert(e);
 					jQuery.handleError(s,xml,status,e);
 				}
+
+				var originalForm=$("#"+s.formId);
+				$(":input[type='file']",form).each(function () {
+					var id=$(this).attr("id");
+					var fle=$("#"+id,originalForm);
+					$(fle).before(this);
+					$(fle).remove();
+				});
 
 				// The request was completed
 				if(s.global)

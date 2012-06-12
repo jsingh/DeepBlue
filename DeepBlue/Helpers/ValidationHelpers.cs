@@ -56,11 +56,13 @@ namespace DeepBlue.Helpers {
 						entityErrors.Add(new ErrorInfo("EntityID", "Entity permission disabled"));
 					}
 					else {
-						if (permission.IsSystemEntity == true) {
-							property.SetValue(instance, (int)ConfigUtil.SystemEntityID, null);
+						if (permission.IsSystemEntity == true && permission.IsOtherEntity == false) {
+							if (entityID != (int)ConfigUtil.SystemEntityID) {
+								entityErrors.Add(new ErrorInfo("EntityID", "Invalid EntityID"));
+							}
 						}
-						else if (entityID != Authentication.CurrentEntity.EntityID) {
-							if (!(Authentication.IsSystemEntityUser && table == Table.USER)) {
+						if (permission.IsSystemEntity == false && permission.IsOtherEntity == true) {
+							if (entityID == (int)ConfigUtil.SystemEntityID) {
 								entityErrors.Add(new ErrorInfo("EntityID", "Invalid EntityID"));
 							}
 						}

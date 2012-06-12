@@ -60,7 +60,12 @@ namespace DeepBlue.Models.Deal {
 		[Required(ErrorMessage = "Tax Cost Date is required")]
 		[DateRange(ErrorMessage = "Tax Cost Date is required")]
 		public DateTime TaxCostDate { get; set; }
-		 
+
+		[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "Broker is required")]
+		public int? BrokerID { get; set; }
+
+		public string Notes { get; set; }
+
 		public bool IsManualStockDistribution { get; set; }
 
 		public IEnumerable<StockDistributionLineItemModel> Deals { get; set; }
@@ -69,7 +74,7 @@ namespace DeepBlue.Models.Deal {
 
 
 	public class StockDistributionLineItemModel {
-		
+
 		public int DealId { get; set; }
 
 		public int FundId { get; set; }
@@ -81,5 +86,5 @@ namespace DeepBlue.Models.Deal {
 		public decimal? CommitmentAmount { get; set; }
 
 	}
- 
+
 }

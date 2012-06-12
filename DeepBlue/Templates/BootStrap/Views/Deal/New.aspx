@@ -172,7 +172,7 @@
 		</td>
 		<td class="lalign">
 			<%: Html.Span("${FundName}",new { @class = "show" })%>
-			<%: Html.TextBox("UnderlyingFund", "${FundName}", new { @class = "hide tooltiptxt", @id="UnderlyingFund",  @top = "198",  @style="width:78%" })%>
+			<%: Html.TextBox("UnderlyingFund", "${FundName}", new { @class = "hide", @id="UnderlyingFund",  @top = "198"  })%>
 			<%: Html.Hidden("UnderlyingFundId","${UnderlyingFundId}")%>
 		</td>
 		<td class="ralign">
@@ -218,7 +218,7 @@
 				<label class="control-label">
 					Fund</label>
 				<div class="controls">
-					<%: Html.TextBox("UnderlyingFund", "${FundName}", new { @class = "hide tooltiptxt input-large", @id = "UnderlyingFund", @top = "198"})%>
+					<%: Html.TextBox("UnderlyingFund", "${FundName}", new { @class = "hide input-large", @id = "UnderlyingFund", @top = "198"})%>
 					<%: Html.Hidden("UnderlyingFundId", "0")%>
 				</div>
 			</div>
@@ -291,7 +291,7 @@
 		</td>
 		<td class="lalign">
 			<%: Html.Span("${IssuerName}",new { @class = "show" })%>
-			<%: Html.TextBox("Issuer", "${IssuerName}", new { @class = "hide tooltiptxt", @id = "Issuer",   @top = "198", @style = "width:78%" })%>
+			<%: Html.TextBox("Issuer", "${IssuerName}", new { @class = "hide", @id = "Issuer",   @top = "198"  })%>
 			<%: Html.Hidden("IssuerId", "${IssuerId}")%>
 			<%: Html.Hidden("SecurityTypeId","${SecurityTypeId}")%>
 			<%: Html.Hidden("SecurityId", "${SecurityId}")%>

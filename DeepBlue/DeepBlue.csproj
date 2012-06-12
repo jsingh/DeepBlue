@@ -175,6 +175,9 @@
     <Compile Include="Models\Deal\AccountInformationModel.cs" />
     <Compile Include="Models\Deal\ActivityDealModel.cs" />
     <Compile Include="Models\Deal\CashDistributionListModel.cs" />
+    <Compile Include="Models\Deal\ImportDealCloseExcelModel.cs" />
+    <Compile Include="Models\Deal\ImportDealExcelModel.cs" />
+    <Compile Include="Models\Deal\ImportDealModel.cs" />
     <Compile Include="Models\Deal\UnderlyingDirectDocumentList.cs" />
     <Compile Include="Models\Deal\DirectListModel.cs" />
     <Compile Include="Models\Deal\ImportExcelFileModel.cs" />
@@ -281,6 +284,7 @@
     <Compile Include="Models\Entity\Partial\ActivityTypeService.cs" />
     <Compile Include="Models\Entity\Partial\AddressService.cs" />
     <Compile Include="Models\Entity\Partial\AnnualMeetingHistoryService.cs" />
+    <Compile Include="Models\Entity\Partial\BrokerService.cs" />
     <Compile Include="Models\Entity\Partial\CashDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalCallLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalDistributionLineItemService.cs" />
@@ -320,6 +324,7 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVHistoryService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
     <Compile Include="Models\Entity\Validation\AnnualMeetingHistory.cs" />
+    <Compile Include="Models\Entity\Validation\Broker.cs" />
     <Compile Include="Models\Entity\Validation\DividendDistribution.cs" />
     <Compile Include="Models\Entity\Validation\DocumentType.cs" />
     <Compile Include="Models\Entity\Validation\Entity.cs" />
@@ -361,6 +366,7 @@
     <Compile Include="Models\Entity\Validation\UnderlyingFundCapitalCallLineItem.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundNAV.cs" />
     <Compile Include="Models\Entity\Validation\UnderlyingFundNAVHistory.cs" />
+    <Compile Include="Models\Excel\ImportExcelTable.cs" />
     <Compile Include="Models\Fund\Enums.cs" />
     <Compile Include="Controllers\Fund\FundRepository.cs" />
     <Compile Include="Controllers\Fund\FundController.cs" />
@@ -395,6 +401,7 @@
     <Compile Include="Models\Investor\ContactCommunicationInformation.cs" />
     <Compile Include="Models\Investor\ContactDetail.cs" />
     <Compile Include="Models\Investor\FundInformation.cs" />
+    <Compile Include="Models\Investor\ImportInvestorExcelModel.cs" />
     <Compile Include="Models\Investor\InvestorInformation.cs" />
     <Compile Include="Models\Investor\InvestorLibraryModel.cs" />
     <Compile Include="Models\Investor\ListModel.cs" />
@@ -673,9 +680,14 @@
     <Compile Include="ViewEngines\TemplateWebformViewEngine.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\javascripts\ImportInvestorExcel.js" />
+    <Content Include="Assets\javascripts\ImportDealCloseExcel.js" />
+    <Content Include="Assets\javascripts\ImportDealExcel.js" />
+    <Content Include="Assets\javascripts\jquery.tipTip.js" />
     <Content Include="Assets\javascripts\ScheduleK1.js" />
     <Content Include="Assets\stylesheets\schedulek1.css" />
     <Content Include="Assets\stylesheets\newdeallayout.css" />
+    <Content Include="Assets\stylesheets\tipTip.css" />
     <Content Include="Templates\BootStrap\Assets\images\glyphicons-halflings-white.png" />
     <Content Include="Templates\BootStrap\Assets\images\glyphicons-halflings.png" />
     <Content Include="Templates\BootStrap\Assets\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1172,7 +1184,7 @@
     <Content Include="Assets\javascripts\UnderlyingFundNAV.js" />
     <Content Include="Assets\javascripts\Export.js" />
     <Content Include="Assets\javascripts\SellerType.js" />
-    <Content Include="Assets\javascripts\ImportExcel.js" />
+    <Content Include="Assets\javascripts\ImportUFVExcel.js" />
     <Content Include="Assets\javascripts\ModifyCapitalDistribution.js" />
     <Content Include="Assets\javascripts\ModifyCapitalCall.js" />
     <Content Include="Assets\javascripts\DealContact.js" />
@@ -1377,7 +1389,6 @@
     <Content Include="Views\Admin\ShareClassType.aspx" />
     <Content Include="Views\Admin\UnderlyingFundType.aspx" />
     <Content Include="Views\Admin\ScheduleK1Detail.ascx" />
-    <Content Include="Views\Admin\ViewPage1.aspx" />
     <Content Include="Views\CapitalCall\CapitalCallDetail.ascx" />
     <Content Include="Views\CapitalCall\CapitalCallInvestorDetail.ascx" />
     <Content Include="Views\CapitalCall\CapitalCallList.ascx" />

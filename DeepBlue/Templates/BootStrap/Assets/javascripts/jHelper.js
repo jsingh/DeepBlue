@@ -264,34 +264,9 @@
 			//.blur(function () { if($.trim(this.value)=="") { this.value=v; } });
 		});
 	}
-
 	,setUpToolTip: function (target) {
-		$(".tooltiptxt",target).each(function () { jHelper.tooltip(this); });
 	}
 	,tooltip: function (target) {
-		$(target).unbind('mouseover')
-		.mouseover(function () {
-			$(".tooltip").remove();
-			var t=document.createElement("div");
-			var mtop=0; //parseInt($(target).attr("top"));
-			if(isNaN(mtop)) { mtop=0; }
-			t.className="tooltip";
-			$(target).after(t);
-			setTimeout(function () {
-				var v=$(target).val();
-				if($.trim(v)=="") {
-					$(t).hide();
-				} else {
-					$(t).html(v);
-					var p=$(target).offset();
-					$(t).css({ "margin-top": "-29px","left": p.left+50 })
-					$(t).fadeIn('slow');
-				}
-			},100);
-		})
-		.mouseout(function () {
-			$(".tooltip").fadeOut('slow');
-		});
 	}
 	,applyGridClass: function (target) {
 		$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");

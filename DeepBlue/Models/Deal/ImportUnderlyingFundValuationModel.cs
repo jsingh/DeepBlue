@@ -25,5 +25,8 @@ namespace DeepBlue.Models.Deal {
 		[Required(ErrorMessage = "Effective Date is required")]
 		public string EffectiveDate { get; set; }
 
+		[Required(ErrorMessage = "Session Key is required")]
+		public string SessionKey { get; set; }
+
 	}
 }

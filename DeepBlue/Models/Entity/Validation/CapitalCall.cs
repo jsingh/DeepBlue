@@ -130,6 +130,15 @@ namespace DeepBlue.Models.Entity {
 			return null;
 		}
 
+		public IEnumerable<ErrorInfo> SaveCapitalCallOnly() {
+			IEnumerable<ErrorInfo> errors = Validate(this);
+			if (errors.Any()) {
+				return errors;
+			}
+			CapitalCallservice.SaveCapitalCallOnly(this);
+			return null;
+		}
+
 		private IEnumerable<ErrorInfo> Validate(CapitalCall capitalCall) {
 			return ValidationHelper.Validate(capitalCall);
 		}

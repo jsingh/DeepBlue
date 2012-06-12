@@ -155,4 +155,17 @@ input[type='text'] {
 	/*margin-right: 61px;*/
 	margin-top: 12px;
 }
- 
+ .tabbg {
+    background-image: url("../images/tabbg.png");
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    float: left;
+    height: 43px;   width: 100%;
+}
+.dealimportsection .editor-label {
+       text-align: right;
+    width: 125px;
+}
+.dealimportsection {
+    width: 700px;
+}

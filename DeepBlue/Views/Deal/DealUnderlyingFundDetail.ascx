@@ -64,7 +64,7 @@
 							<td class="calign">
 							</td>
 							<td class="lalign">
-								<%: Html.TextBox("UnderlyingFund", "", new { @id = "UnderlyingFund", @class = "tooltiptxt", @top = "198", @style = "width:78%" })%>
+								<%: Html.TextBox("UnderlyingFund", "", new { @id = "UnderlyingFund", @class = "", @top = "198"  })%>
 								<%: Html.Hidden("UnderlyingFundId", "0")%>
 							</td>
 							<td class="ralign">

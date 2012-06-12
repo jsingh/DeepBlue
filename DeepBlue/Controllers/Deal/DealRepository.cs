@@ -30,6 +30,12 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public int FindDealID(string fundName, int dealNumber) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.Deals.Where(deal => deal.Fund.FundName == fundName && deal.DealNumber == dealNumber).Select(deal => deal.DealID).FirstOrDefault();
+			}
+		}
+
 		public bool DealNameAvailable(string dealName, int dealId, int fundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return ((from deal in context.DealsTable
@@ -51,6 +57,14 @@ namespace DeepBlue.Controllers.Deal {
 							  .Include("Fund")
 							  .EntityFilter()
 							  .Where(deal => deal.DealID == dealId).SingleOrDefault();
+			}
+		}
+
+		public Models.Entity.Deal FindDeal(string dealName, int fundID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.Deals
+							  .Where(deal => deal.DealName == dealName && deal.FundID == fundID)
+							  .FirstOrDefault();
 			}
 		}
 
@@ -130,7 +144,7 @@ namespace DeepBlue.Controllers.Deal {
 				if ((isNotClose ?? false) == true) {
 					deals = deals.Where(deal => deal.DealClosings.Where(dealClosing => dealClosing.IsFinalClose == true).Count() <= 0);
 				}
-				if ((fundId ?? 0) > 0) 
+				if ((fundId ?? 0) > 0)
 					deals = deals.Where(deal => deal.FundID == fundId);
 				if ((dealId ?? 0) > 0)
 					deals = deals.Where(deal => deal.DealID == dealId);
@@ -207,13 +221,6 @@ namespace DeepBlue.Controllers.Deal {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				Models.Entity.Deal deal = context.DealsTable.Where(deleteDeal => deleteDeal.DealID == dealId).SingleOrDefault();
 				if (deal != null) {
-					var cashDistributions = deal.CashDistributions.ToList();
-					foreach (var cashDistribution in cashDistributions) {
-						context.UnderlyingFundCashDistributions.DeleteObject(cashDistribution.UnderlyingFundCashDistribution);
-						context.CashDistributions.DeleteObject(cashDistribution);
-					}
-					DeleteContactObject(context, deal.Contact);
-					DeleteContactObject(context, deal.Contact1);
 					var dealClosingCosts = deal.DealClosingCosts.ToList();
 					foreach (var dealClosingCost in dealClosingCosts) {
 						context.DealClosingCosts.DeleteObject(dealClosingCost);
@@ -233,6 +240,16 @@ namespace DeepBlue.Controllers.Deal {
 						}
 						context.DealUnderlyingDirects.DeleteObject(dealUnderlyingDirect);
 					}
+					var dealFundDocuments = deal.DealFundDocuments.ToList();
+					foreach (var document in dealFundDocuments) {
+						context.Files.DeleteObject(document.File);
+						context.DealFundDocuments.DeleteObject(document);
+					}
+					var cashDistributions = deal.CashDistributions.ToList();
+					foreach (var cashDistribution in cashDistributions) {
+						context.UnderlyingFundCashDistributions.DeleteObject(cashDistribution.UnderlyingFundCashDistribution);
+						context.CashDistributions.DeleteObject(cashDistribution);
+					}
 					var underlyingFundCapitalCallLineItems = deal.UnderlyingFundCapitalCallLineItems.ToList();
 					foreach (var item in underlyingFundCapitalCallLineItems) {
 						context.UnderlyingFundCapitalCallLineItems.DeleteObject(item);
@@ -241,13 +258,9 @@ namespace DeepBlue.Controllers.Deal {
 					foreach (var item in underlyingFundStockDistributionLineItems) {
 						context.UnderlyingFundStockDistributionLineItems.DeleteObject(item);
 					}
-					if (deal.Partner != null) {
-						context.Partners.DeleteObject(deal.Partner);
-					}
-					var dealFundDocuments = deal.DealFundDocuments.ToList();
-					foreach (var document in dealFundDocuments) {
-						context.Files.DeleteObject(document.File);
-						context.DealFundDocuments.DeleteObject(document);
+					var dividendDistributions = deal.DividendDistributions.ToList();
+					foreach (var dividendDistribution in dividendDistributions) {
+						context.DividendDistributions.DeleteObject(dividendDistribution);
 					}
 					var dealClosings = deal.DealClosings.ToList();
 					foreach (var dealClosing in dealClosings) {
@@ -310,6 +323,24 @@ namespace DeepBlue.Controllers.Deal {
 							  .Include("DealClosingCostType")
 							  .EntityFilter()
 							  .Where(dealClosingCost => dealClosingCost.DealClosingCostID == dealClosingCostId).SingleOrDefault();
+			}
+		}
+
+		public DealClosingCost FindDealClosingCost(int dealID, decimal amount, int dealClosingCostTypeID, DateTime date) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from dealClosingCost in context.DealClosingCostsTable
+						where dealClosingCost.DealID == dealID
+						&& dealClosingCost.Amount == amount
+						&& dealClosingCost.DealClosingCostTypeID == dealClosingCostTypeID
+						&& dealClosingCost.Date == EntityFunctions.TruncateTime(date)
+						select dealClosingCost).FirstOrDefault();
+			}
+		}
+
+		public DealClosingCostType FindDealClosingCostType(string dealClosingCostType) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DealClosingCostTypesTable
+					.Where(type => type.Name == dealClosingCostType).FirstOrDefault();
 			}
 		}
 
@@ -426,6 +457,30 @@ namespace DeepBlue.Controllers.Deal {
 					.Where(dealUnderlyingFund => dealUnderlyingFund.DealUnderlyingtFundID == dealUnderlyingFundId).SingleOrDefault();
 			}
 		}
+
+		public DealUnderlyingFund FindDealUnderlyingFund(int dealID
+														, int underlyingFundID
+														, decimal grossPurchasePrice
+														, DateTime effectiveDate
+														, decimal capitalCommitment
+														, decimal unfundedAmount
+														, DateTime recordDate
+) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from dealUnderlyingFund in context.DealUnderlyingFundsTable
+						where
+						dealUnderlyingFund.DealID == dealID
+						&& dealUnderlyingFund.UnderlyingFundID == underlyingFundID
+						&& dealUnderlyingFund.GrossPurchasePrice == grossPurchasePrice
+						&& dealUnderlyingFund.EffectiveDate == EntityFunctions.TruncateTime(effectiveDate)
+						&& dealUnderlyingFund.CommittedAmount == capitalCommitment
+						&& dealUnderlyingFund.UnfundedAmount == unfundedAmount
+						&& dealUnderlyingFund.RecordDate == EntityFunctions.TruncateTime(recordDate)
+						select dealUnderlyingFund
+						).FirstOrDefault();
+			}
+		}
+		 
 
 		public DealUnderlyingFundModel FindDealUnderlyingFundModel(int dealUnderlyingFundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -546,6 +601,33 @@ namespace DeepBlue.Controllers.Deal {
 							  .Include("SecurityType")
 							  .EntityFilter()
 							  .Where(dealUnderlyingDirect => dealUnderlyingDirect.DealUnderlyingDirectID == dealUnderlyingDirectId).SingleOrDefault();
+			}
+		}
+
+		public DealUnderlyingDirect FindDealUnderlyingDirect(int dealID
+											, int securityID
+											, int securityTypeID
+											, DateTime recordDate
+											, int noOfShares
+											, decimal fmv
+											, decimal purchasePrice
+											, decimal taxCostBase
+											, DateTime taxCostDate
+											) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from dealUnderlyingDirect in context.DealUnderlyingDirectsTable
+						where
+						dealUnderlyingDirect.DealID == dealID
+						&& dealUnderlyingDirect.SecurityID == securityID
+						&& dealUnderlyingDirect.SecurityTypeID == securityTypeID
+						&& dealUnderlyingDirect.RecordDate == EntityFunctions.TruncateTime(recordDate)
+						&& dealUnderlyingDirect.NumberOfShares == noOfShares
+						&& dealUnderlyingDirect.FMV == fmv
+						&& dealUnderlyingDirect.PurchasePrice == purchasePrice
+						&& dealUnderlyingDirect.TaxCostBase == taxCostBase
+						&& dealUnderlyingDirect.TaxCostDate == EntityFunctions.TruncateTime(taxCostDate)
+						select dealUnderlyingDirect
+						).FirstOrDefault();
 			}
 		}
 
@@ -688,6 +770,19 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public object FindEquities() {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from equity in context.EquitiesTable
+						select new AutoCompleteListExtend {
+							id = equity.EquityID,
+							label = equity.Symbol,
+							value = equity.Symbol,
+							otherid = equity.EquityTypeID,
+							otherid2 = equity.IssuerID
+						}).ToList();
+			}
+		}
+
 		#endregion
 
 		#region DealClosing
@@ -724,6 +819,27 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
+		public CreateDealCloseModel FindDealClosingModel(int dealId) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				CreateDealCloseModel model = new CreateDealCloseModel();
+				model.DealId = dealId;
+				model.FundId = context.DealsTable.Where(deal => deal.DealID == dealId).Select(deal => deal.FundID).SingleOrDefault();
+				if (dealId > 0) {
+					IQueryable<DealUnderlyingDirect> dealUnderlyingDirects = context.DealUnderlyingDirectsTable.Where(direct => direct.DealID == dealId && (direct.DealClosingID == null));
+					model.DealUnderlyingDirects = (from direct in dealUnderlyingDirects
+												   select new DealUnderlyingDirectModel {
+													   DealUnderlyingDirectId = direct.DealUnderlyingDirectID
+												   }).ToList();
+					IQueryable<DealUnderlyingFund> dealUnderlyingFunds = context.DealUnderlyingFundsTable.Where(fund => fund.DealID == dealId && (fund.DealClosingID == null));
+					model.DealUnderlyingFunds = (from duf in dealUnderlyingFunds
+												 select new DealUnderlyingFundModel {
+													 DealUnderlyingFundId = duf.DealUnderlyingtFundID
+												 }).ToList();
+				}
+				return model;
+			}
+		}
+
 		public CreateDealCloseModel GetFinalDealClosingModel(int dealId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				CreateDealCloseModel model = new CreateDealCloseModel();
@@ -748,10 +864,19 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-
 		public DealClosing FindDealClosing(int dealClosingId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.DealClosingsTable.Where(dealClosing => dealClosing.DealClosingID == dealClosingId).SingleOrDefault();
+			}
+		}
+
+		public DealClosing FindDealClosing(int dealID, int fundID, DateTime closeDate) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.DealClosingsTable
+					.Where(dealClosing => dealClosing.DealID == dealID
+						&& dealClosing.Deal.FundID == fundID
+						&& dealClosing.CloseDate == EntityFunctions.TruncateTime(closeDate))
+						.FirstOrDefault();
 			}
 		}
 
@@ -1195,7 +1320,17 @@ namespace DeepBlue.Controllers.Deal {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from cashDistribution in context.UnderlyingFundStockDistributionsTable
 						where cashDistribution.UnderlyingFundStockDistributionID == underlyingFundStockDistributionId
-						select cashDistribution).SingleOrDefault();
+						select cashDistribution).FirstOrDefault();
+			}
+		}
+
+		public UnderlyingFundStockDistributionLineItem FindUnderlyingFundStockDistributionLineItem(int underlyingFundStockDistributionID, int underlyingFundID, int dealID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from stockDistributionLineItem in context.UnderlyingFundStockDistributionLineItemsTable
+						where stockDistributionLineItem.UnderlyingFundStockDistributionID == underlyingFundStockDistributionID
+						&& stockDistributionLineItem.UnderlyingFundID == underlyingFundID
+						&& stockDistributionLineItem.DealID == dealID
+						select stockDistributionLineItem).FirstOrDefault();
 			}
 		}
 
@@ -1473,12 +1608,13 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public object FindUnderlyingFundCapitalCall(int fundID, decimal amount, DateTime noticeDate, int underlyingFundID) {
+		public object FindUnderlyingFundCapitalCall(int fundID, decimal amount, DateTime noticeDate, DateTime dueDate, int underlyingFundID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from capitalCall in context.UnderlyingFundCapitalCallsTable
 						where capitalCall.FundID == fundID
 						&& capitalCall.Amount == amount
 						&& EntityFunctions.TruncateTime(capitalCall.NoticeDate) == noticeDate
+						&& EntityFunctions.TruncateTime(capitalCall.DueDate) == dueDate
 						&& capitalCall.UnderlyingFundID == underlyingFundID
 						select new { capitalCall.UnderlyingFundCapitalCallID }).FirstOrDefault();
 			}
@@ -1779,8 +1915,8 @@ namespace DeepBlue.Controllers.Deal {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<UnderlyingFundValuationModel> query = GetUnderlyingFundValuationModel(context, underlyingFundId);
 				query = (from valuation in query
-						where valuation.UnderlyingFundNAVId == underlyingFundNAVId
-						select valuation);
+						 where valuation.UnderlyingFundNAVId == underlyingFundNAVId
+						 select valuation);
 				return query.FirstOrDefault();
 			}
 		}
@@ -1803,13 +1939,13 @@ namespace DeepBlue.Controllers.Deal {
 
 		public UnderlyingFundNAV FindUnderlyingFundNAV(int underlyingFundId, int fundId, DateTime? effectiveDate) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-			var query = context.UnderlyingFundNAVsTable.Where(fundNAV => fundNAV.UnderlyingFundID == underlyingFundId 
-					&& fundNAV.FundID == fundId 
-					);
-				if(effectiveDate.HasValue){
+				var query = context.UnderlyingFundNAVsTable.Where(fundNAV => fundNAV.UnderlyingFundID == underlyingFundId
+						&& fundNAV.FundID == fundId
+						);
+				if (effectiveDate.HasValue) {
 					query = query.Where(ufv => EntityFunctions.TruncateTime(ufv.EffectiveDate) == effectiveDate);
 				}
-				return query.FirstOrDefault(); 
+				return query.FirstOrDefault();
 			}
 		}
 
@@ -1864,7 +2000,7 @@ namespace DeepBlue.Controllers.Deal {
 							 TotalCapitalCall = (from cc in context.UnderlyingFundCapitalCallsTable
 												 where cc.UnderlyingFundID == underlyingFund.UnderlyingtFundID
 												 && cc.FundID == fund.FundID
-												 && cc.NoticeDate >= (underlyingFundNAV != null ? EntityFunctions.TruncateTime(underlyingFundNAV.FundNAVDate) : todayDate)
+												 && cc.DueDate >= (underlyingFundNAV != null ? EntityFunctions.TruncateTime(underlyingFundNAV.FundNAVDate) : todayDate)
 												 select cc.Amount).Sum(),
 							 TotalPostRecordCapitalCall = (from pcc in context.UnderlyingFundCapitalCallLineItemsTable
 														   where pcc.UnderlyingFundID == underlyingFund.UnderlyingtFundID
@@ -2515,7 +2651,8 @@ namespace DeepBlue.Controllers.Deal {
 						CommitmentAmount = dealUnderlyingFund.CommittedAmount,
 						UnfundedAmount = dealUnderlyingFund.UnfundedAmount,
 						DealUnderlyingFundId = dealUnderlyingFund.DealUnderlyingtFundID,
-						FundName = dealUnderlyingFund.Deal.Fund.FundName
+						FundName = dealUnderlyingFund.Deal.Fund.FundName,
+						Notes = (dealUnderlyingFund.DealUnderlyingFundAdjustments.Count() > 0 ? dealUnderlyingFund.DealUnderlyingFundAdjustments.OrderByDescending(dufa => dufa.DealUnderlyingFundAdjustmentID).FirstOrDefault().Notes : "")
 					});
 		}
 
@@ -2569,6 +2706,12 @@ namespace DeepBlue.Controllers.Deal {
 		public Models.Entity.Issuer FindIssuer(int issuerId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.IssuersTable.Where(issuer => issuer.IssuerID == issuerId).SingleOrDefault();
+			}
+		}
+
+		public Models.Entity.Issuer FindIssuer(string issuerName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.IssuersTable.Where(issuer => issuer.Name == issuerName).FirstOrDefault();
 			}
 		}
 
@@ -2628,10 +2771,10 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public bool IssuerNameAvailable(string issuerName, int issuerId) {
+		public bool IssuerNameAvailable(string issuerName, int issuerId, bool isGP) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return ((from issuer in context.IssuersTable
-						 where issuer.Name == issuerName && issuer.IssuerID != issuerId
+						 where issuer.Name == issuerName && issuer.IssuerID != issuerId && issuer.IsGP == isGP
 						 select issuer.IssuerID).Count()) > 0 ? true : false;
 			}
 		}
@@ -2697,6 +2840,12 @@ namespace DeepBlue.Controllers.Deal {
 		public Equity FindEquity(int equityId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.EquitiesTable.Where(equity => equity.EquityID == equityId).SingleOrDefault();
+			}
+		}
+
+		public 	Equity FindEquity(int issuerID, string symbol) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.EquitiesTable.Where(equity => equity.IssuerID == issuerID && equity.Symbol == symbol).FirstOrDefault();
 			}
 		}
 
@@ -2822,6 +2971,15 @@ namespace DeepBlue.Controllers.Deal {
 						select underlyingFund.UnderlyingtFundID).FirstOrDefault();
 			}
 		}
+
+		public UnderlyingFund FindUnderlyingFund(string underlyingFundName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from underlyingFund in context.UnderlyingFundsTable
+						where underlyingFund.FundName == underlyingFundName
+						select underlyingFund).FirstOrDefault();
+			}
+		}
+
 		#endregion
 
 		#region Fund
@@ -3013,11 +3171,12 @@ namespace DeepBlue.Controllers.Deal {
 				var query = (from capitalCall in context.UnderlyingFundCapitalCallsTable
 							 where capitalCall.UnderlyingFundCapitalCallLineItems.Where(item => item.DealID == dealID).Count() > 0
 							 && ((underlyingFundID ?? 0) > 0 ? capitalCall.UnderlyingFundID == underlyingFundID : capitalCall.UnderlyingFundID > 0)
-							 && capitalCall.UnderlyingFundCapitalCallID != null 
+							 && capitalCall.UnderlyingFundCapitalCallID != null
 							 select new {
 								 UnderlyingFundName = capitalCall.UnderlyingFund.FundName,
 								 capitalCall.Fund.FundName,
 								 capitalCall.NoticeDate,
+								 capitalCall.DueDate,
 								 capitalCall.Amount,
 								 capitalCall.IsDeemedCapitalCall
 							 });
@@ -3030,8 +3189,8 @@ namespace DeepBlue.Controllers.Deal {
 
 		public object GetUnderlyingFundCashDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? underlyingFundID, int dealID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				var query = (from cashDistribution in context.UnderlyingFundCashDistributionsTable 
-							 where 
+				var query = (from cashDistribution in context.UnderlyingFundCashDistributionsTable
+							 where
 							 cashDistribution.CashDistributions.Where(d => d.DealID == dealID && d.UnderluingFundCashDistributionID != null).Count() > 0
 							 && ((underlyingFundID ?? 0) > 0 ? cashDistribution.UnderlyingFundID == underlyingFundID : cashDistribution.UnderlyingFundID > 0)
 							 select new {
@@ -3039,7 +3198,7 @@ namespace DeepBlue.Controllers.Deal {
 								 cashDistribution.Fund.FundName,
 								 cashDistribution.NoticeDate,
 								 cashDistribution.Amount,
-								 CashDistributionType = cashDistribution.CashDistributionType.Name 
+								 CashDistributionType = cashDistribution.CashDistributionType.Name
 							 });
 				query = query.OrderBy(sortName, (sortOrder == "asc"));
 				totalRows = query.Count();
@@ -3071,7 +3230,7 @@ namespace DeepBlue.Controllers.Deal {
 		public object GetUnderlyingFundPostRecordCashDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? underlyingFundID, int dealID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				var query = (from cashDistribution in context.CashDistributionsTable
-							 where cashDistribution.DealID == dealID 
+							 where cashDistribution.DealID == dealID
 							 && ((underlyingFundID ?? 0) > 0 ? cashDistribution.UnderlyingFundID == underlyingFundID : cashDistribution.UnderlyingFundID > 0)
 							 && cashDistribution.UnderluingFundCashDistributionID == null
 							 select new {
@@ -3090,8 +3249,8 @@ namespace DeepBlue.Controllers.Deal {
 
 		public object GetUnderlyingFundStockDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int? underlyingFundID, int dealID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				var query = (from stockDistribution in context.UnderlyingFundStockDistributionsTable 
-							 where 
+				var query = (from stockDistribution in context.UnderlyingFundStockDistributionsTable
+							 where
 							 stockDistribution.UnderlyingFundStockDistributionLineItems.Where(d => d.DealID == dealID && d.UnderlyingFundStockDistributionID != null).Count() > 0
 							 && ((underlyingFundID ?? 0) > 0 ? stockDistribution.UnderlyingFundID == underlyingFundID : stockDistribution.UnderlyingFundID > 0)
 							 select new {
@@ -3115,8 +3274,8 @@ namespace DeepBlue.Controllers.Deal {
 		public object GetUnderlyingFundAdjustments(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows,
 			int? dealUnderlyingFundID, int dealID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				var query = (from dealUnderlyingFund in context.DealUnderlyingFundsTable 
-							 where dealUnderlyingFund.DealID == dealID 
+				var query = (from dealUnderlyingFund in context.DealUnderlyingFundsTable
+							 where dealUnderlyingFund.DealID == dealID
 							 && ((dealUnderlyingFundID ?? 0) > 0 ? dealUnderlyingFund.DealUnderlyingtFundID == dealUnderlyingFundID : dealUnderlyingFund.DealUnderlyingtFundID > 0)
 							 select new {
 								 CommitmentAmount = dealUnderlyingFund.CommittedAmount,
@@ -3147,8 +3306,8 @@ namespace DeepBlue.Controllers.Deal {
 								 underlyingFundNAV.FundID
 							 } into underlyingFundNAVs
 							 from underlyingFundNAV in underlyingFundNAVs.DefaultIfEmpty()
-							 where 
-							 dealUnderlyingFund.DealID == dealID 
+							 where
+							 dealUnderlyingFund.DealID == dealID
 							 && ((dealUnderlyingFundID ?? 0) > 0 ? dealUnderlyingFund.DealUnderlyingtFundID == dealUnderlyingFundID : dealUnderlyingFund.DealUnderlyingtFundID > 0)
 							 && ((underlyingFundID ?? 0) > 0 ? dealUnderlyingFund.UnderlyingFundID == underlyingFundID : dealUnderlyingFund.UnderlyingFundID > 0)
 							 select new UnderlyingFundValuationModel {
@@ -3161,7 +3320,7 @@ namespace DeepBlue.Controllers.Deal {
 								 TotalCapitalCall = (from cc in context.UnderlyingFundCapitalCallsTable
 													 where cc.UnderlyingFundID == underlyingFund.UnderlyingtFundID
 													 && cc.FundID == fund.FundID
-													 && cc.NoticeDate >= (underlyingFundNAV != null ? EntityFunctions.TruncateTime(underlyingFundNAV.FundNAVDate) : todayDate)
+													 && cc.DueDate >= (underlyingFundNAV != null ? EntityFunctions.TruncateTime(underlyingFundNAV.FundNAVDate) : todayDate)
 													 select cc.Amount).Sum(),
 								 TotalPostRecordCapitalCall = (from pcc in context.UnderlyingFundCapitalCallLineItemsTable
 															   where pcc.UnderlyingFundID == underlyingFund.UnderlyingtFundID
@@ -3204,8 +3363,8 @@ namespace DeepBlue.Controllers.Deal {
 							 } equals new {
 								 underlyingFundNAV.UnderlyingFundID,
 								 underlyingFundNAV.FundID
-							 } 
-							 join navHistory in context.UnderlyingFundNAVHistoriesTable on underlyingFundNAV.UnderlyingFundNAVID equals navHistory.UnderlyingFundNAVID 
+							 }
+							 join navHistory in context.UnderlyingFundNAVHistoriesTable on underlyingFundNAV.UnderlyingFundNAVID equals navHistory.UnderlyingFundNAVID
 							 where
 							 dealUnderlyingFund.DealID == dealID
 							 && ((dealUnderlyingFundID ?? 0) > 0 ? dealUnderlyingFund.DealUnderlyingtFundID == dealUnderlyingFundID : dealUnderlyingFund.DealUnderlyingtFundID > 0)
@@ -3227,8 +3386,5 @@ namespace DeepBlue.Controllers.Deal {
 
 		#endregion
 
-
-
-		 
 	}
 }

@@ -49,16 +49,48 @@ dealActivity.loadSD=function (isRefresh) {
 			$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
 			$(".mcc",target).removeAttr("class");
 			$("tr",target).each(function () {
+
+				jHelper.trimTextArea(this);
 				var issuer=$("#Issuer",this).get(0);
 				var underlyingFundId=dealActivity.getSDUnderlyingFundId();
 				var fundId=$("#FundId",this).val();
 				var index=$("#Index",this).val();
 				var row=this;
+
+				$("#IssuerName",this)
+				.autocomplete(
+				{
+					source: dealActivity.searchUFSDIssuer
+				,minLength: 1
+				,autoFocus: true
+				,select: function (event,ui) {
+					var tr=$(this).parents("tr:first");
+					$("#IssuerId",tr).val(ui.item.id);
+					$("#Issuer",tr).val("--Select One--");
+					$("#SecurityTypeId",tr).val(0);
+					$("#SecurityId",tr).val(0);
+				}
+				,appendTo: "body",delay: 300
+				});
+
+					$("#Broker",this)
+				.autocomplete(
+				{
+					source: "/Deal/FindBrokers"
+				,minLength: 1
+				,autoFocus: true
+				,select: function (event,ui) {
+					var tr=$(this).parents("tr:first");
+					$("#BrokerID",tr).val(ui.item.id);
+				}
+				,appendTo: "body",delay: 300
+				});
+
 				if(issuer) {
 					$(issuer).autocomplete(
 					{
 						source: function (request,response) {
-							var issuerId=$("#UFSDIssuerId").val();
+							var issuerId=$("#IssuerId").val();
 							if(parseInt(issuerId)>0) {
 								$.getJSON("/Deal/FindStockIssuers?underlyingFundId="+underlyingFundId+"&fundId="+fundId+"&issuerId="+issuerId+"&term="+request.term,function (equityData) {
 									response(equityData);

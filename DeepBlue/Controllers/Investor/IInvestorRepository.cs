@@ -14,6 +14,7 @@ namespace DeepBlue.Controllers.Investor {
 		List<AutoCompleteList> FindInvestors(string investorName, int? fundId);
 		List<AutoCompleteList> FindOtherInvestors(string investorName, int excludeInvestorId);
         DeepBlue.Models.Entity.Investor FindInvestor(int investorId);
+		DeepBlue.Models.Entity.Investor FindInvestor(string investorName);
 		InvestorDetail GetInvestorDetail(int investorId);
 		InvestorType FindInvestorType(int investorTypeId);
         List<InvestorFund> FindInvestorFunds(int investorId);

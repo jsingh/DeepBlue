@@ -55,6 +55,9 @@ namespace DeepBlue.Helpers {
 
 			// Menu
 			Permissions.Add(new EntityPermission { TableName = Table.Menu, URL = "/Admin/Menu", IsSystemEntity = true, IsOtherEntity = false });
+
+			// File Type
+			Permissions.Add(new EntityPermission { TableName = Table.FileType, URL = "/Admin/FileType", IsSystemEntity = true, IsOtherEntity = false });
 		}
 
 		public static string EntityName {

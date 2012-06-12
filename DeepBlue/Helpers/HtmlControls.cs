@@ -39,7 +39,7 @@ namespace DeepBlue.Helpers {
 			if (String.IsNullOrEmpty(labelText)) {
 				return MvcHtmlString.Empty;
 			}
-		    TagBuilder tag = new TagBuilder("label");
+			TagBuilder tag = new TagBuilder("label");
 			tag.MergeAttributes(htmlAttributes);
 			tag.Attributes.Add("for", html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName));
 			tag.SetInnerText(labelText);
@@ -436,6 +436,18 @@ namespace DeepBlue.Helpers {
 		#endregion
 
 		#region GreenButton
+		public static MvcHtmlString DeepBlueButton(this HtmlHelper helper, string name, object htmlAttributes) {
+			TagBuilder tagBuilder = new TagBuilder("div");
+			tagBuilder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+			tagBuilder.AddCssClass("db-btn");
+			return MvcHtmlString.Create(tagBuilder.ToString(TagRenderMode.StartTag) + string.Format("<div class=left></div><div class=center>{0}</div><div class=right></div>", name) + tagBuilder.ToString(TagRenderMode.EndTag));
+		}
+		public static MvcHtmlString DeepBlueButton(this HtmlHelper helper, string name) {
+			return DeepBlueButton(helper, name, new { });
+		}
+		#endregion
+
+		#region GreenButton
 		public static MvcButton GreenButton(this HtmlHelper helper, object htmlAttributes) {
 			TagBuilder tagBuilder = new TagBuilder("div");
 			tagBuilder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
@@ -614,11 +626,12 @@ namespace DeepBlue.Helpers {
 			if (string.IsNullOrEmpty(formatName)) {
 				IDictionary<string, object> dictionaries = new RouteValueDictionary(htmlAttributes);
 				if (dictionaries.ContainsKey("onkeydown")) {
-					int? count = (from dic in dictionaries where 
-									(
-									dic.Value.ToString().Contains("jHelper.isCurrency") == true ||
-									dic.Value.ToString().Contains("jHelper.isNumeric") == true
-									)
+					int? count = (from dic in dictionaries
+								  where
+									  (
+									  dic.Value.ToString().Contains("jHelper.isCurrency") == true ||
+									  dic.Value.ToString().Contains("jHelper.isNumeric") == true
+									  )
 								  select dic).Count();
 					if ((count ?? 0) > 0) {
 						formatName = "formatNumber";
@@ -645,7 +658,7 @@ namespace DeepBlue.Helpers {
 			}
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
-	 
+
 		#endregion
 
 		#region UnorderList

@@ -266,32 +266,8 @@
 	}
 
 	,setUpToolTip: function (target) {
-		$(".tooltiptxt",target).each(function () { jHelper.tooltip(this); });
 	}
 	,tooltip: function (target) {
-		$(target).unbind('mouseover')
-		.mouseover(function () {
-			$(".tooltip").remove();
-			var t=document.createElement("div");
-			var mtop=0; //parseInt($(target).attr("top"));
-			if(isNaN(mtop)) { mtop=0; }
-			t.className="tooltip";
-			$(target).after(t);
-			setTimeout(function () {
-				var v=$(target).val();
-				if($.trim(v)=="") {
-					$(t).hide();
-				} else {
-					$(t).html(v);
-					var p=$(target).offset();
-					$(t).css({ "margin-top": "-29px","left": p.left+50 })
-					$(t).fadeIn('slow');
-				}
-			},100);
-		})
-		.mouseout(function () {
-			$(".tooltip").fadeOut('slow');
-		});
 	}
 	,applyGridClass: function (target) {
 		$("tr:even",target).removeClass("row").removeClass("arow").addClass("row");
@@ -361,7 +337,16 @@
 	,jqComboBox: function (target) { $("select",target).combobox(); }
 	,removejqComboBox: function (target) { $("select",target).combobox("destroy"); }
 	,removejqCheckBox: function (target) { $(".jqCheckBox",target).remove();$(".jqCDisplay",target).remove();$(".jqHidden",target).removeClass(); }
+	,resizeDialog: function () {
+		$(".ui-dialog-content:visible").each(function () {
+			var dialog=$(this).data("dialog");
+			dialog.option("position",dialog.options.position);
+		});
+	}
 }
+$(window).resize(function () {
+	jHelper.resizeDialog();
+});
 $.extend(window,{
 	formatDate: function (dt) { try { if(dt==null) { return ""; } var d=jHelper.formatDate(jHelper.parseJSONDate(dt));if(d=="01/01/1"||d=="01/01/1900") { return ""; } else { return d; } } catch(e) { return ""; } }
 	,formatCurrency: function (d) {

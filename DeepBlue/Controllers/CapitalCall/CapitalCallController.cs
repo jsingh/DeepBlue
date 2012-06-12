@@ -50,6 +50,52 @@ namespace DeepBlue.Controllers.CapitalCall {
 		}
 
 		//
+		// POST: /CapitalCall/ImportCapitalCall
+		[HttpPost]
+		public ActionResult ImportCapitalCall(FormCollection collection) {
+			Models.Entity.CapitalCall capitalCall = new Models.Entity.CapitalCall();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(capitalCall, collection);
+			capitalCall.CreatedBy = Authentication.CurrentUser.UserID;
+			capitalCall.CreatedDate = DateTime.Now;
+			capitalCall.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			capitalCall.LastUpdatedDate = DateTime.Now;
+			capitalCall.CapitalCallTypeID = (int)Models.CapitalCall.Enums.CapitalCallType.Manual;
+			capitalCall.CapitalCallNumber = Convert.ToString(CapitalCallRepository.FindCapitalCallNumber(capitalCall.FundID));
+			IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalCall(capitalCall);
+			if (errorInfo == null) {
+				resultModel.Result += "True||" + capitalCall.CapitalCallID;
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+
+			return View("Result", resultModel);
+		}
+
+		//
+		// POST: /CapitalCall/ImportCapitalCallLineItem
+		[HttpPost]
+		public ActionResult ImportCapitalCallLineItem(FormCollection collection) {
+			CapitalCallLineItem item = new CapitalCallLineItem();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(item, collection);
+			item.CreatedBy = Authentication.CurrentUser.UserID;
+			item.CreatedDate = DateTime.Now;
+			item.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			item.LastUpdatedDate = DateTime.Now;
+			IEnumerable<ErrorInfo> errorInfo = CapitalCallRepository.SaveCapitalCallLineItem(item);
+			if (errorInfo == null) {
+				resultModel.Result += "True||" + item.CapitalCallLineItemID;
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			return View("Result", resultModel);
+		}
+
+
+		//
 		// POST: /CapitalCall/Create
 		[HttpPost]
 		public ActionResult Create(FormCollection collection) {
@@ -1103,12 +1149,12 @@ namespace DeepBlue.Controllers.CapitalCall {
 			item.LastUpdatedDate = DateTime.Now;
 			IEnumerable<ErrorInfo> errorInfo = ValidationHelper.Validate(item);
 			if (errorInfo.Any() == false) {
-					// Attempt to create cash distribution of each investor.
-					errorInfo = CapitalCallRepository.SaveCapitalDistributionLineItem(item);
-					resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
-					if (string.IsNullOrEmpty(resultModel.Result)) {
-						resultModel.Result += "True||" + item.CapitalDistributionLineItemID;
-					}
+				// Attempt to create cash distribution of each investor.
+				errorInfo = CapitalCallRepository.SaveCapitalDistributionLineItem(item);
+				resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					resultModel.Result += "True||" + item.CapitalDistributionLineItemID;
+				}
 			}
 			else {
 				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);

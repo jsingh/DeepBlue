@@ -16,6 +16,14 @@
 	<td class="lalign">
 		<%: Html.TextBox("UnfundedAmount", "{{if UnfundedAmount>0}}${formatNumber(UnfundedAmount)}{{/if}}", new { @class = "hide", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
+	<td class="lalign" style="width:200px;">
+		<div class="show" style="width:200px;overflow:hidden;">
+			 <a href="#" rel="tooltip" title="${Notes}">
+				${Notes}
+			</a>
+		</div>
+		<%: Html.TextBox("Notes", "${Notes}", new { @class = "hide" })%>
+	</td>
 	<td class="ralign">
 		<%: Html.Hidden("DealUnderlyingFundId", "${DealUnderlyingFundId}")%>
 		<%: Html.Span("", new { id = "UpdateLoading" })%>

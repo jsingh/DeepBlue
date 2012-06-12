@@ -14,6 +14,10 @@ using System.Text;
 namespace DeepBlue.Controllers.Admin {
 	public class AdminRepository : IAdminRepository {
 
+		#region Constants
+		private const string COUNTRIES_BY_KEY = "Country-{0}";
+		#endregion
+
 		#region InvestorManagement
 
 		#region  InvestorEntityType
@@ -32,6 +36,12 @@ namespace DeepBlue.Controllers.Admin {
 		public InvestorEntityType FindInvestorEntityType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.InvestorEntityTypesTable.SingleOrDefault(entityType => entityType.InvestorEntityTypeID == id);
+			}
+		}
+
+		public InvestorEntityType FindInvestorEntityType(string investorEntityTypeName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.InvestorEntityTypesTable.FirstOrDefault(entityType => entityType.InvestorEntityTypeName == investorEntityTypeName);
 			}
 		}
 
@@ -428,6 +438,12 @@ namespace DeepBlue.Controllers.Admin {
 		public PurchaseType FindPurchaseType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.PurchaseTypesTable.SingleOrDefault(type => type.PurchaseTypeID == id);
+			}
+		}
+
+		public PurchaseType FindPurchaseType(string purchaseTypeName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.PurchaseTypesTable.FirstOrDefault(type => type.Name == purchaseTypeName);
 			}
 		}
 
@@ -1050,6 +1066,12 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
+		public SecurityType FindSecurityType(string securityTypeName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.SecurityTypesTable.FirstOrDefault(type => type.Name == securityTypeName);
+			}
+		}
+
 		public bool SecurityTypeNameAvailable(string securityTypeName, int securityTypeID) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return ((from type in context.SecurityTypesTable
@@ -1509,15 +1531,25 @@ namespace DeepBlue.Controllers.Admin {
 		#region Country
 		public List<AutoCompleteList> FindCountrys(string countryName) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
-				IQueryable<AutoCompleteList> countryListQuery = (from country in context.COUNTRiesTable
-																 where country.CountryName.StartsWith(countryName)
-																 orderby country.CountryName
-																 select new AutoCompleteList {
-																	 id = country.CountryID,
-																	 label = country.CountryName,
-																	 value = country.CountryName
-																 });
-				return new PaginatedList<AutoCompleteList>(countryListQuery, 1, AutoCompleteOptions.RowsLength);
+				ICacheManager cacheManager = new MemoryCacheManager();
+				string key = string.Format(COUNTRIES_BY_KEY, countryName);
+				return cacheManager.Get(key, () => {
+					IQueryable<AutoCompleteList> countryListQuery = (from country in context.COUNTRiesTable
+																	 where country.CountryName.StartsWith(countryName)
+																	 orderby country.CountryName
+																	 select new AutoCompleteList {
+																		 id = country.CountryID,
+																		 label = country.CountryName,
+																		 value = country.CountryName
+																	 });
+					return new PaginatedList<AutoCompleteList>(countryListQuery, 1, AutoCompleteOptions.RowsLength);
+				});
+			}
+		}
+
+		public COUNTRY FindCountry(string countryName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.COUNTRiesTable.Where(country => country.CountryName == countryName).FirstOrDefault();
 			}
 		}
 		#endregion
@@ -1534,6 +1566,12 @@ namespace DeepBlue.Controllers.Admin {
 																   value = state.Name
 															   }).OrderBy(list => list.label);
 				return new PaginatedList<AutoCompleteList>(stateListQuery, 1, AutoCompleteOptions.RowsLength);
+			}
+		}
+
+		public STATE  FindState(string stateName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.STATEsTable.Where(state => state.Name == stateName).FirstOrDefault();
 			}
 		}
 		#endregion
@@ -2198,6 +2236,7 @@ namespace DeepBlue.Controllers.Admin {
 														underlyingFundCapitalCall.Fund.FundName : string.Empty),
 														underlyingFundCapitalCall.Amount,
 														underlyingFundCapitalCall.NoticeDate,
+														underlyingFundCapitalCall.DueDate,
 														underlyingFundCapitalCall.PaidON,
 														underlyingFundCapitalCall.ReceivedDate,
 														DeemedCapitalCall = underlyingFundCapitalCall.IsDeemedCapitalCall,
@@ -2388,6 +2427,15 @@ namespace DeepBlue.Controllers.Admin {
 					.Where(contact => contact.ContactID == contactId).SingleOrDefault();
 			}
 		}
+
+		public Contact FindDealContact(string dealContactName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from contact in GetDealContactsTable(context.Contacts)
+						where contact.ContactName == dealContactName
+						select contact).FirstOrDefault();
+			}
+		}
+
 
 		public IEnumerable<ErrorInfo> SaveDealContact(Contact contact) {
 			return contact.Save();
@@ -2608,6 +2656,12 @@ namespace DeepBlue.Controllers.Admin {
 		public SellerType FindSellerType(int id) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.SellerTypesTable.SingleOrDefault(field => field.SellerTypeID == id);
+			}
+		}
+
+		public SellerType FindSellerType(string sellerTypeName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.SellerTypesTable.FirstOrDefault(field => field.SellerType1 == sellerTypeName);
 			}
 		}
 
@@ -3075,6 +3129,70 @@ namespace DeepBlue.Controllers.Admin {
 			}
 		}
 
+		#endregion
+
+		#region BrokerRepository
+
+		public List<Models.Entity.Broker> GetAllBrokers(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<Models.Entity.Broker> query = (from broker in context.BrokersTable
+														  select broker);
+				query = query.OrderBy(sortName, (sortOrder == "asc"));
+				PaginatedList<Models.Entity.Broker> paginatedList = new PaginatedList<Models.Entity.Broker>(query, pageIndex, pageSize);
+				totalRows = paginatedList.TotalCount;
+				return paginatedList;
+			}
+		}
+
+		public Models.Entity.Broker FindBroker(int brokerID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.Brokers.FirstOrDefault(broker => broker.BrokerID == brokerID);
+			}
+		}
+
+		public Models.Entity.Broker FindBroker(string brokerName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.BrokersTable.FirstOrDefault(broker => broker.BrokerName == brokerName);
+			}
+		}
+
+		public bool BrokerNameAvailable(string brokerName, int brokerID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return ((from broker in context.BrokersTable
+						 where broker.BrokerName == brokerName && broker.BrokerID != brokerID
+						 select broker.BrokerID).Count()) > 0 ? true : false;
+			}
+		}
+
+		public bool DeleteBroker(int brokerID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				Models.Entity.Broker deleteBroker = context.Brokers.FirstOrDefault(broker => broker.BrokerID == brokerID);
+				if (deleteBroker != null) {
+					context.Brokers.DeleteObject(deleteBroker);
+					context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
+		}
+
+		public IEnumerable<ErrorInfo> SaveBroker(Models.Entity.Broker broker) {
+			return broker.Save();
+		}
+
+		public List<AutoCompleteList> FindBrokers(string brokerName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				IQueryable<AutoCompleteList> query = (from broker in context.BrokersTable
+													  where broker.BrokerName.StartsWith(brokerName)
+													  orderby broker.BrokerName
+													  select new AutoCompleteList {
+														  id = broker.BrokerID,
+														  label = broker.BrokerName,
+														  value = broker.BrokerName
+													  });
+				return new PaginatedList<AutoCompleteList>(query, 1, AutoCompleteOptions.RowsLength);
+			}
+		}
 		#endregion
 
 	}

@@ -18,11 +18,23 @@ using System.Net;
 using DeepBlue.Models.Admin;
 using System.Configuration;
 using System.Data;
+using DeepBlue.Models.Excel;
+using System.Reflection;
 
 namespace DeepBlue.Controllers.Deal {
 
 	[OtherEntityAuthorize]
 	public class DealController : BaseController {
+
+		#region Constants
+		private const string EXCELDEALERROR_BY_KEY = "Deal-Excel-{0}";
+		private const string EXCELDEALEXPENSEERROR_BY_KEY = "Deal-Expense-Excel-{0}";
+		private const string EXCELDEALUFERROR_BY_KEY = "Deal-UnderlyingFund-Excel-{0}";
+		private const string EXCELDEALUDERROR_BY_KEY = "Deal-UnderlyingDirect-Excel-{0}";
+
+		private const string EXCELDEALCLOSEUFERROR_BY_KEY = "DealClose-UnderlyingFund-Excel-{0}";
+		private const string EXCELDEALCLOSEUDERROR_BY_KEY = "DealClose-UnderlyingDirect-Excel-{0}";
+		#endregion
 
 		public IDealRepository DealRepository { get; set; }
 
@@ -121,7 +133,7 @@ namespace DeepBlue.Controllers.Deal {
 		public ActionResult DealList(int pageIndex, int pageSize, string sortName, string sortOrder, bool? isNotClose, int? fundId, int? dealId) {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
-			List<DealListModel> deals = DealRepository.GetAllDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows, isNotClose, fundId,dealId);
+			List<DealListModel> deals = DealRepository.GetAllDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows, isNotClose, fundId, dealId);
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var deal in deals) {
@@ -157,7 +169,7 @@ namespace DeepBlue.Controllers.Deal {
 			List<DealFundListModel> funds = DealRepository.GetAllCloseDeals(pageIndex, pageSize, sortName, sortOrder, ref totalRows, fundID, dealID);
 			return Json(new { page = pageIndex, total = totalRows, rows = funds }, JsonRequestBehavior.AllowGet);
 		}
-		
+
 		//
 		// POST: /Deal/Create
 		[HttpPost]
@@ -181,6 +193,75 @@ namespace DeepBlue.Controllers.Deal {
 					deal.DealNumber = DealRepository.GetMaxDealNumber(model.FundId);
 				}
 
+				deal.EntityID = Authentication.CurrentEntity.EntityID;
+				deal.LastUpdatedBy = Authentication.CurrentUser.UserID;
+				deal.LastUpdatedDate = DateTime.Now;
+				deal.DealName = model.DealName;
+				deal.FundID = model.FundId;
+				deal.IsPartnered = model.IsPartnered;
+				deal.PurchaseTypeID = model.PurchaseTypeId;
+				deal.ContactID = null;
+				if ((model.ContactId ?? 0) > 0)
+					deal.ContactID = model.ContactId;
+
+				if (deal.IsPartnered) {
+
+					// Attempt to create deal partner.
+
+					if (deal.Partner == null) {
+						deal.Partner = new Partner();
+						deal.Partner.CreatedBy = Authentication.CurrentUser.UserID;
+						deal.Partner.CreatedDate = DateTime.Now;
+					}
+					deal.Partner.EntityID = Authentication.CurrentEntity.EntityID;
+					deal.Partner.LastUpdatedBy = Authentication.CurrentUser.UserID;
+					deal.Partner.LastUpdatedDate = DateTime.Now;
+					deal.Partner.PartnerName = model.PartnerName;
+				}
+				else {
+					deal.Partner = null;
+				}
+
+				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveDeal(deal);
+				if (errorInfo != null) {
+					foreach (var err in errorInfo.ToList()) {
+						resultModel.Result += err.PropertyName + " : " + err.ErrorMessage + "\n";
+					}
+				}
+				if (string.IsNullOrEmpty(resultModel.Result)) {
+					resultModel.Result = "True||" + deal.DealID;
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpPost]
+		public ActionResult ImportDeal(FormCollection collection) {
+			DealDetailModel model = new DealDetailModel();
+			this.TryUpdateModel(model);
+			ResultModel resultModel = new ResultModel();
+			string ErrorMessage = DealdNameAvailable(model.DealName, model.DealId, model.FundId);
+			if (String.IsNullOrEmpty(ErrorMessage) == false) {
+				ModelState.AddModelError("DealName", ErrorMessage);
+			}
+			if (ModelState.IsValid) {
+				// Attempt to create deal.
+				Models.Entity.Deal deal = DealRepository.FindDeal(model.DealId);
+				if (deal == null) {
+					deal = new Models.Entity.Deal();
+					deal.CreatedBy = Authentication.CurrentUser.UserID;
+					deal.CreatedDate = DateTime.Now;
+				}
+				deal.DealNumber = model.DealNumber;
 				deal.EntityID = Authentication.CurrentEntity.EntityID;
 				deal.LastUpdatedBy = Authentication.CurrentUser.UserID;
 				deal.LastUpdatedDate = DateTime.Now;
@@ -290,12 +371,13 @@ namespace DeepBlue.Controllers.Deal {
 			CreateDealCloseModel model = null;
 			if (deal != null) {
 				model = new CreateDealCloseModel { DealId = deal.DealID, DealName = deal.DealName, DealNumber = deal.DealNumber };
-			}else{
+			}
+			else {
 				model = new CreateDealCloseModel();
 			}
 			return Json(model, JsonRequestBehavior.AllowGet);
 		}
-		
+
 		//
 		// GET: /Deal/FindDeals
 		[HttpGet]
@@ -628,6 +710,83 @@ namespace DeepBlue.Controllers.Deal {
 			return View("Result", resultModel);
 		}
 
+
+		public string FindDealID(string fundName, int dealNumber) {
+			return DealRepository.FindDealID(fundName, dealNumber).ToString();
+		}
+
+
+		//
+		// GET: /Deal/ImportUpdateDealClosingDealUnderlyingFund
+		[HttpPost]
+		public ActionResult ImportUpdateDealClosingDealUnderlyingFund(FormCollection collection) {
+			DealUnderlyingFundModel model = new DealUnderlyingFundModel();
+			this.TryUpdateModel(model, collection);
+			ResultModel resultModel = new ResultModel();
+			DealUnderlyingFund dealUnderlyingFund = DealRepository.FindDealUnderlyingFund(model.DealUnderlyingFundId ?? 0);
+			if (dealUnderlyingFund != null) {
+				dealUnderlyingFund.DealClosingID = model.DealClosingId;
+				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
+				if (errorInfo == null) {
+					resultModel.Result = "True||" + dealUnderlyingFund.DealUnderlyingtFundID;
+				}
+				else {
+					resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		//
+		// GET: /Deal/ImportDealUnderlyingFund
+		[HttpPost]
+		public ActionResult ImportDealUnderlyingFund(FormCollection collection) {
+			DealUnderlyingFundModel model = new DealUnderlyingFundModel();
+			this.TryUpdateModel(model, collection);
+			ResultModel resultModel = new ResultModel();
+			DealUnderlyingFund dealUnderlyingFund = DealRepository.FindDealUnderlyingFund(model.DealUnderlyingFundId ?? 0);
+			if (dealUnderlyingFund == null) {
+				dealUnderlyingFund = new DealUnderlyingFund();
+			}
+			dealUnderlyingFund.CommittedAmount = model.CommittedAmount;
+			dealUnderlyingFund.DealClosingID = model.DealClosingId;
+			dealUnderlyingFund.DealID = model.DealId;
+			dealUnderlyingFund.Percent = model.Percent;
+			dealUnderlyingFund.GrossPurchasePrice = model.GrossPurchasePrice;
+			dealUnderlyingFund.PostRecordDateCapitalCall = model.PostRecordDateCapitalCall;
+			dealUnderlyingFund.PostRecordDateDistribution = model.PostRecordDateDistribution;
+			dealUnderlyingFund.ReassignedGPP = model.ReassignedGPP;
+			dealUnderlyingFund.RecordDate = model.RecordDate;
+			dealUnderlyingFund.UnderlyingFundID = model.UnderlyingFundId;
+			dealUnderlyingFund.UnfundedAmount = model.UnfundedAmount;
+			dealUnderlyingFund.EffectiveDate = model.EffectiveDate;
+
+			dealUnderlyingFund.NetPurchasePrice = (dealUnderlyingFund.GrossPurchasePrice ?? 0) + (dealUnderlyingFund.PostRecordDateCapitalCall ?? 0) - (dealUnderlyingFund.PostRecordDateDistribution ?? 0);
+			dealUnderlyingFund.AdjustedCost = (dealUnderlyingFund.ReassignedGPP ?? 0) + (dealUnderlyingFund.PostRecordDateCapitalCall ?? 0) - (dealUnderlyingFund.PostRecordDateDistribution ?? 0);
+
+			IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
+
+			if (errorInfo == null) {
+				if ((model.FundNAV ?? 0) > 0) {
+					// Check the user changes the fund navigation.
+					UnderlyingFundNAV underlyingFundNAV = DealRepository.FindUnderlyingFundNAV(model.UnderlyingFundId, model.FundId, model.EffectiveDate);
+					bool isCreateFundNAV = false;
+					if (underlyingFundNAV == null)
+						isCreateFundNAV = true;		// Create new underlying fund valuation.
+					else if (underlyingFundNAV.FundNAV != model.FundNAV)
+						isCreateFundNAV = true; 	// If the user changes the fund navigation then update underlying fund valuation.
+
+					if (isCreateFundNAV)
+						CreateUnderlyingFundValuation(dealUnderlyingFund.UnderlyingFundID, model.FundId, (model.FundNAV ?? 0), DateTime.Now, model.EffectiveDate, out errorInfo);
+				}
+				resultModel.Result = "True||" + dealUnderlyingFund.DealUnderlyingtFundID;
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			return View("Result", resultModel);
+		}
+
 		private IEnumerable<ErrorInfo> SaveDealUnderlyingFund(DealUnderlyingFundModel model, out DealUnderlyingFund dealUnderlyingFund) {
 			// Attempt to create deal underlying fund.
 
@@ -720,6 +879,73 @@ namespace DeepBlue.Controllers.Deal {
 						}
 					}
 				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpPost]
+		public ActionResult ImportUpdateDealClosingDealUnderlyingDirect(FormCollection collection) {
+			DealUnderlyingDirectModel model = new DealUnderlyingDirectModel();
+			this.TryUpdateModel(model, collection);
+			ResultModel resultModel = new ResultModel();
+			// Attempt to create deal underlying direct
+			DealUnderlyingDirect dealUnderlyingDirect = DealRepository.FindDealUnderlyingDirect(model.DealUnderlyingDirectId ?? 0);
+			if (dealUnderlyingDirect != null) {
+				dealUnderlyingDirect.DealClosingID = model.DealClosingId;
+				IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveDealUnderlyingDirect(dealUnderlyingDirect);
+				if (errorInfo == null) {
+					resultModel.Result = "True||" + dealUnderlyingDirect.DealUnderlyingDirectID;
+				}
+				else {
+					resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		[HttpPost]
+		public ActionResult ImportDealUnderlyingDirect(FormCollection collection) {
+			DealUnderlyingDirectModel model = new DealUnderlyingDirectModel();
+			this.TryUpdateModel(model, collection);
+			ResultModel resultModel = new ResultModel();
+			// Attempt to create deal underlying direct
+
+			DealUnderlyingDirect dealUnderlyingDirect = DealRepository.FindDealUnderlyingDirect(model.DealUnderlyingDirectId ?? 0);
+			if (dealUnderlyingDirect == null) {
+				dealUnderlyingDirect = new DealUnderlyingDirect();
+			}
+
+			dealUnderlyingDirect.AdjustedFMV = model.AdjustedFMV;
+			dealUnderlyingDirect.DealClosingID = model.DealClosingId;
+			dealUnderlyingDirect.DealID = model.DealId;
+			dealUnderlyingDirect.FMV = model.FMV;
+			dealUnderlyingDirect.NumberOfShares = model.NumberOfShares;
+			dealUnderlyingDirect.Percent = model.Percent;
+			dealUnderlyingDirect.PurchasePrice = model.PurchasePrice;
+			dealUnderlyingDirect.RecordDate = model.RecordDate;
+			dealUnderlyingDirect.SecurityID = model.SecurityId;
+			dealUnderlyingDirect.SecurityTypeID = model.SecurityTypeId;
+			dealUnderlyingDirect.TaxCostBase = model.TaxCostBase;
+			dealUnderlyingDirect.TaxCostDate = model.TaxCostDate;
+
+			IEnumerable<ErrorInfo> errorInfo = DealRepository.SaveDealUnderlyingDirect(dealUnderlyingDirect);
+			if (errorInfo == null) {
+				if (model.PurchasePrice > 0) {
+					// Check the user changes the purchase price.
+					UnderlyingDirectLastPrice underlyingDirectLastPrice = DealRepository.FindUnderlyingDirectLastPrice(model.FundId, model.SecurityId, model.SecurityTypeId);
+					bool isCreateLastPrice = false;
+					if (underlyingDirectLastPrice == null)
+						isCreateLastPrice = true;
+					else if (underlyingDirectLastPrice.LastPrice != model.PurchasePrice)
+						isCreateLastPrice = true;
+					// If the user changes the purchase price then create underlying direct valuation.
+					if (isCreateLastPrice)
+						errorInfo = SaveUnderlyingDirectValuation(model.FundId, model.SecurityId, model.SecurityTypeId, model.PurchasePrice, DateTime.Now, out underlyingDirectLastPrice);
+				}
+				resultModel.Result = "True||" + dealUnderlyingDirect.DealUnderlyingDirectID;
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 			}
 			return View("Result", resultModel);
 		}
@@ -840,6 +1066,14 @@ namespace DeepBlue.Controllers.Deal {
 		public JsonResult GetDealCloseDetails(int id, int dealId) {
 			return Json(DealRepository.FindDealClosingModel(id, dealId), JsonRequestBehavior.AllowGet);
 		}
+
+		//
+		// GET: /Deal/GetDealCloseAssetDetails
+		[HttpGet]
+		public JsonResult GetDealCloseAssetDetails(int dealId) {
+			return Json(DealRepository.FindDealClosingModel(dealId), JsonRequestBehavior.AllowGet);
+		}
+
 
 		//
 		// GET: /Deal/GetFianlDealCloseDetails
@@ -969,10 +1203,53 @@ namespace DeepBlue.Controllers.Deal {
 						resultModel.Result = "True||" + dealClosing.DealClosingID;
 					}
 				}
-
 				if (string.IsNullOrEmpty(resultModel.Result)) {
 					resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return View("Result", resultModel);
+		}
+
+		//
+		// GET: /Deal/ImportDealClosing
+		[HttpPost]
+		public ActionResult ImportDealClosing(FormCollection collection) {
+			CreateDealCloseModel model = new CreateDealCloseModel();
+			this.TryUpdateModel(model);
+			IEnumerable<ErrorInfo> errorInfo;
+			ResultModel resultModel = new ResultModel();
+			if (model.DealNumber == 0) {
+				ModelState.AddModelError("DealNumber", "Deal Close Number is required");
+			}
+			// Attempt to create deal closing.
+			DealClosing dealClosing = DealRepository.FindDealClosing(model.DealClosingId);
+
+			if (dealClosing == null) {
+				dealClosing = new DealClosing();
+				dealClosing.DealNumber = DealRepository.GetMaxDealClosingNumber(model.DealId);
+			}
+
+			dealClosing.CloseDate = model.CloseDate;
+			dealClosing.DealID = model.DealId;
+			dealClosing.IsFinalClose = model.IsFinalClose;
+
+			errorInfo = DealRepository.SaveDealClosing(dealClosing);
+
+			if (errorInfo == null) {
+				resultModel.Result = "True||" + dealClosing.DealClosingID;
+			}
+
+			if (string.IsNullOrEmpty(resultModel.Result)) {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
 			}
 			else {
 				foreach (var values in ModelState.Values.ToList()) {
@@ -1801,7 +2078,7 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		#endregion
-		
+
 		#region SecurityActivities
 
 		//
@@ -2047,6 +2324,49 @@ namespace DeepBlue.Controllers.Deal {
 			return View("Result", resultModel);
 		}
 
+		#region Import Underlying Fund Cash Distribution
+		[HttpPost]
+		public ActionResult ImportUnderlyingFundCashDistribution(FormCollection collection) {
+			UnderlyingFundCashDistribution underlyingFundCashDistribution = new UnderlyingFundCashDistribution();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(underlyingFundCashDistribution, collection);
+			IEnumerable<ErrorInfo> errorInfo = null;
+			// Attempt to create underlying fund cash distribution.
+			underlyingFundCashDistribution.CreatedBy = Authentication.CurrentUser.UserID;
+			underlyingFundCashDistribution.CreatedDate = DateTime.Now;
+			underlyingFundCashDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			underlyingFundCashDistribution.LastUpdatedDate = DateTime.Now;
+			errorInfo = DealRepository.SaveUnderlyingFundCashDistribution(underlyingFundCashDistribution);
+			if (errorInfo == null) {
+				resultModel.Result = "True||" + underlyingFundCashDistribution.UnderlyingFundCashDistributionID;
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			return View("Result", resultModel);
+		}
+
+		public ActionResult ImportUnderlyingFundCashDistributionLineItem(FormCollection collection) {
+			CashDistribution cashDistribution = new CashDistribution();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(cashDistribution, collection);
+			IEnumerable<ErrorInfo> errorInfo = null;
+			cashDistribution.CreatedBy = Authentication.CurrentUser.UserID;
+			cashDistribution.CreatedDate = DateTime.Now;
+			cashDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			cashDistribution.LastUpdatedDate = DateTime.Now;
+			// Attempt to create underlying fund cash distribution.
+			errorInfo = DealRepository.SaveUnderlyingFundPostRecordCashDistribution(cashDistribution);
+			if (errorInfo == null) {
+				resultModel.Result = "True||" + cashDistribution.CashDistributionID;
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			return View("Result", resultModel);
+		}
+		#endregion
+
 		private IEnumerable<ErrorInfo> SaveUnderlyingFundCashDistribution(UnderlyingFundCashDistributionModel model, FormCollection collection) {
 			IEnumerable<ErrorInfo> errorInfo = null;
 			// Attempt to create underlying fund cash distribution.
@@ -2190,6 +2510,57 @@ namespace DeepBlue.Controllers.Deal {
 			return View("Result", resultModel);
 		}
 
+		#region Import Underlying Fund Post Record Cash Distribution
+		//
+		// POST : /Deal/CreateUnderlyingFundPostRecordCashDistribution
+		[HttpPost]
+		public ActionResult ImportUnderlyingFundPostRecordCashDistribution(FormCollection collection) {
+			UnderlyingFundPostRecordCashDistributionModel model = new UnderlyingFundPostRecordCashDistributionModel();
+			this.TryUpdateModel(model, collection);
+			IEnumerable<ErrorInfo> errorInfo = null;
+			ResultModel resultModel = new ResultModel();
+
+			CashDistribution cashDistribution = null;
+			if (model.CashDistributionId > 0)
+				cashDistribution = DealRepository.FindUnderlyingFundPostRecordCashDistribution(model.CashDistributionId);
+			if (cashDistribution == null) {
+				cashDistribution = new CashDistribution();
+				cashDistribution.CreatedBy = Authentication.CurrentUser.UserID;
+				cashDistribution.CreatedDate = DateTime.Now;
+			}
+			cashDistribution.UnderlyingFundID = model.UnderlyingFundId;
+			cashDistribution.Amount = model.Amount ?? 0;
+			cashDistribution.DealID = model.DealId;
+			cashDistribution.DistributionDate = model.DistributionDate;
+			cashDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			cashDistribution.LastUpdatedDate = DateTime.Now;
+
+			//Assign null value in Underlying Fund Cash Distribution.
+			cashDistribution.UnderluingFundCashDistributionID = null;
+
+			errorInfo = DealRepository.SaveUnderlyingFundPostRecordCashDistribution(cashDistribution);
+			if (errorInfo == null) {
+				//resultModel.Result = "True||" + cashDistribution.CashDistributionID;
+				// Update post record date capital call amount to deal underlying fund and reduce unfunded amount.
+				List<DealUnderlyingFund> dealUnderlyingFunds = DealRepository.GetAllNotClosingDealUnderlyingFunds(cashDistribution.UnderlyingFundID, cashDistribution.DealID);
+				foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
+					if (dealUnderlyingFund.DealClosingID == null && dealUnderlyingFund.DealID == cashDistribution.DealID) {
+						dealUnderlyingFund.NetPurchasePrice = (dealUnderlyingFund.GrossPurchasePrice ?? 0) + (dealUnderlyingFund.PostRecordDateCapitalCall ?? 0) - (dealUnderlyingFund.PostRecordDateDistribution ?? 0);
+						dealUnderlyingFund.AdjustedCost = (dealUnderlyingFund.ReassignedGPP ?? 0) + (dealUnderlyingFund.PostRecordDateCapitalCall ?? 0) - (dealUnderlyingFund.PostRecordDateDistribution ?? 0);
+						errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
+						if (errorInfo != null)
+							break;
+					}
+				}
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+
+			return View("Result", resultModel);
+		}
+		#endregion
+
 		private IEnumerable<ErrorInfo> SaveUnderlyingFundPostRecordCashDistribution(UnderlyingFundPostRecordCashDistributionModel model) {
 			IEnumerable<ErrorInfo> errorInfo = null;
 			// Attempt to create post record cash distribution.
@@ -2297,11 +2668,57 @@ namespace DeepBlue.Controllers.Deal {
 			return View("Result", resultModel);
 		}
 
+
+		//
+		// POST : /Deal/ImportUnderlyingFundCapitalCall
+		[HttpPost]
+		public ActionResult ImportUnderlyingFundCapitalCall(FormCollection collection) {
+			ResultModel resultModel = new ResultModel();
+			UnderlyingFundCapitalCall underlyingFundCapitalCall = new UnderlyingFundCapitalCall();
+			IEnumerable<ErrorInfo> errorInfo = null;
+			this.TryUpdateModel(underlyingFundCapitalCall, collection);
+			underlyingFundCapitalCall.CreatedBy = Authentication.CurrentUser.UserID;
+			underlyingFundCapitalCall.CreatedDate = DateTime.Now;
+			underlyingFundCapitalCall.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			underlyingFundCapitalCall.LastUpdatedDate = DateTime.Now;
+			errorInfo = DealRepository.SaveUnderlyingFundCapitalCall(underlyingFundCapitalCall);
+			if (errorInfo == null) {
+				resultModel.Result = "True||" + underlyingFundCapitalCall.UnderlyingFundCapitalCallID;
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			return View("Result", resultModel);
+		}
+
+		//
+		// POST : /Deal/ImportUnderlyingFundCapitalCallLineItem
+		[HttpPost]
+		public ActionResult ImportUnderlyingFundCapitalCallLineItem(FormCollection collection) {
+			ResultModel resultModel = new ResultModel();
+			UnderlyingFundCapitalCallLineItem underlyingFundCapitalCallLineItem = new UnderlyingFundCapitalCallLineItem();
+			IEnumerable<ErrorInfo> errorInfo = null;
+			this.TryUpdateModel(underlyingFundCapitalCallLineItem, collection);
+
+			underlyingFundCapitalCallLineItem.CreatedBy = Authentication.CurrentUser.UserID;
+			underlyingFundCapitalCallLineItem.CreatedDate = DateTime.Now;
+			underlyingFundCapitalCallLineItem.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			underlyingFundCapitalCallLineItem.LastUpdatedDate = DateTime.Now;
+			errorInfo = DealRepository.SaveUnderlyingFundPostRecordCapitalCall(underlyingFundCapitalCallLineItem);
+			if (errorInfo == null) {
+				resultModel.Result = "True||" + underlyingFundCapitalCallLineItem.UnderlyingFundCapitalCallID;
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			return View("Result", resultModel);
+		}
+
 		//
 		// GET: /Deal/FindUnderlyingFundCapitalCall
 		[HttpGet]
-		public JsonResult FindUnderlyingFundCapitalCall(int fundID, decimal amount, DateTime noticeDate, int underlyingFundID) {
-			return Json(DealRepository.FindUnderlyingFundCapitalCall(fundID, amount, noticeDate, underlyingFundID), JsonRequestBehavior.AllowGet);
+		public JsonResult FindUnderlyingFundCapitalCall(int fundID, decimal amount, DateTime noticeDate, DateTime dueDate, int underlyingFundID) {
+			return Json(DealRepository.FindUnderlyingFundCapitalCall(fundID, amount, noticeDate, dueDate, underlyingFundID), JsonRequestBehavior.AllowGet);
 		}
 
 		private IEnumerable<ErrorInfo> SaveUnderlyingFundCapitalCall(UnderlyingFundCapitalCallModel model, FormCollection collection) {
@@ -2321,9 +2738,11 @@ namespace DeepBlue.Controllers.Deal {
 			underlyingFundCapitalCall.IsDeemedCapitalCall = model.IsDeemedCapitalCall ?? false;
 			underlyingFundCapitalCall.FundID = model.FundId;
 			underlyingFundCapitalCall.NoticeDate = model.NoticeDate;
+			underlyingFundCapitalCall.DueDate = model.NoticeDate;
 			underlyingFundCapitalCall.ReceivedDate = DateTime.Now;
 			underlyingFundCapitalCall.LastUpdatedBy = Authentication.CurrentUser.UserID;
 			underlyingFundCapitalCall.LastUpdatedDate = DateTime.Now;
+			underlyingFundCapitalCall.ManagementFee = model.ManagementFee;
 
 			errorInfo = DealRepository.SaveUnderlyingFundCapitalCall(underlyingFundCapitalCall);
 
@@ -2355,11 +2774,12 @@ namespace DeepBlue.Controllers.Deal {
 					else {
 						underlyingFundCapitalCallLineItem.Amount = ((dealUnderlyingFund.CommittedAmount ?? 0) / (dealUnderlyingFunds.Sum(fund => fund.CommittedAmount ?? 0))) * underlyingFundCapitalCall.Amount;
 					}
-
+					underlyingFundCapitalCallLineItem.ManagementFee = ((dealUnderlyingFund.CommittedAmount ?? 0) / (dealUnderlyingFunds.Sum(fund => fund.CommittedAmount ?? 0))) * (underlyingFundCapitalCall.ManagementFee ?? 0);
 					underlyingFundCapitalCallLineItem.ReceivedDate = underlyingFundCapitalCall.ReceivedDate;
 					underlyingFundCapitalCallLineItem.UnderlyingFundID = underlyingFundCapitalCall.UnderlyingFundID;
 					underlyingFundCapitalCallLineItem.DealID = dealUnderlyingFund.DealID;
-
+					underlyingFundCapitalCallLineItem.DueDate = underlyingFundCapitalCall.DueDate;
+					underlyingFundCapitalCallLineItem.NoticeDate = underlyingFundCapitalCall.NoticeDate;
 					// Update capital call amount to deal underlying fund and reduce unfunded amount.
 
 					dealUnderlyingFund.UnfundedAmount = dealUnderlyingFund.UnfundedAmount - underlyingFundCapitalCallLineItem.Amount;
@@ -2452,6 +2872,49 @@ namespace DeepBlue.Controllers.Deal {
 			return View("Result", resultModel);
 		}
 
+		[HttpPost]
+		public ActionResult ImportUnderlyingFundPostRecordCapitalCall(FormCollection collection) {
+			UnderlyingFundPostRecordCapitalCallModel model = new UnderlyingFundPostRecordCapitalCallModel();
+			ResultModel resultModel = new ResultModel();
+			this.TryUpdateModel(model, collection);
+			IEnumerable<ErrorInfo> errorInfo = null;
+			UnderlyingFundCapitalCallLineItem capitalCallLineItem = null;
+			if (model.UnderlyingFundCapitalCallLineItemId > 0) {
+				capitalCallLineItem = DealRepository.FindUnderlyingFundPostRecordCapitalCall(model.UnderlyingFundCapitalCallLineItemId);
+			}
+			if (capitalCallLineItem == null) {
+				capitalCallLineItem = new UnderlyingFundCapitalCallLineItem();
+				capitalCallLineItem.CreatedBy = Authentication.CurrentUser.UserID;
+				capitalCallLineItem.CreatedDate = DateTime.Now;
+			}
+			capitalCallLineItem.UnderlyingFundID = model.UnderlyingFundId;
+			capitalCallLineItem.Amount = model.Amount ?? 0;
+			capitalCallLineItem.CapitalCallDate = model.CapitalCallDate;
+			capitalCallLineItem.DealID = model.DealId;
+			capitalCallLineItem.ReceivedDate = DateTime.Now;
+			capitalCallLineItem.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			capitalCallLineItem.LastUpdatedDate = DateTime.Now;
+			errorInfo = DealRepository.SaveUnderlyingFundPostRecordCapitalCall(capitalCallLineItem);
+			if (errorInfo == null) {
+				// Update post record date capital call amount to deal underlying fund and reduce unfunded amount.
+				List<DealUnderlyingFund> dealUnderlyingFunds = DealRepository.GetAllNotClosingDealUnderlyingFunds(capitalCallLineItem.UnderlyingFundID, capitalCallLineItem.DealID);
+				foreach (var dealUnderlyingFund in dealUnderlyingFunds) {
+					if (dealUnderlyingFund.DealClosingID == null && dealUnderlyingFund.DealID == capitalCallLineItem.DealID) {
+						dealUnderlyingFund.NetPurchasePrice = (dealUnderlyingFund.GrossPurchasePrice ?? 0) + (dealUnderlyingFund.PostRecordDateCapitalCall ?? 0) - (dealUnderlyingFund.PostRecordDateDistribution ?? 0);
+						dealUnderlyingFund.AdjustedCost = (dealUnderlyingFund.ReassignedGPP ?? 0) + (dealUnderlyingFund.PostRecordDateCapitalCall ?? 0) - (dealUnderlyingFund.PostRecordDateDistribution ?? 0);
+						errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
+						if (errorInfo != null)
+							break;
+					}
+				}
+
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			return View("Result", resultModel);
+		}
+
 		private IEnumerable<ErrorInfo> SaveUnderlyingFundPostRecordCapitalCall(UnderlyingFundPostRecordCapitalCallModel model) {
 			IEnumerable<ErrorInfo> errorInfo = null;
 			// Attempt to create post record capital call.
@@ -2488,7 +2951,6 @@ namespace DeepBlue.Controllers.Deal {
 				}
 
 			}
-
 			return errorInfo;
 		}
 
@@ -2567,7 +3029,18 @@ namespace DeepBlue.Controllers.Deal {
 			IEnumerable<ErrorInfo> errorInfo = null;
 			// Attempt to create underlying fund cash distribution.
 
-			UnderlyingFundStockDistribution underlyingFundStockDistribution = new UnderlyingFundStockDistribution();
+			UnderlyingFundStockDistribution underlyingFundStockDistribution = null;
+			if (model.UnderlyingFundStockDistributionId > 0)
+				underlyingFundStockDistribution = DealRepository.FindUnderlyingFundStockDistribution(model.UnderlyingFundStockDistributionId);
+			if (underlyingFundStockDistribution == null) {
+				underlyingFundStockDistribution = new UnderlyingFundStockDistribution();
+				underlyingFundStockDistribution.CreatedBy = Authentication.CurrentUser.UserID;
+				underlyingFundStockDistribution.CreatedDate = DateTime.Now;
+			}
+
+			underlyingFundStockDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			underlyingFundStockDistribution.LastUpdatedDate = DateTime.Now;
+
 			underlyingFundStockDistribution.UnderlyingFundID = model.UnderlyingFundId;
 			underlyingFundStockDistribution.FundID = model.FundId;
 			underlyingFundStockDistribution.DistributionDate = model.DistributionDate;
@@ -2583,6 +3056,10 @@ namespace DeepBlue.Controllers.Deal {
 			underlyingFundStockDistribution.SecurityTypeID = model.SecurityTypeId;
 			underlyingFundStockDistribution.TaxCostBase = model.TaxCostBase;
 			underlyingFundStockDistribution.TaxCostDate = model.TaxCostDate;
+			if ((model.BrokerID ?? 0) > 0) {
+				underlyingFundStockDistribution.BrokerID = model.BrokerID;
+			}
+			underlyingFundStockDistribution.Notes = model.Notes;
 
 			errorInfo = DealRepository.SaveUnderlyingFundStockDistribution(underlyingFundStockDistribution);
 			if (errorInfo == null) {
@@ -2593,7 +3070,17 @@ namespace DeepBlue.Controllers.Deal {
 
 				decimal? totalDealCommitment = deals.Sum(d => d.CommitmentAmount);
 				foreach (var deal in deals) {
-					UnderlyingFundStockDistributionLineItem stockDistributionItem = new UnderlyingFundStockDistributionLineItem();
+					UnderlyingFundStockDistributionLineItem stockDistributionItem = DealRepository.FindUnderlyingFundStockDistributionLineItem(
+						underlyingFundStockDistribution.UnderlyingFundStockDistributionID
+						, underlyingFundStockDistribution.UnderlyingFundID
+						, deal.DealId);
+					if (stockDistributionItem == null) {
+						stockDistributionItem = new UnderlyingFundStockDistributionLineItem();
+						stockDistributionItem.CreatedBy = Authentication.CurrentUser.UserID;
+						stockDistributionItem.CreatedDate = DateTime.Now;
+					}
+					stockDistributionItem.LastUpdatedBy = Authentication.CurrentUser.UserID;
+					stockDistributionItem.LastUpdatedDate = DateTime.Now;
 					stockDistributionItem.DealID = deal.DealId;
 					stockDistributionItem.UnderlyingFundID = underlyingFundStockDistribution.UnderlyingFundID;
 
@@ -2632,12 +3119,85 @@ namespace DeepBlue.Controllers.Deal {
 			return Json(DealRepository.FindStockIssuers(term, underlyingFundId), JsonRequestBehavior.AllowGet);
 		}
 
+
 		//
 		// GET: /Deal/FindStockIssuers
 		[HttpGet]
 		public JsonResult FindStockIssuers(int underlyingFundId, int fundId, int issuerId, string term) {
 			return Json(DealRepository.FindStockIssuers(underlyingFundId, fundId, issuerId, term), JsonRequestBehavior.AllowGet);
 		}
+
+		//
+		// POST : /Deal/ImportUnderlyingStockDistribution
+		[HttpPost]
+		public ActionResult ImportUnderlyingStockDistribution(FormCollection collection) {
+			ResultModel resultModel = new ResultModel();
+			UnderlyingFundStockDistribution underlyingFundStockDistribution = new UnderlyingFundStockDistribution();
+			IEnumerable<ErrorInfo> errorInfo = null;
+			this.TryUpdateModel(underlyingFundStockDistribution, collection);
+			underlyingFundStockDistribution.CreatedBy = Authentication.CurrentUser.UserID;
+			underlyingFundStockDistribution.CreatedDate = DateTime.Now;
+			underlyingFundStockDistribution.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			underlyingFundStockDistribution.LastUpdatedDate = DateTime.Now;
+
+			string brokerName = collection["BrokerName"];
+			if (string.IsNullOrEmpty(brokerName) == false) {
+				Broker broker = AdminRepository.FindBroker(brokerName);
+				if (broker == null) {
+					broker = new Broker {
+						BrokerName = brokerName,
+						EntityID = Authentication.CurrentEntity.EntityID,
+						CreatedDate = DateTime.Now,
+						CreatedBy = Authentication.CurrentUser.UserID,
+						LastUpdatedDate = DateTime.Now,
+						LastUpdatedBy = Authentication.CurrentUser.UserID,
+					};
+					AdminRepository.SaveBroker(broker);
+				}
+				underlyingFundStockDistribution.BrokerID = broker.BrokerID;
+			}
+
+			if ((underlyingFundStockDistribution.DistributionDate ?? Convert.ToDateTime("01/01/1900")).Year <= 1900)
+				underlyingFundStockDistribution.DistributionDate = null;
+
+			if ((underlyingFundStockDistribution.NoticeDate ?? Convert.ToDateTime("01/01/1900")).Year <= 1900)
+				underlyingFundStockDistribution.NoticeDate = null;
+
+			if ((underlyingFundStockDistribution.TaxCostDate ?? Convert.ToDateTime("01/01/1900")).Year <= 1900)
+				underlyingFundStockDistribution.TaxCostDate = null;
+
+			errorInfo = DealRepository.SaveUnderlyingFundStockDistribution(underlyingFundStockDistribution);
+			if (errorInfo == null) {
+				resultModel.Result = "True||" + underlyingFundStockDistribution.UnderlyingFundStockDistributionID;
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			return View("Result", resultModel);
+		}
+
+		//
+		// POST : /Deal/ImportUnderlyingFundStockDistributionLineItem
+		[HttpPost]
+		public ActionResult ImportUnderlyingFundStockDistributionLineItem(FormCollection collection) {
+			ResultModel resultModel = new ResultModel();
+			UnderlyingFundStockDistributionLineItem underlyingFundStockDistributionLineItem = new UnderlyingFundStockDistributionLineItem();
+			IEnumerable<ErrorInfo> errorInfo = null;
+			this.TryUpdateModel(underlyingFundStockDistributionLineItem, collection);
+			underlyingFundStockDistributionLineItem.CreatedBy = Authentication.CurrentUser.UserID;
+			underlyingFundStockDistributionLineItem.CreatedDate = DateTime.Now;
+			underlyingFundStockDistributionLineItem.LastUpdatedBy = Authentication.CurrentUser.UserID;
+			underlyingFundStockDistributionLineItem.LastUpdatedDate = DateTime.Now;
+			errorInfo = DealRepository.SaveUnderlyingFundStockDistributionLineItem(underlyingFundStockDistributionLineItem);
+			if (errorInfo == null) {
+				resultModel.Result = "True||" + underlyingFundStockDistributionLineItem.UnderlyingFundStockDistributionLineItemID;
+			}
+			else {
+				resultModel.Result = ValidationHelper.GetErrorInfo(errorInfo);
+			}
+			return View("Result", resultModel);
+		}
+
 
 		#endregion
 
@@ -2653,7 +3213,7 @@ namespace DeepBlue.Controllers.Deal {
 		//
 		// GET: /Deal/FindUnderlyingFundValuation
 		[HttpGet]
-		public JsonResult FindUnderlyingFundValuation(int underlyingFundId,int underlyingFundNAVId) {
+		public JsonResult FindUnderlyingFundValuation(int underlyingFundId, int underlyingFundNAVId) {
 			UnderlyingFundValuationModel model = DealRepository.FindUnderlyingFundValuationModel(underlyingFundId, underlyingFundNAVId);
 			if (model == null) {
 				model = new UnderlyingFundValuationModel();
@@ -3031,6 +3591,7 @@ namespace DeepBlue.Controllers.Deal {
 						dealUnderlyingFundAdjustment.CreatedDate = DateTime.Now;
 						dealUnderlyingFundAdjustment.LastUpdatedBy = Authentication.CurrentUser.UserID;
 						dealUnderlyingFundAdjustment.LastUpdatedDate = DateTime.Now;
+						dealUnderlyingFundAdjustment.Notes = model.Notes;
 						dealUnderlyingFundAdjustment.CommitmentAmount = model.CommitmentAmount;
 						dealUnderlyingFundAdjustment.UnfundedAmount = model.UnfundedAmount;
 						dealUnderlyingFundAdjustment.DealUnderlyingFundID = model.DealUnderlyingFundId;
@@ -3603,13 +4164,20 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		//
+		// GET: /Deal/FindEquities
+		[HttpGet]
+		public JsonResult FindEquities() {
+			return Json(DealRepository.FindEquities(), JsonRequestBehavior.AllowGet);
+		}
+
+		//
 		// POST: /Deal/CreateIssuer
 		[HttpPost]
 		public ActionResult CreateIssuer(FormCollection collection) {
 			IssuerDetailModel model = new IssuerDetailModel();
 			ResultModel resultModel = new ResultModel();
 			this.TryUpdateModel(model);
-			string ErrorMessage = IssuerNameAvailable(model.Name, model.IssuerId);
+			string ErrorMessage = IssuerNameAvailable(model.Name, model.IssuerId, model.IsUnderlyingFundModel);
 
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				ModelState.AddModelError("Name", ErrorMessage);
@@ -3656,7 +4224,7 @@ namespace DeepBlue.Controllers.Deal {
 			resultModel.Result += ValidationHelper.GetErrorInfo(errorInfo);
 			resultModel.Result = resultModel.Result.Replace("Issuer Name", "Company").Replace("Parent Name", "Company Parent");
 
-			string ErrorMessage = IssuerNameAvailable(model.Name, model.IssuerId);
+			string ErrorMessage = IssuerNameAvailable(model.Name, model.IssuerId, model.IsUnderlyingFundModel);
 
 			if (String.IsNullOrEmpty(ErrorMessage) == false) {
 				resultModel.Result += "Company name already exist" + "\n";
@@ -3981,8 +4549,8 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		[HttpGet]
-		public string IssuerNameAvailable(string Name, int IssuerID) {
-			if (DealRepository.IssuerNameAvailable(Name, IssuerID))
+		public string IssuerNameAvailable(string name, int issuerID, bool isGP) {
+			if (DealRepository.IssuerNameAvailable(name, issuerID, isGP))
 				return "Name already exist";
 			else
 				return string.Empty;
@@ -4277,10 +4845,9 @@ namespace DeepBlue.Controllers.Deal {
 		[HttpPost]
 		public ActionResult ImportExcel(FormCollection collection) {
 			ImportExcelFileModel model = new ImportExcelFileModel();
-			ResultModel resultModel = new ResultModel();
+			ImportExcelModel importExcelModel = new ImportExcelModel();
+			importExcelModel.Tables = new List<ImportExcelTableModel>();
 			this.TryUpdateModel(model);
-			List<string> columns = new List<string>();
-			int totalRows = 0;
 			if (string.IsNullOrEmpty(model.FileName)) {
 				ModelState.AddModelError("FileName", "File Name is required");
 			}
@@ -4288,29 +4855,35 @@ namespace DeepBlue.Controllers.Deal {
 				string rootPath = Server.MapPath("~/");
 				string uploadFilePath = Path.Combine(rootPath, string.Format(ConfigurationManager.AppSettings["TempUploadPath"], model.FileName));
 				string errorMessage = string.Empty;
-				PagingDataTable table = ExcelConnection.GetTable(uploadFilePath, uploadFilePath, ref errorMessage);
+				string sessionKey = string.Empty;
+				DataSet ds = ExcelConnection.GetDataSet(uploadFilePath, uploadFilePath, ref errorMessage, ref sessionKey);
+				ImportExcelTableModel tableModel = null;
 				if (string.IsNullOrEmpty(errorMessage)) {
-					ExcelConnection.ImportExcelTable = table;
-					totalRows = table.TotalRows;
-					foreach (DataColumn column in table.Columns) {
-						columns.Add(column.ColumnName);
+					foreach (DataTable dt in ds.Tables) {
+						tableModel = new ImportExcelTableModel();
+						tableModel.TableName = dt.TableName;
+						tableModel.TotalRows = dt.Rows.Count;
+						tableModel.SessionKey = sessionKey;
+						foreach (DataColumn column in dt.Columns) {
+							tableModel.Columns.Add(column.ColumnName);
+						}
+						importExcelModel.Tables.Add(tableModel);
 					}
-					resultModel.Result = string.Empty;
 				}
 				else {
-					resultModel.Result += errorMessage;
+					importExcelModel.Result += errorMessage;
 				}
 			}
 			else {
 				foreach (var values in ModelState.Values.ToList()) {
 					foreach (var err in values.Errors.ToList()) {
 						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
-							resultModel.Result += err.ErrorMessage + "\n";
+							importExcelModel.Result += err.ErrorMessage + "\n";
 						}
 					}
 				}
 			}
-			return Json(new { Result = resultModel.Result, Columns = columns, TotalRows = totalRows });
+			return Json(importExcelModel);
 		}
 
 		[HttpPost]
@@ -4322,12 +4895,14 @@ namespace DeepBlue.Controllers.Deal {
 			int completedRows = 0;
 			this.TryUpdateModel(model);
 			if (ModelState.IsValid) {
-				if (ExcelConnection.ImportExcelTable != null) {
-					PagingDataTable table = ExcelConnection.ImportExcelTable.Skip(model.PageIndex);
-					totalPages = ExcelConnection.ImportExcelTable.TotalPages;
-					totalRows = ExcelConnection.ImportExcelTable.TotalRows;
+				DataSet ds = ExcelConnection.ImportExcelDataset(model.SessionKey);
+				if (ds != null) {
+					PagingDataTable importExcelTable = (PagingDataTable)ds.Tables[0];
+					PagingDataTable table = importExcelTable.Skip(model.PageIndex);
+					totalPages = importExcelTable.TotalPages;
+					totalRows = importExcelTable.TotalRows;
 					if (totalPages > model.PageIndex) {
-						completedRows = (model.PageIndex * ExcelConnection.ImportExcelTable.PageSize);
+						completedRows = (model.PageIndex * importExcelTable.PageSize);
 					}
 					else {
 						completedRows = totalRows;
@@ -4341,11 +4916,11 @@ namespace DeepBlue.Controllers.Deal {
 					int? fundId;
 					IEnumerable<ErrorInfo> errorInfo;
 					foreach (DataRow row in table.Rows) {
-						underlyingFundName = Convert.ToString(row[model.UnderlyingFund]);
-						amberbrookFundName = Convert.ToString(row[model.AmberbrookFund]);
-						decimal.TryParse(Convert.ToString(row[model.UpdateNAV]), out updateNAV);
-						DateTime.TryParse(Convert.ToString(row[model.UpdateDate]), out updateDate);
-						DateTime.TryParse(Convert.ToString(row[model.EffectiveDate]), out effectiveDate);
+						underlyingFundName = row.GetValue(model.UnderlyingFund);
+						amberbrookFundName = row.GetValue(model.AmberbrookFund);
+						decimal.TryParse(row.GetValue(model.UpdateNAV), out updateNAV);
+						DateTime.TryParse(row.GetValue(model.UpdateDate), out updateDate);
+						DateTime.TryParse(row.GetValue(model.EffectiveDate), out effectiveDate);
 						if (string.IsNullOrEmpty(amberbrookFundName) == false
 							&& string.IsNullOrEmpty(underlyingFundName) == false) {
 							underlyingFundId = DealRepository.FindUnderlyingFundID(underlyingFundName);
@@ -4372,8 +4947,1329 @@ namespace DeepBlue.Controllers.Deal {
 
 		#endregion
 
+		#region Import Deal
+
+		#region ImportDealExcel
+
+		[HttpPost]
+		public ActionResult ImportDealExcel(FormCollection collection) {
+			ImportDealExcelModel model = new ImportDealExcelModel();
+			ResultModel resultModel = new ResultModel();
+			MemoryCacheManager cacheManager = new MemoryCacheManager();
+			int totalPages = 0;
+			int totalRows = 0;
+			int completedRows = 0;
+			int? succssRows = 0;
+			int? errorRows = 0;
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				string key = string.Format(EXCELDEALEXPENSEERROR_BY_KEY, model.SessionKey);
+				List<ImportExcelError> errors = cacheManager.Get(key, () => {
+					return new List<ImportExcelError>();
+				});
+				DataSet ds = ExcelConnection.ImportExcelDataset(model.SessionKey);
+				if (ds != null) {
+					PagingDataTable importExcelTable = null;
+					if (ds.Tables[model.DealTableName] != null) {
+						importExcelTable = (PagingDataTable)ds.Tables[model.DealTableName];
+					}
+					if (importExcelTable != null) {
+						importExcelTable.PageSize = model.PageSize;
+						PagingDataTable table = importExcelTable.Skip(model.PageIndex);
+						totalPages = importExcelTable.TotalPages;
+						totalRows = importExcelTable.TotalRows;
+						if (totalPages > model.PageIndex) {
+							completedRows = (model.PageIndex * importExcelTable.PageSize);
+						}
+						else {
+							completedRows = totalRows;
+						}
+						string fundName = string.Empty;
+						string dealName = string.Empty;
+
+						string partnerName = string.Empty;
+						string purchaseTypeName = string.Empty;
+
+						string contactName = string.Empty;
+						string contactTitle = string.Empty;
+						string contactPhoneNumber = string.Empty;
+						string contactEmail = string.Empty;
+						string contactWebAddress = string.Empty;
+						string contactNotes = string.Empty;
+
+						string sellerTypeName = string.Empty;
+						string sellerName = string.Empty;
+						string sellerContactName = string.Empty;
+						string sellerPhoneNumber = string.Empty;
+						string sellerEmail = string.Empty;
+						string sellerFax = string.Empty;
+						int rowNumber = 0;
+
+						Models.Entity.Fund fund = null;
+						Models.Entity.Deal deal = null;
+						Models.Entity.Contact contact = null;
+						Models.Entity.SellerType sellerType = null;
+						Models.Entity.PurchaseType purchaseType = null;
+
+						ImportExcelError error;
+
+						StringBuilder rowErrors;
+						foreach (DataRow row in table.Rows) {
+							int.TryParse(row.GetValue("RowNumber"), out rowNumber);
+							fund = null;
+							deal = null;
+							contact = null;
+							purchaseType = null;
+							sellerType = null;
+
+
+							error = new ImportExcelError { RowNumber = rowNumber };
+							rowErrors = new StringBuilder();
+							fundName = row.GetValue(model.FundName);
+							dealName = row.GetValue(model.DealName);
+
+							partnerName = row.GetValue(model.PartnerName);
+							purchaseTypeName = row.GetValue(model.PurchaseType);
+
+							contactName = row.GetValue(model.ContactName);
+							contactTitle = row.GetValue(model.ContactTitle);
+							contactPhoneNumber = row.GetValue(model.ContactPhoneNumber);
+							contactEmail = row.GetValue(model.ContactEmail);
+							contactWebAddress = row.GetValue(model.ContactWebAddress);
+							contactNotes = row.GetValue(model.ContactNotes);
+
+							sellerTypeName = row.GetValue(model.SellerType);
+							sellerName = row.GetValue(model.SellerName);
+							sellerContactName = row.GetValue(model.SellerContactName);
+							sellerPhoneNumber = row.GetValue(model.SellerPhoneNumber);
+							sellerEmail = row.GetValue(model.SellerEmail);
+							sellerFax = row.GetValue(model.SellerFax);
+
+							if (string.IsNullOrEmpty(fundName) == false) {
+								fund = FundRepository.FindFund(fundName);
+							}
+
+							if (fund == null)
+								error.Errors.Add(new ErrorInfo(model.FundName, string.Format("Fund does not exist", fundName)));
+
+							if (error.Errors.Count() == 0) {
+
+								if (fund != null) {
+									if (string.IsNullOrEmpty(dealName) == false) {
+										deal = DealRepository.FindDeal(dealName, fund.FundID);
+										if (deal != null) {
+											error.Errors.Add(new ErrorInfo(model.FundName, string.Format("Deal already exist", dealName)));
+										}
+									}
+								}
+
+								if (string.IsNullOrEmpty(contactName) == false) {
+									contact = AdminRepository.FindDealContact(contactName);
+									if (contact == null) {
+										contact = new Contact();
+										contact.CreatedBy = Authentication.CurrentUser.UserID;
+										contact.CreatedDate = DateTime.Now;
+										contact.LastUpdatedBy = Authentication.CurrentUser.UserID;
+										contact.LastUpdatedDate = DateTime.Now;
+										contact.EntityID = Authentication.CurrentEntity.EntityID;
+										contact.ContactName = contactName;
+										contact.LastName = "n/a";
+										contact.Title = contactTitle;
+										contact.Notes = contactNotes;
+										AddCommunication(contact, Models.Admin.Enums.CommunicationType.Email, contactEmail);
+										AddCommunication(contact, Models.Admin.Enums.CommunicationType.HomePhone, contactPhoneNumber);
+										AddCommunication(contact, Models.Admin.Enums.CommunicationType.WebAddress, contactWebAddress);
+										IEnumerable<ErrorInfo> contactError = AdminRepository.SaveDealContact(contact);
+										if (contactError != null) {
+											contact = null;
+											error.Errors.Add(new ErrorInfo(model.ContactName, ValidationHelper.GetErrorInfo(contactError)));
+										}
+									}
+								}
+
+								if (string.IsNullOrEmpty(purchaseTypeName) == false) {
+									purchaseType = AdminRepository.FindPurchaseType(purchaseTypeName);
+									if (purchaseType == null) {
+										AdminRepository.SavePurchaseType(new PurchaseType {
+											Name = purchaseTypeName,
+											EntityID = Authentication.CurrentEntity.EntityID,
+										});
+										purchaseType = AdminRepository.FindPurchaseType(purchaseTypeName);
+									}
+								}
+
+								if (string.IsNullOrEmpty(sellerTypeName) == false) {
+									sellerType = AdminRepository.FindSellerType(sellerTypeName);
+									if (sellerType == null) {
+										AdminRepository.SaveSellerType(new SellerType {
+											SellerType1 = sellerTypeName,
+											CreatedBy = Authentication.CurrentUser.UserID,
+											CreatedDate = DateTime.Now,
+											LastUpdatedBy = Authentication.CurrentUser.UserID,
+											LastUpdatedDate = DateTime.Now,
+											Enabled = true,
+											EntityID = Authentication.CurrentEntity.EntityID,
+										});
+										sellerType = AdminRepository.FindSellerType(sellerTypeName);
+									}
+								}
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								int? purchaseTypeID = null;
+								int? contactID = null;
+								int? sellerTypeID = null;
+								if (purchaseType != null)
+									purchaseTypeID = purchaseType.PurchaseTypeID;
+								if (contact != null)
+									contactID = contact.ContactID;
+								if (sellerType != null)
+									sellerTypeID = sellerType.SellerTypeID;
+
+								deal = new Models.Entity.Deal {
+									CreatedBy = Authentication.CurrentUser.UserID,
+									CreatedDate = DateTime.Now,
+									DealNumber = DealRepository.GetMaxDealNumber(fund.FundID),
+									EntityID = Authentication.CurrentEntity.EntityID,
+									LastUpdatedBy = Authentication.CurrentUser.UserID,
+									LastUpdatedDate = DateTime.Now,
+									DealName = dealName,
+									PurchaseTypeID = purchaseTypeID,
+									IsPartnered = string.IsNullOrEmpty(partnerName),
+									ContactID = contactID,
+									FundID = fund.FundID,
+									Partner = new Partner {
+										CreatedBy = Authentication.CurrentUser.UserID,
+										CreatedDate = DateTime.Now,
+										EntityID = Authentication.CurrentEntity.EntityID,
+										LastUpdatedBy = Authentication.CurrentUser.UserID,
+										LastUpdatedDate = DateTime.Now,
+										PartnerName = partnerName,
+									},
+								};
+
+								if (string.IsNullOrEmpty(sellerContactName) == false) {
+									deal.SellerTypeID = sellerTypeID;
+									if (deal.Contact1 == null) {
+										deal.Contact1 = new Contact();
+										deal.Contact1.CreatedBy = Authentication.CurrentUser.UserID;
+										deal.Contact1.CreatedDate = DateTime.Now;
+									}
+
+									deal.Contact1.EntityID = Authentication.CurrentEntity.EntityID;
+									deal.Contact1.ContactName = sellerContactName;
+									deal.Contact1.FirstName = sellerName;
+									deal.Contact1.LastName = "n/a";
+									deal.Contact1.LastUpdatedBy = Authentication.CurrentUser.UserID;
+									deal.Contact1.LastUpdatedDate = DateTime.Now;
+									// Attempt to create communication values.
+
+									AddCommunication(deal.Contact1, Models.Admin.Enums.CommunicationType.Email, sellerEmail);
+									AddCommunication(deal.Contact1, Models.Admin.Enums.CommunicationType.Fax, sellerFax);
+									AddCommunication(deal.Contact1, Models.Admin.Enums.CommunicationType.HomePhone, sellerPhoneNumber);
+								}
+
+								IEnumerable<ErrorInfo> dealError = DealRepository.SaveDeal(deal);
+								if (dealError != null) {
+									error.Errors.Add(new ErrorInfo(model.DealName, ValidationHelper.GetErrorInfo(dealError)));
+								}
+							}
+							StringBuilder sberror = new StringBuilder();
+							foreach (var e in error.Errors) {
+								sberror.AppendFormat("{0},", e.ErrorMessage);
+							}
+							importExcelTable.AddError(rowNumber - 1, sberror.ToString());
+							errors.Add(error);
+						}
+					}
+				}
+				if (errors != null) {
+					succssRows = errors.Where(e => e.Errors.Count == 0).Count();
+					errorRows = errors.Where(e => e.Errors.Count > 0).Count();
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new {
+				Result = resultModel.Result,
+				TotalRows = totalRows,
+				CompletedRows = completedRows,
+				TotalPages = totalPages,
+				PageIndex = model.PageIndex,
+				SuccessRows = succssRows,
+				ErrorRows = errorRows
+			});
+		}
+
+		#endregion
+
+		#region ImportDealExpenseExcel
+
+		[HttpPost]
+		public ActionResult ImportDealExpenseExcel(FormCollection collection) {
+			ImportDealExpenseExcelModel model = new ImportDealExpenseExcelModel();
+			ResultModel resultModel = new ResultModel();
+			MemoryCacheManager cacheManager = new MemoryCacheManager();
+			int totalPages = 0;
+			int totalRows = 0;
+			int completedRows = 0;
+			int? succssRows = 0;
+			int? errorRows = 0;
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				string key = string.Format(EXCELDEALEXPENSEERROR_BY_KEY, model.SessionKey);
+				List<ImportExcelError> errors = cacheManager.Get(key, () => {
+					return new List<ImportExcelError>();
+				});
+				DataSet ds = ExcelConnection.ImportExcelDataset(model.SessionKey);
+				if (ds != null) {
+					PagingDataTable importExcelTable = null;
+					if (ds.Tables[model.DealExpenseTableName] != null) {
+						importExcelTable = (PagingDataTable)ds.Tables[model.DealExpenseTableName];
+					}
+					if (importExcelTable != null) {
+						importExcelTable.PageSize = model.PageSize;
+						PagingDataTable table = importExcelTable.Skip(model.PageIndex);
+						totalPages = importExcelTable.TotalPages;
+						totalRows = importExcelTable.TotalRows;
+						if (totalPages > model.PageIndex) {
+							completedRows = (model.PageIndex * importExcelTable.PageSize);
+						}
+						else {
+							completedRows = totalRows;
+						}
+						string fundName = string.Empty;
+						string dealName = string.Empty;
+
+
+						decimal amount = 0;
+						DateTime dealExpenseDate;
+						string description = string.Empty;
+						int rowNumber = 0;
+
+						Models.Entity.Fund fund = null;
+						Models.Entity.Deal deal = null;
+						DealClosingCostType dealClosingCostType = null;
+						IEnumerable<ErrorInfo> errorInfo;
+						ImportExcelError error;
+
+						StringBuilder rowErrors;
+						foreach (DataRow row in table.Rows) {
+							int.TryParse(row.GetValue("RowNumber"), out rowNumber);
+							fund = null;
+							deal = null;
+							dealClosingCostType = null;
+							amount = 0;
+							dealExpenseDate = Convert.ToDateTime("01/01/1900");
+							description = string.Empty;
+
+							error = new ImportExcelError { RowNumber = rowNumber };
+							rowErrors = new StringBuilder();
+							fundName = row.GetValue(model.FundName);
+							dealName = row.GetValue(model.DealName);
+
+							Decimal.TryParse(row.GetValue(model.Amount), out amount);
+							DateTime.TryParse(row.GetValue(model.Date), out dealExpenseDate);
+							description = row.GetValue(model.Description);
+
+							if (string.IsNullOrEmpty(description) == false) {
+								dealClosingCostType = DealRepository.FindDealClosingCostType(description);
+								if (dealClosingCostType == null) {
+									errorInfo = AdminRepository.SaveDealClosingCostType(new DealClosingCostType {
+										Name = description,
+										EntityID = Authentication.CurrentEntity.EntityID,
+									});
+									if (errorInfo == null) {
+										dealClosingCostType = DealRepository.FindDealClosingCostType(description);
+									}
+									else {
+										error.Errors.Add(new ErrorInfo(model.Description, ValidationHelper.GetErrorInfo(errorInfo)));
+									}
+								}
+							}
+							else {
+								error.Errors.Add(new ErrorInfo(model.Description, "Description is required"));
+							}
+
+							if (string.IsNullOrEmpty(fundName) == false) {
+								fund = FundRepository.FindFund(fundName);
+							}
+							else {
+								error.Errors.Add(new ErrorInfo(model.Description, "Fund is required"));
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								if (fund == null)
+									error.Errors.Add(new ErrorInfo(model.FundName, "Fund does not exist"));
+
+								if (dealClosingCostType == null)
+									error.Errors.Add(new ErrorInfo(model.FundName, "Description does not exist"));
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								if (fund != null) {
+									if (string.IsNullOrEmpty(dealName) == false) {
+										deal = DealRepository.FindDeal(dealName, fund.FundID);
+										if (deal == null) {
+											error.Errors.Add(new ErrorInfo(model.FundName, string.Format("Deal does not exist", fundName)));
+										}
+									}
+								}
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								DealClosingCost dealClosingCost = DealRepository.FindDealClosingCost((deal != null ? deal.DealID : 0), amount, (dealClosingCostType != null ? dealClosingCostType.DealClosingCostTypeID : 0), dealExpenseDate);
+
+								if (dealClosingCost == null) {
+									// Attempt to create deal expense.
+									dealClosingCost = new DealClosingCost {
+										Amount = amount,
+										Date = dealExpenseDate,
+										DealClosingCostTypeID = (dealClosingCostType != null ? dealClosingCostType.DealClosingCostTypeID : 0),
+										DealID = (deal != null ? deal.DealID : 0),
+									};
+									errorInfo = DealRepository.SaveDealClosingCost(dealClosingCost);
+
+									if (errorInfo != null) {
+										error.Errors.Add(new ErrorInfo(model.DealName, ValidationHelper.GetErrorInfo(errorInfo)));
+									}
+								}
+								else {
+									error.Errors.Add(new ErrorInfo(model.Description, "Deal Expense already exist"));
+								}
+							}
+							StringBuilder sberror = new StringBuilder();
+							foreach (var e in error.Errors) {
+								sberror.AppendFormat("{0},", e.ErrorMessage);
+							}
+							importExcelTable.AddError(rowNumber - 1, sberror.ToString());
+							errors.Add(error);
+						}
+					}
+				}
+				if (errors != null) {
+					succssRows = errors.Where(e => e.Errors.Count == 0).Count();
+					errorRows = errors.Where(e => e.Errors.Count > 0).Count();
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new {
+				Result = resultModel.Result,
+				TotalRows = totalRows,
+				CompletedRows = completedRows,
+				TotalPages = totalPages,
+				PageIndex = model.PageIndex,
+				SuccessRows = succssRows,
+				ErrorRows = errorRows
+			});
+		}
+
+		#endregion
+
+		#region ImportDealUnderlyingFundExcel
+
+		[HttpPost]
+		public ActionResult ImportDealUnderlyingFundExcel(FormCollection collection) {
+			ImportDealUnderlyingFundExcelModel model = new ImportDealUnderlyingFundExcelModel();
+			ResultModel resultModel = new ResultModel();
+			MemoryCacheManager cacheManager = new MemoryCacheManager();
+			int totalPages = 0;
+			int totalRows = 0;
+			int completedRows = 0;
+			int? succssRows = 0;
+			int? errorRows = 0;
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				string key = string.Format(EXCELDEALUFERROR_BY_KEY, model.SessionKey);
+				List<ImportExcelError> errors = cacheManager.Get(key, () => {
+					return new List<ImportExcelError>();
+				});
+				DataSet ds = ExcelConnection.ImportExcelDataset(model.SessionKey);
+				if (ds != null) {
+					PagingDataTable importExcelTable = null;
+					if (ds.Tables[model.DealUnderlyingFundTableName] != null) {
+						importExcelTable = (PagingDataTable)ds.Tables[model.DealUnderlyingFundTableName];
+					}
+					if (importExcelTable != null) {
+						importExcelTable.PageSize = model.PageSize;
+						PagingDataTable table = importExcelTable.Skip(model.PageIndex);
+						totalPages = importExcelTable.TotalPages;
+						totalRows = importExcelTable.TotalRows;
+						if (totalPages > model.PageIndex) {
+							completedRows = (model.PageIndex * importExcelTable.PageSize);
+						}
+						else {
+							completedRows = totalRows;
+						}
+						string fundName = string.Empty;
+						string dealName = string.Empty;
+
+						string underlyingFundName = string.Empty;
+						decimal grossPurchasePrice = 0;
+						decimal fundNav = 0;
+						DateTime effectiveDate;
+						decimal capitalCommitment = 0;
+						decimal unfundedAmount = 0;
+						DateTime recordDate;
+
+						int rowNumber = 0;
+
+						Models.Entity.Fund fund = null;
+						Models.Entity.Deal deal = null;
+						Models.Entity.UnderlyingFund underlyingFund = null;
+						IEnumerable<ErrorInfo> errorInfo;
+						ImportExcelError error;
+
+						StringBuilder rowErrors;
+						foreach (DataRow row in table.Rows) {
+							int.TryParse(row.GetValue("RowNumber"), out rowNumber);
+							fund = null;
+							deal = null;
+							underlyingFund = null;
+
+							error = new ImportExcelError { RowNumber = rowNumber };
+							rowErrors = new StringBuilder();
+							fundName = row.GetValue(model.FundName);
+							dealName = row.GetValue(model.DealName);
+
+							underlyingFundName = row.GetValue(model.UnderlyingFundName);
+							decimal.TryParse(row.GetValue(model.GrossPurchasePrice), out grossPurchasePrice);
+							decimal.TryParse(row.GetValue(model.FundNav), out fundNav);
+							decimal.TryParse(row.GetValue(model.CapitalCommitment), out capitalCommitment);
+							decimal.TryParse(row.GetValue(model.UnfundedAmount), out unfundedAmount);
+							DateTime.TryParse(row.GetValue(model.EffectiveDate), out effectiveDate);
+							DateTime.TryParse(row.GetValue(model.RecordDate), out recordDate);
+
+							if (string.IsNullOrEmpty(fundName) == false) {
+								fund = FundRepository.FindFund(fundName);
+							}
+							else {
+								error.Errors.Add(new ErrorInfo(model.FundName, "Fund is required"));
+							}
+
+							if (string.IsNullOrEmpty(underlyingFundName) == false) {
+								underlyingFund = DealRepository.FindUnderlyingFund(underlyingFundName);
+							}
+							else {
+								error.Errors.Add(new ErrorInfo(model.UnderlyingFundName, "Underlying Fund is required"));
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								if (fund == null)
+									error.Errors.Add(new ErrorInfo(model.FundName, "Fund does not exist"));
+
+								if (underlyingFund == null)
+									error.Errors.Add(new ErrorInfo(model.FundName, "Underlying Fund does not exist"));
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								if (fund != null) {
+									if (string.IsNullOrEmpty(dealName) == false) {
+										deal = DealRepository.FindDeal(dealName, fund.FundID);
+										if (deal == null) {
+											error.Errors.Add(new ErrorInfo(model.FundName, string.Format("Deal does not exist", fundName)));
+										}
+									}
+								}
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								DealUnderlyingFund dealUnderlyingFund = DealRepository
+									.FindDealUnderlyingFund((deal != null ? deal.DealID : 0)
+									, (underlyingFund != null ? underlyingFund.UnderlyingtFundID : 0)
+								, grossPurchasePrice
+								, effectiveDate
+								, capitalCommitment
+								, unfundedAmount
+								, recordDate);
+
+								if (dealUnderlyingFund == null) {
+
+									errorInfo = SaveDealUnderlyingFund(new DealUnderlyingFundModel {
+										CommittedAmount = capitalCommitment,
+										DealId = (deal != null ? deal.DealID : 0),
+										EffectiveDate = effectiveDate,
+										FundId = (fund != null ? fund.FundID : 0),
+										FundNAV = fundNav,
+										GrossPurchasePrice = grossPurchasePrice,
+										UnfundedAmount = unfundedAmount,
+										RecordDate = recordDate,
+										UnderlyingFundId = (underlyingFund != null ? underlyingFund.UnderlyingtFundID : 0),
+									}, out dealUnderlyingFund);
+
+									if (errorInfo != null) {
+										error.Errors.Add(new ErrorInfo(model.DealName, ValidationHelper.GetErrorInfo(errorInfo)));
+									}
+								}
+								else {
+									error.Errors.Add(new ErrorInfo(model.UnderlyingFundName, "Deal Underlying Fund already exist"));
+								}
+							}
+							StringBuilder sberror = new StringBuilder();
+							foreach (var e in error.Errors) {
+								sberror.AppendFormat("{0},", e.ErrorMessage);
+							}
+							importExcelTable.AddError(rowNumber - 1, sberror.ToString());
+							errors.Add(error);
+						}
+					}
+				}
+				if (errors != null) {
+					succssRows = errors.Where(e => e.Errors.Count == 0).Count();
+					errorRows = errors.Where(e => e.Errors.Count > 0).Count();
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new {
+				Result = resultModel.Result,
+				TotalRows = totalRows,
+				CompletedRows = completedRows,
+				TotalPages = totalPages,
+				PageIndex = model.PageIndex,
+				SuccessRows = succssRows,
+				ErrorRows = errorRows
+			});
+		}
+
+		#endregion
+
+		#region ImportDealUnderlyingDirectExcel
+
+		[HttpPost]
+		public ActionResult ImportDealUnderlyingDirectExcel(FormCollection collection) {
+			ImportDealUnderlyingDirectExcelModel model = new ImportDealUnderlyingDirectExcelModel();
+			ResultModel resultModel = new ResultModel();
+			MemoryCacheManager cacheManager = new MemoryCacheManager();
+			int totalPages = 0;
+			int totalRows = 0;
+			int completedRows = 0;
+			int? succssRows = 0;
+			int? errorRows = 0;
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				string key = string.Format(EXCELDEALUDERROR_BY_KEY, model.SessionKey);
+				List<ImportExcelError> errors = cacheManager.Get(key, () => {
+					return new List<ImportExcelError>();
+				});
+				DataSet ds = ExcelConnection.ImportExcelDataset(model.SessionKey);
+				if (ds != null) {
+					PagingDataTable importExcelTable = null;
+					if (ds.Tables[model.DealUnderlyingDirectTableName] != null) {
+						importExcelTable = (PagingDataTable)ds.Tables[model.DealUnderlyingDirectTableName];
+					}
+					if (importExcelTable != null) {
+						importExcelTable.PageSize = model.PageSize;
+						PagingDataTable table = importExcelTable.Skip(model.PageIndex);
+						totalPages = importExcelTable.TotalPages;
+						totalRows = importExcelTable.TotalRows;
+						if (totalPages > model.PageIndex) {
+							completedRows = (model.PageIndex * importExcelTable.PageSize);
+						}
+						else {
+							completedRows = totalRows;
+						}
+						string fundName = string.Empty;
+						string dealName = string.Empty;
+
+						string companyName = string.Empty;
+						string symbol = string.Empty;
+						string securityTypeName = string.Empty;
+						int noOfShares = 0;
+						decimal purchasePrice = 0;
+						decimal fairMarketValue = 0;
+						decimal taxCostBasisPerShare = 0;
+						DateTime taxCostDate;
+						DateTime recordDate;
+
+
+						int rowNumber = 0;
+
+						Models.Entity.Fund fund = null;
+						Models.Entity.Deal deal = null;
+						Models.Entity.Issuer issuer = null;
+						Models.Entity.SecurityType securityType = null;
+						Models.Entity.Equity equity = null;
+						Models.Entity.FixedIncome fixedIncome = null;
+
+						IEnumerable<ErrorInfo> errorInfo;
+						ImportExcelError error;
+
+						StringBuilder rowErrors;
+						foreach (DataRow row in table.Rows) {
+							int.TryParse(row.GetValue("RowNumber"), out rowNumber);
+							fund = null;
+							deal = null;
+
+							issuer = null;
+							securityType = null;
+							equity = null;
+							fixedIncome = null;
+
+							error = new ImportExcelError { RowNumber = rowNumber };
+							rowErrors = new StringBuilder();
+							fundName = row.GetValue(model.FundName);
+							dealName = row.GetValue(model.DealName);
+
+							companyName = row.GetValue(model.CompanyName);
+							symbol = row.GetValue(model.Symbol);
+							securityTypeName = row.GetValue(model.SecurityType);
+							int.TryParse(row.GetValue(model.NoOfShares), out noOfShares);
+							decimal.TryParse(row.GetValue(model.PurchasePrice), out purchasePrice);
+							decimal.TryParse(row.GetValue(model.FairMarketValue), out fairMarketValue);
+							decimal.TryParse(row.GetValue(model.TaxCostBasisPerShare), out taxCostBasisPerShare);
+							DateTime.TryParse(row.GetValue(model.TaxCostDate), out taxCostDate);
+							DateTime.TryParse(row.GetValue(model.RecordDate), out recordDate);
+
+							if (string.IsNullOrEmpty(fundName) == false) {
+								fund = FundRepository.FindFund(fundName);
+							}
+							else {
+								error.Errors.Add(new ErrorInfo(model.FundName, "Fund is required"));
+							}
+
+							if (string.IsNullOrEmpty(companyName) == false) {
+								issuer = DealRepository.FindIssuer(companyName);
+							}
+							else {
+								error.Errors.Add(new ErrorInfo(model.CompanyName, "Company Name is required"));
+							}
+
+
+							if (string.IsNullOrEmpty(securityTypeName) == false) {
+								securityType = AdminRepository.FindSecurityType(securityTypeName);
+							}
+							else {
+								error.Errors.Add(new ErrorInfo(model.SecurityType, "SecurityType is required"));
+							}
+
+							if (string.IsNullOrEmpty(symbol)) {
+								error.Errors.Add(new ErrorInfo(model.SecurityType, "SecurityType is required"));
+							}
+							else {
+								if (issuer != null && securityType != null) {
+									if (securityType.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity) {
+										equity = DealRepository.FindEquity(issuer.IssuerID, symbol);
+										if (equity == null) {
+											error.Errors.Add(new ErrorInfo(model.Symbol, "Equity does not exist"));
+										}
+									}
+								}
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								if (fund == null)
+									error.Errors.Add(new ErrorInfo(model.FundName, "Fund does not exist"));
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								if (fund != null) {
+									if (string.IsNullOrEmpty(dealName) == false) {
+										deal = DealRepository.FindDeal(dealName, fund.FundID);
+										if (deal == null) {
+											error.Errors.Add(new ErrorInfo(model.FundName, string.Format("Deal does not exist", fundName)));
+										}
+									}
+								}
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								DealUnderlyingDirect dealUnderlyingDirect = DealRepository
+									.FindDealUnderlyingDirect((deal != null ? deal.DealID : 0),
+									(securityType != null ? (equity != null ? equity.EquityID : 0) : (fixedIncome != null ? fixedIncome.FixedIncomeID : 0)),
+									(securityType != null ? securityType.SecurityTypeID : 0),
+									recordDate,
+									noOfShares,
+									fairMarketValue,
+									purchasePrice,
+									taxCostBasisPerShare,
+									taxCostDate
+									);
+
+								if (dealUnderlyingDirect == null) {
+
+									errorInfo = SaveDealUnderlyingDirect(new DealUnderlyingDirectModel {
+										DealId = (deal != null ? deal.DealID : 0),
+										FundId = (fund != null ? fund.FundID : 0),
+										FMV = fairMarketValue,
+										IssuerId = (issuer != null ? issuer.IssuerID : 0),
+										NumberOfShares = noOfShares,
+										PurchasePrice = purchasePrice,
+										SecurityId = (securityType != null ? (equity != null ? equity.EquityID : 0) : (fixedIncome != null ? fixedIncome.FixedIncomeID : 0)),
+										SecurityTypeId = (securityType != null ? securityType.SecurityTypeID : 0),
+										TaxCostBase = taxCostBasisPerShare,
+										TaxCostDate = taxCostDate,
+										RecordDate = recordDate,
+									}, out dealUnderlyingDirect);
+
+									if (errorInfo != null) {
+										error.Errors.Add(new ErrorInfo(model.CompanyName, ValidationHelper.GetErrorInfo(errorInfo)));
+									}
+								}
+								else {
+									error.Errors.Add(new ErrorInfo(model.CompanyName, "Deal Underlying Direct already exist"));
+								}
+							}
+							StringBuilder sberror = new StringBuilder();
+							foreach (var e in error.Errors) {
+								sberror.AppendFormat("{0},", e.ErrorMessage);
+							}
+							importExcelTable.AddError(rowNumber - 1, sberror.ToString());
+							errors.Add(error);
+						}
+					}
+				}
+				if (errors != null) {
+					succssRows = errors.Where(e => e.Errors.Count == 0).Count();
+					errorRows = errors.Where(e => e.Errors.Count > 0).Count();
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new {
+				Result = resultModel.Result,
+				TotalRows = totalRows,
+				CompletedRows = completedRows,
+				TotalPages = totalPages,
+				PageIndex = model.PageIndex,
+				SuccessRows = succssRows,
+				ErrorRows = errorRows
+			});
+		}
+
+		#endregion
+
+		#endregion
+
+		#region Import Deal Close
+
+		#region ImportDealCloseUnderlyingFundExcel
+
+		[HttpPost]
+		public ActionResult ImportDealCloseUnderlyingFundExcel(FormCollection collection) {
+			ImportDealCloseUnderlyingFundExcelModel model = new ImportDealCloseUnderlyingFundExcelModel();
+			ResultModel resultModel = new ResultModel();
+			MemoryCacheManager cacheManager = new MemoryCacheManager();
+			int totalPages = 0;
+			int totalRows = 0;
+			int completedRows = 0;
+			int? succssRows = 0;
+			int? errorRows = 0;
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				string key = string.Format(EXCELDEALCLOSEUFERROR_BY_KEY, model.SessionKey);
+				List<ImportExcelError> errors = cacheManager.Get(key, () => {
+					return new List<ImportExcelError>();
+				});
+				DataSet ds = ExcelConnection.ImportExcelDataset(model.SessionKey);
+				if (ds != null) {
+					PagingDataTable importExcelTable = null;
+					if (ds.Tables[model.DealCloseUnderlyingFundTableName] != null) {
+						importExcelTable = (PagingDataTable)ds.Tables[model.DealCloseUnderlyingFundTableName];
+					}
+					if (importExcelTable != null) {
+						importExcelTable.PageSize = model.PageSize;
+						PagingDataTable table = importExcelTable.Skip(model.PageIndex);
+						totalPages = importExcelTable.TotalPages;
+						totalRows = importExcelTable.TotalRows;
+						if (totalPages > model.PageIndex) {
+							completedRows = (model.PageIndex * importExcelTable.PageSize);
+						}
+						else {
+							completedRows = totalRows;
+						}
+						string fundName = string.Empty;
+						string dealName = string.Empty;
+
+						string underlyingFundName = string.Empty;
+						DateTime closeDate;
+						decimal grossPurchasePrice = 0;
+						decimal netPurchasePrice = 0;
+						decimal capitalCommitment = 0;
+						decimal unfundedAmount = 0;
+						DateTime effectiveDate;
+						DateTime recordDate;
+
+						int rowNumber = 0;
+
+						Models.Entity.Fund fund = null;
+						Models.Entity.Deal deal = null;
+						DealClosing dealClosing = null;
+						Models.Entity.UnderlyingFund underlyingFund = null;
+						IEnumerable<ErrorInfo> errorInfo;
+						ImportExcelError error;
+
+						StringBuilder rowErrors;
+						foreach (DataRow row in table.Rows) {
+							int.TryParse(row.GetValue("RowNumber"), out rowNumber);
+							fund = null;
+							deal = null;
+							underlyingFund = null;
+							dealClosing = null;
+
+							error = new ImportExcelError { RowNumber = rowNumber };
+							rowErrors = new StringBuilder();
+							fundName = row.GetValue(model.FundName);
+							dealName = row.GetValue(model.DealName);
+
+							underlyingFundName = row.GetValue(model.UnderlyingFundName);
+							decimal.TryParse(row.GetValue(model.GrossPurchasePrice), out grossPurchasePrice);
+							decimal.TryParse(row.GetValue(model.NetPurchasePrice), out netPurchasePrice);
+							decimal.TryParse(row.GetValue(model.CapitalCommitment), out capitalCommitment);
+							decimal.TryParse(row.GetValue(model.UnfundedAmount), out unfundedAmount);
+							DateTime.TryParse(row.GetValue(model.CloseDate), out closeDate);
+							DateTime.TryParse(row.GetValue(model.EffectiveDate), out effectiveDate);
+							DateTime.TryParse(row.GetValue(model.RecordDate), out recordDate);
+
+							if (string.IsNullOrEmpty(fundName) == false) {
+								fund = FundRepository.FindFund(fundName);
+							}
+							else {
+								error.Errors.Add(new ErrorInfo(model.FundName, "Fund is required"));
+							}
+
+							if (string.IsNullOrEmpty(underlyingFundName) == false) {
+								underlyingFund = DealRepository.FindUnderlyingFund(underlyingFundName);
+							}
+							else {
+								error.Errors.Add(new ErrorInfo(model.UnderlyingFundName, "Underlying Fund is required"));
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								if (fund == null)
+									error.Errors.Add(new ErrorInfo(model.FundName, "Fund does not exist"));
+
+								if (underlyingFund == null)
+									error.Errors.Add(new ErrorInfo(model.FundName, "Underlying Fund does not exist"));
+							}
+
+							if (error.Errors.Count() == 0) {
+								if (fund != null) {
+									if (string.IsNullOrEmpty(dealName) == false) {
+										deal = DealRepository.FindDeal(dealName, fund.FundID);
+										if (deal == null) {
+											error.Errors.Add(new ErrorInfo(model.FundName, string.Format("Deal does not exist", fundName)));
+										}
+									}
+								}
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								DealUnderlyingFund dealUnderlyingFund = DealRepository
+								.FindDealUnderlyingFund((deal != null ? deal.DealID : 0)
+								, (underlyingFund != null ? underlyingFund.UnderlyingtFundID : 0)
+								, grossPurchasePrice
+								, effectiveDate
+								, capitalCommitment
+								, unfundedAmount
+								, recordDate
+								);
+
+								if (dealUnderlyingFund == null) {
+									error.Errors.Add(new ErrorInfo(model.UnderlyingFundName, "Deal Underlying Fund does not exist"));
+								}
+								else {
+
+									dealClosing = DealRepository.FindDealClosing((deal != null ? deal.DealID : 0), (fund != null ? fund.FundID : 0), closeDate);
+									if (dealClosing == null) {
+										dealClosing = new DealClosing {
+											CloseDate = closeDate,
+											DealID = (deal != null ? deal.DealID : 0),
+											DealNumber = DealRepository.GetMaxDealClosingNumber((deal != null ? deal.DealID : 0)),
+											IsFinalClose = false,
+										};
+										errorInfo = DealRepository.SaveDealClosing(dealClosing);
+									}
+
+									if (dealClosing != null) {
+										dealUnderlyingFund.DealClosingID = dealClosing.DealClosingID;
+										dealUnderlyingFund.CommittedAmount = capitalCommitment;
+										dealUnderlyingFund.UnfundedAmount = unfundedAmount;
+										dealUnderlyingFund.GrossPurchasePrice = grossPurchasePrice;
+										dealUnderlyingFund.NetPurchasePrice = netPurchasePrice;
+										errorInfo = DealRepository.SaveDealUnderlyingFund(dealUnderlyingFund);
+										if (errorInfo != null) {
+											error.Errors.Add(new ErrorInfo(model.DealName, ValidationHelper.GetErrorInfo(errorInfo)));
+										}
+									}
+								}
+							}
+
+							StringBuilder sberror = new StringBuilder();
+							foreach (var e in error.Errors) {
+								sberror.AppendFormat("{0},", e.ErrorMessage);
+							}
+							importExcelTable.AddError(rowNumber - 1, sberror.ToString());
+							errors.Add(error);
+						}
+					}
+				}
+				if (errors != null) {
+					succssRows = errors.Where(e => e.Errors.Count == 0).Count();
+					errorRows = errors.Where(e => e.Errors.Count > 0).Count();
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new {
+				Result = resultModel.Result,
+				TotalRows = totalRows,
+				CompletedRows = completedRows,
+				TotalPages = totalPages,
+				PageIndex = model.PageIndex,
+				SuccessRows = succssRows,
+				ErrorRows = errorRows
+			});
+		}
+
+		#endregion
+
+		#region ImportDealCloseUnderlyingDirectExcel
+
+		[HttpPost]
+		public ActionResult ImportDealCloseUnderlyingDirectExcel(FormCollection collection) {
+			ImportDealCloseUnderlyingDirectExcelModel model = new ImportDealCloseUnderlyingDirectExcelModel();
+			ResultModel resultModel = new ResultModel();
+			MemoryCacheManager cacheManager = new MemoryCacheManager();
+			int totalPages = 0;
+			int totalRows = 0;
+			int completedRows = 0;
+			int? succssRows = 0;
+			int? errorRows = 0;
+			this.TryUpdateModel(model);
+			if (ModelState.IsValid) {
+				string key = string.Format(EXCELDEALCLOSEUDERROR_BY_KEY, model.SessionKey);
+				List<ImportExcelError> errors = cacheManager.Get(key, () => {
+					return new List<ImportExcelError>();
+				});
+				DataSet ds = ExcelConnection.ImportExcelDataset(model.SessionKey);
+				if (ds != null) {
+					PagingDataTable importExcelTable = null;
+					if (ds.Tables[model.DealCloseUnderlyingDirectTableName] != null) {
+						importExcelTable = (PagingDataTable)ds.Tables[model.DealCloseUnderlyingDirectTableName];
+					}
+					if (importExcelTable != null) {
+						importExcelTable.PageSize = model.PageSize;
+						PagingDataTable table = importExcelTable.Skip(model.PageIndex);
+						totalPages = importExcelTable.TotalPages;
+						totalRows = importExcelTable.TotalRows;
+						if (totalPages > model.PageIndex) {
+							completedRows = (model.PageIndex * importExcelTable.PageSize);
+						}
+						else {
+							completedRows = totalRows;
+						}
+						string fundName = string.Empty;
+						string dealName = string.Empty;
+
+						string companyName = string.Empty;
+						string symbol = string.Empty;
+						string securityTypeName = string.Empty;
+						int noOfShares = 0;
+						decimal purchasePrice = 0;
+						decimal fairMarketValue = 0;
+						decimal taxCostBasisPerShare = 0;
+						DateTime closeDate;
+						DateTime taxCostDate;
+						DateTime recordDate;
+
+
+						int rowNumber = 0;
+
+						Models.Entity.Fund fund = null;
+						Models.Entity.Deal deal = null;
+						DealClosing dealClosing = null;
+						Models.Entity.Issuer issuer = null;
+						Models.Entity.SecurityType securityType = null;
+						Models.Entity.Equity equity = null;
+						Models.Entity.FixedIncome fixedIncome = null;
+
+						IEnumerable<ErrorInfo> errorInfo;
+						ImportExcelError error;
+
+						StringBuilder rowErrors;
+						foreach (DataRow row in table.Rows) {
+							int.TryParse(row.GetValue("RowNumber"), out rowNumber);
+							fund = null;
+							deal = null;
+
+							issuer = null;
+							securityType = null;
+							equity = null;
+							fixedIncome = null;
+
+							error = new ImportExcelError { RowNumber = rowNumber };
+							rowErrors = new StringBuilder();
+							fundName = row.GetValue(model.FundName);
+							dealName = row.GetValue(model.DealName);
+
+							companyName = row.GetValue(model.CompanyName);
+							symbol = row.GetValue(model.Symbol);
+							securityTypeName = row.GetValue(model.SecurityType);
+							int.TryParse(row.GetValue(model.NoOfShares), out noOfShares);
+							decimal.TryParse(row.GetValue(model.PurchasePrice), out purchasePrice);
+							decimal.TryParse(row.GetValue(model.FairMarketValue), out fairMarketValue);
+							decimal.TryParse(row.GetValue(model.TaxCostBasisPerShare), out taxCostBasisPerShare);
+							DateTime.TryParse(row.GetValue(model.TaxCostDate), out taxCostDate);
+							DateTime.TryParse(row.GetValue(model.RecordDate), out recordDate);
+							DateTime.TryParse(row.GetValue(model.CloseDate), out closeDate);
+
+							if (string.IsNullOrEmpty(fundName) == false) {
+								fund = FundRepository.FindFund(fundName);
+							}
+							else {
+								error.Errors.Add(new ErrorInfo(model.FundName, "Fund is required"));
+							}
+
+							if (string.IsNullOrEmpty(companyName) == false) {
+								issuer = DealRepository.FindIssuer(companyName);
+							}
+							else {
+								error.Errors.Add(new ErrorInfo(model.CompanyName, "Company Name is required"));
+							}
+
+
+							if (string.IsNullOrEmpty(securityTypeName) == false) {
+								securityType = AdminRepository.FindSecurityType(securityTypeName);
+							}
+							else {
+								error.Errors.Add(new ErrorInfo(model.SecurityType, "SecurityType is required"));
+							}
+
+							if (string.IsNullOrEmpty(symbol)) {
+								error.Errors.Add(new ErrorInfo(model.SecurityType, "SecurityType is required"));
+							}
+							else {
+								if (issuer != null && securityType != null) {
+									if (securityType.SecurityTypeID == (int)Models.Deal.Enums.SecurityType.Equity) {
+										equity = DealRepository.FindEquity(issuer.IssuerID, symbol);
+										if (equity == null) {
+											error.Errors.Add(new ErrorInfo(model.Symbol, "Equity does not exist"));
+										}
+									}
+								}
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								if (fund == null)
+									error.Errors.Add(new ErrorInfo(model.FundName, "Fund does not exist"));
+							}
+
+							if (error.Errors.Count() == 0) {
+
+								if (fund != null) {
+									if (string.IsNullOrEmpty(dealName) == false) {
+										deal = DealRepository.FindDeal(dealName, fund.FundID);
+										if (deal == null) {
+											error.Errors.Add(new ErrorInfo(model.FundName, string.Format("Deal does not exist", fundName)));
+										}
+									}
+								}
+							}
+ 
+							if (error.Errors.Count() == 0) {
+
+								DealUnderlyingDirect dealUnderlyingDirect = DealRepository
+									.FindDealUnderlyingDirect((deal != null ? deal.DealID : 0),
+									(securityType != null ? (equity != null ? equity.EquityID : 0) : (fixedIncome != null ? fixedIncome.FixedIncomeID : 0)),
+									(securityType != null ? securityType.SecurityTypeID : 0),
+									recordDate,
+									noOfShares,
+									fairMarketValue,
+									purchasePrice,
+									taxCostBasisPerShare,
+									taxCostDate
+									);
+
+								if (dealUnderlyingDirect == null) {
+									error.Errors.Add(new ErrorInfo(model.CompanyName, "Deal Underlying Direct already exist"));
+								}
+								else {
+
+									dealClosing = DealRepository.FindDealClosing((deal != null ? deal.DealID : 0), (fund != null ? fund.FundID : 0), closeDate);
+									if (dealClosing == null) {
+
+										dealClosing = new DealClosing {
+											CloseDate = closeDate,
+											DealID = (deal != null ? deal.DealID : 0),
+											DealNumber = DealRepository.GetMaxDealClosingNumber((deal != null ? deal.DealID : 0)),
+											IsFinalClose = false,
+										};
+
+										errorInfo = DealRepository.SaveDealClosing(dealClosing);
+									}
+
+									if (dealClosing != null) {
+										dealUnderlyingDirect.DealClosingID = dealClosing.DealClosingID;
+										dealUnderlyingDirect.NumberOfShares = noOfShares;
+										dealUnderlyingDirect.PurchasePrice = purchasePrice;
+										dealUnderlyingDirect.FMV = fairMarketValue;
+										errorInfo = DealRepository.SaveDealUnderlyingDirect(dealUnderlyingDirect);
+										if (errorInfo != null) {
+											error.Errors.Add(new ErrorInfo(model.DealName, ValidationHelper.GetErrorInfo(errorInfo)));
+										}
+									}
+								}
+							}
+							StringBuilder sberror = new StringBuilder();
+							foreach (var e in error.Errors) {
+								sberror.AppendFormat("{0},", e.ErrorMessage);
+							}
+							importExcelTable.AddError(rowNumber - 1, sberror.ToString());
+							errors.Add(error);
+						}
+					}
+				}
+				if (errors != null) {
+					succssRows = errors.Where(e => e.Errors.Count == 0).Count();
+					errorRows = errors.Where(e => e.Errors.Count > 0).Count();
+				}
+			}
+			else {
+				foreach (var values in ModelState.Values.ToList()) {
+					foreach (var err in values.Errors.ToList()) {
+						if (string.IsNullOrEmpty(err.ErrorMessage) == false) {
+							resultModel.Result += err.ErrorMessage + "\n";
+						}
+					}
+				}
+			}
+			return Json(new {
+				Result = resultModel.Result,
+				TotalRows = totalRows,
+				CompletedRows = completedRows,
+				TotalPages = totalPages,
+				PageIndex = model.PageIndex,
+				SuccessRows = succssRows,
+				ErrorRows = errorRows
+			});
+		}
+
+		#endregion
+
+		#endregion
+
+		public ActionResult GetImportErrorExcel(string sessionKey, string tableName) {
+			MemoryCacheManager cacheManager = new MemoryCacheManager();
+			ActionResult result = null;
+			string key = string.Format(EXCELDEALERROR_BY_KEY, sessionKey);
+			List<ImportExcelError> errors = cacheManager.Get(key, () => {
+				return new List<ImportExcelError>();
+			});
+			DataSet ds = ExcelConnection.ImportExcelDataset(sessionKey);
+			if (ds != null) {
+				PagingDataTable importExcelTable = null;
+				if (ds.Tables[tableName] != null) {
+					importExcelTable = (PagingDataTable)ds.Tables[tableName];
+				}
+				PagingDataTable errorTable = (PagingDataTable)importExcelTable.Clone();
+				DataRow[] rows = importExcelTable.Select("ImportError<>''");
+				foreach (var row in rows) {
+					errorTable.ImportRow(row);
+				}
+				if (importExcelTable != null) {
+					result = new ExportExcel { TableName = string.Format("{0}_{1}", tableName, sessionKey), GridData = errorTable };
+				}
+			}
+			return result;
+		}
+
+		private string AppendErrorInfo(int rowNumber, DataTable excelDataTable, List<ImportExcelError> errors) {
+			StringBuilder errorInfo = new StringBuilder();
+			errorInfo.Append("<table cellpadding=0 cellspacing=0 border=0>");
+			errorInfo.Append("<thead>");
+			errorInfo.Append("<tr>");
+			errorInfo.AppendFormat("<th>{0}</th>", "RowNumber");
+			foreach (DataColumn col in excelDataTable.Columns) {
+				errorInfo.AppendFormat("<th>{0}</th>", col.ColumnName);
+			}
+			errorInfo.Append("</tr>");
+			errorInfo.Append("</thead>");
+			errorInfo.Append("</tbody>");
+			if (errors.Count() > 0) {
+				foreach (var err in errors) {
+					if (err.Errors.Count() > 0) {
+						errorInfo.Append("<tr>");
+						errorInfo.AppendFormat("<td>{0}</td>", err.RowNumber);
+						foreach (DataColumn col in excelDataTable.Columns) {
+							var errorColumn = err.Errors.Where(e => e.PropertyName == col.ColumnName).FirstOrDefault();
+							if (errorColumn != null) {
+								errorInfo.AppendFormat("<td>{0}</td>", errorColumn.ErrorMessage);
+							}
+							else {
+								errorInfo.AppendFormat("<td>{0}</td>", string.Empty);
+							}
+						}
+						errorInfo.Append("</tr>");
+					}
+				}
+			}
+			errorInfo.Append("</tbody>");
+			errorInfo.Append("</table>");
+			return errorInfo.ToString();
+		}
+
+		#region Broker
+		//
+		// GET: /Deal/FindBrokers
+		[HttpGet]
+		public JsonResult FindBrokers(string term) {
+			return Json(AdminRepository.FindBrokers(term), JsonRequestBehavior.AllowGet);
+		}
+		#endregion
+
 		public ActionResult Result() {
 			return View();
 		}
 	}
 }
+

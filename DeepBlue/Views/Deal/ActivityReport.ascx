@@ -29,7 +29,7 @@
 							<th style="text-align: right;" sortname="Amount">
 								Amount
 							</th>
-							<th style="text-align: left; width: 100px;" sortname="NoticeDate">
+							<th style="text-align: left; width: 100px;" sortname="DueDate">
 								Due Date
 							</th>
 						</tr>

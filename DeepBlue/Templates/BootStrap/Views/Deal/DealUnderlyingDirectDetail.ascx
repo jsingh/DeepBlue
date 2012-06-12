@@ -55,7 +55,7 @@
 								<label class="control-label">
 									Company</label>
 								<div class="controls">
-									<%: Html.TextBox("Issuer", "", new { @id = "Issuer", @class = "tooltiptxt input-large", @top = "198" })%>
+									<%: Html.TextBox("Issuer", "", new { @id = "Issuer", @class = "input-large", @top = "198" })%>
 								</div>
 							</div>
 							<div class="control-group pull-left">

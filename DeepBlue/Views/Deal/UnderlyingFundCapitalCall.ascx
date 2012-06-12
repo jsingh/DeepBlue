@@ -14,6 +14,9 @@
 		<%: Html.TextBox("${Index}_Amount", "{{if Amount>0}}${formatNumber(Amount)}{{/if}}", new { @class = "", @onkeydown = "return jHelper.isCurrency(event);" })%>
 	</td>
 	<td class="lalign">
+		<%: Html.TextBox("${Index}_ManagementFee", "{{if ManagementFee>0}}${formatNumber(ManagementFee)}{{/if}}", new { @class = "", @onkeydown = "return jHelper.isCurrency(event);" })%>
+	</td>
+	<td class="lalign">
 		<%: Html.TextBox("${Index}_NoticeDate", "{{if UnderlyingFundCapitalCallId>0}}${NoticeDate}{{/if}}", new { @class = "datefield", @id = "${Index}_CC_NoticeDate" })%>
 	</td>
 	<td class="lalign">

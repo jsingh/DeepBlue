@@ -66,7 +66,7 @@
 							<td class="lalign">
 							</td>
 							<td class="lalign">
-								<%: Html.TextBox("Issuer", "", new { @id = "Issuer", @class = "tooltiptxt", @top = "198", @style = "width:78%" })%>
+								<%: Html.TextBox("Issuer", "", new { @id = "Issuer", @class = "", @top = "198"  })%>
 								<%: Html.Hidden("IssuerId", "0")%>
 								<%: Html.Hidden("SecurityTypeId","0")%>
 								<%: Html.Hidden("SecurityId", "0")%>
@@ -83,7 +83,7 @@
 							<td class="ralign">
 								<%: Html.TextBox("TaxCostBase", "", new { @onkeydown = "return jHelper.isCurrency(event);" })%>
 							</td>
-							<td class="ralign">
+							<td class="lalign">
 								<%: Html.TextBox("TaxCostDate", "", new { @class = "datefield", @id = "0_DirectTaxCostDate" })%>
 							</td>
 							<td class="lalign">

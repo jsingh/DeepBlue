@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using DeepBlue.Models.Entity;
 using System.Text;
 using DeepBlue.Helpers;
+using System.Collections.Specialized;
 
 namespace DeepBlue.Controllers {
 	public class BaseController : Controller {
@@ -15,20 +16,33 @@ namespace DeepBlue.Controllers {
 			string controllerName = Convert.ToString(this.ValueProvider.GetValue("controller").RawValue);
 			string actionName = Convert.ToString(this.ValueProvider.GetValue("action").RawValue);
 			if (controllerName != "Account") {
-				if (Authentication.CurrentUser == null || Authentication.CurrentEntity == null) {
-					RedirectLogOn(filterContext);
+				string queryString = string.Empty;
+				foreach (string key in Request.QueryString.AllKeys) {
+					if(string.IsNullOrEmpty(queryString))
+						queryString += string.Format("?{0}={1}", key, Request.QueryString[key]);
+					else
+						queryString += string.Format("&{0}={1}", key, Request.QueryString[key]);
 				}
-				else if(controllerName != "Home" && controllerName != "Admin") {
+				string returnUrl = string.Format("/{0}/{1}{2}", controllerName, actionName, queryString);
+				if (Authentication.CurrentUser == null || Authentication.CurrentEntity == null) {
+					RedirectLogOn(filterContext, returnUrl);
+				}
+				else if (controllerName != "Home" && controllerName != "Admin") {
+					returnUrl = string.Empty;
 					if (Authentication.IsSystemEntityUser) {
-						RedirectLogOn(filterContext);
+						RedirectLogOn(filterContext, returnUrl);
 					}
 				}
 			}
 			base.OnAuthorization(filterContext);
 		}
 
-		private void RedirectLogOn(AuthorizationContext filterContext) {
-			filterContext.Result = RedirectToAction("LogOn", "Account");
+
+		private void RedirectLogOn(AuthorizationContext filterContext, string returnUrl) {
+			if (String.IsNullOrEmpty(returnUrl))
+				filterContext.Result = RedirectToAction("LogOn", "Account");
+			else
+				filterContext.Result = RedirectToAction("LogOn", "Account", new { ReturnUrl = returnUrl });
 		}
 
 		protected override void OnException(ExceptionContext filterContext) {

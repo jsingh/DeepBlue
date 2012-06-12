@@ -54,6 +54,9 @@ namespace DeepBlue.Controllers.Admin {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			List<InvestorType> investorTypes = AdminRepository.GetAllInvestorTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			if (Authentication.CurrentEntity.EntityID != (int)ConfigUtil.SystemEntityID) {
+				investorTypes = investorTypes.Where(e => e.EntityID == Authentication.CurrentEntity.EntityID).ToList();
+			}
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var invertorType in investorTypes) {
@@ -165,6 +168,9 @@ namespace DeepBlue.Controllers.Admin {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			List<DeepBlue.Models.Entity.InvestorEntityType> investorEntityTypes = AdminRepository.GetAllInvestorEntityTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			if (Authentication.CurrentEntity.EntityID != (int)ConfigUtil.SystemEntityID) {
+				investorEntityTypes = investorEntityTypes.Where(e => e.EntityID == Authentication.CurrentEntity.EntityID).ToList();
+			}
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var investorEntityType in investorEntityTypes) {
@@ -745,6 +751,9 @@ namespace DeepBlue.Controllers.Admin {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			List<DeepBlue.Models.Entity.PurchaseType> purchaseTypes = AdminRepository.GetAllPurchaseTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			if (Authentication.CurrentEntity.EntityID != (int)ConfigUtil.SystemEntityID) {
+				purchaseTypes = purchaseTypes.Where(e => e.EntityID == Authentication.CurrentEntity.EntityID).ToList();
+			}
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var purchaseType in purchaseTypes) {
@@ -848,6 +857,9 @@ namespace DeepBlue.Controllers.Admin {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			List<DeepBlue.Models.Entity.DealClosingCostType> dealClosingCostTypes = AdminRepository.GetAllDealClosingCostTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			if (Authentication.CurrentEntity.EntityID != (int)ConfigUtil.SystemEntityID) {
+				dealClosingCostTypes = dealClosingCostTypes.Where(e => e.EntityID == Authentication.CurrentEntity.EntityID).ToList();
+			}
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var dealClosingCostType in dealClosingCostTypes) {
@@ -949,6 +961,9 @@ namespace DeepBlue.Controllers.Admin {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			List<DeepBlue.Models.Entity.UnderlyingFundType> underlyingFundTypes = AdminRepository.GetAllUnderlyingFundTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			if (Authentication.CurrentEntity.EntityID != (int)ConfigUtil.SystemEntityID) {
+				underlyingFundTypes = underlyingFundTypes.Where(e => e.EntityID == Authentication.CurrentEntity.EntityID).ToList();
+			}
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var underlyingFundType in underlyingFundTypes) {
@@ -1050,6 +1065,9 @@ namespace DeepBlue.Controllers.Admin {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			List<DeepBlue.Models.Entity.ShareClassType> shareClassTypes = AdminRepository.GetAllShareClassTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			if (Authentication.CurrentEntity.EntityID != (int)ConfigUtil.SystemEntityID) {
+				shareClassTypes = shareClassTypes.Where(e => e.EntityID == Authentication.CurrentEntity.EntityID).ToList();
+			}
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var shareClassType in shareClassTypes) {
@@ -1269,6 +1287,9 @@ namespace DeepBlue.Controllers.Admin {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			List<DeepBlue.Models.Entity.FundExpenseType> fundExpenseTypes = AdminRepository.GetAllFundExpenseTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			if (Authentication.CurrentEntity.EntityID != (int)ConfigUtil.SystemEntityID) {
+				fundExpenseTypes = fundExpenseTypes.Where(e => e.EntityID == Authentication.CurrentEntity.EntityID).ToList();
+			}
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var fundExpenseType in fundExpenseTypes) {
@@ -1370,6 +1391,9 @@ namespace DeepBlue.Controllers.Admin {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			List<DeepBlue.Models.Entity.ReportingFrequency> reportingFrequencys = AdminRepository.GetAllReportingFrequencies(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			if (Authentication.CurrentEntity.EntityID != (int)ConfigUtil.SystemEntityID) {
+				reportingFrequencys = reportingFrequencys.Where(e => e.EntityID == Authentication.CurrentEntity.EntityID).ToList();
+			}
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var reportingFrequency in reportingFrequencys) {
@@ -1478,6 +1502,9 @@ namespace DeepBlue.Controllers.Admin {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			List<DeepBlue.Models.Entity.ReportingType> reportingTypes = AdminRepository.GetAllReportingTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			if (Authentication.CurrentEntity.EntityID != (int)ConfigUtil.SystemEntityID) {
+				reportingTypes = reportingTypes.Where(e => e.EntityID == Authentication.CurrentEntity.EntityID).ToList();
+			}
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var reportingType in reportingTypes) {
@@ -1914,6 +1941,9 @@ namespace DeepBlue.Controllers.Admin {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			List<DeepBlue.Models.Entity.Industry> industries = AdminRepository.GetAllIndustrys(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			if (Authentication.CurrentEntity.EntityID != (int)ConfigUtil.SystemEntityID) {
+				industries = industries.Where(e => e.EntityID == Authentication.CurrentEntity.EntityID).ToList();
+			}
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var industry in industries) {
@@ -2148,6 +2178,9 @@ namespace DeepBlue.Controllers.Admin {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			List<DeepBlue.Models.Entity.EquityType> equityTypes = AdminRepository.GetAllEquityTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			if (Authentication.CurrentEntity.EntityID != (int)ConfigUtil.SystemEntityID) {
+				equityTypes = equityTypes.Where(e => e.EntityID == Authentication.CurrentEntity.EntityID).ToList();
+			}
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var equityType in equityTypes) {
@@ -3074,6 +3107,9 @@ namespace DeepBlue.Controllers.Admin {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			List<DeepBlue.Models.Entity.DocumentType> documentTypes = AdminRepository.GetAllDocumentTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			if (Authentication.CurrentEntity.EntityID != (int)ConfigUtil.SystemEntityID) {
+				documentTypes = documentTypes.Where(e => e.EntityID == Authentication.CurrentEntity.EntityID).ToList();
+			}
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var documentType in documentTypes) {
@@ -3506,13 +3542,17 @@ namespace DeepBlue.Controllers.Admin {
 			FlexigridData flexgridData = new FlexigridData();
 			int totalRows = 0;
 			List<DeepBlue.Models.Entity.SellerType> sellerTypes = AdminRepository.GetAllSellerTypes(pageIndex, pageSize, sortName, sortOrder, ref totalRows);
+			if (Authentication.CurrentEntity.EntityID != (int)ConfigUtil.SystemEntityID) {
+				sellerTypes = sellerTypes.Where(e => e.EntityID == Authentication.CurrentEntity.EntityID).ToList();
+			}
 			flexgridData.total = totalRows;
 			flexgridData.page = pageIndex;
 			foreach (var sellerType in sellerTypes) {
 				flexgridData.rows.Add(new FlexigridRow {
 					cell = new List<object> {sellerType.SellerTypeID,
 					  sellerType.SellerType1,
-					  sellerType.Enabled}
+					  sellerType.Enabled 
+					}
 				});
 			}
 			return Json(flexgridData, JsonRequestBehavior.AllowGet);

@@ -284,10 +284,15 @@ h4 a {
 	width: 166px;
 }
 #tblUnderlyingDirect td input[type="text"], #tblUnderlyingDirect td select {
-	max-width: 101px;
+	width: 100px;
 }
 #tblUnderlyingFund td input[type="text"], #tblUnderlyingFund td select {
-	max-width: 129px;
+	width: 100px;
+}
+#tblUnderlyingFund td input.ui-autocomplete-input
+,#tblUnderlyingDirect td input.ui-autocomplete-input
+{
+	width: 100%;
 }
 #tblUnderlyingDirect td.ralign input[type="text"], #tblUnderlyingDirect td.ralign select {
 	float:right;
@@ -443,4 +448,49 @@ h4 a {
 	background-image:url(../images/remove.png);
 	background-repeat:no-repeat;
 	cursor: pointer;
+}
+
+.jqComboBox input.ui-autocomplete-input {
+	max-width: 100%;
+}
+.tabbg{
+  background-image: url("../images/tabbg.png");
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    float: left;
+    height: 43px;
+}
+ .prs-bar {
+	font-weight: bold;
+	margin: 0 auto;
+	text-align: center;
+	width: 300px;
+	clear:both;
+}
+.total-rows {
+	margin: 10px 0;
+}
+.status-bar {
+	border: 1px solid #E0B1B1;
+	height: 20px;
+	margin: 0 auto 20px;
+	width: 100%;
+}
+.status-bar .loading-status {
+	background-color: #D6D6D6;
+	height: 20px;
+}
+.save-box{
+	margin: 0 auto;
+	text-align: center;
+	width: 200px;
+}
+.save-box .editor-label
+,.save-box .editor-field
+{
+	text-align:left;
+	width:auto;
+}
+#spnerrorexcel a{
+	color: red;
 }

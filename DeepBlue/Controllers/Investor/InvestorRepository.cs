@@ -19,6 +19,12 @@ namespace DeepBlue.Controllers.Investor {
 			}
 		}
 
+		public Models.Entity.Investor FindInvestor(string investorName) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.InvestorsTable.FirstOrDefault(investor => investor.InvestorName == investorName);
+			}
+		}
+
 		public List<InvestorFund> FindInvestorFunds(int investorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from investorFund in context.InvestorFunds

@@ -99,27 +99,27 @@
 			var loading=$("#SpnDocLoading");
 			loading.html(jHelper.savingHTML());
 			$.ajaxFileUpload(
-				{
-					url: '/Document/Create',
-					secureuri: false,
-					formId: 'AddNewDocument',
-					dataType: 'json',
-					success: function (data,status) {
-						loading.empty();
-						if($.trim(data.data)!="") {
-							jAlert(data.data);
-						} else {
-							jAlert("Document Saved");
-							jHelper.resetFields($("#AddNewDocument"));
-							$("#FundId").val(0);
-							$("#InvestorId").val(0);
-						}
+			{
+				url: '/Document/Create',
+				secureuri: false,
+				formId: 'AddNewDocument',
+				dataType: 'json',
+				success: function (data,status) {
+					loading.empty();
+					if($.trim(data.data)!="") {
+						jAlert(data.data);
+					} else {
+						jAlert("Document Saved");
+						jHelper.resetFields($("#AddNewDocument"));
+						$("#FundId").val(0);
+						$("#InvestorId").val(0);
 					}
-					,error: function (data,status,e) {
-						loading.empty();
-						jAlert(data.msg+","+status+","+e);
-					}
-				});
+				}
+				,error: function (data,status,e) {
+					loading.empty();
+					jAlert(data.msg+","+status+","+e);
+				}
+			});
 		} catch(e) {
 			jAlert(e);
 		}

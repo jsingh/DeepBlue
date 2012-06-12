@@ -9,7 +9,7 @@ using DeepBlue.Models.Entity.Partial;
 namespace DeepBlue.Models.Entity {
 	[MetadataType(typeof(UnderlyingFundStockDistributionMD))]
 	public partial class UnderlyingFundStockDistribution {
-		public class UnderlyingFundStockDistributionMD {
+		public class UnderlyingFundStockDistributionMD : CreatedByFields {
 			#region Primitive Properties
 			
 			[Required(ErrorMessage = "Fund is required")]

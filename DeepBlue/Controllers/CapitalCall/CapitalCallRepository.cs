@@ -174,6 +174,10 @@ namespace DeepBlue.Controllers.CapitalCall {
 			return capitalCall.Save();
 		}
 
+		public IEnumerable<ErrorInfo> SaveCapitalCallOnly(Models.Entity.CapitalCall capitalCall) {
+			return capitalCall.SaveCapitalCallOnly();
+		}
+
 		public IEnumerable<ErrorInfo> SaveCapitalCallLineItem(CapitalCallLineItem capitalCallLineItem) {
 			return capitalCallLineItem.Save();
 		}

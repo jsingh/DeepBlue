@@ -166,6 +166,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_UnderlyingFundCapitalCallID", "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), "UnderlyingFundCapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCallLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), "UnderlyingFundNAVHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAVHistory), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_UnderlyingFundStockDistribution", "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), "UnderlyingFundStockDistributionLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistributionLineItem), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistribution_Broker", "Broker", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Broker), "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), true)]
 
 #endregion
 
@@ -1896,6 +1897,22 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<USER> _USERs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Broker> Brokers
+        {
+            get
+            {
+                if ((_Brokers == null))
+                {
+                    _Brokers = base.CreateObjectSet<Broker>("Brokers");
+                }
+                return _Brokers;
+            }
+        }
+        private ObjectSet<Broker> _Brokers;
 
         #endregion
         #region AddTo Methods
@@ -2738,6 +2755,14 @@ namespace DeepBlue.Models.Entity
         public void AddToUSERs(USER uSER)
         {
             base.AddObject("USERs", uSER);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Brokers EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBrokers(Broker broker)
+        {
+            base.AddObject("Brokers", broker);
         }
 
         #endregion
@@ -4457,6 +4482,334 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Issuer>("DeepBlueModel.FK_AnnualMeetingHistory_Issuer", "Issuer", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DeepBlueModel", Name="Broker")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Broker : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Broker object.
+        /// </summary>
+        /// <param name="brokerID">Initial value of the BrokerID property.</param>
+        /// <param name="entityID">Initial value of the EntityID property.</param>
+        /// <param name="brokerName">Initial value of the BrokerName property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        public static Broker CreateBroker(global::System.Int32 brokerID, global::System.Int32 entityID, global::System.String brokerName, global::System.DateTime createdDate, global::System.Int32 createdBy)
+        {
+            Broker broker = new Broker();
+            broker.BrokerID = brokerID;
+            broker.EntityID = entityID;
+            broker.BrokerName = brokerName;
+            broker.CreatedDate = createdDate;
+            broker.CreatedBy = createdBy;
+            return broker;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BrokerID
+        {
+            get
+            {
+                return _BrokerID;
+            }
+            set
+            {
+                if (_BrokerID != value)
+                {
+                    OnBrokerIDChanging(value);
+                    ReportPropertyChanging("BrokerID");
+                    _BrokerID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BrokerID");
+                    OnBrokerIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BrokerID;
+        partial void OnBrokerIDChanging(global::System.Int32 value);
+        partial void OnBrokerIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityID
+        {
+            get
+            {
+                return _EntityID;
+            }
+            set
+            {
+                OnEntityIDChanging(value);
+                ReportPropertyChanging("EntityID");
+                _EntityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityID");
+                OnEntityIDChanged();
+            }
+        }
+        private global::System.Int32 _EntityID;
+        partial void OnEntityIDChanging(global::System.Int32 value);
+        partial void OnEntityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String BrokerName
+        {
+            get
+            {
+                return _BrokerName;
+            }
+            set
+            {
+                OnBrokerNameChanging(value);
+                ReportPropertyChanging("BrokerName");
+                _BrokerName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("BrokerName");
+                OnBrokerNameChanged();
+            }
+        }
+        private global::System.String _BrokerName;
+        partial void OnBrokerNameChanging(global::System.String value);
+        partial void OnBrokerNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ContactPerson
+        {
+            get
+            {
+                return _ContactPerson;
+            }
+            set
+            {
+                OnContactPersonChanging(value);
+                ReportPropertyChanging("ContactPerson");
+                _ContactPerson = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ContactPerson");
+                OnContactPersonChanged();
+            }
+        }
+        private global::System.String _ContactPerson;
+        partial void OnContactPersonChanging(global::System.String value);
+        partial void OnContactPersonChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ContactNumber
+        {
+            get
+            {
+                return _ContactNumber;
+            }
+            set
+            {
+                OnContactNumberChanging(value);
+                ReportPropertyChanging("ContactNumber");
+                _ContactNumber = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ContactNumber");
+                OnContactNumberChanged();
+            }
+        }
+        private global::System.String _ContactNumber;
+        partial void OnContactNumberChanging(global::System.String value);
+        partial void OnContactNumberChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Email
+        {
+            get
+            {
+                return _Email;
+            }
+            set
+            {
+                OnEmailChanging(value);
+                ReportPropertyChanging("Email");
+                _Email = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Email");
+                OnEmailChanged();
+            }
+        }
+        private global::System.String _Email;
+        partial void OnEmailChanging(global::System.String value);
+        partial void OnEmailChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> AddressID
+        {
+            get
+            {
+                return _AddressID;
+            }
+            set
+            {
+                OnAddressIDChanging(value);
+                ReportPropertyChanging("AddressID");
+                _AddressID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AddressID");
+                OnAddressIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _AddressID;
+        partial void OnAddressIDChanging(Nullable<global::System.Int32> value);
+        partial void OnAddressIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.Int32 _CreatedBy;
+        partial void OnCreatedByChanging(global::System.Int32 value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistribution_Broker", "UnderlyingFundStockDistribution")]
+        public EntityCollection<UnderlyingFundStockDistribution> UnderlyingFundStockDistributions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UnderlyingFundStockDistribution>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "UnderlyingFundStockDistribution");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundStockDistribution>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "UnderlyingFundStockDistribution", value);
                 }
             }
         }
@@ -14733,6 +15086,30 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _LastUpdatedBy;
         partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
         partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Notes
+        {
+            get
+            {
+                return _Notes;
+            }
+            set
+            {
+                OnNotesChanging(value);
+                ReportPropertyChanging("Notes");
+                _Notes = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Notes");
+                OnNotesChanged();
+            }
+        }
+        private global::System.String _Notes;
+        partial void OnNotesChanging(global::System.String value);
+        partial void OnNotesChanged();
 
         #endregion
     
@@ -36863,6 +37240,54 @@ namespace DeepBlue.Models.Entity
         private global::System.String _ChequeNumber;
         partial void OnChequeNumberChanging(global::System.String value);
         partial void OnChequeNumberChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ManagementFee
+        {
+            get
+            {
+                return _ManagementFee;
+            }
+            set
+            {
+                OnManagementFeeChanging(value);
+                ReportPropertyChanging("ManagementFee");
+                _ManagementFee = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ManagementFee");
+                OnManagementFeeChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ManagementFee;
+        partial void OnManagementFeeChanging(Nullable<global::System.Decimal> value);
+        partial void OnManagementFeeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DueDate
+        {
+            get
+            {
+                return _DueDate;
+            }
+            set
+            {
+                OnDueDateChanging(value);
+                ReportPropertyChanging("DueDate");
+                _DueDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DueDate");
+                OnDueDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DueDate;
+        partial void OnDueDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnDueDateChanged();
 
         #endregion
     
@@ -37365,6 +37790,78 @@ namespace DeepBlue.Models.Entity
         private global::System.String _ChequeNumber;
         partial void OnChequeNumberChanging(global::System.String value);
         partial void OnChequeNumberChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DueDate
+        {
+            get
+            {
+                return _DueDate;
+            }
+            set
+            {
+                OnDueDateChanging(value);
+                ReportPropertyChanging("DueDate");
+                _DueDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DueDate");
+                OnDueDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DueDate;
+        partial void OnDueDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnDueDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> NoticeDate
+        {
+            get
+            {
+                return _NoticeDate;
+            }
+            set
+            {
+                OnNoticeDateChanging(value);
+                ReportPropertyChanging("NoticeDate");
+                _NoticeDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NoticeDate");
+                OnNoticeDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _NoticeDate;
+        partial void OnNoticeDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnNoticeDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ManagementFee
+        {
+            get
+            {
+                return _ManagementFee;
+            }
+            set
+            {
+                OnManagementFeeChanging(value);
+                ReportPropertyChanging("ManagementFee");
+                _ManagementFee = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ManagementFee");
+                OnManagementFeeChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ManagementFee;
+        partial void OnManagementFeeChanging(Nullable<global::System.Decimal> value);
+        partial void OnManagementFeeChanged();
 
         #endregion
     
@@ -39382,7 +39879,9 @@ namespace DeepBlue.Models.Entity
         /// <param name="securityID">Initial value of the SecurityID property.</param>
         /// <param name="securityTypeID">Initial value of the SecurityTypeID property.</param>
         /// <param name="purchasePrice">Initial value of the PurchasePrice property.</param>
-        public static UnderlyingFundStockDistribution CreateUnderlyingFundStockDistribution(global::System.Int32 underlyingFundStockDistributionID, global::System.Int32 underlyingFundID, global::System.Int32 fundID, global::System.Int32 securityID, global::System.Int32 securityTypeID, global::System.Decimal purchasePrice)
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        public static UnderlyingFundStockDistribution CreateUnderlyingFundStockDistribution(global::System.Int32 underlyingFundStockDistributionID, global::System.Int32 underlyingFundID, global::System.Int32 fundID, global::System.Int32 securityID, global::System.Int32 securityTypeID, global::System.Decimal purchasePrice, global::System.DateTime createdDate, global::System.Int32 createdBy)
         {
             UnderlyingFundStockDistribution underlyingFundStockDistribution = new UnderlyingFundStockDistribution();
             underlyingFundStockDistribution.UnderlyingFundStockDistributionID = underlyingFundStockDistributionID;
@@ -39391,6 +39890,8 @@ namespace DeepBlue.Models.Entity
             underlyingFundStockDistribution.SecurityID = securityID;
             underlyingFundStockDistribution.SecurityTypeID = securityTypeID;
             underlyingFundStockDistribution.PurchasePrice = purchasePrice;
+            underlyingFundStockDistribution.CreatedDate = createdDate;
+            underlyingFundStockDistribution.CreatedBy = createdBy;
             return underlyingFundStockDistribution;
         }
 
@@ -39687,6 +40188,174 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.DateTime> _DistributionDate;
         partial void OnDistributionDateChanging(Nullable<global::System.DateTime> value);
         partial void OnDistributionDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.Int32 _CreatedBy;
+        partial void OnCreatedByChanging(global::System.Int32 value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> BrokerID
+        {
+            get
+            {
+                return _BrokerID;
+            }
+            set
+            {
+                OnBrokerIDChanging(value);
+                ReportPropertyChanging("BrokerID");
+                _BrokerID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BrokerID");
+                OnBrokerIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _BrokerID;
+        partial void OnBrokerIDChanging(Nullable<global::System.Int32> value);
+        partial void OnBrokerIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Notes
+        {
+            get
+            {
+                return _Notes;
+            }
+            set
+            {
+                OnNotesChanging(value);
+                ReportPropertyChanging("Notes");
+                _Notes = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Notes");
+                OnNotesChanged();
+            }
+        }
+        private global::System.String _Notes;
+        partial void OnNotesChanging(global::System.String value);
+        partial void OnNotesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsReceived
+        {
+            get
+            {
+                return _IsReceived;
+            }
+            set
+            {
+                OnIsReceivedChanging(value);
+                ReportPropertyChanging("IsReceived");
+                _IsReceived = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsReceived");
+                OnIsReceivedChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsReceived;
+        partial void OnIsReceivedChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsReceivedChanged();
 
         #endregion
     
@@ -39827,6 +40496,44 @@ namespace DeepBlue.Models.Entity
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistribution_Broker", "Broker")]
+        public Broker Broker
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Broker>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "Broker").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Broker>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "Broker").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Broker> BrokerReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Broker>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "Broker");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Broker>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "Broker", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -39848,13 +40555,17 @@ namespace DeepBlue.Models.Entity
         /// <param name="underlyingFundStockDistributionID">Initial value of the UnderlyingFundStockDistributionID property.</param>
         /// <param name="underlyingFundID">Initial value of the UnderlyingFundID property.</param>
         /// <param name="dealID">Initial value of the DealID property.</param>
-        public static UnderlyingFundStockDistributionLineItem CreateUnderlyingFundStockDistributionLineItem(global::System.Int32 underlyingFundStockDistributionLineItemID, global::System.Int32 underlyingFundStockDistributionID, global::System.Int32 underlyingFundID, global::System.Int32 dealID)
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        public static UnderlyingFundStockDistributionLineItem CreateUnderlyingFundStockDistributionLineItem(global::System.Int32 underlyingFundStockDistributionLineItemID, global::System.Int32 underlyingFundStockDistributionID, global::System.Int32 underlyingFundID, global::System.Int32 dealID, global::System.DateTime createdDate, global::System.Int32 createdBy)
         {
             UnderlyingFundStockDistributionLineItem underlyingFundStockDistributionLineItem = new UnderlyingFundStockDistributionLineItem();
             underlyingFundStockDistributionLineItem.UnderlyingFundStockDistributionLineItemID = underlyingFundStockDistributionLineItemID;
             underlyingFundStockDistributionLineItem.UnderlyingFundStockDistributionID = underlyingFundStockDistributionID;
             underlyingFundStockDistributionLineItem.UnderlyingFundID = underlyingFundID;
             underlyingFundStockDistributionLineItem.DealID = dealID;
+            underlyingFundStockDistributionLineItem.CreatedDate = createdDate;
+            underlyingFundStockDistributionLineItem.CreatedBy = createdBy;
             return underlyingFundStockDistributionLineItem;
         }
 
@@ -40007,6 +40718,102 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Decimal> _FMV;
         partial void OnFMVChanging(Nullable<global::System.Decimal> value);
         partial void OnFMVChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.Int32 _CreatedBy;
+        partial void OnCreatedByChanging(global::System.Int32 value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LastUpdatedDate
+        {
+            get
+            {
+                return _LastUpdatedDate;
+            }
+            set
+            {
+                OnLastUpdatedDateChanging(value);
+                ReportPropertyChanging("LastUpdatedDate");
+                _LastUpdatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedDate");
+                OnLastUpdatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LastUpdatedDate;
+        partial void OnLastUpdatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnLastUpdatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LastUpdatedBy
+        {
+            get
+            {
+                return _LastUpdatedBy;
+            }
+            set
+            {
+                OnLastUpdatedByChanging(value);
+                ReportPropertyChanging("LastUpdatedBy");
+                _LastUpdatedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LastUpdatedBy");
+                OnLastUpdatedByChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LastUpdatedBy;
+        partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
+        partial void OnLastUpdatedByChanged();
 
         #endregion
     

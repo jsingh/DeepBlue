@@ -24,6 +24,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region EntityType
 		List<InvestorEntityType> GetAllInvestorEntityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		InvestorEntityType FindInvestorEntityType(int id);
+		InvestorEntityType FindInvestorEntityType(string investorEntityTypeName);
 		bool InvestorEntityTypeNameAvailable(string investorEntityTypeName, int investorEntityTypeID);
 		bool DeleteInvestorEntityType(int id);
 		IEnumerable<ErrorInfo> SaveInvestorEntityType(InvestorEntityType investorEntityType);
@@ -101,6 +102,7 @@ namespace DeepBlue.Controllers.Admin {
 		List<PurchaseType> GetAllPurchaseTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		List<PurchaseType> GetAllPurchaseTypes();
 		PurchaseType FindPurchaseType(int id);
+		PurchaseType FindPurchaseType(string purchaseTypeName);
 		bool PurchaseTypeNameAvailable(string purchaseTypeName, int purchaseTypeID);
 		bool DeletePurchaseType(int id);
 		IEnumerable<ErrorInfo> SavePurchaseType(PurchaseType purchaseType);
@@ -125,6 +127,7 @@ namespace DeepBlue.Controllers.Admin {
 		List<SecurityType> GetAllSecurityTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		List<SecurityType> GetAllSecurityTypes();
 		SecurityType FindSecurityType(int id);
+		SecurityType FindSecurityType(string securityTypeName);
 		bool SecurityTypeNameAvailable(string securityTypeName, int securityTypeID);
 		bool DeleteSecurityType(int id);
 		IEnumerable<ErrorInfo> SaveSecurityType(SecurityType securityType);
@@ -261,10 +264,12 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region Country
 		List<AutoCompleteList> FindCountrys(string countryName);
+		COUNTRY FindCountry(string countryName);
 		#endregion
 
 		#region State
 		List<AutoCompleteList> FindStates(string countryName);
+		STATE FindState(string stateName);
 		#endregion
 
 		#region ExportExcel
@@ -278,6 +283,7 @@ namespace DeepBlue.Controllers.Admin {
 
 		#region DealContacts
 		List<AutoCompleteList> FindDealContacts(string contactName);
+		Contact FindDealContact(string dealContactName);
 		List<DealContactList> GetAllDealContacts(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		Contact FindContact(int contactId);
 		IEnumerable<ErrorInfo> SaveDealContact(Contact contact);
@@ -312,6 +318,7 @@ namespace DeepBlue.Controllers.Admin {
 		#region SellerType
 		List<SellerType> GetAllSellerTypes(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
 		SellerType FindSellerType(int id);
+		SellerType FindSellerType(string sellerTypeName);
 		bool SellerTypeNameAvailable(string sellerTypeName, int sellerTypeId);
 		bool DeleteSellerType(int id);
 		IEnumerable<ErrorInfo> SaveSellerType(SellerType sellerType);
@@ -360,6 +367,16 @@ namespace DeepBlue.Controllers.Admin {
 		PartnersShareForm FindScheduleK1(int partnersShareFormID);
 		bool DeleteScheduleK1(int id);
 		IEnumerable<ErrorInfo> SaveScheduleK1(PartnersShareForm scheduleK1);
+		#endregion
+
+		#region Broker
+		List<Models.Entity.Broker> GetAllBrokers(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows);
+		Models.Entity.Broker FindBroker(int brokerID);
+		Models.Entity.Broker FindBroker(string brokerName);
+		bool BrokerNameAvailable(string brokerName, int brokerID);
+		bool DeleteBroker(int brokerID);
+		IEnumerable<ErrorInfo> SaveBroker(Models.Entity.Broker broker);
+		List<AutoCompleteList> FindBrokers(string brokerName);
 		#endregion
 	}
 }

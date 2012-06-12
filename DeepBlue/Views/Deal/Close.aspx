@@ -13,6 +13,8 @@
 	<%=Html.StylesheetLinkTag("flexigrid.css")%>
 	<%=Html.StylesheetLinkTag("deal.css") %>
 	<%=Html.StylesheetLinkTag("dealclose.css") %>
+	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
+	<%=Html.JavascriptInclueTag("ImportDealCloseExcel.js")%>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
@@ -55,6 +57,9 @@
 					<div id="LoadingDetail" class="cell auto">
 						<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...", new { @id = "SpnGridLoading", @style="display:none;" })%>
 					</div>
+					<div style="float: right" class="cell auto">
+						<%: Html.ImageButton("Import-Excel_active.png", new { @id = "btnImportDeal", onclick = "javascript:$('#ExcelImport').dialog('open');" })%>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -71,11 +76,10 @@
 				</div>
 			</div>
 			<div class="dc-box">
-				<div class="section" style="margin-top: 0px;margin-bottom:20px;">
+				<div class="section" style="margin-top: 0px; margin-bottom: 20px;">
 					<div style="width: 90%; padding-left: 65px;">
 						<% Html.RenderPartial("TBoxTop"); %>
-						<table id="DealCloseList" class="grid" cellpadding="0" cellspacing="0" border="0"
-							style="width: 100%;">
+						<table id="DealCloseList" class="grid" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
 							<thead>
 								<tr>
 									<th style="display: none;">
@@ -116,8 +120,7 @@
 						</div>
 					</div>
 					<div id="NewDealCloseBtn" class="expandaddbtn" style="display: none;">
-						<%using (Html.GreenButton(new { @onclick = "javascript:dealClose.add(0,false);" })) {%>Add
-						Deal Close<%}%>
+						<%using (Html.GreenButton(new { @onclick = "javascript:dealClose.add(0,false);" })) {%>Add Deal Close<%}%>
 					</div>
 					<div id="NDExpandBox" class="expandheader expandsel" style="display: none;">
 						<div class="expandcontainer">
@@ -141,13 +144,11 @@
 						<div class="closetitle">
 							<div class="title">
 								Underlying Funds</div>
-							<%using (Html.BlueButton(new { @onclick = "javascript:dealClose.addDUF('DealUnderlyingFundList');" })) {%>Add
-							underlying funds<%}%>
+							<%using (Html.BlueButton(new { @onclick = "javascript:dealClose.addDUF('DealUnderlyingFundList');" })) {%>Add underlying funds<%}%>
 						</div>
-						<div class="dc-box tabledetail">
+						<div class="dc-box tabledetail" id="DUFTableBox">
 							<div class="gbox" style="width: 90%">
-								<table id="DealUnderlyingFundList" class="grid ngrid" cellpadding="0" cellspacing="0"
-									border="0" style="width: 100%;">
+								<table id="DealUnderlyingFundList" class="grid ngrid" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
 									<thead>
 										<tr>
 											<th style="width: 3%">
@@ -183,13 +184,11 @@
 						<div class="closetitle">
 							<div class="title">
 								Underlying Directs</div>
-							<%using (Html.BlueButton(new { @onclick = "javascript:dealClose.addDUD('DealUnderlyingDirects');" })) {%>Add
-							underlying directs<%}%>
+							<%using (Html.BlueButton(new { @onclick = "javascript:dealClose.addDUD('DealUnderlyingDirects');" })) {%>Add underlying directs<%}%>
 						</div>
-						<div class="dc-box tabledetail">
+						<div class="dc-box tabledetail" id="DUDTableBox">
 							<div class="gbox" style="width: 90%">
-								<table id="DealUnderlyingDirects" class="grid ngrid" cellpadding="0" cellspacing="0"
-									border="0" style="width: 100%;">
+								<table id="DealUnderlyingDirects" class="grid ngrid" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
 									<thead>
 										<tr>
 											<th class="lalign" style="width: 3%">
@@ -250,10 +249,10 @@
 						</div>
 					</div>
 					<div id="FDCloseDateBox" class="expandaddbtn" style="display: none;">
-						 <%: Html.TextBox("CloseDate", "", new { @id = "Final_CloseDate" })%>
+						<%: Html.TextBox("CloseDate", "", new { @id = "Final_CloseDate" })%>
 					</div>
 					<div id="FDDetail" class="detail" style="display: none">
-						<div class="dc-box">
+						<div class="dc-box" id="FinalDealClose_UF_Box">
 							<br />
 							<div class="closetitle" style="margin-top: 0">
 								<div class="title">
@@ -261,8 +260,7 @@
 							</div>
 							<div class="dc-box tabledetail">
 								<div class="gbox" style="width: 90%">
-									<table id="FinalDealUnderlyingFundList" class="grid ngrid" cellpadding="0" cellspacing="0"
-										border="0" style="width: 100%;">
+									<table id="FinalDealUnderlyingFundList" class="grid ngrid" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
 										<thead>
 											<tr>
 												<th class="lalign" style="width: 20%">
@@ -291,15 +289,14 @@
 								</div>
 							</div>
 						</div>
-						<div class="dc-box">
+						<div class="dc-box" id="FinalDealClose_UD_Box">
 							<div class="closetitle">
 								<div class="title">
 									All Underlying Directs</div>
 							</div>
 							<div class="dc-box tabledetail">
 								<div class="gbox" style="width: 90%">
-									<table id="FinalDealUnderlyingDirects" class="grid ngrid" cellpadding="0" cellspacing="0"
-										border="0" style="width: 100%;">
+									<table id="FinalDealUnderlyingDirects" class="grid ngrid" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
 										<thead>
 											<tr>
 												<th class="lalign" style="width: 20%">
@@ -325,15 +322,14 @@
 								</div>
 							</div>
 						</div>
-						<div class="dc-box">
+						<div class="dc-box" id="FinalDealClose_DealDetail_Box">
 							<div class="closetitle">
 								<div class="title">
 									Deal Detail</div>
 							</div>
 							<div class="dc-box tabledetail">
 								<div class="gbox" style="width: 90%">
-									<table id="FinalDealList" class="grid ngrid" cellpadding="0" cellspacing="0" border="0"
-										style="width: 100%;">
+									<table id="FinalDealList" class="grid ngrid" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
 										<thead>
 											<tr>
 												<th class="lalign" style="width: 10%">
@@ -342,7 +338,7 @@
 												<th class="ralign" style="width: 15%">
 													Deal Name
 												</th>
-												<th class="ralign" align=right style="width: 15%">
+												<th class="ralign" align="right" style="width: 15%">
 													Total
 												</th>
 												<th>
@@ -371,6 +367,8 @@
 				<%: Html.Hidden("TotalNotClosing", "0")%>
 			</div>
 		</div>
+	</div>
+	<div id="ExcelImport">
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
@@ -712,5 +710,189 @@
 	</script>
 	<%if (Model.DealId > 0) {%>
 	<script type="text/javascript"> $(document).ready(function() {  dealClose.selectDeal(<%=Model.DealId%>); } );</script>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("ExcelImprtTemplate")) {%>
+	<div class="import-box">
+		<%using (Html.Form(new { @id = "frmUploadExcel", @onsubmit = "return false" })) { %>
+		<div class="editor-label" style="width: 110px;">
+			&nbsp;</div>
+		<div class="editor-field" style="text-align: right; font-size: 11px;">
+			<%:Html.Anchor("Sample Excel","/Files/ImportSamples/DealClose.xls", new { @target = "_blank", @style = "color:blue" })%>
+		</div>
+		<div class="editor-label" style="width: 110px; text-align: right;">
+			<%: Html.Label("File")%></div>
+		<div class="editor-field">
+			<%: Html.File("UploadFile", new { @id = "UploadFile" })%>
+		</div>
+		<div class="editor-label" style="width: 100px">
+			<%: Html.Span("", new { @id = "SpnUELoading" })%>
+		</div>
+		<div class="editor-label" style="clear: right; width: auto; text-align: right;">
+			<%: Html.Image("Upload_active.png", new { @onclick = "javascript:importDealCloseExcel.uploadExcel();" })%></div>
+		<div class="editor-field">
+			<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:$('#ExcelImport').dialog('close');" })%></div>
+		<%}%>
+	</div>
+	<div id="ImportExcel">
+	</div>
+	<div id="ProgressBar">
+	</div>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("ImportExcelTemplate")) {%>
+	<br />
+	<div class="tabbg">
+		<%using (Html.Tab(new { @id = "DealUFTab", @class = "section-tab-sel", @onclick = "javascript:importDealCloseExcel.selectTab('DUF',this);" })) {%>Deal Underlying Fund<%}%>
+		<%using (Html.Tab(new { @id = "DealUDTab", @class = "section-tab", @onclick = "javascript:importDealCloseExcel.selectTab('DUD',this);" })) {%>Deal Underlying Direct<%}%>
+	</div>
+	<div class="clear">
+		&nbsp;</div>
+	<div class="dealimportsection" id="DealUFBox">
+		<div class="formbox">
+			<%using (Html.Form(new { @id = "frm", @onsubmit = "return false" })) { %><div class="editor-label">
+				<%: Html.Label("Excel Tab")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("DealCloseUnderlyingFundTableName", new List<SelectListItem>() {
+			 new  SelectListItem { Text = "--Select Excel Tab--", Value = " " }
+		}, new { @exceltabname = "DealUnderlyingFund", @class = "ddltable", @onchange = "javascript:importDealCloseExcel.selectExcelTab(this);" })%></div>
+			<div class="editor-label">
+				<%: Html.Label("DealName")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("DealName", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("FundName")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("FundName", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label">
+				<%: Html.Label("CloseDate")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("CloseDate", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("UnderlyingFundName")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("UnderlyingFundName", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label">
+				<%: Html.Label("GrossPurchasePrice")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("GrossPurchasePrice", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("EffectiveDate")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("EffectiveDate", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label">
+				<%: Html.Label("CapitalCommitment")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("CapitalCommitment", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("UnfundedAmount")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("UnfundedAmount", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label">
+				<%: Html.Label("RecordDate")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("RecordDate", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="clear">
+				&nbsp;</div>
+			<%: Html.Hidden("TotalRows", "${TotalRows}")%>
+			<%: Html.Hidden("SessionKey", "${SessionKey}")%>
+			<%}%></div>
+		<div class="statusbox">
+		</div>
+	</div>
+	<div class="dealimportsection" id="DealUDBox" style="display: none">
+		<div class="formbox">
+			<%using (Html.Form(new { @id = "frm", @onsubmit = "return false" })) { %><div class="editor-label">
+				<%: Html.Label("Excel Tab")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("DealCloseUnderlyingDirectTableName", new List<SelectListItem>() {
+			 new  SelectListItem { Text = "--Select Excel Tab--", Value = " " }
+		}, new { @exceltabname = "DealUnderlyingDirect", @class = "ddltable", @onchange = "javascript:importDealCloseExcel.selectExcelTab(this);" })%></div>
+			<div class="editor-label">
+				<%: Html.Label("DealName")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("DealName", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("FundName")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("FundName", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label">
+				<%: Html.Label("CloseDate")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("CloseDate", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("CompanyName")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("CompanyName", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label">
+				<%: Html.Label("SecurityType")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("SecurityType", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("Symbol")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("Symbol", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label">
+				<%: Html.Label("NoOfShares")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("NoOfShares", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("PurchasePrice")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("PurchasePrice", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label">
+				<%: Html.Label("FairMarketValue")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("FairMarketValue", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("TaxCostBasisPerShare")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("TaxCostBasisPerShare", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label">
+				<%: Html.Label("TaxCostDate")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("TaxCostDate", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("RecordDate")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("RecordDate", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="clear">
+				&nbsp;</div>
+			<%: Html.Hidden("TotalRows", "${TotalRows}")%>
+			<%: Html.Hidden("SessionKey", "${SessionKey}")%>
+			<%}%></div>
+		<div class="statusbox">
+		</div>
+	</div>
+	<div class="save-box">
+		<div class="editor-label">
+			<%: Html.Image("Save_active.png", new {  @onclick = "javascript:importDealCloseExcel.import(this);" })%></div>
+		<div class="editor-field">
+			<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:$('#ExcelImport').dialog('close');" })%></div>
+		<div class="clear">
+			&nbsp;</div>
+	</div>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("ImportExcelResultTemplate")) {%>
+	<div class="editor-label">
+		<%: Html.Label("Total")%></div>
+	<div class="editor-field">
+		<%: Html.Span("${TotalRows}", new { @id = "spntotal" })%></div>
+	<div class="editor-label">
+		<%: Html.Label("Success")%></div>
+	<div class="editor-field">
+		<%: Html.Span("${SuccessRows}", new { @id = "spnsuccess" })%></div>
+	<div class="editor-label">
+		<%: Html.Label("Errors")%></div>
+	<div class="editor-field">
+		<%: Html.Span("${ErrorRows}", new { @id = "spnerrors" })%></div>
+	<div class="editor-field">
+		<%: Html.Span("", new { @id = "spnerrorexcel", @style="color:red" })%></div>
+	<div class='prs-bar'>
+		<div class='total-rows'>
+			Rows ${CompletedRows} Of ${TotalRows}</div>
+		<div class="status-bar">
+			<div class='loading-status' style='width: ${Percent}%;'>
+			</div>
+		</div>
+	</div>
 	<%}%>
 </asp:Content>

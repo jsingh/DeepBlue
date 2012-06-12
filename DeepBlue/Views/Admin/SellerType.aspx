@@ -15,8 +15,7 @@
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title">ADMIN</span><span class="arrow"></span><span class="pname">DEAL
-					MANAGEMENT</span></div>
+				<span class="title">ADMIN</span><span class="arrow"></span><span class="pname">DEAL MANAGEMENT</span></div>
 			<div class="rightcol">
 			</div>
 		</div>
@@ -31,6 +30,9 @@
 					<tr>
 						<th sortname="SellerType1" style="width: 40%">
 							Seller Type
+						</th>
+						<th datatype="Boolean" sortname="Enabled" style="width: 30%;">
+							Enable
 						</th>
 						<th>
 						</th>
@@ -61,6 +63,10 @@
 	<td style="width: 40%">
 		<%: Html.Span("${row.cell[1]}", new { @class = "show" })%>
 		<%: Html.TextBox("SellerType", "${row.cell[1]}", new { @class = "hide" })%>
+	</td>
+	<td style="width: 30%;text-align:left;">
+		<%: Html.Span("{{if row.cell[2]}}"+Html.Image("tick.png").ToHtmlString()+"{{/if}}", new { @class = "show" })%>		
+		<%: Html.CheckBox("Enabled",false, new { @class = "hide", @val="${row.cell[2]}" })%>
 	</td>
 	<td style="text-align:right;">
 		{{if row.cell[0]==0}}

@@ -15,11 +15,14 @@ namespace DeepBlue.Helpers {
 				ColumnName = "RowNumber",
 				AllowDBNull = false
 			});
+			this.Columns.Add(new DataColumn {
+				ColumnName = "ImportError",
+			});
 			this.PageSize = 200;
 		}
 
 		public int PageSize { get; set; }
- 
+
 
 		public int TotalPages {
 			get {
@@ -32,7 +35,7 @@ namespace DeepBlue.Helpers {
 				return this.Rows.Count;
 			}
 		}
- 
+
 
 		public PagingDataTable Skip(int pageIndex) {
 			PagingDataTable filterTable = (PagingDataTable)this.Clone();
@@ -41,6 +44,14 @@ namespace DeepBlue.Helpers {
 				filterTable.ImportRow(row);
 			}
 			return filterTable;
+		}
+
+
+		public void AddError(int rowIndex, string error) {
+			if (this.Rows.Count >= rowIndex) {
+				if (this.Rows[rowIndex] != null)
+					this.Rows[rowIndex]["ImportError"] = error;
+			}
 		}
 
 
