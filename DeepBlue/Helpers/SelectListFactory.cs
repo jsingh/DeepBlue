@@ -93,15 +93,15 @@ namespace DeepBlue.Helpers {
 			domasticForeigns.Add(item);
 			item = new SelectListItem();
 			item.Text = "FEG";
-			item.Value = "1";
+			item.Value = "FEG";
 			domasticForeigns.Add(item);
 			item = new SelectListItem();
 			item.Text = "Cambridge";
-			item.Value = "2";
+			item.Value = "Cambridge";
 			domasticForeigns.Add(item);
 			item = new SelectListItem();
 			item.Text = "NEPC";
-			item.Value = "3";
+			item.Value = "NEPC";
 			domasticForeigns.Add(item);
 			return domasticForeigns;
 		}

@@ -140,6 +140,12 @@
 							<div class="editor-field">
 								<%: Html.TextBox("CloseDate", "", new { @id = "New_CloseDate" })%>
 							</div>
+							<div class="editor-label" style="clear:right;">
+								<%: Html.Span("Discount NAV", new { })%>
+							</div>
+							<div class="editor-field">
+								<%: Html.TextBox("DiscountNAV", "", new { @id = "DiscountNAV" })%>
+							</div><div class="clear">&nbsp;</div>
 						</div>
 						<div class="closetitle">
 							<div class="title">
@@ -717,7 +723,7 @@
 		<div class="editor-label" style="width: 110px;">
 			&nbsp;</div>
 		<div class="editor-field" style="text-align: right; font-size: 11px;">
-			<%:Html.Anchor("Sample Excel","/Files/ImportSamples/DealClose.xls", new { @target = "_blank", @style = "color:blue" })%>
+			<%:Html.Anchor("Sample Excel","/Files/ImportSamples/DealClose.xlsx", new { @target = "_blank", @style = "color:blue" })%>
 		</div>
 		<div class="editor-label" style="width: 110px; text-align: right;">
 			<%: Html.Label("File")%></div>

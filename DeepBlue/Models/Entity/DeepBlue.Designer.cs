@@ -28,6 +28,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_PartnersShareForm_PartnerAddress", "Address", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Address), "PartnersShareForm", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.PartnersShareForm), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFund_FundRegisteredOffice", "Address", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Address), "UnderlyingFund", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFund), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_AnnualMeetingHistory_Issuer", "Issuer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Issuer), "AnnualMeetingHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.AnnualMeetingHistory), true)]
+[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistribution_Broker", "Broker", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Broker), "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_CapitalCall_CapitalCallType", "CapitalCallType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.CapitalCallType), "CapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.CapitalCall), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_CapitalCall_Fund", "Fund", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.Fund), "CapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.CapitalCall), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_CapitalCallLineItem_CapitalCall", "CapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.CapitalCall), "CapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.CapitalCallLineItem), true)]
@@ -166,7 +167,6 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundCapitalCallLineItem_UnderlyingFundCapitalCallID", "UnderlyingFundCapitalCall", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCall), "UnderlyingFundCapitalCallLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundCapitalCallLineItem), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundNAVHistory_UnderlyingFundNAV", "UnderlyingFundNAV", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.UnderlyingFundNAV), "UnderlyingFundNAVHistory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundNAVHistory), true)]
 [assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistributionLineItem_UnderlyingFundStockDistribution", "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), "UnderlyingFundStockDistributionLineItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistributionLineItem), true)]
-[assembly: EdmRelationshipAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistribution_Broker", "Broker", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DeepBlue.Models.Entity.Broker), "UnderlyingFundStockDistribution", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DeepBlue.Models.Entity.UnderlyingFundStockDistribution), true)]
 
 #endregion
 
@@ -297,6 +297,22 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<AnnualMeetingHistory> _AnnualMeetingHistories;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Broker> Brokers
+        {
+            get
+            {
+                if ((_Brokers == null))
+                {
+                    _Brokers = base.CreateObjectSet<Broker>("Brokers");
+                }
+                return _Brokers;
+            }
+        }
+        private ObjectSet<Broker> _Brokers;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1897,22 +1913,6 @@ namespace DeepBlue.Models.Entity
             }
         }
         private ObjectSet<USER> _USERs;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<Broker> Brokers
-        {
-            get
-            {
-                if ((_Brokers == null))
-                {
-                    _Brokers = base.CreateObjectSet<Broker>("Brokers");
-                }
-                return _Brokers;
-            }
-        }
-        private ObjectSet<Broker> _Brokers;
 
         #endregion
         #region AddTo Methods
@@ -1955,6 +1955,14 @@ namespace DeepBlue.Models.Entity
         public void AddToAnnualMeetingHistories(AnnualMeetingHistory annualMeetingHistory)
         {
             base.AddObject("AnnualMeetingHistories", annualMeetingHistory);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Brokers EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBrokers(Broker broker)
+        {
+            base.AddObject("Brokers", broker);
         }
     
         /// <summary>
@@ -2755,14 +2763,6 @@ namespace DeepBlue.Models.Entity
         public void AddToUSERs(USER uSER)
         {
             base.AddObject("USERs", uSER);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Brokers EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBrokers(Broker broker)
-        {
-            base.AddObject("Brokers", broker);
         }
 
         #endregion
@@ -12922,6 +12922,30 @@ namespace DeepBlue.Models.Entity
         private global::System.Boolean _IsFinalClose;
         partial void OnIsFinalCloseChanging(global::System.Boolean value);
         partial void OnIsFinalCloseChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> DiscountNAV
+        {
+            get
+            {
+                return _DiscountNAV;
+            }
+            set
+            {
+                OnDiscountNAVChanging(value);
+                ReportPropertyChanging("DiscountNAV");
+                _DiscountNAV = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DiscountNAV");
+                OnDiscountNAVChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _DiscountNAV;
+        partial void OnDiscountNAVChanging(Nullable<global::System.Decimal> value);
+        partial void OnDiscountNAVChanged();
 
         #endregion
     
@@ -22932,6 +22956,78 @@ namespace DeepBlue.Models.Entity
         private Nullable<global::System.Int32> _LastUpdatedBy;
         partial void OnLastUpdatedByChanging(Nullable<global::System.Int32> value);
         partial void OnLastUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Source
+        {
+            get
+            {
+                return _Source;
+            }
+            set
+            {
+                OnSourceChanging(value);
+                ReportPropertyChanging("Source");
+                _Source = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Source");
+                OnSourceChanged();
+            }
+        }
+        private global::System.String _Source;
+        partial void OnSourceChanging(global::System.String value);
+        partial void OnSourceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> FOIA
+        {
+            get
+            {
+                return _FOIA;
+            }
+            set
+            {
+                OnFOIAChanging(value);
+                ReportPropertyChanging("FOIA");
+                _FOIA = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FOIA");
+                OnFOIAChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _FOIA;
+        partial void OnFOIAChanging(Nullable<global::System.Boolean> value);
+        partial void OnFOIAChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> ERISA
+        {
+            get
+            {
+                return _ERISA;
+            }
+            set
+            {
+                OnERISAChanging(value);
+                ReportPropertyChanging("ERISA");
+                _ERISA = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ERISA");
+                OnERISAChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _ERISA;
+        partial void OnERISAChanging(Nullable<global::System.Boolean> value);
+        partial void OnERISAChanged();
 
         #endregion
     
@@ -40367,6 +40463,44 @@ namespace DeepBlue.Models.Entity
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistribution_Broker", "Broker")]
+        public Broker Broker
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Broker>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "Broker").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Broker>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "Broker").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Broker> BrokerReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Broker>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "Broker");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Broker>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "Broker", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistribution_Fund", "Fund")]
         public Fund Fund
         {
@@ -40493,44 +40627,6 @@ namespace DeepBlue.Models.Entity
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UnderlyingFundStockDistributionLineItem>("DeepBlueModel.FK_UnderlyingFundStockDistributionLineItem_UnderlyingFundStockDistribution", "UnderlyingFundStockDistributionLineItem", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("DeepBlueModel", "FK_UnderlyingFundStockDistribution_Broker", "Broker")]
-        public Broker Broker
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Broker>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "Broker").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Broker>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "Broker").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Broker> BrokerReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Broker>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "Broker");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Broker>("DeepBlueModel.FK_UnderlyingFundStockDistribution_Broker", "Broker", value);
                 }
             }
         }

@@ -12,5 +12,8 @@ namespace DeepBlue.Models.Investor {
 		public string DisplayName { get; set; }
 		public int InvestorId { get; set; }
         public string Social { get; set; }
+		public string Source { get; set; }
+		public bool FOIA { get; set; }
+		public bool ERISA { get; set; }
 	}
 }

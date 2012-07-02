@@ -185,3 +185,26 @@
 #InvestorContactBox.investorimportsection .editor-label {
 	width: 235px;
 }
+.prs-bar {
+    clear: both;
+    font-weight: bold;
+    margin: 0 auto;
+    text-align: center;
+    width: 300px;
+}
+.total-rows {
+    margin: 10px 0;
+}
+.status-bar {
+    border: 1px solid #E0B1B1;
+    height: 20px;
+    margin: 0 auto 20px;
+    width: 100%;
+}
+.status-bar .loading-status {
+    background-color: #D6D6D6;
+    height: 20px;
+}
+#spnerrorexcel a{
+	color: red;
+}

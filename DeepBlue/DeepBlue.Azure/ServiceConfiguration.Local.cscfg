@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="DeepBlue.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="1" osVersion="*" schemaVersion="2012-05.1.7">
+  <Role name="DeepBlue">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="DeepBlue" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEB0egoztfY2QSFgzN98rfnAwDQYJKoZIhvcNAQEBBQAEggEArloMAsH4wcWmTkiWtlMrnbQUs0WYD7w3SOnUpg4KJFxsy5KSTB6nKgphZS+e0h5EA9dG3zlsYdpAeq2VlLX1tfWj8pOBHQ2jXYXVsroVWtsIyJIQ23vSAQxw51n7zp69W8kWV/KESvLRs2pdnJP6L+OqPADlw0QRlwPbkhPbURt4vlmHwzUDJ9p6xTe/mHsMevBahZHFntdT0JJ8p0uu9vmGKcbC5UNHX1sW09QKImdc45s+hnajDweAXh8aVSQs1Ya0IU6NfrD48Y8jZNoMhCkqABDyO71ouaxGh2xhtGD/yQGnKyxzKfU/4UboHfjsXwGFG0V2Cxpo/02JzHh/ezAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECFL1k1Mr8al1gBAYta+SMLieWSr7wHZz6oqv" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2013-06-28T23:59:59.0000000+05:30" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="DEB5CE57D5C4FF32D82897AF4977D5D4825ECF9D" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>

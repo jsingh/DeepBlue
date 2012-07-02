@@ -116,6 +116,8 @@ namespace DeepBlue.Models.Investor {
 
 		public string Financials { get; set; }
 
+		public string K1 { get; set; }
+
 		public string InvestorLetters { get; set; }
 
 	}

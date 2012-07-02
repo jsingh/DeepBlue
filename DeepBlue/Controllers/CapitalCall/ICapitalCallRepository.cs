@@ -18,9 +18,13 @@ namespace DeepBlue.Controllers.CapitalCall {
 		List<CapitalDistribution> GetCapitalDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId);
 		List<CapitalDistribution> GetCapitalDistributions(int fundId);
 		Models.Entity.CapitalCall FindCapitalCall(int capitalCallId);
+		Models.Entity.CapitalCall FindCapitalCall(int fundID, DateTime capitalCallDate, DateTime capitalCallDueDate, int capitalCallTypeID);
 		CapitalDistribution FindCapitalDistribution(int capitalDistributionId);
+		CapitalDistribution FindCapitalDistribution(int fundID, DateTime distributionDate, DateTime distributionDueDate, bool isManual);
 		CapitalCallLineItem FindCapitalCallLineItem(int capitalCallLineItemId);
+		CapitalCallLineItem FindCapitalCallLineItem(int capitalCallID, int investorID);
 		CapitalDistributionLineItem FindCapitalDistributionLineItem(int capitalDistributionLineItemId);
+		CapitalDistributionLineItem FindCapitalDistributionLineItem(int capitalDistributionID, int investorID);
 		Models.Entity.Fund FindFund(int fundId);
 		FundDetail FindFundDetail(int fundId);
 		int FindCapitalCallNumber(int fundId);

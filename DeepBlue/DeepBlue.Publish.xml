@@ -1,2 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<publishData />
+<publishData>
+  <publishProfile publishUrl="https://deepblue.cloudapp.net:8172/MsDeploy.axd" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="DeepBlue_IN_0_Web" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="True" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="DeepBlue - Production" publishMethod="MSDeploy" replaceMatchingFiles="True" userName="DeepBlue" savePWD="False" userPWD="" SelectedForPublish="False" />
+  <publishProfile publishUrl="https://c68837a05d8f472e984418f337229b60.cloudapp.net:8172/MsDeploy.axd" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="DeepBlue_IN_0_Web" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="True" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="DeepBlue - Staging" publishMethod="MSDeploy" replaceMatchingFiles="True" userName="DeepBlue" savePWD="False" userPWD="" SelectedForPublish="False" />
+</publishData>

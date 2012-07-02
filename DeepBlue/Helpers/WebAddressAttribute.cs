@@ -8,9 +8,5 @@ namespace DeepBlue.Helpers {
 	public class WebAddressAttribute : RegularExpressionAttribute {
 		public WebAddressAttribute()
 			: base("(ftp|http|https):\\/\\/(\\w+:{0,1}\\w*@)?(\\S+)(:[0-9]+)?(\\/|\\/([\\w#!:.?+=&%@!\\-\\/]))?") { }
-
-	 
 	}
-
-
 }

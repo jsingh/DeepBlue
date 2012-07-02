@@ -193,7 +193,7 @@ namespace DeepBlue.Controllers.Investor {
 				return new PaginatedList<AutoCompleteList>(query, 1, AutoCompleteOptions.RowsLength);
 			}
 		}
-
+	 
 		public List<AutoCompleteList> FindOtherInvestors(string investorName, int excludeInvestorId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				IQueryable<AutoCompleteList> query = (from investor in context.InvestorsTable
@@ -216,7 +216,10 @@ namespace DeepBlue.Controllers.Investor {
 							InvestorName = investor.InvestorName,
 							DisplayName = investor.Alias,
 							InvestorId = investor.InvestorID,
-							Social = investor.Social
+							Social = investor.Social,
+							ERISA = (investor.ERISA ?? false),
+							FOIA = (investor.FOIA ?? false),
+							Source = investor.Source
 						}).SingleOrDefault();
 			}
 		}
@@ -270,6 +273,9 @@ namespace DeepBlue.Controllers.Investor {
 							StateOfResidencyName = investor.STATE.Name,
 							Notes = investor.Notes,
 							InvestorId = investor.InvestorID,
+							Source = investor.Source,
+							FOIA = (investor.FOIA ?? false),
+							ERISA = (investor.ERISA ?? false),
 							AccountInformations = (from account in investor.InvestorAccounts
 												   select new {
 													   ABANumber = account.Routing,
@@ -431,16 +437,42 @@ namespace DeepBlue.Controllers.Investor {
 		#endregion
 
 		#region Investor Contact
+
 		public InvestorContact FindInvestorContact(int investorContactId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.InvestorContacts
-				 .Include("Contact")
+							  .Include("Contact")
 							  .Include("Contact.ContactAddresses")
 							  .Include("Contact.ContactAddresses.Address")
 							  .Include("Contact.ContactCommunications")
 							  .Include("Contact.ContactCommunications.Communication")
 							  .EntityFilter()
 					.Where(investorContact => investorContact.InvestorContactID == investorContactId).SingleOrDefault();
+			}
+		}
+
+		public InvestorContact FindInvestorContact(int investorID,
+		string contactPerson,
+		string designation,
+		bool receivesDistributionCapitalCallNotices,
+		bool financials,
+		bool k1,
+		bool investorLetters) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investorContact in context.InvestorContacts
+							  .Include("Contact")
+							  .Include("Contact.ContactAddresses")
+							  .Include("Contact.ContactAddresses.Address")
+							  .Include("Contact.ContactCommunications")
+							  .Include("Contact.ContactCommunications.Communication")
+							  .EntityFilter()
+						where investorContact.Contact.ContactName == contactPerson
+						&& investorContact.Contact.ReceivesDistributionNotices == receivesDistributionCapitalCallNotices
+						&& investorContact.Contact.ReceivesFinancials == financials
+						&& investorContact.Contact.ReceivesInvestorLetters == investorLetters
+						&& investorContact.Contact.ReceivesK1 == k1
+						&& investorContact.Contact.Designation == designation
+						select investorContact).FirstOrDefault();
 			}
 		}
 
@@ -529,11 +561,43 @@ namespace DeepBlue.Controllers.Investor {
 		#endregion
 
 		#region Investor Bank Account
+
 		public InvestorAccount FindInvestorAccount(int investorAccountId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.InvestorAccountsTable
 					   .Where(investorAccount => investorAccount.InvestorAccountID == investorAccountId).SingleOrDefault();
 			}
+		}
+
+		public InvestorAccount FindInvestorAccount(int investorID, string bankName,
+						int abaNumber,
+						string accountName,
+						string accountNumber,
+						string ffcName,
+						string ffcNumber,
+						string reference,
+						string swift,
+						string iban,
+						string phone,
+						string fax) {
+
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from investorAccount in context.InvestorAccountsTable
+						where investorAccount.InvestorID == investorID
+						&& investorAccount.BankName == bankName
+						&& investorAccount.Routing == abaNumber
+						&& investorAccount.Account == accountName
+						&& investorAccount.AccountNumberCash == accountNumber
+						&& investorAccount.FFC == ffcName
+						&& investorAccount.FFCNumber == ffcNumber
+						&& investorAccount.Reference == reference
+						&& investorAccount.SWIFT == swift
+						&& investorAccount.IBAN == iban
+						&& investorAccount.Phone == phone
+						&& investorAccount.Fax == fax
+						select investorAccount).FirstOrDefault();
+			}
+
 		}
 
 		public object FindInvestorAccountModel(int investorAccountId) {
@@ -610,6 +674,9 @@ namespace DeepBlue.Controllers.Investor {
 							StateOfResidencyName = investor.STATE.Name,
 							Notes = investor.Notes,
 							InvestorId = investor.InvestorID,
+							ERISA = (investor.ERISA ?? false),
+							FOIA = (investor.FOIA ?? false),
+							Source = investor.Source,
 						}).SingleOrDefault();
 			}
 		}

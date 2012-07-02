@@ -147,6 +147,21 @@ namespace DeepBlue.Controllers.CapitalCall {
 			}
 		}
 
+		public Models.Entity.CapitalCall FindCapitalCall(int fundID, DateTime capitalCallDate, DateTime capitalCallDueDate, int capitalCallTypeID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from capitalCall in context.CapitalCalls
+										  .Include("CapitalCallLineItems")
+							  .Include("Fund")
+							  .Include("CapitalCallLineItems.Investor")
+							  .EntityFilter()
+						where capitalCall.FundID == fundID
+						&& capitalCall.CapitalCallDate == EntityFunctions.TruncateTime(capitalCallDate)
+						&& capitalCall.CapitalCallDueDate == EntityFunctions.TruncateTime(capitalCallDueDate)
+						&& capitalCall.CapitalCallTypeID == capitalCallTypeID
+						select capitalCall).FirstOrDefault();
+			}
+		}
+
 		public CapitalDistribution FindCapitalDistribution(int capitalDistributionId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.CapitalDistributions
@@ -158,15 +173,46 @@ namespace DeepBlue.Controllers.CapitalCall {
 			}
 		}
 
+		public CapitalDistribution FindCapitalDistribution(int fundID, DateTime distributionDate, DateTime distributionDueDate, bool isManual) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return (from capitalDistribution in context.CapitalDistributions
+							  .Include("CapitalDistributionLineItems")
+							  .Include("Fund")
+							  .Include("CapitalDistributionLineItems.Investor")
+							  .EntityFilter()
+						where capitalDistribution.FundID == fundID
+						&& capitalDistribution.CapitalDistributionDate == EntityFunctions.TruncateTime(distributionDate)
+						&& capitalDistribution.CapitalDistributionDueDate == EntityFunctions.TruncateTime(distributionDueDate)
+						&& capitalDistribution.IsManual == isManual
+						select capitalDistribution).FirstOrDefault();
+			}
+		}
+
 		public CapitalCallLineItem FindCapitalCallLineItem(int capitalCallLineItemId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.CapitalCallLineItemsTable.Where(capitalCallLineItem => capitalCallLineItem.CapitalCallLineItemID == capitalCallLineItemId).SingleOrDefault();
 			}
 		}
 
+		public CapitalCallLineItem FindCapitalCallLineItem(int capitalCallID, int investorID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.CapitalCallLineItemsTable
+					.Where(capitalCallLineItem => capitalCallLineItem.CapitalCallID == capitalCallID && capitalCallLineItem.InvestorID == investorID)
+					.SingleOrDefault();
+			}
+		}
+
 		public CapitalDistributionLineItem FindCapitalDistributionLineItem(int capitalDistributionLineItemId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.CapitalDistributionLineItemsTable.Where(capitalDistributionLineItem => capitalDistributionLineItem.CapitalDistributionLineItemID == capitalDistributionLineItemId).SingleOrDefault();
+			}
+		}
+
+		public CapitalDistributionLineItem FindCapitalDistributionLineItem(int capitalDistributionID, int investorID) {
+			using (DeepBlueEntities context = new DeepBlueEntities()) {
+				return context.CapitalDistributionLineItemsTable
+					.Where(capitalDistributionLineItem => capitalDistributionLineItem.CapitalDistributionID == capitalDistributionID && capitalDistributionLineItem.InvestorID == investorID)
+					.FirstOrDefault();
 			}
 		}
 
@@ -403,10 +449,10 @@ namespace DeepBlue.Controllers.CapitalCall {
 			}
 		}
 
-		public CapitalDistributionDetail FindCapitalDistributionDetail(int fundId, decimal? capitalDistributionAmount, DateTime? capitalDistributionDate, DateTime? capitalDistributionDueDate) { 
+		public CapitalDistributionDetail FindCapitalDistributionDetail(int fundId, decimal? capitalDistributionAmount, DateTime? capitalDistributionDate, DateTime? capitalDistributionDueDate) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return (from capitalDistribution in context.CapitalDistributions
-						where capitalDistribution.FundID == fundId 
+						where capitalDistribution.FundID == fundId
 						&& capitalDistribution.DistributionAmount == capitalDistributionAmount
 						&& EntityFunctions.TruncateTime(capitalDistribution.CapitalDistributionDate) == capitalDistributionDate
 						&& EntityFunctions.TruncateTime(capitalDistribution.CapitalDistributionDueDate) == capitalDistributionDueDate

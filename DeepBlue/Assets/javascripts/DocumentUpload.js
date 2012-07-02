@@ -62,7 +62,7 @@
 				if(FilePath.value=="") {
 					message+="Link is required"+"\n";
 				} else {
-					if(FilePath.value.toLowerCase().indexOf("http://")<0) {
+					if(FilePath.value.toLowerCase().indexOf("http://")<0 && FilePath.value.toLowerCase().indexOf("https://")<0) {
 						FilePath.value="http://"+FilePath.value;
 					}
 				}

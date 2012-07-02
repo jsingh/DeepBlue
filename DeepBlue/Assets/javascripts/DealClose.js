@@ -155,6 +155,13 @@
 				$("#DealNumber").val(data.DealNumber);
 				$("#SpnDealCloseNo").html("Deal Close "+data.DealNumber);
 
+				var DiscountNAV=$("#DiscountNAV","#frmDealClose");
+				if(data.DiscountNAV>0) {
+					DiscountNAV.val(data.DiscountNAV);
+				} else {
+					DiscountNAV.val("");
+				}
+
 				if(data.CloseDate!=null) {
 					var d=jHelper.formatDate(jHelper.parseJSONDate(data.CloseDate));
 					if(d=="01/01/1") { d=""; }

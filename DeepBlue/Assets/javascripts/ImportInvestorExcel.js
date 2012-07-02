@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(function() {
 	var target=$("#ExcelImport");
 	target.dialog({
 		title: "Import Investor",
@@ -7,7 +7,7 @@
 		modal: true,
 		position: 'middle',
 		autoResize: true,
-		open: function () {
+		open: function() {
 			var data=[{ name: ""}];
 			target.empty();
 			$("#ExcelImprtTemplate").tmpl(data).appendTo(target);
@@ -20,7 +20,7 @@
 });
 var importInvestorExcel={
 	defaultID: "DropFileUpload"
-	,uploadExcel: function () {
+	,uploadExcel: function() {
 		try {
 			var loading=$("#SpnUELoading");
 			loading.html(jHelper.uploadingHTML());
@@ -30,15 +30,15 @@ var importInvestorExcel={
 				secureuri: false,
 				formId: 'frmUploadExcel',
 				dataType: 'json',
-				success: function (data,status) {
+				success: function(data,status) {
 					loading.empty();
 					if($.trim(data.Result)!="") {
 						jAlert(data.Result);
 					} else {
-						importInvestorExcel.importRows(data.FileName);
+						importInvestorExcel.importRows(data.FilePath,data.FileName);
 					}
 				},
-				error: function (data,status,e) {
+				error: function(data,status,e) {
 					jAlert(data.msg+","+status+","+e);
 				}
 			}
@@ -47,7 +47,7 @@ var importInvestorExcel={
 			jAlert(e);
 		}
 	}
-	,selectTab: function (type,lnk) {
+	,selectTab: function(type,lnk) {
 		$(".section-tab").removeClass("section-tab-sel");
 		var InvestorDetailTab=$("#InvestorDetailTab");
 		var InvestorBankTab=$("#InvestorBankTab");
@@ -67,22 +67,22 @@ var importInvestorExcel={
 		}
 	}
 	,lastExcelData: null
-	,selectExcelTab: function (ddl) {
+	,selectExcelTab: function(ddl) {
 		var section=$(ddl).parents(".investorimportsection:first");
 		$(".ui-autocomplete-input",section).val("");
-		$("select:not(.ddltable)",section).each(function () {
+		$("select:not(.ddltable)",section).each(function() {
 			var ddl=this;
 			ddl.options.length=null;
 			$(ddl).combobox("destroy");
 		});
-		$.each(importInvestorExcel.lastExcelData.Tables,function (i,item) {
+		$.each(importInvestorExcel.lastExcelData.Tables,function(i,item) {
 			if(item.TableName==ddl.value) {
-				$("select:not(.ddltable)",section).each(function () {
+				$("select:not(.ddltable)",section).each(function() {
 					var ddl=this;
 					ddl.options.length=null;
 					var listItem=new Option("--Select Excel Field--"," ",false,false);
 					ddl.options[ddl.options.length]=listItem;
-					$.each(item.Columns,function (i,name) {
+					$.each(item.Columns,function(i,name) {
 						listItem=new Option(name,name,false,false);
 						if(ddl.name.toLowerCase()==name.toLowerCase()) {
 							listItem.selected=true;
@@ -94,10 +94,12 @@ var importInvestorExcel={
 		});
 		jHelper.jqComboBox(section);
 	}
-	,importRows: function (fileName) {
+	,importRows: function(filePath,fileName) {
 		var importBox=$(".import-box","#ExcelImport");
 		importBox.hide();
-		var param=[{ name: "FileName",value: fileName}];
+		var params=new Array();
+		params[params.length]={ name: "FileName",value: fileName };
+		params[params.length]={ name: "FilePath",value: filePath };
 		var target=$("#ImportExcel","#ExcelImport");
 		target.css({
 			"width": "300px",
@@ -105,7 +107,7 @@ var importInvestorExcel={
 		});
 		target.empty();
 		target.html("<center>"+jHelper.loadingHTML()+"</center>");
-		$.post("/Investor/ImportExcel",param,function (data) {
+		$.post("/Investor/ImportExcel",params,function(data) {
 			importInvestorExcel.lastExcelData=null;
 			target.css({
 				"width": "auto",
@@ -119,12 +121,12 @@ var importInvestorExcel={
 				target.empty();
 				$("#ImportExcelTemplate").tmpl(data).appendTo(target);
 				importInvestorExcel.lastExcelData=data;
-				$(".ddltable",target).each(function () {
+				$(".ddltable",target).each(function() {
 					var ddl=this;
 					ddl.options.length=null;
 					var listItem=new Option("--Select Excel Tab--"," ",false,false);
 					ddl.options[ddl.options.length]=listItem;
-					$.each(data.Tables,function (i,item) {
+					$.each(data.Tables,function(i,item) {
 						listItem=new Option(item.TableName,item.TableName,false,false);
 						var exceltabname=$(ddl).attr("exceltabname");
 						if(exceltabname==undefined) {
@@ -142,32 +144,67 @@ var importInvestorExcel={
 			}
 		},"JSON");
 	}
-	,import: function (btn) {
+	,import: function(btn) {
 		$(btn).hide();
-		//importInvestorExcel.importInvestor();
+		importInvestorExcel.importInvestor();
 	}
-	,expertErrorExcel: function (sessionKey,tableName) {
+	,expertErrorExcel: function(sessionKey,tableName) {
 		var width=300;var height=200;var left=(screen.availWidth/2)-(width/2);var top=(screen.availHeight/2)-(height/2);var features="width="+width+",height="+height+",left="+left+",top="+top+",location=no,menubar=no,toobar=no,scrollbars=yes,resizable=yes,status=yes";
 		window.open("/Investor/GetImportErrorExcel?sessionKey="+sessionKey+"&tableName="+tableName,tableName,features);
 	}
-	,importInvestor: function () {
+	,importInvestor: function() {
 		$("#InvestorDetailTab").click();
 		var thread=new ImportExcel();
 		thread.box=$("#InvestorDetailBox");
 		thread.url="/Investor/ImportInvestorExcel";
-		thread.onComplete=function (sessionKey,tableName) {
-			if($.trim(tableName)!="") {
+		thread.onComplete = function (sessionKey, tableName, data) {
+			if ($.trim(tableName) != "" && data.ErrorRows > 0) {
 				var statusbox=$(".statusbox",thread.box);
 				var spnerrorexcel=$("#spnerrorexcel",statusbox);
 				spnerrorexcel.html("<a href='#'>Error Excel</a>");
-				$("a",spnerrorexcel).click(function () {
+				$("a",spnerrorexcel).click(function() {
+					importInvestorExcel.expertErrorExcel(sessionKey,tableName);
+				});
+			}
+			importInvestorExcel.importInvestorBank();
+		}
+		thread.import();
+	}
+	,importInvestorBank: function() {
+		$("#InvestorBankTab").click();
+		var thread=new ImportExcel();
+		thread.box=$("#InvestorBankBox");
+		thread.url="/Investor/ImportInvestorBankExcel";
+		thread.onComplete = function (sessionKey, tableName, data) {
+			if ($.trim(tableName) != "" && data.ErrorRows > 0) {
+				var statusbox=$(".statusbox",thread.box);
+				var spnerrorexcel=$("#spnerrorexcel",statusbox);
+				spnerrorexcel.html("<a href='#'>Error Excel</a>");
+				$("a",spnerrorexcel).click(function() {
+					importInvestorExcel.expertErrorExcel(sessionKey,tableName);
+				});
+			}
+			importInvestorExcel.importInvestorContact();
+		}
+		thread.import();
+	}
+	,importInvestorContact: function() {
+		$("#InvestorContactTab").click();
+		var thread=new ImportExcel();
+		thread.box=$("#InvestorContactBox");
+		thread.url="/Investor/ImportInvestorContactExcel";
+		thread.onComplete = function (sessionKey, tableName, data) {
+			if ($.trim(tableName) != "" && data.ErrorRows > 0) {
+				var statusbox=$(".statusbox",thread.box);
+				var spnerrorexcel=$("#spnerrorexcel",statusbox);
+				spnerrorexcel.html("<a href='#'>Error Excel</a>");
+				$("a",spnerrorexcel).click(function() {
 					importInvestorExcel.expertErrorExcel(sessionKey,tableName);
 				});
 			}
 		}
 		thread.import();
 	}
-
 }
 
 function ImportExcel() {
@@ -176,7 +213,7 @@ function ImportExcel() {
 	this.onComplete=null;
 	this.url="";
 	this.box=null;
-	this.import=function () {
+	this.import=function() {
 		var that=this;
 		$(".investorimportsection").hide();
 		that.box.show();
@@ -186,7 +223,7 @@ function ImportExcel() {
 		statusbox.show();
 		var frm=$("#frm",that.box);
 		var tablename=$("[exceltabname]",frm).val();
-		$.each(importInvestorExcel.lastExcelData.Tables,function (i,item) {
+		$.each(importInvestorExcel.lastExcelData.Tables,function(i,item) {
 			if(item.TableName==tablename) {
 				$("#SessionKey",frm).val(item.SessionKey);
 				$("#TotalRows",frm).val(item.TotalRows);
@@ -202,12 +239,13 @@ function ImportExcel() {
 		if($.trim(tablename)=="") {
 			var spnerrorexcel=$("#spnerrorexcel",statusbox);
 			spnerrorexcel.html("Excel Tab is required");
-			if(that.onComplete) {
-				that.onComplete($("#SessionKey",frm).val(),tablename);
+			if (that.onComplete) {
+				var data = [{ TotalRows: $("#TotalRows", frm).val(), CompletedRows: 0, Percent: 0, SuccessRows: 0, ErrorRows: 0}];
+				that.onComplete($("#SessionKey", frm).val(), tablename, data);
 			}
 			return;
 		}
-		$.post(this.url,params,function (data) {
+		$.post(this.url,params,function(data) {
 			if(data.Result!="") {
 				jAlert(data.Result);
 			} else {
@@ -216,15 +254,15 @@ function ImportExcel() {
 					that.pageindex++;
 					that.import();
 				} else {
-					if(that.onComplete) {
-						that.onComplete($("#SessionKey",frm).val(),tablename);
+					if (that.onComplete) {
+						that.onComplete($("#SessionKey", frm).val(), tablename, data);
 					}
 				}
 			}
 		},"JSON");
 	};
 
-	this.setStatus=function (statusbox,data) {
+	this.setStatus=function(statusbox,data) {
 		statusbox.empty();
 		data.Percent=parseInt((data.CompletedRows/data.TotalRows)*100);
 		$("#ImportExcelResultTemplate").tmpl(data).appendTo(statusbox);

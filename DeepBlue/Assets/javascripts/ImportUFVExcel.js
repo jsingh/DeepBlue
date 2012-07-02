@@ -90,7 +90,7 @@ var importExcel={
 					if($.trim(data.Result)!="") {
 						jAlert(data.Result);
 					} else {
-						importExcel.importRows(data.FileName);
+						importExcel.importRows(data.FilePath,data.FileName);
 					}
 				},
 				error: function (data,status,e) {
@@ -102,14 +102,16 @@ var importExcel={
 			jAlert(e);
 		}
 	}
-	,importRows: function (fileName) {
+	,importRows: function (filePath,fileName) {
 		var importBox=$(".import-box","#ExcelImport");
 		importBox.hide();
-		var param=[{ name: "FileName",value: fileName}];
+		var params=new Array();
+		params[params.length]={ name: "FileName",value: fileName };
+		params[params.length]={ name: "FilePath",value: filePath };
 		var target=$("#ImportUFV","#ExcelImport");
 		target.empty();
 		target.html("<center>"+jHelper.loadingHTML()+"</center>");
-		$.post("/Deal/ImportExcel",param,function (data) {
+		$.post("/Deal/ImportExcel",params,function (data) {
 			if($.trim(data.Result)!="") {
 				jAlert(data.Result);
 				importBox.show();

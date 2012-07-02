@@ -100,19 +100,19 @@
 			<%: Html.LabelFor(model => model.Source) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.DropDownListFor(model => model.Source, Model.Sources)%>
+			<%: Html.DropDownListFor(model => model.Source, Model.Sources, new { @val = "${Source}" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.LabelFor(model => model.FOIA) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.CheckBoxFor(model => model.FOIA)%>
+			<%: Html.CheckBoxFor(model => model.FOIA, new { @val = "${FOIA}" })%>
 		</div>
 		<div class="editor-label" style="clear: right">
 			<%: Html.LabelFor(model => model.ERISA) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.CheckBoxFor(model => model.ERISA)%>
+			<%: Html.CheckBoxFor(model => model.ERISA, new { @val = "${ERISA}" })%>
 		</div>
 		<% Html.RenderPartial("JQueryTemplateCustomFieldList", Model.CustomField);%>
 		<div class="editor-label">

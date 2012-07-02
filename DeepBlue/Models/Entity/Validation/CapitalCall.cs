@@ -40,7 +40,6 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			[Required(ErrorMessage = "InvestmentAmount is required")]
-			[Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage = "InvestmentAmount is required")]
 			public global::System.Decimal InvestmentAmount {
 				get;
 				set;

@@ -13,6 +13,7 @@ namespace DeepBlue.Models.Deal {
 			DealUnderlyingFunds = new List<DealUnderlyingFundModel>();
 			DealUnderlyingDirects = new List<DealUnderlyingDirectModel>();
 			CloseDate = DateTime.Now;
+			DiscountNAV = 0;
 		}
 
 		public int DealClosingId { get; set; }
@@ -37,6 +38,8 @@ namespace DeepBlue.Models.Deal {
 
 		[DisplayName("Final Close")]
 		public bool IsFinalClose { get; set; }
+
+		public decimal DiscountNAV { get; set; }
 
         public string DealName { get; set; }
 

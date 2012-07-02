@@ -19,7 +19,7 @@ namespace DeepBlue.Models.Investor {
 		public bool FOIA { get; set; }
 
 		[DisplayName("Source")]
-		public int Source { get; set; }
+		public string Source { get; set; }
 
 		[DisplayName("ERISA")]
 		public bool ERISA { get; set; }

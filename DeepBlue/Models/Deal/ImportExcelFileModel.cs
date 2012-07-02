@@ -8,6 +8,8 @@ namespace DeepBlue.Models.Deal {
 	public class ImportExcelFileModel {
 
 		public string FileName { get; set; }
+
+		public string FilePath { get; set; }
 		
 		public HttpPostedFileBase UploadFile { get; set; }
 	

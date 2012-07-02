@@ -411,7 +411,7 @@ namespace DeepBlue.Controllers.Deal {
 						context.Files.DeleteObject(documentfile);
 					}
 					context.SaveChanges();
-					FileHelper.DeleteFile(documentfile);
+					UploadFileHelper.DeleteFile(documentfile);
 					return true;
 				}
 				return false;
@@ -801,7 +801,8 @@ namespace DeepBlue.Controllers.Deal {
 												  DealNumber = dealClosing.DealNumber,
 												  DealClosingId = dealClosing.DealClosingID,
 												  IsFinalClose = dealClosing.IsFinalClose,
-												  FundId = dealClosing.Deal.FundID
+												  FundId = dealClosing.Deal.FundID,
+												  DiscountNAV = dealClosing.DiscountNAV ?? 0
 											  }).SingleOrDefault();
 				if (model == null) {
 					model = new CreateDealCloseModel();
@@ -1206,7 +1207,7 @@ namespace DeepBlue.Controllers.Deal {
 						context.Files.DeleteObject(documentfile);
 					}
 					context.SaveChanges();
-					FileHelper.DeleteFile(documentfile);
+                    UploadFileHelper.DeleteFile(documentfile);
 					return true;
 				}
 				return false;
@@ -3122,7 +3123,7 @@ namespace DeepBlue.Controllers.Deal {
 						context.Files.DeleteObject(documentfile);
 					}
 					context.SaveChanges();
-					FileHelper.DeleteFile(documentfile);
+                    UploadFileHelper.DeleteFile(documentfile);
 					return true;
 				}
 				return false;

@@ -34,14 +34,7 @@ namespace DeepBlue.Models.Entity {
 				get;
 				set;
 			}
-
-			[Required(ErrorMessage = "FileID is required")]
-			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "FileID is required")]
-			public global::System.Int32 FileID {
-				get;
-				set;
-			}
-
+	 
 			[Required(ErrorMessage = "DocumentTypeID is required")]
 			[Range((int)ConfigUtil.IDStartRange, int.MaxValue, ErrorMessage = "DocumentTypeID is required")]
 			public global::System.Int32 DocumentTypeID {

@@ -291,7 +291,7 @@
 		<div class="editor-label" style="width: 110px;">
 			&nbsp;</div>
 		<div class="editor-field" style="text-align: right; font-size: 11px;">
-			<%:Html.Anchor("Sample Excel","/Files/ImportSamples/Deal.xls", new { @target = "_blank", @style = "color:blue" })%>
+			<%:Html.Anchor("Sample Excel","/Files/ImportSamples/Deal.xlsx", new { @target = "_blank", @style = "color:blue" })%>
 		</div>
 		<div class="editor-label" style="width: 110px;">
 			<%: Html.Label("File")%></div>

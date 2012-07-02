@@ -7,15 +7,16 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 	<%=Html.StylesheetLinkTag("capitalcall.css")%>
 	<%=Html.JavascriptInclueTag("jquery.tmpl.min.js")%>
+	<%=Html.JavascriptInclueTag("jquery.fileuploader.js")%>
 	<%=Html.JavascriptInclueTag("CapitalCallDistribution.js")%>
 	<%=Html.JavascriptInclueTag("CapitalCallDistributionManual.js")%>
+	<%=Html.JavascriptInclueTag("ImportCapitalDistributionExcel.js")%>
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="NavigationContent" runat="server">
 	<div class="navigation">
 		<div class="heading">
 			<div class="leftcol">
-				<span class="title"> FUNDS</span><span class="arrow"></span><span class="pname">Capital
-					Distribution</span></div>
+				<span class="title">FUNDS</span><span class="arrow"></span><span class="pname">Capital Distribution</span></div>
 			<div class="rightcol">
 			</div>
 		</div>
@@ -24,11 +25,9 @@
 		<div class="header">
 			<div class="tabbg">
 				<div class="tabinnerbox">
-					<%using (Html.Tab(new { @id = "NewCDTab", @class = "section-tab-sel", @onclick = "javascript:distribution.selectTab('C',this);" })) {%>New
-					Capital Distribution
+					<%using (Html.Tab(new { @id = "NewCDTab", @class = "section-tab-sel", @onclick = "javascript:distribution.selectTab('C',this);" })) {%>New Capital Distribution
 					<%}%>
-					<%using (Html.Tab(new { @id = "ManCDTab", @class = "section-tab", @onclick = "javascript:distribution.selectTab('M',this);" })) {%>Manual
-					Capital Distribution
+					<%using (Html.Tab(new { @id = "ManCDTab", @class = "section-tab", @onclick = "javascript:distribution.selectTab('M',this);" })) {%>Manual Capital Distribution
 					<%}%>
 					<%using (Html.Div(new { @id = "SerCDTab" })) {%>
 					<%: Html.Span(Html.Image("ajax.jpg").ToHtmlString() + "&nbsp;Loading...&nbsp;", new { @id = "SpnLoading", @style = "display:none;float:left;" })%><%: Html.TextBox("Fund", "SEARCH  FUND", new { @class = "wm", @style = "width:200px" })%>
@@ -218,8 +217,7 @@
 				<div class="closetitle">
 					<div class="title">
 						Investors</div>
-					<%using (Html.BlueButton(new { @onclick = "javascript:manualDistribution.addInvestor();" })) {%>Add
-					New Investor<%}%>
+					<%using (Html.BlueButton(new { @onclick = "javascript:manualDistribution.addInvestor();" })) {%>Add New Investor<%}%>
 				</div>
 				<div id="InvestorDetail" class="dc-box tabledetail">
 					<div class="gbox" style="width: 90%">
@@ -257,19 +255,25 @@
 					</div>
 				</div>
 				<%: Html.HiddenFor(model => model.InvestorCount)%>
-				<div class="editor-button" style="margin: 0 auto; padding-top: 10px; width: 153px;">
+				<div style="margin: 0 auto; padding-top: 10px; width: 320px;">
 					<div style="float: left; padding: 0 0 10px 5px;">
 						<%: Html.Span("", new { @id = "ManualUpdateLoading" })%>
 					</div>
-					<div style="float: right; padding: 0 0 10px 5px;">
+					<div style="float: left; padding: 0 0 10px 5px;">
 						<%: Html.Image("submit_active.png", new { @class = "default-button", @onclick = "javascript:manualDistribution.save('ManualDistribution');" })%>
 					</div>
+					<div style="float: left; margin-left: 20px;">
+						<%: Html.ImageButton("Import-Excel_active.png", new { @id = "btnImportInvestor", onclick = "javascript:$('#ExcelImport').dialog('open');" })%>
+					</div>
+					<div class="clear">
+						&nbsp;</div>
 				</div>
 				<div class="line">
 				</div>
 				<%}%>
 			</div>
 		</div>
+	</div><div id="ExcelImport">
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomContent" runat="server">
@@ -291,5 +295,127 @@
 		distribution.selectFund(<%=Model.FundId%>);
 		});
 	</script>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("ExcelImprtTemplate")) {%>
+	<div class="import-box">
+		<%using (Html.Form(new { @id = "frmUploadExcel", @onsubmit = "return false" })) { %>
+		<div class="editor-label" style="width: 110px;">
+			&nbsp;</div>
+		<div class="editor-field" style="text-align: right; font-size: 11px;">
+			<%:Html.Anchor("Sample Excel", "/Files/ImportSamples/ManualCapitalDistribution.xlsx", new { @target = "_blank", @style = "color:blue" })%>
+		</div>
+		<div class="editor-label" style="width: 110px;">
+			<%: Html.Label("File")%></div>
+		<div class="editor-field">
+			<%: Html.File("UploadFile", new { @id = "UploadFile" })%>
+		</div>
+		<div class="editor-label" style="width: 100px">
+			<%: Html.Span("", new { @id = "SpnUELoading" })%>
+		</div>
+		<div class="editor-label" style="clear: right; width: auto;">
+			<%: Html.Image("Upload_active.png", new { @onclick = "javascript:importCapitalDistributionExcel.uploadExcel();" })%></div>
+		<div class="editor-field">
+			<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:$('#ExcelImport').dialog('close');" })%></div>
+		<%}%>
+	</div>
+	<div id="ImportExcel">
+	</div>
+	<div id="ProgressBar">
+	</div>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("ImportExcelTemplate")) {%>
+	<br />
+	<div class="clear">
+		&nbsp;</div>
+	<div class="capitaldistimportsection" id="CapitalDistributionDetailBox">
+		<div class="formbox">
+			<%using (Html.Form(new { @id = "frm", @onsubmit = "return false" })) { %>
+			<div class="editor-label">
+				<%: Html.Label("Excel Tab")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("ManualCapitalDistributionTableName", new List<SelectListItem>() {
+	 new  SelectListItem { Text = "--Select Excel Tab--", Value = " " }
+}, new { @exceltabname = "CapitalDistribution", @class = "ddltable", @onchange = "javascript:importCapitalDistributionExcel.selectExcelTab(this);" })%></div>
+			<div class="editor-label">
+				<%: Html.Label("InvestorName")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("InvestorName", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("FundName")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("FundName", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label">
+				<%: Html.Label("CapitalDistributionAmount")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("CapitalDistributionAmount", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("ReturnManagementFees")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("ReturnManagementFees", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label">
+				<%: Html.Label("ReturnFundExpenses")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("ReturnFundExpenses", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("CostReturned")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("CostReturned", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label">
+				<%: Html.Label("Profits")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("Profits", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("ProfitsReturned")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("ProfitsReturned", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label">
+				<%: Html.Label("DistributionDate")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("DistributionDate", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="editor-label" style="clear: right">
+				<%: Html.Label("DistributionDueDate")%></div>
+			<div class="editor-field">
+				<%: Html.DropDownList("DistributionDueDate", DeepBlue.Helpers.SelectListFactory.GetEmptySelectList())%></div>
+			<div class="clear">
+				&nbsp;</div>
+			<%: Html.Hidden("TotalRows", "${TotalRows}")%>
+			<%: Html.Hidden("SessionKey", "${SessionKey}")%>
+			<%}%>
+		</div>
+		<div class="statusbox">
+		</div>
+	</div>
+	<div class="save-box">
+		<div class="editor-label">
+			<%: Html.Image("Save_active.png", new {  @onclick = "javascript:importCapitalDistributionExcel.import(this);" })%></div>
+		<div class="editor-field">
+			<%: Html.Image("Cancel_active.png", new { @onclick = "javascript:$('#ExcelImport').dialog('close');" })%></div>
+		<div class="clear">
+			&nbsp;</div>
+	</div>
+	<%}%>
+	<%using (Html.jQueryTemplateScript("ImportExcelResultTemplate")) {%>
+	<div class="editor-label">
+		<%: Html.Label("Total")%></div>
+	<div class="editor-field">
+		<%: Html.Span("${TotalRows}", new { @id = "spntotal" })%></div>
+	<div class="editor-label">
+		<%: Html.Label("Success")%></div>
+	<div class="editor-field">
+		<%: Html.Span("${SuccessRows}", new { @id = "spnsuccess" })%></div>
+	<div class="editor-label">
+		<%: Html.Label("Errors")%></div>
+	<div class="editor-field">
+		<%: Html.Span("${ErrorRows}", new { @id = "spnerrors" })%></div>
+	<div class="editor-field">
+		<%: Html.Span("", new { @id = "spnerrorexcel", @style="color:red" })%></div>
+	<div class='prs-bar'>
+		<div class='total-rows'>
+			Rows ${CompletedRows} Of ${TotalRows}</div>
+		<div class="status-bar">
+			<div class='loading-status' style='width: ${Percent}%;'>
+			</div>
+		</div>
+	</div>
 	<%}%>
 </asp:Content>
