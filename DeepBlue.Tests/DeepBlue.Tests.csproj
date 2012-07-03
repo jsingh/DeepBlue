@@ -72,7 +72,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
@@ -1051,13 +1051,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\Report\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\DeepBlue\DeepBlue.csproj">
       <Project>{29CF30A7-AD06-46A1-87F3-2FBEED1FCA1F}</Project>
       <Name>DeepBlue</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Report\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
