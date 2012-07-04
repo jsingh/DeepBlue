@@ -41,7 +41,8 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.0.5022.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>_bin_deployableAssemblies\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -101,12 +102,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="WindowsBase">
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="WindowsBase" />
     <Reference Include="wnvhtmlconvert, Version=3.9.0.25692, Culture=neutral, PublicKeyToken=5b5f377bc08a4d32, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\wnvhtmlconvert.dll</HintPath>
+      <HintPath>_bin_deployableAssemblies\wnvhtmlconvert.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
