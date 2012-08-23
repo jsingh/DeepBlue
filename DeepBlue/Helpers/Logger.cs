@@ -26,7 +26,7 @@ namespace DeepBlue.Helpers {
 		public static void Write(Log log) {
 			switch (ConfigurationManager.AppSettings["Logging.Destination"].ToLower()) {
 				case Logger.DATABASE_LOGSINK:
-					LoggingService.SaveLog(log);
+					log.Save();
 					break;
 				case Logger.MSMQ_LOGSINK:
 					string destinationQ = ConfigurationManager.AppSettings["Logging.MSMQ.Queue.Path"];
@@ -43,7 +43,7 @@ namespace DeepBlue.Helpers {
 					mq.Send(msg);
 					break;
 				default:
-					LoggingService.SaveLog(log);
+					log.Save();
 					break;
 			}
 		}

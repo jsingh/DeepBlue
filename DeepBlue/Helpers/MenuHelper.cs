@@ -13,12 +13,17 @@ namespace DeepBlue.Helpers {
 		public const string ENTITYMENUKEY = "EntityMenu-{0}";
 
 		public static List<EntityMenuModel> GetMenus() {
-			string key = string.Format(ENTITYMENUKEY, Authentication.CurrentEntity.EntityID);
-			ICacheManager cacheManager = new MemoryCacheManager();
-			List<EntityMenuModel> menus = cacheManager.Get(key, () => {
-				IAdminRepository adminRepository = new AdminRepository();
-				return adminRepository.GetAllEntityMenus();
-			});
+			List<EntityMenuModel> menus = null;
+			if (Authentication.CurrentEntity != null) {
+				string key = string.Format(ENTITYMENUKEY, Authentication.CurrentEntity.EntityID);
+				ICacheManager cacheManager = new MemoryCacheManager();
+				menus = cacheManager.Get(key, () => {
+					IAdminRepository adminRepository = new AdminRepository();
+					return adminRepository.GetAllEntityMenus();
+				});
+			} else {
+				menus = new List<EntityMenuModel>();
+			}
 			return menus;
 		}
 

@@ -5,7 +5,8 @@
 }
 #logon {
 	width: 350px;
-	margin: 22% auto;
+	height:230px;
+	margin: 0 auto;
 }
 #logonheader {
 	background-image: url("../images/expandbg.png");

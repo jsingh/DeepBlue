@@ -1,8 +1,9 @@
-﻿(function ($) {
+﻿(function($) {
 
-	$.fn.jqCheckBox=function () {
-		return this.each(function () {
+	$.fn.jqCheckBox=function() {
+		return this.each(function() {
 			if($(this).attr("nojqTranform")!="true") {
+
 				if($(this).hasClass('jqHidden')) { return; }
 
 				var $input=$(this);
@@ -46,7 +47,7 @@
 					$yes.before(disp);
 				}
 
-				$yes.unbind('click').click(function () {
+				$yes.unbind('click').click(function() {
 					if(inputSelf.checked) return false;
 					// Toggle checkbox checked status.
 					inputSelf.checked=!inputSelf.checked;
@@ -56,7 +57,7 @@
 					return false;
 				});
 
-				$no.unbind('click').click(function () {
+				$no.unbind('click').click(function() {
 					if(inputSelf.checked==false) return false;
 					// Toggle checkbox checked status.
 					inputSelf.checked=!inputSelf.checked;
@@ -66,7 +67,7 @@
 					return false;
 				});
 
-				var setClass=function () {
+				var setClass=function() {
 					if(inputSelf.checked) {
 						$yes.addClass(selectCls);
 						$no.removeClass(selectCls);
@@ -75,17 +76,14 @@
 						$yes.removeClass(selectCls);
 					}
 				}
-
 				setClass();
-
 				$input.addClass("jqHidden");
-
 			}
 		});
 	};
 
-	$.fn.jqTransCheckBox=function () {
-		return this.each(function () {
+	$.fn.jqTransCheckBox=function() {
+		return this.each(function() {
 
 			if($(this).attr("nojnice")!="true") {
 
@@ -101,12 +99,12 @@
 				//wrap and add the link
 				$input.addClass('jqTransformHidden').wrap('<span class="jqTransformCheckboxWrapper"></span>').parent().prepend(aLink);
 				//on change, change the class of the link
-				$input.change(function () {
+				$input.change(function() {
 					this.checked&&aLink.addClass('jqTransformChecked')||aLink.removeClass('jqTransformChecked');
 					return true;
 				});
 				// Click Handler, trigger the click and change event on the input
-				aLink.click(function () {
+				aLink.click(function() {
 					//do nothing if the original input is disabled
 					if($input.attr('disabled')) { return false; }
 					//trigger the envents on the input object

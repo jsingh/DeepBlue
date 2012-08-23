@@ -585,6 +585,31 @@ namespace DeepBlue.Models.Entity {
 				return this.Brokers.EntityFilter();
 			}
 		}
+		public IQueryable<AccountingTransactionType> AccountingTransactionTypeTable {
+			get {
+				return this.AccountingTransactionTypes.EntityFilter();
+			}
+		}
+		public IQueryable<AccountingEntryAmountType> AccountingEntryAmountTypesTable {
+			get {
+				return this.AccountingEntryAmountTypes.EntityFilter();
+			}
+		}
+		public IQueryable<VirtualAccount> VirtualAccountsTable {
+			get {
+				return this.VirtualAccounts.EntityFilter();
+			}
+		}
+		public IQueryable<AccountingEntryTemplate> AccountingEntryTemplatesTable {
+			get {
+				return this.AccountingEntryTemplates.EntityFilter();
+			}
+		}
+		public IQueryable<AccountingEntry> AccountingEntriesTable {
+			get {
+				return this.AccountingEntries.EntityFilter();
+			}
+		}
 		#endregion
 	}
 }

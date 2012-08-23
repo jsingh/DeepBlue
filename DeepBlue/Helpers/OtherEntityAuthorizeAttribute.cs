@@ -9,7 +9,10 @@ namespace DeepBlue.Helpers {
 
 	public class OtherEntityAuthorizeAttribute : AuthorizeAttribute {
 		protected override bool AuthorizeCore(HttpContextBase httpContext) {
-			return !(Authentication.IsSystemEntityUser);
+			if (Authentication.CurrentEntity != null)
+				return !(Authentication.IsSystemEntityUser);
+			else
+				return false;
 		}
 	}
 }

@@ -21,7 +21,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -109,6 +109,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Accounting\AccountingController.cs" />
+    <Compile Include="Controllers\Accounting\AccountingManager.cs" />
+    <Compile Include="Controllers\Accounting\AccountingRepository.cs" />
+    <Compile Include="Controllers\Accounting\IAccounting.cs" />
+    <Compile Include="Controllers\Accounting\IAccountingRepository.cs" />
     <Compile Include="Controllers\Account\AccountController.cs" />
     <Compile Include="Controllers\Account\AccountRepository.cs" />
     <Compile Include="Controllers\Account\IAccountRepository.cs" />
@@ -166,6 +171,11 @@
     <Compile Include="Helpers\WebAddressAttribute.cs" />
     <Compile Include="Helpers\WindowsAzureFileUpload.cs" />
     <Compile Include="Helpers\ZipAttribute.cs" />
+    <Compile Include="Models\Accounting\AccountingEntryTemplateListModel.cs" />
+    <Compile Include="Models\Accounting\AccountingEntryTemplateModel.cs" />
+    <Compile Include="Models\Accounting\VirtualAccountModel.cs" />
+    <Compile Include="Models\Accounting\Enums.cs" />
+    <Compile Include="Models\Accounting\VirtualAccountListModel.cs" />
     <Compile Include="Models\Account\LogOnModel.cs" />
     <Compile Include="Models\Admin\EditEntityMenuModel.cs" />
     <Compile Include="Models\Admin\EditMenuModel.cs" />
@@ -300,6 +310,8 @@
       <DependentUpon>DeepBlue.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\DeepBlueEntities.cs" />
+    <Compile Include="Models\Entity\Partial\AccountingEntryService.cs" />
+    <Compile Include="Models\Entity\Partial\AccountingEntryTemplateService.cs" />
     <Compile Include="Models\Entity\Partial\ActivityTypeService.cs" />
     <Compile Include="Models\Entity\Partial\AddressService.cs" />
     <Compile Include="Models\Entity\Partial\AnnualMeetingHistoryService.cs" />
@@ -308,6 +320,7 @@
     <Compile Include="Models\Entity\Partial\CapitalCallLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\CapitalDistributionLineItemService.cs" />
     <Compile Include="Models\Entity\Partial\ContactService.cs" />
+    <Compile Include="Models\Entity\Partial\VirtualAccountService.cs" />
     <Compile Include="Models\Entity\Partial\DividendDistributionService.cs" />
     <Compile Include="Models\Entity\Partial\DocumentTypeService.cs" />
     <Compile Include="Models\Entity\Partial\EntityMenuService.cs" />
@@ -342,8 +355,11 @@
     <Compile Include="Models\Entity\Partial\UnderlyingFundCapitalCallService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVHistoryService.cs" />
     <Compile Include="Models\Entity\Partial\UnderlyingFundNAVService.cs" />
+    <Compile Include="Models\Entity\Validation\AccountingEntry.cs" />
+    <Compile Include="Models\Entity\Validation\AccountingEntryTemplate.cs" />
     <Compile Include="Models\Entity\Validation\AnnualMeetingHistory.cs" />
     <Compile Include="Models\Entity\Validation\Broker.cs" />
+    <Compile Include="Models\Entity\Validation\VirtualAccount.cs" />
     <Compile Include="Models\Entity\Validation\DividendDistribution.cs" />
     <Compile Include="Models\Entity\Validation\DocumentType.cs" />
     <Compile Include="Models\Entity\Validation\Entity.cs" />
@@ -1118,6 +1134,8 @@
     <Content Include="Assets\images\_plus.png" />
     <Content Include="Assets\images\_select_left.png" />
     <Content Include="Assets\images\_select_right.png" />
+    <Content Include="Assets\javascripts\AccountingEntryTemplate.js" />
+    <Content Include="Assets\javascripts\VirtualAccount.js" />
     <Content Include="Assets\javascripts\ImportCapitalDistributionExcel.js" />
     <Content Include="Assets\javascripts\ImportCapitalCallExcel.js" />
     <Content Include="Assets\javascripts\ImportInvestorExcel.js" />
@@ -1125,6 +1143,8 @@
     <Content Include="Assets\javascripts\ImportDealExcel.js" />
     <Content Include="Assets\javascripts\jquery.tipTip.js" />
     <Content Include="Assets\javascripts\ScheduleK1.js" />
+    <Content Include="Assets\stylesheets\accountentrytemplate.css" />
+    <Content Include="Assets\stylesheets\virtualaccount.css" />
     <Content Include="Assets\stylesheets\schedulek1.css" />
     <Content Include="Assets\stylesheets\newdeallayout.css" />
     <Content Include="Assets\stylesheets\tipTip.css" />
@@ -1381,6 +1401,11 @@
     <Content Include="Templates\BootStrap\Views\Shared\Footer.ascx" />
     <Content Include="Templates\BootStrap\Views\Shared\Menu.ascx" />
     <Content Include="Templates\BootStrap\Views\Shared\Result.ascx" />
+    <Content Include="Views\Accounting\AccountingEntryTemplateDetail.ascx" />
+    <Content Include="Views\Accounting\Result.ascx" />
+    <Content Include="Views\Accounting\AccountingEntryTemplate.aspx" />
+    <Content Include="Views\Accounting\VirtualAccountDetail.ascx" />
+    <Content Include="Views\Accounting\VirtualAccount.aspx" />
     <Content Include="Views\Account\LogOn.aspx" />
     <Content Include="Views\Admin\ActivityType.aspx" />
     <Content Include="Views\Admin\CommunicationGrouping.aspx" />
@@ -1566,16 +1591,16 @@
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <EntityDeploy Include="Models\Entity\DeepBlue.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DeepBlue.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <Content Include="Files\ImportSamples\Deal.xlsx" />
     <Content Include="Files\ImportSamples\DealClose.xlsx" />
     <Content Include="Files\ImportSamples\Investor.xlsx" />
     <Content Include="Files\ImportSamples\ManualCapitalCall.xlsx" />
     <Content Include="Files\ImportSamples\ManualCapitalDistribution.xlsx" />
     <Content Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
+    <EntityDeploy Include="Models\Entity\DeepBlue.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DeepBlue.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.xml" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.dll" />
     <None Include="_bin_deployableAssemblies\WebMatrix.Data.xml" />
@@ -1648,9 +1673,8 @@
           <IISUrl>
           </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://192.168.2.21:8080</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

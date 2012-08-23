@@ -33,11 +33,21 @@
 		return true;
 	},
 	logonpos: function(){
-		var winwidth = $(window).width();
-		if(winwidth < 1007) winwidth= 1007;
-		$("#logon").css("top",(($(window).height()/ 2) - ($("#logon").height()/2)) -38);
-		$("#logon").css("left",((winwidth/ 2) - ($("#logon").width()/2)));
+		var ww = $(window).width();
+		var wh = $(window).height();
+		var lh  = $("#logon").innerHeight();
+		var lw  = $("#logon").innerWidth();
+		var top = ((wh/ 2) - (lh/2));
+		var left = ((ww/ 2) - (lw/2));
+		$("#logon")
+		.css({
+		"top": top, "left": left, "position": "absolute"
+		});
 	}
 }
-
-window.onresize = logon.logonpos;
+$(document).ready(function(){
+	 logon.logonpos();
+});
+$(window).resize(function(){
+	logon.logonpos();
+});

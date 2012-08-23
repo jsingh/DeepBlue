@@ -22,9 +22,9 @@ namespace DeepBlue.Controllers.Account {
 			AccountRepository = accountRepository;
 		}
 
+
 		//
 		// GET: /Account/
-
 		public ActionResult LogOn(string returnUrl) {
 			ViewData["ReturnUrl"] = returnUrl;
 			return View();
@@ -64,32 +64,30 @@ namespace DeepBlue.Controllers.Account {
 								returnUrl = model.ReturnUrl;
 							}
 						}
-						if (string.IsNullOrEmpty(returnUrl) == false) {
-							return Redirect(model.ReturnUrl);
-						}
-						else {
-							if (Authentication.IsSystemEntityUser) {
-								menu = MenuHelper.GetMenu("/Admin/EntityType");
-								if (menu != null)
-									redirectUrl = menu.URL;
-								else
-									redirectUrl = "/Admin/EntityType";
-							}
-							else {
+						if (Authentication.IsSystemEntityUser) {
+							menu = MenuHelper.GetMenu("/Admin/EntityType");
+							if (menu != null)
+								redirectUrl = menu.URL;
+							else
+								redirectUrl = "/Admin/EntityType";
+						} else {
+							if (string.IsNullOrEmpty(returnUrl) == false) {
+								return Redirect(model.ReturnUrl);
+							} else {
 								menu = MenuHelper.GetMenu("/Fund");
 								if (menu != null)
 									redirectUrl = menu.URL;
 								else
 									redirectUrl = "/Fund";
 							}
-							if (menu != null) {
-								if (menu.URL.Contains("?"))
-									redirectUrl += "&menuid=" + menu.MenuID;
-								else
-									redirectUrl += "?menuid=" + menu.MenuID;
-							}
-							return Redirect(redirectUrl);
 						}
+						if (menu != null) {
+							if (menu.URL.Contains("?"))
+								redirectUrl += "&menuid=" + menu.MenuID;
+							else
+								redirectUrl += "?menuid=" + menu.MenuID;
+						}
+						return Redirect(redirectUrl);
 					}
 				}
 
@@ -117,8 +115,7 @@ namespace DeepBlue.Controllers.Account {
 			if (Uri.TryCreate(url, UriKind.Absolute, out absoluteUri)) {
 				return String.Equals(this.Request.Url.Host, absoluteUri.Host,
 							StringComparison.OrdinalIgnoreCase);
-			}
-			else {
+			} else {
 				bool isLocal = !url.StartsWith("http:", StringComparison.OrdinalIgnoreCase)
 					&& !url.StartsWith("https:", StringComparison.OrdinalIgnoreCase)
 					&& Uri.IsWellFormedUriString(url, UriKind.Relative);

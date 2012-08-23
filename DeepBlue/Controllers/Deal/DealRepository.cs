@@ -12,6 +12,7 @@ using System.Collections;
 using System.Data.Objects.DataClasses;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using DeepBlue.Controllers.Accounting;
 
 namespace DeepBlue.Controllers.Deal {
 	public class DealRepository : IDealRepository {
@@ -311,8 +312,7 @@ namespace DeepBlue.Controllers.Deal {
 							DealId = expense.DealID,
 							Description = expense.DealClosingCostType.Name
 						});
-			}
-			else {
+			} else {
 				return null;
 			}
 		}
@@ -361,7 +361,17 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		public IEnumerable<ErrorInfo> SaveDealClosingCost(DealClosingCost dealClosingCost) {
-			return dealClosingCost.Save();
+			IEnumerable<ErrorInfo> errorInfo = dealClosingCost.Save();
+			if (errorInfo == null) {
+				using (DeepBlueEntities context = new DeepBlueEntities()) {
+					Models.Entity.Deal deal = context.DealsTable.Where(d => d.DealID == dealClosingCost.DealID).FirstOrDefault();
+					if (deal != null) {
+						IAccounting accountingManager = new AccountingManager();
+						accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.DealClosingCost, deal.FundID, dealClosingCost.Amount, dealClosingCost);
+					}
+				}
+			}
+			return errorInfo;
 		}
 
 		#endregion
@@ -480,7 +490,7 @@ namespace DeepBlue.Controllers.Deal {
 						).FirstOrDefault();
 			}
 		}
-		 
+
 
 		public DealUnderlyingFundModel FindDealUnderlyingFundModel(int dealUnderlyingFundId) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
@@ -504,7 +514,17 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		public IEnumerable<ErrorInfo> SaveDealUnderlyingFund(DealUnderlyingFund dealUnderlyingFund) {
-			return dealUnderlyingFund.Save();
+			IEnumerable<ErrorInfo> errorInfo = dealUnderlyingFund.Save();
+			if (errorInfo == null) {
+				using (DeepBlueEntities context = new DeepBlueEntities()) {
+					Models.Entity.Deal deal = context.DealsTable.Where(d => d.DealID == dealUnderlyingFund.DealID).FirstOrDefault();
+					if (deal != null) {
+						IAccounting accountingManager = new AccountingManager();
+						accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.DealUnderlyingFund, deal.DealID, dealUnderlyingFund.CommittedAmount, dealUnderlyingFund);
+					}
+				}
+			}
+			return errorInfo;
 		}
 
 		public List<DealUnderlyingFundModel> GetAllDealUnderlyingFundDetails(int dealId) {
@@ -946,8 +966,7 @@ namespace DeepBlue.Controllers.Deal {
 				IQueryable<DealReportModel> query = GetAllDealReportQuery(context, fundId);
 				if (string.IsNullOrEmpty(sortName)) {
 					query = query.OrderByDescending(q => new { q.DealNumber, q.DealName });
-				}
-				else {
+				} else {
 					query = query.OrderBy(sortName, (sortOrder == "asc"));
 				}
 				PaginatedList<DealReportModel> paginatedList = new PaginatedList<DealReportModel>(query, pageIndex, pageSize);
@@ -1207,7 +1226,7 @@ namespace DeepBlue.Controllers.Deal {
 						context.Files.DeleteObject(documentfile);
 					}
 					context.SaveChanges();
-                    UploadFileHelper.DeleteFile(documentfile);
+					UploadFileHelper.DeleteFile(documentfile);
 					return true;
 				}
 				return false;
@@ -1340,7 +1359,17 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		public IEnumerable<ErrorInfo> SaveUnderlyingFundStockDistributionLineItem(UnderlyingFundStockDistributionLineItem underlyingFundStockDistributionLineItem) {
-			return underlyingFundStockDistributionLineItem.Save();
+			IEnumerable<ErrorInfo> errorInfo = underlyingFundStockDistributionLineItem.Save();
+			if (errorInfo == null) {
+				using (DeepBlueEntities context = new DeepBlueEntities()) {
+					Models.Entity.Deal deal = context.DealsTable.Where(d => d.DealID == underlyingFundStockDistributionLineItem.DealID).FirstOrDefault();
+					if (deal != null) {
+						IAccounting accountingManager = new AccountingManager();
+						accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.UnderlyingFundStockDistributionLineItem, deal.FundID, underlyingFundStockDistributionLineItem.FMV, underlyingFundStockDistributionLineItem);
+					}
+				}
+			}
+			return errorInfo;
 		}
 
 		public List<UnderlyingFundStockDistributionModel> GetAllUnderlyingFundStockDistributions(int underlyingFundId) {
@@ -1553,7 +1582,17 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		public IEnumerable<ErrorInfo> SaveUnderlyingFundPostRecordCashDistribution(CashDistribution cashDistribution) {
-			return cashDistribution.Save();
+			IEnumerable<ErrorInfo> errorInfo = cashDistribution.Save();
+			if (errorInfo == null) {
+				using (DeepBlueEntities context = new DeepBlueEntities()) {
+					Models.Entity.Deal deal = context.DealsTable.Where(d => d.DealID == cashDistribution.DealID).FirstOrDefault();
+					if (deal != null) {
+						IAccounting accountingManager = new AccountingManager();
+						accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CashDistribution, deal.FundID, cashDistribution.Amount, cashDistribution);
+					}
+				}
+			}
+			return errorInfo;
 		}
 
 		public bool DeleteUnderlyingFundPostRecordCashDistribution(int id) {
@@ -2153,7 +2192,12 @@ namespace DeepBlue.Controllers.Deal {
 		}
 
 		public IEnumerable<ErrorInfo> SaveFundExpense(FundExpense fundExpense) {
-			return fundExpense.Save();
+			IEnumerable<ErrorInfo> errorInfo = fundExpense.Save();
+			if (errorInfo == null) {
+				IAccounting accountingManager = new AccountingManager();
+				accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.FundExpense, fundExpense.FundID, fundExpense.Amount, fundExpense);
+			}
+			return errorInfo;
 		}
 
 		#endregion
@@ -2844,7 +2888,7 @@ namespace DeepBlue.Controllers.Deal {
 			}
 		}
 
-		public 	Equity FindEquity(int issuerID, string symbol) {
+		public Equity FindEquity(int issuerID, string symbol) {
 			using (DeepBlueEntities context = new DeepBlueEntities()) {
 				return context.EquitiesTable.Where(equity => equity.IssuerID == issuerID && equity.Symbol == symbol).FirstOrDefault();
 			}
@@ -3123,7 +3167,7 @@ namespace DeepBlue.Controllers.Deal {
 						context.Files.DeleteObject(documentfile);
 					}
 					context.SaveChanges();
-                    UploadFileHelper.DeleteFile(documentfile);
+					UploadFileHelper.DeleteFile(documentfile);
 					return true;
 				}
 				return false;
@@ -3157,8 +3201,7 @@ namespace DeepBlue.Controllers.Deal {
 				}
 				if (string.IsNullOrEmpty(sortName)) {
 					query = query.OrderBy(q => new { q.DealNumber });
-				}
-				else {
+				} else {
 					query = query.OrderBy(sortName, (sortOrder == "asc"));
 				}
 				PaginatedList<DealReportModel> paginatedList = new PaginatedList<DealReportModel>(query, pageIndex, pageSize);

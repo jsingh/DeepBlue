@@ -1,0 +1,241 @@
+﻿.accountingEntryTemplate-box {
+	clear: both;
+	float: left;
+	width: 100%;
+}
+.accountingEntryTemplate-main {
+	width: 100%;
+	margin: 0;
+	clear: both;
+}
+#cntbox {
+	top: 98px;
+}
+.section-det {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+.accountingEntryTemplate-box-title {
+	font-weight: bold;
+	padding: 10px 0 10px 65px;
+	font-size: 14px;
+}
+.accountingEntryTemplate-header {
+	text-align: right;
+	padding: 5px 0px 5px 0px;
+}
+.accountingEntryTemplate-content {
+	width: 100%;
+}
+.accountingEntryTemplate-box-det {
+	clear: both;
+	float: left;
+	padding: 5px 20px 5px 57px;
+}
+.accountingEntryTemplate-box-det .editor-field input[type="text"] {
+	width: 149px;
+}
+.accountingEntryTemplate-box-det .editor-label {
+	text-align: right;
+	white-space: nowrap;
+}
+.headerbox {
+	cursor: pointer;
+	float: left;
+	width: 90%;
+	padding-left: 65px;
+}
+.editor-field {
+	width: 180px;
+}
+.section-det .title {
+	background: url("../images/plus.png") no-repeat scroll left top transparent;
+	color: #02766F;
+	cursor: pointer;
+	float: left;
+	font-size: 14px;
+	font-weight: bold;
+	height: 23px;
+	line-height: 15px;
+	margin: 10px 0 0 0px;
+	padding-left: 20px;
+	width: 200px;
+}
+.rightdarrow {
+	float: right;
+	padding-right: 0px;
+	padding-top: 10px;
+	vertical-align: middle;
+}
+.rate-detail {
+	clear: both;
+	padding-left: 65px;
+	width: 90%;
+}
+.rate-grid {
+	width: 100%;
+	clear: both;
+}
+.tab-delete {
+	background-image: url("../images/tabdelete.png");
+	background-position: left top;
+	background-repeat: no-repeat;
+	float: left;
+	height: 16px;
+	margin: 7px 0 0 -15px;
+	width: 16px;
+	cursor: pointer;
+}
+#AccountingEntryTemplateDetail {
+	/*margin: 0 auto;*/
+	padding: 0 0 10px 65px;
+	width: 90%;
+}
+/* expand header */
+.expandheader, .recon-expandheader {
+	background-image: url("../images/downarrow.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	float: left;
+	padding: 0;
+	width: 90%;
+}
+.expandheader .expandimg, .recon-expandheader .expandimg {
+	padding: 15px 0 8px;
+}
+.expandsel {
+	color: #FFFFFF;
+	font-size: 18px;
+	padding: 0;
+	width: 100%;
+	margin-top: -2px;
+	background-image: url(../images/expandbg.png);
+	background-repeat: repeat-x;
+	background-position: left top;
+	height: 35px;
+	line-height: 35px;
+}
+.expandheader #title, .recon-expandheader #title {
+	display: none;
+}
+.expandimg {
+	float: left;
+}
+.expandtitle {
+	text-shadow: #0B0B0B 1px 1px 1px;
+	filter: Shadow(Color=#0B0B0B,Direction=135,Strength=2);
+}
+.expandtitle, .recon-expandtitle {
+	float: left;
+	white-space: nowrap;
+	width: 200px; /*margin-left: 65px;*/
+}
+.expandaddbtn {
+	display: none;
+	float: left;
+	height: 31px;
+	line-height: 33px;
+	margin: 5px 0 0 70px;
+	padding-left: 30px;
+	width: 151px;
+}
+.expandaddbtn a {
+	color: #000000;
+	font-size: 11px;
+	font-weight: bold;
+}
+.expandsel .rightuarrow {
+	background-image: url("../images/rightuarrow.png");
+	background-repeat: no-repeat;
+	float: right;
+	height: 9px;
+	margin-top: 12px;
+	width: 16px;
+}
+
+.detail {
+	background-color: #E9EAEC;
+	clear: both;
+	float: left;
+	margin: 0;
+	width: 100%;
+	padding: 10px 0;
+}
+.detail .editor-label {
+	text-align: right;
+}
+/* end expand header */
+.section-tab-main {
+	width: 100%;
+	padding-left: 0;
+}
+.section-tab-box {
+	float: left;
+	padding-left: 63px;
+}
+.expandbtn {
+	float: left;
+	width: 90%;
+	padding-left: 65px;
+}
+
+#BankInformation .editor-label {
+	width: 125px;
+	padding-right:0px;
+}
+
+.headerbar {
+	color: #FFFFFF;
+}
+.headerbar .addbtn {
+	float: left;
+	margin: 0 0 0 107px;
+	padding: 0;
+}
+.headerbar .leftcol {
+	font-size: 18px;
+	text-shadow: 1px 1px 1px #0B0B0B;
+	float: left;
+}
+.flexigrid tr td.editcell {
+	background-image: none;
+	background-color: #E9E9E9;
+	padding: 10px 0;
+}
+.grid tr td.flex-box-top, .grid tr td.flex-box-bottom {
+	height: 4px;
+	background-image: none;
+	padding: 0;
+}
+.grid tr td.middlec, .grid tr td.topl, .grid tr td.topc, .grid tr td.topr, .grid tr td.bottoml, .grid tr td.bottomc, .grid tr td.bottomr {
+	padding: 0px;
+}
+#RateScheduleList tr.arow {
+	background-image: url("../images/table_row_even.gif");
+}
+.grid tr td .addyearbtn img{
+	visibility:hidden;
+}
+.grid tr td .addyearbtn:hover img{
+	visibility:visible;
+}
+#InvestorDetail .flexigrid div.pDiv {
+	height:30px;
+}
+#InvestorDetail  .flexigrid .pGroup tr {
+	background-image:none;
+}
+#InvestorDetail  .flexigrid .pGroup tr td {
+	background-image:none;
+	padding:0;
+	height: auto;
+}
+ 
+#InvestorDetail .flexigrid div.pDiv input[type="text"] {
+    width: auto;
+}
+.flexigrid div.pDiv {
+	height: 30px;
+}

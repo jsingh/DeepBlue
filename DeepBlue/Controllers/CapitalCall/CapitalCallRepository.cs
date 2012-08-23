@@ -7,6 +7,7 @@ using DeepBlue.Models.CapitalCall;
 using DeepBlue.Helpers;
 using System.Data.Objects;
 using System.Data.Objects.SqlClient;
+using DeepBlue.Controllers.Accounting;
 
 namespace DeepBlue.Controllers.CapitalCall {
 	public class CapitalCallRepository : ICapitalCallRepository {
@@ -217,15 +218,60 @@ namespace DeepBlue.Controllers.CapitalCall {
 		}
 
 		public IEnumerable<ErrorInfo> SaveCapitalCall(Models.Entity.CapitalCall capitalCall) {
-			return capitalCall.Save();
+			IEnumerable<ErrorInfo> errorInfo = capitalCall.Save();
+			if (errorInfo == null) {
+				using (DeepBlueEntities context = new DeepBlueEntities()) {
+					int capitalCallID = capitalCall.CapitalCallID;
+					var findCapitalCall = context.CapitalCallsTable.Where(cc => cc.CapitalCallID == capitalCallID).FirstOrDefault();
+					if (findCapitalCall != null) {
+						foreach (var capitalCallLineItem in findCapitalCall.CapitalCallLineItems) {
+							IAccounting accountingManager = new AccountingManager();
+							if (capitalCallLineItem.IsReconciled)
+								accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallReconcilationLineItem, findCapitalCall.FundID, capitalCallLineItem.CapitalAmountCalled, capitalCallLineItem);
+							else
+								accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallLineItem, findCapitalCall.FundID, capitalCallLineItem.CapitalAmountCalled, capitalCallLineItem);
+						}
+					}
+				}
+			}
+			return errorInfo;
 		}
 
 		public IEnumerable<ErrorInfo> SaveCapitalCallOnly(Models.Entity.CapitalCall capitalCall) {
-			return capitalCall.SaveCapitalCallOnly();
+			IEnumerable<ErrorInfo> errorInfo = capitalCall.SaveCapitalCallOnly();
+			if (errorInfo == null) {
+				using (DeepBlueEntities context = new DeepBlueEntities()) {
+					int capitalCallID = capitalCall.CapitalCallID;
+					var findCapitalCall = context.CapitalCallsTable.Where(cc => cc.CapitalCallID == capitalCallID).FirstOrDefault();
+					if (findCapitalCall != null) {
+						foreach (var capitalCallLineItem in findCapitalCall.CapitalCallLineItems) {
+							IAccounting accountingManager = new AccountingManager();
+							if (capitalCallLineItem.IsReconciled)
+								accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallReconcilationLineItem, findCapitalCall.FundID, capitalCallLineItem.CapitalAmountCalled, capitalCallLineItem);
+							else
+								accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallLineItem, findCapitalCall.FundID, capitalCallLineItem.CapitalAmountCalled, capitalCallLineItem);
+						}
+					}
+				}
+			}
+			return errorInfo;
 		}
 
 		public IEnumerable<ErrorInfo> SaveCapitalCallLineItem(CapitalCallLineItem capitalCallLineItem) {
-			return capitalCallLineItem.Save();
+			IEnumerable<ErrorInfo> errorInfo = capitalCallLineItem.Save();
+			if (errorInfo == null) {
+				using (DeepBlueEntities context = new DeepBlueEntities()) {
+					Models.Entity.CapitalCall capitalCall = context.CapitalCallsTable.Where(cc => cc.CapitalCallID == capitalCallLineItem.CapitalCallID).FirstOrDefault();
+					if (capitalCall != null) {
+						IAccounting accountingManager = new AccountingManager();
+						if (capitalCallLineItem.IsReconciled)
+							accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallReconcilationLineItem, capitalCall.FundID, capitalCallLineItem.CapitalAmountCalled, capitalCallLineItem);
+						else
+							accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallLineItem, capitalCall.FundID, capitalCallLineItem.CapitalAmountCalled, capitalCallLineItem);
+					}
+				}
+			}
+			return errorInfo;
 		}
 
 		public IEnumerable<ErrorInfo> SaveCapitalDistribution(CapitalDistribution capitalDistribution) {
@@ -233,7 +279,17 @@ namespace DeepBlue.Controllers.CapitalCall {
 		}
 
 		public IEnumerable<ErrorInfo> SaveCapitalDistributionLineItem(CapitalDistributionLineItem capitalDistributionLineItem) {
-			return capitalDistributionLineItem.Save();
+			IEnumerable<ErrorInfo> errorInfo = capitalDistributionLineItem.Save();
+			if (errorInfo == null) {
+				using (DeepBlueEntities context = new DeepBlueEntities()) {
+					CapitalDistribution capitalDistribution = context.CapitalDistributionsTable.Where(cd => cd.CapitalDistributionID == capitalDistributionLineItem.CapitalDistributionID).FirstOrDefault();
+					if (capitalDistribution != null) {
+						IAccounting accountingManager = new AccountingManager();
+						accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalDistributionLineItem, capitalDistribution.FundID, capitalDistributionLineItem.DistributionAmount, capitalDistributionLineItem);
+					}
+				}
+			}
+			return errorInfo;
 		}
 
 		public List<CapitalDistribution> GetCapitalDistributions(int pageIndex, int pageSize, string sortName, string sortOrder, ref int totalRows, int fundId) {

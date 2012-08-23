@@ -333,7 +333,9 @@
 	,deleteHTML: function () { return this.ajImg()+"Delete..."; }
 	,uploadingHTML: function () { return this.ajImg()+"Upload..."; }
 	,calculatingHTML: function () { return this.ajImg()+"Upload..."; }
-	,jqCheckBox: function (target) { $(":input:checkbox",target).jqCheckBox(); }
+	,jqCheckBox: function (target) { 
+		$(":input:checkbox",target).jqCheckBox(); 
+	}
 	,jqComboBox: function (target) { $("select",target).combobox(); }
 	,removejqComboBox: function (target) { $("select",target).combobox("destroy"); }
 	,removejqCheckBox: function (target) { $(".jqCheckBox",target).remove();$(".jqCDisplay",target).remove();$(".jqHidden",target).removeClass(); }

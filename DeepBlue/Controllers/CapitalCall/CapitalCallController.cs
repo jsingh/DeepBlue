@@ -14,6 +14,7 @@ using DeepBlue.Models.Admin;
 using System.Configuration;
 using System.Data;
 using System.IO;
+using DeepBlue.Controllers.Accounting;
 
 
 namespace DeepBlue.Controllers.CapitalCall {
@@ -420,6 +421,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 										capitalCallLineItem.NewInvestmentAmount=itemModel.NewInvestmentAmount;
 
 										errorInfo=CapitalCallRepository.SaveCapitalCallLineItem(capitalCallLineItem);
+									
 										resultModel.Result+=ValidationHelper.GetErrorInfo(errorInfo);
 									}
 								} else {

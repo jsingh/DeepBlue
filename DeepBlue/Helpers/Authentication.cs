@@ -15,7 +15,10 @@ namespace DeepBlue.Helpers {
 
 		public static bool IsSystemEntityUser {
 			get {
-				return (Authentication.CurrentEntity.EntityID == (int)ConfigUtil.SystemEntityID);
+				if (Authentication.CurrentEntity != null)
+					return (Authentication.CurrentEntity.EntityID == (int)ConfigUtil.SystemEntityID);
+				else
+					return false;
 			}
 		}
 
@@ -47,8 +50,8 @@ namespace DeepBlue.Helpers {
 			Authentication.CurrentUser = null;
 			Authentication.CurrentEntity = null;
 		}
-				
+
 	}
 
- 
+
 }

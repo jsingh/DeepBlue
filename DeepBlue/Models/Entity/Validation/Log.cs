@@ -49,18 +49,6 @@ namespace DeepBlue.Models.Entity {
 				set;
 			}
 
-			[StringLength(255, ErrorMessage = "QueryString must be under 255 characters.")]
-			public global::System.String QueryString {
-				get;
-				set;
-			}
-
-			[StringLength(500, ErrorMessage = "LogText must be under 500 characters.")]
-			public global::System.String LogText {
-				get;
-				set;
-			}
-
 			[StringLength(250, ErrorMessage = "UserAgent must be under 250 characters.")]
 			public global::System.String UserAgent {
 				get;
