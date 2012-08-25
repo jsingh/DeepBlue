@@ -37,6 +37,38 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			#endregion
+
+		}
+
+		public   int? TraceID {
+			get {
+				return this.DealUnderlyingtFundID;
+			}
+		}
+		public   decimal? Amount {
+			get {
+				return this.CommittedAmount;
+			}
+		}
+		public   int? AttributedTo {
+			get {
+				return this.UnderlyingFundID;
+			}
+		}
+		public   string AttributedToName {
+			get {
+				UnderlyingFund uf = this.UnderlyingFund;
+				if (uf == null) {
+					DeepBlueEntities context = new DeepBlueEntities();
+					uf = context.UnderlyingFunds.Where(x => x.UnderlyingtFundID == this.UnderlyingFundID).FirstOrDefault();
+				}
+				return uf.FundName;
+			}
+		}
+		public   string AttributedToType {
+			get {
+				return "UnderlyingFund";
+			}
 		}
 
 		public DealUnderlyingFund(IDealUnderlyingFundService dealUnderlyingFundService)

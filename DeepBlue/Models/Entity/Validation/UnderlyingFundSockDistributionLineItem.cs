@@ -22,6 +22,42 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
+		public int? TraceID {
+			get {
+				return this.UnderlyingFundStockDistributionLineItemID;
+			}
+		}
+		public decimal? Amount {
+			get {
+				// get the purchase price from the parent record
+				DeepBlueEntities context = new DeepBlueEntities();
+				decimal purchasePrice = context.UnderlyingFundStockDistributions.Where(x => x.UnderlyingFundStockDistributionID == this.UnderlyingFundStockDistributionID).FirstOrDefault().PurchasePrice;
+				return purchasePrice * this.NumberOfShares;
+			}
+		}
+
+		/// <summary>
+		/// Attribute this to the Security distributed
+		/// </summary>
+		public int? AttributedTo {
+			get {
+				DeepBlueEntities context = new DeepBlueEntities();
+				return context.UnderlyingFundStockDistributions.Where(x => x.UnderlyingFundStockDistributionID == this.UnderlyingFundStockDistributionID).FirstOrDefault().SecurityID;
+			}
+		}
+		public string AttributedToName {
+			get {
+				DeepBlueEntities context = new DeepBlueEntities();
+				return context.Equities.Where(x => x.EquityID == AttributedTo.Value).FirstOrDefault().Symbol;
+			}
+		}
+
+		public  string AttributedToType {
+			get {
+				return "Security";
+			}
+		}
+
 		public UnderlyingFundStockDistributionLineItem(IUnderlyingFundStockDistributionLineItemService underlyingFundStockDistributionLineItemService)
 			: this() {
 				this.UnderlyingFundStockDistributionLineItemService = underlyingFundStockDistributionLineItemService;

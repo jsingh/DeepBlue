@@ -83,6 +83,39 @@ namespace DeepBlue.Models.Entity {
 			}
 
 			#endregion
+
+
+		}
+
+		public   int? TraceID {
+			get {
+				return this.CapitalCallLineItemID;
+			}
+		}
+		public   decimal? Amount {
+			get {
+				return this.CapitalAmountCalled;
+			}
+		}
+		public   int? AttributedTo {
+			get {
+				return this.InvestorID;
+			}
+		}
+		public   string AttributedToName {
+			get {
+				Investor investor = this.Investor;
+				if (investor == null) {
+					DeepBlueEntities context = new DeepBlueEntities();
+					investor = context.Investors.Where(x => x.InvestorID == this.InvestorID).FirstOrDefault();
+				}
+				return this.Investor.InvestorName;
+			}
+		}
+		public   string AttributedToType {
+			get {
+				return "Investor";
+			}
 		}
 
 		public CapitalCallLineItem(ICapitalCallLineItemService capitalCallLineItemservice)

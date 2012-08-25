@@ -34,6 +34,46 @@ namespace DeepBlue.Models.Entity {
 
 			#endregion
 		}
+ 
+
+		public int? TraceID {
+			get {
+				return this.FundExpenseID;
+			}
+		}
+
+		public int? AttributedTo {
+			get {
+				return this.FundID;
+			}
+		}
+
+		public string AttributedToName {
+			get {
+				Fund fund = this.Fund;
+				DeepBlueEntities context = new DeepBlueEntities();
+
+				if (fund == null) {
+					fund = context.Funds.Where(x => x.FundID == fund.FundID).FirstOrDefault();
+				}
+
+				FundExpenseType fundExpenseType = this.FundExpenseType;
+				if (fundExpenseType == null) {
+					fundExpenseType = context.FundExpenseTypes.Where(x => x.FundExpenseTypeID == this.FundExpenseTypeID).FirstOrDefault();
+				}
+
+				if (fund != null && fundExpenseType != null) {
+					return string.Format("{0}-{1}", fund.FundName, fundExpenseType.Name);
+				}
+
+				return null;
+			}
+		}
+		public string AttributedToType {
+			get {
+				return "Fund";
+			}
+		}
 
 		public FundExpense(IFundExpenseService fundExpenseService)
 			: this() {

@@ -26,6 +26,37 @@ namespace DeepBlue.Models.Entity {
 			#endregion
 		}
 
+		public int? TraceID {
+			get {
+				return this.CapitalDistributionLineItemID;
+			}
+		}
+		public decimal? Amount {
+			get {
+				return this.DistributionAmount;
+			}
+		}
+		public int? AttributedTo {
+			get {
+				return this.InvestorID;
+			}
+		}
+		public string AttributedToName {
+			get {
+				Investor investor = this.Investor;
+				if (investor == null) {
+					DeepBlueEntities context = new DeepBlueEntities();
+					investor = context.Investors.Where(x => x.InvestorID == this.InvestorID).FirstOrDefault();
+				}
+				return this.Investor.InvestorName;
+			}
+		}
+		public string AttributedToType {
+			get {
+				return "Investor";
+			}
+		}
+
 		public CapitalDistributionLineItem(ICapitalDistributionLineItemService capitalDistributionLineItemService)
 			: this() {
 				this.CapitalDistributionLineItemService = capitalDistributionLineItemService;

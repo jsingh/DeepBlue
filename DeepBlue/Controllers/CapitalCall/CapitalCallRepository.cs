@@ -227,9 +227,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 						foreach (var capitalCallLineItem in findCapitalCall.CapitalCallLineItems) {
 							IAccounting accountingManager = new AccountingManager();
 							if (capitalCallLineItem.IsReconciled)
-								accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallReconcilationLineItem, findCapitalCall.FundID, capitalCallLineItem.CapitalAmountCalled, capitalCallLineItem);
+								accountingManager.CreateAccountingEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallReconcilationLineItem, findCapitalCall.FundID, Authentication.CurrentEntity.EntityID,(IAccountable)capitalCallLineItem,capitalCallLineItem.CapitalAmountCalled, null);
 							else
-								accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallLineItem, findCapitalCall.FundID, capitalCallLineItem.CapitalAmountCalled, capitalCallLineItem);
+								accountingManager.CreateAccountingEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallLineItem, findCapitalCall.FundID, Authentication.CurrentEntity.EntityID, (IAccountable)capitalCallLineItem, capitalCallLineItem.CapitalAmountCalled);
 						}
 					}
 				}
@@ -247,9 +247,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 						foreach (var capitalCallLineItem in findCapitalCall.CapitalCallLineItems) {
 							IAccounting accountingManager = new AccountingManager();
 							if (capitalCallLineItem.IsReconciled)
-								accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallReconcilationLineItem, findCapitalCall.FundID, capitalCallLineItem.CapitalAmountCalled, capitalCallLineItem);
+								accountingManager.CreateAccountingEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallReconcilationLineItem, findCapitalCall.FundID, Authentication.CurrentEntity.EntityID, (IAccountable)capitalCallLineItem, capitalCallLineItem.CapitalAmountCalled, null);
 							else
-								accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallLineItem, findCapitalCall.FundID, capitalCallLineItem.CapitalAmountCalled, capitalCallLineItem);
+								accountingManager.CreateAccountingEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallLineItem, findCapitalCall.FundID, Authentication.CurrentEntity.EntityID,(IAccountable)capitalCallLineItem, capitalCallLineItem.CapitalAmountCalled, null);
 						}
 					}
 				}
@@ -265,9 +265,9 @@ namespace DeepBlue.Controllers.CapitalCall {
 					if (capitalCall != null) {
 						IAccounting accountingManager = new AccountingManager();
 						if (capitalCallLineItem.IsReconciled)
-							accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallReconcilationLineItem, capitalCall.FundID, capitalCallLineItem.CapitalAmountCalled, capitalCallLineItem);
+							accountingManager.CreateAccountingEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallReconcilationLineItem, capitalCall.FundID,Authentication.CurrentEntity.EntityID, (IAccountable)capitalCallLineItem, capitalCallLineItem.CapitalAmountCalled,null);
 						else
-							accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallLineItem, capitalCall.FundID, capitalCallLineItem.CapitalAmountCalled, capitalCallLineItem);
+							accountingManager.CreateAccountingEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalCallLineItem, capitalCall.FundID, Authentication.CurrentEntity.EntityID, (IAccountable)capitalCallLineItem, capitalCallLineItem.CapitalAmountCalled, null);
 					}
 				}
 			}
@@ -285,7 +285,7 @@ namespace DeepBlue.Controllers.CapitalCall {
 					CapitalDistribution capitalDistribution = context.CapitalDistributionsTable.Where(cd => cd.CapitalDistributionID == capitalDistributionLineItem.CapitalDistributionID).FirstOrDefault();
 					if (capitalDistribution != null) {
 						IAccounting accountingManager = new AccountingManager();
-						accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalDistributionLineItem, capitalDistribution.FundID, capitalDistributionLineItem.DistributionAmount, capitalDistributionLineItem);
+						accountingManager.CreateAccountingEntry(Models.Accounting.Enums.AccountingTransactionType.CapitalDistributionLineItem, capitalDistribution.FundID, Authentication.CurrentEntity.EntityID,(IAccountable)capitalDistributionLineItem, capitalDistributionLineItem.DistributionAmount, null);
 					}
 				}
 			}

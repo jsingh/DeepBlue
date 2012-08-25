@@ -367,7 +367,7 @@ namespace DeepBlue.Controllers.Deal {
 					Models.Entity.Deal deal = context.DealsTable.Where(d => d.DealID == dealClosingCost.DealID).FirstOrDefault();
 					if (deal != null) {
 						IAccounting accountingManager = new AccountingManager();
-						accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.DealClosingCost, deal.FundID, dealClosingCost.Amount, dealClosingCost);
+						accountingManager.CreateAccountingEntry(Models.Accounting.Enums.AccountingTransactionType.DealClosingCost, deal.FundID, Authentication.CurrentEntity.EntityID, (IAccountable)dealClosingCost, dealClosingCost.Amount, null);
 					}
 				}
 			}
@@ -520,7 +520,7 @@ namespace DeepBlue.Controllers.Deal {
 					Models.Entity.Deal deal = context.DealsTable.Where(d => d.DealID == dealUnderlyingFund.DealID).FirstOrDefault();
 					if (deal != null) {
 						IAccounting accountingManager = new AccountingManager();
-						accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.DealUnderlyingFund, deal.DealID, dealUnderlyingFund.CommittedAmount, dealUnderlyingFund);
+						accountingManager.CreateAccountingEntry(Models.Accounting.Enums.AccountingTransactionType.DealUnderlyingFund, deal.FundID, Authentication.CurrentEntity.EntityID, (IAccountable)dealUnderlyingFund, dealUnderlyingFund.CommittedAmount, null);
 					}
 				}
 			}
@@ -1365,7 +1365,7 @@ namespace DeepBlue.Controllers.Deal {
 					Models.Entity.Deal deal = context.DealsTable.Where(d => d.DealID == underlyingFundStockDistributionLineItem.DealID).FirstOrDefault();
 					if (deal != null) {
 						IAccounting accountingManager = new AccountingManager();
-						accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.UnderlyingFundStockDistributionLineItem, deal.FundID, underlyingFundStockDistributionLineItem.FMV, underlyingFundStockDistributionLineItem);
+						accountingManager.CreateAccountingEntry(Models.Accounting.Enums.AccountingTransactionType.UnderlyingFundStockDistributionLineItem, deal.FundID, Authentication.CurrentEntity.EntityID, (IAccountable)underlyingFundStockDistributionLineItem, underlyingFundStockDistributionLineItem.FMV, null);
 					}
 				}
 			}
@@ -1588,7 +1588,7 @@ namespace DeepBlue.Controllers.Deal {
 					Models.Entity.Deal deal = context.DealsTable.Where(d => d.DealID == cashDistribution.DealID).FirstOrDefault();
 					if (deal != null) {
 						IAccounting accountingManager = new AccountingManager();
-						accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.CashDistribution, deal.FundID, cashDistribution.Amount, cashDistribution);
+						accountingManager.CreateAccountingEntry(Models.Accounting.Enums.AccountingTransactionType.CashDistribution, deal.FundID, Authentication.CurrentEntity.EntityID, (IAccountable)cashDistribution, cashDistribution.Amount, null);
 					}
 				}
 			}
@@ -2195,7 +2195,7 @@ namespace DeepBlue.Controllers.Deal {
 			IEnumerable<ErrorInfo> errorInfo = fundExpense.Save();
 			if (errorInfo == null) {
 				IAccounting accountingManager = new AccountingManager();
-				accountingManager.CreateEntry(Models.Accounting.Enums.AccountingTransactionType.FundExpense, fundExpense.FundID, fundExpense.Amount, fundExpense);
+				accountingManager.CreateAccountingEntry(Models.Accounting.Enums.AccountingTransactionType.FundExpense, fundExpense.FundID, Authentication.CurrentEntity.EntityID, (IAccountable)fundExpense, fundExpense.Amount, null);
 			}
 			return errorInfo;
 		}
